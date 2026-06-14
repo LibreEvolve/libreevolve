@@ -652,15 +652,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     count, TeX source URL, arXiv license URL, and an explicit
     `manual_current_as_of_2026-06-13_without_html_snapshot` status. It also
     marks missing raw/live source refresh evidence, full TeX-source caching,
-    full license-page caching, and submission-history refresh checks. This is
+    license-page refresh gating, and submission-history refresh checks. This is
     still a manually recorded source-version boundary,
     not a full arXiv abstract-page artifact or live refresh verifier.
     `papers/arxiv_abstract_snapshot.json` now pins the current
     `2506.13131v1` abstract HTML byte count and SHA-256 digest, normalized
     title/authors/subjects/DOI/submission-history metadata, and a
     validator-supported live snapshot comparison path, while explicitly
-    missing full HTML retention, extraction-script provenance, and cached-PDF
-    header consistency evidence.
+    missing full arXiv abstract-page HTML retention, extraction-script
+    provenance, and cached-PDF header consistency evidence.
     `papers/alphaevolve_datacite_doi_boundary.json` now pins a bounded
     2026-06-14 DataCite API snapshot for `10.48550/arxiv.2506.13131`,
     including response byte count, SHA-256 digest, DOI, landing URL, title,
@@ -675,8 +675,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_license_page_boundary.json` now pins a bounded
     2026-06-14 Creative Commons BY-NC-ND 4.0 license-page snapshot, including
     HTTP status, content type, byte count, SHA-256 digest, title, license
-    family, license version, and normalized URL, while keeping full HTML
-    retention and automated refresh gating open.
+    family, license version, and normalized URL, while keeping automated
+    refresh gating open.
     `papers/alphaevolve_current_version_boundary.json` now records the
     2026-06-14 arXiv floating abstract status/content/digest, resolves current
     version `2506.13131v1`, and confirms the floating PDF bytes/hash match the
@@ -693,10 +693,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_tex_archive_retention_boundary.json` now retains the
     2,635,462-byte TeX/e-print archive and validates its 58-entry member
     inventory.
+    `papers/alphaevolve_license_page_html_retention_boundary.json` now retains
+    the Creative Commons license-page HTML artifact and validates its byte
+    count, SHA-256 digest, and key content markers.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade evidence, add full license-page HTML retention, a
-    committed full-HTML artifact or approved equivalent, extraction-script
-    artifacts, full floating-PDF response retention, cached-PDF header
+    publication-grade evidence, add a committed full arXiv abstract-page HTML
+    artifact or approved equivalent, extraction-script artifacts, full
+    floating-PDF response retention, cached-PDF header
     consistency evidence, and an automated refresh gate that detects
     arXiv/DataCite/e-print/license version or metadata drift.
 

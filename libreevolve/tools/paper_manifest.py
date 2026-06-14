@@ -63,6 +63,10 @@ from libreevolve.problems.benchmarks.alphaevolve_license_page_boundary import (
     alphaevolve_license_page_boundary_record,
     validate_alphaevolve_license_page_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_license_page_html_retention_boundary import (
+    alphaevolve_license_page_html_retention_boundary_record,
+    validate_alphaevolve_license_page_html_retention_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import (
     alphaevolve_current_version_boundary_record,
     validate_alphaevolve_current_version_boundary,
@@ -658,6 +662,7 @@ ALPHAEVOLVE_DOI_LANDING_RESOLUTION_BOUNDARY_FILE = "papers/alphaevolve_doi_landi
 ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_FILE = "papers/alphaevolve_tex_source_boundary.json"
 ALPHAEVOLVE_TEX_ARCHIVE_RETENTION_BOUNDARY_FILE = "papers/alphaevolve_tex_archive_retention_boundary.json"
 ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_FILE = "papers/alphaevolve_license_page_boundary.json"
+ALPHAEVOLVE_LICENSE_PAGE_HTML_RETENTION_BOUNDARY_FILE = "papers/alphaevolve_license_page_html_retention_boundary.json"
 APPENDIX_A_CURATION_FILE = "papers/appendix_a_matrix_curation.json"
 APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE = "papers/appendix_a_matrix_excluded_target_curation.json"
 APPENDIX_A_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_resource_frontier.json"
@@ -1218,6 +1223,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_tex_source_boundary(root_path))
     issues.extend(_validate_alphaevolve_tex_archive_retention_boundary(root_path))
     issues.extend(_validate_alphaevolve_license_page_boundary(root_path))
+    issues.extend(_validate_alphaevolve_license_page_html_retention_boundary(root_path))
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_benchmark_fixture_readiness_boundary(root_path))
     issues.extend(_validate_systems_result_readiness_boundary(root_path))
@@ -2239,6 +2245,38 @@ def _validate_ablation_registry_if_present(root_path: Path) -> list[PaperManifes
             f"ablation_{issue.code}",
             issue.message,
             _safe_manifest_label(issue.variant_id) if issue.variant_id else None,
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_license_page_html_retention_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_LICENSE_PAGE_HTML_RETENTION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_license_page_html_retention_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_license_page_html_retention_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_LICENSE_PAGE_HTML_RETENTION_BOUNDARY_FILE} must emit "
+                        "the AlphaEvolve license-page HTML retention boundary"
+                    ),
+                    "2506.13131",
+                )
+            ]
+    report = validate_alphaevolve_license_page_html_retention_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_license_page_html_retention_boundary_{issue.code}",
+            issue.message,
+            "2506.13131",
         )
         for issue in report.issues
     ]

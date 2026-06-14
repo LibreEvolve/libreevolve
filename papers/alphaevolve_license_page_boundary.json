@@ -2,7 +2,7 @@
   "schema": "libreevolve.alphaevolve_license_page_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve source metadata should preserve bounded evidence for the arXiv-adjacent Creative Commons source-license page.",
-  "boundary_status": "license_page_digest_without_full_html_or_refresh_gate",
+  "boundary_status": "license_page_digest_with_retained_html_without_refresh_gate",
   "claim_ready": false,
   "license_page_snapshot": {
     "license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
@@ -32,8 +32,7 @@
     "license_page_refresh_gate"
   ],
   "missing_evidence": {
-    "full_html_artifact": "not_recorded_locally",
     "license_page_refresh_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the Creative Commons license URL, status, content type, byte count, SHA-256 digest, title, family, and version for the AlphaEvolve source-license page and is paired with the raw HTTP headers sidecar. It does not claim full HTML retention or an automated license-page refresh gate."
+  "claim_boundary": "This boundary records the Creative Commons license URL, status, content type, byte count, SHA-256 digest, title, family, and version for the AlphaEvolve source-license page and is paired with the raw HTTP headers and retained HTML sidecars. It does not claim an automated license-page refresh gate."
 }

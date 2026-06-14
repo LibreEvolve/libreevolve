@@ -77,6 +77,12 @@ from libreevolve.problems.benchmarks.alphaevolve_license_page_boundary import (
     render_alphaevolve_license_page_boundary_summary,
     validate_alphaevolve_license_page_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_license_page_html_retention_boundary import (
+    ALPHAEVOLVE_LICENSE_PAGE_HTML_RETENTION_BOUNDARY_SCHEMA,
+    alphaevolve_license_page_html_retention_boundary_record,
+    render_alphaevolve_license_page_html_retention_boundary_summary,
+    validate_alphaevolve_license_page_html_retention_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import (
     ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_SCHEMA,
     alphaevolve_current_version_boundary_record,
@@ -1032,6 +1038,7 @@ __all__ = [
     "ALPHAEVOLVE_DATACITE_FULL_RESPONSE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_DOI_LANDING_RESOLUTION_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_LICENSE_PAGE_HTML_RETENTION_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_TEX_ARCHIVE_RETENTION_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA",
@@ -1231,6 +1238,7 @@ __all__ = [
     "alphaevolve_datacite_full_response_boundary_record",
     "alphaevolve_doi_landing_resolution_boundary_record",
     "alphaevolve_license_page_boundary_record",
+    "alphaevolve_license_page_html_retention_boundary_record",
     "alphaevolve_tex_source_boundary_record",
     "alphaevolve_tex_archive_retention_boundary_record",
     "alphaevolve_source_pdf_rights_record",
@@ -1534,6 +1542,7 @@ __all__ = [
     "render_alphaevolve_datacite_full_response_boundary_summary",
     "render_alphaevolve_doi_landing_resolution_boundary_summary",
     "render_alphaevolve_license_page_boundary_summary",
+    "render_alphaevolve_license_page_html_retention_boundary_summary",
     "render_alphaevolve_tex_source_boundary_summary",
     "render_alphaevolve_tex_archive_retention_boundary_summary",
     "render_ucb1_boundary_summary",
@@ -1569,6 +1578,7 @@ __all__ = [
     "validate_alphaevolve_datacite_full_response_boundary",
     "validate_alphaevolve_doi_landing_resolution_boundary",
     "validate_alphaevolve_license_page_boundary",
+    "validate_alphaevolve_license_page_html_retention_boundary",
     "validate_alphaevolve_tex_source_boundary",
     "validate_alphaevolve_tex_archive_retention_boundary",
     "validate_alphaevolve_follow_on_math_source",

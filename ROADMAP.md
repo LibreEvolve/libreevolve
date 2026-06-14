@@ -1474,13 +1474,16 @@ by `papers/lineage_replay_boundary.json`.
   parsed DOI metadata fields.
   `papers/alphaevolve_tex_archive_retention_boundary.json` now retains the
   2,635,462-byte TeX/e-print archive artifact and validates its 58-entry member
-  inventory. Metadata extraction-script artifacts, committed full HTML content,
-  full floating-PDF response retention, cached-PDF header consistency records,
-  and automated CI refresh gates remain open.
+  inventory. `papers/alphaevolve_license_page_html_retention_boundary.json`
+  now retains the Creative Commons license-page HTML artifact and validates its
+  bytes, hash, and key content markers. Metadata extraction-script artifacts,
+  committed full arXiv abstract-page HTML content, full floating-PDF response
+  retention, cached-PDF header consistency records, and automated CI refresh
+  gates remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
-  full HTML retention and automated license-page refresh open.
+  automated license-page refresh open.
 - Keep paper-cache row identity proven before version/rights evidence:
   `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
   contain a source id matching the manifest `id`, and that every local PDF

@@ -64,10 +64,12 @@ Important limits:
   metadata and hashes, while the raw HTTP headers sidecar preserves pinned
   source response header lines and the DataCite full-response sidecar retains
   the complete raw API response body. The TeX archive-retention sidecar now
-  retains the full e-print archive and member inventory. No full HTML artifact,
-  extraction-script artifact, full license-page cache, full floating-PDF
-  response retention, cached-PDF header consistency record, or automated refresh
-  gate exists yet.
+  retains the full e-print archive and member inventory, and the
+  license-page HTML retention sidecar now retains the Creative Commons
+  license-page HTML artifact with byte/hash and content-marker validation. No
+  full arXiv abstract-page HTML artifact, extraction-script artifact, full
+  floating-PDF response retention, cached-PDF header consistency record, or
+  automated refresh gate exists yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text
@@ -1242,8 +1244,10 @@ Important limits:
   digest sidecars now preserve bounded response metadata and hashes, and the
   raw HTTP headers, DOI landing-resolution, and DataCite full-response sidecars
   preserve pinned source response evidence, and the TeX archive-retention
-  sidecar retains the full e-print archive plus member inventory. This is not
-  extraction-script provenance, full license-page caching, committed full HTML
+  sidecar retains the full e-print archive plus member inventory. The
+  license-page HTML retention sidecar retains the Creative Commons license-page
+  HTML artifact and validates its byte/hash markers. This is not
+  extraction-script provenance, committed full arXiv abstract-page HTML
   content, full floating-PDF response retention, cached-PDF header consistency
   evidence, or an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural

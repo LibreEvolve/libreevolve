@@ -790,7 +790,7 @@ def test_validate_paper_manifest_rejects_alphaevolve_license_page_boundary_drift
     record["claim_ready"] = True
     record["boundary_status"] = "license_page_full_refresh_gate_ready"
     record["license_page_snapshot"]["response_bytes"] = 1
-    record["missing_evidence"]["full_html_artifact"] = "recorded"
+    record["missing_evidence"]["license_page_refresh_gate"] = "recorded"
     sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -802,7 +802,7 @@ def test_validate_paper_manifest_rejects_alphaevolve_license_page_boundary_drift
     assert "alphaevolve_license_page_boundary_invalid_boundary_status" in codes
     assert "alphaevolve_license_page_boundary_invalid_snapshot_response_bytes" in codes
     assert (
-        "alphaevolve_license_page_boundary_invalid_missing_evidence_full_html_artifact"
+        "alphaevolve_license_page_boundary_invalid_missing_evidence_license_page_refresh_gate"
         in codes
     )
 
@@ -820,6 +820,75 @@ def test_validate_paper_manifest_requires_alphaevolve_license_page_boundary_at_r
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "alphaevolve_license_page_boundary_manifest_missing" in codes
+
+
+def test_validate_paper_manifest_accepts_alphaevolve_license_page_html_retention_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    papers_dir = tmp_path / "papers"
+    source_root = Path(__file__).resolve().parents[1]
+    (papers_dir / "alphaevolve_license_page.html").write_bytes(
+        (source_root / "papers" / "alphaevolve_license_page.html").read_bytes()
+    )
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_LICENSE_PAGE_HTML_RETENTION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_license_page_html_retention_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_license_page_html_retention_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    papers_dir = tmp_path / "papers"
+    (papers_dir / "alphaevolve_license_page.html").write_text("not the license page", encoding="utf-8")
+    record = paper_manifest.alphaevolve_license_page_html_retention_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "license_page_refresh_gate_ready"
+    record["html_content_markers"]["has_license_title"] = False
+    record["missing_evidence"]["license_page_refresh_gate"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_LICENSE_PAGE_HTML_RETENTION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_license_page_html_retention_boundary_claim_ready_overclaim" in codes
+    assert "alphaevolve_license_page_html_retention_boundary_invalid_boundary_status" in codes
+    assert "alphaevolve_license_page_html_retention_boundary_invalid_html_artifact_sha256" in codes
+    assert "alphaevolve_license_page_html_retention_boundary_invalid_html_content_marker_has_license_title" in codes
+    assert (
+        "alphaevolve_license_page_html_retention_boundary_invalid_missing_evidence_license_page_refresh_gate"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_license_page_html_retention_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_license_page_html_retention_boundary_manifest_missing" in codes
 
 
 def test_validate_paper_manifest_accepts_matching_source_identity_manifest(tmp_path):

@@ -330,7 +330,7 @@ sidecars, tests, and active TODOs.
     `18`, TeX source URL, CC BY-NC-ND 4.0 license URL, and an explicit
     `manual_current_as_of_2026-06-13_without_html_snapshot` status. Its audit
     policy still marks raw/live source refresh evidence, full TeX-source
-    caching, full license-page caching, and submission-history refresh gates as
+    caching, license-page refresh gating, and submission-history refresh gates as
     missing.
     `papers/arxiv_abstract_snapshot.json` now records a
     2026-06-13 arXiv abstract-page HTML byte count, SHA-256 digest, normalized
@@ -366,10 +366,13 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_tex_archive_retention_boundary.json` now retains the
     2,635,462-byte TeX/e-print archive and validates its 58-entry member
     inventory.
+    `papers/alphaevolve_license_page_html_retention_boundary.json` now retains
+    the Creative Commons license-page HTML artifact and validates its byte
+    count, SHA-256 digest, and key content markers.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
-    equivalent, extraction-script artifact, full license-page HTML retention,
-    full floating-PDF response retention, cached-PDF header consistency, and an
+    equivalent for the arXiv abstract page, extraction-script artifact, full
+    floating-PDF response retention, cached-PDF header consistency, and an
     automated CI/network refresh gate that fails paper/source validation if the
     live arXiv/DataCite/e-print/license metadata drifts from the committed
     source boundary.

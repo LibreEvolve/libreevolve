@@ -2311,13 +2311,16 @@ Implemented:
   parsed DOI metadata fields.
   `papers/alphaevolve_tex_archive_retention_boundary.json` now retains the
   2,635,462-byte TeX/e-print archive artifact and validates its 58-entry member
-  inventory. Metadata extraction-script artifacts, committed full HTML content,
-  full floating-PDF response retention, cached-PDF header consistency records,
-  and automated CI refresh checks remain open.
+  inventory. `papers/alphaevolve_license_page_html_retention_boundary.json`
+  now retains the Creative Commons license-page HTML artifact and validates its
+  bytes, hash, and key content markers. Metadata extraction-script artifacts,
+  committed full arXiv abstract-page HTML content, full floating-PDF response
+  retention, cached-PDF header consistency records, and automated CI refresh
+  checks remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
-  full HTML retention and automated license-page refresh open.
+  automated license-page refresh open.
 - `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
   identity evidence. It validates `papers/row_identity.json`, whose 24 source
   records emit manifest row id, URL source id where available, local filename
@@ -2330,9 +2333,11 @@ Implemented:
   `© 2025 Google DeepMind. All rights reserved`, rights holder/year, source
   page/location, manifest row hash/bytes, lack of an open-license declaration
   in the cached PDF, the fact that the arXiv license URL is recorded in
-  `papers/source_versions.json`, and the bounded license-page digest now in
-  `papers/alphaevolve_license_page_boundary.json` while full license page/terms
-  are not cached. It keeps boundaries separating third-party paper-source
+  `papers/source_versions.json`, the bounded license-page digest now in
+  `papers/alphaevolve_license_page_boundary.json`, and the retained
+  license-page HTML artifact in
+  `papers/alphaevolve_license_page_html_retention_boundary.json`. It keeps
+  boundaries separating third-party paper-source
   rights from LibreEvolve's MIT license and the companion repository's
   Apache/CC licensing.
   `papers/source_rights.json` emits that source-rights row with
@@ -2864,8 +2869,12 @@ Implemented:
   source-license page sidecar with the pinned Creative Commons BY-NC-ND 4.0
   URL, retrieval date, status, content type, response byte count, SHA-256
   digest, page title, license family, license version, and normalized URL. It
-  is not full license-page HTML retention or an automated license-page refresh
-  gate.
+  is paired with the raw-header and retained-HTML sidecars, but is not an
+  automated license-page refresh gate.
+- `papers/alphaevolve_license_page_html_retention_boundary.json`: retained
+  Creative Commons license-page HTML sidecar with the committed HTML artifact
+  path, byte count, SHA-256 digest, and key content markers. It is not an
+  automated license-page refresh gate.
 - `papers/candidate_abstraction_bias_matrix.json`: design-level candidate
   abstraction bias matrix for direct-solution, constructor-function,
   bespoke-search, and paired solution/search families. It is not executed

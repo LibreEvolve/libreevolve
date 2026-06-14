@@ -25,7 +25,7 @@ EXPECTED_TITLE = (
 EXPECTED_LICENSE_FAMILY = "CC BY-NC-ND"
 EXPECTED_LICENSE_VERSION = "4.0"
 EXPECTED_BOUNDARY_STATUS = (
-    "license_page_digest_without_full_html_or_refresh_gate"
+    "license_page_digest_with_retained_html_without_refresh_gate"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "license_url",
@@ -43,7 +43,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "license_page_refresh_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "full_html_artifact": "not_recorded_locally",
     "license_page_refresh_gate": "not_recorded_locally",
 }
 
@@ -93,8 +92,8 @@ def alphaevolve_license_page_boundary_record() -> dict[str, Any]:
             "This boundary records the Creative Commons license URL, status, "
             "content type, byte count, SHA-256 digest, title, family, and "
             "version for the AlphaEvolve source-license page and is paired "
-            "with the raw HTTP headers sidecar. It does not claim full HTML "
-            "retention or an automated license-page refresh gate."
+            "with the raw HTTP headers and retained HTML sidecars. It does "
+            "not claim an automated license-page refresh gate."
         ),
     }
 
@@ -130,8 +129,8 @@ def validate_alphaevolve_license_page_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim full HTML retention" not in boundary_text
-        or "raw HTTP headers sidecar" not in boundary_text
+        or "retained HTML sidecars" not in boundary_text
+        or "raw HTTP headers" not in boundary_text
         or "license-page refresh gate" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate the license digest from full retention/refresh evidence"))

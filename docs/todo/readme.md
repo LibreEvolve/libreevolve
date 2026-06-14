@@ -235,6 +235,34 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     papers, and runtime metadata cannot promote smoke examples or benchmark
     candidates into paper-comparable claims until the mapped evidence exists.
 
+## Run Artifacts
+
+- [ ] Add README run-artifact list drift and scope evidence.
+  - Spec evidence: the README's `Run Artifacts` section is an onboarding and
+    inspection contract for the local evolutionary runtime. Its list of common
+    files and directories should stay synchronized with actual run writers,
+    `docs/run-artifacts.md`, artifact schemas, restore behavior, and
+    AlphaEvolve-facing boundaries for what those artifacts do and do not prove.
+  - Current evidence: README lists common outputs such as `manifest.json`,
+    JSONL histories, prompt/LLM call tables, `best.py`, `best_workspace/`,
+    `evaluator_artifacts/`, and `plugin_artifacts/`, and links to
+    `docs/run-artifacts.md` for schemas and restore details. Active code and
+    paper TODOs already track many artifact internals, including manifest
+    schema metadata, history rows, prompt history, archive events, evaluator
+    artifacts, plugin artifacts, resume/replay boundaries, budget reports, and
+    validator-boundary consistency.
+  - Current gap: no README-owned validator, sidecar, or smoke transcript
+    parses the README artifact list, compares it with a current no-provider
+    smoke run and `docs/run-artifacts.md`, detects newly added or removed run
+    outputs, or distinguishes common onboarding outputs from optional,
+    provider-specific, plugin-specific, benchmark-specific, or absence-boundary
+    artifacts.
+  - Required result: add README run-artifact evidence that maps each listed
+    output to writer code, schema/docs coverage, required or optional status,
+    smoke-run presence, restore/inspection relevance, and overclaim scope; add
+    a drift check that updates README/TODO evidence whenever run writers,
+    artifact schemas, restore behavior, or common-output wording changes.
+
 ## Testing
 
 - [ ] Add README testing-command marker and environment evidence.

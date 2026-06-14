@@ -11336,6 +11336,15 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     assert inventory["unique_local_artifact_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []
     assert inventory["artifact_existence_status"] == "all_referenced_local_artifacts_present"
+    expected_todo_count = len(
+        set(inventory["rows"][0]["active_todo_paths"] + inventory["rows"][0]["completed_todo_paths"])
+    )
+    assert inventory["rows"][0]["todo_evidence_path_count"] == expected_todo_count
+    assert inventory["rows"][0]["all_todo_evidence_paths_exist"] is True
+    assert inventory["rows"][0]["todo_evidence_missing_paths"] == []
+    assert inventory["unique_todo_evidence_path_count"] == expected_todo_count
+    assert inventory["missing_todo_evidence_paths"] == []
+    assert inventory["todo_evidence_status"] == "all_referenced_todo_paths_present"
     assert inventory["rows"][0]["source_span_status"] == "phrase_offsets_recorded_in_status_cell"
     assert inventory["rows"][0]["status_claims"][0]["source_span"]["line_start"] > 0
     assert (
@@ -11412,6 +11421,39 @@ def test_validate_paper_manifest_rejects_missing_status_claim_local_artifact(tmp
 
     assert report.ok is False
     assert "status_claim_inventory_missing_local_artifact" in {
+        issue.code for issue in report.issues
+    }
+
+
+def test_validate_paper_manifest_rejects_missing_status_claim_todo_evidence_path(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_status_fixture_artifact(tmp_path)
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    missing_completed_cell = "`docs/todo/Completed/missing.md`"
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                missing_completed_cell,
+            )
+        ],
+    )
+    inventory = paper_manifest.paper_status_claim_inventory_record(tmp_path)
+    assert inventory["rows"][0]["all_todo_evidence_paths_exist"] is False
+    assert inventory["missing_todo_evidence_paths"] == ["docs/todo/Completed/missing.md"]
+    (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "status_claim_inventory_missing_todo_evidence_path" in {
         issue.code for issue in report.issues
     }
 

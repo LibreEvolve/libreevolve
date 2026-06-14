@@ -1438,8 +1438,9 @@ generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
 status inventory with status text hashes, status classes, local artifact
 mentions and existence records, row source lines, TODO evidence paths, and
-status-cell phrase hashes with source offsets plus candidate evidence-link
-lists, but it is not phrase-level semantic proof. The checked
+TODO evidence-path existence records, and status-cell phrase hashes with source
+offsets plus candidate evidence-link lists, but it is not phrase-level semantic
+proof. The checked
 `papers/benchmark_coverage_inventory.json` sidecar records structural
 implemented-benchmark coverage bullet entries with source lines, hashes,
 local-artifact mentions, artifact-existence records, limitation flags, and
@@ -2857,12 +2858,13 @@ Implemented:
 - `papers/status_claim_inventory.json`: row-level paper-index
   implementation-status inventory with one record per status row, status text
   hash, role/status class, manifest-file link, source line, local artifact
-  mentions and existence records, active/completed TODO evidence paths, and
-  status-cell phrase hashes with source offsets plus candidate evidence-link
-  lists. The current inventory records 60 unique referenced local artifact
-  paths and zero missing referenced local artifacts. It is not status-cell
-  phrase-level semantic verification, evidence-link sufficiency proof, or
-  absence-sentence freshness evidence.
+  mentions and existence records, active/completed TODO evidence paths and
+  existence records, and status-cell phrase hashes with source offsets plus
+  candidate evidence-link lists. The current inventory records 60 unique
+  referenced local artifact paths and zero missing referenced local artifacts,
+  plus 6 unique referenced TODO evidence paths and zero missing referenced TODO
+  evidence paths. It is not status-cell phrase-level semantic verification,
+  evidence-link sufficiency proof, or absence-sentence freshness evidence.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit

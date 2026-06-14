@@ -1247,7 +1247,7 @@ Important limits:
   records row-level paper status inventory plus status-cell phrase hashes,
   source offsets, candidate evidence-link lists, and referenced local artifact
   and TODO evidence-path existence checks plus row-specific TODO content
-  artifact-mention records. The checked
+  artifact-mention records plus phrase-local TODO content backing. The checked
   `papers/benchmark_coverage_inventory.json` sidecar now records structural
   implemented-benchmark coverage bullet evidence plus referenced local
   artifact existence checks. This is not an exhaustive
@@ -1260,9 +1260,10 @@ Important limits:
   local artifact paths across status rows and zero missing referenced local
   artifacts, plus 6 unique referenced TODO evidence paths and zero missing
   referenced TODO evidence paths. It also records zero status-row local artifact
-  paths missing from linked row-specific TODO evidence. This is path/content
-  linkage evidence, not proof that each artifact or TODO link is semantically
-  sufficient for the surrounding status phrase.
+  paths and zero status-phrase local artifact paths missing from linked
+  row-specific TODO evidence. This is path/content linkage evidence, not proof
+  that each artifact or TODO link is semantically sufficient for the surrounding
+  status phrase.
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
   SHA-256 digest, normalized author list, subject classes, DOI URL, submitted
   timestamp, TeX-source URL, license URL, and submission-history entry.

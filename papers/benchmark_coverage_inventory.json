@@ -223,8 +223,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1828,
-        "line_end": 1832
+        "line_start": 1829,
+        "line_end": 1833
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/circle_packing"
@@ -254,8 +254,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1832,
-        "line_end": 1839
+        "line_start": 1833,
+        "line_end": 1840
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/matrix_multiplication"
@@ -285,8 +285,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1839,
-        "line_end": 1843
+        "line_start": 1840,
+        "line_end": 1844
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/workspace_math"
@@ -316,8 +316,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1843,
-        "line_end": 1848
+        "line_start": 1844,
+        "line_end": 1849
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/example_scope.py",
@@ -353,8 +353,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1848,
-        "line_end": 2089
+        "line_start": 1849,
+        "line_end": 2090
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/",
@@ -486,8 +486,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2089,
-        "line_end": 2095
+        "line_start": 2090,
+        "line_end": 2096
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/result_certification.py"
@@ -517,8 +517,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2095,
-        "line_end": 2180
+        "line_start": 2096,
+        "line_end": 2181
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/systems_results.py",
@@ -554,8 +554,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2180,
-        "line_end": 2186
+        "line_start": 2181,
+        "line_end": 2187
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/benchmark_hardening.py"
@@ -585,8 +585,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2186,
-        "line_end": 2199
+        "line_start": 2187,
+        "line_end": 2200
       },
       "local_artifact_paths": [
         "libreevolve/core/evaluator.py"
@@ -616,8 +616,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2199,
-        "line_end": 2221
+        "line_start": 2200,
+        "line_end": 2222
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/ablation_results.py"
@@ -647,8 +647,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2221,
-        "line_end": 2233
+        "line_start": 2222,
+        "line_end": 2234
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/ablation_exhibits.py",
@@ -684,8 +684,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2233,
-        "line_end": 2255
+        "line_start": 2234,
+        "line_end": 2256
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/matrix_exhibits.py",
@@ -721,8 +721,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2255,
-        "line_end": 2274
+        "line_start": 2256,
+        "line_end": 2275
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/matrix_exhibits.py",
@@ -758,8 +758,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2274,
-        "line_end": 2288
+        "line_start": 2275,
+        "line_end": 2289
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_artifact_roles.py",
@@ -801,8 +801,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2288,
-        "line_end": 2357
+        "line_start": 2289,
+        "line_end": 2358
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_source_versions.py",
@@ -940,8 +940,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2357,
-        "line_end": 2364
+        "line_start": 2358,
+        "line_end": 2365
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_source_identity.py",
@@ -983,8 +983,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2364,
-        "line_end": 2380
+        "line_start": 2365,
+        "line_end": 2381
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_source_rights.py",
@@ -1038,8 +1038,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2380,
-        "line_end": 2388
+        "line_start": 2381,
+        "line_end": 2389
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_bibliography.py",
@@ -1075,8 +1075,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2388,
-        "line_end": 2409
+        "line_start": 2389,
+        "line_end": 2410
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/companion_sources.py",
@@ -1112,8 +1112,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2409,
-        "line_end": 2429
+        "line_start": 2410,
+        "line_end": 2430
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/follow_on_sources.py",
@@ -1155,8 +1155,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2429,
-        "line_end": 2441
+        "line_start": 2430,
+        "line_end": 2442
       },
       "local_artifact_paths": [
         "papers/follow_on_repository_rights.json"
@@ -1186,8 +1186,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2441,
-        "line_end": 2450
+        "line_start": 2442,
+        "line_end": 2451
       },
       "local_artifact_paths": [
         "papers/follow_on_runtime_absence.json"
@@ -1217,8 +1217,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2450,
-        "line_end": 2457
+        "line_start": 2451,
+        "line_end": 2458
       },
       "local_artifact_paths": [
         "papers/follow_on_tao_blog.json"
@@ -1248,8 +1248,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2457,
-        "line_end": 2467
+        "line_start": 2458,
+        "line_end": 2468
       },
       "local_artifact_paths": [
         "papers/theoretical_cs_sources.json"
@@ -1279,8 +1279,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2467,
-        "line_end": 2473
+        "line_start": 2468,
+        "line_end": 2474
       },
       "local_artifact_paths": [
         "papers/official_deepmind_blog.json"
@@ -1310,8 +1310,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2473,
-        "line_end": 2490
+        "line_start": 2474,
+        "line_end": 2491
       },
       "local_artifact_paths": [
         "papers/alphaevolve_2026_impact_boundary.json"
@@ -1341,8 +1341,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2490,
-        "line_end": 2509
+        "line_start": 2491,
+        "line_end": 2510
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/follow_on_coverage.py"
@@ -1372,8 +1372,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2509,
-        "line_end": 2522
+        "line_start": 2510,
+        "line_end": 2523
       },
       "local_artifact_paths": [
         "libreevolve/llm/budget_report.py",
@@ -1409,8 +1409,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2522,
-        "line_end": 2533
+        "line_start": 2523,
+        "line_end": 2534
       },
       "local_artifact_paths": [
         "papers/llm_budget_policy_boundary.json"
@@ -1440,8 +1440,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2533,
-        "line_end": 2543
+        "line_start": 2534,
+        "line_end": 2544
       },
       "local_artifact_paths": [
         "papers/controller_pending_work_resume_boundary.json"
@@ -1471,8 +1471,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2543,
-        "line_end": 2554
+        "line_start": 2544,
+        "line_end": 2555
       },
       "local_artifact_paths": [
         "papers/lineage_replay_boundary.json"
@@ -1502,8 +1502,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2554,
-        "line_end": 2565
+        "line_start": 2555,
+        "line_end": 2566
       },
       "local_artifact_paths": [
         "papers/runtime_rng_replay_boundary.json"
@@ -1533,8 +1533,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2565,
-        "line_end": 2577
+        "line_start": 2566,
+        "line_end": 2578
       },
       "local_artifact_paths": [
         "papers/validator_execution_boundary.json"
@@ -1564,8 +1564,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2577,
-        "line_end": 2585
+        "line_start": 2578,
+        "line_end": 2586
       },
       "local_artifact_paths": [
         "papers/validator_artifact_promotion_boundary.json"
@@ -1595,8 +1595,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2585,
-        "line_end": 2597
+        "line_start": 2586,
+        "line_end": 2598
       },
       "local_artifact_paths": [
         "papers/llm_role_scheduler_boundary.json"
@@ -1626,8 +1626,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2597,
-        "line_end": 2611
+        "line_start": 2598,
+        "line_end": 2612
       },
       "local_artifact_paths": [
         "papers/fast_strong_model_mix_boundary.json"
@@ -1657,8 +1657,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2611,
-        "line_end": 2617
+        "line_start": 2612,
+        "line_end": 2618
       },
       "local_artifact_paths": [
         "papers/adaptive_mutation_mode_boundary.json"
@@ -1688,8 +1688,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2617,
-        "line_end": 2625
+        "line_start": 2618,
+        "line_end": 2626
       },
       "local_artifact_paths": [
         "papers/mutation_operator_boundary.json"
@@ -1719,8 +1719,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2625,
-        "line_end": 2633
+        "line_start": 2626,
+        "line_end": 2634
       },
       "local_artifact_paths": [
         "libreevolve/llm/cancellation_policy.py"
@@ -1750,8 +1750,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2633,
-        "line_end": 2645
+        "line_start": 2634,
+        "line_end": 2646
       },
       "local_artifact_paths": [
         "papers/provider_cancellation_boundary.json"
@@ -1781,8 +1781,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2645,
-        "line_end": 2657
+        "line_start": 2646,
+        "line_end": 2658
       },
       "local_artifact_paths": [
         "papers/provider_pricing_boundary.json"
@@ -1812,8 +1812,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2657,
-        "line_end": 2668
+        "line_start": 2658,
+        "line_end": 2669
       },
       "local_artifact_paths": [
         "papers/provider_diagnostics_replay_boundary.json"
@@ -1843,8 +1843,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2668,
-        "line_end": 2677
+        "line_start": 2669,
+        "line_end": 2678
       },
       "local_artifact_paths": [
         "papers/llm_stochastic_reproducibility_boundary.json"
@@ -1874,8 +1874,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2677,
-        "line_end": 2684
+        "line_start": 2678,
+        "line_end": 2685
       },
       "local_artifact_paths": [
         "papers/feedback_calibration_boundary.json"
@@ -1905,8 +1905,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2684,
-        "line_end": 2699
+        "line_start": 2685,
+        "line_end": 2700
       },
       "local_artifact_paths": [
         "papers/critique_reviewer_pool_boundary.json"
@@ -1936,8 +1936,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2699,
-        "line_end": 2709
+        "line_start": 2700,
+        "line_end": 2710
       },
       "local_artifact_paths": [
         "papers/gemini_provider_parity_boundary.json"
@@ -1967,8 +1967,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2709,
-        "line_end": 2723
+        "line_start": 2710,
+        "line_end": 2724
       },
       "local_artifact_paths": [
         "papers/prompt_section_packing_boundary.json"
@@ -1998,8 +1998,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2723,
-        "line_end": 2732
+        "line_start": 2724,
+        "line_end": 2733
       },
       "local_artifact_paths": [
         "papers/stochastic_prompt_format_boundary.json"
@@ -2029,8 +2029,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2732,
-        "line_end": 2740
+        "line_start": 2733,
+        "line_end": 2741
       },
       "local_artifact_paths": [
         "papers/systems_result_readiness_boundary.json"
@@ -2060,8 +2060,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2740,
-        "line_end": 2749
+        "line_start": 2741,
+        "line_end": 2750
       },
       "local_artifact_paths": [
         "papers/figure6_scheduling_exhibit_boundary.json"
@@ -2091,8 +2091,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2749,
-        "line_end": 2759
+        "line_start": 2750,
+        "line_end": 2760
       },
       "local_artifact_paths": [
         "papers/figure7_pallas_tiling_exhibit_boundary.json"
@@ -2122,8 +2122,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2759,
-        "line_end": 2769
+        "line_start": 2760,
+        "line_end": 2770
       },
       "local_artifact_paths": [
         "papers/kernel_tiling_shape_corpus_boundary.json"
@@ -2153,8 +2153,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2769,
-        "line_end": 2778
+        "line_start": 2770,
+        "line_end": 2779
       },
       "local_artifact_paths": [
         "papers/pallas_workflow_baseline_boundary.json"
@@ -2184,8 +2184,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2778,
-        "line_end": 2787
+        "line_start": 2779,
+        "line_end": 2788
       },
       "local_artifact_paths": [
         "papers/gemini_self_training_loop_boundary.json"
@@ -2215,8 +2215,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2787,
-        "line_end": 2794
+        "line_start": 2788,
+        "line_end": 2795
       },
       "local_artifact_paths": [
         "papers/hardware_rtl_eda_evidence_boundary.json"
@@ -2246,8 +2246,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2794,
-        "line_end": 2801
+        "line_start": 2795,
+        "line_end": 2802
       },
       "local_artifact_paths": [
         "papers/hardware_rewrite_artifact_boundary.json"
@@ -2277,8 +2277,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2801,
-        "line_end": 2809
+        "line_start": 2802,
+        "line_end": 2810
       },
       "local_artifact_paths": [
         "papers/hardware_contribution_attribution_boundary.json"
@@ -2308,8 +2308,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2809,
-        "line_end": 2816
+        "line_start": 2810,
+        "line_end": 2817
       },
       "local_artifact_paths": [
         "papers/compiler_ir_reference_check_boundary.json"
@@ -2339,8 +2339,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2816,
-        "line_end": 2824
+        "line_start": 2817,
+        "line_end": 2825
       },
       "local_artifact_paths": [
         "papers/compiler_adoption_path_boundary.json"
@@ -2370,8 +2370,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2824,
-        "line_end": 2831
+        "line_start": 2825,
+        "line_end": 2832
       },
       "local_artifact_paths": [
         "papers/compiler_stack_context_boundary.json"
@@ -2401,8 +2401,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2831,
-        "line_end": 2841
+        "line_start": 2832,
+        "line_end": 2842
       },
       "local_artifact_paths": [
         "papers/documentation_truthfulness_boundary.json"
@@ -2432,8 +2432,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2841,
-        "line_end": 2845
+        "line_start": 2842,
+        "line_end": 2846
       },
       "local_artifact_paths": [
         "papers/documentation_claim_inventory.json"
@@ -2463,8 +2463,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2845,
-        "line_end": 2851
+        "line_start": 2846,
+        "line_end": 2852
       },
       "local_artifact_paths": [
         "papers/implementation_evidence_map_boundary.json"
@@ -2494,8 +2494,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2851,
-        "line_end": 2858
+        "line_start": 2852,
+        "line_end": 2859
       },
       "local_artifact_paths": [
         "papers/README.md",
@@ -2527,12 +2527,12 @@
       "coverage_id": "implemented_benchmark_065",
       "bullet_ordinal": 65,
       "summary_sha256": "c67107e9db74d93b2e27d1bfd392474b20a3abf407d91030140a16bf7f873def",
-      "body_sha256": "3d7cb822a549826279aa59775557de982540c0d178759ff1dfb4d8bda1443193",
+      "body_sha256": "9b3cfdf5acddf5efed19a27e76c3fe955b77cbc5beda569169b087ad55f6a766",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2858,
-        "line_end": 2870
+        "line_start": 2859,
+        "line_end": 2872
       },
       "local_artifact_paths": [
         "papers/status_claim_inventory.json"
@@ -2562,8 +2562,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2870,
-        "line_end": 2875
+        "line_start": 2872,
+        "line_end": 2877
       },
       "local_artifact_paths": [
         "papers/arxiv_abstract_snapshot.json"
@@ -2593,8 +2593,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2875,
-        "line_end": 2880
+        "line_start": 2877,
+        "line_end": 2882
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_doi_boundary.json"
@@ -2624,8 +2624,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2880,
-        "line_end": 2885
+        "line_start": 2882,
+        "line_end": 2887
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_full_response_boundary.json"
@@ -2655,8 +2655,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2885,
-        "line_end": 2891
+        "line_start": 2887,
+        "line_end": 2893
       },
       "local_artifact_paths": [
         "papers/alphaevolve_doi_landing_resolution_boundary.json"
@@ -2686,8 +2686,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2891,
-        "line_end": 2896
+        "line_start": 2893,
+        "line_end": 2898
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_source_boundary.json"
@@ -2717,8 +2717,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2896,
-        "line_end": 2902
+        "line_start": 2898,
+        "line_end": 2904
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_archive_retention_boundary.json",
@@ -2754,8 +2754,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2902,
-        "line_end": 2909
+        "line_start": 2904,
+        "line_end": 2911
       },
       "local_artifact_paths": [
         "papers/alphaevolve_current_version_boundary.json"
@@ -2785,8 +2785,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2909,
-        "line_end": 2914
+        "line_start": 2911,
+        "line_end": 2916
       },
       "local_artifact_paths": [
         "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
@@ -2816,8 +2816,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2914,
-        "line_end": 2919
+        "line_start": 2916,
+        "line_end": 2921
       },
       "local_artifact_paths": [
         "papers/alphaevolve_metadata_extraction_script_boundary.json"
@@ -2847,8 +2847,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2919,
-        "line_end": 2926
+        "line_start": 2921,
+        "line_end": 2928
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_gate_boundary.json"
@@ -2878,8 +2878,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2926,
-        "line_end": 2930
+        "line_start": 2928,
+        "line_end": 2932
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_run_2026-06-14.json"
@@ -2909,8 +2909,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2930,
-        "line_end": 2935
+        "line_start": 2932,
+        "line_end": 2937
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_promotion_boundary.json"
@@ -2940,8 +2940,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2935,
-        "line_end": 2941
+        "line_start": 2937,
+        "line_end": 2943
       },
       "local_artifact_paths": [
         "papers/alphaevolve_raw_http_headers_boundary.json"
@@ -2971,8 +2971,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2941,
-        "line_end": 2947
+        "line_start": 2943,
+        "line_end": 2949
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_boundary.json"
@@ -3002,8 +3002,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2947,
-        "line_end": 2951
+        "line_start": 2949,
+        "line_end": 2953
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_html_retention_boundary.json"
@@ -3033,8 +3033,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2951,
-        "line_end": 2955
+        "line_start": 2953,
+        "line_end": 2957
       },
       "local_artifact_paths": [
         "papers/candidate_abstraction_bias_matrix.json"
@@ -3064,8 +3064,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2955,
-        "line_end": 2959
+        "line_start": 2957,
+        "line_end": 2961
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting"
@@ -3095,8 +3095,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2959,
-        "line_end": 2969
+        "line_start": 2961,
+        "line_end": 2971
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting_network_8",

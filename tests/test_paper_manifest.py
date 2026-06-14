@@ -11359,6 +11359,11 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         inventory["todo_content_evidence_status"]
         == "all_row_local_artifacts_mentioned_in_todo_evidence"
     )
+    assert inventory["phrase_local_artifacts_missing_from_todo_evidence"] == []
+    assert (
+        inventory["phrase_todo_content_evidence_status"]
+        == "all_phrase_local_artifacts_mentioned_in_todo_evidence"
+    )
     assert inventory["rows"][0]["source_span_status"] == "phrase_offsets_recorded_in_status_cell"
     assert inventory["rows"][0]["status_claims"][0]["source_span"]["line_start"] > 0
     assert (
@@ -11366,6 +11371,12 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         == "candidate_links_recorded_without_semantic_verification"
     )
     assert "row_active_todo_paths" in inventory["rows"][0]["status_claims"][0]["evidence_links"]
+    assert (
+        inventory["rows"][0]["status_claims"][0]["evidence_links"][
+            "phrase_todo_content_evidence_status"
+        ]
+        == "all_phrase_local_artifacts_mentioned_in_todo_evidence"
+    )
     assert inventory["rows"][0]["status_claims"][0]["semantic_status"] == "not_verified"
     (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
         json.dumps(inventory, indent=2),
@@ -11514,6 +11525,46 @@ def test_validate_paper_manifest_rejects_status_claim_artifact_missing_from_todo
 
     assert report.ok is False
     assert "status_claim_inventory_local_artifact_missing_from_todo_evidence" in {
+        issue.code for issue in report.issues
+    }
+
+
+def test_validate_paper_manifest_rejects_status_phrase_artifact_missing_from_todo_evidence(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_status_fixture_artifact(tmp_path)
+    _write_active_todo_ledgers(tmp_path, row["id"], paths={"docs/todo/code.md"})
+    code_todo = tmp_path / "docs" / "todo" / "code.md"
+    code_todo.write_text(
+        f"- [ ] Track source-specific gap for `{row['id']}`.\n"
+        "  - Current gap: temporary test ledger entry without a cited artifact.\n"
+        "  - Required result: keep this fixture source-specific.\n",
+        encoding="utf-8",
+    )
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell("docs/todo/code.md"),
+                "",
+            )
+        ],
+    )
+    inventory = paper_manifest.paper_status_claim_inventory_record(tmp_path)
+    assert inventory["phrase_local_artifacts_missing_from_todo_evidence"] == [
+        "libreevolve/core/loop.py"
+    ]
+    (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "status_claim_inventory_phrase_local_artifact_missing_from_todo_evidence" in {
         issue.code for issue in report.issues
     }
 

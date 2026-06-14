@@ -146,6 +146,8 @@
   "todo_evidence_status": "all_referenced_todo_paths_present",
   "local_artifacts_missing_from_todo_evidence": [],
   "todo_content_evidence_status": "all_row_local_artifacts_mentioned_in_todo_evidence",
+  "phrase_local_artifacts_missing_from_todo_evidence": [],
+  "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence",
   "missing_evidence": {
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -394,7 +396,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "libreevolve/core/loop.py"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -464,7 +471,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -534,7 +544,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -604,7 +617,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -841,7 +857,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -906,7 +925,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -985,7 +1007,13 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+              "papers/follow_on_sources.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -1259,7 +1287,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "libreevolve/population/map_elites.py"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -1330,7 +1363,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -1409,7 +1445,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/map_elites_illumination_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -1480,7 +1521,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -1754,7 +1798,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "libreevolve/llm/ensemble.py"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -1825,7 +1874,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -1904,7 +1956,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/ucb1_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -2151,7 +2208,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -2221,7 +2281,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -2299,7 +2362,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/gigaevo_framework_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -2546,7 +2614,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -2624,7 +2695,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/codeevolve_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -2898,7 +2974,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "libreevolve/plugins/ttt_rl.py"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -2969,7 +3050,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3040,7 +3124,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3111,7 +3198,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3190,7 +3280,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/thetaevolve_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3464,7 +3559,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "libreevolve/plugins/modular.py"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3535,7 +3635,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3614,7 +3717,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/improvevolve_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3861,7 +3969,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -3931,7 +4042,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4009,7 +4123,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/madevolve_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4283,7 +4402,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "libreevolve/plugins/causal.py"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4354,7 +4478,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4425,7 +4552,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4504,7 +4634,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/causalevolve_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4778,7 +4913,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "libreevolve/plugins/deep_research.py"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4849,7 +4989,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4920,7 +5063,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -4999,7 +5145,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/deepevolve_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -5246,7 +5397,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -5316,7 +5470,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -5394,7 +5551,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/magellan_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -5615,7 +5777,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -5687,7 +5852,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.14718__FHE_on_TPU.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -5908,7 +6078,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -5980,7 +6153,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -6201,7 +6379,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -6273,7 +6454,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.01794__Radar_Power_Allocation.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -6494,7 +6680,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -6566,7 +6755,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2602.23413__EvoX.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -6787,7 +6981,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -6859,7 +7056,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2602.02919__DeltaEvolve.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -7080,7 +7282,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -7152,7 +7357,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2606.06473__MLEvolve.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -7373,7 +7583,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -7445,7 +7658,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.09764__LEVI.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -7666,7 +7884,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -7738,7 +7959,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2601.10657__PACEvolve.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -7959,7 +8185,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8031,7 +8260,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.08520__FlashEvolve.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8252,7 +8486,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8324,7 +8561,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8545,7 +8787,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8609,7 +8854,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8681,7 +8929,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8902,7 +9155,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -8974,7 +9230,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2604.01658__CORAL.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -9195,7 +9456,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -9267,7 +9531,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.13821__AEvo.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -9488,7 +9757,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -9560,7 +9832,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.09959__G_Zero.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -9781,7 +10058,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -9853,7 +10133,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.21605__GenEvolve.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -10074,7 +10359,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -10146,7 +10434,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.29847__EvoRubric.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -10367,7 +10660,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -10439,7 +10735,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.29293__LLM_ALSO.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -10660,7 +10961,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -10732,7 +11036,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2512.18746__MemEvolve.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -10953,7 +11262,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -11025,7 +11337,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -11246,7 +11563,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -11318,7 +11638,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.27276__SIA.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -11539,7 +11864,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -11611,7 +11939,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2606.06324__HarnessFix.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -11832,7 +12165,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -11904,7 +12240,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2606.05922__RHO.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -12125,7 +12466,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -12197,7 +12541,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -12418,7 +12767,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -12490,7 +12842,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2604.25850__AHE.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -12711,7 +13068,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -12783,7 +13143,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.13357__AI_Harness_Engineering.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13004,7 +13369,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13076,7 +13444,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13297,7 +13670,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13369,7 +13745,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2606.01770__Adaptive_Auto_Harness.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13590,7 +13971,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13662,7 +14046,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/2603.28052__Meta_Harness.pdf"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13909,7 +14298,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -13979,7 +14371,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14057,7 +14452,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/archagent_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14304,7 +14704,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14374,7 +14777,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14452,7 +14858,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/multiagent_learning_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14699,7 +15110,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14769,7 +15183,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14839,7 +15256,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -14917,7 +15337,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/ramsey_numbers_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -15164,7 +15589,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -15242,7 +15670,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/theoretical_cs_sources.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -15489,7 +15922,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -15559,7 +15995,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -15629,7 +16068,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -15707,7 +16149,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/combinatorics_berczy_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -15954,7 +16401,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16024,7 +16474,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16102,7 +16555,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/ttt_discover_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16349,7 +16807,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16419,7 +16880,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16497,7 +16961,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/bilateral_trade_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16744,7 +17213,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16814,7 +17286,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16884,7 +17359,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -16962,7 +17440,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/bruhat_intervals_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -17209,7 +17692,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -17279,7 +17765,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -17357,7 +17846,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/fault2flow_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -17604,7 +18098,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -17674,7 +18171,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -17744,7 +18244,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -17822,7 +18325,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/global_nlp_optimization_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18069,7 +18577,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18139,7 +18650,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18209,7 +18723,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18287,7 +18804,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/autoconvolution_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18534,7 +19056,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18604,7 +19129,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18674,7 +19202,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18752,7 +19283,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/sums_differences_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -18999,7 +19535,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -19069,7 +19608,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -19139,7 +19681,10 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -19217,7 +19762,12 @@
                 "exists": true,
                 "kind": "file"
               }
-            ]
+            ],
+            "phrase_local_artifacts_mentioned_in_todo_evidence": [
+              "papers/sums_differences_sequence_boundary.json"
+            ],
+            "phrase_local_artifacts_missing_from_todo_evidence": [],
+            "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
@@ -19231,5 +19781,5 @@
       "freshness_status": "structural_only"
     }
   ],
-  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mentions and existence records, row source line, TODO evidence paths and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row-specific TODO content artifact-mention records. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
+  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mentions and existence records, row source line, TODO evidence paths and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention records. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
 }

@@ -1544,6 +1544,8 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             completed_paths,
             active_todo_records,
             completed_todo_records,
+            active_todo_content_records,
+            completed_todo_content_records,
             row_local_artifact_paths,
         )
         inventory_rows.append(
@@ -1633,6 +1635,14 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             for path in row["local_artifacts_missing_from_todo_evidence"]
         }
     )
+    phrase_local_artifacts_missing_from_todo = sorted(
+        {
+            path
+            for row in inventory_rows
+            for claim in row["status_claims"]
+            for path in claim["evidence_links"]["phrase_local_artifacts_missing_from_todo_evidence"]
+        }
+    )
     return {
         "schema": STATUS_CLAIM_INVENTORY_SCHEMA,
         "inventory_status": STATUS_CLAIM_INVENTORY_STATUS,
@@ -1669,6 +1679,14 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             if local_artifacts_missing_from_todo
             else "no_row_local_artifacts_referenced"
         ),
+        "phrase_local_artifacts_missing_from_todo_evidence": phrase_local_artifacts_missing_from_todo,
+        "phrase_todo_content_evidence_status": (
+            "all_phrase_local_artifacts_mentioned_in_todo_evidence"
+            if unique_local_artifacts and not phrase_local_artifacts_missing_from_todo
+            else "missing_phrase_local_artifact_mentions_in_todo_evidence"
+            if phrase_local_artifacts_missing_from_todo
+            else "no_phrase_local_artifacts_referenced"
+        ),
         "missing_evidence": dict(STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE),
         "rows": inventory_rows,
         "claim_boundary": (
@@ -1678,8 +1696,8 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "artifact mentions and existence records, row source line, TODO "
             "evidence paths and existence records, and status-cell phrase "
             "hashes with character offsets and candidate evidence links plus "
-            "row-specific TODO content artifact-mention records. It does not "
-            "claim phrase-level status verification, evidence-link sufficiency, "
+            "row/phrase-specific TODO content artifact-mention records. It "
+            "does not claim phrase-level status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
             "complete."
@@ -3752,6 +3770,11 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
             "status claim inventory TODO content local artifact mentions drifted",
         ),
         ("todo_content_evidence_status", "status claim inventory TODO content status drifted"),
+        (
+            "phrase_local_artifacts_missing_from_todo_evidence",
+            "status claim inventory phrase TODO content local artifact mentions drifted",
+        ),
+        ("phrase_todo_content_evidence_status", "status claim inventory phrase TODO content status drifted"),
         ("missing_evidence", "status claim inventory missing-evidence boundary drifted"),
         ("claim_boundary", "status claim inventory claim boundary drifted"),
         ("rows", "status claim inventory rows drifted from papers/README.md"),
@@ -3786,6 +3809,14 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
             PaperManifestIssue(
                 "status_claim_inventory_local_artifact_missing_from_todo_evidence",
                 "implementation-status local artifact path is not mentioned in row-specific TODO evidence",
+                _safe_manifest_label(str(missing_path)),
+            )
+        )
+    for missing_path in expected["phrase_local_artifacts_missing_from_todo_evidence"]:
+        issues.append(
+            PaperManifestIssue(
+                "status_claim_inventory_phrase_local_artifact_missing_from_todo_evidence",
+                "implementation-status phrase local artifact path is not mentioned in row-specific TODO evidence",
                 _safe_manifest_label(str(missing_path)),
             )
         )
@@ -8545,9 +8576,12 @@ def _status_claim_inventory_phrases(
     completed_paths: list[str],
     active_todo_records: list[dict[str, Any]],
     completed_todo_records: list[dict[str, Any]],
+    active_todo_content_records: list[dict[str, Any]],
+    completed_todo_content_records: list[dict[str, Any]],
     row_local_artifact_paths: list[str],
 ) -> list[dict[str, Any]]:
     phrases: list[dict[str, Any]] = []
+    todo_content_records = [*active_todo_content_records, *completed_todo_content_records]
     for ordinal, (start, end) in enumerate(_status_claim_phrase_spans(status_text), start=1):
         phrase = status_text[start:end]
         phrase_local_artifact_paths = sorted(_status_local_artifact_paths(phrase))
@@ -8555,6 +8589,17 @@ def _status_claim_inventory_phrases(
         phrase_missing_local_artifacts = [
             record["path"] for record in phrase_local_artifact_records if not record["exists"]
         ]
+        phrase_artifacts_mentioned_in_todo = sorted(
+            {
+                artifact
+                for record in todo_content_records
+                for artifact in record["mentioned_local_artifact_paths"]
+                if artifact in phrase_local_artifact_paths
+            }
+        )
+        phrase_artifacts_missing_from_todo = sorted(
+            set(phrase_local_artifact_paths) - set(phrase_artifacts_mentioned_in_todo)
+        )
         phrases.append(
             {
                 "claim_id": f"{row_id}:status_phrase_{ordinal:03d}",
@@ -8586,6 +8631,15 @@ def _status_claim_inventory_phrases(
                     "row_completed_todo_paths": completed_paths,
                     "row_active_todo_records": active_todo_records,
                     "row_completed_todo_records": completed_todo_records,
+                    "phrase_local_artifacts_mentioned_in_todo_evidence": phrase_artifacts_mentioned_in_todo,
+                    "phrase_local_artifacts_missing_from_todo_evidence": phrase_artifacts_missing_from_todo,
+                    "phrase_todo_content_evidence_status": (
+                        "all_phrase_local_artifacts_mentioned_in_todo_evidence"
+                        if phrase_local_artifact_paths and not phrase_artifacts_missing_from_todo
+                        else "missing_phrase_local_artifact_mentions_in_todo_evidence"
+                        if phrase_artifacts_missing_from_todo
+                        else "no_phrase_local_artifacts_referenced"
+                    ),
                 },
                 "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
                 "semantic_status": "not_verified",

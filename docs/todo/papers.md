@@ -6168,6 +6168,47 @@ directory and using the AlphaEvolve paper as the primary specification.
     that treats HarnessBridge-style learned harness mediation as missing paper
     evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce TRACE correction-to-enforcement evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.13174`, submitted June 11, 2026, is
+    titled `Getting Better at Working With You: Compiling User Corrections
+    into Runtime Enforcement for Coding Agents`. Its abstract defines the
+    gap between preference access and preference compliance: an agent may
+    retrieve a remembered correction but still violate it. TRACE, Test-time
+    Rule Acquisition and Compiled Enforcement, is presented as a drop-in
+    skill-layer pipeline that mines user chat corrections, rewrites them as
+    atomic rules, and compiles them into runtime checks that must pass before
+    future tasks complete. The paper reports that Mem0 memory still leaves
+    `57.5%` of applicable preference checks violated, while TRACE reduces
+    held-out ClawArena preference violations from `100.0%` to `37.6%`
+    in-distribution and to `2.0%` out-of-distribution, and reduces
+    MemoryArena-derived in-distribution violations from `100.0%` to `60.5%`
+    while matching or exceeding the strongest memory baseline on task pass.
+    The arXiv page links experiment code at
+    `https://github.com/YujunZhou/TRACE_exp` and a deployable skill at
+    `https://github.com/YujunZhou/tellonce`.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.13174`. Existing LibreEvolve failure-memory,
+    collaborator-feedback, qualitative-feedback, and harness TODOs do not
+    capture correction extraction from user chat, atomic rule rewriting,
+    rule-library conflict resolution, compiled completion-time runtime checks,
+    preference access-versus-compliance diagnostics, ClawArena/MemoryArena
+    violation metrics, or deployable skill-layer enforcement.
+  - Required result: add reproduction-grade evidence for `2606.13174`:
+    title/authors/arXiv version/date, source license, linked-code and
+    deployable-skill availability, relation to AlphaEvolve, LibreEvolve
+    failure memory, prompt-history feedback, and runtime harness assumptions,
+    correction-mining schema, atomic-rule representation, applicability and
+    conflict-resolution policy, completion-gate runtime-check contract,
+    rule-library persistence and versioning records, privacy/redaction policy
+    for user corrections, ClawArena and MemoryArena-derived task metadata,
+    preference-access and preference-compliance metrics, violation-rate
+    tables, Mem0/Hindsight/ReMe/no-memory baseline identities, latency and
+    task-pass tradeoff records, independent verification outputs, and
+    README/ROADMAP wording that treats TRACE-style compiled user-correction
+    enforcement as missing paper evidence rather than implemented LibreEvolve
+    support.
+
 - [ ] Reproduce inference-time trajectory-alignment harness evidence beyond
       paper coverage.
   - Paper/source evidence: arXiv `2605.21516`, submitted May 15, 2026, is

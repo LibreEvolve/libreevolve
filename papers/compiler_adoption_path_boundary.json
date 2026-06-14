@@ -1,0 +1,47 @@
+{
+  "schema": "libreevolve.compiler_adoption_path_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "3.3.4"
+  ],
+  "source_claim": "AlphaEvolve Section 3.3.4 says discovered compiler optimizations may be incorporated into existing compilers for specific use cases, while incorporating AlphaEvolve into the compiler workflow itself is a longer-term adoption path.",
+  "boundary_status": "metadata_contract_without_real_compiler_adoption_artifacts",
+  "systems_result_schema": "libreevolve.systems_result_report.v1",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "systems_result_compiler_domain_gate",
+    "compiler_adoption_provenance_metadata_contract",
+    "compiler_ir_reference_check_prerequisite_boundary",
+    "compiler_stack_context_prerequisite_boundary",
+    "adoption_path_classification",
+    "target_compiler_version_pass_record",
+    "bounded_use_case_scope_record",
+    "optimization_artifact_identity_and_hash",
+    "compiler_patch_or_pass_artifact",
+    "use_case_integration_record",
+    "integration_owner_record",
+    "reviewer_signoff_file",
+    "adoption_state_record",
+    "rollout_or_revert_log",
+    "workflow_handoff_artifact",
+    "concrete_existing_compiler_adoption_evidence",
+    "alphaevolve_in_compiler_workflow_evidence",
+    "adoption_artifact_refs"
+  ],
+  "missing_evidence": {
+    "target_compiler_version_pass_record": "not_recorded_locally",
+    "bounded_use_case_scope_record": "not_recorded_locally",
+    "optimization_artifact_identity_and_hash": "not_recorded_locally",
+    "compiler_patch_or_pass_artifact": "not_recorded_locally",
+    "use_case_integration_record": "not_recorded_locally",
+    "integration_owner_record": "not_recorded_locally",
+    "reviewer_signoff_file": "not_recorded_locally",
+    "adoption_state_record": "not_recorded_locally",
+    "rollout_or_revert_log": "not_recorded_locally",
+    "workflow_handoff_artifact": "not_recorded_locally",
+    "concrete_existing_compiler_adoption_evidence": "not_recorded_locally",
+    "alphaevolve_in_compiler_workflow_evidence": "not_recorded_locally",
+    "adoption_artifact_refs": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve can validate compiler_adoption_provenance metadata for adoption-path classification, target compiler/version/pass, bounded use-case scope, optimization artifact identity and hash, integration owner, reviewer scope, adoption state, rollout/revert state, workflow handoff boundary, and artifact refs. It does not claim real compiler patch or pass artifacts, use-case integration records, integration-owner records, reviewer signoff files, deployment or rollback logs, workflow-handoff artifacts, concrete existing-compiler adoption evidence, AlphaEvolve-in-compiler-workflow integration evidence, or complete adoption artifact refs."
+}

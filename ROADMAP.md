@@ -2162,6 +2162,11 @@ resumed-trace proof are still open.
   FlashAttention/Pallas/JAX/XLA stack boundary, so compiler-stack metadata
   cannot stand in for workload/model records, Pallas source, JAX wrappers,
   XLA stage outputs, hardware-target records, lowered IR, or decision evidence.
+  `papers/compiler_adoption_path_boundary.json` preserves the adoption-path
+  boundary, so compiler-adoption metadata cannot stand in for compiler
+  patch/pass artifacts, use-case integration records, reviewer signoff files,
+  rollout/revert logs, workflow-handoff artifacts, or AlphaEvolve-in-compiler
+  workflow integration evidence.
   Ready hardware reports now require
   `hardware_rtl_eda_provenance` with HDL/RTL source boundaries, synthesis/PPA
   provenance, timing/power/area constraints, equivalence/formal verification,

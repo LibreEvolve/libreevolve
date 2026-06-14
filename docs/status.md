@@ -1161,7 +1161,9 @@ Important limits:
   identity/hash, integration owner, reviewer scope, adoption state,
   rollout/revert state, workflow-handoff boundary, and artifact refs, not real
   compiler patch/pass artifacts, use-case integration records, reviewer signoff
-  files, deployment or rollback logs, or AlphaEvolve-in-compiler-loop evidence.
+  files, deployment or rollback logs, or AlphaEvolve-in-compiler-loop evidence;
+  that adoption-path boundary is tracked by
+  `papers/compiler_adoption_path_boundary.json`.
 - Self-improvement and distillation claims remain absent: README does not yet
   identify LibreEvolve runtime/provider/evaluator/compiler/benchmark components
   as evolved optimization targets, link evolved candidates to measured

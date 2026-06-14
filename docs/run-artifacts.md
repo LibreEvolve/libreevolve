@@ -2415,7 +2415,9 @@ surrounding FlashAttention/Pallas/JAX/XLA context: workload/model
 configuration, FlashAttention and Pallas kernel identity, JAX pre/postprocessing
 boundaries, XLA lowering stage, hardware target, lowered-IR hash, optimization
 decision category, and artifact refs. This records report metadata; it does
-not create the real lowered-IR artifacts or randomized reference checks.
+not create the real lowered-IR artifacts or randomized reference checks. The
+paper-facing metadata-versus-artifact boundary is tracked in
+`papers/compiler_stack_context_boundary.json`.
 Ready compiler reports also require `compiler_adoption_provenance`, covering
 whether the discovered optimization is scoped as adoption into an existing
 compiler for a specific use case or as longer-term AlphaEvolve-in-the-compiler
@@ -2423,7 +2425,9 @@ workflow integration. The record includes target compiler/version/pass,
 use-case scope, optimization artifact identity/hash, integration owner,
 reviewer signoff, adoption and rollout/revert state, workflow handoff boundary,
 and artifact refs. This records the integration-path boundary; it does not
-implement, deploy, or prove the compiler integration.
+implement, deploy, or prove the compiler integration. The paper-facing
+metadata-versus-integration-artifact boundary is tracked in
+`papers/compiler_adoption_path_boundary.json`.
 Ready hardware reports require `hardware_rtl_eda_provenance`, covering
 AlphaEvolve-style TPU RTL evidence: HDL language and RTL source boundary,
 arithmetic-circuit identity, synthesis toolchain, PPA metric provenance,

@@ -4820,6 +4820,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     compiler/pass/version, use-case boundary, optimization artifact hash,
     integration owner, reviewer signoff, rollout/revert state, workflow handoff,
     and artifact refs.
+    `papers/compiler_adoption_path_boundary.json` now keeps this as a
+    paper-facing adoption-metadata versus integration-artifact boundary.
   - Required result: add real paper/report artifacts for compiler adoption
     paths: compiler patch or pass artifacts, workload/use-case integration
     records, integration-review files, deployment or rollback logs, and

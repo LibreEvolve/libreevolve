@@ -2662,6 +2662,14 @@ Implemented:
   edit sequences, per-edit reference-check outputs, randomized input coverage,
   tolerance/failure-policy artifacts, kernel/pre/postprocessing attribution,
   final expert all-input confirmation, or expert/owner signoff files.
+- `papers/compiler_adoption_path_boundary.json`: compiler-adoption path
+  sidecar for AlphaEvolve Section 3.3.4. It records that
+  `compiler_adoption_provenance` metadata is not evidence of compiler patch or
+  pass artifacts, bounded use-case integration records, integration-owner
+  records, reviewer signoff files, adoption-state records, deployment or
+  rollback logs, workflow-handoff artifacts, concrete existing-compiler
+  adoption evidence, AlphaEvolve-in-compiler-workflow integration evidence, or
+  complete adoption artifact refs.
 - `papers/compiler_stack_context_boundary.json`: FlashAttention compiler-stack
   context sidecar for AlphaEvolve Section 3.3.4. It records that
   `compiler_stack_provenance` metadata is not evidence of workload/model

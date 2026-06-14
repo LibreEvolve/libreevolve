@@ -4460,6 +4460,8 @@ sidecars, tests, and active TODOs.
     use-case scope, optimization artifact identity/hash, integration owner,
     reviewer signoff scope, adoption state, rollout/revert state, workflow
     handoff boundary, and artifact refs.
+    `papers/compiler_adoption_path_boundary.json` now keeps this metadata
+    separate from real compiler integration and workflow-adoption artifacts.
   - Required result: connect compiler fixtures to real adoption/integration
     evidence: compiler patch or pass artifacts, use-case-specific integration
     records, reviewer signoff files, rollout/revert logs, and workflow handoff

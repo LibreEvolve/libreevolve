@@ -6108,6 +6108,45 @@ directory and using the AlphaEvolve paper as the primary specification.
     control-policy evolution as missing autonomous-systems benchmark evidence
     rather than implemented LibreEvolve support.
 
+- [ ] Reproduce AutoICE verifiable C-code evolution evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2512.07501`, submitted December 8, 2025, is
+    titled `AutoICE: Automatically Synthesizing Verifiable C Code via
+    LLM-driven Evolution`. Its abstract says verifiable-code synthesis from
+    natural-language requirements can lower the barrier to formal methods, but
+    existing approaches suffer from syntactic/semantic errors and often miss
+    implicit knowledge. AutoICE is described as an LLM-driven evolutionary
+    search system for synthesizing verifiable C code. It introduces diverse
+    individual initialization and collaborative crossover to support diverse
+    iterative updates and reduce single-agent error propagation, plus
+    self-reflective mutation to discover implicit knowledge. The paper reports
+    90.36% verification success, and 88.33% verification success on a
+    developer-friendly dataset variant versus a 65% SOTA baseline.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2512.07501`. Existing LibreEvolve AlphaEvolve, FunSearch,
+    CodeEvolve, EvoControl, benchmark-hardening, evaluator-contract,
+    systems-verification, and formal-verification-adjacent TODOs do not
+    reproduce natural-language-to-verifiable-C problem schemas, logical
+    verifier integration, candidate C population records, diverse individual
+    initialization, collaborative crossover, self-reflective mutation, implicit
+    knowledge discovery traces, syntax/semantic error propagation diagnostics,
+    verification-success metrics, developer-friendly dataset variants, or
+    SOTA verifiable-code synthesis baselines.
+  - Required result: add reproduction-grade evidence for `2512.07501`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, FunSearch, CodeEvolve, EvoControl,
+    AutoICE, and LibreEvolve, natural-language requirement schema,
+    verifiable-C candidate interface, verifier toolchain identity, logical
+    specification format, candidate-population and generation telemetry,
+    diverse-initialization records, collaborative-crossover prompts and
+    outputs, self-reflective mutation prompts and outputs, implicit-knowledge
+    evidence, syntax/semantic error diagnostics, verification result logs,
+    benchmark and developer-friendly dataset metadata, SOTA baseline identities,
+    90.36% and 88.33% verification-success reproduction tables, failure-case
+    taxonomy, independent verification outputs, and README/ROADMAP wording that
+    treats AutoICE-style verifier-integrated C-code evolution as missing
+    formal-methods evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

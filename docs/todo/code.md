@@ -7831,3 +7831,36 @@ sidecars, tests, and active TODOs.
     `0.9853` gadget baseline to `0.9649`, `117/116` to `111/110`), and
     README/ROADMAP wording that keeps LibreEvolve's generic evaluator validation
     separate from AlphaEvolve-discovered complexity-theory proof elements.
+
+- [ ] Add benchmark provider-profile provenance and local-experiment hygiene.
+  - Spec evidence: AlphaEvolve-style benchmark claims depend on the exact
+    problem, evaluator, model/backend, budget, prompt policy, and run profile
+    being reproducible from committed evidence. A local model adapter or
+    benchmark `config.yaml` that exists only in a developer worktree can be
+    useful for experiments, but it cannot be treated as project-supported
+    benchmark evidence until its provider lane, run profile, and artifacts are
+    committed, scoped, and validated.
+  - Current evidence: the current worktree contains local-only experimental
+    Codex CLI backend/profile files under `libreevolve/llm/` and
+    `libreevolve/problems/examples/sorting_network_9/`, while the tracked
+    repository still exposes only the generic custom-backend extension point
+    plus active TODOs for a first-class subprocess/CLI backend contract and
+    README/backend-doc guardrails. Existing benchmark and paper-boundary
+    sidecars track sorting-network fixture scope and repeated-run evidence
+    gaps, but they do not classify untracked local provider profiles as
+    excluded evidence or require a committed profile before a benchmark run is
+    cited.
+  - Current gap: there is no benchmark-run profile schema, local-experiment
+    hygiene check, or CI/report gate that detects provider adapters or problem
+    configs under source/example paths that are untracked, maps each runnable
+    benchmark profile to an explicit provider lane and support status, records
+    safe model/auth provenance, budget limits, transcript retention policy,
+    and expected artifact outputs, or blocks README/ROADMAP/paper claims from
+    citing local-only provider profiles.
+  - Required result: add committed benchmark provider-profile records plus a
+    validation gate that distinguishes supported, experimental, and
+    local-only provider profiles; checks tracked source/config status,
+    provider-lane readiness, model/budget/provenance fields, transcript and
+    redaction policies, and run-artifact expectations; and requires TODO/docs
+    updates whenever benchmark profiles, local CLI adapters, or cited run
+    evidence change.

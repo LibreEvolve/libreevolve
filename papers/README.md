@@ -2655,6 +2655,13 @@ Implemented:
   integration milestone confirmation, hardware signoff files, synthesis
   rediscovery audit artifacts, mediation confirmations, or complete artifact
   refs.
+- `papers/compiler_ir_reference_check_boundary.json`: compiler-generated IR
+  reference-check sidecar for AlphaEvolve Section 3.3.4. It records that
+  `compiler_ir_provenance` metadata is not evidence of real reference
+  implementation artifacts, randomized input-generator artifacts, candidate
+  edit sequences, per-edit reference-check outputs, randomized input coverage,
+  tolerance/failure-policy artifacts, kernel/pre/postprocessing attribution,
+  final expert all-input confirmation, or expert/owner signoff files.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

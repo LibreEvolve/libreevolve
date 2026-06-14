@@ -1,0 +1,43 @@
+{
+  "schema": "libreevolve.compiler_ir_reference_check_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "3.3.4"
+  ],
+  "source_claim": "AlphaEvolve Section 3.3.4 says it optimized XLA-generated IR for FlashAttention and surrounding input/output processing; each modification was checked against unmodified reference code on randomized inputs, and the final version was confirmed by human experts for all possible inputs.",
+  "boundary_status": "metadata_contract_without_real_ir_reference_check_artifacts",
+  "systems_result_schema": "libreevolve.systems_result_report.v1",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "systems_result_compiler_domain_gate",
+    "reference_correctness_gate",
+    "compiler_ir_provenance_metadata_contract",
+    "ir_origin_and_editability_boundary",
+    "compiler_generated_baseline_provenance",
+    "reference_implementation_artifact",
+    "randomized_input_generator_artifact",
+    "candidate_edit_sequence_artifact",
+    "per_edit_reference_check_outputs",
+    "randomized_input_seed_and_coverage_records",
+    "numerical_tolerance_policy_artifact",
+    "failure_policy_or_rollback_records",
+    "kernel_pre_postprocessing_attribution",
+    "edit_artifact_refs",
+    "final_expert_all_input_confirmation",
+    "expert_or_owner_signoff_file"
+  ],
+  "missing_evidence": {
+    "reference_implementation_artifact": "not_recorded_locally",
+    "randomized_input_generator_artifact": "not_recorded_locally",
+    "candidate_edit_sequence_artifact": "not_recorded_locally",
+    "per_edit_reference_check_outputs": "not_recorded_locally",
+    "randomized_input_seed_and_coverage_records": "not_recorded_locally",
+    "numerical_tolerance_policy_artifact": "not_recorded_locally",
+    "failure_policy_or_rollback_records": "not_recorded_locally",
+    "kernel_pre_postprocessing_attribution": "not_recorded_locally",
+    "edit_artifact_refs": "not_recorded_locally",
+    "final_expert_all_input_confirmation": "not_recorded_locally",
+    "expert_or_owner_signoff_file": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve can validate a compiler domain gate, a final reference-correctness gate, and compiler_ir_provenance metadata for IR origin, editability, baseline provenance, reference hashes, randomized input-generator hashes, tolerance policy, final-expert scope, per-edit reference check metadata, and artifact refs. It does not claim real reference implementation artifacts, randomized input-generator artifacts, candidate edit sequence artifacts, per-edit reference check outputs, randomized input seed or coverage records, tolerance/failure-policy artifacts, kernel/pre/postprocessing attribution artifacts, edit artifact refs, final expert all-input confirmation files, or expert/owner signoff files."
+}

@@ -2152,7 +2152,13 @@ resumed-trace proof are still open.
   bounded-use-case adoption versus AlphaEvolve-in-the-compiler-workflow
   integration, with target compiler/pass, optimization artifact hash,
   integration owner, reviewer scope, rollout/revert state, workflow handoff,
-  and artifact refs. Ready hardware reports now require
+  and artifact refs.
+  `papers/compiler_ir_reference_check_boundary.json` now preserves the
+  compiler-IR metadata-versus-artifact boundary, so per-edit reference-check
+  metadata cannot stand in for candidate edit sequences, randomized input
+  coverage, reference-check outputs, tolerance/failure logs, or expert
+  all-input signoff files.
+  Ready hardware reports now require
   `hardware_rtl_eda_provenance` with HDL/RTL source boundaries, synthesis/PPA
   provenance, timing/power/area constraints, equivalence/formal verification,
   designer validation, downstream synthesis confirmation, RTL-flow placement,

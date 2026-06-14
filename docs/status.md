@@ -1145,7 +1145,9 @@ Important limits:
   numerical tolerance policy, final expert-confirmation scope, per-edit
   reference-check metadata, abstraction-level attribution, and artifact refs,
   not real XLA/FlashAttention edit artifacts, randomized input coverage,
-  reference-check outputs, tolerance/failure logs, or expert all-input signoff.
+  reference-check outputs, tolerance/failure logs, or expert all-input signoff;
+  that compiler-IR reference-check boundary is tracked by
+  `papers/compiler_ir_reference_check_boundary.json`.
 - Compiler stack records validate workload/model configuration,
   FlashAttention/Pallas kernel identity, JAX pre/postprocessing boundaries,
   XLA lowering stage, hardware target, lowered-IR hash, optimization decision

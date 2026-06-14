@@ -4773,6 +4773,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     confirmation scope. They still do not emit real compiler edit artifacts,
     randomized input coverage records, reference-check outputs, or expert
     all-input confirmation files.
+    `papers/compiler_ir_reference_check_boundary.json` now keeps this as a
+    paper-facing compiler-IR metadata versus reference-check artifact boundary.
   - Required result: connect compiler/kernel fixtures to real edit-by-edit
     randomized reference checks, reference-code hashes, input-generator seeds
     and coverage, tolerance/failure-policy outputs, abstraction-level

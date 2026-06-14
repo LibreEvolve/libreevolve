@@ -5246,6 +5246,65 @@ def test_validate_paper_manifest_requires_hardware_contribution_attribution_boun
     assert "hardware_contribution_attribution_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_compiler_ir_reference_check_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.COMPILER_IR_REFERENCE_CHECK_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.compiler_ir_reference_check_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_compiler_ir_reference_check_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.compiler_ir_reference_check_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "compiler_ir_reference_check_artifacts_ready"
+    record["missing_evidence"]["per_edit_reference_check_outputs"] = "recorded"
+    sidecar = tmp_path / paper_manifest.COMPILER_IR_REFERENCE_CHECK_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "compiler_ir_reference_check_boundary_claim_ready_overclaim" in codes
+    assert "compiler_ir_reference_check_boundary_invalid_boundary_status" in codes
+    assert (
+        "compiler_ir_reference_check_boundary_invalid_missing_evidence_per_edit_reference_check_outputs"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_compiler_ir_reference_check_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "compiler_ir_reference_check_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_ramsey_numbers_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

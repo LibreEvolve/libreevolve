@@ -4414,6 +4414,8 @@ sidecars, tests, and active TODOs.
     generator identity/hash, numerical tolerance policy, final expert
     confirmation scope, and per-edit randomized reference-check records with
     kernel/pre/postprocessing attribution and artifact refs.
+    `papers/compiler_ir_reference_check_boundary.json` now keeps this
+    metadata separate from real edit/reference-check/signoff artifacts.
   - Required result: connect compiler/kernel fixtures to real candidate-edit
     sequences, emitted per-edit randomized reference-check artifacts,
     input-generator seed/coverage records, tolerance/failure-policy outputs,

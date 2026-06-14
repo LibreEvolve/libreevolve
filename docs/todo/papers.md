@@ -6298,6 +6298,43 @@ directory and using the AlphaEvolve paper as the primary specification.
     query-plan evolution as missing database-systems benchmark evidence rather
     than implemented LibreEvolve support.
 
+- [ ] Reproduce mutation-convergence diagnostics beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.05408`, submitted June 3, 2026, is
+    titled `Mutation Without Variation: Convergence Dynamics in LLM-Driven
+    Program Evolution`. Its abstract asks whether repeated LLM mutation explores
+    new forms or circles back to the same ones. The study analyzes LLM-driven
+    mutation chains without selection pressure in a domain-specific language
+    while varying prompt design, model family, and stochastic replication. It
+    reports that LLM mutations converge toward restricted attractor regions:
+    structurally, 87% of chains have more than 93% of mutations revisiting a
+    previously seen structural form, with short cycles and self-loops
+    dominating the transition graph. It contrasts this with a classical GP
+    subtree mutation operator and frames structural homogeneity as a risk for
+    open-ended LLM-driven program evolution. The arXiv page links source code
+    on GitHub.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.05408`. Existing LibreEvolve diversity, MAP-Elites,
+    mutation-mode, parent-sampling, proposal-hypothesis, SeaEvo, TurboEvolve,
+    and sample-efficiency TODOs do not reproduce mutation-chain experiments
+    without selection pressure, structural-form canonicalization, attractor
+    region detection, transition-graph cycle analysis, short-cycle/self-loop
+    metrics, prompt/model/stochastic replication sweeps, classical GP subtree
+    mutation baselines, or open-ended-exploration homogeneity diagnostics.
+  - Required result: add reproduction-grade evidence for `2606.05408`:
+    title/authors/arXiv version/date, source license, linked-code URL/status
+    and license, relation to AlphaEvolve, MAP-Elites, SeaEvo, TurboEvolve, and
+    LibreEvolve, domain-specific language grammar, mutation-chain generation
+    protocol, no-selection-pressure run configuration, prompt and model-family
+    sweep metadata, stochastic replication seeds, structural-form
+    canonicalization method, terminal-substitution versus structural-change
+    metrics, attractor-region records, transition-graph and cycle-analysis
+    outputs, short-cycle/self-loop statistics, classical GP subtree mutation
+    baseline implementation, structural-homogeneity thresholds, open-ended
+    exploration risk criteria, independent verification outputs, and README/
+    ROADMAP wording that treats mutation-convergence diagnostics as missing
+    diversity evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

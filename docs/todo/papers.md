@@ -31,8 +31,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     records row-specific TODO content evidence with 175 matched source tokens,
     1048 row-specific TODO block hashes/source offsets, 404 artifact mention
     source-offset records, zero status-row local artifact paths, and zero
-    status-phrase local artifact paths missing from linked TODO evidence. It
-    now structurally classifies 87 status-cell
+    status-phrase local artifact paths missing from linked TODO evidence, plus
+    393 phrase-level TODO block records. It now structurally classifies 87 status-cell
     absence-signal phrases with 99 source-offset records without claiming
     freshness verification.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
@@ -53,8 +53,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence, referenced local artifact/TODO path existence checks, local
     artifact mention source offsets, TODO evidence path source offsets,
     matched TODO content source tokens, row-specific TODO block hashes/source
-    offsets, absence-signal source offsets, and row-local and phrase-local
-    artifact mention source offsets in linked TODO evidence, but
+    offsets, phrase-level TODO block records, absence-signal source offsets,
+    and row-local and phrase-local artifact mention source offsets in linked
+    TODO evidence, but
     there is no proof that those links are sufficient for each implemented or
     missing clause, no semantic verifier for
     `Implemented` benchmark coverage bullets beyond referenced artifact

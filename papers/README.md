@@ -1441,7 +1441,7 @@ mention source offsets and existence records, row source lines, TODO evidence
 path source offsets and existence records, and status-cell phrase hashes with
 source offsets plus candidate evidence-link lists and row-specific TODO content
 matched source tokens, block hashes/source offsets, artifact-mention source
-offsets plus phrase-local TODO content backing, but it is not phrase-level semantic proof or
+offsets plus phrase-local TODO block records, but it is not phrase-level semantic proof or
 absence-sentence freshness proof. The checked
 `papers/benchmark_coverage_inventory.json` sidecar records structural
 implemented-benchmark coverage bullet entries with source lines, hashes,
@@ -2872,7 +2872,8 @@ Implemented:
   TODO block hashes/source offsets, 404 TODO content artifact mention
   source-offset records, and zero status-row local artifact paths missing from
   linked row-specific TODO evidence. It also records zero
-  status-phrase local artifact paths missing from linked row-specific TODO evidence, and structurally classifies 87 status-cell
+  status-phrase local artifact paths missing from linked row-specific TODO
+  evidence, 393 phrase-level TODO block records, and structurally classifies 87 status-cell
   absence-signal phrases with 99 source-offset records. It is not status-cell
   phrase-level semantic verification, evidence-link sufficiency proof, or
   absence-sentence freshness evidence.

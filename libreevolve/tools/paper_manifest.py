@@ -1693,6 +1693,11 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         for row in inventory_rows
         for claim in row["status_claims"]
     )
+    phrase_todo_content_block_record_count = sum(
+        len(claim["evidence_links"]["phrase_todo_content_block_records"])
+        for row in inventory_rows
+        for claim in row["status_claims"]
+    )
     absence_phrase_ids = [
         claim["claim_id"]
         for row in inventory_rows
@@ -1756,6 +1761,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         ),
         "phrase_local_artifacts_missing_from_todo_evidence": phrase_local_artifacts_missing_from_todo,
         "phrase_local_artifact_mention_record_count": phrase_local_artifact_mention_record_count,
+        "phrase_todo_content_block_record_count": phrase_todo_content_block_record_count,
         "phrase_todo_content_evidence_status": (
             "all_phrase_local_artifacts_mentioned_in_todo_evidence"
             if unique_local_artifacts and not phrase_local_artifacts_missing_from_todo
@@ -1779,7 +1785,8 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "records, and status-cell phrase hashes with character offsets "
             "and candidate evidence links plus row/phrase-specific TODO content "
             "matched source tokens, block hashes/source offsets, "
-            "artifact-mention source offsets, and "
+            "artifact-mention source offsets, phrase-local TODO block "
+            "records, and "
             "absence-signal source offsets. It "
             "does not claim phrase-level "
             "status verification, evidence-link sufficiency, "
@@ -3926,6 +3933,10 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         (
             "phrase_local_artifact_mention_record_count",
             "status claim inventory phrase local artifact mention count drifted",
+        ),
+        (
+            "phrase_todo_content_block_record_count",
+            "status claim inventory phrase TODO content block count drifted",
         ),
         ("phrase_todo_content_evidence_status", "status claim inventory phrase TODO content status drifted"),
         ("absence_phrase_count", "status claim inventory absence phrase count drifted"),
@@ -8669,6 +8680,10 @@ def _status_todo_evidence_content_records(
                     block = block_record["text"]
                     block_tokens = sorted(token for token in source_tokens if token in block)
                     if block_tokens:
+                        block_artifact_records = _todo_content_local_artifact_mention_records(
+                            block,
+                            row_local_artifact_paths,
+                        )
                         matching_blocks.append(block)
                         matched_tokens.update(block_tokens)
                         matching_block_records.append(
@@ -8681,6 +8696,10 @@ def _status_todo_evidence_content_records(
                                 "line_end": block_record["line_end"],
                                 "block_sha256": block_record["block_sha256"],
                                 "matched_source_tokens": block_tokens,
+                                "mentioned_local_artifact_records": block_artifact_records,
+                                "mentioned_local_artifact_paths": sorted(
+                                    {record["path"] for record in block_artifact_records}
+                                ),
                             }
                         )
         evidence_text = "\n".join(matching_blocks)
@@ -8863,6 +8882,10 @@ def _status_claim_inventory_phrases(
         phrase_artifacts_missing_from_todo = sorted(
             set(phrase_local_artifact_paths) - set(phrase_artifacts_mentioned_in_todo)
         )
+        phrase_todo_content_block_records = _phrase_todo_content_block_records(
+            todo_content_records,
+            phrase_local_artifact_paths,
+        )
         absence_signal_records = _status_absence_signal_records(
             phrase,
             line_number,
@@ -8905,6 +8928,7 @@ def _status_claim_inventory_phrases(
                     "row_completed_todo_records": completed_todo_records,
                     "phrase_local_artifacts_mentioned_in_todo_evidence": phrase_artifacts_mentioned_in_todo,
                     "phrase_local_artifacts_missing_from_todo_evidence": phrase_artifacts_missing_from_todo,
+                    "phrase_todo_content_block_records": phrase_todo_content_block_records,
                     "phrase_todo_content_evidence_status": (
                         "all_phrase_local_artifacts_mentioned_in_todo_evidence"
                         if phrase_local_artifact_paths and not phrase_artifacts_missing_from_todo
@@ -8927,6 +8951,56 @@ def _status_claim_inventory_phrases(
             }
         )
     return phrases
+
+
+def _phrase_todo_content_block_records(
+    todo_content_records: list[dict[str, Any]],
+    phrase_local_artifact_paths: list[str],
+) -> list[dict[str, Any]]:
+    phrase_artifacts = set(phrase_local_artifact_paths)
+    if not phrase_artifacts:
+        return []
+    records: list[dict[str, Any]] = []
+    for content_record in todo_content_records:
+        for block_record in content_record["row_specific_block_records"]:
+            block_artifacts = [
+                path
+                for path in block_record["mentioned_local_artifact_paths"]
+                if path in phrase_artifacts
+            ]
+            if not block_artifacts:
+                continue
+            artifact_records = [
+                record
+                for record in block_record["mentioned_local_artifact_records"]
+                if record["path"] in phrase_artifacts
+            ]
+            records.append(
+                {
+                    "path": content_record["path"],
+                    "evidence_kind": content_record["evidence_kind"],
+                    "block_kind": block_record["block_kind"],
+                    "block_ordinal": block_record["block_ordinal"],
+                    "file_text_char_start": block_record["file_text_char_start"],
+                    "file_text_char_end": block_record["file_text_char_end"],
+                    "line_start": block_record["line_start"],
+                    "line_end": block_record["line_end"],
+                    "block_sha256": block_record["block_sha256"],
+                    "matched_source_tokens": block_record["matched_source_tokens"],
+                    "phrase_local_artifact_paths_mentioned": sorted(block_artifacts),
+                    "mentioned_local_artifact_records": artifact_records,
+                }
+            )
+    return sorted(
+        records,
+        key=lambda record: (
+            record["path"],
+            record["evidence_kind"],
+            record["block_kind"],
+            record["block_ordinal"],
+            record["file_text_char_start"],
+        ),
+    )
 
 
 def _status_absence_signal_records(

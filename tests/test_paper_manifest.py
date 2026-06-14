@@ -11413,6 +11413,15 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         "line_end": active_evidence_text.count("\n") + 1,
         "block_sha256": hashlib.sha256(active_evidence_text.encode("utf-8")).hexdigest(),
         "matched_source_tokens": [row["id"]],
+        "mentioned_local_artifact_records": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "evidence_text_char_start": active_evidence_text.find("libreevolve/core/loop.py"),
+                "evidence_text_char_end": active_evidence_text.find("libreevolve/core/loop.py")
+                + len("libreevolve/core/loop.py"),
+            }
+        ],
+        "mentioned_local_artifact_paths": ["libreevolve/core/loop.py"],
     }
     assert [
         record["row_specific_block_records"] for record in active_content_records
@@ -11441,6 +11450,19 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
             "line_end": completed_evidence_text.count("\n") + 1,
             "block_sha256": hashlib.sha256(completed_evidence_text.encode("utf-8")).hexdigest(),
             "matched_source_tokens": [row["id"]],
+            "mentioned_local_artifact_records": [
+                {
+                    "path": "libreevolve/core/loop.py",
+                    "evidence_text_char_start": completed_evidence_text.find(
+                        "libreevolve/core/loop.py"
+                    ),
+                    "evidence_text_char_end": completed_evidence_text.find(
+                        "libreevolve/core/loop.py"
+                    )
+                    + len("libreevolve/core/loop.py"),
+                }
+            ],
+            "mentioned_local_artifact_paths": ["libreevolve/core/loop.py"],
         }
     ]
     completed_artifact_start = completed_evidence_text.find("libreevolve/core/loop.py")
@@ -11493,6 +11515,15 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         == [expected_status_artifact_mention]
     )
     assert inventory["phrase_local_artifact_mention_record_count"] == 1
+    phrase_block_records = inventory["rows"][0]["status_claims"][0]["evidence_links"][
+        "phrase_todo_content_block_records"
+    ]
+    assert len(phrase_block_records) == len(active_content_records) + len(completed_content_records)
+    assert inventory["phrase_todo_content_block_record_count"] == len(phrase_block_records)
+    assert {
+        record["phrase_local_artifact_paths_mentioned"][0] for record in phrase_block_records
+    } == {"libreevolve/core/loop.py"}
+    assert all(record["block_sha256"] for record in phrase_block_records)
     assert (
         inventory["rows"][0]["status_claims"][0]["evidence_links"][
             "phrase_todo_content_evidence_status"

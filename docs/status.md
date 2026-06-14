@@ -1113,7 +1113,8 @@ Important limits:
   same Gemini-family system that powered AlphaEvolve, nor that before/after
   production training metrics, engineering-velocity evidence, rollout state,
   or safety/rollback records justify an AlphaEvolve-style self-optimization
-  interpretation.
+  interpretation; that self-training-loop boundary is tracked by
+  `papers/gemini_self_training_loop_boundary.json`.
 - Hardware RTL/EDA records validate HDL source boundaries, synthesis/PPA
   provenance, timing/power/area constraints, equivalence or formal-verification
   evidence, designer validation, downstream synthesis confirmation, RTL-flow

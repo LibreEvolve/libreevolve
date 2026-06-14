@@ -450,6 +450,12 @@ from libreevolve.problems.benchmarks.gigaevo_boundary import (
     render_gigaevo_framework_boundary_summary,
     validate_gigaevo_framework_boundary,
 )
+from libreevolve.problems.benchmarks.gemini_self_training_loop_boundary import (
+    GEMINI_SELF_TRAINING_LOOP_BOUNDARY_SCHEMA,
+    gemini_self_training_loop_boundary_record,
+    render_gemini_self_training_loop_boundary_summary,
+    validate_gemini_self_training_loop_boundary,
+)
 from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
     GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA,
     gemini_provider_parity_boundary_record,
@@ -959,6 +965,7 @@ __all__ = [
     "FIGURE9_MATRIX_DIFF_EXHIBIT_SCHEMA",
     "FAILURE_MEMORY_BOUNDARY_SCHEMA",
     "GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA",
+    "GEMINI_SELF_TRAINING_LOOP_BOUNDARY_SCHEMA",
     "GIGAEVO_FRAMEWORK_BOUNDARY_SCHEMA",
     "IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA",
     "INCORRECT_SUGGESTION_AUDIT_BOUNDARY_SCHEMA",
@@ -1081,6 +1088,7 @@ __all__ = [
     "bruhat_intervals_boundary_record",
     "fault2flow_boundary_record",
     "gemini_provider_parity_boundary_record",
+    "gemini_self_training_loop_boundary_record",
     "global_nlp_optimization_boundary_record",
     "candidate_abstraction_boundary_record",
     "candidate_abstraction_bias_matrix_record",
@@ -1267,6 +1275,7 @@ __all__ = [
     "render_figure9_matrix_diff_artifact_boundary_summary",
     "render_figure9_matrix_diff_exhibit_summary",
     "render_gemini_provider_parity_boundary_summary",
+    "render_gemini_self_training_loop_boundary_summary",
     "render_gigaevo_framework_boundary_summary",
     "render_kernel_tiling_shape_corpus_boundary_summary",
     "render_implementation_evidence_map_boundary_summary",
@@ -1424,6 +1433,7 @@ __all__ = [
     "validate_figure9_matrix_diff_artifact_boundary",
     "validate_figure9_matrix_diff_exhibit",
     "validate_gemini_provider_parity_boundary",
+    "validate_gemini_self_training_loop_boundary",
     "validate_gigaevo_framework_boundary",
     "validate_kernel_tiling_shape_corpus_boundary",
     "validate_implementation_evidence_map_boundary",

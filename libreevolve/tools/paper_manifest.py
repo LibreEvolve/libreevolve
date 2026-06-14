@@ -518,6 +518,10 @@ from libreevolve.problems.benchmarks.gigaevo_boundary import (
     gigaevo_framework_boundary_record,
     validate_gigaevo_framework_boundary,
 )
+from libreevolve.problems.benchmarks.gemini_self_training_loop_boundary import (
+    gemini_self_training_loop_boundary_record,
+    validate_gemini_self_training_loop_boundary,
+)
 from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
     gemini_provider_parity_boundary_record,
     validate_gemini_provider_parity_boundary,
@@ -658,6 +662,7 @@ FAILURE_MEMORY_BOUNDARY_FILE = "papers/failure_memory_boundary.json"
 PROGRAM_OUTPUT_BOUNDARY_FILE = "papers/program_output_boundary.json"
 ARTIFACT_INDEX_BOUNDARY_FILE = "papers/artifact_index_boundary.json"
 GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
+GEMINI_SELF_TRAINING_LOOP_BOUNDARY_FILE = "papers/gemini_self_training_loop_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_FILE = "papers/kernel_tiling_shape_corpus_boundary.json"
 PALLAS_WORKFLOW_BASELINE_BOUNDARY_FILE = "papers/pallas_workflow_baseline_boundary.json"
@@ -1180,6 +1185,7 @@ def validate_paper_manifest(
     issues.extend(_validate_program_output_boundary(root_path))
     issues.extend(_validate_artifact_index_boundary(root_path))
     issues.extend(_validate_gemini_provider_parity_boundary(root_path))
+    issues.extend(_validate_gemini_self_training_loop_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_kernel_tiling_shape_corpus_boundary(root_path))
     issues.extend(_validate_pallas_workflow_baseline_boundary(root_path))
@@ -4344,6 +4350,38 @@ def _validate_gemini_provider_parity_boundary(root_path: Path) -> list[PaperMani
             f"gemini_provider_parity_boundary_{issue.code}",
             issue.message,
             "gemini_provider_parity",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_gemini_self_training_loop_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / GEMINI_SELF_TRAINING_LOOP_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = gemini_self_training_loop_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "gemini_self_training_loop_boundary_manifest_missing",
+                    (
+                        f"{GEMINI_SELF_TRAINING_LOOP_BOUNDARY_FILE} must emit "
+                        "Gemini self-training loop versus Pallas deployment scope"
+                    ),
+                    "gemini_self_training_loop",
+                )
+            ]
+    report = validate_gemini_self_training_loop_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"gemini_self_training_loop_boundary_{issue.code}",
+            issue.message,
+            "gemini_self_training_loop",
         )
         for issue in report.issues
     ]

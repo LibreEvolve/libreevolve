@@ -4671,6 +4671,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     heuristic to the training workload of the Gemini model family, the
     AlphaEvolve/Gemini relationship, deployment state, before/after training
     metrics, and the self-optimization interpretation.
+    `papers/gemini_self_training_loop_boundary.json` now keeps the Pallas
+    deployment versus Gemini self-training loop boundary machine-checked.
   - Required result: add paper/report evidence for Gemini self-training loop
     claims: Gemini model/training workload id, AlphaEvolve backend/model-family
     relation, optimized Pallas kernel id, production deployment or rollout

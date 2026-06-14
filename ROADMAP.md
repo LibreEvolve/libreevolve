@@ -2210,6 +2210,9 @@ resumed-trace proof are still open.
   AlphaEvolve backend or Gemini-family relation, optimized Pallas kernel id,
   production rollout state, before/after training-time and kernel-runtime
   evidence, team-velocity evidence, and rollback/safety status.
+  `papers/gemini_self_training_loop_boundary.json` now preserves this as a
+  separate paper-facing boundary, so ordinary Pallas deployment evidence cannot
+  stand in for Gemini self-optimization evidence.
 - Populate real hardware-adoption and rewrite evidence for TPU RTL-style
   reports before claiming Section 3.3.3 parity: emitted RTL, before/after
   Verilog diffs, removed-bit inventories, synthesis/PPA, verification,

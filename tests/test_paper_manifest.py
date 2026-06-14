@@ -5015,6 +5015,60 @@ def test_validate_paper_manifest_requires_gemini_provider_parity_boundary_at_rep
     assert "gemini_provider_parity_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_gemini_self_training_loop_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.GEMINI_SELF_TRAINING_LOOP_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.gemini_self_training_loop_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_gemini_self_training_loop_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.gemini_self_training_loop_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "gemini_self_training_loop_ready"
+    record["missing_evidence"]["gemini_training_workload_identity"] = "recorded"
+    sidecar = tmp_path / paper_manifest.GEMINI_SELF_TRAINING_LOOP_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "gemini_self_training_loop_boundary_claim_ready_overclaim" in codes
+    assert "gemini_self_training_loop_boundary_invalid_boundary_status" in codes
+    assert (
+        "gemini_self_training_loop_boundary_invalid_missing_evidence_gemini_training_workload_identity"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_gemini_self_training_loop_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "gemini_self_training_loop_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_ramsey_numbers_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

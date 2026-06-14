@@ -2624,6 +2624,15 @@ Implemented:
   hardware-expertise assumptions, kernel-engineer workflow impact,
   model-developer ergonomics impact, baseline comparison artifacts,
   workflow-interruption evidence, or optimization-time reduction evidence.
+- `papers/gemini_self_training_loop_boundary.json`: Gemini self-training loop
+  sidecar for AlphaEvolve Section 3.3.2 and the Discussion. It records that
+  Pallas deployment and kernel-runtime evidence are prerequisites, but not
+  evidence of Gemini model-family identity, Gemini training workload identity,
+  AlphaEvolve/Gemini relation, optimized Pallas kernel id, production rollout
+  state, before/after training-time and kernel-runtime measurements,
+  training-efficiency deltas, research or engineering velocity evidence,
+  causal linkage to Gemini's training pipeline, rollback/safety status, or
+  owner confirmation.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

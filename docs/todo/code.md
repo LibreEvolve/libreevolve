@@ -4311,6 +4311,8 @@ sidecars, tests, and active TODOs.
     to the training workload of the model family that powered AlphaEvolve, the
     production deployment that changed training, and the basis for the
     self-optimization interpretation.
+    `papers/gemini_self_training_loop_boundary.json` now keeps the Pallas
+    deployment versus Gemini self-training loop boundary machine-checked.
   - Required result: add kernel/domain report metadata for Gemini
     self-training claims: model/training workload identity, AlphaEvolve backend
     or Gemini-family relation, optimized Pallas kernel id, deployment date or

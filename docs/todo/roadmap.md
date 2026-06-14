@@ -35,6 +35,34 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 
 ## Missing Roadmap Items
 
+- [ ] Add ROADMAP AlphaEvolve source-span disposition coverage.
+  - Spec evidence: the objective is to bring LibreEvolve toward the
+    AlphaEvolve specification, which means the ROADMAP should account for the
+    paper's requirements, figures, tables, appendices, and application-result
+    claims as source-backed work items or explicit non-goals. A handful of
+    core requirement anchors is useful, but it is not enough to prove that the
+    roadmap has considered every relevant AlphaEvolve source span.
+  - Current evidence: ROADMAP's documentation-truthfulness section references
+    `papers/implementation_evidence_map_boundary.json`, which records core
+    AlphaEvolve anchors for markers, evaluator cascades, LLM prompting,
+    evolutionary database behavior, async/distributed topology, and published
+    benchmarks. That same boundary explicitly says it is not an exhaustive
+    requirement inventory or source-span coverage matrix. `papers/README.md`
+    and the Appendix A/B registries provide many source-specific status rows,
+    but those records are not a ROADMAP coverage proof.
+  - Current gap: there is no ROADMAP-level matrix that walks the retained
+    AlphaEvolve source PDF by section, figure, table, appendix, benchmark
+    family, and application-result claim; classifies each span as implemented,
+    partially implemented, missing, background-only, or non-goal; and proves
+    that every missing or partial span has a linked code/paper/README TODO or
+    ROADMAP priority. There is also no detector for AlphaEvolve source spans
+    that appear in papers/status sidecars but have no roadmap disposition.
+  - Required result: add a source-span disposition matrix for the ROADMAP that
+    links AlphaEvolve sections, figures, tables, appendices, and application
+    claims to implementation status, evidence artifacts, active TODO anchors,
+    non-goal decisions, and phase priority; validate it in CI or the paper
+    manifest so new source-span evidence cannot remain unroadmapped.
+
 ## Existing Items That Need Tightening
 
 - [ ] Add ROADMAP non-goal contradiction checks.

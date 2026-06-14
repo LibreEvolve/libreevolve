@@ -5535,6 +5535,46 @@ directory and using the AlphaEvolve paper as the primary specification.
     that treats medical decision-pipeline evolution as missing application
     benchmark evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce tensor-network contraction-order optimization evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.01975`, submitted June 1, 2026, is
+    titled `Algorithmic algorithm development with LLMs: A Case Study on
+    LLM-Usage for Contraction Order Optimization in Tensor Networks`. The
+    arXiv HTML lists a CC BY 4.0 license. Its abstract studies LLM-based
+    algorithm development through contraction-order optimization for tensor
+    networks with OpenEvolve, focusing on model choice, evaluation metric
+    design, and test-instance selection. The paper positions verifier-guided
+    evolutionary coding agents as promising for algorithm development and
+    improvement, but emphasizes that human scientists still need to define,
+    validate, interpret, and audit the evaluation setup and resulting
+    algorithms. It situates the case study against FunSearch, AlphaEvolve,
+    OpenEvolve, GigaEvo, CodeEvolve, ShinkaEvolve, DeepEvolve, LLM4AD,
+    ThetaEvolve, Escher-Loop, AlgoTuner, and related heuristic-evolution
+    systems.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.01975`. Existing LibreEvolve matrix/tensor TODOs cover
+    AlphaEvolve matrix-multiplication tensor-decomposition artifacts,
+    tensor-rank certificates, and loss-function-only scope boundaries, but
+    they do not reproduce tensor-network contraction-order candidate schemas,
+    contraction-tree or elimination-order representations, tensor-network
+    test-instance suites, contraction-cost metrics, OpenEvolve run
+    configuration, model-choice comparisons, evaluation-metric sensitivity,
+    test-instance sensitivity, baseline planner identities, human
+    interpretation and validation records, or contraction-order correctness
+    and performance certification.
+  - Required result: add reproduction-grade evidence for `2606.01975`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, and LibreEvolve,
+    tensor-network problem schema, contraction-order candidate representation,
+    evaluator contract, contraction-cost metric definitions, correctness
+    checks, test-instance inventory, baseline planner and library identities,
+    LLM/model-selection records, OpenEvolve configuration and budget telemetry,
+    metric/test-instance ablation records, generated algorithm artifacts,
+    human scientist validation and interpretation notes, independent
+    verification outputs, and README/ROADMAP wording that treats tensor-network
+    contraction-order optimization as missing application benchmark evidence
+    rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

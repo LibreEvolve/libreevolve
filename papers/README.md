@@ -2615,6 +2615,15 @@ Implemented:
   tiling-only candidate boundaries, unchanged-kernel-math evidence,
   correctness-by-construction scope, training-time linkage, deployment
   readiness, or shape-corpus-to-runtime joins.
+- `papers/pallas_workflow_baseline_boundary.json`: Pallas workflow-baseline
+  sidecar for AlphaEvolve Section 3.3.2. It records that kernel runtime and
+  shape-corpus boundaries are prerequisites, but not evidence of baseline
+  workflow classes, search-autotuning records, manual-heuristic records,
+  hybrid-expert baselines, autotuning search-space or retuning policy,
+  input-shape-change sensitivity, manual authoring/review effort,
+  hardware-expertise assumptions, kernel-engineer workflow impact,
+  model-developer ergonomics impact, baseline comparison artifacts,
+  workflow-interruption evidence, or optimization-time reduction evidence.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

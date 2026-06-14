@@ -1106,7 +1106,8 @@ Important limits:
   baseline workflow class, autotuning search/retuning policy, manual
   authoring/review effort, input-shape-change sensitivity, hardware-expertise
   assumptions, and model-developer ergonomics comparisons remain active code
-  and paper TODOs.
+  and paper TODOs; that workflow-baseline boundary is tracked by
+  `papers/pallas_workflow_baseline_boundary.json`.
 - Gemini self-training wording remains bounded: README does not yet claim that
   a deployed Pallas kernel optimization affected the training workload of the
   same Gemini-family system that powered AlphaEvolve, nor that before/after

@@ -4648,6 +4648,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     that distinguishes search-based autotuning from manually crafted heuristic
     baselines, records retuning burden for changed shapes, or captures the
     manual-engineering bottleneck and model-developer ergonomics comparison.
+    `papers/pallas_workflow_baseline_boundary.json` now keeps the
+    workflow-baseline evidence boundary machine-checked.
   - Required result: add paper/report fields for baseline workflow class
     (`search_autotuning`, `manual_heuristic`, or `hybrid_expert`), autotuning
     search-space and retuning policy, manual authoring/review effort, input

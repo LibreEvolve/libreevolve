@@ -2201,6 +2201,9 @@ resumed-trace proof are still open.
   search-based autotuning, manual heuristics, and expert-hybrid baselines;
   record retuning burden for input-shape changes, manual authoring/review
   effort, hardware-expertise assumptions, and model-developer ergonomics.
+  `papers/pallas_workflow_baseline_boundary.json` now preserves this as a
+  separate paper-facing boundary, so Pallas runtime or shape-corpus evidence
+  cannot stand in for workflow-baseline evidence.
 - For Gemini self-training claims, add a Pallas deployment-loop evidence row
   before describing kernel deployment as AlphaEvolve-style optimization of
   Gemini's own training pipeline: model/training workload identity,

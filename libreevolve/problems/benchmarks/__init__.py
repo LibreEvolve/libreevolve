@@ -462,6 +462,12 @@ from libreevolve.problems.benchmarks.kernel_tiling_shape_corpus_boundary import 
     render_kernel_tiling_shape_corpus_boundary_summary,
     validate_kernel_tiling_shape_corpus_boundary,
 )
+from libreevolve.problems.benchmarks.pallas_workflow_baseline_boundary import (
+    PALLAS_WORKFLOW_BASELINE_BOUNDARY_SCHEMA,
+    pallas_workflow_baseline_boundary_record,
+    render_pallas_workflow_baseline_boundary_summary,
+    validate_pallas_workflow_baseline_boundary,
+)
 from libreevolve.problems.benchmarks.improvevolve_boundary import (
     IMPROVEVOLVE_BOUNDARY_SCHEMA,
     improvevolve_boundary_record,
@@ -973,6 +979,7 @@ __all__ = [
     "PROMPT_EXAMPLE_COPY_BOUNDARY_SCHEMA",
     "PROMPT_SECTION_PACKING_BOUNDARY_SCHEMA",
     "STOCHASTIC_PROMPT_FORMAT_BOUNDARY_SCHEMA",
+    "PALLAS_WORKFLOW_BASELINE_BOUNDARY_SCHEMA",
     "QUALITATIVE_FEEDBACK_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_ARTIFACT_BOUNDARY_SCHEMA",
     "MATRIX_RANK_TABLE_EXHIBIT_SCHEMA",
@@ -1127,6 +1134,7 @@ __all__ = [
     "mutation_operator_boundary_record",
     "natural_language_preamble_boundary_record",
     "objective_archive_boundary_record",
+    "pallas_workflow_baseline_boundary_record",
     "prompt_example_copy_boundary_record",
     "prompt_section_packing_boundary_record",
     "stochastic_prompt_format_boundary_record",
@@ -1277,6 +1285,7 @@ __all__ = [
     "render_mutation_operator_boundary_summary",
     "render_natural_language_preamble_boundary_summary",
     "render_objective_archive_boundary_summary",
+    "render_pallas_workflow_baseline_boundary_summary",
     "render_prompt_example_copy_boundary_summary",
     "render_prompt_section_packing_boundary_summary",
     "render_stochastic_prompt_format_boundary_summary",
@@ -1433,6 +1442,7 @@ __all__ = [
     "validate_mutation_operator_boundary",
     "validate_natural_language_preamble_boundary",
     "validate_objective_archive_boundary",
+    "validate_pallas_workflow_baseline_boundary",
     "validate_prompt_example_copy_boundary",
     "validate_prompt_section_packing_boundary",
     "validate_stochastic_prompt_format_boundary",

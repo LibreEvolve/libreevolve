@@ -4287,6 +4287,8 @@ sidecars, tests, and active TODOs.
     crafted heuristic, or expert hybrid; record retuning burden for changed
     input shapes; preserve manual-effort assumptions; or compare AlphaEvolve's
     generated heuristic to both baseline workflow classes.
+    `papers/pallas_workflow_baseline_boundary.json` now keeps the Pallas
+    runtime versus workflow-baseline evidence boundary machine-checked.
   - Required result: add kernel report fields and validators for baseline
     workflow type, autotuning search-space and retuning policy, manual-heuristic
     authoring/review effort, input-shape-change sensitivity, hardware-expertise

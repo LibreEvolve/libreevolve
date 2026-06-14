@@ -526,6 +526,10 @@ from libreevolve.problems.benchmarks.kernel_tiling_shape_corpus_boundary import 
     kernel_tiling_shape_corpus_boundary_record,
     validate_kernel_tiling_shape_corpus_boundary,
 )
+from libreevolve.problems.benchmarks.pallas_workflow_baseline_boundary import (
+    pallas_workflow_baseline_boundary_record,
+    validate_pallas_workflow_baseline_boundary,
+)
 from libreevolve.problems.benchmarks.improvevolve_boundary import (
     improvevolve_boundary_record,
     validate_improvevolve_boundary,
@@ -656,6 +660,7 @@ ARTIFACT_INDEX_BOUNDARY_FILE = "papers/artifact_index_boundary.json"
 GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_FILE = "papers/kernel_tiling_shape_corpus_boundary.json"
+PALLAS_WORKFLOW_BASELINE_BOUNDARY_FILE = "papers/pallas_workflow_baseline_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
 THETAEVOLVE_BOUNDARY_FILE = "papers/thetaevolve_boundary.json"
 TTT_DISCOVER_BOUNDARY_FILE = "papers/ttt_discover_boundary.json"
@@ -1177,6 +1182,7 @@ def validate_paper_manifest(
     issues.extend(_validate_gemini_provider_parity_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_kernel_tiling_shape_corpus_boundary(root_path))
+    issues.extend(_validate_pallas_workflow_baseline_boundary(root_path))
     issues.extend(_validate_codeevolve_boundary(root_path))
     issues.extend(_validate_thetaevolve_boundary(root_path))
     issues.extend(_validate_improvevolve_boundary(root_path))
@@ -4402,6 +4408,38 @@ def _validate_kernel_tiling_shape_corpus_boundary(root_path: Path) -> list[Paper
             f"kernel_tiling_shape_corpus_boundary_{issue.code}",
             issue.message,
             "kernel_tiling_shape_corpus",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_pallas_workflow_baseline_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PALLAS_WORKFLOW_BASELINE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = pallas_workflow_baseline_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "pallas_workflow_baseline_boundary_manifest_missing",
+                    (
+                        f"{PALLAS_WORKFLOW_BASELINE_BOUNDARY_FILE} must emit "
+                        "Pallas autotuning and manual workflow-baseline scope"
+                    ),
+                    "pallas_workflow_baseline",
+                )
+            ]
+    report = validate_pallas_workflow_baseline_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"pallas_workflow_baseline_boundary_{issue.code}",
+            issue.message,
+            "pallas_workflow_baseline",
         )
         for issue in report.issues
     ]

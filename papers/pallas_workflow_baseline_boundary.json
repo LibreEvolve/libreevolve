@@ -1,0 +1,50 @@
+{
+  "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "3.3.2"
+  ],
+  "source_claim": "AlphaEvolve Section 3.3.2 contrasts Pallas search-based autotuning with manually crafted tiling heuristics: autotuning interrupts research workflows and requires retuning when input shapes change, while manual heuristic design is a major kernel engineering bottleneck requiring deep hardware expertise; AlphaEvolve is framed as automating manual tuning and improving Gemini kernel ergonomics",
+  "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+  "systems_result_schema": "libreevolve.systems_result_report.v1",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "kernel_shape_corpus_boundary",
+    "kernel_runtime_boundary",
+    "baseline_workflow_class",
+    "search_autotuning_baseline_record",
+    "manual_heuristic_baseline_record",
+    "hybrid_expert_baseline_record",
+    "autotuning_search_space",
+    "autotuning_retuning_policy",
+    "input_shape_change_sensitivity",
+    "manual_authoring_effort",
+    "manual_review_effort",
+    "hardware_expertise_assumptions",
+    "kernel_engineer_workflow_impact",
+    "model_developer_ergonomics_impact",
+    "alphaevolve_generated_heuristic_comparison",
+    "baseline_comparison_artifacts",
+    "workflow_interruption_evidence",
+    "optimization_time_reduction_evidence"
+  ],
+  "missing_evidence": {
+    "baseline_workflow_class": "not_recorded_locally",
+    "search_autotuning_baseline_record": "not_recorded_locally",
+    "manual_heuristic_baseline_record": "not_recorded_locally",
+    "hybrid_expert_baseline_record": "not_recorded_locally",
+    "autotuning_search_space": "not_recorded_locally",
+    "autotuning_retuning_policy": "not_recorded_locally",
+    "input_shape_change_sensitivity": "not_recorded_locally",
+    "manual_authoring_effort": "not_recorded_locally",
+    "manual_review_effort": "not_recorded_locally",
+    "hardware_expertise_assumptions": "not_recorded_locally",
+    "kernel_engineer_workflow_impact": "not_recorded_locally",
+    "model_developer_ergonomics_impact": "not_recorded_locally",
+    "alphaevolve_generated_heuristic_comparison": "not_recorded_locally",
+    "baseline_comparison_artifacts": "not_recorded_locally",
+    "workflow_interruption_evidence": "not_recorded_locally",
+    "optimization_time_reduction_evidence": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve now separately tracks kernel shape-corpus/runtime evidence as a prerequisite. It does not claim baseline workflow class records, search-autotuning baseline records, manual-heuristic baseline records, hybrid expert baseline records, autotuning search-space evidence, retuning policy evidence, input-shape-change sensitivity, manual authoring or review effort, hardware-expertise assumptions, kernel engineer workflow impact, model-developer ergonomics impact, comparison of AlphaEvolve-generated heuristics against baseline workflows, baseline comparison artifacts, workflow-interruption evidence, or optimization-time reduction evidence."
+}

@@ -6029,6 +6029,42 @@ directory and using the AlphaEvolve paper as the primary specification.
     support as missing systems-optimization evidence rather than implemented
     LibreEvolve support.
 
+- [ ] Reproduce MappingEvolve technology-mapping code-evolution evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2604.26591`, submitted April 29, 2026, is
+    titled `MappingEvolve: LLM-Driven Code Evolution for Technology Mapping`.
+    Its abstract says technology mapping is a critical stage in logic
+    synthesis and that MappingEvolve directly evolves technology-mapping code
+    rather than only generating optimization scripts. The method abstracts the
+    mapping process into distinct optimization operators and uses a
+    hierarchical agent architecture with a Planner, Evolver, and Evaluator to
+    guide evolutionary search. It reports 10.04% area reduction versus ABC and
+    7.93% versus mockturtle, 46.6%-96.0% `S_overall` improvement on EPFL
+    benchmarks, explicit area-delay trade-off navigation, and linked code/data
+    at `https://github.com/Flians/MappingEvolve`.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2604.26591`. Existing LibreEvolve AlphaEvolve, CodeEvolve,
+    runtime-CodeEvolve, systems-result, benchmark-hardening, multi-objective,
+    and evaluator-contract TODOs do not reproduce technology-mapping problem
+    schemas, logic-synthesis toolchain integration, planner/evolver/evaluator
+    agent roles, optimization-operator abstractions, area-delay trade-off
+    objectives, ABC or mockturtle baselines, EPFL benchmark fixtures, cec
+    equivalence-check evidence, or linked MappingEvolve code/data
+    reproducibility.
+  - Required result: add reproduction-grade evidence for `2604.26591`:
+    title/authors/arXiv version/date, source license, related DOI,
+    code/data URL status and license, relation to AlphaEvolve, OpenEvolve,
+    CodeEvolve, runtime-CodeEvolve, and LibreEvolve, technology-mapping task
+    schema, optimization-operator taxonomy, Planner/Evolver/Evaluator
+    contracts, prompt and edit traces, logic-synthesis runner environment,
+    ABC and mockturtle baseline command records, EPFL benchmark metadata,
+    area/delay/`S_overall` metric definitions, cec equivalence-check outputs,
+    area-delay trade-off records, model-generalization runs, direct-evolution
+    baseline comparisons, linked-code audit, independent verification outputs,
+    and README/ROADMAP wording that treats MappingEvolve-style
+    technology-mapping code evolution as missing logic-synthesis evidence
+    rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

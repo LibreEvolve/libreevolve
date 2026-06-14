@@ -5052,6 +5052,41 @@ sidecars, tests, and active TODOs.
     usage, retry, status, controller-event, ledger, runtime budget-report
     telemetry, and focused `throughput_depth` unit coverage.
 
+- [ ] Add provider-native retry backoff and rate-limit reset policy.
+  - Spec evidence: AlphaEvolve-style long-running searches spend substantial
+    model-call budget and must distinguish model-quality failures from
+    provider throttling, transport retry, and budget delay. Retry behavior
+    should be accountable as part of the experiment rather than an opaque SDK
+    sleep loop.
+  - Current evidence: built-in OpenAI, Anthropic, and Ollama adapters expose a
+    bounded `provider_max_retries` cap and record `adapter_retry` telemetry
+    with configured max retries, provider-attempt count, failed-attempt count,
+    and safe exception type labels. Each adapter retries by calling
+    `time.sleep(2 ** attempt)` after a failed provider call. `LLMEnsemble`
+    separately classifies failed calls with `provider_failure_category`
+    including `rate_limit`, records safe HTTP-style `provider_status_code`, and
+    accounts aggregate retry/fallback/provider-attempt usage in runtime budget
+    reports. `provider_retry_failure()` currently stores only the adapter
+    attempt index and exception type; it does not inspect provider headers,
+    retry-after fields, rate-limit reset hints, or SDK-specific retry
+    metadata.
+  - Current gap: rate-limit and server-pressure failures use the same fixed
+    exponential backoff as other adapter failures, and the actual retry sleep
+    policy is not persisted per attempt. The runtime can later say a call
+    retried, but not whether it honored provider `Retry-After` or reset hints,
+    ignored them, slept for a configured capped duration, consumed wall-clock
+    budget while waiting, or retried a non-retryable provider client error.
+    That makes provider throttling behavior less reproducible and less
+    comparable across long AlphaEvolve-style runs.
+  - Required result: add a versioned provider retry policy that classifies
+    retryability by provider failure category/status, honors safe provider
+    retry-after or reset hints when exposed, applies configurable min/max
+    backoff and jitter policy, records per-attempt planned/actual sleep
+    decisions and header-derived inputs in redacted telemetry, composes waits
+    with runtime and role budget stops, and adds focused tests for OpenAI,
+    Anthropic, Ollama, and custom/backend exceptions with and without safe
+    retry metadata.
+
 - [ ] Add first-class Google/Gemini backend parity for AlphaEvolve model-mix
       reproduction.
   - Spec evidence: AlphaEvolve Section 2.3 says the published system used

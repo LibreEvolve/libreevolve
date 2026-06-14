@@ -353,8 +353,8 @@ sidecars, tests, and active TODOs.
     family, license version, and normalized URL.
     `papers/alphaevolve_current_version_boundary.json` now records the
     2026-06-14 arXiv floating abstract status/content/digest, resolves current
-    version `2506.13131v1`, and confirms the floating PDF bytes/hash match the
-    cached PDF.
+    version `2506.13131v1`, and confirms the retained floating PDF artifact
+    bytes/hash match the cached PDF.
     `papers/alphaevolve_raw_http_headers_boundary.json` now records pinned raw
     HTTP response header lines for the versioned abstract, floating abstract,
     floating PDF, DataCite API, e-print archive, and license page.
@@ -371,11 +371,10 @@ sidecars, tests, and active TODOs.
     the Creative Commons license-page HTML artifact and validates its byte
     count, SHA-256 digest, and key content markers.
   - Required result: implement a source-metadata verifier that retrieves or
-    pins the remaining source artifacts: extraction-script artifact, full
-    floating-PDF response retention, cached-PDF header consistency, and an
-    automated CI/network refresh gate that fails paper/source validation if the
-    live arXiv/DataCite/e-print/license metadata drifts from the committed
-    source boundary.
+    pins the remaining source artifacts: extraction-script artifact,
+    cached-PDF header consistency, and an automated CI/network refresh gate
+    that fails paper/source validation if the live arXiv/DataCite/e-print/license
+    metadata drifts from the committed source boundary.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

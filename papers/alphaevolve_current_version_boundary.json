@@ -2,7 +2,7 @@
   "schema": "libreevolve.alphaevolve_current_version_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve source metadata should distinguish the floating arXiv abstract/PDF URLs from the cached versioned PDF evidence.",
-  "boundary_status": "current_v1_and_floating_pdf_digest_without_refresh_gate",
+  "boundary_status": "current_v1_and_floating_pdf_retained_without_refresh_gate",
   "claim_ready": false,
   "current_abs_snapshot": {
     "url": "https://arxiv.org/abs/2506.13131",
@@ -22,6 +22,10 @@
     "content_type": "application/pdf",
     "response_bytes": 3525764,
     "response_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "artifact_path": "papers/2506.13131__AlphaEvolve.pdf",
+    "artifact_retained": true,
+    "artifact_bytes": 3525764,
+    "artifact_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
     "cached_pdf_response_bytes": 3525764,
     "cached_pdf_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
     "floating_pdf_matches_cached_pdf": true
@@ -41,6 +45,10 @@
     "floating_pdf_content_type",
     "floating_pdf_response_bytes",
     "floating_pdf_sha256",
+    "floating_pdf_artifact_path",
+    "floating_pdf_artifact_retained",
+    "floating_pdf_artifact_bytes",
+    "floating_pdf_artifact_sha256",
     "cached_pdf_response_bytes",
     "cached_pdf_sha256",
     "floating_pdf_matches_cached_pdf",
@@ -52,9 +60,8 @@
   ],
   "missing_evidence": {
     "full_current_abs_html_artifact": "not_recorded_locally",
-    "full_floating_pdf_response_artifact": "not_recorded_locally",
     "automated_current_version_refresh_gate": "not_recorded_locally",
     "cached_pdf_header_text_consistency": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that the floating arXiv abstract URL still resolves to version 1 and that the floating PDF digest matches the cached PDF, and is paired with the raw HTTP headers sidecar. It does not claim full current-abstract HTML retention, full floating-PDF response retention, an automated current-version refresh gate, or cached PDF header text consistency."
+  "claim_boundary": "This boundary records that the floating arXiv abstract URL still resolves to version 1 and that the retained floating PDF response artifact matches the cached PDF, and is paired with the raw HTTP headers sidecar. It does not claim full current-abstract HTML retention, full floating-abstract HTML retention, an automated current-version refresh gate, or cached PDF header text consistency."
 }

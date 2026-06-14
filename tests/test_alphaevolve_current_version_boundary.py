@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import (
     ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_SCHEMA,
     alphaevolve_current_version_boundary_record,
@@ -14,13 +16,15 @@ def test_alphaevolve_current_version_boundary_accepts_digest_record():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "current_v1_and_floating_pdf_digest_without_refresh_gate"
+        == "current_v1_and_floating_pdf_retained_without_refresh_gate"
     )
-    assert validation.required_evidence_field_count == 22
-    assert validation.missing_evidence_count == 4
+    assert validation.required_evidence_field_count == 26
+    assert validation.missing_evidence_count == 3
     assert boundary["schema"] == ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_SCHEMA
     assert boundary["current_abs_snapshot"]["resolved_current_version"] == 1
     assert boundary["floating_pdf_snapshot"]["floating_pdf_matches_cached_pdf"] is True
+    assert boundary["floating_pdf_snapshot"]["artifact_retained"] is True
+    assert boundary["floating_pdf_snapshot"]["artifact_path"] == "papers/2506.13131__AlphaEvolve.pdf"
 
 
 def test_alphaevolve_current_version_boundary_rejects_refresh_overclaim():
@@ -42,6 +46,26 @@ def test_alphaevolve_current_version_boundary_rejects_refresh_overclaim():
     assert "invalid_missing_evidence_automated_current_version_refresh_gate" in codes
 
 
+def test_alphaevolve_current_version_boundary_validates_retained_pdf_file(tmp_path):
+    repo_root = tmp_path
+    papers_dir = repo_root / "papers"
+    papers_dir.mkdir()
+    source_root = Path(__file__).resolve().parents[1]
+    (papers_dir / "2506.13131__AlphaEvolve.pdf").write_bytes(
+        (source_root / "papers" / "2506.13131__AlphaEvolve.pdf").read_bytes()
+    )
+    boundary_path = papers_dir / "alphaevolve_current_version_boundary.json"
+    boundary_path.write_text(
+        (source_root / "papers" / "alphaevolve_current_version_boundary.json").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+
+    validation = validate_alphaevolve_current_version_boundary(boundary_path)
+
+    assert validation.ok is True
+    assert validation.missing_evidence_count == 3
+
+
 def test_render_alphaevolve_current_version_boundary_summary_reports_shape():
     summary = render_alphaevolve_current_version_boundary_summary(
         alphaevolve_current_version_boundary_record()
@@ -50,8 +74,8 @@ def test_render_alphaevolve_current_version_boundary_summary_reports_shape():
     assert "AlphaEvolve current-version boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | current_v1_and_floating_pdf_digest_without_refresh_gate |"
+        "| boundary_status | current_v1_and_floating_pdf_retained_without_refresh_gate |"
         in summary
     )
-    assert "| required_evidence_field_count | 22 |" in summary
-    assert "| missing_evidence_count | 4 |" in summary
+    assert "| required_evidence_field_count | 26 |" in summary
+    assert "| missing_evidence_count | 3 |" in summary

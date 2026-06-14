@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -30,8 +31,9 @@ EXPECTED_FLOATING_PDF_BYTES = 3525764
 EXPECTED_FLOATING_PDF_SHA256 = (
     "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad"
 )
+EXPECTED_FLOATING_PDF_ARTIFACT_PATH = "papers/2506.13131__AlphaEvolve.pdf"
 EXPECTED_BOUNDARY_STATUS = (
-    "current_v1_and_floating_pdf_digest_without_refresh_gate"
+    "current_v1_and_floating_pdf_retained_without_refresh_gate"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "current_abs_url",
@@ -48,6 +50,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "floating_pdf_content_type",
     "floating_pdf_response_bytes",
     "floating_pdf_sha256",
+    "floating_pdf_artifact_path",
+    "floating_pdf_artifact_retained",
+    "floating_pdf_artifact_bytes",
+    "floating_pdf_artifact_sha256",
     "cached_pdf_response_bytes",
     "cached_pdf_sha256",
     "floating_pdf_matches_cached_pdf",
@@ -59,7 +65,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "full_current_abs_html_artifact": "not_recorded_locally",
-    "full_floating_pdf_response_artifact": "not_recorded_locally",
     "automated_current_version_refresh_gate": "not_recorded_locally",
     "cached_pdf_header_text_consistency": "not_recorded_locally",
 }
@@ -110,6 +115,10 @@ def alphaevolve_current_version_boundary_record() -> dict[str, Any]:
             "content_type": EXPECTED_FLOATING_PDF_CONTENT_TYPE,
             "response_bytes": EXPECTED_FLOATING_PDF_BYTES,
             "response_sha256": EXPECTED_FLOATING_PDF_SHA256,
+            "artifact_path": EXPECTED_FLOATING_PDF_ARTIFACT_PATH,
+            "artifact_retained": True,
+            "artifact_bytes": EXPECTED_FLOATING_PDF_BYTES,
+            "artifact_sha256": EXPECTED_FLOATING_PDF_SHA256,
             "cached_pdf_response_bytes": EXPECTED_FLOATING_PDF_BYTES,
             "cached_pdf_sha256": EXPECTED_FLOATING_PDF_SHA256,
             "floating_pdf_matches_cached_pdf": True,
@@ -118,10 +127,11 @@ def alphaevolve_current_version_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that the floating arXiv abstract URL still "
-            "resolves to version 1 and that the floating PDF digest matches the "
-            "cached PDF, and is paired with the raw HTTP headers sidecar. It "
+            "resolves to version 1 and that the retained floating PDF response "
+            "artifact matches the cached PDF, and is paired with the raw HTTP "
+            "headers sidecar. It "
             "does not claim full current-abstract HTML retention, full "
-            "floating-PDF response retention, an automated current-version "
+            "floating-abstract HTML retention, an automated current-version "
             "refresh gate, or cached PDF header text consistency."
         ),
     }
@@ -130,7 +140,7 @@ def alphaevolve_current_version_boundary_record() -> dict[str, Any]:
 def validate_alphaevolve_current_version_boundary(
     boundary: object | str | Path | None = None,
 ) -> AlphaEvolveCurrentVersionBoundaryValidation:
-    data, read_issues = _load_boundary(
+    data, read_issues, base_dir = _load_boundary(
         alphaevolve_current_version_boundary_record() if boundary is None else boundary
     )
     if read_issues:
@@ -155,12 +165,15 @@ def validate_alphaevolve_current_version_boundary(
         issues.append(_issue("claim_ready_overclaim", "current-version boundary must not claim automated refresh readiness"))
     _validate_current_abs_snapshot(data.get("current_abs_snapshot"), issues)
     _validate_floating_pdf_snapshot(data.get("floating_pdf_snapshot"), issues)
+    if base_dir is not None:
+        _validate_retained_floating_pdf_file(data.get("floating_pdf_snapshot"), base_dir, issues)
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
         or "raw HTTP headers sidecar" not in boundary_text
+        or "retained floating PDF response artifact" not in boundary_text
         or "automated current-version refresh gate" not in boundary_text
         or "cached PDF header text consistency" not in boundary_text
     ):
@@ -232,6 +245,10 @@ def _validate_floating_pdf_snapshot(
         "content_type": EXPECTED_FLOATING_PDF_CONTENT_TYPE,
         "response_bytes": EXPECTED_FLOATING_PDF_BYTES,
         "response_sha256": EXPECTED_FLOATING_PDF_SHA256,
+        "artifact_path": EXPECTED_FLOATING_PDF_ARTIFACT_PATH,
+        "artifact_retained": True,
+        "artifact_bytes": EXPECTED_FLOATING_PDF_BYTES,
+        "artifact_sha256": EXPECTED_FLOATING_PDF_SHA256,
         "cached_pdf_response_bytes": EXPECTED_FLOATING_PDF_BYTES,
         "cached_pdf_sha256": EXPECTED_FLOATING_PDF_SHA256,
         "floating_pdf_matches_cached_pdf": True,
@@ -241,24 +258,52 @@ def _validate_floating_pdf_snapshot(
             issues.append(_issue(f"invalid_floating_pdf_{key}", f"floating_pdf_snapshot.{key} must be {expected_value}"))
 
 
+def _validate_retained_floating_pdf_file(
+    value: object,
+    base_dir: Path,
+    issues: list[AlphaEvolveCurrentVersionBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        return
+    artifact_value = value.get("artifact_path")
+    if not isinstance(artifact_value, str):
+        return
+    artifact_path = base_dir / artifact_value
+    try:
+        pdf_bytes = artifact_path.read_bytes()
+    except OSError as exc:
+        issues.append(_issue("missing_floating_pdf_artifact", f"floating PDF artifact could not be read: {exc}"))
+        return
+    if len(pdf_bytes) != EXPECTED_FLOATING_PDF_BYTES:
+        issues.append(_issue("invalid_floating_pdf_artifact_bytes", f"floating PDF artifact must be {EXPECTED_FLOATING_PDF_BYTES} bytes"))
+    digest = hashlib.sha256(pdf_bytes).hexdigest()
+    if digest != EXPECTED_FLOATING_PDF_SHA256:
+        issues.append(_issue("invalid_floating_pdf_artifact_sha256", f"floating PDF artifact SHA-256 must be {EXPECTED_FLOATING_PDF_SHA256}"))
+    if not pdf_bytes.startswith(b"%PDF"):
+        issues.append(_issue("invalid_floating_pdf_artifact_magic", "floating PDF artifact must start with a PDF header"))
+
+
 def _load_boundary(
     boundary: object | str | Path,
-) -> tuple[dict[str, Any] | None, list[AlphaEvolveCurrentVersionBoundaryIssue]]:
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveCurrentVersionBoundaryIssue], Path | None]:
     if isinstance(boundary, dict):
-        return dict(boundary), []
+        return dict(boundary), [], None
     if isinstance(boundary, str) and boundary.strip().startswith("{"):
         try:
             data = json.loads(boundary)
         except json.JSONDecodeError as exc:
-            return None, [_issue("invalid_json", f"boundary JSON is invalid: {exc}")]
+            return None, [_issue("invalid_json", f"boundary JSON is invalid: {exc}")], None
+        base_dir = None
     else:
+        path = Path(boundary)
         try:
-            data = json.loads(Path(boundary).read_text(encoding="utf-8"))
+            data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
-            return None, [_issue("unreadable_boundary", f"boundary could not be loaded: {exc}")]
+            return None, [_issue("unreadable_boundary", f"boundary could not be loaded: {exc}")], None
+        base_dir = path.parent.parent
     if isinstance(data, dict):
-        return data, []
-    return None, [_issue("invalid_shape", "current-version boundary must be a JSON object")]
+        return data, [], base_dir
+    return None, [_issue("invalid_shape", "current-version boundary must be a JSON object")], None
 
 
 def _validate_required_fields(

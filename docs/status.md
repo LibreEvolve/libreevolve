@@ -67,9 +67,10 @@ Important limits:
   archive-retention sidecar now retains the full e-print archive and member
   inventory, and the license-page HTML retention sidecar now retains the
   Creative Commons license-page HTML artifact with byte/hash and
-  content-marker validation. No extraction-script artifact, full floating-PDF
-  response retention, cached-PDF header consistency record, or automated
-  refresh gate exists yet.
+  content-marker validation. The current-version sidecar validates that the
+  retained floating PDF artifact bytes/hash match the cached PDF. No
+  extraction-script artifact, cached-PDF header consistency record, or
+  automated refresh gate exists yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text
@@ -1246,9 +1247,10 @@ Important limits:
   preserve pinned source response evidence, and the TeX archive-retention
   sidecar retains the full e-print archive plus member inventory. The
   arXiv abstract snapshot and license-page HTML retention sidecars retain their
-  full HTML artifacts and validate byte/hash markers. This is not
-  extraction-script provenance, full floating-PDF response retention,
-  cached-PDF header consistency evidence, or an automated CI refresh gate.
+  full HTML artifacts and validate byte/hash markers; the current-version
+  sidecar validates the retained floating PDF artifact bytes/hash. This is not
+  extraction-script provenance, cached-PDF header consistency evidence, or an
+  automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

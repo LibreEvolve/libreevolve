@@ -330,7 +330,9 @@ def test_validate_paper_manifest_requires_arxiv_abstract_snapshot_at_repo_root(
 def test_validate_paper_manifest_accepts_alphaevolve_current_version_boundary(
     tmp_path,
 ):
-    row = _row(tmp_path)
+    source_root = Path(__file__).resolve().parents[1]
+    alphaevolve_pdf_bytes = (source_root / "papers" / "2506.13131__AlphaEvolve.pdf").read_bytes()
+    row = _row(tmp_path, content=alphaevolve_pdf_bytes)
     _write_manifest(tmp_path, [row])
     sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE
     sidecar.write_text(
@@ -375,6 +377,7 @@ def test_validate_paper_manifest_rejects_alphaevolve_current_version_boundary_dr
         "alphaevolve_current_version_boundary_invalid_floating_pdf_floating_pdf_matches_cached_pdf"
         in codes
     )
+    assert "alphaevolve_current_version_boundary_invalid_floating_pdf_artifact_sha256" in codes
     assert (
         "alphaevolve_current_version_boundary_invalid_missing_evidence_automated_current_version_refresh_gate"
         in codes

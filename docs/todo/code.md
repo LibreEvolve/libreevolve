@@ -2525,6 +2525,41 @@ sidecars, tests, and active TODOs.
     similarity search so AlphaEvolve-style program outputs attached to
     solutions are queryable beyond bounded current-run evidence.
 
+- [ ] Add read-side torn JSONL repair before trusting resume and inspection
+      streams.
+  - Spec evidence: AlphaEvolve-style long-running experiments depend on
+    durable, replayable controller/database state. A run artifact contract that
+    treats newline-terminated JSONL records as the unit of durable state should
+    apply consistently when writing, showing, restoring, and validating run
+    streams.
+  - Current evidence: `append_strict_jsonl()` calls
+    `repair_trailing_partial_jsonl()` before appending and documents that a
+    non-empty final fragment without a terminating newline is a torn append
+    from a prior interrupted write. The repair helper truncates even a
+    syntactically complete final JSON object without a newline and emits a
+    `jsonl_torn_final_record_repaired` diagnostic. In contrast,
+    `iter_strict_jsonl_objects()` reads byte lines and parses a final
+    newline-missing JSON object as a valid record. A local proof with
+    `history.jsonl` containing only
+    `{"id":"complete-but-unterminated"}` returned one record through
+    `iter_strict_jsonl_objects()`, while calling
+    `repair_trailing_partial_jsonl()` on the same bytes truncated the stream
+    and wrote a repair diagnostic.
+  - Current gap: `libreevolve show`, restore loaders, archive/history
+    replay helpers, and paper-facing strict JSONL summaries can accept a
+    final unterminated JSON object that the managed append policy would treat
+    as torn state. That makes read-side inspection and resume semantics weaker
+    than the write-side durability contract and can let interrupted final
+    rows influence selected best programs, archive restore bundles, or
+    runtime summaries before the next append repairs the stream.
+  - Required result: add read-side strict JSONL repair or fail-closed
+    validation for all run artifact readers, including `show`, archive
+    restore, controller-budget replay, manifest/runtime summary generation,
+    paper-facing row summaries, and plugin/context readers; route repair
+    diagnostics to the paired quarantine stream where available, preserve
+    retention-mode redaction, and add tests proving newline-missing final
+    records cannot be trusted during inspection or resume.
+
 - [ ] Extend exploration/exploitation sampling-balance reports into calibrated
   database-resurfacing analysis.
   - Spec evidence: AlphaEvolve Section 2.5 says the evolutionary database must

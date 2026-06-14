@@ -6646,7 +6646,7 @@
       "coverage_id": "implemented_benchmark_065",
       "bullet_ordinal": 65,
       "summary_sha256": "c67107e9db74d93b2e27d1bfd392474b20a3abf407d91030140a16bf7f873def",
-      "body_sha256": "17d6c265443a8a1a90f798e0600c02c5888dbef0ec50cff8e9f6a54379346fe5",
+      "body_sha256": "10ddee8342580ce223f7c9c86dc9de6a7156c35a9c41724842330dc9bc9fb2cf",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
@@ -6711,41 +6711,41 @@
         },
         {
           "term": "missing",
-          "bullet_text_char_start": 814,
-          "bullet_text_char_end": 821,
+          "bullet_text_char_start": 871,
+          "bullet_text_char_end": 878,
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
             "line_start": 2871,
             "line_end": 2871,
-            "bullet_text_char_start": 814,
-            "bullet_text_char_end": 821
+            "bullet_text_char_start": 871,
+            "bullet_text_char_end": 878
           }
         },
         {
           "term": "missing",
-          "bullet_text_char_start": 920,
-          "bullet_text_char_end": 927,
+          "bullet_text_char_start": 977,
+          "bullet_text_char_end": 984,
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
             "line_start": 2872,
             "line_end": 2872,
-            "bullet_text_char_start": 920,
-            "bullet_text_char_end": 927
+            "bullet_text_char_start": 977,
+            "bullet_text_char_end": 984
           }
         },
         {
           "term": "not",
-          "bullet_text_char_start": 1075,
-          "bullet_text_char_end": 1078,
+          "bullet_text_char_start": 1132,
+          "bullet_text_char_end": 1135,
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
             "line_start": 2874,
             "line_end": 2874,
-            "bullet_text_char_start": 1075,
-            "bullet_text_char_end": 1078
+            "bullet_text_char_start": 1132,
+            "bullet_text_char_end": 1135
           }
         }
       ],

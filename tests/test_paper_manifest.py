@@ -11390,6 +11390,37 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     assert inventory["rows"][0]["local_artifacts_mentioned_in_todo_evidence"] == [
         "libreevolve/core/loop.py"
     ]
+    active_content_records = inventory["rows"][0]["active_todo_content_records"]
+    completed_content_records = inventory["rows"][0]["completed_todo_content_records"]
+    active_evidence_text = (
+        f"- [ ] Track source-specific gap for `{row['id']}`.\n"
+        "  - Current gap: temporary test ledger entry for `libreevolve/core/loop.py`.\n"
+        "  - Required result: keep the temporary fixture source-specific.\n"
+    )
+    active_artifact_start = active_evidence_text.find("libreevolve/core/loop.py")
+    active_artifact_end = active_artifact_start + len("libreevolve/core/loop.py")
+    expected_active_artifact_record = {
+        "path": "libreevolve/core/loop.py",
+        "evidence_text_char_start": active_artifact_start,
+        "evidence_text_char_end": active_artifact_end,
+    }
+    assert [
+        record["mentioned_local_artifact_records"] for record in active_content_records
+    ] == [[expected_active_artifact_record] for _record in active_content_records]
+    completed_evidence_text = (
+        f"- [x] Completed fixture evidence for `{row['id']}` in "
+        "`libreevolve/core/loop.py`.\n"
+    )
+    completed_artifact_start = completed_evidence_text.find("libreevolve/core/loop.py")
+    completed_artifact_end = completed_artifact_start + len("libreevolve/core/loop.py")
+    assert completed_content_records[0]["mentioned_local_artifact_records"] == [
+        {
+            "path": "libreevolve/core/loop.py",
+            "evidence_text_char_start": completed_artifact_start,
+            "evidence_text_char_end": completed_artifact_end,
+        }
+    ]
+    assert inventory["todo_content_artifact_mention_record_count"] == len(active_content_records) + 1
     assert inventory["rows"][0]["local_artifacts_missing_from_todo_evidence"] == []
     assert inventory["rows"][0]["all_local_artifacts_linked_from_todo_evidence"] is True
     assert (

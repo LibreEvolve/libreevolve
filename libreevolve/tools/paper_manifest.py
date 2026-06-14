@@ -1662,6 +1662,11 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             for path in row["local_artifacts_missing_from_todo_evidence"]
         }
     )
+    todo_content_artifact_mention_record_count = sum(
+        len(record["mentioned_local_artifact_records"])
+        for row in inventory_rows
+        for record in [*row["active_todo_content_records"], *row["completed_todo_content_records"]]
+    )
     phrase_local_artifacts_missing_from_todo = sorted(
         {
             path
@@ -1725,6 +1730,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             else "no_todo_evidence_paths_referenced"
         ),
         "local_artifacts_missing_from_todo_evidence": local_artifacts_missing_from_todo,
+        "todo_content_artifact_mention_record_count": todo_content_artifact_mention_record_count,
         "todo_content_evidence_status": (
             "all_row_local_artifacts_mentioned_in_todo_evidence"
             if unique_local_artifacts and not local_artifacts_missing_from_todo
@@ -1756,7 +1762,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "source line, TODO evidence path source offsets and existence "
             "records, and status-cell phrase hashes with character offsets "
             "and candidate evidence links plus row/phrase-specific TODO content "
-            "artifact-mention records and absence-signal source offsets. It "
+            "artifact-mention source offsets and absence-signal source offsets. It "
             "does not claim phrase-level "
             "status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
@@ -3877,6 +3883,10 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         (
             "local_artifacts_missing_from_todo_evidence",
             "status claim inventory TODO content local artifact mentions drifted",
+        ),
+        (
+            "todo_content_artifact_mention_record_count",
+            "status claim inventory TODO content local artifact mention count drifted",
         ),
         ("todo_content_evidence_status", "status claim inventory TODO content status drifted"),
         (
@@ -8631,9 +8641,11 @@ def _status_todo_evidence_content_records(
                         matching_blocks.append(block)
                         matched_tokens.update(block_tokens)
         evidence_text = "\n".join(matching_blocks)
-        mentioned_artifacts = sorted(
-            artifact for artifact in row_local_artifact_paths if artifact in evidence_text
+        mentioned_artifact_records = _todo_content_local_artifact_mention_records(
+            evidence_text,
+            row_local_artifact_paths,
         )
+        mentioned_artifacts = sorted({record["path"] for record in mentioned_artifact_records})
         missing_artifacts = sorted(set(row_local_artifact_paths) - set(mentioned_artifacts))
         records.append(
             {
@@ -8642,6 +8654,7 @@ def _status_todo_evidence_content_records(
                 "readable": readable,
                 "row_source_token_match_count": len(matched_tokens),
                 "row_specific_block_count": len(matching_blocks),
+                "mentioned_local_artifact_records": mentioned_artifact_records,
                 "mentioned_local_artifact_paths": mentioned_artifacts,
                 "missing_local_artifact_paths": missing_artifacts,
                 "content_evidence_status": (
@@ -8654,6 +8667,36 @@ def _status_todo_evidence_content_records(
             }
         )
     return records
+
+
+def _todo_content_local_artifact_mention_records(
+    evidence_text: str,
+    row_local_artifact_paths: list[str],
+) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for artifact in row_local_artifact_paths:
+        start = 0
+        while True:
+            index = evidence_text.find(artifact, start)
+            if index < 0:
+                break
+            end = index + len(artifact)
+            records.append(
+                {
+                    "path": artifact,
+                    "evidence_text_char_start": index,
+                    "evidence_text_char_end": end,
+                }
+            )
+            start = end
+    return sorted(
+        records,
+        key=lambda record: (
+            record["evidence_text_char_start"],
+            record["evidence_text_char_end"],
+            record["path"],
+        ),
+    )
 
 
 def _status_table_status_cells(text: str) -> dict[str, str]:

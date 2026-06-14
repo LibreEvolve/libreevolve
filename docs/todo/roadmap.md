@@ -317,3 +317,38 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifacts/sidecars/TODOs; and validate README, ROADMAP, papers, evaluator
     docs, and runtime metadata against implying full cascade readiness before
     the checklist is satisfied.
+
+- [ ] Add ROADMAP multi-objective search readiness criteria.
+  - Spec evidence: the `2. Strengthen multi-objective search` section defines
+    whether LibreEvolve's search is genuinely multi-objective or still a
+    scalar-primary archive with bounded diagnostic overlays. ROADMAP should
+    state what evidence promotes metric reports, prompt-diverse inspiration,
+    duplicate-work memory, descriptor models, and metric-specific reports into
+    an AlphaEvolve-style multi-objective search system.
+  - Current evidence: ROADMAP records cross-run paper metric reports, averaged
+    normalized declared metrics, bounded Pareto and metric-cell retained
+    overlays, `objective_archive_policy` readiness snapshots, metric-diverse
+    inspiration reports, sampling-balance reports, run-local exact-workspace
+    evaluator cache evidence, descriptor-model snapshots, selected-row `show`
+    archive objective-vector summaries, manifest-level metric archive
+    summaries, and sidecars for metric-diverse prompts, sampling balance,
+    duplicate-work policy, descriptor readiness, MAP-Elites illumination, and
+    objective-archive boundaries. Active code and paper TODOs already track
+    primary Pareto/frontier archive replacement, durable metric-specific
+    optimization, durable resurfacing indexes, durable duplicate-work memory,
+    behavior descriptor models, MAP-Elites parity, and benchmark prompt-policy
+    evidence.
+  - Current gap: there is no section-level multi-objective readiness rubric,
+    archive-policy matrix, descriptor/memory capability checklist, or
+    stale-readiness detector tying those pieces together, so bounded overlays,
+    prompt-visible diversity reports, or run-local duplicate caches could be
+    mistaken for full multi-objective search parity.
+  - Required result: add ROADMAP multi-objective criteria that classify each
+    objective surface by primary/archive policy, metric normalization,
+    Pareto/frontier support, durable cross-run storage, parent/inspiration
+    balance evidence, descriptor authority, duplicate-work memory scope,
+    metric-specific CLI/report drill-downs, benchmark comparison evidence, and
+    overclaim status; map each criterion to code/tests/runtime
+    artifacts/sidecars/TODOs; and validate README, ROADMAP, papers, archive
+    reports, and runtime metadata against implying full multi-objective
+    readiness before the matrix is satisfied.

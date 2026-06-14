@@ -580,6 +580,38 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     require updates whenever provider examples or supported backend families
     change.
 
+## Release Docs
+
+- [ ] Add release-checklist documentation drift evidence.
+  - Spec evidence: `docs/release-checklist.md` is a local release-smoke
+    contract for build, package-content, install-from-wheel, CLI-smoke,
+    provenance-file, and artifact-preservation evidence. AlphaEvolve-alignment
+    work depends on keeping release and reproducibility wording separate from
+    unverifiable signed-release, published-index, or maintainer-approved
+    release claims.
+  - Current evidence: `docs/development.md`, `docs/run-artifacts.md`,
+    ROADMAP, `papers/README.md`, `papers/ci_workflow_coverage_boundary.json`,
+    and `papers/release_artifact_reproducibility_boundary.json` all refer to
+    the release-smoke checklist and its unsigned/unpublished scope. Tests in
+    `tests/test_agents_docs.py` assert that the GitHub Actions
+    `release_artifact` job builds wheel/sdist artifacts, writes
+    `dist/release_artifact_provenance.json`, uploads
+    `libreevolve-release-smoke-artifacts`, and that the checklist names the
+    local smoke requirements.
+  - Current gap: there is no page-specific inventory or drift validator that
+    maps each `docs/release-checklist.md` bullet to the workflow step,
+    release-provenance tool, package-content check, CLI smoke, uploaded
+    artifact name, paper boundary sidecar, and active code/paper TODO owner.
+    A future release workflow, artifact name, provenance schema, local command,
+    or signed/published-release boundary could drift while the checklist still
+    reads as authoritative.
+  - Required result: add a release-checklist evidence map and validation gate
+    that parses the checklist bullets, verifies workflow/tool/test/sidecar
+    anchors, distinguishes local smoke evidence from signed or index-published
+    release proof, and requires README/docs/TODO updates whenever release
+    artifact generation, provenance schema, upload policy, or release-boundary
+    wording changes.
+
 ## Contributing
 
 - [ ] Add README contributor-gate and secret-scan evidence mapping.

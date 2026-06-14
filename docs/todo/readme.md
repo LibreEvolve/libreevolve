@@ -5,6 +5,35 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## AlphaEvolve Comparison Table
 
+## Documentation Map
+
+- [ ] Add README documentation-map routing and drift evidence.
+  - Spec evidence: the README's `Documentation Map` is a reader-routing
+    contract for where setup, operational details, implementation status,
+    roadmap priorities, paper-derived evidence, and TODO ledgers belong. For
+    AlphaEvolve-alignment work, those route descriptions should stay
+    synchronized with the actual documentation tree and should prevent claims
+    from being hidden in the wrong surface.
+  - Current evidence: README links `docs/README.md`, architecture,
+    configuration, backends, plugins, run artifacts, status, ROADMAP,
+    `papers/README.md`, and `docs/todo/`, and says setup belongs in the root
+    README, operational details in `docs/`, paper-derived evidence in
+    `papers/`, and active/completed gap tracking in `docs/todo/` plus
+    `ROADMAP.md`. The broad README semantic-claim TODO and
+    `papers/documentation_truthfulness_boundary.json` already track
+    cross-document truthfulness and docs-routing at a high level.
+  - Current gap: no README-owned validator or sidecar parses the Documentation
+    Map, verifies every linked target exists, checks that each route summary
+    matches the target document's purpose, flags newly added major docs that
+    need routing, or detects content placed in the wrong surface such as
+    paper-derived claims outside `papers/` or implementation priorities
+    outside ROADMAP/TODO ledgers.
+  - Required result: add README documentation-map evidence that inventories
+    each routed document, validates link existence and purpose text, compares
+    route summaries with target headings/front matter or declared scope, flags
+    missing major docs, and checks that README/docs/papers/ROADMAP/TODO content
+    boundaries remain synchronized whenever documentation structure changes.
+
 ## Requirements
 
 - [ ] Add durable README install and requirements smoke evidence.

@@ -5692,6 +5692,37 @@ sidecars, tests, and active TODOs.
     policy for validators, with manifest-visible evidence and tests proving the
     intended boundary.
 
+- [ ] Bind evaluator artifact copy-out to stable source-file identity.
+  - Spec evidence: AlphaEvolve-style evaluator artifacts are experiment
+    evidence; copied files should be traceable to the exact candidate-run
+    outputs that were selected for retention, not only to a best-effort
+    post-copy content hash.
+  - Current evidence: `_collect_evaluator_artifacts()` builds a path list from
+    `_matching_artifact_paths()`, skips symlinks and path escapes, prechecks
+    `path.stat().st_size`, reads with `path.read_bytes()`, optionally redacts
+    text, writes the stored bytes under the evaluator-artifact directory, and
+    records path fields, source/stored byte counts, content excerpts, redaction
+    metadata, and a SHA-256 hash of the stored bytes. Completed artifact
+    hardening already covers path confinement, safe glob selectors, symlink
+    skip behavior, source byte/file limits, redaction, bounded excerpts, and
+    ordinary copy-out tests.
+  - Current gap: artifact copy-out does not record or validate stable
+    pre/post source identity across match, stat, read, redaction, and store.
+    It does not compare post-read metadata, detect replacement/truncation/
+    growth between `stat()` and `read_bytes()`, persist platform file-id/
+    device/inode/link-count/mtime evidence where available, distinguish
+    hardlink/shared-file identity risks, or test artifact mutation during
+    copy-out. The copied artifact is bounded and hashed after storage, but it
+    is not fully provenance-bound to the exact source file identity observed at
+    selection time.
+  - Required result: add a versioned artifact source-identity contract that
+    records sanitized pre/post source metadata, validates unchanged identity,
+    size, and mtime or retries/rejects on drift, handles platform-limited
+    fields, rejects or flags hardlink/shared identities where needed, updates
+    runtime artifact indexes and prompt-visible metadata, and adds tests for
+    stat/read drift, replacement, truncation/growth, hardlink cases,
+    redaction, and byte-budget behavior.
+
 - [ ] Extend run-artifact validator-boundary consistency checks beyond CLI
       inspection.
   - Spec evidence: AlphaEvolve-scale evaluation provenance should make the

@@ -2662,6 +2662,13 @@ Implemented:
   edit sequences, per-edit reference-check outputs, randomized input coverage,
   tolerance/failure-policy artifacts, kernel/pre/postprocessing attribution,
   final expert all-input confirmation, or expert/owner signoff files.
+- `papers/compiler_stack_context_boundary.json`: FlashAttention compiler-stack
+  context sidecar for AlphaEvolve Section 3.3.4. It records that
+  `compiler_stack_provenance` metadata is not evidence of workload/model
+  records, FlashAttention/Pallas source artifacts, JAX pre/postprocessing
+  wrappers, XLA lowering-stage outputs, hardware-target records, lowered-IR
+  artifacts, memory-access/scheduling decision evidence, or complete stack
+  artifact refs.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

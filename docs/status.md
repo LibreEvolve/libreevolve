@@ -1153,7 +1153,9 @@ Important limits:
   XLA lowering stage, hardware target, lowered-IR hash, optimization decision
   category, and artifact refs, not real Transformer/inference configuration
   records, Pallas source snapshots, JAX wrapper artifacts, XLA stage outputs,
-  hardware-target records, lowered-IR files, or decision-evidence artifacts.
+  hardware-target records, lowered-IR files, or decision-evidence artifacts;
+  that stack-context boundary is tracked by
+  `papers/compiler_stack_context_boundary.json`.
 - Compiler adoption records validate adoption-path classification, target
   compiler/version/pass identity, bounded use-case scope, optimization artifact
   identity/hash, integration owner, reviewer scope, adoption state,

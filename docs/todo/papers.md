@@ -4796,6 +4796,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     workload/model configuration, FlashAttention/Pallas kernel identity, JAX
     pre/postprocessing boundaries, XLA lowering stage, hardware target,
     lowered-IR hash, optimization decision category, and artifact refs.
+    `papers/compiler_stack_context_boundary.json` now keeps this as a
+    paper-facing stack-metadata versus artifact boundary.
   - Required result: add real paper/report artifacts for FlashAttention
     compiler stack context: Transformer/model or inference configuration
     records, FlashAttention/Pallas kernel source files, JAX pre/postprocessing

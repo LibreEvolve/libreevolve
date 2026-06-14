@@ -538,6 +538,10 @@ from libreevolve.problems.benchmarks.compiler_ir_reference_check_boundary import
     compiler_ir_reference_check_boundary_record,
     validate_compiler_ir_reference_check_boundary,
 )
+from libreevolve.problems.benchmarks.compiler_stack_context_boundary import (
+    compiler_stack_context_boundary_record,
+    validate_compiler_stack_context_boundary,
+)
 from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
     gemini_provider_parity_boundary_record,
     validate_gemini_provider_parity_boundary,
@@ -683,6 +687,7 @@ HARDWARE_RTL_EDA_EVIDENCE_BOUNDARY_FILE = "papers/hardware_rtl_eda_evidence_boun
 HARDWARE_REWRITE_ARTIFACT_BOUNDARY_FILE = "papers/hardware_rewrite_artifact_boundary.json"
 HARDWARE_CONTRIBUTION_ATTRIBUTION_BOUNDARY_FILE = "papers/hardware_contribution_attribution_boundary.json"
 COMPILER_IR_REFERENCE_CHECK_BOUNDARY_FILE = "papers/compiler_ir_reference_check_boundary.json"
+COMPILER_STACK_CONTEXT_BOUNDARY_FILE = "papers/compiler_stack_context_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_FILE = "papers/kernel_tiling_shape_corpus_boundary.json"
 PALLAS_WORKFLOW_BASELINE_BOUNDARY_FILE = "papers/pallas_workflow_baseline_boundary.json"
@@ -1210,6 +1215,7 @@ def validate_paper_manifest(
     issues.extend(_validate_hardware_rewrite_artifact_boundary(root_path))
     issues.extend(_validate_hardware_contribution_attribution_boundary(root_path))
     issues.extend(_validate_compiler_ir_reference_check_boundary(root_path))
+    issues.extend(_validate_compiler_stack_context_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_kernel_tiling_shape_corpus_boundary(root_path))
     issues.extend(_validate_pallas_workflow_baseline_boundary(root_path))
@@ -4536,6 +4542,38 @@ def _validate_compiler_ir_reference_check_boundary(root_path: Path) -> list[Pape
             f"compiler_ir_reference_check_boundary_{issue.code}",
             issue.message,
             "compiler_ir_reference_check",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_compiler_stack_context_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / COMPILER_STACK_CONTEXT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = compiler_stack_context_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "compiler_stack_context_boundary_manifest_missing",
+                    (
+                        f"{COMPILER_STACK_CONTEXT_BOUNDARY_FILE} must emit "
+                        "FlashAttention compiler-stack metadata versus artifact scope"
+                    ),
+                    "compiler_stack_context",
+                )
+            ]
+    report = validate_compiler_stack_context_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"compiler_stack_context_boundary_{issue.code}",
+            issue.message,
+            "compiler_stack_context",
         )
         for issue in report.issues
     ]

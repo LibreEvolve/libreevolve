@@ -480,6 +480,12 @@ from libreevolve.problems.benchmarks.compiler_ir_reference_check_boundary import
     render_compiler_ir_reference_check_boundary_summary,
     validate_compiler_ir_reference_check_boundary,
 )
+from libreevolve.problems.benchmarks.compiler_stack_context_boundary import (
+    COMPILER_STACK_CONTEXT_BOUNDARY_SCHEMA,
+    compiler_stack_context_boundary_record,
+    render_compiler_stack_context_boundary_summary,
+    validate_compiler_stack_context_boundary,
+)
 from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
     GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA,
     gemini_provider_parity_boundary_record,
@@ -960,6 +966,7 @@ __all__ = [
     "CODEBASE_SCALE_BENCHMARK_BOUNDARY_SCHEMA",
     "CODEEVOLVE_BOUNDARY_SCHEMA",
     "COMPILER_IR_REFERENCE_CHECK_BOUNDARY_SCHEMA",
+    "COMPILER_STACK_CONTEXT_BOUNDARY_SCHEMA",
     "SORTING_NETWORK_REDISCOVERY_BOUNDARY_SCHEMA",
     "TABLE1_CAPABILITY_EXHIBIT_BOUNDARY_SCHEMA",
     "SELF_IMPROVEMENT_DISTILLATION_BOUNDARY_SCHEMA",
@@ -1119,6 +1126,7 @@ __all__ = [
     "gemini_self_training_loop_boundary_record",
     "global_nlp_optimization_boundary_record",
     "compiler_ir_reference_check_boundary_record",
+    "compiler_stack_context_boundary_record",
     "hardware_contribution_attribution_boundary_record",
     "hardware_rtl_eda_evidence_boundary_record",
     "hardware_rewrite_artifact_boundary_record",
@@ -1310,6 +1318,7 @@ __all__ = [
     "render_gemini_self_training_loop_boundary_summary",
     "render_gigaevo_framework_boundary_summary",
     "render_compiler_ir_reference_check_boundary_summary",
+    "render_compiler_stack_context_boundary_summary",
     "render_hardware_contribution_attribution_boundary_summary",
     "render_hardware_rtl_eda_evidence_boundary_summary",
     "render_hardware_rewrite_artifact_boundary_summary",
@@ -1428,6 +1437,7 @@ __all__ = [
     "validate_fault2flow_boundary",
     "validate_global_nlp_optimization_boundary",
     "validate_compiler_ir_reference_check_boundary",
+    "validate_compiler_stack_context_boundary",
     "validate_hardware_contribution_attribution_boundary",
     "validate_hardware_rtl_eda_evidence_boundary",
     "validate_hardware_rewrite_artifact_boundary",

@@ -2158,6 +2158,10 @@ resumed-trace proof are still open.
   metadata cannot stand in for candidate edit sequences, randomized input
   coverage, reference-check outputs, tolerance/failure logs, or expert
   all-input signoff files.
+  `papers/compiler_stack_context_boundary.json` separately preserves the
+  FlashAttention/Pallas/JAX/XLA stack boundary, so compiler-stack metadata
+  cannot stand in for workload/model records, Pallas source, JAX wrappers,
+  XLA stage outputs, hardware-target records, lowered IR, or decision evidence.
   Ready hardware reports now require
   `hardware_rtl_eda_provenance` with HDL/RTL source boundaries, synthesis/PPA
   provenance, timing/power/area constraints, equivalence/formal verification,

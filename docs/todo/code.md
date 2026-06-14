@@ -4438,6 +4438,8 @@ sidecars, tests, and active TODOs.
     workload/model configuration, FlashAttention/Pallas kernel identity, JAX
     pre/postprocessing boundaries, XLA lowering stage, hardware target,
     lowered-IR hash, optimization decision category, and artifact refs.
+    `papers/compiler_stack_context_boundary.json` now keeps this metadata
+    separate from real FlashAttention/Pallas/JAX/XLA stack artifacts.
   - Required result: connect compiler/kernel fixtures to real emitted
     FlashAttention stack artifacts: Pallas kernel source snapshots, JAX
     pre/postprocessing wrapper artifacts, XLA IR-stage outputs, hardware-target

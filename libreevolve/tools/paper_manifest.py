@@ -1813,12 +1813,14 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         source_token_match_records = _benchmark_source_token_match_records(
             text,
             bullet["line_start"],
+            bullet["file_text_char_start"],
             manifest_rows,
         )
         source_ids_mentioned = sorted({record["row_id"] for record in source_token_match_records})
         local_artifact_mention_records = _benchmark_local_artifact_mention_records(
             text,
             bullet["line_start"],
+            bullet["file_text_char_start"],
         )
         local_artifacts = sorted({record["path"] for record in local_artifact_mention_records})
         local_artifact_records = _local_artifact_path_records(root_path, local_artifacts)
@@ -1828,6 +1830,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         limitation_signal_records = _benchmark_limitation_signal_records(
             text,
             bullet["line_start"],
+            bullet["file_text_char_start"],
         )
         limitation_signal_terms = list(
             dict.fromkeys(record["term"] for record in limitation_signal_records)
@@ -1918,6 +1921,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         "source_token_match_record_count": benchmark_source_token_match_record_count,
         "source_token_coverage_status": "source_tokens_structurally_recorded_without_semantic_verifier",
         "implemented_bullet_source_span_status": "file_character_offsets_recorded",
+        "implemented_bullet_mention_source_span_status": "file_character_offsets_recorded",
         "unique_local_artifact_paths": unique_local_artifacts,
         "unique_local_artifact_count": len(unique_local_artifacts),
         "local_artifact_mention_record_count": local_artifact_mention_record_count,
@@ -4070,6 +4074,10 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
         ("source_token_match_record_count", "benchmark coverage source-token match count drifted"),
         ("source_token_coverage_status", "benchmark coverage source-token status drifted"),
         ("implemented_bullet_source_span_status", "benchmark coverage bullet source-span status drifted"),
+        (
+            "implemented_bullet_mention_source_span_status",
+            "benchmark coverage mention source-span status drifted",
+        ),
         ("unique_local_artifact_paths", "benchmark coverage unique local artifact paths drifted"),
         ("unique_local_artifact_count", "benchmark coverage unique local artifact count drifted"),
         ("local_artifact_mention_record_count", "benchmark coverage local artifact mention count drifted"),
@@ -9278,7 +9286,11 @@ def _read_implemented_benchmark_bullet_records(root: Path) -> tuple[list[dict[st
     return records, []
 
 
-def _benchmark_local_artifact_mention_records(text: str, bullet_line_start: int) -> list[dict[str, Any]]:
+def _benchmark_local_artifact_mention_records(
+    text: str,
+    bullet_line_start: int,
+    bullet_file_start: int,
+) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for match in LOCAL_ARTIFACT_PATH_RE.finditer(text):
         path = match.group(0).strip("`")
@@ -9296,6 +9308,8 @@ def _benchmark_local_artifact_mention_records(text: str, bullet_line_start: int)
                     "line_end": bullet_line_start + text.count("\n", 0, end),
                     "bullet_text_char_start": start,
                     "bullet_text_char_end": end,
+                    "file_text_char_start": bullet_file_start + start,
+                    "file_text_char_end": bullet_file_start + end,
                 },
             }
         )
@@ -9305,6 +9319,7 @@ def _benchmark_local_artifact_mention_records(text: str, bullet_line_start: int)
 def _benchmark_source_token_match_records(
     text: str,
     bullet_line_start: int,
+    bullet_file_start: int,
     manifest_rows: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
@@ -9332,6 +9347,8 @@ def _benchmark_source_token_match_records(
                             "line_end": bullet_line_start + text.count("\n", 0, end),
                             "bullet_text_char_start": index,
                             "bullet_text_char_end": end,
+                            "file_text_char_start": bullet_file_start + index,
+                            "file_text_char_end": bullet_file_start + end,
                         },
                     }
                 )
@@ -9347,7 +9364,11 @@ def _benchmark_source_token_match_records(
     )
 
 
-def _benchmark_limitation_signal_records(text: str, bullet_line_start: int) -> list[dict[str, Any]]:
+def _benchmark_limitation_signal_records(
+    text: str,
+    bullet_line_start: int,
+    bullet_file_start: int,
+) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for match in BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE.finditer(text):
         term = re.sub(r"\s+", " ", match.group(0).strip().lower())
@@ -9367,6 +9388,8 @@ def _benchmark_limitation_signal_records(text: str, bullet_line_start: int) -> l
                     "line_end": bullet_line_start + text.count("\n", 0, end),
                     "bullet_text_char_start": start,
                     "bullet_text_char_end": end,
+                    "file_text_char_start": bullet_file_start + start,
+                    "file_text_char_end": bullet_file_start + end,
                 },
             }
         )

@@ -12188,6 +12188,8 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
                 "line_end": bullet["source_span"]["line_start"],
                 "bullet_text_char_start": source_token_start,
                 "bullet_text_char_end": source_token_end,
+                "file_text_char_start": bullet_file_start + source_token_start,
+                "file_text_char_end": bullet_file_start + source_token_end,
             },
         }
     ]
@@ -12203,6 +12205,8 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
                 "line_end": bullet["source_span"]["line_start"],
                 "bullet_text_char_start": artifact_start,
                 "bullet_text_char_end": artifact_end,
+                "file_text_char_start": bullet_file_start + artifact_start,
+                "file_text_char_end": bullet_file_start + artifact_end,
             },
         }
     ]
@@ -12218,6 +12222,12 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     assert bullet["limitation_signal_records"][0]["bullet_text_char_start"] == bullet_text.find("but")
     assert bullet["limitation_signal_records"][1]["bullet_text_char_start"] == bullet_text.find("not")
     assert bullet["limitation_signal_records"][0]["source_span"]["line_start"] == bullet["source_span"]["line_start"]
+    assert bullet["limitation_signal_records"][0]["source_span"]["file_text_char_start"] == (
+        bullet_file_start + bullet_text.find("but")
+    )
+    assert bullet["limitation_signal_records"][1]["source_span"]["file_text_char_start"] == (
+        bullet_file_start + bullet_text.find("not")
+    )
     assert bullet["has_limitation_boundary"] is True
     assert bullet["limitation_signal_status"] == "limitation_signals_structurally_classified"
     assert inventory["source_ids_mentioned"] == [row["id"]]
@@ -12228,6 +12238,7 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
         == "source_tokens_structurally_recorded_without_semantic_verifier"
     )
     assert inventory["implemented_bullet_source_span_status"] == "file_character_offsets_recorded"
+    assert inventory["implemented_bullet_mention_source_span_status"] == "file_character_offsets_recorded"
     assert inventory["unique_local_artifact_count"] == 1
     assert inventory["local_artifact_mention_record_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []

@@ -836,7 +836,7 @@ is not yet an AlphaEvolve reproduction.
   mention source offsets plus structural absence-signal source-offset classification, while
   `papers/benchmark_coverage_inventory.json` records structural implemented
   benchmark coverage bullets plus file character offsets, source-token match
-  offsets, referenced local artifact mention source offsets/existence checks, and limitation-signal term/source-offset
+  file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
   This is not an exhaustive source-span coverage matrix,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,

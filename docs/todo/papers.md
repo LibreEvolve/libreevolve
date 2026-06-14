@@ -40,8 +40,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     summary/body hashes, local artifact mention source offsets, local artifact
     existence records, 116
     unique local artifact paths, zero missing referenced local artifacts,
-    source-token match offsets for 3 manifest source IDs across 15 records,
-    limitation-signal terms/source offsets/counts, and contradiction flags.
+    source-token match file offsets for 3 manifest source IDs across 15
+    records, limitation-signal term file offsets/counts, and contradiction flags.
     The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
     missing evidence for status-cell semantic verifier, implemented-benchmark

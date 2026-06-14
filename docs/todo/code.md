@@ -51,8 +51,8 @@ sidecars, tests, and active TODOs.
     records, and artifact-mention source offsets plus structural absence-signal
     source-offset classification.
     `papers/benchmark_coverage_inventory.json` records structural evidence,
-    implemented-bullet file character offsets, source-token match offsets,
-    local artifact mention source offsets and existence checks, and limitation-signal term/source-offset classification for implemented
+    implemented-bullet file character offsets, source-token match file offsets,
+    local artifact mention file offsets and existence checks, and limitation-signal term/source-offset classification for implemented
     benchmark coverage bullets.
     The boundary still explicitly keeps
     per-phrase evidence-link sufficiency, status-cell semantic verification,
@@ -68,8 +68,8 @@ sidecars, tests, and active TODOs.
     source tokens, row-specific TODO block hashes/source offsets, artifact
     mention source offsets, phrase-level TODO block records, TODO evidence
     path source offsets, and absence-signal source offsets, or implemented-benchmark
-    coverage qualifiers beyond referenced source-token match offsets, artifact
-    mention/existence/source offsets and structural limitation-signal
+    coverage qualifiers beyond referenced source-token match file offsets,
+    artifact mention/existence/source offsets and structural limitation-signal
     terms/source offsets; no absence-sentence freshness verifier proves
     structurally detected absence phrases are still current; and no generated
     code-audit report proves that all implemented and missing

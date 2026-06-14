@@ -287,7 +287,7 @@ def test_validate_paper_manifest_rejects_arxiv_abstract_snapshot_drift(tmp_path)
     record = paper_manifest.alphaevolve_arxiv_abstract_snapshot_record()
     record["html_snapshot"]["bytes"] = 1
     record["normalized_metadata"]["subject_codes"] = ["cs.AI"]
-    record["missing_evidence"]["current_version_resolution_snapshot"] = "recorded"
+    record["missing_evidence"]["cached_pdf_header_consistency_record"] = "recorded"
     sidecar = tmp_path / paper_manifest.ARXIV_ABSTRACT_SNAPSHOT_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -298,7 +298,7 @@ def test_validate_paper_manifest_rejects_arxiv_abstract_snapshot_drift(tmp_path)
     assert "alphaevolve_arxiv_abstract_snapshot_invalid_html_snapshot_bytes" in codes
     assert "alphaevolve_arxiv_abstract_snapshot_invalid_metadata_subject_codes" in codes
     assert (
-        "alphaevolve_arxiv_abstract_snapshot_invalid_missing_evidence_current_version_resolution_snapshot"
+        "alphaevolve_arxiv_abstract_snapshot_invalid_missing_evidence_cached_pdf_header_consistency_record"
         in codes
     )
 
@@ -316,6 +316,75 @@ def test_validate_paper_manifest_requires_arxiv_abstract_snapshot_at_repo_root(
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "alphaevolve_arxiv_abstract_snapshot_manifest_missing" in codes
+
+
+def test_validate_paper_manifest_accepts_alphaevolve_current_version_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_current_version_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_current_version_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_current_version_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "current_version_refresh_gate_ready"
+    record["current_abs_snapshot"]["resolved_current_version"] = 2
+    record["floating_pdf_snapshot"]["floating_pdf_matches_cached_pdf"] = False
+    record["missing_evidence"]["automated_current_version_refresh_gate"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_current_version_boundary_claim_ready_overclaim" in codes
+    assert "alphaevolve_current_version_boundary_invalid_boundary_status" in codes
+    assert (
+        "alphaevolve_current_version_boundary_invalid_current_abs_resolved_current_version"
+        in codes
+    )
+    assert (
+        "alphaevolve_current_version_boundary_invalid_floating_pdf_floating_pdf_matches_cached_pdf"
+        in codes
+    )
+    assert (
+        "alphaevolve_current_version_boundary_invalid_missing_evidence_automated_current_version_refresh_gate"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_current_version_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_current_version_boundary_manifest_missing" in codes
 
 
 def test_validate_paper_manifest_accepts_alphaevolve_datacite_doi_boundary(

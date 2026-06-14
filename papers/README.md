@@ -2297,12 +2297,15 @@ Implemented:
   version. `papers/alphaevolve_tex_source_boundary.json` now pins the arXiv
   e-print endpoint, retrieval date, HTTP status, gzip content type,
   content-disposition filename, byte count, SHA-256 digest, and
-  `2506.13131v1` linkage. Raw HTTP response headers, full raw DataCite
-  response retention, full TeX/e-print archive retention, archive member
-  inventories, metadata extraction-script artifacts, committed full HTML
-  content, current-version resolution snapshots, floating-PDF URL
-  version-drift gates, cached-PDF header consistency records, DOI
-  landing-resolution headers, and automated CI refresh checks remain open.
+  `2506.13131v1` linkage.
+  `papers/alphaevolve_current_version_boundary.json` now pins the floating
+  abstract URL status/content/digest, confirms current version `2506.13131v1`,
+  and records that the floating PDF digest/bytes match the cached PDF. Raw HTTP
+  response headers, full raw DataCite response retention, full TeX/e-print
+  archive retention, archive member inventories, metadata extraction-script
+  artifacts, committed full HTML content, full floating-PDF response retention,
+  cached-PDF header consistency records, DOI landing-resolution headers, and
+  automated CI refresh checks remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2803,8 +2806,7 @@ Implemented:
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   normalized source metadata, and explicit remaining gaps for full HTML,
   raw HTTP response headers, metadata extraction-script artifacts, TeX-source,
-  current-version resolution, floating-PDF URL version-drift checks, cached-PDF
-  header consistency, and automated refresh evidence. It is not full
+  cached-PDF header consistency, and automated refresh evidence. It is not full
   publication-grade source evidence or a live refresh gate.
 - `papers/alphaevolve_datacite_doi_boundary.json`: AlphaEvolve DOI/DataCite
   sidecar with the pinned DataCite API URL, retrieval date, status, response
@@ -2819,6 +2821,14 @@ Implemented:
   `2506.13131v1` linkage. It is not full raw archive retention, raw HTTP header
   retention, archive member inventory, extraction-script evidence, a
   TeX-source refresh gate, or cached-PDF header consistency evidence.
+- `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
+  current-version/floating-PDF sidecar with pinned current abstract URL,
+  retrieval date, status, content type, byte count, SHA-256 digest, title,
+  resolved version, expected source version, floating PDF URL, status, content
+  type, bytes/hash, cached-PDF bytes/hash, and match flag. It is not raw header
+  retention, full current-abstract HTML retention, full floating-PDF response
+  retention, automated current-version refresh, or cached PDF header text
+  consistency evidence.
 - `papers/alphaevolve_license_page_boundary.json`: AlphaEvolve
   source-license page sidecar with the pinned Creative Commons BY-NC-ND 4.0
   URL, retrieval date, status, content type, response byte count, SHA-256

@@ -1,0 +1,61 @@
+{
+  "schema": "libreevolve.alphaevolve_current_version_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve source metadata should distinguish the floating arXiv abstract/PDF URLs from the cached versioned PDF evidence.",
+  "boundary_status": "current_v1_and_floating_pdf_digest_without_refresh_gate",
+  "claim_ready": false,
+  "current_abs_snapshot": {
+    "url": "https://arxiv.org/abs/2506.13131",
+    "retrieved_on": "2026-06-14",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "response_bytes": 49939,
+    "response_sha256": "707d6aa982e50eca955e6cf7f4a86d2bce2ca6cea543827fea22537ef68d87bb",
+    "title": "[2506.13131] AlphaEvolve: A coding agent for scientific and algorithmic discovery",
+    "resolved_current_version": 1,
+    "expected_source_version_id": "2506.13131v1"
+  },
+  "floating_pdf_snapshot": {
+    "url": "https://arxiv.org/pdf/2506.13131.pdf",
+    "retrieved_on": "2026-06-14",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "response_bytes": 3525764,
+    "response_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "cached_pdf_response_bytes": 3525764,
+    "cached_pdf_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "floating_pdf_matches_cached_pdf": true
+  },
+  "required_evidence_fields": [
+    "current_abs_url",
+    "retrieved_on",
+    "current_abs_http_status",
+    "current_abs_content_type",
+    "current_abs_response_bytes",
+    "current_abs_sha256",
+    "current_abs_title",
+    "resolved_current_version",
+    "expected_source_version_id",
+    "floating_pdf_url",
+    "floating_pdf_http_status",
+    "floating_pdf_content_type",
+    "floating_pdf_response_bytes",
+    "floating_pdf_sha256",
+    "cached_pdf_response_bytes",
+    "cached_pdf_sha256",
+    "floating_pdf_matches_cached_pdf",
+    "raw_http_headers",
+    "full_current_abs_html_artifact",
+    "full_floating_pdf_response_artifact",
+    "automated_current_version_refresh_gate",
+    "cached_pdf_header_text_consistency"
+  ],
+  "missing_evidence": {
+    "raw_http_headers": "not_recorded_locally",
+    "full_current_abs_html_artifact": "not_recorded_locally",
+    "full_floating_pdf_response_artifact": "not_recorded_locally",
+    "automated_current_version_refresh_gate": "not_recorded_locally",
+    "cached_pdf_header_text_consistency": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that the floating arXiv abstract URL still resolves to version 1 and that the floating PDF digest matches the cached PDF. It does not claim raw HTTP header retention, full current-abstract HTML retention, full floating-PDF response retention, an automated current-version refresh gate, or cached PDF header text consistency."
+}

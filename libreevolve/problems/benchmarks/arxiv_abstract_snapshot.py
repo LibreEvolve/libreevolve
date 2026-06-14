@@ -63,8 +63,6 @@ EXPECTED_MISSING_EVIDENCE = {
     "full_html_artifact_committed": "not_recorded_locally",
     "raw_http_response_headers": "not_recorded_locally",
     "metadata_extraction_script_artifact": "not_recorded_locally",
-    "current_version_resolution_snapshot": "not_recorded_locally",
-    "floating_pdf_url_version_drift_gate": "not_recorded_locally",
     "cached_pdf_header_consistency_record": "not_recorded_locally",
     "automated_live_refresh_ci_gate": "not_recorded_locally",
 }
@@ -139,10 +137,8 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
             "2506.13131v1. It does not commit the full HTML body, resolve "
             "raw HTTP response headers, preserve the metadata extraction "
             "script artifact, resolve DataCite DOI metadata, retain the full "
-            "TeX source archive, record current-version resolution, install a "
-            "floating-PDF URL version-drift gate, record "
-            "cached-PDF header consistency, or install an automated live-refresh "
-            "CI gate."
+            "TeX source archive, record cached-PDF header consistency, or "
+            "install an automated live-refresh CI gate."
         ),
     }
 
@@ -183,8 +179,6 @@ def validate_alphaevolve_arxiv_abstract_snapshot(
         or "raw HTTP response headers" not in boundary_text
         or "metadata extraction script artifact" not in boundary_text
         or "DataCite DOI metadata" not in boundary_text
-        or "current-version resolution" not in boundary_text
-        or "floating-PDF URL version-drift gate" not in boundary_text
         or "cached-PDF header consistency" not in boundary_text
         or "automated live-refresh CI gate" not in boundary_text
     ):

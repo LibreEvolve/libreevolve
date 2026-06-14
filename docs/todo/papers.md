@@ -660,8 +660,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     title/authors/subjects/DOI/submission-history metadata, and a
     validator-supported live snapshot comparison path, while explicitly
     missing full HTML retention, raw HTTP response headers, extraction-script
-    provenance, current-version resolution, floating-PDF drift checks, and
-    cached-PDF header consistency evidence.
+    provenance, and cached-PDF header consistency evidence.
     `papers/alphaevolve_datacite_doi_boundary.json` now pins a bounded
     2026-06-14 DataCite API snapshot for `10.48550/arxiv.2506.13131`,
     including response byte count, SHA-256 digest, DOI, landing URL, title,
@@ -678,15 +677,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     HTTP status, content type, byte count, SHA-256 digest, title, license
     family, license version, and normalized URL, while keeping full HTML
     retention and automated refresh gating open.
+    `papers/alphaevolve_current_version_boundary.json` now records the
+    2026-06-14 arXiv floating abstract status/content/digest, resolves current
+    version `2506.13131v1`, and confirms the floating PDF bytes/hash match the
+    cached PDF.
   - Required result: before using arXiv abstract-page metadata as
     publication-grade evidence, add full raw DataCite response retention,
     DOI landing-resolution headers, full TeX/e-print archive retention,
     archive member inventory, full license-page HTML retention, a committed
     full-HTML artifact or approved equivalent, raw HTTP headers,
-    extraction-script artifacts, current-version resolution, floating-PDF URL
-    drift checking, cached-PDF header consistency evidence, and an automated
-    refresh gate that detects arXiv/DataCite/e-print/license version or
-    metadata drift.
+    extraction-script artifacts, full floating-PDF response retention,
+    cached-PDF header consistency evidence, and an automated refresh gate that
+    detects arXiv/DataCite/e-print/license version or metadata drift.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

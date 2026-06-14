@@ -1460,12 +1460,15 @@ by `papers/lineage_replay_boundary.json`.
   `papers/alphaevolve_tex_source_boundary.json` now pins the arXiv e-print
   endpoint, retrieval date, HTTP status, gzip content type,
   content-disposition filename, byte count, SHA-256 digest, and
-  `2506.13131v1` source-version linkage. Raw HTTP response headers, committed
-  full raw DataCite responses, full TeX/e-print archive retention, archive
-  member inventories, metadata extraction-script artifacts, DOI
-  landing-resolution headers, committed full HTML content, current-version
-  resolution snapshots, floating-PDF URL version-drift gates, cached-PDF header
-  consistency records, and automated CI refresh gates remain open.
+  `2506.13131v1` source-version linkage.
+  `papers/alphaevolve_current_version_boundary.json` now pins the floating
+  abstract URL status/content/digest, confirms current version `2506.13131v1`,
+  and records that the floating PDF digest/bytes match the cached PDF. Raw HTTP
+  response headers, committed full raw DataCite responses, full TeX/e-print
+  archive retention, archive member inventories, metadata extraction-script
+  artifacts, DOI landing-resolution headers, committed full HTML content, full
+  floating-PDF response retention, cached-PDF header consistency records, and
+  automated CI refresh gates remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

@@ -350,14 +350,18 @@ sidecars, tests, and active TODOs.
     2026-06-14 Creative Commons BY-NC-ND 4.0 license-page snapshot, including
     HTTP status, content type, byte count, SHA-256 digest, title, license
     family, license version, and normalized URL.
+    `papers/alphaevolve_current_version_boundary.json` now records the
+    2026-06-14 arXiv floating abstract status/content/digest, resolves current
+    version `2506.13131v1`, and confirms the floating PDF bytes/hash match the
+    cached PDF.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
     equivalent, raw HTTP response headers, extraction-script artifact,
     full raw DataCite response retention, DOI landing-resolution headers,
     full TeX/e-print archive retention, archive member inventory,
-    full license-page HTML retention, current-version resolution, floating-PDF
-    URL version-drift checks, cached-PDF header consistency, and an automated
-    CI/network refresh gate that fails paper/source validation if the live
+    full license-page HTML retention, full floating-PDF response retention,
+    cached-PDF header consistency, and an automated CI/network refresh gate
+    that fails paper/source validation if the live
     arXiv/DataCite/e-print/license metadata drifts from the committed source
     boundary.
 

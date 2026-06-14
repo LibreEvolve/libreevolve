@@ -51,6 +51,10 @@ from libreevolve.problems.benchmarks.alphaevolve_license_page_boundary import (
     alphaevolve_license_page_boundary_record,
     validate_alphaevolve_license_page_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import (
+    alphaevolve_current_version_boundary_record,
+    validate_alphaevolve_current_version_boundary,
+)
 from libreevolve.problems.benchmarks.autoconvolution_boundary import (
     autoconvolution_boundary_record,
     validate_autoconvolution_boundary,
@@ -630,6 +634,7 @@ from libreevolve.problems.benchmarks.ttt_discover_boundary import (
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
 ARXIV_ABSTRACT_SNAPSHOT_FILE = "papers/arxiv_abstract_snapshot.json"
+ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE = "papers/alphaevolve_current_version_boundary.json"
 ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE = "papers/alphaevolve_datacite_doi_boundary.json"
 ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_FILE = "papers/alphaevolve_tex_source_boundary.json"
 ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_FILE = "papers/alphaevolve_license_page_boundary.json"
@@ -1185,6 +1190,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_alphaevolve_arxiv_abstract_snapshot(root_path))
+    issues.extend(_validate_alphaevolve_current_version_boundary(root_path))
     issues.extend(_validate_alphaevolve_datacite_doi_boundary(root_path))
     issues.extend(_validate_alphaevolve_tex_source_boundary(root_path))
     issues.extend(_validate_alphaevolve_license_page_boundary(root_path))
@@ -1913,6 +1919,38 @@ def _validate_alphaevolve_arxiv_abstract_snapshot(root_path: Path) -> list[Paper
     return [
         PaperManifestIssue(
             f"alphaevolve_arxiv_abstract_snapshot_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_current_version_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_current_version_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_current_version_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE} must emit "
+                        "the AlphaEvolve current-version/floating-PDF boundary"
+                    ),
+                    "2506.13131",
+                )
+            ]
+    report = validate_alphaevolve_current_version_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_current_version_boundary_{issue.code}",
             issue.message,
             "2506.13131",
         )

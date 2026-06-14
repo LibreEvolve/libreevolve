@@ -1244,9 +1244,10 @@ Important limits:
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark
   evidence. The checked `papers/status_claim_inventory.json` sidecar now
-  records row-level paper status inventory plus status-cell phrase hashes and
-  source offsets. This is not an exhaustive source-span coverage matrix,
-  per-phrase evidence-link inventory, status-cell semantic verifier,
+  records row-level paper status inventory plus status-cell phrase hashes,
+  source offsets, and candidate evidence-link lists. This is not an exhaustive
+  source-span coverage matrix, per-phrase evidence-link sufficiency proof,
+  status-cell semantic verifier,
   implemented-benchmark bullet coverage map, absence-sentence freshness
   matrix, or generated code-audit report; that boundary is tracked by
   `papers/implementation_evidence_map_boundary.json`.

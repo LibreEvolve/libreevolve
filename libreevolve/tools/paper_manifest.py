@@ -1052,9 +1052,8 @@ STATUS_TABLE_POSITIVE_IMPLEMENTATION_RE = re.compile(
 )
 STATUS_TABLE_NOT_IMPLEMENTED_AS_DESCRIBED_PREFIXES = ("Not implemented as described:",)
 STATUS_CLAIM_INVENTORY_SCHEMA = "libreevolve.paper_index_status_claim_inventory.v1"
-STATUS_CLAIM_INVENTORY_STATUS = "phrase_hash_inventory_without_semantic_verifier"
+STATUS_CLAIM_INVENTORY_STATUS = "phrase_evidence_link_inventory_without_semantic_verifier"
 STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
-    "status_phrase_evidence_link_inventory": "not_recorded_locally",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -1484,6 +1483,9 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         cells = status_record["cells"]
         row_id, title, role, status_text = cells
         active_cell, completed_cell = todo_rows.get(row_id, ("", ""))
+        active_paths = _status_claim_inventory_paths(active_cell)
+        completed_paths = _status_claim_inventory_paths(completed_cell)
+        row_local_artifact_paths = sorted(_status_local_artifact_paths(status_text))
         status_class = _status_claim_inventory_class(status_text)
         status_class_counts[status_class] = status_class_counts.get(status_class, 0) + 1
         manifest_row = manifest_rows_by_id.get(row_id, {})
@@ -1491,6 +1493,9 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             row_id,
             status_text,
             status_record["line_number"],
+            active_paths,
+            completed_paths,
+            row_local_artifact_paths,
         )
         inventory_rows.append(
             {
@@ -1507,12 +1512,12 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
                     "line_end": status_record["line_number"],
                 },
                 "manifest_file": manifest_row.get("file", ""),
-                "local_artifact_paths": sorted(_status_local_artifact_paths(status_text)),
-                "active_todo_paths": _status_claim_inventory_paths(active_cell),
-                "completed_todo_paths": _status_claim_inventory_paths(completed_cell),
+                "local_artifact_paths": row_local_artifact_paths,
+                "active_todo_paths": active_paths,
+                "completed_todo_paths": completed_paths,
                 "claim_count": len(status_claims),
                 "status_claims": status_claims,
-                "claim_inventory_status": "phrase_hashes_and_offsets_recorded",
+                "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
                 "source_span_status": "phrase_offsets_recorded_in_status_cell",
                 "freshness_status": "structural_only",
             }
@@ -1534,9 +1539,9 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "papers/README.md implementation-status table row, including "
             "role, status class, status text hash, manifest file, local "
             "artifact mentions, row source line, TODO evidence paths, and "
-            "status-cell phrase hashes with character offsets. It does not "
-            "claim phrase-level status verification, per-phrase evidence "
-            "links, "
+            "status-cell phrase hashes with character offsets and candidate "
+            "evidence links. It does not claim phrase-level status "
+            "verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
             "complete."
@@ -8127,10 +8132,14 @@ def _status_claim_inventory_phrases(
     row_id: str,
     status_text: str,
     line_number: int,
+    active_paths: list[str],
+    completed_paths: list[str],
+    row_local_artifact_paths: list[str],
 ) -> list[dict[str, Any]]:
     phrases: list[dict[str, Any]] = []
     for ordinal, (start, end) in enumerate(_status_claim_phrase_spans(status_text), start=1):
         phrase = status_text[start:end]
+        phrase_local_artifact_paths = sorted(_status_local_artifact_paths(phrase))
         phrases.append(
             {
                 "claim_id": f"{row_id}:status_phrase_{ordinal:03d}",
@@ -8146,7 +8155,13 @@ def _status_claim_inventory_phrases(
                     "status_text_char_start": start,
                     "status_text_char_end": end,
                 },
-                "evidence_link_status": "row_level_links_only",
+                "evidence_links": {
+                    "phrase_local_artifact_paths": phrase_local_artifact_paths,
+                    "row_local_artifact_paths": row_local_artifact_paths,
+                    "row_active_todo_paths": active_paths,
+                    "row_completed_todo_paths": completed_paths,
+                },
+                "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
                 "semantic_status": "not_verified",
             }
         )

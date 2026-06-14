@@ -43,15 +43,16 @@ sidecars, tests, and active TODOs.
     prompting/sampling, the evolutionary database, async/distributed topology,
     and published benchmarks with module/test/sidecar/TODO references while
     `papers/status_claim_inventory.json` now records checked row-level paper
-    status inventory plus status-cell phrase hashes and source offsets. The
-    boundary still explicitly keeps per-phrase evidence links, status-cell
-    semantic verification, implemented-benchmark bullet coverage, and
+    status inventory plus status-cell phrase hashes, source offsets, and
+    candidate evidence-link lists. The boundary still explicitly keeps
+    per-phrase evidence-link sufficiency, status-cell semantic verification,
+    implemented-benchmark bullet coverage, and
     absence-sentence freshness checks as missing evidence.
   - Current gap: there is no machine-readable AlphaEvolve requirement
     inventory that is exhaustive across all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
-    coverage; no per-phrase evidence-link map proves long status-cell
+    coverage; no per-phrase evidence-sufficiency check proves long status-cell
     semantics or implemented-benchmark qualifiers; and no generated code-audit
     report proves that all implemented and missing AlphaEvolve-facing behavior
     has been classified.

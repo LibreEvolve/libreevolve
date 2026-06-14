@@ -1433,12 +1433,13 @@ Core AlphaEvolve implementation-evidence mapping is now represented by
 anchors for markers, evaluator cascades, LLM prompting/sampling, the
 evolutionary database, async/distributed topology, and published benchmark
 coverage. It is not an exhaustive requirement inventory, source-span coverage
-matrix, per-phrase evidence-link inventory, coverage detector, generated
-code-audit report, or CI exhaustiveness gate. The checked
+matrix, per-phrase evidence-link sufficiency proof, coverage detector,
+generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
 status inventory with status text hashes, status classes, local artifact
 mentions, row source lines, TODO evidence paths, and status-cell phrase hashes
-with source offsets, but it is not phrase-level semantic proof.
+with source offsets plus candidate evidence-link lists, but it is not
+phrase-level semantic proof.
 Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
@@ -2838,16 +2839,16 @@ Implemented:
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive
-  audit coverage, per-phrase evidence-link inventory, status-cell semantic
+  audit coverage, per-phrase evidence-link sufficiency, status-cell semantic
   verification, implemented-benchmark bullet coverage, and absence-sentence
   freshness checks.
 - `papers/status_claim_inventory.json`: row-level paper-index
   implementation-status inventory with one record per status row, status text
   hash, role/status class, manifest-file link, source line, local artifact
   mentions, active/completed TODO evidence paths, and status-cell phrase hashes
-  with source offsets. It is not status-cell phrase-level semantic
-  verification, per-phrase evidence-link coverage, or absence-sentence
-  freshness evidence.
+  with source offsets plus candidate evidence-link lists. It is not status-cell
+  phrase-level semantic verification, evidence-link sufficiency proof, or
+  absence-sentence freshness evidence.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit

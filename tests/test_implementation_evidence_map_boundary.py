@@ -17,7 +17,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
         == "core_requirement_anchors_without_exhaustive_coverage"
     )
     assert validation.requirement_count == 6
-    assert validation.missing_evidence_count == 10
+    assert validation.missing_evidence_count == 9
     assert boundary["schema"] == IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     requirement_ids = {
@@ -26,7 +26,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert "alphaevolve_program_markers" in requirement_ids
     assert "alphaevolve_published_benchmarks" in requirement_ids
     assert (
-        boundary["missing_evidence"]["status_phrase_evidence_link_inventory"]
+        boundary["missing_evidence"]["status_cell_semantic_verifier"]
         == "not_recorded_locally"
     )
     assert (
@@ -77,4 +77,4 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
         in summary
     )
     assert "| requirement_count | 6 |" in summary
-    assert "| missing_evidence_count | 10 |" in summary
+    assert "| missing_evidence_count | 9 |" in summary

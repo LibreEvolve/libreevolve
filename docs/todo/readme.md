@@ -51,6 +51,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     taxonomy, validate README topic wording from those records, and update
     README/TODO/paper docs when the cache scope changes.
 
+- [ ] Add README fresh-checkout paper-cache rehydrate evidence.
+  - Spec evidence: the README tells users they can rehydrate the gitignored
+    PDF cache on a fresh checkout. That is a reproducibility and source-access
+    claim, so it should be backed by evidence distinct from a local machine
+    already having all PDFs present.
+  - Current evidence: `libreevolve.tools.paper_manifest` implements
+    `--rehydrate`, validates byte counts and SHA-256 hashes, and has unit
+    tests for missing-file downloads, matching-file skips, forced redownloads,
+    and redacted network failures. The local `--require-local-pdfs` check
+    currently proves that this workstation has 53 present PDFs, and
+    `papers/README.md` also documents the rehydrate command.
+  - Current gap: no committed README-owned transcript, sidecar, or CI/manual
+    run artifact proves the exact README `--rehydrate` command from a clean
+    checkout with an absent PDF cache, records expected network failure/skip
+    modes, confirms all downloaded files match manifest hashes, or separates
+    rehydrate drift from ordinary local-cache validation.
+  - Required result: add a fresh-checkout rehydrate proof that runs or
+    faithfully simulates the README command from an empty ignored PDF cache,
+    records row counts, downloaded/skipped/failure states, byte-count/hash
+    verification, and safe redaction behavior, then updates README/TODO
+    evidence whenever paper-cache commands or manifest semantics change.
+
 ## Feature Claims
 
 - [ ] Add semantic README claim verification and evidence mapping.

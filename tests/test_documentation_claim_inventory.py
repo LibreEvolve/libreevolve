@@ -64,7 +64,7 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     ] == "todo_anchor_recorded"
     assert inventory["uncovered_heading_todo_link_records"][0]["todo_span"][
         "line_start"
-    ] == 56
+    ] == 78
     assert inventory["claim_surface_heading_records"][0] == {
         "path": "README.md",
         "line_start": 1,

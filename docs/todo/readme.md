@@ -62,3 +62,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     the README no-provider quick-start path, validates expected stop reason and
     `show` output fields, and updates README/TODO evidence when the command
     changes.
+
+- [ ] Add provider-backed README example smoke matrix.
+  - Spec evidence: AlphaEvolve depends on a managed model mix and provider
+    capability, while LibreEvolve's README shows provider-backed run examples
+    for OpenAI, Anthropic, and Ollama. Those examples should be kept honest
+    with provider-specific availability evidence rather than only placeholder
+    model ids.
+  - Current evidence: the README explicitly tells users to replace
+    `<openai-model-id>`, `<anthropic-model-id>`, and
+    `<installed-ollama-model>` with models available to their account or local
+    install, and warns that provider-backed runs may fail. The current
+    `tests/integration/test_hello_world.py` coverage is credential-gated on
+    `ANTHROPIC_API_KEY`; it does not prove the README OpenAI example, Ollama
+    example, account-specific model ids, or provider-command parity.
+  - Current gap: there is no committed provider smoke matrix, redacted model
+    availability record, local Ollama inventory, or CI/report artifact that
+    proves each provider-backed README command family remains runnable. This
+    also keeps Google/Gemini AlphaEvolve provider parity separate from the
+    README's generic backend examples.
+  - Required result: add provider-family smoke evidence with safe credential
+    handling, account/local model id provenance, expected skip/failure modes,
+    and README/TODO updates whenever provider example commands or supported
+    backend families change.

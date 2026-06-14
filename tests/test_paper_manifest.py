@@ -692,6 +692,75 @@ def test_validate_paper_manifest_requires_alphaevolve_tex_source_boundary_at_rep
     assert "alphaevolve_tex_source_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_alphaevolve_tex_archive_retention_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    papers_dir = tmp_path / "papers"
+    source_root = Path(__file__).resolve().parents[1]
+    (papers_dir / "alphaevolve_tex_source_archive.tar.gz").write_bytes(
+        (source_root / "papers" / "alphaevolve_tex_source_archive.tar.gz").read_bytes()
+    )
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_TEX_ARCHIVE_RETENTION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_tex_archive_retention_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_tex_archive_retention_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    papers_dir = tmp_path / "papers"
+    (papers_dir / "alphaevolve_tex_source_archive.tar.gz").write_bytes(b"not a tarball")
+    record = paper_manifest.alphaevolve_tex_archive_retention_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "tex_archive_refresh_gate_ready"
+    record["archive_member_inventory"]["member_count"] = 1
+    record["missing_evidence"]["tex_source_refresh_gate"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_TEX_ARCHIVE_RETENTION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_tex_archive_retention_boundary_claim_ready_overclaim" in codes
+    assert "alphaevolve_tex_archive_retention_boundary_invalid_boundary_status" in codes
+    assert "alphaevolve_tex_archive_retention_boundary_invalid_archive_member_inventory_member_count" in codes
+    assert "alphaevolve_tex_archive_retention_boundary_invalid_archive_artifact_sha256" in codes
+    assert (
+        "alphaevolve_tex_archive_retention_boundary_invalid_missing_evidence_tex_source_refresh_gate"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_tex_archive_retention_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_tex_archive_retention_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_alphaevolve_license_page_boundary(
     tmp_path,
 ):

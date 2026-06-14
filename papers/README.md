@@ -2308,10 +2308,12 @@ Implemented:
   resolver `302` headers, redirect location, and final arXiv landing-page
   headers. `papers/alphaevolve_datacite_full_response_boundary.json` now
   retains the complete 15,905-byte DataCite API response body and validates its
-  parsed DOI metadata fields. Full TeX/e-print archive retention, archive
-  member inventories, metadata extraction-script artifacts, committed full HTML
-  content, full floating-PDF response retention, cached-PDF header consistency
-  records, and automated CI refresh checks remain open.
+  parsed DOI metadata fields.
+  `papers/alphaevolve_tex_archive_retention_boundary.json` now retains the
+  2,635,462-byte TeX/e-print archive artifact and validates its 58-entry member
+  inventory. Metadata extraction-script artifacts, committed full HTML content,
+  full floating-PDF response retention, cached-PDF header consistency records,
+  and automated CI refresh checks remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2836,9 +2838,14 @@ Implemented:
 - `papers/alphaevolve_tex_source_boundary.json`: AlphaEvolve arXiv TeX/e-print
   sidecar with the pinned e-print URL, retrieval date, status, content type,
   content-disposition filename, response byte count, SHA-256 digest, and
-  `2506.13131v1` linkage. It is not full raw archive retention, archive member
-  inventory, extraction-script evidence, a TeX-source refresh gate, or
-  cached-PDF header consistency evidence.
+  `2506.13131v1` linkage. It is not extraction-script evidence, a TeX-source
+  refresh gate, or cached-PDF header consistency evidence.
+- `papers/alphaevolve_tex_archive_retention_boundary.json`: AlphaEvolve
+  TeX/e-print archive-retention sidecar with the retained
+  `papers/alphaevolve_tex_source_archive.tar.gz` artifact, archive bytes/hash,
+  `2506.13131v1` linkage, 58-member inventory, per-file sizes, and per-file
+  SHA-256 digests. It is not metadata extraction-script provenance, an
+  automated TeX-source refresh gate, or cached-PDF header consistency evidence.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,

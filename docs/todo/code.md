@@ -363,11 +363,13 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_datacite_full_response_boundary.json` now retains the
     complete 15,905-byte raw DataCite API response body and validates parsed
     DOI metadata fields.
+    `papers/alphaevolve_tex_archive_retention_boundary.json` now retains the
+    2,635,462-byte TeX/e-print archive and validates its 58-entry member
+    inventory.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
-    equivalent, extraction-script artifact, full TeX/e-print archive retention,
-    archive member inventory, full license-page HTML retention, full
-    floating-PDF response retention, cached-PDF header consistency, and an
+    equivalent, extraction-script artifact, full license-page HTML retention,
+    full floating-PDF response retention, cached-PDF header consistency, and an
     automated CI/network refresh gate that fails paper/source validation if the
     live arXiv/DataCite/e-print/license metadata drifts from the committed
     source boundary.

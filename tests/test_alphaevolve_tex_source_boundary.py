@@ -17,7 +17,7 @@ def test_alphaevolve_tex_source_boundary_accepts_eprint_digest_record():
         == "tex_eprint_digest_without_archive_retention_or_refresh_gate"
     )
     assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 5
+    assert validation.missing_evidence_count == 3
     assert boundary["schema"] == ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_SCHEMA
     assert boundary["tex_eprint_snapshot"]["response_bytes"] == 2635462
     assert (
@@ -31,7 +31,7 @@ def test_alphaevolve_tex_source_boundary_rejects_archive_overclaim():
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "full_tex_source_archive_refresh_gate_ready"
     boundary["tex_eprint_snapshot"]["response_bytes"] = 1
-    boundary["missing_evidence"]["full_raw_archive_artifact"] = "recorded"
+    boundary["missing_evidence"]["tex_source_refresh_gate"] = "recorded"
 
     validation = validate_alphaevolve_tex_source_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -40,7 +40,7 @@ def test_alphaevolve_tex_source_boundary_rejects_archive_overclaim():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_snapshot_response_bytes" in codes
-    assert "invalid_missing_evidence_full_raw_archive_artifact" in codes
+    assert "invalid_missing_evidence_tex_source_refresh_gate" in codes
 
 
 def test_render_alphaevolve_tex_source_boundary_summary_reports_shape():
@@ -55,4 +55,4 @@ def test_render_alphaevolve_tex_source_boundary_summary_reports_shape():
         in summary
     )
     assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 3 |" in summary

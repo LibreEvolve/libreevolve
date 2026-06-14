@@ -63,10 +63,11 @@ Important limits:
   current-version/floating-PDF digest sidecars now preserve bounded response
   metadata and hashes, while the raw HTTP headers sidecar preserves pinned
   source response header lines and the DataCite full-response sidecar retains
-  the complete raw API response body. No full HTML artifact, extraction-script
-  artifact, full TeX-source cache, full license-page cache, full floating-PDF
-  response retention, cached-PDF header consistency record, or automated
-  refresh gate exists yet.
+  the complete raw API response body. The TeX archive-retention sidecar now
+  retains the full e-print archive and member inventory. No full HTML artifact,
+  extraction-script artifact, full license-page cache, full floating-PDF
+  response retention, cached-PDF header consistency record, or automated refresh
+  gate exists yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text
@@ -1240,10 +1241,11 @@ Important limits:
   DataCite DOI, TeX/e-print, license-page, and current-version/floating-PDF
   digest sidecars now preserve bounded response metadata and hashes, and the
   raw HTTP headers, DOI landing-resolution, and DataCite full-response sidecars
-  preserve pinned source response evidence. This is not extraction-script
-  provenance, full TeX-source archive caching, full license-page caching,
-  committed full HTML content, full floating-PDF response retention, cached-PDF
-  header consistency evidence, or an automated CI refresh gate.
+  preserve pinned source response evidence, and the TeX archive-retention
+  sidecar retains the full e-print archive plus member inventory. This is not
+  extraction-script provenance, full license-page caching, committed full HTML
+  content, full floating-PDF response retention, cached-PDF header consistency
+  evidence, or an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

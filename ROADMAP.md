@@ -1471,10 +1471,12 @@ by `papers/lineage_replay_boundary.json`.
   resolver `302` headers, redirect location, and final arXiv landing-page
   headers. `papers/alphaevolve_datacite_full_response_boundary.json` now
   retains the complete 15,905-byte DataCite API response body and validates its
-  parsed DOI metadata fields. Full TeX/e-print archive retention, archive
-  member inventories, metadata extraction-script artifacts, committed full HTML
-  content, full floating-PDF response retention, cached-PDF header consistency
-  records, and automated CI refresh gates remain open.
+  parsed DOI metadata fields.
+  `papers/alphaevolve_tex_archive_retention_boundary.json` now retains the
+  2,635,462-byte TeX/e-print archive artifact and validates its 58-entry member
+  inventory. Metadata extraction-script artifacts, committed full HTML content,
+  full floating-PDF response retention, cached-PDF header consistency records,
+  and automated CI refresh gates remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

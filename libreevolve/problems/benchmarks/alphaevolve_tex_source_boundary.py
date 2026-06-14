@@ -40,8 +40,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "cached_pdf_header_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "full_raw_archive_artifact": "not_recorded_locally",
-    "archive_member_inventory": "not_recorded_locally",
     "extraction_script_artifact": "not_recorded_locally",
     "tex_source_refresh_gate": "not_recorded_locally",
     "cached_pdf_header_consistency": "not_recorded_locally",
@@ -92,10 +90,9 @@ def alphaevolve_tex_source_boundary_record() -> dict[str, Any]:
             "This boundary records the arXiv e-print endpoint, HTTP status, "
             "gzip content type, content-disposition filename, byte count, and "
             "SHA-256 digest for the AlphaEvolve source archive and is paired "
-            "with the raw HTTP headers sidecar. It does not claim full raw "
-            "archive retention, archive member inventory, extraction-script "
-            "artifacts, TeX-source refresh gates, or cached-PDF header "
-            "consistency."
+            "with the raw HTTP headers and retained archive sidecars. It does "
+            "not claim extraction-script artifacts, TeX-source refresh gates, "
+            "or cached-PDF header consistency."
         ),
     }
 
@@ -132,8 +129,8 @@ def validate_alphaevolve_tex_source_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim full raw archive retention" not in boundary_text
-        or "raw HTTP headers sidecar" not in boundary_text
+        or "retained archive sidecars" not in boundary_text
+        or "raw HTTP headers" not in boundary_text
         or "TeX-source refresh gates" not in boundary_text
         or "cached-PDF header consistency" not in boundary_text
     ):

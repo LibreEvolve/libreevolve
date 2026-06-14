@@ -135,6 +135,33 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     sidecars/TODO evidence, extend it to the linked documentation surfaces,
     then validate stale or unsupported claims in CI.
 
+- [ ] Add docs-index reader-path and boundary drift evidence.
+  - Spec evidence: `docs/README.md` is the documentation directory's routing
+    contract for new users, operators, contributors, and paper/spec reviewers.
+    It also defines which claims belong in the root README, operational
+    guides, `docs/status.md`, ROADMAP, TODO ledgers, `papers/README.md`, and
+    paper sidecars. AlphaEvolve-alignment work depends on this routing page
+    staying current so implementation, roadmap, and paper-boundary claims do
+    not move to the wrong surface.
+  - Current evidence: `docs/README.md` links the root README, problem format,
+    run artifacts, configuration, backends, development, status, ROADMAP,
+    `papers/README.md`, and `docs/todo/`, and it states that
+    AlphaEvolve-alignment cleanup is a whole-documentation task. The active
+    README documentation-map TODO covers the root README's `Documentation Map`,
+    while `papers/documentation_truthfulness_boundary.json` records
+    docs/README routing as broad boundary evidence.
+  - Current gap: there is no page-specific inventory or drift validator that
+    parses `docs/README.md`, verifies each reader path and operational-guide
+    link, checks that route descriptions match target document scope, flags
+    newly added major docs that need index placement, or detects boundary
+    violations such as paper-derived claims outside `papers/` or long-term
+    roadmap work outside ROADMAP/TODO ledgers.
+  - Required result: add a docs-index evidence map and validation gate that
+    inventories reader paths, operational guide entries, and documentation
+    boundary bullets; verifies link existence and target-scope agreement; and
+    requires README/docs/TODO updates whenever documentation surfaces, route
+    ownership, or AlphaEvolve-facing claim boundaries change.
+
 - [ ] Add `docs/status.md` ledger freshness and coverage evidence.
   - Spec evidence: the README tells readers that `docs/status.md` is the full
     implemented-versus-missing ledger. For AlphaEvolve-alignment work, that is

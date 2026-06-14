@@ -1089,6 +1089,42 @@ sidecars, tests, and active TODOs.
     ROADMAP, benchmark, or paper-facing materials claim Codex-authenticated or
     other local CLI providers are supported.
 
+- [ ] Define a required custom-backend attribution and telemetry contract.
+  - Spec evidence: AlphaEvolve-style model ensembles require comparable
+    provider identity, request settings, usage, failure, and budget telemetry
+    across every backend lane. A custom backend is still a model provider in
+    the experiment, so opaque `generate()` wrappers should not be enough for
+    benchmark-grade model-mix or cost/latency claims.
+  - Current evidence: `LLMBackend` in `libreevolve/llm/base.py` requires only
+    `generate(prompt, **kwargs) -> str` and a `name` property. `_build_custom_backend()`
+    imports the configured `class_path`, constructs it with JSON-safe kwargs,
+    and accepts the object when `isinstance(backend, LLMBackend)` succeeds.
+    `LLMEnsemble` can opportunistically read optional attributes such as
+    `request_parameters`, `backend_defaults`, `client_context`,
+    `prompt_role_policy_for_role()`, and `provider_response_metadata`, but the
+    custom protocol and docs do not require them. `docs/backends.md` tells
+    custom backends they "should" carry provider-specific retry settings
+    through `provider_response_metadata` if they want them copied into
+    `llm_calls.jsonl`; missing attributes simply become empty telemetry.
+  - Current gap: an opaque custom backend can participate in scheduling,
+    rewards, manifests, and paper-facing provider diagnostics without proving
+    model/provider identity beyond a freeform `name`, effective request
+    parameters, endpoint/client provenance, output-token cap, retry policy,
+    timeout behavior, usage/token totals, finish reason, response/request ids,
+    or provider diagnostic policy. That makes custom lanes weaker than built-in
+    OpenAI/Anthropic/Ollama lanes and can hide real provider behavior behind a
+    manifest-safe `class_path` while still contributing to AlphaEvolve-style
+    ensemble claims.
+  - Required result: add a versioned custom-backend telemetry interface with
+    required or explicitly-declared-unsupported fields for provider identity,
+    request parameters, backend defaults, client context, role prompt policy,
+    provider response metadata, retry/timeout policy, usage/cost accounting,
+    and failure diagnostics; validate custom backends at construction and
+    during call-history replay; distinguish opaque custom wrappers from
+    claim-ready provider adapters in runtime reports; and add tests proving
+    missing or malformed custom telemetry cannot support model-mix,
+    budget/cost, or benchmark-provider claims.
+
 - [ ] Add an OpenAI Responses request-surface capability contract.
   - Spec evidence: AlphaEvolve-style model-mix experiments depend on stable
     provider request controls, not only model names. Current OpenAI docs expose

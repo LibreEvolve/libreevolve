@@ -6223,6 +6223,44 @@ directory and using the AlphaEvolve paper as the primary specification.
     that treats EvolVE-style Verilog generation and optimization as missing
     hardware benchmark evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce TurboEvolve sample-efficiency and robustness evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2604.18607`, submitted April 12, 2026, is
+    titled `TurboEvolve: Towards Fast and Robust LLM-Driven Program
+    Evolution`. Its abstract says LLM-driven program evolution can discover
+    high-quality programs, but cost and run-to-run variance hinder reliable
+    progress. TurboEvolve is described as a multi-island evolutionary framework
+    that improves sample efficiency and robustness under fixed evaluation
+    budgets. It introduces verbalized Sampling, where an LLM emits `K` diverse
+    candidates with explicit self-assigned sampling weights, plus an online
+    scheduler that adapts `K` to expand exploration under stagnation and reduce
+    overhead during steady progress. It also introduces seed-pool injection,
+    clustering seeds and assigning them across islands with controlled
+    perturbations and elitist preservation to balance diversity and refinement.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2604.18607`. Existing LibreEvolve island, parent-sampling,
+    sample-efficiency, initial-pool-divergence, AdaEvolve, LEVI, PACEvolve,
+    SeaEvo, and MLEvolve TODOs do not reproduce verbalized multi-offspring
+    generation, self-assigned sampling weights, adaptive offspring-count `K`
+    scheduling, stagnation-triggered exploration expansion, overhead-reducing
+    steady-progress policies, clustered seed-pool injection, controlled seed
+    perturbation, elitist seed preservation, run-to-run robustness metrics, or
+    fixed-evaluation-budget comparisons for TurboEvolve.
+  - Required result: add reproduction-grade evidence for `2604.18607`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, AdaEvolve, LEVI,
+    PACEvolve, SeaEvo, MLEvolve, and LibreEvolve, multi-island configuration,
+    verbalized Sampling prompt schema, candidate-weight output parser,
+    per-offspring lineage and weight records, adaptive-`K` scheduler state,
+    stagnation and steady-progress detectors, scheduler ablation traces,
+    seed-clustering method, seed-to-island assignment records, controlled
+    perturbation prompts, elitist-preservation policy, fixed-budget benchmark
+    metadata, sample-efficiency and robustness metric definitions, run-to-run
+    variance tables, best-known-solution improvement records, independent
+    verification outputs, and README/ROADMAP wording that treats
+    TurboEvolve-style adaptive multi-offspring island search as missing
+    robustness evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

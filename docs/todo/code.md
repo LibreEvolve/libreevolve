@@ -4232,12 +4232,14 @@ sidecars, tests, and active TODOs.
     correctness-by-construction evidence.
     `papers/systems_result_readiness_boundary.json` now machine-records that
     Figure 7 Pallas-tiling exhibit records, diagram artifacts, and shape-
-    corpus/runtime links are required evidence. Real emitted report records are
-    still absent for the Figure 7 exhibit ID, matrix-shape variable
-    definitions, tile-parameter schema, accelerator/memory/fusion/compiler-
-    context annotations, diagram source data, rendered visual artifact paths/
-    hashes, rendering parameters, and links from the displayed tiling problem
-    to the Pallas runtime and shape-corpus reports.
+    corpus/runtime links are required evidence.
+    `papers/figure7_pallas_tiling_exhibit_boundary.json` now keeps the exact
+    exhibit contract machine-checked. Real emitted report records are still
+    absent for the Figure 7 exhibit ID, matrix-shape variable definitions,
+    tile-parameter schema, accelerator/memory/fusion/compiler-context
+    annotations, diagram source data, rendered visual artifact paths/hashes,
+    rendering parameters, and links from the displayed tiling problem to the
+    Pallas runtime and shape-corpus reports.
   - Required result: add report/inventory metadata for Figure 7-style kernel
     exhibits: stable exhibit ID, kernel benchmark/candidate link, matrix
     dimension and tile-parameter definitions, shape-corpus and accelerator

@@ -1092,7 +1092,8 @@ Important limits:
   tile-parameter schema, accelerator/memory/fusion/compiler-context
   annotations, diagram source data, rendered visual artifact hashes, rendering
   parameters, and links to shape-corpus/runtime reports remain active code and
-  paper TODOs.
+  paper TODOs; that exhibit-specific boundary is tracked by
+  `papers/figure7_pallas_tiling_exhibit_boundary.json`.
 - Kernel systems-result reports currently cover generic domain gates and
   claim-calibration metadata, not Pallas/Gemini input-shape corpus provenance,
   deterministic train/eval split hashes, real TPU runtime artifacts,

@@ -5792,6 +5792,63 @@ def test_validate_paper_manifest_requires_figure6_scheduling_exhibit_boundary_at
     assert "figure6_scheduling_exhibit_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_figure7_pallas_tiling_exhibit_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.FIGURE7_PALLAS_TILING_EXHIBIT_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.figure7_pallas_tiling_exhibit_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_figure7_pallas_tiling_exhibit_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.figure7_pallas_tiling_exhibit_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "figure7_exhibit_artifacts_ready"
+    record["missing_evidence"]["rendered_diagram_artifact_hash"] = "recorded"
+    sidecar = tmp_path / paper_manifest.FIGURE7_PALLAS_TILING_EXHIBIT_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "figure7_pallas_tiling_exhibit_boundary_claim_ready_overclaim" in codes
+    assert "figure7_pallas_tiling_exhibit_boundary_invalid_boundary_status" in codes
+    assert (
+        "figure7_pallas_tiling_exhibit_boundary_invalid_missing_evidence_rendered_diagram_artifact_hash"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_figure7_pallas_tiling_exhibit_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "figure7_pallas_tiling_exhibit_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_process_exhibit_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

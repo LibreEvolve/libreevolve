@@ -4603,6 +4603,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/systems_result_readiness_boundary.json` now machine-records those
     Figure 7 exhibit records, diagram artifacts, and shape-corpus/runtime
     links as missing required evidence.
+    `papers/figure7_pallas_tiling_exhibit_boundary.json` now keeps the
+    exhibit-specific contract machine-checked.
   - Required result: add Figure 7-style exhibit metadata with a stable exhibit
     ID, kernel benchmark/candidate link, matrix dimension and tile-parameter
     definitions, accelerator and shape-corpus context links, diagram/JSON data

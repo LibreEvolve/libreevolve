@@ -2595,6 +2595,16 @@ Implemented:
   simulator/held-out/deployment report links, resource-recovery denominator
   windows, claim calibration, and scheduling-readiness linkages. It is not
   evidence that those artifacts have been emitted.
+- `papers/figure7_pallas_tiling_exhibit_boundary.json`: Figure 7 Pallas
+  tiling exhibit sidecar for AlphaEvolve Figure 7 and Section 3.3.2. It
+  records the required contract for stable exhibit rows, kernel benchmark/
+  candidate links, matrix product and dimension definitions, tile-parameter
+  schemas, Pallas kernel identity, accelerator/memory/fusion/compiler context,
+  shape-corpus and runtime report links, diagram source data, rendering
+  parameters, rendered diagram hashes, baseline tiling heuristic identity,
+  tiling-only correctness links, train/eval split linkage, claim calibration,
+  and systems-readiness linkage. It is not evidence that those artifacts have
+  been emitted.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

@@ -265,6 +265,10 @@ from libreevolve.problems.benchmarks.figure6_scheduling_exhibit_boundary import 
     figure6_scheduling_exhibit_boundary_record,
     validate_figure6_scheduling_exhibit_boundary,
 )
+from libreevolve.problems.benchmarks.figure7_pallas_tiling_exhibit_boundary import (
+    figure7_pallas_tiling_exhibit_boundary_record,
+    validate_figure7_pallas_tiling_exhibit_boundary,
+)
 from libreevolve.problems.benchmarks.example_scope import (
     example_benchmark_scope_records,
     validate_example_benchmark_scope,
@@ -607,6 +611,7 @@ AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_FILE = "papers/automated_evaluator_scope_boun
 EMBEDDED_EVALUATOR_BOUNDARY_FILE = "papers/embedded_evaluator_boundary.json"
 FIGURE3_SUPERVISED_EXHIBIT_BOUNDARY_FILE = "papers/figure3_supervised_exhibit_boundary.json"
 FIGURE6_SCHEDULING_EXHIBIT_BOUNDARY_FILE = "papers/figure6_scheduling_exhibit_boundary.json"
+FIGURE7_PALLAS_TILING_EXHIBIT_BOUNDARY_FILE = "papers/figure7_pallas_tiling_exhibit_boundary.json"
 PROCESS_EXHIBIT_BOUNDARY_FILE = "papers/process_exhibit_boundary.json"
 PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_boundary.json"
 INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE = "papers/incorrect_suggestion_audit_boundary.json"
@@ -1132,6 +1137,7 @@ def validate_paper_manifest(
     issues.extend(_validate_embedded_evaluator_boundary(root_path))
     issues.extend(_validate_figure3_supervised_exhibit_boundary(root_path))
     issues.extend(_validate_figure6_scheduling_exhibit_boundary(root_path))
+    issues.extend(_validate_figure7_pallas_tiling_exhibit_boundary(root_path))
     issues.extend(_validate_process_exhibit_boundary(root_path))
     issues.extend(_validate_proposal_lifecycle_audit_boundary(root_path))
     issues.extend(_validate_incorrect_suggestion_audit_boundary(root_path))
@@ -3814,6 +3820,38 @@ def _validate_figure6_scheduling_exhibit_boundary(root_path: Path) -> list[Paper
             f"figure6_scheduling_exhibit_boundary_{issue.code}",
             issue.message,
             "figure6_scheduling_exhibit",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_figure7_pallas_tiling_exhibit_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / FIGURE7_PALLAS_TILING_EXHIBIT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = figure7_pallas_tiling_exhibit_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "figure7_pallas_tiling_exhibit_boundary_manifest_missing",
+                    (
+                        f"{FIGURE7_PALLAS_TILING_EXHIBIT_BOUNDARY_FILE} must emit "
+                        "Figure 7 Pallas tiling-exhibit artifact scope"
+                    ),
+                    "figure7_pallas_tiling_exhibit",
+                )
+            ]
+    report = validate_figure7_pallas_tiling_exhibit_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"figure7_pallas_tiling_exhibit_boundary_{issue.code}",
+            issue.message,
+            "figure7_pallas_tiling_exhibit",
         )
         for issue in report.issues
     ]

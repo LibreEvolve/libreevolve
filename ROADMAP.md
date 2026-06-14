@@ -2184,6 +2184,13 @@ resumed-trace proof are still open.
   compiler-stack artifacts, real compiler adoption/integration artifacts, real
   hardware RTL/EDA artifacts, real hardware rewrite artifacts, and real
   Gemini-to-TPU attribution artifacts still need to populate those records.
+  `papers/figure7_pallas_tiling_exhibit_boundary.json` similarly preserves
+  the Figure 7 Pallas tiling-exhibit contract: stable exhibit ID, matrix
+  product and dimension definitions, tile-parameter schema, Pallas kernel
+  identity, accelerator/memory/fusion/compiler context, diagram data and
+  rendering artifacts, baseline tiling heuristic identity, shape-corpus and
+  runtime links, train/eval linkage, claim calibration, and systems-readiness
+  linkage.
 - For Pallas/Gemini kernel fixtures, populate workflow-baseline evidence before
   claiming AlphaEvolve-style automation of tiling-heuristic work: distinguish
   search-based autotuning, manual heuristics, and expert-hybrid baselines;

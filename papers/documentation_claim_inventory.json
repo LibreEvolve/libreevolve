@@ -294,6 +294,530 @@
     }
   ],
   "missing_claim_surface_document_records": [],
+  "claim_surface_heading_claim_status": "partial_heading_claim_coverage",
+  "claim_surface_heading_claim_record_count": 34,
+  "claim_surface_heading_claim_covered_count": 6,
+  "uncovered_claim_surface_heading_count": 28,
+  "claim_surface_heading_claim_records": [
+    {
+      "path": "README.md",
+      "line_start": 1,
+      "level": 1,
+      "heading_text": "LibreEvolve",
+      "heading_slug": "libreevolve",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 13,
+      "level": 2,
+      "heading_text": "Current Status",
+      "heading_slug": "current-status",
+      "claim_coverage_status": "has_claim_record",
+      "claim_ids": [
+        "readme_current_status_scope",
+        "readme_runnable_today_scope",
+        "readme_important_limits_scope"
+      ]
+    },
+    {
+      "path": "README.md",
+      "line_start": 102,
+      "level": 2,
+      "heading_text": "Requirements",
+      "heading_slug": "requirements",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 114,
+      "level": 2,
+      "heading_text": "Quick Start",
+      "heading_slug": "quick-start",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 141,
+      "level": 2,
+      "heading_text": "Problem Layout",
+      "heading_slug": "problem-layout",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 154,
+      "level": 2,
+      "heading_text": "Example Scope",
+      "heading_slug": "example-scope",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 174,
+      "level": 2,
+      "heading_text": "Run Artifacts",
+      "heading_slug": "run-artifacts",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 196,
+      "level": 2,
+      "heading_text": "Documentation Map",
+      "heading_slug": "documentation-map",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 216,
+      "level": 2,
+      "heading_text": "Research Sources",
+      "heading_slug": "research-sources",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 240,
+      "level": 2,
+      "heading_text": "Testing",
+      "heading_slug": "testing",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 254,
+      "level": 2,
+      "heading_text": "Repository Layout",
+      "heading_slug": "repository-layout",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 270,
+      "level": 2,
+      "heading_text": "Contributing",
+      "heading_slug": "contributing",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "README.md",
+      "line_start": 282,
+      "level": 2,
+      "heading_text": "License",
+      "heading_slug": "license",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1,
+      "level": 1,
+      "heading_text": "Roadmap",
+      "heading_slug": "roadmap",
+      "claim_coverage_status": "has_claim_record",
+      "claim_ids": [
+        "roadmap_alphaevolve_gap_scope"
+      ]
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 14,
+      "level": 2,
+      "heading_text": "Current State",
+      "heading_slug": "current-state",
+      "claim_coverage_status": "has_claim_record",
+      "claim_ids": [
+        "roadmap_current_state_scope"
+      ]
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 476,
+      "level": 2,
+      "heading_text": "Near Term",
+      "heading_slug": "near-term",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 478,
+      "level": 3,
+      "heading_text": "1. Finish candidate workspace fidelity",
+      "heading_slug": "1-finish-candidate-workspace-fidelity",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 554,
+      "level": 3,
+      "heading_text": "2. Strengthen multi-objective search",
+      "heading_slug": "2-strengthen-multi-objective-search",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 622,
+      "level": 3,
+      "heading_text": "3. Expand evaluation cascades",
+      "heading_slug": "3-expand-evaluation-cascades",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 721,
+      "level": 3,
+      "heading_text": "4. Prompt and context work",
+      "heading_slug": "4-prompt-and-context-work",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 817,
+      "level": 3,
+      "heading_text": "5. Documentation truthfulness",
+      "heading_slug": "5-documentation-truthfulness",
+      "claim_coverage_status": "has_claim_record",
+      "claim_ids": [
+        "roadmap_documentation_truthfulness_scope"
+      ]
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1034,
+      "level": 2,
+      "heading_text": "Mid Term",
+      "heading_slug": "mid-term",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1036,
+      "level": 3,
+      "heading_text": "6. Async and resumable runtime",
+      "heading_slug": "6-async-and-resumable-runtime",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1109,
+      "level": 3,
+      "heading_text": "7. Backend scheduling and critique",
+      "heading_slug": "7-backend-scheduling-and-critique",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1214,
+      "level": 3,
+      "heading_text": "8. Plugin extensibility",
+      "heading_slug": "8-plugin-extensibility",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1232,
+      "level": 2,
+      "heading_text": "Longer Term",
+      "heading_slug": "longer-term",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1234,
+      "level": 3,
+      "heading_text": "9. Representative benchmarks",
+      "heading_slug": "9-representative-benchmarks",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2500,
+      "level": 3,
+      "heading_text": "10. Operational maturity",
+      "heading_slug": "10-operational-maturity",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2530,
+      "level": 2,
+      "heading_text": "Non-Goals For Now",
+      "heading_slug": "non-goals-for-now",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2537,
+      "level": 2,
+      "heading_text": "Good First Follow-Ups",
+      "heading_slug": "good-first-follow-ups",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1,
+      "level": 1,
+      "heading_text": "Local Paper Cache",
+      "heading_slug": "local-paper-cache",
+      "claim_coverage_status": "has_claim_record",
+      "claim_ids": [
+        "papers_cache_manifest_scope"
+      ]
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 316,
+      "level": 2,
+      "heading_text": "Implementation status",
+      "heading_slug": "implementation-status",
+      "claim_coverage_status": "has_claim_record",
+      "claim_ids": [
+        "papers_implementation_status_scope"
+      ]
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1751,
+      "level": 2,
+      "heading_text": "TODO coverage cross-references",
+      "heading_slug": "todo-coverage-cross-references",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1829,
+      "level": 2,
+      "heading_text": "Benchmark coverage decisions",
+      "heading_slug": "benchmark-coverage-decisions",
+      "claim_coverage_status": "no_claim_record",
+      "claim_ids": []
+    }
+  ],
+  "uncovered_claim_surface_heading_records": [
+    {
+      "path": "README.md",
+      "line_start": 1,
+      "heading_text": "LibreEvolve",
+      "heading_slug": "libreevolve",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 102,
+      "heading_text": "Requirements",
+      "heading_slug": "requirements",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 114,
+      "heading_text": "Quick Start",
+      "heading_slug": "quick-start",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 141,
+      "heading_text": "Problem Layout",
+      "heading_slug": "problem-layout",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 154,
+      "heading_text": "Example Scope",
+      "heading_slug": "example-scope",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 174,
+      "heading_text": "Run Artifacts",
+      "heading_slug": "run-artifacts",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 196,
+      "heading_text": "Documentation Map",
+      "heading_slug": "documentation-map",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 216,
+      "heading_text": "Research Sources",
+      "heading_slug": "research-sources",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 240,
+      "heading_text": "Testing",
+      "heading_slug": "testing",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 254,
+      "heading_text": "Repository Layout",
+      "heading_slug": "repository-layout",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 270,
+      "heading_text": "Contributing",
+      "heading_slug": "contributing",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "README.md",
+      "line_start": 282,
+      "heading_text": "License",
+      "heading_slug": "license",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 476,
+      "heading_text": "Near Term",
+      "heading_slug": "near-term",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 478,
+      "heading_text": "1. Finish candidate workspace fidelity",
+      "heading_slug": "1-finish-candidate-workspace-fidelity",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 554,
+      "heading_text": "2. Strengthen multi-objective search",
+      "heading_slug": "2-strengthen-multi-objective-search",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 622,
+      "heading_text": "3. Expand evaluation cascades",
+      "heading_slug": "3-expand-evaluation-cascades",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 721,
+      "heading_text": "4. Prompt and context work",
+      "heading_slug": "4-prompt-and-context-work",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1034,
+      "heading_text": "Mid Term",
+      "heading_slug": "mid-term",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1036,
+      "heading_text": "6. Async and resumable runtime",
+      "heading_slug": "6-async-and-resumable-runtime",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1109,
+      "heading_text": "7. Backend scheduling and critique",
+      "heading_slug": "7-backend-scheduling-and-critique",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1214,
+      "heading_text": "8. Plugin extensibility",
+      "heading_slug": "8-plugin-extensibility",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1232,
+      "heading_text": "Longer Term",
+      "heading_slug": "longer-term",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1234,
+      "heading_text": "9. Representative benchmarks",
+      "heading_slug": "9-representative-benchmarks",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2500,
+      "heading_text": "10. Operational maturity",
+      "heading_slug": "10-operational-maturity",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2530,
+      "heading_text": "Non-Goals For Now",
+      "heading_slug": "non-goals-for-now",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2537,
+      "heading_text": "Good First Follow-Ups",
+      "heading_slug": "good-first-follow-ups",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1751,
+      "heading_text": "TODO coverage cross-references",
+      "heading_slug": "todo-coverage-cross-references",
+      "reason": "no_claim_record_for_heading"
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1829,
+      "heading_text": "Benchmark coverage decisions",
+      "heading_slug": "benchmark-coverage-decisions",
+      "reason": "no_claim_record_for_heading"
+    }
+  ],
   "claims": [
     {
       "claim_id": "readme_current_status_scope",
@@ -1038,5 +1562,5 @@
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution, and audited surface headings are enumerated for the README, ROADMAP, and papers index. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution, and audited surface headings are enumerated for the README, ROADMAP, and papers index with explicit heading-to-claim coverage records. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

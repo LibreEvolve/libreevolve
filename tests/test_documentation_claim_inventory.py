@@ -38,6 +38,13 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert inventory["claim_surface_heading_status"] == "audited_surface_headings_recorded"
     assert inventory["claim_surface_heading_record_count"] == 34
     assert inventory["missing_claim_surface_document_records"] == []
+    assert (
+        inventory["claim_surface_heading_claim_status"]
+        == "partial_heading_claim_coverage"
+    )
+    assert inventory["claim_surface_heading_claim_record_count"] == 34
+    assert inventory["claim_surface_heading_claim_covered_count"] == 6
+    assert inventory["uncovered_claim_surface_heading_count"] == 28
     assert inventory["claim_surface_heading_records"][0] == {
         "path": "README.md",
         "line_start": 1,
@@ -54,6 +61,26 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         "heading_text": "5. Documentation truthfulness",
         "heading_slug": "5-documentation-truthfulness",
     } in inventory["claim_surface_heading_records"]
+    assert inventory["claim_surface_heading_claim_records"][1] == {
+        "path": "README.md",
+        "line_start": 13,
+        "level": 2,
+        "heading_text": "Current Status",
+        "heading_slug": "current-status",
+        "claim_coverage_status": "has_claim_record",
+        "claim_ids": [
+            "readme_current_status_scope",
+            "readme_runnable_today_scope",
+            "readme_important_limits_scope",
+        ],
+    }
+    assert inventory["uncovered_claim_surface_heading_records"][0] == {
+        "path": "README.md",
+        "line_start": 1,
+        "heading_text": "LibreEvolve",
+        "heading_slug": "libreevolve",
+        "reason": "no_claim_record_for_heading",
+    }
     assert inventory["evidence_ref_record_count"] == sum(
         len(claim["evidence_refs"]) for claim in inventory["claims"]
     )
@@ -133,6 +160,11 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     )
     inventory["claim_surface_heading_record_count"] = 0
     inventory["claim_surface_heading_records"] = []
+    inventory["claim_surface_heading_claim_status"] = (
+        "all_audited_headings_have_claim_records"
+    )
+    inventory["uncovered_claim_surface_heading_count"] = 0
+    inventory["uncovered_claim_surface_heading_records"] = []
     inventory["source_anchor_status"] = "missing_claim_source_anchors"
     inventory["evidence_ref_status"] = "missing_local_evidence_refs"
     inventory["evidence_ref_fragment_status"] = "missing_fragment_anchors"
@@ -149,6 +181,9 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     assert "invalid_evidence_ref_fragment_status" in codes
     assert "invalid_claim_surface_heading_record_count" in codes
     assert "invalid_claim_surface_heading_records" in codes
+    assert "invalid_claim_surface_heading_claim_status" in codes
+    assert "invalid_uncovered_claim_surface_heading_count" in codes
+    assert "invalid_uncovered_claim_surface_heading_records" in codes
 
 
 def test_render_documentation_claim_inventory_summary_reports_shape():
@@ -167,3 +202,4 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| roadmap_claim_count | 3 |" in summary
     assert "| papers_claim_count | 2 |" in summary
     assert "| claim_surface_heading_count | 34 |" in summary
+    assert "| uncovered_claim_surface_heading_count | 28 |" in summary

@@ -272,6 +272,21 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             and record["fragment_status"] != "fragment_anchor_resolved"
         )
     ]
+    heading_claim_records = _claim_surface_heading_claim_records(
+        heading_records,
+        claims,
+    )
+    uncovered_heading_records = [
+        {
+            "path": record["path"],
+            "line_start": record["line_start"],
+            "heading_text": record["heading_text"],
+            "heading_slug": record["heading_slug"],
+            "reason": "no_claim_record_for_heading",
+        }
+        for record in heading_claim_records
+        if record["claim_coverage_status"] == "no_claim_record"
+    ]
     return {
         "schema": DOCUMENTATION_CLAIM_INVENTORY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
@@ -318,6 +333,20 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
         "claim_surface_heading_record_count": len(heading_records),
         "claim_surface_heading_records": heading_records,
         "missing_claim_surface_document_records": missing_heading_documents,
+        "claim_surface_heading_claim_status": (
+            "all_audited_headings_have_claim_records"
+            if not uncovered_heading_records
+            else "partial_heading_claim_coverage"
+        ),
+        "claim_surface_heading_claim_record_count": len(heading_claim_records),
+        "claim_surface_heading_claim_covered_count": sum(
+            1
+            for record in heading_claim_records
+            if record["claim_coverage_status"] == "has_claim_record"
+        ),
+        "uncovered_claim_surface_heading_count": len(uncovered_heading_records),
+        "claim_surface_heading_claim_records": heading_claim_records,
+        "uncovered_claim_surface_heading_records": uncovered_heading_records,
         "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -327,7 +356,8 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             "top-level claim surfaces and local evidence-ref existence records. "
             "Fragment-bearing evidence refs also record exact Markdown heading "
             "anchor resolution, and audited surface headings are enumerated "
-            "for the README, ROADMAP, and papers index. "
+            "for the README, ROADMAP, and papers index with explicit "
+            "heading-to-claim coverage records. "
             "It does not claim complete README coverage, "
             "complete ROADMAP coverage, complete papers index coverage, "
             "semantic claim verification, stale completed-entry detection, "
@@ -501,6 +531,85 @@ def validate_documentation_claim_inventory(
                 "missing claim surface document records drifted",
             )
         )
+    expected_heading_claim_records = _claim_surface_heading_claim_records(
+        expected_heading_records,
+        expected_claims,
+    )
+    expected_uncovered_heading_records = [
+        {
+            "path": record["path"],
+            "line_start": record["line_start"],
+            "heading_text": record["heading_text"],
+            "heading_slug": record["heading_slug"],
+            "reason": "no_claim_record_for_heading",
+        }
+        for record in expected_heading_claim_records
+        if record["claim_coverage_status"] == "no_claim_record"
+    ]
+    expected_heading_claim_status = (
+        "all_audited_headings_have_claim_records"
+        if not expected_uncovered_heading_records
+        else "partial_heading_claim_coverage"
+    )
+    if data.get("claim_surface_heading_claim_status") != expected_heading_claim_status:
+        issues.append(
+            _issue(
+                "invalid_claim_surface_heading_claim_status",
+                "claim surface heading claim status drifted",
+            )
+        )
+    if (
+        data.get("claim_surface_heading_claim_record_count")
+        != len(expected_heading_claim_records)
+    ):
+        issues.append(
+            _issue(
+                "invalid_claim_surface_heading_claim_record_count",
+                "claim surface heading claim record count drifted",
+            )
+        )
+    expected_heading_claim_covered_count = sum(
+        1
+        for record in expected_heading_claim_records
+        if record["claim_coverage_status"] == "has_claim_record"
+    )
+    if (
+        data.get("claim_surface_heading_claim_covered_count")
+        != expected_heading_claim_covered_count
+    ):
+        issues.append(
+            _issue(
+                "invalid_claim_surface_heading_claim_covered_count",
+                "claim surface heading claim covered count drifted",
+            )
+        )
+    if (
+        data.get("uncovered_claim_surface_heading_count")
+        != len(expected_uncovered_heading_records)
+    ):
+        issues.append(
+            _issue(
+                "invalid_uncovered_claim_surface_heading_count",
+                "uncovered claim surface heading count drifted",
+            )
+        )
+    if data.get("claim_surface_heading_claim_records") != expected_heading_claim_records:
+        issues.append(
+            _issue(
+                "invalid_claim_surface_heading_claim_records",
+                "claim surface heading claim records drifted",
+            )
+        )
+    if (
+        data.get("uncovered_claim_surface_heading_records")
+        != expected_uncovered_heading_records
+    ):
+        issues.append(
+            _issue(
+                "invalid_uncovered_claim_surface_heading_records",
+                "uncovered claim surface heading records drifted",
+            )
+        )
     claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
         data.get("claims"),
         issues,
@@ -544,6 +653,7 @@ def render_documentation_claim_inventory_summary(inventory: dict[str, Any]) -> s
         f"| papers_claim_count | {validation.papers_claim_count} |",
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
         f"| claim_surface_heading_count | {inventory.get('claim_surface_heading_record_count', '<unknown>')} |",
+        f"| uncovered_claim_surface_heading_count | {inventory.get('uncovered_claim_surface_heading_count', '<unknown>')} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -699,6 +809,45 @@ def _claim_surface_heading_inventory(
                 }
             )
     return records, missing_documents
+
+
+def _claim_surface_heading_claim_records(
+    heading_records: list[dict[str, Any]],
+    claims: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    claim_ids_by_heading: dict[tuple[str, str], list[str]] = {}
+    for claim in claims:
+        document_path = claim.get("document_path")
+        source_anchor_text = claim.get("source_anchor_text")
+        claim_id = claim.get("claim_id")
+        if not (
+            isinstance(document_path, str)
+            and isinstance(source_anchor_text, str)
+            and isinstance(claim_id, str)
+        ):
+            continue
+        heading_text = source_anchor_text.lstrip("#").strip()
+        claim_ids_by_heading.setdefault((document_path, heading_text), []).append(
+            claim_id
+        )
+    records: list[dict[str, Any]] = []
+    for heading in heading_records:
+        key = (heading["path"], heading["heading_text"])
+        claim_ids = claim_ids_by_heading.get(key, [])
+        records.append(
+            {
+                "path": heading["path"],
+                "line_start": heading["line_start"],
+                "level": heading["level"],
+                "heading_text": heading["heading_text"],
+                "heading_slug": heading["heading_slug"],
+                "claim_coverage_status": (
+                    "has_claim_record" if claim_ids else "no_claim_record"
+                ),
+                "claim_ids": claim_ids,
+            }
+        )
+    return records
 
 
 def _evidence_ref_record(root: Path, ref: str) -> dict[str, Any]:

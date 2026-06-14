@@ -1425,11 +1425,11 @@ boundary-test evidence exist. The committed
 `papers/documentation_claim_inventory.json` sidecar adds top-level README,
 ROADMAP, and papers-index claim ids with file-offset evidence anchors, local
 evidence-ref existence records, and Markdown fragment-anchor resolution records,
-plus audited surface heading records, while complete README/ROADMAP/papers
-index coverage, semantic documentation claim verification, complete
-implementation-evidence mapping, stale completed-entry detection, generated
-alignment reports, and full proof that every AlphaEvolve-facing claim is
-current remain absent.
+plus audited surface heading records and uncovered heading-to-claim gap records,
+while complete README/ROADMAP/papers index coverage, semantic documentation
+claim verification, complete implementation-evidence mapping, stale
+completed-entry detection, generated alignment reports, and full proof that
+every AlphaEvolve-facing claim is current remain absent.
 Core AlphaEvolve implementation-evidence mapping is now represented by
 `papers/implementation_evidence_map_boundary.json`, which records requirement
 anchors for markers, evaluator cascades, LLM prompting/sampling, the
@@ -2847,7 +2847,8 @@ Implemented:
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,
   Markdown fragment-anchor resolution records, audited surface heading records,
-  and explicit missing-evidence fields for complete coverage and semantic proof.
+  uncovered heading-to-claim gap records, and explicit missing-evidence fields
+  for complete coverage and semantic proof.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

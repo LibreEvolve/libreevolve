@@ -823,9 +823,9 @@ is not yet an AlphaEvolve reproduction.
   `papers/documentation_claim_inventory.json` now gives top-level README,
   ROADMAP, and papers-index claim ids with file-offset evidence anchors, local
   evidence-ref existence records, Markdown fragment-anchor resolution, and
-  audited surface heading records while keeping complete claim coverage,
-  semantic documentation-claim verification, and full AlphaEvolve-facing claim
-  proof open.
+  audited surface heading records with uncovered heading-to-claim gaps while
+  keeping complete claim coverage, semantic documentation-claim verification,
+  and full AlphaEvolve-facing claim proof open.
 - Keep the code-audit completeness boundary explicit:
   `papers/implementation_evidence_map_boundary.json` records core
   AlphaEvolve requirement anchors with module, test, sidecar, and TODO links,

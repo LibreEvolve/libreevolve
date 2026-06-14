@@ -1238,8 +1238,9 @@ Important limits:
   sidecar-registry, and top-level README/ROADMAP/papers-index claim-inventory
   guards with file-offset source anchors, local evidence-ref existence records,
   Markdown fragment-anchor resolution records, and audited surface heading
-  records, not semantic proof that every README, ROADMAP, papers-index, and
-  TODO statement is current; that boundary is tracked by
+  records with uncovered heading-to-claim gap records, not semantic proof that
+  every README, ROADMAP, papers-index, and TODO statement is current; that
+  boundary is tracked by
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors

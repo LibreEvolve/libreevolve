@@ -51,7 +51,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifest scope and the implementation-status table scope, records local
     evidence-ref existence plus Markdown fragment-anchor resolution for those
     anchors, and records audited README, ROADMAP, and papers-index Markdown
-    headings, while explicitly keeping row-level semantic proof out of scope.
+    headings plus uncovered heading-to-claim gaps, while explicitly keeping
+    row-level semantic proof out of scope.
   - Current gap: each status phrase now has a stable hash and source offset,
     candidate links to phrase-local artifacts plus row-level TODO and completed
     evidence, referenced local artifact/TODO path existence checks, local

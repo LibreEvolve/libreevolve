@@ -2502,6 +2502,64 @@ def test_validate_paper_manifest_requires_archive_event_replay_boundary_at_repo_
     assert "archive_event_replay_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_controller_pending_work_resume_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.controller_pending_work_resume_boundary_record(), indent=2
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_controller_pending_work_resume_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.controller_pending_work_resume_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "pending_work_resume_ready"
+    record["missing_evidence"]["controller_queue_checkpoint_schema"] = "recorded"
+    sidecar = tmp_path / paper_manifest.CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "controller_pending_work_resume_boundary_claim_ready_overclaim" in codes
+    assert "controller_pending_work_resume_boundary_invalid_boundary_status" in codes
+    assert (
+        "controller_pending_work_resume_boundary_invalid_missing_evidence_controller_queue_checkpoint_schema"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_controller_pending_work_resume_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "controller_pending_work_resume_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_metric_diverse_prompt_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

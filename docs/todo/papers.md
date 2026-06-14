@@ -2538,12 +2538,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     per-record status, and a stable records hash.
     `libreevolve.controller_state_validation.v1` now verifies the terminal
     drained synchronous boundary and reports pending-work or async/full-replay
-    overclaims as manifest validation failures.
+    overclaims as manifest validation failures. The paper manifest now requires
+    `papers/controller_pending_work_resume_boundary.json`, which preserves that
+    terminal controller-state boundary separately from real queue checkpoint
+    and pending-work resume support.
   - Required result: apply or explicitly model migration-event replay, add
     controller/pending-work resume state, and add paper-visible resume/replay
     tests covering below-threshold, non-admitted, elite-only, and
     cell-replacement cases. The remaining paper gap is not terminal controller
-    event-stream artifact verification or terminal drained-state validation.
+    event-stream artifact verification, terminal drained-state validation, or
+    preserving the current pending-work absence boundary.
 
 - [ ] Extend meta-prompt context policy beyond validated current fields.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.2 and 4.

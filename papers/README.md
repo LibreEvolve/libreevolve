@@ -1193,6 +1193,12 @@ part of the broader resume gap. The committed
 `papers/archive_event_replay_boundary.json` sidecar keeps the current
 archive-state snapshot restore plus audit-only event reconciliation scope
 machine-validated apart from ordered archive-event restore-engine support.
+`papers/controller_pending_work_resume_boundary.json` separately preserves the
+terminal synchronous controller-state boundary: current runs can validate zero
+queued/running/pending work at finalization and checked full-resume unsupported
+surfaces, but they do not checkpoint controller queues, running evaluations,
+in-flight LLM calls, pending archive admissions, provider handoff replay, or an
+end-to-end resumed trace.
 
 AlphaEvolve rejected-diagnostics note: rejected archive-admission metadata is
 kept JSON-safe, but hook-mutated/restored programs with non-finite top-level
@@ -2457,6 +2463,16 @@ Implemented:
   provider-cancellation budget state, provider-output replay for budget resume,
   accelerator or worker lease budget accounting, or experiment-owned quota
   policy.
+- `papers/controller_pending_work_resume_boundary.json`: controller
+  pending-work resume sidecar for AlphaEvolve Sections 2.5 and 2.6. It records
+  the current `runtime.history.controller_state` terminal drained snapshot,
+  zero pending-work validation, `controller_budget_events.jsonl` stream checks,
+  controller-state artifact inventory, full-resume bundle validation,
+  CLI/direct restore entrypoints, and unsupported-surface listing. It is not
+  evidence of controller queue checkpoint schemas, queued proposal state,
+  running evaluation state, in-flight LLM call state, pending archive admission
+  state, partial-generation replay traces, async controller graph checkpoints,
+  provider-output handoff replay, or end-to-end resumed trace proof.
 - `papers/llm_role_scheduler_boundary.json`: LLM role-scheduler sidecar for
   AlphaEvolve Sections 2.1 and 2.6. It records configured role-backend
   routing, backend metadata role matching, reward-accounted roles, feedback

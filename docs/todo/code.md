@@ -5220,9 +5220,12 @@ sidecars, tests, and active TODOs.
     no pending-work resume claim, and `resumed_trace_proof_ready: false`.
     Validation rejects forged resumed-trace proof claims. Archive restore
     explicitly covers current cell/elite placements without replaying migration
-    events as an ordered restore engine. Remaining gaps are no provider-output
-    replay, no controller queue or pending-evaluation state, no migration-event
-    replay engine, and no end-to-end resumed trace proving parent/inspiration/
+    events as an ordered restore engine. The paper manifest now requires
+    `papers/controller_pending_work_resume_boundary.json`, which preserves the
+    terminal controller-state scope and rejects controller queue/pending-work
+    resume overclaims. Remaining gaps are no provider-output replay, no
+    controller queue or pending-evaluation state, no migration-event replay
+    engine, and no end-to-end resumed trace proving parent/inspiration/
     prompt/archive/controller continuity.
   - Required result: add one direct and CLI resume entrypoint that validates
     and composes population/database state, backend bandit state, prompt
@@ -5230,7 +5233,8 @@ sidecars, tests, and active TODOs.
     explicit non-replay policy, and pending controller/evaluation work, with an
     end-to-end resumed trace proving parent/inspiration/prompt/archive/
     controller continuity. The remaining gap is not validating the current
-    compatible full-resume bundle shape.
+    compatible full-resume bundle shape; it is adding real controller
+    queue/pending-work resume state and resumed-trace proof.
 
 - [ ] Define lineage replay contract for direct UUIDs and provider boundaries.
   - Spec evidence: AlphaEvolve compares systems over long computation budgets,

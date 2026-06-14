@@ -606,6 +606,12 @@ from libreevolve.problems.benchmarks.archive_event_replay_boundary import (
     render_archive_event_replay_boundary_summary,
     validate_archive_event_replay_boundary,
 )
+from libreevolve.problems.benchmarks.controller_pending_work_resume_boundary import (
+    CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_SCHEMA,
+    controller_pending_work_resume_boundary_record,
+    render_controller_pending_work_resume_boundary_summary,
+    validate_controller_pending_work_resume_boundary,
+)
 from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
     METRIC_DIVERSE_PROMPT_BOUNDARY_SCHEMA,
     metric_diverse_prompt_boundary_record,
@@ -1064,6 +1070,7 @@ __all__ = [
     "MAP_ELITES_DESCRIPTOR_BOUNDARY_SCHEMA",
     "MAP_ELITES_ILLUMINATION_BOUNDARY_SCHEMA",
     "ARCHIVE_EVENT_REPLAY_BOUNDARY_SCHEMA",
+    "CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_SCHEMA",
     "MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA",
     "MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA",
     "MATH_OUTCOME_BOUNDARY_SCHEMA",
@@ -1137,6 +1144,7 @@ __all__ = [
     "alphaevolve_source_pdf_rights_record",
     "alphaevolve_source_pdf_version_record",
     "archive_event_replay_boundary_record",
+    "controller_pending_work_resume_boundary_record",
     "artifact_index_boundary_record",
     "benchmark_fixture_readiness_boundary_record",
     "benchmark_hardening_artifact_inventory",
@@ -1287,6 +1295,7 @@ __all__ = [
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
     "render_archive_event_replay_boundary_summary",
+    "render_controller_pending_work_resume_boundary_summary",
     "render_archagent_boundary_summary",
     "render_artifact_index_boundary_summary",
     "render_automated_evaluator_scope_boundary_summary",
@@ -1452,6 +1461,7 @@ __all__ = [
     "validate_alphaevolve_source_pdf_rights",
     "validate_alphaevolve_source_pdf_version",
     "validate_archive_event_replay_boundary",
+    "validate_controller_pending_work_resume_boundary",
     "validate_archagent_boundary",
     "validate_artifact_index_boundary",
     "validate_automated_evaluator_scope_boundary",

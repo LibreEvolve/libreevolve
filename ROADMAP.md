@@ -1038,7 +1038,11 @@ is not yet an AlphaEvolve reproduction.
   parallelism evidence open.
 - Compose the current restored LLM scheduler, prompt-history, RNG, archive, and
   budget snapshots with controller and pending-evaluation checkpoint state so
-  long runs can resume from more than a terminal drained boundary.
+  long runs can resume from more than a terminal drained boundary. The committed
+  `papers/controller_pending_work_resume_boundary.json` sidecar preserves the
+  current terminal controller-state evidence while keeping queue checkpoint,
+  running-work resume, provider handoff replay, and end-to-end resumed-trace
+  proof open.
 - Extend the current restorable MAP-Elites cell/island snapshots, elite
   snapshots, and island cursor/counter state with descriptor-value replay
   semantics, ordered migration-event replay, controller queues, and pending-work
@@ -1048,7 +1052,9 @@ is not yet an AlphaEvolve reproduction.
   restore surfaces into a checked full-runtime bundle, but it is not a full
   replay or resumed experiment trace. The committed
   `papers/archive_event_replay_boundary.json` sidecar preserves that
-  snapshot-restore versus ordered-event-replay boundary.
+  snapshot-restore versus ordered-event-replay boundary, and
+  `papers/controller_pending_work_resume_boundary.json` separately preserves
+  the terminal controller-state versus pending-work resume boundary.
 - Complete run manifest hardening for direct custom plugin package-registry and
   constructor-value/schema attribution beyond the current direct-instance
   signature-only policy, plus aggregate hashes for artifacts emitted after
@@ -1063,7 +1069,8 @@ for direct `evolve()` calls and CLI runs, and the current full-runtime bundle
 composes it with compatible LLM scheduler, archive, budget, controller-budget,
 and lineage-boundary checks while keeping resumed-trace proof readiness false;
 provider/plugin output replay, controller pending-work state, and end-to-end
-resumed-trace proof are still open.
+resumed-trace proof are still open; the terminal controller-state boundary is
+tracked by `papers/controller_pending_work_resume_boundary.json`.
 - Extend budget accounting beyond the current local synchronous generation,
   evaluator-call, evaluator-second, wall-clock, LLM call/provider/token/
   configured-cost/latency, synchronous controller-budget event replay, and

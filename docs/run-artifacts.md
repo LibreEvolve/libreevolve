@@ -1133,7 +1133,9 @@ The returned bundle also includes `bundle_validation` with schema
 runtime RNG, LLM scheduler, archive restore, runtime budget, controller-budget
 replay, lineage boundary, and unsupported-surface list while keeping
 `full_replay_ready`, `provider_output_replay_ready`, and
-`pending_work_resume_ready` false.
+`pending_work_resume_ready` false. The paper-facing version of this terminal
+controller-state versus pending-work resume boundary is preserved in
+`papers/controller_pending_work_resume_boundary.json`.
 `llm_budget_resume_artifact_inventory()` emits
 `libreevolve.llm_budget_resume_artifact_inventory.v1` to verify optional
 `runtime.llm_budget_report.resume_state.artifacts[]` records against an
@@ -1184,7 +1186,8 @@ in-flight LLM calls, and pending archive admissions plus a compact
 drained boundary and reports pending work, malformed fields, or async/full
 replay overclaims as validation failures. Queued/running async worker state,
 provider-output replay, and end-to-end lineage replay proof remain separate
-resume work.
+resume work; `papers/controller_pending_work_resume_boundary.json` keeps that
+terminal-snapshot scope machine-validated.
 Completed runtime history also records
 `runtime.history.distributed_pipeline_topology_report` with schema
 `libreevolve.distributed_pipeline_topology_report.v1`. The report names the

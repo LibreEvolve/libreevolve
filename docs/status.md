@@ -614,7 +614,9 @@ Important limits:
   provider-output/raw-payload replay, pending-work or async-worker resume,
   cross-run provider-failure policy proof, or a mutation-chain-depth policy
   for slow evaluator feedback; the role-level LLM budget boundary is tracked
-  by `papers/llm_budget_policy_boundary.json`.
+  by `papers/llm_budget_policy_boundary.json`, and the terminal
+  controller-state versus pending-work resume boundary is tracked by
+  `papers/controller_pending_work_resume_boundary.json`.
 - Lineage replay evidence is limited to loop-owned deterministic surfaces:
   run-local RNG snapshots, prompt-history replay, deterministic seed/generated
   candidate ids, database-created prompt ids, ordered LLM call ids, and the
@@ -622,7 +624,8 @@ Important limits:
   bundles. Direct `Program()` / `PromptProgram()` UUID4 defaults, provider/model
   outputs, controller pending work, plugin internal randomness, validator
   subprocess randomness, migration-event replay, and end-to-end resumed-trace
-  proof remain outside the replay contract.
+  proof remain outside the replay contract; the current terminal controller
+  evidence is bounded by `papers/controller_pending_work_resume_boundary.json`.
 - Parallel-evaluation readiness is limited to configured local
   `eval_stages[].sample_workers` fan-out, observed sample wall-clock
   compression, and topology linkage. It is not AlphaEvolve-style

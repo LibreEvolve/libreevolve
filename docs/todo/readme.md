@@ -135,6 +135,34 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     sidecars/TODO evidence, extend it to the linked documentation surfaces,
     then validate stale or unsupported claims in CI.
 
+- [ ] Add `docs/status.md` ledger freshness and coverage evidence.
+  - Spec evidence: the README tells readers that `docs/status.md` is the full
+    implemented-versus-missing ledger. For AlphaEvolve-alignment work, that is
+    a strong documentation claim: the status ledger should remain synchronized
+    with implementation code, ROADMAP priorities, `papers/README.md` status
+    rows, sidecar absence boundaries, and active TODO entries rather than
+    becoming a stale hand-maintained summary.
+  - Current evidence: `docs/status.md` contains the detailed implementation
+    and absence-boundary inventory moved out of the root README; `docs/README.md`
+    routes paper/spec reviewers to `docs/status.md`, ROADMAP, and
+    `papers/README.md`; and `papers/documentation_claim_inventory.json`
+    tracks selected README/ROADMAP/papers-index claims. Existing paper
+    status-claim inventory validation checks `papers/README.md` row claims,
+    not the much larger `docs/status.md` ledger.
+  - Current gap: there is no structured inventory, sidecar, or CI check that
+    parses `docs/status.md`, maps each implemented and missing-status bullet to
+    source modules, tests, ROADMAP entries, paper sidecars, active/completed
+    TODO anchors, and `papers/README.md` rows, or detects stale status prose
+    when code, ROADMAP, paper status rows, or TODO coverage changes. This
+    leaves the README's "full implemented-versus-missing ledger" claim weaker
+    than the paper-index status inventory.
+  - Required result: add a status-ledger freshness artifact and validator that
+    inventories `docs/status.md` bullets, links each claim to current
+    implementation/sidecar/TODO evidence or explicit absence scope, compares
+    overlapping claims with README, ROADMAP, `papers/README.md`, and paper
+    sidecars, and fails when status wording drifts from authoritative current
+    evidence.
+
 ## Architecture Description
 
 - [ ] Add README repository-layout drift and module-role evidence.

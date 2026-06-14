@@ -23,7 +23,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evidence-ref existence plus Markdown fragment-anchor resolution for those
     anchors, and includes ROADMAP current-state, documentation-truthfulness,
     and AlphaEvolve-gap claims. It also records audited README, ROADMAP, and
-    papers-index Markdown headings plus uncovered heading-to-claim gaps.
+    papers-index Markdown headings plus uncovered heading-to-claim gaps with
+    active TODO-owner links.
   - Current gap: there is no complete machine-readable claim inventory for
     every ROADMAP current-state bullet, no per-bullet code/test/runtime-
     artifact/sidecar/TODO evidence map, no stale-priority detector, and no

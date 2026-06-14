@@ -45,6 +45,26 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert inventory["claim_surface_heading_claim_record_count"] == 34
     assert inventory["claim_surface_heading_claim_covered_count"] == 6
     assert inventory["uncovered_claim_surface_heading_count"] == 28
+    assert (
+        inventory["uncovered_heading_todo_link_status"]
+        == "all_uncovered_heading_groups_have_todo_links"
+    )
+    assert inventory["uncovered_heading_todo_link_record_count"] == 3
+    assert inventory["uncovered_heading_todo_link_records"][0][
+        "document_path"
+    ] == "README.md"
+    assert inventory["uncovered_heading_todo_link_records"][0][
+        "uncovered_heading_count"
+    ] == 12
+    assert inventory["uncovered_heading_todo_link_records"][0][
+        "todo_path"
+    ] == "docs/todo/readme.md"
+    assert inventory["uncovered_heading_todo_link_records"][0][
+        "todo_anchor_status"
+    ] == "todo_anchor_recorded"
+    assert inventory["uncovered_heading_todo_link_records"][0]["todo_span"][
+        "line_start"
+    ] == 12
     assert inventory["claim_surface_heading_records"][0] == {
         "path": "README.md",
         "line_start": 1,
@@ -165,6 +185,10 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     )
     inventory["uncovered_claim_surface_heading_count"] = 0
     inventory["uncovered_claim_surface_heading_records"] = []
+    inventory["uncovered_heading_todo_link_status"] = (
+        "missing_uncovered_heading_todo_links"
+    )
+    inventory["uncovered_heading_todo_link_records"] = []
     inventory["source_anchor_status"] = "missing_claim_source_anchors"
     inventory["evidence_ref_status"] = "missing_local_evidence_refs"
     inventory["evidence_ref_fragment_status"] = "missing_fragment_anchors"
@@ -184,6 +208,8 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     assert "invalid_claim_surface_heading_claim_status" in codes
     assert "invalid_uncovered_claim_surface_heading_count" in codes
     assert "invalid_uncovered_claim_surface_heading_records" in codes
+    assert "invalid_uncovered_heading_todo_link_status" in codes
+    assert "invalid_uncovered_heading_todo_link_records" in codes
 
 
 def test_render_documentation_claim_inventory_summary_reports_shape():
@@ -203,3 +229,4 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| papers_claim_count | 2 |" in summary
     assert "| claim_surface_heading_count | 34 |" in summary
     assert "| uncovered_claim_surface_heading_count | 28 |" in summary
+    assert "| uncovered_heading_todo_link_count | 3 |" in summary

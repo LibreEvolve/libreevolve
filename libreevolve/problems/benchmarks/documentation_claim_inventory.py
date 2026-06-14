@@ -19,6 +19,22 @@ EXPECTED_CLAIM_SURFACE_DOCUMENT_PATHS = (
     "ROADMAP.md",
     "papers/README.md",
 )
+UNCOVERED_HEADING_TODO_LINKS = {
+    "README.md": {
+        "todo_path": "docs/todo/readme.md",
+        "todo_anchor_text": "- [ ] Add semantic README claim verification and evidence mapping.",
+    },
+    "ROADMAP.md": {
+        "todo_path": "docs/todo/roadmap.md",
+        "todo_anchor_text": (
+            "- [ ] Add semantic evidence mapping for ROADMAP current-state and priority"
+        ),
+    },
+    "papers/README.md": {
+        "todo_path": "docs/todo/papers.md",
+        "todo_anchor_text": "- [ ] Add semantic evidence mapping for every paper-index status row.",
+    },
+}
 EXPECTED_MISSING_EVIDENCE = {
     "complete_readme_claim_inventory": "not_recorded_locally",
     "complete_roadmap_claim_inventory": "not_recorded_locally",
@@ -287,6 +303,10 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
         for record in heading_claim_records
         if record["claim_coverage_status"] == "no_claim_record"
     ]
+    uncovered_heading_todo_link_records = _uncovered_heading_todo_link_records(
+        root_path,
+        uncovered_heading_records,
+    )
     return {
         "schema": DOCUMENTATION_CLAIM_INVENTORY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
@@ -347,6 +367,18 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
         "uncovered_claim_surface_heading_count": len(uncovered_heading_records),
         "claim_surface_heading_claim_records": heading_claim_records,
         "uncovered_claim_surface_heading_records": uncovered_heading_records,
+        "uncovered_heading_todo_link_status": (
+            "all_uncovered_heading_groups_have_todo_links"
+            if all(
+                record["todo_anchor_status"] == "todo_anchor_recorded"
+                for record in uncovered_heading_todo_link_records
+            )
+            else "missing_uncovered_heading_todo_links"
+        ),
+        "uncovered_heading_todo_link_record_count": len(
+            uncovered_heading_todo_link_records
+        ),
+        "uncovered_heading_todo_link_records": uncovered_heading_todo_link_records,
         "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -610,6 +642,42 @@ def validate_documentation_claim_inventory(
                 "uncovered claim surface heading records drifted",
             )
         )
+    expected_uncovered_todo_links = _uncovered_heading_todo_link_records(
+        Path(root),
+        expected_uncovered_heading_records,
+    )
+    expected_uncovered_todo_link_status = (
+        "all_uncovered_heading_groups_have_todo_links"
+        if all(
+            record["todo_anchor_status"] == "todo_anchor_recorded"
+            for record in expected_uncovered_todo_links
+        )
+        else "missing_uncovered_heading_todo_links"
+    )
+    if data.get("uncovered_heading_todo_link_status") != expected_uncovered_todo_link_status:
+        issues.append(
+            _issue(
+                "invalid_uncovered_heading_todo_link_status",
+                "uncovered heading TODO link status drifted",
+            )
+        )
+    if (
+        data.get("uncovered_heading_todo_link_record_count")
+        != len(expected_uncovered_todo_links)
+    ):
+        issues.append(
+            _issue(
+                "invalid_uncovered_heading_todo_link_record_count",
+                "uncovered heading TODO link count drifted",
+            )
+        )
+    if data.get("uncovered_heading_todo_link_records") != expected_uncovered_todo_links:
+        issues.append(
+            _issue(
+                "invalid_uncovered_heading_todo_link_records",
+                "uncovered heading TODO link records drifted",
+            )
+        )
     claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
         data.get("claims"),
         issues,
@@ -654,6 +722,7 @@ def render_documentation_claim_inventory_summary(inventory: dict[str, Any]) -> s
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
         f"| claim_surface_heading_count | {inventory.get('claim_surface_heading_record_count', '<unknown>')} |",
         f"| uncovered_claim_surface_heading_count | {inventory.get('uncovered_claim_surface_heading_count', '<unknown>')} |",
+        f"| uncovered_heading_todo_link_count | {inventory.get('uncovered_heading_todo_link_record_count', '<unknown>')} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -845,6 +914,42 @@ def _claim_surface_heading_claim_records(
                     "has_claim_record" if claim_ids else "no_claim_record"
                 ),
                 "claim_ids": claim_ids,
+            }
+        )
+    return records
+
+
+def _uncovered_heading_todo_link_records(
+    root: Path,
+    uncovered_heading_records: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    counts_by_path: dict[str, int] = {}
+    for record in uncovered_heading_records:
+        path = record["path"]
+        counts_by_path[path] = counts_by_path.get(path, 0) + 1
+    records: list[dict[str, Any]] = []
+    for path in EXPECTED_CLAIM_SURFACE_DOCUMENT_PATHS:
+        uncovered_count = counts_by_path.get(path, 0)
+        if uncovered_count == 0:
+            continue
+        todo_link = UNCOVERED_HEADING_TODO_LINKS[path]
+        todo_span = _source_anchor_span(
+            root,
+            todo_link["todo_path"],
+            todo_link["todo_anchor_text"],
+        )
+        records.append(
+            {
+                "document_path": path,
+                "uncovered_heading_count": uncovered_count,
+                "todo_path": todo_link["todo_path"],
+                "todo_anchor_text": todo_link["todo_anchor_text"],
+                "todo_anchor_status": (
+                    "todo_anchor_recorded"
+                    if todo_span["found"]
+                    else "todo_anchor_missing"
+                ),
+                "todo_span": todo_span,
             }
         )
     return records

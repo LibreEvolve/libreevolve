@@ -17,8 +17,8 @@ def test_alphaevolve_datacite_full_response_boundary_accepts_raw_body_record():
         == "full_datacite_response_body_retained_without_refresh_gate"
     )
     assert validation.response_bytes == 15905
-    assert validation.required_evidence_field_count == 15
-    assert validation.missing_evidence_count == 2
+    assert validation.required_evidence_field_count == 14
+    assert validation.missing_evidence_count == 1
     assert boundary["schema"] == ALPHAEVOLVE_DATACITE_FULL_RESPONSE_BOUNDARY_SCHEMA
     assert boundary["parsed_response_summary"]["doi"] == "10.48550/arxiv.2506.13131"
     assert boundary["parsed_response_summary"]["creator_count"] == 18
@@ -55,4 +55,4 @@ def test_render_alphaevolve_datacite_full_response_boundary_summary_reports_shap
         in summary
     )
     assert "| response_bytes | 15905 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

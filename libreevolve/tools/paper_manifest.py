@@ -71,6 +71,10 @@ from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import
     alphaevolve_current_version_boundary_record,
     validate_alphaevolve_current_version_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_cached_pdf_header_consistency_boundary import (
+    alphaevolve_cached_pdf_header_consistency_boundary_record,
+    validate_alphaevolve_cached_pdf_header_consistency_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_raw_http_headers_boundary import (
     alphaevolve_raw_http_headers_boundary_record,
     validate_alphaevolve_raw_http_headers_boundary,
@@ -655,6 +659,7 @@ from libreevolve.problems.benchmarks.ttt_discover_boundary import (
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
 ARXIV_ABSTRACT_SNAPSHOT_FILE = "papers/arxiv_abstract_snapshot.json"
 ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE = "papers/alphaevolve_current_version_boundary.json"
+ALPHAEVOLVE_CACHED_PDF_HEADER_CONSISTENCY_BOUNDARY_FILE = "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
 ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_FILE = "papers/alphaevolve_raw_http_headers_boundary.json"
 ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE = "papers/alphaevolve_datacite_doi_boundary.json"
 ALPHAEVOLVE_DATACITE_FULL_RESPONSE_BOUNDARY_FILE = "papers/alphaevolve_datacite_full_response_boundary.json"
@@ -805,6 +810,13 @@ MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_FILE = "papers/math_heuristic_stage_seque
 PAPER_ARTIFACT_ROLES_FILE = "papers/paper_artifact_roles.json"
 PAPER_ARTIFACT_LINKAGE_FILE = "papers/paper_artifact_linkage.json"
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
+ALLOWED_TRACKED_PAPER_PDFS = {
+    (
+        "2506.13131",
+        "papers/2506.13131__AlphaEvolve.pdf",
+        "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    )
+}
 PAPER_ID_RE = re.compile(r"(?:\d{4}\.\d{5}|[a-z0-9][a-z0-9-]{0,94}[a-z0-9])")
 ARXIV_ID_RE = re.compile(r"\d{4}\.\d{5}(?:v\d+)?")
 PAPER_FILE_NAME_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,159}\.pdf")
@@ -1179,7 +1191,10 @@ def validate_paper_manifest(
                 local_present_count += 1
                 availability_record = _availability(row, file_value, "present", git_tracked_files)
                 availability.append(availability_record)
-                if availability_record.git_tracked is True:
+                if (
+                    availability_record.git_tracked is True
+                    and not _is_allowed_tracked_paper_pdf(row, file_value)
+                ):
                     issues.append(
                         PaperManifestIssue(
                             "tracked_pdf",
@@ -1216,6 +1231,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_alphaevolve_arxiv_abstract_snapshot(root_path))
     issues.extend(_validate_alphaevolve_current_version_boundary(root_path))
+    issues.extend(_validate_alphaevolve_cached_pdf_header_consistency_boundary(root_path))
     issues.extend(_validate_alphaevolve_raw_http_headers_boundary(root_path))
     issues.extend(_validate_alphaevolve_datacite_doi_boundary(root_path))
     issues.extend(_validate_alphaevolve_datacite_full_response_boundary(root_path))
@@ -1981,6 +1997,38 @@ def _validate_alphaevolve_current_version_boundary(root_path: Path) -> list[Pape
     return [
         PaperManifestIssue(
             f"alphaevolve_current_version_boundary_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_cached_pdf_header_consistency_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_CACHED_PDF_HEADER_CONSISTENCY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_cached_pdf_header_consistency_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_cached_pdf_header_consistency_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_CACHED_PDF_HEADER_CONSISTENCY_BOUNDARY_FILE} must emit "
+                        "the AlphaEvolve cached-PDF header consistency boundary"
+                    ),
+                    "2506.13131",
+                )
+            ]
+    report = validate_alphaevolve_cached_pdf_header_consistency_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_cached_pdf_header_consistency_boundary_{issue.code}",
             issue.message,
             "2506.13131",
         )
@@ -8641,6 +8689,14 @@ def _availability(
         local_status=local_status,
         git_tracked=None if git_tracked_files is None else file_value.replace("\\", "/") in git_tracked_files,
     )
+
+
+def _is_allowed_tracked_paper_pdf(row: dict[str, Any], file_value: str) -> bool:
+    row_id = _safe_manifest_label(str(row.get("id", "")))
+    sha256 = row.get("sha256")
+    if not isinstance(sha256, str):
+        return False
+    return (row_id, file_value.replace("\\", "/"), sha256) in ALLOWED_TRACKED_PAPER_PDFS
 
 
 def _git_tracked_files(root: Path) -> set[str] | None:

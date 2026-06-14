@@ -49,11 +49,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "full_raw_response_artifact",
     "datacite_refresh_gate",
     "doi_landing_resolution_headers",
-    "cached_pdf_header_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "datacite_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_consistency": "not_recorded_locally",
 }
 
 
@@ -107,9 +105,10 @@ def alphaevolve_datacite_doi_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records a bounded DataCite API response summary and "
             "content hash for DOI 10.48550/arxiv.2506.13131 and is paired "
-            "with the raw HTTP headers, full raw response, and DOI "
-            "landing-resolution sidecars. It does not claim automated DataCite "
-            "refresh gates or cached-PDF header consistency."
+            "with the raw HTTP headers, full raw response, DOI "
+            "landing-resolution sidecars, and cached-PDF header consistency "
+            "sidecar. "
+            "It does not claim automated DataCite refresh gates."
         ),
     }
 

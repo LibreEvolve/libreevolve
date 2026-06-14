@@ -29,12 +29,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "final_landing_response_sha256",
     "full_doi_redirect_body_artifact",
     "automated_doi_resolution_refresh_gate",
-    "cached_pdf_header_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "full_doi_redirect_body_artifact": "not_recorded_locally",
     "automated_doi_resolution_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_consistency": "not_recorded_locally",
 }
 EXPECTED_DOI_REDIRECT_HEADER_LINES = (
     "Date: Sun, 14 Jun 2026 02:32:27 GMT",
@@ -128,7 +126,8 @@ def alphaevolve_doi_landing_resolution_boundary_record() -> dict[str, Any]:
             "This boundary records raw DOI resolver redirect headers and the "
             "final arXiv landing response headers for 10.48550/arxiv.2506.13131. "
             "It does not claim full DOI redirect body retention, an automated "
-            "DOI resolution refresh gate, or cached-PDF header consistency."
+            "DOI resolution refresh gate. It is paired with the cached-PDF "
+            "header consistency sidecar."
         ),
     }
 

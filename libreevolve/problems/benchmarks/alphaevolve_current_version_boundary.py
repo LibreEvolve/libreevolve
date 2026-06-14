@@ -61,12 +61,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "full_current_abs_html_artifact",
     "full_floating_pdf_response_artifact",
     "automated_current_version_refresh_gate",
-    "cached_pdf_header_text_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "full_current_abs_html_artifact": "not_recorded_locally",
     "automated_current_version_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_text_consistency": "not_recorded_locally",
 }
 
 
@@ -132,7 +130,8 @@ def alphaevolve_current_version_boundary_record() -> dict[str, Any]:
             "headers sidecar. It "
             "does not claim full current-abstract HTML retention, full "
             "floating-abstract HTML retention, an automated current-version "
-            "refresh gate, or cached PDF header text consistency."
+            "refresh gate, and is paired with the cached PDF header text "
+            "consistency sidecar."
         ),
     }
 

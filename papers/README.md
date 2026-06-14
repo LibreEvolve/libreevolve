@@ -1,9 +1,11 @@
 # Local Paper Cache
 
 This directory is the paper-cache index. On the working machine it contains 53
-locally cached PDFs plus download manifests, but the PDFs are intentionally
-gitignored; the committed repository tracks this README and the CSV/JSON
-manifests. The manifests record each cached PDF's byte count and SHA-256 hash.
+locally cached PDFs plus download manifests. PDFs are intentionally gitignored
+by default; the retained AlphaEvolve PDF is the explicit hash-validated source
+artifact exception. The committed repository tracks this README, the CSV/JSON
+manifests, sidecars, and that retained source artifact. The manifests record
+each cached PDF's byte count and SHA-256 hash.
 Manifest `title` values are inventory/display slugs derived from the local cache
 name, not authoritative bibliographic titles; use the implementation-status
 table below for paper-facing titles and roles.
@@ -36,7 +38,8 @@ duplicate-key-free JSON rows, and the canonical CSV header order. With
 `%PDF-` files with at least one readable `pypdf` page, streams digest
 verification instead of reading whole files into memory, fails historical
 failed-download rows, reports unmanifested local PDFs, and treats Git-tracked
-cache PDFs as repository-boundary violations. The
+cache PDFs as repository-boundary violations unless they match the retained
+AlphaEvolve source-artifact path and SHA-256 allowlist. The
 implementation-status table IDs below are reconciled against the committed
 manifest IDs by the same validator. The validator treats the implementation-
 status table as a structured public claim surface: it requires the stable
@@ -2303,6 +2306,9 @@ Implemented:
   abstract URL status/content/digest, confirms current version `2506.13131v1`,
   and records that the retained floating PDF artifact bytes/hash match the
   cached PDF.
+  `papers/alphaevolve_cached_pdf_header_consistency_boundary.json` now pins
+  cached-PDF first-page header extraction hashes and arXiv/title/rights
+  markers for the retained AlphaEvolve PDF.
   `papers/alphaevolve_raw_http_headers_boundary.json` now preserves pinned raw
   HTTP response header lines for the versioned abstract, floating abstract,
   floating PDF, DataCite API, e-print archive, and license page.
@@ -2316,8 +2322,7 @@ Implemented:
   inventory. `papers/alphaevolve_license_page_html_retention_boundary.json`
   now retains the Creative Commons license-page HTML artifact and validates its
   bytes, hash, and key content markers. Metadata extraction-script artifacts,
-  cached-PDF header consistency records, and automated CI refresh checks remain
-  open.
+  and automated CI refresh checks remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2819,52 +2824,54 @@ Implemented:
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit
-  remaining gaps for metadata extraction-script artifacts, cached-PDF header
-  consistency, and automated refresh evidence. It is not full
+  remaining gaps for metadata extraction-script artifacts and automated
+  refresh evidence. It is not full
   publication-grade source evidence or a live refresh gate.
 - `papers/alphaevolve_datacite_doi_boundary.json`: AlphaEvolve DOI/DataCite
   sidecar with the pinned DataCite API URL, retrieval date, status, response
   byte count, SHA-256 digest, DOI, landing URL, title, creator count,
   publisher, publication year, resource type, schema version, registered
-  timestamp, and version. It is not a DataCite refresh gate or cached-PDF
-  header consistency evidence.
+  timestamp, and version. It is not a DataCite refresh gate.
 - `papers/alphaevolve_datacite_full_response_boundary.json`: AlphaEvolve
   DataCite full-response sidecar with the retained raw DataCite API response
   body, byte count, SHA-256 digest, parsed DOI, landing URL, title, creator
   count, publisher, publication year, resource type, schema version, registered
-  timestamp, and version. It is not an automated DataCite refresh gate or
-  cached-PDF header consistency evidence.
+  timestamp, and version. It is not an automated DataCite refresh gate.
 - `papers/alphaevolve_doi_landing_resolution_boundary.json`: AlphaEvolve DOI
   landing-resolution sidecar with the pinned DOI URL, retrieval timestamp,
   resolver `302` status, redirect location, raw resolver header lines, final
   arXiv landing URL/status/content type, final raw header lines, and final
   landing response bytes/hash. It is not full DOI redirect body retention, an
-  automated DOI resolution refresh gate, or cached-PDF header consistency
-  evidence.
+  automated DOI resolution refresh gate.
 - `papers/alphaevolve_tex_source_boundary.json`: AlphaEvolve arXiv TeX/e-print
   sidecar with the pinned e-print URL, retrieval date, status, content type,
   content-disposition filename, response byte count, SHA-256 digest, and
   `2506.13131v1` linkage. It is not extraction-script evidence, a TeX-source
-  refresh gate, or cached-PDF header consistency evidence.
+  refresh gate.
 - `papers/alphaevolve_tex_archive_retention_boundary.json`: AlphaEvolve
   TeX/e-print archive-retention sidecar with the retained
   `papers/alphaevolve_tex_source_archive.tar.gz` artifact, archive bytes/hash,
   `2506.13131v1` linkage, 58-member inventory, per-file sizes, and per-file
   SHA-256 digests. It is not metadata extraction-script provenance, an
-  automated TeX-source refresh gate, or cached-PDF header consistency evidence.
+  automated TeX-source refresh gate.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,
   resolved version, expected source version, floating PDF URL, status, content
   type, bytes/hash, retained PDF artifact path, cached-PDF bytes/hash, and
   match flag. It is not full current-abstract HTML retention, automated
-  current-version refresh, or cached PDF header text consistency evidence.
+  current-version refresh evidence.
+- `papers/alphaevolve_cached_pdf_header_consistency_boundary.json`:
+  AlphaEvolve cached-PDF header consistency sidecar with retained-PDF
+  bytes/hash, first-page text extraction hashes, and arXiv version/title/rights
+  markers. It is not a reusable metadata extraction-script artifact or an
+  automated cached-PDF header refresh gate.
 - `papers/alphaevolve_raw_http_headers_boundary.json`: AlphaEvolve source-URL
   raw HTTP headers sidecar with pinned header lines for the versioned abstract,
   floating abstract, floating PDF, DataCite API, e-print archive, and Creative
   Commons license page, linked to the already-pinned response bytes and
   SHA-256 digests. It is not full raw response body retention, an automated
-  header refresh gate, or cached PDF header text consistency evidence.
+  header refresh gate.
 - `papers/alphaevolve_license_page_boundary.json`: AlphaEvolve
   source-license page sidecar with the pinned Creative Commons BY-NC-ND 4.0
   URL, retrieval date, status, content type, response byte count, SHA-256

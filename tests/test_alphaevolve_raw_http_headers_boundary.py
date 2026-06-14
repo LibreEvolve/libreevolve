@@ -17,8 +17,8 @@ def test_alphaevolve_raw_http_headers_boundary_accepts_header_record():
         == "raw_http_headers_recorded_without_full_response_retention_or_refresh_gate"
     )
     assert validation.response_count == 6
-    assert validation.required_evidence_field_count == 13
-    assert validation.missing_evidence_count == 3
+    assert validation.required_evidence_field_count == 12
+    assert validation.missing_evidence_count == 2
     assert boundary["schema"] == ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_SCHEMA
     assert (
         boundary["header_snapshots"]["floating_pdf"]["response_sha256"]
@@ -56,4 +56,4 @@ def test_render_alphaevolve_raw_http_headers_boundary_summary_reports_shape():
         in summary
     )
     assert "| response_count | 6 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

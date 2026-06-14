@@ -37,12 +37,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "archive_member_inventory",
     "extraction_script_artifact",
     "tex_source_refresh_gate",
-    "cached_pdf_header_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "extraction_script_artifact": "not_recorded_locally",
     "tex_source_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_consistency": "not_recorded_locally",
 }
 
 
@@ -91,8 +89,8 @@ def alphaevolve_tex_source_boundary_record() -> dict[str, Any]:
             "gzip content type, content-disposition filename, byte count, and "
             "SHA-256 digest for the AlphaEvolve source archive and is paired "
             "with the raw HTTP headers and retained archive sidecars. It does "
-            "not claim extraction-script artifacts, TeX-source refresh gates, "
-            "or cached-PDF header consistency."
+            "not claim extraction-script artifacts or TeX-source refresh gates. "
+            "It is paired with the cached-PDF header consistency sidecar."
         ),
     }
 

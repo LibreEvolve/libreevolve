@@ -89,6 +89,12 @@ from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import
     render_alphaevolve_current_version_boundary_summary,
     validate_alphaevolve_current_version_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_cached_pdf_header_consistency_boundary import (
+    ALPHAEVOLVE_CACHED_PDF_HEADER_CONSISTENCY_BOUNDARY_SCHEMA,
+    alphaevolve_cached_pdf_header_consistency_boundary_record,
+    render_alphaevolve_cached_pdf_header_consistency_boundary_summary,
+    validate_alphaevolve_cached_pdf_header_consistency_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_raw_http_headers_boundary import (
     ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_SCHEMA,
     alphaevolve_raw_http_headers_boundary_record,
@@ -1032,6 +1038,7 @@ __all__ = [
     "ALPHAEVOLVE_FOLLOW_ON_PROBLEM_COVERAGE_SCHEMA",
     "ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA",
+    "ALPHAEVOLVE_CACHED_PDF_HEADER_CONSISTENCY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_SCHEMA",
@@ -1232,6 +1239,7 @@ __all__ = [
     "alphaevolve_paper_artifact_linkage_record",
     "alphaevolve_references_section_record",
     "alphaevolve_arxiv_abstract_snapshot_record",
+    "alphaevolve_cached_pdf_header_consistency_boundary_record",
     "alphaevolve_current_version_boundary_record",
     "alphaevolve_raw_http_headers_boundary_record",
     "alphaevolve_datacite_doi_boundary_record",
@@ -1396,6 +1404,7 @@ __all__ = [
     "render_alphaevolve_follow_on_problem_coverage_summary",
     "render_alphaevolve_references_section_summary",
     "render_alphaevolve_arxiv_abstract_snapshot_summary",
+    "render_alphaevolve_cached_pdf_header_consistency_boundary_summary",
     "render_alphaevolve_source_pdf_rights_summary",
     "render_alphaevolve_source_pdf_version_summary",
     "render_archive_event_replay_boundary_summary",
@@ -1572,6 +1581,7 @@ __all__ = [
     "validate_alphaevolve_companion_colab_source",
     "validate_alphaevolve_2026_impact_boundary",
     "validate_alphaevolve_arxiv_abstract_snapshot",
+    "validate_alphaevolve_cached_pdf_header_consistency_boundary",
     "validate_alphaevolve_current_version_boundary",
     "validate_alphaevolve_raw_http_headers_boundary",
     "validate_alphaevolve_datacite_doi_boundary",

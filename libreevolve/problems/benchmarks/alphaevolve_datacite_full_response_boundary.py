@@ -33,11 +33,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "parsed_registered_timestamp",
     "parsed_version",
     "automated_datacite_refresh_gate",
-    "cached_pdf_header_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "automated_datacite_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_consistency": "not_recorded_locally",
 }
 EXPECTED_PARSED_RESPONSE_SUMMARY = {
     "top_level_type": "dois",

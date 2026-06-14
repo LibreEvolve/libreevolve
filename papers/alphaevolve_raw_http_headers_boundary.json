@@ -183,13 +183,11 @@
     "content_lengths_or_transfer_encoding",
     "response_sha256_linkage",
     "full_raw_response_artifacts",
-    "automated_header_refresh_gate",
-    "cached_pdf_header_text_consistency"
+    "automated_header_refresh_gate"
   ],
   "missing_evidence": {
     "full_raw_response_artifacts": "not_recorded_locally",
-    "automated_header_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_text_consistency": "not_recorded_locally"
+    "automated_header_refresh_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records raw HTTP response header lines and links them to pinned response byte counts and SHA-256 digests for the AlphaEvolve source URLs. It does not claim full raw response body retention, an automated header refresh gate, or cached PDF header text consistency."
+  "claim_boundary": "This boundary records raw HTTP response header lines and links them to pinned response byte counts and SHA-256 digests for the AlphaEvolve source URLs. It does not claim full raw response body retention or an automated header refresh gate, and is paired with the cached PDF header text consistency sidecar."
 }

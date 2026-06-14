@@ -63,7 +63,6 @@ EXPECTED_HISTORY = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "metadata_extraction_script_artifact": "not_recorded_locally",
-    "cached_pdf_header_consistency_record": "not_recorded_locally",
     "automated_live_refresh_ci_gate": "not_recorded_locally",
 }
 EXPECTED_CONTENT_MARKERS = {
@@ -148,8 +147,9 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
             "SHA-256 digest, and normalized source metadata for AlphaEvolve "
             "2506.13131v1 and retains the full HTML body alongside the raw "
             "HTTP headers sidecar. It does not preserve the metadata "
-            "extraction script artifact, record cached-PDF header consistency, "
-            "or install an automated live-refresh CI gate."
+            "extraction script artifact or install an automated live-refresh "
+            "CI gate, and is paired with the cached-PDF header consistency "
+            "sidecar."
         ),
     }
 

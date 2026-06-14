@@ -39,12 +39,10 @@
     "parsed_creator_count",
     "parsed_registered_timestamp",
     "parsed_version",
-    "automated_datacite_refresh_gate",
-    "cached_pdf_header_consistency"
+    "automated_datacite_refresh_gate"
   ],
   "missing_evidence": {
-    "automated_datacite_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_consistency": "not_recorded_locally"
+    "automated_datacite_refresh_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary retains the complete DataCite API response body and validates its hash and parsed DOI metadata fields. It does not claim an automated DataCite refresh gate or cached-PDF header consistency."
+  "claim_boundary": "This boundary retains the complete DataCite API response body and validates its hash and parsed DOI metadata fields. It does not claim an automated DataCite refresh gate. It is paired with the cached-PDF header consistency sidecar."
 }

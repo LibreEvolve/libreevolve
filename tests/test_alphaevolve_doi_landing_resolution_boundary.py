@@ -18,8 +18,8 @@ def test_alphaevolve_doi_landing_resolution_boundary_accepts_redirect_record():
     )
     assert validation.redirect_status == 302
     assert validation.final_status == 200
-    assert validation.required_evidence_field_count == 15
-    assert validation.missing_evidence_count == 3
+    assert validation.required_evidence_field_count == 14
+    assert validation.missing_evidence_count == 2
     assert boundary["schema"] == ALPHAEVOLVE_DOI_LANDING_RESOLUTION_BOUNDARY_SCHEMA
     assert boundary["doi_redirect"]["location"] == "https://arxiv.org/abs/2506.13131"
     assert boundary["final_landing"]["response_bytes"] == 49939

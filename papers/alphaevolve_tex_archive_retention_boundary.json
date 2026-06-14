@@ -385,13 +385,11 @@
     "arxiv_versioned_id",
     "archive_member_inventory",
     "extraction_script_artifact",
-    "tex_source_refresh_gate",
-    "cached_pdf_header_consistency"
+    "tex_source_refresh_gate"
   ],
   "missing_evidence": {
     "extraction_script_artifact": "not_recorded_locally",
-    "tex_source_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_consistency": "not_recorded_locally"
+    "tex_source_refresh_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary retains the full arXiv TeX/e-print archive artifact and validates its archive member inventory. It does not claim metadata extraction-script provenance, an automated TeX-source refresh gate, or cached-PDF header consistency."
+  "claim_boundary": "This boundary retains the full arXiv TeX/e-print archive artifact and validates its archive member inventory. It does not claim metadata extraction-script provenance or an automated TeX-source refresh gate. It is paired with the cached-PDF header consistency sidecar."
 }

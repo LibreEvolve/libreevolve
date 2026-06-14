@@ -41,12 +41,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "archive_member_inventory",
     "extraction_script_artifact",
     "tex_source_refresh_gate",
-    "cached_pdf_header_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "extraction_script_artifact": "not_recorded_locally",
     "tex_source_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_consistency": "not_recorded_locally",
 }
 
 

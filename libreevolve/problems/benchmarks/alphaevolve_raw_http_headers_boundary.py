@@ -35,12 +35,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "response_sha256_linkage",
     "full_raw_response_artifacts",
     "automated_header_refresh_gate",
-    "cached_pdf_header_text_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "full_raw_response_artifacts": "not_recorded_locally",
     "automated_header_refresh_gate": "not_recorded_locally",
-    "cached_pdf_header_text_consistency": "not_recorded_locally",
 }
 EXPECTED_HEADERS: dict[str, dict[str, Any]] = {
     "versioned_abstract": {
@@ -244,8 +242,8 @@ def alphaevolve_raw_http_headers_boundary_record() -> dict[str, Any]:
             "This boundary records raw HTTP response header lines and links "
             "them to pinned response byte counts and SHA-256 digests for the "
             "AlphaEvolve source URLs. It does not claim full raw response body "
-            "retention, an automated header refresh gate, or cached PDF header "
-            "text consistency."
+            "retention or an automated header refresh gate, and is paired "
+            "with the cached PDF header text consistency sidecar."
         ),
     }
 

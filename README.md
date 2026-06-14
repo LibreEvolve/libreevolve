@@ -262,7 +262,7 @@ libreevolve/
   problems/      examples and problem loading
   tools/         paper/source manifest validation
 docs/            architecture, configuration, backend, plugin, and artifact docs
-papers/          tracked manifests plus ignored local PDF cache
+papers/          tracked manifests plus ignored PDF cache and retained source artifacts
 runs/            gitignored run outputs
 tests/           unit and integration tests
 ```

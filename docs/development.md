@@ -154,9 +154,10 @@ py -3.12 -m pytest tests/ -m "not integration" --tb=short
 For `papers/` or paper-index changes, also validate the local paper index:
 
 - run `py -3.12 -m libreevolve.tools.paper_manifest --rehydrate` on a fresh
-  checkout to restore the ignored local PDF cache from the committed manifests;
+  checkout to restore ignored local cache PDFs from the committed manifests;
   the command downloads manifest URLs, verifies byte counts and SHA-256 hashes
-  before installing files, and reports network or integrity failures explicitly
+  before installing files, and reports network or integrity failures explicitly.
+  Retained source-artifact PDFs are tracked only by explicit path/SHA allowlist.
 - run `py -3.12 -m libreevolve.tools.paper_manifest` to validate committed
   CSV/JSON schema, count agreement, and canonical SHA-256 format
 - run `py -3.12 -m libreevolve.tools.paper_manifest --require-local-pdfs` when

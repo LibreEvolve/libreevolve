@@ -1,0 +1,34 @@
+{
+  "schema": "libreevolve.alphaevolve_cached_pdf_header_consistency_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_version_id": "2506.13131v1",
+  "source_claim": "AlphaEvolve source metadata should prove the retained cached PDF first-page header matches the expected arXiv version and rights markers.",
+  "boundary_status": "cached_pdf_header_consistency_recorded_without_refresh_gate",
+  "claim_ready": false,
+  "pdf_artifact": {
+    "path": "papers/2506.13131__AlphaEvolve.pdf",
+    "bytes": 3525764,
+    "sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "artifact_retained": true
+  },
+  "first_page_extraction": {
+    "page_index": 0,
+    "tool": "pypdf.PdfReader.pages[0].extract_text",
+    "strict_pdf_reader": true,
+    "text_chars": 3505,
+    "normalized_text_chars": 3503,
+    "text_sha256": "63d1a313606834b3e02f3b8ba7b39d09204c6b9796df8cca82155a3b0797514b",
+    "normalized_text_sha256": "b824d50aced8d82d43468d67f3000183490014d3669481a5597d8a0a3e8a8b78",
+    "required_markers": {
+      "has_arxiv_header": true,
+      "has_title": true,
+      "has_google_deepmind": true,
+      "has_rights_statement": true
+    }
+  },
+  "missing_evidence": {
+    "metadata_extraction_script_artifact": "not_recorded_locally",
+    "automated_cached_pdf_header_refresh_gate": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records cached-PDF first-page header consistency for the retained AlphaEvolve PDF, including arXiv version, title, Google DeepMind, and rights markers. It does not claim a reusable metadata extraction-script artifact or an automated cached-PDF header refresh gate."
+}

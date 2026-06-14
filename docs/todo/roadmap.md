@@ -18,8 +18,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     status scoping plus cross-document guardrails, while keeping semantic
     documentation-claim verification and complete implementation-evidence
     mapping absent. `papers/documentation_claim_inventory.json` now assigns
-    stable claim ids and evidence anchors to top-level README, ROADMAP, and
-    papers-index scope claims, including ROADMAP current-state,
+    stable claim ids and evidence anchors with file-offset source spans to
+    top-level README, ROADMAP, and papers-index scope claims, including ROADMAP current-state,
     documentation-truthfulness, and AlphaEvolve-gap claims.
   - Current gap: there is no complete machine-readable claim inventory for
     every ROADMAP current-state bullet, no per-bullet code/test/runtime-

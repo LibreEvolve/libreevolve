@@ -38,6 +38,7 @@ EXPECTED_CLAIMS = (
             "papers/documentation_truthfulness_boundary.json",
             "docs/todo/readme.md",
         ],
+        "source_anchor_text": "## Current Status",
         "verification_scope": "top_level_claim_anchor_only",
     },
     {
@@ -60,6 +61,7 @@ EXPECTED_CLAIMS = (
             "libreevolve/population/",
             "docs/status.md",
         ],
+        "source_anchor_text": "## Current Status",
         "verification_scope": "top_level_claim_anchor_only",
     },
     {
@@ -80,6 +82,7 @@ EXPECTED_CLAIMS = (
             "docs/todo/code.md",
             "docs/todo/papers.md",
         ],
+        "source_anchor_text": "## Current Status",
         "verification_scope": "top_level_claim_anchor_only",
     },
     {
@@ -98,6 +101,7 @@ EXPECTED_CLAIMS = (
             "papers/README.md",
             "docs/todo/roadmap.md",
         ],
+        "source_anchor_text": "## Current State",
         "verification_scope": "top_level_claim_anchor_only",
     },
     {
@@ -118,6 +122,7 @@ EXPECTED_CLAIMS = (
             "docs/todo/roadmap.md",
             "docs/todo/papers.md",
         ],
+        "source_anchor_text": "### 5. Documentation truthfulness",
         "verification_scope": "top_level_claim_anchor_only",
     },
     {
@@ -137,6 +142,7 @@ EXPECTED_CLAIMS = (
             "docs/todo/code.md",
             "docs/todo/papers.md",
         ],
+        "source_anchor_text": "# Roadmap",
         "verification_scope": "top_level_claim_anchor_only",
     },
     {
@@ -156,6 +162,7 @@ EXPECTED_CLAIMS = (
             "libreevolve/tools/paper_manifest.py",
             "tests/test_paper_manifest.py",
         ],
+        "source_anchor_text": "# Local Paper Cache",
         "verification_scope": "top_level_claim_anchor_only",
     },
     {
@@ -175,6 +182,7 @@ EXPECTED_CLAIMS = (
             "papers/documentation_truthfulness_boundary.json",
             "libreevolve/tools/paper_manifest.py",
         ],
+        "source_anchor_text": "## Implementation status",
         "verification_scope": "top_level_claim_anchor_only",
     },
 )
@@ -198,9 +206,29 @@ class DocumentationClaimInventoryValidation:
     issues: list[DocumentationClaimInventoryIssue]
 
 
-def documentation_claim_inventory_record() -> dict[str, Any]:
+def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, Any]:
     """Return the current top-level documentation claim inventory boundary."""
 
+    root_path = Path(root)
+    claims = []
+    for claim in EXPECTED_CLAIMS:
+        claim_record = dict(claim)
+        claim_record["source_span"] = _source_anchor_span(
+            root_path,
+            claim_record["document_path"],
+            claim_record["source_anchor_text"],
+        )
+        claim_record["source_anchor_status"] = (
+            "source_anchor_recorded"
+            if claim_record["source_span"]["found"]
+            else "source_anchor_missing"
+        )
+        claims.append(claim_record)
+    source_anchor_missing_claim_ids = [
+        claim["claim_id"]
+        for claim in claims
+        if claim["source_anchor_status"] != "source_anchor_recorded"
+    ]
     return {
         "schema": DOCUMENTATION_CLAIM_INVENTORY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
@@ -211,12 +239,19 @@ def documentation_claim_inventory_record() -> dict[str, Any]:
             "This is not a complete semantic verifier for every documentation "
             "sentence."
         ),
-        "claims": [dict(claim) for claim in EXPECTED_CLAIMS],
+        "source_anchor_status": (
+            "all_claim_source_anchors_recorded"
+            if not source_anchor_missing_claim_ids
+            else "missing_claim_source_anchors"
+        ),
+        "source_anchor_missing_claim_ids": source_anchor_missing_claim_ids,
+        "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This inventory gives stable ids and evidence anchors for the "
             "top-level README, ROADMAP, and papers index AlphaEvolve-facing "
-            "status claims. It does not claim complete README coverage, "
+            "status claims, including source-anchor file offsets for those "
+            "top-level claim surfaces. It does not claim complete README coverage, "
             "complete ROADMAP coverage, complete papers index coverage, "
             "semantic claim verification, stale completed-entry detection, "
             "generated alignment reports, or full proof that every documentation "
@@ -227,9 +262,11 @@ def documentation_claim_inventory_record() -> dict[str, Any]:
 
 def validate_documentation_claim_inventory(
     inventory: object | str | Path | None = None,
+    *,
+    root: str | Path = ".",
 ) -> DocumentationClaimInventoryValidation:
     data, read_issues = _load_inventory(
-        documentation_claim_inventory_record() if inventory is None else inventory
+        documentation_claim_inventory_record(root) if inventory is None else inventory
     )
     if read_issues:
         return DocumentationClaimInventoryValidation(False, None, 0, 0, 0, 0, 0, read_issues)
@@ -247,7 +284,36 @@ def validate_documentation_claim_inventory(
     scope = data.get("coverage_scope")
     if not isinstance(scope, str) or "Top-level README, ROADMAP, and papers index" not in scope:
         issues.append(_issue("invalid_coverage_scope", "coverage_scope must identify top-level README, ROADMAP, and papers index scope"))
-    claim_count, readme_count, roadmap_count, papers_count = _validate_claims(data.get("claims"), issues)
+    source_anchor_status = data.get("source_anchor_status")
+    if source_anchor_status not in {
+        "all_claim_source_anchors_recorded",
+        "missing_claim_source_anchors",
+    }:
+        issues.append(_issue("invalid_source_anchor_status", "source_anchor_status must report recorded or missing claim anchors"))
+    source_anchor_missing_claim_ids = data.get("source_anchor_missing_claim_ids")
+    if not isinstance(source_anchor_missing_claim_ids, list) or any(
+        not isinstance(item, str) for item in source_anchor_missing_claim_ids
+    ):
+        issues.append(_issue("invalid_source_anchor_missing_claim_ids", "source_anchor_missing_claim_ids must be a list of strings"))
+    expected_missing_claim_ids = [
+        claim["claim_id"]
+        for claim in _expected_claims_with_spans(Path(root))
+        if claim["source_anchor_status"] != "source_anchor_recorded"
+    ]
+    expected_source_anchor_status = (
+        "all_claim_source_anchors_recorded"
+        if not expected_missing_claim_ids
+        else "missing_claim_source_anchors"
+    )
+    if source_anchor_status != expected_source_anchor_status:
+        issues.append(_issue("invalid_source_anchor_status", "source_anchor_status drifted from current claim anchors"))
+    if source_anchor_missing_claim_ids != expected_missing_claim_ids:
+        issues.append(_issue("invalid_source_anchor_missing_claim_ids", "source anchor missing ids drifted"))
+    claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
+        data.get("claims"),
+        issues,
+        Path(root),
+    )
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
@@ -315,6 +381,7 @@ def _load_inventory(
 def _validate_claims(
     value: object,
     issues: list[DocumentationClaimInventoryIssue],
+    root: Path,
 ) -> tuple[int, int, int, int]:
     if not isinstance(value, list):
         issues.append(_issue("invalid_claims", "claims must be a list"))
@@ -322,7 +389,7 @@ def _validate_claims(
     claims = [claim for claim in value if isinstance(claim, dict)]
     if len(claims) != len(value):
         issues.append(_issue("invalid_claim", "each claim must be an object"))
-    expected_by_id = {claim["claim_id"]: claim for claim in EXPECTED_CLAIMS}
+    expected_by_id = {claim["claim_id"]: claim for claim in _expected_claims_with_spans(root)}
     actual_by_id = {
         claim.get("claim_id"): claim
         for claim in claims
@@ -372,6 +439,61 @@ def _validate_missing_evidence(
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
+
+
+def _expected_claims_with_spans(root: Path) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for claim in EXPECTED_CLAIMS:
+        record = dict(claim)
+        record["source_span"] = _source_anchor_span(
+            root,
+            record["document_path"],
+            record["source_anchor_text"],
+        )
+        record["source_anchor_status"] = (
+            "source_anchor_recorded"
+            if record["source_span"]["found"]
+            else "source_anchor_missing"
+        )
+        records.append(record)
+    return records
+
+
+def _source_anchor_span(root: Path, document_path: str, anchor_text: str) -> dict[str, Any]:
+    path = root / document_path
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return {
+            "path": document_path,
+            "anchor_text": anchor_text,
+            "found": False,
+            "file_text_char_start": None,
+            "file_text_char_end": None,
+            "line_start": None,
+            "line_end": None,
+        }
+    start = text.find(anchor_text)
+    if start < 0:
+        return {
+            "path": document_path,
+            "anchor_text": anchor_text,
+            "found": False,
+            "file_text_char_start": None,
+            "file_text_char_end": None,
+            "line_start": None,
+            "line_end": None,
+        }
+    end = start + len(anchor_text)
+    return {
+        "path": document_path,
+        "anchor_text": anchor_text,
+        "found": True,
+        "file_text_char_start": start,
+        "file_text_char_end": end,
+        "line_start": text.count("\n", 0, start) + 1,
+        "line_end": text.count("\n", 0, end) + 1,
+    }
 
 
 def _issue(code: str, message: str) -> DocumentationClaimInventoryIssue:

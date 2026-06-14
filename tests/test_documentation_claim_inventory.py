@@ -23,10 +23,20 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert validation.missing_evidence_count == 7
     assert inventory["schema"] == DOCUMENTATION_CLAIM_INVENTORY_SCHEMA
     assert inventory["claim_ready"] is False
+    assert inventory["source_anchor_status"] == "all_claim_source_anchors_recorded"
+    assert inventory["source_anchor_missing_claim_ids"] == []
     claim_ids = {claim["claim_id"] for claim in inventory["claims"]}
     assert "readme_current_status_scope" in claim_ids
     assert "roadmap_documentation_truthfulness_scope" in claim_ids
     assert "papers_implementation_status_scope" in claim_ids
+    readme_claim = next(
+        claim for claim in inventory["claims"] if claim["claim_id"] == "readme_current_status_scope"
+    )
+    assert readme_claim["source_anchor_text"] == "## Current Status"
+    assert readme_claim["source_anchor_status"] == "source_anchor_recorded"
+    assert readme_claim["source_span"]["path"] == "README.md"
+    assert readme_claim["source_span"]["line_start"] == 13
+    assert isinstance(readme_claim["source_span"]["file_text_char_start"], int)
     assert (
         "does not claim complete README coverage"
         in inventory["claim_boundary"]
@@ -53,12 +63,16 @@ def test_documentation_claim_inventory_rejects_semantic_proof_overclaim():
 def test_documentation_claim_inventory_rejects_anchor_drift():
     inventory = documentation_claim_inventory_record()
     inventory["claims"][0]["evidence_refs"] = ["README.md"]
+    inventory["claims"][0]["source_span"]["line_start"] = -1
+    inventory["source_anchor_status"] = "missing_claim_source_anchors"
 
     validation = validate_documentation_claim_inventory(inventory)
     codes = {issue.code for issue in validation.issues}
 
     assert validation.ok is False
     assert "invalid_readme_current_status_scope_evidence_refs" in codes
+    assert "invalid_readme_current_status_scope_source_span" in codes
+    assert "invalid_source_anchor_status" in codes
 
 
 def test_render_documentation_claim_inventory_summary_reports_shape():

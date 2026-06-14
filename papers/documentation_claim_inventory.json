@@ -4,6 +4,8 @@
   "inventory_status": "top_level_readme_roadmap_papers_claim_inventory_without_semantic_verifier",
   "claim_ready": false,
   "coverage_scope": "Top-level README, ROADMAP, and papers index claim anchors only. This is not a complete semantic verifier for every documentation sentence.",
+  "source_anchor_status": "all_claim_source_anchors_recorded",
+  "source_anchor_missing_claim_ids": [],
   "claims": [
     {
       "claim_id": "readme_current_status_scope",
@@ -17,7 +19,18 @@
         "papers/documentation_truthfulness_boundary.json",
         "docs/todo/readme.md"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "## Current Status",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "README.md",
+        "anchor_text": "## Current Status",
+        "found": true,
+        "file_text_char_start": 541,
+        "file_text_char_end": 558,
+        "line_start": 13,
+        "line_end": 13
+      },
+      "source_anchor_status": "source_anchor_recorded"
     },
     {
       "claim_id": "readme_runnable_today_scope",
@@ -34,7 +47,18 @@
         "libreevolve/population/",
         "docs/status.md"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "## Current Status",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "README.md",
+        "anchor_text": "## Current Status",
+        "found": true,
+        "file_text_char_start": 541,
+        "file_text_char_end": 558,
+        "line_start": 13,
+        "line_end": 13
+      },
+      "source_anchor_status": "source_anchor_recorded"
     },
     {
       "claim_id": "readme_important_limits_scope",
@@ -49,7 +73,18 @@
         "docs/todo/code.md",
         "docs/todo/papers.md"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "## Current Status",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "README.md",
+        "anchor_text": "## Current Status",
+        "found": true,
+        "file_text_char_start": 541,
+        "file_text_char_end": 558,
+        "line_start": 13,
+        "line_end": 13
+      },
+      "source_anchor_status": "source_anchor_recorded"
     },
     {
       "claim_id": "roadmap_current_state_scope",
@@ -63,7 +98,18 @@
         "papers/README.md",
         "docs/todo/roadmap.md"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "## Current State",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "ROADMAP.md",
+        "anchor_text": "## Current State",
+        "found": true,
+        "file_text_char_start": 590,
+        "file_text_char_end": 606,
+        "line_start": 14,
+        "line_end": 14
+      },
+      "source_anchor_status": "source_anchor_recorded"
     },
     {
       "claim_id": "roadmap_documentation_truthfulness_scope",
@@ -79,7 +125,18 @@
         "docs/todo/roadmap.md",
         "docs/todo/papers.md"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "### 5. Documentation truthfulness",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "ROADMAP.md",
+        "anchor_text": "### 5. Documentation truthfulness",
+        "found": true,
+        "file_text_char_start": 53494,
+        "file_text_char_end": 53527,
+        "line_start": 817,
+        "line_end": 817
+      },
+      "source_anchor_status": "source_anchor_recorded"
     },
     {
       "claim_id": "roadmap_alphaevolve_gap_scope",
@@ -94,7 +151,18 @@
         "docs/todo/code.md",
         "docs/todo/papers.md"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "# Roadmap",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "ROADMAP.md",
+        "anchor_text": "# Roadmap",
+        "found": true,
+        "file_text_char_start": 0,
+        "file_text_char_end": 9,
+        "line_start": 1,
+        "line_end": 1
+      },
+      "source_anchor_status": "source_anchor_recorded"
     },
     {
       "claim_id": "papers_cache_manifest_scope",
@@ -109,7 +177,18 @@
         "libreevolve/tools/paper_manifest.py",
         "tests/test_paper_manifest.py"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "# Local Paper Cache",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "papers/README.md",
+        "anchor_text": "# Local Paper Cache",
+        "found": true,
+        "file_text_char_start": 0,
+        "file_text_char_end": 19,
+        "line_start": 1,
+        "line_end": 1
+      },
+      "source_anchor_status": "source_anchor_recorded"
     },
     {
       "claim_id": "papers_implementation_status_scope",
@@ -124,7 +203,18 @@
         "papers/documentation_truthfulness_boundary.json",
         "libreevolve/tools/paper_manifest.py"
       ],
-      "verification_scope": "top_level_claim_anchor_only"
+      "source_anchor_text": "## Implementation status",
+      "verification_scope": "top_level_claim_anchor_only",
+      "source_span": {
+        "path": "papers/README.md",
+        "anchor_text": "## Implementation status",
+        "found": true,
+        "file_text_char_start": 21982,
+        "file_text_char_end": 22006,
+        "line_start": 316,
+        "line_end": 316
+      },
+      "source_anchor_status": "source_anchor_recorded"
     }
   ],
   "missing_evidence": {
@@ -136,5 +226,5 @@
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

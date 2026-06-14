@@ -3824,7 +3824,7 @@ def _validate_documentation_claim_inventory(root_path: Path) -> list[PaperManife
     if sidecar_path.exists():
         recordset: object | str | Path = sidecar_path
     else:
-        recordset = documentation_claim_inventory_record()
+        recordset = documentation_claim_inventory_record(root_path)
         if is_repo_root:
             return [
                 PaperManifestIssue(
@@ -3836,7 +3836,7 @@ def _validate_documentation_claim_inventory(root_path: Path) -> list[PaperManife
                     "documentation_claim_inventory",
                 )
             ]
-    report = validate_documentation_claim_inventory(recordset)
+    report = validate_documentation_claim_inventory(recordset, root=root_path)
     return [
         PaperManifestIssue(
             f"documentation_claim_inventory_{issue.code}",

@@ -46,7 +46,7 @@ sidecars, tests, and active TODOs.
     status inventory plus status-cell phrase hashes, source offsets, and
     candidate evidence-link lists with local artifact and TODO evidence-path
     existence checks plus row/phrase-specific TODO content artifact-mention
-    records.
+    records and structural absence-signal classification.
     `papers/benchmark_coverage_inventory.json` records structural evidence and
     local artifact existence checks for implemented benchmark coverage bullets.
     The boundary still explicitly keeps
@@ -60,7 +60,9 @@ sidecars, tests, and active TODOs.
     coverage; no per-phrase evidence-sufficiency check proves long status-cell
     semantics beyond referenced artifact/TODO path existence and row-specific
     or phrase-specific TODO artifact mentions, or implemented-benchmark
-    coverage qualifiers beyond referenced artifact existence; and no generated code-audit report proves that all implemented and missing
+    coverage qualifiers beyond referenced artifact existence; no
+    absence-sentence freshness verifier proves structurally detected absence
+    phrases are still current; and no generated code-audit report proves that all implemented and missing
     AlphaEvolve-facing behavior has been classified.
   - Required result: build an implementation-evidence map with requirement ids,
     source-paper spans, relevant modules/tests, runtime/report artifacts,

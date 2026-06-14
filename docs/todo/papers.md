@@ -28,7 +28,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence paths and zero missing referenced TODO evidence paths. It also
     records row-specific TODO content evidence showing zero status-row local
     artifact paths and zero status-phrase local artifact paths missing from
-    linked TODO evidence.
+    linked TODO evidence. It now structurally classifies 87 status-cell
+    absence-signal phrases without claiming freshness verification.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
     benchmark coverage bullets with source lines, summary/body hashes, local
     artifact mentions, local artifact existence records, 116 unique local
@@ -49,9 +50,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     there is no proof that those links are sufficient for each implemented or
     missing clause, no semantic verifier for
     `Implemented` benchmark coverage bullets beyond referenced artifact
-    existence, no absence-sentence freshness matrix, and no semantic verifier
-    that checks benchmark qualifiers, implemented-bullet scope/limitation
-    wording, or absence sentences against the current code and paper evidence.
+    existence, no absence-sentence freshness matrix beyond structural signal
+    classification, and no semantic verifier that checks benchmark qualifiers,
+    implemented-bullet scope/limitation wording, or absence sentences against
+    the current code and paper evidence.
   - Required result: extend the phrase-level inventory with evidence-sufficiency
     checks, freshness checks, and benchmark-coverage semantic checks, then add
     CI validation before treating `papers/README.md` as semantically complete

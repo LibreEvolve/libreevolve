@@ -1059,6 +1059,11 @@ STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
 }
+STATUS_ABSENCE_SIGNAL_RE = re.compile(
+    r"\b(?:no|not|without|missing|lacks?|absence|absent|unimplemented|unsupported)\b"
+    r"|\bnot\s+implemented\b|\bnot\s+yet\b|\bout\s+of\s+scope\b|\bremain(?:s)?\s+open\b",
+    flags=re.IGNORECASE,
+)
 BENCHMARK_COVERAGE_INVENTORY_SCHEMA = "libreevolve.paper_index_benchmark_coverage_inventory.v1"
 BENCHMARK_COVERAGE_INVENTORY_STATUS = "implemented_bullet_inventory_without_semantic_verifier"
 BENCHMARK_COVERAGE_MISSING_EVIDENCE = {
@@ -1643,6 +1648,20 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             for path in claim["evidence_links"]["phrase_local_artifacts_missing_from_todo_evidence"]
         }
     )
+    absence_phrase_ids = [
+        claim["claim_id"]
+        for row in inventory_rows
+        for claim in row["status_claims"]
+        if claim["absence_signal_terms"]
+    ]
+    absence_signal_terms = sorted(
+        {
+            term
+            for row in inventory_rows
+            for claim in row["status_claims"]
+            for term in claim["absence_signal_terms"]
+        }
+    )
     return {
         "schema": STATUS_CLAIM_INVENTORY_SCHEMA,
         "inventory_status": STATUS_CLAIM_INVENTORY_STATUS,
@@ -1687,6 +1706,10 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             if phrase_local_artifacts_missing_from_todo
             else "no_phrase_local_artifacts_referenced"
         ),
+        "absence_phrase_count": len(absence_phrase_ids),
+        "absence_phrase_ids": absence_phrase_ids,
+        "absence_signal_terms": absence_signal_terms,
+        "absence_signal_inventory_status": "absence_signals_structurally_classified_without_freshness_verification",
         "missing_evidence": dict(STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE),
         "rows": inventory_rows,
         "claim_boundary": (
@@ -1696,8 +1719,9 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "artifact mentions and existence records, row source line, TODO "
             "evidence paths and existence records, and status-cell phrase "
             "hashes with character offsets and candidate evidence links plus "
-            "row/phrase-specific TODO content artifact-mention records. It "
-            "does not claim phrase-level status verification, evidence-link sufficiency, "
+            "row/phrase-specific TODO content artifact-mention records and "
+            "absence-signal classification. It does not claim phrase-level "
+            "status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
             "complete."
@@ -3775,6 +3799,10 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
             "status claim inventory phrase TODO content local artifact mentions drifted",
         ),
         ("phrase_todo_content_evidence_status", "status claim inventory phrase TODO content status drifted"),
+        ("absence_phrase_count", "status claim inventory absence phrase count drifted"),
+        ("absence_phrase_ids", "status claim inventory absence phrase ids drifted"),
+        ("absence_signal_terms", "status claim inventory absence signal terms drifted"),
+        ("absence_signal_inventory_status", "status claim inventory absence signal status drifted"),
         ("missing_evidence", "status claim inventory missing-evidence boundary drifted"),
         ("claim_boundary", "status claim inventory claim boundary drifted"),
         ("rows", "status claim inventory rows drifted from papers/README.md"),
@@ -8600,6 +8628,7 @@ def _status_claim_inventory_phrases(
         phrase_artifacts_missing_from_todo = sorted(
             set(phrase_local_artifact_paths) - set(phrase_artifacts_mentioned_in_todo)
         )
+        absence_signal_terms = _status_absence_signal_terms(phrase)
         phrases.append(
             {
                 "claim_id": f"{row_id}:status_phrase_{ordinal:03d}",
@@ -8641,11 +8670,28 @@ def _status_claim_inventory_phrases(
                         else "no_phrase_local_artifacts_referenced"
                     ),
                 },
+                "absence_signal_terms": absence_signal_terms,
+                "has_absence_signal": bool(absence_signal_terms),
+                "absence_signal_status": (
+                    "absence_signal_structurally_classified"
+                    if absence_signal_terms
+                    else "no_absence_signal_detected"
+                ),
+                "freshness_status": "not_verified",
                 "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
                 "semantic_status": "not_verified",
             }
         )
     return phrases
+
+
+def _status_absence_signal_terms(phrase: str) -> list[str]:
+    terms: list[str] = []
+    for match in STATUS_ABSENCE_SIGNAL_RE.finditer(phrase):
+        term = re.sub(r"\s+", " ", match.group(0).strip().lower())
+        if term:
+            terms.append(term)
+    return list(dict.fromkeys(terms))
 
 
 def _status_claim_phrase_spans(status_text: str) -> list[tuple[int, int]]:

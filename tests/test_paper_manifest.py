@@ -11364,6 +11364,11 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         inventory["phrase_todo_content_evidence_status"]
         == "all_phrase_local_artifacts_mentioned_in_todo_evidence"
     )
+    assert inventory["absence_phrase_count"] == 1
+    assert inventory["absence_signal_terms"] == ["no"]
+    assert inventory["absence_signal_inventory_status"] == (
+        "absence_signals_structurally_classified_without_freshness_verification"
+    )
     assert inventory["rows"][0]["source_span_status"] == "phrase_offsets_recorded_in_status_cell"
     assert inventory["rows"][0]["status_claims"][0]["source_span"]["line_start"] > 0
     assert (
@@ -11378,6 +11383,12 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         == "all_phrase_local_artifacts_mentioned_in_todo_evidence"
     )
     assert inventory["rows"][0]["status_claims"][0]["semantic_status"] == "not_verified"
+    absence_claims = [
+        claim for claim in inventory["rows"][0]["status_claims"] if claim["has_absence_signal"]
+    ]
+    assert len(absence_claims) == 1
+    assert absence_claims[0]["absence_signal_terms"] == ["no"]
+    assert absence_claims[0]["freshness_status"] == "not_verified"
     (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
         json.dumps(inventory, indent=2),
         encoding="utf-8",

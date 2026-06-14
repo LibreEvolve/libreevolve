@@ -2527,12 +2527,12 @@
       "coverage_id": "implemented_benchmark_065",
       "bullet_ordinal": 65,
       "summary_sha256": "c67107e9db74d93b2e27d1bfd392474b20a3abf407d91030140a16bf7f873def",
-      "body_sha256": "9b3cfdf5acddf5efed19a27e76c3fe955b77cbc5beda569169b087ad55f6a766",
+      "body_sha256": "a6848c0591955d7960d3cf6e5ce6fd947bb4ae312eab7fc7b016bcc0dfe3fcf2",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
         "line_start": 2859,
-        "line_end": 2872
+        "line_end": 2873
       },
       "local_artifact_paths": [
         "papers/status_claim_inventory.json"
@@ -2562,8 +2562,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2872,
-        "line_end": 2877
+        "line_start": 2873,
+        "line_end": 2878
       },
       "local_artifact_paths": [
         "papers/arxiv_abstract_snapshot.json"
@@ -2593,8 +2593,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2877,
-        "line_end": 2882
+        "line_start": 2878,
+        "line_end": 2883
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_doi_boundary.json"
@@ -2624,8 +2624,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2882,
-        "line_end": 2887
+        "line_start": 2883,
+        "line_end": 2888
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_full_response_boundary.json"
@@ -2655,8 +2655,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2887,
-        "line_end": 2893
+        "line_start": 2888,
+        "line_end": 2894
       },
       "local_artifact_paths": [
         "papers/alphaevolve_doi_landing_resolution_boundary.json"
@@ -2686,8 +2686,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2893,
-        "line_end": 2898
+        "line_start": 2894,
+        "line_end": 2899
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_source_boundary.json"
@@ -2717,8 +2717,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2898,
-        "line_end": 2904
+        "line_start": 2899,
+        "line_end": 2905
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_archive_retention_boundary.json",
@@ -2754,8 +2754,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2904,
-        "line_end": 2911
+        "line_start": 2905,
+        "line_end": 2912
       },
       "local_artifact_paths": [
         "papers/alphaevolve_current_version_boundary.json"
@@ -2785,8 +2785,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2911,
-        "line_end": 2916
+        "line_start": 2912,
+        "line_end": 2917
       },
       "local_artifact_paths": [
         "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
@@ -2816,8 +2816,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2916,
-        "line_end": 2921
+        "line_start": 2917,
+        "line_end": 2922
       },
       "local_artifact_paths": [
         "papers/alphaevolve_metadata_extraction_script_boundary.json"
@@ -2847,8 +2847,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2921,
-        "line_end": 2928
+        "line_start": 2922,
+        "line_end": 2929
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_gate_boundary.json"
@@ -2878,8 +2878,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2928,
-        "line_end": 2932
+        "line_start": 2929,
+        "line_end": 2933
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_run_2026-06-14.json"
@@ -2909,8 +2909,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2932,
-        "line_end": 2937
+        "line_start": 2933,
+        "line_end": 2938
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_promotion_boundary.json"
@@ -2940,8 +2940,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2937,
-        "line_end": 2943
+        "line_start": 2938,
+        "line_end": 2944
       },
       "local_artifact_paths": [
         "papers/alphaevolve_raw_http_headers_boundary.json"
@@ -2971,8 +2971,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2943,
-        "line_end": 2949
+        "line_start": 2944,
+        "line_end": 2950
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_boundary.json"
@@ -3002,8 +3002,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2949,
-        "line_end": 2953
+        "line_start": 2950,
+        "line_end": 2954
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_html_retention_boundary.json"
@@ -3033,8 +3033,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2953,
-        "line_end": 2957
+        "line_start": 2954,
+        "line_end": 2958
       },
       "local_artifact_paths": [
         "papers/candidate_abstraction_bias_matrix.json"
@@ -3064,8 +3064,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2957,
-        "line_end": 2961
+        "line_start": 2958,
+        "line_end": 2962
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting"
@@ -3095,8 +3095,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2961,
-        "line_end": 2971
+        "line_start": 2962,
+        "line_end": 2972
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting_network_8",

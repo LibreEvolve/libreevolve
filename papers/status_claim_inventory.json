@@ -148,6 +148,106 @@
   "todo_content_evidence_status": "all_row_local_artifacts_mentioned_in_todo_evidence",
   "phrase_local_artifacts_missing_from_todo_evidence": [],
   "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence",
+  "absence_phrase_count": 87,
+  "absence_phrase_ids": [
+    "2506.13131:status_phrase_001",
+    "2506.13131:status_phrase_002",
+    "2506.13131:status_phrase_004",
+    "2511.02864:status_phrase_001",
+    "2511.02864:status_phrase_003",
+    "1504.04909:status_phrase_002",
+    "1504.04909:status_phrase_003",
+    "1504.04909:status_phrase_004",
+    "auer-cesa-bianchi-fischer-2002:status_phrase_002",
+    "auer-cesa-bianchi-fischer-2002:status_phrase_003",
+    "2511.17592:status_phrase_001",
+    "2511.17592:status_phrase_003",
+    "2510.14150:status_phrase_001",
+    "2510.14150:status_phrase_002",
+    "2511.23473:status_phrase_004",
+    "2511.23473:status_phrase_005",
+    "2602.10233:status_phrase_002",
+    "2602.10233:status_phrase_003",
+    "2602.15951:status_phrase_002",
+    "2602.15951:status_phrase_003",
+    "2603.14575:status_phrase_002",
+    "2603.14575:status_phrase_004",
+    "2510.06056:status_phrase_003",
+    "2510.06056:status_phrase_004",
+    "2601.21096:status_phrase_002",
+    "2601.21096:status_phrase_003",
+    "2605.14718:status_phrase_002",
+    "2605.05921:status_phrase_002",
+    "2605.01794:status_phrase_002",
+    "2602.23413:status_phrase_002",
+    "2602.02919:status_phrase_002",
+    "2606.06473:status_phrase_002",
+    "2605.09764:status_phrase_002",
+    "2601.10657:status_phrase_002",
+    "2605.08520:status_phrase_002",
+    "2605.20086:status_phrase_002",
+    "2605.01120:status_phrase_001",
+    "2605.01120:status_phrase_003",
+    "2604.01658:status_phrase_002",
+    "2605.13821:status_phrase_002",
+    "2605.09959:status_phrase_002",
+    "2605.21605:status_phrase_002",
+    "2605.29847:status_phrase_002",
+    "2605.29293:status_phrase_002",
+    "2512.18746:status_phrase_002",
+    "2606.06114:status_phrase_002",
+    "2605.27276:status_phrase_002",
+    "2606.06324:status_phrase_002",
+    "2606.05922:status_phrase_002",
+    "2605.30621:status_phrase_002",
+    "2604.25850:status_phrase_002",
+    "2605.13357:status_phrase_002",
+    "2605.21516:status_phrase_002",
+    "2606.01770:status_phrase_002",
+    "2603.28052:status_phrase_002",
+    "2602.22425:status_phrase_002",
+    "2602.22425:status_phrase_003",
+    "2602.16928:status_phrase_002",
+    "2602.16928:status_phrase_003",
+    "2603.09172:status_phrase_001",
+    "2603.09172:status_phrase_003",
+    "2603.09172:status_phrase_004",
+    "2509.18057:status_phrase_002",
+    "2603.06692:status_phrase_001",
+    "2603.06692:status_phrase_003",
+    "2603.06692:status_phrase_004",
+    "2601.16175:status_phrase_002",
+    "2601.16175:status_phrase_003",
+    "2603.08679:status_phrase_002",
+    "2603.08679:status_phrase_003",
+    "2601.01235:status_phrase_001",
+    "2601.01235:status_phrase_003",
+    "2601.01235:status_phrase_004",
+    "2511.12916:status_phrase_002",
+    "2511.12916:status_phrase_003",
+    "2601.05943:status_phrase_001",
+    "2601.05943:status_phrase_003",
+    "2601.05943:status_phrase_004",
+    "2506.16750:status_phrase_001",
+    "2506.16750:status_phrase_003",
+    "2506.16750:status_phrase_004",
+    "2505.16105:status_phrase_001",
+    "2505.16105:status_phrase_003",
+    "2505.16105:status_phrase_004",
+    "2506.01896:status_phrase_001",
+    "2506.01896:status_phrase_003",
+    "2506.01896:status_phrase_004"
+  ],
+  "absence_signal_terms": [
+    "absence",
+    "missing",
+    "no",
+    "not",
+    "out of scope",
+    "remain open",
+    "unsupported"
+  ],
+  "absence_signal_inventory_status": "absence_signals_structurally_classified_without_freshness_verification",
   "missing_evidence": {
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -403,6 +503,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "unsupported"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -476,6 +582,13 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "no",
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -549,6 +662,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -622,6 +739,13 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "unsupported",
+            "remain open"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -862,6 +986,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -930,6 +1060,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -1015,6 +1149,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -1294,6 +1434,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -1368,6 +1512,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -1452,6 +1602,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -1526,6 +1682,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "remain open"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -1805,6 +1967,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -1879,6 +2045,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "out of scope"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -1963,6 +2135,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -2213,6 +2391,13 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not",
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -2286,6 +2471,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -2369,6 +2558,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -2619,6 +2814,13 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not",
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -2702,6 +2904,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -2981,6 +3189,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -3055,6 +3267,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -3129,6 +3345,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -3203,6 +3423,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -3287,6 +3513,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -3566,6 +3798,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -3640,6 +3876,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -3724,6 +3966,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -3974,6 +4222,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -4047,6 +4299,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -4130,6 +4388,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -4409,6 +4673,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -4483,6 +4751,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -4557,6 +4831,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -4641,6 +4919,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -4920,6 +5204,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -4994,6 +5282,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -5068,6 +5360,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -5152,6 +5450,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -5402,6 +5706,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -5475,6 +5783,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -5558,6 +5872,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -5782,6 +6102,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -5859,6 +6183,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -6083,6 +6413,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -6160,6 +6494,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -6384,6 +6724,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -6461,6 +6805,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -6685,6 +7035,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -6762,6 +7116,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -6986,6 +7346,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -7063,6 +7427,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -7287,6 +7657,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -7364,6 +7738,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -7588,6 +7968,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -7665,6 +8049,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -7889,6 +8279,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -7966,6 +8360,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -8190,6 +8590,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -8267,6 +8671,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -8491,6 +8901,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -8568,6 +8982,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -8792,6 +9212,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -8859,6 +9285,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -8936,6 +9366,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -9160,6 +9596,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -9237,6 +9677,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -9461,6 +9907,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -9538,6 +9988,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -9762,6 +10218,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -9839,6 +10299,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -10063,6 +10529,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -10140,6 +10610,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -10364,6 +10840,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -10441,6 +10921,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -10665,6 +11151,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -10742,6 +11232,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -10966,6 +11462,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -11043,6 +11543,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -11267,6 +11773,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -11344,6 +11854,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -11568,6 +12084,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -11645,6 +12165,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -11869,6 +12395,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -11946,6 +12476,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -12170,6 +12706,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -12247,6 +12787,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -12471,6 +13017,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -12548,6 +13098,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -12772,6 +13328,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -12849,6 +13409,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -13073,6 +13639,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -13150,6 +13720,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -13374,6 +13950,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -13451,6 +14031,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -13675,6 +14261,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -13752,6 +14342,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -13976,6 +14572,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -14053,6 +14653,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -14303,6 +14909,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -14376,6 +14986,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -14459,6 +15075,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -14709,6 +15331,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -14782,6 +15408,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -14865,6 +15497,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -15115,6 +15753,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -15188,6 +15832,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -15261,6 +15909,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -15344,6 +15998,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -15594,6 +16254,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -15677,6 +16341,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "no"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -15927,6 +16597,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -16000,6 +16676,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -16073,6 +16753,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -16156,6 +16842,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -16406,6 +17098,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -16479,6 +17175,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -16562,6 +17264,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -16812,6 +17520,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -16885,6 +17597,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -16968,6 +17686,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -17218,6 +17942,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -17291,6 +18021,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -17364,6 +18098,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -17447,6 +18187,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -17697,6 +18443,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -17770,6 +18520,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -17853,6 +18609,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -18103,6 +18865,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -18176,6 +18944,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -18249,6 +19021,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -18332,6 +19110,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -18582,6 +19366,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -18655,6 +19445,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -18728,6 +19522,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -18811,6 +19611,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -19061,6 +19867,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -19134,6 +19946,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -19207,6 +20023,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -19290,6 +20112,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -19540,6 +20368,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "not"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -19613,6 +20447,10 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [],
+          "has_absence_signal": false,
+          "absence_signal_status": "no_absence_signal_detected",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -19686,6 +20524,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_terms": [
+            "missing"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         },
@@ -19769,6 +20613,12 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_terms": [
+            "absence"
+          ],
+          "has_absence_signal": true,
+          "absence_signal_status": "absence_signal_structurally_classified",
+          "freshness_status": "not_verified",
           "evidence_link_status": "candidate_links_recorded_without_semantic_verification",
           "semantic_status": "not_verified"
         }
@@ -19781,5 +20631,5 @@
       "freshness_status": "structural_only"
     }
   ],
-  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mentions and existence records, row source line, TODO evidence paths and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention records. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
+  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mentions and existence records, row source line, TODO evidence paths and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention records and absence-signal classification. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
 }

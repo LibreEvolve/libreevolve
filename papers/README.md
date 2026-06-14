@@ -1441,7 +1441,7 @@ mentions and existence records, row source lines, TODO evidence paths, and
 TODO evidence-path existence records, and status-cell phrase hashes with source
 offsets plus candidate evidence-link lists and row-specific TODO content
 artifact-mention records plus phrase-local TODO content backing, but it is not
-phrase-level semantic proof. The checked
+phrase-level semantic proof or absence-sentence freshness proof. The checked
 `papers/benchmark_coverage_inventory.json` sidecar records structural
 implemented-benchmark coverage bullet entries with source lines, hashes,
 local-artifact mentions, artifact-existence records, limitation flags, and
@@ -2866,7 +2866,8 @@ Implemented:
   plus 6 unique referenced TODO evidence paths and zero missing referenced TODO
   evidence paths, and zero status-row local artifact paths missing from linked
   row-specific TODO evidence. It also records zero status-phrase local artifact
-  paths missing from linked row-specific TODO evidence. It is not status-cell
+  paths missing from linked row-specific TODO evidence, and structurally
+  classifies 87 status-cell absence-signal phrases. It is not status-cell
   phrase-level semantic verification, evidence-link sufficiency proof, or
   absence-sentence freshness evidence.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page

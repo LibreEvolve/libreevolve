@@ -831,7 +831,7 @@ is not yet an AlphaEvolve reproduction.
   status inventory plus status-cell phrase hashes, source offsets, and
   candidate evidence-link lists plus referenced local artifact and TODO
   evidence-path existence checks plus row/phrase-specific TODO content
-  artifact mention records, while
+  artifact mention records and structural absence-signal classification, while
   `papers/benchmark_coverage_inventory.json` records structural implemented
   benchmark coverage bullets plus referenced local artifact existence checks.
   This is not an exhaustive source-span coverage matrix,

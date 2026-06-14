@@ -33,6 +33,37 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and CI validation before treating ROADMAP as semantically complete
     AlphaEvolve-alignment proof.
 
+- [ ] Add ROADMAP readiness taxonomy and weighted completion evidence.
+  - Spec evidence: the active project goal is not simply to accumulate TODO
+    entries; it is to bring LibreEvolve toward the AlphaEvolve specification
+    across code, ROADMAP, README, and papers. A project-completion percentage
+    should therefore distinguish technical implementation parity, benchmark
+    reproduction, operational/release maturity, documentation truthfulness,
+    paper-source metadata, and source-only fixture evidence.
+  - Current evidence: raw TODO counting currently reports a useful ledger
+    ratio, but it weights every checklist item equally. Source-publication
+    metadata boundaries such as title-page affiliation and system-contribution
+    provenance can be claim-ready for narrow fixture facts, while many
+    technical AlphaEvolve boundaries remain explicitly false for async
+    topology, Gemini Flash/Pro parity, realistic codebase benchmarks,
+    sandbox/resource enforcement, representative benchmark reproduction, and
+    full resume/replay proof. README and `docs/status.md` correctly say this
+    is not a full AlphaEvolve reproduction, but ROADMAP has no formal
+    denominator or weighting model for the implementation-completion
+    percentage readers ask for.
+  - Current gap: there is no machine-readable readiness taxonomy, weighted
+    denominator, category rollup, confidence label, or stale-count detector
+    separating raw TODO-ledger completion from actual AlphaEvolve
+    implementation parity. There is also no guard that prevents paper-source
+    metadata readiness, documentation-routing work, or fixture-level
+    provenance from inflating technical implementation completion.
+  - Required result: add a ROADMAP readiness model with stable categories,
+    weights, source requirements, TODO/sidecar/test evidence links,
+    per-category completion counts, uncertainty labels, and a validator that
+    reports raw TODO completion separately from weighted AlphaEvolve
+    implementation readiness before publishing project-completion percentages
+    as more than a ledger statistic.
+
 ## Missing Roadmap Items
 
 - [ ] Add ROADMAP AlphaEvolve source-span disposition coverage.

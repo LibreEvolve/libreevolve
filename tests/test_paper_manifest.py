@@ -12155,6 +12155,17 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
     assert inventory["implemented_bullet_count"] == 1
     bullet = inventory["implemented_bullets"][0]
+    readme_text = readme_path.read_text(encoding="utf-8")
+    bullet_file_start = readme_text.find(bullet_text)
+    bullet_file_end = bullet_file_start + len(bullet_text)
+    assert bullet["source_span"] == {
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions",
+        "line_start": bullet["source_span"]["line_start"],
+        "line_end": bullet["source_span"]["line_end"],
+        "file_text_char_start": bullet_file_start,
+        "file_text_char_end": bullet_file_end,
+    }
     artifact_start = bullet_text.find("`libreevolve/problems/benchmarks/matrix_results.py`")
     artifact_end = artifact_start + len("`libreevolve/problems/benchmarks/matrix_results.py`")
     assert bullet["has_local_artifact"] is True
@@ -12216,6 +12227,7 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
         inventory["source_token_coverage_status"]
         == "source_tokens_structurally_recorded_without_semantic_verifier"
     )
+    assert inventory["implemented_bullet_source_span_status"] == "file_character_offsets_recorded"
     assert inventory["unique_local_artifact_count"] == 1
     assert inventory["local_artifact_mention_record_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []

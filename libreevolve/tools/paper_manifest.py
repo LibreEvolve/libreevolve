@@ -1843,6 +1843,8 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
                     "section": "Benchmark coverage decisions",
                     "line_start": bullet["line_start"],
                     "line_end": bullet["line_end"],
+                    "file_text_char_start": bullet["file_text_char_start"],
+                    "file_text_char_end": bullet["file_text_char_end"],
                 },
                 "source_ids_mentioned": source_ids_mentioned,
                 "source_token_match_records": source_token_match_records,
@@ -1915,6 +1917,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         "source_id_mention_count": len(benchmark_source_ids_mentioned),
         "source_token_match_record_count": benchmark_source_token_match_record_count,
         "source_token_coverage_status": "source_tokens_structurally_recorded_without_semantic_verifier",
+        "implemented_bullet_source_span_status": "file_character_offsets_recorded",
         "unique_local_artifact_paths": unique_local_artifacts,
         "unique_local_artifact_count": len(unique_local_artifacts),
         "local_artifact_mention_record_count": local_artifact_mention_record_count,
@@ -1938,9 +1941,9 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         "claim_boundary": (
             "This inventory records one structured entry for each "
             "papers/README.md Implemented benchmark coverage bullet, including "
-            "source lines, summary/body hashes, source-token match offsets, "
-            "local artifact mention source offsets, local artifact existence "
-            "records, limitation-signal terms/source offsets, and "
+            "source lines and file character offsets, summary/body hashes, "
+            "source-token match offsets, local artifact mention source "
+            "offsets, local artifact existence records, limitation-signal terms/source offsets, and "
             "contradiction flags. It does not claim "
             "semantic verification, benchmark freshness, reproduced result "
             "linkage, or proof that the benchmark coverage prose is complete."
@@ -4066,6 +4069,7 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
         ("source_id_mention_count", "benchmark coverage source id count drifted"),
         ("source_token_match_record_count", "benchmark coverage source-token match count drifted"),
         ("source_token_coverage_status", "benchmark coverage source-token status drifted"),
+        ("implemented_bullet_source_span_status", "benchmark coverage bullet source-span status drifted"),
         ("unique_local_artifact_paths", "benchmark coverage unique local artifact paths drifted"),
         ("unique_local_artifact_count", "benchmark coverage unique local artifact count drifted"),
         ("local_artifact_mention_record_count", "benchmark coverage local artifact mention count drifted"),
@@ -9261,10 +9265,12 @@ def _read_implemented_benchmark_bullet_records(root: Path) -> tuple[list[dict[st
         if not block:
             continue
         absolute_start = implemented_absolute_start + start
-        absolute_end = implemented_absolute_start + end
+        absolute_end = absolute_start + len(block)
         records.append(
             {
                 "text": block,
+                "file_text_char_start": absolute_start,
+                "file_text_char_end": absolute_end,
                 "line_start": text.count("\n", 0, absolute_start) + 1,
                 "line_end": text.count("\n", 0, absolute_end) + 1,
             }

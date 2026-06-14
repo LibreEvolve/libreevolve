@@ -36,8 +36,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     absence-signal phrases with 99 source-offset records without claiming
     freshness verification.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
-    benchmark coverage bullets with source lines, summary/body hashes, local
-    artifact mention source offsets, local artifact existence records, 116
+    benchmark coverage bullets with source lines, file character offsets,
+    summary/body hashes, local artifact mention source offsets, local artifact
+    existence records, 116
     unique local artifact paths, zero missing referenced local artifacts,
     source-token match offsets for 3 manifest source IDs across 15 records,
     limitation-signal terms/source offsets/counts, and contradiction flags.

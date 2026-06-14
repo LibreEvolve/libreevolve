@@ -51,8 +51,8 @@ sidecars, tests, and active TODOs.
     records, and artifact-mention source offsets plus structural absence-signal
     source-offset classification.
     `papers/benchmark_coverage_inventory.json` records structural evidence,
-    source-token match offsets, local artifact mention source offsets and
-    existence checks, and limitation-signal term/source-offset classification for implemented
+    implemented-bullet file character offsets, source-token match offsets,
+    local artifact mention source offsets and existence checks, and limitation-signal term/source-offset classification for implemented
     benchmark coverage bullets.
     The boundary still explicitly keeps
     per-phrase evidence-link sufficiency, status-cell semantic verification,

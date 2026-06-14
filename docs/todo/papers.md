@@ -74,6 +74,36 @@ directory and using the AlphaEvolve paper as the primary specification.
     CI validation before treating `papers/README.md` as semantically complete
     implementation-status or benchmark-coverage proof.
 
+- [ ] Add anchor-level semantic validation for paper-index TODO coverage rows.
+  - Paper evidence: `papers/README.md` uses the TODO coverage cross-reference
+    table as backlog traceability between every local paper-cache row and the
+    active or completed work that keeps implementation-status claims honest.
+    For AlphaEvolve-alignment work, that table should prove row-specific
+    disposition, not merely that a broad TODO file contains some related open
+    work.
+  - Current evidence: `validate_paper_manifest()` checks the TODO coverage
+    table shape, manifest-id row coverage, duplicate rows, active TODO file
+    paths, completed-ledger paths with checklist evidence, and a narrow stale
+    source-specific absence phrase family. The prose explicitly says grouped
+    labels are intentionally not accepted until a grouped-label taxonomy
+    exists, and that the table is backlog traceability evidence rather than
+    semantic proof.
+  - Current gap: active coverage cells still cite only broad files such as
+    `docs/todo/code.md` and `docs/todo/papers.md`, not exact row-specific TODO
+    anchors, gap categories, status classes, or source-span dispositions. The
+    validator does not prove that each cited active ledger contains a current
+    open block specifically about that paper row, that completed evidence
+    addresses the same status-cell clauses, that broad file-level coverage is
+    not hiding missing source-specific work, or that a changed paper role,
+    implementation status, benchmark qualifier, or source-span claim forces a
+    row-specific TODO coverage refresh.
+  - Required result: extend the paper-index TODO coverage map with stable
+    active/completed anchor ids, source-specific gap categories, role/status
+    expectations, and optional grouped-label taxonomy; validate that every
+    paper row's cited TODO anchors are live, row-specific, semantically aligned
+    with its implementation-status clauses, and refreshed when paper status,
+    benchmark coverage, or source-span evidence changes.
+
 - [ ] Track independent evaluator-oracle evidence beyond local arbitration
       metadata.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` states that AlphaEvolve

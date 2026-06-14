@@ -5869,6 +5869,50 @@ directory and using the AlphaEvolve paper as the primary specification.
     missing search-memory architecture evidence rather than implemented
     LibreEvolve support.
 
+- [ ] Reproduce EMO-STA multi-task program-discovery evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2605.22613`, submitted May 21, 2026, is
+    titled `Evolutionary Multi-Task Optimization for LLM-Guided Program
+    Discovery` and the arXiv page links a Creative Commons license. Its
+    abstract says recent LLM-guided evolutionary search usually optimizes each
+    task independently even when related tasks share reusable structure. It
+    introduces Evolutionary Multi-Task Optimization (EMO) and EMO-STA
+    (Shared-Then-Adapt), a two-stage framework that first evolves a shared
+    archive of executable programs across a task family, then adapts selected
+    shared candidates to each target task. It compares warm-starting from the
+    shared archive, adapting the best average shared program, and adapting the
+    best shared program per target task. Across eight task families spanning
+    continuous optimization, geometric construction, modeling, and algorithmic
+    optimization, it reports improvement over matched-compute single-task
+    evolution in most settings, with STA Best-Local strongest in-distribution
+    and STA Best-Shared robust for unseen-task transfer. It also reports that
+    roughly balanced shared/adaptation budgets are often optimal and that
+    shared evolution can reduce low-evidence overfitting on ARC and time-series
+    feature-engineering tasks.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2605.22613`. Existing LibreEvolve island, MAP-Elites,
+    archive-restore, parent-sampling, LEVI, SeaEvo, PACEvolve, benchmark-
+    hardening, and transfer TODOs do not reproduce family-level task schemas,
+    shared executable-program archives, shared-then-adapt control flow,
+    warm-start adaptation policies, Best-Average/Best-Local/Best-Shared
+    selection rules, matched-compute single-task baselines, shared-versus-
+    adaptation budget sweeps, unseen-task transfer metrics, or low-evidence
+    overfitting mitigation for ARC and time-series feature-engineering tasks.
+  - Required result: add reproduction-grade evidence for `2605.22613`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, FunSearch, OpenEvolve, LEVI,
+    SeaEvo, and LibreEvolve, task-family schema, shared-archive data model,
+    executable-program compatibility contract across tasks, shared-evolution
+    stage telemetry, adaptation-stage telemetry, warm-start and selected-
+    candidate adaptation policies, Best-Average/Best-Local/Best-Shared
+    selection records, budget-allocation schedules, matched-compute
+    single-task baseline identities, eight task-family benchmark metadata,
+    in-distribution and unseen-task transfer metrics, low-evidence overfitting
+    diagnostics, ARC and time-series feature-engineering records, independent
+    verification outputs, and README/ROADMAP wording that treats EMO-STA
+    multi-task program discovery as missing shared-evolution evidence rather
+    than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

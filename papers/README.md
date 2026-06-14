@@ -1439,8 +1439,8 @@ generated code-audit report, or CI exhaustiveness gate. The checked
 status inventory with status text hashes, status classes, local artifact
 mentions and existence records, row source lines, TODO evidence paths, and
 TODO evidence-path existence records, and status-cell phrase hashes with source
-offsets plus candidate evidence-link lists, but it is not phrase-level semantic
-proof. The checked
+offsets plus candidate evidence-link lists and row-specific TODO content
+artifact-mention records, but it is not phrase-level semantic proof. The checked
 `papers/benchmark_coverage_inventory.json` sidecar records structural
 implemented-benchmark coverage bullet entries with source lines, hashes,
 local-artifact mentions, artifact-existence records, limitation flags, and
@@ -2863,8 +2863,10 @@ Implemented:
   candidate evidence-link lists. The current inventory records 60 unique
   referenced local artifact paths and zero missing referenced local artifacts,
   plus 6 unique referenced TODO evidence paths and zero missing referenced TODO
-  evidence paths. It is not status-cell phrase-level semantic verification,
-  evidence-link sufficiency proof, or absence-sentence freshness evidence.
+  evidence paths, and zero status-row local artifact paths missing from linked
+  row-specific TODO evidence. It is not status-cell phrase-level semantic
+  verification, evidence-link sufficiency proof, or absence-sentence freshness
+  evidence.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit

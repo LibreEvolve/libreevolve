@@ -1496,19 +1496,45 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         completed_paths = _status_claim_inventory_paths(completed_cell)
         active_todo_records = _local_artifact_path_records(root_path, active_paths)
         completed_todo_records = _local_artifact_path_records(root_path, completed_paths)
+        manifest_row = manifest_rows_by_id.get(row_id, {})
         missing_todo_paths = [
             record["path"]
             for record in [*active_todo_records, *completed_todo_records]
             if not record["exists"]
         ]
         row_local_artifact_paths = sorted(_status_local_artifact_paths(status_text))
+        active_todo_content_records = _status_todo_evidence_content_records(
+            root_path,
+            row_id,
+            active_paths,
+            manifest_row,
+            row_local_artifact_paths,
+            "active",
+        )
+        completed_todo_content_records = _status_todo_evidence_content_records(
+            root_path,
+            row_id,
+            completed_paths,
+            manifest_row,
+            row_local_artifact_paths,
+            "completed",
+        )
+        row_artifacts_mentioned_in_todo = sorted(
+            {
+                artifact
+                for record in [*active_todo_content_records, *completed_todo_content_records]
+                for artifact in record["mentioned_local_artifact_paths"]
+            }
+        )
+        row_artifacts_missing_from_todo = sorted(
+            set(row_local_artifact_paths) - set(row_artifacts_mentioned_in_todo)
+        )
         row_local_artifact_records = _local_artifact_path_records(root_path, row_local_artifact_paths)
         row_missing_local_artifacts = [
             record["path"] for record in row_local_artifact_records if not record["exists"]
         ]
         status_class = _status_claim_inventory_class(status_text)
         status_class_counts[status_class] = status_class_counts.get(status_class, 0) + 1
-        manifest_row = manifest_rows_by_id.get(row_id, {})
         status_claims = _status_claim_inventory_phrases(
             root_path,
             row_id,
@@ -1548,9 +1574,16 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
                 "completed_todo_paths": completed_paths,
                 "active_todo_records": active_todo_records,
                 "completed_todo_records": completed_todo_records,
+                "active_todo_content_records": active_todo_content_records,
+                "completed_todo_content_records": completed_todo_content_records,
                 "todo_evidence_path_count": len(set(active_paths + completed_paths)),
                 "todo_evidence_missing_paths": missing_todo_paths,
                 "all_todo_evidence_paths_exist": bool(active_paths or completed_paths) and not missing_todo_paths,
+                "local_artifacts_mentioned_in_todo_evidence": row_artifacts_mentioned_in_todo,
+                "local_artifacts_missing_from_todo_evidence": row_artifacts_missing_from_todo,
+                "all_local_artifacts_linked_from_todo_evidence": (
+                    bool(row_local_artifact_paths) and not row_artifacts_missing_from_todo
+                ),
                 "claim_count": len(status_claims),
                 "status_claims": status_claims,
                 "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
@@ -1567,6 +1600,13 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
                     else "missing_referenced_todo_paths"
                     if missing_todo_paths
                     else "no_todo_evidence_paths_referenced"
+                ),
+                "todo_content_evidence_status": (
+                    "all_row_local_artifacts_mentioned_in_todo_evidence"
+                    if row_local_artifact_paths and not row_artifacts_missing_from_todo
+                    else "missing_row_local_artifact_mentions_in_todo_evidence"
+                    if row_artifacts_missing_from_todo
+                    else "no_row_local_artifacts_referenced"
                 ),
                 "source_span_status": "phrase_offsets_recorded_in_status_cell",
                 "freshness_status": "structural_only",
@@ -1585,6 +1625,13 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
     )
     missing_todo_paths = sorted(
         {path for row in inventory_rows for path in row["todo_evidence_missing_paths"]}
+    )
+    local_artifacts_missing_from_todo = sorted(
+        {
+            path
+            for row in inventory_rows
+            for path in row["local_artifacts_missing_from_todo_evidence"]
+        }
     )
     return {
         "schema": STATUS_CLAIM_INVENTORY_SCHEMA,
@@ -1614,6 +1661,14 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             if missing_todo_paths
             else "no_todo_evidence_paths_referenced"
         ),
+        "local_artifacts_missing_from_todo_evidence": local_artifacts_missing_from_todo,
+        "todo_content_evidence_status": (
+            "all_row_local_artifacts_mentioned_in_todo_evidence"
+            if unique_local_artifacts and not local_artifacts_missing_from_todo
+            else "missing_row_local_artifact_mentions_in_todo_evidence"
+            if local_artifacts_missing_from_todo
+            else "no_row_local_artifacts_referenced"
+        ),
         "missing_evidence": dict(STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE),
         "rows": inventory_rows,
         "claim_boundary": (
@@ -1622,8 +1677,9 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "role, status class, status text hash, manifest file, local "
             "artifact mentions and existence records, row source line, TODO "
             "evidence paths and existence records, and status-cell phrase "
-            "hashes with character offsets and candidate evidence links. It "
-            "does not claim phrase-level status verification, evidence-link sufficiency, "
+            "hashes with character offsets and candidate evidence links plus "
+            "row-specific TODO content artifact-mention records. It does not "
+            "claim phrase-level status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
             "complete."
@@ -3691,6 +3747,11 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         ("unique_todo_evidence_path_count", "status claim inventory unique TODO evidence path count drifted"),
         ("missing_todo_evidence_paths", "status claim inventory missing TODO evidence paths drifted"),
         ("todo_evidence_status", "status claim inventory TODO evidence status drifted"),
+        (
+            "local_artifacts_missing_from_todo_evidence",
+            "status claim inventory TODO content local artifact mentions drifted",
+        ),
+        ("todo_content_evidence_status", "status claim inventory TODO content status drifted"),
         ("missing_evidence", "status claim inventory missing-evidence boundary drifted"),
         ("claim_boundary", "status claim inventory claim boundary drifted"),
         ("rows", "status claim inventory rows drifted from papers/README.md"),
@@ -3717,6 +3778,14 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
             PaperManifestIssue(
                 "status_claim_inventory_missing_todo_evidence_path",
                 "implementation-status row cites a missing TODO evidence path",
+                _safe_manifest_label(str(missing_path)),
+            )
+        )
+    for missing_path in expected["local_artifacts_missing_from_todo_evidence"]:
+        issues.append(
+            PaperManifestIssue(
+                "status_claim_inventory_local_artifact_missing_from_todo_evidence",
+                "implementation-status local artifact path is not mentioned in row-specific TODO evidence",
                 _safe_manifest_label(str(missing_path)),
             )
         )
@@ -8345,6 +8414,61 @@ def _status_evidence_text(
         evidence_blocks.extend(block for block in _open_todo_blocks(text) if any(token in block for token in source_tokens))
         evidence_blocks.extend(block for block in _completed_todo_blocks(text) if any(token in block for token in source_tokens))
     return "\n".join(evidence_blocks)
+
+
+def _status_todo_evidence_content_records(
+    root: Path,
+    row_id: str,
+    evidence_paths: list[str],
+    manifest_row: dict[str, Any] | None,
+    row_local_artifact_paths: list[str],
+    evidence_kind: str,
+) -> list[dict[str, Any]]:
+    source_tokens = _completed_todo_source_tokens(row_id, manifest_row)
+    records: list[dict[str, Any]] = []
+    for relative_path in dict.fromkeys(evidence_paths):
+        path = root / relative_path
+        base_record = _local_artifact_path_records(root, [relative_path])[0]
+        readable = False
+        matching_blocks: list[str] = []
+        matched_tokens: set[str] = set()
+        if path.exists():
+            try:
+                text = path.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError):
+                text = ""
+            else:
+                readable = True
+                blocks = [*_open_todo_blocks(text), *_completed_todo_blocks(text)]
+                for block in blocks:
+                    block_tokens = {token for token in source_tokens if token in block}
+                    if block_tokens:
+                        matching_blocks.append(block)
+                        matched_tokens.update(block_tokens)
+        evidence_text = "\n".join(matching_blocks)
+        mentioned_artifacts = sorted(
+            artifact for artifact in row_local_artifact_paths if artifact in evidence_text
+        )
+        missing_artifacts = sorted(set(row_local_artifact_paths) - set(mentioned_artifacts))
+        records.append(
+            {
+                **base_record,
+                "evidence_kind": evidence_kind,
+                "readable": readable,
+                "row_source_token_match_count": len(matched_tokens),
+                "row_specific_block_count": len(matching_blocks),
+                "mentioned_local_artifact_paths": mentioned_artifacts,
+                "missing_local_artifact_paths": missing_artifacts,
+                "content_evidence_status": (
+                    "row_local_artifacts_mentioned"
+                    if row_local_artifact_paths and not missing_artifacts
+                    else "missing_row_local_artifact_mentions"
+                    if missing_artifacts
+                    else "no_row_local_artifacts_referenced"
+                ),
+            }
+        )
+    return records
 
 
 def _status_table_status_cells(text: str) -> dict[str, str]:

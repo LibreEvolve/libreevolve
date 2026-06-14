@@ -25,7 +25,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     with source-line and character offsets plus candidate evidence-link lists.
     It now records 60 unique status-row local artifact paths and zero missing
     referenced status-row local artifacts, plus 6 unique status-row TODO
-    evidence paths and zero missing referenced TODO evidence paths.
+    evidence paths and zero missing referenced TODO evidence paths. It also
+    records row-specific TODO content evidence showing zero status-row local
+    artifact paths missing from linked TODO evidence.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
     benchmark coverage bullets with source lines, summary/body hashes, local
     artifact mentions, local artifact existence records, 116 unique local
@@ -41,9 +43,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     semantic proof out of scope.
   - Current gap: each status phrase now has a stable hash and source offset,
     candidate links to phrase-local artifacts plus row-level TODO and completed
-    evidence, and referenced local artifact/TODO path existence checks, but
-    there is no proof that those links are sufficient for each implemented or
-    missing clause, no semantic verifier for
+    evidence, referenced local artifact/TODO path existence checks, and
+    row-local artifact mentions in linked TODO evidence, but there is no proof
+    that those links are sufficient for each implemented or missing clause, no
+    semantic verifier for
     `Implemented` benchmark coverage bullets beyond referenced artifact
     existence, no absence-sentence freshness matrix, and no semantic verifier
     that checks benchmark qualifiers, implemented-bullet scope/limitation

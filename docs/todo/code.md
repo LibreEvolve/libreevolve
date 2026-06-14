@@ -1089,6 +1089,41 @@ sidecars, tests, and active TODOs.
     ROADMAP, benchmark, or paper-facing materials claim Codex-authenticated or
     other local CLI providers are supported.
 
+- [ ] Add an OpenAI Responses request-surface capability contract.
+  - Spec evidence: AlphaEvolve-style model-mix experiments depend on stable
+    provider request controls, not only model names. Current OpenAI docs expose
+    Responses-only reasoning controls with model-dependent effort support,
+    reasoning-summary configuration, and GPT-5 verbosity controls; unsupported
+    or omitted controls can change proposal style, reasoning budget, and
+    reproducibility for long evolutionary runs.
+  - Current evidence: `libreevolve/llm/openai_compat.py` hardcodes a local
+    reasoning-effort compatibility policy for `none`, `minimal`, `low`,
+    `medium`, `high`, and `xhigh`, with model-family rules last documented in
+    a 2026-06-03 check. `libreevolve/llm/openai.py` forwards
+    `reasoning={"effort": ...}` only when `reasoning_effort` is configured.
+    `libreevolve/llm/request_params.py` only validates and forwards
+    `temperature`, `top_p`, Chat-Completions-only `stop`, and
+    Chat-Completions-only `seed`; it has no typed surface for Responses
+    reasoning summaries, GPT-5 verbosity, text-output configuration, or a
+    docs/model-capability snapshot proving which controls are supported for a
+    configured OpenAI model/API mode.
+  - Current gap: OpenAI adapter behavior can drift as Responses request fields
+    and model-specific compatibility change. The code has no refreshed
+    capability sidecar, provider docs snapshot, account/model availability
+    probe, request-surface validator, manifest telemetry, or tests that
+    distinguish unsupported fields from intentionally unsupported local
+    policy. This is narrower than live provider model-registry lookup: it is
+    the missing contract for the request controls LibreEvolve claims or
+    intentionally omits.
+  - Required result: add a versioned OpenAI request-surface capability record
+    for Chat Completions versus Responses, model-family reasoning effort,
+    reasoning-summary, verbosity, text-output, and unsupported fields; validate
+    configured OpenAI request controls against that record; persist the
+    effective request-surface policy in backend defaults and call telemetry;
+    add docs-refresh or drift tests tied to official OpenAI docs snapshots; and
+    keep README/backend/paper wording from implying unsupported OpenAI controls
+    are reproducible experiment inputs.
+
 - [ ] Extend prompt-template compatibility beyond current mutation-template
   checks and duplicate-arm audit.
   - Spec evidence: AlphaEvolve-style prompt evolution should make prompt

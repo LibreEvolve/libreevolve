@@ -205,6 +205,34 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and README/TODO updates whenever provider example commands or supported
     backend families change.
 
+- [ ] Add README guardrail for subprocess/CLI-authenticated LLM providers.
+  - Spec evidence: AlphaEvolve-style experiments rely on auditable provider
+    calls and model-mix claims. A README feature bullet for backend support
+    should distinguish built-in SDK adapters, generic custom import-path
+    backends, and any future local authenticated CLI provider before readers
+    use README commands or benchmark prompts as evidence of first-class
+    provider support.
+  - Current evidence: the README currently lists OpenAI, Anthropic, Ollama,
+    and custom import-path backend support; the quick-start provider examples
+    show only OpenAI, Anthropic, and Ollama placeholders. `docs/backends.md`
+    documents custom backends as Python `class_path` implementations with
+    JSON-safe kwargs, while the active code TODO now tracks the missing
+    subprocess/CLI backend contract for command discovery, auth/session
+    provenance, transcript retention, diagnostics, and budget/cancellation
+    semantics.
+  - Current gap: no README-owned wording, evidence map, or drift check states
+    that custom import-path support is not the same thing as first-class
+    Codex-authenticated or other local CLI provider support. A user could add
+    an ad hoc CLI wrapper through `type: custom` and mistake the README's
+    generic backend claim for supported, reproducible provider parity.
+  - Required result: update README provider/support wording and validation so
+    built-in SDK adapters, custom import-path wrappers, and any future
+    subprocess/CLI-authenticated provider lane are separated; link to the
+    subprocess/CLI backend contract TODO; and prevent README, ROADMAP,
+    benchmark, or paper-facing examples from claiming Codex-authenticated or
+    local CLI providers until the tracked backend contract and smoke evidence
+    exist.
+
 ## Problem Layout
 
 - [ ] Add README problem-layout contract drift evidence.

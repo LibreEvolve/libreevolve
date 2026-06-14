@@ -5311,6 +5311,43 @@ sidecars, tests, and active TODOs.
     ensemble-deadline timeout call records or verifying declared cancellation
     evidence files once a policy names them.
 
+- [ ] Emit structured exhausted-quarantine records for LLM role backend pools.
+  - Spec evidence: AlphaEvolve-scale model routing should treat provider
+    failures, fallbacks, and exhausted backend pools as auditable controller
+    decisions rather than bare runtime exceptions, especially when role-specific
+    backend pools and quarantine thresholds determine whether generation can
+    continue.
+  - Current evidence: `LLMEnsemble.generate()` supports
+    `role_failure_quarantine_after`, excludes quarantined backends on later
+    calls, and `llm_calls.jsonl` rows can record per-call
+    `provider_failure_policy` metadata when a backend attempt actually occurs.
+    Tests cover a failing backend being quarantined, a healthy fallback being
+    selected, restored quarantine state excluding the failed backend, and
+    cancellation-policy observations summarizing configured/observed
+    quarantine state.
+  - Current gap: exhausted role pools do not have a structured exhaustion path.
+    A current-state proof with one backend, `role_backend_indices={"mutation":
+    [0]}`, and `role_failure_quarantine_after={"mutation": 1}` first records a
+    timeout/quarantine failure, then the next `generate(..., role="mutation")`
+    raises a bare `AssertionError`, increments
+    `role_call_limits.logical_calls_by_role["mutation"]` to `2`, and writes no
+    second call-history or quarantine-exhaustion record. With the generic role
+    pool, the same exhausted state raises `ValueError("no eligible LLM backend
+    remains for selection")`, also without a persisted exhaustion row. This is
+    separate from the broader live hard-cancellation/timeout-stop TODO: the
+    issue is deterministic no-eligible-backend handling after configured
+    quarantine has already done its job.
+  - Required result: add a first-class exhausted-backend-pool error and
+    telemetry contract that records role, configured/metadata backend pool,
+    quarantined backend ids, threshold policy, logical-call accounting decision,
+    retry/fallback/stop action, and redacted diagnostic text; ensure explicit
+    `role_backend_indices` and metadata/global pools share the same path; avoid
+    bare assertions; avoid consuming role call budget unless policy explicitly
+    says exhaustion attempts count; persist a strict JSONL-compatible
+    exhaustion row or generated failure-history record; and add tests for
+    explicit role pools, metadata role pools, global pools, restored quarantine
+    state, and interaction with `llm_role_call_limits`.
+
 - [ ] Extend critique reviewer pools beyond synchronous first/last-valid
   selection.
   - Spec evidence: AlphaEvolve names LLM-supported candidate critique in the

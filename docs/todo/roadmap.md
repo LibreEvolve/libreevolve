@@ -185,3 +185,36 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     paper-scope attribution, and validation gates, and add checks that README,
     papers, runtime metadata, and plugin docs cannot overclaim external plugin
     readiness until the full matrix is satisfied.
+
+- [ ] Add ROADMAP backend-scheduling and critique readiness criteria.
+  - Spec evidence: the `7. Backend scheduling and critique` section combines
+    reward assumptions, role-scoped backend routing, provider diagnostics,
+    pricing, cancellation, fast/strong model-mix scheduling, sample-efficiency
+    evidence, repeated-sampling comparators, Gemini parity, and critique
+    reviewer pools. Those are separate implementation tracks, but together
+    they define whether LibreEvolve has a reliable AlphaEvolve-style
+    backend/critique control plane rather than a collection of local
+    heuristics.
+  - Current evidence: ROADMAP already distinguishes current heuristic UCB
+    routing, opt-in role-scoped scheduler state, configured cost estimates,
+    scalar provider diagnostics, retry/fallback quarantine, policy-only
+    cancellation evidence, `throughput_depth` metadata tests,
+    sample-efficiency reports, repeated-sampling boundaries,
+    Gemini-provider-parity absence records, and synchronous first/last-valid
+    critique reviewer aggregation from missing calibrated rewards, quotas,
+    live provider/default pricing, raw replay, hard cancellation, equal-budget
+    scheduler comparisons, first-class Gemini lanes, async reviewer overlap,
+    reviewer isolation, and critique-to-revision attribution. Active code and
+    paper TODOs track those individual gaps.
+  - Current gap: there is no section-level readiness rubric, backend-role
+    capability matrix, critique-control checklist, or stale-readiness detector
+    proving when these scheduler/provider/critique pieces are coherent enough
+    to support AlphaEvolve-style claims, nor a guard that prevents one
+    completed subfeature from implying full backend scheduling maturity.
+  - Required result: add ROADMAP backend-scheduling criteria that classify each
+    role and provider lane by selection policy, reward assumptions, budget and
+    quota ownership, pricing/default-rate evidence, diagnostics/replay support,
+    cancellation behavior, resume semantics, equal-budget comparator evidence,
+    critique/reviewer isolation, Gemini substitution status, and validation
+    gates, then enforce README/papers/ROADMAP wording against overclaiming
+    backend-scheduler or critique parity until the matrix is complete.

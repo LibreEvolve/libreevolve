@@ -573,6 +573,31 @@ sidecars, tests, and active TODOs.
     optimization-pressure examples are excluded from strict complete initial
     implementation parity suites.
 
+- [ ] Add filesystem-live validation for the shipped example benchmark-scope
+      registry.
+  - Spec evidence: AlphaEvolve-comparable benchmark claims depend on concrete
+    task packages whose evaluator, initial program, metric definitions,
+    target/baseline metadata, and emitted artifacts can be re-run and audited.
+    A scope registry that is only shape-valid can still drift from the shipped
+    problem packages and weaken benchmark-readiness evidence.
+  - Current evidence: `libreevolve/problems/benchmarks/example_scope.py`
+    statically records eight shipped example problem ids, paths, scope levels,
+    current roles, reasons, and required upgrades. Focused tests prove record
+    shape, duplicate-id rejection, safe relative paths, smoke/comparable
+    gating, paper-claim gating, and summary rendering. The validator does not
+    currently receive a repository root, check that each registry path exists,
+    enumerate the actual `libreevolve/problems/examples/*` directories, verify
+    `task_description.txt`, `metrics.yaml`, `validate.py` or embedded
+    evaluator configuration, seed workspace presence, loader usability, or
+    detect orphaned directories and stale registry rows.
+  - Required result: extend the example-scope validation/report path with an
+    optional repo-root filesystem audit that checks registry coverage against
+    shipped example directories, verifies required problem files and supported
+    embedded-evaluator alternatives, detects missing/orphaned/stale scope
+    records, proves each registered example can be loaded by the problem
+    loader, and feeds those diagnostics into benchmark-fixture readiness before
+    relying on the scope registry as benchmark evidence.
+
 - [ ] Populate expert-reviewed problem-formulation metadata for benchmark definitions.
   - Spec evidence: AlphaEvolve Section 2.1 frames the task definition,
     evaluator, initial solution, and optional background knowledge as

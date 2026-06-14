@@ -290,6 +290,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     first-class contract, manifest fields, diagnostics, and smoke fixtures are
     implemented.
 
+## Plugin Docs
+
+- [ ] Add plugin-guide hook contract drift evidence.
+  - Spec evidence: `docs/plugins.md` is the detailed user-facing contract for
+    lifecycle hooks, configured plugin specs, execution order, score
+    adjustment, prompt context, run-artifact metadata, and fatal plugin
+    failures. For AlphaEvolve-alignment work, plugin behavior must stay
+    clearly scoped as synchronous local hooks and paper-inspired approximations
+    rather than faithful multi-agent, distributed, or external-plugin parity.
+  - Current evidence: `docs/plugins.md` documents alias/spec validation,
+    direct plugin-object validation, hook ordering, prompt-context metadata,
+    score-composition behavior, artifact metadata, fatal hook failures, and
+    built-in `causal`, `deep_research`, `modular`, and `ttt_rl` limitations.
+    Active roadmap and code TODOs cover broader plugin extensibility and
+    paper-inspired plugin overclaiming, but there is no plugin-guide-specific
+    drift check comparable to the README, backend-doc, development-doc, and
+    AGENTS.md documentation guardrails.
+  - Current gap: there is no committed inventory that maps each
+    `docs/plugins.md` hook, validation rule, failure policy, built-in option,
+    and limitation statement to `PluginBase`, the registry, loop call sites,
+    tests, runtime metadata, and paper-boundary TODOs. There is also no guard
+    that fails when hook order, plugin config schemas, score/admission
+    semantics, or built-in plugin capabilities change without updating the
+    plugin guide and its AlphaEvolve scope wording.
+  - Required result: add a plugin-guide contract map and drift validator that
+    links each documented hook and built-in plugin claim to code/tests/runtime
+    artifacts, separates local synchronous hook support from AlphaEvolve-style
+    plugin/agent parity, and requires README/TODO updates when plugin runtime
+    behavior or built-in plugin evidence changes.
+
 ## Problem Layout
 
 - [ ] Add README problem-layout contract drift evidence.

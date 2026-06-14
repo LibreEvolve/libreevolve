@@ -1156,6 +1156,37 @@ sidecars, tests, and active TODOs.
     the adapter proves it is full, text-only enough for the configured policy,
     and reproducibly accounted.
 
+- [ ] Harden Anthropic Messages content-block extraction and completion-state
+  accounting.
+  - Spec evidence: AlphaEvolve-style mutation proposals require complete,
+    auditable model text before SEARCH/REPLACE parsing, candidate validation,
+    and backend reward attribution. Provider adapters that accept only part of
+    a message can turn a valid multi-block mutation into a truncated patch
+    while still recording the call as successful.
+  - Current evidence: `AnthropicBackend.generate()` in
+    `libreevolve/llm/anthropic.py` reads `msg.content` as a list or tuple,
+    skips refusal and tool-use blocks, assigns `text = block_text`, and breaks
+    on the first block with a non-`None` `text` attribute. Existing backend
+    tests cover one text block, non-text output, empty output, and
+    tool-use-only output, but they do not cover multiple text blocks, mixed
+    text plus tool-use/refusal blocks, thinking/redacted-thinking blocks,
+    stop-reason-specific incomplete output, or telemetry that proves the
+    accepted text was the whole provider answer.
+  - Current gap: an Anthropic response with multiple text-bearing content
+    blocks can be silently truncated before mutation parsing, and mixed
+    auxiliary blocks are not surfaced as an explicit extraction policy. The
+    adapter records provider metadata such as `stop_reason`, request id,
+    response id, usage, model, and type, but not content-block counts,
+    accepted-block indexes, rejected auxiliary block counts, or whether a
+    stop reason made the text incomplete for benchmark-grade mutation use.
+  - Required result: add a typed Anthropic Messages extraction contract that
+    concatenates all text blocks or rejects multi-block/mixed-content output
+    under a documented policy; classify refusal/tool/thinking/incomplete
+    stop-reason shapes as provider-response outcomes; persist content-block
+    extraction metadata in call telemetry; and add focused tests so Anthropic
+    output cannot be admitted as a mutation candidate until the adapter proves
+    it is complete enough for the configured policy and reproducibly accounted.
+
 - [ ] Extend prompt-template compatibility beyond current mutation-template
   checks and duplicate-arm audit.
   - Spec evidence: AlphaEvolve-style prompt evolution should make prompt

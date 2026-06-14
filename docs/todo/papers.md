@@ -22,7 +22,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     missing evidence for the per-row paper-index status-claim inventory,
     status-row source-span inventory, status-cell semantic verifier,
     implemented-benchmark bullet coverage map, and absence-sentence freshness
-    matrix.
+    matrix. `papers/documentation_claim_inventory.json` now adds top-level
+    papers-index claim anchors for the local paper-cache manifest scope and the
+    implementation-status table scope, while explicitly keeping row-level
+    semantic proof out of scope.
   - Current gap: there is no machine-readable evidence map for every natural-
     language phrase in each paper status row, no per-row source-span or code/
     test/sidecar link inventory for all implemented and missing clauses, no

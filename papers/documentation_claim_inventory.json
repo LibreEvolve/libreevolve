@@ -1,9 +1,9 @@
 {
   "schema": "libreevolve.documentation_claim_inventory.v1",
   "source_paper_id": "2506.13131",
-  "inventory_status": "top_level_readme_roadmap_claim_inventory_without_semantic_verifier",
+  "inventory_status": "top_level_readme_roadmap_papers_claim_inventory_without_semantic_verifier",
   "claim_ready": false,
-  "coverage_scope": "Top-level README and ROADMAP claim anchors only. This is not a complete semantic verifier for every documentation sentence.",
+  "coverage_scope": "Top-level README, ROADMAP, and papers index claim anchors only. This is not a complete semantic verifier for every documentation sentence.",
   "claims": [
     {
       "claim_id": "readme_current_status_scope",
@@ -95,15 +95,46 @@
         "docs/todo/papers.md"
       ],
       "verification_scope": "top_level_claim_anchor_only"
+    },
+    {
+      "claim_id": "papers_cache_manifest_scope",
+      "document_path": "papers/README.md",
+      "document_section": "Local Paper Cache",
+      "claim_kind": "paper_cache_scope",
+      "claim_summary": "The papers README describes the local cache manifests, ignored PDF policy, retained AlphaEvolve source-artifact exception, rehydration command, and manifest validation boundaries.",
+      "evidence_refs": [
+        "papers/README.md#local-paper-cache",
+        "papers/download_manifest.json",
+        "papers/download_manifest.csv",
+        "libreevolve/tools/paper_manifest.py",
+        "tests/test_paper_manifest.py"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
+    },
+    {
+      "claim_id": "papers_implementation_status_scope",
+      "document_path": "papers/README.md",
+      "document_section": "Implementation status",
+      "claim_kind": "paper_status_scope",
+      "claim_summary": "The papers README implementation-status table is a maintained public claim surface with structural validation and TODO linkage, but not a semantic proof ledger for every long status phrase.",
+      "evidence_refs": [
+        "papers/README.md#implementation-status",
+        "docs/todo/papers.md",
+        "papers/implementation_evidence_map_boundary.json",
+        "papers/documentation_truthfulness_boundary.json",
+        "libreevolve/tools/paper_manifest.py"
+      ],
+      "verification_scope": "top_level_claim_anchor_only"
     }
   ],
   "missing_evidence": {
     "complete_readme_claim_inventory": "not_recorded_locally",
     "complete_roadmap_claim_inventory": "not_recorded_locally",
+    "complete_paper_index_status_row_inventory": "not_recorded_locally",
     "semantic_claim_verifier": "not_recorded_locally",
     "stale_completed_entry_detection": "not_recorded_locally",
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README and ROADMAP AlphaEvolve-facing status claims. It does not claim complete README coverage, complete ROADMAP coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

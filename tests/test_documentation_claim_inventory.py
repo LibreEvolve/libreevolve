@@ -14,17 +14,19 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert validation.ok is True
     assert (
         validation.inventory_status
-        == "top_level_readme_roadmap_claim_inventory_without_semantic_verifier"
+        == "top_level_readme_roadmap_papers_claim_inventory_without_semantic_verifier"
     )
-    assert validation.claim_count == 6
+    assert validation.claim_count == 8
     assert validation.readme_claim_count == 3
     assert validation.roadmap_claim_count == 3
-    assert validation.missing_evidence_count == 6
+    assert validation.papers_claim_count == 2
+    assert validation.missing_evidence_count == 7
     assert inventory["schema"] == DOCUMENTATION_CLAIM_INVENTORY_SCHEMA
     assert inventory["claim_ready"] is False
     claim_ids = {claim["claim_id"] for claim in inventory["claims"]}
     assert "readme_current_status_scope" in claim_ids
     assert "roadmap_documentation_truthfulness_scope" in claim_ids
+    assert "papers_implementation_status_scope" in claim_ids
     assert (
         "does not claim complete README coverage"
         in inventory["claim_boundary"]
@@ -67,9 +69,10 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "Documentation claim inventory" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| inventory_status | top_level_readme_roadmap_claim_inventory_without_semantic_verifier |"
+        "| inventory_status | top_level_readme_roadmap_papers_claim_inventory_without_semantic_verifier |"
         in summary
     )
-    assert "| claim_count | 6 |" in summary
+    assert "| claim_count | 8 |" in summary
     assert "| readme_claim_count | 3 |" in summary
     assert "| roadmap_claim_count | 3 |" in summary
+    assert "| papers_claim_count | 2 |" in summary

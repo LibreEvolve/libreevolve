@@ -23,9 +23,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     the root README, operational guides, status, ROADMAP, papers index,
     sidecars, and active/completed TODO ledgers.
     `papers/documentation_claim_inventory.json` now assigns stable claim ids
-    and evidence anchors to top-level README status, runnable-today, and limit
-    claims, while marking complete README coverage and semantic verification as
-    absent.
+    and evidence anchors to top-level README status, runnable-today, limit,
+    ROADMAP, and papers-index scope claims, while marking complete README
+    coverage and semantic verification as absent.
   - Current gap: there is still no semantic claim verifier, machine-readable
     implementation-evidence mapping for every README claim, complete
     cross-document claim inventory, stale completed-entry detector, generated

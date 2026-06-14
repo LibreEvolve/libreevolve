@@ -820,9 +820,9 @@ is not yet an AlphaEvolve reproduction.
   behavior. The committed
   `papers/documentation_truthfulness_boundary.json` sidecar preserves the
   current cross-document guard boundary, and
-  `papers/documentation_claim_inventory.json` now gives top-level README and
-  ROADMAP claim ids with evidence anchors while keeping complete claim
-  coverage, semantic documentation-claim verification, and full
+  `papers/documentation_claim_inventory.json` now gives top-level README,
+  ROADMAP, and papers-index claim ids with evidence anchors while keeping
+  complete claim coverage, semantic documentation-claim verification, and full
   AlphaEvolve-facing claim proof open.
 - Keep the code-audit completeness boundary explicit:
   `papers/implementation_evidence_map_boundary.json` records core

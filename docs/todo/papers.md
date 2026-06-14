@@ -5701,6 +5701,50 @@ directory and using the AlphaEvolve paper as the primary specification.
     symbolic regression as missing benchmark evidence rather than implemented
     LibreEvolve support.
 
+- [ ] Reproduce diffuse-AI-control fuzzy-task prompt-optimization evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.08892`, submitted June 8, 2026, is
+    titled `Diffuse AI Control on Fuzzy Tasks` and the arXiv HTML lists a
+    CC BY 4.0 license. Its abstract frames diffuse AI control as mitigating
+    long-horizon sabotage on fuzzy, hard-to-grade tasks. The paper defines a
+    red-team/blue-team adversarial game: the blue team uses a weaker trusted
+    model to construct a weak score for training or selection, while the red
+    team searches for model behaviors that receive high weak scores but low
+    ground-truth-proxy scores. It evaluates experimental-proposal generation
+    from recent ML papers using Opus 4.6 as the untrusted generator, Sonnet
+    4.6 with paper access as the ground-truth proxy scorer, and Haiku 4.5 as
+    the weak trusted scorer. The red team uses multi-objective evolutionary
+    prompt optimization adapted from MO-ASHA and AlphaEvolve design ideas to
+    map weak-score versus ground-truth-proxy Pareto frontiers; the paper also
+    uses OpenEvolve as a single-objective AlphaEvolve baseline and reports a
+    blue-team adversarial optimization procedure that discovers a more robust
+    weak-scorer prompt.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.08892`. Existing LibreEvolve objective-frontier,
+    proposal-diversity, critique, feedback-grader, benchmark-hardening, and
+    OpenEvolve TODOs do not reproduce fuzzy-task research-question extraction,
+    proposal-generation task fixtures, weak-versus-ground-truth scorer
+    separation, red-team/blue-team strategy schemas, MO-ASHA-style
+    multi-objective prompt optimization, subversion and Goodharting Pareto
+    frontier records, weak-score slack/lower-confidence-bound policy,
+    rubric-access ablations, sandbagging-detector prompts, or adversarial
+    blue-team prompt optimization.
+  - Required result: add reproduction-grade evidence for `2606.08892`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, MO-ASHA, and
+    LibreEvolve, fuzzy-task dataset and paper-processing pipeline metadata,
+    research-question extraction records, generator/weak-scorer/ground-truth-
+    proxy model identities, scorer rubric and paper-access policy, red-team
+    prompt schema, blue-team prompt schema, weak-score and ground-truth-score
+    normalization, subversion and Goodharting Pareto frontier artifacts,
+    slack/lower-confidence-bound calculations, MO-ASHA scheduler configuration,
+    OpenEvolve baseline configuration, rubric-access and scorer ablation rows,
+    sandbagging-detector evidence, adversarial blue-team optimization records,
+    qualitative attack/defense examples, independent verification outputs, and
+    README/ROADMAP wording that treats diffuse-AI-control fuzzy-task prompt
+    optimization as missing safety benchmark evidence rather than implemented
+    LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

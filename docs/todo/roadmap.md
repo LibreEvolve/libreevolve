@@ -60,3 +60,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     contradictory support claims, and updates ROADMAP/TODO evidence whenever a
     non-goal is completed, removed, or intentionally promoted into active
     implementation work.
+
+- [ ] Add ROADMAP Good First Follow-Ups priority freshness evidence.
+  - Spec evidence: the `Good First Follow-Ups` section is a prioritization
+    claim. If it tells contributors that database query indexes, one non-toy
+    benchmark fixture, workspace resume coverage, and feedback-calibration
+    reports are the next approachable steps, that ordering should be tied to
+    current implementation state, dependency readiness, and AlphaEvolve-gap
+    impact rather than remaining a static list.
+  - Current evidence: ROADMAP lists four good first follow-ups, and active
+    code/paper TODOs already track the underlying implementation gaps for
+    durable query indexes, benchmark fixtures, workspace resume, and
+    feedback-calibration reports. The documentation claim inventory records
+    the `Good First Follow-Ups` heading as uncovered, while the broad ROADMAP
+    semantic-evidence TODO covers priority claims only at a whole-document
+    level.
+  - Current gap: there is no per-item priority rationale, dependency/readiness
+    record, owner/scope label, estimated validation gate, or stale-priority
+    detector proving these four items remain the best first follow-ups after
+    new ROADMAP, code, README, or paper-sidecar work lands.
+  - Required result: add a ROADMAP priority-evidence map for good-first items
+    that links each follow-up to active implementation TODOs, current
+    blockers, expected validation artifacts, and AlphaEvolve-alignment impact,
+    and add a drift check that forces the section to be refreshed when those
+    dependencies or implementation states change.

@@ -5244,6 +5244,37 @@ sidecars, tests, and active TODOs.
     integration coverage, branch policy, and notification-safe trigger policy
     before treating CI as AlphaEvolve-grade validation coverage.
 
+- [ ] Add an exhaustive CLI/configuration contract map.
+  - Spec evidence: AlphaEvolve-style experiments depend on reproducible task
+    setup, evaluator policy, model selection, budget limits, archive behavior,
+    resume boundaries, and artifact retention. In LibreEvolve, those controls
+    are split across `Config` defaults, `config.yaml`, Click options,
+    manifest fields, documentation, and tests, so the CLI/configuration
+    surface itself needs an auditable contract.
+  - Current evidence: `docs/configuration.md` documents configuration
+    precedence, many `Config` fields, and CLI overrides. `libreevolve/cli.py`
+    exposes a large `run` option surface for budgets, prompt limits, backend
+    routing, mutation modes, restore options, and overwrite behavior.
+    `Config.validate()` enforces many scalar, enum, backend, plugin, prompt,
+    validator, retention, artifact, and candidate-workspace constraints, and
+    `tests/test_cli.py` covers selected help text, override precedence,
+    Click diagnostics, provider-free runs, restore paths, plugin loading, and
+    artifact inspection behavior.
+  - Current gap: there is no generated CLI/configuration inventory that maps
+    every Click option to its target `Config` field or runtime-only restore
+    surface, default value, YAML key, docs heading, manifest/provenance field,
+    validation function, focused test, and AlphaEvolve-facing boundary. There
+    is also no drift check that fails when a new `Config` field lacks a CLI
+    decision, when a CLI option is undocumented or untested, when help text
+    diverges from `docs/configuration.md`, or when runtime-only restore and
+    inspection options are accidentally treated as paper-parity evidence.
+  - Required result: add a machine-readable CLI/config contract map and
+    validator that covers defaults, YAML keys, Click options, runtime-only
+    flags, docs anchors, manifest fields, validation functions, tests,
+    source-boundary sidecars, and explicit non-goal/parity status, then run it
+    in CI before treating CLI/configuration behavior as complete
+    AlphaEvolve-grade experiment setup evidence.
+
 - [ ] Add replayable external build, package-source, and accelerator environment evidence.
   - Spec evidence: AlphaEvolve-scale experiments should be reproducible across
     long-running evaluator environments, including external build steps,

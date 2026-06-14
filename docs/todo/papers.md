@@ -6897,6 +6897,48 @@ directory and using the AlphaEvolve paper as the primary specification.
     independent reproduction outputs, and README/ROADMAP wording that treats
     SIA as background context until those artifacts exist.
 
+- [ ] Reproduce Darwin Godel Machine self-improving-agent evidence beyond
+      broad self-improvement boundaries.
+  - Paper/source evidence: arXiv `2505.22954`, submitted May 29, 2025 and
+    last revised March 12, 2026, is titled `Darwin Godel Machine:
+    Open-Ended Evolution of Self-Improving Agents`. Its abstract introduces
+    DGM as a self-improving system that iteratively modifies its own code and
+    empirically validates each change using coding benchmarks. It maintains
+    an archive of generated coding agents, grows the archive by sampling an
+    agent and using a foundation model to create a new version, and frames the
+    resulting search as open-ended exploration over a growing tree of diverse,
+    high-quality agents. The abstract reports SWE-bench improvement from
+    20.0% to 50.0% and Polyglot improvement from 14.2% to 30.7%, with
+    safety precautions including sandboxing and human oversight. The arXiv
+    page links source code at `https://github.com/jennyzzt/dgm`; the GitHub
+    page identifies the repository as Apache-2.0 licensed and shows DGM
+    runner, coding-agent, SWE-bench, Polyglot, prompt, tool, and analysis
+    files.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, source-scoped TODO, or code TODO
+    exists for `2505.22954`. Existing LibreEvolve self-improvement,
+    self-improvement-cadence, SIA, HarnessFix, RHO, Adaptive Auto-Harness,
+    Meta-Harness, AHE, and AlphaEvolve Discussion TODOs do not reproduce DGM's
+    self-modifying coding-agent archive, generated-agent tree, archive-growth
+    policy, agent-code mutation/evaluation protocol, coding-benchmark
+    validation loop, SWE-bench and Polyglot setup, benchmark-result deltas,
+    open-ended stepping-stone analysis, sandbox/human-oversight safety
+    controls, experiment logs, linked-code audit, or independent reproduction
+    outputs.
+  - Required result: add reproduction-grade evidence for `2505.22954`:
+    title/authors/arXiv version/date, arXiv license, GitHub URL/status and
+    Apache-2.0 license, relation to AlphaEvolve, LibreEvolve, DGM, SIA, and
+    harness-evolution papers, generated-agent archive schema, agent-lineage
+    tree export, archive sampling and growth policy, self-modification prompt
+    and tool contract, coding-agent file inventory, code-edit provenance,
+    empirical-validation gate, SWE-bench fixture and pinned checkout metadata,
+    Polyglot dataset preparation metadata, baseline identities, per-generation
+    benchmark scores, open-ended exploration and stepping-stone metrics,
+    sandboxing/human-oversight safety records, experiment-log provenance,
+    linked-code snapshot audit, independent reproduction outputs, and README/
+    ROADMAP wording that treats DGM-style self-improving coding-agent archives
+    as missing evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce HarnessFix trace-grounded harness repair evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2606.06324`, submitted June 4, 2026, is

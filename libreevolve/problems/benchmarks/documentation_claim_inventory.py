@@ -14,6 +14,11 @@ EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_INVENTORY_STATUS = (
     "top_level_readme_roadmap_papers_claim_inventory_without_semantic_verifier"
 )
+EXPECTED_CLAIM_SURFACE_DOCUMENT_PATHS = (
+    "README.md",
+    "ROADMAP.md",
+    "papers/README.md",
+)
 EXPECTED_MISSING_EVIDENCE = {
     "complete_readme_claim_inventory": "not_recorded_locally",
     "complete_roadmap_claim_inventory": "not_recorded_locally",
@@ -211,6 +216,9 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
     """Return the current top-level documentation claim inventory boundary."""
 
     root_path = Path(root)
+    heading_records, missing_heading_documents = _claim_surface_heading_inventory(
+        root_path
+    )
     claims = []
     for claim in EXPECTED_CLAIMS:
         claim_record = dict(claim)
@@ -301,6 +309,15 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             if record["fragment"] is not None
         ),
         "missing_fragment_ref_records": missing_fragment_ref_records,
+        "claim_surface_document_paths": list(EXPECTED_CLAIM_SURFACE_DOCUMENT_PATHS),
+        "claim_surface_heading_status": (
+            "audited_surface_headings_recorded"
+            if not missing_heading_documents
+            else "missing_audited_surface_documents"
+        ),
+        "claim_surface_heading_record_count": len(heading_records),
+        "claim_surface_heading_records": heading_records,
+        "missing_claim_surface_document_records": missing_heading_documents,
         "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -309,7 +326,8 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             "status claims, including source-anchor file offsets for those "
             "top-level claim surfaces and local evidence-ref existence records. "
             "Fragment-bearing evidence refs also record exact Markdown heading "
-            "anchor resolution. "
+            "anchor resolution, and audited surface headings are enumerated "
+            "for the README, ROADMAP, and papers index. "
             "It does not claim complete README coverage, "
             "complete ROADMAP coverage, complete papers index coverage, "
             "semantic claim verification, stale completed-entry detection, "
@@ -435,6 +453,54 @@ def validate_documentation_claim_inventory(
                 "missing fragment-ref records drifted",
             )
         )
+    expected_heading_records, expected_missing_heading_documents = (
+        _claim_surface_heading_inventory(Path(root))
+    )
+    if data.get("claim_surface_document_paths") != list(
+        EXPECTED_CLAIM_SURFACE_DOCUMENT_PATHS
+    ):
+        issues.append(
+            _issue(
+                "invalid_claim_surface_document_paths",
+                "claim surface document paths drifted",
+            )
+        )
+    expected_heading_status = (
+        "audited_surface_headings_recorded"
+        if not expected_missing_heading_documents
+        else "missing_audited_surface_documents"
+    )
+    if data.get("claim_surface_heading_status") != expected_heading_status:
+        issues.append(
+            _issue(
+                "invalid_claim_surface_heading_status",
+                "claim surface heading status drifted from current files",
+            )
+        )
+    if data.get("claim_surface_heading_record_count") != len(expected_heading_records):
+        issues.append(
+            _issue(
+                "invalid_claim_surface_heading_record_count",
+                "claim surface heading count drifted from current files",
+            )
+        )
+    if data.get("claim_surface_heading_records") != expected_heading_records:
+        issues.append(
+            _issue(
+                "invalid_claim_surface_heading_records",
+                "claim surface heading records drifted from current files",
+            )
+        )
+    if (
+        data.get("missing_claim_surface_document_records")
+        != expected_missing_heading_documents
+    ):
+        issues.append(
+            _issue(
+                "invalid_missing_claim_surface_document_records",
+                "missing claim surface document records drifted",
+            )
+        )
     claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
         data.get("claims"),
         issues,
@@ -477,6 +543,7 @@ def render_documentation_claim_inventory_summary(inventory: dict[str, Any]) -> s
         f"| roadmap_claim_count | {validation.roadmap_claim_count} |",
         f"| papers_claim_count | {validation.papers_claim_count} |",
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
+        f"| claim_surface_heading_count | {inventory.get('claim_surface_heading_record_count', '<unknown>')} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -597,6 +664,41 @@ def _expected_claims_with_spans(root: Path) -> list[dict[str, Any]]:
         )
         records.append(record)
     return records
+
+
+def _claim_surface_heading_inventory(
+    root: Path,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    records: list[dict[str, Any]] = []
+    missing_documents: list[dict[str, Any]] = []
+    for path_text in EXPECTED_CLAIM_SURFACE_DOCUMENT_PATHS:
+        path = root / path_text
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            missing_documents.append(
+                {
+                    "path": path_text,
+                    "reason": "unreadable_or_missing",
+                }
+            )
+            continue
+        for line_number, line in enumerate(text.splitlines(), start=1):
+            match = re.match(r"^(#{1,6})\s+(.+?)\s*$", line)
+            if not match:
+                continue
+            heading_text = match.group(2).strip()
+            records.append(
+                {
+                    "path": path_text,
+                    "line_start": line_number,
+                    "line_end": line_number,
+                    "level": len(match.group(1)),
+                    "heading_text": heading_text,
+                    "heading_slug": _markdown_heading_slug(heading_text),
+                }
+            )
+    return records, missing_documents
 
 
 def _evidence_ref_record(root: Path, ref: str) -> dict[str, Any]:

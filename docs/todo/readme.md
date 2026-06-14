@@ -26,8 +26,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and evidence anchors with file-offset source spans to top-level README
     status, runnable-today, limit, ROADMAP, and papers-index scope claims,
     and records local evidence-ref existence plus Markdown fragment-anchor
-    resolution for those anchors while marking complete README coverage and
-    semantic verification as absent.
+    resolution for those anchors. It also records audited README, ROADMAP,
+    and papers-index Markdown headings while marking complete README coverage
+    and semantic verification as absent.
   - Current gap: there is still no semantic claim verifier, machine-readable
     implementation-evidence mapping for every README claim, complete
     cross-document claim inventory, stale completed-entry detector, generated

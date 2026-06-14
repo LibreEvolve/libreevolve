@@ -30,6 +30,30 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert inventory["evidence_ref_fragment_status"] == "all_fragment_anchors_resolved"
     assert inventory["fragment_evidence_ref_record_count"] == 7
     assert inventory["missing_fragment_ref_records"] == []
+    assert inventory["claim_surface_document_paths"] == [
+        "README.md",
+        "ROADMAP.md",
+        "papers/README.md",
+    ]
+    assert inventory["claim_surface_heading_status"] == "audited_surface_headings_recorded"
+    assert inventory["claim_surface_heading_record_count"] == 34
+    assert inventory["missing_claim_surface_document_records"] == []
+    assert inventory["claim_surface_heading_records"][0] == {
+        "path": "README.md",
+        "line_start": 1,
+        "line_end": 1,
+        "level": 1,
+        "heading_text": "LibreEvolve",
+        "heading_slug": "libreevolve",
+    }
+    assert {
+        "path": "ROADMAP.md",
+        "line_start": 817,
+        "line_end": 817,
+        "level": 3,
+        "heading_text": "5. Documentation truthfulness",
+        "heading_slug": "5-documentation-truthfulness",
+    } in inventory["claim_surface_heading_records"]
     assert inventory["evidence_ref_record_count"] == sum(
         len(claim["evidence_refs"]) for claim in inventory["claims"]
     )
@@ -107,6 +131,8 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     inventory["claims"][0]["evidence_ref_records"][0]["fragment_status"] = (
         "fragment_anchor_missing"
     )
+    inventory["claim_surface_heading_record_count"] = 0
+    inventory["claim_surface_heading_records"] = []
     inventory["source_anchor_status"] = "missing_claim_source_anchors"
     inventory["evidence_ref_status"] = "missing_local_evidence_refs"
     inventory["evidence_ref_fragment_status"] = "missing_fragment_anchors"
@@ -121,6 +147,8 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     assert "invalid_source_anchor_status" in codes
     assert "invalid_evidence_ref_status" in codes
     assert "invalid_evidence_ref_fragment_status" in codes
+    assert "invalid_claim_surface_heading_record_count" in codes
+    assert "invalid_claim_surface_heading_records" in codes
 
 
 def test_render_documentation_claim_inventory_summary_reports_shape():
@@ -138,3 +166,4 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| readme_claim_count | 3 |" in summary
     assert "| roadmap_claim_count | 3 |" in summary
     assert "| papers_claim_count | 2 |" in summary
+    assert "| claim_surface_heading_count | 34 |" in summary

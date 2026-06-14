@@ -12,6 +12,288 @@
   "evidence_ref_fragment_status": "all_fragment_anchors_resolved",
   "fragment_evidence_ref_record_count": 7,
   "missing_fragment_ref_records": [],
+  "claim_surface_document_paths": [
+    "README.md",
+    "ROADMAP.md",
+    "papers/README.md"
+  ],
+  "claim_surface_heading_status": "audited_surface_headings_recorded",
+  "claim_surface_heading_record_count": 34,
+  "claim_surface_heading_records": [
+    {
+      "path": "README.md",
+      "line_start": 1,
+      "line_end": 1,
+      "level": 1,
+      "heading_text": "LibreEvolve",
+      "heading_slug": "libreevolve"
+    },
+    {
+      "path": "README.md",
+      "line_start": 13,
+      "line_end": 13,
+      "level": 2,
+      "heading_text": "Current Status",
+      "heading_slug": "current-status"
+    },
+    {
+      "path": "README.md",
+      "line_start": 102,
+      "line_end": 102,
+      "level": 2,
+      "heading_text": "Requirements",
+      "heading_slug": "requirements"
+    },
+    {
+      "path": "README.md",
+      "line_start": 114,
+      "line_end": 114,
+      "level": 2,
+      "heading_text": "Quick Start",
+      "heading_slug": "quick-start"
+    },
+    {
+      "path": "README.md",
+      "line_start": 141,
+      "line_end": 141,
+      "level": 2,
+      "heading_text": "Problem Layout",
+      "heading_slug": "problem-layout"
+    },
+    {
+      "path": "README.md",
+      "line_start": 154,
+      "line_end": 154,
+      "level": 2,
+      "heading_text": "Example Scope",
+      "heading_slug": "example-scope"
+    },
+    {
+      "path": "README.md",
+      "line_start": 174,
+      "line_end": 174,
+      "level": 2,
+      "heading_text": "Run Artifacts",
+      "heading_slug": "run-artifacts"
+    },
+    {
+      "path": "README.md",
+      "line_start": 196,
+      "line_end": 196,
+      "level": 2,
+      "heading_text": "Documentation Map",
+      "heading_slug": "documentation-map"
+    },
+    {
+      "path": "README.md",
+      "line_start": 216,
+      "line_end": 216,
+      "level": 2,
+      "heading_text": "Research Sources",
+      "heading_slug": "research-sources"
+    },
+    {
+      "path": "README.md",
+      "line_start": 240,
+      "line_end": 240,
+      "level": 2,
+      "heading_text": "Testing",
+      "heading_slug": "testing"
+    },
+    {
+      "path": "README.md",
+      "line_start": 254,
+      "line_end": 254,
+      "level": 2,
+      "heading_text": "Repository Layout",
+      "heading_slug": "repository-layout"
+    },
+    {
+      "path": "README.md",
+      "line_start": 270,
+      "line_end": 270,
+      "level": 2,
+      "heading_text": "Contributing",
+      "heading_slug": "contributing"
+    },
+    {
+      "path": "README.md",
+      "line_start": 282,
+      "line_end": 282,
+      "level": 2,
+      "heading_text": "License",
+      "heading_slug": "license"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1,
+      "line_end": 1,
+      "level": 1,
+      "heading_text": "Roadmap",
+      "heading_slug": "roadmap"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 14,
+      "line_end": 14,
+      "level": 2,
+      "heading_text": "Current State",
+      "heading_slug": "current-state"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 476,
+      "line_end": 476,
+      "level": 2,
+      "heading_text": "Near Term",
+      "heading_slug": "near-term"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 478,
+      "line_end": 478,
+      "level": 3,
+      "heading_text": "1. Finish candidate workspace fidelity",
+      "heading_slug": "1-finish-candidate-workspace-fidelity"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 554,
+      "line_end": 554,
+      "level": 3,
+      "heading_text": "2. Strengthen multi-objective search",
+      "heading_slug": "2-strengthen-multi-objective-search"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 622,
+      "line_end": 622,
+      "level": 3,
+      "heading_text": "3. Expand evaluation cascades",
+      "heading_slug": "3-expand-evaluation-cascades"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 721,
+      "line_end": 721,
+      "level": 3,
+      "heading_text": "4. Prompt and context work",
+      "heading_slug": "4-prompt-and-context-work"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 817,
+      "line_end": 817,
+      "level": 3,
+      "heading_text": "5. Documentation truthfulness",
+      "heading_slug": "5-documentation-truthfulness"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1034,
+      "line_end": 1034,
+      "level": 2,
+      "heading_text": "Mid Term",
+      "heading_slug": "mid-term"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1036,
+      "line_end": 1036,
+      "level": 3,
+      "heading_text": "6. Async and resumable runtime",
+      "heading_slug": "6-async-and-resumable-runtime"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1109,
+      "line_end": 1109,
+      "level": 3,
+      "heading_text": "7. Backend scheduling and critique",
+      "heading_slug": "7-backend-scheduling-and-critique"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1214,
+      "line_end": 1214,
+      "level": 3,
+      "heading_text": "8. Plugin extensibility",
+      "heading_slug": "8-plugin-extensibility"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1232,
+      "line_end": 1232,
+      "level": 2,
+      "heading_text": "Longer Term",
+      "heading_slug": "longer-term"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 1234,
+      "line_end": 1234,
+      "level": 3,
+      "heading_text": "9. Representative benchmarks",
+      "heading_slug": "9-representative-benchmarks"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2500,
+      "line_end": 2500,
+      "level": 3,
+      "heading_text": "10. Operational maturity",
+      "heading_slug": "10-operational-maturity"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2530,
+      "line_end": 2530,
+      "level": 2,
+      "heading_text": "Non-Goals For Now",
+      "heading_slug": "non-goals-for-now"
+    },
+    {
+      "path": "ROADMAP.md",
+      "line_start": 2537,
+      "line_end": 2537,
+      "level": 2,
+      "heading_text": "Good First Follow-Ups",
+      "heading_slug": "good-first-follow-ups"
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1,
+      "line_end": 1,
+      "level": 1,
+      "heading_text": "Local Paper Cache",
+      "heading_slug": "local-paper-cache"
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 316,
+      "line_end": 316,
+      "level": 2,
+      "heading_text": "Implementation status",
+      "heading_slug": "implementation-status"
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1751,
+      "line_end": 1751,
+      "level": 2,
+      "heading_text": "TODO coverage cross-references",
+      "heading_slug": "todo-coverage-cross-references"
+    },
+    {
+      "path": "papers/README.md",
+      "line_start": 1829,
+      "line_end": 1829,
+      "level": 2,
+      "heading_text": "Benchmark coverage decisions",
+      "heading_slug": "benchmark-coverage-decisions"
+    }
+  ],
+  "missing_claim_surface_document_records": [],
   "claims": [
     {
       "claim_id": "readme_current_status_scope",
@@ -756,5 +1038,5 @@
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution, and audited surface headings are enumerated for the README, ROADMAP, and papers index. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

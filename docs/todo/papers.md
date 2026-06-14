@@ -50,7 +50,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     claim anchors with file-offset source spans for the local paper-cache
     manifest scope and the implementation-status table scope, records local
     evidence-ref existence plus Markdown fragment-anchor resolution for those
-    anchors, while explicitly keeping row-level semantic proof out of scope.
+    anchors, and records audited README, ROADMAP, and papers-index Markdown
+    headings, while explicitly keeping row-level semantic proof out of scope.
   - Current gap: each status phrase now has a stable hash and source offset,
     candidate links to phrase-local artifacts plus row-level TODO and completed
     evidence, referenced local artifact/TODO path existence checks, local

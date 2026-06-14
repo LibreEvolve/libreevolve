@@ -64,6 +64,35 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     implementation readiness before publishing project-completion percentages
     as more than a ledger statistic.
 
+- [ ] Add TODO-ledger canonical ownership and duplicate-gap audit.
+  - Spec evidence: the active project goal spans code, ROADMAP, README, and
+    papers, so the same AlphaEvolve gap often needs implementation, planning,
+    user-facing documentation, and paper-boundary entries. That cross-linking
+    is useful, but the project-completion percentage and audit workflow need
+    to distinguish one underlying missing capability from several document-
+    specific TODOs about that capability.
+  - Current evidence: `docs/todo/code.md`, `docs/todo/roadmap.md`,
+    `docs/todo/readme.md`, and `docs/todo/papers.md` all carry legitimate
+    open items, and the paper-manifest gate validates selected active and
+    completed TODO evidence paths for paper-index rows. The current raw
+    percentage is derived from checklist counts only, while active TODOs can
+    intentionally overlap around provider parity, benchmark evidence,
+    documentation drift, readiness criteria, and paper-source boundaries.
+  - Current gap: there is no canonical underlying-gap id, owner ledger,
+    duplicate/derivative relationship, consolidation report, or stale-duplicate
+    detector across active and completed TODO ledgers. A newly identified
+    problem can be counted multiple times, a completed document-specific TODO
+    can leave its implementation owner ambiguous, and repeated audit slices can
+    inflate the denominator without proving that a distinct AlphaEvolve
+    requirement was discovered.
+  - Required result: add a TODO-ledger ownership model that assigns stable
+    gap ids, canonical owner ledgers, derivative/documentation relationships,
+    source/paper anchors, implementation evidence links, and completion
+    rollup rules; add a validator/report that detects likely duplicate active
+    TODOs, stale completed duplicates, orphaned derivative entries, and raw-
+    count inflation; and publish raw checklist completion separately from
+    canonical underlying-gap completion.
+
 ## Missing Roadmap Items
 
 - [ ] Add ROADMAP AlphaEvolve source-span disposition coverage.

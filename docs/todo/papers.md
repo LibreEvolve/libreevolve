@@ -6209,6 +6209,43 @@ directory and using the AlphaEvolve paper as the primary specification.
     enforcement as missing paper evidence rather than implemented LibreEvolve
     support.
 
+- [ ] Reproduce Evoflux executable-tool-workflow evolution evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.12674`, submitted June 10, 2026, is
+    titled `Evoflux: Inference-Time Evolution of Executable Tool Workflows
+    for Compact Agents`. Its abstract says compact language models can reduce
+    cost, latency, and deployment risk for tool agents, but MCP-style tool use
+    requires live tool discovery, schema satisfaction, dependency preservation
+    across intermediate outputs, and final answers grounded in executed
+    evidence. Evoflux treats compact tool use as inference-time repair of
+    executable tool workflows: it evolves typed workflow graphs through
+    structured edits, execution feedback, adaptive intensity, meta-guided
+    redesign, and diversity pruning. The paper reports held-out MCP-Bench
+    tasks spanning live MCP servers and `250` tools, raising execution
+    feasibility from roughly `3%` to `17-24%` across small planners while
+    SFT and SFT+DPO on the same search-mined data match, underperform, or
+    collapse below zero-shot performance, and ReAct reaches higher peaks with
+    higher variance and token cost.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.12674`. Existing LibreEvolve harness, tool-use,
+    failure-memory, and meta-harness TODOs do not capture executable tool
+    workflow graph candidates, MCP/tool catalog schemas, dependency-validated
+    workflow evolution, adaptive mutation intensity, meta-guided redesign,
+    diversity pruning, execution-grounded repair, invalid-tool-use diagnostics,
+    or MCP-Bench benchmark provenance.
+  - Required result: add reproduction-grade evidence for `2606.12674`:
+    title/authors/arXiv version/date, source license, linked code or artifact
+    availability, relation to AlphaEvolve, LibreEvolve plugins/tool
+    assumptions, and current candidate-workspace loop, typed workflow graph
+    schema, tool catalog and MCP server metadata, schema/dependency validation
+    records, mutation-operator taxonomy, adaptive-intensity policy,
+    meta-guided redesign records, diversity-pruning policy, executable
+    workflow artifacts, benchmark/task metadata, baseline identities,
+    token/cost/latency telemetry, invalid-tool-use and execution-error
+    diagnostics, independent verification outputs, and README/ROADMAP wording
+    that treats Evoflux-style executable tool-workflow evolution as missing
+    paper evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce inference-time trajectory-alignment harness evidence beyond
       paper coverage.
   - Paper/source evidence: arXiv `2605.21516`, submitted May 15, 2026, is

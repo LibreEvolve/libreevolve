@@ -321,6 +321,40 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     first-class contract, manifest fields, diagnostics, and smoke fixtures are
     implemented.
 
+- [ ] Add backend-guide provider contract drift evidence.
+  - Spec evidence: `docs/backends.md` is the detailed operational contract for
+    provider selection, scheduler/reward accounting, retry/fallback behavior,
+    provider failure telemetry, prompt and response caps, role routing,
+    OpenAI API-mode policy, Anthropic/Ollama adapter behavior, custom backend
+    construction, credential preflight, client-context provenance, and
+    Google/Gemini absence boundaries. AlphaEvolve-alignment work depends on
+    this page staying synchronized with actual backend/runtime behavior before
+    any model-mix, provider, or scheduling claim is treated as evidence.
+  - Current evidence: the guide documents `LLMEnsemble` accounting, bounded
+    call-history retention, durable `llm_calls.jsonl` replay, scheduler
+    restore, prompt validation, built-in adapter defaults, role-scoped
+    backend routing, failure quarantine, retries, timeouts, prompt-token
+    limits, OpenAI Chat/Responses routing, request-parameter surfaces,
+    `llm_prompt_roles`, custom backend `class_path` specs, `.env` credential
+    behavior, and Gemini provider-parity absence records. Many individual
+    backend behaviors have focused tests and completed TODOs, but the active
+    backend-doc TODO covers only CLI-authenticated provider overclaiming.
+  - Current gap: there is no page-specific inventory or drift validator that
+    maps each `docs/backends.md` claim, constructor field, allowed parameter,
+    telemetry field, timeout/retry rule, scheduler policy, OpenAI route rule,
+    custom-backend limitation, environment/preflight statement, and
+    AlphaEvolve-facing provider boundary to source modules, tests, run
+    artifacts, paper sidecars, and active TODO owners. Backend behavior can
+    change in `llm/`, `core/config.py`, `cli.py`, ledger replay, or runtime
+    manifest code without a backend-guide failure.
+  - Required result: add a backend-guide evidence map and validation gate that
+    parses provider sections and practical guidance, verifies code/test/
+    artifact anchors for each documented claim, separates built-in SDK
+    support from custom-extension and missing Gemini/Codex-provider parity,
+    and requires README/docs/TODO updates whenever provider adapters,
+    scheduler policy, telemetry, timeout/retry, credential, or custom-backend
+    behavior changes.
+
 ## Plugin Docs
 
 - [ ] Add plugin-guide hook contract drift evidence.

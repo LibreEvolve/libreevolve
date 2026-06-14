@@ -580,6 +580,40 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     require updates whenever provider examples or supported backend families
     change.
 
+- [ ] Add development-guide workflow and convention drift evidence.
+  - Spec evidence: `docs/development.md` is the contributor workflow contract
+    for Python version expectations, editable install, pre-commit setup,
+    dependency lists, `.env` behavior, unit/integration commands,
+    secret-scan policy, CI coverage boundaries, paper-manifest commands,
+    repository conventions, and first-read docs. AlphaEvolve-alignment work
+    depends on those local verification and source-boundary instructions
+    staying synchronized with actual tooling before changes are treated as
+    benchmark or paper evidence.
+  - Current evidence: the guide documents `py -3.12`, editable dev install,
+    runtime and development dependencies, `.env` override behavior, common
+    pytest and pre-commit commands, `.secrets.baseline` handling,
+    path-scoped CI coverage, paper-manifest rehydrate/validation commands,
+    release-smoke scope, and problem/mutation/logging/plugin conventions.
+    Existing tests check selected secret-scan wording, CI workflow shape,
+    release-smoke details, and a small configuration-doc subset. The active
+    development-guide provider TODO covers only the provider-backed example
+    run commands.
+  - Current gap: there is no page-specific inventory or drift validator that
+    maps each `docs/development.md` setup command, dependency list, CI claim,
+    paper-manifest instruction, release-smoke statement, secret-scan policy,
+    repository convention, and suggested-reading link to `pyproject.toml`,
+    pre-commit config, GitHub Actions, tests, paper-manifest code, README,
+    operational docs, sidecars, and active TODO owners. Changes to tooling,
+    dependencies, workflow path filters, paper-cache semantics, or repository
+    conventions can leave the development guide stale without a focused
+    failure.
+  - Required result: add a development-guide evidence map and validation gate
+    that parses the guide's commands and convention bullets, verifies
+    tool/config/workflow/doc anchors, separates local contributor workflow
+    evidence from AlphaEvolve-grade benchmark proof, and requires
+    README/docs/TODO updates whenever development setup, validation,
+    paper-manifest, CI, release, or repository-convention behavior changes.
+
 ## Configuration Docs
 
 - [ ] Add configuration-guide field and override drift evidence.

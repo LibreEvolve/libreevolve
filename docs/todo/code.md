@@ -4262,6 +4262,8 @@ sidecars, tests, and active TODOs.
     identity, real accelerator runtime measurements, baseline expert heuristic
     comparisons, tiling-only candidate boundaries, or correctness-by-
     construction evidence for unchanged kernel math.
+    `papers/kernel_tiling_shape_corpus_boundary.json` now keeps the generic
+    kernel-gates versus Pallas shape-corpus/runtime boundary machine-checked.
   - Required result: add kernel-domain report metadata and validators for
     collected input-shape corpora, deterministic train/eval split provenance,
     accelerator/runtime measurement artifacts, baseline heuristic identity,

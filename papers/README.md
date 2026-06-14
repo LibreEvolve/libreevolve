@@ -2605,6 +2605,16 @@ Implemented:
   tiling-only correctness links, train/eval split linkage, claim calibration,
   and systems-readiness linkage. It is not evidence that those artifacts have
   been emitted.
+- `papers/kernel_tiling_shape_corpus_boundary.json`: Pallas/Gemini kernel
+  shape-corpus sidecar for AlphaEvolve Section 3.3.2. It records that generic
+  kernel gates, claim-calibration records, application provenance, and
+  certification references are not enough to claim Pallas parity. It is not
+  evidence of collected input-shape corpora, source provenance, deterministic
+  train/eval splits, shape-set hashes, real accelerator runtime artifacts,
+  Pallas kernel source identity, expert baseline tiling heuristics,
+  tiling-only candidate boundaries, unchanged-kernel-math evidence,
+  correctness-by-construction scope, training-time linkage, deployment
+  readiness, or shape-corpus-to-runtime joins.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

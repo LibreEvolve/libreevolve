@@ -2190,7 +2190,12 @@ resumed-trace proof are still open.
   identity, accelerator/memory/fusion/compiler context, diagram data and
   rendering artifacts, baseline tiling heuristic identity, shape-corpus and
   runtime links, train/eval linkage, claim calibration, and systems-readiness
-  linkage.
+  linkage. `papers/kernel_tiling_shape_corpus_boundary.json` preserves the
+  related runtime-evidence boundary for Pallas/Gemini kernel results: collected
+  input-shape corpora, deterministic train/eval splits and hashes, real
+  accelerator runtime artifacts, expert baseline tiling heuristics,
+  tiling-only output constraints, unchanged-kernel-math proof, and
+  shape-corpus-to-runtime joins remain missing.
 - For Pallas/Gemini kernel fixtures, populate workflow-baseline evidence before
   claiming AlphaEvolve-style automation of tiling-heuristic work: distinguish
   search-based autotuning, manual heuristics, and expert-hybrid baselines;

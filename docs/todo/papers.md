@@ -4625,6 +4625,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     corpus provenance, deterministic train/eval split evidence, real
     accelerator runtime artifacts, baseline heuristic identity, tiling-only
     output constraints, or correctness-by-construction scope.
+    `papers/kernel_tiling_shape_corpus_boundary.json` now keeps the generic
+    kernel-gates versus Pallas shape-corpus/runtime boundary machine-checked.
   - Required result: add kernel report fields and validation for collected
     input-shape corpora, train/eval split hashes, real accelerator runtime
     measurements, expert-baseline comparison, tiling-parameter constraints,

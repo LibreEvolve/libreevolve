@@ -1099,7 +1099,8 @@ Important limits:
   deterministic train/eval split hashes, real TPU runtime artifacts,
   expert-baseline tiling heuristic identity, tiling-only candidate boundaries,
   unchanged-operation correctness-by-construction evidence, engineering-effort
-  calibration, or production/workflow adoption.
+  calibration, or production/workflow adoption; the shape-corpus/runtime
+  boundary is tracked by `papers/kernel_tiling_shape_corpus_boundary.json`.
 - Pallas workflow documentation does not yet prove AlphaEvolve-style
   automation of search-based autotuning or manual tiling-heuristic work:
   baseline workflow class, autotuning search/retuning policy, manual

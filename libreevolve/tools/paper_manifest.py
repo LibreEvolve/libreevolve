@@ -522,6 +522,10 @@ from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
     gemini_provider_parity_boundary_record,
     validate_gemini_provider_parity_boundary,
 )
+from libreevolve.problems.benchmarks.kernel_tiling_shape_corpus_boundary import (
+    kernel_tiling_shape_corpus_boundary_record,
+    validate_kernel_tiling_shape_corpus_boundary,
+)
 from libreevolve.problems.benchmarks.improvevolve_boundary import (
     improvevolve_boundary_record,
     validate_improvevolve_boundary,
@@ -651,6 +655,7 @@ PROGRAM_OUTPUT_BOUNDARY_FILE = "papers/program_output_boundary.json"
 ARTIFACT_INDEX_BOUNDARY_FILE = "papers/artifact_index_boundary.json"
 GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
+KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_FILE = "papers/kernel_tiling_shape_corpus_boundary.json"
 CODEEVOLVE_BOUNDARY_FILE = "papers/codeevolve_boundary.json"
 THETAEVOLVE_BOUNDARY_FILE = "papers/thetaevolve_boundary.json"
 TTT_DISCOVER_BOUNDARY_FILE = "papers/ttt_discover_boundary.json"
@@ -1171,6 +1176,7 @@ def validate_paper_manifest(
     issues.extend(_validate_artifact_index_boundary(root_path))
     issues.extend(_validate_gemini_provider_parity_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
+    issues.extend(_validate_kernel_tiling_shape_corpus_boundary(root_path))
     issues.extend(_validate_codeevolve_boundary(root_path))
     issues.extend(_validate_thetaevolve_boundary(root_path))
     issues.extend(_validate_improvevolve_boundary(root_path))
@@ -4364,6 +4370,38 @@ def _validate_gigaevo_framework_boundary(root_path: Path) -> list[PaperManifestI
             f"gigaevo_framework_boundary_{issue.code}",
             issue.message,
             "gigaevo_framework",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_kernel_tiling_shape_corpus_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = kernel_tiling_shape_corpus_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "kernel_tiling_shape_corpus_boundary_manifest_missing",
+                    (
+                        f"{KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_FILE} must emit "
+                        "Pallas kernel shape-corpus and real-runtime scope"
+                    ),
+                    "kernel_tiling_shape_corpus",
+                )
+            ]
+    report = validate_kernel_tiling_shape_corpus_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"kernel_tiling_shape_corpus_boundary_{issue.code}",
+            issue.message,
+            "kernel_tiling_shape_corpus",
         )
         for issue in report.issues
     ]

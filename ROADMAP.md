@@ -2173,7 +2173,13 @@ resumed-trace proof are still open.
   deployment measurements, expert confirmations, or domain-specific result
   artifacts. That boundary now also marks Figure 6 scheduling-heuristic
   heatmap artifacts and Figure 7 Pallas-tiling diagram artifacts as required
-  but missing engineering-exhibit evidence. Real scheduling resource recovery,
+  but missing engineering-exhibit evidence.
+  `papers/figure6_scheduling_exhibit_boundary.json` now preserves the more
+  specific Figure 6 scheduling-exhibit contract: stable exhibit ID, exact
+  heuristic source/hash, residual feature/unit definitions, heatmap data and
+  rendering parameters, rendered artifact hashes, baseline heuristic identity,
+  simulator/held-out/deployment links, resource-recovery denominator/window,
+  and readiness linkages. Real scheduling resource recovery,
   kernel/training-time speedup, RTL PPA, compiler speedup fixtures, emitted
   compiler-stack artifacts, real compiler adoption/integration artifacts, real
   hardware RTL/EDA artifacts, real hardware rewrite artifacts, and real

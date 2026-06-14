@@ -4204,12 +4204,14 @@ sidecars, tests, and active TODOs.
     interpretability/deployment evidence.
     `papers/systems_result_readiness_boundary.json` now machine-records that
     Figure 6 scheduling-exhibit records, heatmap artifacts, and held-out/
-    deployment links are required evidence. Real emitted report records are
-    still absent for the Figure 6 exhibit ID, exact heuristic source artifact/
-    hash, residual input definitions and units, heatmap grid/rendering
-    parameters, visual artifact paths/hashes, baseline production heuristic
-    identity, and links from the displayed exhibit to simulator, held-out,
-    deployment, and claim-calibration records.
+    deployment links are required evidence.
+    `papers/figure6_scheduling_exhibit_boundary.json` now keeps the exact
+    exhibit contract machine-checked. Real emitted report records are still
+    absent for the Figure 6 exhibit ID, exact heuristic source artifact/hash,
+    residual input definitions and units, heatmap grid/rendering parameters,
+    visual artifact paths/hashes, baseline production heuristic identity, and
+    links from the displayed exhibit to simulator, held-out, deployment, and
+    claim-calibration records.
   - Required result: add report/inventory metadata for Figure 6-style systems
     exhibits: stable exhibit ID, scheduling benchmark/candidate link, exact
     heuristic code artifact and hash, residual-feature definitions, baseline

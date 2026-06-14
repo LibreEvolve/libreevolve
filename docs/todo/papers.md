@@ -4571,7 +4571,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     ranking-only scheduling safety, and interpretability/deployment evidence,
     and `papers/systems_result_readiness_boundary.json` now machine-records
     that Figure 6 scheduling-exhibit records, heatmap artifacts, and held-out/
-    deployment links are required evidence. The paper-facing record still
+    deployment links are required evidence.
+    `papers/figure6_scheduling_exhibit_boundary.json` now keeps the
+    exhibit-specific contract machine-checked. The paper-facing record still
     lacks real Figure 6 exhibit rows mapping exact heuristic code, residual-
     feature definitions and units, heatmap data, rendering parameters, visual
     artifact paths/hashes, baseline production heuristic identity, simulator/

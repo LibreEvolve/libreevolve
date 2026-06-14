@@ -2586,6 +2586,15 @@ Implemented:
   hardware readiness surfaces. It is not evidence of real scheduling, kernel,
   compiler, or hardware fixture runs, deployment measurements, expert
   confirmation, or domain-specific result artifacts.
+- `papers/figure6_scheduling_exhibit_boundary.json`: Figure 6 scheduling
+  exhibit sidecar for AlphaEvolve Figure 6 and Section 3.3.1. It records the
+  required contract for stable exhibit rows, scheduling benchmark/candidate
+  links, exact heuristic source artifacts and hashes, code identity maps,
+  residual feature/unit definitions, residual grids, heatmap data, rendering
+  parameters, rendered heatmap hashes, baseline heuristic identity,
+  simulator/held-out/deployment report links, resource-recovery denominator
+  windows, claim calibration, and scheduling-readiness linkages. It is not
+  evidence that those artifacts have been emitted.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

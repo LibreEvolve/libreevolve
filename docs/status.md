@@ -1085,7 +1085,8 @@ Important limits:
   provenance: exact Borg heuristic source/hash, CPU/memory residual-feature
   definitions, heatmap data and rendering parameters, rendered artifact hashes,
   baseline production heuristic identity, or simulator/held-out/deployment
-  report links remain active code and paper TODOs.
+  report links remain active code and paper TODOs; that exhibit-specific
+  boundary is tracked by `papers/figure6_scheduling_exhibit_boundary.json`.
 - Kernel documentation does not yet reproduce AlphaEvolve Figure 7 Pallas
   tiling-problem exhibit provenance: matrix-shape variable definitions,
   tile-parameter schema, accelerator/memory/fusion/compiler-context

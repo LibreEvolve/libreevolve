@@ -360,14 +360,17 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_doi_landing_resolution_boundary.json` now records the
     DOI resolver `302` status, redirect location, raw DOI resolver headers, and
     final arXiv landing-page headers.
+    `papers/alphaevolve_datacite_full_response_boundary.json` now retains the
+    complete 15,905-byte raw DataCite API response body and validates parsed
+    DOI metadata fields.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
-    equivalent, extraction-script artifact, full raw DataCite response
-    retention, full TeX/e-print archive retention, archive member inventory,
-    full license-page HTML retention, full floating-PDF response retention,
-    cached-PDF header consistency, and an automated CI/network refresh gate
-    that fails paper/source validation if the live arXiv/DataCite/e-print/license
-    metadata drifts from the committed source boundary.
+    equivalent, extraction-script artifact, full TeX/e-print archive retention,
+    archive member inventory, full license-page HTML retention, full
+    floating-PDF response retention, cached-PDF header consistency, and an
+    automated CI/network refresh gate that fails paper/source validation if the
+    live arXiv/DataCite/e-print/license metadata drifts from the committed
+    source boundary.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

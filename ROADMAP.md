@@ -1469,10 +1469,12 @@ by `papers/lineage_replay_boundary.json`.
   floating PDF, DataCite API, e-print archive, and license page.
   `papers/alphaevolve_doi_landing_resolution_boundary.json` now pins the DOI
   resolver `302` headers, redirect location, and final arXiv landing-page
-  headers. Committed full raw DataCite responses, full TeX/e-print archive
-  retention, archive member inventories, metadata extraction-script artifacts,
-  committed full HTML content, full floating-PDF response retention, cached-PDF
-  header consistency records, and automated CI refresh gates remain open.
+  headers. `papers/alphaevolve_datacite_full_response_boundary.json` now
+  retains the complete 15,905-byte DataCite API response body and validates its
+  parsed DOI metadata fields. Full TeX/e-print archive retention, archive
+  member inventories, metadata extraction-script artifacts, committed full HTML
+  content, full floating-PDF response retention, cached-PDF header consistency
+  records, and automated CI refresh gates remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

@@ -2306,10 +2306,12 @@ Implemented:
   floating PDF, DataCite API, e-print archive, and license page.
   `papers/alphaevolve_doi_landing_resolution_boundary.json` now pins the DOI
   resolver `302` headers, redirect location, and final arXiv landing-page
-  headers. Full raw DataCite response retention, full TeX/e-print archive
-  retention, archive member inventories, metadata extraction-script artifacts,
-  committed full HTML content, full floating-PDF response retention, cached-PDF
-  header consistency records, and automated CI refresh checks remain open.
+  headers. `papers/alphaevolve_datacite_full_response_boundary.json` now
+  retains the complete 15,905-byte DataCite API response body and validates its
+  parsed DOI metadata fields. Full TeX/e-print archive retention, archive
+  member inventories, metadata extraction-script artifacts, committed full HTML
+  content, full floating-PDF response retention, cached-PDF header consistency
+  records, and automated CI refresh checks remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2816,8 +2818,14 @@ Implemented:
   sidecar with the pinned DataCite API URL, retrieval date, status, response
   byte count, SHA-256 digest, DOI, landing URL, title, creator count,
   publisher, publication year, resource type, schema version, registered
-  timestamp, and version. It is not full raw response retention, a DataCite
-  refresh gate, or cached-PDF header consistency evidence.
+  timestamp, and version. It is not a DataCite refresh gate or cached-PDF
+  header consistency evidence.
+- `papers/alphaevolve_datacite_full_response_boundary.json`: AlphaEvolve
+  DataCite full-response sidecar with the retained raw DataCite API response
+  body, byte count, SHA-256 digest, parsed DOI, landing URL, title, creator
+  count, publisher, publication year, resource type, schema version, registered
+  timestamp, and version. It is not an automated DataCite refresh gate or
+  cached-PDF header consistency evidence.
 - `papers/alphaevolve_doi_landing_resolution_boundary.json`: AlphaEvolve DOI
   landing-resolution sidecar with the pinned DOI URL, retrieval timestamp,
   resolver `302` status, redirect location, raw resolver header lines, final

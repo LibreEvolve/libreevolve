@@ -687,13 +687,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_doi_landing_resolution_boundary.json` now records the
     DOI resolver `302` status, redirect location, raw DOI resolver headers, and
     final arXiv landing-page headers.
+    `papers/alphaevolve_datacite_full_response_boundary.json` now retains the
+    complete 15,905-byte raw DataCite API response body and validates parsed
+    DOI metadata fields.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade evidence, add full raw DataCite response retention,
-    full TeX/e-print archive retention, archive member inventory, full
-    license-page HTML retention, a committed full-HTML artifact or approved
-    equivalent, extraction-script artifacts, full floating-PDF response
-    retention, cached-PDF header consistency evidence, and an automated refresh
-    gate that detects arXiv/DataCite/e-print/license version or metadata drift.
+    publication-grade evidence, add full TeX/e-print archive retention,
+    archive member inventory, full license-page HTML retention, a committed
+    full-HTML artifact or approved equivalent, extraction-script artifacts,
+    full floating-PDF response retention, cached-PDF header consistency
+    evidence, and an automated refresh gate that detects
+    arXiv/DataCite/e-print/license version or metadata drift.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

@@ -17,7 +17,7 @@ def test_alphaevolve_datacite_doi_boundary_accepts_snapshot_record():
         == "datacite_api_snapshot_without_full_source_refresh_gate"
     )
     assert validation.required_evidence_field_count == 20
-    assert validation.missing_evidence_count == 3
+    assert validation.missing_evidence_count == 2
     assert boundary["schema"] == ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_SCHEMA
     assert boundary["datacite_api_snapshot"]["doi"] == "10.48550/arxiv.2506.13131"
     assert boundary["datacite_api_snapshot"]["creator_count"] == 18
@@ -52,4 +52,4 @@ def test_render_alphaevolve_datacite_doi_boundary_summary_reports_shape():
         in summary
     )
     assert "| required_evidence_field_count | 20 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

@@ -41,3 +41,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     then validate stale or unsupported claims in CI.
 
 ## Architecture Description
+
+## Quick Start
+
+- [ ] Add durable README quick-start smoke-run evidence.
+  - Spec evidence: the root README is the primary onboarding claim surface, so
+    its no-provider quick-start commands should be protected by committed
+    evidence or CI rather than relying on ad hoc local runs.
+  - Current evidence: on 2026-06-14, the documented commands
+    `py -3.12 -m libreevolve run libreevolve/problems/examples/sorting --run-name readme_smoke_sorting --max-llm-calls 0 --overwrite`
+    and `py -3.12 -m libreevolve show runs/readme_smoke_sorting` both
+    completed locally. The run stopped with `stop_reason: max_llm_calls`,
+    selected an archive-retained valid seed program, and reported
+    `Best fitness: 1.000000`.
+  - Current gap: the successful run artifacts live under gitignored `runs/`;
+    there is no committed README quick-start smoke transcript, sidecar, or CI
+    check proving that the exact README commands keep working across future
+    changes.
+  - Required result: add a committed smoke-proof artifact or CI job that runs
+    the README no-provider quick-start path, validates expected stop reason and
+    `show` output fields, and updates README/TODO evidence when the command
+    changes.

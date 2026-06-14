@@ -5616,6 +5616,49 @@ directory and using the AlphaEvolve paper as the primary specification.
     network co-design as missing application benchmark evidence rather than
     implemented LibreEvolve support.
 
+- [ ] Reproduce LLM-evolved pattern-generator planning evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.02438`, submitted June 1, 2026, is
+    titled `LLM-Evolved Pattern Generators for Optimal Classical Planning`.
+    Its abstract says learned heuristics are competitive for satisficing
+    planning, but existing learned approaches usually improve search guidance
+    rather than guarantee admissibility, making them unsuitable for optimal
+    classical planning. The paper presents a method for learning
+    domain-dependent heuristics that are admissible by design and preserve
+    A* optimality guarantees by learning programs that construct abstractions,
+    not direct state-to-heuristic mappings. It uses an LLM-driven evolutionary
+    program-synthesis framework to obtain, for each planning domain, a program
+    that produces a pattern collection for any task in that domain, then
+    combines the resulting patterns admissibly via saturated cost partitioning.
+    The paper reports interpretable domain-specific insights, negligible
+    test-time overhead, coverage matching state-of-the-art domain-independent
+    baselines on several domains, and substantially faster per-state heuristic
+    evaluation.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.02438`. Existing LibreEvolve OpenEvolve, GigaEvo,
+    MAP-Elites, benchmark-hardening, tensor/matrix, and constructive-math
+    TODOs do not reproduce optimal-classical-planning task schemas, PDDL or
+    transition-system problem fixtures, pattern-generator candidate programs,
+    abstraction admissibility proofs, saturated-cost-partitioning evidence,
+    A* optimality-preservation records, planning-domain train/test splits,
+    coverage/per-state-evaluation-time metrics, state-of-the-art
+    domain-independent baseline comparisons, or interpretability artifacts for
+    evolved planning heuristics.
+  - Required result: add reproduction-grade evidence for `2606.02438`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to FunSearch, AlphaEvolve, OpenEvolve, and
+    LibreEvolve, classical-planning domain schema, PDDL/transition-system
+    fixture inventory, pattern-collection generator interface, abstraction
+    construction records, admissibility and consistency proof artifacts,
+    saturated-cost-partitioning configuration, A* optimality-preservation
+    checks, OpenEvolve run configuration and budget telemetry, planning-domain
+    train/test split metadata, coverage and node-expansion metrics,
+    per-state heuristic-evaluation-time records, baseline planner/heuristic
+    identities, evolved-program interpretability notes, independent
+    verification outputs, and README/ROADMAP wording that treats LLM-evolved
+    pattern generators for optimal planning as missing benchmark evidence
+    rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

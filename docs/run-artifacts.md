@@ -1155,7 +1155,9 @@ are live cooperative stop inputs before the next LLM call, including from
 restored runtime budget snapshots. Reports also validate top-level
 `role_scheduler_scope` so shared versus role-owned scheduler selection is
 visible in paper-facing budget evidence. It still does not mean hard provider
-cancellation, pending-work queue restoration, or provider-output replay.
+cancellation, pending-work queue restoration, or provider-output replay; that
+role-level cooperative-budget boundary is tracked by
+`papers/llm_budget_policy_boundary.json`.
 Runtime manifests also include `runtime.prompt_section_packing` with schema
 `libreevolve.prompt_section_packing_coverage.v1`. It records which prompt
 roles use section-level packing before the LLM call, which roles only have the

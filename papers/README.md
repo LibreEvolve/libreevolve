@@ -2443,7 +2443,20 @@ Implemented:
   restored runtime budget snapshot consumption, and emitted controller
   budget-event logs are wired, while queued/running async or pending-work
   budget consumption inside `evolve()`, provider-output replay composition, and
-  hard provider cancellation remain open.
+  hard provider cancellation remain open. The committed
+  `papers/llm_budget_policy_boundary.json` sidecar preserves that cooperative
+  budget snapshot boundary.
+- `papers/llm_budget_policy_boundary.json`: LLM budget policy sidecar for
+  AlphaEvolve Sections 2.2, 2.4, 2.6, and 4. It records
+  `llm_budget_report` schema linkage, cooperative runtime budget policy,
+  role-scheduler scope metadata, logical-call/retry/adapter-attempt usage,
+  provider-token usage, configured-cost usage, retained-latency usage,
+  controller budget-event replay, full-runtime restore budget pre-application,
+  and resume-artifact inventory checks. It is not evidence of async role work
+  queue budget accounting, queued/running/pending-work budget state, hard
+  provider-cancellation budget state, provider-output replay for budget resume,
+  accelerator or worker lease budget accounting, or experiment-owned quota
+  policy.
 - `papers/llm_role_scheduler_boundary.json`: LLM role-scheduler sidecar for
   AlphaEvolve Sections 2.1 and 2.6. It records configured role-backend
   routing, backend metadata role matching, reward-accounted roles, feedback

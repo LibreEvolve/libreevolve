@@ -1472,6 +1472,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     counts, configured cost-estimate evidence, not-estimated reasons, backend
     defaults, call-history retention, and a records hash while explicitly
     avoiding full raw provider-payload and live-pricing claims.
+    `papers/llm_budget_policy_boundary.json` now keeps role-level LLM budget
+    reporting scoped to cooperative snapshots rather than async pending-work
+    budget accounting or provider-output replay for budget resume.
     `validate_provider_capability_lookup_policy()` now validates
     `libreevolve.provider_capability_lookup_policy.v1` records for static-only
     provider lookup boundaries, OpenAI API-mode policy linkage, offline

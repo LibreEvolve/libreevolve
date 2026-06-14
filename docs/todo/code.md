@@ -4836,6 +4836,9 @@ sidecars, tests, and active TODOs.
     replay, or separate budget-stop manifests for replay-only exhaustion
     scenarios beyond the manifest stop snapshot. The remaining gap is not
     resume-state artifact inventory verification. The checked-in Figure 8
+    `papers/llm_budget_policy_boundary.json` now keeps role-level LLM budget
+    reports scoped to cooperative snapshots rather than async pending-work
+    budget accounting.
     ablation registry is still definition-only: several
     `required_config_assertions` are declarative component labels rather than
     executable `Config` fields or runtime switches, including

@@ -635,7 +635,12 @@ is not yet an AlphaEvolve reproduction.
 - Extend paper-facing `libreevolve.llm_budget_report.v1` cooperative
   enforcement snapshots to pending-work queues, provider-output replay, and hard
   cancellation semantics; provider-attempt, token, configured-cost, and retained
-  latency limits already feed live resumed-run stop checks.
+  latency limits already feed live resumed-run stop checks. The current
+  `papers/llm_budget_policy_boundary.json` sidecar preserves the cooperative
+  LLM budget snapshot boundary while keeping async role work queues,
+  queued/running pending-work budget state, provider-output replay for budget
+  resume, hard provider-cancellation budget state, accelerator/worker lease
+  accounting, and experiment-owned quota policy open.
 - Emit calibration/ablation runs for LLM feedback graders; the
   `libreevolve.llm_feedback_calibration.v1` report and artifact-inventory
   contracts now validate declared multi-task calibration evidence, but no
@@ -1064,7 +1069,10 @@ resumed-trace proof are still open.
   configured-cost/latency, synchronous controller-budget event replay, and
   stop-reason counters, plus pre-applied full-runtime restore bundles, to cover
   concurrent evaluations, async queues, pending-work restore, provider-output
-  replay, and executed equal-budget ablation reports. The named AlphaEvolve
+  replay, and executed equal-budget ablation reports. The current
+  `papers/llm_budget_policy_boundary.json` sidecar keeps role-level LLM budget
+  reporting scoped to cooperative snapshots rather than async pending-work
+  accounting. The named AlphaEvolve
   Figure 8 ablation variants are now captured as a validated report contract,
   but the runs/curves are not implemented.
 

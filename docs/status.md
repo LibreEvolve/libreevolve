@@ -613,7 +613,8 @@ Important limits:
   replay those synchronous counters into resumed runs, but this is not
   provider-output/raw-payload replay, pending-work or async-worker resume,
   cross-run provider-failure policy proof, or a mutation-chain-depth policy
-  for slow evaluator feedback.
+  for slow evaluator feedback; the role-level LLM budget boundary is tracked
+  by `papers/llm_budget_policy_boundary.json`.
 - Lineage replay evidence is limited to loop-owned deterministic surfaces:
   run-local RNG snapshots, prompt-history replay, deterministic seed/generated
   candidate ids, database-created prompt ids, ordered LLM call ids, and the

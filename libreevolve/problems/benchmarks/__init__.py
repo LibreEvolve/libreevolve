@@ -156,6 +156,12 @@ from libreevolve.problems.benchmarks.llm_role_scheduler_boundary import (
     render_llm_role_scheduler_boundary_summary,
     validate_llm_role_scheduler_boundary,
 )
+from libreevolve.problems.benchmarks.llm_budget_policy_boundary import (
+    LLM_BUDGET_POLICY_BOUNDARY_SCHEMA,
+    llm_budget_policy_boundary_record,
+    render_llm_budget_policy_boundary_summary,
+    validate_llm_budget_policy_boundary,
+)
 from libreevolve.problems.benchmarks.llm_stochastic_reproducibility_boundary import (
     LLM_STOCHASTIC_REPRODUCIBILITY_BOUNDARY_SCHEMA,
     llm_stochastic_reproducibility_boundary_record,
@@ -1023,6 +1029,7 @@ __all__ = [
     "INITIAL_PROGRAM_SEED_VARIANT_MATRIX_SCHEMA",
     "INITIAL_PROGRAM_VALIDITY_BOUNDARY_SCHEMA",
     "IMPROVEVOLVE_BOUNDARY_SCHEMA",
+    "LLM_BUDGET_POLICY_BOUNDARY_SCHEMA",
     "LLM_STOCHASTIC_REPRODUCIBILITY_BOUNDARY_SCHEMA",
     "MADEVOLVE_BOUNDARY_SCHEMA",
     "MAGELLAN_BOUNDARY_SCHEMA",
@@ -1186,6 +1193,7 @@ __all__ = [
     "initial_program_seed_variant_matrix_record",
     "initial_program_validity_boundary_record",
     "improvevolve_boundary_record",
+    "llm_budget_policy_boundary_record",
     "llm_role_scheduler_boundary_record",
     "llm_stochastic_reproducibility_boundary_record",
     "madevolve_boundary_record",
@@ -1347,6 +1355,7 @@ __all__ = [
     "render_initial_program_seed_variant_matrix_summary",
     "render_initial_program_validity_boundary_summary",
     "render_improvevolve_boundary_summary",
+    "render_llm_budget_policy_boundary_summary",
     "render_llm_role_scheduler_boundary_summary",
     "render_llm_stochastic_reproducibility_boundary_summary",
     "render_madevolve_boundary_summary",
@@ -1512,6 +1521,7 @@ __all__ = [
     "validate_initial_program_seed_variant_matrix",
     "validate_initial_program_validity_boundary",
     "validate_improvevolve_boundary",
+    "validate_llm_budget_policy_boundary",
     "validate_llm_role_scheduler_boundary",
     "validate_llm_stochastic_reproducibility_boundary",
     "validate_madevolve_boundary",

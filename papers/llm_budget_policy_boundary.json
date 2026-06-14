@@ -1,0 +1,44 @@
+{
+  "schema": "libreevolve.llm_budget_policy_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.2",
+    "2.4",
+    "2.6",
+    "4"
+  ],
+  "source_claim": "AlphaEvolve tracks model-call budgets, evaluation budgets, and fixed-budget ablations while operating an asynchronous search pipeline, so role-level LLM budget evidence must stay separate from queued or pending async work that has not been implemented.",
+  "boundary_status": "cooperative_llm_budget_snapshots_without_async_pending_work_accounting",
+  "llm_budget_report_schema": "libreevolve.llm_budget_report.v1",
+  "llm_budget_resume_inventory_schema": "libreevolve.llm_budget_resume_artifact_inventory.v1",
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "llm_budget_report_schema",
+    "runtime_cooperative_budget_policy",
+    "role_scheduler_scope_metadata",
+    "logical_call_usage",
+    "retry_attempt_usage",
+    "adapter_attempt_usage",
+    "provider_token_usage",
+    "configured_cost_usage",
+    "retained_latency_usage",
+    "controller_budget_event_replay",
+    "full_runtime_restore_budget_preapply",
+    "resume_artifact_inventory",
+    "async_role_work_queue_budget_accounting",
+    "queued_running_pending_work_budget_state",
+    "hard_provider_cancellation_budget_state",
+    "provider_output_replay_for_budget_resume",
+    "accelerator_worker_lease_budget_accounting",
+    "experiment_owned_quota_policy"
+  ],
+  "missing_evidence": {
+    "async_role_work_queue_budget_accounting": "not_recorded_locally",
+    "queued_running_pending_work_budget_state": "not_recorded_locally",
+    "hard_provider_cancellation_budget_state": "not_recorded_locally",
+    "provider_output_replay_for_budget_resume": "not_recorded_locally",
+    "accelerator_worker_lease_budget_accounting": "not_recorded_locally",
+    "experiment_owned_quota_policy": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has cooperative llm_budget_report snapshots, runtime cooperative budget policy, role scheduler scope metadata, logical-call usage, retry-attempt usage, adapter-attempt usage, provider-token usage, configured cost usage, retained latency usage, controller budget-event replay, full-runtime restore budget pre-application, and resume artifact inventory checks. It does not claim async role work queue budget accounting, queued/running/pending-work budget state, hard provider cancellation budget state, provider-output replay for budget resume, accelerator or worker lease budget accounting, or experiment-owned quota policy."
+}

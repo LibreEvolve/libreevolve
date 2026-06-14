@@ -1743,7 +1743,13 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         missing_local_artifacts = [
             record["path"] for record in local_artifact_records if not record["exists"]
         ]
-        limitation_signal_terms = _benchmark_limitation_signal_terms(text)
+        limitation_signal_records = _benchmark_limitation_signal_records(
+            text,
+            bullet["line_start"],
+        )
+        limitation_signal_terms = list(
+            dict.fromkeys(record["term"] for record in limitation_signal_records)
+        )
         rows.append(
             {
                 "coverage_id": f"implemented_benchmark_{ordinal:03d}",
@@ -1762,6 +1768,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
                 "local_artifact_existing_count": len(local_artifacts) - len(missing_local_artifacts),
                 "local_artifact_missing_paths": missing_local_artifacts,
                 "all_local_artifacts_exist": bool(local_artifacts) and not missing_local_artifacts,
+                "limitation_signal_records": limitation_signal_records,
                 "limitation_signal_terms": limitation_signal_terms,
                 "has_limitation_boundary": bool(limitation_signal_terms),
                 "has_not_implemented_contradiction": bool(BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE.search(text)),
@@ -1797,6 +1804,9 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
             for term in row["limitation_signal_terms"]
         }
     )
+    limitation_signal_record_count = sum(
+        len(row["limitation_signal_records"]) for row in rows
+    )
     contradiction_bullet_ids = [
         row["coverage_id"] for row in rows if row["has_not_implemented_contradiction"]
     ]
@@ -1818,6 +1828,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         ),
         "limitation_bullet_count": len(limitation_bullet_ids),
         "limitation_bullet_ids": limitation_bullet_ids,
+        "limitation_signal_record_count": limitation_signal_record_count,
         "limitation_signal_terms": limitation_signal_terms,
         "limitation_signal_inventory_status": "limitation_signals_structurally_classified_without_semantic_verifier",
         "not_implemented_contradiction_count": len(contradiction_bullet_ids),
@@ -1828,10 +1839,10 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
             "This inventory records one structured entry for each "
             "papers/README.md Implemented benchmark coverage bullet, including "
             "source lines, summary/body hashes, local artifact mentions, "
-            "local artifact existence records, limitation-signal terms, and "
-            "contradiction flags. It does not claim semantic verification, "
-            "benchmark freshness, reproduced result linkage, or proof that "
-            "the benchmark coverage prose is complete."
+            "local artifact existence records, limitation-signal terms/source "
+            "offsets, and contradiction flags. It does not claim semantic "
+            "verification, benchmark freshness, reproduced result linkage, or "
+            "proof that the benchmark coverage prose is complete."
         ),
     }
 
@@ -3929,6 +3940,7 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
         ("artifact_existence_status", "benchmark coverage artifact existence status drifted"),
         ("limitation_bullet_count", "benchmark coverage limitation bullet count drifted"),
         ("limitation_bullet_ids", "benchmark coverage limitation bullet ids drifted"),
+        ("limitation_signal_record_count", "benchmark coverage limitation signal record count drifted"),
         ("limitation_signal_terms", "benchmark coverage limitation signal terms drifted"),
         ("limitation_signal_inventory_status", "benchmark coverage limitation signal status drifted"),
         ("not_implemented_contradiction_count", "benchmark coverage contradiction count drifted"),
@@ -8898,13 +8910,30 @@ def _read_implemented_benchmark_bullet_records(root: Path) -> tuple[list[dict[st
     return records, []
 
 
-def _benchmark_limitation_signal_terms(text: str) -> list[str]:
-    terms: list[str] = []
+def _benchmark_limitation_signal_records(text: str, bullet_line_start: int) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
     for match in BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE.finditer(text):
         term = re.sub(r"\s+", " ", match.group(0).strip().lower())
-        if term:
-            terms.append(term)
-    return list(dict.fromkeys(terms))
+        if not term:
+            continue
+        start = match.start()
+        end = match.end()
+        records.append(
+            {
+                "term": term,
+                "bullet_text_char_start": start,
+                "bullet_text_char_end": end,
+                "source_span": {
+                    "path": "papers/README.md",
+                    "section": "Benchmark coverage decisions",
+                    "line_start": bullet_line_start + text.count("\n", 0, start),
+                    "line_end": bullet_line_start + text.count("\n", 0, end),
+                    "bullet_text_char_start": start,
+                    "bullet_text_char_end": end,
+                },
+            }
+        )
+    return records
 
 
 def _open_todo_blocks_contain(text: str, needle: str) -> bool:

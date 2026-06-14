@@ -834,7 +834,7 @@ is not yet an AlphaEvolve reproduction.
   artifact mention records and structural absence-signal classification, while
   `papers/benchmark_coverage_inventory.json` records structural implemented
   benchmark coverage bullets plus referenced local artifact existence checks
-  and limitation-signal classification.
+  and limitation-signal term/source-offset classification.
   This is not an exhaustive source-span coverage matrix,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

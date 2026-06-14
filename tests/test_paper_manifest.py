@@ -11969,39 +11969,47 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     artifact_path = tmp_path / "libreevolve" / "problems" / "benchmarks" / "matrix_results.py"
     artifact_path.parent.mkdir(parents=True)
     artifact_path.write_text("# matrix result evidence\n", encoding="utf-8")
+    bullet_text = (
+        "- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, "
+        "but not yet a full benchmark."
+    )
     readme_path = tmp_path / "papers" / "README.md"
     readme_path.write_text(
         readme_path.read_text(encoding="utf-8")
         + "\n\n## Benchmark coverage decisions\n\n"
         + "Implemented:\n\n"
-        + "- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, but not yet a full benchmark.\n\n"
+        + bullet_text
+        + "\n\n"
         + "Planned or background-only:\n\n"
         + "- Self-improvement evidence is not implemented.\n",
         encoding="utf-8",
     )
     inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
     assert inventory["implemented_bullet_count"] == 1
-    assert inventory["implemented_bullets"][0]["has_local_artifact"] is True
-    assert inventory["implemented_bullets"][0]["all_local_artifacts_exist"] is True
-    assert inventory["implemented_bullets"][0]["local_artifact_existing_count"] == 1
-    assert inventory["implemented_bullets"][0]["local_artifact_records"] == [
+    bullet = inventory["implemented_bullets"][0]
+    assert bullet["has_local_artifact"] is True
+    assert bullet["all_local_artifacts_exist"] is True
+    assert bullet["local_artifact_existing_count"] == 1
+    assert bullet["local_artifact_records"] == [
         {
             "path": "libreevolve/problems/benchmarks/matrix_results.py",
             "exists": True,
             "kind": "file",
         }
     ]
-    assert inventory["implemented_bullets"][0]["limitation_signal_terms"] == ["but", "not"]
-    assert inventory["implemented_bullets"][0]["has_limitation_boundary"] is True
-    assert (
-        inventory["implemented_bullets"][0]["limitation_signal_status"]
-        == "limitation_signals_structurally_classified"
-    )
+    assert bullet["limitation_signal_terms"] == ["but", "not"]
+    assert [record["term"] for record in bullet["limitation_signal_records"]] == ["but", "not"]
+    assert bullet["limitation_signal_records"][0]["bullet_text_char_start"] == bullet_text.find("but")
+    assert bullet["limitation_signal_records"][1]["bullet_text_char_start"] == bullet_text.find("not")
+    assert bullet["limitation_signal_records"][0]["source_span"]["line_start"] == bullet["source_span"]["line_start"]
+    assert bullet["has_limitation_boundary"] is True
+    assert bullet["limitation_signal_status"] == "limitation_signals_structurally_classified"
     assert inventory["unique_local_artifact_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []
     assert inventory["artifact_existence_status"] == "all_referenced_local_artifacts_present"
     assert inventory["limitation_bullet_count"] == 1
     assert inventory["limitation_bullet_ids"] == ["implemented_benchmark_001"]
+    assert inventory["limitation_signal_record_count"] == 2
     assert inventory["limitation_signal_terms"] == ["but", "not"]
     assert (
         inventory["limitation_signal_inventory_status"]

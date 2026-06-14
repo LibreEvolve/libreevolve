@@ -5659,6 +5659,48 @@ directory and using the AlphaEvolve paper as the primary specification.
     pattern generators for optimal planning as missing benchmark evidence
     rather than implemented LibreEvolve support.
 
+- [ ] Reproduce FunctionEvolve structure-guided symbolic-regression evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.07704`, submitted June 5, 2026, is
+    titled `FunctionEvolve: Structure-Guided Symbolic Regression with LLMs`.
+    Its abstract frames symbolic regression as recovering explicit scientific
+    laws from data and argues that recent LLM-guided mutation methods are more
+    directed than random genetic programming but remain structure-blind. The
+    paper says exact symbolic recovery needs both semantic guidance and
+    explicit valid symbolic structure, so search should operate over
+    domain-informed symbolic representations rather than vague candidates.
+    FunctionEvolve organizes search around expression trees: structure
+    summaries support diverse parent selection, local tree edits preserve
+    useful subexpressions, and structure-aware coefficient fitting decomposes,
+    constrains, and simplifies coefficients so scoring does not reject a
+    correct expression skeleton. The paper evaluates on LLM-SRBench synthetic
+    tasks, reports large exact-form recovery gains over same-backbone
+    baselines, and audits benchmark identifiability issues in the materials-
+    science subset.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.07704`. Existing LibreEvolve PACEvolve, EvoDiverse,
+    CausalEvolve, proposal-hypothesis, and benchmark-hardening TODOs do not
+    reproduce symbolic-regression candidate schemas, expression-tree
+    canonicalization, local tree-edit mutation operators, structure-summary
+    parent selection, elementary-function-family constraints, coefficient-
+    fitting decomposition/simplification, exact-symbolic-recovery metrics,
+    LLM-SRBench task metadata, same-backbone symbolic-regression baselines, or
+    benchmark non-identifiability audits for materials-science tasks.
+  - Required result: add reproduction-grade evidence for `2606.07704`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, FunSearch, LLM-SR, PACEvolve, and
+    LibreEvolve, symbolic-regression task schema, expression-tree candidate
+    representation, structural canonicalization rules, local tree-edit
+    mutation contract, structure-summary/diversity parent-selection records,
+    elementary-function-family policy, coefficient-fitting and simplification
+    artifacts, scoring and exact-recovery metric definitions, LLM-SRBench
+    synthetic-task metadata, same-backbone baseline identities, ablation rows
+    for structure visibility and coefficient optimization, materials-science
+    identifiability audit records, independent verification outputs, and
+    README/ROADMAP wording that treats FunctionEvolve-style structure-guided
+    symbolic regression as missing benchmark evidence rather than implemented
+    LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

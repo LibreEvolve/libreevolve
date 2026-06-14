@@ -176,6 +176,35 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and README/TODO updates whenever provider example commands or supported
     backend families change.
 
+## Problem Layout
+
+- [ ] Add README problem-layout contract drift evidence.
+  - Spec evidence: the README's `Problem Layout` section is the first
+    problem-authoring contract most users see. Its list of required and
+    optional files should stay synchronized with the loader, problem-format
+    docs, bundled examples, and AlphaEvolve-alignment boundaries for validators,
+    metrics, prompts, context, config, and candidate workspaces.
+  - Current evidence: README lists `initial_programs/`, `validate.py`,
+    `metrics.yaml`, `task_description.txt`, and optional `config.yaml`, and
+    points to `docs/problem-format.md` for the full contract. The current
+    examples exercise several layouts, including workspace examples and
+    sorting-network candidates, while broader code/paper TODOs track
+    non-Python runners, candidate abstractions, evaluator contracts, context
+    manifests, validator metadata, and benchmark fixtures.
+  - Current gap: no README-owned validator, sidecar, or smoke fixture parses
+    the README problem-layout list, compares it with loader/preflight behavior
+    and `docs/problem-format.md`, checks that at least one minimal example
+    still satisfies the listed contract, or flags when new problem surfaces
+    such as context manifests, artifact policies, candidate-language metadata,
+    or benchmark-hardening helpers should be mentioned or explicitly scoped
+    out.
+  - Required result: add a README problem-layout evidence map or drift test
+    that links each listed path to loader behavior, docs, examples, and
+    validation coverage; records required versus optional status and known
+    AlphaEvolve-facing omissions; and updates README/TODO evidence whenever
+    problem-loading, evaluator, context, metrics, config, or example layout
+    semantics change.
+
 ## Testing
 
 - [ ] Add README testing-command marker and environment evidence.

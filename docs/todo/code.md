@@ -1009,6 +1009,41 @@ sidecars, tests, and active TODOs.
     current synchronous provider-attempt/token/configured-cost/latency
     controller-event replay.
 
+- [ ] Define a first-class subprocess/CLI LLM backend contract before treating
+      Codex-authenticated providers as supported.
+  - Spec evidence: AlphaEvolve-style runs depend on a coherent model ensemble
+    whose provider calls, failures, budgets, and outputs are attributable
+    across long evolutionary searches. A local authenticated CLI provider can
+    be useful for experiments, but it is still a provider boundary and needs
+    the same truthfulness, replay, redaction, timeout, and diagnostic treatment
+    as SDK-backed providers before being described as supported.
+  - Current evidence: tracked backend configuration accepts only
+    `anthropic`, `openai`, `ollama`, and `custom`; `docs/backends.md` lists
+    OpenAI, Anthropic, Ollama, and custom import-path backends; and
+    `build_llm()` constructs custom backends by importing a Python
+    `class_path` with JSON-safe kwargs and validating the `generate(prompt,
+    **kwargs)` protocol. The current tracked code does not define a
+    subprocess-backed provider adapter contract for command discovery,
+    authenticated CLI session provenance, stdin/stdout protocol, transcript
+    persistence, model-id availability checks, provider attempt accounting,
+    timeout/cancellation semantics, or provider-error classification.
+  - Current gap: a Codex CLI or other authenticated local CLI can be wrapped as
+    an ad hoc custom backend, but that does not make it a first-class or
+    reproducible LibreEvolve backend. There is no committed registry lane,
+    config schema, docs page, safety checklist, smoke fixture, redacted
+    transcript schema, runtime manifest field, or test matrix proving that
+    CLI-authenticated model calls are portable, auditable, budget-accounted,
+    and comparable with SDK-backed providers in AlphaEvolve-style benchmark
+    runs.
+  - Required result: add a tracked subprocess/CLI provider backend contract
+    covering command resolution, auth/session provenance without secret
+    capture, safe prompt/response transport, transcript hashing and optional
+    retention, bounded redacted stderr/stdout diagnostics, model availability
+    preflight, provider-attempt/token/cost limitations, timeout and cancellation
+    behavior, manifest/report fields, docs, and focused tests before README,
+    ROADMAP, benchmark, or paper-facing materials claim Codex-authenticated or
+    other local CLI providers are supported.
+
 - [ ] Extend prompt-template compatibility beyond current mutation-template
   checks and duplicate-arm audit.
   - Spec evidence: AlphaEvolve-style prompt evolution should make prompt

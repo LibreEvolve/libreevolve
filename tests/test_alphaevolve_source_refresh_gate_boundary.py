@@ -19,7 +19,7 @@ def test_alphaevolve_source_refresh_gate_boundary_accepts_record():
         == "scheduled_live_source_refresh_gate_recorded_with_archived_manual_outcome"
     )
     assert validation.source_count == 6
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert boundary["schema"] == ALPHAEVOLVE_SOURCE_REFRESH_GATE_BOUNDARY_SCHEMA
     assert (
         boundary["script_artifact"]["path"]
@@ -104,4 +104,4 @@ def test_render_alphaevolve_source_refresh_gate_boundary_summary_reports_shape()
         in summary
     )
     assert "| source_count | 6 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

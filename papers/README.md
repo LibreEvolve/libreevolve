@@ -2334,8 +2334,11 @@ Implemented:
   archives one successful manual live-network refresh run with six matched
   source responses and a canonical run-report hash. The scheduled/manual
   workflow now writes `alphaevolve_source_refresh_report.json` and uploads it
-  as the `alphaevolve-source-refresh-report` artifact. Scheduled CI
-  refresh-run history and per-source refresh-ready promotion remain open.
+  as the `alphaevolve-source-refresh-report` artifact.
+  `papers/alphaevolve_source_refresh_promotion_boundary.json` now records the
+  decision not to relabel older per-source snapshot sidecars as standalone
+  refresh-ready evidence, mapping each central-gate source id to the paper
+  sidecars it covers. Scheduled CI refresh-run history remains open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2893,8 +2896,12 @@ Implemented:
 - `papers/alphaevolve_source_refresh_run_2026-06-14.json`: AlphaEvolve source
   refresh-run sidecar with one archived manual live-network run, six matched
   source responses, a canonical run-report hash, and explicit missing evidence
-  for scheduled CI refresh-run history and per-source refresh-ready promotion.
-  It is not recurring freshness evidence.
+  for scheduled CI refresh-run history. It is not recurring freshness evidence.
+- `papers/alphaevolve_source_refresh_promotion_boundary.json`: AlphaEvolve
+  source refresh-promotion policy sidecar mapping each central-gate source id
+  to covered paper sidecars and recording the decision not to relabel older
+  per-source snapshot sidecars as standalone refresh-ready evidence. It is not
+  scheduled CI refresh-run history.
 - `papers/alphaevolve_raw_http_headers_boundary.json`: AlphaEvolve source-URL
   raw HTTP headers sidecar with pinned header lines for the versioned abstract,
   floating abstract, floating PDF, DataCite API, e-print archive, and Creative

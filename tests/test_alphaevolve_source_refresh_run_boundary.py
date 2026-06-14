@@ -17,7 +17,7 @@ def test_alphaevolve_source_refresh_run_boundary_accepts_record():
         == "manual_live_source_refresh_run_archived_without_scheduled_history"
     )
     assert validation.source_count == 6
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert boundary["schema"] == ALPHAEVOLVE_SOURCE_REFRESH_RUN_BOUNDARY_SCHEMA
     assert boundary["run_report"]["mode"] == "live_network"
 
@@ -65,4 +65,4 @@ def test_render_alphaevolve_source_refresh_run_boundary_summary_reports_shape():
         in summary
     )
     assert "| source_count | 6 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

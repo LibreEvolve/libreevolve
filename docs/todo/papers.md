@@ -715,10 +715,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     The scheduled/manual GitHub Actions job now writes
     `alphaevolve_source_refresh_report.json` and uploads it as the
     `alphaevolve-source-refresh-report` artifact.
+    `papers/alphaevolve_source_refresh_promotion_boundary.json` now records
+    the decision not to relabel older per-source snapshot sidecars as
+    standalone refresh-ready evidence; it maps each central-gate source id to
+    the sidecars covered by the gate.
   - Required result: before using arXiv abstract-page metadata as
     publication-grade freshness evidence, retain scheduled CI refresh-run
-    history and decide whether older per-source sidecars should be promoted
-    from bounded snapshots to refresh-ready evidence.
+    history.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

@@ -1,0 +1,66 @@
+{
+  "schema": "libreevolve.alphaevolve_source_refresh_promotion_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_version_id": "2506.13131v1",
+  "source_claim": "Per-source AlphaEvolve source sidecars should either be promoted to refresh-ready evidence or explicitly kept as bounded snapshots covered by the central refresh gate.",
+  "boundary_status": "central_refresh_gate_coverage_recorded_without_individual_sidecar_promotion",
+  "claim_ready": false,
+  "promotion_policy": "central_gate_covers_sources_sidecars_remain_snapshots",
+  "central_refresh_gate": {
+    "path": "papers/alphaevolve_source_refresh_gate_boundary.json",
+    "workflow_path": ".github/workflows/tests.yml",
+    "archived_manual_run_path": "papers/alphaevolve_source_refresh_run_2026-06-14.json"
+  },
+  "source_sidecar_map": [
+    {
+      "source_id": "versioned_abstract",
+      "promotion_status": "covered_by_central_refresh_gate_not_individually_promoted",
+      "sidecars": [
+        "papers/arxiv_abstract_snapshot.json"
+      ]
+    },
+    {
+      "source_id": "current_abstract",
+      "promotion_status": "covered_by_central_refresh_gate_not_individually_promoted",
+      "sidecars": [
+        "papers/alphaevolve_current_version_boundary.json"
+      ]
+    },
+    {
+      "source_id": "floating_pdf",
+      "promotion_status": "covered_by_central_refresh_gate_not_individually_promoted",
+      "sidecars": [
+        "papers/alphaevolve_current_version_boundary.json",
+        "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
+      ]
+    },
+    {
+      "source_id": "datacite_api",
+      "promotion_status": "covered_by_central_refresh_gate_not_individually_promoted",
+      "sidecars": [
+        "papers/alphaevolve_datacite_doi_boundary.json",
+        "papers/alphaevolve_datacite_full_response_boundary.json"
+      ]
+    },
+    {
+      "source_id": "eprint_archive",
+      "promotion_status": "covered_by_central_refresh_gate_not_individually_promoted",
+      "sidecars": [
+        "papers/alphaevolve_tex_source_boundary.json",
+        "papers/alphaevolve_tex_archive_retention_boundary.json"
+      ]
+    },
+    {
+      "source_id": "license_page",
+      "promotion_status": "covered_by_central_refresh_gate_not_individually_promoted",
+      "sidecars": [
+        "papers/alphaevolve_license_page_boundary.json",
+        "papers/alphaevolve_license_page_html_retention_boundary.json"
+      ]
+    }
+  ],
+  "missing_evidence": {
+    "scheduled_ci_refresh_run_history": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the decision not to relabel older per-source snapshot sidecars as standalone refresh-ready evidence. Each source id checked by the central AlphaEvolve refresh gate is mapped to the paper sidecars it covers, while scheduled CI refresh-run history remains outside the committed evidence."
+}

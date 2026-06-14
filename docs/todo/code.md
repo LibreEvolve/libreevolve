@@ -391,9 +391,12 @@ sidecars, tests, and active TODOs.
     The scheduled/manual GitHub Actions job now writes
     `alphaevolve_source_refresh_report.json` and uploads it as the
     `alphaevolve-source-refresh-report` artifact.
-  - Required result: retain scheduled CI refresh-run history and decide
-    whether to promote older per-source sidecars to refresh-ready evidence
-    before treating source metadata as publication-grade freshness evidence.
+    `papers/alphaevolve_source_refresh_promotion_boundary.json` now records
+    the decision not to relabel older per-source snapshot sidecars as
+    standalone refresh-ready evidence; it maps each central-gate source id to
+    the sidecars covered by the gate.
+  - Required result: retain scheduled CI refresh-run history before treating
+    source metadata as publication-grade freshness evidence.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

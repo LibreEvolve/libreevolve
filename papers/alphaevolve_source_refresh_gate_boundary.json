@@ -38,8 +38,7 @@
     "license_page"
   ],
   "missing_evidence": {
-    "scheduled_ci_refresh_run_history": "not_recorded_locally",
-    "per_source_refresh_ready_promotion": "not_recorded_locally"
+    "scheduled_ci_refresh_run_history": "not_recorded_locally"
   },
   "claim_boundary": "This boundary records a deterministic AlphaEvolve source refresh gate script plus scheduled and manual GitHub Actions live-network execution wiring, report artifact upload wiring, and a committed manual live-run outcome sidecar. It does not claim that scheduled CI refresh-run history has been archived or that the older per-source sidecars themselves are individually promoted to refresh-ready evidence."
 }

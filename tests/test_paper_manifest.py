@@ -695,6 +695,84 @@ def test_validate_paper_manifest_requires_alphaevolve_source_refresh_run_boundar
     assert "alphaevolve_source_refresh_run_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_alphaevolve_source_refresh_promotion_boundary(
+    tmp_path,
+):
+    source_root = Path(__file__).resolve().parents[1]
+    alphaevolve_pdf_bytes = (source_root / "papers" / "2506.13131__AlphaEvolve.pdf").read_bytes()
+    row = _row(tmp_path, content=alphaevolve_pdf_bytes)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_source_refresh_promotion_boundary_record()
+    linked_paths = {
+        record["central_refresh_gate"]["path"],
+        record["central_refresh_gate"]["workflow_path"],
+        record["central_refresh_gate"]["archived_manual_run_path"],
+    }
+    for source in record["source_sidecar_map"]:
+        linked_paths.update(source["sidecars"])
+    for relative_path in linked_paths:
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((source_root / relative_path).read_bytes())
+    for relative_path in (
+        "libreevolve/tools/alphaevolve_source_refresh_gate.py",
+        "papers/arxiv_abstract_2506.13131v1.html",
+        "papers/alphaevolve_license_page.html",
+        "papers/alphaevolve_tex_source_archive.tar.gz",
+    ):
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((source_root / relative_path).read_bytes())
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_SOURCE_REFRESH_PROMOTION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_source_refresh_promotion_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_source_refresh_promotion_boundary_record()
+    record["claim_ready"] = True
+    record["promotion_policy"] = "all_sidecars_individually_refresh_ready"
+    record["source_sidecar_map"][0]["promotion_status"] = "refresh_ready"
+    record["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_SOURCE_REFRESH_PROMOTION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_source_refresh_promotion_boundary_claim_ready_overclaim" in codes
+    assert "alphaevolve_source_refresh_promotion_boundary_invalid_promotion_policy" in codes
+    assert "alphaevolve_source_refresh_promotion_boundary_invalid_promotion_status" in codes
+    assert (
+        "alphaevolve_source_refresh_promotion_boundary_invalid_missing_evidence_scheduled_ci_refresh_run_history"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_source_refresh_promotion_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_source_refresh_promotion_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_alphaevolve_raw_http_headers_boundary(
     tmp_path,
 ):

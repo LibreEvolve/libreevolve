@@ -36,7 +36,6 @@ EXPECTED_OBSERVED_CONTENT_TYPES = {
 }
 EXPECTED_MISSING_EVIDENCE = {
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
-    "per_source_refresh_ready_promotion": "not_recorded_locally",
 }
 
 

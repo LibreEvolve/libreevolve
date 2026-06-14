@@ -132,8 +132,7 @@
     "source_count": 6
   },
   "missing_evidence": {
-    "scheduled_ci_refresh_run_history": "not_recorded_locally",
-    "per_source_refresh_ready_promotion": "not_recorded_locally"
+    "scheduled_ci_refresh_run_history": "not_recorded_locally"
   },
   "claim_boundary": "This boundary archives one successful manual live-network source refresh run for AlphaEvolve. It does not claim scheduled CI refresh-run history or promote the older per-source snapshot sidecars to standalone refresh-ready evidence."
 }

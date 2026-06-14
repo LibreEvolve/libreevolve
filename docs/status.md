@@ -77,8 +77,10 @@ Important limits:
   license drift checks, and the refresh-run sidecar archives one successful
   manual live-network run with six matched source responses. The workflow now
   uploads `alphaevolve_source_refresh_report.json` as
-  `alphaevolve-source-refresh-report`. Scheduled CI refresh-run history and
-  per-source refresh-ready promotion are still not claimed.
+  `alphaevolve-source-refresh-report`. The source refresh-promotion sidecar
+  maps each central-gate source id to covered paper sidecars while keeping
+  those older sidecars as bounded snapshots. Scheduled CI refresh-run history
+  is still not claimed.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text

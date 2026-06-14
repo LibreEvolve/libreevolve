@@ -37,7 +37,6 @@ EXPECTED_ARCHIVED_OUTCOME_PATH = "papers/alphaevolve_source_refresh_run_2026-06-
 EXPECTED_ARCHIVED_OUTCOME_SCHEMA = "libreevolve.alphaevolve_source_refresh_run_boundary.v1"
 EXPECTED_MISSING_EVIDENCE = {
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
-    "per_source_refresh_ready_promotion": "not_recorded_locally",
 }
 
 

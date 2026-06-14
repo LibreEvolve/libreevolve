@@ -385,7 +385,10 @@ sidecars, tests, and active TODOs.
     SHA-256 digests against the committed source boundaries, and
     `libreevolve.tools.paper_manifest` requires the sidecar at the real repo
     root.
-  - Required result: archive successful live refresh-run outcomes and decide
+    `papers/alphaevolve_source_refresh_run_2026-06-14.json` now archives one
+    successful manual live-network refresh run with six matched source
+    responses and a canonical run-report hash.
+  - Required result: retain scheduled CI refresh-run history and decide
     whether to promote older per-source sidecars to refresh-ready evidence
     before treating source metadata as publication-grade freshness evidence.
 

@@ -2330,8 +2330,10 @@ Implemented:
   pins the deterministic/live refresh-gate script and the scheduled/manual
   GitHub Actions `source_refresh_gate` job that compares live
   arXiv/DataCite/e-print/license responses against committed source
-  boundaries. Archived successful live-run outcomes and per-source
-  refresh-ready promotion remain open.
+  boundaries. `papers/alphaevolve_source_refresh_run_2026-06-14.json` now
+  archives one successful manual live-network refresh run with six matched
+  source responses and a canonical run-report hash. Scheduled CI refresh-run
+  history and per-source refresh-ready promotion remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2881,10 +2883,14 @@ Implemented:
   and TeX archive inputs. It is not an automated live refresh CI gate.
 - `papers/alphaevolve_source_refresh_gate_boundary.json`: AlphaEvolve source
   refresh-gate sidecar with the pinned deterministic/live refresh script, six
-  expected source ids, scheduled/manual GitHub Actions wiring, and explicit
-  missing evidence for archived successful live-run outcomes and published
-  refresh-report retention. It is not proof that a successful live refresh run
-  has been archived as paper evidence.
+  expected source ids, scheduled/manual GitHub Actions wiring, and linkage to
+  the archived manual live-run outcome. It is not proof that scheduled CI
+  refresh-run history has been archived.
+- `papers/alphaevolve_source_refresh_run_2026-06-14.json`: AlphaEvolve source
+  refresh-run sidecar with one archived manual live-network run, six matched
+  source responses, a canonical run-report hash, and explicit missing evidence
+  for scheduled CI refresh-run history and per-source refresh-ready promotion.
+  It is not recurring freshness evidence.
 - `papers/alphaevolve_raw_http_headers_boundary.json`: AlphaEvolve source-URL
   raw HTTP headers sidecar with pinned header lines for the versioned abstract,
   floating abstract, floating PDF, DataCite API, e-print archive, and Creative

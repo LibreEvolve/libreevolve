@@ -13,7 +13,7 @@ EXPECTED_REPORT_SCHEMA = "libreevolve.alphaevolve_source_refresh_gate_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_VERSION_ID = "2506.13131v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "scheduled_live_source_refresh_gate_recorded_without_archived_outcome"
+    "scheduled_live_source_refresh_gate_recorded_with_archived_manual_outcome"
 )
 EXPECTED_SCRIPT_PATH = "libreevolve/tools/alphaevolve_source_refresh_gate.py"
 EXPECTED_SCRIPT_BYTES = 9543
@@ -29,9 +29,11 @@ EXPECTED_WORKFLOW_MARKERS = {
         "python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty"
     ),
 }
+EXPECTED_ARCHIVED_OUTCOME_PATH = "papers/alphaevolve_source_refresh_run_2026-06-14.json"
+EXPECTED_ARCHIVED_OUTCOME_SCHEMA = "libreevolve.alphaevolve_source_refresh_run_boundary.v1"
 EXPECTED_MISSING_EVIDENCE = {
-    "archived_successful_live_refresh_run": "not_recorded_locally",
-    "published_refresh_artifact_retention": "not_recorded_locally",
+    "scheduled_ci_refresh_run_history": "not_recorded_locally",
+    "per_source_refresh_ready_promotion": "not_recorded_locally",
 }
 
 
@@ -89,15 +91,21 @@ def alphaevolve_source_refresh_gate_boundary_record() -> dict[str, Any]:
             "manual_dispatch_input": "run_source_refresh_gate",
             "live_gate_command": EXPECTED_WORKFLOW_MARKERS["live_gate_command"],
         },
+        "archived_outcome_artifact": {
+            "path": EXPECTED_ARCHIVED_OUTCOME_PATH,
+            "schema": EXPECTED_ARCHIVED_OUTCOME_SCHEMA,
+            "run_date": "2026-06-14",
+            "run_mode": "live_network",
+        },
         "expected_report_schema": EXPECTED_REPORT_SCHEMA,
         "expected_source_ids": expected_sources,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records a deterministic AlphaEvolve source refresh "
             "gate script plus scheduled and manual GitHub Actions live-network "
-            "execution wiring. It does not claim that a successful live run has "
-            "been archived, that refresh reports are published as durable paper "
-            "artifacts, or that the older per-source sidecars themselves are "
+            "execution wiring and a committed manual live-run outcome sidecar. "
+            "It does not claim that scheduled CI refresh-run history has been "
+            "archived or that the older per-source sidecars themselves are "
             "individually promoted to refresh-ready evidence."
         ),
     }
@@ -133,6 +141,7 @@ def validate_alphaevolve_source_refresh_gate_boundary(
         issues.append(_issue("claim_ready_overclaim", "source refresh-gate boundary must not claim archived live-run readiness"))
     _validate_script_artifact(data.get("script_artifact"), issues)
     _validate_workflow_artifact(data.get("workflow_artifact"), issues)
+    _validate_archived_outcome_artifact(data.get("archived_outcome_artifact"), issues)
     source_count = _validate_expected_source_ids(data.get("expected_source_ids"), issues)
     if data.get("expected_report_schema") != EXPECTED_REPORT_SCHEMA:
         issues.append(_issue("invalid_expected_report_schema", f"expected_report_schema must be {EXPECTED_REPORT_SCHEMA}"))
@@ -141,8 +150,8 @@ def validate_alphaevolve_source_refresh_gate_boundary(
     if (
         not isinstance(boundary_text, str)
         or "scheduled and manual GitHub Actions live-network execution" not in boundary_text
-        or "does not claim that a successful live run has been archived" not in boundary_text
-        or "durable paper artifacts" not in boundary_text
+        or "committed manual live-run outcome sidecar" not in boundary_text
+        or "does not claim that scheduled CI refresh-run history has been archived" not in boundary_text
         or "per-source sidecars" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate refresh-gate wiring from archived live-run evidence"))
@@ -228,6 +237,24 @@ def _validate_workflow_artifact(
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
             issues.append(_issue(f"invalid_workflow_artifact_{field}", f"workflow_artifact.{field} must be {expected_value}"))
+
+
+def _validate_archived_outcome_artifact(
+    value: object,
+    issues: list[AlphaEvolveSourceRefreshGateBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_archived_outcome_artifact", "archived_outcome_artifact must be an object"))
+        return
+    expected = {
+        "path": EXPECTED_ARCHIVED_OUTCOME_PATH,
+        "schema": EXPECTED_ARCHIVED_OUTCOME_SCHEMA,
+        "run_date": "2026-06-14",
+        "run_mode": "live_network",
+    }
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(_issue(f"invalid_archived_outcome_artifact_{field}", f"archived_outcome_artifact.{field} must be {expected_value}"))
 
 
 def _validate_expected_source_ids(

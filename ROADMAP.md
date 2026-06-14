@@ -1490,8 +1490,10 @@ by `papers/lineage_replay_boundary.json`.
   pins the deterministic/live refresh-gate script and the scheduled/manual
   GitHub Actions `source_refresh_gate` job that compares live
   arXiv/DataCite/e-print/license responses against committed source
-  boundaries. Archived successful live-run outcomes and per-source
-  refresh-ready promotion remain open.
+  boundaries. `papers/alphaevolve_source_refresh_run_2026-06-14.json` now
+  archives one successful manual live-network refresh run with six matched
+  source responses and a canonical run-report hash. Scheduled CI refresh-run
+  history and per-source refresh-ready promotion remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

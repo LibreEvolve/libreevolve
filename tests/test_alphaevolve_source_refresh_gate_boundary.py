@@ -16,7 +16,7 @@ def test_alphaevolve_source_refresh_gate_boundary_accepts_record():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "scheduled_live_source_refresh_gate_recorded_without_archived_outcome"
+        == "scheduled_live_source_refresh_gate_recorded_with_archived_manual_outcome"
     )
     assert validation.source_count == 6
     assert validation.missing_evidence_count == 2
@@ -33,8 +33,9 @@ def test_alphaevolve_source_refresh_gate_boundary_rejects_overclaim():
     boundary["boundary_status"] = "source_refresh_gate_publication_ready"
     boundary["script_artifact"]["sha256"] = "0" * 64
     boundary["workflow_artifact"]["schedule_cron"] = "0 0 * * *"
+    boundary["archived_outcome_artifact"]["run_mode"] = "provided_snapshots"
     boundary["expected_source_ids"] = ["datacite_api"]
-    boundary["missing_evidence"]["archived_successful_live_refresh_run"] = "recorded"
+    boundary["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
 
     validation = validate_alphaevolve_source_refresh_gate_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -44,9 +45,10 @@ def test_alphaevolve_source_refresh_gate_boundary_rejects_overclaim():
     assert "invalid_boundary_status" in codes
     assert "invalid_script_artifact_sha256" in codes
     assert "invalid_workflow_artifact_schedule_cron" in codes
+    assert "invalid_archived_outcome_artifact_run_mode" in codes
     assert "invalid_expected_source_ids" in codes
     assert (
-        "invalid_missing_evidence_archived_successful_live_refresh_run"
+        "invalid_missing_evidence_scheduled_ci_refresh_run_history"
         in codes
     )
 
@@ -96,7 +98,7 @@ def test_render_alphaevolve_source_refresh_gate_boundary_summary_reports_shape()
     assert "AlphaEvolve source refresh-gate boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | scheduled_live_source_refresh_gate_recorded_without_archived_outcome |"
+        "| boundary_status | scheduled_live_source_refresh_gate_recorded_with_archived_manual_outcome |"
         in summary
     )
     assert "| source_count | 6 |" in summary

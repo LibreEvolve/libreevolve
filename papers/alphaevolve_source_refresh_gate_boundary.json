@@ -3,7 +3,7 @@
   "source_paper_id": "2506.13131",
   "source_version_id": "2506.13131v1",
   "source_claim": "AlphaEvolve source metadata should have a reusable live source refresh gate that compares current network responses with committed source boundaries.",
-  "boundary_status": "scheduled_live_source_refresh_gate_recorded_without_archived_outcome",
+  "boundary_status": "scheduled_live_source_refresh_gate_recorded_with_archived_manual_outcome",
   "claim_ready": false,
   "script_artifact": {
     "path": "libreevolve/tools/alphaevolve_source_refresh_gate.py",
@@ -20,6 +20,12 @@
     "manual_dispatch_input": "run_source_refresh_gate",
     "live_gate_command": "python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty"
   },
+  "archived_outcome_artifact": {
+    "path": "papers/alphaevolve_source_refresh_run_2026-06-14.json",
+    "schema": "libreevolve.alphaevolve_source_refresh_run_boundary.v1",
+    "run_date": "2026-06-14",
+    "run_mode": "live_network"
+  },
   "expected_report_schema": "libreevolve.alphaevolve_source_refresh_gate_report.v1",
   "expected_source_ids": [
     "versioned_abstract",
@@ -30,8 +36,8 @@
     "license_page"
   ],
   "missing_evidence": {
-    "archived_successful_live_refresh_run": "not_recorded_locally",
-    "published_refresh_artifact_retention": "not_recorded_locally"
+    "scheduled_ci_refresh_run_history": "not_recorded_locally",
+    "per_source_refresh_ready_promotion": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a deterministic AlphaEvolve source refresh gate script plus scheduled and manual GitHub Actions live-network execution wiring. It does not claim that a successful live run has been archived, that refresh reports are published as durable paper artifacts, or that the older per-source sidecars themselves are individually promoted to refresh-ready evidence."
+  "claim_boundary": "This boundary records a deterministic AlphaEvolve source refresh gate script plus scheduled and manual GitHub Actions live-network execution wiring and a committed manual live-run outcome sidecar. It does not claim that scheduled CI refresh-run history has been archived or that the older per-source sidecars themselves are individually promoted to refresh-ready evidence."
 }

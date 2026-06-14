@@ -1,0 +1,139 @@
+{
+  "schema": "libreevolve.alphaevolve_source_refresh_run_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_version_id": "2506.13131v1",
+  "source_claim": "AlphaEvolve source freshness evidence should retain successful live refresh run outcomes, not only the executable refresh gate.",
+  "boundary_status": "manual_live_source_refresh_run_archived_without_scheduled_history",
+  "claim_ready": false,
+  "run_date": "2026-06-14",
+  "run_context": "manual_local_network_run",
+  "refresh_gate_artifact": {
+    "path": "libreevolve/tools/alphaevolve_source_refresh_gate.py",
+    "bytes": 9543,
+    "sha256": "40a5dd07f3f190204d8fb13622f7b05ec2b94b2b9a28b60ceacc7afb9071ffd5",
+    "command": "py -3.12 -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty"
+  },
+  "run_report_sha256": "cbe0004faf698d2350e31695889046ead3e5e6d0d50679f0d03f65d5249b231e",
+  "run_report": {
+    "checks": [
+      {
+        "expected": {
+          "bytes": 50098,
+          "content_type": "text/html; charset=utf-8",
+          "sha256": "ab39ec118afe0874f34179b5a06c42a57799b1103f027942a1ecd54dc3d95471",
+          "status": 200
+        },
+        "issues": [],
+        "observed": {
+          "bytes": 50098,
+          "content_type": "text/html; charset=utf-8",
+          "sha256": "ab39ec118afe0874f34179b5a06c42a57799b1103f027942a1ecd54dc3d95471",
+          "status": 200
+        },
+        "ok": true,
+        "source_id": "versioned_abstract",
+        "url": "https://arxiv.org/abs/2506.13131v1"
+      },
+      {
+        "expected": {
+          "bytes": 49939,
+          "content_type": "text/html; charset=utf-8",
+          "sha256": "707d6aa982e50eca955e6cf7f4a86d2bce2ca6cea543827fea22537ef68d87bb",
+          "status": 200
+        },
+        "issues": [],
+        "observed": {
+          "bytes": 49939,
+          "content_type": "text/html; charset=utf-8",
+          "sha256": "707d6aa982e50eca955e6cf7f4a86d2bce2ca6cea543827fea22537ef68d87bb",
+          "status": 200
+        },
+        "ok": true,
+        "source_id": "current_abstract",
+        "url": "https://arxiv.org/abs/2506.13131"
+      },
+      {
+        "expected": {
+          "bytes": 3525764,
+          "content_type": "application/pdf",
+          "sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+          "status": 200
+        },
+        "issues": [],
+        "observed": {
+          "bytes": 3525764,
+          "content_type": "application/pdf",
+          "sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+          "status": 200
+        },
+        "ok": true,
+        "source_id": "floating_pdf",
+        "url": "https://arxiv.org/pdf/2506.13131.pdf"
+      },
+      {
+        "expected": {
+          "bytes": 15905,
+          "content_type": "application/json",
+          "sha256": "90c017a039e22f04fb6a5bc108ab8edf1614bc446aea83997537a01d2ef38af9",
+          "status": 200
+        },
+        "issues": [],
+        "observed": {
+          "bytes": 15905,
+          "content_type": "application/json; charset=utf-8",
+          "sha256": "90c017a039e22f04fb6a5bc108ab8edf1614bc446aea83997537a01d2ef38af9",
+          "status": 200
+        },
+        "ok": true,
+        "source_id": "datacite_api",
+        "url": "https://api.datacite.org/dois/10.48550%2Farxiv.2506.13131"
+      },
+      {
+        "expected": {
+          "bytes": 2635462,
+          "content_type": "application/gzip",
+          "sha256": "a3ea37c5b6fe967fba459f0daca8548a78e2a1eac45e5c2aac83051ef113f21d",
+          "status": 200
+        },
+        "issues": [],
+        "observed": {
+          "bytes": 2635462,
+          "content_type": "application/gzip",
+          "sha256": "a3ea37c5b6fe967fba459f0daca8548a78e2a1eac45e5c2aac83051ef113f21d",
+          "status": 200
+        },
+        "ok": true,
+        "source_id": "eprint_archive",
+        "url": "https://arxiv.org/e-print/2506.13131"
+      },
+      {
+        "expected": {
+          "bytes": 36988,
+          "content_type": "text/html",
+          "sha256": "7d6f32e34442a8e08c86a77ace49166f7193af0857816b739354493e2c812939",
+          "status": 200
+        },
+        "issues": [],
+        "observed": {
+          "bytes": 36988,
+          "content_type": "text/html",
+          "sha256": "7d6f32e34442a8e08c86a77ace49166f7193af0857816b739354493e2c812939",
+          "status": 200
+        },
+        "ok": true,
+        "source_id": "license_page",
+        "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+      }
+    ],
+    "claim_boundary": "Compares live response status, content type, byte count, and SHA-256 digest against committed AlphaEvolve source boundaries.",
+    "mode": "live_network",
+    "ok": true,
+    "schema": "libreevolve.alphaevolve_source_refresh_gate_report.v1",
+    "source_count": 6
+  },
+  "missing_evidence": {
+    "scheduled_ci_refresh_run_history": "not_recorded_locally",
+    "per_source_refresh_ready_promotion": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary archives one successful manual live-network source refresh run for AlphaEvolve. It does not claim scheduled CI refresh-run history or promote the older per-source snapshot sidecars to standalone refresh-ready evidence."
+}

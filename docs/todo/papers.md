@@ -709,9 +709,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     Actions job that compares live arXiv/DataCite/e-print/license responses
     against committed source boundaries; the paper manifest requires and
     validates that sidecar at the real repo root.
+    `papers/alphaevolve_source_refresh_run_2026-06-14.json` now archives one
+    successful manual live-network refresh run with six matched source
+    responses and a canonical run-report hash.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade freshness evidence, retain successful live refresh-run
-    outcomes and decide whether older per-source sidecars should be promoted
+    publication-grade freshness evidence, retain scheduled CI refresh-run
+    history and decide whether older per-source sidecars should be promoted
     from bounded snapshots to refresh-ready evidence.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend

@@ -58,7 +58,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "cached_pdf_header_text_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "raw_http_headers": "not_recorded_locally",
     "full_current_abs_html_artifact": "not_recorded_locally",
     "full_floating_pdf_response_artifact": "not_recorded_locally",
     "automated_current_version_refresh_gate": "not_recorded_locally",
@@ -120,10 +119,10 @@ def alphaevolve_current_version_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records that the floating arXiv abstract URL still "
             "resolves to version 1 and that the floating PDF digest matches the "
-            "cached PDF. It does not claim raw HTTP header retention, full "
-            "current-abstract HTML retention, full floating-PDF response "
-            "retention, an automated current-version refresh gate, or cached "
-            "PDF header text consistency."
+            "cached PDF, and is paired with the raw HTTP headers sidecar. It "
+            "does not claim full current-abstract HTML retention, full "
+            "floating-PDF response retention, an automated current-version "
+            "refresh gate, or cached PDF header text consistency."
         ),
     }
 
@@ -161,7 +160,7 @@ def validate_alphaevolve_current_version_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim raw HTTP header retention" not in boundary_text
+        or "raw HTTP headers sidecar" not in boundary_text
         or "automated current-version refresh gate" not in boundary_text
         or "cached PDF header text consistency" not in boundary_text
     ):

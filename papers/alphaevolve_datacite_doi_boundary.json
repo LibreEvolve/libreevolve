@@ -44,11 +44,10 @@
     "cached_pdf_header_consistency"
   ],
   "missing_evidence": {
-    "raw_http_headers": "not_recorded_locally",
     "full_raw_response_artifact": "not_recorded_locally",
     "datacite_refresh_gate": "not_recorded_locally",
     "doi_landing_resolution_headers": "not_recorded_locally",
     "cached_pdf_header_consistency": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a bounded DataCite API response summary and content hash for DOI 10.48550/arxiv.2506.13131. It does not claim raw HTTP header retention, full raw response retention, automated DataCite refresh gates, DOI landing-resolution headers, or cached-PDF header consistency."
+  "claim_boundary": "This boundary records a bounded DataCite API response summary and content hash for DOI 10.48550/arxiv.2506.13131 and is paired with the raw HTTP headers sidecar. It does not claim full raw response retention, automated DataCite refresh gates, DOI landing-resolution headers, or cached-PDF header consistency."
 }

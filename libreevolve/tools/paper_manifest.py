@@ -55,6 +55,10 @@ from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import
     alphaevolve_current_version_boundary_record,
     validate_alphaevolve_current_version_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_raw_http_headers_boundary import (
+    alphaevolve_raw_http_headers_boundary_record,
+    validate_alphaevolve_raw_http_headers_boundary,
+)
 from libreevolve.problems.benchmarks.autoconvolution_boundary import (
     autoconvolution_boundary_record,
     validate_autoconvolution_boundary,
@@ -635,6 +639,7 @@ from libreevolve.problems.benchmarks.ttt_discover_boundary import (
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
 ARXIV_ABSTRACT_SNAPSHOT_FILE = "papers/arxiv_abstract_snapshot.json"
 ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE = "papers/alphaevolve_current_version_boundary.json"
+ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_FILE = "papers/alphaevolve_raw_http_headers_boundary.json"
 ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE = "papers/alphaevolve_datacite_doi_boundary.json"
 ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_FILE = "papers/alphaevolve_tex_source_boundary.json"
 ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_FILE = "papers/alphaevolve_license_page_boundary.json"
@@ -1191,6 +1196,7 @@ def validate_paper_manifest(
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_alphaevolve_arxiv_abstract_snapshot(root_path))
     issues.extend(_validate_alphaevolve_current_version_boundary(root_path))
+    issues.extend(_validate_alphaevolve_raw_http_headers_boundary(root_path))
     issues.extend(_validate_alphaevolve_datacite_doi_boundary(root_path))
     issues.extend(_validate_alphaevolve_tex_source_boundary(root_path))
     issues.extend(_validate_alphaevolve_license_page_boundary(root_path))
@@ -1951,6 +1957,38 @@ def _validate_alphaevolve_current_version_boundary(root_path: Path) -> list[Pape
     return [
         PaperManifestIssue(
             f"alphaevolve_current_version_boundary_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_raw_http_headers_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_raw_http_headers_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_raw_http_headers_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_FILE} must emit "
+                        "the AlphaEvolve raw HTTP headers boundary"
+                    ),
+                    "2506.13131",
+                )
+            ]
+    report = validate_alphaevolve_raw_http_headers_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_raw_http_headers_boundary_{issue.code}",
             issue.message,
             "2506.13131",
         )

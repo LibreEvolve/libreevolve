@@ -61,10 +61,11 @@ Important limits:
   `papers/arxiv_abstract_snapshot.json` now pins an abstract-page byte/hash and
   normalized metadata snapshot; DataCite DOI, TeX/e-print, license-page, and
   current-version/floating-PDF digest sidecars now preserve bounded response
-  metadata and hashes. No full HTML artifact, raw HTTP headers,
-  extraction-script artifact, full raw DataCite response, full TeX-source
-  cache, full license-page cache, full floating-PDF response retention,
-  cached-PDF header consistency record, or automated refresh gate exists yet.
+  metadata and hashes, while the raw HTTP headers sidecar preserves pinned
+  source response header lines. No full HTML artifact, extraction-script
+  artifact, full raw DataCite response, full TeX-source cache, full
+  license-page cache, full floating-PDF response retention, cached-PDF header
+  consistency record, or automated refresh gate exists yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text
@@ -1236,12 +1237,12 @@ Important limits:
   SHA-256 digest, normalized author list, subject classes, DOI URL, submitted
   timestamp, TeX-source URL, license URL, and submission-history entry.
   DataCite DOI, TeX/e-print, license-page, and current-version/floating-PDF
-  digest sidecars now preserve bounded response metadata and hashes. This is
-  not raw HTTP header retention, extraction-script provenance, full raw
-  DataCite response retention, full TeX-source archive caching, full
-  license-page caching, committed full HTML content, full floating-PDF response
-  retention, cached-PDF header consistency evidence, or an automated CI refresh
-  gate.
+  digest sidecars now preserve bounded response metadata and hashes, and the
+  raw HTTP headers sidecar preserves pinned response header lines. This is not
+  extraction-script provenance, full raw DataCite response retention, full
+  TeX-source archive caching, full license-page caching, committed full HTML
+  content, full floating-PDF response retention, cached-PDF header consistency
+  evidence, or an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

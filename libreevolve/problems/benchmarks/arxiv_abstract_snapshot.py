@@ -61,7 +61,6 @@ EXPECTED_HISTORY = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "full_html_artifact_committed": "not_recorded_locally",
-    "raw_http_response_headers": "not_recorded_locally",
     "metadata_extraction_script_artifact": "not_recorded_locally",
     "cached_pdf_header_consistency_record": "not_recorded_locally",
     "automated_live_refresh_ci_gate": "not_recorded_locally",
@@ -134,11 +133,11 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records an arXiv abstract-page HTML byte count, "
             "SHA-256 digest, and normalized source metadata for AlphaEvolve "
-            "2506.13131v1. It does not commit the full HTML body, resolve "
-            "raw HTTP response headers, preserve the metadata extraction "
-            "script artifact, resolve DataCite DOI metadata, retain the full "
-            "TeX source archive, record cached-PDF header consistency, or "
-            "install an automated live-refresh CI gate."
+            "2506.13131v1 and is paired with the raw HTTP headers sidecar. It "
+            "does not commit the full HTML body, preserve the metadata "
+            "extraction script artifact, resolve DataCite DOI metadata, retain "
+            "the full TeX source archive, record cached-PDF header "
+            "consistency, or install an automated live-refresh CI gate."
         ),
     }
 
@@ -176,7 +175,7 @@ def validate_alphaevolve_arxiv_abstract_snapshot(
     if (
         not isinstance(boundary_text, str)
         or "does not commit the full HTML body" not in boundary_text
-        or "raw HTTP response headers" not in boundary_text
+        or "raw HTTP headers sidecar" not in boundary_text
         or "metadata extraction script artifact" not in boundary_text
         or "DataCite DOI metadata" not in boundary_text
         or "cached-PDF header consistency" not in boundary_text

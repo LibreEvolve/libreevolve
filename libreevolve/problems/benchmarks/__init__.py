@@ -65,6 +65,12 @@ from libreevolve.problems.benchmarks.alphaevolve_current_version_boundary import
     render_alphaevolve_current_version_boundary_summary,
     validate_alphaevolve_current_version_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_raw_http_headers_boundary import (
+    ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_SCHEMA,
+    alphaevolve_raw_http_headers_boundary_record,
+    render_alphaevolve_raw_http_headers_boundary_summary,
+    validate_alphaevolve_raw_http_headers_boundary,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA as APPENDIX_A_MATRIX_CURATION_SCHEMA,
     EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA as APPENDIX_A_MATRIX_EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
@@ -1003,6 +1009,7 @@ __all__ = [
     "ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA",
     "ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_SCHEMA",
@@ -1198,6 +1205,7 @@ __all__ = [
     "alphaevolve_references_section_record",
     "alphaevolve_arxiv_abstract_snapshot_record",
     "alphaevolve_current_version_boundary_record",
+    "alphaevolve_raw_http_headers_boundary_record",
     "alphaevolve_datacite_doi_boundary_record",
     "alphaevolve_license_page_boundary_record",
     "alphaevolve_tex_source_boundary_record",
@@ -1497,6 +1505,7 @@ __all__ = [
     "render_ttt_discover_boundary_summary",
     "render_alphaevolve_2026_impact_boundary_summary",
     "render_alphaevolve_current_version_boundary_summary",
+    "render_alphaevolve_raw_http_headers_boundary_summary",
     "render_alphaevolve_datacite_doi_boundary_summary",
     "render_alphaevolve_license_page_boundary_summary",
     "render_alphaevolve_tex_source_boundary_summary",
@@ -1528,6 +1537,7 @@ __all__ = [
     "validate_alphaevolve_2026_impact_boundary",
     "validate_alphaevolve_arxiv_abstract_snapshot",
     "validate_alphaevolve_current_version_boundary",
+    "validate_alphaevolve_raw_http_headers_boundary",
     "validate_alphaevolve_datacite_doi_boundary",
     "validate_alphaevolve_license_page_boundary",
     "validate_alphaevolve_tex_source_boundary",

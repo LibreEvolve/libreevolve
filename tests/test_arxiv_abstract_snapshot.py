@@ -16,7 +16,7 @@ def test_alphaevolve_arxiv_abstract_snapshot_accepts_pinned_metadata():
     assert validation.live_refresh_checked is False
     assert validation.author_count == 18
     assert validation.subject_count == 3
-    assert validation.missing_evidence_count == 5
+    assert validation.missing_evidence_count == 4
     assert snapshot["schema"] == ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA
     assert snapshot["html_snapshot"]["bytes"] == 50098
     assert (
@@ -25,7 +25,7 @@ def test_alphaevolve_arxiv_abstract_snapshot_accepts_pinned_metadata():
     )
     assert snapshot["normalized_metadata"]["subject_codes"] == ["cs.AI", "cs.LG", "cs.NE"]
     assert "does not commit the full HTML body" in snapshot["claim_boundary"]
-    assert "raw HTTP response headers" in snapshot["claim_boundary"]
+    assert "raw HTTP headers sidecar" in snapshot["claim_boundary"]
     assert "cached-PDF header consistency" in snapshot["claim_boundary"]
 
 
@@ -33,7 +33,6 @@ def test_alphaevolve_arxiv_abstract_snapshot_rejects_digest_and_metadata_drift()
     snapshot = alphaevolve_arxiv_abstract_snapshot_record()
     snapshot["html_snapshot"]["sha256"] = "0" * 64
     snapshot["normalized_metadata"]["author_count"] = 17
-    snapshot["missing_evidence"]["raw_http_response_headers"] = "recorded"
     snapshot["missing_evidence"]["cached_pdf_header_consistency_record"] = "recorded"
 
     validation = validate_alphaevolve_arxiv_abstract_snapshot(snapshot)
@@ -42,7 +41,6 @@ def test_alphaevolve_arxiv_abstract_snapshot_rejects_digest_and_metadata_drift()
     assert validation.ok is False
     assert "invalid_html_snapshot_sha256" in codes
     assert "invalid_metadata_author_count" in codes
-    assert "invalid_missing_evidence_raw_http_response_headers" in codes
     assert "invalid_missing_evidence_cached_pdf_header_consistency_record" in codes
 
 

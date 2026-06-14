@@ -17,7 +17,7 @@ def test_alphaevolve_license_page_boundary_accepts_digest_record():
         == "license_page_digest_without_full_html_or_refresh_gate"
     )
     assert validation.required_evidence_field_count == 13
-    assert validation.missing_evidence_count == 3
+    assert validation.missing_evidence_count == 2
     assert boundary["schema"] == ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_SCHEMA
     assert boundary["license_page_snapshot"]["response_bytes"] == 36988
     assert boundary["license_page_snapshot"]["license_family"] == "CC BY-NC-ND"
@@ -52,4 +52,4 @@ def test_render_alphaevolve_license_page_boundary_summary_reports_shape():
         in summary
     )
     assert "| required_evidence_field_count | 13 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

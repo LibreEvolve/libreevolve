@@ -44,7 +44,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "full_html_artifact": "not_recorded_locally",
-    "raw_http_headers": "not_recorded_locally",
     "license_page_refresh_gate": "not_recorded_locally",
 }
 
@@ -93,9 +92,9 @@ def alphaevolve_license_page_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records the Creative Commons license URL, status, "
             "content type, byte count, SHA-256 digest, title, family, and "
-            "version for the AlphaEvolve source-license page. It does not "
-            "claim full HTML retention, raw HTTP header retention, or an "
-            "automated license-page refresh gate."
+            "version for the AlphaEvolve source-license page and is paired "
+            "with the raw HTTP headers sidecar. It does not claim full HTML "
+            "retention or an automated license-page refresh gate."
         ),
     }
 
@@ -132,7 +131,7 @@ def validate_alphaevolve_license_page_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim full HTML retention" not in boundary_text
-        or "raw HTTP header retention" not in boundary_text
+        or "raw HTTP headers sidecar" not in boundary_text
         or "license-page refresh gate" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate the license digest from full retention/refresh evidence"))

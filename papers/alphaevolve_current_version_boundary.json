@@ -51,11 +51,10 @@
     "cached_pdf_header_text_consistency"
   ],
   "missing_evidence": {
-    "raw_http_headers": "not_recorded_locally",
     "full_current_abs_html_artifact": "not_recorded_locally",
     "full_floating_pdf_response_artifact": "not_recorded_locally",
     "automated_current_version_refresh_gate": "not_recorded_locally",
     "cached_pdf_header_text_consistency": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that the floating arXiv abstract URL still resolves to version 1 and that the floating PDF digest matches the cached PDF. It does not claim raw HTTP header retention, full current-abstract HTML retention, full floating-PDF response retention, an automated current-version refresh gate, or cached PDF header text consistency."
+  "claim_boundary": "This boundary records that the floating arXiv abstract URL still resolves to version 1 and that the floating PDF digest matches the cached PDF, and is paired with the raw HTTP headers sidecar. It does not claim full current-abstract HTML retention, full floating-PDF response retention, an automated current-version refresh gate, or cached PDF header text consistency."
 }

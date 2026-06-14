@@ -387,6 +387,67 @@ def test_validate_paper_manifest_requires_alphaevolve_current_version_boundary_a
     assert "alphaevolve_current_version_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_alphaevolve_raw_http_headers_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_raw_http_headers_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_raw_http_headers_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_raw_http_headers_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "raw_http_headers_refresh_gate_ready"
+    record["header_snapshots"]["floating_pdf"]["raw_header_lines"] = []
+    record["missing_evidence"]["automated_header_refresh_gate"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_raw_http_headers_boundary_claim_ready_overclaim" in codes
+    assert "alphaevolve_raw_http_headers_boundary_invalid_boundary_status" in codes
+    assert "alphaevolve_raw_http_headers_boundary_invalid_floating_pdf_raw_header_lines" in codes
+    assert (
+        "alphaevolve_raw_http_headers_boundary_invalid_missing_evidence_automated_header_refresh_gate"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_raw_http_headers_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_raw_http_headers_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_alphaevolve_datacite_doi_boundary(
     tmp_path,
 ):
@@ -416,7 +477,7 @@ def test_validate_paper_manifest_rejects_alphaevolve_datacite_doi_boundary_drift
     record["claim_ready"] = True
     record["boundary_status"] = "full_source_refresh_gate_ready"
     record["datacite_api_snapshot"]["creator_count"] = 17
-    record["missing_evidence"]["raw_http_headers"] = "recorded"
+    record["missing_evidence"]["datacite_refresh_gate"] = "recorded"
     sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -428,7 +489,7 @@ def test_validate_paper_manifest_rejects_alphaevolve_datacite_doi_boundary_drift
     assert "alphaevolve_datacite_doi_boundary_invalid_boundary_status" in codes
     assert "alphaevolve_datacite_doi_boundary_invalid_snapshot_creator_count" in codes
     assert (
-        "alphaevolve_datacite_doi_boundary_invalid_missing_evidence_raw_http_headers"
+        "alphaevolve_datacite_doi_boundary_invalid_missing_evidence_datacite_refresh_gate"
         in codes
     )
 

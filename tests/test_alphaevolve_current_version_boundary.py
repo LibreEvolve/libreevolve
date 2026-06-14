@@ -17,7 +17,7 @@ def test_alphaevolve_current_version_boundary_accepts_digest_record():
         == "current_v1_and_floating_pdf_digest_without_refresh_gate"
     )
     assert validation.required_evidence_field_count == 22
-    assert validation.missing_evidence_count == 5
+    assert validation.missing_evidence_count == 4
     assert boundary["schema"] == ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_SCHEMA
     assert boundary["current_abs_snapshot"]["resolved_current_version"] == 1
     assert boundary["floating_pdf_snapshot"]["floating_pdf_matches_cached_pdf"] is True
@@ -54,4 +54,4 @@ def test_render_alphaevolve_current_version_boundary_summary_reports_shape():
         in summary
     )
     assert "| required_evidence_field_count | 22 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

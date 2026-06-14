@@ -33,8 +33,7 @@
   ],
   "missing_evidence": {
     "full_html_artifact": "not_recorded_locally",
-    "raw_http_headers": "not_recorded_locally",
     "license_page_refresh_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the Creative Commons license URL, status, content type, byte count, SHA-256 digest, title, family, and version for the AlphaEvolve source-license page. It does not claim full HTML retention, raw HTTP header retention, or an automated license-page refresh gate."
+  "claim_boundary": "This boundary records the Creative Commons license URL, status, content type, byte count, SHA-256 digest, title, family, and version for the AlphaEvolve source-license page and is paired with the raw HTTP headers sidecar. It does not claim full HTML retention or an automated license-page refresh gate."
 }

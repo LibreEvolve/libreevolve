@@ -1507,7 +1507,13 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             for record in [*active_todo_records, *completed_todo_records]
             if not record["exists"]
         ]
-        row_local_artifact_paths = sorted(_status_local_artifact_paths(status_text))
+        row_local_artifact_mention_records = _status_local_artifact_mention_records(
+            status_text,
+            status_record["line_number"],
+        )
+        row_local_artifact_paths = sorted(
+            {record["path"] for record in row_local_artifact_mention_records}
+        )
         active_todo_content_records = _status_todo_evidence_content_records(
             root_path,
             row_id,
@@ -1569,6 +1575,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
                 },
                 "manifest_file": manifest_row.get("file", ""),
                 "local_artifact_paths": row_local_artifact_paths,
+                "local_artifact_mention_records": row_local_artifact_mention_records,
                 "local_artifact_records": row_local_artifact_records,
                 "local_artifact_existing_count": (
                     len(row_local_artifact_paths) - len(row_missing_local_artifacts)
@@ -1624,6 +1631,9 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
     unique_local_artifacts = sorted(
         {path for row in inventory_rows for path in row["local_artifact_paths"]}
     )
+    local_artifact_mention_record_count = sum(
+        len(row["local_artifact_mention_records"]) for row in inventory_rows
+    )
     missing_local_artifacts = sorted(
         {path for row in inventory_rows for path in row["local_artifact_missing_paths"]}
     )
@@ -1647,6 +1657,11 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             for claim in row["status_claims"]
             for path in claim["evidence_links"]["phrase_local_artifacts_missing_from_todo_evidence"]
         }
+    )
+    phrase_local_artifact_mention_record_count = sum(
+        len(claim["evidence_links"]["phrase_local_artifact_mention_records"])
+        for row in inventory_rows
+        for claim in row["status_claims"]
     )
     absence_phrase_ids = [
         claim["claim_id"]
@@ -1672,6 +1687,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         "status_class_counts": dict(sorted(status_class_counts.items())),
         "unique_local_artifact_paths": unique_local_artifacts,
         "unique_local_artifact_count": len(unique_local_artifacts),
+        "local_artifact_mention_record_count": local_artifact_mention_record_count,
         "missing_local_artifact_paths": missing_local_artifacts,
         "artifact_existence_status": (
             "all_referenced_local_artifacts_present"
@@ -1699,6 +1715,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             else "no_row_local_artifacts_referenced"
         ),
         "phrase_local_artifacts_missing_from_todo_evidence": phrase_local_artifacts_missing_from_todo,
+        "phrase_local_artifact_mention_record_count": phrase_local_artifact_mention_record_count,
         "phrase_todo_content_evidence_status": (
             "all_phrase_local_artifacts_mentioned_in_todo_evidence"
             if unique_local_artifacts and not phrase_local_artifacts_missing_from_todo
@@ -1716,11 +1733,12 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "This inventory records one structured row for every "
             "papers/README.md implementation-status table row, including "
             "role, status class, status text hash, manifest file, local "
-            "artifact mentions and existence records, row source line, TODO "
-            "evidence paths and existence records, and status-cell phrase "
-            "hashes with character offsets and candidate evidence links plus "
-            "row/phrase-specific TODO content artifact-mention records and "
-            "absence-signal classification. It does not claim phrase-level "
+            "artifact mention source offsets and existence records, row "
+            "source line, TODO evidence paths and existence records, and "
+            "status-cell phrase hashes with character offsets and candidate "
+            "evidence links plus row/phrase-specific TODO content "
+            "artifact-mention records and absence-signal classification. It "
+            "does not claim phrase-level "
             "status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
@@ -3829,6 +3847,7 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         ("status_class_counts", "status claim inventory status-class counts drifted"),
         ("unique_local_artifact_paths", "status claim inventory unique local artifact paths drifted"),
         ("unique_local_artifact_count", "status claim inventory unique local artifact count drifted"),
+        ("local_artifact_mention_record_count", "status claim inventory local artifact mention count drifted"),
         ("missing_local_artifact_paths", "status claim inventory missing local artifact paths drifted"),
         ("artifact_existence_status", "status claim inventory artifact existence status drifted"),
         ("unique_todo_evidence_paths", "status claim inventory unique TODO evidence paths drifted"),
@@ -3843,6 +3862,10 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         (
             "phrase_local_artifacts_missing_from_todo_evidence",
             "status claim inventory phrase TODO content local artifact mentions drifted",
+        ),
+        (
+            "phrase_local_artifact_mention_record_count",
+            "status claim inventory phrase local artifact mention count drifted",
         ),
         ("phrase_todo_content_evidence_status", "status claim inventory phrase TODO content status drifted"),
         ("absence_phrase_count", "status claim inventory absence phrase count drifted"),
@@ -8485,6 +8508,34 @@ def _status_local_artifact_paths(status: str) -> set[str]:
     return {match.group(0).strip("`") for match in LOCAL_ARTIFACT_PATH_RE.finditer(status)}
 
 
+def _status_local_artifact_mention_records(
+    status_text: str,
+    line_number: int,
+    *,
+    status_text_char_offset: int = 0,
+) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for match in LOCAL_ARTIFACT_PATH_RE.finditer(status_text):
+        start = status_text_char_offset + match.start()
+        end = status_text_char_offset + match.end()
+        records.append(
+            {
+                "path": match.group(0).strip("`"),
+                "status_text_char_start": start,
+                "status_text_char_end": end,
+                "source_span": {
+                    "path": "papers/README.md",
+                    "section": "Implementation status",
+                    "line_start": line_number,
+                    "line_end": line_number,
+                    "status_text_char_start": start,
+                    "status_text_char_end": end,
+                },
+            }
+        )
+    return records
+
+
 def _local_artifact_path_records(root: Path, paths: list[str]) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for relative_path in paths:
@@ -8666,7 +8717,14 @@ def _status_claim_inventory_phrases(
     todo_content_records = [*active_todo_content_records, *completed_todo_content_records]
     for ordinal, (start, end) in enumerate(_status_claim_phrase_spans(status_text), start=1):
         phrase = status_text[start:end]
-        phrase_local_artifact_paths = sorted(_status_local_artifact_paths(phrase))
+        phrase_local_artifact_mention_records = _status_local_artifact_mention_records(
+            phrase,
+            line_number,
+            status_text_char_offset=start,
+        )
+        phrase_local_artifact_paths = sorted(
+            {record["path"] for record in phrase_local_artifact_mention_records}
+        )
         phrase_local_artifact_records = _local_artifact_path_records(root, phrase_local_artifact_paths)
         phrase_missing_local_artifacts = [
             record["path"] for record in phrase_local_artifact_records if not record["exists"]
@@ -8700,6 +8758,7 @@ def _status_claim_inventory_phrases(
                 },
                 "evidence_links": {
                     "phrase_local_artifact_paths": phrase_local_artifact_paths,
+                    "phrase_local_artifact_mention_records": phrase_local_artifact_mention_records,
                     "phrase_local_artifact_records": phrase_local_artifact_records,
                     "phrase_local_artifact_missing_paths": phrase_missing_local_artifacts,
                     "phrase_artifact_existence_status": (

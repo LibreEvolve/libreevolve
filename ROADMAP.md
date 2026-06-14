@@ -828,10 +828,11 @@ is not yet an AlphaEvolve reproduction.
   `papers/implementation_evidence_map_boundary.json` records core
   AlphaEvolve requirement anchors with module, test, sidecar, and TODO links,
   and `papers/status_claim_inventory.json` records checked row-level paper
-  status inventory plus status-cell phrase hashes, source offsets, and
-  candidate evidence-link lists plus referenced local artifact and TODO
-  evidence-path existence checks plus row/phrase-specific TODO content
-  artifact mention records and structural absence-signal classification, while
+  status inventory plus status-cell phrase hashes, source offsets, local
+  artifact mention source offsets, and candidate evidence-link lists plus
+  referenced local artifact and TODO evidence-path existence checks plus
+  row/phrase-specific TODO content artifact mention records and structural
+  absence-signal classification, while
   `papers/benchmark_coverage_inventory.json` records structural implemented
   benchmark coverage bullets plus referenced local artifact mention source
   offsets/existence checks and limitation-signal term/source-offset

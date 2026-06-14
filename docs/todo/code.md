@@ -43,10 +43,11 @@ sidecars, tests, and active TODOs.
     prompting/sampling, the evolutionary database, async/distributed topology,
     and published benchmarks with module/test/sidecar/TODO references while
     `papers/status_claim_inventory.json` now records checked row-level paper
-    status inventory plus status-cell phrase hashes, source offsets, and
-    candidate evidence-link lists with local artifact and TODO evidence-path
-    existence checks plus row/phrase-specific TODO content artifact-mention
-    records and structural absence-signal classification.
+    status inventory plus status-cell phrase hashes, source offsets, local
+    artifact mention source offsets, and candidate evidence-link lists with
+    local artifact and TODO evidence-path existence checks plus
+    row/phrase-specific TODO content artifact-mention records and structural
+    absence-signal classification.
     `papers/benchmark_coverage_inventory.json` records structural evidence,
     local artifact mention source offsets and existence checks, and
     limitation-signal term/source-offset classification for implemented
@@ -60,10 +61,11 @@ sidecars, tests, and active TODOs.
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
     coverage; no per-phrase evidence-sufficiency check proves long status-cell
-    semantics beyond referenced artifact/TODO path existence and row-specific
-    or phrase-specific TODO artifact mentions, or implemented-benchmark
-    coverage qualifiers beyond referenced artifact mention/existence/source
-    offsets and structural limitation-signal terms/source offsets; no
+    semantics beyond referenced artifact/TODO path existence, row-specific or
+    phrase-specific TODO artifact mentions, and artifact mention source
+    offsets, or implemented-benchmark coverage qualifiers beyond referenced
+    artifact mention/existence/source offsets and structural limitation-signal
+    terms/source offsets; no
     absence-sentence freshness verifier proves structurally detected absence
     phrases are still current; and no generated
     code-audit report proves that all implemented and missing

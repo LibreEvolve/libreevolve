@@ -1245,10 +1245,11 @@ Important limits:
   database behavior, async/distributed topology, and published benchmark
   evidence. The checked `papers/status_claim_inventory.json` sidecar now
   records row-level paper status inventory plus status-cell phrase hashes,
-  source offsets, candidate evidence-link lists, and referenced local artifact
-  and TODO evidence-path existence checks plus row-specific TODO content
-  artifact-mention records, phrase-local TODO content backing, and structural
-  absence-signal classification. The checked
+  source offsets, local artifact mention source offsets, candidate
+  evidence-link lists, and referenced local artifact and TODO evidence-path
+  existence checks plus row-specific TODO content artifact-mention records,
+  phrase-local TODO content backing, and structural absence-signal
+  classification. The checked
   `papers/benchmark_coverage_inventory.json` sidecar now records structural
   implemented-benchmark coverage bullet evidence plus referenced local
   artifact existence checks. This is not an exhaustive

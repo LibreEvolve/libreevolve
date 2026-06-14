@@ -11330,10 +11330,29 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     assert inventory["rows"][0]["source_span"]["line_start"] > 0
     assert inventory["rows"][0]["all_local_artifacts_exist"] is True
     assert inventory["rows"][0]["local_artifact_existing_count"] == 1
+    status_artifact_start = PARTIAL_FIXTURE_STATUS.find("`libreevolve/core/loop.py`")
+    status_artifact_end = status_artifact_start + len("`libreevolve/core/loop.py`")
+    expected_status_artifact_mention = {
+        "path": "libreevolve/core/loop.py",
+        "status_text_char_start": status_artifact_start,
+        "status_text_char_end": status_artifact_end,
+        "source_span": {
+            "path": "papers/README.md",
+            "section": "Implementation status",
+            "line_start": inventory["rows"][0]["source_span"]["line_start"],
+            "line_end": inventory["rows"][0]["source_span"]["line_start"],
+            "status_text_char_start": status_artifact_start,
+            "status_text_char_end": status_artifact_end,
+        },
+    }
+    assert inventory["rows"][0]["local_artifact_mention_records"] == [
+        expected_status_artifact_mention
+    ]
     assert inventory["rows"][0]["local_artifact_records"] == [
         {"path": "libreevolve/core/loop.py", "exists": True, "kind": "file"}
     ]
     assert inventory["unique_local_artifact_count"] == 1
+    assert inventory["local_artifact_mention_record_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []
     assert inventory["artifact_existence_status"] == "all_referenced_local_artifacts_present"
     expected_todo_count = len(
@@ -11376,6 +11395,13 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         == "candidate_links_recorded_without_semantic_verification"
     )
     assert "row_active_todo_paths" in inventory["rows"][0]["status_claims"][0]["evidence_links"]
+    assert (
+        inventory["rows"][0]["status_claims"][0]["evidence_links"][
+            "phrase_local_artifact_mention_records"
+        ]
+        == [expected_status_artifact_mention]
+    )
+    assert inventory["phrase_local_artifact_mention_record_count"] == 1
     assert (
         inventory["rows"][0]["status_claims"][0]["evidence_links"][
             "phrase_todo_content_evidence_status"

@@ -1437,11 +1437,11 @@ matrix, per-phrase evidence-link sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
 status inventory with status text hashes, status classes, local artifact
-mentions and existence records, row source lines, TODO evidence paths, and
-TODO evidence-path existence records, and status-cell phrase hashes with source
-offsets plus candidate evidence-link lists and row-specific TODO content
-artifact-mention records plus phrase-local TODO content backing, but it is not
-phrase-level semantic proof or absence-sentence freshness proof. The checked
+mention source offsets and existence records, row source lines, TODO evidence
+paths, and TODO evidence-path existence records, and status-cell phrase hashes
+with source offsets plus candidate evidence-link lists and row-specific TODO
+content artifact-mention records plus phrase-local TODO content backing, but it
+is not phrase-level semantic proof or absence-sentence freshness proof. The checked
 `papers/benchmark_coverage_inventory.json` sidecar records structural
 implemented-benchmark coverage bullet entries with source lines, hashes,
 local-artifact mention source offsets, artifact-existence records,
@@ -2860,17 +2860,19 @@ Implemented:
 - `papers/status_claim_inventory.json`: row-level paper-index
   implementation-status inventory with one record per status row, status text
   hash, role/status class, manifest-file link, source line, local artifact
-  mentions and existence records, active/completed TODO evidence paths and
-  existence records, and status-cell phrase hashes with source offsets plus
-  candidate evidence-link lists. The current inventory records 60 unique
-  referenced local artifact paths and zero missing referenced local artifacts,
-  plus 6 unique referenced TODO evidence paths and zero missing referenced TODO
-  evidence paths, and zero status-row local artifact paths missing from linked
-  row-specific TODO evidence. It also records zero status-phrase local artifact
-  paths missing from linked row-specific TODO evidence, and structurally
-  classifies 87 status-cell absence-signal phrases. It is not status-cell
-  phrase-level semantic verification, evidence-link sufficiency proof, or
-  absence-sentence freshness evidence.
+  mention source offsets and existence records, active/completed TODO evidence
+  paths and existence records, and status-cell phrase hashes with source
+  offsets plus candidate evidence-link lists. The current inventory records 60
+  unique referenced local artifact paths, 60 row-level artifact mention
+  records, 60 phrase-level artifact mention records, and zero missing
+  referenced local artifacts, plus 6 unique referenced TODO evidence paths and
+  zero missing referenced TODO evidence paths, and zero status-row local
+  artifact paths missing from linked row-specific TODO evidence. It also
+  records zero status-phrase local artifact paths missing from linked
+  row-specific TODO evidence, and structurally classifies 87 status-cell
+  absence-signal phrases. It is not status-cell phrase-level semantic
+  verification, evidence-link sufficiency proof, or absence-sentence freshness
+  evidence.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit

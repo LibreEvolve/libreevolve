@@ -6398,6 +6398,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     identities, seed/budget records, compiler build/runtime environment
     metadata, independent checker outputs, and reproducibility status.
 
+- [ ] Reproduce AI-PROPELLER warehouse-scale code-layout evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.00131`, submitted May 28, 2026, is
+    titled `AI-PROPELLER: Warehouse-Scale Interprocedural Code Layout
+    Optimization with AlphaEvolve`. Its abstract says AI-PROPELLER uses
+    Magellan and AlphaEvolve to evolve Propeller's compiler heuristic into a
+    fine-grained interprocedural optimizer, uses Vizier to tune policy
+    hyperparameters, executes generated layout variants on actual hardware to
+    measure real performance counters, and reports `0.23%` to `1.6%`
+    performance improvements on benchmarks including large warehouse-scale
+    applications optimized with state-of-the-art FDO and PLO.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.00131`. The broader Magellan compiler-optimization row
+    does not capture AI-PROPELLER's post-link optimizer setting,
+    interprocedural code-layout candidate artifacts, Vizier tuning phase,
+    hardware-counter reward loop, warehouse-scale application benchmark
+    metadata, FDO/PLO baselines, or reported `0.23%` to `1.6%` result
+    boundary.
+  - Required result: add reproduction-grade evidence for `2606.00131`:
+    title/authors/arXiv version/date, source license, relation to AlphaEvolve,
+    Magellan, Propeller, Vizier, and LibreEvolve's current code-search loop,
+    interprocedural code-layout candidate schemas, Propeller integration
+    metadata, policy-hyperparameter tuning records, generated layout variant
+    artifacts, actual-hardware benchmark environment, performance-counter
+    reward definitions, benchmark and warehouse-scale workload provenance,
+    FDO/PLO/BOLT baseline identities, result tables for the reported
+    performance range, code/artifact availability status, independent
+    verification outputs, and README/ROADMAP wording that treats
+    AI-PROPELLER-style warehouse-scale compiler optimization as missing paper
+    evidence rather than implemented LibreEvolve support.
+
 - [ ] Implement AlphaEvolve ArchAgent computer-architecture paper evidence beyond source boundary.
   - Paper/source evidence: arXiv `2602.22425`, submitted February 25, 2026, is
     titled `ArchAgent: Agentic AI-driven Computer Architecture Discovery`.

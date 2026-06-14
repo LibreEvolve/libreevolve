@@ -1448,9 +1448,10 @@ by `papers/lineage_replay_boundary.json`.
   this built-in record and the committed `papers/source_versions.json`
   companion manifest, which emits the `2506.13131v1` source-version row and
   links it to docs/TODO claim surfaces while keeping the legacy CSV/JSON
-  download manifests as PDF cache ledgers. Full arXiv abstract-page parity
-  is still not claimed, but `papers/arxiv_abstract_snapshot.json` now records
-  the current abstract-page byte count, SHA-256 digest, normalized title,
+  download manifests as PDF cache ledgers. Full publication-grade source
+  metadata parity is still not claimed, but
+  `papers/arxiv_abstract_snapshot.json` now records the current abstract-page
+  byte count, SHA-256 digest, retained HTML artifact path, normalized title,
   author list, subject classes, DOI URL, submitted timestamp, TeX-source URL,
   license URL, and submission-history entry.
   `papers/alphaevolve_datacite_doi_boundary.json` now pins a bounded DataCite
@@ -1477,9 +1478,8 @@ by `papers/lineage_replay_boundary.json`.
   inventory. `papers/alphaevolve_license_page_html_retention_boundary.json`
   now retains the Creative Commons license-page HTML artifact and validates its
   bytes, hash, and key content markers. Metadata extraction-script artifacts,
-  committed full arXiv abstract-page HTML content, full floating-PDF response
-  retention, cached-PDF header consistency records, and automated CI refresh
-  gates remain open.
+  full floating-PDF response retention, cached-PDF header consistency records,
+  and automated CI refresh gates remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

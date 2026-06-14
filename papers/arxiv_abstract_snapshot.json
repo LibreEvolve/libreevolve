@@ -10,7 +10,17 @@
     "content_type": "text/html; charset=utf-8",
     "bytes": 50098,
     "sha256": "ab39ec118afe0874f34179b5a06c42a57799b1103f027942a1ecd54dc3d95471",
-    "full_html_committed": false
+    "full_html_committed": true,
+    "html_artifact_path": "papers/arxiv_abstract_2506.13131v1.html",
+    "html_artifact_bytes": 50098,
+    "html_artifact_sha256": "ab39ec118afe0874f34179b5a06c42a57799b1103f027942a1ecd54dc3d95471",
+    "content_markers": {
+      "has_doctype": true,
+      "has_arxiv_id": true,
+      "has_title": true,
+      "has_doi": true,
+      "has_license_href": true
+    }
   },
   "normalized_metadata": {
     "title": "AlphaEvolve: A coding agent for scientific and algorithmic discovery",
@@ -58,11 +68,11 @@
   },
   "source_version_boundary_link": {
     "source_versions_file": "papers/source_versions.json",
-    "expected_abstract_page_metadata_status": "manual_current_as_of_2026-06-13_without_html_snapshot",
-    "updates_manual_metadata_with_html_digest": true
+    "expected_abstract_page_metadata_status": "manual_current_as_of_2026-06-13_with_html_snapshot",
+    "updates_manual_metadata_with_html_digest": true,
+    "retains_full_html_artifact": true
   },
   "missing_evidence": {
-    "full_html_artifact_committed": "not_recorded_locally",
     "metadata_extraction_script_artifact": "not_recorded_locally",
     "cached_pdf_header_consistency_record": "not_recorded_locally",
     "automated_live_refresh_ci_gate": "not_recorded_locally"
@@ -73,5 +83,5 @@
     "live_snapshot_input_required_for_network_refresh": true,
     "drift_policy": "fail_if_live_html_digest_or_normalized_metadata_differs"
   },
-  "claim_boundary": "This boundary records an arXiv abstract-page HTML byte count, SHA-256 digest, and normalized source metadata for AlphaEvolve 2506.13131v1 and is paired with the raw HTTP headers sidecar. It does not commit the full HTML body, preserve the metadata extraction script artifact, resolve DataCite DOI metadata, retain the full TeX source archive, record cached-PDF header consistency, or install an automated live-refresh CI gate."
+  "claim_boundary": "This boundary records an arXiv abstract-page HTML byte count, SHA-256 digest, and normalized source metadata for AlphaEvolve 2506.13131v1 and retains the full HTML body alongside the raw HTTP headers sidecar. It does not preserve the metadata extraction script artifact, record cached-PDF header consistency, or install an automated live-refresh CI gate."
 }

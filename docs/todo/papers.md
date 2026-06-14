@@ -650,17 +650,18 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: `papers/source_versions.json` now extends the AlphaEvolve
     source-version row with DOI, subject classes, submitted timestamp, author
     count, TeX source URL, arXiv license URL, and an explicit
-    `manual_current_as_of_2026-06-13_without_html_snapshot` status. It also
-    marks missing raw/live source refresh evidence, full TeX-source caching,
-    license-page refresh gating, and submission-history refresh checks. This is
-    still a manually recorded source-version boundary,
-    not a full arXiv abstract-page artifact or live refresh verifier.
+    `manual_current_as_of_2026-06-13_with_html_snapshot` status. Its audit
+    policy links DataCite, TeX-source archive, and license-page evidence to
+    companion sidecars while still keeping raw/live source refresh evidence,
+    license-page refresh gating, and submission-history refresh checks open.
+    This is still a manually recorded source-version boundary, not a live
+    refresh verifier.
     `papers/arxiv_abstract_snapshot.json` now pins the current
-    `2506.13131v1` abstract HTML byte count and SHA-256 digest, normalized
-    title/authors/subjects/DOI/submission-history metadata, and a
-    validator-supported live snapshot comparison path, while explicitly
-    missing full arXiv abstract-page HTML retention, extraction-script
-    provenance, and cached-PDF header consistency evidence.
+    `2506.13131v1` abstract HTML byte count, SHA-256 digest, retained HTML
+    artifact path, normalized title/authors/subjects/DOI/submission-history
+    metadata, and a validator-supported live snapshot comparison path, while
+    explicitly missing extraction-script provenance and cached-PDF header
+    consistency evidence.
     `papers/alphaevolve_datacite_doi_boundary.json` now pins a bounded
     2026-06-14 DataCite API snapshot for `10.48550/arxiv.2506.13131`,
     including response byte count, SHA-256 digest, DOI, landing URL, title,
@@ -697,11 +698,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     the Creative Commons license-page HTML artifact and validates its byte
     count, SHA-256 digest, and key content markers.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade evidence, add a committed full arXiv abstract-page HTML
-    artifact or approved equivalent, extraction-script artifacts, full
-    floating-PDF response retention, cached-PDF header
-    consistency evidence, and an automated refresh gate that detects
-    arXiv/DataCite/e-print/license version or metadata drift.
+    publication-grade evidence, add extraction-script artifacts, full
+    floating-PDF response retention, cached-PDF header consistency evidence,
+    and an automated refresh gate that detects arXiv/DataCite/e-print/license
+    version or metadata drift.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

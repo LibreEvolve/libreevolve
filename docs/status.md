@@ -58,18 +58,18 @@ Important limits:
   metadata for `2506.13131v1` in `papers/source_versions.json`, including DOI,
   subject classes, submitted timestamp, author count, TeX source URL, and
   source license URL. It remains boundary evidence only:
-  `papers/arxiv_abstract_snapshot.json` now pins an abstract-page byte/hash and
-  normalized metadata snapshot; DataCite DOI, TeX/e-print, license-page, and
-  current-version/floating-PDF digest sidecars now preserve bounded response
-  metadata and hashes, while the raw HTTP headers sidecar preserves pinned
-  source response header lines and the DataCite full-response sidecar retains
-  the complete raw API response body. The TeX archive-retention sidecar now
-  retains the full e-print archive and member inventory, and the
-  license-page HTML retention sidecar now retains the Creative Commons
-  license-page HTML artifact with byte/hash and content-marker validation. No
-  full arXiv abstract-page HTML artifact, extraction-script artifact, full
-  floating-PDF response retention, cached-PDF header consistency record, or
-  automated refresh gate exists yet.
+  `papers/arxiv_abstract_snapshot.json` now pins an abstract-page byte/hash,
+  retained HTML artifact, and normalized metadata snapshot; DataCite DOI,
+  TeX/e-print, license-page, and current-version/floating-PDF digest sidecars
+  now preserve bounded response metadata and hashes, while the raw HTTP headers
+  sidecar preserves pinned source response header lines and the DataCite
+  full-response sidecar retains the complete raw API response body. The TeX
+  archive-retention sidecar now retains the full e-print archive and member
+  inventory, and the license-page HTML retention sidecar now retains the
+  Creative Commons license-page HTML artifact with byte/hash and
+  content-marker validation. No extraction-script artifact, full floating-PDF
+  response retention, cached-PDF header consistency record, or automated
+  refresh gate exists yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text
@@ -1245,11 +1245,10 @@ Important limits:
   raw HTTP headers, DOI landing-resolution, and DataCite full-response sidecars
   preserve pinned source response evidence, and the TeX archive-retention
   sidecar retains the full e-print archive plus member inventory. The
-  license-page HTML retention sidecar retains the Creative Commons license-page
-  HTML artifact and validates its byte/hash markers. This is not
-  extraction-script provenance, committed full arXiv abstract-page HTML
-  content, full floating-PDF response retention, cached-PDF header consistency
-  evidence, or an automated CI refresh gate.
+  arXiv abstract snapshot and license-page HTML retention sidecars retain their
+  full HTML artifacts and validate byte/hash markers. This is not
+  extraction-script provenance, full floating-PDF response retention,
+  cached-PDF header consistency evidence, or an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

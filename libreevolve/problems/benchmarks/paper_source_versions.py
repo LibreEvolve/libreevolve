@@ -52,6 +52,9 @@ EXPECTED_SHA256 = "".join(
     ]
 )
 _SHA256_RE = re.compile(r"[0-9a-f]{64}")
+EXPECTED_ABSTRACT_PAGE_METADATA_STATUS = (
+    "manual_current_as_of_2026-06-13_with_html_snapshot"
+)
 
 
 @dataclass(frozen=True)
@@ -98,7 +101,7 @@ def alphaevolve_source_pdf_version_record() -> dict[str, Any]:
             "versioned_pdf_url": EXPECTED_VERSIONED_PDF_URL,
             "tex_source_url": EXPECTED_TEX_SOURCE_URL,
             "license_url": EXPECTED_ARXIV_LICENSE_URL,
-            "abstract_page_metadata_status": "manual_current_as_of_2026-06-13_without_html_snapshot",
+            "abstract_page_metadata_status": EXPECTED_ABSTRACT_PAGE_METADATA_STATUS,
             "expected_header_page": EXPECTED_HEADER_PAGE,
             "expected_header_phrase": EXPECTED_HEADER_PHRASE,
         },
@@ -107,9 +110,9 @@ def alphaevolve_source_pdf_version_record() -> dict[str, Any]:
             "claim_audits_must_name_source_version": True,
             "floating_url_refresh_is_not_silent_version_change": True,
             "arxiv_abs_html_snapshot_required_for_live_metadata_claims": True,
-            "datacite_doi_resolution_not_snapshotted": True,
-            "tex_source_not_cached": True,
-            "arxiv_license_page_not_cached": True,
+            "datacite_doi_resolution_tracked_by_sidecars": True,
+            "tex_source_archive_retention_tracked_by_sidecars": True,
+            "arxiv_license_page_retention_tracked_by_sidecars": True,
             "submission_history_refresh_gate_not_implemented": True,
             "scope": "AlphaEvolve source PDF identity, not result-version provenance",
         },
@@ -401,7 +404,7 @@ def _validate_arxiv_source(value: object, issues: list[AlphaEvolveSourcePdfVersi
         "versioned_pdf_url": EXPECTED_VERSIONED_PDF_URL,
         "tex_source_url": EXPECTED_TEX_SOURCE_URL,
         "license_url": EXPECTED_ARXIV_LICENSE_URL,
-        "abstract_page_metadata_status": "manual_current_as_of_2026-06-13_without_html_snapshot",
+        "abstract_page_metadata_status": EXPECTED_ABSTRACT_PAGE_METADATA_STATUS,
         "expected_header_page": EXPECTED_HEADER_PAGE,
         "expected_header_phrase": EXPECTED_HEADER_PHRASE,
     }
@@ -419,9 +422,9 @@ def _validate_audit_policy(value: object, issues: list[AlphaEvolveSourcePdfVersi
         "claim_audits_must_name_source_version",
         "floating_url_refresh_is_not_silent_version_change",
         "arxiv_abs_html_snapshot_required_for_live_metadata_claims",
-        "datacite_doi_resolution_not_snapshotted",
-        "tex_source_not_cached",
-        "arxiv_license_page_not_cached",
+        "datacite_doi_resolution_tracked_by_sidecars",
+        "tex_source_archive_retention_tracked_by_sidecars",
+        "arxiv_license_page_retention_tracked_by_sidecars",
         "submission_history_refresh_gate_not_implemented",
     )
     for field in required_true:

@@ -145,9 +145,9 @@ def test_validate_alphaevolve_source_pdf_version_rejects_audit_policy_drift():
     recordset["audit_policy"]["claim_audits_must_name_source_version"] = False
     recordset["audit_policy"]["floating_url_refresh_is_not_silent_version_change"] = False
     recordset["audit_policy"]["arxiv_abs_html_snapshot_required_for_live_metadata_claims"] = False
-    recordset["audit_policy"]["datacite_doi_resolution_not_snapshotted"] = False
-    recordset["audit_policy"]["tex_source_not_cached"] = False
-    recordset["audit_policy"]["arxiv_license_page_not_cached"] = False
+    recordset["audit_policy"]["datacite_doi_resolution_tracked_by_sidecars"] = False
+    recordset["audit_policy"]["tex_source_archive_retention_tracked_by_sidecars"] = False
+    recordset["audit_policy"]["arxiv_license_page_retention_tracked_by_sidecars"] = False
     recordset["audit_policy"]["submission_history_refresh_gate_not_implemented"] = False
     recordset["audit_policy"]["scope"] = "result-version provenance"
 
@@ -162,9 +162,9 @@ def test_validate_alphaevolve_source_pdf_version_rejects_audit_policy_drift():
         "invalid_audit_policy_arxiv_abs_html_snapshot_required_for_live_metadata_claims"
         in codes
     )
-    assert "invalid_audit_policy_datacite_doi_resolution_not_snapshotted" in codes
-    assert "invalid_audit_policy_tex_source_not_cached" in codes
-    assert "invalid_audit_policy_arxiv_license_page_not_cached" in codes
+    assert "invalid_audit_policy_datacite_doi_resolution_tracked_by_sidecars" in codes
+    assert "invalid_audit_policy_tex_source_archive_retention_tracked_by_sidecars" in codes
+    assert "invalid_audit_policy_arxiv_license_page_retention_tracked_by_sidecars" in codes
     assert (
         "invalid_audit_policy_submission_history_refresh_gate_not_implemented"
         in codes

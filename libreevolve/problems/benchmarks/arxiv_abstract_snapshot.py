@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,6 +19,7 @@ EXPECTED_HTML_BYTES = 50098
 EXPECTED_HTML_SHA256 = (
     "ab39ec118afe0874f34179b5a06c42a57799b1103f027942a1ecd54dc3d95471"
 )
+EXPECTED_HTML_ARTIFACT_PATH = "papers/arxiv_abstract_2506.13131v1.html"
 EXPECTED_RETRIEVED_AT_UTC = "2026-06-13T20:42:36Z"
 EXPECTED_TITLE = "AlphaEvolve: A coding agent for scientific and algorithmic discovery"
 EXPECTED_AUTHORS = (
@@ -60,10 +62,16 @@ EXPECTED_HISTORY = (
     },
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "full_html_artifact_committed": "not_recorded_locally",
     "metadata_extraction_script_artifact": "not_recorded_locally",
     "cached_pdf_header_consistency_record": "not_recorded_locally",
     "automated_live_refresh_ci_gate": "not_recorded_locally",
+}
+EXPECTED_CONTENT_MARKERS = {
+    "has_doctype": True,
+    "has_arxiv_id": True,
+    "has_title": True,
+    "has_doi": True,
+    "has_license_href": True,
 }
 
 
@@ -99,7 +107,11 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
             "content_type": EXPECTED_CONTENT_TYPE,
             "bytes": EXPECTED_HTML_BYTES,
             "sha256": EXPECTED_HTML_SHA256,
-            "full_html_committed": False,
+            "full_html_committed": True,
+            "html_artifact_path": EXPECTED_HTML_ARTIFACT_PATH,
+            "html_artifact_bytes": EXPECTED_HTML_BYTES,
+            "html_artifact_sha256": EXPECTED_HTML_SHA256,
+            "content_markers": dict(EXPECTED_CONTENT_MARKERS),
         },
         "normalized_metadata": {
             "title": EXPECTED_TITLE,
@@ -119,9 +131,10 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
         "source_version_boundary_link": {
             "source_versions_file": "papers/source_versions.json",
             "expected_abstract_page_metadata_status": (
-                "manual_current_as_of_2026-06-13_without_html_snapshot"
+                "manual_current_as_of_2026-06-13_with_html_snapshot"
             ),
             "updates_manual_metadata_with_html_digest": True,
+            "retains_full_html_artifact": True,
         },
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "refresh_gate": {
@@ -133,11 +146,10 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records an arXiv abstract-page HTML byte count, "
             "SHA-256 digest, and normalized source metadata for AlphaEvolve "
-            "2506.13131v1 and is paired with the raw HTTP headers sidecar. It "
-            "does not commit the full HTML body, preserve the metadata "
-            "extraction script artifact, resolve DataCite DOI metadata, retain "
-            "the full TeX source archive, record cached-PDF header "
-            "consistency, or install an automated live-refresh CI gate."
+            "2506.13131v1 and retains the full HTML body alongside the raw "
+            "HTTP headers sidecar. It does not preserve the metadata "
+            "extraction script artifact, record cached-PDF header consistency, "
+            "or install an automated live-refresh CI gate."
         ),
     }
 
@@ -147,7 +159,7 @@ def validate_alphaevolve_arxiv_abstract_snapshot(
     *,
     live_snapshot: dict[str, Any] | None = None,
 ) -> AlphaEvolveArxivAbstractSnapshotValidation:
-    data, read_issues = _load_snapshot(
+    data, read_issues, base_dir = _load_snapshot(
         alphaevolve_arxiv_abstract_snapshot_record() if snapshot is None else snapshot
     )
     if read_issues:
@@ -167,6 +179,8 @@ def validate_alphaevolve_arxiv_abstract_snapshot(
     if data.get("retrieval_method") != "urllib_request_user_agent_metadata_audit":
         issues.append(_issue("invalid_retrieval_method", "retrieval_method must identify the bounded metadata audit fetch"))
     _validate_html_snapshot(data.get("html_snapshot"), issues)
+    if base_dir is not None:
+        _validate_retained_html_file(data.get("html_snapshot"), base_dir, issues)
     author_count, subject_count = _validate_normalized_metadata(data.get("normalized_metadata"), issues)
     _validate_source_version_boundary_link(data.get("source_version_boundary_link"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -174,10 +188,9 @@ def validate_alphaevolve_arxiv_abstract_snapshot(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not commit the full HTML body" not in boundary_text
+        or "retains the full HTML body" not in boundary_text
         or "raw HTTP headers sidecar" not in boundary_text
         or "metadata extraction script artifact" not in boundary_text
-        or "DataCite DOI metadata" not in boundary_text
         or "cached-PDF header consistency" not in boundary_text
         or "automated live-refresh CI gate" not in boundary_text
     ):
@@ -221,22 +234,25 @@ def render_alphaevolve_arxiv_abstract_snapshot_summary(
 
 def _load_snapshot(
     snapshot: object | str | Path,
-) -> tuple[dict[str, Any] | None, list[AlphaEvolveArxivAbstractSnapshotIssue]]:
+) -> tuple[dict[str, Any] | None, list[AlphaEvolveArxivAbstractSnapshotIssue], Path | None]:
     if isinstance(snapshot, dict):
-        return dict(snapshot), []
+        return dict(snapshot), [], None
     if isinstance(snapshot, str) and snapshot.strip().startswith("{"):
         try:
             data = json.loads(snapshot)
         except json.JSONDecodeError as exc:
-            return None, [_issue("invalid_json", f"snapshot JSON is invalid: {exc}")]
+            return None, [_issue("invalid_json", f"snapshot JSON is invalid: {exc}")], None
+        base_dir = None
     else:
+        path = Path(snapshot)
         try:
-            data = json.loads(Path(snapshot).read_text(encoding="utf-8"))
+            data = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
-            return None, [_issue("unreadable_snapshot", f"snapshot could not be loaded: {exc}")]
+            return None, [_issue("unreadable_snapshot", f"snapshot could not be loaded: {exc}")], None
+        base_dir = path.parent.parent
     if isinstance(data, dict):
-        return data, []
-    return None, [_issue("invalid_shape", "arXiv abstract snapshot must be a JSON object")]
+        return data, [], base_dir
+    return None, [_issue("invalid_shape", "arXiv abstract snapshot must be a JSON object")], None
 
 
 def _validate_html_snapshot(
@@ -251,11 +267,49 @@ def _validate_html_snapshot(
         "content_type": EXPECTED_CONTENT_TYPE,
         "bytes": EXPECTED_HTML_BYTES,
         "sha256": EXPECTED_HTML_SHA256,
-        "full_html_committed": False,
+        "full_html_committed": True,
+        "html_artifact_path": EXPECTED_HTML_ARTIFACT_PATH,
+        "html_artifact_bytes": EXPECTED_HTML_BYTES,
+        "html_artifact_sha256": EXPECTED_HTML_SHA256,
+        "content_markers": dict(EXPECTED_CONTENT_MARKERS),
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:
             issues.append(_issue(f"invalid_html_snapshot_{field}", f"html_snapshot.{field} must match the pinned arXiv fetch"))
+
+
+def _validate_retained_html_file(
+    value: object,
+    base_dir: Path,
+    issues: list[AlphaEvolveArxivAbstractSnapshotIssue],
+) -> None:
+    if not isinstance(value, dict):
+        return
+    artifact_value = value.get("html_artifact_path")
+    if not isinstance(artifact_value, str):
+        return
+    artifact_path = base_dir / artifact_value
+    try:
+        html_bytes = artifact_path.read_bytes()
+    except OSError as exc:
+        issues.append(_issue("missing_html_artifact", f"HTML artifact could not be read: {exc}"))
+        return
+    if len(html_bytes) != EXPECTED_HTML_BYTES:
+        issues.append(_issue("invalid_html_artifact_bytes", f"HTML artifact must be {EXPECTED_HTML_BYTES} bytes"))
+    digest = hashlib.sha256(html_bytes).hexdigest()
+    if digest != EXPECTED_HTML_SHA256:
+        issues.append(_issue("invalid_html_artifact_sha256", f"HTML artifact SHA-256 must be {EXPECTED_HTML_SHA256}"))
+    html_text = html_bytes.decode("utf-8", errors="replace")
+    actual_markers = {
+        "has_doctype": html_text.startswith("<!DOCTYPE html>"),
+        "has_arxiv_id": "arXiv:2506.13131v1" in html_text,
+        "has_title": EXPECTED_TITLE in html_text,
+        "has_doi": EXPECTED_DOI in html_text,
+        "has_license_href": EXPECTED_LICENSE_HREF in html_text,
+    }
+    markers = value.get("content_markers")
+    if isinstance(markers, dict) and actual_markers != markers:
+        issues.append(_issue("html_content_marker_drift", "HTML content markers must match the retained artifact"))
 
 
 def _validate_normalized_metadata(
@@ -300,8 +354,9 @@ def _validate_source_version_boundary_link(
         return
     expected = {
         "source_versions_file": "papers/source_versions.json",
-        "expected_abstract_page_metadata_status": "manual_current_as_of_2026-06-13_without_html_snapshot",
+        "expected_abstract_page_metadata_status": "manual_current_as_of_2026-06-13_with_html_snapshot",
         "updates_manual_metadata_with_html_digest": True,
+        "retains_full_html_artifact": True,
     }
     for field, expected_value in expected.items():
         if value.get(field) != expected_value:

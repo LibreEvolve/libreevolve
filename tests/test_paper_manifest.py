@@ -269,6 +269,10 @@ def test_validate_paper_manifest_rejects_source_version_manifest_row_drift(tmp_p
 def test_validate_paper_manifest_accepts_arxiv_abstract_snapshot(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
+    source_root = Path(__file__).resolve().parents[1]
+    (tmp_path / "papers" / "arxiv_abstract_2506.13131v1.html").write_bytes(
+        (source_root / "papers" / "arxiv_abstract_2506.13131v1.html").read_bytes()
+    )
     sidecar = tmp_path / paper_manifest.ARXIV_ABSTRACT_SNAPSHOT_FILE
     sidecar.write_text(
         json.dumps(paper_manifest.alphaevolve_arxiv_abstract_snapshot_record(), indent=2),
@@ -284,6 +288,10 @@ def test_validate_paper_manifest_accepts_arxiv_abstract_snapshot(tmp_path):
 def test_validate_paper_manifest_rejects_arxiv_abstract_snapshot_drift(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
+    (tmp_path / "papers" / "arxiv_abstract_2506.13131v1.html").write_text(
+        "not the abstract page",
+        encoding="utf-8",
+    )
     record = paper_manifest.alphaevolve_arxiv_abstract_snapshot_record()
     record["html_snapshot"]["bytes"] = 1
     record["normalized_metadata"]["subject_codes"] = ["cs.AI"]
@@ -296,6 +304,7 @@ def test_validate_paper_manifest_rejects_arxiv_abstract_snapshot_drift(tmp_path)
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "alphaevolve_arxiv_abstract_snapshot_invalid_html_snapshot_bytes" in codes
+    assert "alphaevolve_arxiv_abstract_snapshot_invalid_html_artifact_sha256" in codes
     assert "alphaevolve_arxiv_abstract_snapshot_invalid_metadata_subject_codes" in codes
     assert (
         "alphaevolve_arxiv_abstract_snapshot_invalid_missing_evidence_cached_pdf_header_consistency_record"

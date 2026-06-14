@@ -328,15 +328,16 @@ sidecars, tests, and active TODOs.
     row: subject classes `cs.AI`/`cs.LG`/`cs.NE`, submitted timestamp
     `2025-06-16T06:37:18Z`, DOI `10.48550/arXiv.2506.13131`, author count
     `18`, TeX source URL, CC BY-NC-ND 4.0 license URL, and an explicit
-    `manual_current_as_of_2026-06-13_without_html_snapshot` status. Its audit
-    policy still marks raw/live source refresh evidence, full TeX-source
-    caching, license-page refresh gating, and submission-history refresh gates as
-    missing.
+    `manual_current_as_of_2026-06-13_with_html_snapshot` status. Its audit
+    policy links DataCite, TeX-source archive, and license-page evidence to
+    companion sidecars while still keeping raw/live source refresh evidence,
+    license-page refresh gating, and submission-history refresh gates open.
     `papers/arxiv_abstract_snapshot.json` now records a
-    2026-06-13 arXiv abstract-page HTML byte count, SHA-256 digest, normalized
-    title, author list, subject classes, DOI URL, submitted date/timestamp,
-    TeX-source URL, license URL, and submission-history entry for
-    `2506.13131v1`, plus a validator-supported live-refresh comparison input.
+    2026-06-13 arXiv abstract-page HTML byte count, SHA-256 digest, retained
+    HTML artifact path, normalized title, author list, subject classes, DOI
+    URL, submitted date/timestamp, TeX-source URL, license URL, and
+    submission-history entry for `2506.13131v1`, plus a validator-supported
+    live-refresh comparison input.
     `papers/alphaevolve_datacite_doi_boundary.json` now records a bounded
     2026-06-14 DataCite API snapshot for `10.48550/arxiv.2506.13131`,
     including response byte count, SHA-256 digest, DOI, landing URL, title,
@@ -370,8 +371,7 @@ sidecars, tests, and active TODOs.
     the Creative Commons license-page HTML artifact and validates its byte
     count, SHA-256 digest, and key content markers.
   - Required result: implement a source-metadata verifier that retrieves or
-    pins the remaining source artifacts: committed full HTML or approved
-    equivalent for the arXiv abstract page, extraction-script artifact, full
+    pins the remaining source artifacts: extraction-script artifact, full
     floating-PDF response retention, cached-PDF header consistency, and an
     automated CI/network refresh gate that fails paper/source validation if the
     live arXiv/DataCite/e-print/license metadata drifts from the committed

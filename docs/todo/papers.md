@@ -5789,6 +5789,43 @@ directory and using the AlphaEvolve paper as the primary specification.
     treats DMCI program-and-parameter co-search as missing benchmark evidence
     rather than implemented LibreEvolve support.
 
+- [ ] Reproduce OpenEvolve combinatorial-bijection discovery evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2511.20987`, submitted November 26, 2025,
+    is titled `Even with AI, Bijection Discovery is Still Hard: The
+    Opportunities and Challenges of OpenEvolve for Novel Bijection
+    Construction`. Its abstract says AlphaEvolve, OpenEvolve, and
+    ShinkaEvolve use LLM teams to generate and evolve human-readable code
+    candidates beyond one-shot LLM outputs, and argues that explicit
+    construction problems are natural targets beyond bound-establishing
+    applications such as sphere packing. The paper applies OpenEvolve to three
+    combinatorial bijection-construction problems involving Dyck paths, two
+    known and one open, and concludes that OpenEvolve is promising for
+    combinatorialists but current frontier systems still struggle to find
+    novel research-level bijections, reinforcing the need for human
+    mathematicians in the loop.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2511.20987`. Existing LibreEvolve constructive-math,
+    Bruhat-interval, Ramsey, Zarankiewicz, sphere-packing, and OpenEvolve
+    TODOs do not reproduce combinatorial-bijection candidate schemas,
+    Dyck-path object encodings, bijection/inverse contracts, known-bijection
+    recovery tasks, open-bijection construction attempts, proof obligation
+    tracking, human mathematician review states, failure-mode taxonomy for
+    research-level construction, or lessons-learned evidence about where
+    LLM-guided program evolution needs expert intervention.
+  - Required result: add reproduction-grade evidence for `2511.20987`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, ShinkaEvolve, and
+    LibreEvolve, Dyck-path representation schema, three problem definitions,
+    candidate bijection program interface, inverse/checker contracts,
+    exactness and domain/codomain coverage tests, known-bijection baseline
+    identities, open-problem attempt logs, OpenEvolve run configuration and
+    budget telemetry, generated program artifacts, proof and explanation
+    records, human-review and intervention notes, negative-result/failure
+    taxonomy, independent verification outputs, and README/ROADMAP wording
+    that treats combinatorial-bijection discovery as missing constructive-math
+    benchmark evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

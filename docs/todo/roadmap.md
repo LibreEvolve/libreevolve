@@ -105,3 +105,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     to prerequisites, blocking TODOs, validation gates, and promotion criteria,
     then validate that phase labels and item ordering are refreshed when
     implementation or evidence status changes.
+
+- [ ] Add ROADMAP operational-maturity acceptance criteria.
+  - Spec evidence: the `10. Operational maturity` section groups config
+    validation, strict JSONL diagnostics, run inspection, packaging/release
+    provenance, and CI workflow coverage. As written, it is a roadmap category,
+    but it does not define what evidence would make LibreEvolve operationally
+    mature enough for AlphaEvolve-style experiments rather than only more
+    locally smoke-tested.
+  - Current evidence: ROADMAP names the current config, JSONL, run-inspection,
+    release-artifact, and CI boundaries, and active code/paper TODOs track
+    missing plugin-specific config schemas, provider/model compatibility,
+    signed release provenance, local-PDF CI checks, semantic docs verification,
+    branch policy, and notification policy.
+  - Current gap: there is no section-level operational-maturity checklist,
+    risk classification, acceptance threshold, or evidence map that ties those
+    subitems together and prevents one green release/CI boundary from being
+    mistaken for overall operational readiness.
+  - Required result: add ROADMAP operational-maturity criteria that classify
+    required validation, packaging, observability, reproducibility, CI, release,
+    and policy evidence; map each criterion to code/tests/sidecars/TODOs; and
+    reject claims that the project is operationally mature until the full
+    checklist is satisfied.

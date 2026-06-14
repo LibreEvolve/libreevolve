@@ -5491,6 +5491,50 @@ directory and using the AlphaEvolve paper as the primary specification.
     EvoDiverse-style parallel-tempered hypothesis search as missing paper
     evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce medical-decision-pipeline evolution evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.07342`, submitted June 5, 2026, is
+    titled `LLM-Guided Evolution for Medical Decision Pipelines`. Its abstract
+    studies LLM-guided MAP-Elites evolution as an inference-time alternative
+    to fine-tuning or manual clinical pipeline engineering and provides an
+    implementation repository. It formulates urgency triage, interactive
+    consultation, and medical image classification as evolutionary searches
+    over executable artifacts optimized by task-specific fitness functions.
+    The paper uses GigaEvo with MAP-Elites search, asynchronous evaluation,
+    rewrite-based mutation, and lineage tracking; candidates include
+    standalone Python decision programs, consultation policies, and
+    prompt-producing modules. Reported evidence covers safety-weighted
+    Semigran and MIMIC-ESI triage, MEDIQ/iMEDQA interactive consultation with
+    iCRAFTMD held-out transfer, and PneumoniaMNIST prompt-only evolution for
+    fixed MedGemma VLMs while preserving strict JSON outputs. It emphasizes
+    practical clinical constraints such as emergency recall, undertriage,
+    interaction-token cost, cross-model transfer, held-out evaluation,
+    structured-output validity, and interpretable program-level mechanisms.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.07342`. Existing LibreEvolve GigaEvo, MAP-Elites,
+    EvoRubric, proposal-diversity, evaluator-output, and benchmark-hardening
+    TODOs do not reproduce safety-sensitive clinical candidate schemas,
+    Semigran/Levine/MIMIC-ESI triage splits, MEDIQ/iMEDQA/iCRAFTMD
+    interactive-consultation protocols, PneumoniaMNIST/MedGemma prompt-only
+    VLM evaluation, emergency-recall and undertriage metrics, token-cost
+    frontiers, strict clinical JSON-output validation, medical cross-model
+    transfer, held-out clinical generalization, or ethics/data-access
+    provenance.
+  - Required result: add reproduction-grade evidence for `2606.07342`:
+    title/authors/arXiv version/date, source license, implementation-
+    repository snapshot, relation to AlphaEvolve, GigaEvo, MAP-Elites, and
+    LibreEvolve, clinical task definitions, dataset access and ethics
+    constraints, candidate-artifact schemas for triage programs,
+    consultation policies, and prompt-producing VLM modules, fitness formulas,
+    safety-weighted objective records, emergency-recall/undertriage metrics,
+    Semigran/Levine/MIMIC-ESI/iMEDQA/iCRAFTMD/PneumoniaMNIST metadata,
+    MedGemma/model-backbone identities, structured-output parser contracts,
+    interaction-cost accounting, cross-model and held-out transfer records,
+    ablation outputs, qualitative mechanism annotations, benchmark baseline
+    identities, independent verification outputs, and README/ROADMAP wording
+    that treats medical decision-pipeline evolution as missing application
+    benchmark evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

@@ -34,3 +34,4 @@ __pycache__/
 !/papers/README.md
 !/papers/download_manifest.csv
 !/papers/download_manifest.json
+!/papers/status_claim_inventory.json

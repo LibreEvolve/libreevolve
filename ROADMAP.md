@@ -827,10 +827,11 @@ is not yet an AlphaEvolve reproduction.
 - Keep the code-audit completeness boundary explicit:
   `papers/implementation_evidence_map_boundary.json` records core
   AlphaEvolve requirement anchors with module, test, sidecar, and TODO links,
-  but it is not an exhaustive source-span coverage matrix, paper-index
-  status-claim inventory, status-cell semantic verifier, implemented-benchmark
-  bullet coverage map, absence-sentence freshness matrix, coverage detector,
-  generated code-audit report, or CI exhaustiveness gate.
+  and `papers/status_claim_inventory.json` records checked row-level paper
+  status inventory, but this is not an exhaustive source-span coverage matrix,
+  paper-index phrase-claim inventory, status-cell semantic verifier,
+  implemented-benchmark bullet coverage map, absence-sentence freshness matrix,
+  coverage detector, generated code-audit report, or CI exhaustiveness gate.
 - Keep paper-manifest validation diagnostics shareable by using
   repository-relative labels and secret-redacted exception text in text and JSON
   output.

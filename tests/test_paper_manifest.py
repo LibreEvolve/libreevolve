@@ -11301,6 +11301,61 @@ def test_validate_paper_manifest_accepts_matching_todo_coverage_table(tmp_path):
     assert report.ok is True
 
 
+def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    completed_cell = _write_completed_todo_ledger(tmp_path)
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                completed_cell,
+            )
+        ],
+    )
+    (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
+        json.dumps(paper_manifest.paper_status_claim_inventory_record(tmp_path), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_rejects_status_claim_inventory_drift(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    completed_cell = _write_completed_todo_ledger(tmp_path)
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                completed_cell,
+            )
+        ],
+    )
+    inventory = paper_manifest.paper_status_claim_inventory_record(tmp_path)
+    inventory["rows"][0]["status_text_sha256"] = "0" * 64
+    (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "status_claim_inventory_rows_mismatch" in {issue.code for issue in report.issues}
+
+
 def test_validate_paper_manifest_rejects_grouped_todo_coverage_policy_text(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

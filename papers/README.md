@@ -1433,8 +1433,11 @@ Core AlphaEvolve implementation-evidence mapping is now represented by
 anchors for markers, evaluator cascades, LLM prompting/sampling, the
 evolutionary database, async/distributed topology, and published benchmark
 coverage. It is not an exhaustive requirement inventory, source-span coverage
-matrix, coverage detector, generated code-audit report, or CI exhaustiveness
-gate.
+matrix, paper-index phrase-claim inventory, coverage detector, generated
+code-audit report, or CI exhaustiveness gate. The checked
+`papers/status_claim_inventory.json` sidecar records row-level paper-index
+status inventory with status text hashes, status classes, local artifact
+mentions, and TODO evidence paths, but it is not phrase-level semantic proof.
 Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
@@ -2834,9 +2837,15 @@ Implemented:
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive
-  audit coverage, paper-index status-claim inventory, status-cell semantic
+  audit coverage, paper-index phrase-claim inventory, status-cell semantic
   verification, implemented-benchmark bullet coverage, and absence-sentence
   freshness checks.
+- `papers/status_claim_inventory.json`: row-level paper-index
+  implementation-status inventory with one record per status row, status text
+  hash, role/status class, manifest-file link, local artifact mentions, and
+  active/completed TODO evidence paths. It is not status-cell phrase-level
+  semantic verification, source-span coverage, or absence-sentence freshness
+  evidence.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit

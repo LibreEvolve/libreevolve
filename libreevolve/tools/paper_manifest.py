@@ -726,6 +726,7 @@ STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_bounda
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
+STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
@@ -1050,6 +1051,15 @@ STATUS_TABLE_POSITIVE_IMPLEMENTATION_RE = re.compile(
     flags=re.IGNORECASE,
 )
 STATUS_TABLE_NOT_IMPLEMENTED_AS_DESCRIBED_PREFIXES = ("Not implemented as described:",)
+STATUS_CLAIM_INVENTORY_SCHEMA = "libreevolve.paper_index_status_claim_inventory.v1"
+STATUS_CLAIM_INVENTORY_STATUS = "row_level_status_inventory_without_phrase_semantic_verifier"
+STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
+    "status_cell_phrase_claim_inventory": "not_recorded_locally",
+    "status_row_source_span_inventory": "not_recorded_locally",
+    "status_cell_semantic_verifier": "not_recorded_locally",
+    "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
+    "absence_sentence_freshness_matrix": "not_recorded_locally",
+}
 
 
 @dataclass(frozen=True)
@@ -1437,6 +1447,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_theoretical_cs_source_manifest(root_path))
     issues.extend(_validate_alphaevolve_official_blog_manifest(root_path))
     issues.extend(_validate_todo_coverage_table(root_path, seen_ids, manifest_rows_by_id))
+    issues.extend(_validate_status_claim_inventory(root_path))
     issues.extend(_validate_todo_absence_wording(root_path, seen_ids))
     issues.extend(_validate_benchmark_coverage_decisions(root_path))
 
@@ -1449,6 +1460,71 @@ def validate_paper_manifest(
         availability=availability,
         issues=issues,
     )
+
+
+def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any]:
+    """Return a row-level inventory for papers/README.md implementation status."""
+
+    root_path = Path(root)
+    manifest_rows, _manifest_issues = _load_json_manifest(
+        root_path / "papers" / "download_manifest.json",
+        root_path,
+    )
+    manifest_rows_by_id = {
+        str(row.get("id")): row
+        for row in manifest_rows
+        if isinstance(row.get("id"), str)
+    }
+    status_rows, _status_issues = _read_status_table_rows(root_path)
+    status_rows = status_rows or []
+    todo_rows, _todo_issues = _read_todo_coverage_table_cells(root_path)
+    inventory_rows: list[dict[str, Any]] = []
+    status_class_counts: dict[str, int] = {}
+
+    for row_ordinal, cells in enumerate(status_rows, start=1):
+        row_id, title, role, status_text = cells
+        active_cell, completed_cell = todo_rows.get(row_id, ("", ""))
+        status_class = _status_claim_inventory_class(status_text)
+        status_class_counts[status_class] = status_class_counts.get(status_class, 0) + 1
+        manifest_row = manifest_rows_by_id.get(row_id, {})
+        inventory_rows.append(
+            {
+                "id": row_id,
+                "row_ordinal": row_ordinal,
+                "title": title,
+                "role": role,
+                "status_class": status_class,
+                "status_text_sha256": hashlib.sha256(status_text.encode("utf-8")).hexdigest(),
+                "manifest_file": manifest_row.get("file", ""),
+                "local_artifact_paths": sorted(_status_local_artifact_paths(status_text)),
+                "active_todo_paths": _status_claim_inventory_paths(active_cell),
+                "completed_todo_paths": _status_claim_inventory_paths(completed_cell),
+                "claim_inventory_status": "row_classified_without_phrase_semantics",
+                "source_span_status": "not_recorded_locally",
+                "freshness_status": "structural_only",
+            }
+        )
+
+    return {
+        "schema": STATUS_CLAIM_INVENTORY_SCHEMA,
+        "inventory_status": STATUS_CLAIM_INVENTORY_STATUS,
+        "source_path": "papers/README.md#implementation-status",
+        "row_count": len(inventory_rows),
+        "row_ids": [row["id"] for row in inventory_rows],
+        "status_class_counts": dict(sorted(status_class_counts.items())),
+        "missing_evidence": dict(STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE),
+        "rows": inventory_rows,
+        "claim_boundary": (
+            "This inventory records one structured row for every "
+            "papers/README.md implementation-status table row, including "
+            "role, status class, status text hash, manifest file, local "
+            "artifact mentions, and TODO evidence paths. It does not claim "
+            "phrase-level status verification, row source-span coverage, "
+            "implemented-benchmark bullet coverage, absence-sentence "
+            "freshness, or proof that status-cell prose is semantically "
+            "complete."
+        ),
+    }
 
 
 def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[PaperManifestIssue]:
@@ -3373,6 +3449,69 @@ def _validate_implementation_evidence_map_boundary(root_path: Path) -> list[Pape
         )
         for issue in report.issues
     ]
+
+
+def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / STATUS_CLAIM_INVENTORY_FILE
+    if not sidecar_path.exists():
+        if not is_repo_root:
+            return []
+        return [
+            PaperManifestIssue(
+                "status_claim_inventory_missing",
+                (
+                    f"{STATUS_CLAIM_INVENTORY_FILE} must record every "
+                    "papers/README.md implementation-status row"
+                ),
+                "status_claim_inventory",
+            )
+        ]
+    try:
+        data = json.loads(sidecar_path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        return [
+            PaperManifestIssue(
+                "status_claim_inventory_unreadable",
+                _manifest_diagnostic(sidecar_path, root_path, exc),
+                "status_claim_inventory",
+            )
+        ]
+    if not isinstance(data, dict):
+        return [
+            PaperManifestIssue(
+                "status_claim_inventory_schema",
+                "status claim inventory must be a JSON object",
+                "status_claim_inventory",
+            )
+        ]
+
+    expected = paper_status_claim_inventory_record(root_path)
+    issues: list[PaperManifestIssue] = []
+    checks = (
+        ("schema", "status claim inventory schema changed"),
+        ("inventory_status", "status claim inventory status changed"),
+        ("source_path", "status claim inventory source path changed"),
+        ("row_count", "status claim inventory row count drifted"),
+        ("row_ids", "status claim inventory row ids drifted"),
+        ("status_class_counts", "status claim inventory status-class counts drifted"),
+        ("missing_evidence", "status claim inventory missing-evidence boundary drifted"),
+        ("claim_boundary", "status claim inventory claim boundary drifted"),
+        ("rows", "status claim inventory rows drifted from papers/README.md"),
+    )
+    for key, message in checks:
+        if data.get(key) != expected[key]:
+            issues.append(
+                PaperManifestIssue(
+                    f"status_claim_inventory_{key}_mismatch",
+                    message,
+                    "status_claim_inventory",
+                )
+            )
+    return issues
 
 
 def _validate_release_artifact_reproducibility_boundary(root_path: Path) -> list[PaperManifestIssue]:
@@ -7917,6 +8056,56 @@ def _status_table_status_cells(text: str) -> dict[str, str]:
     return statuses
 
 
+def _read_todo_coverage_table_cells(root: Path) -> tuple[dict[str, tuple[str, str]], list[PaperManifestIssue]]:
+    path = root / "papers" / "README.md"
+    if not path.exists():
+        return {}, []
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return {}, [
+            PaperManifestIssue(
+                "todo_coverage_table_unreadable",
+                _manifest_diagnostic(path, root, exc),
+            )
+        ]
+    section = _markdown_section(text, "## TODO coverage cross-references")
+    if section is None:
+        return {}, []
+    rows: dict[str, tuple[str, str]] = {}
+    issues: list[PaperManifestIssue] = []
+    for line in section.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [cell.strip() for cell in line.strip("|").split("|")]
+        if len(cells) < 3 or cells[0] == "ID" or set(cells[0]) <= {"-", ":"}:
+            continue
+        row_id = cells[0]
+        row_label = _safe_manifest_label(row_id)
+        if row_id in rows:
+            issues.append(
+                PaperManifestIssue(
+                    "duplicate_todo_coverage_row",
+                    "duplicate papers/README.md TODO coverage row",
+                    row_label,
+                )
+            )
+            continue
+        rows[row_id] = (cells[1], cells[2])
+    return rows, issues
+
+
+def _status_claim_inventory_class(status_text: str) -> str:
+    for prefix in ALLOWED_STATUS_TABLE_STATUS_PREFIXES:
+        if status_text.startswith(prefix):
+            return prefix.rstrip(" :;")
+    return "unknown"
+
+
+def _status_claim_inventory_paths(cell: str) -> list[str]:
+    return list(dict.fromkeys(TODO_COVERAGE_PATH_RE.findall(cell)))
+
+
 def _validate_todo_absence_wording(root: Path, manifest_ids: set[str]) -> list[PaperManifestIssue]:
     if not manifest_ids:
         return []
@@ -8080,6 +8269,13 @@ def _manifest_path_label(path: Path, root: Path) -> str:
 
 
 def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperManifestIssue]]:
+    rows, issues = _read_status_table_rows(root)
+    if rows is None:
+        return None, issues
+    return [cells[0] for cells in rows], issues
+
+
+def _read_status_table_rows(root: Path) -> tuple[list[list[str]] | None, list[PaperManifestIssue]]:
     path = root / "papers" / "README.md"
     if not path.exists():
         return None, []
@@ -8094,7 +8290,7 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
         ]
     in_section = False
     header_seen = False
-    ids: list[str] = []
+    rows: list[list[str]] = []
     issues: list[PaperManifestIssue] = []
     seen: set[str] = set()
     table_closed = False
@@ -8108,7 +8304,7 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
         if not in_section:
             continue
         if not line.startswith("|"):
-            if header_seen and ids and line.strip():
+            if header_seen and rows and line.strip():
                 table_closed = True
             continue
         if table_closed and not non_contiguous_reported:
@@ -8156,12 +8352,12 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
                 )
             )
         seen.add(row_id)
-        ids.append(row_id)
-    if not in_section or not ids:
+        rows.append(cells)
+    if not in_section or not rows:
         return None, issues
     if not header_seen:
         issues.append(PaperManifestIssue("missing_status_table_header", "implementation status header is missing"))
-    return ids, issues
+    return rows, issues
 
 
 def _validate_status_table_row_cells(cells: list[str], row_id: str) -> list[PaperManifestIssue]:

@@ -26,7 +26,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert "alphaevolve_program_markers" in requirement_ids
     assert "alphaevolve_published_benchmarks" in requirement_ids
     assert (
-        boundary["missing_evidence"]["paper_index_status_claim_inventory"]
+        boundary["missing_evidence"]["paper_index_phrase_claim_inventory"]
         == "not_recorded_locally"
     )
     assert (

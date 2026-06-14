@@ -1243,8 +1243,10 @@ Important limits:
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark
-  evidence. This is not an exhaustive source-span coverage matrix,
-  paper-index status-claim inventory, status-cell semantic verifier,
+  evidence. The checked `papers/status_claim_inventory.json` sidecar now
+  records row-level paper status inventory. This is not an exhaustive
+  source-span coverage matrix, paper-index phrase-claim inventory,
+  status-cell semantic verifier,
   implemented-benchmark bullet coverage map, absence-sentence freshness
   matrix, or generated code-audit report; that boundary is tracked by
   `papers/implementation_evidence_map_boundary.json`.

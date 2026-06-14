@@ -5745,6 +5745,50 @@ directory and using the AlphaEvolve paper as the primary specification.
     optimization as missing safety benchmark evidence rather than implemented
     LibreEvolve support.
 
+- [ ] Reproduce DMCI program-and-parameter co-search evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.09930`, submitted June 7, 2026, is
+    titled `Compile Once, Differentiate Everywhere: A Differentiable
+    Meta-Circular Interpreter`. Its abstract presents differentiable
+    meta-circular interpretation (DMCI): a self-hosting Scheme subset is
+    compiled into differentiable computation graphs so a compiled Scheme
+    interpreter executes programs supplied as data while reverse-mode autodiff
+    propagates gradients into continuous constants embedded in those programs.
+    The interpreter is compiled once, then new programs inherit
+    differentiability without recompilation or custom gradient code while
+    retaining closures, recursion, and data structures. The paper proves
+    gradients through the compiled interpreter are correct almost everywhere,
+    validates them against direct compilation across `171` recursive and
+    higher-order program-seed pairs, and uses DMCI for program-and-parameter
+    co-search: an LLM proposes Scheme program structures while exact gradients
+    calibrate each candidate's continuous parameters through a frozen
+    interpreter. It applies this OpenEvolve-style search to battery
+    capacity-fade modeling and a high-dimensional El Nino inverse problem.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.09930`. Existing LibreEvolve FunctionEvolve,
+    symbolic-regression, matrix/tensor, gradient-method, evaluator-contract,
+    and arbitrary-language-runner TODOs do not reproduce Scheme candidate
+    programs, differentiable interpreter compilation, autograd backend
+    provenance, continuous-parameter extraction and calibration, gradient
+    correctness tests, direct-compilation comparison records, frozen-
+    interpreter reuse, battery degradation fixtures, El Nino inverse-problem
+    likelihood evaluation, or combined discrete-structure plus continuous-
+    parameter search telemetry.
+  - Required result: add reproduction-grade evidence for `2606.09930`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, symbolic regression,
+    and LibreEvolve, Scheme subset and interpreter semantics, candidate
+    program schema, continuous-parameter annotation policy, compiler/autograd
+    backend metadata, gradient-correctness theorem/proof scope, recursive and
+    higher-order validation-pair inventory, direct-compilation comparison
+    artifacts, optimizer and parameter-calibration traces, OpenEvolve outer-
+    loop configuration, MAP-Elites/island metadata if reproduced, battery
+    capacity-fade split definitions and baselines, El Nino inverse-problem
+    likelihood records, gradient-free baseline failures, held-out forecast
+    metrics, independent verification outputs, and README/ROADMAP wording that
+    treats DMCI program-and-parameter co-search as missing benchmark evidence
+    rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

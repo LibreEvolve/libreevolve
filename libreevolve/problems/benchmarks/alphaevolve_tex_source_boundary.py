@@ -37,7 +37,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "archive_member_inventory",
     "extraction_script_artifact",
     "tex_source_refresh_gate",
-    "license_page_artifact",
     "cached_pdf_header_consistency",
 )
 EXPECTED_MISSING_EVIDENCE = {
@@ -46,7 +45,6 @@ EXPECTED_MISSING_EVIDENCE = {
     "archive_member_inventory": "not_recorded_locally",
     "extraction_script_artifact": "not_recorded_locally",
     "tex_source_refresh_gate": "not_recorded_locally",
-    "license_page_artifact": "not_recorded_locally",
     "cached_pdf_header_consistency": "not_recorded_locally",
 }
 
@@ -97,8 +95,7 @@ def alphaevolve_tex_source_boundary_record() -> dict[str, Any]:
             "SHA-256 digest for the AlphaEvolve source archive. It does not "
             "claim full raw archive retention, raw HTTP header retention, "
             "archive member inventory, extraction-script artifacts, TeX-source "
-            "refresh gates, license-page artifacts, or cached-PDF header "
-            "consistency."
+            "refresh gates, or cached-PDF header consistency."
         ),
     }
 

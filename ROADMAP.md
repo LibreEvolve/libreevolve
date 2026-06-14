@@ -1463,10 +1463,13 @@ by `papers/lineage_replay_boundary.json`.
   `2506.13131v1` source-version linkage. Raw HTTP response headers, committed
   full raw DataCite responses, full TeX/e-print archive retention, archive
   member inventories, metadata extraction-script artifacts, DOI
-  landing-resolution headers, license-page cache, committed full HTML content,
-  current-version resolution snapshots, floating-PDF URL version-drift gates,
-  cached-PDF header consistency records, and automated CI refresh gates remain
-  open.
+  landing-resolution headers, committed full HTML content, current-version
+  resolution snapshots, floating-PDF URL version-drift gates, cached-PDF header
+  consistency records, and automated CI refresh gates remain open.
+  `papers/alphaevolve_license_page_boundary.json` now pins the Creative
+  Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
+  byte count, SHA-256 digest, title, license family, and version while keeping
+  full HTML retention, raw headers, and automated license-page refresh open.
 - Keep paper-cache row identity proven before version/rights evidence:
   `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
   contain a source id matching the manifest `id`, and that every local PDF

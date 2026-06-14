@@ -2299,10 +2299,14 @@ Implemented:
   content-disposition filename, byte count, SHA-256 digest, and
   `2506.13131v1` linkage. Raw HTTP response headers, full raw DataCite
   response retention, full TeX/e-print archive retention, archive member
-  inventories, metadata extraction-script artifacts, license-page caching,
-  committed full HTML content, current-version resolution snapshots,
-  floating-PDF URL version-drift gates, cached-PDF header consistency records,
-  DOI landing-resolution headers, and automated CI refresh checks remain open.
+  inventories, metadata extraction-script artifacts, committed full HTML
+  content, current-version resolution snapshots, floating-PDF URL
+  version-drift gates, cached-PDF header consistency records, DOI
+  landing-resolution headers, and automated CI refresh checks remain open.
+  `papers/alphaevolve_license_page_boundary.json` now pins the Creative
+  Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
+  byte count, SHA-256 digest, title, license family, and version while keeping
+  full HTML retention, raw headers, and automated license-page refresh open.
 - `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
   identity evidence. It validates `papers/row_identity.json`, whose 24 source
   records emit manifest row id, URL source id where available, local filename
@@ -2315,9 +2319,11 @@ Implemented:
   `© 2025 Google DeepMind. All rights reserved`, rights holder/year, source
   page/location, manifest row hash/bytes, lack of an open-license declaration
   in the cached PDF, the fact that the arXiv license URL is recorded in
-  `papers/source_versions.json` while the license page/terms are not cached,
-  and boundaries separating third-party paper-source rights from LibreEvolve's
-  MIT license and the companion repository's Apache/CC licensing.
+  `papers/source_versions.json`, and the bounded license-page digest now in
+  `papers/alphaevolve_license_page_boundary.json` while full license page/terms
+  are not cached. It keeps boundaries separating third-party paper-source
+  rights from LibreEvolve's MIT license and the companion repository's
+  Apache/CC licensing.
   `papers/source_rights.json` emits that source-rights row with
   reproduction-policy requirements for excerpts, tables, figures, quotes, and
   appendix claims, and the paper-manifest command validates the companion file
@@ -2797,23 +2803,28 @@ Implemented:
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   normalized source metadata, and explicit remaining gaps for full HTML,
   raw HTTP response headers, metadata extraction-script artifacts, TeX-source,
-  license-page, current-version resolution, floating-PDF URL version-drift
-  checks, cached-PDF header consistency, and automated refresh evidence. It is
-  not full publication-grade source evidence or a live refresh gate.
+  current-version resolution, floating-PDF URL version-drift checks, cached-PDF
+  header consistency, and automated refresh evidence. It is not full
+  publication-grade source evidence or a live refresh gate.
 - `papers/alphaevolve_datacite_doi_boundary.json`: AlphaEvolve DOI/DataCite
   sidecar with the pinned DataCite API URL, retrieval date, status, response
   byte count, SHA-256 digest, DOI, landing URL, title, creator count,
   publisher, publication year, resource type, schema version, registered
   timestamp, and version. It is not raw HTTP header retention, full raw
   response retention, a DataCite refresh gate, DOI landing-resolution-header
-  evidence, license-page evidence, or cached-PDF header consistency evidence.
+  evidence, or cached-PDF header consistency evidence.
 - `papers/alphaevolve_tex_source_boundary.json`: AlphaEvolve arXiv TeX/e-print
   sidecar with the pinned e-print URL, retrieval date, status, content type,
   content-disposition filename, response byte count, SHA-256 digest, and
   `2506.13131v1` linkage. It is not full raw archive retention, raw HTTP header
   retention, archive member inventory, extraction-script evidence, a
-  TeX-source refresh gate, license-page evidence, or cached-PDF header
-  consistency evidence.
+  TeX-source refresh gate, or cached-PDF header consistency evidence.
+- `papers/alphaevolve_license_page_boundary.json`: AlphaEvolve
+  source-license page sidecar with the pinned Creative Commons BY-NC-ND 4.0
+  URL, retrieval date, status, content type, response byte count, SHA-256
+  digest, page title, license family, license version, and normalized URL. It
+  is not full license-page HTML retention, raw HTTP header retention, or an
+  automated license-page refresh gate.
 - `papers/candidate_abstraction_bias_matrix.json`: design-level candidate
   abstraction bias matrix for direct-solution, constructor-function,
   bespoke-search, and paired solution/search families. It is not executed

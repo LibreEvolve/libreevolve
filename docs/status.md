@@ -1233,12 +1233,13 @@ Important limits:
   `papers/implementation_evidence_map_boundary.json`.
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
   SHA-256 digest, normalized author list, subject classes, DOI URL, submitted
-  timestamp, TeX-source URL, license URL, and submission-history entry. This is
-  not raw HTTP header retention, extraction-script provenance, DataCite DOI
-  resolution, TeX-source archive caching, license-page caching, committed full
-  HTML content, current-version resolution, floating-PDF drift checking,
-  cached-PDF header consistency evidence, or an automated CI refresh gate; that
-  boundary is tracked by `papers/arxiv_abstract_snapshot.json`.
+  timestamp, TeX-source URL, license URL, and submission-history entry.
+  DataCite DOI, TeX/e-print, and license-page digest sidecars now preserve
+  bounded response metadata and hashes. This is not raw HTTP header retention,
+  extraction-script provenance, full raw DataCite response retention, full
+  TeX-source archive caching, full license-page caching, committed full HTML
+  content, current-version resolution, floating-PDF drift checking, cached-PDF
+  header consistency evidence, or an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

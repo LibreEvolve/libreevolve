@@ -53,6 +53,12 @@ from libreevolve.problems.benchmarks.alphaevolve_tex_source_boundary import (
     render_alphaevolve_tex_source_boundary_summary,
     validate_alphaevolve_tex_source_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_license_page_boundary import (
+    ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_SCHEMA,
+    alphaevolve_license_page_boundary_record,
+    render_alphaevolve_license_page_boundary_summary,
+    validate_alphaevolve_license_page_boundary,
+)
 from libreevolve.problems.benchmarks.appendix_a_matrix_registry import (
     CURATION_SCHEMA as APPENDIX_A_MATRIX_CURATION_SCHEMA,
     EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA as APPENDIX_A_MATRIX_EXCLUDED_TARGET_CURATION_BOUNDARY_SCHEMA,
@@ -991,6 +997,7 @@ __all__ = [
     "ALPHAEVOLVE_2026_IMPACT_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA",
     "ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA",
     "ALPHAEVOLVE_SOURCE_PDF_RIGHTS_SCHEMA",
@@ -1184,6 +1191,7 @@ __all__ = [
     "alphaevolve_references_section_record",
     "alphaevolve_arxiv_abstract_snapshot_record",
     "alphaevolve_datacite_doi_boundary_record",
+    "alphaevolve_license_page_boundary_record",
     "alphaevolve_tex_source_boundary_record",
     "alphaevolve_source_pdf_rights_record",
     "alphaevolve_source_pdf_version_record",
@@ -1481,6 +1489,7 @@ __all__ = [
     "render_ttt_discover_boundary_summary",
     "render_alphaevolve_2026_impact_boundary_summary",
     "render_alphaevolve_datacite_doi_boundary_summary",
+    "render_alphaevolve_license_page_boundary_summary",
     "render_alphaevolve_tex_source_boundary_summary",
     "render_ucb1_boundary_summary",
     "render_whole_run_source_workspace_integrity_boundary_summary",
@@ -1510,6 +1519,7 @@ __all__ = [
     "validate_alphaevolve_2026_impact_boundary",
     "validate_alphaevolve_arxiv_abstract_snapshot",
     "validate_alphaevolve_datacite_doi_boundary",
+    "validate_alphaevolve_license_page_boundary",
     "validate_alphaevolve_tex_source_boundary",
     "validate_alphaevolve_follow_on_math_source",
     "validate_alphaevolve_follow_on_problem_coverage",

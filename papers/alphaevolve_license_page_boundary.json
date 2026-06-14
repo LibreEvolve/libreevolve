@@ -1,0 +1,40 @@
+{
+  "schema": "libreevolve.alphaevolve_license_page_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve source metadata should preserve bounded evidence for the arXiv-adjacent Creative Commons source-license page.",
+  "boundary_status": "license_page_digest_without_full_html_or_refresh_gate",
+  "claim_ready": false,
+  "license_page_snapshot": {
+    "license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+    "retrieved_on": "2026-06-14",
+    "http_status": 200,
+    "content_type": "text/html",
+    "response_bytes": 36988,
+    "response_sha256": "7d6f32e34442a8e08c86a77ace49166f7193af0857816b739354493e2c812939",
+    "title": "Deed - Attribution-NonCommercial-NoDerivatives 4.0 International - Creative Commons",
+    "license_family": "CC BY-NC-ND",
+    "license_version": "4.0",
+    "normalized_license_url": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+  },
+  "required_evidence_fields": [
+    "license_url",
+    "retrieved_on",
+    "http_status",
+    "content_type",
+    "response_bytes",
+    "response_sha256",
+    "title",
+    "license_family",
+    "license_version",
+    "normalized_license_url",
+    "full_html_artifact",
+    "raw_http_headers",
+    "license_page_refresh_gate"
+  ],
+  "missing_evidence": {
+    "full_html_artifact": "not_recorded_locally",
+    "raw_http_headers": "not_recorded_locally",
+    "license_page_refresh_gate": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the Creative Commons license URL, status, content type, byte count, SHA-256 digest, title, family, and version for the AlphaEvolve source-license page. It does not claim full HTML retention, raw HTTP header retention, or an automated license-page refresh gate."
+}

@@ -329,8 +329,8 @@ sidecars, tests, and active TODOs.
     `2025-06-16T06:37:18Z`, DOI `10.48550/arXiv.2506.13131`, author count
     `18`, TeX source URL, CC BY-NC-ND 4.0 license URL, and an explicit
     `manual_current_as_of_2026-06-13_without_html_snapshot` status. Its audit
-    policy marks DOI/DataCite resolution, full TeX-source caching,
-    license-page caching, and submission-history refresh gates as still
+    policy still marks raw/live source refresh evidence, full TeX-source
+    caching, full license-page caching, and submission-history refresh gates as
     missing.
     `papers/arxiv_abstract_snapshot.json` now records a
     2026-06-13 arXiv abstract-page HTML byte count, SHA-256 digest, normalized
@@ -346,15 +346,20 @@ sidecars, tests, and active TODOs.
     2026-06-14 arXiv e-print snapshot for `2506.13131`, including HTTP status,
     gzip content type, content-disposition filename, byte count, SHA-256
     digest, and `2506.13131v1` source-version linkage.
+    `papers/alphaevolve_license_page_boundary.json` now records a bounded
+    2026-06-14 Creative Commons BY-NC-ND 4.0 license-page snapshot, including
+    HTTP status, content type, byte count, SHA-256 digest, title, license
+    family, license version, and normalized URL.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
     equivalent, raw HTTP response headers, extraction-script artifact,
     full raw DataCite response retention, DOI landing-resolution headers,
     full TeX/e-print archive retention, archive member inventory,
-    license-page artifact, current-version resolution, floating-PDF URL
-    version-drift checks, cached-PDF header consistency, and an automated
+    full license-page HTML retention, current-version resolution, floating-PDF
+    URL version-drift checks, cached-PDF header consistency, and an automated
     CI/network refresh gate that fails paper/source validation if the live
-    arXiv/DataCite/e-print metadata drifts from the committed source boundary.
+    arXiv/DataCite/e-print/license metadata drifts from the committed source
+    boundary.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

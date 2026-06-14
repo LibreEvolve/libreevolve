@@ -4746,6 +4746,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     arithmetic circuit and TPU generation received it, why it qualifies as a
     first direct contribution, integration milestone, review scope, and how it
     differs from the downstream synthesis-tool rediscovery note.
+    `papers/hardware_contribution_attribution_boundary.json` now keeps this
+    as a paper-facing attribution-metadata versus artifact boundary.
   - Required result: add real paper/report artifacts for Gemini hardware
     self-contribution claims: model-family/backend records, TPU and
     arithmetic-circuit identifiers, integration milestone records,

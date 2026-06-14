@@ -4388,6 +4388,8 @@ sidecars, tests, and active TODOs.
     milestone, responsible hardware review/signoff scope, distinction from
     downstream synthesis-tool rediscovery, confirmation flags, and artifact
     refs.
+    `papers/hardware_contribution_attribution_boundary.json` now keeps this
+    metadata separate from real Gemini-to-TPU attribution artifacts.
   - Required result: connect hardware fixtures to real attribution artifacts:
     model/run/backend records, reviewed TPU-generation and circuit identifiers,
     firstness/novelty review evidence, integration milestone records,

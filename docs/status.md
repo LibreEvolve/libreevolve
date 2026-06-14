@@ -1137,7 +1137,9 @@ Important limits:
   milestone, hardware review scope, synthesis-rediscovery caveat, confirmation
   flags, and artifact refs, not real model/run/backend records, reviewed
   TPU/circuit identifiers, firstness evidence, integration records, hardware
-  signoff files, or synthesis-rediscovery audit artifacts.
+  signoff files, or synthesis-rediscovery audit artifacts; that attribution
+  boundary is tracked by
+  `papers/hardware_contribution_attribution_boundary.json`.
 - Compiler IR records validate IR-origin/editability boundaries,
   compiler-generated baseline provenance, reference and input-generator hashes,
   numerical tolerance policy, final expert-confirmation scope, per-edit

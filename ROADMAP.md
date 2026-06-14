@@ -2227,6 +2227,11 @@ resumed-trace proof are still open.
   preserves the concrete rewrite-artifact boundary, so before/after Verilog
   hashes and removed-bit metadata cannot stand in for source files, diff/AST
   artifacts, removed-signal inventories, or per-bit PPA/verification links.
+  `papers/hardware_contribution_attribution_boundary.json` now preserves the
+  Gemini-to-TPU attribution boundary, so `hardware_contribution_provenance`
+  metadata cannot stand in for model/run/backend records, reviewed TPU/circuit
+  identifiers, firstness review, integration milestones, hardware signoff, or
+  synthesis-rediscovery audit artifacts.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style
   infrastructure or base-model uplift: component identity, before/after
   measurements, deployment/adoption status, rollback/safety review, provenance

@@ -2647,6 +2647,14 @@ Implemented:
   artifacts, changed-span artifacts, removed-bit or signal inventories,
   per-bit PPA and verification linkages, PPA deltas, functional verification
   outputs, component review/signoff, or complete artifact refs.
+- `papers/hardware_contribution_attribution_boundary.json`: Gemini-to-TPU
+  attribution sidecar for AlphaEvolve Section 3.3.3. It records that
+  `hardware_contribution_provenance` metadata is not evidence of Gemini
+  model-family identity, AlphaEvolve run identity, producing backend identity,
+  reviewed TPU generation or circuit identifiers, firstness/novelty review,
+  integration milestone confirmation, hardware signoff files, synthesis
+  rediscovery audit artifacts, mediation confirmations, or complete artifact
+  refs.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

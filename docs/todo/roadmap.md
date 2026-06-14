@@ -156,3 +156,32 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evidence, artifact outputs, and current readiness, and validate that
     README/papers/ROADMAP wording cannot promote smoke fixtures or one narrow
     benchmark family as representative coverage.
+
+- [ ] Add ROADMAP plugin-extensibility readiness criteria.
+  - Spec evidence: the `8. Plugin extensibility` section describes a framework
+    surface, not just a set of plugin TODOs. To support AlphaEvolve-style
+    extensible research workflows, ROADMAP should define when plugin loading,
+    configuration, provenance, artifacts, and paper-inspiration metadata are
+    mature enough for external plugins rather than only trusted in-repo
+    examples.
+  - Current evidence: ROADMAP distinguishes the current entry-point registry,
+    direct-instance signature-only policy, built-in scalar/path configuration,
+    configured entry-point plugin distribution records, prompt/context/config
+    provenance, and manifest-safe artifact summaries from planned richer
+    package policy, direct custom constructor schemas, versioned custom
+    registries, constructor-value provenance, package-version attribution,
+    artifact lifecycle hashes, and strategy-choice evidence. Active code and
+    paper TODOs already track direct custom plugin provenance, custom plugin
+    package-registry attribution, constructor-value/schema evidence, and
+    paper-inspired plugin scope boundaries.
+  - Current gap: there is no section-level plugin-extensibility rubric,
+    trust-boundary matrix, admission checklist, or stale-readiness detector
+    tying those plugin subfeatures together, so a partial entry-point or
+    provenance improvement could be mistaken for broad custom-plugin support.
+  - Required result: add ROADMAP plugin-extensibility criteria that classify
+    built-in, entry-point, direct-instance, and future custom-registry plugins
+    by supported configuration shape, package/source identity, constructor
+    provenance, artifact hashing, runtime isolation/trust assumptions,
+    paper-scope attribution, and validation gates, and add checks that README,
+    papers, runtime metadata, and plugin docs cannot overclaim external plugin
+    readiness until the full matrix is satisfied.

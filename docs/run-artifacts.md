@@ -1493,7 +1493,9 @@ controller state, and provider-output semantics end to end.
 `load_runtime_lineage_replay_policy_snapshot()` validates that manifest policy
 and `load_full_resume_bundle()` packages the checked copy as explicit restore
 metadata; any unsupported field, missing field, or claim that provider outputs
-were replayed is rejected before the bundle is accepted.
+were replayed is rejected before the bundle is accepted. The paper-facing
+sidecar `papers/lineage_replay_boundary.json` preserves this deterministic
+id-policy boundary separately from full resumed lineage proof.
 
 Plugin-supplied fields live under nested `metadata`; top-level `plugin`,
 `module`, `class`, `index`, and `instance_id` are derived from the runtime

@@ -624,8 +624,10 @@ Important limits:
   bundles. Direct `Program()` / `PromptProgram()` UUID4 defaults, provider/model
   outputs, controller pending work, plugin internal randomness, validator
   subprocess randomness, migration-event replay, and end-to-end resumed-trace
-  proof remain outside the replay contract; the current terminal controller
-  evidence is bounded by `papers/controller_pending_work_resume_boundary.json`.
+  proof remain outside the replay contract. This lineage boundary is tracked by
+  `papers/lineage_replay_boundary.json`; the current terminal controller
+  evidence is separately bounded by
+  `papers/controller_pending_work_resume_boundary.json`.
 - Parallel-evaluation readiness is limited to configured local
   `eval_stages[].sample_workers` fan-out, observed sample wall-clock
   compression, and topology linkage. It is not AlphaEvolve-style

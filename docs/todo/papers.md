@@ -1580,7 +1580,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     controller-budget replay, lineage boundary, and unsupported-surface list
     while keeping full replay, provider-output replay, pending-work resume, and
     resumed-trace proof marked unavailable, with validation rejecting forged
-    resumed-trace proof readiness. But
+    resumed-trace proof readiness. The paper manifest now requires
+    `papers/lineage_replay_boundary.json` to preserve the deterministic
+    lineage-id policy, direct UUID exclusions, and provider-output non-replay
+    boundary. But
     this still stops short of an end-to-end replay trace that proves identical
     provider outputs or resumed lineage. Validator subprocesses now use an
     explicit
@@ -1656,6 +1659,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     beyond entry-point distribution records, and live authenticated provider
     request/model-registry evidence beyond credential-presence and local client
     construction.
+    The remaining paper gap is not deterministic loop-created ids, direct UUID
+    exclusion, the runtime lineage policy validator, or the lineage sidecar; it
+    is full resumed lineage proof across provider output, archive/controller
+    resume, migration ordering, plugin state, and validator subprocess
+    boundaries.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation

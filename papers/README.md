@@ -2473,6 +2473,17 @@ Implemented:
   running evaluation state, in-flight LLM call state, pending archive admission
   state, partial-generation replay traces, async controller graph checkpoints,
   provider-output handoff replay, or end-to-end resumed trace proof.
+- `papers/lineage_replay_boundary.json`: lineage replay sidecar for
+  AlphaEvolve Sections 2.5, 2.6, and 4. It records validated
+  `runtime.lineage_replay_policy` evidence for deterministic loop-created seed
+  and generated candidate ids, deterministic PromptDatabase ids, ordered LLM
+  call ids, direct `Program()` / `PromptProgram()` UUID4 exclusions,
+  provider-output non-replay metadata, runtime RNG, LLM scheduler, archive
+  snapshot, prompt-history replay linkage, and full-resume bundle policy
+  validation. It is not evidence of provider-output replay in resumed traces,
+  controller pending-work lineage state, ordered migration lineage replay,
+  plugin or validator RNG state linkage, or end-to-end resumed lineage trace
+  proof.
 - `papers/llm_role_scheduler_boundary.json`: LLM role-scheduler sidecar for
   AlphaEvolve Sections 2.1 and 2.6. It records configured role-backend
   routing, backend metadata role matching, reward-accounted roles, feedback

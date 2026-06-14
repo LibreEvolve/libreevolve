@@ -1070,7 +1070,9 @@ composes it with compatible LLM scheduler, archive, budget, controller-budget,
 and lineage-boundary checks while keeping resumed-trace proof readiness false;
 provider/plugin output replay, controller pending-work state, and end-to-end
 resumed-trace proof are still open; the terminal controller-state boundary is
-tracked by `papers/controller_pending_work_resume_boundary.json`.
+tracked by `papers/controller_pending_work_resume_boundary.json`, and the
+deterministic lineage-id versus provider/direct-UUID replay boundary is tracked
+by `papers/lineage_replay_boundary.json`.
 - Extend budget accounting beyond the current local synchronous generation,
   evaluator-call, evaluator-second, wall-clock, LLM call/provider/token/
   configured-cost/latency, synchronous controller-budget event replay, and

@@ -1208,7 +1208,8 @@ authoritative run accounting.
   `runtime.lineage_replay_policy` separately declares deterministic loop-owned
   candidate, prompt, and LLM call id surfaces, excludes direct `Program()` and
   `PromptProgram()` UUID4 defaults, and states that provider outputs are not
-  replayed by call ids or RNG restore.
+  replayed by call ids or RNG restore. The paper-facing version of that
+  boundary is preserved in `papers/lineage_replay_boundary.json`.
 - `prompt_history.jsonl` can be replayed into a prompt archive, and the current
   full-runtime restore bundle can validate RNG, LLM scheduler, archive
   cell/elite, runtime-budget, synchronous controller-budget event, explicit RNG

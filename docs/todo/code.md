@@ -5264,11 +5264,16 @@ sidecars, tests, and active TODOs.
     and `load_full_resume_bundle()` includes the checked policy/provider-output
     non-replay boundary in its composed restore metadata. There is still no
     end-to-end full replay trace that composes ids, RNG, archive, controller,
-    and provider boundaries.
+    and provider boundaries. The paper manifest now requires
+    `papers/lineage_replay_boundary.json` to preserve the deterministic
+    lineage-id policy without overclaiming provider-output replay or
+    end-to-end resumed lineage proof.
   - Required result: compose deterministic prompt/candidate/call ids with full
     resume orchestration, provider-output capture or explicit non-replay in the
     resumed trace, and end-to-end resumed-run tests proving stable parent,
     prompt, call, archive-sampling, controller, and manifest replay metadata.
+    The remaining gap is not the runtime lineage replay-policy validator or its
+    paper sidecar; it is the resumed trace proof itself.
 
 - [ ] Compose framework RNG restore with resumed-trace replay.
   - Spec evidence: AlphaEvolve-style runs should be reproducible without

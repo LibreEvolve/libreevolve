@@ -6065,6 +6065,49 @@ directory and using the AlphaEvolve paper as the primary specification.
     technology-mapping code evolution as missing logic-synthesis evidence
     rather than implemented LibreEvolve support.
 
+- [ ] Reproduce EvoControl interpretable control-policy evolution evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2601.06845`, submitted January 11, 2026, is
+    titled `Code Evolution for Control: Synthesizing Policies via LLM-Driven
+    Evolutionary Search`. Its abstract says reinforcement-learning control
+    policies can have high sample complexity, reward-shaping difficulties, and
+    opaque neural network policies that are hard to interpret or verify. The
+    paper treats policy synthesis as code evolution, uses EvoToolkit to combine
+    LLM-driven evolution with customizable fitness evaluation, and evolves
+    populations of executable candidate policy programs. The HTML paper reports
+    LunarLander-v3 experiments comparing FunSearch, EoH, and EvoEngineer
+    strategies against random and PPO baselines; EvoEngineer+ reaches a 70%
+    landing success rate versus PPO's 60% at roughly equivalent environment
+    interactions, produces a 59-line inspectable Python policy, and preserves a
+    lower average-reward trade-off that the paper frames as relevant to
+    safety-critical success-rate objectives. The arXiv page links code at
+    `https://github.com/pgg3/EvoControl`.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2601.06845`. Existing LibreEvolve AlphaEvolve, FunSearch,
+    EoH, EvoEngineer, systems-result, benchmark-hardening, policy, and
+    evaluator-contract TODOs do not reproduce executable control-policy
+    candidate schemas, Gymnasium LunarLander-v3 fixtures, state/action/reward
+    contracts, sandboxed policy execution, episode-statistics feedback,
+    failure-mode prompt context, PPO/random baselines, equivalent environment
+    interaction budgets, landing-success metrics, policy-size/complexity
+    interpretability metrics, or formal-verification readiness for evolved
+    autonomous-system policies.
+  - Required result: add reproduction-grade evidence for `2601.06845`:
+    title/authors/arXiv version/date, source license, linked-code URL/status
+    and license, relation to AlphaEvolve, FunSearch, EoH, EvoEngineer,
+    EvoToolkit, and LibreEvolve, executable policy interface, Gymnasium
+    LunarLander-v3 environment metadata, state/action/reward schema,
+    sandboxed policy-runner constraints, population and generation settings,
+    LLM call and environment-step budgets, mutation/crossover/operator prompt
+    records, episode-statistics and failure-mode feedback artifacts, PPO and
+    random baseline identities, average-reward and landing-success metric
+    definitions, policy LoC/cyclomatic-complexity records, 59-line policy
+    artifact, cost and sample-efficiency comparisons, safety-critical
+    interpretability/verification criteria, independent verification outputs,
+    and README/ROADMAP wording that treats EvoControl-style interpretable
+    control-policy evolution as missing autonomous-systems benchmark evidence
+    rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

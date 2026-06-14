@@ -5545,6 +5545,44 @@ directory and using the AlphaEvolve paper as the primary specification.
     discovery as missing paper evidence rather than implemented LibreEvolve
     support.
 
+- [ ] Reproduce EurekAgent environment-engineering evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.13662`, submitted June 11, 2026, is
+    titled `EurekAgent: Agent Environment Engineering is All You Need For
+    Autonomous Scientific Discovery`. Its abstract argues that the bottleneck
+    for autonomous scientific discovery is shifting from prescribed agent
+    workflows to engineered environments: resources, constraints, and
+    interfaces that amplify open-ended exploration, systematic artifact
+    management, and inter-agent collaboration while suppressing reward
+    hacking and high-friction human oversight. EurekAgent engineers
+    permissions for bounded execution and isolated evaluation, filesystem and
+    Git-based artifact collaboration, budget-aware exploration, and
+    human-in-the-loop supervision. It reports new state-of-the-art results on
+    mathematics, kernel engineering, and machine-learning tasks, including a
+    new 26-circle-packing result discovered for less than `$11` in total API
+    cost. The paper's related-work framing explicitly contrasts this
+    environment-first approach with evolutionary systems such as AlphaEvolve
+    that prescribe population, mutation, and selection workflows.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.13662`. Existing 26-circle TODOs only preserve the
+    checked-in smoke fixture and AlphaEvolve Appendix B claim boundary, and
+    existing human-in-the-loop/Fault2Flow rows do not cover EurekAgent's
+    permission sandboxing, isolated-evaluation environment, Git collaboration
+    substrate, budget-aware exploration controls, environment-mediated
+    artifact management, or cross-domain math/kernel/MLE benchmark evidence.
+  - Required result: add reproduction-grade evidence for `2606.13662`:
+    title/authors/arXiv version/date, source license, linked code/results
+    availability, relation to AlphaEvolve, TTT-Discover, CORAL, and
+    LibreEvolve's current workflow-centered loop, permission and execution
+    boundary schemas, isolated-evaluation records, filesystem/Git artifact
+    lineage, collaboration traces, budget and API-cost ledgers, human
+    supervision/intervention logs, reward-hacking and artifact-tampering
+    safeguards, 26-circle-packing task records, kernel-engineering benchmark
+    metadata, MLE-Bench Lite task/submission evidence, baseline identities,
+    independent verification outputs, and README/ROADMAP wording that treats
+    EurekAgent-style environment engineering as missing paper evidence rather
+    than implemented LibreEvolve support.
+
 - [ ] Reproduce CORAL autonomous multi-agent evolution evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2604.01658`, submitted April 2, 2026 and

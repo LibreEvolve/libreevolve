@@ -189,6 +189,37 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and updates README/TODO evidence whenever module ownership or layout
     changes.
 
+- [ ] Add architecture-guide runtime-flow drift evidence.
+  - Spec evidence: `docs/architecture.md` is the detailed end-to-end runtime
+    contract for CLI setup, problem loading, candidate representation,
+    mutation application, evolution-loop ordering, prompt sampling,
+    evaluation, plugins, MAP-Elites, persistence, restore, and known
+    limitations. For AlphaEvolve-alignment work, that architecture guide must
+    stay synchronized with the actual implementation and keep local
+    synchronous behavior separate from AlphaEvolve async/distributed parity.
+  - Current evidence: the root README and `docs/README.md` route readers to
+    `docs/architecture.md` for runtime architecture. The guide contains many
+    code-specific claims, including `.env` loading boundaries, configured
+    plugin resolution, candidate path safety, proposal-loop ordering,
+    critique/feedback sequencing, prompt-context behavior, evaluator
+    preflight, archive restore, controller-state snapshots, and synchronous
+    limitation bullets. Active TODOs already cover README repository-layout
+    drift, `docs/status.md` ledger freshness, ROADMAP readiness criteria, and
+    paper-facing async/topology boundaries, but not the architecture guide as
+    a standalone operational contract.
+  - Current gap: there is no committed architecture-claim inventory or drift
+    validator that maps each `docs/architecture.md` flow step, limitation, and
+    component-role statement to concrete source functions, tests, runtime
+    manifest fields, sidecars, and active TODO owners. Hook order, restore
+    semantics, prompt/evaluator surfaces, archive behavior, plugin behavior,
+    or runtime-budget claims can drift without a page-specific failure or
+    source-offset evidence update.
+  - Required result: add an architecture-guide evidence map and validation
+    gate that inventories each major architecture claim with code/test/runtime
+    anchors, flags unsupported or AlphaEvolve-facing parity claims separately,
+    and requires README/docs/TODO updates when implementation flow,
+    persistence semantics, or architecture limitations change.
+
 ## Quick Start
 
 - [ ] Add durable README quick-start smoke-run evidence.

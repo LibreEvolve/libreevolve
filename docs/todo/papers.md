@@ -5360,6 +5360,46 @@ directory and using the AlphaEvolve paper as the primary specification.
     and metric definitions, mathematical-algorithm baseline identities,
     code/artifact reproducibility status, and independent verification outputs.
 
+- [ ] Reproduce deletion-correcting-code FunSearch evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2504.00613`, submitted April 1, 2025 and
+    last revised June 5, 2026, is titled `LLM-Guided Search for
+    Deletion-Correcting Codes`. Its abstract adapts FunSearch-style
+    LLM-guided evolutionary search to construct deletion-correcting codes at
+    short code lengths, finds a function that is proved to construct the
+    conjectured-optimal Varshamov-Tenengolts code for a single deletion,
+    reports improved empirical constructions for multiple deletions and
+    quaternary edit codes, and studies design choices for LLM-guided
+    evolutionary search. The paper reports that, for this problem, compute is
+    better spent sampling more functions than producing longer reasoning
+    traces, that co-evolving natural-language descriptions with code hurts
+    search quality, and that deduplicating logically identical functions is
+    critical for search diversity. It also notes that evaluation scales
+    exponentially with code length, limiting the formulation to short codes.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2504.00613`. Existing LibreEvolve duplicate-work and
+    distributed-pipeline TODOs cover exact workspace hashes, current-run
+    duplicate caches, semantic near-duplicate absence, and async topology
+    boundaries, but they do not reproduce deletion-code candidate schemas,
+    greedy code-construction priority functions, Varshamov-Tenengolts proof
+    artifacts, multiple-deletion or quaternary edit-code benchmark rows,
+    sampling-versus-reasoning budget ablations, natural-language-description
+    co-evolution ablations, logical-function-equivalence deduplication, or
+    exponential evaluation-scaling diagnostics.
+  - Required result: add reproduction-grade evidence for `2504.00613`:
+    title/authors/arXiv version/date, source license, linked code/artifact
+    availability, relation to FunSearch, AlphaEvolve, and LibreEvolve,
+    deletion-code candidate representation, priority-function interface,
+    greedy construction evaluator, single-deletion Varshamov-Tenengolts proof
+    linkage, multiple-deletion and quaternary edit-code benchmark metadata,
+    baseline identities, sampling-count versus reasoning-trace ablation
+    records, natural-language-description co-evolution ablation records,
+    logical-equivalence deduplication policy and verifier, distributed or
+    batched inference/runtime provenance if reproduced, evaluation-scaling
+    measurements, independent verification outputs, and README/ROADMAP wording
+    that treats deletion-correcting-code search as missing benchmark evidence
+    rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

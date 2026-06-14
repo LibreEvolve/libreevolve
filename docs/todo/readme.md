@@ -86,6 +86,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Architecture Description
 
+- [ ] Add README repository-layout drift and module-role evidence.
+  - Spec evidence: a README repository-layout block is an architecture claim
+    surface. For AlphaEvolve-alignment work, high-level module roles should
+    stay tied to the actual code tree and supporting docs so readers can tell
+    which runtime components exist, which are only planned, and where
+    paper-facing boundaries live.
+  - Current evidence: the README lists `libreevolve/core`, `llm`,
+    `population`, `plugins`, `problems`, and `tools`, plus `docs/`, `papers/`,
+    `runs/`, and `tests/`. Those directories currently exist, and
+    `docs/architecture.md` provides a fuller runtime overview. The broader
+    documentation-claim inventory records the README headings and selected
+    evidence refs, but it does not validate the repository-layout code block
+    as a structured architecture claim.
+  - Current gap: no committed layout inventory, test, or sidecar compares the
+    README repository-layout entries against the current source/docs tree,
+    validates that each role summary is still accurate, flags new top-level
+    packages or docs that should be mentioned, or distinguishes implemented
+    module roles from AlphaEvolve-parity placeholders.
+  - Required result: add a README layout/schema drift check or generated
+    sidecar that parses the layout block, compares it with the package and
+    documentation tree, maps each role summary to concrete modules/docs/tests,
+    and updates README/TODO evidence whenever module ownership or layout
+    changes.
+
 ## Quick Start
 
 - [ ] Add durable README quick-start smoke-run evidence.

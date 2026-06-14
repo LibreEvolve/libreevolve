@@ -6184,6 +6184,45 @@ directory and using the AlphaEvolve paper as the primary specification.
     missing domain-benchmark evidence rather than implemented LibreEvolve
     support.
 
+- [ ] Reproduce EvolVE Verilog-generation and optimization evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2601.18067`, submitted January 26, 2026, is
+    titled `EvolVE: Evolutionary Search for LLM-based Verilog Generation and
+    Optimization`. Its abstract says Verilog design requires domain expertise
+    and that LLMs struggle with hardware formal logic and concurrency. EvolVE
+    analyzes multiple evolution strategies on chip-design tasks, reporting that
+    Monte Carlo Tree Search (MCTS) is strongest for functional correctness and
+    Idea-Guided Refinement (IGR) is strongest for optimization, while
+    Structured Testbench Generation (STG) accelerates the evolutionary process.
+    The paper introduces IC-RTL from National Integrated Circuit Contest
+    industry-scale problems, reports 98.1% on VerilogEval v2 and 92% on RTLLM
+    v2, and says IC-RTL reduces Power, Performance, Area (PPA) product by up
+    to 66% on Huffman Coding and 17% geometric mean across all problems versus
+    contest-participant references. The IC-RTL benchmark source is linked at
+    `https://github.com/weiber2002/ICRTL`.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2601.18067`. Existing LibreEvolve hardware RTL/EDA TODOs cover
+    AlphaEvolve TPU rewrite artifact boundaries and do not reproduce
+    specification-to-Verilog candidate schemas, VerilogEval v2 or RTLLM v2
+    fixtures, IC-RTL benchmark records, National Integrated Circuit Contest
+    provenance, MCTS versus IGR evolution-strategy comparisons, Structured
+    Testbench Generation, hardware-concurrency correctness checks, PPA-product
+    optimization, Huffman Coding benchmark details, or source-linked IC-RTL
+    independent verification.
+  - Required result: add reproduction-grade evidence for `2601.18067`:
+    title/authors/arXiv version/date, source license, IC-RTL code URL/status
+    and license, relation to AlphaEvolve, OpenEvolve, hardware RTL/EDA
+    AlphaEvolve boundary records, and LibreEvolve, Verilog candidate interface,
+    HDL runner and simulator/synthesis toolchain identity, MCTS state/action/
+    reward records, IGR prompt and refinement traces, STG testbench-generation
+    artifacts, VerilogEval v2 and RTLLM v2 benchmark metadata, IC-RTL task
+    metadata and contest provenance, functional-correctness metrics,
+    concurrency/formal-logic checks, PPA metric definitions and tool outputs,
+    Huffman Coding and geometric-mean result tables, reference-implementation
+    identities, independent verification outputs, and README/ROADMAP wording
+    that treats EvolVE-style Verilog generation and optimization as missing
+    hardware benchmark evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

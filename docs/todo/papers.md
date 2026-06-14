@@ -5446,6 +5446,51 @@ directory and using the AlphaEvolve paper as the primary specification.
     and README/ROADMAP wording that treats BB/PBB quantum-code discovery as
     missing benchmark evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce EvoDiverse parallel-tempered hypothesis-search evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.10587`, submitted June 9, 2026, is
+    titled `Towards Diverse Scientific Hypothesis Search with Large Language
+    Models`. Its abstract frames scientific discovery as needing a set of
+    high-quality alternative hypotheses under noisy and expensive validation,
+    not only a single best hypothesis. It argues that common evolutionary
+    search recipes prioritize optimization over exploration, causing diversity
+    collapse, and formulates hypothesis search as efficiently producing
+    diverse, high-quality hypotheses under a fixed validation budget.
+    EvoDiverse is presented as a parallel-tempered evolutionary framework that
+    searches at multiple temperature levels and exchanges information across
+    temperatures to improve exploration without disrupting convergence. The
+    paper reports quality and diversity improvements under the same validation
+    budget across molecular discovery, equation discovery, and algorithm
+    discovery, with candidates remaining robust under more expensive downstream
+    computational validations. Its appendix gives a generic template with
+    initial temperature-indexed pools, LLM evolutionary operators, objective
+    scores, offspring and parent sizes, swap size/period, total iterations,
+    a powering factor, Metropolis-Hastings swap dynamics, and adaptive power
+    adjustment.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.10587`. Existing LibreEvolve MAP-Elites, proposal-
+    diversity, hypothesis-index, hypothesis-branch, cascade hypothesis-test,
+    and LEVI diversity-preserving TODOs do not reproduce a fixed-validation-
+    budget hypothesis-sampling objective, multiple temperature-indexed pools,
+    Boltzmann-style score-to-weight conversion, Metropolis-Hastings cross-pool
+    swaps, adaptive powering factors, swap-rate diagnostics, same-budget
+    quality-and-diversity comparisons, molecular/equation/algorithm discovery
+    task coverage, or downstream expensive-validation robustness checks.
+  - Required result: add reproduction-grade evidence for `2606.10587`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, FunSearch, MAP-Elites,
+    LibreEvolve's prompt/database/archive behavior, and current proposal-
+    diversity reports, temperature-pool schema, objective and validation-
+    budget definitions, score-to-weight/powering-factor formulas, parent and
+    survivor sampling policy, cross-temperature swap contract,
+    Metropolis-Hastings acceptance evidence, adaptive swap-rate/power records,
+    quality and diversity metrics, same-budget baseline identities,
+    molecular/equation/algorithm discovery task metadata, downstream
+    validation records, ablation outputs for swaps and temperature levels,
+    independent verification outputs, and README/ROADMAP wording that treats
+    EvoDiverse-style parallel-tempered hypothesis search as missing paper
+    evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

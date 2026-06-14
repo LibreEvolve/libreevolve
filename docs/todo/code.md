@@ -4364,6 +4364,8 @@ sidecars, tests, and active TODOs.
     arithmetic-circuit component id, matrix-multiplication-unit context,
     semantic rewrite category, rewrite rationale, PPA linkage, verification
     linkage, and artifact refs.
+    `papers/hardware_rewrite_artifact_boundary.json` now keeps the rewrite
+    metadata contract separate from real source/diff/removed-bit artifacts.
   - Required result: connect hardware fixtures to real source and modified
     Verilog files, exact changed-line or AST/diff artifacts, removed-bit/signal
     inventories, component and matrix-unit records, and per-bit links to

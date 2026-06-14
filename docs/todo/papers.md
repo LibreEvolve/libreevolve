@@ -4724,6 +4724,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     identities, arithmetic-circuit component context, matrix-multiplication-
     unit context, semantic rewrite category, and links from removed bits to PPA
     and verification records.
+    `papers/hardware_rewrite_artifact_boundary.json` now keeps this as a
+    paper-facing rewrite-metadata versus concrete-artifact boundary.
   - Required result: add real paper/report artifacts for the TPU arithmetic-
     circuit rewrite: source and modified Verilog files, exact diff or AST span
     records, removed-bit inventory, component and matrix-unit identifiers,

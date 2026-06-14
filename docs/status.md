@@ -1129,7 +1129,8 @@ Important limits:
   matrix-unit context, rewrite category/rationale, and PPA/verification refs,
   not real before/after Verilog files, exact diff or AST artifacts,
   removed-bit inventories, component review files, or per-bit functional and
-  PPA evidence for the TPU arithmetic-circuit rewrite.
+  PPA evidence for the TPU arithmetic-circuit rewrite; that concrete rewrite
+  boundary is tracked by `papers/hardware_rewrite_artifact_boundary.json`.
 - Hardware contribution records validate Gemini/AlphaEvolve model-family
   relationship, run/backend identity, TPU generation and arithmetic-circuit
   identity, novelty basis, first-direct-contribution scope, integration

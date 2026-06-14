@@ -526,6 +526,10 @@ from libreevolve.problems.benchmarks.hardware_rtl_eda_evidence_boundary import (
     hardware_rtl_eda_evidence_boundary_record,
     validate_hardware_rtl_eda_evidence_boundary,
 )
+from libreevolve.problems.benchmarks.hardware_rewrite_artifact_boundary import (
+    hardware_rewrite_artifact_boundary_record,
+    validate_hardware_rewrite_artifact_boundary,
+)
 from libreevolve.problems.benchmarks.gemini_provider_parity_boundary import (
     gemini_provider_parity_boundary_record,
     validate_gemini_provider_parity_boundary,
@@ -668,6 +672,7 @@ ARTIFACT_INDEX_BOUNDARY_FILE = "papers/artifact_index_boundary.json"
 GEMINI_PROVIDER_PARITY_BOUNDARY_FILE = "papers/gemini_provider_parity_boundary.json"
 GEMINI_SELF_TRAINING_LOOP_BOUNDARY_FILE = "papers/gemini_self_training_loop_boundary.json"
 HARDWARE_RTL_EDA_EVIDENCE_BOUNDARY_FILE = "papers/hardware_rtl_eda_evidence_boundary.json"
+HARDWARE_REWRITE_ARTIFACT_BOUNDARY_FILE = "papers/hardware_rewrite_artifact_boundary.json"
 GIGAEVO_FRAMEWORK_BOUNDARY_FILE = "papers/gigaevo_framework_boundary.json"
 KERNEL_TILING_SHAPE_CORPUS_BOUNDARY_FILE = "papers/kernel_tiling_shape_corpus_boundary.json"
 PALLAS_WORKFLOW_BASELINE_BOUNDARY_FILE = "papers/pallas_workflow_baseline_boundary.json"
@@ -1192,6 +1197,7 @@ def validate_paper_manifest(
     issues.extend(_validate_gemini_provider_parity_boundary(root_path))
     issues.extend(_validate_gemini_self_training_loop_boundary(root_path))
     issues.extend(_validate_hardware_rtl_eda_evidence_boundary(root_path))
+    issues.extend(_validate_hardware_rewrite_artifact_boundary(root_path))
     issues.extend(_validate_gigaevo_framework_boundary(root_path))
     issues.extend(_validate_kernel_tiling_shape_corpus_boundary(root_path))
     issues.extend(_validate_pallas_workflow_baseline_boundary(root_path))
@@ -4420,6 +4426,38 @@ def _validate_hardware_rtl_eda_evidence_boundary(root_path: Path) -> list[PaperM
             f"hardware_rtl_eda_evidence_boundary_{issue.code}",
             issue.message,
             "hardware_rtl_eda_evidence",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_hardware_rewrite_artifact_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / HARDWARE_REWRITE_ARTIFACT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = hardware_rewrite_artifact_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "hardware_rewrite_artifact_boundary_manifest_missing",
+                    (
+                        f"{HARDWARE_REWRITE_ARTIFACT_BOUNDARY_FILE} must emit "
+                        "TPU arithmetic-circuit rewrite metadata versus artifact scope"
+                    ),
+                    "hardware_rewrite_artifact",
+                )
+            ]
+    report = validate_hardware_rewrite_artifact_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"hardware_rewrite_artifact_boundary_{issue.code}",
+            issue.message,
+            "hardware_rewrite_artifact",
         )
         for issue in report.issues
     ]

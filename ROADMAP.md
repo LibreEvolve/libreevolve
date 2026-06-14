@@ -2223,7 +2223,10 @@ resumed-trace proof are still open.
   metadata-versus-real-artifact boundary for RTL/EDA evidence, so validated
   hardware report fields cannot stand in for emitted Verilog, PPA,
   verification, signoff, synthesis, integration, or deployment-impact
-  artifacts.
+  artifacts. `papers/hardware_rewrite_artifact_boundary.json` separately
+  preserves the concrete rewrite-artifact boundary, so before/after Verilog
+  hashes and removed-bit metadata cannot stand in for source files, diff/AST
+  artifacts, removed-signal inventories, or per-bit PPA/verification links.
 - Add self-improvement evidence boundaries before claiming AlphaEvolve-style
   infrastructure or base-model uplift: component identity, before/after
   measurements, deployment/adoption status, rollback/safety review, provenance

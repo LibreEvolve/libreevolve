@@ -2640,6 +2640,13 @@ Implemented:
   constraints, equivalence and formal-verification logs, designer signoff,
   downstream synthesis confirmation, RTL-stage timing, adoption rationale,
   integration target, deployment/time-to-market evidence, or artifact refs.
+- `papers/hardware_rewrite_artifact_boundary.json`: TPU arithmetic-circuit
+  rewrite sidecar for AlphaEvolve Section 3.3.3. It records that
+  `hardware_rewrite_provenance` metadata is not evidence of exact circuit and
+  matrix-unit identity, source and modified Verilog files, rewrite diff/AST
+  artifacts, changed-span artifacts, removed-bit or signal inventories,
+  per-bit PPA and verification linkages, PPA deltas, functional verification
+  outputs, component review/signoff, or complete artifact refs.
 - `papers/documentation_truthfulness_boundary.json`: documentation
   truthfulness sidecar for the AlphaEvolve-alignment docs process. It records
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README

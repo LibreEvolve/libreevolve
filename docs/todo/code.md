@@ -5697,6 +5697,37 @@ sidecars, tests, and active TODOs.
     verification without overclaiming full release reproducibility from the
     current CI smoke.
 
+- [ ] Add untracked-source hygiene to release artifact provenance.
+  - Spec evidence: AlphaEvolve-style experiment and release artifacts should be
+    attributable to the source tree that produced them. A wheel or sdist built
+    from a developer worktree must not look reproducible if local untracked
+    package files or problem-profile files could enter the distribution or
+    influence the smoke result without being represented in release
+    provenance.
+  - Current evidence: `.github/workflows/tests.yml` builds release artifacts
+    from a clean checkout and checks that every file currently under
+    `libreevolve/` appears in both the wheel and sdist. The provenance writer
+    records `source.tracked_files_dirty` by running `git status --porcelain
+    --untracked-files=no`, so it intentionally ignores untracked files. The
+    current local worktree has untracked source/example paths under
+    `libreevolve/llm/` and
+    `libreevolve/problems/examples/sorting_network_9/`; the separate benchmark
+    provider-profile TODO classifies those as local-only benchmark evidence,
+    but release provenance still has no source-hygiene field for untracked
+    package-tree inputs.
+  - Current gap: a local release smoke or provenance artifact can report clean
+    tracked source while omitting untracked files under package, example,
+    workflow, test, docs, or manifest paths that may be packaged by
+    `MANIFEST.in`, inspected by the package-tree check, or used in local
+    validation. That weakens install-from-wheel evidence separately from the
+    benchmark-profile support-status gap.
+  - Required result: extend release artifact provenance and its tests with a
+    redacted/hash-backed untracked-source report over release-relevant paths,
+    fail or explicitly mark local release artifacts as non-reproducible when
+    untracked package inputs are present, and update the release checklist/CI
+    docs so clean-checkout CI smoke and local dirty-worktree smoke have distinct
+    evidence semantics.
+
 - [ ] Expand GitHub Actions workflow coverage beyond path-scoped cross-platform unit jobs.
   - Spec evidence: AlphaEvolve-scale engineering claims should be supported by
     repeatable validation over source code, docs, paper evidence, packaging,

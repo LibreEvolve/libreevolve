@@ -1701,11 +1701,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     contract across manifest-backed `history.jsonl` and
     `failure_history.jsonl` rows; `libreevolve show` invokes the gate and
     reports stream/line diagnostics for missing, legacy, or drifting boundary
-    metadata.
+    metadata. The paper manifest now requires
+    `papers/validator_artifact_promotion_boundary.json` to preserve this
+    CLI-inspection gate separately from run-finalization, CI, or release-
+    artifact promotion enforcement.
   - Current gap: the paper-facing artifact surface has a CLI inspection gate,
     but no run-finalization, CI, or release-artifact promotion gate that
     requires persisted policy-to-attempt boundary consistency before archiving
-    benchmark evidence.
+    benchmark evidence. The remaining gap is not the CLI/show artifact gate or
+    its paper sidecar; it is promotion-time enforcement.
   - Required result: add promotion-time validation/report evidence for
     policy-to-attempt boundary consistency while keeping this artifact gate
     separate from the broader missing OS/container sandbox and resource-quota

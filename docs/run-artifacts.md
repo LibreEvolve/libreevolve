@@ -2574,7 +2574,9 @@ validates `manifest.json` `policies.validator_execution`, scans
 evaluation attempt to carry `evaluation.metadata.validator_boundary`, and
 applies the consistency helper to each row. `libreevolve show` runs this
 artifact gate for manifest-backed runs and reports the first missing, legacy,
-or mismatched boundary with its stream and line number.
+or mismatched boundary with its stream and line number. This inspection gate is
+preserved in `papers/validator_artifact_promotion_boundary.json` separately
+from run-finalization, CI, and release-promotion enforcement.
 Startup manifests also persist the effective `config.validator_network_policy` and
 `policies.validator_network`, so allowed host/deny modes and the remaining
 OS/container network-sandbox gap are visible before individual evaluation

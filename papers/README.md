@@ -427,6 +427,10 @@ gate: `validate_run_artifact_validator_boundary_consistency()` checks
 and `failure_history.jsonl` evaluation boundary, and `libreevolve show`
 reports stream/line diagnostics for missing, legacy, or mismatched boundary
 rows.
+The paper manifest also requires
+`papers/validator_artifact_promotion_boundary.json` to preserve that CLI/show
+inspection gate without presenting it as run-finalization, CI, release-
+artifact promotion, historical-bundle batch, or archival blocking enforcement.
 Execution diagnostics can now be narrowed with `execution_diagnostic_groups`,
 a safe allowlist over validator boundary, stdin, diagnostic-output, and
 timeout-cleanup subgroups.
@@ -2508,6 +2512,14 @@ Implemented:
   enforcement, kernel/container network egress control, OS-enforced filesystem
   capabilities, CPU/memory/GPU/disk/process quotas, native-extension network
   denial proof, or distributed evaluator-worker resume state.
+- `papers/validator_artifact_promotion_boundary.json`: validator artifact
+  promotion sidecar for AlphaEvolve Sections 2.4, 2.6, and 4. It records
+  run-artifact validator-boundary consistency schema, manifest policy checks,
+  history/failure stream scans, missing/mismatched/legacy row rejection,
+  `libreevolve show` gate coverage, and stream/line diagnostics. It is not
+  evidence of run-finalization enforcement, CI artifact-promotion enforcement,
+  release-artifact promotion enforcement, historical bundle batch enforcement,
+  or archival blocking policy.
 - `papers/llm_role_scheduler_boundary.json`: LLM role-scheduler sidecar for
   AlphaEvolve Sections 2.1 and 2.6. It records configured role-backend
   routing, backend metadata role matching, reward-accounted roles, feedback

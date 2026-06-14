@@ -2722,6 +2722,64 @@ def test_validate_paper_manifest_requires_validator_execution_boundary_at_repo_r
     assert "validator_execution_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_validator_artifact_promotion_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.VALIDATOR_ARTIFACT_PROMOTION_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.validator_artifact_promotion_boundary_record(), indent=2
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_validator_artifact_promotion_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.validator_artifact_promotion_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "release_artifact_promotion_gate_ready"
+    record["missing_evidence"]["release_artifact_promotion_gate"] = "recorded"
+    sidecar = tmp_path / paper_manifest.VALIDATOR_ARTIFACT_PROMOTION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "validator_artifact_promotion_boundary_claim_ready_overclaim" in codes
+    assert "validator_artifact_promotion_boundary_invalid_boundary_status" in codes
+    assert (
+        "validator_artifact_promotion_boundary_invalid_missing_evidence_release_artifact_promotion_gate"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_validator_artifact_promotion_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "validator_artifact_promotion_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_metric_diverse_prompt_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

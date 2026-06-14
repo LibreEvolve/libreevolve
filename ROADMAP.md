@@ -855,7 +855,9 @@ is not yet an AlphaEvolve reproduction.
   `evaluation.metadata.validator_boundary` on each persisted attempt, and
   `libreevolve show` fails missing, legacy, or mismatched boundary evidence.
   This remains audit consistency for the declared local-subprocess boundary,
-  not OS/container sandbox or quota enforcement.
+  not OS/container sandbox, quota enforcement, or promotion-time archival
+  blocking. The committed `papers/validator_artifact_promotion_boundary.json`
+  sidecar preserves that CLI-inspection versus promotion-gate boundary.
 - Continue labeling CausalEvolve, DeepEvolve, ImprovEvolve, ThetaEvolve,
   TTT Discover, Bruhat Intervals, GigaEvo, CodeEvolve, MadEvolve, Magellan,
   ArchAgent, Multiagent Learning, Bilateral Trade, Fault2Flow, Global NLP

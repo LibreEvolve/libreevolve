@@ -1261,6 +1261,8 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   across manifest-backed `history.jsonl` and `failure_history.jsonl` rows, and
   `libreevolve show` fails current run bundles when persisted evaluation
   attempts are missing boundary metadata or drift from the manifest policy.
+  This is not a finalization, CI, or release-promotion gate; that boundary is
+  tracked by `papers/validator_artifact_promotion_boundary.json`.
 - `prompt_variants` populate the prompt-program database; set
   `meta_prompt_evolution: true` to allow interval-based LLM template mutation.
   Identical configured variants are intentionally admitted as separate prompt

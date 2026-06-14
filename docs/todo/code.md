@@ -5391,11 +5391,15 @@ sidecars, tests, and active TODOs.
     attempt. `libreevolve show` invokes the gate and focused tests cover clean
     rows, missing boundary metadata, mismatched network/filesystem/resource/
     secret fields through the shared helper, failure-history mismatch rows, and
-    manifest-backed legacy rows.
+    manifest-backed legacy rows. The paper manifest now requires
+    `papers/validator_artifact_promotion_boundary.json` to preserve this
+    CLI-inspection scope without overclaiming finalization, CI, release, or
+    archival promotion enforcement.
   - Remaining gap: this is a routine CLI inspection gate, not a
     run-finalization, CI, or release-artifact promotion gate. Historical bundles
     can still exist without being checked unless they are inspected through the
-    validation path.
+    validation path. The remaining gap is not the current run-artifact
+    consistency validator or its paper sidecar; it is promotion-time blocking.
   - Required result: add run-finalization or CI artifact-promotion enforcement
     if benchmark evidence bundles should fail automatically before archival,
     without confusing this consistency gate with the separate sandbox/resource-

@@ -212,7 +212,8 @@ Important limits:
   `libreevolve show` reports missing, legacy, or drifting boundary evidence
   with stream/line diagnostics. This is not run-finalization, CI, or release-
   artifact promotion enforcement, and it remains separate from stronger
-  OS/container sandboxing and resource-quota enforcement.
+  OS/container sandboxing and resource-quota enforcement; the promotion-gate
+  boundary is tracked by `papers/validator_artifact_promotion_boundary.json`.
 - Execution-grounding and incorrect-suggestion reports are local run telemetry
   over accepted, rejected, execution-filtered, invalid-evaluation, parse-error,
   archive-rejected, and accepted-invalid candidates, not independent rejudge

@@ -580,6 +580,40 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     require updates whenever provider examples or supported backend families
     change.
 
+## Configuration Docs
+
+- [ ] Add configuration-guide field and override drift evidence.
+  - Spec evidence: `docs/configuration.md` is the user-facing contract for
+    config precedence, problem-local `config.yaml`, `.env` loading,
+    validator environment isolation, `Config` fields, CLI overrides, backend
+    specs, environment variables, validation caveats, and restore limitations.
+    AlphaEvolve-alignment work depends on reproducible experiment setup, so
+    every documented setting should stay tied to code, tests, manifest fields,
+    and explicit parity boundaries.
+  - Current evidence: the guide documents defaults and semantics for many
+    `Config` dataclass fields, lists CLI `run` overrides, describes backend
+    spec behavior, and scopes cooperative budgets, prompt retention,
+    validator isolation, archive/RNG/budget restore, and provider capability
+    lookup limitations. `tests/test_agents_docs.py` currently checks only a
+    small subset of configuration-doc claims, such as sampling strategy fields
+    and archive-event cleanup stream wording. The active code TODO for an
+    exhaustive CLI/configuration contract map covers the underlying
+    code/config surface, but not the guide as a standalone documentation
+    claim surface.
+  - Current gap: there is no page-specific inventory or drift validator that
+    parses `docs/configuration.md`, maps each documented field/default,
+    allowed enum, CLI option, YAML key, manifest/provenance output,
+    validation rule, restore limitation, and provider-boundary statement to
+    `Config`, `cli.py`, source validators, tests, run artifacts, and active
+    code/paper TODO owners. A new `Config` field, changed default, renamed
+    CLI flag, altered validation behavior, or restored-runtime capability can
+    drift without a configuration-guide failure.
+  - Required result: add a configuration-guide evidence map and validation
+    gate that checks documented fields/defaults/options against code and
+    tests, links each runtime or AlphaEvolve-facing limitation to sidecars or
+    TODO owners, and requires README/docs/TODO updates whenever configuration,
+    CLI override, manifest, restore, provider, or validation behavior changes.
+
 ## Release Docs
 
 - [ ] Add release-checklist documentation drift evidence.

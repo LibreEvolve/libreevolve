@@ -1055,7 +1055,7 @@ STATUS_CLAIM_INVENTORY_SCHEMA = "libreevolve.paper_index_status_claim_inventory.
 STATUS_CLAIM_INVENTORY_STATUS = "row_level_status_inventory_without_phrase_semantic_verifier"
 STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
     "status_cell_phrase_claim_inventory": "not_recorded_locally",
-    "status_row_source_span_inventory": "not_recorded_locally",
+    "status_phrase_source_span_inventory": "not_recorded_locally",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -1475,13 +1475,14 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         for row in manifest_rows
         if isinstance(row.get("id"), str)
     }
-    status_rows, _status_issues = _read_status_table_rows(root_path)
-    status_rows = status_rows or []
+    status_records, _status_issues = _read_status_table_row_records(root_path)
+    status_records = status_records or []
     todo_rows, _todo_issues = _read_todo_coverage_table_cells(root_path)
     inventory_rows: list[dict[str, Any]] = []
     status_class_counts: dict[str, int] = {}
 
-    for row_ordinal, cells in enumerate(status_rows, start=1):
+    for row_ordinal, status_record in enumerate(status_records, start=1):
+        cells = status_record["cells"]
         row_id, title, role, status_text = cells
         active_cell, completed_cell = todo_rows.get(row_id, ("", ""))
         status_class = _status_claim_inventory_class(status_text)
@@ -1495,12 +1496,18 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
                 "role": role,
                 "status_class": status_class,
                 "status_text_sha256": hashlib.sha256(status_text.encode("utf-8")).hexdigest(),
+                "source_span": {
+                    "path": "papers/README.md",
+                    "section": "Implementation status",
+                    "line_start": status_record["line_number"],
+                    "line_end": status_record["line_number"],
+                },
                 "manifest_file": manifest_row.get("file", ""),
                 "local_artifact_paths": sorted(_status_local_artifact_paths(status_text)),
                 "active_todo_paths": _status_claim_inventory_paths(active_cell),
                 "completed_todo_paths": _status_claim_inventory_paths(completed_cell),
                 "claim_inventory_status": "row_classified_without_phrase_semantics",
-                "source_span_status": "not_recorded_locally",
+                "source_span_status": "row_markdown_line_recorded",
                 "freshness_status": "structural_only",
             }
         )
@@ -1518,8 +1525,9 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "This inventory records one structured row for every "
             "papers/README.md implementation-status table row, including "
             "role, status class, status text hash, manifest file, local "
-            "artifact mentions, and TODO evidence paths. It does not claim "
-            "phrase-level status verification, row source-span coverage, "
+            "artifact mentions, row source line, and TODO evidence paths. It "
+            "does not claim phrase-level status verification, phrase "
+            "source-span coverage, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
             "complete."
@@ -8276,6 +8284,13 @@ def _read_status_table_ids(root: Path) -> tuple[list[str] | None, list[PaperMani
 
 
 def _read_status_table_rows(root: Path) -> tuple[list[list[str]] | None, list[PaperManifestIssue]]:
+    records, issues = _read_status_table_row_records(root)
+    if records is None:
+        return None, issues
+    return [record["cells"] for record in records], issues
+
+
+def _read_status_table_row_records(root: Path) -> tuple[list[dict[str, Any]] | None, list[PaperManifestIssue]]:
     path = root / "papers" / "README.md"
     if not path.exists():
         return None, []
@@ -8290,12 +8305,12 @@ def _read_status_table_rows(root: Path) -> tuple[list[list[str]] | None, list[Pa
         ]
     in_section = False
     header_seen = False
-    rows: list[list[str]] = []
+    rows: list[dict[str, Any]] = []
     issues: list[PaperManifestIssue] = []
     seen: set[str] = set()
     table_closed = False
     non_contiguous_reported = False
-    for line in text.splitlines():
+    for line_number, line in enumerate(text.splitlines(), start=1):
         if line.strip() == "## Implementation status":
             in_section = True
             continue
@@ -8352,7 +8367,7 @@ def _read_status_table_rows(root: Path) -> tuple[list[list[str]] | None, list[Pa
                 )
             )
         seen.add(row_id)
-        rows.append(cells)
+        rows.append({"line_number": line_number, "cells": cells})
     if not in_section or not rows:
         return None, issues
     if not header_seen:

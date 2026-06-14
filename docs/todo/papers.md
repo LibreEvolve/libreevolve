@@ -20,10 +20,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     `Implemented` benchmark bullet phrased as not implemented. The committed
     `papers/status_claim_inventory.json` now records one checked row per
     implementation-status table row with row ids, role/status class, status
-    text hashes, manifest-file links, local artifact mentions, and active/
-    completed TODO evidence paths. The committed
+    text hashes, row source lines, manifest-file links, local artifact mentions,
+    and active/completed TODO evidence paths. The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
-    missing evidence for paper-index phrase-claim inventory, status-row
+    missing evidence for paper-index phrase-claim inventory, status-phrase
     source-span inventory, status-cell semantic verifier, implemented-benchmark
     bullet coverage map, and absence-sentence freshness matrix.
     `papers/documentation_claim_inventory.json` now adds top-level papers-index

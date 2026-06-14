@@ -44,7 +44,7 @@ sidecars, tests, and active TODOs.
     and published benchmarks with module/test/sidecar/TODO references while
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory. The boundary still explicitly keeps paper-index phrase
-    claim inventory, status-row source spans, status-cell semantic
+    claim inventory, status-phrase source spans, status-cell semantic
     verification, implemented-benchmark bullet coverage, and absence-sentence
     freshness checks as missing evidence.
   - Current gap: there is no machine-readable AlphaEvolve requirement

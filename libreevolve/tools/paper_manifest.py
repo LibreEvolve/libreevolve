@@ -39,6 +39,10 @@ from libreevolve.problems.benchmarks.arxiv_abstract_snapshot import (
     alphaevolve_arxiv_abstract_snapshot_record,
     validate_alphaevolve_arxiv_abstract_snapshot,
 )
+from libreevolve.problems.benchmarks.alphaevolve_datacite_doi_boundary import (
+    alphaevolve_datacite_doi_boundary_record,
+    validate_alphaevolve_datacite_doi_boundary,
+)
 from libreevolve.problems.benchmarks.autoconvolution_boundary import (
     autoconvolution_boundary_record,
     validate_autoconvolution_boundary,
@@ -618,6 +622,7 @@ from libreevolve.problems.benchmarks.ttt_discover_boundary import (
 
 REQUIRED_FIELDS = ("id", "title", "url", "file", "ok", "bytes", "sha256", "message")
 ARXIV_ABSTRACT_SNAPSHOT_FILE = "papers/arxiv_abstract_snapshot.json"
+ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE = "papers/alphaevolve_datacite_doi_boundary.json"
 APPENDIX_A_CURATION_FILE = "papers/appendix_a_matrix_curation.json"
 APPENDIX_A_EXCLUDED_TARGET_CURATION_FILE = "papers/appendix_a_matrix_excluded_target_curation.json"
 APPENDIX_A_RESOURCE_FRONTIER_FILE = "papers/appendix_a_matrix_resource_frontier.json"
@@ -1170,6 +1175,7 @@ def validate_paper_manifest(
     issues.extend(_validate_appendix_b_registry_if_present(root_path))
     issues.extend(_validate_ablation_registry_if_present(root_path))
     issues.extend(_validate_alphaevolve_arxiv_abstract_snapshot(root_path))
+    issues.extend(_validate_alphaevolve_datacite_doi_boundary(root_path))
     issues.extend(_validate_figure8_ablation_artifacts(root_path))
     issues.extend(_validate_benchmark_fixture_readiness_boundary(root_path))
     issues.extend(_validate_systems_result_readiness_boundary(root_path))
@@ -1895,6 +1901,38 @@ def _validate_alphaevolve_arxiv_abstract_snapshot(root_path: Path) -> list[Paper
     return [
         PaperManifestIssue(
             f"alphaevolve_arxiv_abstract_snapshot_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_datacite_doi_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_datacite_doi_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_datacite_doi_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE} must emit "
+                        "the AlphaEvolve DOI/DataCite source-evidence boundary"
+                    ),
+                    "2506.13131",
+                )
+            ]
+    report = validate_alphaevolve_datacite_doi_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_datacite_doi_boundary_{issue.code}",
             issue.message,
             "2506.13131",
         )

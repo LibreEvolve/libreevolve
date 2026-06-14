@@ -1452,12 +1452,16 @@ by `papers/lineage_replay_boundary.json`.
   is still not claimed, but `papers/arxiv_abstract_snapshot.json` now records
   the current abstract-page byte count, SHA-256 digest, normalized title,
   author list, subject classes, DOI URL, submitted timestamp, TeX-source URL,
-  license URL, and submission-history entry. DataCite DOI resolution artifacts,
-  raw HTTP response headers, metadata extraction-script artifacts,
-  TeX-source cache digests, license-page cache, committed full HTML content,
-  current-version resolution snapshots, floating-PDF URL version-drift gates,
-  cached-PDF header consistency records, and automated CI refresh gates remain
-  open.
+  license URL, and submission-history entry.
+  `papers/alphaevolve_datacite_doi_boundary.json` now pins a bounded DataCite
+  API response summary, response byte count, SHA-256 digest, DOI, landing URL,
+  title, creator count, publisher, publication year, resource type, schema
+  version, registered timestamp, and version. Raw HTTP response headers,
+  committed full raw DataCite responses, metadata extraction-script artifacts,
+  DOI landing-resolution headers, TeX-source cache digests, license-page
+  cache, committed full HTML content, current-version resolution snapshots,
+  floating-PDF URL version-drift gates, cached-PDF header consistency records,
+  and automated CI refresh gates remain open.
 - Keep paper-cache row identity proven before version/rights evidence:
   `libreevolve.tools.paper_manifest` now validates that arXiv PDF/abs URLs
   contain a source id matching the manifest `id`, and that every local PDF

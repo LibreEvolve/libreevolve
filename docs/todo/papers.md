@@ -662,13 +662,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     missing full HTML retention, raw HTTP response headers, extraction-script
     provenance, current-version resolution, floating-PDF drift checks, and
     cached-PDF header consistency evidence.
+    `papers/alphaevolve_datacite_doi_boundary.json` now pins a bounded
+    2026-06-14 DataCite API snapshot for `10.48550/arxiv.2506.13131`,
+    including response byte count, SHA-256 digest, DOI, landing URL, title,
+    creator count, publisher, publication year, resource type, schema version,
+    registered timestamp, and version, while keeping full raw response
+    retention and automated refresh gating open.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade evidence, add DOI/DataCite resolution evidence,
-    TeX-source and license-page retrieval records, a committed full-HTML
-    artifact or approved equivalent, raw HTTP headers, extraction-script
-    artifacts, current-version resolution, floating-PDF URL drift checking,
-    cached-PDF header consistency evidence, and an automated refresh gate that
-    detects arXiv version or metadata drift.
+    publication-grade evidence, add full raw DataCite response retention,
+    DOI landing-resolution headers, TeX-source and license-page retrieval
+    records, a committed full-HTML artifact or approved equivalent, raw HTTP
+    headers, extraction-script artifacts, current-version resolution,
+    floating-PDF URL drift checking, cached-PDF header consistency evidence,
+    and an automated refresh gate that detects arXiv/DataCite version or
+    metadata drift.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

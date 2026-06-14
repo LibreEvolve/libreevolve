@@ -16,7 +16,7 @@ def test_alphaevolve_arxiv_abstract_snapshot_accepts_pinned_metadata():
     assert validation.live_refresh_checked is False
     assert validation.author_count == 18
     assert validation.subject_count == 3
-    assert validation.missing_evidence_count == 10
+    assert validation.missing_evidence_count == 9
     assert snapshot["schema"] == ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA
     assert snapshot["html_snapshot"]["bytes"] == 50098
     assert (

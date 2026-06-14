@@ -336,14 +336,20 @@ sidecars, tests, and active TODOs.
     title, author list, subject classes, DOI URL, submitted date/timestamp,
     TeX-source URL, license URL, and submission-history entry for
     `2506.13131v1`, plus a validator-supported live-refresh comparison input.
+    `papers/alphaevolve_datacite_doi_boundary.json` now records a bounded
+    2026-06-14 DataCite API snapshot for `10.48550/arxiv.2506.13131`,
+    including response byte count, SHA-256 digest, DOI, landing URL, title,
+    creator count, publisher, publication year, resource type, schema version,
+    registered timestamp, and version.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
     equivalent, raw HTTP response headers, extraction-script artifact,
-    DOI/DataCite evidence, TeX archive digest, license-page artifact,
-    current-version resolution, floating-PDF URL version-drift checks,
-    cached-PDF header consistency, and an automated CI/network refresh gate
-    that fails paper/source validation if the live arXiv page or version
-    metadata drifts from the committed source boundary.
+    full raw DataCite response retention, DOI landing-resolution headers,
+    TeX archive digest, license-page artifact, current-version resolution,
+    floating-PDF URL version-drift checks, cached-PDF header consistency, and
+    an automated CI/network refresh gate that fails paper/source validation if
+    the live arXiv/DataCite page or version metadata drifts from the committed
+    source boundary.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

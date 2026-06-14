@@ -63,7 +63,6 @@ EXPECTED_MISSING_EVIDENCE = {
     "full_html_artifact_committed": "not_recorded_locally",
     "raw_http_response_headers": "not_recorded_locally",
     "metadata_extraction_script_artifact": "not_recorded_locally",
-    "datacite_doi_resolution_snapshot": "not_recorded_locally",
     "tex_source_archive_digest": "not_recorded_locally",
     "license_page_snapshot": "not_recorded_locally",
     "current_version_resolution_snapshot": "not_recorded_locally",

@@ -5615,6 +5615,35 @@ sidecars, tests, and active TODOs.
     and replay/restore exclusions without introspecting arbitrary live object
     state or leaking secrets.
 
+- [ ] Add configurable non-fatal plugin hook isolation for optional extension
+      surfaces.
+  - Spec evidence: AlphaEvolve-style long-running experiments need auxiliary
+    retrieval, context, scoring, and artifact extensions to be attributable and
+    controllable. A single optional plugin failure should be distinguishable
+    from core candidate/evaluator failure, and users should be able to decide
+    which hooks are fatal versus quarantined or skipped.
+  - Current evidence: `PluginBase` exposes lifecycle, score, prompt-context,
+    metadata, and artifact hooks. `evolve()` calls generation, context,
+    scoring, and generation-end hooks through `_call_plugin_hook(...)`, whose
+    default and call-site `hook_policy` is `"fatal_run_abort"`. Optional
+    metadata and artifact hooks use `_call_optional_plugin_hook(...)`, but that
+    helper also annotates and re-raises hook exceptions under the same fatal
+    policy. Completed runtime hardening now persists
+    `runtime.abort.plugin_failure`, `runtime.plugin_failures[]`, and
+    `runtime.plugin_artifact_failures[]` with structured attribution, so the
+    current fatal behavior is visible and tested rather than silent.
+  - Current gap: there is no per-hook or per-plugin failure policy such as
+    `fatal`, `skip_context`, `quarantine_plugin`, or
+    `continue_without_artifact_summary`; no prompt-context or artifact hook can
+    fail closed while the run continues; no quarantine state prevents repeated
+    optional-hook failures from polluting later prompts; and no report proves
+    which plugin failures were isolated, skipped, retried, or allowed to abort.
+  - Required result: add a versioned plugin hook failure-policy schema,
+    hook-criticality defaults, per-plugin overrides, quarantine/skip records in
+    runtime manifests and prompt metadata, tests for prompt-context and
+    artifact-summary continuation, and docs that keep score/admission hooks
+    fatal unless an explicit safe continuation contract exists.
+
 - [ ] Keep built-in paper-inspired plugin behavior scoped to approximation
   metadata.
   - Spec evidence: paper-inspired plugins and framework references should not

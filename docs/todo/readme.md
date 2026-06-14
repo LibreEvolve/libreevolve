@@ -793,6 +793,37 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     against current configuration, and updates README/TODO evidence whenever
     contributor gates or source-boundary validation policy changes.
 
+## Repository Policy
+
+- [ ] Add repository ignore-policy evidence-retention drift check.
+  - Spec evidence: `.gitignore` is part of the repository's truthfulness
+    boundary because it decides which run artifacts, paper caches, release
+    outputs, local secrets, worktrees, preview files, and paper sidecars are
+    committed versus kept local. AlphaEvolve-alignment evidence should not
+    depend on an untracked policy file whose changes can silently alter what
+    validators, papers, and README claims are able to prove.
+  - Current evidence: `.gitignore` excludes Python caches, virtual
+    environments, build outputs, `runs/`, `.env`, `.claude/`, `.worktrees/`,
+    preview/superpowers paths, and `papers/*` while allowlisting
+    `papers/README.md`, download manifests, benchmark coverage inventory, and
+    status-claim inventory. README and `papers/README.md` state that run
+    outputs and cached paper PDFs are intentionally gitignored, and completed
+    TODOs already cover the local-PDF allowlist boundary. GitHub Actions
+    `push`/`pull_request` path filters cover docs, papers, tests, package
+    metadata, and the workflow file itself, but not `.gitignore`.
+  - Current gap: no README-owned inventory or validator maps each ignore and
+    negation rule to its retention rationale, expected documentation claim,
+    paper-cache/run-artifact boundary, local-only artifact class, and CI
+    trigger coverage. A future `.gitignore` change could exclude committed
+    evidence, allow local-only artifacts, or bypass docs/paper validation
+    without a focused failure or TODO update.
+  - Required result: add an ignore-policy evidence map and validation gate
+    that parses `.gitignore`, verifies ignored and allowlisted surfaces
+    against README/docs/papers/TODO boundaries, checks workflow path filters
+    include policy-critical files, proves allowlisted paper sidecars and
+    manifests remain reachable, and requires README/TODO updates whenever
+    ignore policy or CI trigger coverage changes.
+
 ## License
 
 - [ ] Add README license and third-party rights boundary evidence.

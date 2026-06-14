@@ -241,6 +241,7 @@
     "2506.01896:status_phrase_003",
     "2506.01896:status_phrase_004"
   ],
+  "absence_signal_record_count": 99,
   "absence_signal_terms": [
     "absence",
     "missing",
@@ -577,6 +578,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "unsupported",
+              "phrase_text_char_start": 113,
+              "phrase_text_char_end": 124,
+              "status_text_char_start": 113,
+              "status_text_char_end": 124,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 462,
+                "line_end": 462,
+                "status_text_char_start": 113,
+                "status_text_char_end": 124
+              }
+            }
+          ],
           "absence_signal_terms": [
             "unsupported"
           ],
@@ -657,6 +675,38 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 425,
+              "phrase_text_char_end": 427,
+              "status_text_char_start": 2899,
+              "status_text_char_end": 2901,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 462,
+                "line_end": 462,
+                "status_text_char_start": 2899,
+                "status_text_char_end": 2901
+              }
+            },
+            {
+              "term": "missing",
+              "phrase_text_char_start": 1190,
+              "phrase_text_char_end": 1197,
+              "status_text_char_start": 3664,
+              "status_text_char_end": 3671,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 462,
+                "line_end": 462,
+                "status_text_char_start": 3664,
+                "status_text_char_end": 3671
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no",
             "missing"
@@ -738,6 +788,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -816,6 +867,38 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "unsupported",
+              "phrase_text_char_start": 60,
+              "phrase_text_char_end": 71,
+              "status_text_char_start": 7041,
+              "status_text_char_end": 7052,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 462,
+                "line_end": 462,
+                "status_text_char_start": 7041,
+                "status_text_char_end": 7052
+              }
+            },
+            {
+              "term": "remain open",
+              "phrase_text_char_start": 2854,
+              "phrase_text_char_end": 2865,
+              "status_text_char_start": 9835,
+              "status_text_char_end": 9846,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 462,
+                "line_end": 462,
+                "status_text_char_start": 9835,
+                "status_text_char_end": 9846
+              }
+            }
+          ],
           "absence_signal_terms": [
             "unsupported",
             "remain open"
@@ -1127,6 +1210,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 463,
+                "line_end": 463,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -1202,6 +1302,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -1319,6 +1420,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 236,
+              "phrase_text_char_end": 238,
+              "status_text_char_start": 281,
+              "status_text_char_end": 283,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 463,
+                "line_end": 463,
+                "status_text_char_start": 281,
+                "status_text_char_end": 283
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -1688,6 +1806,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -1767,6 +1886,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 227,
+              "phrase_text_char_end": 229,
+              "status_text_char_start": 507,
+              "status_text_char_end": 509,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 464,
+                "line_end": 464,
+                "status_text_char_start": 507,
+                "status_text_char_end": 509
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -1872,6 +2008,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 78,
+              "phrase_text_char_end": 85,
+              "status_text_char_start": 611,
+              "status_text_char_end": 618,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 464,
+                "line_end": 464,
+                "status_text_char_start": 611,
+                "status_text_char_end": 618
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -1953,6 +2106,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "remain open",
+              "phrase_text_char_start": 221,
+              "phrase_text_char_end": 232,
+              "status_text_char_start": 1057,
+              "status_text_char_end": 1068,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 464,
+                "line_end": 464,
+                "status_text_char_start": 1057,
+                "status_text_char_end": 1068
+              }
+            }
+          ],
           "absence_signal_terms": [
             "remain open"
           ],
@@ -2322,6 +2492,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -2401,6 +2572,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "out of scope",
+              "phrase_text_char_start": 94,
+              "phrase_text_char_end": 106,
+              "status_text_char_start": 224,
+              "status_text_char_end": 236,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 465,
+                "line_end": 465,
+                "status_text_char_start": 224,
+                "status_text_char_end": 236
+              }
+            }
+          ],
           "absence_signal_terms": [
             "out of scope"
           ],
@@ -2506,6 +2694,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 36,
+              "phrase_text_char_end": 43,
+              "status_text_char_start": 332,
+              "status_text_char_end": 339,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 465,
+                "line_end": 465,
+                "status_text_char_start": 332,
+                "status_text_char_end": 339
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -2819,6 +3024,38 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 466,
+                "line_end": 466,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 30,
+              "phrase_text_char_end": 32,
+              "status_text_char_start": 30,
+              "status_text_char_end": 32,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 466,
+                "line_end": 466,
+                "status_text_char_start": 30,
+                "status_text_char_end": 32
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not",
             "no"
@@ -2900,6 +3137,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -3002,6 +3240,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 86,
+              "phrase_text_char_end": 93,
+              "status_text_char_start": 293,
+              "status_text_char_end": 300,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 466,
+                "line_end": 466,
+                "status_text_char_start": 293,
+                "status_text_char_end": 300
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -3315,6 +3570,38 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 467,
+                "line_end": 467,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 136,
+              "phrase_text_char_end": 138,
+              "status_text_char_start": 136,
+              "status_text_char_end": 138,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 467,
+                "line_end": 467,
+                "status_text_char_start": 136,
+                "status_text_char_end": 138
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not",
             "no"
@@ -3420,6 +3707,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 63,
+              "phrase_text_char_end": 70,
+              "status_text_char_start": 389,
+              "status_text_char_end": 396,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 467,
+                "line_end": 467,
+                "status_text_char_start": 389,
+                "status_text_char_end": 396
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -3789,6 +4093,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -3868,6 +4173,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -3947,6 +4253,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -4026,6 +4333,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 9,
+              "phrase_text_char_end": 11,
+              "status_text_char_start": 515,
+              "status_text_char_end": 517,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 468,
+                "line_end": 468,
+                "status_text_char_start": 515,
+                "status_text_char_end": 517
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -4131,6 +4455,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 64,
+              "phrase_text_char_end": 71,
+              "status_text_char_start": 756,
+              "status_text_char_end": 763,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 468,
+                "line_end": 468,
+                "status_text_char_start": 756,
+                "status_text_char_end": 763
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -4500,6 +4841,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -4579,6 +4921,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 2,
+              "status_text_char_start": 294,
+              "status_text_char_end": 296,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 469,
+                "line_end": 469,
+                "status_text_char_start": 294,
+                "status_text_char_end": 296
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -4684,6 +5043,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 65,
+              "phrase_text_char_end": 72,
+              "status_text_char_start": 544,
+              "status_text_char_end": 551,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 469,
+                "line_end": 469,
+                "status_text_char_start": 544,
+                "status_text_char_end": 551
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -4997,6 +5373,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -5075,6 +5452,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 2,
+              "status_text_char_start": 17,
+              "status_text_char_end": 19,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 470,
+                "line_end": 470,
+                "status_text_char_start": 17,
+                "status_text_char_end": 19
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -5179,6 +5573,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 62,
+              "phrase_text_char_end": 69,
+              "status_text_char_start": 289,
+              "status_text_char_end": 296,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 470,
+                "line_end": 470,
+                "status_text_char_start": 289,
+                "status_text_char_end": 296
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -5548,6 +5959,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -5627,6 +6039,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 2,
+              "status_text_char_start": 83,
+              "status_text_char_end": 85,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 471,
+                "line_end": 471,
+                "status_text_char_start": 83,
+                "status_text_char_end": 85
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -5708,6 +6137,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -5811,6 +6241,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 64,
+              "phrase_text_char_end": 71,
+              "status_text_char_start": 641,
+              "status_text_char_end": 648,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 471,
+                "line_end": 471,
+                "status_text_char_start": 641,
+                "status_text_char_end": 648
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -6180,6 +6627,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -6259,6 +6707,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -6338,6 +6787,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 264,
+              "phrase_text_char_end": 266,
+              "status_text_char_start": 1556,
+              "status_text_char_end": 1558,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 472,
+                "line_end": 472,
+                "status_text_char_start": 1556,
+                "status_text_char_end": 1558
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -6443,6 +6909,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 62,
+              "phrase_text_char_end": 69,
+              "status_text_char_start": 1964,
+              "status_text_char_end": 1971,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 472,
+                "line_end": 472,
+                "status_text_char_start": 1964,
+                "status_text_char_end": 1971
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -6756,6 +7239,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -6834,6 +7318,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 17,
+              "status_text_char_end": 24,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 473,
+                "line_end": 473,
+                "status_text_char_start": 17,
+                "status_text_char_end": 24
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -6938,6 +7439,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 61,
+              "phrase_text_char_end": 68,
+              "status_text_char_start": 393,
+              "status_text_char_end": 400,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 473,
+                "line_end": 473,
+                "status_text_char_start": 393,
+                "status_text_char_end": 400
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -7219,6 +7737,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -7315,6 +7834,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 75,
+              "phrase_text_char_end": 77,
+              "status_text_char_start": 92,
+              "status_text_char_end": 94,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 474,
+                "line_end": 474,
+                "status_text_char_start": 92,
+                "status_text_char_end": 94
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -7596,6 +8132,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -7692,6 +8229,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 93,
+              "phrase_text_char_end": 95,
+              "status_text_char_start": 110,
+              "status_text_char_end": 112,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 475,
+                "line_end": 475,
+                "status_text_char_start": 110,
+                "status_text_char_end": 112
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -7973,6 +8527,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -8069,6 +8624,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 87,
+              "phrase_text_char_end": 89,
+              "status_text_char_start": 104,
+              "status_text_char_end": 106,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 476,
+                "line_end": 476,
+                "status_text_char_start": 104,
+                "status_text_char_end": 106
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -8350,6 +8922,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -8446,6 +9019,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 69,
+              "phrase_text_char_end": 71,
+              "status_text_char_start": 86,
+              "status_text_char_end": 88,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 477,
+                "line_end": 477,
+                "status_text_char_start": 86,
+                "status_text_char_end": 88
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -8727,6 +9317,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -8823,6 +9414,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 76,
+              "phrase_text_char_end": 78,
+              "status_text_char_start": 93,
+              "status_text_char_end": 95,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 478,
+                "line_end": 478,
+                "status_text_char_start": 93,
+                "status_text_char_end": 95
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -9104,6 +9712,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -9200,6 +9809,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 73,
+              "phrase_text_char_end": 75,
+              "status_text_char_start": 90,
+              "status_text_char_end": 92,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 479,
+                "line_end": 479,
+                "status_text_char_start": 90,
+                "status_text_char_end": 92
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -9481,6 +10107,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -9577,6 +10204,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 69,
+              "phrase_text_char_end": 71,
+              "status_text_char_start": 86,
+              "status_text_char_end": 88,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 480,
+                "line_end": 480,
+                "status_text_char_start": 86,
+                "status_text_char_end": 88
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -9858,6 +10502,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -9954,6 +10599,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 74,
+              "phrase_text_char_end": 76,
+              "status_text_char_start": 91,
+              "status_text_char_end": 93,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 481,
+                "line_end": 481,
+                "status_text_char_start": 91,
+                "status_text_char_end": 93
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -10235,6 +10897,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -10331,6 +10994,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 76,
+              "phrase_text_char_end": 78,
+              "status_text_char_start": 93,
+              "status_text_char_end": 95,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 482,
+                "line_end": 482,
+                "status_text_char_start": 93,
+                "status_text_char_end": 95
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -10612,6 +11292,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -10708,6 +11389,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 91,
+              "phrase_text_char_end": 93,
+              "status_text_char_start": 108,
+              "status_text_char_end": 110,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 483,
+                "line_end": 483,
+                "status_text_char_start": 108,
+                "status_text_char_end": 110
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -10989,6 +11687,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 484,
+                "line_end": 484,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -11063,6 +11778,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -11159,6 +11875,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 95,
+              "phrase_text_char_end": 97,
+              "status_text_char_start": 140,
+              "status_text_char_end": 142,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 484,
+                "line_end": 484,
+                "status_text_char_start": 140,
+                "status_text_char_end": 142
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -11440,6 +12173,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -11536,6 +12270,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 70,
+              "phrase_text_char_end": 72,
+              "status_text_char_start": 87,
+              "status_text_char_end": 89,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 485,
+                "line_end": 485,
+                "status_text_char_start": 87,
+                "status_text_char_end": 89
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -11817,6 +12568,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -11913,6 +12665,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 69,
+              "phrase_text_char_end": 71,
+              "status_text_char_start": 86,
+              "status_text_char_end": 88,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 486,
+                "line_end": 486,
+                "status_text_char_start": 86,
+                "status_text_char_end": 88
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -12194,6 +12963,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -12290,6 +13060,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 71,
+              "phrase_text_char_end": 73,
+              "status_text_char_start": 88,
+              "status_text_char_end": 90,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 487,
+                "line_end": 487,
+                "status_text_char_start": 88,
+                "status_text_char_end": 90
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -12571,6 +13358,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -12667,6 +13455,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 74,
+              "phrase_text_char_end": 76,
+              "status_text_char_start": 91,
+              "status_text_char_end": 93,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 488,
+                "line_end": 488,
+                "status_text_char_start": 91,
+                "status_text_char_end": 93
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -12948,6 +13753,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -13044,6 +13850,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 74,
+              "phrase_text_char_end": 76,
+              "status_text_char_start": 91,
+              "status_text_char_end": 93,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 489,
+                "line_end": 489,
+                "status_text_char_start": 91,
+                "status_text_char_end": 93
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -13325,6 +14148,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -13421,6 +14245,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 73,
+              "phrase_text_char_end": 75,
+              "status_text_char_start": 90,
+              "status_text_char_end": 92,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 490,
+                "line_end": 490,
+                "status_text_char_start": 90,
+                "status_text_char_end": 92
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -13702,6 +14543,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -13798,6 +14640,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 74,
+              "phrase_text_char_end": 76,
+              "status_text_char_start": 91,
+              "status_text_char_end": 93,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 491,
+                "line_end": 491,
+                "status_text_char_start": 91,
+                "status_text_char_end": 93
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -14079,6 +14938,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -14175,6 +15035,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 89,
+              "phrase_text_char_end": 91,
+              "status_text_char_start": 106,
+              "status_text_char_end": 108,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 492,
+                "line_end": 492,
+                "status_text_char_start": 106,
+                "status_text_char_end": 108
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -14456,6 +15333,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -14552,6 +15430,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 68,
+              "phrase_text_char_end": 70,
+              "status_text_char_start": 85,
+              "status_text_char_end": 87,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 493,
+                "line_end": 493,
+                "status_text_char_start": 85,
+                "status_text_char_end": 87
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -14833,6 +15728,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -14929,6 +15825,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 75,
+              "phrase_text_char_end": 77,
+              "status_text_char_start": 92,
+              "status_text_char_end": 94,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 494,
+                "line_end": 494,
+                "status_text_char_start": 92,
+                "status_text_char_end": 94
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -15210,6 +16123,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -15306,6 +16220,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 68,
+              "phrase_text_char_end": 70,
+              "status_text_char_start": 85,
+              "status_text_char_end": 87,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 495,
+                "line_end": 495,
+                "status_text_char_start": 85,
+                "status_text_char_end": 87
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -15587,6 +16518,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -15683,6 +16615,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 104,
+              "phrase_text_char_end": 106,
+              "status_text_char_start": 121,
+              "status_text_char_end": 123,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 496,
+                "line_end": 496,
+                "status_text_char_start": 121,
+                "status_text_char_end": 123
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -15964,6 +16913,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -16060,6 +17010,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 68,
+              "phrase_text_char_end": 70,
+              "status_text_char_start": 85,
+              "status_text_char_end": 87,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 497,
+                "line_end": 497,
+                "status_text_char_start": 85,
+                "status_text_char_end": 87
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -16341,6 +17308,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -16437,6 +17405,143 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 87,
+              "phrase_text_char_end": 89,
+              "status_text_char_start": 104,
+              "status_text_char_end": 106,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 104,
+                "status_text_char_end": 106
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 317,
+              "phrase_text_char_end": 319,
+              "status_text_char_start": 334,
+              "status_text_char_end": 336,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 334,
+                "status_text_char_end": 336
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 342,
+              "phrase_text_char_end": 344,
+              "status_text_char_start": 359,
+              "status_text_char_end": 361,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 359,
+                "status_text_char_end": 361
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 381,
+              "phrase_text_char_end": 383,
+              "status_text_char_start": 398,
+              "status_text_char_end": 400,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 398,
+                "status_text_char_end": 400
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 425,
+              "phrase_text_char_end": 427,
+              "status_text_char_start": 442,
+              "status_text_char_end": 444,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 442,
+                "status_text_char_end": 444
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 482,
+              "phrase_text_char_end": 484,
+              "status_text_char_start": 499,
+              "status_text_char_end": 501,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 499,
+                "status_text_char_end": 501
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 522,
+              "phrase_text_char_end": 524,
+              "status_text_char_start": 539,
+              "status_text_char_end": 541,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 539,
+                "status_text_char_end": 541
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 566,
+              "phrase_text_char_end": 568,
+              "status_text_char_start": 583,
+              "status_text_char_end": 585,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 583,
+                "status_text_char_end": 585
+              }
+            },
+            {
+              "term": "no",
+              "phrase_text_char_start": 601,
+              "phrase_text_char_end": 603,
+              "status_text_char_start": 618,
+              "status_text_char_end": 620,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 498,
+                "line_end": 498,
+                "status_text_char_start": 618,
+                "status_text_char_end": 620
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -16718,6 +17823,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -16814,6 +17920,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 100,
+              "phrase_text_char_end": 102,
+              "status_text_char_start": 117,
+              "status_text_char_end": 119,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 499,
+                "line_end": 499,
+                "status_text_char_start": 117,
+                "status_text_char_end": 119
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -17095,6 +18218,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -17191,6 +18315,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 86,
+              "phrase_text_char_end": 88,
+              "status_text_char_start": 103,
+              "status_text_char_end": 105,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 500,
+                "line_end": 500,
+                "status_text_char_start": 103,
+                "status_text_char_end": 105
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -17472,6 +18613,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -17568,6 +18710,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 77,
+              "phrase_text_char_end": 79,
+              "status_text_char_start": 94,
+              "status_text_char_end": 96,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 501,
+                "line_end": 501,
+                "status_text_char_start": 94,
+                "status_text_char_end": 96
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -17881,6 +19040,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -17959,6 +19119,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 17,
+              "status_text_char_end": 24,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 502,
+                "line_end": 502,
+                "status_text_char_start": 17,
+                "status_text_char_end": 24
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -18063,6 +19240,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 62,
+              "phrase_text_char_end": 69,
+              "status_text_char_start": 479,
+              "status_text_char_end": 486,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 502,
+                "line_end": 502,
+                "status_text_char_start": 479,
+                "status_text_char_end": 486
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -18376,6 +19570,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -18454,6 +19649,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 17,
+              "status_text_char_end": 24,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 503,
+                "line_end": 503,
+                "status_text_char_start": 17,
+                "status_text_char_end": 24
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -18558,6 +19770,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 72,
+              "phrase_text_char_end": 79,
+              "status_text_char_start": 377,
+              "status_text_char_end": 384,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 503,
+                "line_end": 503,
+                "status_text_char_start": 377,
+                "status_text_char_end": 384
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -18871,6 +20100,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 504,
+                "line_end": 504,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -18951,6 +20197,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -19029,6 +20276,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 45,
+              "status_text_char_end": 52,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 504,
+                "line_end": 504,
+                "status_text_char_start": 45,
+                "status_text_char_end": 52
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -19133,6 +20397,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 67,
+              "phrase_text_char_end": 74,
+              "status_text_char_start": 398,
+              "status_text_char_end": 405,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 504,
+                "line_end": 504,
+                "status_text_char_start": 398,
+                "status_text_char_end": 405
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -19446,6 +20727,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -19548,6 +20830,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "no",
+              "phrase_text_char_start": 275,
+              "phrase_text_char_end": 277,
+              "status_text_char_start": 292,
+              "status_text_char_end": 294,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 505,
+                "line_end": 505,
+                "status_text_char_start": 292,
+                "status_text_char_end": 294
+              }
+            }
+          ],
           "absence_signal_terms": [
             "no"
           ],
@@ -19861,6 +21160,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 506,
+                "line_end": 506,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -19941,6 +21257,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -20019,6 +21336,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 45,
+              "status_text_char_end": 52,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 506,
+                "line_end": 506,
+                "status_text_char_start": 45,
+                "status_text_char_end": 52
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -20123,6 +21457,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 73,
+              "phrase_text_char_end": 80,
+              "status_text_char_start": 496,
+              "status_text_char_end": 503,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 506,
+                "line_end": 506,
+                "status_text_char_start": 496,
+                "status_text_char_end": 503
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -20436,6 +21787,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -20514,6 +21866,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 17,
+              "status_text_char_end": 24,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 507,
+                "line_end": 507,
+                "status_text_char_start": 17,
+                "status_text_char_end": 24
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -20618,6 +21987,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 65,
+              "phrase_text_char_end": 72,
+              "status_text_char_start": 472,
+              "status_text_char_end": 479,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 507,
+                "line_end": 507,
+                "status_text_char_start": 472,
+                "status_text_char_end": 479
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -20931,6 +22317,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -21009,6 +22396,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 17,
+              "status_text_char_end": 24,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 508,
+                "line_end": 508,
+                "status_text_char_start": 17,
+                "status_text_char_end": 24
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -21113,6 +22517,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 68,
+              "phrase_text_char_end": 75,
+              "status_text_char_start": 538,
+              "status_text_char_end": 545,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 508,
+                "line_end": 508,
+                "status_text_char_start": 538,
+                "status_text_char_end": 545
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -21426,6 +22847,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 509,
+                "line_end": 509,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -21506,6 +22944,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -21584,6 +23023,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 45,
+              "status_text_char_end": 52,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 509,
+                "line_end": 509,
+                "status_text_char_start": 45,
+                "status_text_char_end": 52
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -21688,6 +23144,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 69,
+              "phrase_text_char_end": 76,
+              "status_text_char_start": 625,
+              "status_text_char_end": 632,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 509,
+                "line_end": 509,
+                "status_text_char_start": 625,
+                "status_text_char_end": 632
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -22001,6 +23474,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -22079,6 +23553,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 17,
+              "status_text_char_end": 24,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 510,
+                "line_end": 510,
+                "status_text_char_start": 17,
+                "status_text_char_end": 24
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -22183,6 +23674,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 63,
+              "phrase_text_char_end": 70,
+              "status_text_char_start": 589,
+              "status_text_char_end": 596,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 510,
+                "line_end": 510,
+                "status_text_char_start": 589,
+                "status_text_char_end": 596
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -22496,6 +24004,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 511,
+                "line_end": 511,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -22576,6 +24101,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -22654,6 +24180,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 45,
+              "status_text_char_end": 52,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 511,
+                "line_end": 511,
+                "status_text_char_start": 45,
+                "status_text_char_end": 52
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -22758,6 +24301,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 76,
+              "phrase_text_char_end": 83,
+              "status_text_char_start": 592,
+              "status_text_char_end": 599,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 511,
+                "line_end": 511,
+                "status_text_char_start": 592,
+                "status_text_char_end": 599
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -23071,6 +24631,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 512,
+                "line_end": 512,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -23151,6 +24728,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -23229,6 +24807,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 45,
+              "status_text_char_end": 52,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 512,
+                "line_end": 512,
+                "status_text_char_start": 45,
+                "status_text_char_end": 52
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -23333,6 +24928,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 68,
+              "phrase_text_char_end": 75,
+              "status_text_char_start": 602,
+              "status_text_char_end": 609,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 512,
+                "line_end": 512,
+                "status_text_char_start": 602,
+                "status_text_char_end": 609
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -23646,6 +25258,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 513,
+                "line_end": 513,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -23726,6 +25355,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -23804,6 +25434,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 45,
+              "status_text_char_end": 52,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 513,
+                "line_end": 513,
+                "status_text_char_start": 45,
+                "status_text_char_end": 52
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -23908,6 +25555,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 69,
+              "phrase_text_char_end": 76,
+              "status_text_char_start": 602,
+              "status_text_char_end": 609,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 513,
+                "line_end": 513,
+                "status_text_char_start": 602,
+                "status_text_char_end": 609
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -24221,6 +25885,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "not",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 3,
+              "status_text_char_start": 0,
+              "status_text_char_end": 3,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 514,
+                "line_end": 514,
+                "status_text_char_start": 0,
+                "status_text_char_end": 3
+              }
+            }
+          ],
           "absence_signal_terms": [
             "not"
           ],
@@ -24301,6 +25982,7 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [],
           "absence_signal_terms": [],
           "has_absence_signal": false,
           "absence_signal_status": "no_absence_signal_detected",
@@ -24379,6 +26061,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "no_phrase_local_artifacts_referenced"
           },
+          "absence_signal_records": [
+            {
+              "term": "missing",
+              "phrase_text_char_start": 0,
+              "phrase_text_char_end": 7,
+              "status_text_char_start": 45,
+              "status_text_char_end": 52,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 514,
+                "line_end": 514,
+                "status_text_char_start": 45,
+                "status_text_char_end": 52
+              }
+            }
+          ],
           "absence_signal_terms": [
             "missing"
           ],
@@ -24483,6 +26182,23 @@
             "phrase_local_artifacts_missing_from_todo_evidence": [],
             "phrase_todo_content_evidence_status": "all_phrase_local_artifacts_mentioned_in_todo_evidence"
           },
+          "absence_signal_records": [
+            {
+              "term": "absence",
+              "phrase_text_char_start": 78,
+              "phrase_text_char_end": 85,
+              "status_text_char_start": 566,
+              "status_text_char_end": 573,
+              "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": 514,
+                "line_end": 514,
+                "status_text_char_start": 566,
+                "status_text_char_end": 573
+              }
+            }
+          ],
           "absence_signal_terms": [
             "absence"
           ],
@@ -24501,5 +26217,5 @@
       "freshness_status": "structural_only"
     }
   ],
-  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mention source offsets and existence records, row source line, TODO evidence path source offsets and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention records and absence-signal classification. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
+  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mention source offsets and existence records, row source line, TODO evidence path source offsets and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention records and absence-signal source offsets. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
 }

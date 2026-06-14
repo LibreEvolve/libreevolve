@@ -31,7 +31,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     records row-specific TODO content evidence showing zero status-row local
     artifact paths and zero status-phrase local artifact paths missing from
     linked TODO evidence. It now structurally classifies 87 status-cell
-    absence-signal phrases without claiming freshness verification.
+    absence-signal phrases with 99 source-offset records without claiming
+    freshness verification.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
     benchmark coverage bullets with source lines, summary/body hashes, local
     artifact mention source offsets, local artifact existence records, 116
@@ -48,16 +49,17 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: each status phrase now has a stable hash and source offset,
     candidate links to phrase-local artifacts plus row-level TODO and completed
     evidence, referenced local artifact/TODO path existence checks, local
-    artifact mention source offsets, TODO evidence path source offsets, and
-    row-local and phrase-local artifact mentions in linked TODO evidence, but
+    artifact mention source offsets, TODO evidence path source offsets,
+    absence-signal source offsets, and row-local and phrase-local artifact
+    mentions in linked TODO evidence, but
     there is no proof that those links are sufficient for each implemented or
     missing clause, no semantic verifier for
     `Implemented` benchmark coverage bullets beyond referenced artifact
     mention/existence/source-offset records, no absence-sentence freshness
-    matrix beyond structural signal classification, and no semantic verifier
-    that checks benchmark qualifiers, implemented-bullet scope/limitation
-    semantics beyond structural signal terms and source offsets, or absence
-    sentences against the current code and paper evidence.
+    matrix beyond structural signal source-offset classification, and no
+    semantic verifier that checks benchmark qualifiers, implemented-bullet
+    scope/limitation semantics beyond structural signal terms and source
+    offsets, or absence sentences against the current code and paper evidence.
   - Required result: extend the phrase-level inventory with evidence-sufficiency
     checks, freshness checks, and benchmark-coverage semantic checks, then add
     CI validation before treating `papers/README.md` as semantically complete

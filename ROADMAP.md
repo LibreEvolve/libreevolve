@@ -832,7 +832,7 @@ is not yet an AlphaEvolve reproduction.
   artifact mention source offsets, and candidate evidence-link lists plus
   referenced local artifact and TODO evidence-path source offsets/existence checks plus
   row/phrase-specific TODO content artifact mention records and structural
-  absence-signal classification, while
+  absence-signal source-offset classification, while
   `papers/benchmark_coverage_inventory.json` records structural implemented
   benchmark coverage bullets plus referenced local artifact mention source
   offsets/existence checks and limitation-signal term/source-offset

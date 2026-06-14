@@ -11407,6 +11407,7 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         == "all_phrase_local_artifacts_mentioned_in_todo_evidence"
     )
     assert inventory["absence_phrase_count"] == 1
+    assert inventory["absence_signal_record_count"] == 1
     assert inventory["absence_signal_terms"] == ["no"]
     assert inventory["absence_signal_inventory_status"] == (
         "absence_signals_structurally_classified_without_freshness_verification"
@@ -11437,6 +11438,26 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     ]
     assert len(absence_claims) == 1
     assert absence_claims[0]["absence_signal_terms"] == ["no"]
+    absence_start = PARTIAL_FIXTURE_STATUS.find("no")
+    absence_end = absence_start + len("no")
+    absence_phrase_start = absence_claims[0]["status_text_char_start"]
+    assert absence_claims[0]["absence_signal_records"] == [
+        {
+            "term": "no",
+            "phrase_text_char_start": absence_start - absence_phrase_start,
+            "phrase_text_char_end": absence_end - absence_phrase_start,
+            "status_text_char_start": absence_start,
+            "status_text_char_end": absence_end,
+            "source_span": {
+                "path": "papers/README.md",
+                "section": "Implementation status",
+                "line_start": inventory["rows"][0]["source_span"]["line_start"],
+                "line_end": inventory["rows"][0]["source_span"]["line_start"],
+                "status_text_char_start": absence_start,
+                "status_text_char_end": absence_end,
+            },
+        }
+    ]
     assert absence_claims[0]["freshness_status"] == "not_verified"
     (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
         json.dumps(inventory, indent=2),

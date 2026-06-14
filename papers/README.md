@@ -2871,9 +2871,9 @@ Implemented:
   artifact paths missing from linked row-specific TODO evidence. It also
   records zero status-phrase local artifact paths missing from linked
   row-specific TODO evidence, and structurally classifies 87 status-cell
-  absence-signal phrases. It is not status-cell phrase-level semantic
-  verification, evidence-link sufficiency proof, or absence-sentence freshness
-  evidence.
+  absence-signal phrases with 99 source-offset records. It is not status-cell
+  phrase-level semantic verification, evidence-link sufficiency proof, or
+  absence-sentence freshness evidence.
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit

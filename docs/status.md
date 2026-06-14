@@ -1248,8 +1248,8 @@ Important limits:
   source offsets, local artifact mention source offsets, candidate
   evidence-link lists, and referenced local artifact and TODO evidence-path
   source offsets/existence checks plus row-specific TODO content
-  artifact-mention records, phrase-local TODO content backing, and structural absence-signal
-  classification. The checked
+  artifact-mention records, phrase-local TODO content backing, and structural
+  absence-signal source-offset classification. The checked
   `papers/benchmark_coverage_inventory.json` sidecar now records structural
   implemented-benchmark coverage bullet evidence plus referenced local
   artifact existence checks. This is not an exhaustive
@@ -1265,9 +1265,9 @@ Important limits:
   also records zero status-row local artifact
   paths and zero status-phrase local artifact paths missing from linked
   row-specific TODO evidence, and structurally classifies 87 status-cell
-  absence-signal phrases. This is path/content linkage and signal evidence, not
-  proof that each artifact or TODO link is semantically sufficient or that
-  absence wording is fresh.
+  absence-signal phrases with 99 source-offset records. This is path/content
+  linkage and signal evidence, not proof that each artifact or TODO link is
+  semantically sufficient or that absence wording is fresh.
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
   SHA-256 digest, normalized author list, subject classes, DOI URL, submitted
   timestamp, TeX-source URL, license URL, and submission-history entry.

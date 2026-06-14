@@ -47,7 +47,7 @@ sidecars, tests, and active TODOs.
     artifact mention source offsets, and candidate evidence-link lists with
     local artifact and TODO evidence-path source offsets/existence checks plus
     row/phrase-specific TODO content artifact-mention records and structural
-    absence-signal classification.
+    absence-signal source-offset classification.
     `papers/benchmark_coverage_inventory.json` records structural evidence,
     local artifact mention source offsets and existence checks, and
     limitation-signal term/source-offset classification for implemented
@@ -62,12 +62,12 @@ sidecars, tests, and active TODOs.
     detector flags source modules or paper claims that lack mapped audit
     coverage; no per-phrase evidence-sufficiency check proves long status-cell
     semantics beyond referenced artifact/TODO path existence, row-specific or
-    phrase-specific TODO artifact mentions, and artifact mention source
-    offsets plus TODO evidence path source offsets, or implemented-benchmark
-    coverage qualifiers beyond referenced artifact mention/existence/source
-    offsets and structural limitation-signal terms/source offsets; no
-    absence-sentence freshness verifier proves structurally detected absence
-    phrases are still current; and no generated
+    phrase-specific TODO artifact mentions, artifact mention source offsets,
+    TODO evidence path source offsets, and absence-signal source offsets, or
+    implemented-benchmark coverage qualifiers beyond referenced artifact
+    mention/existence/source offsets and structural limitation-signal
+    terms/source offsets; no absence-sentence freshness verifier proves
+    structurally detected absence phrases are still current; and no generated
     code-audit report proves that all implemented and missing
     AlphaEvolve-facing behavior has been classified.
   - Required result: build an implementation-evidence map with requirement ids,

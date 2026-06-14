@@ -1679,15 +1679,20 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         claim["claim_id"]
         for row in inventory_rows
         for claim in row["status_claims"]
-        if claim["absence_signal_terms"]
+        if claim["absence_signal_records"]
     ]
     absence_signal_terms = sorted(
         {
-            term
+            record["term"]
             for row in inventory_rows
             for claim in row["status_claims"]
-            for term in claim["absence_signal_terms"]
+            for record in claim["absence_signal_records"]
         }
+    )
+    absence_signal_record_count = sum(
+        len(claim["absence_signal_records"])
+        for row in inventory_rows
+        for claim in row["status_claims"]
     )
     return {
         "schema": STATUS_CLAIM_INVENTORY_SCHEMA,
@@ -1738,6 +1743,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         ),
         "absence_phrase_count": len(absence_phrase_ids),
         "absence_phrase_ids": absence_phrase_ids,
+        "absence_signal_record_count": absence_signal_record_count,
         "absence_signal_terms": absence_signal_terms,
         "absence_signal_inventory_status": "absence_signals_structurally_classified_without_freshness_verification",
         "missing_evidence": dict(STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE),
@@ -1750,7 +1756,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "source line, TODO evidence path source offsets and existence "
             "records, and status-cell phrase hashes with character offsets "
             "and candidate evidence links plus row/phrase-specific TODO content "
-            "artifact-mention records and absence-signal classification. It "
+            "artifact-mention records and absence-signal source offsets. It "
             "does not claim phrase-level "
             "status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
@@ -3884,6 +3890,7 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         ("phrase_todo_content_evidence_status", "status claim inventory phrase TODO content status drifted"),
         ("absence_phrase_count", "status claim inventory absence phrase count drifted"),
         ("absence_phrase_ids", "status claim inventory absence phrase ids drifted"),
+        ("absence_signal_record_count", "status claim inventory absence signal record count drifted"),
         ("absence_signal_terms", "status claim inventory absence signal terms drifted"),
         ("absence_signal_inventory_status", "status claim inventory absence signal status drifted"),
         ("missing_evidence", "status claim inventory missing-evidence boundary drifted"),
@@ -8768,7 +8775,14 @@ def _status_claim_inventory_phrases(
         phrase_artifacts_missing_from_todo = sorted(
             set(phrase_local_artifact_paths) - set(phrase_artifacts_mentioned_in_todo)
         )
-        absence_signal_terms = _status_absence_signal_terms(phrase)
+        absence_signal_records = _status_absence_signal_records(
+            phrase,
+            line_number,
+            status_text_char_offset=start,
+        )
+        absence_signal_terms = list(
+            dict.fromkeys(record["term"] for record in absence_signal_records)
+        )
         phrases.append(
             {
                 "claim_id": f"{row_id}:status_phrase_{ordinal:03d}",
@@ -8811,6 +8825,7 @@ def _status_claim_inventory_phrases(
                         else "no_phrase_local_artifacts_referenced"
                     ),
                 },
+                "absence_signal_records": absence_signal_records,
                 "absence_signal_terms": absence_signal_terms,
                 "has_absence_signal": bool(absence_signal_terms),
                 "absence_signal_status": (
@@ -8826,13 +8841,39 @@ def _status_claim_inventory_phrases(
     return phrases
 
 
-def _status_absence_signal_terms(phrase: str) -> list[str]:
-    terms: list[str] = []
+def _status_absence_signal_records(
+    phrase: str,
+    line_number: int,
+    *,
+    status_text_char_offset: int = 0,
+) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
     for match in STATUS_ABSENCE_SIGNAL_RE.finditer(phrase):
         term = re.sub(r"\s+", " ", match.group(0).strip().lower())
-        if term:
-            terms.append(term)
-    return list(dict.fromkeys(terms))
+        if not term:
+            continue
+        phrase_start = match.start()
+        phrase_end = match.end()
+        status_start = status_text_char_offset + phrase_start
+        status_end = status_text_char_offset + phrase_end
+        records.append(
+            {
+                "term": term,
+                "phrase_text_char_start": phrase_start,
+                "phrase_text_char_end": phrase_end,
+                "status_text_char_start": status_start,
+                "status_text_char_end": status_end,
+                "source_span": {
+                    "path": "papers/README.md",
+                    "section": "Implementation status",
+                    "line_start": line_number,
+                    "line_end": line_number,
+                    "status_text_char_start": status_start,
+                    "status_text_char_end": status_end,
+                },
+            }
+        )
+    return records
 
 
 def _status_claim_phrase_spans(status_text: str) -> list[tuple[int, int]]:

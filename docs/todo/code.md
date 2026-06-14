@@ -2560,6 +2560,35 @@ sidecars, tests, and active TODOs.
     retention-mode redaction, and add tests proving newline-missing final
     records cannot be trusted during inspection or resume.
 
+- [ ] Add multi-writer append serialization for run artifact JSONL streams.
+  - Spec evidence: AlphaEvolve-style async/distributed execution has controller,
+    sampler, evaluator, and feedback roles that may emit state concurrently.
+    Durable run artifacts must define a single-writer coordinator or
+    interprocess locking/queueing policy before multiple workers can write
+    shared state streams.
+  - Current evidence: `append_strict_jsonl()` validates strict finite JSON,
+    repairs a torn final line before appending, writes a newline-terminated line,
+    flushes, and `os.fsync()`s the file. `ProgramDatabase` and prompt/plugin
+    helpers append shared streams including `history.jsonl`,
+    `failure_history.jsonl`, `archive_events.jsonl`,
+    `controller_budget_events.jsonl`, `llm_calls.jsonl`,
+    `prompt_history.jsonl`, and GRPO/plugin JSONL files through that helper. A
+    targeted source scan found no `msvcrt`, `fcntl`, `portalocker`, `filelock`,
+    mutex, semaphore, or `LockFileEx` usage; `_append_serialized_jsonl_line()` is
+    just `open(path, "a")`, `write(line + "\n")`, `flush()`, and `os.fsync()`.
+  - Current gap: the append contract is suitable for the current single-process
+    synchronous controller, but it does not specify or enforce
+    multi-process/multi-worker writer serialization, append ordering, sequence
+    allocation, or queue ownership. Future async evaluator nodes, LLM sampler
+    workers, plugin trainers, or external feedback workers could interleave
+    repairs/appends/quarantine writes, duplicate sequence counters, or create
+    ambiguous event order without a first-class run-artifact writer.
+  - Required result: add a run-artifact write coordinator, interprocess lock, or
+    append queue contract for every shared JSONL stream; define
+    ordering/sequence ownership, repair/quarantine atomicity, cross-platform
+    Windows/POSIX behavior, crash recovery, and tests with concurrent writers
+    before using shared JSONL files as AlphaEvolve-grade async/distributed state.
+
 - [ ] Extend exploration/exploitation sampling-balance reports into calibrated
   database-resurfacing analysis.
   - Spec evidence: AlphaEvolve Section 2.5 says the evolutionary database must

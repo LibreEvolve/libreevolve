@@ -375,6 +375,32 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README/TODO evidence whenever the documented commands or marker policy
     change.
 
+- [ ] Add AGENTS.md operational-instruction drift evidence.
+  - Spec evidence: AGENTS.md is the repository-local operating contract for
+    future coding agents. During AlphaEvolve-alignment work, stale agent
+    instructions can cause agents to run the wrong commands, trust obsolete
+    architecture summaries, miss active TODO surfaces, or overclaim provider,
+    benchmark, and paper-readiness state.
+  - Current evidence: `tests/test_agents_docs.py` checks that AGENTS.md does
+    not pin stale selected-test counts, includes selected artifact stream
+    names, distinguishes `VALID_THRESHOLD` from MAP-Elites retention, and
+    mentions several configuration-doc sampling fields. AGENTS.md currently
+    summarizes the tech stack, architecture tree, key conventions, test
+    commands, provider-backed run example, and common pitfalls.
+  - Current gap: there is no structured AGENTS.md inventory or drift check
+    comparing its architecture tree, example problem list, dependency list,
+    run-artifact list, provider/backend guidance, AlphaEvolve limitation
+    wording, and TODO/paper-routing guidance against README, ROADMAP,
+    `docs/status.md`, `docs/configuration.md`, `docs/backends.md`,
+    `papers/README.md`, the package tree, and active TODO ledgers. For
+    example, AGENTS.md has a manually maintained examples list while newer
+    benchmark-candidate examples and related scope boundaries live elsewhere.
+  - Required result: add an AGENTS.md evidence map or validator that links each
+    operational instruction to authoritative code/docs/tests/sidecar sources,
+    detects stale architecture/example/dependency/provider/test-command
+    wording, and requires AGENTS.md or TODO updates whenever agent-facing
+    project behavior or AlphaEvolve-scope boundaries change.
+
 ## Contributing
 
 - [ ] Add README contributor-gate and secret-scan evidence mapping.

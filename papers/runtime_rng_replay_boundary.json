@@ -1,0 +1,46 @@
+{
+  "schema": "libreevolve.runtime_rng_replay_boundary_paper.v1",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.6",
+    "4"
+  ],
+  "source_claim": "AlphaEvolve-style long-running experiments should preserve framework-owned stochastic state without implying that provider, plugin, validator, controller, or resumed-trace randomness is fully replayed.",
+  "boundary_status": "framework_rng_snapshot_restore_without_full_resumed_trace_replay",
+  "runtime_rng_snapshot_schema": "python.random.mt19937.v1",
+  "runtime_rng_replay_boundary_schema": "libreevolve.runtime_rng_replay_boundary.v1",
+  "owned_rng": "framework_run_random",
+  "owned_surfaces": [
+    "loop_parent_explore_exploit_choice",
+    "prompt_template_sampling",
+    "program_database_sampling",
+    "island_sampling",
+    "map_elites_sampling"
+  ],
+  "claim_ready": false,
+  "required_evidence_fields": [
+    "runtime_rng_snapshot_schema",
+    "runtime_rng_state_sha256",
+    "random_setstate_restore_entrypoint",
+    "direct_evolve_rng_restore_entrypoint",
+    "cli_restore_rng_from_manifest_entrypoint",
+    "seed_mismatch_rejection",
+    "runtime_rng_replay_boundary_schema",
+    "framework_owned_surface_list",
+    "process_global_rng_isolation",
+    "full_resume_bundle_rng_boundary_linkage",
+    "llm_provider_output_replay_or_exclusion",
+    "plugin_internal_rng_capture_or_exclusion",
+    "validator_subprocess_rng_capture_or_exclusion",
+    "controller_pending_work_rng_linkage",
+    "end_to_end_sampling_continuity_trace"
+  ],
+  "missing_evidence": {
+    "llm_provider_output_replay_or_exclusion": "not_composed_in_resumed_trace",
+    "plugin_internal_rng_capture_or_exclusion": "not_composed_in_resumed_trace",
+    "validator_subprocess_rng_capture_or_exclusion": "not_composed_in_resumed_trace",
+    "controller_pending_work_rng_linkage": "not_recorded_locally",
+    "end_to_end_sampling_continuity_trace": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve persists a checked python.random.mt19937.v1 runtime RNG snapshot with state_sha256, uses random.Random.setstate as the restore entrypoint, supports direct evolve() and CLI --restore-rng-from-manifest restore, rejects seed mismatches, records a libreevolve.runtime_rng_replay_boundary.v1 runtime boundary, keeps framework-owned parent/prompt/database/island/MAP-Elites sampling surfaces explicit, avoids perturbing process-global RNG, and includes the RNG boundary in full-runtime restore bundles. It does not claim LLM provider output replay or resumed-trace exclusion, plugin internal RNG capture or resumed-trace exclusion, validator subprocess RNG capture or resumed-trace exclusion, controller pending-work RNG linkage, or end-to-end sampling continuity trace proof."
+}

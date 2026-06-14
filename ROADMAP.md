@@ -325,6 +325,8 @@ LibreEvolve has:
   prompt-context override source, inline/effective-config boundary, and the
   run-local framework RNG replay boundary while keeping separate config-file
   source attribution and human-authorship certification out of parity claims
+  (`papers/runtime_rng_replay_boundary.json` keeps the framework RNG restore
+  claim separate from full resumed sampling replay)
 - runtime initial-program idea provenance reports under
   `runtime.history.initial_program_idea_provenance_report`, linking optional
   seed idea-origin metadata and seed variant ids from `problem.seed_sources` to

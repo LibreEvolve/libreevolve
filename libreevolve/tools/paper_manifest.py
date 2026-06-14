@@ -506,6 +506,10 @@ from libreevolve.problems.benchmarks.lineage_replay_boundary import (
     lineage_replay_boundary_record,
     validate_lineage_replay_boundary,
 )
+from libreevolve.problems.benchmarks.runtime_rng_replay_boundary import (
+    runtime_rng_replay_boundary_record,
+    validate_runtime_rng_replay_boundary,
+)
 from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
     metric_diverse_prompt_boundary_record,
     validate_metric_diverse_prompt_boundary,
@@ -699,6 +703,7 @@ OBJECTIVE_ARCHIVE_BOUNDARY_FILE = "papers/objective_archive_boundary.json"
 ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE = "papers/archive_event_replay_boundary.json"
 CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_FILE = "papers/controller_pending_work_resume_boundary.json"
 LINEAGE_REPLAY_BOUNDARY_FILE = "papers/lineage_replay_boundary.json"
+RUNTIME_RNG_REPLAY_BOUNDARY_FILE = "papers/runtime_rng_replay_boundary.json"
 METRIC_DIVERSE_PROMPT_BOUNDARY_FILE = "papers/metric_diverse_prompt_boundary.json"
 PROPOSAL_SCORE_BOUNDARY_FILE = "papers/proposal_score_boundary.json"
 PROPOSAL_DIVERSITY_BOUNDARY_FILE = "papers/proposal_diversity_boundary.json"
@@ -1232,6 +1237,7 @@ def validate_paper_manifest(
     issues.extend(_validate_archive_event_replay_boundary(root_path))
     issues.extend(_validate_controller_pending_work_resume_boundary(root_path))
     issues.extend(_validate_lineage_replay_boundary(root_path))
+    issues.extend(_validate_runtime_rng_replay_boundary(root_path))
     issues.extend(_validate_metric_diverse_prompt_boundary(root_path))
     issues.extend(_validate_proposal_score_boundary(root_path))
     issues.extend(_validate_proposal_diversity_boundary(root_path))
@@ -4316,6 +4322,38 @@ def _validate_lineage_replay_boundary(root_path: Path) -> list[PaperManifestIssu
             f"lineage_replay_boundary_{issue.code}",
             issue.message,
             "lineage_replay",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_runtime_rng_replay_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / RUNTIME_RNG_REPLAY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = runtime_rng_replay_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "runtime_rng_replay_boundary_manifest_missing",
+                    (
+                        f"{RUNTIME_RNG_REPLAY_BOUNDARY_FILE} must emit "
+                        "framework RNG restore versus full sampling replay scope"
+                    ),
+                    "runtime_rng_replay",
+                )
+            ]
+    report = validate_runtime_rng_replay_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"runtime_rng_replay_boundary_{issue.code}",
+            issue.message,
+            "runtime_rng_replay",
         )
         for issue in report.issues
     ]

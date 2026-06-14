@@ -1233,7 +1233,8 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   under `runtime.history.controller_state` with embedded validation for the
   drained terminal boundary.
   `runtime.rng.replay_boundary` records the current framework-owned RNG
-  boundary and explicit external exclusions.
+  boundary and explicit external exclusions; the paper-facing boundary is
+  tracked by `papers/runtime_rng_replay_boundary.json`.
 - `eval_stages` is still local subprocess execution. It is not yet a
   distributed evaluator-worker scheduler.
 - Validator entrypoints are loaded from a temporary runner as either direct

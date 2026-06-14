@@ -2484,6 +2484,17 @@ Implemented:
   controller pending-work lineage state, ordered migration lineage replay,
   plugin or validator RNG state linkage, or end-to-end resumed lineage trace
   proof.
+- `papers/runtime_rng_replay_boundary.json`: framework RNG replay sidecar for
+  AlphaEvolve Sections 2.6 and 4. It records checked
+  `python.random.mt19937.v1` runtime RNG snapshots, state hashes,
+  `random.Random.setstate` restore, direct and CLI RNG restore entrypoints,
+  seed-mismatch rejection, the runtime RNG replay-boundary schema, explicit
+  framework-owned parent/prompt/database/island/MAP-Elites sampling surfaces,
+  process-global RNG isolation, and full-resume bundle linkage. It is not
+  evidence of LLM provider-output replay or resumed-trace exclusion, plugin
+  internal RNG capture or resumed-trace exclusion, validator subprocess RNG
+  capture or resumed-trace exclusion, controller pending-work RNG linkage, or
+  end-to-end sampling continuity trace proof.
 - `papers/llm_role_scheduler_boundary.json`: LLM role-scheduler sidecar for
   AlphaEvolve Sections 2.1 and 2.6. It records configured role-backend
   routing, backend metadata role matching, reward-accounted roles, feedback

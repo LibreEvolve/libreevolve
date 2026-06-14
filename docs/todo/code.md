@@ -5297,7 +5297,10 @@ sidecars, tests, and active TODOs.
     randomness, while validation normalizes older boundaryless snapshots.
     `load_full_resume_bundle()` now exposes that validated boundary as
     `runtime_rng_replay_boundary` beside the restored RNG snapshot and lineage
-    replay policy.
+    replay policy. The paper manifest now requires
+    `papers/runtime_rng_replay_boundary.json` to preserve the framework-owned
+    RNG restore boundary without overclaiming provider/plugin/validator RNG
+    replay or end-to-end sampling continuity.
   - Remaining gap: full run replay still lacks provider output replay,
     plugin-owned RNG capture, controller/pending-work state restore,
     lineage-id replay, and end-to-end parent/inspiration/prompt/island/
@@ -5306,7 +5309,9 @@ sidecars, tests, and active TODOs.
     unified resume/replay entrypoint, define provider-output and plugin-owned
     RNG capture or exclusion semantics for that entrypoint, and test
     parent-selection, inspiration-sampling, prompt-selection, island-sampling,
-    and MAP-Elites sampling continuity across an end-to-end resumed trace.
+    and MAP-Elites sampling continuity across an end-to-end resumed trace. The
+    remaining gap is not the runtime RNG snapshot validator or its paper
+    sidecar; it is composition into a full resumed sampling trace.
 
 
 - [ ] Enforce validator container, filesystem-capability, and resource-limit policy.

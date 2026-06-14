@@ -1479,7 +1479,8 @@ internal replay state remain separate gaps.
 surfaces inspectable alongside the other restore metadata.
 The bundle's `bundle_validation` record also checks that this RNG boundary
 matches the RNG snapshot and that provider-output replay remains outside the
-current restore claim.
+current restore claim. The paper-facing version of this framework RNG restore
+boundary is preserved in `papers/runtime_rng_replay_boundary.json`.
 
 `runtime.lineage_replay_policy` records schema
 `libreevolve.lineage_replay_policy.v1` for the loop-owned replay boundary. It

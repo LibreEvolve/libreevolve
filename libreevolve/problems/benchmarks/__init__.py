@@ -618,6 +618,12 @@ from libreevolve.problems.benchmarks.lineage_replay_boundary import (
     render_lineage_replay_boundary_summary,
     validate_lineage_replay_boundary,
 )
+from libreevolve.problems.benchmarks.runtime_rng_replay_boundary import (
+    RUNTIME_RNG_REPLAY_BOUNDARY_SCHEMA,
+    render_runtime_rng_replay_boundary_summary,
+    runtime_rng_replay_boundary_record,
+    validate_runtime_rng_replay_boundary,
+)
 from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
     METRIC_DIVERSE_PROMPT_BOUNDARY_SCHEMA,
     metric_diverse_prompt_boundary_record,
@@ -1078,6 +1084,7 @@ __all__ = [
     "ARCHIVE_EVENT_REPLAY_BOUNDARY_SCHEMA",
     "CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_SCHEMA",
     "LINEAGE_REPLAY_BOUNDARY_SCHEMA",
+    "RUNTIME_RNG_REPLAY_BOUNDARY_SCHEMA",
     "MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA",
     "MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA",
     "MATH_OUTCOME_BOUNDARY_SCHEMA",
@@ -1153,6 +1160,7 @@ __all__ = [
     "archive_event_replay_boundary_record",
     "controller_pending_work_resume_boundary_record",
     "lineage_replay_boundary_record",
+    "runtime_rng_replay_boundary_record",
     "artifact_index_boundary_record",
     "benchmark_fixture_readiness_boundary_record",
     "benchmark_hardening_artifact_inventory",
@@ -1305,6 +1313,7 @@ __all__ = [
     "render_archive_event_replay_boundary_summary",
     "render_controller_pending_work_resume_boundary_summary",
     "render_lineage_replay_boundary_summary",
+    "render_runtime_rng_replay_boundary_summary",
     "render_archagent_boundary_summary",
     "render_artifact_index_boundary_summary",
     "render_automated_evaluator_scope_boundary_summary",
@@ -1472,6 +1481,7 @@ __all__ = [
     "validate_archive_event_replay_boundary",
     "validate_controller_pending_work_resume_boundary",
     "validate_lineage_replay_boundary",
+    "validate_runtime_rng_replay_boundary",
     "validate_archagent_boundary",
     "validate_artifact_index_boundary",
     "validate_automated_evaluator_scope_boundary",

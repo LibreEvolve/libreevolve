@@ -1204,7 +1204,8 @@ authoritative run accounting.
   `--restore-rng-from-manifest`. `runtime.rng.replay_boundary` records which
   framework-owned stochastic surfaces are covered and explicitly excludes LLM
   provider outputs, plugin internal randomness, and validator subprocess
-  randomness from the framework RNG restore contract.
+  randomness from the framework RNG restore contract. The paper-facing version
+  of that boundary is preserved in `papers/runtime_rng_replay_boundary.json`.
   `runtime.lineage_replay_policy` separately declares deterministic loop-owned
   candidate, prompt, and LLM call id surfaces, excludes direct `Program()` and
   `PromptProgram()` UUID4 defaults, and states that provider outputs are not

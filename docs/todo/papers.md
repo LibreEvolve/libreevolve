@@ -1730,13 +1730,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     while validation normalizes older boundaryless snapshots.
     `load_full_resume_bundle()` now surfaces the validated replay boundary as
     explicit restore metadata beside the RNG snapshot and lineage replay policy.
+    The paper manifest now requires
+    `papers/runtime_rng_replay_boundary.json` to preserve that framework RNG
+    restore boundary separately from full resumed sampling replay.
   - Current gap: full run replay still lacks provider output replay,
     plugin-owned RNG capture, controller/pending-work state restore, and
     lineage replay.
   - Required result: compose persisted RNG restore with full resume/replay,
     define provider-output and plugin-owned RNG capture or exclusion semantics,
     and keep paper-index seeded-replay claims scoped so they do not imply full
-    replayability until this is true.
+    replayability until this is true. The remaining paper gap is not the
+    runtime RNG snapshot validator or paper sidecar; it is the resumed trace
+    composition across external stochastic surfaces.
 
 - [ ] Promote multiple-score overlays to primary archive optimization.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

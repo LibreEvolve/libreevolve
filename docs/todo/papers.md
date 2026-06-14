@@ -6131,6 +6131,43 @@ directory and using the AlphaEvolve paper as the primary specification.
     treats AI Harness Engineering as background context until those artifacts
     exist.
 
+- [ ] Reproduce HarnessBridge learnable-controller evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.12882`, submitted June 11, 2026, is
+    titled `HarnessBridge: Learnable Bidirectional Controller for LLM Agent
+    Harness`. Its abstract says long-horizon agent performance depends on the
+    harness that mediates agent-environment interaction, not only on model
+    capability or environment design. HarnessBridge is a lightweight
+    learnable plug-in controller that parameterizes the agent-environment
+    interface as two bidirectional projections: an observation projection that
+    distills raw trajectories into compact decision-relevant states, and an
+    action projection that converts proposed actions into executable
+    transitions or trajectory-grounded rejections. It is trained on a harness
+    supervision dataset through unified instruction tuning and reports
+    matching or surpassing strong specialized harnesses on Terminal-Bench 2.0
+    and SWE-bench Verified while reducing token usage and trajectory length.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.12882`. Existing harness TODOs cover runtime-substrate
+    taxonomies, trace-grounded repair, retrospective harness optimization,
+    observability-driven harness evolution, partial-harness trajectory
+    alignment, and open-ended auto-harness deployment, but they do not capture
+    a learnable bidirectional controller, observation/action projection
+    schemas, harness-supervision training data, unified instruction-tuning
+    evidence, token/trajectory compression metrics, or small-to-commercial
+    model transfer.
+  - Required result: add reproduction-grade evidence for `2606.12882`:
+    title/authors/arXiv version/date, source license, code/model/dataset
+    availability, relation to AlphaEvolve and LibreEvolve harness assumptions,
+    learnable-controller architecture schema, observation-projection and
+    action-projection records, executable-transition and rejection semantics,
+    harness-supervision dataset provenance, unified instruction-tuning
+    configuration, generator/model-transfer records, Terminal-Bench 2.0 and
+    SWE-bench Verified task metadata, specialized-harness baseline identities,
+    token-usage and trajectory-length metrics, ablation and generalization
+    evidence, independent verification outputs, and README/ROADMAP wording
+    that treats HarnessBridge-style learned harness mediation as missing paper
+    evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce inference-time trajectory-alignment harness evidence beyond
       paper coverage.
   - Paper/source evidence: arXiv `2605.21516`, submitted May 15, 2026, is

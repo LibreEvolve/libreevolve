@@ -2536,10 +2536,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2506.13131",
                 "2506.13131__AlphaEvolve",
@@ -10935,11 +10935,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 186,
-              "file_text_char_start": 491169,
-              "file_text_char_end": 493954,
-              "line_start": 7245,
-              "line_end": 7285,
+              "block_ordinal": 187,
+              "file_text_char_start": 493804,
+              "file_text_char_end": 496589,
+              "line_start": 7282,
+              "line_end": 7322,
               "block_sha256": "264a380eb515886d4df49293eec28f5e02ec6c1716e973cdeb948335ad42cd37",
               "matched_source_tokens": [
                 "1504.04909"
@@ -10964,23 +10964,23 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "1504.04909"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/map_elites_illumination_boundary.json",
-                  "evidence_text_char_start": 215238,
-                  "evidence_text_char_end": 215282
+                  "evidence_text_char_start": 217873,
+                  "evidence_text_char_end": 217917
                 },
                 {
                   "path": "papers/map_elites_illumination_boundary.json",
-                  "evidence_text_char_start": 215918,
-                  "evidence_text_char_end": 215962
+                  "evidence_text_char_start": 218553,
+                  "evidence_text_char_end": 218597
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -11001,13 +11001,13 @@
             },
             {
               "path": "papers/map_elites_illumination_boundary.json",
-              "evidence_text_char_start": 218024,
-              "evidence_text_char_end": 218068
+              "evidence_text_char_start": 220659,
+              "evidence_text_char_end": 220703
             },
             {
               "path": "papers/map_elites_illumination_boundary.json",
-              "evidence_text_char_start": 218704,
-              "evidence_text_char_end": 218748
+              "evidence_text_char_start": 221339,
+              "evidence_text_char_end": 221383
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -11902,11 +11902,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 186,
-                "file_text_char_start": 491169,
-                "file_text_char_end": 493954,
-                "line_start": 7245,
-                "line_end": 7285,
+                "block_ordinal": 187,
+                "file_text_char_start": 493804,
+                "file_text_char_end": 496589,
+                "line_start": 7282,
+                "line_end": 7322,
                 "block_sha256": "264a380eb515886d4df49293eec28f5e02ec6c1716e973cdeb948335ad42cd37",
                 "matched_source_tokens": [
                   "1504.04909"
@@ -11933,10 +11933,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "1504.04909"
                 ],
@@ -11946,13 +11946,13 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/map_elites_illumination_boundary.json",
-                    "evidence_text_char_start": 215238,
-                    "evidence_text_char_end": 215282
+                    "evidence_text_char_start": 217873,
+                    "evidence_text_char_end": 217917
                   },
                   {
                     "path": "papers/map_elites_illumination_boundary.json",
-                    "evidence_text_char_start": 215918,
-                    "evidence_text_char_end": 215962
+                    "evidence_text_char_start": 218553,
+                    "evidence_text_char_end": 218597
                   }
                 ]
               }
@@ -12352,11 +12352,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 178,
-              "file_text_char_start": 467608,
-              "file_text_char_end": 470287,
-              "line_start": 6902,
-              "line_end": 6942,
+              "block_ordinal": 179,
+              "file_text_char_start": 470243,
+              "file_text_char_end": 472922,
+              "line_start": 6939,
+              "line_end": 6979,
               "block_sha256": "eb38f8029c444f067979cbce4ff04083339160d721a540aa6e44943259aee0d6",
               "matched_source_tokens": [
                 "auer-cesa-bianchi-fischer-2002",
@@ -12378,10 +12378,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "auer-cesa-bianchi-fischer-2002",
                 "auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit",
@@ -12390,8 +12390,8 @@
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/ucb1_boundary.json",
-                  "evidence_text_char_start": 191995,
-                  "evidence_text_char_end": 192020
+                  "evidence_text_char_start": 194630,
+                  "evidence_text_char_end": 194655
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -12407,8 +12407,8 @@
             },
             {
               "path": "papers/ucb1_boundary.json",
-              "evidence_text_char_start": 194675,
-              "evidence_text_char_end": 194700
+              "evidence_text_char_start": 197310,
+              "evidence_text_char_end": 197335
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -13209,11 +13209,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 178,
-                "file_text_char_start": 467608,
-                "file_text_char_end": 470287,
-                "line_start": 6902,
-                "line_end": 6942,
+                "block_ordinal": 179,
+                "file_text_char_start": 470243,
+                "file_text_char_end": 472922,
+                "line_start": 6939,
+                "line_end": 6979,
                 "block_sha256": "eb38f8029c444f067979cbce4ff04083339160d721a540aa6e44943259aee0d6",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002",
@@ -13237,10 +13237,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002",
                   "auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit",
@@ -13252,8 +13252,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/ucb1_boundary.json",
-                    "evidence_text_char_start": 191995,
-                    "evidence_text_char_end": 192020
+                    "evidence_text_char_start": 194630,
+                    "evidence_text_char_end": 194655
                   }
                 ]
               }
@@ -13530,11 +13530,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 179,
-              "file_text_char_start": 470287,
-              "file_text_char_end": 473206,
-              "line_start": 6942,
-              "line_end": 6985,
+              "block_ordinal": 180,
+              "file_text_char_start": 472922,
+              "file_text_char_end": 475841,
+              "line_start": 6979,
+              "line_end": 7022,
               "block_sha256": "c8d5217e2cbd548aac6330d624d601977911ed35cf4b1bf11c3ae748869a8c3b",
               "matched_source_tokens": [
                 "2511.17592"
@@ -13554,18 +13554,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2511.17592"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/gigaevo_framework_boundary.json",
-                  "evidence_text_char_start": 194800,
-                  "evidence_text_char_end": 194838
+                  "evidence_text_char_start": 197435,
+                  "evidence_text_char_end": 197473
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -13581,8 +13581,8 @@
             },
             {
               "path": "papers/gigaevo_framework_boundary.json",
-              "evidence_text_char_start": 197720,
-              "evidence_text_char_end": 197758
+              "evidence_text_char_start": 200355,
+              "evidence_text_char_end": 200393
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -14326,11 +14326,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 179,
-                "file_text_char_start": 470287,
-                "file_text_char_end": 473206,
-                "line_start": 6942,
-                "line_end": 6985,
+                "block_ordinal": 180,
+                "file_text_char_start": 472922,
+                "file_text_char_end": 475841,
+                "line_start": 6979,
+                "line_end": 7022,
                 "block_sha256": "c8d5217e2cbd548aac6330d624d601977911ed35cf4b1bf11c3ae748869a8c3b",
                 "matched_source_tokens": [
                   "2511.17592"
@@ -14352,10 +14352,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2511.17592"
                 ],
@@ -14365,8 +14365,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/gigaevo_framework_boundary.json",
-                    "evidence_text_char_start": 194800,
-                    "evidence_text_char_end": 194838
+                    "evidence_text_char_start": 197435,
+                    "evidence_text_char_end": 197473
                   }
                 ]
               }
@@ -14623,11 +14623,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 180,
-              "file_text_char_start": 473206,
-              "file_text_char_end": 476378,
-              "line_start": 6985,
-              "line_end": 7031,
+              "block_ordinal": 181,
+              "file_text_char_start": 475841,
+              "file_text_char_end": 479013,
+              "line_start": 7022,
+              "line_end": 7068,
               "block_sha256": "dbf676e70ba73c5d957e5c79c8572a0f05e4811dad3390b2395a516865d0dd92",
               "matched_source_tokens": [
                 "2510.14150"
@@ -14647,18 +14647,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2510.14150"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/codeevolve_boundary.json",
-                  "evidence_text_char_start": 197541,
-                  "evidence_text_char_end": 197572
+                  "evidence_text_char_start": 200176,
+                  "evidence_text_char_end": 200207
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -14674,8 +14674,8 @@
             },
             {
               "path": "papers/codeevolve_boundary.json",
-              "evidence_text_char_start": 200714,
-              "evidence_text_char_end": 200745
+              "evidence_text_char_start": 203349,
+              "evidence_text_char_end": 203380
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -15329,11 +15329,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 180,
-                "file_text_char_start": 473206,
-                "file_text_char_end": 476378,
-                "line_start": 6985,
-                "line_end": 7031,
+                "block_ordinal": 181,
+                "file_text_char_start": 475841,
+                "file_text_char_end": 479013,
+                "line_start": 7022,
+                "line_end": 7068,
                 "block_sha256": "dbf676e70ba73c5d957e5c79c8572a0f05e4811dad3390b2395a516865d0dd92",
                 "matched_source_tokens": [
                   "2510.14150"
@@ -15355,10 +15355,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2510.14150"
                 ],
@@ -15368,8 +15368,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/codeevolve_boundary.json",
-                    "evidence_text_char_start": 197541,
-                    "evidence_text_char_end": 197572
+                    "evidence_text_char_start": 200176,
+                    "evidence_text_char_end": 200207
                   }
                 ]
               }
@@ -15647,11 +15647,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 181,
-              "file_text_char_start": 476378,
-              "file_text_char_end": 479411,
-              "line_start": 7031,
-              "line_end": 7075,
+              "block_ordinal": 182,
+              "file_text_char_start": 479013,
+              "file_text_char_end": 482046,
+              "line_start": 7068,
+              "line_end": 7112,
               "block_sha256": "d92282606eff4e91eb9bf61ada854164fae3ad7ba37d89359691027558247c80",
               "matched_source_tokens": [
                 "2511.23473"
@@ -15671,18 +15671,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2511.23473"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/thetaevolve_boundary.json",
-                  "evidence_text_char_start": 200657,
-                  "evidence_text_char_end": 200689
+                  "evidence_text_char_start": 203292,
+                  "evidence_text_char_end": 203324
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -15698,8 +15698,8 @@
             },
             {
               "path": "papers/thetaevolve_boundary.json",
-              "evidence_text_char_start": 203691,
-              "evidence_text_char_end": 203723
+              "evidence_text_char_start": 206326,
+              "evidence_text_char_end": 206358
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -16652,11 +16652,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 181,
-                "file_text_char_start": 476378,
-                "file_text_char_end": 479411,
-                "line_start": 7031,
-                "line_end": 7075,
+                "block_ordinal": 182,
+                "file_text_char_start": 479013,
+                "file_text_char_end": 482046,
+                "line_start": 7068,
+                "line_end": 7112,
                 "block_sha256": "d92282606eff4e91eb9bf61ada854164fae3ad7ba37d89359691027558247c80",
                 "matched_source_tokens": [
                   "2511.23473"
@@ -16678,10 +16678,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2511.23473"
                 ],
@@ -16691,8 +16691,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/thetaevolve_boundary.json",
-                    "evidence_text_char_start": 200657,
-                    "evidence_text_char_end": 200689
+                    "evidence_text_char_start": 203292,
+                    "evidence_text_char_end": 203324
                   }
                 ]
               }
@@ -16970,11 +16970,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 182,
-              "file_text_char_start": 479411,
-              "file_text_char_end": 482268,
-              "line_start": 7075,
-              "line_end": 7117,
+              "block_ordinal": 183,
+              "file_text_char_start": 482046,
+              "file_text_char_end": 484903,
+              "line_start": 7112,
+              "line_end": 7154,
               "block_sha256": "08eb86c02019367c97f6b33087b9d48e4dc4ea0f6c1d78296a45db65a993e931",
               "matched_source_tokens": [
                 "2602.10233"
@@ -16994,18 +16994,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2602.10233"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/improvevolve_boundary.json",
-                  "evidence_text_char_start": 203661,
-                  "evidence_text_char_end": 203694
+                  "evidence_text_char_start": 206296,
+                  "evidence_text_char_end": 206329
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -17021,8 +17021,8 @@
             },
             {
               "path": "papers/improvevolve_boundary.json",
-              "evidence_text_char_start": 206519,
-              "evidence_text_char_end": 206552
+              "evidence_text_char_start": 209154,
+              "evidence_text_char_end": 209187
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -17813,11 +17813,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 182,
-                "file_text_char_start": 479411,
-                "file_text_char_end": 482268,
-                "line_start": 7075,
-                "line_end": 7117,
+                "block_ordinal": 183,
+                "file_text_char_start": 482046,
+                "file_text_char_end": 484903,
+                "line_start": 7112,
+                "line_end": 7154,
                 "block_sha256": "08eb86c02019367c97f6b33087b9d48e4dc4ea0f6c1d78296a45db65a993e931",
                 "matched_source_tokens": [
                   "2602.10233"
@@ -17839,10 +17839,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2602.10233"
                 ],
@@ -17852,8 +17852,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/improvevolve_boundary.json",
-                    "evidence_text_char_start": 203661,
-                    "evidence_text_char_end": 203694
+                    "evidence_text_char_start": 206296,
+                    "evidence_text_char_end": 206329
                   }
                 ]
               }
@@ -18110,11 +18110,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 183,
-              "file_text_char_start": 482268,
-              "file_text_char_end": 485340,
-              "line_start": 7117,
-              "line_end": 7160,
+              "block_ordinal": 184,
+              "file_text_char_start": 484903,
+              "file_text_char_end": 487975,
+              "line_start": 7154,
+              "line_end": 7197,
               "block_sha256": "ba9b63264ccc58fbbb5b623a7efdef828c1f2bcaa5feba340dba265b9b85fde5",
               "matched_source_tokens": [
                 "2602.15951"
@@ -18134,18 +18134,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2602.15951"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/madevolve_boundary.json",
-                  "evidence_text_char_start": 206555,
-                  "evidence_text_char_end": 206585
+                  "evidence_text_char_start": 209190,
+                  "evidence_text_char_end": 209220
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -18161,8 +18161,8 @@
             },
             {
               "path": "papers/madevolve_boundary.json",
-              "evidence_text_char_start": 209628,
-              "evidence_text_char_end": 209658
+              "evidence_text_char_start": 212263,
+              "evidence_text_char_end": 212293
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -18914,11 +18914,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 183,
-                "file_text_char_start": 482268,
-                "file_text_char_end": 485340,
-                "line_start": 7117,
-                "line_end": 7160,
+                "block_ordinal": 184,
+                "file_text_char_start": 484903,
+                "file_text_char_end": 487975,
+                "line_start": 7154,
+                "line_end": 7197,
                 "block_sha256": "ba9b63264ccc58fbbb5b623a7efdef828c1f2bcaa5feba340dba265b9b85fde5",
                 "matched_source_tokens": [
                   "2602.15951"
@@ -18940,10 +18940,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2602.15951"
                 ],
@@ -18953,8 +18953,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/madevolve_boundary.json",
-                    "evidence_text_char_start": 206555,
-                    "evidence_text_char_end": 206585
+                    "evidence_text_char_start": 209190,
+                    "evidence_text_char_end": 209220
                   }
                 ]
               }
@@ -19253,11 +19253,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 184,
-              "file_text_char_start": 485340,
-              "file_text_char_end": 488382,
-              "line_start": 7160,
-              "line_end": 7204,
+              "block_ordinal": 185,
+              "file_text_char_start": 487975,
+              "file_text_char_end": 491017,
+              "line_start": 7197,
+              "line_end": 7241,
               "block_sha256": "b34da9fe8683c6874dd5630f25871ec212b3a3d7e80203bfb5c7a582f9878aa8",
               "matched_source_tokens": [
                 "2603.14575"
@@ -19277,18 +19277,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2603.14575"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/causalevolve_boundary.json",
-                  "evidence_text_char_start": 209694,
-                  "evidence_text_char_end": 209727
+                  "evidence_text_char_start": 212329,
+                  "evidence_text_char_end": 212362
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -19304,8 +19304,8 @@
             },
             {
               "path": "papers/causalevolve_boundary.json",
-              "evidence_text_char_start": 212737,
-              "evidence_text_char_end": 212770
+              "evidence_text_char_start": 215372,
+              "evidence_text_char_end": 215405
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -20191,11 +20191,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 184,
-                "file_text_char_start": 485340,
-                "file_text_char_end": 488382,
-                "line_start": 7160,
-                "line_end": 7204,
+                "block_ordinal": 185,
+                "file_text_char_start": 487975,
+                "file_text_char_end": 491017,
+                "line_start": 7197,
+                "line_end": 7241,
                 "block_sha256": "b34da9fe8683c6874dd5630f25871ec212b3a3d7e80203bfb5c7a582f9878aa8",
                 "matched_source_tokens": [
                   "2603.14575"
@@ -20217,10 +20217,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2603.14575"
                 ],
@@ -20230,8 +20230,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/causalevolve_boundary.json",
-                    "evidence_text_char_start": 209694,
-                    "evidence_text_char_end": 209727
+                    "evidence_text_char_start": 212329,
+                    "evidence_text_char_end": 212362
                   }
                 ]
               }
@@ -20530,11 +20530,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 185,
-              "file_text_char_start": 488382,
-              "file_text_char_end": 491169,
-              "line_start": 7204,
-              "line_end": 7245,
+              "block_ordinal": 186,
+              "file_text_char_start": 491017,
+              "file_text_char_end": 493804,
+              "line_start": 7241,
+              "line_end": 7282,
               "block_sha256": "c8666a7135872dc6ccb2aa3da775b9f0753612634ba227d3f380048fcb2c9f3a",
               "matched_source_tokens": [
                 "2510.06056"
@@ -20554,18 +20554,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2510.06056"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/deepevolve_boundary.json",
-                  "evidence_text_char_start": 212785,
-                  "evidence_text_char_end": 212816
+                  "evidence_text_char_start": 215420,
+                  "evidence_text_char_end": 215451
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -20581,8 +20581,8 @@
             },
             {
               "path": "papers/deepevolve_boundary.json",
-              "evidence_text_char_start": 215573,
-              "evidence_text_char_end": 215604
+              "evidence_text_char_start": 218208,
+              "evidence_text_char_end": 218239
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -21484,11 +21484,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 185,
-                "file_text_char_start": 488382,
-                "file_text_char_end": 491169,
-                "line_start": 7204,
-                "line_end": 7245,
+                "block_ordinal": 186,
+                "file_text_char_start": 491017,
+                "file_text_char_end": 493804,
+                "line_start": 7241,
+                "line_end": 7282,
                 "block_sha256": "c8666a7135872dc6ccb2aa3da775b9f0753612634ba227d3f380048fcb2c9f3a",
                 "matched_source_tokens": [
                   "2510.06056"
@@ -21510,10 +21510,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2510.06056"
                 ],
@@ -21523,8 +21523,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/deepevolve_boundary.json",
-                    "evidence_text_char_start": 212785,
-                    "evidence_text_char_end": 212816
+                    "evidence_text_char_start": 215420,
+                    "evidence_text_char_end": 215451
                   }
                 ]
               }
@@ -21781,11 +21781,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 168,
-              "file_text_char_start": 435249,
-              "file_text_char_end": 437436,
-              "line_start": 6442,
-              "line_end": 6473,
+              "block_ordinal": 169,
+              "file_text_char_start": 437884,
+              "file_text_char_end": 440071,
+              "line_start": 6479,
+              "line_end": 6510,
               "block_sha256": "7f31e47b8dff3ffef33642fb8d5c1b6fe2c460c8ad931b912241fe0c50e16e22",
               "matched_source_tokens": [
                 "2601.21096"
@@ -21805,18 +21805,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2601.21096"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/magellan_boundary.json",
-                  "evidence_text_char_start": 159155,
-                  "evidence_text_char_end": 159184
+                  "evidence_text_char_start": 161790,
+                  "evidence_text_char_end": 161819
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -21832,8 +21832,8 @@
             },
             {
               "path": "papers/magellan_boundary.json",
-              "evidence_text_char_start": 161343,
-              "evidence_text_char_end": 161372
+              "evidence_text_char_start": 163978,
+              "evidence_text_char_end": 164007
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -22568,11 +22568,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 168,
-                "file_text_char_start": 435249,
-                "file_text_char_end": 437436,
-                "line_start": 6442,
-                "line_end": 6473,
+                "block_ordinal": 169,
+                "file_text_char_start": 437884,
+                "file_text_char_end": 440071,
+                "line_start": 6479,
+                "line_end": 6510,
                 "block_sha256": "7f31e47b8dff3ffef33642fb8d5c1b6fe2c460c8ad931b912241fe0c50e16e22",
                 "matched_source_tokens": [
                   "2601.21096"
@@ -22594,10 +22594,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2601.21096"
                 ],
@@ -22607,8 +22607,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/magellan_boundary.json",
-                    "evidence_text_char_start": 159155,
-                    "evidence_text_char_end": 159184
+                    "evidence_text_char_start": 161790,
+                    "evidence_text_char_end": 161819
                   }
                 ]
               }
@@ -22892,10 +22892,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.14718",
                 "2605.14718__FHE_on_TPU",
@@ -23466,10 +23466,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.14718",
                   "2605.14718__FHE_on_TPU",
@@ -23767,10 +23767,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.05921",
                 "2605.05921__Intentmaking_and_Sensemaking",
@@ -24294,10 +24294,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.05921",
                   "2605.05921__Intentmaking_and_Sensemaking",
@@ -24595,10 +24595,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.01794",
                 "2605.01794__Radar_Power_Allocation",
@@ -25122,10 +25122,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.01794",
                   "2605.01794__Radar_Power_Allocation",
@@ -25423,10 +25423,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2602.23413",
                 "2602.23413__EvoX",
@@ -25950,10 +25950,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2602.23413",
                   "2602.23413__EvoX",
@@ -26251,10 +26251,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2602.02919",
                 "2602.02919__DeltaEvolve",
@@ -26778,10 +26778,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2602.02919",
                   "2602.02919__DeltaEvolve",
@@ -27079,10 +27079,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2606.06473",
                 "2606.06473__MLEvolve",
@@ -27606,10 +27606,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2606.06473",
                   "2606.06473__MLEvolve",
@@ -27907,10 +27907,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.09764",
                 "2605.09764__LEVI",
@@ -28434,10 +28434,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.09764",
                   "2605.09764__LEVI",
@@ -28735,10 +28735,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2601.10657",
                 "2601.10657__PACEvolve",
@@ -29262,10 +29262,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2601.10657",
                   "2601.10657__PACEvolve",
@@ -29563,10 +29563,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.08520",
                 "2605.08520__FlashEvolve",
@@ -30090,10 +30090,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.08520",
                   "2605.08520__FlashEvolve",
@@ -30391,10 +30391,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.20086",
                 "2605.20086__Evolutionary_Coding_Agents",
@@ -30918,10 +30918,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.20086",
                   "2605.20086__Evolutionary_Coding_Agents",
@@ -31219,10 +31219,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.01120",
                 "2605.01120__Zarankiewicz_Reinforced_Search",
@@ -31838,10 +31838,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.01120",
                   "2605.01120__Zarankiewicz_Reinforced_Search",
@@ -32139,10 +32139,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2604.01658",
                 "2604.01658__CORAL",
@@ -32666,10 +32666,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2604.01658",
                   "2604.01658__CORAL",
@@ -32967,10 +32967,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.13821",
                 "2605.13821__AEvo",
@@ -33494,10 +33494,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.13821",
                   "2605.13821__AEvo",
@@ -33795,10 +33795,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.09959",
                 "2605.09959__G_Zero",
@@ -34322,10 +34322,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.09959",
                   "2605.09959__G_Zero",
@@ -34623,10 +34623,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.21605",
                 "2605.21605__GenEvolve",
@@ -35150,10 +35150,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.21605",
                   "2605.21605__GenEvolve",
@@ -35451,10 +35451,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.29847",
                 "2605.29847__EvoRubric",
@@ -35978,10 +35978,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.29847",
                   "2605.29847__EvoRubric",
@@ -36279,10 +36279,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.29293",
                 "2605.29293__LLM_ALSO",
@@ -36806,10 +36806,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.29293",
                   "2605.29293__LLM_ALSO",
@@ -37107,10 +37107,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2512.18746",
                 "2512.18746__MemEvolve",
@@ -37634,10 +37634,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2512.18746",
                   "2512.18746__MemEvolve",
@@ -37935,10 +37935,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2606.06114",
                 "2606.06114__ANCHOR_Healthy_Evolution",
@@ -38462,10 +38462,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2606.06114",
                   "2606.06114__ANCHOR_Healthy_Evolution",
@@ -38763,10 +38763,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.27276",
                 "2605.27276__SIA",
@@ -39290,10 +39290,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.27276",
                   "2605.27276__SIA",
@@ -39591,10 +39591,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2606.06324",
                 "2606.06324__HarnessFix",
@@ -40118,10 +40118,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2606.06324",
                   "2606.06324__HarnessFix",
@@ -40419,10 +40419,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2606.05922",
                 "2606.05922__RHO",
@@ -40946,10 +40946,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2606.05922",
                   "2606.05922__RHO",
@@ -41247,10 +41247,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.30621",
                 "2605.30621__Harness_Updating_Is_Not_Harness_Benefit",
@@ -41774,10 +41774,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.30621",
                   "2605.30621__Harness_Updating_Is_Not_Harness_Benefit",
@@ -42075,10 +42075,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2604.25850",
                 "2604.25850__AHE",
@@ -42602,10 +42602,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2604.25850",
                   "2604.25850__AHE",
@@ -42903,10 +42903,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.13357",
                 "2605.13357__AI_Harness_Engineering",
@@ -43430,10 +43430,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.13357",
                   "2605.13357__AI_Harness_Engineering",
@@ -43824,11 +43824,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 161,
-              "file_text_char_start": 414067,
-              "file_text_char_end": 416944,
-              "line_start": 6134,
-              "line_end": 6177,
+              "block_ordinal": 162,
+              "file_text_char_start": 416702,
+              "file_text_char_end": 419579,
+              "line_start": 6171,
+              "line_end": 6214,
               "block_sha256": "0c636d9c47eb12e46a56beafbddb0087d467580478cf3db12edd0d6091d0ac37",
               "matched_source_tokens": [
                 "2605.21516",
@@ -43851,10 +43851,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2605.21516",
                 "2605.21516__Inference_Time_Trajectory_Alignment",
@@ -43864,8 +43864,8 @@
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf",
-                  "evidence_text_char_start": 138090,
-                  "evidence_text_char_end": 138148
+                  "evidence_text_char_start": 140725,
+                  "evidence_text_char_end": 140783
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -43881,8 +43881,8 @@
             },
             {
               "path": "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf",
-              "evidence_text_char_start": 140968,
-              "evidence_text_char_end": 141026
+              "evidence_text_char_start": 143603,
+              "evidence_text_char_end": 143661
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -44349,11 +44349,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 161,
-                "file_text_char_start": 414067,
-                "file_text_char_end": 416944,
-                "line_start": 6134,
-                "line_end": 6177,
+                "block_ordinal": 162,
+                "file_text_char_start": 416702,
+                "file_text_char_end": 419579,
+                "line_start": 6171,
+                "line_end": 6214,
                 "block_sha256": "0c636d9c47eb12e46a56beafbddb0087d467580478cf3db12edd0d6091d0ac37",
                 "matched_source_tokens": [
                   "2605.21516",
@@ -44378,10 +44378,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2605.21516",
                   "2605.21516__Inference_Time_Trajectory_Alignment",
@@ -44394,8 +44394,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf",
-                    "evidence_text_char_start": 138090,
-                    "evidence_text_char_end": 138148
+                    "evidence_text_char_start": 140725,
+                    "evidence_text_char_end": 140783
                   }
                 ]
               }
@@ -44652,11 +44652,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 162,
-              "file_text_char_start": 416944,
-              "file_text_char_end": 420109,
-              "line_start": 6177,
-              "line_end": 6223,
+              "block_ordinal": 163,
+              "file_text_char_start": 419579,
+              "file_text_char_end": 422744,
+              "line_start": 6214,
+              "line_end": 6260,
               "block_sha256": "36f072bc810ac090afa5f2e834241b957af4acf3716136da1c517e25ed186695",
               "matched_source_tokens": [
                 "2606.01770",
@@ -44679,10 +44679,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2606.01770",
                 "2606.01770__Adaptive_Auto_Harness",
@@ -44692,8 +44692,8 @@
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/2606.01770__Adaptive_Auto_Harness.pdf",
-                  "evidence_text_char_start": 141158,
-                  "evidence_text_char_end": 141202
+                  "evidence_text_char_start": 143793,
+                  "evidence_text_char_end": 143837
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -44709,8 +44709,8 @@
             },
             {
               "path": "papers/2606.01770__Adaptive_Auto_Harness.pdf",
-              "evidence_text_char_start": 144324,
-              "evidence_text_char_end": 144368
+              "evidence_text_char_start": 146959,
+              "evidence_text_char_end": 147003
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -45177,11 +45177,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 162,
-                "file_text_char_start": 416944,
-                "file_text_char_end": 420109,
-                "line_start": 6177,
-                "line_end": 6223,
+                "block_ordinal": 163,
+                "file_text_char_start": 419579,
+                "file_text_char_end": 422744,
+                "line_start": 6214,
+                "line_end": 6260,
                 "block_sha256": "36f072bc810ac090afa5f2e834241b957af4acf3716136da1c517e25ed186695",
                 "matched_source_tokens": [
                   "2606.01770",
@@ -45206,10 +45206,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2606.01770",
                   "2606.01770__Adaptive_Auto_Harness",
@@ -45222,8 +45222,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/2606.01770__Adaptive_Auto_Harness.pdf",
-                    "evidence_text_char_start": 141158,
-                    "evidence_text_char_end": 141202
+                    "evidence_text_char_start": 143793,
+                    "evidence_text_char_end": 143837
                   }
                 ]
               }
@@ -45480,11 +45480,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 163,
-              "file_text_char_start": 420109,
-              "file_text_char_end": 422956,
-              "line_start": 6223,
-              "line_end": 6266,
+              "block_ordinal": 164,
+              "file_text_char_start": 422744,
+              "file_text_char_end": 425591,
+              "line_start": 6260,
+              "line_end": 6303,
               "block_sha256": "1f0e2c64fad3292056856c13b4dfb2cefac6ad9d85b4553d933e4c5c8685afc5",
               "matched_source_tokens": [
                 "2603.28052",
@@ -45507,10 +45507,10 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2603.28052",
                 "2603.28052__Meta_Harness",
@@ -45520,8 +45520,8 @@
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/2603.28052__Meta_Harness.pdf",
-                  "evidence_text_char_start": 144163,
-                  "evidence_text_char_end": 144198
+                  "evidence_text_char_start": 146798,
+                  "evidence_text_char_end": 146833
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -45537,8 +45537,8 @@
             },
             {
               "path": "papers/2603.28052__Meta_Harness.pdf",
-              "evidence_text_char_start": 147011,
-              "evidence_text_char_end": 147046
+              "evidence_text_char_start": 149646,
+              "evidence_text_char_end": 149681
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -46005,11 +46005,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 163,
-                "file_text_char_start": 420109,
-                "file_text_char_end": 422956,
-                "line_start": 6223,
-                "line_end": 6266,
+                "block_ordinal": 164,
+                "file_text_char_start": 422744,
+                "file_text_char_end": 425591,
+                "line_start": 6260,
+                "line_end": 6303,
                 "block_sha256": "1f0e2c64fad3292056856c13b4dfb2cefac6ad9d85b4553d933e4c5c8685afc5",
                 "matched_source_tokens": [
                   "2603.28052",
@@ -46034,10 +46034,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2603.28052",
                   "2603.28052__Meta_Harness",
@@ -46050,8 +46050,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/2603.28052__Meta_Harness.pdf",
-                    "evidence_text_char_start": 144163,
-                    "evidence_text_char_end": 144198
+                    "evidence_text_char_start": 146798,
+                    "evidence_text_char_end": 146833
                   }
                 ]
               }
@@ -46308,11 +46308,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 170,
-              "file_text_char_start": 439557,
-              "file_text_char_end": 441908,
-              "line_start": 6504,
-              "line_end": 6538,
+              "block_ordinal": 171,
+              "file_text_char_start": 442192,
+              "file_text_char_end": 444543,
+              "line_start": 6541,
+              "line_end": 6575,
               "block_sha256": "e87b2fd4ae89fd0b5353681936e9a0576194f776274f11ddabbe41dc96daa3de",
               "matched_source_tokens": [
                 "2602.22425"
@@ -46332,18 +46332,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2602.22425"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/archagent_boundary.json",
-                  "evidence_text_char_start": 163620,
-                  "evidence_text_char_end": 163650
+                  "evidence_text_char_start": 166255,
+                  "evidence_text_char_end": 166285
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -46359,8 +46359,8 @@
             },
             {
               "path": "papers/archagent_boundary.json",
-              "evidence_text_char_start": 165972,
-              "evidence_text_char_end": 166002
+              "evidence_text_char_start": 168607,
+              "evidence_text_char_end": 168637
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -47058,11 +47058,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 170,
-                "file_text_char_start": 439557,
-                "file_text_char_end": 441908,
-                "line_start": 6504,
-                "line_end": 6538,
+                "block_ordinal": 171,
+                "file_text_char_start": 442192,
+                "file_text_char_end": 444543,
+                "line_start": 6541,
+                "line_end": 6575,
                 "block_sha256": "e87b2fd4ae89fd0b5353681936e9a0576194f776274f11ddabbe41dc96daa3de",
                 "matched_source_tokens": [
                   "2602.22425"
@@ -47084,10 +47084,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2602.22425"
                 ],
@@ -47097,8 +47097,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/archagent_boundary.json",
-                    "evidence_text_char_start": 163620,
-                    "evidence_text_char_end": 163650
+                    "evidence_text_char_start": 166255,
+                    "evidence_text_char_end": 166285
                   }
                 ]
               }
@@ -47355,11 +47355,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 164,
-              "file_text_char_start": 422956,
-              "file_text_char_end": 424936,
-              "line_start": 6266,
-              "line_end": 6294,
+              "block_ordinal": 165,
+              "file_text_char_start": 425591,
+              "file_text_char_end": 427571,
+              "line_start": 6303,
+              "line_end": 6331,
               "block_sha256": "635a456441f91241c23f0533c1c33667f04a6fff503d1e8ede5fc8ad7514fa6b",
               "matched_source_tokens": [
                 "2602.16928"
@@ -47379,18 +47379,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2602.16928"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/multiagent_learning_boundary.json",
-                  "evidence_text_char_start": 146819,
-                  "evidence_text_char_end": 146859
+                  "evidence_text_char_start": 149454,
+                  "evidence_text_char_end": 149494
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -47406,8 +47406,8 @@
             },
             {
               "path": "papers/multiagent_learning_boundary.json",
-              "evidence_text_char_start": 148800,
-              "evidence_text_char_end": 148840
+              "evidence_text_char_start": 151435,
+              "evidence_text_char_end": 151475
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -48124,11 +48124,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 164,
-                "file_text_char_start": 422956,
-                "file_text_char_end": 424936,
-                "line_start": 6266,
-                "line_end": 6294,
+                "block_ordinal": 165,
+                "file_text_char_start": 425591,
+                "file_text_char_end": 427571,
+                "line_start": 6303,
+                "line_end": 6331,
                 "block_sha256": "635a456441f91241c23f0533c1c33667f04a6fff503d1e8ede5fc8ad7514fa6b",
                 "matched_source_tokens": [
                   "2602.16928"
@@ -48150,10 +48150,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2602.16928"
                 ],
@@ -48163,8 +48163,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/multiagent_learning_boundary.json",
-                    "evidence_text_char_start": 146819,
-                    "evidence_text_char_end": 146859
+                    "evidence_text_char_start": 149454,
+                    "evidence_text_char_end": 149494
                   }
                 ]
               }
@@ -48421,11 +48421,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 165,
-              "file_text_char_start": 424936,
-              "file_text_char_end": 427903,
-              "line_start": 6294,
-              "line_end": 6336,
+              "block_ordinal": 166,
+              "file_text_char_start": 427571,
+              "file_text_char_end": 430538,
+              "line_start": 6331,
+              "line_end": 6373,
               "block_sha256": "ffc80abdc9728b46c870fc808979139223f97e0029a5c0947fcac61cd127544f",
               "matched_source_tokens": [
                 "2603.09172"
@@ -48445,18 +48445,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2603.09172"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/ramsey_numbers_boundary.json",
-                  "evidence_text_char_start": 149442,
-                  "evidence_text_char_end": 149477
+                  "evidence_text_char_start": 152077,
+                  "evidence_text_char_end": 152112
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -48472,8 +48472,8 @@
             },
             {
               "path": "papers/ramsey_numbers_boundary.json",
-              "evidence_text_char_start": 152410,
-              "evidence_text_char_end": 152445
+              "evidence_text_char_start": 155045,
+              "evidence_text_char_end": 155080
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -49270,11 +49270,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 165,
-                "file_text_char_start": 424936,
-                "file_text_char_end": 427903,
-                "line_start": 6294,
-                "line_end": 6336,
+                "block_ordinal": 166,
+                "file_text_char_start": 427571,
+                "file_text_char_end": 430538,
+                "line_start": 6331,
+                "line_end": 6373,
                 "block_sha256": "ffc80abdc9728b46c870fc808979139223f97e0029a5c0947fcac61cd127544f",
                 "matched_source_tokens": [
                   "2603.09172"
@@ -49296,10 +49296,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2603.09172"
                 ],
@@ -49309,8 +49309,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/ramsey_numbers_boundary.json",
-                    "evidence_text_char_start": 149442,
-                    "evidence_text_char_end": 149477
+                    "evidence_text_char_start": 152077,
+                    "evidence_text_char_end": 152112
                   }
                 ]
               }
@@ -49567,11 +49567,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 187,
-              "file_text_char_start": 493954,
-              "file_text_char_end": 496963,
-              "line_start": 7285,
-              "line_end": 7327,
+              "block_ordinal": 188,
+              "file_text_char_start": 496589,
+              "file_text_char_end": 499598,
+              "line_start": 7322,
+              "line_end": 7364,
               "block_sha256": "dd3b1783bea2192ead103c0b0fe70e0dd59685d9a572bd75694e47b6f02d3662",
               "matched_source_tokens": [
                 "2509.18057"
@@ -49591,18 +49591,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2509.18057"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/theoretical_cs_sources.json",
-                  "evidence_text_char_start": 218155,
-                  "evidence_text_char_end": 218189
+                  "evidence_text_char_start": 220790,
+                  "evidence_text_char_end": 220824
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -49618,8 +49618,8 @@
             },
             {
               "path": "papers/theoretical_cs_sources.json",
-              "evidence_text_char_start": 221165,
-              "evidence_text_char_end": 221199
+              "evidence_text_char_start": 223800,
+              "evidence_text_char_end": 223834
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -50253,11 +50253,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 187,
-                "file_text_char_start": 493954,
-                "file_text_char_end": 496963,
-                "line_start": 7285,
-                "line_end": 7327,
+                "block_ordinal": 188,
+                "file_text_char_start": 496589,
+                "file_text_char_end": 499598,
+                "line_start": 7322,
+                "line_end": 7364,
                 "block_sha256": "dd3b1783bea2192ead103c0b0fe70e0dd59685d9a572bd75694e47b6f02d3662",
                 "matched_source_tokens": [
                   "2509.18057"
@@ -50279,10 +50279,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2509.18057"
                 ],
@@ -50292,8 +50292,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/theoretical_cs_sources.json",
-                    "evidence_text_char_start": 218155,
-                    "evidence_text_char_end": 218189
+                    "evidence_text_char_start": 220790,
+                    "evidence_text_char_end": 220824
                   }
                 ]
               }
@@ -50550,11 +50550,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 166,
-              "file_text_char_start": 427903,
-              "file_text_char_end": 431691,
-              "line_start": 6336,
-              "line_end": 6390,
+              "block_ordinal": 167,
+              "file_text_char_start": 430538,
+              "file_text_char_end": 434326,
+              "line_start": 6373,
+              "line_end": 6427,
               "block_sha256": "7748c01d113c449bce2937478432058ac2449677bbb8441f8e74b09129c7ba82",
               "matched_source_tokens": [
                 "2603.06692"
@@ -50574,18 +50574,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2603.06692"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/combinatorics_berczy_boundary.json",
-                  "evidence_text_char_start": 152330,
-                  "evidence_text_char_end": 152371
+                  "evidence_text_char_start": 154965,
+                  "evidence_text_char_end": 155006
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -50601,8 +50601,8 @@
             },
             {
               "path": "papers/combinatorics_berczy_boundary.json",
-              "evidence_text_char_start": 156119,
-              "evidence_text_char_end": 156160
+              "evidence_text_char_start": 158754,
+              "evidence_text_char_end": 158795
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -51399,11 +51399,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 166,
-                "file_text_char_start": 427903,
-                "file_text_char_end": 431691,
-                "line_start": 6336,
-                "line_end": 6390,
+                "block_ordinal": 167,
+                "file_text_char_start": 430538,
+                "file_text_char_end": 434326,
+                "line_start": 6373,
+                "line_end": 6427,
                 "block_sha256": "7748c01d113c449bce2937478432058ac2449677bbb8441f8e74b09129c7ba82",
                 "matched_source_tokens": [
                   "2603.06692"
@@ -51425,10 +51425,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2603.06692"
                 ],
@@ -51438,8 +51438,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/combinatorics_berczy_boundary.json",
-                    "evidence_text_char_start": 152330,
-                    "evidence_text_char_end": 152371
+                    "evidence_text_char_start": 154965,
+                    "evidence_text_char_end": 155006
                   }
                 ]
               }
@@ -51696,11 +51696,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 172,
-              "file_text_char_start": 446020,
-              "file_text_char_end": 449933,
-              "line_start": 6596,
-              "line_end": 6650,
+              "block_ordinal": 173,
+              "file_text_char_start": 448655,
+              "file_text_char_end": 452568,
+              "line_start": 6633,
+              "line_end": 6687,
               "block_sha256": "c6bbd2472fdfc00cc43dc11cbd22bac5f551d48e5f08a9a88456abefa99450a2",
               "matched_source_tokens": [
                 "2601.16175"
@@ -51720,18 +51720,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2601.16175"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/ttt_discover_boundary.json",
-                  "evidence_text_char_start": 170452,
-                  "evidence_text_char_end": 170485
+                  "evidence_text_char_start": 173087,
+                  "evidence_text_char_end": 173120
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -51747,8 +51747,8 @@
             },
             {
               "path": "papers/ttt_discover_boundary.json",
-              "evidence_text_char_start": 174366,
-              "evidence_text_char_end": 174399
+              "evidence_text_char_start": 177001,
+              "evidence_text_char_end": 177034
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -52448,11 +52448,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 172,
-                "file_text_char_start": 446020,
-                "file_text_char_end": 449933,
-                "line_start": 6596,
-                "line_end": 6650,
+                "block_ordinal": 173,
+                "file_text_char_start": 448655,
+                "file_text_char_end": 452568,
+                "line_start": 6633,
+                "line_end": 6687,
                 "block_sha256": "c6bbd2472fdfc00cc43dc11cbd22bac5f551d48e5f08a9a88456abefa99450a2",
                 "matched_source_tokens": [
                   "2601.16175"
@@ -52474,10 +52474,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2601.16175"
                 ],
@@ -52487,8 +52487,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/ttt_discover_boundary.json",
-                    "evidence_text_char_start": 170452,
-                    "evidence_text_char_end": 170485
+                    "evidence_text_char_start": 173087,
+                    "evidence_text_char_end": 173120
                   }
                 ]
               }
@@ -52745,11 +52745,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 167,
-              "file_text_char_start": 431691,
-              "file_text_char_end": 435249,
-              "line_start": 6390,
-              "line_end": 6442,
+              "block_ordinal": 168,
+              "file_text_char_start": 434326,
+              "file_text_char_end": 437884,
+              "line_start": 6427,
+              "line_end": 6479,
               "block_sha256": "bb2e9e52efb7329837d01cedb965f2c7f4fde986f0cc24864baf48553252c9e1",
               "matched_source_tokens": [
                 "2603.08679"
@@ -52769,18 +52769,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2603.08679"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/bilateral_trade_boundary.json",
-                  "evidence_text_char_start": 156105,
-                  "evidence_text_char_end": 156141
+                  "evidence_text_char_start": 158740,
+                  "evidence_text_char_end": 158776
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -52796,8 +52796,8 @@
             },
             {
               "path": "papers/bilateral_trade_boundary.json",
-              "evidence_text_char_start": 159664,
-              "evidence_text_char_end": 159700
+              "evidence_text_char_start": 162299,
+              "evidence_text_char_end": 162335
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -53514,11 +53514,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 167,
-                "file_text_char_start": 431691,
-                "file_text_char_end": 435249,
-                "line_start": 6390,
-                "line_end": 6442,
+                "block_ordinal": 168,
+                "file_text_char_start": 434326,
+                "file_text_char_end": 437884,
+                "line_start": 6427,
+                "line_end": 6479,
                 "block_sha256": "bb2e9e52efb7329837d01cedb965f2c7f4fde986f0cc24864baf48553252c9e1",
                 "matched_source_tokens": [
                   "2603.08679"
@@ -53540,10 +53540,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2603.08679"
                 ],
@@ -53553,8 +53553,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/bilateral_trade_boundary.json",
-                    "evidence_text_char_start": 156105,
-                    "evidence_text_char_end": 156141
+                    "evidence_text_char_start": 158740,
+                    "evidence_text_char_end": 158776
                   }
                 ]
               }
@@ -53811,11 +53811,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 173,
-              "file_text_char_start": 449933,
-              "file_text_char_end": 453888,
-              "line_start": 6650,
-              "line_end": 6705,
+              "block_ordinal": 174,
+              "file_text_char_start": 452568,
+              "file_text_char_end": 456523,
+              "line_start": 6687,
+              "line_end": 6742,
               "block_sha256": "6a200b36c7482c75eefdab9d1de0c6176abb69562830fea0d17b2e97d5ca9ef3",
               "matched_source_tokens": [
                 "2601.01235"
@@ -53835,18 +53835,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2601.01235"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/bruhat_intervals_boundary.json",
-                  "evidence_text_char_start": 174108,
-                  "evidence_text_char_end": 174145
+                  "evidence_text_char_start": 176743,
+                  "evidence_text_char_end": 176780
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -53862,8 +53862,8 @@
             },
             {
               "path": "papers/bruhat_intervals_boundary.json",
-              "evidence_text_char_start": 178064,
-              "evidence_text_char_end": 178101
+              "evidence_text_char_start": 180699,
+              "evidence_text_char_end": 180736
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -54661,11 +54661,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 173,
-                "file_text_char_start": 449933,
-                "file_text_char_end": 453888,
-                "line_start": 6650,
-                "line_end": 6705,
+                "block_ordinal": 174,
+                "file_text_char_start": 452568,
+                "file_text_char_end": 456523,
+                "line_start": 6687,
+                "line_end": 6742,
                 "block_sha256": "6a200b36c7482c75eefdab9d1de0c6176abb69562830fea0d17b2e97d5ca9ef3",
                 "matched_source_tokens": [
                   "2601.01235"
@@ -54687,10 +54687,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2601.01235"
                 ],
@@ -54700,8 +54700,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/bruhat_intervals_boundary.json",
-                    "evidence_text_char_start": 174108,
-                    "evidence_text_char_end": 174145
+                    "evidence_text_char_start": 176743,
+                    "evidence_text_char_end": 176780
                   }
                 ]
               }
@@ -54958,11 +54958,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 171,
-              "file_text_char_start": 441908,
-              "file_text_char_end": 446020,
-              "line_start": 6538,
-              "line_end": 6596,
+              "block_ordinal": 172,
+              "file_text_char_start": 444543,
+              "file_text_char_end": 448655,
+              "line_start": 6575,
+              "line_end": 6633,
               "block_sha256": "763b3a077531f4282fe253006fa4b9f11b846a786859304923397495a81f4d94",
               "matched_source_tokens": [
                 "2511.12916"
@@ -54982,18 +54982,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2511.12916"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/fault2flow_boundary.json",
-                  "evidence_text_char_start": 166427,
-                  "evidence_text_char_end": 166458
+                  "evidence_text_char_start": 169062,
+                  "evidence_text_char_end": 169093
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -55009,8 +55009,8 @@
             },
             {
               "path": "papers/fault2flow_boundary.json",
-              "evidence_text_char_start": 170540,
-              "evidence_text_char_end": 170571
+              "evidence_text_char_start": 173175,
+              "evidence_text_char_end": 173206
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -55728,11 +55728,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 171,
-                "file_text_char_start": 441908,
-                "file_text_char_end": 446020,
-                "line_start": 6538,
-                "line_end": 6596,
+                "block_ordinal": 172,
+                "file_text_char_start": 444543,
+                "file_text_char_end": 448655,
+                "line_start": 6575,
+                "line_end": 6633,
                 "block_sha256": "763b3a077531f4282fe253006fa4b9f11b846a786859304923397495a81f4d94",
                 "matched_source_tokens": [
                   "2511.12916"
@@ -55754,10 +55754,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2511.12916"
                 ],
@@ -55767,8 +55767,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/fault2flow_boundary.json",
-                    "evidence_text_char_start": 166427,
-                    "evidence_text_char_end": 166458
+                    "evidence_text_char_start": 169062,
+                    "evidence_text_char_end": 169093
                   }
                 ]
               }
@@ -56025,11 +56025,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 174,
-              "file_text_char_start": 453888,
-              "file_text_char_end": 457698,
-              "line_start": 6705,
-              "line_end": 6758,
+              "block_ordinal": 175,
+              "file_text_char_start": 456523,
+              "file_text_char_end": 460333,
+              "line_start": 6742,
+              "line_end": 6795,
               "block_sha256": "cf1e1a9fe11752b42e5384cdbd0994e0f2909b6e87eecc813f3743b98fc22c37",
               "matched_source_tokens": [
                 "2601.05943"
@@ -56049,18 +56049,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2601.05943"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/global_nlp_optimization_boundary.json",
-                  "evidence_text_char_start": 178041,
-                  "evidence_text_char_end": 178085
+                  "evidence_text_char_start": 180676,
+                  "evidence_text_char_end": 180720
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -56076,8 +56076,8 @@
             },
             {
               "path": "papers/global_nlp_optimization_boundary.json",
-              "evidence_text_char_start": 181852,
-              "evidence_text_char_end": 181896
+              "evidence_text_char_start": 184487,
+              "evidence_text_char_end": 184531
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -56893,11 +56893,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 174,
-                "file_text_char_start": 453888,
-                "file_text_char_end": 457698,
-                "line_start": 6705,
-                "line_end": 6758,
+                "block_ordinal": 175,
+                "file_text_char_start": 456523,
+                "file_text_char_end": 460333,
+                "line_start": 6742,
+                "line_end": 6795,
                 "block_sha256": "cf1e1a9fe11752b42e5384cdbd0994e0f2909b6e87eecc813f3743b98fc22c37",
                 "matched_source_tokens": [
                   "2601.05943"
@@ -56919,10 +56919,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2601.05943"
                 ],
@@ -56932,8 +56932,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/global_nlp_optimization_boundary.json",
-                    "evidence_text_char_start": 178041,
-                    "evidence_text_char_end": 178085
+                    "evidence_text_char_start": 180676,
+                    "evidence_text_char_end": 180720
                   }
                 ]
               }
@@ -57190,11 +57190,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 175,
-              "file_text_char_start": 457698,
-              "file_text_char_end": 461154,
-              "line_start": 6758,
-              "line_end": 6808,
+              "block_ordinal": 176,
+              "file_text_char_start": 460333,
+              "file_text_char_end": 463789,
+              "line_start": 6795,
+              "line_end": 6845,
               "block_sha256": "a28bcf51a0fc5f3c41ed9437d53c5b5e1b1c989623d24d1c725c498af09da26d",
               "matched_source_tokens": [
                 "2506.16750"
@@ -57214,18 +57214,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2506.16750"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/autoconvolution_boundary.json",
-                  "evidence_text_char_start": 181683,
-                  "evidence_text_char_end": 181719
+                  "evidence_text_char_start": 184318,
+                  "evidence_text_char_end": 184354
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -57241,8 +57241,8 @@
             },
             {
               "path": "papers/autoconvolution_boundary.json",
-              "evidence_text_char_start": 185140,
-              "evidence_text_char_end": 185176
+              "evidence_text_char_start": 187775,
+              "evidence_text_char_end": 187811
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -58040,11 +58040,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 175,
-                "file_text_char_start": 457698,
-                "file_text_char_end": 461154,
-                "line_start": 6758,
-                "line_end": 6808,
+                "block_ordinal": 176,
+                "file_text_char_start": 460333,
+                "file_text_char_end": 463789,
+                "line_start": 6795,
+                "line_end": 6845,
                 "block_sha256": "a28bcf51a0fc5f3c41ed9437d53c5b5e1b1c989623d24d1c725c498af09da26d",
                 "matched_source_tokens": [
                   "2506.16750"
@@ -58066,10 +58066,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2506.16750"
                 ],
@@ -58079,8 +58079,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/autoconvolution_boundary.json",
-                    "evidence_text_char_start": 181683,
-                    "evidence_text_char_end": 181719
+                    "evidence_text_char_start": 184318,
+                    "evidence_text_char_end": 184354
                   }
                 ]
               }
@@ -58351,11 +58351,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 176,
-              "file_text_char_start": 461154,
-              "file_text_char_end": 464428,
-              "line_start": 6808,
-              "line_end": 6856,
+              "block_ordinal": 177,
+              "file_text_char_start": 463789,
+              "file_text_char_end": 467063,
+              "line_start": 6845,
+              "line_end": 6893,
               "block_sha256": "21e83433f85103977b6d0f4d4129dec1fa81e62882a95d7d8915a19405efc95a",
               "matched_source_tokens": [
                 "2505.16105"
@@ -58373,11 +58373,11 @@
             },
             {
               "block_kind": "active",
-              "block_ordinal": 177,
-              "file_text_char_start": 464428,
-              "file_text_char_end": 467608,
-              "line_start": 6856,
-              "line_end": 6902,
+              "block_ordinal": 178,
+              "file_text_char_start": 467063,
+              "file_text_char_end": 470243,
+              "line_start": 6893,
+              "line_end": 6939,
               "block_sha256": "d914b3f591ec3f0ad7bf6aca63081d5d2e191292f20996b1e4c15ec6020ca32f",
               "matched_source_tokens": [
                 "2505.16105"
@@ -58389,18 +58389,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2505.16105"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/sums_differences_boundary.json",
-                  "evidence_text_char_start": 185466,
-                  "evidence_text_char_end": 185503
+                  "evidence_text_char_start": 188101,
+                  "evidence_text_char_end": 188138
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -58416,8 +58416,8 @@
             },
             {
               "path": "papers/sums_differences_boundary.json",
-              "evidence_text_char_start": 191922,
-              "evidence_text_char_end": 191959
+              "evidence_text_char_start": 194557,
+              "evidence_text_char_end": 194594
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -59243,11 +59243,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 176,
-                "file_text_char_start": 461154,
-                "file_text_char_end": 464428,
-                "line_start": 6808,
-                "line_end": 6856,
+                "block_ordinal": 177,
+                "file_text_char_start": 463789,
+                "file_text_char_end": 467063,
+                "line_start": 6845,
+                "line_end": 6893,
                 "block_sha256": "21e83433f85103977b6d0f4d4129dec1fa81e62882a95d7d8915a19405efc95a",
                 "matched_source_tokens": [
                   "2505.16105"
@@ -59269,10 +59269,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2505.16105"
                 ],
@@ -59282,8 +59282,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/sums_differences_boundary.json",
-                    "evidence_text_char_start": 185466,
-                    "evidence_text_char_end": 185503
+                    "evidence_text_char_start": 188101,
+                    "evidence_text_char_end": 188138
                   }
                 ]
               }
@@ -59540,11 +59540,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 177,
-              "file_text_char_start": 464428,
-              "file_text_char_end": 467608,
-              "line_start": 6856,
-              "line_end": 6902,
+              "block_ordinal": 178,
+              "file_text_char_start": 467063,
+              "file_text_char_end": 470243,
+              "line_start": 6893,
+              "line_end": 6939,
               "block_sha256": "d914b3f591ec3f0ad7bf6aca63081d5d2e191292f20996b1e4c15ec6020ca32f",
               "matched_source_tokens": [
                 "2506.01896"
@@ -59564,18 +59564,18 @@
               "block_kind": "completed",
               "block_ordinal": 5,
               "file_text_char_start": 277059,
-              "file_text_char_end": 496963,
+              "file_text_char_end": 499598,
               "line_start": 4103,
-              "line_end": 7327,
-              "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+              "line_end": 7364,
+              "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
               "matched_source_tokens": [
                 "2506.01896"
               ],
               "mentioned_local_artifact_records": [
                 {
                   "path": "papers/sums_differences_sequence_boundary.json",
-                  "evidence_text_char_start": 188688,
-                  "evidence_text_char_end": 188734
+                  "evidence_text_char_start": 191323,
+                  "evidence_text_char_end": 191369
                 }
               ],
               "mentioned_local_artifact_paths": [
@@ -59591,8 +59591,8 @@
             },
             {
               "path": "papers/sums_differences_sequence_boundary.json",
-              "evidence_text_char_start": 191869,
-              "evidence_text_char_end": 191915
+              "evidence_text_char_start": 194504,
+              "evidence_text_char_end": 194550
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -60390,11 +60390,11 @@
                 "path": "docs/todo/papers.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 177,
-                "file_text_char_start": 464428,
-                "file_text_char_end": 467608,
-                "line_start": 6856,
-                "line_end": 6902,
+                "block_ordinal": 178,
+                "file_text_char_start": 467063,
+                "file_text_char_end": 470243,
+                "line_start": 6893,
+                "line_end": 6939,
                 "block_sha256": "d914b3f591ec3f0ad7bf6aca63081d5d2e191292f20996b1e4c15ec6020ca32f",
                 "matched_source_tokens": [
                   "2506.01896"
@@ -60416,10 +60416,10 @@
                 "block_kind": "completed",
                 "block_ordinal": 5,
                 "file_text_char_start": 277059,
-                "file_text_char_end": 496963,
+                "file_text_char_end": 499598,
                 "line_start": 4103,
-                "line_end": 7327,
-                "block_sha256": "d8c477fa0f712d4581dbed4b08aaf7572308c36f249fbca984b8d6a6969df9fb",
+                "line_end": 7364,
+                "block_sha256": "74bffb366b5eb602c8883a44f99f947abebdc97d8bca0f19c9ebac0b616f07ce",
                 "matched_source_tokens": [
                   "2506.01896"
                 ],
@@ -60429,8 +60429,8 @@
                 "mentioned_local_artifact_records": [
                   {
                     "path": "papers/sums_differences_sequence_boundary.json",
-                    "evidence_text_char_start": 188688,
-                    "evidence_text_char_end": 188734
+                    "evidence_text_char_start": 191323,
+                    "evidence_text_char_end": 191369
                   }
                 ]
               }

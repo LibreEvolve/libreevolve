@@ -5400,6 +5400,52 @@ directory and using the AlphaEvolve paper as the primary specification.
     that treats deletion-correcting-code search as missing benchmark evidence
     rather than implemented LibreEvolve support.
 
+- [ ] Reproduce bivariate-bicycle quantum-code discovery evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.02418`, submitted June 1, 2026, is
+    titled `Evolutionary Discovery of Bivariate Bicycle Codes with LLM-Guided
+    Search`. Its abstract says quantum LDPC code discovery requires searching
+    large algebraic design spaces while certifying both candidate parameters
+    and equivalence classes. The workflow mutates Python programs that
+    generate bivariate-bicycle and perturbed bivariate-bicycle code ansatze;
+    across five campaigns it performed approximately `1,650` evolutionary
+    iterations, screened about `2 x 10^5` candidate codes, and used roughly
+    `140` hours plus about `US$400` of LLM inference. Candidate evaluation
+    combines `GF(2)` rank computation, distance estimation and certification,
+    mixed-integer linear programming, BLISS Tanner-graph deduplication,
+    decomposability analysis, and local-Clifford equivalence checks. At block
+    length `n <= 360`, it reports `465` distinct candidate codes: `97` CSS
+    bivariate-bicycle codes and `368` non-CSS perturbed variants, including
+    an indecomposable `[[288,16,12]]` code, higher-weight codes up to `k = 50`
+    at `d = 8`, and non-CSS perturbed codes matching the gross-code figure of
+    merit at `[[144,12,12]]`. The linked `qiskit-community/qcode-discovery`
+    repository is Apache-2.0 and includes campaign results, verification
+    scripts, ablations, MILP/BP-OSD result files, JSON/JSONL run logs, and
+    W&B tracking hooks.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.02418`. Existing LibreEvolve constructive-math,
+    deletion-code, Zarankiewicz, FHE/TPU, and duplicate-work TODOs do not
+    reproduce quantum LDPC candidate schemas, BB/PBB polynomial tuple
+    generation, CSS and non-CSS code-family distinction, staged quantum-code
+    validation cascades, `GF(2)` rank evidence, BP-OSD distance-estimation
+    diagnostics, MILP exact-distance certification, BLISS Tanner-graph
+    deduplication, decomposability analysis, local-Clifford equivalence
+    checks, gross-code baselines, campaign-level cost/runtime telemetry, or
+    code-capacity simulation result provenance.
+  - Required result: add reproduction-grade evidence for `2606.02418`:
+    title/authors/arXiv version/date, source license, linked-code snapshot,
+    relation to FunSearch, AlphaEvolve, OpenEvolve, and LibreEvolve, BB/PBB
+    candidate schema, polynomial-ring/lattice metadata, CSS/non-CSS
+    validation contracts, staged evaluation cascade records, `GF(2)` rank
+    and distance-estimation artifacts, MILP solver configuration and
+    optimality status, BLISS deduplication records, Tanner-graph and
+    decomposability evidence, local-Clifford equivalence audit, gross-code and
+    Bravyi-baseline identities, campaign model/population/iteration/cost
+    telemetry, result-file hash inventory, ablation records, threshold or
+    code-capacity simulation provenance, independent verification outputs,
+    and README/ROADMAP wording that treats BB/PBB quantum-code discovery as
+    missing benchmark evidence rather than implemented LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

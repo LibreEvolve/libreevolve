@@ -261,6 +261,35 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     local CLI providers until the tracked backend contract and smoke evidence
     exist.
 
+- [ ] Add backend-doc guardrail for CLI-authenticated provider support.
+  - Spec evidence: `docs/backends.md` is the detailed provider contract that
+    users will follow when choosing between built-in SDK adapters and custom
+    extension points. It should make the current backend boundary clear before
+    benchmark prompts or local experiments rely on Codex-authenticated or other
+    local CLI sessions as if they were first-class supported providers.
+  - Current evidence: `docs/backends.md` lists OpenAI, Anthropic, Ollama, and
+    custom import-path backends, then documents custom backends as Python
+    `class_path` implementations with JSON-safe kwargs and the common
+    `generate(prompt, **kwargs) -> str` protocol. The active code TODO tracks
+    the missing subprocess/CLI backend contract, and the README TODO tracks
+    top-level provider wording, but the backend docs page itself does not yet
+    separate SDK adapters, extension-owned wrappers, and any future
+    CLI-authenticated provider lane.
+  - Current gap: a reader can treat a custom import-path wrapper around a local
+    CLI as equivalent to supported provider integration, even though
+    `docs/backends.md` currently has no command-discovery, auth-session,
+    transcript-retention, provider-attempt accounting, timeout/cancellation,
+    or diagnostics contract for that lane. There is also no backend-doc drift
+    check preventing examples, configuration snippets, or model-selection
+    guidance from implying Codex-authenticated or local CLI provider support
+    before the tracked backend contract and smoke evidence exist.
+  - Required result: update `docs/backends.md` with an explicit provider-lane
+    taxonomy, custom-wrapper limitation wording, and links to the
+    subprocess/CLI backend contract TODO; add a docs/test guard that rejects
+    CLI-authenticated provider examples or supported-provider claims until the
+    first-class contract, manifest fields, diagnostics, and smoke fixtures are
+    implemented.
+
 ## Problem Layout
 
 - [ ] Add README problem-layout contract drift evidence.

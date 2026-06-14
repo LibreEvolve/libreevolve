@@ -6147,6 +6147,43 @@ directory and using the AlphaEvolve paper as the primary specification.
     treats AutoICE-style verifier-integrated C-code evolution as missing
     formal-methods evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce CogAlpha financial-alpha code-evolution evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2511.18850`, submitted November 24, 2025 and
+    last revised April 20, 2026, is titled `Cognitive Alpha Mining via
+    LLM-Driven Code-Based Evolution`. Its abstract says discovering predictive
+    financial alphas from high-dimensional, low-signal data remains difficult:
+    neural models can be opaque and fragile, and symbolic/formula methods can
+    become redundant, economically ungrounded, and weakly generalizing.
+    CogAlpha combines code-level alpha representation with LLM-driven reasoning
+    and evolutionary search. It treats LLMs as adaptive cognitive agents that
+    refine, mutate, and recombine alpha candidates through multi-stage prompts
+    and financial feedback, reporting experiments on five stock datasets from
+    three stock markets with stronger predictive accuracy, robustness, and
+    generalization than existing methods.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2511.18850`. Existing LibreEvolve AlphaEvolve, FunSearch,
+    DeepResearch, proposal-hypothesis, finance-impact, benchmark-portfolio,
+    evaluator-contract, and multi-objective TODOs do not reproduce financial
+    alpha candidate code schemas, OHLCV/data-market fixtures, multi-stage
+    reasoning prompts, financial-feedback loops, alpha mutation/recombination
+    operators, economic-grounding checks, alpha quality metrics, robustness and
+    generalization tests across stock markets, or source-code availability
+    tracking for CogAlpha.
+  - Required result: add reproduction-grade evidence for `2511.18850`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, FunSearch, DeepResearch, and
+    LibreEvolve, financial-alpha candidate interface, code-level alpha schema,
+    stock-market and dataset metadata, OHLCV/feature input contract,
+    multi-stage prompt templates, financial-feedback records, mutation and
+    recombination traces, quality-checker outputs, economic-interpretability
+    criteria, alpha metric definitions, predictive-accuracy/robustness/
+    generalization tables, baseline identities, leakage and backtest-safety
+    checks, source-code release status, independent verification outputs, and
+    README/ROADMAP wording that treats CogAlpha-style financial alpha mining as
+    missing domain-benchmark evidence rather than implemented LibreEvolve
+    support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

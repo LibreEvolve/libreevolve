@@ -68,6 +68,71 @@
     "Partially implemented": 1,
     "Static prompt guidance exists": 1
   },
+  "unique_local_artifact_paths": [
+    "libreevolve/core/loop.py",
+    "libreevolve/llm/ensemble.py",
+    "libreevolve/plugins/causal.py",
+    "libreevolve/plugins/deep_research.py",
+    "libreevolve/plugins/modular.py",
+    "libreevolve/plugins/ttt_rl.py",
+    "libreevolve/population/map_elites.py",
+    "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+    "papers/2512.18746__MemEvolve.pdf",
+    "papers/2601.10657__PACEvolve.pdf",
+    "papers/2602.02919__DeltaEvolve.pdf",
+    "papers/2602.23413__EvoX.pdf",
+    "papers/2603.28052__Meta_Harness.pdf",
+    "papers/2604.01658__CORAL.pdf",
+    "papers/2604.25850__AHE.pdf",
+    "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+    "papers/2605.01794__Radar_Power_Allocation.pdf",
+    "papers/2605.05921__Intentmaking_and_Sensemaking.pdf",
+    "papers/2605.08520__FlashEvolve.pdf",
+    "papers/2605.09764__LEVI.pdf",
+    "papers/2605.09959__G_Zero.pdf",
+    "papers/2605.13357__AI_Harness_Engineering.pdf",
+    "papers/2605.13821__AEvo.pdf",
+    "papers/2605.14718__FHE_on_TPU.pdf",
+    "papers/2605.20086__Evolutionary_Coding_Agents.pdf",
+    "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+    "papers/2605.21605__GenEvolve.pdf",
+    "papers/2605.27276__SIA.pdf",
+    "papers/2605.29293__LLM_ALSO.pdf",
+    "papers/2605.29847__EvoRubric.pdf",
+    "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+    "papers/2606.01770__Adaptive_Auto_Harness.pdf",
+    "papers/2606.05922__RHO.pdf",
+    "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf",
+    "papers/2606.06324__HarnessFix.pdf",
+    "papers/2606.06473__MLEvolve.pdf",
+    "papers/archagent_boundary.json",
+    "papers/autoconvolution_boundary.json",
+    "papers/bilateral_trade_boundary.json",
+    "papers/bruhat_intervals_boundary.json",
+    "papers/causalevolve_boundary.json",
+    "papers/codeevolve_boundary.json",
+    "papers/combinatorics_berczy_boundary.json",
+    "papers/deepevolve_boundary.json",
+    "papers/fault2flow_boundary.json",
+    "papers/follow_on_sources.json",
+    "papers/gigaevo_framework_boundary.json",
+    "papers/global_nlp_optimization_boundary.json",
+    "papers/improvevolve_boundary.json",
+    "papers/madevolve_boundary.json",
+    "papers/magellan_boundary.json",
+    "papers/map_elites_illumination_boundary.json",
+    "papers/multiagent_learning_boundary.json",
+    "papers/ramsey_numbers_boundary.json",
+    "papers/sums_differences_boundary.json",
+    "papers/sums_differences_sequence_boundary.json",
+    "papers/theoretical_cs_sources.json",
+    "papers/thetaevolve_boundary.json",
+    "papers/ttt_discover_boundary.json",
+    "papers/ucb1_boundary.json"
+  ],
+  "unique_local_artifact_count": 60,
+  "missing_local_artifact_paths": [],
+  "artifact_existence_status": "all_referenced_local_artifacts_present",
   "missing_evidence": {
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -91,6 +156,16 @@
       "local_artifact_paths": [
         "libreevolve/core/loop.py"
       ],
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -121,6 +196,15 @@
             "phrase_local_artifact_paths": [
               "libreevolve/core/loop.py"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "libreevolve/core/loop.py",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/core/loop.py"
             ],
@@ -154,6 +238,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/core/loop.py"
             ],
@@ -187,6 +274,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/core/loop.py"
             ],
@@ -220,6 +310,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/core/loop.py"
             ],
@@ -239,6 +332,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -260,6 +354,21 @@
         "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
         "papers/follow_on_sources.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/follow_on_sources.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/papers.md"
       ],
@@ -287,6 +396,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
               "papers/follow_on_sources.json"
@@ -320,6 +432,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
               "papers/follow_on_sources.json"
@@ -356,6 +471,20 @@
               "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
               "papers/follow_on_sources.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+                "exists": true,
+                "kind": "file"
+              },
+              {
+                "path": "papers/follow_on_sources.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
               "papers/follow_on_sources.json"
@@ -375,6 +504,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -396,6 +526,21 @@
         "libreevolve/population/map_elites.py",
         "papers/map_elites_illumination_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/population/map_elites.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/map_elites_illumination_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -426,6 +571,15 @@
             "phrase_local_artifact_paths": [
               "libreevolve/population/map_elites.py"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "libreevolve/population/map_elites.py",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/population/map_elites.py",
               "papers/map_elites_illumination_boundary.json"
@@ -460,6 +614,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/population/map_elites.py",
               "papers/map_elites_illumination_boundary.json"
@@ -496,6 +653,15 @@
             "phrase_local_artifact_paths": [
               "papers/map_elites_illumination_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/map_elites_illumination_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/population/map_elites.py",
               "papers/map_elites_illumination_boundary.json"
@@ -530,6 +696,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/population/map_elites.py",
               "papers/map_elites_illumination_boundary.json"
@@ -550,6 +719,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -571,6 +741,21 @@
         "libreevolve/llm/ensemble.py",
         "papers/ucb1_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/llm/ensemble.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/ucb1_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -601,6 +786,15 @@
             "phrase_local_artifact_paths": [
               "libreevolve/llm/ensemble.py"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "libreevolve/llm/ensemble.py",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/llm/ensemble.py",
               "papers/ucb1_boundary.json"
@@ -635,6 +829,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/llm/ensemble.py",
               "papers/ucb1_boundary.json"
@@ -671,6 +868,15 @@
             "phrase_local_artifact_paths": [
               "papers/ucb1_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/ucb1_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/llm/ensemble.py",
               "papers/ucb1_boundary.json"
@@ -691,6 +897,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -711,6 +918,16 @@
       "local_artifact_paths": [
         "papers/gigaevo_framework_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/gigaevo_framework_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -739,6 +956,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/gigaevo_framework_boundary.json"
             ],
@@ -772,6 +992,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/gigaevo_framework_boundary.json"
             ],
@@ -807,6 +1030,15 @@
             "phrase_local_artifact_paths": [
               "papers/gigaevo_framework_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/gigaevo_framework_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/gigaevo_framework_boundary.json"
             ],
@@ -826,6 +1058,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -846,6 +1079,16 @@
       "local_artifact_paths": [
         "papers/codeevolve_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/codeevolve_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -874,6 +1117,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/codeevolve_boundary.json"
             ],
@@ -909,6 +1155,15 @@
             "phrase_local_artifact_paths": [
               "papers/codeevolve_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/codeevolve_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/codeevolve_boundary.json"
             ],
@@ -928,6 +1183,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -949,6 +1205,21 @@
         "libreevolve/plugins/ttt_rl.py",
         "papers/thetaevolve_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/plugins/ttt_rl.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/thetaevolve_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -979,6 +1250,15 @@
             "phrase_local_artifact_paths": [
               "libreevolve/plugins/ttt_rl.py"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "libreevolve/plugins/ttt_rl.py",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/ttt_rl.py",
               "papers/thetaevolve_boundary.json"
@@ -1013,6 +1293,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/ttt_rl.py",
               "papers/thetaevolve_boundary.json"
@@ -1047,6 +1330,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/ttt_rl.py",
               "papers/thetaevolve_boundary.json"
@@ -1081,6 +1367,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/ttt_rl.py",
               "papers/thetaevolve_boundary.json"
@@ -1117,6 +1406,15 @@
             "phrase_local_artifact_paths": [
               "papers/thetaevolve_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/thetaevolve_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/ttt_rl.py",
               "papers/thetaevolve_boundary.json"
@@ -1137,6 +1435,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -1158,6 +1457,21 @@
         "libreevolve/plugins/modular.py",
         "papers/improvevolve_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/plugins/modular.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/improvevolve_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -1188,6 +1502,15 @@
             "phrase_local_artifact_paths": [
               "libreevolve/plugins/modular.py"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "libreevolve/plugins/modular.py",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/modular.py",
               "papers/improvevolve_boundary.json"
@@ -1222,6 +1545,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/modular.py",
               "papers/improvevolve_boundary.json"
@@ -1258,6 +1584,15 @@
             "phrase_local_artifact_paths": [
               "papers/improvevolve_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/improvevolve_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/modular.py",
               "papers/improvevolve_boundary.json"
@@ -1278,6 +1613,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -1298,6 +1634,16 @@
       "local_artifact_paths": [
         "papers/madevolve_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/madevolve_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -1326,6 +1672,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/madevolve_boundary.json"
             ],
@@ -1359,6 +1708,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/madevolve_boundary.json"
             ],
@@ -1394,6 +1746,15 @@
             "phrase_local_artifact_paths": [
               "papers/madevolve_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/madevolve_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/madevolve_boundary.json"
             ],
@@ -1413,6 +1774,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -1434,6 +1796,21 @@
         "libreevolve/plugins/causal.py",
         "papers/causalevolve_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/plugins/causal.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/causalevolve_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -1464,6 +1841,15 @@
             "phrase_local_artifact_paths": [
               "libreevolve/plugins/causal.py"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "libreevolve/plugins/causal.py",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/causal.py",
               "papers/causalevolve_boundary.json"
@@ -1498,6 +1884,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/causal.py",
               "papers/causalevolve_boundary.json"
@@ -1532,6 +1921,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/causal.py",
               "papers/causalevolve_boundary.json"
@@ -1568,6 +1960,15 @@
             "phrase_local_artifact_paths": [
               "papers/causalevolve_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/causalevolve_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/causal.py",
               "papers/causalevolve_boundary.json"
@@ -1588,6 +1989,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -1609,6 +2011,21 @@
         "libreevolve/plugins/deep_research.py",
         "papers/deepevolve_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/plugins/deep_research.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/deepevolve_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -1639,6 +2056,15 @@
             "phrase_local_artifact_paths": [
               "libreevolve/plugins/deep_research.py"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "libreevolve/plugins/deep_research.py",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/deep_research.py",
               "papers/deepevolve_boundary.json"
@@ -1673,6 +2099,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/deep_research.py",
               "papers/deepevolve_boundary.json"
@@ -1707,6 +2136,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "libreevolve/plugins/deep_research.py",
               "papers/deepevolve_boundary.json"
@@ -1743,6 +2175,15 @@
             "phrase_local_artifact_paths": [
               "papers/deepevolve_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/deepevolve_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "libreevolve/plugins/deep_research.py",
               "papers/deepevolve_boundary.json"
@@ -1763,6 +2204,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -1783,6 +2225,16 @@
       "local_artifact_paths": [
         "papers/magellan_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/magellan_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -1811,6 +2263,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/magellan_boundary.json"
             ],
@@ -1844,6 +2299,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/magellan_boundary.json"
             ],
@@ -1879,6 +2337,15 @@
             "phrase_local_artifact_paths": [
               "papers/magellan_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/magellan_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/magellan_boundary.json"
             ],
@@ -1898,6 +2365,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -1918,6 +2386,16 @@
       "local_artifact_paths": [
         "papers/2605.14718__FHE_on_TPU.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.14718__FHE_on_TPU.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -1945,6 +2423,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.14718__FHE_on_TPU.pdf"
             ],
@@ -1979,6 +2460,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.14718__FHE_on_TPU.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.14718__FHE_on_TPU.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.14718__FHE_on_TPU.pdf"
             ],
@@ -1997,6 +2487,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2017,6 +2508,16 @@
       "local_artifact_paths": [
         "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.05921__Intentmaking_and_Sensemaking.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2044,6 +2545,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
             ],
@@ -2078,6 +2582,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.05921__Intentmaking_and_Sensemaking.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
             ],
@@ -2096,6 +2609,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2116,6 +2630,16 @@
       "local_artifact_paths": [
         "papers/2605.01794__Radar_Power_Allocation.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.01794__Radar_Power_Allocation.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2143,6 +2667,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.01794__Radar_Power_Allocation.pdf"
             ],
@@ -2177,6 +2704,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.01794__Radar_Power_Allocation.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.01794__Radar_Power_Allocation.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.01794__Radar_Power_Allocation.pdf"
             ],
@@ -2195,6 +2731,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2215,6 +2752,16 @@
       "local_artifact_paths": [
         "papers/2602.23413__EvoX.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2602.23413__EvoX.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2242,6 +2789,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2602.23413__EvoX.pdf"
             ],
@@ -2276,6 +2826,15 @@
             "phrase_local_artifact_paths": [
               "papers/2602.23413__EvoX.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2602.23413__EvoX.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2602.23413__EvoX.pdf"
             ],
@@ -2294,6 +2853,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2314,6 +2874,16 @@
       "local_artifact_paths": [
         "papers/2602.02919__DeltaEvolve.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2602.02919__DeltaEvolve.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2341,6 +2911,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2602.02919__DeltaEvolve.pdf"
             ],
@@ -2375,6 +2948,15 @@
             "phrase_local_artifact_paths": [
               "papers/2602.02919__DeltaEvolve.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2602.02919__DeltaEvolve.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2602.02919__DeltaEvolve.pdf"
             ],
@@ -2393,6 +2975,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2413,6 +2996,16 @@
       "local_artifact_paths": [
         "papers/2606.06473__MLEvolve.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2606.06473__MLEvolve.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2440,6 +3033,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2606.06473__MLEvolve.pdf"
             ],
@@ -2474,6 +3070,15 @@
             "phrase_local_artifact_paths": [
               "papers/2606.06473__MLEvolve.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2606.06473__MLEvolve.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2606.06473__MLEvolve.pdf"
             ],
@@ -2492,6 +3097,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2512,6 +3118,16 @@
       "local_artifact_paths": [
         "papers/2605.09764__LEVI.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.09764__LEVI.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2539,6 +3155,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.09764__LEVI.pdf"
             ],
@@ -2573,6 +3192,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.09764__LEVI.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.09764__LEVI.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.09764__LEVI.pdf"
             ],
@@ -2591,6 +3219,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2611,6 +3240,16 @@
       "local_artifact_paths": [
         "papers/2601.10657__PACEvolve.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2601.10657__PACEvolve.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2638,6 +3277,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2601.10657__PACEvolve.pdf"
             ],
@@ -2672,6 +3314,15 @@
             "phrase_local_artifact_paths": [
               "papers/2601.10657__PACEvolve.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2601.10657__PACEvolve.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2601.10657__PACEvolve.pdf"
             ],
@@ -2690,6 +3341,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2710,6 +3362,16 @@
       "local_artifact_paths": [
         "papers/2605.08520__FlashEvolve.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.08520__FlashEvolve.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2737,6 +3399,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.08520__FlashEvolve.pdf"
             ],
@@ -2771,6 +3436,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.08520__FlashEvolve.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.08520__FlashEvolve.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.08520__FlashEvolve.pdf"
             ],
@@ -2789,6 +3463,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2809,6 +3484,16 @@
       "local_artifact_paths": [
         "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.20086__Evolutionary_Coding_Agents.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2836,6 +3521,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
             ],
@@ -2870,6 +3558,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.20086__Evolutionary_Coding_Agents.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
             ],
@@ -2888,6 +3585,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -2908,6 +3606,16 @@
       "local_artifact_paths": [
         "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -2935,6 +3643,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
             ],
@@ -2967,6 +3678,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
             ],
@@ -3001,6 +3715,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
             ],
@@ -3019,6 +3742,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3039,6 +3763,16 @@
       "local_artifact_paths": [
         "papers/2604.01658__CORAL.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2604.01658__CORAL.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3066,6 +3800,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2604.01658__CORAL.pdf"
             ],
@@ -3100,6 +3837,15 @@
             "phrase_local_artifact_paths": [
               "papers/2604.01658__CORAL.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2604.01658__CORAL.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2604.01658__CORAL.pdf"
             ],
@@ -3118,6 +3864,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3138,6 +3885,16 @@
       "local_artifact_paths": [
         "papers/2605.13821__AEvo.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.13821__AEvo.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3165,6 +3922,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.13821__AEvo.pdf"
             ],
@@ -3199,6 +3959,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.13821__AEvo.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.13821__AEvo.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.13821__AEvo.pdf"
             ],
@@ -3217,6 +3986,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3237,6 +4007,16 @@
       "local_artifact_paths": [
         "papers/2605.09959__G_Zero.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.09959__G_Zero.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3264,6 +4044,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.09959__G_Zero.pdf"
             ],
@@ -3298,6 +4081,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.09959__G_Zero.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.09959__G_Zero.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.09959__G_Zero.pdf"
             ],
@@ -3316,6 +4108,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3336,6 +4129,16 @@
       "local_artifact_paths": [
         "papers/2605.21605__GenEvolve.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.21605__GenEvolve.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3363,6 +4166,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.21605__GenEvolve.pdf"
             ],
@@ -3397,6 +4203,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.21605__GenEvolve.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.21605__GenEvolve.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.21605__GenEvolve.pdf"
             ],
@@ -3415,6 +4230,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3435,6 +4251,16 @@
       "local_artifact_paths": [
         "papers/2605.29847__EvoRubric.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.29847__EvoRubric.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3462,6 +4288,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.29847__EvoRubric.pdf"
             ],
@@ -3496,6 +4325,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.29847__EvoRubric.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.29847__EvoRubric.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.29847__EvoRubric.pdf"
             ],
@@ -3514,6 +4352,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3534,6 +4373,16 @@
       "local_artifact_paths": [
         "papers/2605.29293__LLM_ALSO.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.29293__LLM_ALSO.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3561,6 +4410,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.29293__LLM_ALSO.pdf"
             ],
@@ -3595,6 +4447,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.29293__LLM_ALSO.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.29293__LLM_ALSO.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.29293__LLM_ALSO.pdf"
             ],
@@ -3613,6 +4474,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3633,6 +4495,16 @@
       "local_artifact_paths": [
         "papers/2512.18746__MemEvolve.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2512.18746__MemEvolve.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3660,6 +4532,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2512.18746__MemEvolve.pdf"
             ],
@@ -3694,6 +4569,15 @@
             "phrase_local_artifact_paths": [
               "papers/2512.18746__MemEvolve.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2512.18746__MemEvolve.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2512.18746__MemEvolve.pdf"
             ],
@@ -3712,6 +4596,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3732,6 +4617,16 @@
       "local_artifact_paths": [
         "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3759,6 +4654,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
             ],
@@ -3793,6 +4691,15 @@
             "phrase_local_artifact_paths": [
               "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
             ],
@@ -3811,6 +4718,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3831,6 +4739,16 @@
       "local_artifact_paths": [
         "papers/2605.27276__SIA.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.27276__SIA.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3858,6 +4776,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.27276__SIA.pdf"
             ],
@@ -3892,6 +4813,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.27276__SIA.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.27276__SIA.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.27276__SIA.pdf"
             ],
@@ -3910,6 +4840,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -3930,6 +4861,16 @@
       "local_artifact_paths": [
         "papers/2606.06324__HarnessFix.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2606.06324__HarnessFix.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -3957,6 +4898,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2606.06324__HarnessFix.pdf"
             ],
@@ -3991,6 +4935,15 @@
             "phrase_local_artifact_paths": [
               "papers/2606.06324__HarnessFix.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2606.06324__HarnessFix.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2606.06324__HarnessFix.pdf"
             ],
@@ -4009,6 +4962,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4029,6 +4983,16 @@
       "local_artifact_paths": [
         "papers/2606.05922__RHO.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2606.05922__RHO.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4056,6 +5020,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2606.05922__RHO.pdf"
             ],
@@ -4090,6 +5057,15 @@
             "phrase_local_artifact_paths": [
               "papers/2606.05922__RHO.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2606.05922__RHO.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2606.05922__RHO.pdf"
             ],
@@ -4108,6 +5084,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4128,6 +5105,16 @@
       "local_artifact_paths": [
         "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4155,6 +5142,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
             ],
@@ -4189,6 +5179,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
             ],
@@ -4207,6 +5206,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4227,6 +5227,16 @@
       "local_artifact_paths": [
         "papers/2604.25850__AHE.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2604.25850__AHE.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4254,6 +5264,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2604.25850__AHE.pdf"
             ],
@@ -4288,6 +5301,15 @@
             "phrase_local_artifact_paths": [
               "papers/2604.25850__AHE.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2604.25850__AHE.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2604.25850__AHE.pdf"
             ],
@@ -4306,6 +5328,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4326,6 +5349,16 @@
       "local_artifact_paths": [
         "papers/2605.13357__AI_Harness_Engineering.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.13357__AI_Harness_Engineering.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4353,6 +5386,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.13357__AI_Harness_Engineering.pdf"
             ],
@@ -4387,6 +5423,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.13357__AI_Harness_Engineering.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.13357__AI_Harness_Engineering.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.13357__AI_Harness_Engineering.pdf"
             ],
@@ -4405,6 +5450,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4425,6 +5471,16 @@
       "local_artifact_paths": [
         "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4452,6 +5508,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
             ],
@@ -4486,6 +5545,15 @@
             "phrase_local_artifact_paths": [
               "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
             ],
@@ -4504,6 +5572,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4524,6 +5593,16 @@
       "local_artifact_paths": [
         "papers/2606.01770__Adaptive_Auto_Harness.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2606.01770__Adaptive_Auto_Harness.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4551,6 +5630,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2606.01770__Adaptive_Auto_Harness.pdf"
             ],
@@ -4585,6 +5667,15 @@
             "phrase_local_artifact_paths": [
               "papers/2606.01770__Adaptive_Auto_Harness.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2606.01770__Adaptive_Auto_Harness.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2606.01770__Adaptive_Auto_Harness.pdf"
             ],
@@ -4603,6 +5694,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4623,6 +5715,16 @@
       "local_artifact_paths": [
         "papers/2603.28052__Meta_Harness.pdf"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/2603.28052__Meta_Harness.pdf",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4650,6 +5752,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/2603.28052__Meta_Harness.pdf"
             ],
@@ -4684,6 +5789,15 @@
             "phrase_local_artifact_paths": [
               "papers/2603.28052__Meta_Harness.pdf"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/2603.28052__Meta_Harness.pdf",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/2603.28052__Meta_Harness.pdf"
             ],
@@ -4702,6 +5816,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4722,6 +5837,16 @@
       "local_artifact_paths": [
         "papers/archagent_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/archagent_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4750,6 +5875,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/archagent_boundary.json"
             ],
@@ -4783,6 +5911,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/archagent_boundary.json"
             ],
@@ -4818,6 +5949,15 @@
             "phrase_local_artifact_paths": [
               "papers/archagent_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/archagent_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/archagent_boundary.json"
             ],
@@ -4837,6 +5977,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4857,6 +5998,16 @@
       "local_artifact_paths": [
         "papers/multiagent_learning_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/multiagent_learning_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -4885,6 +6036,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/multiagent_learning_boundary.json"
             ],
@@ -4918,6 +6072,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/multiagent_learning_boundary.json"
             ],
@@ -4953,6 +6110,15 @@
             "phrase_local_artifact_paths": [
               "papers/multiagent_learning_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/multiagent_learning_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/multiagent_learning_boundary.json"
             ],
@@ -4972,6 +6138,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -4992,6 +6159,16 @@
       "local_artifact_paths": [
         "papers/ramsey_numbers_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/ramsey_numbers_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -5020,6 +6197,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/ramsey_numbers_boundary.json"
             ],
@@ -5053,6 +6233,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/ramsey_numbers_boundary.json"
             ],
@@ -5086,6 +6269,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/ramsey_numbers_boundary.json"
             ],
@@ -5121,6 +6307,15 @@
             "phrase_local_artifact_paths": [
               "papers/ramsey_numbers_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/ramsey_numbers_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/ramsey_numbers_boundary.json"
             ],
@@ -5140,6 +6335,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -5160,6 +6356,16 @@
       "local_artifact_paths": [
         "papers/theoretical_cs_sources.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/theoretical_cs_sources.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -5188,6 +6394,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/theoretical_cs_sources.json"
             ],
@@ -5223,6 +6432,15 @@
             "phrase_local_artifact_paths": [
               "papers/theoretical_cs_sources.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/theoretical_cs_sources.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/theoretical_cs_sources.json"
             ],
@@ -5242,6 +6460,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -5262,6 +6481,16 @@
       "local_artifact_paths": [
         "papers/combinatorics_berczy_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/combinatorics_berczy_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -5290,6 +6519,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/combinatorics_berczy_boundary.json"
             ],
@@ -5323,6 +6555,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/combinatorics_berczy_boundary.json"
             ],
@@ -5356,6 +6591,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/combinatorics_berczy_boundary.json"
             ],
@@ -5391,6 +6629,15 @@
             "phrase_local_artifact_paths": [
               "papers/combinatorics_berczy_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/combinatorics_berczy_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/combinatorics_berczy_boundary.json"
             ],
@@ -5410,6 +6657,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -5430,6 +6678,16 @@
       "local_artifact_paths": [
         "papers/ttt_discover_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/ttt_discover_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -5458,6 +6716,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/ttt_discover_boundary.json"
             ],
@@ -5491,6 +6752,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/ttt_discover_boundary.json"
             ],
@@ -5526,6 +6790,15 @@
             "phrase_local_artifact_paths": [
               "papers/ttt_discover_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/ttt_discover_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/ttt_discover_boundary.json"
             ],
@@ -5545,6 +6818,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -5565,6 +6839,16 @@
       "local_artifact_paths": [
         "papers/bilateral_trade_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/bilateral_trade_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -5593,6 +6877,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/bilateral_trade_boundary.json"
             ],
@@ -5626,6 +6913,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/bilateral_trade_boundary.json"
             ],
@@ -5661,6 +6951,15 @@
             "phrase_local_artifact_paths": [
               "papers/bilateral_trade_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/bilateral_trade_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/bilateral_trade_boundary.json"
             ],
@@ -5680,6 +6979,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -5700,6 +7000,16 @@
       "local_artifact_paths": [
         "papers/bruhat_intervals_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/bruhat_intervals_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -5728,6 +7038,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/bruhat_intervals_boundary.json"
             ],
@@ -5761,6 +7074,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/bruhat_intervals_boundary.json"
             ],
@@ -5794,6 +7110,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/bruhat_intervals_boundary.json"
             ],
@@ -5829,6 +7148,15 @@
             "phrase_local_artifact_paths": [
               "papers/bruhat_intervals_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/bruhat_intervals_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/bruhat_intervals_boundary.json"
             ],
@@ -5848,6 +7176,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -5868,6 +7197,16 @@
       "local_artifact_paths": [
         "papers/fault2flow_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/fault2flow_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -5896,6 +7235,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/fault2flow_boundary.json"
             ],
@@ -5929,6 +7271,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/fault2flow_boundary.json"
             ],
@@ -5964,6 +7309,15 @@
             "phrase_local_artifact_paths": [
               "papers/fault2flow_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/fault2flow_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/fault2flow_boundary.json"
             ],
@@ -5983,6 +7337,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -6003,6 +7358,16 @@
       "local_artifact_paths": [
         "papers/global_nlp_optimization_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/global_nlp_optimization_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -6031,6 +7396,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/global_nlp_optimization_boundary.json"
             ],
@@ -6064,6 +7432,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/global_nlp_optimization_boundary.json"
             ],
@@ -6097,6 +7468,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/global_nlp_optimization_boundary.json"
             ],
@@ -6132,6 +7506,15 @@
             "phrase_local_artifact_paths": [
               "papers/global_nlp_optimization_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/global_nlp_optimization_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/global_nlp_optimization_boundary.json"
             ],
@@ -6151,6 +7534,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -6171,6 +7555,16 @@
       "local_artifact_paths": [
         "papers/autoconvolution_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/autoconvolution_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -6199,6 +7593,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/autoconvolution_boundary.json"
             ],
@@ -6232,6 +7629,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/autoconvolution_boundary.json"
             ],
@@ -6265,6 +7665,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/autoconvolution_boundary.json"
             ],
@@ -6300,6 +7703,15 @@
             "phrase_local_artifact_paths": [
               "papers/autoconvolution_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/autoconvolution_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/autoconvolution_boundary.json"
             ],
@@ -6319,6 +7731,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -6339,6 +7752,16 @@
       "local_artifact_paths": [
         "papers/sums_differences_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/sums_differences_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -6367,6 +7790,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/sums_differences_boundary.json"
             ],
@@ -6400,6 +7826,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/sums_differences_boundary.json"
             ],
@@ -6433,6 +7862,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/sums_differences_boundary.json"
             ],
@@ -6468,6 +7900,15 @@
             "phrase_local_artifact_paths": [
               "papers/sums_differences_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/sums_differences_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/sums_differences_boundary.json"
             ],
@@ -6487,6 +7928,7 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     },
@@ -6507,6 +7949,16 @@
       "local_artifact_paths": [
         "papers/sums_differences_sequence_boundary.json"
       ],
+      "local_artifact_records": [
+        {
+          "path": "papers/sums_differences_sequence_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "active_todo_paths": [
         "docs/todo/code.md",
         "docs/todo/papers.md"
@@ -6535,6 +7987,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/sums_differences_sequence_boundary.json"
             ],
@@ -6568,6 +8023,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/sums_differences_sequence_boundary.json"
             ],
@@ -6601,6 +8059,9 @@
           },
           "evidence_links": {
             "phrase_local_artifact_paths": [],
+            "phrase_local_artifact_records": [],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "no_local_artifacts_referenced",
             "row_local_artifact_paths": [
               "papers/sums_differences_sequence_boundary.json"
             ],
@@ -6636,6 +8097,15 @@
             "phrase_local_artifact_paths": [
               "papers/sums_differences_sequence_boundary.json"
             ],
+            "phrase_local_artifact_records": [
+              {
+                "path": "papers/sums_differences_sequence_boundary.json",
+                "exists": true,
+                "kind": "file"
+              }
+            ],
+            "phrase_local_artifact_missing_paths": [],
+            "phrase_artifact_existence_status": "all_referenced_local_artifacts_present",
             "row_local_artifact_paths": [
               "papers/sums_differences_sequence_boundary.json"
             ],
@@ -6655,9 +8125,10 @@
         }
       ],
       "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "source_span_status": "phrase_offsets_recorded_in_status_cell",
       "freshness_status": "structural_only"
     }
   ],
-  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mentions, row source line, TODO evidence paths, and status-cell phrase hashes with character offsets and candidate evidence links. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
+  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mentions and existence records, row source line, TODO evidence paths, and status-cell phrase hashes with character offsets and candidate evidence links. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
 }

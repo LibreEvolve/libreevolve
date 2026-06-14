@@ -44,9 +44,9 @@ sidecars, tests, and active TODOs.
     and published benchmarks with module/test/sidecar/TODO references while
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, and
-    candidate evidence-link lists. `papers/benchmark_coverage_inventory.json`
-    records structural evidence and local artifact existence checks for
-    implemented benchmark coverage bullets.
+    candidate evidence-link lists with local artifact existence checks.
+    `papers/benchmark_coverage_inventory.json` records structural evidence and
+    local artifact existence checks for implemented benchmark coverage bullets.
     The boundary still explicitly keeps
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
@@ -56,9 +56,10 @@ sidecars, tests, and active TODOs.
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
     coverage; no per-phrase evidence-sufficiency check proves long status-cell
-    semantics or implemented-benchmark coverage qualifiers beyond referenced
-    artifact existence; and no generated code-audit report proves that all
-    implemented and missing AlphaEvolve-facing behavior has been classified.
+    semantics beyond referenced artifact existence or implemented-benchmark
+    coverage qualifiers beyond referenced artifact existence; and no generated
+    code-audit report proves that all implemented and missing
+    AlphaEvolve-facing behavior has been classified.
   - Required result: build an implementation-evidence map with requirement ids,
     source-paper spans, relevant modules/tests, runtime/report artifacts,
     sidecar/TODO links, claim status, freshness checks, and CI validation

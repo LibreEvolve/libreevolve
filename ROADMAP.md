@@ -829,11 +829,12 @@ is not yet an AlphaEvolve reproduction.
   AlphaEvolve requirement anchors with module, test, sidecar, and TODO links,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, and
-  candidate evidence-link lists, while `papers/benchmark_coverage_inventory.json`
-  records structural implemented-benchmark coverage bullets plus referenced
-  local artifact existence checks. This is not an exhaustive source-span
-  coverage matrix, per-phrase evidence-link sufficiency proof, status-cell
-  semantic verifier, implemented-benchmark bullet semantic verifier,
+  candidate evidence-link lists plus referenced local artifact existence
+  checks, while `papers/benchmark_coverage_inventory.json` records structural
+  implemented-benchmark coverage bullets plus referenced local artifact
+  existence checks. This is not an exhaustive source-span coverage matrix,
+  per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
+  implemented-benchmark bullet semantic verifier,
   absence-sentence freshness matrix, coverage detector, generated code-audit
   report, or CI exhaustiveness gate.
 - Keep paper-manifest validation diagnostics shareable by using

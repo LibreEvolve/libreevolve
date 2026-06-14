@@ -117,6 +117,12 @@ def _write_status_table(root, row_ids):
     )
 
 
+def _write_status_fixture_artifact(root):
+    artifact_path = root / "libreevolve" / "core" / "loop.py"
+    artifact_path.parent.mkdir(parents=True, exist_ok=True)
+    artifact_path.write_text("# loop fixture\n", encoding="utf-8")
+
+
 def _append_todo_coverage_table(root, rows):
     table_rows = "\n".join(
         f"| {row_id} | {active_cell} | {completed_cell} |"
@@ -11305,6 +11311,7 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
     _write_status_table(tmp_path, [row["id"]])
+    _write_status_fixture_artifact(tmp_path)
     _write_active_todo_ledgers(tmp_path, row["id"])
     completed_cell = _write_completed_todo_ledger(tmp_path)
     _append_todo_coverage_table(
@@ -11321,6 +11328,14 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     assert inventory["claim_count"] >= 1
     assert inventory["rows"][0]["source_span"]["path"] == "papers/README.md"
     assert inventory["rows"][0]["source_span"]["line_start"] > 0
+    assert inventory["rows"][0]["all_local_artifacts_exist"] is True
+    assert inventory["rows"][0]["local_artifact_existing_count"] == 1
+    assert inventory["rows"][0]["local_artifact_records"] == [
+        {"path": "libreevolve/core/loop.py", "exists": True, "kind": "file"}
+    ]
+    assert inventory["unique_local_artifact_count"] == 1
+    assert inventory["missing_local_artifact_paths"] == []
+    assert inventory["artifact_existence_status"] == "all_referenced_local_artifacts_present"
     assert inventory["rows"][0]["source_span_status"] == "phrase_offsets_recorded_in_status_cell"
     assert inventory["rows"][0]["status_claims"][0]["source_span"]["line_start"] > 0
     assert (
@@ -11343,6 +11358,7 @@ def test_validate_paper_manifest_rejects_status_claim_inventory_drift(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
     _write_status_table(tmp_path, [row["id"]])
+    _write_status_fixture_artifact(tmp_path)
     _write_active_todo_ledgers(tmp_path, row["id"])
     completed_cell = _write_completed_todo_ledger(tmp_path)
     _append_todo_coverage_table(
@@ -11366,6 +11382,38 @@ def test_validate_paper_manifest_rejects_status_claim_inventory_drift(tmp_path):
 
     assert report.ok is False
     assert "status_claim_inventory_rows_mismatch" in {issue.code for issue in report.issues}
+
+
+def test_validate_paper_manifest_rejects_missing_status_claim_local_artifact(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    _write_active_todo_ledgers(tmp_path, row["id"])
+    completed_cell = _write_completed_todo_ledger(tmp_path)
+    _append_todo_coverage_table(
+        tmp_path,
+        [
+            (
+                row["id"],
+                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                completed_cell,
+            )
+        ],
+    )
+    inventory = paper_manifest.paper_status_claim_inventory_record(tmp_path)
+    assert inventory["rows"][0]["all_local_artifacts_exist"] is False
+    assert inventory["missing_local_artifact_paths"] == ["libreevolve/core/loop.py"]
+    (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "status_claim_inventory_missing_local_artifact" in {
+        issue.code for issue in report.issues
+    }
 
 
 def test_validate_paper_manifest_rejects_grouped_todo_coverage_policy_text(tmp_path):

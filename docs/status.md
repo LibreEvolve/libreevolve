@@ -1245,15 +1245,20 @@ Important limits:
   database behavior, async/distributed topology, and published benchmark
   evidence. The checked `papers/status_claim_inventory.json` sidecar now
   records row-level paper status inventory plus status-cell phrase hashes,
-  source offsets, and candidate evidence-link lists. The checked
-  `papers/benchmark_coverage_inventory.json` sidecar now records structural
-  implemented-benchmark coverage bullet evidence plus referenced local
-  artifact existence checks. This is not an exhaustive
+  source offsets, candidate evidence-link lists, and referenced local artifact
+  existence checks. The checked `papers/benchmark_coverage_inventory.json`
+  sidecar now records structural implemented-benchmark coverage bullet
+  evidence plus referenced local artifact existence checks. This is not an
+  exhaustive
   source-span coverage matrix, per-phrase evidence-link sufficiency proof,
   status-cell semantic verifier, implemented-benchmark bullet semantic
   verifier, absence-sentence freshness
   matrix, or generated code-audit report; that boundary is tracked by
   `papers/implementation_evidence_map_boundary.json`.
+- Paper-index implementation-status validation now records 60 unique referenced
+  local artifact paths across status rows and zero missing referenced local
+  artifacts. This is path-existence evidence, not proof that each artifact is
+  semantically sufficient for the surrounding status phrase.
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,
   SHA-256 digest, normalized author list, subject classes, DOI URL, submitted
   timestamp, TeX-source URL, license URL, and submission-history entry.

@@ -1495,10 +1495,15 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         active_paths = _status_claim_inventory_paths(active_cell)
         completed_paths = _status_claim_inventory_paths(completed_cell)
         row_local_artifact_paths = sorted(_status_local_artifact_paths(status_text))
+        row_local_artifact_records = _local_artifact_path_records(root_path, row_local_artifact_paths)
+        row_missing_local_artifacts = [
+            record["path"] for record in row_local_artifact_records if not record["exists"]
+        ]
         status_class = _status_claim_inventory_class(status_text)
         status_class_counts[status_class] = status_class_counts.get(status_class, 0) + 1
         manifest_row = manifest_rows_by_id.get(row_id, {})
         status_claims = _status_claim_inventory_phrases(
+            root_path,
             row_id,
             status_text,
             status_record["line_number"],
@@ -1522,17 +1527,38 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
                 },
                 "manifest_file": manifest_row.get("file", ""),
                 "local_artifact_paths": row_local_artifact_paths,
+                "local_artifact_records": row_local_artifact_records,
+                "local_artifact_existing_count": (
+                    len(row_local_artifact_paths) - len(row_missing_local_artifacts)
+                ),
+                "local_artifact_missing_paths": row_missing_local_artifacts,
+                "all_local_artifacts_exist": (
+                    bool(row_local_artifact_paths) and not row_missing_local_artifacts
+                ),
                 "active_todo_paths": active_paths,
                 "completed_todo_paths": completed_paths,
                 "claim_count": len(status_claims),
                 "status_claims": status_claims,
                 "claim_inventory_status": "phrase_candidate_evidence_links_recorded",
+                "artifact_existence_status": (
+                    "all_referenced_local_artifacts_present"
+                    if row_local_artifact_paths and not row_missing_local_artifacts
+                    else "missing_referenced_local_artifacts"
+                    if row_missing_local_artifacts
+                    else "no_local_artifacts_referenced"
+                ),
                 "source_span_status": "phrase_offsets_recorded_in_status_cell",
                 "freshness_status": "structural_only",
             }
         )
 
     total_claims = sum(row["claim_count"] for row in inventory_rows)
+    unique_local_artifacts = sorted(
+        {path for row in inventory_rows for path in row["local_artifact_paths"]}
+    )
+    missing_local_artifacts = sorted(
+        {path for row in inventory_rows for path in row["local_artifact_missing_paths"]}
+    )
     return {
         "schema": STATUS_CLAIM_INVENTORY_SCHEMA,
         "inventory_status": STATUS_CLAIM_INVENTORY_STATUS,
@@ -1541,16 +1567,26 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         "claim_count": total_claims,
         "row_ids": [row["id"] for row in inventory_rows],
         "status_class_counts": dict(sorted(status_class_counts.items())),
+        "unique_local_artifact_paths": unique_local_artifacts,
+        "unique_local_artifact_count": len(unique_local_artifacts),
+        "missing_local_artifact_paths": missing_local_artifacts,
+        "artifact_existence_status": (
+            "all_referenced_local_artifacts_present"
+            if unique_local_artifacts and not missing_local_artifacts
+            else "missing_referenced_local_artifacts"
+            if missing_local_artifacts
+            else "no_local_artifacts_referenced"
+        ),
         "missing_evidence": dict(STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE),
         "rows": inventory_rows,
         "claim_boundary": (
             "This inventory records one structured row for every "
             "papers/README.md implementation-status table row, including "
             "role, status class, status text hash, manifest file, local "
-            "artifact mentions, row source line, TODO evidence paths, and "
-            "status-cell phrase hashes with character offsets and candidate "
-            "evidence links. It does not claim phrase-level status "
-            "verification, evidence-link sufficiency, "
+            "artifact mentions and existence records, row source line, TODO "
+            "evidence paths, and status-cell phrase hashes with character "
+            "offsets and candidate evidence links. It does not claim "
+            "phrase-level status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
             "complete."
@@ -3610,6 +3646,10 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         ("row_count", "status claim inventory row count drifted"),
         ("row_ids", "status claim inventory row ids drifted"),
         ("status_class_counts", "status claim inventory status-class counts drifted"),
+        ("unique_local_artifact_paths", "status claim inventory unique local artifact paths drifted"),
+        ("unique_local_artifact_count", "status claim inventory unique local artifact count drifted"),
+        ("missing_local_artifact_paths", "status claim inventory missing local artifact paths drifted"),
+        ("artifact_existence_status", "status claim inventory artifact existence status drifted"),
         ("missing_evidence", "status claim inventory missing-evidence boundary drifted"),
         ("claim_boundary", "status claim inventory claim boundary drifted"),
         ("rows", "status claim inventory rows drifted from papers/README.md"),
@@ -3623,6 +3663,14 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
                     "status_claim_inventory",
                 )
             )
+    for missing_path in expected["missing_local_artifact_paths"]:
+        issues.append(
+            PaperManifestIssue(
+                "status_claim_inventory_missing_local_artifact",
+                "implementation-status row cites a missing local artifact path",
+                _safe_manifest_label(str(missing_path)),
+            )
+        )
     return issues
 
 
@@ -8316,6 +8364,7 @@ def _status_claim_inventory_paths(cell: str) -> list[str]:
 
 
 def _status_claim_inventory_phrases(
+    root: Path,
     row_id: str,
     status_text: str,
     line_number: int,
@@ -8327,6 +8376,10 @@ def _status_claim_inventory_phrases(
     for ordinal, (start, end) in enumerate(_status_claim_phrase_spans(status_text), start=1):
         phrase = status_text[start:end]
         phrase_local_artifact_paths = sorted(_status_local_artifact_paths(phrase))
+        phrase_local_artifact_records = _local_artifact_path_records(root, phrase_local_artifact_paths)
+        phrase_missing_local_artifacts = [
+            record["path"] for record in phrase_local_artifact_records if not record["exists"]
+        ]
         phrases.append(
             {
                 "claim_id": f"{row_id}:status_phrase_{ordinal:03d}",
@@ -8344,6 +8397,15 @@ def _status_claim_inventory_phrases(
                 },
                 "evidence_links": {
                     "phrase_local_artifact_paths": phrase_local_artifact_paths,
+                    "phrase_local_artifact_records": phrase_local_artifact_records,
+                    "phrase_local_artifact_missing_paths": phrase_missing_local_artifacts,
+                    "phrase_artifact_existence_status": (
+                        "all_referenced_local_artifacts_present"
+                        if phrase_local_artifact_paths and not phrase_missing_local_artifacts
+                        else "missing_referenced_local_artifacts"
+                        if phrase_missing_local_artifacts
+                        else "no_local_artifacts_referenced"
+                    ),
                     "row_local_artifact_paths": row_local_artifact_paths,
                     "row_active_todo_paths": active_paths,
                     "row_completed_todo_paths": completed_paths,

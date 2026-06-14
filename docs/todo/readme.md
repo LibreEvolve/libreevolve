@@ -500,6 +500,31 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     papers, and runtime metadata cannot promote smoke examples or benchmark
     candidates into paper-comparable claims until the mapped evidence exists.
 
+- [ ] Add example-runs README fixture-claim drift evidence.
+  - Spec evidence: `examples/runs/README.md` is a reader-facing evidence
+    surface for curated run fixtures. Its per-run record counts, behavior
+    summaries, and `libreevolve show` inspection commands should stay true
+    while remaining clearly scoped away from full current run-artifact or
+    AlphaEvolve-comparable result evidence.
+  - Current evidence: `examples/runs/README.md` says
+    `hello_world_ensemble/` has 11 records and reaches the correct greeting in
+    generation 0, says `sorting_ttt_rl/` has 56 records and demonstrates
+    neutral implementation diversity, and documents two `py -3.12 -m
+    libreevolve show examples/runs/...` commands. Existing tests only prove
+    that the checked-in run directories are legacy history fixtures containing
+    non-empty `history.jsonl` and `best.py`, and that the README names missing
+    modern artifacts.
+  - Current gap: no page-specific validator parses the example-runs README
+    rows, counts JSONL records, checks the described first/best behavior,
+    validates the constant-fitness or neutral-diversity narrative, exercises
+    the documented `show` commands against legacy fixtures, or flags fixture
+    updates that require README/TODO/paper-boundary refresh.
+  - Required result: add an example-runs README evidence map and validation
+    gate that ties each fixture row and inspect command to the checked-in
+    histories, expected summary semantics, legacy `show` compatibility, and
+    explicit non-claim boundaries for full run artifacts and AlphaEvolve-level
+    reproducibility.
+
 ## Run Artifacts
 
 - [ ] Add README run-artifact list drift and scope evidence.

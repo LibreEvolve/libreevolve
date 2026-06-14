@@ -248,3 +248,36 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     code/tests/runtime artifacts/sidecars/TODOs; and reject README, ROADMAP,
     and paper wording that implies async or resumable parity before the full
     checklist is satisfied.
+
+- [ ] Add ROADMAP prompt/context-system readiness criteria.
+  - Spec evidence: the `4. Prompt and context work` section defines the
+    prompt/control surface that makes AlphaEvolve-style program evolution more
+    than isolated LLM calls. It should specify when prompt templates, context
+    selection, token packing, proposal memory, retrieval evidence,
+    meta-prompting, and prompt-database behavior are coherent enough to support
+    AlphaEvolve-alignment claims.
+  - Current evidence: ROADMAP records current prompt-template schema and
+    dry-run checks, mutation-channel validation, parent-placeholder retention,
+    first-N context truncation, mutation-path section packing, role-scoped
+    token counting, backend context-window metadata, stochastic prompt-format
+    distribution evidence, configurable retention surfaces, evaluator-artifact
+    content retrieval, bounded DeepEvolve-style retrieval provenance, proposal
+    score/diversity/hypothesis/backtracking reports, absolute/improvement
+    meta-prompt rewards, and a local `PromptDatabase`. Active code and paper
+    TODOs already track role-specific template compatibility, all-role
+    provider-token packing, separate stochastic format source provenance,
+    structured prompt-context policy expansion, audit-grade retrieval
+    integrity, semantic proposal retrieval, calibrated meta-prompt rewards,
+    and prompt-database parity.
+  - Current gap: there is no section-level prompt/context readiness rubric,
+    capability matrix, or stale-readiness detector that proves these features
+    compose into a safe AlphaEvolve-style prompt system, nor a guard preventing
+    one bounded prompt feature from implying full prompt/context parity.
+  - Required result: add ROADMAP prompt/context criteria that classify each
+    prompt role and context source by template compatibility, source
+    selection/summarization policy, token-counter authority, section-packing
+    coverage, retention/replay policy, retrieval provenance, proposal-memory
+    semantics, meta-prompt reward evidence, prompt-database lifecycle,
+    benchmark evidence, and overclaim status, and validate README, ROADMAP,
+    papers, runtime metadata, and prompt docs against implying complete
+    AlphaEvolve prompt/context readiness before the matrix is satisfied.

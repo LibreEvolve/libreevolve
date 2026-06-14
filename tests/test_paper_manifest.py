@@ -11404,6 +11404,19 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         "  - Current gap: temporary test ledger entry for `libreevolve/core/loop.py`.\n"
         "  - Required result: keep the temporary fixture source-specific.\n"
     )
+    expected_active_block_record = {
+        "block_kind": "active",
+        "block_ordinal": 1,
+        "file_text_char_start": 0,
+        "file_text_char_end": len(active_evidence_text),
+        "line_start": 1,
+        "line_end": active_evidence_text.count("\n") + 1,
+        "block_sha256": hashlib.sha256(active_evidence_text.encode("utf-8")).hexdigest(),
+        "matched_source_tokens": [row["id"]],
+    }
+    assert [
+        record["row_specific_block_records"] for record in active_content_records
+    ] == [[expected_active_block_record] for _record in active_content_records]
     active_artifact_start = active_evidence_text.find("libreevolve/core/loop.py")
     active_artifact_end = active_artifact_start + len("libreevolve/core/loop.py")
     expected_active_artifact_record = {
@@ -11418,6 +11431,18 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         f"- [x] Completed fixture evidence for `{row['id']}` in "
         "`libreevolve/core/loop.py`.\n"
     )
+    assert completed_content_records[0]["row_specific_block_records"] == [
+        {
+            "block_kind": "completed",
+            "block_ordinal": 1,
+            "file_text_char_start": 0,
+            "file_text_char_end": len(completed_evidence_text),
+            "line_start": 1,
+            "line_end": completed_evidence_text.count("\n") + 1,
+            "block_sha256": hashlib.sha256(completed_evidence_text.encode("utf-8")).hexdigest(),
+            "matched_source_tokens": [row["id"]],
+        }
+    ]
     completed_artifact_start = completed_evidence_text.find("libreevolve/core/loop.py")
     completed_artifact_end = completed_artifact_start + len("libreevolve/core/loop.py")
     assert completed_content_records[0]["mentioned_local_artifact_records"] == [
@@ -11428,6 +11453,10 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         }
     ]
     assert inventory["todo_content_artifact_mention_record_count"] == len(active_content_records) + 1
+    assert inventory["todo_content_row_specific_block_record_count"] == (
+        sum(len(record["row_specific_block_records"]) for record in active_content_records)
+        + sum(len(record["row_specific_block_records"]) for record in completed_content_records)
+    )
     assert inventory["rows"][0]["local_artifacts_missing_from_todo_evidence"] == []
     assert inventory["rows"][0]["all_local_artifacts_linked_from_todo_evidence"] is True
     assert (

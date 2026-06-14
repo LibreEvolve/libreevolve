@@ -1667,6 +1667,11 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         for row in inventory_rows
         for record in [*row["active_todo_content_records"], *row["completed_todo_content_records"]]
     )
+    todo_content_row_specific_block_record_count = sum(
+        len(record["row_specific_block_records"])
+        for row in inventory_rows
+        for record in [*row["active_todo_content_records"], *row["completed_todo_content_records"]]
+    )
     todo_content_matched_source_tokens = sorted(
         {
             token
@@ -1739,6 +1744,7 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         ),
         "local_artifacts_missing_from_todo_evidence": local_artifacts_missing_from_todo,
         "todo_content_artifact_mention_record_count": todo_content_artifact_mention_record_count,
+        "todo_content_row_specific_block_record_count": todo_content_row_specific_block_record_count,
         "todo_content_matched_source_tokens": todo_content_matched_source_tokens,
         "todo_content_matched_source_token_count": len(todo_content_matched_source_tokens),
         "todo_content_evidence_status": (
@@ -1772,7 +1778,8 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "source line, TODO evidence path source offsets and existence "
             "records, and status-cell phrase hashes with character offsets "
             "and candidate evidence links plus row/phrase-specific TODO content "
-            "matched source tokens, artifact-mention source offsets, and "
+            "matched source tokens, block hashes/source offsets, "
+            "artifact-mention source offsets, and "
             "absence-signal source offsets. It "
             "does not claim phrase-level "
             "status verification, evidence-link sufficiency, "
@@ -3898,6 +3905,10 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         (
             "todo_content_artifact_mention_record_count",
             "status claim inventory TODO content local artifact mention count drifted",
+        ),
+        (
+            "todo_content_row_specific_block_record_count",
+            "status claim inventory TODO content block record count drifted",
         ),
         (
             "todo_content_matched_source_tokens",
@@ -8645,6 +8656,7 @@ def _status_todo_evidence_content_records(
         base_record = _local_artifact_path_records(root, [relative_path])[0]
         readable = False
         matching_blocks: list[str] = []
+        matching_block_records: list[dict[str, Any]] = []
         matched_tokens: set[str] = set()
         if path.exists():
             try:
@@ -8653,12 +8665,24 @@ def _status_todo_evidence_content_records(
                 text = ""
             else:
                 readable = True
-                blocks = [*_open_todo_blocks(text), *_completed_todo_blocks(text)]
-                for block in blocks:
-                    block_tokens = {token for token in source_tokens if token in block}
+                for block_record in _todo_block_span_records(text):
+                    block = block_record["text"]
+                    block_tokens = sorted(token for token in source_tokens if token in block)
                     if block_tokens:
                         matching_blocks.append(block)
                         matched_tokens.update(block_tokens)
+                        matching_block_records.append(
+                            {
+                                "block_kind": block_record["block_kind"],
+                                "block_ordinal": block_record["block_ordinal"],
+                                "file_text_char_start": block_record["file_text_char_start"],
+                                "file_text_char_end": block_record["file_text_char_end"],
+                                "line_start": block_record["line_start"],
+                                "line_end": block_record["line_end"],
+                                "block_sha256": block_record["block_sha256"],
+                                "matched_source_tokens": block_tokens,
+                            }
+                        )
         evidence_text = "\n".join(matching_blocks)
         mentioned_artifact_records = _todo_content_local_artifact_mention_records(
             evidence_text,
@@ -8674,6 +8698,7 @@ def _status_todo_evidence_content_records(
                 "row_source_tokens_matched": sorted(matched_tokens),
                 "row_source_token_match_count": len(matched_tokens),
                 "row_specific_block_count": len(matching_blocks),
+                "row_specific_block_records": matching_block_records,
                 "mentioned_local_artifact_records": mentioned_artifact_records,
                 "mentioned_local_artifact_paths": mentioned_artifacts,
                 "missing_local_artifact_paths": missing_artifacts,
@@ -9059,6 +9084,40 @@ def _open_todo_blocks(text: str) -> list[str]:
     starts = [match.start() for match in re.finditer(r"(?m)^- \[ \] ", text)]
     starts.append(len(text))
     return [text[start:end] for start, end in zip(starts, starts[1:])]
+
+
+def _todo_block_span_records(text: str) -> list[dict[str, Any]]:
+    return [
+        *_todo_block_span_records_for_marker(text, r"(?m)^- \[ \] ", "active"),
+        *_todo_block_span_records_for_marker(text, r"(?m)^- \[x\] ", "completed"),
+    ]
+
+
+def _todo_block_span_records_for_marker(
+    text: str,
+    pattern: str,
+    block_kind: str,
+) -> list[dict[str, Any]]:
+    starts = [match.start() for match in re.finditer(pattern, text)]
+    starts.append(len(text))
+    records: list[dict[str, Any]] = []
+    for ordinal, (start, end) in enumerate(zip(starts, starts[1:]), start=1):
+        block = text[start:end]
+        if not block:
+            continue
+        records.append(
+            {
+                "text": block,
+                "block_kind": block_kind,
+                "block_ordinal": ordinal,
+                "file_text_char_start": start,
+                "file_text_char_end": end,
+                "line_start": text.count("\n", 0, start) + 1,
+                "line_end": text.count("\n", 0, end) + 1,
+                "block_sha256": hashlib.sha256(block.encode("utf-8")).hexdigest(),
+            }
+        )
+    return records
 
 
 def _markdown_bullet_blocks(text: str) -> list[str]:

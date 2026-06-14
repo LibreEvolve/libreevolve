@@ -1248,8 +1248,9 @@ Important limits:
   source offsets, local artifact mention source offsets, candidate
   evidence-link lists, and referenced local artifact and TODO evidence-path
   source offsets/existence checks plus row-specific TODO content
-  matched source tokens/artifact-mention source offsets, phrase-local TODO
-  content backing, and structural absence-signal source-offset classification.
+  matched source tokens, block hashes/source offsets, artifact-mention source
+  offsets, phrase-local TODO content backing, and structural absence-signal
+  source-offset classification.
   The checked
   `papers/benchmark_coverage_inventory.json` sidecar now records structural
   implemented-benchmark coverage bullet evidence plus referenced local
@@ -1263,10 +1264,11 @@ Important limits:
   local artifact paths across status rows and zero missing referenced local
   artifacts, plus 6 unique referenced TODO evidence paths, 289 TODO evidence
   path mention records, and zero missing referenced TODO evidence paths. It
-  also records 175 matched TODO content source tokens, 404 TODO content
-  artifact mention source-offset records, zero status-row local artifact paths,
-  and zero status-phrase local artifact paths missing from linked row-specific
-  TODO evidence, and structurally classifies 87 status-cell
+  also records 175 matched TODO content source tokens, 1048 row-specific TODO
+  block hashes/source offsets, 404 TODO content artifact mention source-offset
+  records, zero status-row local artifact paths, and zero status-phrase local
+  artifact paths missing from linked row-specific TODO evidence, and
+  structurally classifies 87 status-cell
   absence-signal phrases with 99 source-offset records. This is path/content
   linkage and signal evidence, not proof that each artifact or TODO link is
   semantically sufficient or that absence wording is fresh.

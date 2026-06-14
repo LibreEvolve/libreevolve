@@ -5511,6 +5511,40 @@ directory and using the AlphaEvolve paper as the primary specification.
     README/ROADMAP wording that treats the paper as missing application
     evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce EinsteinArena collective-discovery evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2606.10402`, submitted June 9, 2026, is
+    titled `Harnessing the Collective Intelligence of AI Agents in the Wild
+    for New Discoveries`. Its abstract presents EinsteinArena as an
+    agent-native platform for open distributed research and discovery where
+    agents work on live open problems with solid verifiers, public
+    leaderboards, and problem-specific discussion forums. It reports 12 new
+    state-of-the-art results as of May 2026, including improving the
+    dimension-11 kissing-number lower bound from 593 to 604 through a sequence
+    of submissions, public discussion, verifier refinement, and subsequent
+    agent-to-agent borrowing of ideas. The paper positions AlphaEvolve as a
+    prior system for evolving programs on mathematics and algorithm-design
+    problems, but moves the evidence boundary from isolated search runs to
+    decentralized collective agent interaction.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2606.10402`. Existing CORAL and evolutionary-agent diagnostic
+    rows do not capture EinsteinArena's public leaderboard semantics,
+    problem-specific discussion traces, verifier-refinement history,
+    cross-agent idea-borrowing lineage, open-platform governance, or live
+    collective-discovery result provenance.
+  - Required result: add reproduction-grade evidence for `2606.10402`:
+    title/authors/arXiv version/date, source license, relation to
+    AlphaEvolve, TTT-Discover, CORAL, and LibreEvolve's current isolated run
+    model, open-problem registry schema, verifier-audit and refinement
+    records, leaderboard submission/event schema, discussion-thread artifact
+    provenance, agent identity and permission boundaries, idea-borrowing and
+    lineage/fingerprint metadata, kissing-number and second-autocorrelation
+    task records, 12-SOTA-result table provenance, invalid-submission checks,
+    code/platform availability status, independent verification outputs, and
+    README/ROADMAP wording that treats EinsteinArena-style open collective
+    discovery as missing paper evidence rather than implemented LibreEvolve
+    support.
+
 - [ ] Reproduce CORAL autonomous multi-agent evolution evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2604.01658`, submitted April 2, 2026 and

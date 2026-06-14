@@ -153,3 +153,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     handling, account/local model id provenance, expected skip/failure modes,
     and README/TODO updates whenever provider example commands or supported
     backend families change.
+
+## Testing
+
+- [ ] Add README testing-command marker and environment evidence.
+  - Spec evidence: the README's testing commands are an onboarding and
+    contribution contract. For AlphaEvolve-alignment work, local verification
+    instructions should prove the intended test scope, marker behavior, and
+    credential-gated integration boundary rather than only listing commands.
+  - Current evidence: the README documents the non-integration command
+    `py -3.12 -m pytest tests/ -m "not integration" --tb=short` and the
+    credential-gated integration command
+    `py -3.12 -m pytest tests/integration/ -m integration --tb=short`.
+    `tests/test_agents_docs.py` checks that AGENTS.md does not pin stale test
+    counts and that the non-integration command string remains present there.
+    Broader CI coverage is tracked separately by
+    `papers/ci_workflow_coverage_boundary.json` and active code/paper TODOs.
+  - Current gap: no README-owned smoke transcript, generated sidecar, or CI
+    assertion proves that the README commands themselves select the intended
+    test sets, that integration tests are skipped only for missing provider
+    credentials, that marker registration has not drifted, or that test
+    failures can be attributed separately from paper-manifest/source-boundary
+    validation.
+  - Required result: add README testing-command evidence that records Python
+    and pytest versions, marker registration, selected/skipped test counts,
+    credential-gated integration behavior, and a drift check that updates
+    README/TODO evidence whenever the documented commands or marker policy
+    change.

@@ -205,6 +205,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     problem-loading, evaluator, context, metrics, config, or example layout
     semantics change.
 
+## Example Scope
+
+- [ ] Add README example-scope drift and benchmark-claim evidence.
+  - Spec evidence: the README's `Example Scope` section is the first guardrail
+    separating smoke fixtures, benchmark candidates, and paper-comparable
+    evidence. That distinction is central to AlphaEvolve-alignment truthfulness
+    because examples can otherwise be mistaken for reproduced benchmark
+    results.
+  - Current evidence: README says bundled examples are intentionally small,
+    distinguishes optimization-pressure seeds from neutral plateau/diversity
+    fixtures, scopes `sorting_network_8` and `sorting_network_9` as bounded
+    benchmark candidates rather than paper-comparable evidence, and points to
+    `papers/sorting_network_rediscovery_boundary.json`. Code and paper TODOs
+    already track stronger benchmark fixtures, benchmark-hardening reports,
+    example-scope registries, sorting-network repeated-run/source-citation/
+    certification evidence, matrix and constructive-math benchmark artifacts,
+    and broader representative-benchmark readiness.
+  - Current gap: no README-owned validator, sidecar, or drift check parses the
+    example-scope wording, compares it with the example-scope registry,
+    problem docs, runtime `benchmark_fixture_readiness_report` records,
+    sorting-network boundary sidecars, and `papers/README.md` status rows, or
+    detects when a smoke fixture, benchmark candidate, or paper-comparable
+    claim changes without README/TODO updates.
+  - Required result: add README example-scope evidence that maps each bundled
+    example family to its scope classification, validator strength,
+    benchmark-readiness artifacts, paper-comparability status, and required
+    future certification gates; validate that README, problem docs, ROADMAP,
+    papers, and runtime metadata cannot promote smoke examples or benchmark
+    candidates into paper-comparable claims until the mapped evidence exists.
+
 ## Testing
 
 - [ ] Add README testing-command marker and environment evidence.

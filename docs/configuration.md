@@ -1252,7 +1252,8 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   checks, bounded artifact copy-out, unsupported host-filesystem sandboxing,
   wall-clock timeout cleanup, and unsupported CPU/memory/GPU/disk/process-count
   quotas. They are audit evidence for the local runner, not enforcement of a
-  configurable container or OS resource sandbox.
+  configurable container or OS resource sandbox; the paper-facing boundary is
+  tracked by `papers/validator_execution_boundary.json`.
   `validate_validator_boundary_consistency.v1` compares the startup policy to
   attempt-level `evaluation.metadata.validator_boundary` records for the shared
   execution, filesystem, network, resource, and secret-boundary claims.

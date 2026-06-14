@@ -5357,6 +5357,9 @@ sidecars, tests, and active TODOs.
     `evaluation.metadata.validator_boundary`; the consistency validator checks
     execution, filesystem-capability, network, resource-limit, and
     secret-boundary agreement while still reporting `sandbox_ready: false`.
+    The paper manifest now requires `papers/validator_execution_boundary.json`
+    to preserve that local-subprocess policy scope without overclaiming
+    OS/container sandboxing or resource quotas.
   - Remaining gap: there is still no configurable container/security sandbox,
     no OS/container-grade network egress sandbox, no proof that native
     extensions, subprocesses, or alternate runtimes cannot connect out, no
@@ -5365,7 +5368,8 @@ sidecars, tests, and active TODOs.
     GPU, disk, or process-count quotas, no network-mediated provider credential
     boundary audit, and no resumable distributed evaluator worker state. The
     remaining gap is not startup validator policy-record validation or
-    policy-to-boundary consistency validation.
+    policy-to-boundary consistency validation, or the paper-facing local
+    validator execution boundary.
   - Required result: define and enforce configurable sandbox/container,
     filesystem capability, OS/container network capability, and resource-limit
     policy for validators, with manifest-visible evidence and tests proving the

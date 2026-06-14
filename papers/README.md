@@ -1117,7 +1117,8 @@ AlphaEvolve validator-network note: `validator_network_policy` now records host
 network inheritance by default and can install a Python socket-level deny hook
 for validator preflight/evaluation. This is policy evidence and an
 accidental-egress guard, not OS/container-grade network isolation; the broader
-network/container sandboxing gap remains open.
+network/container sandboxing gap remains open and is tracked by
+`papers/validator_execution_boundary.json`.
 
 AlphaEvolve prompt-budget note: mutation prompt diagnostics now include
 `section_budget` with schema `libreevolve.prompt_section_budget.v1`. It records
@@ -2495,6 +2496,18 @@ Implemented:
   internal RNG capture or resumed-trace exclusion, validator subprocess RNG
   capture or resumed-trace exclusion, controller pending-work RNG linkage, or
   end-to-end sampling continuity trace proof.
+- `papers/validator_execution_boundary.json`: validator execution sidecar for
+  AlphaEvolve Sections 2.4, 2.6, and 4. It records startup
+  `policies.validator_execution`, per-attempt
+  `evaluation.metadata.validator_boundary`, validator-boundary consistency,
+  run-artifact boundary scans, local subprocess execution, candidate-root and
+  declared-problem-file access policy, filesystem-capability metadata,
+  validator network policy, Python socket-denial metadata, minimal environment
+  and redacted-output secret boundaries, wall-clock timeout cleanup, and
+  resource-limit metadata. It is not evidence of OS/container sandbox
+  enforcement, kernel/container network egress control, OS-enforced filesystem
+  capabilities, CPU/memory/GPU/disk/process quotas, native-extension network
+  denial proof, or distributed evaluator-worker resume state.
 - `papers/llm_role_scheduler_boundary.json`: LLM role-scheduler sidecar for
   AlphaEvolve Sections 2.1 and 2.6. It records configured role-backend
   routing, backend metadata role matching, reward-accounted roles, feedback

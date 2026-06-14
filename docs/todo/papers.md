@@ -1602,6 +1602,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `evaluation.metadata.validator_boundary` records match the startup policy
     across execution, filesystem-capability, network, resource-limit, and
     secret-boundary claims while still marking the full sandbox unavailable.
+    The paper manifest now requires `papers/validator_execution_boundary.json`
+    to preserve the local-subprocess policy boundary separately from
+    OS/container sandbox and resource-quota enforcement.
     Problem-local
     evaluator helper modules are imported as sibling modules beside a
     configured validator file or through package-relative imports for package

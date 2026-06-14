@@ -2566,7 +2566,8 @@ policy also names `validate_validator_boundary_consistency.v1` and the shared
 policy/boundary fields it compares. `validate_validator_boundary_consistency()`
 checks that an attempt-level `evaluation.metadata.validator_boundary` matches
 the startup policy for the execution, filesystem, network, resource, and secret
-boundary claims while still leaving `sandbox_ready: false`.
+boundary claims while still leaving `sandbox_ready: false`. The paper-facing
+boundary is preserved in `papers/validator_execution_boundary.json`.
 `validate_run_artifact_validator_boundary_consistency()` loads a run directory,
 validates `manifest.json` `policies.validator_execution`, scans
 `history.jsonl` plus `failure_history.jsonl`, requires every persisted

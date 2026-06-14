@@ -690,7 +690,10 @@ is not yet an AlphaEvolve reproduction.
   bridge claims.
 - Add OS/container-grade validator network isolation and stronger
   sandbox/resource controls beyond the current Python-socket denial option,
-  minimal environment, wall-clock budgets, and process-tree cleanup.
+  minimal environment, wall-clock budgets, and process-tree cleanup. The
+  committed `papers/validator_execution_boundary.json` sidecar preserves the
+  current local-subprocess policy evidence without claiming OS/container
+  sandboxing or resource quotas.
 - Extend evaluator provenance beyond the enforced problem-local dependency
   policy to cover external package/native data access when that becomes part of
   the sandbox/environment contract.

@@ -204,7 +204,8 @@ Important limits:
   unsupported security sandbox/container status, and unsupported CPU, memory,
   GPU, disk, and process-count quotas. They are not OS/container sandboxing,
   OS-enforced filesystem capabilities, kernel/container network isolation, or
-  AlphaEvolve-scale resource-limit enforcement.
+  AlphaEvolve-scale resource-limit enforcement; that boundary is tracked by
+  `papers/validator_execution_boundary.json`.
 - Validator-boundary consistency checks are CLI/run-inspection evidence:
   `validate_run_artifact_validator_boundary_consistency()` scans manifest-
   backed `history.jsonl` and `failure_history.jsonl` rows, and

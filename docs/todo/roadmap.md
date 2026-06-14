@@ -84,3 +84,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     blockers, expected validation artifacts, and AlphaEvolve-alignment impact,
     and add a drift check that forces the section to be refreshed when those
     dependencies or implementation states change.
+
+- [ ] Add ROADMAP phase-boundary and sequencing evidence.
+  - Spec evidence: the `Near Term`, `Mid Term`, and `Longer Term` headings are
+    not neutral labels; they tell readers which AlphaEvolve-alignment work is
+    nearer, which depends on more infrastructure, and which is deliberately
+    deferred. That phase taxonomy should stay tied to dependency readiness and
+    implementation prerequisites.
+  - Current evidence: ROADMAP groups candidate-workspace fidelity,
+    multi-objective search, evaluation cascades, prompt/context, documentation,
+    async runtime, backend scheduling, plugin extensibility, representative
+    benchmarks, and operational maturity into staged sections. Active code and
+    paper TODOs cover many underlying features, and the documentation claim
+    inventory records the phase headings as uncovered claim surfaces.
+  - Current gap: there is no machine-readable phase map, dependency graph,
+    promotion/demotion criterion, or stale-phase detector proving that a
+    ROADMAP item still belongs in Near Term, Mid Term, or Longer Term after
+    related code, papers, README, or sidecar evidence changes.
+  - Required result: add ROADMAP phase metadata that links each major section
+    to prerequisites, blocking TODOs, validation gates, and promotion criteria,
+    then validate that phase labels and item ordering are refreshed when
+    implementation or evidence status changes.

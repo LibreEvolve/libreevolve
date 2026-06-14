@@ -218,3 +218,33 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     critique/reviewer isolation, Gemini substitution status, and validation
     gates, then enforce README/papers/ROADMAP wording against overclaiming
     backend-scheduler or critique parity until the matrix is complete.
+
+- [ ] Add ROADMAP async/resumable-runtime readiness criteria.
+  - Spec evidence: the `6. Async and resumable runtime` section is the main
+    roadmap boundary for AlphaEvolve Section 2.6-style concurrent proposal and
+    evaluation work. It should define what proves LibreEvolve has a real async
+    and resumable runtime, not only synchronous batches, local sample-worker
+    fan-out, terminal snapshots, and absence-boundary metadata.
+  - Current evidence: ROADMAP records synchronous topology reporting,
+    parallel-evaluation readiness reports, terminal controller-state restore
+    evidence, MAP-Elites archive snapshots, cursor/full archive restore
+    surfaces, run manifest hardening, framework RNG restore, synchronous
+    budget counters, and validated sidecars for distributed-pipeline topology,
+    parallel evaluation, controller pending-work resume, archive-event replay,
+    lineage replay, and LLM budget policy. Active code and paper TODOs already
+    track async evaluator workers, concurrent proposal control, ordered archive
+    replay, pending-work controller resume, budget resume, provider replay,
+    RNG/resumed-trace proof, and external environment replay.
+  - Current gap: there is no section-level readiness rubric, async-state
+    inventory, replay-resume acceptance checklist, or stale-readiness detector
+    tying those runtime pieces together, so partial synchronous restore or
+    sample-worker fan-out could be mistaken for full async/resumable runtime
+    parity.
+  - Required result: add ROADMAP async/resumable-runtime criteria that classify
+    controller queues, LLM sampler tasks, evaluator workers, pending-work
+    checkpoints, deterministic merge/admission order, archive/event replay,
+    RNG and lineage replay, provider/plugin nondeterminism, budget accounting,
+    environment replay, and resumed-trace proof status; map each criterion to
+    code/tests/runtime artifacts/sidecars/TODOs; and reject README, ROADMAP,
+    and paper wording that implies async or resumable parity before the full
+    checklist is satisfied.

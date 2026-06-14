@@ -352,3 +352,41 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifacts/sidecars/TODOs; and validate README, ROADMAP, papers, archive
     reports, and runtime metadata against implying full multi-objective
     readiness before the matrix is satisfied.
+
+- [ ] Add ROADMAP candidate-workspace fidelity readiness criteria.
+  - Spec evidence: the `1. Finish candidate workspace fidelity` section is the
+    first ROADMAP step toward AlphaEvolve-style candidate handling. It should
+    define when workspace materialization, candidate abstraction, language and
+    build runners, mutation application, artifact capture, topology
+    diagnostics, and resume semantics are faithful enough to support
+    AlphaEvolve-alignment claims rather than only Python-local workspace
+    experiments.
+  - Current evidence: ROADMAP records manifest-only candidate-language runner
+    declarations, code-file-set divergence from AlphaEvolve's flexible
+    solution-abstraction API, candidate-abstraction design matrices,
+    Python-only evolve-block marker handling, `workspace_math` smoke fixtures,
+    Table 1 codebase-scale absence reports, fixed diff/full/file/block/topology
+    mutation parser evidence, prompt-example copy diagnostics,
+    mutation-consistency reports, initial-pool divergence reports,
+    binary/static candidate handling, topology materialization diagnostics, and
+    archive-content restore boundaries. Active code and paper TODOs already
+    track real language/build runners, candidate-embedded evaluators,
+    abstraction-choice benchmark evidence, topology diagnostics, adaptive
+    mutation modes, mutation-operator provenance, validator boundary checks,
+    source/workspace integrity, binary/static replay policy, codebase-scale
+    evidence, and ordered migration-event replay.
+  - Current gap: there is no section-level candidate-workspace readiness
+    rubric, abstraction/language/build capability matrix, mutation-fidelity
+    checklist, or stale-readiness detector tying those pieces together, so a
+    passing Python workspace fixture, fixed diff parser, or snapshot restore
+    could be mistaken for complete AlphaEvolve-style workspace support.
+  - Required result: add ROADMAP candidate-workspace criteria that classify
+    each candidate surface by language/build runner support, abstraction API
+    status, marker/materialization policy, fixture scale, mutation operator
+    provenance, prompt-example-copy guard strength, cross-file consistency
+    evidence, initial-pool divergence evidence, binary/static replay policy,
+    topology diagnostics, artifact/reproducibility bundle coverage, resume
+    semantics, benchmark evidence, and overclaim status; map each criterion to
+    code/tests/runtime artifacts/sidecars/TODOs; and validate README, ROADMAP,
+    papers, run manifests, and workspace docs against implying full
+    candidate-workspace fidelity before the matrix is satisfied.

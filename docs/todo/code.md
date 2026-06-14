@@ -419,6 +419,26 @@ sidecars, tests, and active TODOs.
   - Required result: retain scheduled CI refresh-run history before treating
     source metadata as publication-grade freshness evidence.
 
+- [ ] Harden the AlphaEvolve source-refresh gate CLI artifact contract.
+  - Evidence: `libreevolve/tools/alphaevolve_source_refresh_gate.py` now emits a
+    JSON report for deterministic fixture mode and live network mode, and the
+    scheduled/manual GitHub Actions job pipes that report into
+    `alphaevolve_source_refresh_report.json` for artifact upload.
+    `tests/test_alphaevolve_source_refresh_gate.py` currently covers fixture
+    success, digest drift, missing snapshots, and the basic JSON-output happy
+    path.
+  - Current gap: the CLI contract is not yet pinned for `--fixture-json`
+    inputs, malformed or non-object fixture files, drift-mode nonzero exit
+    behavior, live-fetch error record shape, timeout propagation, report schema
+    stability for uploaded artifacts, or stderr/stdout separation. A broken
+    workflow/report wrapper could still upload a malformed or partial
+    refresh-gate artifact without a focused test failing before CI.
+  - Required result: add focused source-refresh gate CLI tests and, if needed,
+    parser/report validation that prove fixture-file loading, malformed input
+    diagnostics, drift exit codes, live-fetch error normalization, timeout
+    bounds, JSON schema stability, and artifact stdout behavior before treating
+    the refresh-gate command as a stable paper-evidence producer.
+
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.
   - Spec evidence: AlphaEvolve Section 2.1 and Discussion say the same problem

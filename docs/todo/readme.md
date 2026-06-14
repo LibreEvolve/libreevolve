@@ -7,6 +7,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
 
 ## Research References and Bundled Papers
 
+- [ ] Add README paper-cache topical classification evidence.
+  - Spec evidence: the README says the local paper cache contains 53 PDFs on
+    LLM-guided evolution, program synthesis, quality-diversity optimization,
+    and related benchmarks. That topical scope should be backed by row-level
+    paper taxonomy or source-role labels, not only by local PDF availability.
+  - Current evidence: `paper_manifest` validates manifest shape, README
+    documented count, local PDF existence, source rows, and the local paper
+    cache badge/count. `papers/README.md` provides paper-facing titles,
+    implementation status, and benchmark coverage decisions, while
+    `papers/related_work_taxonomy_boundary.json` records that AlphaEvolve
+    Related Work positioning taxonomy and README/ROADMAP claim gates are not
+    yet ready.
+  - Current gap: there is no committed row-level topic taxonomy proving which
+    cached papers belong to the README-listed topic families, no validator
+    checking README topic wording against paper-index categories, and no drift
+    report when new papers fall outside those categories or when the README
+    topic sentence changes.
+  - Required result: add paper-cache topic/category fields or a sidecar
+    taxonomy, validate README topic wording from those records, and update
+    README/TODO/paper docs when the cache scope changes.
+
 ## Feature Claims
 
 - [ ] Add semantic README claim verification and evidence mapping.

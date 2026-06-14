@@ -5826,6 +5826,49 @@ directory and using the AlphaEvolve paper as the primary specification.
     that treats combinatorial-bijection discovery as missing constructive-math
     benchmark evidence rather than implemented LibreEvolve support.
 
+- [ ] Reproduce SeaEvo strategy-space evolution evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2604.24372`, submitted April 27, 2026 and
+    last revised May 8, 2026, is titled `SeaEvo: Advancing Algorithm Discovery
+    with Strategy Space Evolution`. Its abstract says LLM-guided evolutionary
+    search is increasingly used for automated algorithm discovery, but current
+    methods usually track progress through executable programs and scalar
+    fitness. Even when natural-language reasoning appears in heuristic
+    descriptions or reflection, it often remains transient mutation context or
+    unstructured memory instead of persistent population-level state over
+    strategic directions. SeaEvo adds a modular strategy-space layer: each
+    candidate program receives an explicit natural-language strategy, the
+    archive is clustered by strategy semantics, behaviorally complementary
+    inspirations are retrieved, and the strategy landscape is periodically
+    navigated to avoid saturated directions. The paper reports improvements
+    over existing evolutionary backbones across algorithm discovery, systems
+    optimization, and agent-scaffold design tasks, including a `20.6%` average
+    relative improvement across four systems benchmarks and a `3x` higher best
+    single Prism run.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2604.24372`. Existing LibreEvolve proposal-hypothesis,
+    proposal-diversity, failure-memory, DeepResearch, LEVI, PACEvolve, and
+    MAP-Elites TODOs do not reproduce candidate-level strategy descriptions as
+    first-class population state, semantic strategy clustering, stratified
+    experience retrieval, strategy-complementarity inspiration selection,
+    periodic strategic landscape navigation, saturated/underexplored strategy
+    family detection, strategy-level lineage, or same-backbone SeaEvo versus
+    OpenEvolve/ShinkaEvolve benchmark comparisons.
+  - Required result: add reproduction-grade evidence for `2604.24372`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, ShinkaEvolve, LEVI,
+    PACEvolve, and LibreEvolve, strategy-description schema, candidate-to-
+    strategy linkage, semantic clustering method, strategy-cluster archive
+    records, behaviorally complementary inspiration retrieval policy,
+    strategic landscape summary artifacts, saturated and underexplored family
+    diagnostics, mutation prompt integration, per-backbone configuration and
+    budget telemetry, algorithm-discovery/systems/agent-scaffold benchmark
+    metadata, cost-efficiency records, ablation outputs for strategy
+    articulation/retrieval/navigation, independent verification outputs, and
+    README/ROADMAP wording that treats SeaEvo strategy-space evolution as
+    missing search-memory architecture evidence rather than implemented
+    LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

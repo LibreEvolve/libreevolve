@@ -5989,6 +5989,46 @@ directory and using the AlphaEvolve paper as the primary specification.
     style adaptive scheduling as missing controller evidence rather than
     implemented LibreEvolve support.
 
+- [ ] Reproduce runtime-enriched CodeEvolve multi-language optimization evidence beyond paper coverage.
+  - Paper/source evidence: arXiv `2605.04677`, submitted May 6, 2026, is
+    titled `CodeEvolve: LLM-Driven Evolutionary Optimization with
+    Runtime-Enriched Target Selection for Multi-Language Code Enhancement`.
+    Its abstract says this CodeEvolve extends OpenEvolve with runtime-guided
+    target selection, Monte Carlo Tree Search (MCTS), automated code
+    refinement, and language-specific evaluation pipelines for Java and
+    Salesforce Apex. It uses Java Flight Recorder (JFR) profiles to build
+    weighted component graphs and pick optimization targets that account for
+    most execution cost, then evaluates candidate edits with build validation,
+    unit tests, performance checks, static analysis, and LLM-based review while
+    retaining only functionality-preserving variants. It reports a 15.22x
+    average speedup across seven hotspot functions in a large enterprise Java
+    codebase and an Apex ablation where the full MCTS-augmented configuration
+    produces 19.5 valid programs out of 20 on average.
+  - Current gap: no paper manifest row, cached PDF, paper-index entry,
+    row-identity record, boundary artifact, or source-scoped TODO coverage
+    exists for `2605.04677`. Existing LibreEvolve CodeEvolve coverage is for
+    arXiv `2510.14150` and its islands/crossover/meta-prompting benchmark
+    boundary; it does not reproduce runtime-profile target selection, JFR
+    weighted component graphs, hotspot-function prioritization, MCTS search
+    over edits, automated refinement loops, Java or Salesforce Apex evaluation
+    pipelines, LLM-based review gates, multi-language build/static/performance
+    validation, enterprise Java speedup evidence, or Apex valid-program
+    ablation rows.
+  - Required result: add reproduction-grade evidence for `2605.04677`:
+    title/authors/arXiv version/date, source license, code/artifact
+    availability, relation to AlphaEvolve, OpenEvolve, the `2510.14150`
+    CodeEvolve paper, and LibreEvolve, runtime-profile ingestion schema, JFR
+    profile metadata, weighted component graph construction, hotspot target
+    selection policy, MCTS state/action/reward records, automated refinement
+    loop telemetry, Java and Salesforce Apex runner contracts, build/unit/
+    performance/static-analysis/LLM-review gate outputs, functionality-
+    preservation evidence, enterprise Java benchmark metadata, seven-hotspot
+    speedup tables, Apex optimization benchmark metadata, ablation outputs for
+    search/filtering/refinement, independent verification outputs, and README/
+    ROADMAP wording that treats runtime-enriched multi-language CodeEvolve
+    support as missing systems-optimization evidence rather than implemented
+    LibreEvolve support.
+
 - [ ] Reproduce LEVI cost-aware search-architecture evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.09764`, submitted May 10, 2026, is

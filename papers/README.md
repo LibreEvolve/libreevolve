@@ -1445,8 +1445,9 @@ offsets plus phrase-local TODO block records, but it is not phrase-level semanti
 absence-sentence freshness proof. The checked
 `papers/benchmark_coverage_inventory.json` sidecar records structural
 implemented-benchmark coverage bullet entries with source lines, hashes,
-local-artifact mention source offsets, artifact-existence records,
-limitation-signal terms/source offsets/counts, and contradiction flags, but it
+source-token match offsets, local-artifact mention source offsets,
+artifact-existence records, limitation-signal terms/source offsets/counts, and
+contradiction flags, but it
 is not semantic proof that each bullet is sufficient or fresh.
 Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
@@ -2852,10 +2853,12 @@ Implemented:
   freshness checks.
 - `papers/benchmark_coverage_inventory.json`: structural inventory for
   `papers/README.md` Implemented benchmark coverage bullets. It records bullet
-  source spans, summary/body hashes, local artifact mention source offsets,
-  artifact-existence records, limitation-signal terms/source offsets/counts,
-  and contradiction flags. The current inventory records 116 unique referenced
-  local artifact paths and zero missing referenced local artifacts. It is not
+  source spans, summary/body hashes, source-token match offsets, local artifact
+  mention source offsets, artifact-existence records, limitation-signal
+  terms/source offsets/counts, and contradiction flags. The current inventory
+  records 3 referenced manifest source IDs across 15 source-token match
+  records, 116 unique referenced local artifact paths, and zero missing
+  referenced local artifacts. It is not
   benchmark-result reproduction evidence, semantic verification, or freshness
   proof.
 - `papers/status_claim_inventory.json`: row-level paper-index

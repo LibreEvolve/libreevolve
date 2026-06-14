@@ -1801,11 +1801,21 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
     """Return the paper-index implemented benchmark coverage inventory."""
 
     root_path = Path(root)
+    manifest_rows, _manifest_issues = _load_json_manifest(
+        root_path / "papers" / "download_manifest.json",
+        root_path,
+    )
     bullets, _issues = _read_implemented_benchmark_bullet_records(root_path)
     rows: list[dict[str, Any]] = []
     for ordinal, bullet in enumerate(bullets, start=1):
         text = bullet["text"]
         summary = text.splitlines()[0].strip()
+        source_token_match_records = _benchmark_source_token_match_records(
+            text,
+            bullet["line_start"],
+            manifest_rows,
+        )
+        source_ids_mentioned = sorted({record["row_id"] for record in source_token_match_records})
         local_artifact_mention_records = _benchmark_local_artifact_mention_records(
             text,
             bullet["line_start"],
@@ -1834,6 +1844,9 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
                     "line_start": bullet["line_start"],
                     "line_end": bullet["line_end"],
                 },
+                "source_ids_mentioned": source_ids_mentioned,
+                "source_token_match_records": source_token_match_records,
+                "source_token_match_count": len(source_token_match_records),
                 "local_artifact_paths": local_artifacts,
                 "has_local_artifact": bool(local_artifacts),
                 "local_artifact_mention_records": local_artifact_mention_records,
@@ -1867,6 +1880,12 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
     local_artifact_mention_record_count = sum(
         len(row["local_artifact_mention_records"]) for row in rows
     )
+    benchmark_source_ids_mentioned = sorted(
+        {row_id for row in rows for row_id in row["source_ids_mentioned"]}
+    )
+    benchmark_source_token_match_record_count = sum(
+        row["source_token_match_count"] for row in rows
+    )
     missing_local_artifacts = sorted(
         {path for row in rows for path in row["local_artifact_missing_paths"]}
     )
@@ -1892,6 +1911,10 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         "source_path": "papers/README.md#benchmark-coverage-decisions",
         "implemented_bullet_count": len(rows),
         "implemented_bullet_ids": [row["coverage_id"] for row in rows],
+        "source_ids_mentioned": benchmark_source_ids_mentioned,
+        "source_id_mention_count": len(benchmark_source_ids_mentioned),
+        "source_token_match_record_count": benchmark_source_token_match_record_count,
+        "source_token_coverage_status": "source_tokens_structurally_recorded_without_semantic_verifier",
         "unique_local_artifact_paths": unique_local_artifacts,
         "unique_local_artifact_count": len(unique_local_artifacts),
         "local_artifact_mention_record_count": local_artifact_mention_record_count,
@@ -1915,9 +1938,10 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         "claim_boundary": (
             "This inventory records one structured entry for each "
             "papers/README.md Implemented benchmark coverage bullet, including "
-            "source lines, summary/body hashes, local artifact mention source "
-            "offsets, local artifact existence records, limitation-signal "
-            "terms/source offsets, and contradiction flags. It does not claim "
+            "source lines, summary/body hashes, source-token match offsets, "
+            "local artifact mention source offsets, local artifact existence "
+            "records, limitation-signal terms/source offsets, and "
+            "contradiction flags. It does not claim "
             "semantic verification, benchmark freshness, reproduced result "
             "linkage, or proof that the benchmark coverage prose is complete."
         ),
@@ -4038,6 +4062,10 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
         ("source_path", "benchmark coverage inventory source path changed"),
         ("implemented_bullet_count", "benchmark coverage implemented-bullet count drifted"),
         ("implemented_bullet_ids", "benchmark coverage implemented-bullet ids drifted"),
+        ("source_ids_mentioned", "benchmark coverage source ids drifted"),
+        ("source_id_mention_count", "benchmark coverage source id count drifted"),
+        ("source_token_match_record_count", "benchmark coverage source-token match count drifted"),
+        ("source_token_coverage_status", "benchmark coverage source-token status drifted"),
         ("unique_local_artifact_paths", "benchmark coverage unique local artifact paths drifted"),
         ("unique_local_artifact_count", "benchmark coverage unique local artifact count drifted"),
         ("local_artifact_mention_record_count", "benchmark coverage local artifact mention count drifted"),
@@ -9266,6 +9294,51 @@ def _benchmark_local_artifact_mention_records(text: str, bullet_line_start: int)
             }
         )
     return records
+
+
+def _benchmark_source_token_match_records(
+    text: str,
+    bullet_line_start: int,
+    manifest_rows: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for manifest_row in manifest_rows:
+        row_id = manifest_row.get("id")
+        if not isinstance(row_id, str) or not row_id:
+            continue
+        for token in _completed_todo_source_tokens(row_id, manifest_row):
+            start = 0
+            while True:
+                index = text.find(token, start)
+                if index < 0:
+                    break
+                end = index + len(token)
+                records.append(
+                    {
+                        "row_id": row_id,
+                        "token": token,
+                        "bullet_text_char_start": index,
+                        "bullet_text_char_end": end,
+                        "source_span": {
+                            "path": "papers/README.md",
+                            "section": "Benchmark coverage decisions",
+                            "line_start": bullet_line_start + text.count("\n", 0, index),
+                            "line_end": bullet_line_start + text.count("\n", 0, end),
+                            "bullet_text_char_start": index,
+                            "bullet_text_char_end": end,
+                        },
+                    }
+                )
+                start = end
+    return sorted(
+        records,
+        key=lambda record: (
+            record["bullet_text_char_start"],
+            record["bullet_text_char_end"],
+            record["row_id"],
+            record["token"],
+        ),
+    )
 
 
 def _benchmark_limitation_signal_records(text: str, bullet_line_start: int) -> list[dict[str, Any]]:

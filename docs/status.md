@@ -1253,8 +1253,8 @@ Important limits:
   source-offset classification.
   The checked
   `papers/benchmark_coverage_inventory.json` sidecar now records structural
-  implemented-benchmark coverage bullet evidence plus referenced local
-  artifact existence checks. This is not an exhaustive
+  implemented-benchmark coverage bullet evidence plus source-token match
+  offsets and referenced local artifact existence checks. This is not an exhaustive
   source-span coverage matrix, per-phrase evidence-link sufficiency proof,
   status-cell semantic verifier, implemented-benchmark bullet semantic
   verifier, absence-sentence freshness
@@ -1291,9 +1291,11 @@ Important limits:
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction, and the committed benchmark coverage inventory records source
-  spans, hashes, local artifact mention source offsets, artifact-existence
-  records, limitation-signal terms/source offsets/counts, and contradiction
-  flags for each implemented bullet. It currently records
+  spans, hashes, source-token match offsets, local artifact mention source
+  offsets, artifact-existence records, limitation-signal terms/source
+  offsets/counts, and contradiction flags for each implemented bullet. It
+  currently records 3 referenced manifest source IDs across 15 source-token
+  match records,
   116 unique referenced local artifact paths and zero missing referenced local
   artifacts. It is not semantic proof that every implemented benchmark bullet
   is fresh, sufficient, or benchmark-comparable; that remains part of the

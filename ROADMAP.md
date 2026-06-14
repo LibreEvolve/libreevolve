@@ -835,8 +835,8 @@ is not yet an AlphaEvolve reproduction.
   block hashes/source offsets, phrase-level TODO block records, and artifact
   mention source offsets plus structural absence-signal source-offset classification, while
   `papers/benchmark_coverage_inventory.json` records structural implemented
-  benchmark coverage bullets plus referenced local artifact mention source
-  offsets/existence checks and limitation-signal term/source-offset
+  benchmark coverage bullets plus source-token match offsets, referenced local
+  artifact mention source offsets/existence checks, and limitation-signal term/source-offset
   classification.
   This is not an exhaustive source-span coverage matrix,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,

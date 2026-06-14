@@ -12139,7 +12139,7 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     artifact_path.write_text("# matrix result evidence\n", encoding="utf-8")
     bullet_text = (
         "- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, "
-        "but not yet a full benchmark."
+        f"tracks `{row['id']}` but not yet a full benchmark."
     )
     readme_path = tmp_path / "papers" / "README.md"
     readme_path.write_text(
@@ -12160,6 +12160,26 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     assert bullet["has_local_artifact"] is True
     assert bullet["all_local_artifacts_exist"] is True
     assert bullet["local_artifact_existing_count"] == 1
+    source_token_start = bullet_text.find(row["id"])
+    source_token_end = source_token_start + len(row["id"])
+    assert bullet["source_ids_mentioned"] == [row["id"]]
+    assert bullet["source_token_match_count"] == 1
+    assert bullet["source_token_match_records"] == [
+        {
+            "row_id": row["id"],
+            "token": row["id"],
+            "bullet_text_char_start": source_token_start,
+            "bullet_text_char_end": source_token_end,
+            "source_span": {
+                "path": "papers/README.md",
+                "section": "Benchmark coverage decisions",
+                "line_start": bullet["source_span"]["line_start"],
+                "line_end": bullet["source_span"]["line_start"],
+                "bullet_text_char_start": source_token_start,
+                "bullet_text_char_end": source_token_end,
+            },
+        }
+    ]
     assert bullet["local_artifact_mention_records"] == [
         {
             "path": "libreevolve/problems/benchmarks/matrix_results.py",
@@ -12189,6 +12209,13 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     assert bullet["limitation_signal_records"][0]["source_span"]["line_start"] == bullet["source_span"]["line_start"]
     assert bullet["has_limitation_boundary"] is True
     assert bullet["limitation_signal_status"] == "limitation_signals_structurally_classified"
+    assert inventory["source_ids_mentioned"] == [row["id"]]
+    assert inventory["source_id_mention_count"] == 1
+    assert inventory["source_token_match_record_count"] == 1
+    assert (
+        inventory["source_token_coverage_status"]
+        == "source_tokens_structurally_recorded_without_semantic_verifier"
+    )
     assert inventory["unique_local_artifact_count"] == 1
     assert inventory["local_artifact_mention_record_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []

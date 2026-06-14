@@ -39,6 +39,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark coverage bullets with source lines, summary/body hashes, local
     artifact mention source offsets, local artifact existence records, 116
     unique local artifact paths, zero missing referenced local artifacts,
+    source-token match offsets for 3 manifest source IDs across 15 records,
     limitation-signal terms/source offsets/counts, and contradiction flags.
     The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
@@ -58,8 +59,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     TODO evidence, but
     there is no proof that those links are sufficient for each implemented or
     missing clause, no semantic verifier for
-    `Implemented` benchmark coverage bullets beyond referenced artifact
-    mention/existence/source-offset records, no absence-sentence freshness
+    `Implemented` benchmark coverage bullets beyond referenced source-token
+    match offsets, artifact mention/existence/source-offset records, no absence-sentence freshness
     matrix beyond structural signal source-offset classification, and no
     semantic verifier that checks benchmark qualifiers, implemented-bullet
     scope/limitation semantics beyond structural signal terms and source

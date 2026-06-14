@@ -1124,6 +1124,38 @@ sidecars, tests, and active TODOs.
     keep README/backend/paper wording from implying unsupported OpenAI controls
     are reproducible experiment inputs.
 
+- [ ] Harden OpenAI Responses output-text extraction and completion-state
+  accounting.
+  - Spec evidence: AlphaEvolve-style mutations depend on complete provider
+    output before SEARCH/REPLACE parsing, candidate validation, and reward
+    attribution. Current OpenAI Responses docs describe `response.output` as an
+    array of typed items and recommend the SDK `output_text` helper when only
+    final text is needed, or explicit per-item handling when outputs include
+    reasoning, tools, or multimodal items.
+  - Current evidence: `OpenAIBackend._generate_responses()` in
+    `libreevolve/llm/openai.py` iterates over `r.output` and returns the first
+    `output_text` part from the first message item it encounters. Existing
+    backend tests cover a single `output_text` happy path, missing/empty output
+    text, refusal-only output, and tool-call-only output, but they do not cover
+    multiple message items, multiple `output_text` parts, mixed text plus
+    refusal/tool items, SDK `response.output_text` helper parity, or non-
+    completed Responses statuses.
+  - Current gap: a multi-part Responses payload can be silently truncated
+    before mutation parsing, and provider telemetry records `status` as a
+    finish reason without an extraction policy proving whether accepted text was
+    complete, partial, mixed with auxiliary output, or rejected because the
+    provider response was incomplete/truncated. That makes OpenAI Responses
+    runs less auditable than AlphaEvolve-style benchmark runs require.
+  - Required result: add a typed Responses extraction contract that either
+    concatenates all text parts or intentionally rejects multi-part output per
+    documented policy; classify mixed text/refusal/tool shapes and
+    incomplete/truncated statuses as provider-response outcomes; record output
+    item/content counts plus completion status in call telemetry; validate
+    parity with the SDK `output_text` helper where available; and add focused
+    tests so Responses output is never admitted as a mutation candidate until
+    the adapter proves it is full, text-only enough for the configured policy,
+    and reproducibly accounted.
+
 - [ ] Extend prompt-template compatibility beyond current mutation-template
   checks and duplicate-arm audit.
   - Spec evidence: AlphaEvolve-style prompt evolution should make prompt

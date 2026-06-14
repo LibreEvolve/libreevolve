@@ -1,0 +1,83 @@
+{
+  "schema": "libreevolve.alphaevolve_doi_landing_resolution_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "AlphaEvolve source metadata should retain DOI landing-resolution evidence connecting the DOI URL to the arXiv abstract landing page.",
+  "boundary_status": "doi_redirect_headers_without_body_retention_or_refresh_gate",
+  "claim_ready": false,
+  "doi": "10.48550/arxiv.2506.13131",
+  "retrieved_at_utc": "2026-06-14T02:32:29Z",
+  "doi_redirect": {
+    "url": "https://doi.org/10.48550/arxiv.2506.13131",
+    "http_status": 302,
+    "reason": "Found",
+    "location": "https://arxiv.org/abs/2506.13131",
+    "body_bytes": 149,
+    "raw_header_lines": [
+      "Date: Sun, 14 Jun 2026 02:32:27 GMT",
+      "Content-Type: text/html;charset=utf-8",
+      "Transfer-Encoding: chunked",
+      "Connection: close",
+      "location: https://arxiv.org/abs/2506.13131",
+      "Server: cloudflare",
+      "vary: Origin",
+      "vary: Accept",
+      "expires: Sun, 14 Jun 2026 03:02:17 GMT",
+      "permissions-policy: interest-cohort=(),browsing-topics=()",
+      "cf-cache-status: DYNAMIC",
+      "Nel: {\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+      "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload",
+      "Report-To: {\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=BAtMPR7rKW9O2QlWTMUiAnJi50%2FCFOftLcifnFmUi5oQnSiOIB%2BPgGvEQXFbMxyaGZycV6L3ywUBzrotoHcSCLChVX68n0xT%2BvMnpKy7%2Fv6lBDVh%2F80%2B2Y4%3D\"}]}",
+      "CF-RAY: a0b5ecb518554a3e-CMH",
+      "alt-svc: h3=\":443\"; ma=86400"
+    ]
+  },
+  "final_landing": {
+    "url": "https://arxiv.org/abs/2506.13131",
+    "http_status": 200,
+    "reason": "OK",
+    "content_type": "text/html; charset=utf-8",
+    "response_bytes": 49939,
+    "response_sha256": "707d6aa982e50eca955e6cf7f4a86d2bce2ca6cea543827fea22537ef68d87bb",
+    "raw_header_lines": [
+      "Connection: close",
+      "Content-Length: 49939",
+      "cache-control: max-age=3600",
+      "x-cloud-trace-context: c7cc521b4a3d0fff5e24aab4e096e3cc",
+      "last-modified: Tue, 17 Jun 2025 01:05:15 GMT",
+      "content-type: text/html; charset=utf-8",
+      "content-security-policy: frame-ancestors 'none'",
+      "x-frame-options: SAMEORIGIN",
+      "via: 1.1 google, 1.1 varnish, 1.1 varnish, 1.1 varnish",
+      "server: Google Frontend",
+      "Accept-Ranges: bytes",
+      "Age: 479589",
+      "Date: Sun, 14 Jun 2026 02:32:27 GMT",
+      "X-Served-By: cache-lga21947-LGA, cache-lga21962-LGA, cache-cmh1290123-CMH",
+      "X-Cache: MISS, HIT, HIT",
+      "X-Timer: S1781404348.935582,VS0,VE1"
+    ]
+  },
+  "required_evidence_fields": [
+    "doi_url",
+    "retrieved_at_utc",
+    "doi_redirect_status",
+    "doi_redirect_location",
+    "doi_redirect_raw_header_lines",
+    "doi_redirect_body_bytes",
+    "final_landing_url",
+    "final_landing_status",
+    "final_landing_content_type",
+    "final_landing_raw_header_lines",
+    "final_landing_response_bytes",
+    "final_landing_response_sha256",
+    "full_doi_redirect_body_artifact",
+    "automated_doi_resolution_refresh_gate",
+    "cached_pdf_header_consistency"
+  ],
+  "missing_evidence": {
+    "full_doi_redirect_body_artifact": "not_recorded_locally",
+    "automated_doi_resolution_refresh_gate": "not_recorded_locally",
+    "cached_pdf_header_consistency": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records raw DOI resolver redirect headers and the final arXiv landing response headers for 10.48550/arxiv.2506.13131. It does not claim full DOI redirect body retention, an automated DOI resolution refresh gate, or cached-PDF header consistency."
+}

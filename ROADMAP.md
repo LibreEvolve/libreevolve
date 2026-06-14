@@ -1466,12 +1466,13 @@ by `papers/lineage_replay_boundary.json`.
   and records that the floating PDF digest/bytes match the cached PDF.
   `papers/alphaevolve_raw_http_headers_boundary.json` now preserves pinned raw
   HTTP response header lines for the versioned abstract, floating abstract,
-  floating PDF, DataCite API, e-print archive, and license page. Committed full
-  raw DataCite responses, full TeX/e-print archive retention, archive member
-  inventories, metadata extraction-script artifacts, DOI landing-resolution
-  headers, committed full HTML content, full floating-PDF response retention,
-  cached-PDF header consistency records, and automated CI refresh gates remain
-  open.
+  floating PDF, DataCite API, e-print archive, and license page.
+  `papers/alphaevolve_doi_landing_resolution_boundary.json` now pins the DOI
+  resolver `302` headers, redirect location, and final arXiv landing-page
+  headers. Committed full raw DataCite responses, full TeX/e-print archive
+  retention, archive member inventories, metadata extraction-script artifacts,
+  committed full HTML content, full floating-PDF response retention, cached-PDF
+  header consistency records, and automated CI refresh gates remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

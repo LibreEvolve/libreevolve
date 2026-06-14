@@ -47,6 +47,12 @@ from libreevolve.problems.benchmarks.alphaevolve_datacite_doi_boundary import (
     render_alphaevolve_datacite_doi_boundary_summary,
     validate_alphaevolve_datacite_doi_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_doi_landing_resolution_boundary import (
+    ALPHAEVOLVE_DOI_LANDING_RESOLUTION_BOUNDARY_SCHEMA,
+    alphaevolve_doi_landing_resolution_boundary_record,
+    render_alphaevolve_doi_landing_resolution_boundary_summary,
+    validate_alphaevolve_doi_landing_resolution_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_tex_source_boundary import (
     ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_SCHEMA,
     alphaevolve_tex_source_boundary_record,
@@ -1011,6 +1017,7 @@ __all__ = [
     "ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_DOI_LANDING_RESOLUTION_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_LICENSE_PAGE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_REFERENCES_SECTION_SCHEMA",
@@ -1207,6 +1214,7 @@ __all__ = [
     "alphaevolve_current_version_boundary_record",
     "alphaevolve_raw_http_headers_boundary_record",
     "alphaevolve_datacite_doi_boundary_record",
+    "alphaevolve_doi_landing_resolution_boundary_record",
     "alphaevolve_license_page_boundary_record",
     "alphaevolve_tex_source_boundary_record",
     "alphaevolve_source_pdf_rights_record",
@@ -1507,6 +1515,7 @@ __all__ = [
     "render_alphaevolve_current_version_boundary_summary",
     "render_alphaevolve_raw_http_headers_boundary_summary",
     "render_alphaevolve_datacite_doi_boundary_summary",
+    "render_alphaevolve_doi_landing_resolution_boundary_summary",
     "render_alphaevolve_license_page_boundary_summary",
     "render_alphaevolve_tex_source_boundary_summary",
     "render_ucb1_boundary_summary",
@@ -1539,6 +1548,7 @@ __all__ = [
     "validate_alphaevolve_current_version_boundary",
     "validate_alphaevolve_raw_http_headers_boundary",
     "validate_alphaevolve_datacite_doi_boundary",
+    "validate_alphaevolve_doi_landing_resolution_boundary",
     "validate_alphaevolve_license_page_boundary",
     "validate_alphaevolve_tex_source_boundary",
     "validate_alphaevolve_follow_on_math_source",

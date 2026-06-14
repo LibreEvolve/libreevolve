@@ -1238,11 +1238,11 @@ Important limits:
   timestamp, TeX-source URL, license URL, and submission-history entry.
   DataCite DOI, TeX/e-print, license-page, and current-version/floating-PDF
   digest sidecars now preserve bounded response metadata and hashes, and the
-  raw HTTP headers sidecar preserves pinned response header lines. This is not
-  extraction-script provenance, full raw DataCite response retention, full
-  TeX-source archive caching, full license-page caching, committed full HTML
-  content, full floating-PDF response retention, cached-PDF header consistency
-  evidence, or an automated CI refresh gate.
+  raw HTTP headers and DOI landing-resolution sidecars preserve pinned response
+  header lines. This is not extraction-script provenance, full raw DataCite
+  response retention, full TeX-source archive caching, full license-page
+  caching, committed full HTML content, full floating-PDF response retention,
+  cached-PDF header consistency evidence, or an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

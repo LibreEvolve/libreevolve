@@ -357,15 +357,17 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_raw_http_headers_boundary.json` now records pinned raw
     HTTP response header lines for the versioned abstract, floating abstract,
     floating PDF, DataCite API, e-print archive, and license page.
+    `papers/alphaevolve_doi_landing_resolution_boundary.json` now records the
+    DOI resolver `302` status, redirect location, raw DOI resolver headers, and
+    final arXiv landing-page headers.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
     equivalent, extraction-script artifact, full raw DataCite response
-    retention, DOI landing-resolution headers, full TeX/e-print archive
-    retention, archive member inventory, full license-page HTML retention, full
-    floating-PDF response retention, cached-PDF header consistency, and an
-    automated CI/network refresh gate that fails paper/source validation if the live
-    arXiv/DataCite/e-print/license metadata drifts from the committed source
-    boundary.
+    retention, full TeX/e-print archive retention, archive member inventory,
+    full license-page HTML retention, full floating-PDF response retention,
+    cached-PDF header consistency, and an automated CI/network refresh gate
+    that fails paper/source validation if the live arXiv/DataCite/e-print/license
+    metadata drifts from the committed source boundary.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

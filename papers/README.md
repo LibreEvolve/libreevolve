@@ -2303,12 +2303,13 @@ Implemented:
   and records that the floating PDF digest/bytes match the cached PDF.
   `papers/alphaevolve_raw_http_headers_boundary.json` now preserves pinned raw
   HTTP response header lines for the versioned abstract, floating abstract,
-  floating PDF, DataCite API, e-print archive, and license page. Full raw
-  DataCite response retention, full TeX/e-print archive retention, archive
-  member inventories, metadata extraction-script artifacts, committed full HTML
-  content, full floating-PDF response retention, cached-PDF header consistency
-  records, DOI landing-resolution headers, and automated CI refresh checks
-  remain open.
+  floating PDF, DataCite API, e-print archive, and license page.
+  `papers/alphaevolve_doi_landing_resolution_boundary.json` now pins the DOI
+  resolver `302` headers, redirect location, and final arXiv landing-page
+  headers. Full raw DataCite response retention, full TeX/e-print archive
+  retention, archive member inventories, metadata extraction-script artifacts,
+  committed full HTML content, full floating-PDF response retention, cached-PDF
+  header consistency records, and automated CI refresh checks remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2816,8 +2817,14 @@ Implemented:
   byte count, SHA-256 digest, DOI, landing URL, title, creator count,
   publisher, publication year, resource type, schema version, registered
   timestamp, and version. It is not full raw response retention, a DataCite
-  refresh gate, DOI landing-resolution-header evidence, or cached-PDF header
-  consistency evidence.
+  refresh gate, or cached-PDF header consistency evidence.
+- `papers/alphaevolve_doi_landing_resolution_boundary.json`: AlphaEvolve DOI
+  landing-resolution sidecar with the pinned DOI URL, retrieval timestamp,
+  resolver `302` status, redirect location, raw resolver header lines, final
+  arXiv landing URL/status/content type, final raw header lines, and final
+  landing response bytes/hash. It is not full DOI redirect body retention, an
+  automated DOI resolution refresh gate, or cached-PDF header consistency
+  evidence.
 - `papers/alphaevolve_tex_source_boundary.json`: AlphaEvolve arXiv TeX/e-print
   sidecar with the pinned e-print URL, retrieval date, status, content type,
   content-disposition filename, response byte count, SHA-256 digest, and

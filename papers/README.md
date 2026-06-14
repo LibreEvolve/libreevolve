@@ -1423,7 +1423,8 @@ ROADMAP, papers-index, TODO-ledger, path-filter, paper-manifest consistency,
 TODO-coverage, stale source-specific wording, sidecar-registry, and focused
 boundary-test evidence exist. The committed
 `papers/documentation_claim_inventory.json` sidecar adds top-level README,
-ROADMAP, and papers-index claim ids with file-offset evidence anchors, while complete
+ROADMAP, and papers-index claim ids with file-offset evidence anchors and
+local evidence-ref existence records, while complete
 README/ROADMAP/papers-index coverage, semantic documentation-claim verification, complete
 implementation-evidence mapping, stale completed-entry detection, generated
 alignment reports, and full proof that every AlphaEvolve-facing claim is
@@ -2843,7 +2844,8 @@ Implemented:
   claim is current.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
-  sections, file-offset source anchors, and explicit missing-evidence fields for
+  sections, file-offset source anchors, local evidence-ref existence records,
+  and explicit missing-evidence fields for
   complete coverage and semantic proof.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/

@@ -223,11 +223,33 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             if claim_record["source_span"]["found"]
             else "source_anchor_missing"
         )
+        claim_record["evidence_ref_records"] = [
+            _evidence_ref_record(root_path, ref)
+            for ref in claim_record["evidence_refs"]
+        ]
+        claim_record["missing_evidence_refs"] = [
+            record["ref"]
+            for record in claim_record["evidence_ref_records"]
+            if not record["exists"]
+        ]
+        claim_record["evidence_ref_status"] = (
+            "all_local_evidence_refs_present"
+            if not claim_record["missing_evidence_refs"]
+            else "missing_local_evidence_refs"
+        )
         claims.append(claim_record)
     source_anchor_missing_claim_ids = [
         claim["claim_id"]
         for claim in claims
         if claim["source_anchor_status"] != "source_anchor_recorded"
+    ]
+    missing_evidence_ref_records = [
+        {
+            "claim_id": claim["claim_id"],
+            "ref": ref,
+        }
+        for claim in claims
+        for ref in claim["missing_evidence_refs"]
     ]
     return {
         "schema": DOCUMENTATION_CLAIM_INVENTORY_SCHEMA,
@@ -245,13 +267,23 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             else "missing_claim_source_anchors"
         ),
         "source_anchor_missing_claim_ids": source_anchor_missing_claim_ids,
+        "evidence_ref_status": (
+            "all_local_evidence_refs_present"
+            if not missing_evidence_ref_records
+            else "missing_local_evidence_refs"
+        ),
+        "evidence_ref_record_count": sum(
+            len(claim["evidence_ref_records"]) for claim in claims
+        ),
+        "missing_evidence_ref_records": missing_evidence_ref_records,
         "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This inventory gives stable ids and evidence anchors for the "
             "top-level README, ROADMAP, and papers index AlphaEvolve-facing "
             "status claims, including source-anchor file offsets for those "
-            "top-level claim surfaces. It does not claim complete README coverage, "
+            "top-level claim surfaces and local evidence-ref existence records. "
+            "It does not claim complete README coverage, "
             "complete ROADMAP coverage, complete papers index coverage, "
             "semantic claim verification, stale completed-entry detection, "
             "generated alignment reports, or full proof that every documentation "
@@ -309,6 +341,29 @@ def validate_documentation_claim_inventory(
         issues.append(_issue("invalid_source_anchor_status", "source_anchor_status drifted from current claim anchors"))
     if source_anchor_missing_claim_ids != expected_missing_claim_ids:
         issues.append(_issue("invalid_source_anchor_missing_claim_ids", "source anchor missing ids drifted"))
+    expected_claims = _expected_claims_with_spans(Path(root))
+    expected_missing_evidence_ref_records = [
+        {
+            "claim_id": claim["claim_id"],
+            "ref": ref,
+        }
+        for claim in expected_claims
+        for ref in claim["missing_evidence_refs"]
+    ]
+    expected_evidence_ref_status = (
+        "all_local_evidence_refs_present"
+        if not expected_missing_evidence_ref_records
+        else "missing_local_evidence_refs"
+    )
+    if data.get("evidence_ref_status") != expected_evidence_ref_status:
+        issues.append(_issue("invalid_evidence_ref_status", "evidence_ref_status drifted from current files"))
+    expected_evidence_ref_record_count = sum(
+        len(claim["evidence_ref_records"]) for claim in expected_claims
+    )
+    if data.get("evidence_ref_record_count") != expected_evidence_ref_record_count:
+        issues.append(_issue("invalid_evidence_ref_record_count", "evidence_ref_record_count drifted from current claims"))
+    if data.get("missing_evidence_ref_records") != expected_missing_evidence_ref_records:
+        issues.append(_issue("invalid_missing_evidence_ref_records", "missing evidence-ref records drifted"))
     claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
         data.get("claims"),
         issues,
@@ -455,8 +510,49 @@ def _expected_claims_with_spans(root: Path) -> list[dict[str, Any]]:
             if record["source_span"]["found"]
             else "source_anchor_missing"
         )
+        record["evidence_ref_records"] = [
+            _evidence_ref_record(root, ref)
+            for ref in record["evidence_refs"]
+        ]
+        record["missing_evidence_refs"] = [
+            item["ref"]
+            for item in record["evidence_ref_records"]
+            if not item["exists"]
+        ]
+        record["evidence_ref_status"] = (
+            "all_local_evidence_refs_present"
+            if not record["missing_evidence_refs"]
+            else "missing_local_evidence_refs"
+        )
         records.append(record)
     return records
+
+
+def _evidence_ref_record(root: Path, ref: str) -> dict[str, Any]:
+    path_text, separator, fragment = ref.partition("#")
+    path = root / path_text
+    try:
+        exists = path.exists()
+        if exists and path.is_file():
+            kind = "file"
+        elif exists and path.is_dir():
+            kind = "directory"
+        elif exists:
+            kind = "other"
+        else:
+            kind = "missing"
+    except OSError:
+        exists = True
+        kind = "inaccessible"
+    if not exists:
+        kind = "missing"
+    return {
+        "ref": ref,
+        "path": path_text,
+        "fragment": fragment if separator else None,
+        "exists": exists,
+        "kind": kind,
+    }
 
 
 def _source_anchor_span(root: Path, document_path: str, anchor_text: str) -> dict[str, Any]:

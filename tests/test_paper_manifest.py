@@ -2753,6 +2753,7 @@ def test_validate_paper_manifest_accepts_documentation_claim_inventory(tmp_path)
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
     sidecar = tmp_path / paper_manifest.DOCUMENTATION_CLAIM_INVENTORY_FILE
+    sidecar.write_text("{}", encoding="utf-8")
     sidecar.write_text(
         json.dumps(paper_manifest.documentation_claim_inventory_record(tmp_path), indent=2),
         encoding="utf-8",
@@ -2769,12 +2770,13 @@ def test_validate_paper_manifest_rejects_documentation_claim_inventory_drift(
 ):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.DOCUMENTATION_CLAIM_INVENTORY_FILE
+    sidecar.write_text("{}", encoding="utf-8")
     record = paper_manifest.documentation_claim_inventory_record(tmp_path)
     record["claim_ready"] = True
     record["inventory_status"] = "complete_semantic_documentation_truth_ready"
     record["claims"][0]["evidence_refs"] = ["README.md"]
     record["missing_evidence"]["semantic_claim_verifier"] = "recorded"
-    sidecar = tmp_path / paper_manifest.DOCUMENTATION_CLAIM_INVENTORY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
     report = validate_paper_manifest(tmp_path)

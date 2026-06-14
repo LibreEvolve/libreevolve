@@ -6,6 +6,9 @@
   "coverage_scope": "Top-level README, ROADMAP, and papers index claim anchors only. This is not a complete semantic verifier for every documentation sentence.",
   "source_anchor_status": "all_claim_source_anchors_recorded",
   "source_anchor_missing_claim_ids": [],
+  "evidence_ref_status": "all_local_evidence_refs_present",
+  "evidence_ref_record_count": 41,
+  "missing_evidence_ref_records": [],
   "claims": [
     {
       "claim_id": "readme_current_status_scope",
@@ -30,7 +33,39 @@
         "line_start": 13,
         "line_end": 13
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "README.md#current-status",
+          "path": "README.md",
+          "fragment": "current-status",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/status.md",
+          "path": "docs/status.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/documentation_truthfulness_boundary.json",
+          "path": "papers/documentation_truthfulness_boundary.json",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/readme.md",
+          "path": "docs/todo/readme.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     },
     {
       "claim_id": "readme_runnable_today_scope",
@@ -58,7 +93,60 @@
         "line_start": 13,
         "line_end": 13
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "README.md#current-status",
+          "path": "README.md",
+          "fragment": "current-status",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "libreevolve/cli.py",
+          "path": "libreevolve/cli.py",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "libreevolve/core/loop.py",
+          "path": "libreevolve/core/loop.py",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "libreevolve/core/diff.py",
+          "path": "libreevolve/core/diff.py",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "libreevolve/llm/",
+          "path": "libreevolve/llm/",
+          "fragment": null,
+          "exists": true,
+          "kind": "directory"
+        },
+        {
+          "ref": "libreevolve/population/",
+          "path": "libreevolve/population/",
+          "fragment": null,
+          "exists": true,
+          "kind": "directory"
+        },
+        {
+          "ref": "docs/status.md",
+          "path": "docs/status.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     },
     {
       "claim_id": "readme_important_limits_scope",
@@ -84,7 +172,46 @@
         "line_start": 13,
         "line_end": 13
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "README.md#current-status",
+          "path": "README.md",
+          "fragment": "current-status",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/README.md",
+          "path": "papers/README.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/documentation_truthfulness_boundary.json",
+          "path": "papers/documentation_truthfulness_boundary.json",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/code.md",
+          "path": "docs/todo/code.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/papers.md",
+          "path": "docs/todo/papers.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     },
     {
       "claim_id": "roadmap_current_state_scope",
@@ -109,7 +236,39 @@
         "line_start": 14,
         "line_end": 14
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "ROADMAP.md#current-state",
+          "path": "ROADMAP.md",
+          "fragment": "current-state",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/status.md",
+          "path": "docs/status.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/README.md",
+          "path": "papers/README.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/roadmap.md",
+          "path": "docs/todo/roadmap.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     },
     {
       "claim_id": "roadmap_documentation_truthfulness_scope",
@@ -136,7 +295,53 @@
         "line_start": 817,
         "line_end": 817
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "ROADMAP.md#documentation-truthfulness",
+          "path": "ROADMAP.md",
+          "fragment": "documentation-truthfulness",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/documentation_truthfulness_boundary.json",
+          "path": "papers/documentation_truthfulness_boundary.json",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/documentation_claim_inventory.json",
+          "path": "papers/documentation_claim_inventory.json",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/readme.md",
+          "path": "docs/todo/readme.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/roadmap.md",
+          "path": "docs/todo/roadmap.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/papers.md",
+          "path": "docs/todo/papers.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     },
     {
       "claim_id": "roadmap_alphaevolve_gap_scope",
@@ -162,7 +367,46 @@
         "line_start": 1,
         "line_end": 1
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "ROADMAP.md",
+          "path": "ROADMAP.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/2506.13131__AlphaEvolve.pdf",
+          "path": "papers/2506.13131__AlphaEvolve.pdf",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/README.md",
+          "path": "papers/README.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/code.md",
+          "path": "docs/todo/code.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/papers.md",
+          "path": "docs/todo/papers.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     },
     {
       "claim_id": "papers_cache_manifest_scope",
@@ -188,7 +432,46 @@
         "line_start": 1,
         "line_end": 1
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "papers/README.md#local-paper-cache",
+          "path": "papers/README.md",
+          "fragment": "local-paper-cache",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/download_manifest.json",
+          "path": "papers/download_manifest.json",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/download_manifest.csv",
+          "path": "papers/download_manifest.csv",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "libreevolve/tools/paper_manifest.py",
+          "path": "libreevolve/tools/paper_manifest.py",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "tests/test_paper_manifest.py",
+          "path": "tests/test_paper_manifest.py",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     },
     {
       "claim_id": "papers_implementation_status_scope",
@@ -214,7 +497,46 @@
         "line_start": 316,
         "line_end": 316
       },
-      "source_anchor_status": "source_anchor_recorded"
+      "source_anchor_status": "source_anchor_recorded",
+      "evidence_ref_records": [
+        {
+          "ref": "papers/README.md#implementation-status",
+          "path": "papers/README.md",
+          "fragment": "implementation-status",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "docs/todo/papers.md",
+          "path": "docs/todo/papers.md",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/implementation_evidence_map_boundary.json",
+          "path": "papers/implementation_evidence_map_boundary.json",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "papers/documentation_truthfulness_boundary.json",
+          "path": "papers/documentation_truthfulness_boundary.json",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "ref": "libreevolve/tools/paper_manifest.py",
+          "path": "libreevolve/tools/paper_manifest.py",
+          "fragment": null,
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "missing_evidence_refs": [],
+      "evidence_ref_status": "all_local_evidence_refs_present"
     }
   ],
   "missing_evidence": {
@@ -226,5 +548,5 @@
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

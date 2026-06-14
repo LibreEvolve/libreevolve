@@ -48,8 +48,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     bullet semantic verifier, and absence-sentence freshness matrix.
     `papers/documentation_claim_inventory.json` now adds top-level papers-index
     claim anchors with file-offset source spans for the local paper-cache
-    manifest scope and the implementation-status table scope, while explicitly
-    keeping row-level semantic proof out of scope.
+    manifest scope and the implementation-status table scope, records local
+    evidence-ref existence for those anchors, while explicitly keeping
+    row-level semantic proof out of scope.
   - Current gap: each status phrase now has a stable hash and source offset,
     candidate links to phrase-local artifacts plus row-level TODO and completed
     evidence, referenced local artifact/TODO path existence checks, local

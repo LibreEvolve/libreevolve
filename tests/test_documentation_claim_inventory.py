@@ -25,6 +25,11 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert inventory["claim_ready"] is False
     assert inventory["source_anchor_status"] == "all_claim_source_anchors_recorded"
     assert inventory["source_anchor_missing_claim_ids"] == []
+    assert inventory["evidence_ref_status"] == "all_local_evidence_refs_present"
+    assert inventory["missing_evidence_ref_records"] == []
+    assert inventory["evidence_ref_record_count"] == sum(
+        len(claim["evidence_refs"]) for claim in inventory["claims"]
+    )
     claim_ids = {claim["claim_id"] for claim in inventory["claims"]}
     assert "readme_current_status_scope" in claim_ids
     assert "roadmap_documentation_truthfulness_scope" in claim_ids
@@ -37,6 +42,15 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert readme_claim["source_span"]["path"] == "README.md"
     assert readme_claim["source_span"]["line_start"] == 13
     assert isinstance(readme_claim["source_span"]["file_text_char_start"], int)
+    assert readme_claim["evidence_ref_status"] == "all_local_evidence_refs_present"
+    assert readme_claim["missing_evidence_refs"] == []
+    assert readme_claim["evidence_ref_records"][0] == {
+        "ref": "README.md#current-status",
+        "path": "README.md",
+        "fragment": "current-status",
+        "exists": True,
+        "kind": "file",
+    }
     assert (
         "does not claim complete README coverage"
         in inventory["claim_boundary"]
@@ -64,7 +78,9 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     inventory = documentation_claim_inventory_record()
     inventory["claims"][0]["evidence_refs"] = ["README.md"]
     inventory["claims"][0]["source_span"]["line_start"] = -1
+    inventory["claims"][0]["evidence_ref_records"][0]["exists"] = False
     inventory["source_anchor_status"] = "missing_claim_source_anchors"
+    inventory["evidence_ref_status"] = "missing_local_evidence_refs"
 
     validation = validate_documentation_claim_inventory(inventory)
     codes = {issue.code for issue in validation.issues}
@@ -72,7 +88,9 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     assert validation.ok is False
     assert "invalid_readme_current_status_scope_evidence_refs" in codes
     assert "invalid_readme_current_status_scope_source_span" in codes
+    assert "invalid_readme_current_status_scope_evidence_ref_records" in codes
     assert "invalid_source_anchor_status" in codes
+    assert "invalid_evidence_ref_status" in codes
 
 
 def test_render_documentation_claim_inventory_summary_reports_shape():

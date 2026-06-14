@@ -1802,6 +1802,39 @@ sidecars, tests, and active TODOs.
     report examples before claiming AlphaEvolve-style evaluator support for
     evolved search algorithms or model-training workloads.
 
+- [ ] Add child-process and external-command policy for validator and embedded
+      candidate execution.
+  - Spec evidence: AlphaEvolve-style automated evaluators execute candidate
+    code and, for complex tasks, may run inner searches or model-training
+    workloads. A faithful local runner must make external process execution
+    explicit, bounded, and auditable before treating generated code execution
+    as benchmark-grade evidence.
+  - Current evidence: `libreevolve/core/evaluator.py` launches local Python
+    runner subprocesses without `shell=True`, records subprocess-attempt
+    accounting, applies timeout cleanup, and on Windows can attach a kill-on-
+    close job object. The validator boundary metadata still declares
+    `security_sandbox: "unsupported"`, process quotas as unsupported, and
+    network policy as either host-inherited or Python-socket-level deny. Tests
+    cover local child-process cleanup, validator boundary reporting, and
+    network-deny behavior, but candidate or validator code can still invoke
+    `subprocess`, `os.system`, native binaries, or package-specific process
+    launch APIs from inside the runner process unless an external sandbox or
+    problem-specific validator blocks it.
+  - Current gap: there is no configured child-process allow/deny policy,
+    command allowlist, executable/path provenance, per-child command telemetry,
+    process tree resource accounting, shell invocation detector, or paper-
+    facing report that separates runner-owned Python subprocesses from
+    candidate/evaluator-spawned external processes. Existing timeout cleanup
+    and OS/container-sandbox absence records do not prove external-command
+    control.
+  - Required result: add a versioned external-command execution policy for
+    validator and embedded-evaluate stages, including deny/allow modes,
+    command/path allowlists, child-process telemetry, process-tree accounting,
+    timeout/resource enforcement, diagnostics for blocked launches, tests for
+    `subprocess`, `os.system`, and native binary attempts, and documentation
+    checks that keep local evaluator execution from being described as
+    hardened benchmark isolation until this policy is implemented.
+
 - [ ] Add asynchronous evaluator workers and concurrent proposal control.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
     work across many randomized initializations or accelerators, and its

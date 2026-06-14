@@ -34,7 +34,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark coverage bullets with source lines, summary/body hashes, local
     artifact mentions, local artifact existence records, 116 unique local
     artifact paths, zero missing referenced local artifacts,
-    limitation-boundary flags, and contradiction flags.
+    limitation-signal terms/counts, and contradiction flags.
     The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
     missing evidence for status-cell semantic verifier, implemented-benchmark
@@ -52,8 +52,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     `Implemented` benchmark coverage bullets beyond referenced artifact
     existence, no absence-sentence freshness matrix beyond structural signal
     classification, and no semantic verifier that checks benchmark qualifiers,
-    implemented-bullet scope/limitation wording, or absence sentences against
-    the current code and paper evidence.
+    implemented-bullet scope/limitation semantics beyond structural signal
+    terms, or absence sentences against the current code and paper evidence.
   - Required result: extend the phrase-level inventory with evidence-sufficiency
     checks, freshness checks, and benchmark-coverage semantic checks, then add
     CI validation before treating `papers/README.md` as semantically complete

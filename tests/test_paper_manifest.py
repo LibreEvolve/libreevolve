@@ -11991,10 +11991,24 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
             "kind": "file",
         }
     ]
+    assert inventory["implemented_bullets"][0]["limitation_signal_terms"] == ["but", "not"]
     assert inventory["implemented_bullets"][0]["has_limitation_boundary"] is True
+    assert (
+        inventory["implemented_bullets"][0]["limitation_signal_status"]
+        == "limitation_signals_structurally_classified"
+    )
     assert inventory["unique_local_artifact_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []
     assert inventory["artifact_existence_status"] == "all_referenced_local_artifacts_present"
+    assert inventory["limitation_bullet_count"] == 1
+    assert inventory["limitation_bullet_ids"] == ["implemented_benchmark_001"]
+    assert inventory["limitation_signal_terms"] == ["but", "not"]
+    assert (
+        inventory["limitation_signal_inventory_status"]
+        == "limitation_signals_structurally_classified_without_semantic_verifier"
+    )
+    assert inventory["not_implemented_contradiction_count"] == 0
+    assert inventory["not_implemented_contradiction_bullet_ids"] == []
     (tmp_path / paper_manifest.BENCHMARK_COVERAGE_INVENTORY_FILE).write_text(
         json.dumps(inventory, indent=2),
         encoding="utf-8",

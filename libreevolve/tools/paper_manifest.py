@@ -1743,6 +1743,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         missing_local_artifacts = [
             record["path"] for record in local_artifact_records if not record["exists"]
         ]
+        limitation_signal_terms = _benchmark_limitation_signal_terms(text)
         rows.append(
             {
                 "coverage_id": f"implemented_benchmark_{ordinal:03d}",
@@ -1761,9 +1762,15 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
                 "local_artifact_existing_count": len(local_artifacts) - len(missing_local_artifacts),
                 "local_artifact_missing_paths": missing_local_artifacts,
                 "all_local_artifacts_exist": bool(local_artifacts) and not missing_local_artifacts,
-                "has_limitation_boundary": bool(BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE.search(text)),
+                "limitation_signal_terms": limitation_signal_terms,
+                "has_limitation_boundary": bool(limitation_signal_terms),
                 "has_not_implemented_contradiction": bool(BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE.search(text)),
                 "coverage_status": "implemented_bullet_structurally_inventoried",
+                "limitation_signal_status": (
+                    "limitation_signals_structurally_classified"
+                    if limitation_signal_terms
+                    else "no_limitation_signal_detected"
+                ),
                 "artifact_existence_status": (
                     "all_referenced_local_artifacts_present"
                     if local_artifacts and not missing_local_artifacts
@@ -1780,6 +1787,19 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
     missing_local_artifacts = sorted(
         {path for row in rows for path in row["local_artifact_missing_paths"]}
     )
+    limitation_bullet_ids = [
+        row["coverage_id"] for row in rows if row["limitation_signal_terms"]
+    ]
+    limitation_signal_terms = sorted(
+        {
+            term
+            for row in rows
+            for term in row["limitation_signal_terms"]
+        }
+    )
+    contradiction_bullet_ids = [
+        row["coverage_id"] for row in rows if row["has_not_implemented_contradiction"]
+    ]
     return {
         "schema": BENCHMARK_COVERAGE_INVENTORY_SCHEMA,
         "inventory_status": BENCHMARK_COVERAGE_INVENTORY_STATUS,
@@ -1796,13 +1816,19 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
             if missing_local_artifacts
             else "no_local_artifacts_referenced"
         ),
+        "limitation_bullet_count": len(limitation_bullet_ids),
+        "limitation_bullet_ids": limitation_bullet_ids,
+        "limitation_signal_terms": limitation_signal_terms,
+        "limitation_signal_inventory_status": "limitation_signals_structurally_classified_without_semantic_verifier",
+        "not_implemented_contradiction_count": len(contradiction_bullet_ids),
+        "not_implemented_contradiction_bullet_ids": contradiction_bullet_ids,
         "missing_evidence": dict(BENCHMARK_COVERAGE_MISSING_EVIDENCE),
         "implemented_bullets": rows,
         "claim_boundary": (
             "This inventory records one structured entry for each "
             "papers/README.md Implemented benchmark coverage bullet, including "
             "source lines, summary/body hashes, local artifact mentions, "
-            "local artifact existence records, limitation-boundary flags, and "
+            "local artifact existence records, limitation-signal terms, and "
             "contradiction flags. It does not claim semantic verification, "
             "benchmark freshness, reproduced result linkage, or proof that "
             "the benchmark coverage prose is complete."
@@ -3901,6 +3927,12 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
         ("unique_local_artifact_count", "benchmark coverage unique local artifact count drifted"),
         ("missing_local_artifact_paths", "benchmark coverage missing local artifact paths drifted"),
         ("artifact_existence_status", "benchmark coverage artifact existence status drifted"),
+        ("limitation_bullet_count", "benchmark coverage limitation bullet count drifted"),
+        ("limitation_bullet_ids", "benchmark coverage limitation bullet ids drifted"),
+        ("limitation_signal_terms", "benchmark coverage limitation signal terms drifted"),
+        ("limitation_signal_inventory_status", "benchmark coverage limitation signal status drifted"),
+        ("not_implemented_contradiction_count", "benchmark coverage contradiction count drifted"),
+        ("not_implemented_contradiction_bullet_ids", "benchmark coverage contradiction ids drifted"),
         ("missing_evidence", "benchmark coverage missing-evidence boundary drifted"),
         ("claim_boundary", "benchmark coverage claim boundary drifted"),
         ("implemented_bullets", "benchmark coverage implemented bullets drifted from papers/README.md"),
@@ -8864,6 +8896,15 @@ def _read_implemented_benchmark_bullet_records(root: Path) -> tuple[list[dict[st
             }
         )
     return records, []
+
+
+def _benchmark_limitation_signal_terms(text: str) -> list[str]:
+    terms: list[str] = []
+    for match in BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE.finditer(text):
+        term = re.sub(r"\s+", " ", match.group(0).strip().lower())
+        if term:
+            terms.append(term)
+    return list(dict.fromkeys(terms))
 
 
 def _open_todo_blocks_contain(text: str, needle: str) -> bool:

@@ -209,6 +209,107 @@
   "unique_local_artifact_count": 116,
   "missing_local_artifact_paths": [],
   "artifact_existence_status": "all_referenced_local_artifacts_present",
+  "limitation_bullet_count": 83,
+  "limitation_bullet_ids": [
+    "implemented_benchmark_001",
+    "implemented_benchmark_002",
+    "implemented_benchmark_003",
+    "implemented_benchmark_004",
+    "implemented_benchmark_005",
+    "implemented_benchmark_006",
+    "implemented_benchmark_007",
+    "implemented_benchmark_008",
+    "implemented_benchmark_009",
+    "implemented_benchmark_010",
+    "implemented_benchmark_011",
+    "implemented_benchmark_012",
+    "implemented_benchmark_013",
+    "implemented_benchmark_014",
+    "implemented_benchmark_015",
+    "implemented_benchmark_016",
+    "implemented_benchmark_017",
+    "implemented_benchmark_018",
+    "implemented_benchmark_019",
+    "implemented_benchmark_020",
+    "implemented_benchmark_021",
+    "implemented_benchmark_022",
+    "implemented_benchmark_023",
+    "implemented_benchmark_024",
+    "implemented_benchmark_025",
+    "implemented_benchmark_026",
+    "implemented_benchmark_027",
+    "implemented_benchmark_028",
+    "implemented_benchmark_029",
+    "implemented_benchmark_030",
+    "implemented_benchmark_031",
+    "implemented_benchmark_032",
+    "implemented_benchmark_033",
+    "implemented_benchmark_034",
+    "implemented_benchmark_035",
+    "implemented_benchmark_036",
+    "implemented_benchmark_037",
+    "implemented_benchmark_038",
+    "implemented_benchmark_039",
+    "implemented_benchmark_040",
+    "implemented_benchmark_041",
+    "implemented_benchmark_042",
+    "implemented_benchmark_043",
+    "implemented_benchmark_044",
+    "implemented_benchmark_045",
+    "implemented_benchmark_046",
+    "implemented_benchmark_047",
+    "implemented_benchmark_048",
+    "implemented_benchmark_049",
+    "implemented_benchmark_050",
+    "implemented_benchmark_051",
+    "implemented_benchmark_052",
+    "implemented_benchmark_053",
+    "implemented_benchmark_054",
+    "implemented_benchmark_055",
+    "implemented_benchmark_056",
+    "implemented_benchmark_057",
+    "implemented_benchmark_058",
+    "implemented_benchmark_059",
+    "implemented_benchmark_060",
+    "implemented_benchmark_061",
+    "implemented_benchmark_062",
+    "implemented_benchmark_063",
+    "implemented_benchmark_064",
+    "implemented_benchmark_065",
+    "implemented_benchmark_066",
+    "implemented_benchmark_067",
+    "implemented_benchmark_068",
+    "implemented_benchmark_069",
+    "implemented_benchmark_070",
+    "implemented_benchmark_071",
+    "implemented_benchmark_072",
+    "implemented_benchmark_073",
+    "implemented_benchmark_074",
+    "implemented_benchmark_075",
+    "implemented_benchmark_076",
+    "implemented_benchmark_077",
+    "implemented_benchmark_078",
+    "implemented_benchmark_079",
+    "implemented_benchmark_080",
+    "implemented_benchmark_081",
+    "implemented_benchmark_082",
+    "implemented_benchmark_083"
+  ],
+  "limitation_signal_terms": [
+    "but",
+    "lack",
+    "missing",
+    "no",
+    "not",
+    "remain open",
+    "remains open",
+    "smoke-only",
+    "still",
+    "without"
+  ],
+  "limitation_signal_inventory_status": "limitation_signals_structurally_classified_without_semantic_verifier",
+  "not_implemented_contradiction_count": 0,
+  "not_implemented_contradiction_bullet_ids": [],
   "missing_evidence": {
     "benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "benchmark_bullet_freshness_matrix": "not_recorded_locally",
@@ -240,9 +341,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -271,9 +377,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "still",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -302,9 +413,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "smoke-only"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -339,9 +454,14 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "smoke-only",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -472,9 +592,16 @@
       "local_artifact_existing_count": 18,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "still",
+        "not",
+        "but",
+        "no"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -503,9 +630,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -540,9 +672,17 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "still",
+        "not",
+        "but",
+        "missing",
+        "no"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -571,9 +711,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "still"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -602,9 +747,15 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "still",
+        "not",
+        "remain open"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -633,9 +784,15 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "no",
+        "without",
+        "but"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -670,9 +827,13 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -707,9 +868,15 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not",
+        "but",
+        "still"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -744,9 +911,15 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not",
+        "but",
+        "still"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -787,9 +960,14 @@
       "local_artifact_existing_count": 3,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -926,9 +1104,14 @@
       "local_artifact_existing_count": 19,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not",
+        "remains open"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -969,9 +1152,13 @@
       "local_artifact_existing_count": 3,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1024,9 +1211,13 @@
       "local_artifact_existing_count": 5,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "lack"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1061,9 +1252,13 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1098,9 +1293,14 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1141,9 +1341,14 @@
       "local_artifact_existing_count": 3,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1172,9 +1377,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1203,9 +1412,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1234,9 +1447,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1265,9 +1482,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not",
+        "missing"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1296,9 +1518,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1327,9 +1553,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1358,9 +1588,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1395,9 +1630,13 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "remain open"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1426,9 +1665,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1457,9 +1700,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1488,9 +1735,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1519,9 +1770,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1550,9 +1805,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1581,9 +1840,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "missing",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1612,9 +1876,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1643,9 +1911,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "missing",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1674,9 +1947,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1705,9 +1982,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1736,9 +2017,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "remain open"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1767,9 +2053,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1798,9 +2088,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1829,9 +2123,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1860,9 +2158,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1891,9 +2193,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1922,9 +2228,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not",
+        "no"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1953,9 +2264,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -1984,9 +2299,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2015,9 +2334,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2046,9 +2369,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2077,9 +2404,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2108,9 +2439,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2139,9 +2474,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2170,9 +2509,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2201,9 +2545,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2232,9 +2581,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2263,9 +2616,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2294,9 +2651,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2325,9 +2686,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2356,9 +2721,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2387,9 +2756,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2418,9 +2791,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2449,9 +2826,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "missing"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2480,9 +2861,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "missing"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2490,12 +2875,12 @@
       "coverage_id": "implemented_benchmark_064",
       "bullet_ordinal": 64,
       "summary_sha256": "3c0a1f6dc68d1f11144988c920beb6bc6c61be8833d03553aa37da6f54919055",
-      "body_sha256": "72aa834466797c355ac8311ffc385b53ef2509e55e0708b900e72ac6cc5b158a",
+      "body_sha256": "0c8bfc18267bb423d2b93a91e119e601bab13882351166d41b168132dcedaff7",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
         "line_start": 2852,
-        "line_end": 2859
+        "line_end": 2860
       },
       "local_artifact_paths": [
         "papers/README.md",
@@ -2517,9 +2902,14 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "missing",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2531,8 +2921,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2859,
-        "line_end": 2873
+        "line_start": 2860,
+        "line_end": 2874
       },
       "local_artifact_paths": [
         "papers/status_claim_inventory.json"
@@ -2548,9 +2938,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "missing",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2562,8 +2957,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2873,
-        "line_end": 2878
+        "line_start": 2874,
+        "line_end": 2879
       },
       "local_artifact_paths": [
         "papers/arxiv_abstract_snapshot.json"
@@ -2579,9 +2974,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2593,8 +2992,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2878,
-        "line_end": 2883
+        "line_start": 2879,
+        "line_end": 2884
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_doi_boundary.json"
@@ -2610,9 +3009,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2624,8 +3027,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2883,
-        "line_end": 2888
+        "line_start": 2884,
+        "line_end": 2889
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_full_response_boundary.json"
@@ -2641,9 +3044,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2655,8 +3062,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2888,
-        "line_end": 2894
+        "line_start": 2889,
+        "line_end": 2895
       },
       "local_artifact_paths": [
         "papers/alphaevolve_doi_landing_resolution_boundary.json"
@@ -2672,9 +3079,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2686,8 +3097,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2894,
-        "line_end": 2899
+        "line_start": 2895,
+        "line_end": 2900
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_source_boundary.json"
@@ -2703,9 +3114,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2717,8 +3132,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2899,
-        "line_end": 2905
+        "line_start": 2900,
+        "line_end": 2906
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_archive_retention_boundary.json",
@@ -2740,9 +3155,13 @@
       "local_artifact_existing_count": 2,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2754,8 +3173,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2905,
-        "line_end": 2912
+        "line_start": 2906,
+        "line_end": 2913
       },
       "local_artifact_paths": [
         "papers/alphaevolve_current_version_boundary.json"
@@ -2771,9 +3190,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2785,8 +3208,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2912,
-        "line_end": 2917
+        "line_start": 2913,
+        "line_end": 2918
       },
       "local_artifact_paths": [
         "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
@@ -2802,9 +3225,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2816,8 +3243,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2917,
-        "line_end": 2922
+        "line_start": 2918,
+        "line_end": 2923
       },
       "local_artifact_paths": [
         "papers/alphaevolve_metadata_extraction_script_boundary.json"
@@ -2833,9 +3260,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2847,8 +3278,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2922,
-        "line_end": 2929
+        "line_start": 2923,
+        "line_end": 2930
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_gate_boundary.json"
@@ -2864,9 +3295,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2878,8 +3313,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2929,
-        "line_end": 2933
+        "line_start": 2930,
+        "line_end": 2934
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_run_2026-06-14.json"
@@ -2895,9 +3330,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "missing",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2909,8 +3349,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2933,
-        "line_end": 2938
+        "line_start": 2934,
+        "line_end": 2939
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_promotion_boundary.json"
@@ -2926,9 +3366,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2940,8 +3384,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2938,
-        "line_end": 2944
+        "line_start": 2939,
+        "line_end": 2945
       },
       "local_artifact_paths": [
         "papers/alphaevolve_raw_http_headers_boundary.json"
@@ -2957,9 +3401,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -2971,8 +3419,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2944,
-        "line_end": 2950
+        "line_start": 2945,
+        "line_end": 2951
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_boundary.json"
@@ -2988,9 +3436,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -3002,8 +3455,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2950,
-        "line_end": 2954
+        "line_start": 2951,
+        "line_end": 2955
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_html_retention_boundary.json"
@@ -3019,9 +3472,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -3033,8 +3490,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2954,
-        "line_end": 2958
+        "line_start": 2955,
+        "line_end": 2959
       },
       "local_artifact_paths": [
         "papers/candidate_abstraction_bias_matrix.json"
@@ -3050,9 +3507,13 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -3064,8 +3525,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2958,
-        "line_end": 2962
+        "line_start": 2959,
+        "line_end": 2963
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting"
@@ -3081,9 +3542,14 @@
       "local_artifact_existing_count": 1,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "but",
+        "not"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
@@ -3095,8 +3561,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2962,
-        "line_end": 2972
+        "line_start": 2963,
+        "line_end": 2973
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting_network_8",
@@ -3124,12 +3590,17 @@
       "local_artifact_existing_count": 3,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
+      "limitation_signal_terms": [
+        "not",
+        "but"
+      ],
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "limitation_signal_status": "limitation_signals_structurally_classified",
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     }
   ],
-  "claim_boundary": "This inventory records one structured entry for each papers/README.md Implemented benchmark coverage bullet, including source lines, summary/body hashes, local artifact mentions, local artifact existence records, limitation-boundary flags, and contradiction flags. It does not claim semantic verification, benchmark freshness, reproduced result linkage, or proof that the benchmark coverage prose is complete."
+  "claim_boundary": "This inventory records one structured entry for each papers/README.md Implemented benchmark coverage bullet, including source lines, summary/body hashes, local artifact mentions, local artifact existence records, limitation-signal terms, and contradiction flags. It does not claim semantic verification, benchmark freshness, reproduced result linkage, or proof that the benchmark coverage prose is complete."
 }

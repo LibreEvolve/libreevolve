@@ -1,0 +1,37 @@
+{
+  "schema": "libreevolve.alphaevolve_source_refresh_gate_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_version_id": "2506.13131v1",
+  "source_claim": "AlphaEvolve source metadata should have a reusable live source refresh gate that compares current network responses with committed source boundaries.",
+  "boundary_status": "scheduled_live_source_refresh_gate_recorded_without_archived_outcome",
+  "claim_ready": false,
+  "script_artifact": {
+    "path": "libreevolve/tools/alphaevolve_source_refresh_gate.py",
+    "bytes": 9543,
+    "sha256": "40a5dd07f3f190204d8fb13622f7b05ec2b94b2b9a28b60ceacc7afb9071ffd5",
+    "entrypoint": "run_refresh_gate",
+    "cli": "py -3.12 -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty",
+    "deterministic_cli": "py -3.12 -m libreevolve.tools.alphaevolve_source_refresh_gate --pretty"
+  },
+  "workflow_artifact": {
+    "path": ".github/workflows/tests.yml",
+    "job_id": "source_refresh_gate",
+    "schedule_cron": "17 6 * * 1",
+    "manual_dispatch_input": "run_source_refresh_gate",
+    "live_gate_command": "python -m libreevolve.tools.alphaevolve_source_refresh_gate --live --pretty"
+  },
+  "expected_report_schema": "libreevolve.alphaevolve_source_refresh_gate_report.v1",
+  "expected_source_ids": [
+    "versioned_abstract",
+    "current_abstract",
+    "floating_pdf",
+    "datacite_api",
+    "eprint_archive",
+    "license_page"
+  ],
+  "missing_evidence": {
+    "archived_successful_live_refresh_run": "not_recorded_locally",
+    "published_refresh_artifact_retention": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records a deterministic AlphaEvolve source refresh gate script plus scheduled and manual GitHub Actions live-network execution wiring. It does not claim that a successful live run has been archived, that refresh reports are published as durable paper artifacts, or that the older per-source sidecars themselves are individually promoted to refresh-ready evidence."
+}

@@ -704,9 +704,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_license_page_html_retention_boundary.json` now retains
     the Creative Commons license-page HTML artifact and validates its byte
     count, SHA-256 digest, and key content markers.
+    `papers/alphaevolve_source_refresh_gate_boundary.json` now records the
+    deterministic/live refresh-gate script and the scheduled/manual GitHub
+    Actions job that compares live arXiv/DataCite/e-print/license responses
+    against committed source boundaries; the paper manifest requires and
+    validates that sidecar at the real repo root.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade evidence, add an automated refresh gate that detects
-    arXiv/DataCite/e-print/license version or metadata drift.
+    publication-grade freshness evidence, retain successful live refresh-run
+    outcomes and decide whether older per-source sidecars should be promoted
+    from bounded snapshots to refresh-ready evidence.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

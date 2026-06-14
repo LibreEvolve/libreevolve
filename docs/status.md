@@ -72,7 +72,10 @@ Important limits:
   cached-PDF header consistency sidecar validates first-page header extraction
   hashes and markers. The metadata extraction-script sidecar now pins the
   reusable offline extraction script and retained source-artifact coverage.
-  No automated refresh gate exists yet.
+  The source refresh-gate sidecar now pins the deterministic/live refresh
+  script and scheduled/manual GitHub Actions job for arXiv/DataCite/e-print/
+  license drift checks, but archived successful live-run outcomes and
+  per-source refresh-ready promotion are still not claimed.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text

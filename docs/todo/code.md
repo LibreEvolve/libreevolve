@@ -378,9 +378,16 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_license_page_html_retention_boundary.json` now retains
     the Creative Commons license-page HTML artifact and validates its byte
     count, SHA-256 digest, and key content markers.
-  - Required result: implement an automated CI/network refresh gate that fails
-    paper/source validation if the live arXiv/DataCite/e-print/license metadata
-    drifts from the committed source boundary.
+    `papers/alphaevolve_source_refresh_gate_boundary.json` now pins
+    `libreevolve/tools/alphaevolve_source_refresh_gate.py` plus the scheduled
+    and manual GitHub Actions `source_refresh_gate` job; the script compares
+    live arXiv/DataCite/e-print/license status, content type, byte count, and
+    SHA-256 digests against the committed source boundaries, and
+    `libreevolve.tools.paper_manifest` requires the sidecar at the real repo
+    root.
+  - Required result: archive successful live refresh-run outcomes and decide
+    whether to promote older per-source sidecars to refresh-ready evidence
+    before treating source metadata as publication-grade freshness evidence.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

@@ -545,6 +545,81 @@ def test_validate_paper_manifest_requires_alphaevolve_metadata_extraction_script
     assert "alphaevolve_metadata_extraction_script_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_alphaevolve_source_refresh_gate_boundary(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    source_root = Path(__file__).resolve().parents[1]
+    script_target = tmp_path / "libreevolve" / "tools" / "alphaevolve_source_refresh_gate.py"
+    workflow_target = tmp_path / ".github" / "workflows" / "tests.yml"
+    script_target.parent.mkdir(parents=True)
+    workflow_target.parent.mkdir(parents=True)
+    script_target.write_bytes(
+        (source_root / "libreevolve" / "tools" / "alphaevolve_source_refresh_gate.py").read_bytes()
+    )
+    workflow_target.write_text(
+        (source_root / ".github" / "workflows" / "tests.yml").read_text(encoding="utf-8"),
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_SOURCE_REFRESH_GATE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_source_refresh_gate_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_source_refresh_gate_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_source_refresh_gate_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "source_refresh_gate_publication_ready"
+    record["script_artifact"]["sha256"] = "0" * 64
+    record["workflow_artifact"]["schedule_cron"] = "0 0 * * *"
+    record["missing_evidence"]["archived_successful_live_refresh_run"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_SOURCE_REFRESH_GATE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_source_refresh_gate_boundary_claim_ready_overclaim" in codes
+    assert "alphaevolve_source_refresh_gate_boundary_invalid_boundary_status" in codes
+    assert "alphaevolve_source_refresh_gate_boundary_invalid_script_artifact_sha256" in codes
+    assert "alphaevolve_source_refresh_gate_boundary_invalid_workflow_artifact_schedule_cron" in codes
+    assert (
+        "alphaevolve_source_refresh_gate_boundary_invalid_missing_evidence_archived_successful_live_refresh_run"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_source_refresh_gate_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_source_refresh_gate_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_alphaevolve_raw_http_headers_boundary(
     tmp_path,
 ):

@@ -79,6 +79,10 @@ from libreevolve.problems.benchmarks.alphaevolve_metadata_extraction_script_boun
     alphaevolve_metadata_extraction_script_boundary_record,
     validate_alphaevolve_metadata_extraction_script_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_source_refresh_gate_boundary import (
+    alphaevolve_source_refresh_gate_boundary_record,
+    validate_alphaevolve_source_refresh_gate_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_raw_http_headers_boundary import (
     alphaevolve_raw_http_headers_boundary_record,
     validate_alphaevolve_raw_http_headers_boundary,
@@ -665,6 +669,7 @@ ARXIV_ABSTRACT_SNAPSHOT_FILE = "papers/arxiv_abstract_snapshot.json"
 ALPHAEVOLVE_CURRENT_VERSION_BOUNDARY_FILE = "papers/alphaevolve_current_version_boundary.json"
 ALPHAEVOLVE_CACHED_PDF_HEADER_CONSISTENCY_BOUNDARY_FILE = "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
 ALPHAEVOLVE_METADATA_EXTRACTION_SCRIPT_BOUNDARY_FILE = "papers/alphaevolve_metadata_extraction_script_boundary.json"
+ALPHAEVOLVE_SOURCE_REFRESH_GATE_BOUNDARY_FILE = "papers/alphaevolve_source_refresh_gate_boundary.json"
 ALPHAEVOLVE_RAW_HTTP_HEADERS_BOUNDARY_FILE = "papers/alphaevolve_raw_http_headers_boundary.json"
 ALPHAEVOLVE_DATACITE_DOI_BOUNDARY_FILE = "papers/alphaevolve_datacite_doi_boundary.json"
 ALPHAEVOLVE_DATACITE_FULL_RESPONSE_BOUNDARY_FILE = "papers/alphaevolve_datacite_full_response_boundary.json"
@@ -1238,6 +1243,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_current_version_boundary(root_path))
     issues.extend(_validate_alphaevolve_cached_pdf_header_consistency_boundary(root_path))
     issues.extend(_validate_alphaevolve_metadata_extraction_script_boundary(root_path))
+    issues.extend(_validate_alphaevolve_source_refresh_gate_boundary(root_path))
     issues.extend(_validate_alphaevolve_raw_http_headers_boundary(root_path))
     issues.extend(_validate_alphaevolve_datacite_doi_boundary(root_path))
     issues.extend(_validate_alphaevolve_datacite_full_response_boundary(root_path))
@@ -2067,6 +2073,38 @@ def _validate_alphaevolve_metadata_extraction_script_boundary(root_path: Path) -
     return [
         PaperManifestIssue(
             f"alphaevolve_metadata_extraction_script_boundary_{issue.code}",
+            issue.message,
+            "2506.13131",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_source_refresh_gate_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_SOURCE_REFRESH_GATE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_source_refresh_gate_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_source_refresh_gate_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_SOURCE_REFRESH_GATE_BOUNDARY_FILE} must emit "
+                        "the AlphaEvolve source refresh-gate boundary"
+                    ),
+                    "2506.13131",
+                )
+            ]
+    report = validate_alphaevolve_source_refresh_gate_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_source_refresh_gate_boundary_{issue.code}",
             issue.message,
             "2506.13131",
         )

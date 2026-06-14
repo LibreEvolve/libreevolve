@@ -2326,7 +2326,12 @@ Implemented:
   reusable offline extraction script path, byte count, SHA-256 digest,
   import entrypoint, CLI command, and retained source artifact coverage for
   abstract HTML, cached PDF, DataCite full response, license HTML, and TeX
-  archive inputs. Automated CI refresh checks remain open.
+  archive inputs. `papers/alphaevolve_source_refresh_gate_boundary.json` now
+  pins the deterministic/live refresh-gate script and the scheduled/manual
+  GitHub Actions `source_refresh_gate` job that compares live
+  arXiv/DataCite/e-print/license responses against committed source
+  boundaries. Archived successful live-run outcomes and per-source
+  refresh-ready promotion remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2874,6 +2879,12 @@ Implemented:
   count, SHA-256 digest, import entrypoint, CLI command, and retained artifact
   coverage for abstract HTML, cached PDF, DataCite full response, license HTML,
   and TeX archive inputs. It is not an automated live refresh CI gate.
+- `papers/alphaevolve_source_refresh_gate_boundary.json`: AlphaEvolve source
+  refresh-gate sidecar with the pinned deterministic/live refresh script, six
+  expected source ids, scheduled/manual GitHub Actions wiring, and explicit
+  missing evidence for archived successful live-run outcomes and published
+  refresh-report retention. It is not proof that a successful live refresh run
+  has been archived as paper evidence.
 - `papers/alphaevolve_raw_http_headers_boundary.json`: AlphaEvolve source-URL
   raw HTTP headers sidecar with pinned header lines for the versioned abstract,
   floating abstract, floating PDF, DataCite API, e-print archive, and Creative

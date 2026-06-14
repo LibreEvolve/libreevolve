@@ -5422,9 +5422,9 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     source_evidence = oracle_registry["oracle_source_evidence"]
     assert source_evidence["schema"] == "libreevolve.evaluator_oracle_source_evidence.v1"
     assert source_evidence["oracle_count"] == 2
-    assert source_evidence["source_ref_count"] == 1
+    assert source_evidence["source_ref_count"] == 2
     assert source_evidence["source_hash_count"] == 1
-    assert source_evidence["unlocated_oracle_count"] == 1
+    assert source_evidence["unlocated_oracle_count"] == 0
     assert source_evidence["claim_readiness"]["local_oracle_source_refs_recorded"] is True
     assert source_evidence["claim_readiness"]["benchmark_sufficiency_proof"] is False
     assert source_evidence["claim_readiness"]["independent_oracle_source_evidence"] is False
@@ -5434,7 +5434,8 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
     assert default_source["source_hash_recorded"] is True
     assert default_source["benchmark_sufficiency_proof"] is False
     assert feedback_source["oracle_id"] == "llm_feedback:latency_review"
-    assert feedback_source["source_status"] == "not_available"
+    assert feedback_source["source_status"] == "recorded"
+    assert feedback_source["local_source_ref_recorded"] is True
     assert feedback_source["source_hash_recorded"] is False
     assert oracle_registry["merge_policy"]["evaluator_policy"] == "single_default_validator"
     assert oracle_registry["merge_policy"]["llm_feedback_policy"] == (
@@ -5937,7 +5938,8 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert evidence_summary["stage_count"] == 2
     assert evidence_summary["configured_stage_count"] == 2
     assert evidence_summary["stage_role_declaration_count"] == 2
-    assert evidence_summary["stage_source_ref_count"] == 0
+    assert evidence_summary["stage_source_ref_count"] == 2
+    assert evidence_summary["stage_source_hash_count"] == 2
     assert evidence_summary["runtime_sample_count"] == 3
     assert evidence_summary["main_test_exposure_count"] == 1
     assert evidence_summary["early_prune_count"] == 1
@@ -5949,6 +5951,8 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "runtime_accounting_only"
     )
     assert evidence_summary["claim_readiness"]["stage_role_declarations"] is True
+    assert evidence_summary["claim_readiness"]["local_stage_source_refs"] is True
+    assert evidence_summary["claim_readiness"]["local_stage_source_hashes"] is True
     assert evidence_summary["claim_readiness"]["runtime_sample_accounting"] is True
     assert evidence_summary["claim_readiness"]["evaluator_test_set_identity"] is False
     assert (

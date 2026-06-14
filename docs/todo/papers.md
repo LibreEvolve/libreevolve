@@ -32,8 +32,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     absence-signal phrases without claiming freshness verification.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
     benchmark coverage bullets with source lines, summary/body hashes, local
-    artifact mentions, local artifact existence records, 116 unique local
-    artifact paths, zero missing referenced local artifacts,
+    artifact mention source offsets, local artifact existence records, 116
+    unique local artifact paths, zero missing referenced local artifacts,
     limitation-signal terms/source offsets/counts, and contradiction flags.
     The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
@@ -50,11 +50,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     there is no proof that those links are sufficient for each implemented or
     missing clause, no semantic verifier for
     `Implemented` benchmark coverage bullets beyond referenced artifact
-    existence, no absence-sentence freshness matrix beyond structural signal
-    classification, and no semantic verifier that checks benchmark qualifiers,
-    implemented-bullet scope/limitation semantics beyond structural signal
-    terms and source offsets, or absence sentences against the current code
-    and paper evidence.
+    mention/existence/source-offset records, no absence-sentence freshness
+    matrix beyond structural signal classification, and no semantic verifier
+    that checks benchmark qualifiers, implemented-bullet scope/limitation
+    semantics beyond structural signal terms and source offsets, or absence
+    sentences against the current code and paper evidence.
   - Required result: extend the phrase-level inventory with evidence-sufficiency
     checks, freshness checks, and benchmark-coverage semantic checks, then add
     CI validation before treating `papers/README.md` as semantically complete

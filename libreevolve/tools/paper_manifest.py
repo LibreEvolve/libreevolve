@@ -1738,7 +1738,11 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
     for ordinal, bullet in enumerate(bullets, start=1):
         text = bullet["text"]
         summary = text.splitlines()[0].strip()
-        local_artifacts = sorted(_status_local_artifact_paths(text))
+        local_artifact_mention_records = _benchmark_local_artifact_mention_records(
+            text,
+            bullet["line_start"],
+        )
+        local_artifacts = sorted({record["path"] for record in local_artifact_mention_records})
         local_artifact_records = _local_artifact_path_records(root_path, local_artifacts)
         missing_local_artifacts = [
             record["path"] for record in local_artifact_records if not record["exists"]
@@ -1764,6 +1768,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
                 },
                 "local_artifact_paths": local_artifacts,
                 "has_local_artifact": bool(local_artifacts),
+                "local_artifact_mention_records": local_artifact_mention_records,
                 "local_artifact_records": local_artifact_records,
                 "local_artifact_existing_count": len(local_artifacts) - len(missing_local_artifacts),
                 "local_artifact_missing_paths": missing_local_artifacts,
@@ -1790,6 +1795,9 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         )
     unique_local_artifacts = sorted(
         {path for row in rows for path in row["local_artifact_paths"]}
+    )
+    local_artifact_mention_record_count = sum(
+        len(row["local_artifact_mention_records"]) for row in rows
     )
     missing_local_artifacts = sorted(
         {path for row in rows for path in row["local_artifact_missing_paths"]}
@@ -1818,6 +1826,7 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         "implemented_bullet_ids": [row["coverage_id"] for row in rows],
         "unique_local_artifact_paths": unique_local_artifacts,
         "unique_local_artifact_count": len(unique_local_artifacts),
+        "local_artifact_mention_record_count": local_artifact_mention_record_count,
         "missing_local_artifact_paths": missing_local_artifacts,
         "artifact_existence_status": (
             "all_referenced_local_artifacts_present"
@@ -1838,11 +1847,11 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         "claim_boundary": (
             "This inventory records one structured entry for each "
             "papers/README.md Implemented benchmark coverage bullet, including "
-            "source lines, summary/body hashes, local artifact mentions, "
-            "local artifact existence records, limitation-signal terms/source "
-            "offsets, and contradiction flags. It does not claim semantic "
-            "verification, benchmark freshness, reproduced result linkage, or "
-            "proof that the benchmark coverage prose is complete."
+            "source lines, summary/body hashes, local artifact mention source "
+            "offsets, local artifact existence records, limitation-signal "
+            "terms/source offsets, and contradiction flags. It does not claim "
+            "semantic verification, benchmark freshness, reproduced result "
+            "linkage, or proof that the benchmark coverage prose is complete."
         ),
     }
 
@@ -3936,6 +3945,7 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
         ("implemented_bullet_ids", "benchmark coverage implemented-bullet ids drifted"),
         ("unique_local_artifact_paths", "benchmark coverage unique local artifact paths drifted"),
         ("unique_local_artifact_count", "benchmark coverage unique local artifact count drifted"),
+        ("local_artifact_mention_record_count", "benchmark coverage local artifact mention count drifted"),
         ("missing_local_artifact_paths", "benchmark coverage missing local artifact paths drifted"),
         ("artifact_existence_status", "benchmark coverage artifact existence status drifted"),
         ("limitation_bullet_count", "benchmark coverage limitation bullet count drifted"),
@@ -8908,6 +8918,30 @@ def _read_implemented_benchmark_bullet_records(root: Path) -> tuple[list[dict[st
             }
         )
     return records, []
+
+
+def _benchmark_local_artifact_mention_records(text: str, bullet_line_start: int) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for match in LOCAL_ARTIFACT_PATH_RE.finditer(text):
+        path = match.group(0).strip("`")
+        start = match.start()
+        end = match.end()
+        records.append(
+            {
+                "path": path,
+                "bullet_text_char_start": start,
+                "bullet_text_char_end": end,
+                "source_span": {
+                    "path": "papers/README.md",
+                    "section": "Benchmark coverage decisions",
+                    "line_start": bullet_line_start + text.count("\n", 0, start),
+                    "line_end": bullet_line_start + text.count("\n", 0, end),
+                    "bullet_text_char_start": start,
+                    "bullet_text_char_end": end,
+                },
+            }
+        )
+    return records
 
 
 def _benchmark_limitation_signal_records(text: str, bullet_line_start: int) -> list[dict[str, Any]]:

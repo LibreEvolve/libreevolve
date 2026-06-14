@@ -1284,9 +1284,9 @@ Important limits:
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction, and the committed benchmark coverage inventory records source
-  spans, hashes, local artifacts, artifact-existence records,
-  limitation-signal terms/source offsets/counts, and contradiction flags for
-  each implemented bullet. It currently records
+  spans, hashes, local artifact mention source offsets, artifact-existence
+  records, limitation-signal terms/source offsets/counts, and contradiction
+  flags for each implemented bullet. It currently records
   116 unique referenced local artifact paths and zero missing referenced local
   artifacts. It is not semantic proof that every implemented benchmark bullet
   is fresh, sufficient, or benchmark-comparable; that remains part of the

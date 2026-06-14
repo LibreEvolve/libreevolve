@@ -11987,9 +11987,26 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
     assert inventory["implemented_bullet_count"] == 1
     bullet = inventory["implemented_bullets"][0]
+    artifact_start = bullet_text.find("`libreevolve/problems/benchmarks/matrix_results.py`")
+    artifact_end = artifact_start + len("`libreevolve/problems/benchmarks/matrix_results.py`")
     assert bullet["has_local_artifact"] is True
     assert bullet["all_local_artifacts_exist"] is True
     assert bullet["local_artifact_existing_count"] == 1
+    assert bullet["local_artifact_mention_records"] == [
+        {
+            "path": "libreevolve/problems/benchmarks/matrix_results.py",
+            "bullet_text_char_start": artifact_start,
+            "bullet_text_char_end": artifact_end,
+            "source_span": {
+                "path": "papers/README.md",
+                "section": "Benchmark coverage decisions",
+                "line_start": bullet["source_span"]["line_start"],
+                "line_end": bullet["source_span"]["line_start"],
+                "bullet_text_char_start": artifact_start,
+                "bullet_text_char_end": artifact_end,
+            },
+        }
+    ]
     assert bullet["local_artifact_records"] == [
         {
             "path": "libreevolve/problems/benchmarks/matrix_results.py",
@@ -12005,6 +12022,7 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     assert bullet["has_limitation_boundary"] is True
     assert bullet["limitation_signal_status"] == "limitation_signals_structurally_classified"
     assert inventory["unique_local_artifact_count"] == 1
+    assert inventory["local_artifact_mention_record_count"] == 1
     assert inventory["missing_local_artifact_paths"] == []
     assert inventory["artifact_existence_status"] == "all_referenced_local_artifacts_present"
     assert inventory["limitation_bullet_count"] == 1

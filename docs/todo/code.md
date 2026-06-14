@@ -48,8 +48,9 @@ sidecars, tests, and active TODOs.
     existence checks plus row/phrase-specific TODO content artifact-mention
     records and structural absence-signal classification.
     `papers/benchmark_coverage_inventory.json` records structural evidence,
-    local artifact existence checks, and limitation-signal term/source-offset
-    classification for implemented benchmark coverage bullets.
+    local artifact mention source offsets and existence checks, and
+    limitation-signal term/source-offset classification for implemented
+    benchmark coverage bullets.
     The boundary still explicitly keeps
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
@@ -61,10 +62,10 @@ sidecars, tests, and active TODOs.
     coverage; no per-phrase evidence-sufficiency check proves long status-cell
     semantics beyond referenced artifact/TODO path existence and row-specific
     or phrase-specific TODO artifact mentions, or implemented-benchmark
-    coverage qualifiers beyond referenced artifact existence and structural
-    limitation-signal terms/source offsets; no absence-sentence freshness
-    verifier proves structurally detected absence phrases are still current;
-    and no generated
+    coverage qualifiers beyond referenced artifact mention/existence/source
+    offsets and structural limitation-signal terms/source offsets; no
+    absence-sentence freshness verifier proves structurally detected absence
+    phrases are still current; and no generated
     code-audit report proves that all implemented and missing
     AlphaEvolve-facing behavior has been classified.
   - Required result: build an implementation-evidence map with requirement ids,

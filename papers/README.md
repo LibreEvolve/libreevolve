@@ -1444,9 +1444,9 @@ artifact-mention records plus phrase-local TODO content backing, but it is not
 phrase-level semantic proof or absence-sentence freshness proof. The checked
 `papers/benchmark_coverage_inventory.json` sidecar records structural
 implemented-benchmark coverage bullet entries with source lines, hashes,
-local-artifact mentions, artifact-existence records, limitation-signal
-terms/source offsets/counts, and contradiction flags, but it is not semantic
-proof that each bullet is sufficient or fresh.
+local-artifact mention source offsets, artifact-existence records,
+limitation-signal terms/source offsets/counts, and contradiction flags, but it
+is not semantic proof that each bullet is sufficient or fresh.
 Environment provenance is useful
 package name/version, selected and extra `[project]` metadata, known-lockfile
 hash, pip-freeze and pip-config hash/preview, installed-distribution `WHEEL`
@@ -2851,9 +2851,9 @@ Implemented:
   freshness checks.
 - `papers/benchmark_coverage_inventory.json`: structural inventory for
   `papers/README.md` Implemented benchmark coverage bullets. It records bullet
-  source spans, summary/body hashes, local artifact mentions,
-  artifact-existence records, limitation-signal terms/source offsets/counts, and
-  contradiction flags. The current inventory records 116 unique referenced
+  source spans, summary/body hashes, local artifact mention source offsets,
+  artifact-existence records, limitation-signal terms/source offsets/counts,
+  and contradiction flags. The current inventory records 116 unique referenced
   local artifact paths and zero missing referenced local artifacts. It is not
   benchmark-result reproduction evidence, semantic verification, or freshness
   proof.

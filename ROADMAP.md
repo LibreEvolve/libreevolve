@@ -828,10 +828,11 @@ is not yet an AlphaEvolve reproduction.
   `papers/implementation_evidence_map_boundary.json` records core
   AlphaEvolve requirement anchors with module, test, sidecar, and TODO links,
   and `papers/status_claim_inventory.json` records checked row-level paper
-  status inventory, but this is not an exhaustive source-span coverage matrix,
-  paper-index phrase-claim inventory, status-cell semantic verifier,
-  implemented-benchmark bullet coverage map, absence-sentence freshness matrix,
-  coverage detector, generated code-audit report, or CI exhaustiveness gate.
+  status inventory plus status-cell phrase hashes and source offsets, but this
+  is not an exhaustive source-span coverage matrix, per-phrase evidence-link
+  inventory, status-cell semantic verifier, implemented-benchmark bullet
+  coverage map, absence-sentence freshness matrix, coverage detector,
+  generated code-audit report, or CI exhaustiveness gate.
 - Keep paper-manifest validation diagnostics shareable by using
   repository-relative labels and secret-redacted exception text in text and JSON
   output.

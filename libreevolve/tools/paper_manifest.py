@@ -1052,10 +1052,9 @@ STATUS_TABLE_POSITIVE_IMPLEMENTATION_RE = re.compile(
 )
 STATUS_TABLE_NOT_IMPLEMENTED_AS_DESCRIBED_PREFIXES = ("Not implemented as described:",)
 STATUS_CLAIM_INVENTORY_SCHEMA = "libreevolve.paper_index_status_claim_inventory.v1"
-STATUS_CLAIM_INVENTORY_STATUS = "row_level_status_inventory_without_phrase_semantic_verifier"
+STATUS_CLAIM_INVENTORY_STATUS = "phrase_hash_inventory_without_semantic_verifier"
 STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
-    "status_cell_phrase_claim_inventory": "not_recorded_locally",
-    "status_phrase_source_span_inventory": "not_recorded_locally",
+    "status_phrase_evidence_link_inventory": "not_recorded_locally",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_coverage_map": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -1488,6 +1487,11 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         status_class = _status_claim_inventory_class(status_text)
         status_class_counts[status_class] = status_class_counts.get(status_class, 0) + 1
         manifest_row = manifest_rows_by_id.get(row_id, {})
+        status_claims = _status_claim_inventory_phrases(
+            row_id,
+            status_text,
+            status_record["line_number"],
+        )
         inventory_rows.append(
             {
                 "id": row_id,
@@ -1506,17 +1510,21 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
                 "local_artifact_paths": sorted(_status_local_artifact_paths(status_text)),
                 "active_todo_paths": _status_claim_inventory_paths(active_cell),
                 "completed_todo_paths": _status_claim_inventory_paths(completed_cell),
-                "claim_inventory_status": "row_classified_without_phrase_semantics",
-                "source_span_status": "row_markdown_line_recorded",
+                "claim_count": len(status_claims),
+                "status_claims": status_claims,
+                "claim_inventory_status": "phrase_hashes_and_offsets_recorded",
+                "source_span_status": "phrase_offsets_recorded_in_status_cell",
                 "freshness_status": "structural_only",
             }
         )
 
+    total_claims = sum(row["claim_count"] for row in inventory_rows)
     return {
         "schema": STATUS_CLAIM_INVENTORY_SCHEMA,
         "inventory_status": STATUS_CLAIM_INVENTORY_STATUS,
         "source_path": "papers/README.md#implementation-status",
         "row_count": len(inventory_rows),
+        "claim_count": total_claims,
         "row_ids": [row["id"] for row in inventory_rows],
         "status_class_counts": dict(sorted(status_class_counts.items())),
         "missing_evidence": dict(STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE),
@@ -1525,9 +1533,10 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "This inventory records one structured row for every "
             "papers/README.md implementation-status table row, including "
             "role, status class, status text hash, manifest file, local "
-            "artifact mentions, row source line, and TODO evidence paths. It "
-            "does not claim phrase-level status verification, phrase "
-            "source-span coverage, "
+            "artifact mentions, row source line, TODO evidence paths, and "
+            "status-cell phrase hashes with character offsets. It does not "
+            "claim phrase-level status verification, per-phrase evidence "
+            "links, "
             "implemented-benchmark bullet coverage, absence-sentence "
             "freshness, or proof that status-cell prose is semantically "
             "complete."
@@ -8112,6 +8121,69 @@ def _status_claim_inventory_class(status_text: str) -> str:
 
 def _status_claim_inventory_paths(cell: str) -> list[str]:
     return list(dict.fromkeys(TODO_COVERAGE_PATH_RE.findall(cell)))
+
+
+def _status_claim_inventory_phrases(
+    row_id: str,
+    status_text: str,
+    line_number: int,
+) -> list[dict[str, Any]]:
+    phrases: list[dict[str, Any]] = []
+    for ordinal, (start, end) in enumerate(_status_claim_phrase_spans(status_text), start=1):
+        phrase = status_text[start:end]
+        phrases.append(
+            {
+                "claim_id": f"{row_id}:status_phrase_{ordinal:03d}",
+                "phrase_ordinal": ordinal,
+                "status_text_char_start": start,
+                "status_text_char_end": end,
+                "phrase_sha256": hashlib.sha256(phrase.encode("utf-8")).hexdigest(),
+                "source_span": {
+                    "path": "papers/README.md",
+                    "section": "Implementation status",
+                    "line_start": line_number,
+                    "line_end": line_number,
+                    "status_text_char_start": start,
+                    "status_text_char_end": end,
+                },
+                "evidence_link_status": "row_level_links_only",
+                "semantic_status": "not_verified",
+            }
+        )
+    return phrases
+
+
+def _status_claim_phrase_spans(status_text: str) -> list[tuple[int, int]]:
+    spans: list[tuple[int, int]] = []
+    start = 0
+    in_code = False
+    for index, char in enumerate(status_text):
+        if char == "`":
+            in_code = not in_code
+            continue
+        if in_code or char not in ".;":
+            continue
+        next_index = index + 1
+        if next_index < len(status_text) and not status_text[next_index].isspace():
+            continue
+        segment_start = start
+        segment_end = next_index
+        while segment_start < segment_end and status_text[segment_start].isspace():
+            segment_start += 1
+        while segment_end > segment_start and status_text[segment_end - 1].isspace():
+            segment_end -= 1
+        if segment_start < segment_end:
+            spans.append((segment_start, segment_end))
+        start = next_index
+    segment_start = start
+    segment_end = len(status_text)
+    while segment_start < segment_end and status_text[segment_start].isspace():
+        segment_start += 1
+    while segment_end > segment_start and status_text[segment_end - 1].isspace():
+        segment_end -= 1
+    if segment_start < segment_end:
+        spans.append((segment_start, segment_end))
+    return spans
 
 
 def _validate_todo_absence_wording(root: Path, manifest_ids: set[str]) -> list[PaperManifestIssue]:

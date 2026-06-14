@@ -21,27 +21,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/status_claim_inventory.json` now records one checked row per
     implementation-status table row with row ids, role/status class, status
     text hashes, row source lines, manifest-file links, local artifact mentions,
-    and active/completed TODO evidence paths. The committed
+    active/completed TODO evidence paths, and 143 status-cell phrase hashes
+    with source-line and character offsets. The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
-    missing evidence for paper-index phrase-claim inventory, status-phrase
-    source-span inventory, status-cell semantic verifier, implemented-benchmark
+    missing evidence for per-phrase evidence-link inventory, status-cell
+    semantic verifier, implemented-benchmark
     bullet coverage map, and absence-sentence freshness matrix.
     `papers/documentation_claim_inventory.json` now adds top-level papers-index
     claim anchors for the local paper-cache manifest scope and the
     implementation-status table scope, while explicitly keeping row-level
     semantic proof out of scope.
-  - Current gap: there is no machine-readable evidence map for every natural-
-    language phrase in each paper status row, no per-phrase source-span or code/
-    test/sidecar link inventory for all implemented and missing clauses, no
-    per-benchmark coverage-claim inventory for `Implemented` bullets, no
-    absence-sentence freshness matrix, and no semantic verifier that checks
-    benchmark qualifiers, implemented-bullet scope/limitation wording, or
-    absence sentences against the current code and paper evidence.
-  - Required result: extend the row-level inventory into per-paper status-claim
-    entries with claim ids, source spans, code/test/sidecar/TODO evidence
-    links, freshness checks, and benchmark-coverage bullet mappings, then add
-    CI validation before treating `papers/README.md` as semantically complete
-    implementation-status or benchmark-coverage proof.
+  - Current gap: each status phrase now has a stable hash and source offset,
+    but there is no per-phrase code/test/sidecar/TODO evidence-link inventory
+    for all implemented and missing clauses, no per-benchmark coverage-claim
+    inventory for `Implemented` bullets, no absence-sentence freshness matrix,
+    and no semantic verifier that checks benchmark qualifiers,
+    implemented-bullet scope/limitation wording, or absence sentences against
+    the current code and paper evidence.
+  - Required result: extend the phrase-level inventory with code/test/sidecar/
+    TODO evidence links, freshness checks, and benchmark-coverage bullet
+    mappings, then add CI validation before treating `papers/README.md` as
+    semantically complete implementation-status or benchmark-coverage proof.
 
 - [ ] Track independent evaluator-oracle evidence beyond local arbitration
       metadata.

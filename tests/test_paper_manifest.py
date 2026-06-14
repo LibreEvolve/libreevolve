@@ -11318,9 +11318,12 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         ],
     )
     inventory = paper_manifest.paper_status_claim_inventory_record(tmp_path)
+    assert inventory["claim_count"] >= 1
     assert inventory["rows"][0]["source_span"]["path"] == "papers/README.md"
     assert inventory["rows"][0]["source_span"]["line_start"] > 0
-    assert inventory["rows"][0]["source_span_status"] == "row_markdown_line_recorded"
+    assert inventory["rows"][0]["source_span_status"] == "phrase_offsets_recorded_in_status_cell"
+    assert inventory["rows"][0]["status_claims"][0]["source_span"]["line_start"] > 0
+    assert inventory["rows"][0]["status_claims"][0]["semantic_status"] == "not_verified"
     (tmp_path / paper_manifest.STATUS_CLAIM_INVENTORY_FILE).write_text(
         json.dumps(inventory, indent=2),
         encoding="utf-8",

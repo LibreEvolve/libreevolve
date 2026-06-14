@@ -148,6 +148,184 @@
   "todo_evidence_status": "all_referenced_todo_paths_present",
   "local_artifacts_missing_from_todo_evidence": [],
   "todo_content_artifact_mention_record_count": 404,
+  "todo_content_matched_source_tokens": [
+    "1504.04909",
+    "1504.04909__MAP_Elites",
+    "1504.04909__MAP_Elites.pdf",
+    "2505.16105",
+    "2506.01896",
+    "2506.13131",
+    "2506.13131__AlphaEvolve",
+    "2506.13131__AlphaEvolve.pdf",
+    "2506.16750",
+    "2509.18057",
+    "2509.18057__Hardness_of_Approximation",
+    "2509.18057__Hardness_of_Approximation.pdf",
+    "2510.06056",
+    "2510.06056__DeepEvolve",
+    "2510.06056__DeepEvolve.pdf",
+    "2510.14150",
+    "2510.14150__CodeEvolve",
+    "2510.14150__CodeEvolve.pdf",
+    "2511.02864",
+    "2511.02864__Mathematical_exploration_and_discovery_at_scale",
+    "2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+    "2511.12916",
+    "2511.12916__Fault2Flow",
+    "2511.12916__Fault2Flow.pdf",
+    "2511.17592",
+    "2511.17592__GigaEvo",
+    "2511.17592__GigaEvo.pdf",
+    "2511.23473",
+    "2511.23473__ThetaEvolve",
+    "2511.23473__ThetaEvolve.pdf",
+    "2512.18746",
+    "2512.18746__MemEvolve",
+    "2512.18746__MemEvolve.pdf",
+    "2601.01235",
+    "2601.05943",
+    "2601.05943__Global_NLP_Optimization",
+    "2601.05943__Global_NLP_Optimization.pdf",
+    "2601.10657",
+    "2601.10657__PACEvolve",
+    "2601.10657__PACEvolve.pdf",
+    "2601.16175",
+    "2601.21096",
+    "2601.21096__Magellan",
+    "2601.21096__Magellan.pdf",
+    "2602.02919",
+    "2602.02919__DeltaEvolve",
+    "2602.02919__DeltaEvolve.pdf",
+    "2602.10233",
+    "2602.10233__ImprovEvolve",
+    "2602.10233__ImprovEvolve.pdf",
+    "2602.15951",
+    "2602.15951__MadEvolve",
+    "2602.15951__MadEvolve.pdf",
+    "2602.16928",
+    "2602.16928__Multiagent_Learning",
+    "2602.16928__Multiagent_Learning.pdf",
+    "2602.22425",
+    "2602.22425__ArchAgent",
+    "2602.22425__ArchAgent.pdf",
+    "2602.23413",
+    "2602.23413__EvoX",
+    "2602.23413__EvoX.pdf",
+    "2603.06692",
+    "2603.08679",
+    "2603.08679__Bilateral_Trade",
+    "2603.08679__Bilateral_Trade.pdf",
+    "2603.09172",
+    "2603.14575",
+    "2603.14575__CausalEvolve",
+    "2603.14575__CausalEvolve.pdf",
+    "2603.28052",
+    "2603.28052__Meta_Harness",
+    "2603.28052__Meta_Harness.pdf",
+    "2604.01658",
+    "2604.01658__CORAL",
+    "2604.01658__CORAL.pdf",
+    "2604.25850",
+    "2604.25850__AHE",
+    "2604.25850__AHE.pdf",
+    "2605.01120",
+    "2605.01120__Zarankiewicz_Reinforced_Search",
+    "2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+    "2605.01794",
+    "2605.01794__Radar_Power_Allocation",
+    "2605.01794__Radar_Power_Allocation.pdf",
+    "2605.05921",
+    "2605.05921__Intentmaking_and_Sensemaking",
+    "2605.05921__Intentmaking_and_Sensemaking.pdf",
+    "2605.08520",
+    "2605.08520__FlashEvolve",
+    "2605.08520__FlashEvolve.pdf",
+    "2605.09764",
+    "2605.09764__LEVI",
+    "2605.09764__LEVI.pdf",
+    "2605.09959",
+    "2605.09959__G_Zero",
+    "2605.09959__G_Zero.pdf",
+    "2605.13357",
+    "2605.13357__AI_Harness_Engineering",
+    "2605.13357__AI_Harness_Engineering.pdf",
+    "2605.13821",
+    "2605.13821__AEvo",
+    "2605.13821__AEvo.pdf",
+    "2605.14718",
+    "2605.14718__FHE_on_TPU",
+    "2605.14718__FHE_on_TPU.pdf",
+    "2605.20086",
+    "2605.20086__Evolutionary_Coding_Agents",
+    "2605.20086__Evolutionary_Coding_Agents.pdf",
+    "2605.21516",
+    "2605.21516__Inference_Time_Trajectory_Alignment",
+    "2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+    "2605.21605",
+    "2605.21605__GenEvolve",
+    "2605.21605__GenEvolve.pdf",
+    "2605.27276",
+    "2605.27276__SIA",
+    "2605.27276__SIA.pdf",
+    "2605.29293",
+    "2605.29293__LLM_ALSO",
+    "2605.29293__LLM_ALSO.pdf",
+    "2605.29847",
+    "2605.29847__EvoRubric",
+    "2605.29847__EvoRubric.pdf",
+    "2605.30621",
+    "2605.30621__Harness_Updating_Is_Not_Harness_Benefit",
+    "2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+    "2606.01770",
+    "2606.01770__Adaptive_Auto_Harness",
+    "2606.01770__Adaptive_Auto_Harness.pdf",
+    "2606.05922",
+    "2606.05922__RHO",
+    "2606.05922__RHO.pdf",
+    "2606.06114",
+    "2606.06114__ANCHOR_Healthy_Evolution",
+    "2606.06114__ANCHOR_Healthy_Evolution.pdf",
+    "2606.06324",
+    "2606.06324__HarnessFix",
+    "2606.06324__HarnessFix.pdf",
+    "2606.06473",
+    "2606.06473__MLEvolve",
+    "2606.06473__MLEvolve.pdf",
+    "auer-cesa-bianchi-fischer-2002",
+    "auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit",
+    "auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf",
+    "papers/2506.13131__AlphaEvolve.pdf",
+    "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+    "papers/2512.18746__MemEvolve.pdf",
+    "papers/2601.10657__PACEvolve.pdf",
+    "papers/2602.02919__DeltaEvolve.pdf",
+    "papers/2602.23413__EvoX.pdf",
+    "papers/2603.28052__Meta_Harness.pdf",
+    "papers/2604.01658__CORAL.pdf",
+    "papers/2604.25850__AHE.pdf",
+    "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+    "papers/2605.01794__Radar_Power_Allocation.pdf",
+    "papers/2605.05921__Intentmaking_and_Sensemaking.pdf",
+    "papers/2605.08520__FlashEvolve.pdf",
+    "papers/2605.09764__LEVI.pdf",
+    "papers/2605.09959__G_Zero.pdf",
+    "papers/2605.13357__AI_Harness_Engineering.pdf",
+    "papers/2605.13821__AEvo.pdf",
+    "papers/2605.14718__FHE_on_TPU.pdf",
+    "papers/2605.20086__Evolutionary_Coding_Agents.pdf",
+    "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+    "papers/2605.21605__GenEvolve.pdf",
+    "papers/2605.27276__SIA.pdf",
+    "papers/2605.29293__LLM_ALSO.pdf",
+    "papers/2605.29847__EvoRubric.pdf",
+    "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+    "papers/2606.01770__Adaptive_Auto_Harness.pdf",
+    "papers/2606.05922__RHO.pdf",
+    "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf",
+    "papers/2606.06324__HarnessFix.pdf",
+    "papers/2606.06473__MLEvolve.pdf"
+  ],
+  "todo_content_matched_source_token_count": 175,
   "todo_content_evidence_status": "all_row_local_artifacts_mentioned_in_todo_evidence",
   "phrase_local_artifacts_missing_from_todo_evidence": [],
   "phrase_local_artifact_mention_record_count": 60,
@@ -392,6 +570,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.13131"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [],
@@ -407,6 +588,11 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.13131",
+            "2506.13131__AlphaEvolve",
+            "2506.13131__AlphaEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 121,
           "mentioned_local_artifact_records": [],
@@ -424,6 +610,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.13131",
+            "2506.13131__AlphaEvolve",
+            "2506.13131__AlphaEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 6,
           "mentioned_local_artifact_records": [
@@ -445,6 +636,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.13131",
+            "2506.13131__AlphaEvolve",
+            "2506.13131__AlphaEvolve.pdf",
+            "papers/2506.13131__AlphaEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 385,
           "mentioned_local_artifact_records": [],
@@ -460,6 +657,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.13131",
+            "2506.13131__AlphaEvolve",
+            "2506.13131__AlphaEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 12,
           "mentioned_local_artifact_records": [],
@@ -475,6 +677,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.13131"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -1070,6 +1275,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.02864",
+            "2511.02864__Mathematical_exploration_and_discovery_at_scale",
+            "2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+            "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -1119,6 +1330,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.02864"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -1142,6 +1356,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.02864",
+            "2511.02864__Mathematical_exploration_and_discovery_at_scale",
+            "2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+            "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -1169,6 +1389,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.02864"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -1192,6 +1415,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.02864"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -1689,6 +1915,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "1504.04909"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -1736,6 +1965,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "1504.04909"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -1776,6 +2008,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "1504.04909"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -1799,6 +2034,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "1504.04909",
+            "1504.04909__MAP_Elites",
+            "1504.04909__MAP_Elites.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 7,
           "mentioned_local_artifact_records": [
@@ -1822,6 +2062,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "1504.04909"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -1845,6 +2088,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "1504.04909"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -2462,6 +2708,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "auer-cesa-bianchi-fischer-2002"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -2499,6 +2748,11 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "auer-cesa-bianchi-fischer-2002",
+            "auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit",
+            "auer-cesa-bianchi-fischer-2002__UCB1_Finite_Time_Analysis_Multiarmed_Bandit.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -2529,6 +2783,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "auer-cesa-bianchi-fischer-2002"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -2552,6 +2809,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "auer-cesa-bianchi-fischer-2002"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -2575,6 +2835,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "auer-cesa-bianchi-fischer-2002"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -2603,6 +2866,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "auer-cesa-bianchi-fischer-2002"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3098,6 +3364,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.17592"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3134,6 +3403,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.17592"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3162,6 +3434,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.17592"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -3183,6 +3458,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.17592",
+            "2511.17592__GigaEvo",
+            "2511.17592__GigaEvo.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3204,6 +3484,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.17592"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3225,6 +3508,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.17592"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3711,6 +3997,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.14150"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3737,6 +4026,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.14150"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3765,6 +4057,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.14150"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -3786,6 +4081,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.14150",
+            "2510.14150__CodeEvolve",
+            "2510.14150__CodeEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3807,6 +4107,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.14150"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -3828,6 +4131,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.14150"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -4254,6 +4560,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.23473"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -4282,6 +4591,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.23473"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -4312,6 +4624,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.23473"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -4339,6 +4654,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.23473",
+            "2511.23473__ThetaEvolve",
+            "2511.23473__ThetaEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -4362,6 +4682,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.23473"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -4385,6 +4708,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.23473"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5064,6 +5390,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.10233"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5092,6 +5421,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.10233"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5122,6 +5454,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.10233"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -5149,6 +5484,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.10233",
+            "2602.10233__ImprovEvolve",
+            "2602.10233__ImprovEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5172,6 +5512,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.10233"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5195,6 +5538,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.10233"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5695,6 +6041,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.15951"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5721,6 +6070,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.15951"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -5749,6 +6101,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.15951"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -5770,6 +6125,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.15951",
+            "2602.15951__MadEvolve",
+            "2602.15951__MadEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -5791,6 +6151,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.15951",
+            "2602.15951__MadEvolve",
+            "2602.15951__MadEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -5812,6 +6177,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.15951"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -6301,6 +6669,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.14575"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -6338,6 +6709,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.14575"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -6368,6 +6742,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.14575"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -6391,6 +6768,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.14575",
+            "2603.14575__CausalEvolve",
+            "2603.14575__CausalEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -6414,6 +6796,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.14575"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -6437,6 +6822,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.14575"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7036,6 +7424,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.06056"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7073,6 +7464,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.06056"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7103,6 +7497,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.06056"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -7126,6 +7523,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.06056",
+            "2510.06056__DeepEvolve",
+            "2510.06056__DeepEvolve.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -7149,6 +7551,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.06056"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7172,6 +7577,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2510.06056"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7752,6 +8160,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.21096"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7778,6 +8189,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.21096"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7806,6 +8220,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.21096"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [],
@@ -7821,6 +8238,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.21096",
+            "2601.21096__Magellan",
+            "2601.21096__Magellan.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7842,6 +8264,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.21096"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -7868,6 +8293,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.21096",
+            "2601.21096__Magellan",
+            "2601.21096__Magellan.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -8326,6 +8756,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.14718",
+            "2605.14718__FHE_on_TPU",
+            "2605.14718__FHE_on_TPU.pdf",
+            "papers/2605.14718__FHE_on_TPU.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -8352,6 +8788,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.14718",
+            "2605.14718__FHE_on_TPU",
+            "2605.14718__FHE_on_TPU.pdf",
+            "papers/2605.14718__FHE_on_TPU.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -8380,6 +8822,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.14718",
+            "2605.14718__FHE_on_TPU",
+            "2605.14718__FHE_on_TPU.pdf",
+            "papers/2605.14718__FHE_on_TPU.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -8401,6 +8849,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.14718",
+            "2605.14718__FHE_on_TPU",
+            "2605.14718__FHE_on_TPU.pdf",
+            "papers/2605.14718__FHE_on_TPU.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -8422,6 +8876,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.14718",
+            "2605.14718__FHE_on_TPU",
+            "2605.14718__FHE_on_TPU.pdf",
+            "papers/2605.14718__FHE_on_TPU.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -8766,6 +9226,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.05921",
+            "2605.05921__Intentmaking_and_Sensemaking",
+            "2605.05921__Intentmaking_and_Sensemaking.pdf",
+            "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -8792,6 +9258,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.05921",
+            "2605.05921__Intentmaking_and_Sensemaking",
+            "2605.05921__Intentmaking_and_Sensemaking.pdf",
+            "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -8820,6 +9292,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.05921",
+            "2605.05921__Intentmaking_and_Sensemaking",
+            "2605.05921__Intentmaking_and_Sensemaking.pdf",
+            "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -8841,6 +9319,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.05921"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -8856,6 +9337,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.05921",
+            "2605.05921__Intentmaking_and_Sensemaking",
+            "2605.05921__Intentmaking_and_Sensemaking.pdf",
+            "papers/2605.05921__Intentmaking_and_Sensemaking.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -9200,6 +9687,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01794",
+            "2605.01794__Radar_Power_Allocation",
+            "2605.01794__Radar_Power_Allocation.pdf",
+            "papers/2605.01794__Radar_Power_Allocation.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -9226,6 +9719,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01794",
+            "2605.01794__Radar_Power_Allocation",
+            "2605.01794__Radar_Power_Allocation.pdf",
+            "papers/2605.01794__Radar_Power_Allocation.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -9254,6 +9753,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01794",
+            "2605.01794__Radar_Power_Allocation",
+            "2605.01794__Radar_Power_Allocation.pdf",
+            "papers/2605.01794__Radar_Power_Allocation.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -9275,6 +9780,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01794"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -9290,6 +9798,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01794",
+            "2605.01794__Radar_Power_Allocation",
+            "2605.01794__Radar_Power_Allocation.pdf",
+            "papers/2605.01794__Radar_Power_Allocation.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -9634,6 +10148,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.23413",
+            "2602.23413__EvoX",
+            "2602.23413__EvoX.pdf",
+            "papers/2602.23413__EvoX.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -9660,6 +10180,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.23413",
+            "2602.23413__EvoX",
+            "2602.23413__EvoX.pdf",
+            "papers/2602.23413__EvoX.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -9688,6 +10214,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.23413",
+            "2602.23413__EvoX",
+            "2602.23413__EvoX.pdf",
+            "papers/2602.23413__EvoX.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -9709,6 +10241,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.23413"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -9724,6 +10259,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.23413",
+            "2602.23413__EvoX",
+            "2602.23413__EvoX.pdf",
+            "papers/2602.23413__EvoX.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10068,6 +10609,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.02919",
+            "2602.02919__DeltaEvolve",
+            "2602.02919__DeltaEvolve.pdf",
+            "papers/2602.02919__DeltaEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10094,6 +10641,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.02919",
+            "2602.02919__DeltaEvolve",
+            "2602.02919__DeltaEvolve.pdf",
+            "papers/2602.02919__DeltaEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10122,6 +10675,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.02919",
+            "2602.02919__DeltaEvolve",
+            "2602.02919__DeltaEvolve.pdf",
+            "papers/2602.02919__DeltaEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -10143,6 +10702,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.02919"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -10158,6 +10720,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.02919",
+            "2602.02919__DeltaEvolve",
+            "2602.02919__DeltaEvolve.pdf",
+            "papers/2602.02919__DeltaEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10502,6 +11070,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06473",
+            "2606.06473__MLEvolve",
+            "2606.06473__MLEvolve.pdf",
+            "papers/2606.06473__MLEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10528,6 +11102,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06473",
+            "2606.06473__MLEvolve",
+            "2606.06473__MLEvolve.pdf",
+            "papers/2606.06473__MLEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10556,6 +11136,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06473",
+            "2606.06473__MLEvolve",
+            "2606.06473__MLEvolve.pdf",
+            "papers/2606.06473__MLEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -10577,6 +11163,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06473"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -10592,6 +11181,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06473",
+            "2606.06473__MLEvolve",
+            "2606.06473__MLEvolve.pdf",
+            "papers/2606.06473__MLEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10936,6 +11531,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09764",
+            "2605.09764__LEVI",
+            "2605.09764__LEVI.pdf",
+            "papers/2605.09764__LEVI.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10962,6 +11563,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09764",
+            "2605.09764__LEVI",
+            "2605.09764__LEVI.pdf",
+            "papers/2605.09764__LEVI.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -10990,6 +11597,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09764",
+            "2605.09764__LEVI",
+            "2605.09764__LEVI.pdf",
+            "papers/2605.09764__LEVI.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -11011,6 +11624,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09764"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -11026,6 +11642,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09764",
+            "2605.09764__LEVI",
+            "2605.09764__LEVI.pdf",
+            "papers/2605.09764__LEVI.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -11370,6 +11992,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.10657",
+            "2601.10657__PACEvolve",
+            "2601.10657__PACEvolve.pdf",
+            "papers/2601.10657__PACEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -11396,6 +12024,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.10657",
+            "2601.10657__PACEvolve",
+            "2601.10657__PACEvolve.pdf",
+            "papers/2601.10657__PACEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -11424,6 +12058,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.10657",
+            "2601.10657__PACEvolve",
+            "2601.10657__PACEvolve.pdf",
+            "papers/2601.10657__PACEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -11445,6 +12085,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.10657"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -11460,6 +12103,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.10657",
+            "2601.10657__PACEvolve",
+            "2601.10657__PACEvolve.pdf",
+            "papers/2601.10657__PACEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -11804,6 +12453,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.08520",
+            "2605.08520__FlashEvolve",
+            "2605.08520__FlashEvolve.pdf",
+            "papers/2605.08520__FlashEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -11830,6 +12485,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.08520",
+            "2605.08520__FlashEvolve",
+            "2605.08520__FlashEvolve.pdf",
+            "papers/2605.08520__FlashEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -11858,6 +12519,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.08520",
+            "2605.08520__FlashEvolve",
+            "2605.08520__FlashEvolve.pdf",
+            "papers/2605.08520__FlashEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -11879,6 +12546,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.08520"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -11894,6 +12564,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.08520",
+            "2605.08520__FlashEvolve",
+            "2605.08520__FlashEvolve.pdf",
+            "papers/2605.08520__FlashEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -12238,6 +12914,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.20086",
+            "2605.20086__Evolutionary_Coding_Agents",
+            "2605.20086__Evolutionary_Coding_Agents.pdf",
+            "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -12264,6 +12946,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.20086",
+            "2605.20086__Evolutionary_Coding_Agents",
+            "2605.20086__Evolutionary_Coding_Agents.pdf",
+            "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -12292,6 +12980,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.20086",
+            "2605.20086__Evolutionary_Coding_Agents",
+            "2605.20086__Evolutionary_Coding_Agents.pdf",
+            "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -12313,6 +13007,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.20086"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -12328,6 +13025,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.20086",
+            "2605.20086__Evolutionary_Coding_Agents",
+            "2605.20086__Evolutionary_Coding_Agents.pdf",
+            "papers/2605.20086__Evolutionary_Coding_Agents.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -12672,6 +13375,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01120",
+            "2605.01120__Zarankiewicz_Reinforced_Search",
+            "2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+            "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -12698,6 +13407,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01120",
+            "2605.01120__Zarankiewicz_Reinforced_Search",
+            "2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+            "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -12726,6 +13441,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01120",
+            "2605.01120__Zarankiewicz_Reinforced_Search",
+            "2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+            "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -12747,6 +13468,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01120"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -12762,6 +13486,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.01120",
+            "2605.01120__Zarankiewicz_Reinforced_Search",
+            "2605.01120__Zarankiewicz_Reinforced_Search.pdf",
+            "papers/2605.01120__Zarankiewicz_Reinforced_Search.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -13197,6 +13927,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.01658",
+            "2604.01658__CORAL",
+            "2604.01658__CORAL.pdf",
+            "papers/2604.01658__CORAL.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -13223,6 +13959,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.01658",
+            "2604.01658__CORAL",
+            "2604.01658__CORAL.pdf",
+            "papers/2604.01658__CORAL.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -13251,6 +13993,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.01658",
+            "2604.01658__CORAL",
+            "2604.01658__CORAL.pdf",
+            "papers/2604.01658__CORAL.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -13272,6 +14020,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.01658"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -13287,6 +14038,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.01658",
+            "2604.01658__CORAL",
+            "2604.01658__CORAL.pdf",
+            "papers/2604.01658__CORAL.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -13631,6 +14388,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13821",
+            "2605.13821__AEvo",
+            "2605.13821__AEvo.pdf",
+            "papers/2605.13821__AEvo.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -13657,6 +14420,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13821",
+            "2605.13821__AEvo",
+            "2605.13821__AEvo.pdf",
+            "papers/2605.13821__AEvo.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -13685,6 +14454,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13821",
+            "2605.13821__AEvo",
+            "2605.13821__AEvo.pdf",
+            "papers/2605.13821__AEvo.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -13706,6 +14481,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13821"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -13721,6 +14499,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13821",
+            "2605.13821__AEvo",
+            "2605.13821__AEvo.pdf",
+            "papers/2605.13821__AEvo.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14065,6 +14849,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09959",
+            "2605.09959__G_Zero",
+            "2605.09959__G_Zero.pdf",
+            "papers/2605.09959__G_Zero.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14091,6 +14881,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09959",
+            "2605.09959__G_Zero",
+            "2605.09959__G_Zero.pdf",
+            "papers/2605.09959__G_Zero.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14119,6 +14915,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09959",
+            "2605.09959__G_Zero",
+            "2605.09959__G_Zero.pdf",
+            "papers/2605.09959__G_Zero.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -14140,6 +14942,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09959"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -14155,6 +14960,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.09959",
+            "2605.09959__G_Zero",
+            "2605.09959__G_Zero.pdf",
+            "papers/2605.09959__G_Zero.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14499,6 +15310,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21605",
+            "2605.21605__GenEvolve",
+            "2605.21605__GenEvolve.pdf",
+            "papers/2605.21605__GenEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14525,6 +15342,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21605",
+            "2605.21605__GenEvolve",
+            "2605.21605__GenEvolve.pdf",
+            "papers/2605.21605__GenEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14553,6 +15376,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21605",
+            "2605.21605__GenEvolve",
+            "2605.21605__GenEvolve.pdf",
+            "papers/2605.21605__GenEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -14574,6 +15403,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21605"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -14589,6 +15421,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21605",
+            "2605.21605__GenEvolve",
+            "2605.21605__GenEvolve.pdf",
+            "papers/2605.21605__GenEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14933,6 +15771,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29847",
+            "2605.29847__EvoRubric",
+            "2605.29847__EvoRubric.pdf",
+            "papers/2605.29847__EvoRubric.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14959,6 +15803,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29847",
+            "2605.29847__EvoRubric",
+            "2605.29847__EvoRubric.pdf",
+            "papers/2605.29847__EvoRubric.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -14987,6 +15837,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29847",
+            "2605.29847__EvoRubric",
+            "2605.29847__EvoRubric.pdf",
+            "papers/2605.29847__EvoRubric.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -15008,6 +15864,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29847"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -15023,6 +15882,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29847",
+            "2605.29847__EvoRubric",
+            "2605.29847__EvoRubric.pdf",
+            "papers/2605.29847__EvoRubric.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -15367,6 +16232,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29293",
+            "2605.29293__LLM_ALSO",
+            "2605.29293__LLM_ALSO.pdf",
+            "papers/2605.29293__LLM_ALSO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -15393,6 +16264,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29293",
+            "2605.29293__LLM_ALSO",
+            "2605.29293__LLM_ALSO.pdf",
+            "papers/2605.29293__LLM_ALSO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -15421,6 +16298,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29293",
+            "2605.29293__LLM_ALSO",
+            "2605.29293__LLM_ALSO.pdf",
+            "papers/2605.29293__LLM_ALSO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -15442,6 +16325,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29293"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -15457,6 +16343,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.29293",
+            "2605.29293__LLM_ALSO",
+            "2605.29293__LLM_ALSO.pdf",
+            "papers/2605.29293__LLM_ALSO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -15801,6 +16693,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2512.18746",
+            "2512.18746__MemEvolve",
+            "2512.18746__MemEvolve.pdf",
+            "papers/2512.18746__MemEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -15827,6 +16725,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2512.18746",
+            "2512.18746__MemEvolve",
+            "2512.18746__MemEvolve.pdf",
+            "papers/2512.18746__MemEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -15855,6 +16759,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2512.18746",
+            "2512.18746__MemEvolve",
+            "2512.18746__MemEvolve.pdf",
+            "papers/2512.18746__MemEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -15876,6 +16786,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2512.18746"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -15891,6 +16804,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2512.18746",
+            "2512.18746__MemEvolve",
+            "2512.18746__MemEvolve.pdf",
+            "papers/2512.18746__MemEvolve.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -16235,6 +17154,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06114",
+            "2606.06114__ANCHOR_Healthy_Evolution",
+            "2606.06114__ANCHOR_Healthy_Evolution.pdf",
+            "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -16261,6 +17186,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06114",
+            "2606.06114__ANCHOR_Healthy_Evolution",
+            "2606.06114__ANCHOR_Healthy_Evolution.pdf",
+            "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -16289,6 +17220,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06114",
+            "2606.06114__ANCHOR_Healthy_Evolution",
+            "2606.06114__ANCHOR_Healthy_Evolution.pdf",
+            "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -16310,6 +17247,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06114"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -16325,6 +17265,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06114",
+            "2606.06114__ANCHOR_Healthy_Evolution",
+            "2606.06114__ANCHOR_Healthy_Evolution.pdf",
+            "papers/2606.06114__ANCHOR_Healthy_Evolution.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -16669,6 +17615,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.27276",
+            "2605.27276__SIA",
+            "2605.27276__SIA.pdf",
+            "papers/2605.27276__SIA.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -16695,6 +17647,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.27276",
+            "2605.27276__SIA",
+            "2605.27276__SIA.pdf",
+            "papers/2605.27276__SIA.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -16723,6 +17681,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.27276",
+            "2605.27276__SIA",
+            "2605.27276__SIA.pdf",
+            "papers/2605.27276__SIA.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -16744,6 +17708,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.27276"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -16759,6 +17726,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.27276",
+            "2605.27276__SIA",
+            "2605.27276__SIA.pdf",
+            "papers/2605.27276__SIA.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17103,6 +18076,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06324",
+            "2606.06324__HarnessFix",
+            "2606.06324__HarnessFix.pdf",
+            "papers/2606.06324__HarnessFix.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17129,6 +18108,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06324",
+            "2606.06324__HarnessFix",
+            "2606.06324__HarnessFix.pdf",
+            "papers/2606.06324__HarnessFix.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17157,6 +18142,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06324",
+            "2606.06324__HarnessFix",
+            "2606.06324__HarnessFix.pdf",
+            "papers/2606.06324__HarnessFix.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -17178,6 +18169,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06324"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -17193,6 +18187,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.06324",
+            "2606.06324__HarnessFix",
+            "2606.06324__HarnessFix.pdf",
+            "papers/2606.06324__HarnessFix.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17537,6 +18537,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.05922",
+            "2606.05922__RHO",
+            "2606.05922__RHO.pdf",
+            "papers/2606.05922__RHO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17563,6 +18569,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.05922",
+            "2606.05922__RHO",
+            "2606.05922__RHO.pdf",
+            "papers/2606.05922__RHO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17591,6 +18603,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.05922",
+            "2606.05922__RHO",
+            "2606.05922__RHO.pdf",
+            "papers/2606.05922__RHO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -17612,6 +18630,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.05922"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -17627,6 +18648,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.05922",
+            "2606.05922__RHO",
+            "2606.05922__RHO.pdf",
+            "papers/2606.05922__RHO.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17971,6 +18998,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.30621",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+            "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -17997,6 +19030,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.30621",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+            "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -18025,6 +19064,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.30621",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+            "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -18046,6 +19091,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.30621"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -18061,6 +19109,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.30621",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit",
+            "2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf",
+            "papers/2605.30621__Harness_Updating_Is_Not_Harness_Benefit.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -18405,6 +19459,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.25850",
+            "2604.25850__AHE",
+            "2604.25850__AHE.pdf",
+            "papers/2604.25850__AHE.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -18431,6 +19491,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.25850",
+            "2604.25850__AHE",
+            "2604.25850__AHE.pdf",
+            "papers/2604.25850__AHE.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -18459,6 +19525,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.25850",
+            "2604.25850__AHE",
+            "2604.25850__AHE.pdf",
+            "papers/2604.25850__AHE.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -18480,6 +19552,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.25850"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -18495,6 +19570,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2604.25850",
+            "2604.25850__AHE",
+            "2604.25850__AHE.pdf",
+            "papers/2604.25850__AHE.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -18839,6 +19920,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13357",
+            "2605.13357__AI_Harness_Engineering",
+            "2605.13357__AI_Harness_Engineering.pdf",
+            "papers/2605.13357__AI_Harness_Engineering.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -18865,6 +19952,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13357",
+            "2605.13357__AI_Harness_Engineering",
+            "2605.13357__AI_Harness_Engineering.pdf",
+            "papers/2605.13357__AI_Harness_Engineering.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -18893,6 +19986,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13357",
+            "2605.13357__AI_Harness_Engineering",
+            "2605.13357__AI_Harness_Engineering.pdf",
+            "papers/2605.13357__AI_Harness_Engineering.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -18914,6 +20013,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13357"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -18929,6 +20031,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.13357",
+            "2605.13357__AI_Harness_Engineering",
+            "2605.13357__AI_Harness_Engineering.pdf",
+            "papers/2605.13357__AI_Harness_Engineering.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -19393,6 +20501,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21516",
+            "2605.21516__Inference_Time_Trajectory_Alignment",
+            "2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+            "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -19419,6 +20533,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21516",
+            "2605.21516__Inference_Time_Trajectory_Alignment",
+            "2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+            "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -19447,6 +20567,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21516",
+            "2605.21516__Inference_Time_Trajectory_Alignment",
+            "2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+            "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -19468,6 +20594,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21516"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -19483,6 +20612,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2605.21516",
+            "2605.21516__Inference_Time_Trajectory_Alignment",
+            "2605.21516__Inference_Time_Trajectory_Alignment.pdf",
+            "papers/2605.21516__Inference_Time_Trajectory_Alignment.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -19827,6 +20962,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.01770",
+            "2606.01770__Adaptive_Auto_Harness",
+            "2606.01770__Adaptive_Auto_Harness.pdf",
+            "papers/2606.01770__Adaptive_Auto_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -19853,6 +20994,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.01770",
+            "2606.01770__Adaptive_Auto_Harness",
+            "2606.01770__Adaptive_Auto_Harness.pdf",
+            "papers/2606.01770__Adaptive_Auto_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -19881,6 +21028,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.01770",
+            "2606.01770__Adaptive_Auto_Harness",
+            "2606.01770__Adaptive_Auto_Harness.pdf",
+            "papers/2606.01770__Adaptive_Auto_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -19902,6 +21055,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.01770"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -19917,6 +21073,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2606.01770",
+            "2606.01770__Adaptive_Auto_Harness",
+            "2606.01770__Adaptive_Auto_Harness.pdf",
+            "papers/2606.01770__Adaptive_Auto_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20261,6 +21423,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.28052",
+            "2603.28052__Meta_Harness",
+            "2603.28052__Meta_Harness.pdf",
+            "papers/2603.28052__Meta_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20287,6 +21455,12 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.28052",
+            "2603.28052__Meta_Harness",
+            "2603.28052__Meta_Harness.pdf",
+            "papers/2603.28052__Meta_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20315,6 +21489,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.28052",
+            "2603.28052__Meta_Harness",
+            "2603.28052__Meta_Harness.pdf",
+            "papers/2603.28052__Meta_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -20336,6 +21516,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.28052"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [],
@@ -20351,6 +21534,12 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.28052",
+            "2603.28052__Meta_Harness",
+            "2603.28052__Meta_Harness.pdf",
+            "papers/2603.28052__Meta_Harness.pdf"
+          ],
           "row_source_token_match_count": 4,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20707,6 +21896,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.22425"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20733,6 +21925,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.22425"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20761,6 +21956,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.22425"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [],
@@ -20776,6 +21974,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.22425",
+            "2602.22425__ArchAgent",
+            "2602.22425__ArchAgent.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20797,6 +22000,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.22425"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -20818,6 +22024,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.22425",
+            "2602.22425__ArchAgent",
+            "2602.22425__ArchAgent.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -21288,6 +22499,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.16928"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21314,6 +22528,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.16928"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21342,6 +22559,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.16928"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [],
@@ -21357,6 +22577,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.16928",
+            "2602.16928__Multiagent_Learning",
+            "2602.16928__Multiagent_Learning.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21378,6 +22603,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.16928"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21404,6 +22632,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2602.16928"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21874,6 +23105,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.09172"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21900,6 +23134,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.09172"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21928,6 +23165,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.09172"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [],
@@ -21943,6 +23183,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.09172"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -21964,6 +23207,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.09172"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -21990,6 +23236,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.09172"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -22557,6 +23806,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2509.18057"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -22583,6 +23835,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2509.18057"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -22611,6 +23866,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2509.18057"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -22632,6 +23890,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2509.18057",
+            "2509.18057__Hardness_of_Approximation",
+            "2509.18057__Hardness_of_Approximation.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -22653,6 +23916,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2509.18057"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -22674,6 +23940,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2509.18057"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23047,6 +24316,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.06692"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23073,6 +24345,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.06692"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23101,6 +24376,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.06692"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [],
@@ -23116,6 +24394,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.06692"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -23137,6 +24418,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.06692"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23163,6 +24447,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.06692"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23730,6 +25017,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.16175"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23756,6 +25046,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.16175"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23784,6 +25077,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.16175"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -23805,6 +25101,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.16175"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -23826,6 +25125,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.16175"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -23852,6 +25154,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.16175"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24317,6 +25622,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.08679"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24343,6 +25651,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.08679"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24371,6 +25682,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.08679"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [],
@@ -24386,6 +25700,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.08679",
+            "2603.08679__Bilateral_Trade",
+            "2603.08679__Bilateral_Trade.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24407,6 +25726,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.08679"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24433,6 +25755,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2603.08679"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24903,6 +26228,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.01235"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24929,6 +26257,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.01235"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -24957,6 +26288,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.01235"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -24978,6 +26312,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.01235"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -24999,6 +26336,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.01235"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -25025,6 +26365,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.01235"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -25587,6 +26930,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.12916"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -25613,6 +26959,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.12916"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -25641,6 +26990,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.12916"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -25662,6 +27014,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.12916",
+            "2511.12916__Fault2Flow",
+            "2511.12916__Fault2Flow.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -25683,6 +27040,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.12916"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -25704,6 +27064,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2511.12916"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26174,6 +27537,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.05943"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26200,6 +27566,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.05943"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26228,6 +27597,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.05943"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -26249,6 +27621,11 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.05943",
+            "2601.05943__Global_NLP_Optimization",
+            "2601.05943__Global_NLP_Optimization.pdf"
+          ],
           "row_source_token_match_count": 3,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26270,6 +27647,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.05943"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26291,6 +27671,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2601.05943"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26858,6 +28241,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.16750"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26884,6 +28270,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.16750"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26912,6 +28301,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.16750"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -26933,6 +28325,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.16750"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -26954,6 +28349,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.16750"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -26975,6 +28373,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.16750"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -27542,6 +28943,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2505.16105"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -27568,6 +28972,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2505.16105"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -27596,6 +29003,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2505.16105"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -27617,6 +29027,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2505.16105"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -27638,6 +29051,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2505.16105"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -27664,6 +29080,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2505.16105"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 3,
           "mentioned_local_artifact_records": [
@@ -28226,6 +29645,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.01896"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -28252,6 +29674,9 @@
           "kind": "file",
           "evidence_kind": "active",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.01896"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -28280,6 +29705,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.01896"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -28301,6 +29729,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.01896"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 1,
           "mentioned_local_artifact_records": [
@@ -28322,6 +29753,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.01896"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -28348,6 +29782,9 @@
           "kind": "file",
           "evidence_kind": "completed",
           "readable": true,
+          "row_source_tokens_matched": [
+            "2506.01896"
+          ],
           "row_source_token_match_count": 1,
           "row_specific_block_count": 2,
           "mentioned_local_artifact_records": [
@@ -28778,5 +30215,5 @@
       "freshness_status": "structural_only"
     }
   ],
-  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mention source offsets and existence records, row source line, TODO evidence path source offsets and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention source offsets and absence-signal source offsets. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
+  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mention source offsets and existence records, row source line, TODO evidence path source offsets and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content matched source tokens, artifact-mention source offsets, and absence-signal source offsets. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
 }

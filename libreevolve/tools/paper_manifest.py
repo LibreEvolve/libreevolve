@@ -1667,6 +1667,14 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         for row in inventory_rows
         for record in [*row["active_todo_content_records"], *row["completed_todo_content_records"]]
     )
+    todo_content_matched_source_tokens = sorted(
+        {
+            token
+            for row in inventory_rows
+            for record in [*row["active_todo_content_records"], *row["completed_todo_content_records"]]
+            for token in record["row_source_tokens_matched"]
+        }
+    )
     phrase_local_artifacts_missing_from_todo = sorted(
         {
             path
@@ -1731,6 +1739,8 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
         ),
         "local_artifacts_missing_from_todo_evidence": local_artifacts_missing_from_todo,
         "todo_content_artifact_mention_record_count": todo_content_artifact_mention_record_count,
+        "todo_content_matched_source_tokens": todo_content_matched_source_tokens,
+        "todo_content_matched_source_token_count": len(todo_content_matched_source_tokens),
         "todo_content_evidence_status": (
             "all_row_local_artifacts_mentioned_in_todo_evidence"
             if unique_local_artifacts and not local_artifacts_missing_from_todo
@@ -1762,7 +1772,8 @@ def paper_status_claim_inventory_record(root: str | Path = ".") -> dict[str, Any
             "source line, TODO evidence path source offsets and existence "
             "records, and status-cell phrase hashes with character offsets "
             "and candidate evidence links plus row/phrase-specific TODO content "
-            "artifact-mention source offsets and absence-signal source offsets. It "
+            "matched source tokens, artifact-mention source offsets, and "
+            "absence-signal source offsets. It "
             "does not claim phrase-level "
             "status verification, evidence-link sufficiency, "
             "implemented-benchmark bullet coverage, absence-sentence "
@@ -3887,6 +3898,14 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
         (
             "todo_content_artifact_mention_record_count",
             "status claim inventory TODO content local artifact mention count drifted",
+        ),
+        (
+            "todo_content_matched_source_tokens",
+            "status claim inventory TODO content matched source tokens drifted",
+        ),
+        (
+            "todo_content_matched_source_token_count",
+            "status claim inventory TODO content matched source token count drifted",
         ),
         ("todo_content_evidence_status", "status claim inventory TODO content status drifted"),
         (
@@ -8652,6 +8671,7 @@ def _status_todo_evidence_content_records(
                 **base_record,
                 "evidence_kind": evidence_kind,
                 "readable": readable,
+                "row_source_tokens_matched": sorted(matched_tokens),
                 "row_source_token_match_count": len(matched_tokens),
                 "row_specific_block_count": len(matching_blocks),
                 "mentioned_local_artifact_records": mentioned_artifact_records,

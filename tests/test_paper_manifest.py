@@ -11392,6 +11392,13 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     ]
     active_content_records = inventory["rows"][0]["active_todo_content_records"]
     completed_content_records = inventory["rows"][0]["completed_todo_content_records"]
+    assert active_content_records[0]["row_source_tokens_matched"] == [row["id"]]
+    assert completed_content_records[0]["row_source_tokens_matched"] == [row["id"]]
+    assert row["id"] in inventory["todo_content_matched_source_tokens"]
+    assert (
+        inventory["todo_content_matched_source_token_count"]
+        == len(inventory["todo_content_matched_source_tokens"])
+    )
     active_evidence_text = (
         f"- [ ] Track source-specific gap for `{row['id']}`.\n"
         "  - Current gap: temporary test ledger entry for `libreevolve/core/loop.py`.\n"

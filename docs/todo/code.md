@@ -329,8 +329,9 @@ sidecars, tests, and active TODOs.
     `2025-06-16T06:37:18Z`, DOI `10.48550/arXiv.2506.13131`, author count
     `18`, TeX source URL, CC BY-NC-ND 4.0 license URL, and an explicit
     `manual_current_as_of_2026-06-13_without_html_snapshot` status. Its audit
-    policy marks DOI/DataCite resolution, TeX-source caching, license-page
-    caching, and submission-history refresh gates as still missing.
+    policy marks DOI/DataCite resolution, full TeX-source caching,
+    license-page caching, and submission-history refresh gates as still
+    missing.
     `papers/arxiv_abstract_snapshot.json` now records a
     2026-06-13 arXiv abstract-page HTML byte count, SHA-256 digest, normalized
     title, author list, subject classes, DOI URL, submitted date/timestamp,
@@ -341,15 +342,19 @@ sidecars, tests, and active TODOs.
     including response byte count, SHA-256 digest, DOI, landing URL, title,
     creator count, publisher, publication year, resource type, schema version,
     registered timestamp, and version.
+    `papers/alphaevolve_tex_source_boundary.json` now records a bounded
+    2026-06-14 arXiv e-print snapshot for `2506.13131`, including HTTP status,
+    gzip content type, content-disposition filename, byte count, SHA-256
+    digest, and `2506.13131v1` source-version linkage.
   - Required result: implement a source-metadata verifier that retrieves or
     pins the remaining source artifacts: committed full HTML or approved
     equivalent, raw HTTP response headers, extraction-script artifact,
     full raw DataCite response retention, DOI landing-resolution headers,
-    TeX archive digest, license-page artifact, current-version resolution,
-    floating-PDF URL version-drift checks, cached-PDF header consistency, and
-    an automated CI/network refresh gate that fails paper/source validation if
-    the live arXiv/DataCite page or version metadata drifts from the committed
-    source boundary.
+    full TeX/e-print archive retention, archive member inventory,
+    license-page artifact, current-version resolution, floating-PDF URL
+    version-drift checks, cached-PDF header consistency, and an automated
+    CI/network refresh gate that fails paper/source validation if the live
+    arXiv/DataCite/e-print metadata drifts from the committed source boundary.
 
 - [ ] Add abstraction-choice metadata and benchmark evidence for candidate
       representations.

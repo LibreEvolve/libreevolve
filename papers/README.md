@@ -2294,12 +2294,15 @@ Implemented:
   now pins a bounded DataCite API response summary with response byte count,
   SHA-256 digest, DOI, landing URL, title, creator count, publisher,
   publication year, resource type, schema version, registered timestamp, and
-  version. TeX-source archive digests, raw HTTP response headers, full raw
-  DataCite response retention, metadata extraction-script artifacts,
-  license-page caching, committed full HTML content, current-version
-  resolution snapshots, floating-PDF URL version-drift gates, cached-PDF header
-  consistency records, DOI landing-resolution headers, and automated CI
-  refresh checks remain open.
+  version. `papers/alphaevolve_tex_source_boundary.json` now pins the arXiv
+  e-print endpoint, retrieval date, HTTP status, gzip content type,
+  content-disposition filename, byte count, SHA-256 digest, and
+  `2506.13131v1` linkage. Raw HTTP response headers, full raw DataCite
+  response retention, full TeX/e-print archive retention, archive member
+  inventories, metadata extraction-script artifacts, license-page caching,
+  committed full HTML content, current-version resolution snapshots,
+  floating-PDF URL version-drift gates, cached-PDF header consistency records,
+  DOI landing-resolution headers, and automated CI refresh checks remain open.
 - `libreevolve/problems/benchmarks/paper_source_identity.py`: paper-cache row
   identity evidence. It validates `papers/row_identity.json`, whose 24 source
   records emit manifest row id, URL source id where available, local filename
@@ -2803,8 +2806,14 @@ Implemented:
   publisher, publication year, resource type, schema version, registered
   timestamp, and version. It is not raw HTTP header retention, full raw
   response retention, a DataCite refresh gate, DOI landing-resolution-header
-  evidence, TeX-source digest evidence, license-page evidence, or cached-PDF
-  header consistency evidence.
+  evidence, license-page evidence, or cached-PDF header consistency evidence.
+- `papers/alphaevolve_tex_source_boundary.json`: AlphaEvolve arXiv TeX/e-print
+  sidecar with the pinned e-print URL, retrieval date, status, content type,
+  content-disposition filename, response byte count, SHA-256 digest, and
+  `2506.13131v1` linkage. It is not full raw archive retention, raw HTTP header
+  retention, archive member inventory, extraction-script evidence, a
+  TeX-source refresh gate, license-page evidence, or cached-PDF header
+  consistency evidence.
 - `papers/candidate_abstraction_bias_matrix.json`: design-level candidate
   abstraction bias matrix for direct-solution, constructor-function,
   bespoke-search, and paired solution/search families. It is not executed

@@ -1187,6 +1187,39 @@ sidecars, tests, and active TODOs.
     output cannot be admitted as a mutation candidate until the adapter proves
     it is complete enough for the configured policy and reproducibly accounted.
 
+- [ ] Harden Ollama Chat completion-state and response-shape validation.
+  - Spec evidence: AlphaEvolve-style mutation runs need complete provider
+    output before SEARCH/REPLACE parsing, candidate validation, and backend
+    reward attribution. A local/offline adapter should still distinguish a
+    finished model answer from partial, interrupted, or shape-drifted provider
+    payloads before treating text as a successful mutation proposal.
+  - Current evidence: `OllamaBackend.generate()` in
+    `libreevolve/llm/ollama.py` calls `ollama.chat(...)` or
+    `ollama.Client(...).chat(...)`, reads `r["message"]["content"]` when the
+    response is a dict with a message mapping, validates that content as text,
+    and returns it. `_ollama_metadata()` records provider usage counts,
+    `done_reason` as `finish_reason`, and diagnostics including `model`,
+    `done`, and duration counters, but the adapter does not require
+    `done is True`, does not classify non-stop/truncated/error-like
+    `done_reason` values, and does not persist an extraction policy for
+    unexpected message shapes. Existing tests cover one happy path, retry,
+    configured request parameters, configured host, empty content, and missing
+    content, but not `done: false`, incomplete `done_reason`, extra message
+    fields, or response-shape drift.
+  - Current gap: an Ollama response can be accepted as successful mutation text
+    solely because `message.content` is non-empty, even if completion metadata
+    says the answer was not final or cannot be interpreted. That weakens local
+    provider auditability compared with the OpenAI/Anthropic extraction TODOs
+    and can let partial offline generations enter candidate parsing and reward
+    accounting as if they were complete.
+  - Required result: add an Ollama Chat extraction contract that requires and
+    records acceptable completion state, classifies incomplete/truncated/error
+    `done_reason` values as provider-response outcomes, validates unexpected
+    message shapes and auxiliary fields under a documented policy, persists
+    response-shape/completion metadata in call telemetry, and adds focused
+    tests so Ollama output is not admitted as a mutation candidate until the
+    adapter proves it is final enough for the configured policy.
+
 - [ ] Extend prompt-template compatibility beyond current mutation-template
   checks and duplicate-arm audit.
   - Spec evidence: AlphaEvolve-style prompt evolution should make prompt

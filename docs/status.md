@@ -1247,7 +1247,8 @@ Important limits:
   records row-level paper status inventory plus status-cell phrase hashes,
   source offsets, and candidate evidence-link lists. The checked
   `papers/benchmark_coverage_inventory.json` sidecar now records structural
-  implemented-benchmark coverage bullet evidence. This is not an exhaustive
+  implemented-benchmark coverage bullet evidence plus referenced local
+  artifact existence checks. This is not an exhaustive
   source-span coverage matrix, per-phrase evidence-link sufficiency proof,
   status-cell semantic verifier, implemented-benchmark bullet semantic
   verifier, absence-sentence freshness
@@ -1271,10 +1272,12 @@ Important limits:
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction, and the committed benchmark coverage inventory records source
-  spans, hashes, local artifacts, limitation flags, and contradiction flags for
-  each implemented bullet. It is not semantic proof that every implemented
-  benchmark bullet is fresh, sufficient, or benchmark-comparable; that remains
-  part of the paper-index semantic evidence-mapping TODO.
+  spans, hashes, local artifacts, artifact-existence records, limitation flags,
+  and contradiction flags for each implemented bullet. It currently records
+  116 unique referenced local artifact paths and zero missing referenced local
+  artifacts. It is not semantic proof that every implemented benchmark bullet
+  is fresh, sufficient, or benchmark-comparable; that remains part of the
+  paper-index semantic evidence-mapping TODO.
 - Database sampling reports are local strategy/count telemetry, not calibrated
   AlphaEvolve-style exploration/exploitation balance, fallback source-pool
   provenance, selected-program repetition tables, island/cell/metric/lineage/

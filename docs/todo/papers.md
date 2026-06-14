@@ -25,7 +25,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     with source-line and character offsets plus candidate evidence-link lists.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
     benchmark coverage bullets with source lines, summary/body hashes, local
-    artifact mentions, limitation-boundary flags, and contradiction flags.
+    artifact mentions, local artifact existence records, 116 unique local
+    artifact paths, zero missing referenced local artifacts,
+    limitation-boundary flags, and contradiction flags.
     The committed
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
     missing evidence for status-cell semantic verifier, implemented-benchmark
@@ -38,10 +40,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     and candidate links to phrase-local artifacts plus row-level TODO and
     completed evidence, but there is no proof that those links are sufficient
     for each implemented or missing clause, no semantic verifier for
-    `Implemented` benchmark coverage bullets, no absence-sentence freshness
-    matrix, and no semantic verifier that checks benchmark qualifiers,
-    implemented-bullet scope/limitation wording, or absence sentences against
-    the current code and paper evidence.
+    `Implemented` benchmark coverage bullets beyond referenced artifact
+    existence, no absence-sentence freshness matrix, and no semantic verifier
+    that checks benchmark qualifiers, implemented-bullet scope/limitation
+    wording, or absence sentences against the current code and paper evidence.
   - Required result: extend the phrase-level inventory with evidence-sufficiency
     checks, freshness checks, and benchmark-coverage semantic checks, then add
     CI validation before treating `papers/README.md` as semantically complete

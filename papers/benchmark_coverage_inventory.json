@@ -88,6 +88,127 @@
     "implemented_benchmark_082",
     "implemented_benchmark_083"
   ],
+  "unique_local_artifact_paths": [
+    "libreevolve/core/evaluator.py",
+    "libreevolve/llm/budget_report.py",
+    "libreevolve/llm/cancellation_policy.py",
+    "libreevolve/problems/benchmarks/ablation_exhibits.py",
+    "libreevolve/problems/benchmarks/ablation_results.py",
+    "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/",
+    "libreevolve/problems/benchmarks/benchmark_hardening.py",
+    "libreevolve/problems/benchmarks/companion_sources.py",
+    "libreevolve/problems/benchmarks/example_scope.py",
+    "libreevolve/problems/benchmarks/follow_on_coverage.py",
+    "libreevolve/problems/benchmarks/follow_on_sources.py",
+    "libreevolve/problems/benchmarks/matrix_exhibits.py",
+    "libreevolve/problems/benchmarks/matrix_results.py",
+    "libreevolve/problems/benchmarks/paper_artifact_roles.py",
+    "libreevolve/problems/benchmarks/paper_bibliography.py",
+    "libreevolve/problems/benchmarks/paper_source_identity.py",
+    "libreevolve/problems/benchmarks/paper_source_rights.py",
+    "libreevolve/problems/benchmarks/paper_source_versions.py",
+    "libreevolve/problems/benchmarks/result_certification.py",
+    "libreevolve/problems/benchmarks/systems_results.py",
+    "libreevolve/problems/examples/circle_packing",
+    "libreevolve/problems/examples/matrix_multiplication",
+    "libreevolve/problems/examples/sorting",
+    "libreevolve/problems/examples/sorting_network_8",
+    "libreevolve/problems/examples/sorting_network_9",
+    "libreevolve/problems/examples/workspace_math",
+    "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+    "papers/README.md",
+    "papers/adaptive_mutation_mode_boundary.json",
+    "papers/alphaevolve_2026_impact_boundary.json",
+    "papers/alphaevolve_cached_pdf_header_consistency_boundary.json",
+    "papers/alphaevolve_current_version_boundary.json",
+    "papers/alphaevolve_datacite_doi_boundary.json",
+    "papers/alphaevolve_datacite_full_response_boundary.json",
+    "papers/alphaevolve_doi_landing_resolution_boundary.json",
+    "papers/alphaevolve_license_page_boundary.json",
+    "papers/alphaevolve_license_page_html_retention_boundary.json",
+    "papers/alphaevolve_metadata_extraction_script_boundary.json",
+    "papers/alphaevolve_raw_http_headers_boundary.json",
+    "papers/alphaevolve_source_refresh_gate_boundary.json",
+    "papers/alphaevolve_source_refresh_promotion_boundary.json",
+    "papers/alphaevolve_source_refresh_run_2026-06-14.json",
+    "papers/alphaevolve_tex_archive_retention_boundary.json",
+    "papers/alphaevolve_tex_source_archive.tar.gz",
+    "papers/alphaevolve_tex_source_boundary.json",
+    "papers/appendix_a_matrix_baseline_citations.json",
+    "papers/appendix_a_matrix_curation.json",
+    "papers/appendix_a_matrix_excluded_target_curation.json",
+    "papers/appendix_a_matrix_local_resource_frontier.json",
+    "papers/appendix_a_matrix_resource_frontier.json",
+    "papers/appendix_a_matrix_row_note_artifacts.json",
+    "papers/appendix_a_matrix_subset_scope_artifacts.json",
+    "papers/arxiv_abstract_snapshot.json",
+    "papers/benchmark_coverage_inventory.json",
+    "papers/candidate_abstraction_bias_matrix.json",
+    "papers/companion_sources.json",
+    "papers/compiler_adoption_path_boundary.json",
+    "papers/compiler_ir_reference_check_boundary.json",
+    "papers/compiler_stack_context_boundary.json",
+    "papers/controller_pending_work_resume_boundary.json",
+    "papers/critique_reviewer_pool_boundary.json",
+    "papers/documentation_claim_inventory.json",
+    "papers/documentation_truthfulness_boundary.json",
+    "papers/example_benchmark_scope.json",
+    "papers/fast_strong_model_mix_boundary.json",
+    "papers/feedback_calibration_boundary.json",
+    "papers/figure4_matrix_discovery_artifacts.json",
+    "papers/figure6_scheduling_exhibit_boundary.json",
+    "papers/figure7_pallas_tiling_exhibit_boundary.json",
+    "papers/figure8_ablation_artifacts.json",
+    "papers/figure9_matrix_diff_artifacts.json",
+    "papers/follow_on_repository_rights.json",
+    "papers/follow_on_runtime_absence.json",
+    "papers/follow_on_sources.json",
+    "papers/follow_on_tao_blog.json",
+    "papers/gemini_provider_parity_boundary.json",
+    "papers/gemini_self_training_loop_boundary.json",
+    "papers/hardware_contribution_attribution_boundary.json",
+    "papers/hardware_rewrite_artifact_boundary.json",
+    "papers/hardware_rtl_eda_evidence_boundary.json",
+    "papers/implementation_evidence_map_boundary.json",
+    "papers/kernel_tiling_shape_corpus_boundary.json",
+    "papers/lineage_replay_boundary.json",
+    "papers/llm_budget_policy_boundary.json",
+    "papers/llm_role_scheduler_boundary.json",
+    "papers/llm_stochastic_reproducibility_boundary.json",
+    "papers/matrix_baseline_component_runtime_boundary.json",
+    "papers/matrix_cascade_run_runtime_boundary.json",
+    "papers/matrix_headline_historicity_artifacts.json",
+    "papers/matrix_near_integrality_runtime_boundary.json",
+    "papers/matrix_rank_table_artifacts.json",
+    "papers/matrix_scalar_field_runtime_boundary.json",
+    "papers/matrix_suite_publication_artifacts.json",
+    "papers/matrix_sweep_space_runtime_boundary.json",
+    "papers/matrix_tensor_rank_runtime_boundary.json",
+    "papers/mutation_operator_boundary.json",
+    "papers/official_deepmind_blog.json",
+    "papers/pallas_workflow_baseline_boundary.json",
+    "papers/paper_artifact_linkage.json",
+    "papers/paper_artifact_roles.json",
+    "papers/prompt_section_packing_boundary.json",
+    "papers/provider_cancellation_boundary.json",
+    "papers/provider_diagnostics_replay_boundary.json",
+    "papers/provider_pricing_boundary.json",
+    "papers/references.json",
+    "papers/row_identity.json",
+    "papers/runtime_rng_replay_boundary.json",
+    "papers/sorting_network_rediscovery_boundary.json",
+    "papers/source_rights.json",
+    "papers/source_versions.json",
+    "papers/status_claim_inventory.json",
+    "papers/stochastic_prompt_format_boundary.json",
+    "papers/systems_result_readiness_boundary.json",
+    "papers/theoretical_cs_sources.json",
+    "papers/validator_artifact_promotion_boundary.json",
+    "papers/validator_execution_boundary.json"
+  ],
+  "unique_local_artifact_count": 116,
+  "missing_local_artifact_paths": [],
+  "artifact_existence_status": "all_referenced_local_artifacts_present",
   "missing_evidence": {
     "benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "benchmark_bullet_freshness_matrix": "not_recorded_locally",
@@ -102,16 +223,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1826,
-        "line_end": 1830
+        "line_start": 1827,
+        "line_end": 1831
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/circle_packing"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/examples/circle_packing",
+          "exists": true,
+          "kind": "directory"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -122,16 +254,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1830,
-        "line_end": 1837
+        "line_start": 1831,
+        "line_end": 1838
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/matrix_multiplication"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/examples/matrix_multiplication",
+          "exists": true,
+          "kind": "directory"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -142,16 +285,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1837,
-        "line_end": 1841
+        "line_start": 1838,
+        "line_end": 1842
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/workspace_math"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/examples/workspace_math",
+          "exists": true,
+          "kind": "directory"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -162,17 +316,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1841,
-        "line_end": 1846
+        "line_start": 1842,
+        "line_end": 1847
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/example_scope.py",
         "papers/example_benchmark_scope.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/example_scope.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/example_benchmark_scope.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -183,8 +353,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 1846,
-        "line_end": 2087
+        "line_start": 1847,
+        "line_end": 2088
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/",
@@ -207,9 +377,105 @@
         "papers/matrix_tensor_rank_runtime_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/",
+          "exists": true,
+          "kind": "directory"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/matrix_results.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/appendix_a_matrix_baseline_citations.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/appendix_a_matrix_curation.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/appendix_a_matrix_excluded_target_curation.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/appendix_a_matrix_local_resource_frontier.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/appendix_a_matrix_resource_frontier.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/appendix_a_matrix_row_note_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/appendix_a_matrix_subset_scope_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_baseline_component_runtime_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_cascade_run_runtime_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_headline_historicity_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_near_integrality_runtime_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_scalar_field_runtime_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_sweep_space_runtime_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/matrix_tensor_rank_runtime_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 18,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -220,16 +486,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2087,
-        "line_end": 2093
+        "line_start": 2088,
+        "line_end": 2094
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/result_certification.py"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/result_certification.py",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -240,17 +517,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2093,
-        "line_end": 2178
+        "line_start": 2094,
+        "line_end": 2179
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/systems_results.py",
         "papers/systems_result_readiness_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -261,16 +554,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2178,
-        "line_end": 2184
+        "line_start": 2179,
+        "line_end": 2185
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/benchmark_hardening.py"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/benchmark_hardening.py",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -281,16 +585,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2184,
-        "line_end": 2197
+        "line_start": 2185,
+        "line_end": 2198
       },
       "local_artifact_paths": [
         "libreevolve/core/evaluator.py"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -301,16 +616,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2197,
-        "line_end": 2219
+        "line_start": 2198,
+        "line_end": 2220
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/ablation_results.py"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -321,17 +647,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2219,
-        "line_end": 2231
+        "line_start": 2220,
+        "line_end": 2232
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/ablation_exhibits.py",
         "papers/figure8_ablation_artifacts.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -342,17 +684,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2231,
-        "line_end": 2253
+        "line_start": 2232,
+        "line_end": 2254
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/matrix_exhibits.py",
         "papers/figure4_matrix_discovery_artifacts.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/matrix_exhibits.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/figure4_matrix_discovery_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -363,17 +721,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2253,
-        "line_end": 2272
+        "line_start": 2254,
+        "line_end": 2273
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/matrix_exhibits.py",
         "papers/figure9_matrix_diff_artifacts.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/matrix_exhibits.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/figure9_matrix_diff_artifacts.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -384,8 +758,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2272,
-        "line_end": 2286
+        "line_start": 2273,
+        "line_end": 2287
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_artifact_roles.py",
@@ -393,9 +767,30 @@
         "papers/paper_artifact_roles.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/paper_artifact_roles.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/paper_artifact_linkage.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/paper_artifact_roles.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 3,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -406,8 +801,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2286,
-        "line_end": 2355
+        "line_start": 2287,
+        "line_end": 2356
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_source_versions.py",
@@ -431,9 +826,110 @@
         "papers/source_versions.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/paper_source_versions.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_cached_pdf_header_consistency_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_current_version_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_datacite_doi_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_datacite_full_response_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_doi_landing_resolution_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_license_page_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_license_page_html_retention_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_metadata_extraction_script_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_raw_http_headers_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_source_refresh_gate_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_source_refresh_promotion_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_source_refresh_run_2026-06-14.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_tex_archive_retention_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_tex_source_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/arxiv_abstract_snapshot.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/row_identity.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/source_rights.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/source_versions.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 19,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -444,8 +940,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2355,
-        "line_end": 2362
+        "line_start": 2356,
+        "line_end": 2363
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_source_identity.py",
@@ -453,9 +949,30 @@
         "papers/source_versions.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/paper_source_identity.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/row_identity.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/source_versions.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 3,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -466,8 +983,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2362,
-        "line_end": 2378
+        "line_start": 2363,
+        "line_end": 2379
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_source_rights.py",
@@ -477,9 +994,40 @@
         "papers/source_versions.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/paper_source_rights.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_license_page_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_license_page_html_retention_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/source_rights.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/source_versions.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 5,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -490,17 +1038,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2378,
-        "line_end": 2386
+        "line_start": 2379,
+        "line_end": 2387
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/paper_bibliography.py",
         "papers/references.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/paper_bibliography.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/references.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -511,17 +1075,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2386,
-        "line_end": 2407
+        "line_start": 2387,
+        "line_end": 2408
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/companion_sources.py",
         "papers/companion_sources.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/companion_sources.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/companion_sources.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -532,8 +1112,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2407,
-        "line_end": 2427
+        "line_start": 2408,
+        "line_end": 2428
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/follow_on_sources.py",
@@ -541,9 +1121,30 @@
         "papers/follow_on_sources.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/follow_on_sources.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/2511.02864__Mathematical_exploration_and_discovery_at_scale.pdf",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/follow_on_sources.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 3,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -554,16 +1155,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2427,
-        "line_end": 2439
+        "line_start": 2428,
+        "line_end": 2440
       },
       "local_artifact_paths": [
         "papers/follow_on_repository_rights.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/follow_on_repository_rights.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -574,16 +1186,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2439,
-        "line_end": 2448
+        "line_start": 2440,
+        "line_end": 2449
       },
       "local_artifact_paths": [
         "papers/follow_on_runtime_absence.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/follow_on_runtime_absence.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -594,16 +1217,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2448,
-        "line_end": 2455
+        "line_start": 2449,
+        "line_end": 2456
       },
       "local_artifact_paths": [
         "papers/follow_on_tao_blog.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/follow_on_tao_blog.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -614,16 +1248,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2455,
-        "line_end": 2465
+        "line_start": 2456,
+        "line_end": 2466
       },
       "local_artifact_paths": [
         "papers/theoretical_cs_sources.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/theoretical_cs_sources.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -634,16 +1279,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2465,
-        "line_end": 2471
+        "line_start": 2466,
+        "line_end": 2472
       },
       "local_artifact_paths": [
         "papers/official_deepmind_blog.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/official_deepmind_blog.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -654,16 +1310,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2471,
-        "line_end": 2488
+        "line_start": 2472,
+        "line_end": 2489
       },
       "local_artifact_paths": [
         "papers/alphaevolve_2026_impact_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_2026_impact_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -674,16 +1341,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2488,
-        "line_end": 2507
+        "line_start": 2489,
+        "line_end": 2508
       },
       "local_artifact_paths": [
         "libreevolve/problems/benchmarks/follow_on_coverage.py"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/benchmarks/follow_on_coverage.py",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -694,17 +1372,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2507,
-        "line_end": 2520
+        "line_start": 2508,
+        "line_end": 2521
       },
       "local_artifact_paths": [
         "libreevolve/llm/budget_report.py",
         "papers/llm_budget_policy_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/llm/budget_report.py",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/llm_budget_policy_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -715,16 +1409,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2520,
-        "line_end": 2531
+        "line_start": 2521,
+        "line_end": 2532
       },
       "local_artifact_paths": [
         "papers/llm_budget_policy_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/llm_budget_policy_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -735,16 +1440,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2531,
-        "line_end": 2541
+        "line_start": 2532,
+        "line_end": 2542
       },
       "local_artifact_paths": [
         "papers/controller_pending_work_resume_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/controller_pending_work_resume_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -755,16 +1471,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2541,
-        "line_end": 2552
+        "line_start": 2542,
+        "line_end": 2553
       },
       "local_artifact_paths": [
         "papers/lineage_replay_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/lineage_replay_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -775,16 +1502,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2552,
-        "line_end": 2563
+        "line_start": 2553,
+        "line_end": 2564
       },
       "local_artifact_paths": [
         "papers/runtime_rng_replay_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/runtime_rng_replay_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -795,16 +1533,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2563,
-        "line_end": 2575
+        "line_start": 2564,
+        "line_end": 2576
       },
       "local_artifact_paths": [
         "papers/validator_execution_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/validator_execution_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -815,16 +1564,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2575,
-        "line_end": 2583
+        "line_start": 2576,
+        "line_end": 2584
       },
       "local_artifact_paths": [
         "papers/validator_artifact_promotion_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/validator_artifact_promotion_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -835,16 +1595,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2583,
-        "line_end": 2595
+        "line_start": 2584,
+        "line_end": 2596
       },
       "local_artifact_paths": [
         "papers/llm_role_scheduler_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/llm_role_scheduler_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -855,16 +1626,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2595,
-        "line_end": 2609
+        "line_start": 2596,
+        "line_end": 2610
       },
       "local_artifact_paths": [
         "papers/fast_strong_model_mix_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -875,16 +1657,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2609,
-        "line_end": 2615
+        "line_start": 2610,
+        "line_end": 2616
       },
       "local_artifact_paths": [
         "papers/adaptive_mutation_mode_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/adaptive_mutation_mode_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -895,16 +1688,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2615,
-        "line_end": 2623
+        "line_start": 2616,
+        "line_end": 2624
       },
       "local_artifact_paths": [
         "papers/mutation_operator_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/mutation_operator_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -915,16 +1719,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2623,
-        "line_end": 2631
+        "line_start": 2624,
+        "line_end": 2632
       },
       "local_artifact_paths": [
         "libreevolve/llm/cancellation_policy.py"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/llm/cancellation_policy.py",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -935,16 +1750,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2631,
-        "line_end": 2643
+        "line_start": 2632,
+        "line_end": 2644
       },
       "local_artifact_paths": [
         "papers/provider_cancellation_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/provider_cancellation_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -955,16 +1781,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2643,
-        "line_end": 2655
+        "line_start": 2644,
+        "line_end": 2656
       },
       "local_artifact_paths": [
         "papers/provider_pricing_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/provider_pricing_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -975,16 +1812,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2655,
-        "line_end": 2666
+        "line_start": 2656,
+        "line_end": 2667
       },
       "local_artifact_paths": [
         "papers/provider_diagnostics_replay_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/provider_diagnostics_replay_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -995,16 +1843,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2666,
-        "line_end": 2675
+        "line_start": 2667,
+        "line_end": 2676
       },
       "local_artifact_paths": [
         "papers/llm_stochastic_reproducibility_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/llm_stochastic_reproducibility_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1015,16 +1874,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2675,
-        "line_end": 2682
+        "line_start": 2676,
+        "line_end": 2683
       },
       "local_artifact_paths": [
         "papers/feedback_calibration_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/feedback_calibration_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1035,16 +1905,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2682,
-        "line_end": 2697
+        "line_start": 2683,
+        "line_end": 2698
       },
       "local_artifact_paths": [
         "papers/critique_reviewer_pool_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/critique_reviewer_pool_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1055,16 +1936,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2697,
-        "line_end": 2707
+        "line_start": 2698,
+        "line_end": 2708
       },
       "local_artifact_paths": [
         "papers/gemini_provider_parity_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/gemini_provider_parity_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1075,16 +1967,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2707,
-        "line_end": 2721
+        "line_start": 2708,
+        "line_end": 2722
       },
       "local_artifact_paths": [
         "papers/prompt_section_packing_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/prompt_section_packing_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1095,16 +1998,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2721,
-        "line_end": 2730
+        "line_start": 2722,
+        "line_end": 2731
       },
       "local_artifact_paths": [
         "papers/stochastic_prompt_format_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/stochastic_prompt_format_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1115,16 +2029,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2730,
-        "line_end": 2738
+        "line_start": 2731,
+        "line_end": 2739
       },
       "local_artifact_paths": [
         "papers/systems_result_readiness_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1135,16 +2060,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2738,
-        "line_end": 2747
+        "line_start": 2739,
+        "line_end": 2748
       },
       "local_artifact_paths": [
         "papers/figure6_scheduling_exhibit_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1155,16 +2091,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2747,
-        "line_end": 2757
+        "line_start": 2748,
+        "line_end": 2758
       },
       "local_artifact_paths": [
         "papers/figure7_pallas_tiling_exhibit_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1175,16 +2122,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2757,
-        "line_end": 2767
+        "line_start": 2758,
+        "line_end": 2768
       },
       "local_artifact_paths": [
         "papers/kernel_tiling_shape_corpus_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1195,16 +2153,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2767,
-        "line_end": 2776
+        "line_start": 2768,
+        "line_end": 2777
       },
       "local_artifact_paths": [
         "papers/pallas_workflow_baseline_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1215,16 +2184,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2776,
-        "line_end": 2785
+        "line_start": 2777,
+        "line_end": 2786
       },
       "local_artifact_paths": [
         "papers/gemini_self_training_loop_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1235,16 +2215,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2785,
-        "line_end": 2792
+        "line_start": 2786,
+        "line_end": 2793
       },
       "local_artifact_paths": [
         "papers/hardware_rtl_eda_evidence_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/hardware_rtl_eda_evidence_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1255,16 +2246,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2792,
-        "line_end": 2799
+        "line_start": 2793,
+        "line_end": 2800
       },
       "local_artifact_paths": [
         "papers/hardware_rewrite_artifact_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/hardware_rewrite_artifact_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1275,16 +2277,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2799,
-        "line_end": 2807
+        "line_start": 2800,
+        "line_end": 2808
       },
       "local_artifact_paths": [
         "papers/hardware_contribution_attribution_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/hardware_contribution_attribution_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1295,16 +2308,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2807,
-        "line_end": 2814
+        "line_start": 2808,
+        "line_end": 2815
       },
       "local_artifact_paths": [
         "papers/compiler_ir_reference_check_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/compiler_ir_reference_check_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1315,16 +2339,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2814,
-        "line_end": 2822
+        "line_start": 2815,
+        "line_end": 2823
       },
       "local_artifact_paths": [
         "papers/compiler_adoption_path_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/compiler_adoption_path_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1335,16 +2370,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2822,
-        "line_end": 2829
+        "line_start": 2823,
+        "line_end": 2830
       },
       "local_artifact_paths": [
         "papers/compiler_stack_context_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/compiler_stack_context_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1355,16 +2401,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2829,
-        "line_end": 2839
+        "line_start": 2830,
+        "line_end": 2840
       },
       "local_artifact_paths": [
         "papers/documentation_truthfulness_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/documentation_truthfulness_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1375,16 +2432,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2839,
-        "line_end": 2843
+        "line_start": 2840,
+        "line_end": 2844
       },
       "local_artifact_paths": [
         "papers/documentation_claim_inventory.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/documentation_claim_inventory.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1395,37 +2463,64 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2843,
-        "line_end": 2849
+        "line_start": 2844,
+        "line_end": 2850
       },
       "local_artifact_paths": [
         "papers/implementation_evidence_map_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/implementation_evidence_map_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
       "coverage_id": "implemented_benchmark_064",
       "bullet_ordinal": 64,
       "summary_sha256": "3c0a1f6dc68d1f11144988c920beb6bc6c61be8833d03553aa37da6f54919055",
-      "body_sha256": "40d0964372fe6d1374ea9122376898d8b44813eced60dd20655c0a5f4cda3ebe",
+      "body_sha256": "72aa834466797c355ac8311ffc385b53ef2509e55e0708b900e72ac6cc5b158a",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2849,
-        "line_end": 2854
+        "line_start": 2850,
+        "line_end": 2857
       },
       "local_artifact_paths": [
         "papers/README.md",
         "papers/benchmark_coverage_inventory.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/README.md",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/benchmark_coverage_inventory.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1436,16 +2531,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2854,
-        "line_end": 2861
+        "line_start": 2857,
+        "line_end": 2864
       },
       "local_artifact_paths": [
         "papers/status_claim_inventory.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/status_claim_inventory.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1456,16 +2562,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2861,
-        "line_end": 2866
+        "line_start": 2864,
+        "line_end": 2869
       },
       "local_artifact_paths": [
         "papers/arxiv_abstract_snapshot.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/arxiv_abstract_snapshot.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1476,16 +2593,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2866,
-        "line_end": 2871
+        "line_start": 2869,
+        "line_end": 2874
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_doi_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_datacite_doi_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1496,16 +2624,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2871,
-        "line_end": 2876
+        "line_start": 2874,
+        "line_end": 2879
       },
       "local_artifact_paths": [
         "papers/alphaevolve_datacite_full_response_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_datacite_full_response_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1516,16 +2655,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2876,
-        "line_end": 2882
+        "line_start": 2879,
+        "line_end": 2885
       },
       "local_artifact_paths": [
         "papers/alphaevolve_doi_landing_resolution_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_doi_landing_resolution_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1536,16 +2686,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2882,
-        "line_end": 2887
+        "line_start": 2885,
+        "line_end": 2890
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_source_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_tex_source_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1556,17 +2717,33 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2887,
-        "line_end": 2893
+        "line_start": 2890,
+        "line_end": 2896
       },
       "local_artifact_paths": [
         "papers/alphaevolve_tex_archive_retention_boundary.json",
         "papers/alphaevolve_tex_source_archive.tar.gz"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_tex_archive_retention_boundary.json",
+          "exists": true,
+          "kind": "file"
+        },
+        {
+          "path": "papers/alphaevolve_tex_source_archive.tar.gz",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 2,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1577,16 +2754,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2893,
-        "line_end": 2900
+        "line_start": 2896,
+        "line_end": 2903
       },
       "local_artifact_paths": [
         "papers/alphaevolve_current_version_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_current_version_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1597,16 +2785,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2900,
-        "line_end": 2905
+        "line_start": 2903,
+        "line_end": 2908
       },
       "local_artifact_paths": [
         "papers/alphaevolve_cached_pdf_header_consistency_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_cached_pdf_header_consistency_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1617,16 +2816,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2905,
-        "line_end": 2910
+        "line_start": 2908,
+        "line_end": 2913
       },
       "local_artifact_paths": [
         "papers/alphaevolve_metadata_extraction_script_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_metadata_extraction_script_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1637,16 +2847,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2910,
-        "line_end": 2917
+        "line_start": 2913,
+        "line_end": 2920
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_gate_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_source_refresh_gate_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1657,16 +2878,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2917,
-        "line_end": 2921
+        "line_start": 2920,
+        "line_end": 2924
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_run_2026-06-14.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_source_refresh_run_2026-06-14.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1677,16 +2909,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2921,
-        "line_end": 2926
+        "line_start": 2924,
+        "line_end": 2929
       },
       "local_artifact_paths": [
         "papers/alphaevolve_source_refresh_promotion_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_source_refresh_promotion_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1697,16 +2940,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2926,
-        "line_end": 2932
+        "line_start": 2929,
+        "line_end": 2935
       },
       "local_artifact_paths": [
         "papers/alphaevolve_raw_http_headers_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_raw_http_headers_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1717,16 +2971,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2932,
-        "line_end": 2938
+        "line_start": 2935,
+        "line_end": 2941
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_license_page_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1737,16 +3002,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2938,
-        "line_end": 2942
+        "line_start": 2941,
+        "line_end": 2945
       },
       "local_artifact_paths": [
         "papers/alphaevolve_license_page_html_retention_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/alphaevolve_license_page_html_retention_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1757,16 +3033,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2942,
-        "line_end": 2946
+        "line_start": 2945,
+        "line_end": 2949
       },
       "local_artifact_paths": [
         "papers/candidate_abstraction_bias_matrix.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "papers/candidate_abstraction_bias_matrix.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1777,16 +3064,27 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2946,
-        "line_end": 2950
+        "line_start": 2949,
+        "line_end": 2953
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/examples/sorting",
+          "exists": true,
+          "kind": "directory"
+        }
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     },
     {
@@ -1797,8 +3095,8 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 2950,
-        "line_end": 2960
+        "line_start": 2953,
+        "line_end": 2963
       },
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting_network_8",
@@ -1806,11 +3104,32 @@
         "papers/sorting_network_rediscovery_boundary.json"
       ],
       "has_local_artifact": true,
+      "local_artifact_records": [
+        {
+          "path": "libreevolve/problems/examples/sorting_network_8",
+          "exists": true,
+          "kind": "directory"
+        },
+        {
+          "path": "libreevolve/problems/examples/sorting_network_9",
+          "exists": true,
+          "kind": "directory"
+        },
+        {
+          "path": "papers/sorting_network_rediscovery_boundary.json",
+          "exists": true,
+          "kind": "file"
+        }
+      ],
+      "local_artifact_existing_count": 3,
+      "local_artifact_missing_paths": [],
+      "all_local_artifacts_exist": true,
       "has_limitation_boundary": true,
       "has_not_implemented_contradiction": false,
       "coverage_status": "implemented_bullet_structurally_inventoried",
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
       "semantic_status": "not_verified"
     }
   ],
-  "claim_boundary": "This inventory records one structured entry for each papers/README.md Implemented benchmark coverage bullet, including source lines, summary/body hashes, local artifact mentions, limitation-boundary flags, and contradiction flags. It does not claim semantic verification, benchmark freshness, reproduced result linkage, or proof that the benchmark coverage prose is complete."
+  "claim_boundary": "This inventory records one structured entry for each papers/README.md Implemented benchmark coverage bullet, including source lines, summary/body hashes, local artifact mentions, local artifact existence records, limitation-boundary flags, and contradiction flags. It does not claim semantic verification, benchmark freshness, reproduced result linkage, or proof that the benchmark coverage prose is complete."
 }

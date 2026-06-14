@@ -11665,6 +11665,9 @@ def test_validate_paper_manifest_reports_not_implemented_benchmark_under_impleme
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
     _write_status_table(tmp_path, [row["id"]])
+    artifact_path = tmp_path / "libreevolve" / "problems" / "benchmarks" / "matrix_results.py"
+    artifact_path.parent.mkdir(parents=True)
+    artifact_path.write_text("# matrix result evidence\n", encoding="utf-8")
     readme_path = tmp_path / "papers" / "README.md"
     readme_path.write_text(
         readme_path.read_text(encoding="utf-8")
@@ -11751,6 +11754,9 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
     _write_status_table(tmp_path, [row["id"]])
+    artifact_path = tmp_path / "libreevolve" / "problems" / "benchmarks" / "matrix_results.py"
+    artifact_path.parent.mkdir(parents=True)
+    artifact_path.write_text("# matrix result evidence\n", encoding="utf-8")
     readme_path = tmp_path / "papers" / "README.md"
     readme_path.write_text(
         readme_path.read_text(encoding="utf-8")
@@ -11764,7 +11770,19 @@ def test_validate_paper_manifest_accepts_matching_benchmark_coverage_inventory(t
     inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
     assert inventory["implemented_bullet_count"] == 1
     assert inventory["implemented_bullets"][0]["has_local_artifact"] is True
+    assert inventory["implemented_bullets"][0]["all_local_artifacts_exist"] is True
+    assert inventory["implemented_bullets"][0]["local_artifact_existing_count"] == 1
+    assert inventory["implemented_bullets"][0]["local_artifact_records"] == [
+        {
+            "path": "libreevolve/problems/benchmarks/matrix_results.py",
+            "exists": True,
+            "kind": "file",
+        }
+    ]
     assert inventory["implemented_bullets"][0]["has_limitation_boundary"] is True
+    assert inventory["unique_local_artifact_count"] == 1
+    assert inventory["missing_local_artifact_paths"] == []
+    assert inventory["artifact_existence_status"] == "all_referenced_local_artifacts_present"
     (tmp_path / paper_manifest.BENCHMARK_COVERAGE_INVENTORY_FILE).write_text(
         json.dumps(inventory, indent=2),
         encoding="utf-8",
@@ -11779,6 +11797,9 @@ def test_validate_paper_manifest_rejects_benchmark_coverage_inventory_drift(tmp_
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])
     _write_status_table(tmp_path, [row["id"]])
+    artifact_path = tmp_path / "libreevolve" / "problems" / "benchmarks" / "matrix_results.py"
+    artifact_path.parent.mkdir(parents=True)
+    artifact_path.write_text("# matrix result evidence\n", encoding="utf-8")
     readme_path = tmp_path / "papers" / "README.md"
     readme_path.write_text(
         readme_path.read_text(encoding="utf-8")
@@ -11800,6 +11821,38 @@ def test_validate_paper_manifest_rejects_benchmark_coverage_inventory_drift(tmp_
 
     assert report.ok is False
     assert "benchmark_coverage_inventory_implemented_bullets_mismatch" in {
+        issue.code for issue in report.issues
+    }
+
+
+def test_validate_paper_manifest_rejects_missing_benchmark_coverage_local_artifact(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + "- `libreevolve/problems/benchmarks/missing_results.py`: implemented locally, but not yet a full benchmark.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Self-improvement evidence is not implemented.\n",
+        encoding="utf-8",
+    )
+    inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
+    assert inventory["implemented_bullets"][0]["all_local_artifacts_exist"] is False
+    assert inventory["missing_local_artifact_paths"] == [
+        "libreevolve/problems/benchmarks/missing_results.py"
+    ]
+    (tmp_path / paper_manifest.BENCHMARK_COVERAGE_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is False
+    assert "benchmark_coverage_inventory_missing_local_artifact" in {
         issue.code for issue in report.issues
     }
 

@@ -1568,6 +1568,10 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
         text = bullet["text"]
         summary = text.splitlines()[0].strip()
         local_artifacts = sorted(_status_local_artifact_paths(text))
+        local_artifact_records = _local_artifact_path_records(root_path, local_artifacts)
+        missing_local_artifacts = [
+            record["path"] for record in local_artifact_records if not record["exists"]
+        ]
         rows.append(
             {
                 "coverage_id": f"implemented_benchmark_{ordinal:03d}",
@@ -1582,28 +1586,55 @@ def paper_benchmark_coverage_inventory_record(root: str | Path = ".") -> dict[st
                 },
                 "local_artifact_paths": local_artifacts,
                 "has_local_artifact": bool(local_artifacts),
+                "local_artifact_records": local_artifact_records,
+                "local_artifact_existing_count": len(local_artifacts) - len(missing_local_artifacts),
+                "local_artifact_missing_paths": missing_local_artifacts,
+                "all_local_artifacts_exist": bool(local_artifacts) and not missing_local_artifacts,
                 "has_limitation_boundary": bool(BENCHMARK_IMPLEMENTED_LIMITATION_BOUNDARY_RE.search(text)),
                 "has_not_implemented_contradiction": bool(BENCHMARK_IMPLEMENTED_NOT_IMPLEMENTED_RE.search(text)),
                 "coverage_status": "implemented_bullet_structurally_inventoried",
+                "artifact_existence_status": (
+                    "all_referenced_local_artifacts_present"
+                    if local_artifacts and not missing_local_artifacts
+                    else "missing_referenced_local_artifacts"
+                    if missing_local_artifacts
+                    else "no_local_artifacts_referenced"
+                ),
                 "semantic_status": "not_verified",
             }
         )
+    unique_local_artifacts = sorted(
+        {path for row in rows for path in row["local_artifact_paths"]}
+    )
+    missing_local_artifacts = sorted(
+        {path for row in rows for path in row["local_artifact_missing_paths"]}
+    )
     return {
         "schema": BENCHMARK_COVERAGE_INVENTORY_SCHEMA,
         "inventory_status": BENCHMARK_COVERAGE_INVENTORY_STATUS,
         "source_path": "papers/README.md#benchmark-coverage-decisions",
         "implemented_bullet_count": len(rows),
         "implemented_bullet_ids": [row["coverage_id"] for row in rows],
+        "unique_local_artifact_paths": unique_local_artifacts,
+        "unique_local_artifact_count": len(unique_local_artifacts),
+        "missing_local_artifact_paths": missing_local_artifacts,
+        "artifact_existence_status": (
+            "all_referenced_local_artifacts_present"
+            if unique_local_artifacts and not missing_local_artifacts
+            else "missing_referenced_local_artifacts"
+            if missing_local_artifacts
+            else "no_local_artifacts_referenced"
+        ),
         "missing_evidence": dict(BENCHMARK_COVERAGE_MISSING_EVIDENCE),
         "implemented_bullets": rows,
         "claim_boundary": (
             "This inventory records one structured entry for each "
             "papers/README.md Implemented benchmark coverage bullet, including "
             "source lines, summary/body hashes, local artifact mentions, "
-            "limitation-boundary flags, and contradiction flags. It does not "
-            "claim semantic verification, benchmark freshness, reproduced "
-            "result linkage, or proof that the benchmark coverage prose is "
-            "complete."
+            "local artifact existence records, limitation-boundary flags, and "
+            "contradiction flags. It does not claim semantic verification, "
+            "benchmark freshness, reproduced result linkage, or proof that "
+            "the benchmark coverage prose is complete."
         ),
     }
 
@@ -3641,6 +3672,10 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
         ("source_path", "benchmark coverage inventory source path changed"),
         ("implemented_bullet_count", "benchmark coverage implemented-bullet count drifted"),
         ("implemented_bullet_ids", "benchmark coverage implemented-bullet ids drifted"),
+        ("unique_local_artifact_paths", "benchmark coverage unique local artifact paths drifted"),
+        ("unique_local_artifact_count", "benchmark coverage unique local artifact count drifted"),
+        ("missing_local_artifact_paths", "benchmark coverage missing local artifact paths drifted"),
+        ("artifact_existence_status", "benchmark coverage artifact existence status drifted"),
         ("missing_evidence", "benchmark coverage missing-evidence boundary drifted"),
         ("claim_boundary", "benchmark coverage claim boundary drifted"),
         ("implemented_bullets", "benchmark coverage implemented bullets drifted from papers/README.md"),
@@ -3654,6 +3689,14 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
                     "benchmark_coverage_inventory",
                 )
             )
+    for missing_path in expected["missing_local_artifact_paths"]:
+        issues.append(
+            PaperManifestIssue(
+                "benchmark_coverage_inventory_missing_local_artifact",
+                "implemented benchmark coverage bullet cites a missing local artifact path",
+                _safe_manifest_label(str(missing_path)),
+            )
+        )
     return issues
 
 
@@ -8161,6 +8204,29 @@ def _validate_status_evidence_links(
 
 def _status_local_artifact_paths(status: str) -> set[str]:
     return {match.group(0).strip("`") for match in LOCAL_ARTIFACT_PATH_RE.finditer(status)}
+
+
+def _local_artifact_path_records(root: Path, paths: list[str]) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for relative_path in paths:
+        path = root / relative_path
+        exists = path.exists()
+        if path.is_file():
+            kind = "file"
+        elif path.is_dir():
+            kind = "directory"
+        elif exists:
+            kind = "other"
+        else:
+            kind = "missing"
+        records.append(
+            {
+                "path": relative_path,
+                "exists": exists,
+                "kind": kind,
+            }
+        )
+    return records
 
 
 def _status_evidence_text(

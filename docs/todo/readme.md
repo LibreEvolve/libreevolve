@@ -430,6 +430,36 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     wording, and requires AGENTS.md or TODO updates whenever agent-facing
     project behavior or AlphaEvolve-scope boundaries change.
 
+## Development Docs
+
+- [ ] Add development-guide provider example smoke evidence.
+  - Spec evidence: `docs/development.md` is the contributor command contract
+    for local setup, tests, and example runs. For AlphaEvolve-alignment work,
+    contributor-facing provider examples should be evidence-backed just like
+    README examples, because they can otherwise imply supported provider/model
+    readiness or benchmark parity from placeholder commands.
+  - Current evidence: `docs/development.md` tells contributors to run
+    `hello_world` with `openai:<openai-model-id>`, run `circle_packing` with
+    `anthropic:<anthropic-model-id>`, and then show `runs/hello_world`. It also
+    tells readers to replace placeholders with currently available
+    provider/account model ids. The active README provider-smoke TODO covers
+    the root README examples, while the AGENTS.md drift TODO covers
+    agent-facing instructions, but neither is a development-guide-specific
+    check for these commands.
+  - Current gap: there is no committed development-guide provider smoke
+    matrix, redacted model-availability record, expected skip/failure policy,
+    or docs drift check proving that the exact `docs/development.md` example
+    commands are current, internally consistent, and safely separated from
+    AlphaEvolve Gemini/model-mix parity. There is also no check that
+    development docs update when supported provider families, placeholder
+    syntax, example run names, or provider-backed smoke policy changes.
+  - Required result: add a development-guide provider example inventory and
+    validator or smoke artifact that maps each documented command to a
+    provider family, placeholder/model-availability evidence, expected run
+    directory, skip/failure mode, and README/backend-doc/paper-boundary links;
+    require updates whenever provider examples or supported backend families
+    change.
+
 ## Contributing
 
 - [ ] Add README contributor-gate and secret-scan evidence mapping.

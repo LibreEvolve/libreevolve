@@ -11313,13 +11313,14 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
     _write_status_table(tmp_path, [row["id"]])
     _write_status_fixture_artifact(tmp_path)
     _write_active_todo_ledgers(tmp_path, row["id"])
+    active_cell = _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS)
     completed_cell = _write_completed_todo_ledger(tmp_path)
     _append_todo_coverage_table(
         tmp_path,
         [
             (
                 row["id"],
-                _active_todo_cell(*paper_manifest.ACTIVE_TODO_LEDGER_PATHS),
+                active_cell,
                 completed_cell,
             )
         ],
@@ -11359,6 +11360,28 @@ def test_validate_paper_manifest_accepts_matching_status_claim_inventory(tmp_pat
         set(inventory["rows"][0]["active_todo_paths"] + inventory["rows"][0]["completed_todo_paths"])
     )
     assert inventory["rows"][0]["todo_evidence_path_count"] == expected_todo_count
+    expected_active_path_mentions = [
+        {
+            "path": path,
+            "evidence_kind": "active",
+            "todo_cell_char_start": active_cell.find(f"`{path}`"),
+            "todo_cell_char_end": active_cell.find(f"`{path}`") + len(f"`{path}`"),
+        }
+        for path in inventory["rows"][0]["active_todo_paths"]
+    ]
+    expected_completed_path_mentions = [
+        {
+            "path": path,
+            "evidence_kind": "completed",
+            "todo_cell_char_start": completed_cell.find(f"`{path}`"),
+            "todo_cell_char_end": completed_cell.find(f"`{path}`") + len(f"`{path}`"),
+        }
+        for path in inventory["rows"][0]["completed_todo_paths"]
+    ]
+    assert inventory["rows"][0]["active_todo_path_mention_records"] == expected_active_path_mentions
+    assert inventory["rows"][0]["completed_todo_path_mention_records"] == expected_completed_path_mentions
+    assert inventory["rows"][0]["todo_evidence_path_mention_count"] == expected_todo_count
+    assert inventory["todo_evidence_path_mention_count"] == expected_todo_count
     assert inventory["rows"][0]["all_todo_evidence_paths_exist"] is True
     assert inventory["rows"][0]["todo_evidence_missing_paths"] == []
     assert inventory["unique_todo_evidence_path_count"] == expected_todo_count

@@ -143,6 +143,7 @@
     "docs/todo/papers.md"
   ],
   "unique_todo_evidence_path_count": 6,
+  "todo_evidence_path_mention_count": 289,
   "missing_todo_evidence_paths": [],
   "todo_evidence_status": "all_referenced_todo_paths_present",
   "local_artifacts_missing_from_todo_evidence": [],
@@ -308,6 +309,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -431,6 +472,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -862,6 +904,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 21
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/papers.md",
@@ -974,6 +1050,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -1330,6 +1407,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -1464,6 +1581,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -1923,6 +2041,46 @@
         "docs/todo/Completed/roadmap.md",
         "docs/todo/Completed/readme.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 96
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 98,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -2057,6 +2215,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -2416,6 +2575,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -2539,6 +2738,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -2871,6 +3071,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -2994,6 +3234,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -3267,6 +3508,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -3401,6 +3682,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -3937,6 +4219,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -4071,6 +4393,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -4430,6 +4753,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -4553,6 +4916,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -4903,6 +5267,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -5037,6 +5441,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -5494,6 +5899,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -5628,6 +6073,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -6066,6 +6512,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -6189,6 +6675,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -6519,6 +7006,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -6623,6 +7144,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -6861,6 +7383,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -6965,6 +7521,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -7203,6 +7760,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -7307,6 +7898,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -7545,6 +8137,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -7649,6 +8275,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -7887,6 +8514,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -7991,6 +8652,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -8229,6 +8891,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -8333,6 +9029,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -8571,6 +9268,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -8675,6 +9406,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -8913,6 +9645,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -9017,6 +9783,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -9255,6 +10022,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -9359,6 +10160,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -9597,6 +10399,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -9701,6 +10537,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -9939,6 +10776,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -10043,6 +10914,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -10355,6 +11227,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -10459,6 +11365,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -10697,6 +11604,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -10801,6 +11742,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -11039,6 +11981,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -11143,6 +12119,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -11381,6 +12358,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -11485,6 +12496,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -11723,6 +12735,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -11827,6 +12873,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -12065,6 +13112,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -12169,6 +13250,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -12407,6 +13489,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -12511,6 +13627,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -12749,6 +13866,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -12853,6 +14004,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -13091,6 +14243,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -13195,6 +14381,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -13433,6 +14620,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -13537,6 +14758,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -13775,6 +14997,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -13879,6 +15135,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -14117,6 +15374,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -14221,6 +15512,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -14459,6 +15751,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -14563,6 +15889,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -14801,6 +16128,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -14905,6 +16266,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -15143,6 +16505,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -15247,6 +16643,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -15485,6 +16882,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -15589,6 +17020,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -15827,6 +17259,40 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 31
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 33,
+          "todo_cell_char_end": 64
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 66,
+          "todo_cell_char_end": 98
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -15931,6 +17397,7 @@
         }
       ],
       "todo_evidence_path_count": 5,
+      "todo_evidence_path_mention_count": 5,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -16170,6 +17637,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -16293,6 +17800,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -16624,6 +18132,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -16747,6 +18295,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -17078,6 +18627,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -17201,6 +18790,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -17612,6 +19202,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -17735,6 +19365,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -17986,6 +19617,46 @@
         "docs/todo/Completed/roadmap.md",
         "docs/todo/Completed/readme.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 96
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 98,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -18109,6 +19780,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -18520,6 +20192,46 @@
         "docs/todo/Completed/roadmap.md",
         "docs/todo/Completed/readme.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 96
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 98,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -18643,6 +20355,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -18974,6 +20687,46 @@
         "docs/todo/Completed/roadmap.md",
         "docs/todo/Completed/readme.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 96
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 98,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -19097,6 +20850,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -19428,6 +21182,46 @@
         "docs/todo/Completed/roadmap.md",
         "docs/todo/Completed/readme.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 96
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 98,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -19551,6 +21345,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -19962,6 +21757,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -20085,6 +21920,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -20416,6 +22252,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -20539,6 +22415,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -20950,6 +22827,46 @@
         "docs/todo/Completed/readme.md",
         "docs/todo/Completed/roadmap.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 95
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 97,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -21073,6 +22990,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -21484,6 +23402,46 @@
         "docs/todo/Completed/roadmap.md",
         "docs/todo/Completed/readme.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 96
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 98,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -21607,6 +23565,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -22018,6 +23977,46 @@
         "docs/todo/Completed/roadmap.md",
         "docs/todo/Completed/readme.md"
       ],
+      "active_todo_path_mention_records": [
+        {
+          "path": "docs/todo/code.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 19
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "evidence_kind": "active",
+          "todo_cell_char_start": 21,
+          "todo_cell_char_end": 42
+        }
+      ],
+      "completed_todo_path_mention_records": [
+        {
+          "path": "docs/todo/Completed/code.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 0,
+          "todo_cell_char_end": 29
+        },
+        {
+          "path": "docs/todo/Completed/papers.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 31,
+          "todo_cell_char_end": 62
+        },
+        {
+          "path": "docs/todo/Completed/roadmap.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 64,
+          "todo_cell_char_end": 96
+        },
+        {
+          "path": "docs/todo/Completed/readme.md",
+          "evidence_kind": "completed",
+          "todo_cell_char_start": 98,
+          "todo_cell_char_end": 129
+        }
+      ],
       "active_todo_records": [
         {
           "path": "docs/todo/code.md",
@@ -22141,6 +24140,7 @@
         }
       ],
       "todo_evidence_path_count": 6,
+      "todo_evidence_path_mention_count": 6,
       "todo_evidence_missing_paths": [],
       "all_todo_evidence_paths_exist": true,
       "local_artifacts_mentioned_in_todo_evidence": [
@@ -22501,5 +24501,5 @@
       "freshness_status": "structural_only"
     }
   ],
-  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mention source offsets and existence records, row source line, TODO evidence paths and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention records and absence-signal classification. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
+  "claim_boundary": "This inventory records one structured row for every papers/README.md implementation-status table row, including role, status class, status text hash, manifest file, local artifact mention source offsets and existence records, row source line, TODO evidence path source offsets and existence records, and status-cell phrase hashes with character offsets and candidate evidence links plus row/phrase-specific TODO content artifact-mention records and absence-signal classification. It does not claim phrase-level status verification, evidence-link sufficiency, implemented-benchmark bullet coverage, absence-sentence freshness, or proof that status-cell prose is semantically complete."
 }

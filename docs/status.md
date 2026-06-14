@@ -1247,8 +1247,8 @@ Important limits:
   records row-level paper status inventory plus status-cell phrase hashes,
   source offsets, local artifact mention source offsets, candidate
   evidence-link lists, and referenced local artifact and TODO evidence-path
-  existence checks plus row-specific TODO content artifact-mention records,
-  phrase-local TODO content backing, and structural absence-signal
+  source offsets/existence checks plus row-specific TODO content
+  artifact-mention records, phrase-local TODO content backing, and structural absence-signal
   classification. The checked
   `papers/benchmark_coverage_inventory.json` sidecar now records structural
   implemented-benchmark coverage bullet evidence plus referenced local
@@ -1260,8 +1260,9 @@ Important limits:
   `papers/implementation_evidence_map_boundary.json`.
 - Paper-index implementation-status validation now records 60 unique referenced
   local artifact paths across status rows and zero missing referenced local
-  artifacts, plus 6 unique referenced TODO evidence paths and zero missing
-  referenced TODO evidence paths. It also records zero status-row local artifact
+  artifacts, plus 6 unique referenced TODO evidence paths, 289 TODO evidence
+  path mention records, and zero missing referenced TODO evidence paths. It
+  also records zero status-row local artifact
   paths and zero status-phrase local artifact paths missing from linked
   row-specific TODO evidence, and structurally classifies 87 status-cell
   absence-signal phrases. This is path/content linkage and signal evidence, not

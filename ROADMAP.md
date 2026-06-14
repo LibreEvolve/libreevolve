@@ -830,7 +830,7 @@ is not yet an AlphaEvolve reproduction.
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
-  referenced local artifact and TODO evidence-path existence checks plus
+  referenced local artifact and TODO evidence-path source offsets/existence checks plus
   row/phrase-specific TODO content artifact mention records and structural
   absence-signal classification, while
   `papers/benchmark_coverage_inventory.json` records structural implemented

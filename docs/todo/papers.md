@@ -21,13 +21,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/status_claim_inventory.json` now records one checked row per
     implementation-status table row with row ids, role/status class, status
     text hashes, row source lines, manifest-file links, local artifact mention
-    source offsets, active/completed TODO evidence paths, and 143 status-cell
-    phrase hashes with source-line and character offsets plus candidate
-    evidence-link lists. It now records 60 unique status-row local artifact
+    source offsets, active/completed TODO evidence path source offsets, and
+    143 status-cell phrase hashes with source-line and character offsets plus
+    candidate evidence-link lists. It now records 60 unique status-row local artifact
     paths, 60 row-level artifact mention records, 60 phrase-level artifact
     mention records, and zero missing referenced status-row local artifacts,
-    plus 6 unique status-row TODO
-    evidence paths and zero missing referenced TODO evidence paths. It also
+    plus 6 unique status-row TODO evidence paths, 289 TODO evidence path
+    mention records, and zero missing referenced TODO evidence paths. It also
     records row-specific TODO content evidence showing zero status-row local
     artifact paths and zero status-phrase local artifact paths missing from
     linked TODO evidence. It now structurally classifies 87 status-cell
@@ -48,8 +48,8 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: each status phrase now has a stable hash and source offset,
     candidate links to phrase-local artifacts plus row-level TODO and completed
     evidence, referenced local artifact/TODO path existence checks, local
-    artifact mention source offsets, and row-local and phrase-local artifact
-    mentions in linked TODO evidence, but
+    artifact mention source offsets, TODO evidence path source offsets, and
+    row-local and phrase-local artifact mentions in linked TODO evidence, but
     there is no proof that those links are sufficient for each implemented or
     missing clause, no semantic verifier for
     `Implemented` benchmark coverage bullets beyond referenced artifact

@@ -27,6 +27,9 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert inventory["source_anchor_missing_claim_ids"] == []
     assert inventory["evidence_ref_status"] == "all_local_evidence_refs_present"
     assert inventory["missing_evidence_ref_records"] == []
+    assert inventory["evidence_ref_fragment_status"] == "all_fragment_anchors_resolved"
+    assert inventory["fragment_evidence_ref_record_count"] == 7
+    assert inventory["missing_fragment_ref_records"] == []
     assert inventory["evidence_ref_record_count"] == sum(
         len(claim["evidence_refs"]) for claim in inventory["claims"]
     )
@@ -50,7 +53,29 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         "fragment": "current-status",
         "exists": True,
         "kind": "file",
+        "fragment_status": "fragment_anchor_resolved",
+        "fragment_found": True,
+        "matched_heading_text": "Current Status",
+        "matched_heading_slug": "current-status",
+        "matched_heading_line_start": 13,
     }
+    roadmap_doc_claim = next(
+        claim
+        for claim in inventory["claims"]
+        if claim["claim_id"] == "roadmap_documentation_truthfulness_scope"
+    )
+    assert (
+        "ROADMAP.md#5-documentation-truthfulness"
+        in roadmap_doc_claim["evidence_refs"]
+    )
+    assert (
+        roadmap_doc_claim["evidence_ref_records"][0]["fragment_status"]
+        == "fragment_anchor_resolved"
+    )
+    assert (
+        roadmap_doc_claim["evidence_ref_records"][0]["matched_heading_slug"]
+        == "5-documentation-truthfulness"
+    )
     assert (
         "does not claim complete README coverage"
         in inventory["claim_boundary"]
@@ -79,8 +104,12 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     inventory["claims"][0]["evidence_refs"] = ["README.md"]
     inventory["claims"][0]["source_span"]["line_start"] = -1
     inventory["claims"][0]["evidence_ref_records"][0]["exists"] = False
+    inventory["claims"][0]["evidence_ref_records"][0]["fragment_status"] = (
+        "fragment_anchor_missing"
+    )
     inventory["source_anchor_status"] = "missing_claim_source_anchors"
     inventory["evidence_ref_status"] = "missing_local_evidence_refs"
+    inventory["evidence_ref_fragment_status"] = "missing_fragment_anchors"
 
     validation = validate_documentation_claim_inventory(inventory)
     codes = {issue.code for issue in validation.issues}
@@ -91,6 +120,7 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     assert "invalid_readme_current_status_scope_evidence_ref_records" in codes
     assert "invalid_source_anchor_status" in codes
     assert "invalid_evidence_ref_status" in codes
+    assert "invalid_evidence_ref_fragment_status" in codes
 
 
 def test_render_documentation_claim_inventory_summary_reports_shape():

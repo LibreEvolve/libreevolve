@@ -9,6 +9,9 @@
   "evidence_ref_status": "all_local_evidence_refs_present",
   "evidence_ref_record_count": 41,
   "missing_evidence_ref_records": [],
+  "evidence_ref_fragment_status": "all_fragment_anchors_resolved",
+  "fragment_evidence_ref_record_count": 7,
+  "missing_fragment_ref_records": [],
   "claims": [
     {
       "claim_id": "readme_current_status_scope",
@@ -40,28 +43,48 @@
           "path": "README.md",
           "fragment": "current-status",
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "fragment_anchor_resolved",
+          "fragment_found": true,
+          "matched_heading_text": "Current Status",
+          "matched_heading_slug": "current-status",
+          "matched_heading_line_start": 13
         },
         {
           "ref": "docs/status.md",
           "path": "docs/status.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/documentation_truthfulness_boundary.json",
           "path": "papers/documentation_truthfulness_boundary.json",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/readme.md",
           "path": "docs/todo/readme.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -100,49 +123,84 @@
           "path": "README.md",
           "fragment": "current-status",
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "fragment_anchor_resolved",
+          "fragment_found": true,
+          "matched_heading_text": "Current Status",
+          "matched_heading_slug": "current-status",
+          "matched_heading_line_start": 13
         },
         {
           "ref": "libreevolve/cli.py",
           "path": "libreevolve/cli.py",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "libreevolve/core/loop.py",
           "path": "libreevolve/core/loop.py",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "libreevolve/core/diff.py",
           "path": "libreevolve/core/diff.py",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "libreevolve/llm/",
           "path": "libreevolve/llm/",
           "fragment": null,
           "exists": true,
-          "kind": "directory"
+          "kind": "directory",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "libreevolve/population/",
           "path": "libreevolve/population/",
           "fragment": null,
           "exists": true,
-          "kind": "directory"
+          "kind": "directory",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/status.md",
           "path": "docs/status.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -179,35 +237,60 @@
           "path": "README.md",
           "fragment": "current-status",
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "fragment_anchor_resolved",
+          "fragment_found": true,
+          "matched_heading_text": "Current Status",
+          "matched_heading_slug": "current-status",
+          "matched_heading_line_start": 13
         },
         {
           "ref": "papers/README.md",
           "path": "papers/README.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/documentation_truthfulness_boundary.json",
           "path": "papers/documentation_truthfulness_boundary.json",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/code.md",
           "path": "docs/todo/code.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/papers.md",
           "path": "docs/todo/papers.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -243,28 +326,48 @@
           "path": "ROADMAP.md",
           "fragment": "current-state",
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "fragment_anchor_resolved",
+          "fragment_found": true,
+          "matched_heading_text": "Current State",
+          "matched_heading_slug": "current-state",
+          "matched_heading_line_start": 14
         },
         {
           "ref": "docs/status.md",
           "path": "docs/status.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/README.md",
           "path": "papers/README.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/roadmap.md",
           "path": "docs/todo/roadmap.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -277,7 +380,7 @@
       "claim_kind": "documentation_boundary",
       "claim_summary": "ROADMAP documentation-truthfulness status records path, manifest, TODO-coverage, and sidecar-registry guards while leaving semantic claim-by-claim proof open.",
       "evidence_refs": [
-        "ROADMAP.md#documentation-truthfulness",
+        "ROADMAP.md#5-documentation-truthfulness",
         "papers/documentation_truthfulness_boundary.json",
         "papers/documentation_claim_inventory.json",
         "docs/todo/readme.md",
@@ -298,46 +401,76 @@
       "source_anchor_status": "source_anchor_recorded",
       "evidence_ref_records": [
         {
-          "ref": "ROADMAP.md#documentation-truthfulness",
+          "ref": "ROADMAP.md#5-documentation-truthfulness",
           "path": "ROADMAP.md",
-          "fragment": "documentation-truthfulness",
+          "fragment": "5-documentation-truthfulness",
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "fragment_anchor_resolved",
+          "fragment_found": true,
+          "matched_heading_text": "5. Documentation truthfulness",
+          "matched_heading_slug": "5-documentation-truthfulness",
+          "matched_heading_line_start": 817
         },
         {
           "ref": "papers/documentation_truthfulness_boundary.json",
           "path": "papers/documentation_truthfulness_boundary.json",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/documentation_claim_inventory.json",
           "path": "papers/documentation_claim_inventory.json",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/readme.md",
           "path": "docs/todo/readme.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/roadmap.md",
           "path": "docs/todo/roadmap.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/papers.md",
           "path": "docs/todo/papers.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -374,35 +507,60 @@
           "path": "ROADMAP.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/2506.13131__AlphaEvolve.pdf",
           "path": "papers/2506.13131__AlphaEvolve.pdf",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/README.md",
           "path": "papers/README.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/code.md",
           "path": "docs/todo/code.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "docs/todo/papers.md",
           "path": "docs/todo/papers.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -439,35 +597,60 @@
           "path": "papers/README.md",
           "fragment": "local-paper-cache",
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "fragment_anchor_resolved",
+          "fragment_found": true,
+          "matched_heading_text": "Local Paper Cache",
+          "matched_heading_slug": "local-paper-cache",
+          "matched_heading_line_start": 1
         },
         {
           "ref": "papers/download_manifest.json",
           "path": "papers/download_manifest.json",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/download_manifest.csv",
           "path": "papers/download_manifest.csv",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "libreevolve/tools/paper_manifest.py",
           "path": "libreevolve/tools/paper_manifest.py",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "tests/test_paper_manifest.py",
           "path": "tests/test_paper_manifest.py",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -504,35 +687,60 @@
           "path": "papers/README.md",
           "fragment": "implementation-status",
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "fragment_anchor_resolved",
+          "fragment_found": true,
+          "matched_heading_text": "Implementation status",
+          "matched_heading_slug": "implementation-status",
+          "matched_heading_line_start": 316
         },
         {
           "ref": "docs/todo/papers.md",
           "path": "docs/todo/papers.md",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/implementation_evidence_map_boundary.json",
           "path": "papers/implementation_evidence_map_boundary.json",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "papers/documentation_truthfulness_boundary.json",
           "path": "papers/documentation_truthfulness_boundary.json",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         },
         {
           "ref": "libreevolve/tools/paper_manifest.py",
           "path": "libreevolve/tools/paper_manifest.py",
           "fragment": null,
           "exists": true,
-          "kind": "file"
+          "kind": "file",
+          "fragment_status": "no_fragment",
+          "fragment_found": null,
+          "matched_heading_text": null,
+          "matched_heading_slug": null,
+          "matched_heading_line_start": null
         }
       ],
       "missing_evidence_refs": [],
@@ -548,5 +756,5 @@
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

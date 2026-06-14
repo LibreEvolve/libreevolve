@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -115,7 +116,7 @@ EXPECTED_CLAIMS = (
             "claim-by-claim proof open."
         ),
         "evidence_refs": [
-            "ROADMAP.md#documentation-truthfulness",
+            "ROADMAP.md#5-documentation-truthfulness",
             "papers/documentation_truthfulness_boundary.json",
             "papers/documentation_claim_inventory.json",
             "docs/todo/readme.md",
@@ -251,6 +252,18 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
         for claim in claims
         for ref in claim["missing_evidence_refs"]
     ]
+    missing_fragment_ref_records = [
+        {
+            "claim_id": claim["claim_id"],
+            "ref": record["ref"],
+        }
+        for claim in claims
+        for record in claim["evidence_ref_records"]
+        if (
+            record["fragment"] is not None
+            and record["fragment_status"] != "fragment_anchor_resolved"
+        )
+    ]
     return {
         "schema": DOCUMENTATION_CLAIM_INVENTORY_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
@@ -276,6 +289,18 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             len(claim["evidence_ref_records"]) for claim in claims
         ),
         "missing_evidence_ref_records": missing_evidence_ref_records,
+        "evidence_ref_fragment_status": (
+            "all_fragment_anchors_resolved"
+            if not missing_fragment_ref_records
+            else "missing_fragment_anchors"
+        ),
+        "fragment_evidence_ref_record_count": sum(
+            1
+            for claim in claims
+            for record in claim["evidence_ref_records"]
+            if record["fragment"] is not None
+        ),
+        "missing_fragment_ref_records": missing_fragment_ref_records,
         "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -283,6 +308,8 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             "top-level README, ROADMAP, and papers index AlphaEvolve-facing "
             "status claims, including source-anchor file offsets for those "
             "top-level claim surfaces and local evidence-ref existence records. "
+            "Fragment-bearing evidence refs also record exact Markdown heading "
+            "anchor resolution. "
             "It does not claim complete README coverage, "
             "complete ROADMAP coverage, complete papers index coverage, "
             "semantic claim verification, stale completed-entry detection, "
@@ -364,6 +391,50 @@ def validate_documentation_claim_inventory(
         issues.append(_issue("invalid_evidence_ref_record_count", "evidence_ref_record_count drifted from current claims"))
     if data.get("missing_evidence_ref_records") != expected_missing_evidence_ref_records:
         issues.append(_issue("invalid_missing_evidence_ref_records", "missing evidence-ref records drifted"))
+    expected_missing_fragment_ref_records = [
+        {
+            "claim_id": claim["claim_id"],
+            "ref": record["ref"],
+        }
+        for claim in expected_claims
+        for record in claim["evidence_ref_records"]
+        if (
+            record["fragment"] is not None
+            and record["fragment_status"] != "fragment_anchor_resolved"
+        )
+    ]
+    expected_fragment_status = (
+        "all_fragment_anchors_resolved"
+        if not expected_missing_fragment_ref_records
+        else "missing_fragment_anchors"
+    )
+    if data.get("evidence_ref_fragment_status") != expected_fragment_status:
+        issues.append(
+            _issue(
+                "invalid_evidence_ref_fragment_status",
+                "evidence_ref_fragment_status drifted from current headings",
+            )
+        )
+    expected_fragment_count = sum(
+        1
+        for claim in expected_claims
+        for record in claim["evidence_ref_records"]
+        if record["fragment"] is not None
+    )
+    if data.get("fragment_evidence_ref_record_count") != expected_fragment_count:
+        issues.append(
+            _issue(
+                "invalid_fragment_evidence_ref_record_count",
+                "fragment evidence-ref count drifted from current claims",
+            )
+        )
+    if data.get("missing_fragment_ref_records") != expected_missing_fragment_ref_records:
+        issues.append(
+            _issue(
+                "invalid_missing_fragment_ref_records",
+                "missing fragment-ref records drifted",
+            )
+        )
     claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
         data.get("claims"),
         issues,
@@ -546,13 +617,71 @@ def _evidence_ref_record(root: Path, ref: str) -> dict[str, Any]:
         kind = "inaccessible"
     if not exists:
         kind = "missing"
+    fragment_text = fragment if separator else None
+    fragment_record = (
+        _fragment_anchor_record(path, fragment_text)
+        if fragment_text
+        else _no_fragment_anchor_record()
+    )
     return {
         "ref": ref,
         "path": path_text,
-        "fragment": fragment if separator else None,
+        "fragment": fragment_text,
         "exists": exists,
         "kind": kind,
+        **fragment_record,
     }
+
+
+def _no_fragment_anchor_record() -> dict[str, Any]:
+    return {
+        "fragment_status": "no_fragment",
+        "fragment_found": None,
+        "matched_heading_text": None,
+        "matched_heading_slug": None,
+        "matched_heading_line_start": None,
+    }
+
+
+def _fragment_anchor_record(path: Path, fragment: str) -> dict[str, Any]:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return {
+            "fragment_status": "fragment_anchor_unreadable",
+            "fragment_found": False,
+            "matched_heading_text": None,
+            "matched_heading_slug": None,
+            "matched_heading_line_start": None,
+        }
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        if not line.startswith("#"):
+            continue
+        heading_text = line.lstrip("#").strip()
+        heading_slug = _markdown_heading_slug(heading_text)
+        if heading_slug == fragment:
+            return {
+                "fragment_status": "fragment_anchor_resolved",
+                "fragment_found": True,
+                "matched_heading_text": heading_text,
+                "matched_heading_slug": heading_slug,
+                "matched_heading_line_start": line_number,
+            }
+    return {
+        "fragment_status": "fragment_anchor_missing",
+        "fragment_found": False,
+        "matched_heading_text": None,
+        "matched_heading_slug": None,
+        "matched_heading_line_start": None,
+    }
+
+
+def _markdown_heading_slug(heading_text: str) -> str:
+    slug = heading_text.strip().lower()
+    slug = re.sub(r"[^a-z0-9\s-]", "", slug)
+    slug = re.sub(r"\s+", "-", slug)
+    slug = re.sub(r"-+", "-", slug)
+    return slug.strip("-")
 
 
 def _source_anchor_span(root: Path, document_path: str, anchor_text: str) -> dict[str, Any]:

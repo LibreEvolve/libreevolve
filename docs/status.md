@@ -1236,9 +1236,10 @@ Important limits:
   both artifacts as `not_yet_linked`.
 - Documentation alignment checks are path, manifest, TODO-coverage,
   sidecar-registry, and top-level README/ROADMAP/papers-index claim-inventory
-  guards with file-offset source anchors and local evidence-ref existence
-  records, not semantic proof that every README, ROADMAP, papers-index, and
-  TODO statement is current; that boundary is tracked by
+  guards with file-offset source anchors, local evidence-ref existence records,
+  and Markdown fragment-anchor resolution records, not semantic proof that
+  every README, ROADMAP, papers-index, and TODO statement is current; that
+  boundary is tracked by
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors

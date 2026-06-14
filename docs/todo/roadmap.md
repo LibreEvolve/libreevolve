@@ -20,8 +20,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     mapping absent. `papers/documentation_claim_inventory.json` now assigns
     stable claim ids and evidence anchors with file-offset source spans to
     top-level README, ROADMAP, and papers-index scope claims, records local
-    evidence-ref existence for those anchors, and includes ROADMAP current-state,
-    documentation-truthfulness, and AlphaEvolve-gap claims.
+    evidence-ref existence plus Markdown fragment-anchor resolution for those
+    anchors, and includes ROADMAP current-state, documentation-truthfulness,
+    and AlphaEvolve-gap claims.
   - Current gap: there is no complete machine-readable claim inventory for
     every ROADMAP current-state bullet, no per-bullet code/test/runtime-
     artifact/sidecar/TODO evidence map, no stale-priority detector, and no

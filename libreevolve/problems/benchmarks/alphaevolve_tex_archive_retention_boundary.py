@@ -39,11 +39,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "archive_artifact_sha256",
     "arxiv_versioned_id",
     "archive_member_inventory",
-    "extraction_script_artifact",
     "tex_source_refresh_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "extraction_script_artifact": "not_recorded_locally",
     "tex_source_refresh_gate": "not_recorded_locally",
 }
 

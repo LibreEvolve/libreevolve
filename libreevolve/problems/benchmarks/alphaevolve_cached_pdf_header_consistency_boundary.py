@@ -35,7 +35,6 @@ EXPECTED_REQUIRED_MARKERS = {
     "has_rights_statement": True,
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "metadata_extraction_script_artifact": "not_recorded_locally",
     "automated_cached_pdf_header_refresh_gate": "not_recorded_locally",
 }
 
@@ -89,9 +88,9 @@ def alphaevolve_cached_pdf_header_consistency_boundary_record() -> dict[str, Any
         "claim_boundary": (
             "This boundary records cached-PDF first-page header consistency for "
             "the retained AlphaEvolve PDF, including arXiv version, title, "
-            "Google DeepMind, and rights markers. It does not claim a reusable "
-            "metadata extraction-script artifact or an automated cached-PDF "
-            "header refresh gate."
+            "Google DeepMind, and rights markers. It is paired with the "
+            "metadata extraction-script sidecar and does not claim an "
+            "automated cached-PDF header refresh gate."
         ),
     }
 
@@ -134,7 +133,7 @@ def validate_alphaevolve_cached_pdf_header_consistency_boundary(
     if (
         not isinstance(boundary_text, str)
         or "cached-PDF first-page header consistency" not in boundary_text
-        or "metadata extraction-script artifact" not in boundary_text
+        or "metadata extraction-script sidecar" not in boundary_text
         or "automated cached-PDF header refresh gate" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate cached-PDF header evidence from refresh/extraction gaps"))

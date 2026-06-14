@@ -70,8 +70,9 @@ Important limits:
   content-marker validation. The current-version sidecar validates that the
   retained floating PDF artifact bytes/hash match the cached PDF, and the
   cached-PDF header consistency sidecar validates first-page header extraction
-  hashes and markers. No extraction-script artifact or automated refresh gate
-  exists yet.
+  hashes and markers. The metadata extraction-script sidecar now pins the
+  reusable offline extraction script and retained source-artifact coverage.
+  No automated refresh gate exists yet.
 - Figure 1/Figure 2 process-exhibit reports map AlphaEvolve diagram nodes,
   edges, and pseudocode steps to local artifacts, not exact source-diagram
   reproduction, exact source caption/text identity, source diagram text
@@ -1251,8 +1252,9 @@ Important limits:
   full HTML artifacts and validate byte/hash markers; the current-version
   sidecar validates the retained floating PDF artifact bytes/hash. The
   cached-PDF header consistency sidecar validates first-page header extraction
-  hashes and markers. This is not extraction-script provenance or an automated
-  CI refresh gate.
+  hashes and markers. The metadata extraction-script sidecar pins the offline
+  extraction script path/hash, entrypoint, CLI, and retained source-artifact
+  coverage. This is not an automated CI refresh gate.
 - Paper-index benchmark coverage validation currently catches structural
   coverage issues and one narrow `Implemented`-but-`not implemented`
   contradiction. It is not semantic proof that every implemented benchmark

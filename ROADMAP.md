@@ -1481,8 +1481,12 @@ by `papers/lineage_replay_boundary.json`.
   2,635,462-byte TeX/e-print archive artifact and validates its 58-entry member
   inventory. `papers/alphaevolve_license_page_html_retention_boundary.json`
   now retains the Creative Commons license-page HTML artifact and validates its
-  bytes, hash, and key content markers. Metadata extraction-script artifacts,
-  and automated CI refresh gates remain open.
+  bytes, hash, and key content markers.
+  `papers/alphaevolve_metadata_extraction_script_boundary.json` now pins the
+  reusable offline extraction script path, byte count, SHA-256 digest,
+  import entrypoint, CLI command, and retained source artifact coverage for
+  abstract HTML, cached PDF, DataCite full response, license HTML, and TeX
+  archive inputs. Automated CI refresh gates remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping

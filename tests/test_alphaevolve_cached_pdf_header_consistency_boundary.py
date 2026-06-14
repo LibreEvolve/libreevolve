@@ -19,7 +19,7 @@ def test_alphaevolve_cached_pdf_header_consistency_boundary_accepts_record():
         == "cached_pdf_header_consistency_recorded_without_refresh_gate"
     )
     assert validation.header_checked is False
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert boundary["schema"] == ALPHAEVOLVE_CACHED_PDF_HEADER_CONSISTENCY_BOUNDARY_SCHEMA
     assert boundary["pdf_artifact"]["artifact_retained"] is True
     assert boundary["first_page_extraction"]["required_markers"]["has_arxiv_header"] is True
@@ -60,7 +60,7 @@ def test_alphaevolve_cached_pdf_header_consistency_boundary_validates_pdf_file(t
 
     assert validation.ok is True
     assert validation.header_checked is True
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
 
 
 def test_render_alphaevolve_cached_pdf_header_consistency_boundary_summary_reports_shape():
@@ -74,4 +74,4 @@ def test_render_alphaevolve_cached_pdf_header_consistency_boundary_summary_repor
         "| boundary_status | cached_pdf_header_consistency_recorded_without_refresh_gate |"
         in summary
     )
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

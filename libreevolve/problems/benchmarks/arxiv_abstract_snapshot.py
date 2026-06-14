@@ -62,7 +62,6 @@ EXPECTED_HISTORY = (
     },
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "metadata_extraction_script_artifact": "not_recorded_locally",
     "automated_live_refresh_ci_gate": "not_recorded_locally",
 }
 EXPECTED_CONTENT_MARKERS = {
@@ -146,10 +145,9 @@ def alphaevolve_arxiv_abstract_snapshot_record() -> dict[str, Any]:
             "This boundary records an arXiv abstract-page HTML byte count, "
             "SHA-256 digest, and normalized source metadata for AlphaEvolve "
             "2506.13131v1 and retains the full HTML body alongside the raw "
-            "HTTP headers sidecar. It does not preserve the metadata "
-            "extraction script artifact or install an automated live-refresh "
-            "CI gate, and is paired with the cached-PDF header consistency "
-            "sidecar."
+            "HTTP headers sidecar. It is paired with the metadata "
+            "extraction-script and cached-PDF header consistency sidecars. "
+            "It does not install an automated live-refresh CI gate."
         ),
     }
 
@@ -190,7 +188,7 @@ def validate_alphaevolve_arxiv_abstract_snapshot(
         not isinstance(boundary_text, str)
         or "retains the full HTML body" not in boundary_text
         or "raw HTTP headers sidecar" not in boundary_text
-        or "metadata extraction script artifact" not in boundary_text
+        or "metadata extraction-script" not in boundary_text
         or "cached-PDF header consistency" not in boundary_text
         or "automated live-refresh CI gate" not in boundary_text
     ):

@@ -16,8 +16,8 @@ def test_alphaevolve_tex_source_boundary_accepts_eprint_digest_record():
         validation.boundary_status
         == "tex_eprint_digest_without_archive_retention_or_refresh_gate"
     )
-    assert validation.required_evidence_field_count == 13
-    assert validation.missing_evidence_count == 2
+    assert validation.required_evidence_field_count == 12
+    assert validation.missing_evidence_count == 1
     assert boundary["schema"] == ALPHAEVOLVE_TEX_SOURCE_BOUNDARY_SCHEMA
     assert boundary["tex_eprint_snapshot"]["response_bytes"] == 2635462
     assert (
@@ -54,5 +54,5 @@ def test_render_alphaevolve_tex_source_boundary_summary_reports_shape():
         "| boundary_status | tex_eprint_digest_without_archive_retention_or_refresh_gate |"
         in summary
     )
-    assert "| required_evidence_field_count | 13 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| required_evidence_field_count | 12 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

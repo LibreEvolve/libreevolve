@@ -2321,8 +2321,12 @@ Implemented:
   2,635,462-byte TeX/e-print archive artifact and validates its 58-entry member
   inventory. `papers/alphaevolve_license_page_html_retention_boundary.json`
   now retains the Creative Commons license-page HTML artifact and validates its
-  bytes, hash, and key content markers. Metadata extraction-script artifacts,
-  and automated CI refresh checks remain open.
+  bytes, hash, and key content markers.
+  `papers/alphaevolve_metadata_extraction_script_boundary.json` now pins the
+  reusable offline extraction script path, byte count, SHA-256 digest,
+  import entrypoint, CLI command, and retained source artifact coverage for
+  abstract HTML, cached PDF, DataCite full response, license HTML, and TeX
+  archive inputs. Automated CI refresh checks remain open.
   `papers/alphaevolve_license_page_boundary.json` now pins the Creative
   Commons BY-NC-ND 4.0 license URL, retrieval date, HTTP status, content type,
   byte count, SHA-256 digest, title, license family, and version while keeping
@@ -2824,8 +2828,7 @@ Implemented:
 - `papers/arxiv_abstract_snapshot.json`: AlphaEvolve arXiv abstract-page
   snapshot sidecar with the pinned `2506.13131v1` HTML byte count/digest,
   retained HTML artifact path, normalized source metadata, and explicit
-  remaining gaps for metadata extraction-script artifacts and automated
-  refresh evidence. It is not full
+  remaining automated refresh evidence. It is not full
   publication-grade source evidence or a live refresh gate.
 - `papers/alphaevolve_datacite_doi_boundary.json`: AlphaEvolve DOI/DataCite
   sidecar with the pinned DataCite API URL, retrieval date, status, response
@@ -2846,14 +2849,14 @@ Implemented:
 - `papers/alphaevolve_tex_source_boundary.json`: AlphaEvolve arXiv TeX/e-print
   sidecar with the pinned e-print URL, retrieval date, status, content type,
   content-disposition filename, response byte count, SHA-256 digest, and
-  `2506.13131v1` linkage. It is not extraction-script evidence, a TeX-source
-  refresh gate.
+  `2506.13131v1` linkage. It is not a TeX-source refresh gate and is paired
+  with the metadata extraction-script sidecar.
 - `papers/alphaevolve_tex_archive_retention_boundary.json`: AlphaEvolve
   TeX/e-print archive-retention sidecar with the retained
   `papers/alphaevolve_tex_source_archive.tar.gz` artifact, archive bytes/hash,
   `2506.13131v1` linkage, 58-member inventory, per-file sizes, and per-file
-  SHA-256 digests. It is not metadata extraction-script provenance, an
-  automated TeX-source refresh gate.
+  SHA-256 digests. It is not an automated TeX-source refresh gate and is paired
+  with the metadata extraction-script sidecar.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,
@@ -2864,8 +2867,13 @@ Implemented:
 - `papers/alphaevolve_cached_pdf_header_consistency_boundary.json`:
   AlphaEvolve cached-PDF header consistency sidecar with retained-PDF
   bytes/hash, first-page text extraction hashes, and arXiv version/title/rights
-  markers. It is not a reusable metadata extraction-script artifact or an
-  automated cached-PDF header refresh gate.
+  markers. It is paired with the metadata extraction-script sidecar and is not
+  an automated cached-PDF header refresh gate.
+- `papers/alphaevolve_metadata_extraction_script_boundary.json`: AlphaEvolve
+  offline metadata extraction-script sidecar with the pinned script path, byte
+  count, SHA-256 digest, import entrypoint, CLI command, and retained artifact
+  coverage for abstract HTML, cached PDF, DataCite full response, license HTML,
+  and TeX archive inputs. It is not an automated live refresh CI gate.
 - `papers/alphaevolve_raw_http_headers_boundary.json`: AlphaEvolve source-URL
   raw HTTP headers sidecar with pinned header lines for the versioned abstract,
   floating abstract, floating PDF, DataCite API, e-print archive, and Creative

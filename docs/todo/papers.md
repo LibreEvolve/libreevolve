@@ -660,7 +660,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     `2506.13131v1` abstract HTML byte count, SHA-256 digest, retained HTML
     artifact path, normalized title/authors/subjects/DOI/submission-history
     metadata, and a validator-supported live snapshot comparison path, while
-    explicitly missing extraction-script provenance.
+    paired with the reusable offline extraction-script boundary.
     `papers/alphaevolve_datacite_doi_boundary.json` now pins a bounded
     2026-06-14 DataCite API snapshot for `10.48550/arxiv.2506.13131`,
     including response byte count, SHA-256 digest, DOI, landing URL, title,
@@ -684,6 +684,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_cached_pdf_header_consistency_boundary.json` now pins
     cached-PDF first-page header extraction hashes and arXiv/title/rights
     markers for the retained AlphaEvolve PDF.
+    `papers/alphaevolve_metadata_extraction_script_boundary.json` now pins the
+    reusable offline extraction script path, byte count, SHA-256 digest,
+    import entrypoint, CLI command, and retained source artifact coverage for
+    abstract HTML, cached PDF, DataCite full response, license HTML, and TeX
+    archive inputs.
     `papers/alphaevolve_raw_http_headers_boundary.json` now records pinned raw
     HTTP response header lines for the versioned abstract, floating abstract,
     floating PDF, DataCite API, e-print archive, and license page.
@@ -700,9 +705,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     the Creative Commons license-page HTML artifact and validates its byte
     count, SHA-256 digest, and key content markers.
   - Required result: before using arXiv abstract-page metadata as
-    publication-grade evidence, add extraction-script artifacts and an
-    automated refresh gate that detects arXiv/DataCite/e-print/license version
-    or metadata drift.
+    publication-grade evidence, add an automated refresh gate that detects
+    arXiv/DataCite/e-print/license version or metadata drift.
 
 - [ ] Track Google/Gemini provider parity separately from generic backend
       configurability.

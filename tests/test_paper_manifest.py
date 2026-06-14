@@ -295,7 +295,7 @@ def test_validate_paper_manifest_rejects_arxiv_abstract_snapshot_drift(tmp_path)
     record = paper_manifest.alphaevolve_arxiv_abstract_snapshot_record()
     record["html_snapshot"]["bytes"] = 1
     record["normalized_metadata"]["subject_codes"] = ["cs.AI"]
-    record["missing_evidence"]["metadata_extraction_script_artifact"] = "recorded"
+    record["missing_evidence"]["automated_live_refresh_ci_gate"] = "recorded"
     sidecar = tmp_path / paper_manifest.ARXIV_ABSTRACT_SNAPSHOT_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -307,7 +307,7 @@ def test_validate_paper_manifest_rejects_arxiv_abstract_snapshot_drift(tmp_path)
     assert "alphaevolve_arxiv_abstract_snapshot_invalid_html_artifact_sha256" in codes
     assert "alphaevolve_arxiv_abstract_snapshot_invalid_metadata_subject_codes" in codes
     assert (
-        "alphaevolve_arxiv_abstract_snapshot_invalid_missing_evidence_metadata_extraction_script_artifact"
+        "alphaevolve_arxiv_abstract_snapshot_invalid_missing_evidence_automated_live_refresh_ci_gate"
         in codes
     )
 
@@ -467,6 +467,82 @@ def test_validate_paper_manifest_requires_alphaevolve_cached_pdf_header_consiste
     codes = {issue.code for issue in report.issues}
     assert report.ok is False
     assert "alphaevolve_cached_pdf_header_consistency_boundary_manifest_missing" in codes
+
+
+def test_validate_paper_manifest_accepts_alphaevolve_metadata_extraction_script_boundary(
+    tmp_path,
+):
+    source_root = Path(__file__).resolve().parents[1]
+    alphaevolve_pdf_bytes = (source_root / "papers" / "2506.13131__AlphaEvolve.pdf").read_bytes()
+    row = _row(tmp_path, content=alphaevolve_pdf_bytes)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "libreevolve" / "tools").mkdir(parents=True)
+    (tmp_path / "libreevolve" / "tools" / "alphaevolve_source_metadata.py").write_bytes(
+        (source_root / "libreevolve" / "tools" / "alphaevolve_source_metadata.py").read_bytes()
+    )
+    for relative_path in (
+        "papers/arxiv_abstract_2506.13131v1.html",
+        "papers/alphaevolve_datacite_full_response_boundary.json",
+        "papers/alphaevolve_license_page.html",
+        "papers/alphaevolve_tex_source_archive.tar.gz",
+    ):
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((source_root / relative_path).read_bytes())
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_METADATA_EXTRACTION_SCRIPT_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_metadata_extraction_script_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_metadata_extraction_script_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_metadata_extraction_script_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "metadata_refresh_gate_ready"
+    record["script_artifact"]["sha256"] = "0" * 64
+    record["missing_evidence"]["automated_live_refresh_ci_gate"] = "recorded"
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_METADATA_EXTRACTION_SCRIPT_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_metadata_extraction_script_boundary_claim_ready_overclaim" in codes
+    assert "alphaevolve_metadata_extraction_script_boundary_invalid_boundary_status" in codes
+    assert "alphaevolve_metadata_extraction_script_boundary_invalid_script_artifact_sha256" in codes
+    assert (
+        "alphaevolve_metadata_extraction_script_boundary_invalid_missing_evidence_automated_live_refresh_ci_gate"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_metadata_extraction_script_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "alphaevolve_metadata_extraction_script_boundary_manifest_missing" in codes
 
 
 def test_validate_paper_manifest_accepts_alphaevolve_raw_http_headers_boundary(

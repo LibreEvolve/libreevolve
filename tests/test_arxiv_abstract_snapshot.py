@@ -18,7 +18,7 @@ def test_alphaevolve_arxiv_abstract_snapshot_accepts_pinned_metadata():
     assert validation.live_refresh_checked is False
     assert validation.author_count == 18
     assert validation.subject_count == 3
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert snapshot["schema"] == ALPHAEVOLVE_ARXIV_ABSTRACT_SNAPSHOT_SCHEMA
     assert snapshot["html_snapshot"]["bytes"] == 50098
     assert (
@@ -40,7 +40,7 @@ def test_alphaevolve_arxiv_abstract_snapshot_rejects_digest_and_metadata_drift()
     snapshot = alphaevolve_arxiv_abstract_snapshot_record()
     snapshot["html_snapshot"]["sha256"] = "0" * 64
     snapshot["normalized_metadata"]["author_count"] = 17
-    snapshot["missing_evidence"]["metadata_extraction_script_artifact"] = "recorded"
+    snapshot["missing_evidence"]["automated_live_refresh_ci_gate"] = "recorded"
 
     validation = validate_alphaevolve_arxiv_abstract_snapshot(snapshot)
     codes = {issue.code for issue in validation.issues}
@@ -48,7 +48,7 @@ def test_alphaevolve_arxiv_abstract_snapshot_rejects_digest_and_metadata_drift()
     assert validation.ok is False
     assert "invalid_html_snapshot_sha256" in codes
     assert "invalid_metadata_author_count" in codes
-    assert "invalid_missing_evidence_metadata_extraction_script_artifact" in codes
+    assert "invalid_missing_evidence_automated_live_refresh_ci_gate" in codes
 
 
 def test_alphaevolve_arxiv_abstract_snapshot_validates_retained_file(tmp_path):
@@ -68,7 +68,7 @@ def test_alphaevolve_arxiv_abstract_snapshot_validates_retained_file(tmp_path):
     validation = validate_alphaevolve_arxiv_abstract_snapshot(snapshot_path)
 
     assert validation.ok is True
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
 
 
 def test_alphaevolve_arxiv_abstract_snapshot_live_refresh_detects_drift():

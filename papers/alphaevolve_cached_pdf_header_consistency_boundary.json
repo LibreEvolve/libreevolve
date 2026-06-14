@@ -27,8 +27,7 @@
     }
   },
   "missing_evidence": {
-    "metadata_extraction_script_artifact": "not_recorded_locally",
     "automated_cached_pdf_header_refresh_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records cached-PDF first-page header consistency for the retained AlphaEvolve PDF, including arXiv version, title, Google DeepMind, and rights markers. It does not claim a reusable metadata extraction-script artifact or an automated cached-PDF header refresh gate."
+  "claim_boundary": "This boundary records cached-PDF first-page header consistency for the retained AlphaEvolve PDF, including arXiv version, title, Google DeepMind, and rights markers. It is paired with the metadata extraction-script sidecar and does not claim an automated cached-PDF header refresh gate."
 }

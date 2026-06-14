@@ -20,8 +20,8 @@ def test_alphaevolve_tex_archive_retention_boundary_accepts_record():
     )
     assert validation.archive_artifact_retained is True
     assert validation.member_count == 58
-    assert validation.required_evidence_field_count == 15
-    assert validation.missing_evidence_count == 2
+    assert validation.required_evidence_field_count == 14
+    assert validation.missing_evidence_count == 1
     assert boundary["schema"] == ALPHAEVOLVE_TEX_ARCHIVE_RETENTION_BOUNDARY_SCHEMA
     assert boundary["archive_member_inventory"]["file_count"] == 54
     assert boundary["archive_member_inventory"]["dir_count"] == 4

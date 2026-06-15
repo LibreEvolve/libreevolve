@@ -5382,6 +5382,38 @@ directory and using the AlphaEvolve paper as the primary specification.
     quantum-circuit or molecular-simulation benchmark fixture before
     LibreEvolve claims comparable quantum-computing support.
 
+- [ ] Reproduce AlphaEvolve public-gallery/Tammes evidence beyond the generic
+      2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, links to an AlphaEvolve public experiment page for
+    optimizing an instance of the Tammes problem and to a broader public
+    gallery of additional AlphaEvolve-generated potential solutions. The
+    current web-visible gallery and experiment routes are JavaScript-rendered
+    `alphaevolve-examples.web.app` pages, so source-faithful coverage needs
+    rendered-page capture rather than relying on static article text alone.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    public-gallery and Tammes URLs only as source links. No dedicated TODO,
+    rendered gallery snapshot, experiment-page snapshot, route inventory,
+    gallery item manifest, Tammes problem-instance definition, candidate
+    solution artifact, visualization/media artifact, scoring metric, best-
+    program provenance, AlphaEvolve run metadata, license/terms boundary,
+    screenshot/hash evidence, or independent reproduction output exists for
+    the public gallery evidence.
+  - Required result: add reproduction-grade evidence for the gallery source:
+    DeepMind impact URL/date/authors, public experiment URL, gallery URL,
+    rendered-page retrieval method, HTML/screenshot/media hashes, source
+    license/terms status, route and item inventory, Tammes problem parameters,
+    objective/evaluator definition, candidate program/solution payload,
+    visualization artifact identities, selected-program metadata, run/generation
+    history if exposed, links to any downloadable code/data, gallery item
+    stability/versioning checks, accessibility of the JS-rendered content,
+    independent reproduction feasibility assessment, README/ROADMAP/
+    paper-index wording that keeps the public gallery as source-reported
+    demonstration evidence only, and code TODOs for any future gallery import,
+    Tammes benchmark fixture, or rendered-source archiver before LibreEvolve
+    claims comparable public AlphaEvolve example coverage.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

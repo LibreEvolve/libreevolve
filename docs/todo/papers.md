@@ -5358,6 +5358,50 @@ directory and using the AlphaEvolve paper as the primary specification.
     computational-lithography benchmark fixture before LibreEvolve claims
     comparable semiconductor support.
 
+- [ ] Reproduce WPP campaign-model AlphaEvolve evidence beyond generic
+      customer-claim coverage.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, reports that WPP used AlphaEvolve in advertising
+    and marketing to refine AI model components over complex, high-dimensional
+    campaign data, achieving 10% accuracy gains over competitive manual model
+    optimizations. WPP Research's `AlphaEvolve Pod` report, `Harnessing Google
+    AlphaEvolve for semi-supervised model improvement`, gives source-specific
+    details: AlphaEvolve evolved prediction and recommendation model
+    components for a campaign-intelligence pipeline, improved prediction
+    accuracy by up to 10% and recommendation scores by up to 7% over
+    baselines, used macro-average F1 as the prediction target, evaluated
+    synthetic datasets V15/V16/V17/V25/V26 plus real data, ran sessions up to
+    1,000 evolutionary iterations with four concurrent candidate evaluations,
+    and attributes the collaboration to WPP Research, Google Cloud AI for
+    Science, and Google DeepMind contributors.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records WPP
+    only as a generic customer case from the broader DeepMind impact article
+    and marks customer snapshots as missing. No dedicated TODO, source
+    snapshot, campaign-intelligence benchmark fixture, synthetic/real dataset
+    schema, feature-embedding contract, prediction/recommendation model seed
+    code, macro-F1 or normalized-score evaluator, train/validation split
+    provenance, class-imbalance handling, candidate-program archive, iteration
+    telemetry, Google Cloud/Gemini model access record, WPP collaboration
+    verification artifact, privacy/compliance boundary for campaign data, or
+    independent reproduction output exists for the WPP evidence.
+  - Required result: add reproduction-grade evidence for the WPP source:
+    DeepMind impact URL/date/authors, WPP Research pod URL/date/authors,
+    retrieval hashes, source license/terms status, customer and Google
+    collaborator identities, AlphaEvolve-on-Google-Cloud access status,
+    campaign-model problem statement, prediction and recommendation baseline
+    semantics, dataset identities and privacy boundaries, feature/modality
+    schema, class labels and imbalance policy, evaluator metric definitions,
+    macro-F1 and normalized-score calculations, V15/V16/V17/V25/V26/real-data
+    result tables, seed-program and evolution-block definitions, model/loss/
+    hyperparameter mutation provenance, iteration and concurrency telemetry,
+    failure/overfitting checks, manual-review requirements, cloud/runtime cost
+    metadata, customer-verification snapshots, independent reproduction
+    feasibility assessment, README/ROADMAP/paper-index wording that keeps WPP
+    as source-reported deployment evidence only, and code TODOs for any future
+    campaign-modeling benchmark fixture before LibreEvolve claims comparable
+    advertising or marketing optimization support.
+
 - [ ] Reproduce Schrodinger MLFF AlphaEvolve evidence beyond generic
       customer-claim coverage.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

@@ -5290,6 +5290,50 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark fixture before LibreEvolve claims comparable electricity-grid
     optimization support.
 
+- [ ] Reproduce Earth AI disaster-risk AlphaEvolve evidence beyond the
+      generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, says AlphaEvolve helped automate optimization of
+    Earth AI models and increased the overall accuracy of predicting natural
+    disaster risk by 5% aggregated across 20 categories such as wildfires,
+    floods, and tornadoes. The linked paper is arXiv `2510.18318`, `Earth AI:
+    Unlocking Geospatial Insights with Foundation Models and Cross-Modal
+    Reasoning`, which describes Earth AI as a family of geospatial foundation
+    models spanning planet-scale imagery, population, and environment, plus a
+    Gemini-powered reasoning engine over foundation models, geospatial data
+    sources, and tools. The Google Earth AI product page separately positions
+    Earth AI for enterprises, nonprofits, and cities across environmental
+    monitoring, disaster response, Google Earth, Google Maps Platform, and
+    Google Cloud, with examples covering cyclone prediction, cholera-risk
+    queries, mangrove similarity, and partner geospatial workflows.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    Earth AI claim only as a generic impact item. No dedicated TODO, Earth AI
+    paper snapshot, product-page snapshot, disaster-category inventory,
+    geospatial dataset provenance, imagery/population/environment model
+    identity, cross-modal reasoning trace, AlphaEvolve optimization target,
+    seed-model or prompt/program mutation record, 5% aggregate-accuracy
+    calculation, per-category metric table, disaster-response safety boundary,
+    partner/product-access boundary, or independent reproduction output exists
+    for the AlphaEvolve Earth AI claim.
+  - Required result: add reproduction-grade evidence for the Earth AI source
+    set: DeepMind impact URL/date/authors, arXiv `2510.18318` URL/version/
+    authors, Google Earth AI product-page URL/date, retrieval hashes, source
+    license/terms status, relation between Earth AI foundation models and the
+    AlphaEvolve-optimized component, AlphaEvolve access status, 20 disaster
+    category names, data-source identities and privacy/licensing boundaries,
+    imagery/population/environment model-version records, reasoning-engine
+    and tool-call schemas, seed model/program or prompt contract, evaluator
+    metric definitions, aggregate and per-category accuracy calculations,
+    baseline and ablation rows, geospatial split/leakage controls, cyclone/
+    wildfire/flood/tornado/cholera example boundaries, product and partner
+    availability notes, humanitarian/disaster-response safety constraints,
+    independent reproduction feasibility assessment, README/ROADMAP/
+    paper-index wording that keeps Earth AI as source-reported geospatial
+    evidence only, and code TODOs for any future geospatial or disaster-risk
+    benchmark fixture before LibreEvolve claims comparable Earth-science
+    optimization support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

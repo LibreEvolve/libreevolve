@@ -183,6 +183,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     when code, ROADMAP, paper status rows, or TODO coverage changes. This
     leaves the README's "full implemented-versus-missing ledger" claim weaker
     than the paper-index status inventory.
+    Current drift evidence: after the embedded-evaluator TODOs were tightened,
+    active code/paper TODOs now name the missing generated/interactive
+    task-input replay contract for `evaluate(eval_inputs)` and external
+    validators, while `docs/status.md` still summarizes the embedded evaluator
+    boundary only as default loading, Figure 3 fixture identity, typed
+    eval-input contracts beyond JSON-safe config, build/runtime isolation, and
+    non-static/external-validator causal linkage. That omission shows the
+    status ledger can lag behind newly identified AlphaEvolve-facing gaps even
+    when README, ROADMAP, paper, and active TODO surfaces stay conservative.
   - Required result: add a status-ledger freshness artifact and validator that
     inventories `docs/status.md` bullets, links each claim to current
     implementation/sidecar/TODO evidence or explicit absence scope, compares

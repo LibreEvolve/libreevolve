@@ -205,16 +205,26 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     release-artifact, and CI boundaries, and active code/paper TODOs track
     missing plugin-specific config schemas, provider/model compatibility,
     signed release provenance, local-PDF CI checks, semantic docs verification,
-    branch policy, and notification policy.
+    branch policy, and notification policy. ROADMAP also lists structured
+    `manifest.json`, `history.jsonl`, `best.py`/`best_workspace/`, v1
+    run-artifact schema metadata, standalone `task_specification.json`, and
+    `prompt_prior_score_table.jsonl`, while newer code/README TODOs identify
+    lifecycle drift for generated prompt-table artifacts and
+    `paper_artifacts/` directories that are documented or emitted but not yet
+    consistently represented in collision/overwrite cleanup policy.
   - Current gap: there is no section-level operational-maturity checklist,
     risk classification, acceptance threshold, or evidence map that ties those
     subitems together and prevents one green release/CI boundary from being
-    mistaken for overall operational readiness.
+    mistaken for overall operational readiness. In particular, the roadmap
+    does not require a unified generated-artifact inventory proving that every
+    documented runtime artifact, derived JSONL export, source/paper exhibit
+    directory, overwrite target, schema row, and `show`/restore reader is
+    lifecycle-managed before operational maturity is claimed.
   - Required result: add ROADMAP operational-maturity criteria that classify
     required validation, packaging, observability, reproducibility, CI, release,
-    and policy evidence; map each criterion to code/tests/sidecars/TODOs; and
-    reject claims that the project is operationally mature until the full
-    checklist is satisfied.
+    run-artifact lifecycle, and policy evidence; map each criterion to
+    code/tests/sidecars/TODOs; and reject claims that the project is
+    operationally mature until the full checklist is satisfied.
 
 - [ ] Add ROADMAP representative-benchmark portfolio readiness criteria.
   - Spec evidence: the `9. Representative benchmarks` section is more than a

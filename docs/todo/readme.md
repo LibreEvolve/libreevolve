@@ -406,6 +406,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     behavior, and Gemini provider-parity absence records. Many individual
     backend behaviors have focused tests and completed TODOs, but the active
     backend-doc TODO covers only CLI-authenticated provider overclaiming.
+    A current cross-doc drift example is backend role routing:
+    `docs/backends.md` says `llm_role_backend_indices` can route call roles to
+    explicit backend-index lanes and that roles without explicit routes can
+    still use backend metadata `role` lanes, while `docs/configuration.md`
+    still says the backend `role` field is descriptive metadata only and "not
+    yet used for quotas, escalation, or role-specific routing." The code and
+    tests now validate `llm_role_backend_indices` and metadata fallback
+    routing, so the configuration prose can understate implemented routing and
+    confuse the remaining gap, which is richer quotas/escalation and stronger
+    AlphaEvolve model-mix evidence.
   - Current gap: there is no page-specific inventory or drift validator that
     maps each `docs/backends.md` claim, constructor field, allowed parameter,
     telemetry field, timeout/retry rule, scheduler policy, OpenAI route rule,

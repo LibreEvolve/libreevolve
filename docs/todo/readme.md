@@ -573,15 +573,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve/core/jsonl.py`, `libreevolve/core/loop.py`,
     `libreevolve/core/best_artifacts.py`, `libreevolve/cli.py`,
     artifact-schema metadata, `tests/core/test_loop.py`, and paper sidecars.
-    The active README run-artifact TODO covers only the short README output
-    list and smoke presence, not the full run-artifacts guide.
+    Its artifact tree includes `task_specification.json`,
+    `prompt_current_binding_table.jsonl`, and
+    `prompt_prior_score_table.jsonl`, and later sections document
+    `paper_artifacts/...` source/exhibit outputs. The guide's
+    run-directory reuse section separately lists the known artifacts checked
+    for collision/overwrite cleanup but omits at least the standalone task
+    specification and prompt-table exports. The active README run-artifact
+    TODO covers only the short README output list and smoke presence, not the
+    full run-artifacts guide.
   - Current gap: there is no committed run-artifacts guide claim inventory or
     drift validator that maps each documented artifact, schema field, invalid
     stream, restore command, overwrite rule, show behavior, and
     AlphaEvolve-facing limitation to writer/reader code, tests, manifest
     sidecars, and active TODO owners. New runtime reports, artifact streams,
-    restore semantics, quarantine policies, or inspection behavior can drift
-    without a page-specific validation failure.
+    restore semantics, quarantine policies, collision/overwrite cleanup lists,
+    or inspection behavior can drift without a page-specific validation
+    failure. Current guide prose can therefore present one artifact set in the
+    tree and another in lifecycle policy without a focused docs failure.
   - Required result: add a run-artifacts evidence map and validation gate that
     inventories documented artifact files and runtime report claims, verifies
     code/test/schema anchors and optional-versus-required status, separates

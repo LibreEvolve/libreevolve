@@ -5280,6 +5280,48 @@ directory and using the AlphaEvolve paper as the primary specification.
     deployment evidence only, and code TODOs for any future warehouse-routing
     benchmark fixture before LibreEvolve claims comparable logistics support.
 
+- [ ] Reproduce Substrate computational-lithography AlphaEvolve evidence
+      beyond generic customer-claim coverage.
+  - Paper/source evidence: Substrate published `Information to Atoms` on
+    April 7, 2026. The article says Google DeepMind's AlphaEvolve improved
+    Substrate's computational-lithography stack by 680% runtime speed and
+    reduced compute costs by 97%, enabling simulation and printing of advanced
+    semiconductor layers. It describes X-ray lithography, ILT/OPC-style
+    computational lithography, simulations of trillions of photons, GPU/TPU
+    accelerated differentiable simulation, M1-layer P24/12 nm half-pitch
+    examples, and AlphaEvolve/Gemini generation of algorithmic hypotheses,
+    code mutations, and autonomous evaluator-scored experiments against
+    ground-truth samples. The source reports 256 program evaluations for a
+    single objective, 1,853 evaluations across multiple evolved strategies,
+    lossless-compression discoveries, lower-precision numerical representation
+    switches, 74% lower equivalent memory usage, 680% runtime improvement, and
+    97% compute-cost reduction after a month of co-design.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records
+    Substrate only as a generic customer case from the broader DeepMind impact
+    article and marks customer snapshots as missing. No dedicated TODO,
+    source snapshot, computational-lithography benchmark fixture, optical/
+    X-ray physics simulation schema, mask/pattern artifact inventory,
+    ground-truth sample set, evaluator scoring contract, TPU/GPU runtime
+    provenance, compression/numerical-precision mutation record, memory/cost/
+    runtime calculation, printed-silicon validation artifact, customer
+    verification snapshot, or independent reproduction output exists for the
+    April 2026 Substrate source.
+  - Required result: add reproduction-grade evidence for the Substrate source:
+    article URL/date/authors, retrieval hash, source license/terms status,
+    customer and Google collaborator identities, AlphaEvolve-on-Google-Cloud
+    access status, computational-lithography problem statement, ILT/OPC/X-ray
+    modeling scope, simulation input/output schemas, M1/P24/12 nm artifact
+    identities, seed algorithm and baseline semantics, evaluator and
+    ground-truth sample definitions, mutation/evaluation protocol, program-
+    evaluation counts, compression and precision-change provenance, GPU/TPU
+    runtime environment, 97% cost, 74% memory, and 680% runtime calculations,
+    printed-silicon validation evidence, cloud/deployment provenance,
+    customer-verification snapshots, independent reproduction feasibility
+    assessment, README/ROADMAP/paper-index wording that keeps Substrate as
+    source-reported deployment evidence only, and code TODOs for any future
+    computational-lithography benchmark fixture before LibreEvolve claims
+    comparable semiconductor support.
+
 - [ ] Reproduce AlphaEvolve FHE-on-TPU application evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.14718`, submitted May 14, 2026, is

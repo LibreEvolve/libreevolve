@@ -5612,6 +5612,47 @@ directory and using the AlphaEvolve paper as the primary specification.
     synthetic-persona benchmark fixture before LibreEvolve claims comparable
     synthetic data generation support.
 
+- [ ] Reproduce cryptography-for-user-privacy AlphaEvolve impact evidence
+      beyond the generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, lists cryptography for user privacy as a linked
+    scientific-source impact area. The linked arXiv source is `2605.14718`,
+    `Adapting AlphaEvolve to Optimize Fully Homomorphic Encryption on TPUs`,
+    submitted May 14, 2026 by Shruthi Gorantala, Jianming Tong, Asra Ali,
+    Baiyu Li, Jonathan Katz, Jeremy Kun, Thomas Steinke, Abhradeep Thakurta,
+    Julian Walker, and Amir Yazdanbakhsh. Its abstract frames FHE deployment as
+    limited by computational overhead, uses AlphaEvolve for hardware-aware
+    cryptographic-kernel optimizations, relies on real TPUv5e hardware
+    execution plus correctness testing, and reports TFHE/Jaxite and CKKS/CROSS
+    speedups of 2.5x, 1.31x, and 1.18x relative to human-engineered
+    state-of-the-art baselines.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    `cryptography_user_privacy` claim only as a generic linked-source item and
+    marks the `cryptography_privacy_fixture` as not implemented locally. The
+    existing FHE-on-TPU TODO covers the paper as application context, but no
+    dedicated impact-claim TODO, user-privacy threat model, FHE scheme-to-
+    privacy mapping, local cryptography/privacy benchmark fixture, TPUv5e
+    execution record, generated cryptographic-kernel artifact, FHE correctness
+    proof/test boundary, baseline implementation identity, latency table, or
+    independent reproduction output exists for the impact article's
+    cryptography-for-user-privacy evidence.
+  - Required result: add reproduction-grade evidence for the DeepMind impact
+    claim and arXiv `2605.14718`: DeepMind impact URL/date/authors, arXiv
+    URL/version/authors, PDF retrieval hash and license metadata, explicit
+    relation between `cryptography for user privacy` wording and FHE-on-TPU
+    optimization, FHE privacy/threat-model statement, TFHE/Jaxite and CKKS/
+    CROSS primitive taxonomy, candidate kernel schema, TPUv5e hardware-
+    execution provenance, correctness-test definitions, baseline implementation
+    identity, latency benchmark rows for bootstrap/rotation/multiplication,
+    generated-kernel artifacts and hashes, AlphaEvolve run/model/provider
+    provenance, cryptographic-safety review status, deployment and data-use
+    boundaries, independent reproduction feasibility assessment, README/
+    ROADMAP/paper-index wording that keeps the claim as source-reported
+    cryptography/privacy evidence only, and code TODOs for any future FHE or
+    cryptographic-kernel benchmark fixture before LibreEvolve claims comparable
+    privacy-preserving cryptography optimization support.
+
 - [ ] Reproduce Spanner LSM-compaction AlphaEvolve evidence beyond the generic
       2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

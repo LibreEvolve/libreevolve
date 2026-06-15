@@ -5358,6 +5358,46 @@ directory and using the AlphaEvolve paper as the primary specification.
     computational-lithography benchmark fixture before LibreEvolve claims
     comparable semiconductor support.
 
+- [ ] Reproduce Schrodinger MLFF AlphaEvolve evidence beyond generic
+      customer-claim coverage.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, reports that Schrodinger applied AlphaEvolve in
+    computational material and life sciences and achieved roughly 4x speedup
+    in both Machine Learned Force Fields (MLFF) training and inference. The
+    same article includes a Schrodinger technical-lead quote tying faster
+    MLFF inference to larger chemical-space exploration and shorter R&D
+    cycles. A separate Google Cloud Schrodinger customer case study describes
+    the non-AlphaEvolve cloud-computing context: 70% faster therapeutic drug
+    development, 97% fewer physically built molecules, 4,000x larger lymphoma
+    research datasets, computations moving from weeks to hours on Compute
+    Engine and Cloud GPUs, and one program narrowing eight billion molecules
+    to 78 candidates.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records
+    Schrodinger only as a generic customer case from the broader DeepMind
+    impact article and marks customer snapshots as missing. No dedicated TODO,
+    source snapshot, MLFF benchmark fixture, molecular-system or materials
+    workload identity, training/inference baseline implementation, force-field
+    quality metric, speedup calculation, hardware/runtime provenance,
+    chemistry-data privacy boundary, molecule-screening pipeline link,
+    Google Cloud case-study separation note, customer verification artifact,
+    or independent reproduction output exists for the Schrodinger evidence.
+  - Required result: add reproduction-grade evidence for the Schrodinger
+    source: DeepMind impact URL/date/authors, Google Cloud case-study URL/date,
+    retrieval hashes, source license/terms status, customer and Google
+    collaborator identities, AlphaEvolve-on-Google-Cloud access status, MLFF
+    training and inference workload definitions, baseline semantics, molecular
+    dataset/model-family boundaries, evaluator metric definitions, quality and
+    physical-validity guards, mutation/evaluation protocol, 4x speedup
+    calculation, accelerator/cloud/runtime provenance, chemistry-data privacy
+    and customer-verification snapshots, explicit separation between
+    AlphaEvolve MLFF claims and older Google Cloud infrastructure results,
+    independent reproduction feasibility assessment, README/ROADMAP/
+    paper-index wording that keeps Schrodinger as source-reported deployment
+    evidence only, and code TODOs for any future MLFF/materials-science
+    benchmark fixture before LibreEvolve claims comparable drug-discovery or
+    materials-design support.
+
 - [ ] Reproduce AlphaEvolve FHE-on-TPU application evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.14718`, submitted May 14, 2026, is

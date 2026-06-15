@@ -1752,6 +1752,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `fail` and `overwrite`, treats them as outside the run-owned artifact set,
     and records count, entry type, and hashed immediate names in
     `manifest.json` without exposing raw filenames.
+    Paper-facing generated-artifact lifecycle evidence is still incomplete:
+    runtime and paper documentation now cite standalone `task_specification.json`,
+    generated prompt tables, and `paper_artifacts/...` source/exhibit
+    directories, but the paper TODO surface does not yet require one unified
+    inventory proving every documented/emitted paper artifact participates in
+    the same collision, overwrite-cleanup, artifact-hash, schema, restore, and
+    `show` inspection contracts. `task_specification.json` is already in the
+    known run-artifact set, while generated
+    `prompt_current_binding_table.jsonl`, `prompt_prior_score_table.jsonl`, and
+    `paper_artifacts/` still need paper-facing lifecycle proof so stale or
+    out-of-band paper evidence cannot be confused with current-run AlphaEvolve
+    provenance.
     Run names now share the runtime identity secret-safety policy: assignment-
     style secret strings and provider-token-shaped values are rejected before
     filesystem or manifest writes, while ordinary portable run names remain
@@ -1787,7 +1799,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     exclusion, the runtime lineage policy validator, or the lineage sidecar; it
     is full resumed lineage proof across provider output, archive/controller
     resume, migration ordering, plugin state, and validator subprocess
-    boundaries.
+    boundaries, plus a unified generated-artifact lifecycle inventory for
+    paper-cited prompt-table and `paper_artifacts/...` evidence.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation

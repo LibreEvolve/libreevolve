@@ -5450,6 +5450,44 @@ directory and using the AlphaEvolve paper as the primary specification.
     LibreEvolve claims comparable database-infrastructure optimization
     support.
 
+- [ ] Reproduce compiler storage-footprint AlphaEvolve evidence beyond the
+      generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, reports that AlphaEvolve provided insights for new
+    compiler optimization strategies that reduced the storage footprint of
+    software by nearly 9%. The claim appears alongside the Spanner LSM
+    compaction result, but the impact article does not expose the compiler
+    target, storage-footprint metric, workload corpus, generated strategy, or
+    deployment/review artifacts. The related Magellan paper and boundary in
+    this repo cover AlphaEvolve-style compiler-pass evolution as background
+    context, including LLVM/XLA tasks and code-size/runtime optimization, but
+    they do not prove the specific 2026 DeepMind nearly-9% storage-footprint
+    claim.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    compiler-storage claim only as a generic impact item. No dedicated TODO,
+    source snapshot, compiler target identity, code-size/storage-footprint
+    metric contract, benchmark corpus, baseline compiler strategy, generated
+    heuristic/policy archive, compiler rebuild or integration proof,
+    correctness/regression suite, binary/package artifact hashes, production
+    review/deployment boundary, nearly-9% calculation, relation-to-Magellan
+    mapping, or independent reproduction output exists for the AlphaEvolve
+    compiler-storage evidence.
+  - Required result: add reproduction-grade evidence for the compiler-storage
+    source: DeepMind impact URL/date/authors, retrieval hash, source
+    license/terms status, compiler stack identity, relation to Magellan/LLVM/
+    XLA or other compiler systems, AlphaEvolve access status, target programs
+    and workload corpus, baseline compiler strategy and artifact hashes,
+    storage-footprint metric definition, runtime/correctness guard metrics,
+    generated strategy/code provenance, compiler integration and rebuild
+    evidence, binary/package size tables, nearly-9% calculation, deployment
+    and rollback policy, maintainer-review evidence, production-vs-benchmark
+    boundary, independent reproduction feasibility assessment, README/
+    ROADMAP/paper-index wording that keeps the claim as source-reported
+    Google-internal compiler evidence only, and code TODOs for any future
+    compiler-storage benchmark fixture before LibreEvolve claims comparable
+    compiler storage-footprint optimization support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

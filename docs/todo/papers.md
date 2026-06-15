@@ -5492,6 +5492,45 @@ directory and using the AlphaEvolve paper as the primary specification.
     cognitive-model or neuroscience benchmark fixture before LibreEvolve
     claims comparable interpretable-neuroscience modeling support.
 
+- [ ] Reproduce neural-network building-block AlphaEvolve impact evidence
+      beyond the generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, lists rapidly advancing neural network building
+    blocks as a linked scientific-source impact area. The linked arXiv source
+    is `2602.05688`, `Mining Generalizable Activation Functions`, submitted
+    February 5, 2026 by Alex Vitvitskyi, Michael Boratko, Matej Grcic, Razvan
+    Pascanu, Deep Shah, and Petar Velickovic. Its abstract says activation
+    functions affect optimization, expressivity, and implicit inductive bias;
+    argues that AlphaEvolve-style frontier-LLM mutation enables a wider search
+    space over Python functions within a FLOP budget; and reports small-scale
+    synthetic datasets as sufficient for AlphaEvolve to discover meaningful
+    activations.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    `neural_network_building_blocks` claim only as a generic linked-source
+    item and marks the `neural_network_building_block_fixture` as not
+    implemented locally. No dedicated TODO, arXiv/PDF snapshot, activation-
+    function search-space schema, FLOP-budget contract, synthetic-dataset
+    fixture, out-of-distribution fitness definition, baseline activation rows,
+    Python-function safety/validity constraints, inductive-bias measurement,
+    training/evaluation split records, model architecture identities,
+    reproduced discovered activation artifacts, or independent reproduction
+    output exists for the activation-function evidence.
+  - Required result: add reproduction-grade evidence for arXiv `2602.05688`:
+    DeepMind impact URL/date/authors, arXiv URL/version/authors, PDF retrieval
+    hash and license metadata, source relation to the broader AlphaEvolve
+    impact wording, activation-function candidate grammar, allowed Python
+    operation/FLOP budget, architecture and optimizer definitions, small-scale
+    synthetic dataset generator and seeds, OOD evaluation split records,
+    fitness metric definitions, baseline activation-function rows, discovered
+    activation artifacts, training curves and compute budget, robustness and
+    generalization checks, inductive-bias interpretation rubric, code/source
+    availability status, README/ROADMAP/paper-index wording that keeps the
+    claim as source-reported neural-network-building-block evidence only, and
+    code TODOs for any future activation-function or neural-architecture
+    benchmark fixture before LibreEvolve claims comparable neural-network
+    building-block discovery support.
+
 - [ ] Reproduce Spanner LSM-compaction AlphaEvolve evidence beyond the generic
       2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

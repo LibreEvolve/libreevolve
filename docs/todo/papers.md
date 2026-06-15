@@ -5334,6 +5334,54 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark fixture before LibreEvolve claims comparable Earth-science
     optimization support.
 
+- [ ] Reproduce Willow quantum-circuit AlphaEvolve evidence beyond the
+      generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, says AlphaEvolve optimized quantum circuits for
+    complex molecular simulations on Google's Willow quantum processor,
+    suggesting quantum circuits with 10x lower error than previous
+    conventionally optimized baselines. The linked paper is arXiv `2510.19550`,
+    `Quantum computation of molecular geometry via many-body nuclear spin
+    echoes`. It describes AlphaEvolve runs over Python programs implementing a
+    first-order Trotter formula with a swap network for 15 qubits, fixed
+    function signatures carrying total time, Trotter steps, couplings, on-site
+    terms, butterfly/measurement indices, landscape parameters, and CZ-gate
+    caps, prompts covering quantum simulation/Trotterization/NMR/OTOCs plus
+    focus prompts for simplification, lightcone, THRIFT, and commutator
+    scaling, evaluation by averaging OTOCs over 250 sampled initial states,
+    exact OTOC reference checks with sparse GPU unitary computations, root
+    mean square OTOC error as the optimization metric, Cirq/KAK CZ-counting
+    bottleneck mitigation, multi-run AlphaEvolve re-seeding, and Willow
+    hardware execution on selected 9- and 15-qubit sub-grids.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    Willow claim only as a generic impact item. No dedicated TODO, paper
+    snapshot, Willow source snapshot, quantum-circuit benchmark fixture,
+    Hamiltonian/molecule/problem-instance inventory, seed Trotter/swap-network
+    program, AlphaEvolve prompt and focus-prompt record, OTOC reference-data
+    artifact, sampled-state determinism contract, CZ-gate cap enforcement,
+    Cirq/KAK decomposition provenance, generated-circuit archive,
+    10x-error-reduction calculation, Willow calibration/runtime metadata,
+    hardware-access boundary, or independent reproduction output exists for
+    the AlphaEvolve Willow evidence.
+  - Required result: add reproduction-grade evidence for the Willow source
+    set: DeepMind impact URL/date/authors, arXiv `2510.19550` URL/version/
+    authors, Willow Keyword article URL/date/authors, retrieval hashes, source
+    license/terms status, relation between the molecular-geometry paper and
+    the impact-article 10x claim, AlphaEvolve and Willow access status,
+    molecule identities and Hamiltonian schemas, seed program semantics,
+    Trotter/swap-network/CZ-gate-budget definitions, prompt/focus-prompt
+    provenance, multi-run re-seeding policy, evaluator metric definitions,
+    sampled/exact OTOC reference records, Cirq/KAK and sparse-GPU unitary
+    provenance, generated circuit/program archive, hardware sub-grid,
+    calibration, gate/readout/coherence metadata, 10x lower-error calculation,
+    conventionally optimized baseline identity, quantum-hardware safety and
+    non-reproducibility boundary, independent reproduction feasibility
+    assessment, README/ROADMAP/paper-index wording that keeps Willow as
+    source-reported quantum evidence only, and code TODOs for any future
+    quantum-circuit or molecular-simulation benchmark fixture before
+    LibreEvolve claims comparable quantum-computing support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

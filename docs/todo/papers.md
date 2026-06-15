@@ -5531,6 +5531,46 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark fixture before LibreEvolve claims comparable neural-network
     building-block discovery support.
 
+- [ ] Reproduce frontier-AI safety-mitigation AlphaEvolve impact evidence
+      beyond the generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, lists critical safety mitigations for frontier AI
+    models as a linked scientific-source impact area. The linked arXiv source
+    is `2601.11516`, `Building Production-Ready Probes For Gemini`, submitted
+    January 16, 2026 and revised January 19, 2026 by Janos Kramar, Joshua
+    Engels, Zheng Wang, Bilal Chughtai, Rohin Shah, Neel Nanda, and Arthur
+    Conmy. Its abstract describes activation probes for misuse mitigation,
+    production distribution shifts including long-context inputs, multi-turn
+    conversations, and adaptive red teaming, successful deployment of misuse
+    mitigation probes in user-facing Gemini instances, and early positive
+    AlphaEvolve results for automating probe architecture search and adaptive
+    red teaming.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    `frontier_ai_safety_mitigations` claim only as a generic linked-source
+    item and marks the `safety_mitigation_fixture` as not implemented locally.
+    No dedicated TODO, arXiv/PDF snapshot, probe-architecture search schema,
+    cyber-offensive-domain evaluation fixture, production distribution-shift
+    taxonomy, long-context/multi-turn/adaptive-red-team test set, prompted-
+    classifier baseline, probe-compute/accuracy tradeoff record, Gemini
+    deployment evidence, AlphaEvolve automated-red-team artifact, safety-review
+    boundary, or independent reproduction output exists for this safety
+    mitigation evidence.
+  - Required result: add reproduction-grade evidence for arXiv `2601.11516`:
+    DeepMind impact URL/date/authors, arXiv URL/version/authors, PDF retrieval
+    hash and license metadata, source relation to the broader AlphaEvolve
+    impact wording, misuse-probe candidate schema, architecture-search
+    parameters, cyber-offensive evaluation taxonomy, long-context and
+    multi-turn split definitions, adaptive red-team protocol, prompted-
+    classifier comparator rows, probe accuracy/latency/cost metrics, training
+    distribution diversity records, deployment-status evidence boundaries,
+    AlphaEvolve search-run provenance, discovered probe/red-team artifacts,
+    safety and dual-use handling policy, privacy/redaction status, independent
+    reproduction feasibility assessment, README/ROADMAP/paper-index wording
+    that keeps the claim as source-reported frontier-AI-safety evidence only,
+    and code TODOs for any future misuse-probe or adaptive-red-team benchmark
+    fixture before LibreEvolve claims comparable safety-mitigation support.
+
 - [ ] Reproduce Spanner LSM-compaction AlphaEvolve evidence beyond the generic
       2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

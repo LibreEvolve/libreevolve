@@ -219,9 +219,18 @@ sidecars, tests, and active TODOs.
     loading, Figure 3 codebase fixture identity, typed eval-input contracts
     beyond JSON-safe config provenance, and the fact that external
     `validate.py` remains the default outside all-embedded configs.
+    The evaluator input boundary is also narrower than AlphaEvolve-style
+    task-input parity: embedded stages pass only JSON-safe configured
+    `eval_inputs` whose raw value is hashed/not retained, while external
+    validator stdin metadata still records `generated_input: "unsupported"`
+    and either `interactive_input: "unsupported"` or a configured fixture-text
+    stdin hash. There is no generated input stream, replayable generated-input
+    artifact, interactive input capture policy, or typed task-input schema that
+    spans both embedded `evaluate(eval_inputs)` and external validator stages.
   - Required result: make candidate-owned `evaluate(eval_inputs)` the
     first-class/default Figure 3 problem contract, or add a paper-facing
     all-embedded fixture with source identity, typed eval-input schema,
+    generated/interactive task-input replay policy,
     skeleton-to-evolved-block invocation proof, per-score causal attribution,
     build/runtime isolation beyond the local subprocess plus materialized-
     workspace guard, and non-static/external-validator causal-linkage coverage

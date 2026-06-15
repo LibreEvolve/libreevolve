@@ -306,9 +306,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     codebase fixture identity, eval-input type contracts, build isolation,
     non-static score causality, external-validator causal score linkage, and
     prompt/response exhibit artifacts.
+    The task-input surface is narrower than this Figure 3 wording can imply:
+    embedded stages only receive JSON-safe configured `eval_inputs` whose raw
+    value is hashed/not retained, while external validator stdin provenance
+    still marks generated input as unsupported and interactive input as either
+    unsupported or a configured fixture-text hash. There is no generated-input
+    stream, replayable generated-input artifact, interactive task-input capture
+    policy, or typed input schema that unifies embedded and external evaluator
+    stages.
   - Required result: make candidate-owned `evaluate(eval_inputs)` the
     first-class/default Figure 3 problem contract, or add a paper-facing
     all-embedded fixture with source identity, typed eval-input schema,
+    generated/interactive task-input replay policy,
     skeleton-to-evolved-block invocation proof, per-score causal attribution,
     build/runtime isolation, and prompt/response exhibit artifacts before
     treating local validator execution as AlphaEvolve Figure 3 evaluator

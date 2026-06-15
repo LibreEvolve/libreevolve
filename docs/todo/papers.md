@@ -5203,6 +5203,42 @@ directory and using the AlphaEvolve paper as the primary specification.
     console/API/billing artifacts, customer availability, and managed-agent
     workflow semantics.
 
+- [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
+      generic customer-claim coverage.
+  - Paper/source evidence: Klarna Engineering published `Beyond Prompting:
+    How Algorithmic Evolution Doubled our Training Speed` in 2026. The source
+    describes applying Google DeepMind AlphaEvolve with Google Cloud to one of
+    Klarna's largest transformer models, moving from prompt-level tuning to
+    algorithmic code evolution. Current search snippets for the primary
+    article report that the work ran over three weeks and nearly 6,000
+    candidate programs, improved throughput from 49 to about 72 samples per
+    second before combined changes brought throughput to roughly 97 samples
+    per second under deterministic production constraints, doubled training
+    speed, and improved model quality rather than trading quality away.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records Klarna
+    only as a generic customer case from the broader DeepMind impact article
+    and marks customer snapshots as missing. No dedicated TODO, source
+    snapshot, transformer-training benchmark fixture, model/training-workload
+    identity, production-constraint contract, candidate-program archive,
+    code-mutation provenance, sample/sec measurement harness, quality-metric
+    guard, deterministic audit/reproducibility record, cloud/runtime
+    provenance, customer verification artifact, or independent reproduction
+    output exists for the Klarna Engineering source.
+  - Required result: add reproduction-grade evidence for the Klarna source:
+    article URL/date/authors, retrieval hash, source license/terms status,
+    customer and Google collaborator identities, AlphaEvolve-on-Google-Cloud
+    access status, model-family and training workload identity, seed-code
+    baseline semantics, candidate-program generation and selection protocol,
+    program-count records, deterministic production constraints, throughput
+    measurement definition, 49-to-72-to-97 sample/sec calculations,
+    quality-metric preservation/improvement evidence, mutation/provenance
+    artifacts, cloud/runtime/training-cost metadata, customer-verification
+    snapshots, independent reproduction feasibility assessment, README/
+    ROADMAP/paper-index wording that keeps Klarna as source-reported
+    deployment evidence only, and code TODOs for any future transformer-
+    training optimization benchmark fixture before LibreEvolve claims
+    comparable financial-services model-training support.
+
 - [ ] Reproduce BASF supply-chain AlphaEvolve deployment evidence beyond
       official Google Cloud customer-source coverage.
   - Paper/source evidence: Google Cloud published `How BASF manages thousands

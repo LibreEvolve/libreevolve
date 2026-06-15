@@ -5571,6 +5571,47 @@ directory and using the AlphaEvolve paper as the primary specification.
     and code TODOs for any future misuse-probe or adaptive-red-team benchmark
     fixture before LibreEvolve claims comparable safety-mitigation support.
 
+- [ ] Reproduce synthetic-persona generation AlphaEvolve impact evidence
+      beyond the generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, lists synthetic data generation as a linked
+    scientific-source impact area. The linked arXiv source is `2602.03545`,
+    `Persona Generators: Generating Diverse Synthetic Personas for Arbitrary
+    Contexts`, submitted February 3, 2026 and revised May 25, 2026 by Davide
+    Paglieri, Logan Cross, William A. Cunningham, Joel Z. Leibo, and Alexander
+    Sasha Vezhnevets. Its abstract says evaluating AI systems that interact
+    with humans requires behavior coverage across diverse user populations,
+    introduces Persona Generators as functions that produce diverse synthetic
+    populations tailored to arbitrary contexts, applies an AlphaEvolve-based
+    iterative improvement loop over hundreds of iterations, and reports
+    improved six-metric diversity on held-out contexts including rare trait
+    combinations.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    `synthetic_data_generation` claim only as a generic linked-source item and
+    marks the `synthetic_data_generation_fixture` as not implemented locally.
+    No dedicated TODO, arXiv/PDF snapshot, persona-generator candidate schema,
+    arbitrary-context prompt schema, diversity-axis definition, six-metric
+    evaluation fixture, held-out-context split, baseline generator rows,
+    long-tail/rare-trait coverage checker, privacy/consent boundary,
+    synthetic-population artifact policy, hundreds-iteration run provenance,
+    or independent reproduction output exists for the synthetic-persona
+    evidence.
+  - Required result: add reproduction-grade evidence for arXiv `2602.03545`:
+    DeepMind impact URL/date/authors, arXiv URL/version/authors, PDF retrieval
+    hash and license metadata, source relation to the broader AlphaEvolve
+    impact wording, persona-generator code grammar, arbitrary-context input
+    schema, small-description expansion contract, opinion/preference diversity
+    axes, six diversity metric definitions, held-out-context split records,
+    rare-trait-combination coverage checks, baseline generator rows,
+    AlphaEvolve mutation/run configuration, generated persona artifacts,
+    privacy/consent and synthetic-data-use boundaries, evaluation-cost and
+    compute records, independent reproduction feasibility assessment,
+    README/ROADMAP/paper-index wording that keeps the claim as source-reported
+    synthetic-data-generation evidence only, and code TODOs for any future
+    synthetic-persona benchmark fixture before LibreEvolve claims comparable
+    synthetic data generation support.
+
 - [ ] Reproduce Spanner LSM-compaction AlphaEvolve evidence beyond the generic
       2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

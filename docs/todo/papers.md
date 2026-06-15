@@ -5385,6 +5385,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     benchmark or customer evidence, and explicit unsupported-local-evidence
     flags.
 
+- [ ] Add AlphaEvolve 2026 impact linked-source independent-verification and
+      local-benchmark report matrix.
+  - Paper/source evidence: `papers/alphaevolve_2026_impact_boundary.json`
+    records `linked_source_independent_verification` as not recorded locally
+    and `local_benchmark_reports` as not implemented locally. The same
+    boundary requires `local_fixture_status`, `local_benchmark_report_status`,
+    `unsupported_local_benchmark_flags`, and `independent_verification_status`
+    for the official 2026 impact source set covering DeepConsensus, AC OPF,
+    Earth AI, Willow, public gallery/math, TPU design, cache policies, Spanner,
+    compiler storage, customer cases, product surfaces, UI/API surfaces, and
+    linked scientific sources.
+  - Current gap: individual TODO blocks mention independent reproduction or
+    benchmark gaps for many sources, but no aggregate matrix proves each
+    impact claim has a source snapshot, artifact/source availability status,
+    fixture status, local benchmark-report status, external verification
+    attempt, failure reason, unsupported-local-benchmark flag, and docs
+    downgrade wording. Without that matrix, green paper-manifest tests can
+    prove the boundary file exists but cannot prove every linked impact source
+    has a current independent-verification row or a machine-checkable local
+    benchmark absence row.
+  - Required result: add a versioned impact-verification matrix and validator:
+    one row per 2026 impact claim and outbound source, canonical claim id,
+    source URL, retrieval hash, source artifact status, fixture/report path,
+    local benchmark implemented/not-implemented status, benchmark report hash
+    when present, independent verifier identity or external-check method,
+    verification date, verification outcome, blocker/failure reason, customer
+    confirmation status where relevant, unsupported-local-benchmark flag,
+    release-note eligibility, README/ROADMAP/paper-index downgrade wording,
+    and tests that fail when a claim has no verification/report row or when a
+    missing local benchmark is described as reproduced.
+
 - [ ] Reproduce DeepConsensus/PacBio AlphaEvolve genomics evidence beyond the
       generic 2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

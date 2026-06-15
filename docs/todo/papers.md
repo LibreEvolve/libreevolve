@@ -5451,6 +5451,47 @@ directory and using the AlphaEvolve paper as the primary specification.
     lower-bound checker or graph/gadget benchmark fixture before LibreEvolve
     claims comparable TSP or approximation-hardness support.
 
+- [ ] Reproduce neuroscience interpretable-model impact evidence beyond the
+      generic 2026 AlphaEvolve boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, lists discovering interpretable models in
+    neuroscience as a linked scientific-source impact area. The linked Google
+    DeepMind publication page, `Automated Discovery of Interpretable Cognitive
+    Programs underlying Reward-guided behavior`, dated February 6, 2025,
+    points to a bioRxiv source and describes CogFunSearch: an automated
+    LLM-based program discovery tool based on FunSearch, used to discover
+    symbolic programs for rodent reward-guided choice behavior. The abstract
+    says the discovered programs outperform state-of-the-art cognitive models
+    for predicting rat choices in a two-armed drifting-bandit task, while a
+    simple unconstrained neural network still outperforms both classic and
+    discovered symbolic models.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    neuroscience claim only as a generic impact item and marks the
+    `neuroscience_model_fixture` as not implemented locally. No dedicated
+    TODO, publication-page snapshot, bioRxiv/PDF snapshot, relation-to-
+    AlphaEvolve/CogFunSearch mapping, rodent choice dataset fixture,
+    two-armed drifting-bandit task schema, symbolic-program candidate schema,
+    state-of-the-art cognitive-model baseline, neural-network baseline,
+    prompt-semantics experiment record, prediction metric definition, model
+    interpretability rubric, animal-behavior ethics/data boundary, or
+    independent reproduction output exists for the neuroscience evidence.
+  - Required result: add reproduction-grade evidence for the neuroscience
+    source set: DeepMind impact URL/date/authors, DeepMind publication-page
+    URL/date/authors, bioRxiv URL/version/authors, retrieval hashes, source
+    license/terms status, explicit relation between FunSearch/CogFunSearch and
+    AlphaEvolve impact wording, dataset identity and access status, rodent
+    reward-guided choice task schema, train/test split records, seed program
+    and candidate-program grammar, prompt variants and semantic-information
+    ablations, evaluator metric definitions, classic cognitive-model baseline
+    rows, unconstrained-neural-network baseline rows, discovered-program
+    artifacts, interpretability criteria, statistical significance checks,
+    ethics/privacy/data-use boundary, independent reproduction feasibility
+    assessment, README/ROADMAP/paper-index wording that keeps the claim as
+    source-reported neuroscience evidence only, and code TODOs for any future
+    cognitive-model or neuroscience benchmark fixture before LibreEvolve
+    claims comparable interpretable-neuroscience modeling support.
+
 - [ ] Reproduce Spanner LSM-compaction AlphaEvolve evidence beyond the generic
       2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

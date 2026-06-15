@@ -5245,6 +5245,41 @@ directory and using the AlphaEvolve paper as the primary specification.
     evidence only, and code TODOs for any future supply-chain benchmark
     fixture before LibreEvolve claims comparable customer-deployment support.
 
+- [ ] Reproduce FM Logistic warehouse-scale AlphaEvolve routing evidence beyond
+      generic customer-claim coverage.
+  - Paper/source evidence: Google Cloud published `How FM Logistic tackled the
+    traveling salesman problem at warehouse scale with AlphaEvolve` on
+    March 27, 2026. The article says FM Logistic used AlphaEvolve on Google
+    Cloud for a warehouse-routing problem in Poland, with a facility spanning
+    eight football fields, over 17,700 picking locations, and up to several
+    dozen operators on ride-on electric trucks per shift. It describes an
+    existing fast cost-prioritized routing algorithm as the seed program,
+    AlphaEvolve/Gemini mutation of that code, candidate scoring against
+    route-quality objectives, and a reported 10.4% routing-efficiency
+    improvement that would reduce travel by over 15,000 km annually.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records FM
+    Logistic only as one customer case from the broader DeepMind impact
+    article and marks customer snapshots as missing. No dedicated TODO,
+    source snapshot, warehouse-routing fixture, TSP/vehicle-routing candidate
+    schema, route-cost evaluator, warehouse map/input artifact, seed-program
+    baseline record, operator/shift workload model, real-time-responsiveness
+    constraint, annual-distance calculation, customer verification artifact,
+    Google Cloud deployment evidence, or independent reproduction output
+    exists for the March 2026 FM Logistic source.
+  - Required result: add reproduction-grade evidence for the FM Logistic
+    source: article URL/date/authors, retrieval hash, source license/terms
+    status, customer and collaborator identities, AlphaEvolve-on-Google-Cloud
+    access status, warehouse/facility and picking-location dimensions, seed
+    algorithm identity and baseline semantics, route/input data privacy
+    boundary, objective/evaluator metric definitions, mutation/evaluation
+    protocol, reported 10.4% improvement and 15,000 km/year calculation,
+    annualization assumptions, generated routing-rule/code artifact
+    requirements, cloud/runtime/deployment provenance, customer-verification
+    snapshots, independent reproduction feasibility assessment, README/
+    ROADMAP/paper-index wording that keeps FM Logistic as source-reported
+    deployment evidence only, and code TODOs for any future warehouse-routing
+    benchmark fixture before LibreEvolve claims comparable logistics support.
+
 - [ ] Reproduce AlphaEvolve FHE-on-TPU application evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.14718`, submitted May 14, 2026, is

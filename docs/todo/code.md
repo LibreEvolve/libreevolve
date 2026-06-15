@@ -8361,3 +8361,36 @@ sidecars, tests, and active TODOs.
     redaction policies, and run-artifact expectations; and requires TODO/docs
     updates whenever benchmark profiles, local CLI adapters, or cited run
     evidence change.
+
+- [ ] Align generated prompt-table artifacts with run-directory collision and
+      overwrite cleanup policy.
+  - Spec evidence: AlphaEvolve-style experiment runs need self-contained,
+    collision-safe run directories. Any artifact that README, manifests, or
+    schemas describe as part of a run must participate in the same startup
+    collision, overwrite, stale-file, and foreign-entry policy as the core
+    history, failure, archive, prompt, LLM, manifest, best, evaluator-artifact,
+    and plugin-artifact outputs.
+  - Current evidence: `README.md` lists
+    `prompt_current_binding_table.jsonl` and `prompt_prior_score_table.jsonl`
+    as run artifacts; `run_artifact_schema()` advertises both schemas; and
+    `_write_prompt_current_binding_table()` plus
+    `_write_prompt_prior_score_table()` write those files during runtime
+    finalization. Separately, `libreevolve.core.database.RUN_ARTIFACT_NAMES`
+    is the source used by `prepare_run_directory()` to detect existing run
+    artifacts, remove known artifacts during `overwrite`, and classify foreign
+    run-directory entries. That set still omits both prompt-table artifact
+    names.
+  - Current gap: reusing a run directory with `--overwrite` can leave old
+    prompt-table JSONL files behind because they are not part of the cleanup
+    artifact-name set, while a new finalized manifest may still expose current
+    artifact metadata for those same paths. The stale files are also treated as
+    preserved foreign entries rather than known LibreEvolve run artifacts. This
+    is narrower than the multi-writer JSONL gap: it is a run-directory
+    lifecycle and artifact-inventory consistency gap for already generated
+    prompt-table exports.
+  - Required result: make every generated run artifact name declared by README,
+    manifest schemas, runtime artifact summaries, and finalization writers flow
+    through one checked artifact inventory; include prompt binding/prior-score
+    tables in collision detection and overwrite cleanup; add stale-file tests
+    for reused run directories; and validate that documented/schema-listed run
+    artifacts cannot be omitted from cleanup policy.

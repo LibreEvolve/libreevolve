@@ -5350,6 +5350,41 @@ directory and using the AlphaEvolve paper as the primary specification.
     page snapshot verifier or managed AlphaEvolve compatibility claim before
     LibreEvolve treats the DeepMind product page as implementation evidence.
 
+- [ ] Add AlphaEvolve 2026 impact claim-value normalization and release-note
+      promotion gates.
+  - Paper/source evidence: `papers/alphaevolve_2026_impact_boundary.json`
+    records heterogeneous official 2026 impact claims from the DeepMind impact
+    article, Google Cloud/private-preview sources, Google Keyword update,
+    customer cases, linked scientific papers, public gallery links, and
+    product/context pages. The claim registry mixes percentages, speedups,
+    qualitative descriptions, deployment/access statements, customer-reported
+    business outcomes, and source-only outbound links. The same boundary lists
+    `claim_value_normalization_policy` as not recorded and
+    `release_note_claim_gate` as not implemented.
+  - Current gap: existing README, ROADMAP, paper-index, and TODO wording keeps
+    the claims source-scoped, but there is no dedicated normalization policy
+    explaining how to compare or promote values such as `30%` error reduction,
+    `14% to over 88%` feasibility, `5%` accuracy gain, `10x` lower error,
+    `20%` write-amplification reduction, `nearly 9%` storage-footprint
+    reduction, `2x` training speed, `10.4%` routing efficiency, `4x` MLFF
+    speedup, `two days vs months`, public-gallery qualitative claims, private-
+    preview access claims, or customer-availability claims. There is also no
+    release-note gate requiring source snapshot, local fixture status,
+    independent verification, customer confirmation, and overclaim checks
+    before any impact value is described as implemented, reproduced, or
+    LibreEvolve-supported.
+  - Required result: add a machine-checkable claim-normalization and promotion
+    policy for the 2026 impact source set: canonical claim ids, source URL and
+    retrieval hash, value type, unit, denominator, baseline identity,
+    comparison direction, uncertainty/approximation wording, customer-reported
+    versus measured result class, local fixture availability, reproduction
+    artifact links, independent verification status, release-note eligibility,
+    README/ROADMAP/paper-index wording constraints, required downgrade wording
+    when evidence is missing, and tests that fail if a source-reported impact
+    claim is promoted without source snapshots, normalized value rows,
+    benchmark or customer evidence, and explicit unsupported-local-evidence
+    flags.
+
 - [ ] Reproduce DeepConsensus/PacBio AlphaEvolve genomics evidence beyond the
       generic 2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

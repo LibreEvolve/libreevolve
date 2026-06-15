@@ -5414,6 +5414,43 @@ directory and using the AlphaEvolve paper as the primary specification.
     Tammes benchmark fixture, or rendered-source archiver before LibreEvolve
     claims comparable public AlphaEvolve example coverage.
 
+- [ ] Reproduce TSP lower-bound AlphaEvolve impact evidence beyond the generic
+      2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, lists improved lower bounds for the Traveling
+    Salesman Problem as one of the public AlphaEvolve mathematics advances.
+    The existing theoretical-CS source sidecar records `2509.18057`,
+    `Hardness of Approximation`, as AlphaEvolve complexity-theory context,
+    including a metric Traveling Salesman Problem application with reported
+    TSP hardness factor `111/110`, MAX-k-CUT gadget rows, random-graph/
+    Ramanujan graph evidence, proof-element boundaries, and missing verifier
+    or graph/gadget artifact gates. That sidecar is background/source
+    coverage, not reproduced evidence for the official impact article's
+    broad TSP lower-bound claim.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    traveling-salesman claim only as a generic impact item and marks the
+    `traveling_salesman_lower_bound_checker` as not implemented locally. No
+    dedicated TODO, source snapshot, exact TSP claim mapping, problem-variant
+    taxonomy, lower-bound theorem statement, gadget construction payload,
+    verifier code, graph/equation artifact hashes, independent checker,
+    baseline-prior comparison ledger, proof-lifting metadata, artifact license
+    boundary, or independent reproduction output exists for the official
+    TSP impact claim.
+  - Required result: add reproduction-grade evidence for the TSP source set:
+    DeepMind impact URL/date/authors, `2509.18057` arXiv/PDF URL/version/
+    authors, retrieval hashes, source license/terms status, relation between
+    the impact article's TSP wording and the Hardness-of-Approximation metric-
+    TSP row, exact problem variant and theorem identity, baseline lower-bound
+    history, gadget/equation schema, graph or construction artifacts, evolved
+    verifier/proof code provenance, independent brute-force or formal checker
+    outputs, Table 1 LB/UB values where relevant, theorem-lifting assumptions,
+    artifact/repository availability, independent reproduction feasibility
+    assessment, README/ROADMAP/paper-index wording that keeps TSP as source-
+    reported theoretical-CS evidence only, and code TODOs for any future TSP
+    lower-bound checker or graph/gadget benchmark fixture before LibreEvolve
+    claims comparable TSP or approximation-hardness support.
+
 - [ ] Reproduce Spanner LSM-compaction AlphaEvolve evidence beyond the generic
       2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

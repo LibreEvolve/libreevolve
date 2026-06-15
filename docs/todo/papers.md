@@ -5319,6 +5319,37 @@ directory and using the AlphaEvolve paper as the primary specification.
     managed API, or customer-engagement adapter before LibreEvolve claims
     comparable AlphaEvolve UI/API support.
 
+- [ ] Reproduce DeepMind AlphaEvolve product-page evidence beyond the generic
+      2026 impact boundary.
+  - Paper/source evidence: `papers/alphaevolve_2026_impact_boundary.json`
+    records `https://deepmind.google/science/alphaevolve/` as
+    `alphaevolve_product_page` with category `product_context` and status
+    `outbound_reference_only`. Current Google DeepMind science-page search
+    snippets position AlphaEvolve as a coding agent built with Gemini for
+    designing advanced algorithms for math and practical computing
+    applications by combining large language model creativity with automated
+    evaluators. The same DeepMind site navigation surfaces AlphaEvolve under
+    Science alongside AlphaFold, AlphaGenome, WeatherNext, and AlphaEarth.
+  - Current gap: the boundary records the product page only as an outbound
+    reference. No dedicated TODO, product-page HTML snapshot, page hash,
+    title/subtitle/source-card inventory, navigation placement record,
+    source-update timestamp, product-versus-white-paper claim separation,
+    relation to the 2025 announcement and 2026 impact article, access/status
+    statement, public artifact links, image/video asset inventory, or
+    independent availability check exists for the DeepMind product-page
+    evidence.
+  - Required result: add source-specific evidence for the product page:
+    canonical URL, retrieval date, page title/subtitle, HTML byte count and
+    hash, DeepMind science-navigation placement, all outbound links and media
+    assets, wording that describes AlphaEvolve as Gemini-built algorithm
+    design context, explicit distinction between product/science page,
+    original white paper, announcement blog, 2026 impact article, Google Cloud
+    private preview, and local LibreEvolve support, access/product availability
+    notes, README/ROADMAP/paper-index wording that keeps this page as
+    source-reported product context only, and code TODOs for any future product
+    page snapshot verifier or managed AlphaEvolve compatibility claim before
+    LibreEvolve treats the DeepMind product page as implementation evidence.
+
 - [ ] Reproduce DeepConsensus/PacBio AlphaEvolve genomics evidence beyond the
       generic 2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

@@ -5248,6 +5248,48 @@ directory and using the AlphaEvolve paper as the primary specification.
     sequencing-error or variant-calling benchmark fixture before LibreEvolve
     claims comparable genomics support.
 
+- [ ] Reproduce AC-OPF/CANOS AlphaEvolve grid-optimization evidence beyond
+      the generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, says AlphaEvolve was applied to the AC Optimal
+    Power Flow problem and increased a trained Graph Neural Network model's
+    feasible-solution rate from 14% to over 88%, reducing the need for costly
+    post-processing in electricity-grid workflows. The linked source is arXiv
+    `2403.17660`, `CANOS: A Fast and Scalable Neural AC-OPF Solver Robust To
+    N-1 Perturbations`, which presents a Constraint-Augmented Neural OPF
+    Solver using GNNs, PGLib-OPF cases, PowerModels.jl plus Ipopt reference
+    solutions, 500/2,000/10,000-bus grids, FullTop and TopDrop datasets with
+    300k examples each, 90/5/5 train/validation/test splits, N-1 topology
+    perturbations, JAX/Haiku/Jraph/Optax training, 8 A100 40GB GPUs, and
+    evaluation against AC-IPOPT and DC-IPOPT baselines with speed,
+    optimality, solution-accuracy, and feasibility metrics.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    AC-OPF claim only as a generic impact item. No dedicated TODO, CANOS paper
+    snapshot, PGLib/PowerModels/Ipopt data pipeline, graph-schema fixture,
+    bus/branch/generator/load/shunt feature contract, topology-perturbation
+    generator, GNN seed-program identity, constraint-augmented loss mutation
+    record, feasibility metric definition, 14%-to-over-88% calculation,
+    power-flow post-processing harness, baseline solver provenance,
+    accelerator/runtime record, electricity-grid safety boundary, or
+    independent reproduction output exists for the AlphaEvolve AC-OPF claim.
+  - Required result: add reproduction-grade evidence for the AC-OPF source
+    set: DeepMind impact URL/date/authors, arXiv `2403.17660` URL/version/
+    authors, retrieval hashes, source license/terms status, relation between
+    CANOS and the AlphaEvolve-improved model, dataset identities and access
+    status, PGLib/PowerModels.jl/Ipopt/pandapower/JAX dependency provenance,
+    graph input/output schemas, FullTop/TopDrop and N-1 perturbation
+    generation records, train/validation/test split hashes, seed architecture
+    and evolved-code regions, constraint-loss/evaluator definitions,
+    feasibility and post-processing metrics, 14%-to-over-88% claim
+    normalization, AC-IPOPT/DC-IPOPT baseline rows, GPU/runtime/cost metadata,
+    power-grid operational-safety and non-deployment boundary wording,
+    independent reproduction feasibility assessment, README/ROADMAP/
+    paper-index wording that keeps AC-OPF as source-reported grid evidence
+    only, and code TODOs for any future power-grid or constrained-optimization
+    benchmark fixture before LibreEvolve claims comparable electricity-grid
+    optimization support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

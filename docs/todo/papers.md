@@ -5280,6 +5280,45 @@ directory and using the AlphaEvolve paper as the primary specification.
     service or customer-case fixture before LibreEvolve claims comparable
     Google Cloud customer availability or product support.
 
+- [ ] Reproduce AlphaEvolve UI/API attribution and artifact-inventory evidence
+      beyond the generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, includes an acknowledgements section that separates
+    the original AlphaEvolve development team, later impact-scaling
+    contributors, AlphaEvolve UI collaborators, AlphaEvolve API and Google
+    Cloud customer-engagement collaborators, application collaborators, and
+    partner teams across Google DeepMind, Google Cloud, Google Labs, Google
+    Research, and other product areas. The article specifically says Adam
+    Connors, Alex Bäuerle, Anna Trostanetski, Fernanda Viegas, Gabi Cardoso,
+    Jonathan Caton, Lucas Dixon, Mariana Felix, Martin Wattenberg, Matin
+    Akhlaghinia, Richard Green, Yosuke Ushigome, and Yunhan Xu collaborated on
+    the UI, and separately names Anant Nawalgaria, Diego Ballesteros, Gemma
+    Jennings, Jakob Oesinghaus, Kartik Sanu, Laurynas Tamulevičius, Nicolas
+    Stroppa, Nishta Dhawan, Oliver Hilsenbeck, Puneet Jagralapudi, Reah
+    Miyara, Skander Hannachi, Tom Beyer, and Vishal Agarwal as API and Google
+    Cloud customer collaborators.
+  - Current gap: `papers/alphaevolve_2026_impact_boundary.json` records
+    `ui_api_attribution_records` as boundary-only and records UI/API
+    contributor flags, but `local_role_artifact_links_ready` remains false and
+    `ui_surface_artifact_inventory` plus `api_cloud_customer_artifact_inventory`
+    remain missing. No dedicated TODO, UI screenshot/source snapshot,
+    interaction-flow inventory, API endpoint/schema inventory, Cloud customer
+    engagement artifact, role-to-artifact link table, privacy/contact
+    redaction policy, product-team attribution boundary, or independent
+    artifact verification exists for the article's UI/API claims.
+  - Required result: add source-specific evidence for the UI/API attribution
+    claims: impact article URL/date/authors, retrieval hash, UI collaborator
+    roster, API/Cloud-customer collaborator roster, role-category definitions,
+    artifact availability policy, UI screenshot or source-snapshot inventory,
+    public/private artifact access status, API endpoint/schema documentation
+    status, Cloud customer-engagement evidence status, role-to-artifact links,
+    privacy/contact-redaction policy, product-team attribution separation from
+    local LibreEvolve authorship, README/ROADMAP/paper-index wording that keeps
+    UI/API claims source-reported only, and code TODOs for any future local UI,
+    managed API, or customer-engagement adapter before LibreEvolve claims
+    comparable AlphaEvolve UI/API support.
+
 - [ ] Reproduce DeepConsensus/PacBio AlphaEvolve genomics evidence beyond the
       generic 2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

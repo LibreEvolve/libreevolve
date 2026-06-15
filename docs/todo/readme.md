@@ -192,6 +192,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     non-static/external-validator causal linkage. That omission shows the
     status ledger can lag behind newly identified AlphaEvolve-facing gaps even
     when README, ROADMAP, paper, and active TODO surfaces stay conservative.
+    A second current drift example is the top-level `docs/status.md` run-
+    artifact bullet: it still summarizes `runs/` outputs as manifests,
+    histories, prompts, failures, best candidates, and plugin/evaluator
+    artifacts, while active code/paper TODOs now identify generated
+    `prompt_current_binding_table.jsonl`, `prompt_prior_score_table.jsonl`,
+    and `paper_artifacts/...` as documented or emitted run artifacts whose
+    collision/overwrite lifecycle is not yet unified. The status ledger does
+    not expose that artifact-lifecycle boundary in its high-level run-artifact
+    summary.
   - Required result: add a status-ledger freshness artifact and validator that
     inventories `docs/status.md` bullets, links each claim to current
     implementation/sidecar/TODO evidence or explicit absence scope, compares

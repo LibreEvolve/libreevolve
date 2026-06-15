@@ -319,6 +319,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     proves each provider-backed README command family remains runnable. This
     also keeps Google/Gemini AlphaEvolve provider parity separate from the
     README's generic backend examples.
+    A narrower current gap is CLI-versus-config backend coverage: the README
+    provider examples use the `--backends type:model` shortcut, while
+    `libreevolve/cli.py` turns each shortcut into only `{"type": t,
+    "model": m}` and `libreevolve/core/config.py` requires custom backends to
+    carry `class_path` (and optional JSON-safe `kwargs`) through config. The
+    README therefore has no smoke evidence or reader guardrail proving how
+    custom import-path backends are configured outside the CLI shorthand.
   - Required result: add provider-family smoke evidence with safe credential
     handling, account/local model id provenance, expected skip/failure modes,
     and README/TODO updates whenever provider example commands or supported

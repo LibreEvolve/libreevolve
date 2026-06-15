@@ -540,13 +540,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     paper TODOs already track many artifact internals, including manifest
     schema metadata, history rows, prompt history, archive events, evaluator
     artifacts, plugin artifacts, resume/replay boundaries, budget reports, and
-    validator-boundary consistency.
+    validator-boundary consistency. The detailed run-artifacts guide and
+    runtime code also expose `task_specification.json` as a standalone
+    task-specification artifact and `paper_artifacts/...` as generated
+    AlphaEvolve source/exhibit evidence, while the README's common-output list
+    does not mention either surface.
   - Current gap: no README-owned validator, sidecar, or smoke transcript
     parses the README artifact list, compares it with a current no-provider
     smoke run and `docs/run-artifacts.md`, detects newly added or removed run
     outputs, or distinguishes common onboarding outputs from optional,
-    provider-specific, plugin-specific, benchmark-specific, or absence-boundary
-    artifacts.
+    provider-specific, plugin-specific, benchmark-specific, paper/source
+    exhibit, task-specification, or absence-boundary artifacts. That makes it
+    unclear whether omissions such as `task_specification.json` and
+    `paper_artifacts/` are intentional scope choices or stale documentation.
   - Required result: add README run-artifact evidence that maps each listed
     output to writer code, schema/docs coverage, required or optional status,
     smoke-run presence, restore/inspection relevance, and overclaim scope; add

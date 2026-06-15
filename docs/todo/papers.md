@@ -5488,6 +5488,45 @@ directory and using the AlphaEvolve paper as the primary specification.
     compiler-storage benchmark fixture before LibreEvolve claims comparable
     compiler storage-footprint optimization support.
 
+- [ ] Reproduce cache-replacement policy AlphaEvolve impact evidence beyond
+      ArchAgent background coverage.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, says AlphaEvolve found more efficient cache
+    replacement policies in two days where previous approaches required
+    months of concerted human-intensive effort. The related ArchAgent paper
+    and local `papers/archagent_boundary.json` cover AlphaEvolve-style
+    computer-architecture discovery as background context, including generated
+    C++ cache-policy logic, ChampSim `policy.h` integration, SPEC06
+    single-core and Google Workload Trace multi-core rows, Policy31/
+    Policy31-Tuned/Policy61/Policy62 artifacts, IPC-over-LRU metrics, and
+    hardware-realizability/state-budget checks. That background does not prove
+    the specific DeepMind 2026 impact article's two-days-versus-months claim.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    cache-replacement claim only as a generic impact item. No dedicated TODO,
+    official-source snapshot, linked ArchAgent source mapping, cache hierarchy
+    fixture, ChampSim/runtime repository snapshot, workload-trace access
+    record, generated C++ policy archive, baseline human-effort record,
+    two-day run telemetry, months-of-human-effort comparison evidence,
+    simulator-escape guard, state-budget verification, hardware-review
+    artifact, production/post-silicon boundary, or independent reproduction
+    output exists for the AlphaEvolve cache-policy impact claim.
+  - Required result: add reproduction-grade evidence for the cache-policy
+    source set: DeepMind impact URL/date/authors, ArchAgent arXiv/PDF
+    URL/version/authors, retrieval hashes, source license/terms status,
+    relation between ArchAgent and the official impact claim, AlphaEvolve
+    access status, cache hierarchy and replacement-policy schemas, generated
+    C++ policy artifacts, ChampSim integration details, SPEC06 and Google
+    Workload Trace access/provenance, IPC-over-LRU metric definitions,
+    Policy31/Policy31-Tuned/Policy61/Policy62 result tables, state-budget and
+    hardware-realizability checks, two-day run telemetry, months-of-effort
+    baseline evidence, simulator-escape and write-bypass controls,
+    production/post-silicon boundary, independent reproduction feasibility
+    assessment, README/ROADMAP/paper-index wording that keeps the claim as
+    source-reported computer-architecture evidence only, and code TODOs for
+    any future cache-replacement benchmark fixture before LibreEvolve claims
+    comparable architecture-policy optimization support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

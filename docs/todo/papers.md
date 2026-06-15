@@ -5241,6 +5241,45 @@ directory and using the AlphaEvolve paper as the primary specification.
     service adapter before LibreEvolve claims Google Cloud AlphaEvolve,
     AlphaEvolve Service API, or Gemini Enterprise AlphaEvolve support.
 
+- [ ] Reproduce Google Keyword one-year AlphaEvolve customer-availability
+      evidence beyond the generic 2026 impact boundary.
+  - Paper/source evidence: the Google Keyword article `AlphaEvolve, 1 year
+    later: Impact on science, technology`, linked from
+    `papers/alphaevolve_2026_impact_boundary.json` as
+    `google_keyword_alphaevolve_one_year_update`, says AlphaEvolve has gone
+    from research to solving real-life problems. It reports that AlphaEvolve
+    helped improve DNA sequencing error correction, increase disaster-
+    prediction accuracy, demonstrate potential grid-stabilization simulations,
+    accelerate molecular simulations, unlock neuroscience insights, improve
+    Google infrastructure, and help Google Cloud customers improve ML models,
+    accelerate drug discovery, improve supply chains, and optimize warehouse
+    design. The article is attributed to Pushmeet Kohli, Chief Scientist,
+    Google Cloud and Vice President, Google DeepMind, and Amin Vahdat, SVP and
+    Chief Technologist, Google Cloud.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    Google Keyword one-year update only as a product/source surface requiring
+    a snapshot, while `customer_availability_source_snapshot`,
+    `api_cloud_customer_artifact_inventory`, `ui_surface_artifact_inventory`,
+    and `cloud_product_api_console_billing_artifacts` remain missing. No
+    dedicated TODO, article snapshot/hash, publication date/author metadata,
+    customer-availability matrix, customer/source crosswalk, product launch
+    linkage, Cloud account access evidence, UI/API artifact inventory,
+    infrastructure-versus-customer claim separation, or independent
+    availability check exists for the Keyword update.
+  - Required result: add source-specific evidence for the Keyword update:
+    article URL/date/authors, retrieval hash, relation to the DeepMind impact
+    article and Cloud private-preview post, customer and domain claim table,
+    customer-source links or explicit absence records, ML-model/drug-
+    discovery/supply-chain/warehouse-design availability rows, Google
+    infrastructure claim separation, UI/API/product artifact inventory,
+    account-access and billing/console status, rollout/owner metadata,
+    availability geography or access-tier notes, claim-value normalization,
+    independent external availability assessment, README/ROADMAP/paper-index
+    wording that keeps the article as source-reported Google/Google Cloud
+    customer impact evidence only, and code TODOs for any future managed
+    service or customer-case fixture before LibreEvolve claims comparable
+    Google Cloud customer availability or product support.
+
 - [ ] Reproduce DeepConsensus/PacBio AlphaEvolve genomics evidence beyond the
       generic 2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

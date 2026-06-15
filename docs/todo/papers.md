@@ -5414,6 +5414,42 @@ directory and using the AlphaEvolve paper as the primary specification.
     Tammes benchmark fixture, or rendered-source archiver before LibreEvolve
     claims comparable public AlphaEvolve example coverage.
 
+- [ ] Reproduce Spanner LSM-compaction AlphaEvolve evidence beyond the generic
+      2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, reports that AlphaEvolve improved Google Spanner
+    efficiency by refining Log-Structured Merge-tree compaction heuristics.
+    The article defines write amplification as the ratio of data written to
+    storage versus the original request and reports a 20% reduction in write
+    amplification. The same paragraph groups this with compiler-optimization
+    storage-footprint results, but does not expose the Spanner workload,
+    heuristic, candidate code, or measurement harness.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    Spanner claim only as a generic impact item and marks the
+    `spanner_lsm_compaction_fixture` as not implemented locally. No dedicated
+    TODO, source snapshot, Spanner storage-engine fixture, LSM-tree model,
+    compaction-policy candidate schema, write/read/space-amplification metric
+    contract, workload trace, baseline heuristic identity, generated heuristic
+    archive, production-safety review artifact, storage-device cost or wear
+    model, 20% reduction calculation, Google-internal deployment boundary, or
+    independent reproduction output exists for the AlphaEvolve Spanner claim.
+  - Required result: add reproduction-grade evidence for the Spanner source:
+    DeepMind impact URL/date/authors, retrieval hash, source license/terms
+    status, Spanner/LSM component identity, AlphaEvolve access status,
+    candidate compaction-heuristic code shape, baseline heuristic semantics,
+    workload and key-distribution definitions, write-amplification formula,
+    read/space-amplification guard metrics, simulator or benchmark fixture,
+    generated-candidate archive, admission and rollback safety policy,
+    production-vs-simulation boundary, storage hardware/cost/wear metadata,
+    20% reduction calculation, comparison against known LSM compaction
+    literature where relevant, independent reproduction feasibility assessment,
+    README/ROADMAP/paper-index wording that keeps Spanner as source-reported
+    Google-internal infrastructure evidence only, and code TODOs for any
+    future LSM-tree or database-compaction benchmark fixture before
+    LibreEvolve claims comparable database-infrastructure optimization
+    support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

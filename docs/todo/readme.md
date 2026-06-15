@@ -201,6 +201,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     collision/overwrite lifecycle is not yet unified. The status ledger does
     not expose that artifact-lifecycle boundary in its high-level run-artifact
     summary.
+    A third current drift example is backend support: `docs/status.md` lists
+    only OpenAI, Anthropic, and Ollama under "Implemented today", while the
+    root README and `docs/backends.md` describe custom import-path backends as
+    supported. `docs/status.md` mentions custom wrappers only later in a
+    provider-limit paragraph, so its implemented capability list can understate
+    extension-point support and blur the distinction between built-in adapters,
+    custom wrappers, and still-missing first-class CLI/Codex-authenticated
+    provider lanes.
   - Required result: add a status-ledger freshness artifact and validator that
     inventories `docs/status.md` bullets, links each claim to current
     implementation/sidecar/TODO evidence or explicit absence scope, compares

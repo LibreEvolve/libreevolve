@@ -5203,6 +5203,48 @@ directory and using the AlphaEvolve paper as the primary specification.
     console/API/billing artifacts, customer availability, and managed-agent
     workflow semantics.
 
+- [ ] Reproduce BASF supply-chain AlphaEvolve deployment evidence beyond
+      official Google Cloud customer-source coverage.
+  - Paper/source evidence: Google Cloud published `How BASF manages thousands
+    of supply chain decisions with AlphaEvolve's agentic algorithms` on
+    May 7, 2026. The article says BASF Agricultural Solutions used
+    AlphaEvolve on Google Cloud to build a digital twin for a production
+    network spanning 180 production sites and more than 5,000 value chains.
+    It describes a foundational seed program that translated demand forecasts
+    into production schedules, three years of historical data including
+    inventory, demand, and production outputs, AlphaEvolve code mutations that
+    tried to match historical supply-chain behavior, an evaluator metric based
+    on matching simulated inventory and production decisions to historical
+    reality, more than 80% relative accuracy improvement over the seed model,
+    and discovered planning rules for production consolidation, dynamic safety
+    stocks, and network-wide coordination. The source also names BASF,
+    prognostica GmbH, Google Cloud, and Google DeepMind collaborators.
+  - Current gap: no source-scoped TODO, paper/customer manifest row, source
+    snapshot, local fixture, benchmark report, customer-verification artifact,
+    or boundary update exists for this BASF customer article. Existing
+    AlphaEvolve 2026 impact TODOs and sidecars track the May 2026 DeepMind
+    impact article, Google Cloud private preview, Gemini Enterprise docs, and
+    the earlier customer list of Klarna, Substrate, FM Logistic, WPP, and
+    Schrodinger, but not this newer BASF supply-chain planning deployment.
+    LibreEvolve has no BASF-like supply-chain graph/data schema, demand-
+    forecast-to-production-schedule seed-program contract, historical
+    inventory/demand/production-data ingestion fixture, digital-twin evaluator,
+    production-tier dependency model, safety-stock rule extraction, customer
+    collaboration provenance, cloud deployment evidence, or independent
+    reproduction output.
+  - Required result: add reproduction-grade evidence for the BASF source:
+    article URL/date/authors, retrieval hash, source license/terms status,
+    customer and collaborator identities, AlphaEvolve-on-Google-Cloud access
+    status, supply-chain network dimensions, seed-program baseline semantics,
+    historical-data schema and privacy boundary, evaluator metric definition,
+    mutation/evaluation protocol, reported accuracy-improvement value and
+    baseline, discovered-rule taxonomy, digital-twin artifact requirements,
+    cloud/runtime/deployment provenance, customer-verification source
+    snapshots, independent reproduction feasibility assessment, README/
+    ROADMAP/paper-index wording that keeps BASF as source-reported deployment
+    evidence only, and code TODOs for any future supply-chain benchmark
+    fixture before LibreEvolve claims comparable customer-deployment support.
+
 - [ ] Reproduce AlphaEvolve FHE-on-TPU application evidence beyond paper
       coverage.
   - Paper/source evidence: arXiv `2605.14718`, submitted May 14, 2026, is

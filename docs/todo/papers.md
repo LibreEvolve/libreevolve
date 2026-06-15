@@ -5203,6 +5203,51 @@ directory and using the AlphaEvolve paper as the primary specification.
     console/API/billing artifacts, customer availability, and managed-agent
     workflow semantics.
 
+- [ ] Reproduce DeepConsensus/PacBio AlphaEvolve genomics evidence beyond the
+      generic 2026 impact boundary.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, says AlphaEvolve improved DeepConsensus, a Google
+    Research model for correcting DNA sequencing errors, with a 30% reduction
+    in variant detection errors and PacBio downstream benefit. PacBio's
+    `Improving HiFi sequencing accuracy with Google DeepConsensus and
+    AlphaEvolve` source separately describes DeepConsensus as a transformer
+    model that combines raw base calls with a draft HMM consensus, notes the
+    original DeepConsensus reduced HiFi read errors by about 42%, reports
+    Revio throughput changes from about 12 Gb/hour at launch to about
+    16 Gb/hour after engineering work and about 18 Gb/hour in the upcoming
+    2026 release, and explains that AlphaEvolve work focused on improving the
+    DeepConsensus loss function. The DeepConsensus Nature Biotechnology paper
+    and Google repository provide older baseline context, including gap-aware
+    sequence transformers, AlignmentLoss, PacBio HiFi data, DeepVariant/
+    assembly downstream checks, and non-clinical/non-medical-device caveats.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    DeepConsensus claim only as a generic impact item. No dedicated TODO,
+    PacBio article snapshot, DeepConsensus paper/repository snapshot, HiFi
+    sequencing fixture, read/alignment data schema, loss-function mutation
+    record, variant-calling benchmark contract, DeepVariant/assembly
+    downstream evaluation harness, Revio hardware/runtime provenance,
+    throughput-vs-accuracy separation note, clinical-use boundary, PacBio
+    verification artifact, or independent reproduction output exists for the
+    AlphaEvolve DeepConsensus evidence.
+  - Required result: add reproduction-grade evidence for the DeepConsensus
+    source set: DeepMind impact URL/date/authors, PacBio article URL/date/
+    authors, DeepConsensus paper DOI, repository snapshot/license/non-product
+    disclaimer, retrieval hashes, source license/terms status, PacBio and
+    Google collaborator identities, model/version and Revio release identity,
+    AlphaEvolve access status, HiFi read/input data boundaries, draft HMM
+    consensus and raw-base-call schemas, seed loss/evaluator definitions,
+    AlignmentLoss or evolved-loss provenance, candidate-program archive,
+    variant-detection-error metric definition, 30% reduction calculation,
+    separation from older 42% read-error and 12/16/18 Gb/hour throughput
+    claims, DeepVariant/assembly downstream validation requirements, hardware/
+    accelerator/runtime metadata, privacy and clinical-use constraints,
+    customer-verification snapshots, independent reproduction feasibility
+    assessment, README/ROADMAP/paper-index wording that keeps DeepConsensus
+    as source-reported genomics evidence only, and code TODOs for any future
+    sequencing-error or variant-calling benchmark fixture before LibreEvolve
+    claims comparable genomics support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

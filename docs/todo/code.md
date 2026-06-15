@@ -8394,3 +8394,37 @@ sidecars, tests, and active TODOs.
     tables in collision detection and overwrite cleanup; add stale-file tests
     for reused run directories; and validate that documented/schema-listed run
     artifacts cannot be omitted from cleanup policy.
+
+- [ ] Bring generated `paper_artifacts/` directories under the run-artifact
+      lifecycle policy.
+  - Spec evidence: AlphaEvolve-style paper/source evidence emitted into a run
+    directory must be lifecycle-managed with the same collision, overwrite,
+    stale-file, and manifest-inventory rules as ordinary run outputs. Otherwise
+    a reused run directory can mix old source-exhibit evidence with a new
+    manifest and make paper-facing provenance look stronger or different than
+    the actual run produced.
+  - Current evidence: `libreevolve.core.loop` writes AlphaEvolve paper/source
+    evidence below `run_dir / "paper_artifacts"` for marker spelling,
+    process-exhibit, and Table 1 capability-comparison reports, with runtime
+    records pointing at paths such as
+    `paper_artifacts/marker_spelling/alphaevolve_page_4_text.txt`,
+    `paper_artifacts/process_exhibit/figure_1.mmd`, and
+    `paper_artifacts/table1_capability_comparison/table_1.md`.
+    `docs/run-artifacts.md` also documents those `paper_artifacts/...` paths.
+    Separately, `ProgramDatabase.RUN_ARTIFACT_NAMES` drives startup collision
+    detection, overwrite cleanup, and foreign-entry classification, but it
+    does not include `paper_artifacts`.
+  - Current gap: `paper_artifacts/` can be generated and cited by runtime
+    manifest reports while remaining outside the central cleanup/collision
+    artifact set. `--overwrite` may preserve stale paper/source evidence from a
+    previous run, and stale `paper_artifacts` entries are classified as foreign
+    preserved files rather than known LibreEvolve run artifacts. This is a
+    lifecycle/inventory gap, separate from the already tracked paper-artifact
+    creator/assembler-role attribution and the availability/linkage sidecars in
+    `papers/`.
+  - Required result: add `paper_artifacts` to the checked run-artifact
+    inventory or centralize generated artifact registration so every writer is
+    lifecycle-managed; make overwrite remove or explicitly version old
+    paper-artifact directories; add stale-paper-artifact reuse tests; and
+    validate that manifest/documented `paper_artifacts/...` paths cannot exist
+    outside collision, cleanup, and run-artifact summary policy.

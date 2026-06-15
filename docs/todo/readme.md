@@ -585,6 +585,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     task-specification artifact and `paper_artifacts/...` as generated
     AlphaEvolve source/exhibit evidence, while the README's common-output list
     does not mention either surface.
+    A second current drift example is optional invalid/quarantine streams:
+    `docs/run-artifacts.md` documents `history_invalid.jsonl`,
+    `failure_history_invalid.jsonl`, `archive_events_invalid.jsonl`,
+    `controller_budget_events_invalid.jsonl`, `llm_calls_invalid.jsonl`,
+    `manifest_invalid.jsonl`, `prompt_history_invalid.jsonl`, and plugin
+    export invalid streams, but the README common-output list does not classify
+    them as optional diagnostics or explain when readers should expect them.
   - Current gap: no README-owned validator, sidecar, or smoke transcript
     parses the README artifact list, compares it with a current no-provider
     smoke run and `docs/run-artifacts.md`, detects newly added or removed run

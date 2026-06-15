@@ -5203,6 +5203,44 @@ directory and using the AlphaEvolve paper as the primary specification.
     console/API/billing artifacts, customer availability, and managed-agent
     workflow semantics.
 
+- [ ] Reproduce Google Cloud AlphaEvolve private-preview and Service API
+      access evidence beyond the generic 2026 impact boundary.
+  - Paper/source evidence: the Google Cloud blog post `AlphaEvolve on Google
+    Cloud`, linked from the May 7, 2026 DeepMind impact article, says
+    AlphaEvolve is being released to Google Cloud in private preview and that
+    the AlphaEvolve Service API is available through an Early Access Program.
+    The post directs interested users with suitable optimization problems to
+    contact their Google Cloud representative. The linked Gemini Enterprise
+    documentation, `Accelerate R&D with Co-Scientist and AlphaEvolve agents`,
+    marks the Co-Scientist and AlphaEvolve agent feature as preview/Pre-GA,
+    says access is restricted, and states that account teams provide detailed
+    product documentation after access is granted.
+  - Current gap: `papers/alphaevolve_2026_impact_boundary.json` records the
+    Google Cloud private-preview post, AlphaEvolve Service API Early Access
+    surface, Gemini Enterprise Pre-GA docs, restricted account-team access,
+    and missing `cloud_product_api_console_billing_artifacts` only as generic
+    product/source boundaries. No dedicated TODO, HTML/PDF/source snapshot set,
+    Cloud launch post hash, Service API endpoint/schema inventory, Early
+    Access eligibility evidence, private-preview terms record, Gemini
+    Enterprise Pre-GA terms snapshot, account-team access handoff artifact,
+    console/API/billing screenshot inventory, customer availability matrix,
+    managed-agent workflow semantics, or independent availability check exists
+    for the product/access claims.
+  - Required result: add product-surface evidence before any README, ROADMAP,
+    paper index, or release-note wording treats Cloud AlphaEvolve as locally
+    usable or implemented: Cloud blog URL/date/authors, DeepMind impact
+    linkage, Gemini Enterprise docs URL/last-updated date, retrieval hashes,
+    launch/private-preview status, Service API access model, endpoint/schema
+    documentation status, Early Access eligibility path, Google Cloud
+    representative/account-team requirement, Pre-GA terms and support boundary,
+    detailed-product-documentation availability after access, console/API/
+    billing artifact status, customer/source availability snapshots, managed
+    Co-Scientist versus AlphaEvolve workflow semantics, integration/security/
+    data-use boundaries, unavailable-artifact notes, independent external
+    availability assessment, and code TODOs for any future provider or managed
+    service adapter before LibreEvolve claims Google Cloud AlphaEvolve,
+    AlphaEvolve Service API, or Gemini Enterprise AlphaEvolve support.
+
 - [ ] Reproduce DeepConsensus/PacBio AlphaEvolve genomics evidence beyond the
       generic 2026 impact boundary.
   - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:

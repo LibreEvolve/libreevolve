@@ -228,6 +228,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     validates that each role summary is still accurate, flags new top-level
     packages or docs that should be mentioned, or distinguishes implemented
     module roles from AlphaEvolve-parity placeholders.
+    Current drift evidence: the README `Runnable today` list says LibreEvolve
+    supports OpenAI, Anthropic, Ollama, and custom import-path backends, and
+    the docs map links `docs/backends.md` for "provider adapters and custom
+    backends"; however, the repository-layout block still describes `llm/` as
+    only "OpenAI, Anthropic, Ollama, and ensemble routing." Without a layout
+    inventory, module-role summaries can understate implemented extension
+    points while nearby feature bullets advertise them.
   - Required result: add a README layout/schema drift check or generated
     sidecar that parses the layout block, compares it with the package and
     documentation tree, maps each role summary to concrete modules/docs/tests,

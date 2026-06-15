@@ -5527,6 +5527,46 @@ directory and using the AlphaEvolve paper as the primary specification.
     any future cache-replacement benchmark fixture before LibreEvolve claims
     comparable architecture-policy optimization support.
 
+- [ ] Reproduce next-generation TPU-design AlphaEvolve lifecycle evidence
+      beyond original RTL/EDA boundaries.
+  - Paper/source evidence: the Google DeepMind impact article `AlphaEvolve:
+    How our Gemini-powered coding agent is scaling impact across fields`,
+    published May 7, 2026, says AlphaEvolve graduated from pilot testing to a
+    core infrastructure component and has been used as a regular tool to
+    optimize the design of the next generation of TPUs. The Google Cloud
+    private-preview launch post separately says AlphaEvolve accelerated
+    next-generation TPU design by discovering more efficient arithmetic
+    circuits, while Ironwood/TPU7x Google Cloud materials identify the
+    seventh-generation TPU family and product surface without tying public
+    artifact-level design provenance to the AlphaEvolve claim. Existing local
+    hardware RTL/EDA boundaries preserve the original AlphaEvolve paper's
+    specific Verilog rewrite and upcoming-TPU contribution claims, not this
+    newer regular-tool lifecycle claim.
+  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
+    next-generation TPU-design claim only as a generic impact item. No
+    dedicated TODO, source snapshot, TPU generation identity, regular-tool
+    adoption record, pilot-to-core lifecycle proof, AlphaEvolve usage cadence,
+    arithmetic-circuit inventory, design-review signoff, RTL/EDA artifact
+    linkage, Ironwood/TPU7x relation analysis, Google Cloud product-surface
+    separation note, owner/rollout evidence, or independent verification
+    output exists for the 2026 next-generation TPU-design claim.
+  - Required result: add reproduction-grade evidence for the TPU-design
+    lifecycle source set: DeepMind impact URL/date/authors, Google Cloud
+    AlphaEvolve private-preview URL/date/authors, Ironwood/TPU7x public URL/
+    date, retrieval hashes, source license/terms status, relation to the
+    original AlphaEvolve RTL/EDA claim, exact TPU generation or target
+    identity if public, AlphaEvolve access status, regular-tool usage cadence,
+    pilot/core-infrastructure transition evidence, candidate arithmetic
+    circuit/problem schemas, RTL/EDA artifact references or redaction
+    boundary, synthesis/PPA/equivalence/formal-verification records,
+    designer-review and rollout signoff, integration/deployment milestone,
+    product-surface separation from Google Cloud TPU availability, independent
+    verification feasibility assessment, README/ROADMAP/paper-index wording
+    that keeps the claim as source-reported Google-internal hardware-design
+    lifecycle evidence only, and code TODOs for any future TPU-design or
+    hardware-codesign benchmark fixture before LibreEvolve claims comparable
+    next-generation accelerator-design support.
+
 - [ ] Reproduce Klarna transformer-training AlphaEvolve evidence beyond
       generic customer-claim coverage.
   - Paper/source evidence: Klarna Engineering published `Beyond Prompting:

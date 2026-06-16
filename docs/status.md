@@ -1318,6 +1318,7 @@ Important limits:
   `papers/docs_architecture_runtime_flow_boundary.json`,
   `papers/backend_cli_provider_guardrail_boundary.json`,
   `papers/backend_guide_contract_drift_boundary.json`,
+  `papers/plugin_guide_contract_drift_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
@@ -1369,6 +1370,13 @@ Important limits:
   active TODO anchors. This is not semantic backend-claim verification, a
   per-constructor-field evidence map, a per-telemetry-field evidence map, a
   backend-docs CI drift gate, or owner review signoff.
+- Plugin-guide contract drift evidence now records `docs/plugins.md` section,
+  hook, execution-order, score/admission, artifact, fatal-failure, built-in
+  plugin, entry-point, constructor-schema, package-provenance, and direct-
+  plugin policy markers, plus `PluginBase`, registry, loop, config, built-in
+  plugin, focused-test, sidecar, and active TODO anchors. This is not semantic
+  hook-contract verification, per-hook executable traces, a per-built-in plugin
+  capability matrix, a plugin-docs CI drift gate, or owner review signoff.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
   classification, obsolete `alphaevolve/*` path signals, legacy checkbox plan

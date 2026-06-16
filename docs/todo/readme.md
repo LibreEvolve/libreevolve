@@ -578,23 +578,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     constructor options, distribution name/version hashes, hash-only
     `RECORD` / `WHEEL` summaries, and the direct-plugin policy distinction
     between entry-point packages and explicit direct plugin instances.
-    Active roadmap and code TODOs cover broader plugin extensibility and
-    paper-inspired plugin overclaiming, but there is no plugin-guide-specific
-    drift check comparable to the README, backend-doc, development-doc, and
-    AGENTS.md documentation guardrails.
-  - Current gap: there is no committed inventory that maps each
-    `docs/plugins.md` hook, validation rule, failure policy, built-in option,
-    entry-point package-provenance claim, and limitation statement to
-    `PluginBase`, the registry, loop call sites, tests, runtime metadata, and
-    paper-boundary TODOs. There is also no guard that fails when hook order,
-    plugin config schemas, score/admission semantics, entry-point provenance
-    policy, direct-plugin policy, or built-in plugin capabilities change
-    without updating the plugin guide and its AlphaEvolve scope wording.
-  - Required result: add a plugin-guide contract map and drift validator that
-    links each documented hook and built-in plugin claim to code/tests/runtime
-    artifacts, separates local synchronous hook support from AlphaEvolve-style
-    plugin/agent parity, and requires README/TODO updates when plugin runtime
-    behavior or built-in plugin evidence changes.
+    `papers/plugin_guide_contract_drift_boundary.json` now records a
+    structural map of guide section, hook, execution-order, score/admission,
+    artifact, fatal-failure, built-in plugin, entry-point, constructor-schema,
+    package-provenance, and direct-plugin policy markers to `PluginBase`, the
+    registry, loop, config, built-in plugin modules, focused tests, sidecars,
+    and active TODO anchors.
+  - Current gap: the committed sidecar is structural evidence only. There is
+    still no semantic verifier for every plugin-guide claim, no per-hook
+    executable trace proving exact runtime order and manifest payloads, no
+    per-built-in plugin capability matrix, no CI drift gate scoped to plugin
+    docs, and no owner review signoff. Future hook-order, plugin config schema,
+    score/admission, entry-point provenance, direct-plugin policy, or built-in
+    plugin capability changes can be detected by the marker map only when their
+    documented/code anchors move or disappear.
+  - Required result: add semantic plugin-guide claim verification, per-hook
+    executable trace artifacts, and a plugin-docs CI drift gate that requires
+    README/TODO updates when plugin runtime behavior or built-in plugin evidence
+    changes.
 
 ## Problem Layout
 

@@ -2934,9 +2934,9 @@ Implemented:
   plugin docstring scans, exhaustive Markdown corpus scans, CI promotion
   gates, intentional-promotion workflow, contradiction remediation, and joined
   runtime/plugin/docs/paper scope maps. It now points to the separate Markdown
-  corpus scan sidecar, but it is not evidence that runtime/plugin scans, gates,
-  workflows, remediation reports, scope joins, or owner review signoff are
-  implemented.
+  corpus and plugin docstring scan sidecars, but it is not evidence that
+  runtime scans, gates, workflows, remediation reports, scope joins, or owner
+  review signoff are implemented.
 - `papers/roadmap_non_goal_markdown_scan_boundary.json`: ROADMAP non-goal
   Markdown corpus scan sidecar with the repository Markdown file inventory,
   stable non-goal ids, forbidden support-claim phrases, line-level hit records,
@@ -2944,6 +2944,14 @@ Implemented:
   metadata scanning, plugin docstring scanning, CI promotion enforcement,
   intentional promotion workflow, joined runtime/plugin/docs/paper scope proof,
   or owner-reviewed remediation readiness.
+- `papers/roadmap_non_goal_plugin_docstring_boundary.json`: ROADMAP non-goal
+  plugin docstring scan sidecar with built-in plugin source-file inventory,
+  AST docstring records, registry labels, paper-inspiration labels, forbidden
+  faithful-claim phrase checks, zero faithful-overclaim hits, and no missing
+  non-faithful disclaimers for paper-inspired built-ins. It is not evidence of
+  runtime metadata scanning, CI promotion enforcement, intentional promotion
+  workflow, joined runtime/plugin/docs/paper scope proof, or owner-reviewed
+  remediation readiness.
 - `papers/roadmap_good_first_followups_boundary.json`: ROADMAP Good First
   Follow-Ups priority sidecar with the four current priority items, active
   TODO refs, priority rationale, dependency-readiness labels, validation gates,

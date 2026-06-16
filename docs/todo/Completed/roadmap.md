@@ -15712,3 +15712,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     workflow, contradiction-remediation reporting, runtime/plugin/docs/paper
     scope joins, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add ROADMAP non-goal plugin docstring contradiction scan.
+  - Spec evidence: ROADMAP non-goals say paper-inspired plugins must not be
+    advertised as faithful paper implementations, so plugin source/docstrings
+    and registry labels need machine-readable scope evidence.
+  - Status: `papers/roadmap_non_goal_plugin_docstring_boundary.json` now
+    records the built-in plugin source-file inventory, AST docstring records,
+    registry labels, paper-inspiration labels, forbidden faithful-claim phrase
+    scan, and paper-inspired built-in disclaimer checks. It records zero
+    faithful-overclaim hits and no missing non-faithful disclaimers. The
+    paper-manifest gate now requires and validates the sidecar at the repo
+    root.
+  - Remaining roadmap gap: runtime metadata scanning, CI promotion enforcement,
+    intentional non-goal promotion workflow, contradiction-remediation
+    reporting, runtime/plugin/docs/paper scope joins, and owner review signoff
+    remain active in `docs/todo/roadmap.md`.

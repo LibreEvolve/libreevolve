@@ -231,6 +231,10 @@ from libreevolve.problems.benchmarks.roadmap_non_goal_markdown_scan_boundary imp
     roadmap_non_goal_markdown_scan_boundary_record,
     validate_roadmap_non_goal_markdown_scan_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_non_goal_plugin_docstring_boundary import (
+    roadmap_non_goal_plugin_docstring_boundary_record,
+    validate_roadmap_non_goal_plugin_docstring_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_good_first_followups_boundary import (
     roadmap_good_first_followups_boundary_record,
     validate_roadmap_good_first_followups_boundary,
@@ -873,6 +877,7 @@ ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_FILE = "papers/roadmap_source_span_e
 ROADMAP_NON_GOAL_CONTRADICTION_BOUNDARY_FILE = "papers/roadmap_non_goal_contradiction_boundary.json"
 ROADMAP_NON_GOAL_DRIFT_BOUNDARY_FILE = "papers/roadmap_non_goal_drift_boundary.json"
 ROADMAP_NON_GOAL_MARKDOWN_SCAN_BOUNDARY_FILE = "papers/roadmap_non_goal_markdown_scan_boundary.json"
+ROADMAP_NON_GOAL_PLUGIN_DOCSTRING_BOUNDARY_FILE = "papers/roadmap_non_goal_plugin_docstring_boundary.json"
 ROADMAP_GOOD_FIRST_FOLLOWUPS_BOUNDARY_FILE = "papers/roadmap_good_first_followups_boundary.json"
 ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_good_first_freshness_boundary.json"
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_FILE = "papers/roadmap_phase_sequence_boundary.json"
@@ -1561,6 +1566,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_non_goal_contradiction_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_drift_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_markdown_scan_boundary(root_path))
+    issues.extend(_validate_roadmap_non_goal_plugin_docstring_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_followups_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_freshness_boundary(root_path))
     issues.extend(_validate_roadmap_phase_sequence_boundary(root_path))
@@ -4515,6 +4521,41 @@ def _validate_roadmap_non_goal_markdown_scan_boundary(root_path: Path) -> list[P
             f"roadmap_non_goal_markdown_scan_boundary_{issue.code}",
             issue.message,
             "roadmap_non_goal_markdown_scan",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_non_goal_plugin_docstring_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_NON_GOAL_PLUGIN_DOCSTRING_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = roadmap_non_goal_plugin_docstring_boundary_record(root_path)
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_non_goal_plugin_docstring_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_NON_GOAL_PLUGIN_DOCSTRING_BOUNDARY_FILE} must emit "
+                        "ROADMAP non-goal plugin docstring scan metadata"
+                    ),
+                    "roadmap_non_goal_plugin_docstring",
+                )
+            ]
+    report = validate_roadmap_non_goal_plugin_docstring_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_non_goal_plugin_docstring_boundary_{issue.code}",
+            issue.message,
+            "roadmap_non_goal_plugin_docstring",
         )
         for issue in report.issues
     ]

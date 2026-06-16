@@ -206,21 +206,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     repository Markdown corpus against the stable ROADMAP non-goal ids, records
     the scanned Markdown file inventory, checks all configured forbidden
     support-claim phrases, and retains zero line-level contradiction hits.
+    `papers/roadmap_non_goal_plugin_docstring_boundary.json` now scans built-in
+    plugin Python source files, AST docstrings, registry labels, and
+    paper-inspiration labels for faithful-implementation overclaims, with zero
+    detected faithful-claim hits and no missing non-faithful disclaimers for
+    the paper-inspired built-ins.
   - Current gap: the sidecars are bounded documentation and readiness
-    inventories plus a Markdown-corpus phrase scan, not a full runtime
-    contradiction detector or promotion gate. There is still no implemented
-    runtime metadata scan, plugin docstring scan, CI promotion gate,
-    intentional-promotion workflow, contradiction-remediation report,
-    runtime/plugin/docs/paper scope join, or owner review signoff proving
-    future ROADMAP edits cannot accidentally promote a non-goal into a
-    supported AlphaEvolve-parity claim.
+    inventories plus Markdown and plugin-source phrase scans, not a full
+    runtime contradiction detector or promotion gate. There is still no
+    implemented runtime metadata scan, CI promotion gate, intentional-promotion
+    workflow, contradiction-remediation report, runtime/plugin/docs/paper scope
+    join, or owner review signoff proving future ROADMAP edits cannot
+    accidentally promote a non-goal into a supported AlphaEvolve-parity claim.
   - Required result: implement the missing readiness fields recorded by the
-    sidecars: runtime metadata scan, plugin docstring scan, CI promotion gate,
-    intentional promotion workflow, contradiction-remediation report that
-    rejects contradictory support claims, code/docs/paper surfaces plus
-    runtime/plugin scope join, and owner review signoff. The workflow must
-    update ROADMAP/TODO evidence whenever a non-goal is completed, removed, or
-    intentionally promoted into active implementation work.
+    sidecars: runtime metadata scan, CI promotion gate, intentional promotion
+    workflow, contradiction-remediation report that rejects contradictory
+    support claims, code/docs/paper surfaces plus runtime/plugin scope join,
+    and owner review signoff. The workflow must update ROADMAP/TODO evidence
+    whenever a non-goal is completed, removed, or intentionally promoted into
+    active implementation work.
 
 - [ ] Add ROADMAP Good First Follow-Ups priority freshness evidence.
   - Spec evidence: the `Good First Follow-Ups` section is a prioritization

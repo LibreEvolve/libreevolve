@@ -1,0 +1,310 @@
+{
+  "boundary_status": "plugin_docstring_scan_without_runtime_or_promotion_gate",
+  "builtin_plugin_count": 4,
+  "builtin_plugin_records": [
+    {
+      "label": "causal",
+      "option_names": [
+        "history_limit"
+      ],
+      "paper_inspiration": "CausalEvolve",
+      "plugin_class": "CausalPlugin",
+      "plugin_module": "libreevolve.plugins.causal"
+    },
+    {
+      "label": "deep_research",
+      "option_names": [
+        "cache_dir",
+        "cache_mode",
+        "max_events",
+        "retrieval_body_retention_mode",
+        "search_every",
+        "source_ranking_policy"
+      ],
+      "paper_inspiration": "DeepEvolve",
+      "plugin_class": "DeepResearchPlugin",
+      "plugin_module": "libreevolve.plugins.deep_research"
+    },
+    {
+      "label": "modular",
+      "option_names": [],
+      "paper_inspiration": "ImprovEvolve",
+      "plugin_class": "ModularPlugin",
+      "plugin_module": "libreevolve.plugins.modular"
+    },
+    {
+      "label": "ttt_rl",
+      "option_names": [
+        "log_dir",
+        "max_payload_field_chars",
+        "max_payload_total_chars",
+        "max_retained_examples",
+        "train_every"
+      ],
+      "paper_inspiration": "ThetaEvolve",
+      "plugin_class": "TTTRLPlugin",
+      "plugin_module": "libreevolve.plugins.ttt_rl"
+    }
+  ],
+  "claim_boundary": "This boundary scans built-in plugin Python source files, AST docstrings, registry labels, and paper-inspiration labels for faithful-implementation overclaims. It does not claim runtime metadata scanning, CI promotion enforcement, intentional promotion workflow, joined runtime/plugin/docs/paper scope proof, or owner-reviewed remediation readiness.",
+  "claim_ready": false,
+  "docstring_record_count": 14,
+  "faithful_overclaim_count": 0,
+  "faithful_overclaim_hit_records": [],
+  "forbidden_phrase_count": 7,
+  "missing_disclaimer_count": 0,
+  "missing_disclaimer_records": [],
+  "missing_evidence": {
+    "ci_non_goal_promotion_gate": "not_recorded_locally",
+    "claim_surface_remediation": "not_recorded_locally",
+    "intentional_promotion_workflow": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "runtime_metadata_scan": "not_recorded_locally",
+    "runtime_plugin_scope_join": "not_recorded_locally"
+  },
+  "paper_inspired_builtin_plugin_count": 4,
+  "paper_inspired_plugin_scope_records": [
+    {
+      "class_docstring_present": true,
+      "docstring": "CausalEvolve-inspired MAB outcome-factor guidance.\n\nThis is not the CausalEvolve causal scratchpad from the paper.\nSource: arXiv 2603.14575. Hooks: build_extra_context, on_evaluated.",
+      "label": "causal",
+      "non_faithful_disclaimer_present": true,
+      "paper_inspiration": "CausalEvolve",
+      "paper_inspired_term_present": true,
+      "plugin_class": "CausalPlugin"
+    },
+    {
+      "class_docstring_present": true,
+      "docstring": "DeepEvolve-inspired web-search context before generation.\n\nThis does not implement DeepEvolve's cross-file debug/refinement loop.\nSource: arXiv 2510.06056. Hook: on_generation_start.\nDefault uses the free arXiv API. Pass search_fn=callable(query)->str\nor callable(query)->dict to override with a custom search provider.",
+      "label": "deep_research",
+      "non_faithful_disclaimer_present": true,
+      "paper_inspiration": "DeepEvolve",
+      "paper_inspired_term_present": true,
+      "plugin_class": "DeepResearchPlugin"
+    },
+    {
+      "class_docstring_present": true,
+      "docstring": "ImprovEvolve-inspired modular decomposition prompt guidance.\n\nThis does not enforce or execute ImprovEvolve's interface/search loop.\nHook: build_extra_context.",
+      "label": "modular",
+      "non_faithful_disclaimer_present": true,
+      "paper_inspiration": "ImprovEvolve",
+      "paper_inspired_term_present": true,
+      "plugin_class": "ModularPlugin"
+    },
+    {
+      "class_docstring_present": true,
+      "docstring": "ThetaEvolve-inspired clipped-reward training-data export.\n\nThis accumulates examples only; it does not implement online GRPO/RL training.\nSource: arXiv 2511.23473. Hooks: on_evaluated, on_generation_end.\nWrites (prompt, response, reward) triples to grpo_data.jsonl.",
+      "label": "ttt_rl",
+      "non_faithful_disclaimer_present": true,
+      "paper_inspiration": "ThetaEvolve",
+      "paper_inspired_term_present": true,
+      "plugin_class": "TTTRLPlugin"
+    }
+  ],
+  "plugin_source_file_count": 7,
+  "plugin_source_file_records": [
+    {
+      "docstring_records": [],
+      "faithful_overclaim_hit_records": [],
+      "path": "libreevolve/plugins/__init__.py",
+      "read_status": "ok"
+    },
+    {
+      "docstring_records": [
+        {
+          "docstring": "Base class for LibreEvolve plugins. Override only the hooks you need.",
+          "line_start": 8,
+          "node_kind": "class",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/base.py",
+          "qualname": "PluginBase"
+        }
+      ],
+      "faithful_overclaim_hit_records": [],
+      "path": "libreevolve/plugins/base.py",
+      "read_status": "ok"
+    },
+    {
+      "docstring_records": [
+        {
+          "docstring": "CausalEvolve-inspired MAB outcome-factor guidance.\n\nThis is not the CausalEvolve causal scratchpad from the paper.\nSource: arXiv 2603.14575. Hooks: build_extra_context, on_evaluated.",
+          "line_start": 20,
+          "node_kind": "class",
+          "non_faithful_disclaimer_present": true,
+          "paper_inspired_term_present": true,
+          "path": "libreevolve/plugins/causal.py",
+          "qualname": "CausalPlugin"
+        },
+        {
+          "docstring": "Classify which code dimensions a mutation changed.\n\nDiff-mode evidence compares tokens that differ between SEARCH and\nREPLACE blocks. Full-mode evidence scans the replacement payload\ndirectly because there is no old/new block boundary.",
+          "line_start": 204,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/causal.py",
+          "qualname": "_detect_factors"
+        }
+      ],
+      "faithful_overclaim_hit_records": [],
+      "path": "libreevolve/plugins/causal.py",
+      "read_status": "ok"
+    },
+    {
+      "docstring_records": [
+        {
+          "docstring": "Search arXiv and return synthesis plus bounded source provenance.",
+          "line_start": 117,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "arxiv_search_result"
+        },
+        {
+          "docstring": "Search arXiv for papers matching *query* and return a brief synthesis.\n\nUses the free arXiv API (no key required). Returns None on network\nerrors so evolution continues uninterrupted.",
+          "line_start": 198,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "arxiv_search"
+        },
+        {
+          "docstring": "DeepEvolve-inspired web-search context before generation.\n\nThis does not implement DeepEvolve's cross-file debug/refinement loop.\nSource: arXiv 2510.06056. Hook: on_generation_start.\nDefault uses the free arXiv API. Pass search_fn=callable(query)->str\nor callable(query)->dict to override with a custom search provider.",
+          "line_start": 278,
+          "node_kind": "class",
+          "non_faithful_disclaimer_present": true,
+          "paper_inspired_term_present": true,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "DeepResearchPlugin"
+        },
+        {
+          "docstring": "Compactly link prompt-visible retrieval text to its source event.",
+          "line_start": 866,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "_active_context_metadata"
+        },
+        {
+          "docstring": "Verify retrieval payload sidecar references under an artifact root.",
+          "line_start": 2381,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "retrieval_payload_artifact_inventory"
+        },
+        {
+          "docstring": "Verify retained-source ranking hashes from retrieval events or snapshots.",
+          "line_start": 2446,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "retrieval_source_ranking_provenance"
+        },
+        {
+          "docstring": "Verify that retrieval provenance does not overclaim semantic replay.\n\nDeepResearch currently preserves bounded redacted payload artifacts and\ndeterministic lexical grounding, not raw payloads, TLS certificate chains,\nor semantic source-meaning verification. This audit makes that evidence\nboundary machine-checkable for retrieval events, plugin metadata, and cache\nsnapshots.",
+          "line_start": 2498,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "retrieval_semantic_boundary_audit"
+        },
+        {
+          "docstring": "Classify prompt-visible retrieval evidence without making it authoritative.",
+          "line_start": 3561,
+          "node_kind": "function",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/deep_research.py",
+          "qualname": "_retrieval_context_audit_policy"
+        }
+      ],
+      "faithful_overclaim_hit_records": [],
+      "path": "libreevolve/plugins/deep_research.py",
+      "read_status": "ok"
+    },
+    {
+      "docstring_records": [
+        {
+          "docstring": "ImprovEvolve-inspired modular decomposition prompt guidance.\n\nThis does not enforce or execute ImprovEvolve's interface/search loop.\nHook: build_extra_context.",
+          "line_start": 12,
+          "node_kind": "class",
+          "non_faithful_disclaimer_present": true,
+          "paper_inspired_term_present": true,
+          "path": "libreevolve/plugins/modular.py",
+          "qualname": "ModularPlugin"
+        }
+      ],
+      "faithful_overclaim_hit_records": [],
+      "path": "libreevolve/plugins/modular.py",
+      "read_status": "ok"
+    },
+    {
+      "docstring_records": [
+        {
+          "docstring": "Raised when a configured plugin cannot be resolved or validated.",
+          "line_start": 16,
+          "node_kind": "class",
+          "non_faithful_disclaimer_present": false,
+          "paper_inspired_term_present": false,
+          "path": "libreevolve/plugins/registry.py",
+          "qualname": "PluginRegistryError"
+        }
+      ],
+      "faithful_overclaim_hit_records": [],
+      "path": "libreevolve/plugins/registry.py",
+      "read_status": "ok"
+    },
+    {
+      "docstring_records": [
+        {
+          "docstring": "ThetaEvolve-inspired clipped-reward training-data export.\n\nThis accumulates examples only; it does not implement online GRPO/RL training.\nSource: arXiv 2511.23473. Hooks: on_evaluated, on_generation_end.\nWrites (prompt, response, reward) triples to grpo_data.jsonl.",
+          "line_start": 19,
+          "node_kind": "class",
+          "non_faithful_disclaimer_present": true,
+          "paper_inspired_term_present": true,
+          "path": "libreevolve/plugins/ttt_rl.py",
+          "qualname": "TTTRLPlugin"
+        }
+      ],
+      "faithful_overclaim_hit_records": [],
+      "path": "libreevolve/plugins/ttt_rl.py",
+      "read_status": "ok"
+    }
+  ],
+  "plugin_source_files": [
+    "libreevolve/plugins/__init__.py",
+    "libreevolve/plugins/base.py",
+    "libreevolve/plugins/causal.py",
+    "libreevolve/plugins/deep_research.py",
+    "libreevolve/plugins/modular.py",
+    "libreevolve/plugins/registry.py",
+    "libreevolve/plugins/ttt_rl.py"
+  ],
+  "plugin_source_root": "libreevolve/plugins",
+  "required_evidence_fields": [
+    "stable_non_goal_ids",
+    "plugin_source_file_inventory",
+    "plugin_docstring_scan",
+    "builtin_plugin_registry_labels",
+    "paper_inspiration_label_scan",
+    "faithful_claim_phrase_scan",
+    "paper_inspired_plugin_disclaimer_scan",
+    "runtime_metadata_scan",
+    "ci_non_goal_promotion_gate",
+    "intentional_promotion_workflow",
+    "claim_surface_remediation",
+    "runtime_plugin_scope_join",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_non_goal_plugin_docstring_boundary.v1",
+  "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",
+  "source_non_goal_count": 3,
+  "source_read_error_count": 0
+}

@@ -20,8 +20,8 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     assert boundary["claim_ready"] is False
     assert boundary["owner_record_count"] == 4
     assert boundary["raw_todo_ledger_active_count"] == 506
-    assert boundary["raw_todo_ledger_completed_count"] == 4662
-    assert boundary["raw_todo_ledger_total_count"] == 5168
+    assert boundary["raw_todo_ledger_completed_count"] == 4663
+    assert boundary["raw_todo_ledger_total_count"] == 5169
     assert boundary["active_ledger_completed_marker_count"] == 0
     assert boundary["completed_ledger_active_marker_count"] == 0
     assert (

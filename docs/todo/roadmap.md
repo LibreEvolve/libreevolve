@@ -342,11 +342,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     live provider/default pricing, raw replay, hard cancellation, equal-budget
     scheduler comparisons, first-class Gemini lanes, async reviewer overlap,
     reviewer isolation, and critique-to-revision attribution. Active code and
-    paper TODOs track those individual gaps.
-  - Current gap: there is no section-level readiness rubric, backend-role
-    capability matrix, critique-control checklist, or stale-readiness detector
-    proving when these scheduler/provider/critique pieces are coherent enough
-    to support AlphaEvolve-style claims, nor a guard that prevents one
+    paper TODOs track those individual gaps. The bounded
+    `papers/roadmap_backend_scheduling_critique_boundary.json` sidecar now
+    records nine tracks: heuristic UCB rewards, role-scoped routing, provider
+    diagnostics/pricing, cancellation/quarantine, fast/strong model mix,
+    sample efficiency, repeated-sampling baselines, Gemini provider parity, and
+    critique reviewer pools, with selection-policy, reward-assumption,
+    budget/quota, pricing/default-rate, diagnostics/replay, cancellation,
+    resume, equal-budget, reviewer-isolation, Gemini-substitution,
+    sidecar-ref, active-TODO, validation-gate, and readiness labels.
+  - Current gap: there is no backend-role capability matrix,
+    critique-control checklist, calibrated reward policy, role quota ownership,
+    live provider pricing/default evidence, raw provider replay, live hard
+    cancellation, equal-budget scheduler comparator, first-class Gemini lane
+    evidence, async reviewer isolation, stale-readiness detector, or owner
+    signoff proving when these scheduler/provider/critique pieces are coherent
+    enough to support AlphaEvolve-style claims, nor a guard that prevents one
     completed subfeature from implying full backend scheduling maturity.
   - Required result: add ROADMAP backend-scheduling criteria that classify each
     role and provider lane by selection policy, reward assumptions, budget and

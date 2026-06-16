@@ -15228,3 +15228,25 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     plugin registry, artifact lifecycle hash policy, runtime isolation policy,
     paper-scope attribution policy, stale-readiness detector, and owner review
     signoff remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP backend-scheduling and critique matrix.
+  - Spec evidence: AlphaEvolve-style backend scheduling and critique readiness
+    depends on coherent reward assumptions, role-scoped routing, provider
+    diagnostics, pricing, cancellation, fast/strong lanes, sample-efficiency
+    evidence, repeated-sampling comparators, Gemini parity, and reviewer-pool
+    controls rather than any single completed subfeature.
+  - Status: `papers/roadmap_backend_scheduling_critique_boundary.json` now
+    records nine tracks: heuristic UCB rewards, role-scoped routing, provider
+    diagnostics/pricing, cancellation/quarantine, fast/strong model mix,
+    sample efficiency, repeated-sampling baselines, Gemini provider parity, and
+    critique reviewer pools, with selection-policy, reward-assumption,
+    budget/quota, pricing/default-rate, diagnostics/replay, cancellation,
+    resume, equal-budget, reviewer-isolation, Gemini-substitution,
+    sidecar-ref, active-TODO, validation-gate, and readiness labels. The
+    paper-manifest gate now requires and validates the sidecar at the repo
+    root.
+  - Remaining roadmap gap: backend-role capability matrix, critique-control
+    checklist, calibrated reward policy, role quota ownership, live provider
+    pricing/default evidence, raw provider replay, live hard cancellation,
+    equal-budget scheduler comparators, first-class Gemini lanes, async
+    reviewer isolation, stale-readiness detector, and owner review signoff
+    remain active in `docs/todo/roadmap.md`.

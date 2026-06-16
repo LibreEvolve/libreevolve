@@ -2914,6 +2914,17 @@ Implemented:
   value/schema registry, versioned custom plugin registry, artifact lifecycle
   hash policy, runtime isolation policy, paper-scope attribution policy,
   stale-readiness detector, or owner review signoff.
+- `papers/roadmap_backend_scheduling_critique_boundary.json`: ROADMAP
+  backend-scheduling and critique sidecar with nine tracks, selection-policy,
+  reward-assumption, budget/quota, pricing/default-rate, diagnostics/replay,
+  cancellation, resume, equal-budget, reviewer-isolation,
+  Gemini-substitution, sidecar-ref, active-TODO, validation-gate, and
+  readiness labels. It is not evidence of a backend-role capability matrix,
+  critique-control checklist, calibrated reward policy, role quota ownership,
+  live provider pricing/default evidence, raw provider replay, live hard
+  cancellation, equal-budget scheduler comparator, first-class Gemini lane
+  evidence, async reviewer isolation, stale-readiness detector, or owner
+  review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

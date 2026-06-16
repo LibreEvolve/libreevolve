@@ -1271,6 +1271,7 @@ Important limits:
   `papers/roadmap_operational_maturity_boundary.json`,
   `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
   `papers/roadmap_plugin_extensibility_boundary.json`,
+  `papers/roadmap_backend_scheduling_critique_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1313,6 +1314,19 @@ Important limits:
   plugin trust-boundary matrix, plugin admission checklist, direct constructor
   value/schema registry, versioned custom plugin registry, artifact lifecycle
   hash policy, runtime isolation policy, paper-scope attribution policy,
+  stale-readiness detector, or owner review signoff.
+- ROADMAP backend-scheduling and critique evidence now records nine tracks:
+  heuristic UCB rewards, role-scoped routing, provider diagnostics/pricing,
+  cancellation/quarantine, fast/strong model mix, sample efficiency,
+  repeated-sampling baselines, Gemini provider parity, and critique reviewer
+  pools, with selection-policy, reward-assumption, budget/quota,
+  pricing/default-rate, diagnostics/replay, cancellation, resume,
+  equal-budget, reviewer-isolation, Gemini-substitution, sidecar-ref,
+  active-TODO, validation-gate, and readiness labels. This is not a
+  backend-role capability matrix, critique-control checklist, calibrated
+  reward policy, role quota ownership, live provider pricing/default evidence,
+  raw provider replay, live hard cancellation, equal-budget scheduler
+  comparator, first-class Gemini lane evidence, async reviewer isolation,
   stale-readiness detector, or owner review signoff.
 - ROADMAP operational-maturity evidence now records six section-level criteria
   with risk classes, current sidecar refs, active TODO refs, and

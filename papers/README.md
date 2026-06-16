@@ -2925,6 +2925,18 @@ Implemented:
   cancellation, equal-budget scheduler comparator, first-class Gemini lane
   evidence, async reviewer isolation, stale-readiness detector, or owner
   review signoff.
+- `papers/roadmap_async_resumable_runtime_boundary.json`: ROADMAP
+  async/resumable-runtime sidecar with nine criteria for topology, parallel
+  evaluation, controller pending work, archive-event replay, RNG/lineage
+  replay, provider/plugin nondeterminism, budget resume, environment replay,
+  and resumed-trace proof, with current scope, missing-readiness,
+  sidecar-ref, active-TODO, validation-gate, and readiness labels. It is not
+  evidence of an async-state inventory, replay-resume acceptance checklist,
+  controller queue checkpoint, LLM sampler task state, evaluator pending-work
+  state, deterministic async merge/admission order, ordered migration restore
+  engine, provider-output replay, plugin RNG replay, async budget accounting,
+  external environment replay, end-to-end resumed trace proof,
+  stale-readiness detector, or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

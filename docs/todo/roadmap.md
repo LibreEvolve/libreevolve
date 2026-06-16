@@ -382,12 +382,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     lineage replay, and LLM budget policy. Active code and paper TODOs already
     track async evaluator workers, concurrent proposal control, ordered archive
     replay, pending-work controller resume, budget resume, provider replay,
-    RNG/resumed-trace proof, and external environment replay.
-  - Current gap: there is no section-level readiness rubric, async-state
-    inventory, replay-resume acceptance checklist, or stale-readiness detector
-    tying those runtime pieces together, so partial synchronous restore or
-    sample-worker fan-out could be mistaken for full async/resumable runtime
-    parity.
+    RNG/resumed-trace proof, and external environment replay. The bounded
+    `papers/roadmap_async_resumable_runtime_boundary.json` sidecar now records
+    nine criteria for topology, parallel evaluation, controller pending work,
+    archive-event replay, RNG/lineage replay, provider/plugin nondeterminism,
+    budget resume, environment replay, and resumed-trace proof, with current
+    scope, missing-readiness, sidecar-ref, active-TODO, validation-gate, and
+    readiness labels.
+  - Current gap: there is no async-state inventory, replay-resume acceptance
+    checklist, controller queue checkpoint, LLM sampler task state, evaluator
+    pending-work state, deterministic async merge/admission order, ordered
+    migration restore engine, provider-output replay, plugin RNG replay, async
+    budget accounting, external environment replay, end-to-end resumed trace
+    proof, stale-readiness detector, or owner signoff tying those runtime
+    pieces together, so partial synchronous restore or sample-worker fan-out
+    could be mistaken for full async/resumable runtime parity.
   - Required result: add ROADMAP async/resumable-runtime criteria that classify
     controller queues, LLM sampler tasks, evaluator workers, pending-work
     checkpoints, deterministic merge/admission order, archive/event replay,

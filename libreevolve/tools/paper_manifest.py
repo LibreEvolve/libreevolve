@@ -223,6 +223,10 @@ from libreevolve.problems.benchmarks.roadmap_backend_scheduling_critique_boundar
     roadmap_backend_scheduling_critique_boundary_record,
     validate_roadmap_backend_scheduling_critique_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_async_resumable_runtime_boundary import (
+    roadmap_async_resumable_runtime_boundary_record,
+    validate_roadmap_async_resumable_runtime_boundary,
+)
 from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import (
     implementation_evidence_map_boundary_record,
     validate_implementation_evidence_map_boundary,
@@ -775,6 +779,7 @@ ROADMAP_OPERATIONAL_MATURITY_BOUNDARY_FILE = "papers/roadmap_operational_maturit
 ROADMAP_REPRESENTATIVE_BENCHMARK_PORTFOLIO_BOUNDARY_FILE = "papers/roadmap_representative_benchmark_portfolio_boundary.json"
 ROADMAP_PLUGIN_EXTENSIBILITY_BOUNDARY_FILE = "papers/roadmap_plugin_extensibility_boundary.json"
 ROADMAP_BACKEND_SCHEDULING_CRITIQUE_BOUNDARY_FILE = "papers/roadmap_backend_scheduling_critique_boundary.json"
+ROADMAP_ASYNC_RESUMABLE_RUNTIME_BOUNDARY_FILE = "papers/roadmap_async_resumable_runtime_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
 BENCHMARK_COVERAGE_INVENTORY_FILE = "papers/benchmark_coverage_inventory.json"
 STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
@@ -1439,6 +1444,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_representative_benchmark_portfolio_boundary(root_path))
     issues.extend(_validate_roadmap_plugin_extensibility_boundary(root_path))
     issues.extend(_validate_roadmap_backend_scheduling_critique_boundary(root_path))
+    issues.extend(_validate_roadmap_async_resumable_runtime_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
@@ -4315,6 +4321,41 @@ def _validate_roadmap_backend_scheduling_critique_boundary(root_path: Path) -> l
             f"roadmap_backend_scheduling_critique_boundary_{issue.code}",
             issue.message,
             "roadmap_backend_scheduling_critique",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_async_resumable_runtime_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_ASYNC_RESUMABLE_RUNTIME_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_async_resumable_runtime_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_ASYNC_RESUMABLE_RUNTIME_BOUNDARY_FILE} must emit "
+                        "ROADMAP async and resumable runtime metadata"
+                    ),
+                    "roadmap_async_resumable_runtime",
+                )
+            ]
+        return []
+    report = validate_roadmap_async_resumable_runtime_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_async_resumable_runtime_boundary_{issue.code}",
+            issue.message,
+            "roadmap_async_resumable_runtime",
         )
         for issue in report.issues
     ]

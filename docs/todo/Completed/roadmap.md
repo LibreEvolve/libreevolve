@@ -15250,3 +15250,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     equal-budget scheduler comparators, first-class Gemini lanes, async
     reviewer isolation, stale-readiness detector, and owner review signoff
     remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP async/resumable-runtime readiness matrix.
+  - Spec evidence: AlphaEvolve Section 2.6-style runtime readiness requires
+    concurrent proposal/evaluation control, pending-work resume, ordered
+    archive replay, budget accounting, provider/plugin nondeterminism policy,
+    and resumed-trace proof, not only terminal synchronous snapshots.
+  - Status: `papers/roadmap_async_resumable_runtime_boundary.json` now records
+    nine criteria for topology, parallel evaluation, controller pending work,
+    archive-event replay, RNG/lineage replay, provider/plugin nondeterminism,
+    budget resume, environment replay, and resumed-trace proof, with current
+    scope, missing-readiness, sidecar-ref, active-TODO, validation-gate, and
+    readiness labels. The paper-manifest gate now requires and validates the
+    sidecar at the repo root.
+  - Remaining roadmap gap: async-state inventory, replay-resume acceptance
+    checklist, controller queue checkpoints, LLM sampler task state, evaluator
+    pending-work state, deterministic async merge/admission order, ordered
+    migration restore engine, provider-output replay, plugin RNG replay, async
+    budget accounting, external environment replay, end-to-end resumed trace
+    proof, stale-readiness detector, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

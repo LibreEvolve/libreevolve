@@ -18,7 +18,8 @@ Implemented today:
 - Python-primary candidate workspaces and seed programs.
 - SEARCH/REPLACE diff mutations using the AlphaEvolve fence format.
 - Full-code replacement mode when configured.
-- OpenAI, Anthropic, and Ollama backend adapters.
+- OpenAI, Anthropic, Ollama, and configured custom import-path backend
+  support.
 - A heuristic UCB-style backend selector.
 - Synchronous MAP-Elites and island archives, with five islands by default.
 - Local subprocess evaluation with staged validator support.

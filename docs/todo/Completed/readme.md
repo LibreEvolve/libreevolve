@@ -4,6 +4,21 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Align `docs/status.md` implemented backend support with README/backend
+      docs.
+  - Status: the `docs/status.md` "Implemented today" list now includes
+    configured custom import-path backend support instead of naming only the
+    bundled OpenAI, Anthropic, and Ollama adapters.
+  - Evidence: `README.md` and `docs/backends.md` already document custom
+    import-path backend support, while the `docs/status.md` provider-limit
+    paragraph still keeps first-class Gemini and CLI/Codex-authenticated
+    provider lanes scoped as missing.
+  - Remaining guard: the active status-ledger freshness TODO still needs
+    cross-surface semantic checks so future README/backend/status drift is
+    detected automatically rather than by manual review.
+  - Verification: regenerated documentation/status sidecars and focused
+    manifest checks include the updated status-ledger bullet hash.
+
 - [x] Add structural `docs/status.md` ledger inventory to documentation claim
       evidence.
   - Status: `papers/documentation_claim_inventory.json` now records

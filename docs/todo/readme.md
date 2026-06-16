@@ -260,14 +260,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     collision/overwrite lifecycle is not yet unified. The status ledger does
     not expose that artifact-lifecycle boundary in its high-level run-artifact
     summary.
-    A third current drift example is backend support: `docs/status.md` lists
-    only OpenAI, Anthropic, and Ollama under "Implemented today", while the
-    root README and `docs/backends.md` describe custom import-path backends as
-    supported. `docs/status.md` mentions custom wrappers only later in a
-    provider-limit paragraph, so its implemented capability list can understate
-    extension-point support and blur the distinction between built-in adapters,
-    custom wrappers, and still-missing first-class CLI/Codex-authenticated
-    provider lanes.
+    A resolved narrow drift example is backend support: `docs/status.md`
+    previously listed only OpenAI, Anthropic, and Ollama under "Implemented
+    today", while the root README and `docs/backends.md` described custom
+    import-path backends as supported. The status ledger now includes
+    configured custom import-path backend support in the implemented list,
+    while the provider-limit paragraph still preserves the missing
+    first-class Gemini and CLI/Codex-authenticated provider-lane boundary.
     A resolved narrow drift example is generated-inventory count freshness:
     after the paper-index TODO coverage update, the current
     `papers/status_claim_inventory.json` recorded `1054` row-specific TODO

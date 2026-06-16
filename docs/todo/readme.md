@@ -740,6 +740,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     AlphaEvolve Gemini/model-mix parity. There is also no check that
     development docs update when supported provider families, placeholder
     syntax, example run names, or provider-backed smoke policy changes.
+    A current inspection-linkage drift is that the guide shows a
+    `circle_packing` Anthropic run immediately before
+    `py -3.12 -m libreevolve show runs/hello_world`, so only the OpenAI
+    `hello_world` example has an obvious paired inspection path. There is no
+    explicit `--run-name`, `--overwrite`, or `show runs/circle_packing`
+    guidance proving that each provider example has a distinct expected run
+    directory and post-run inspection contract.
   - Required result: add a development-guide provider example inventory and
     validator or smoke artifact that maps each documented command to a
     provider family, placeholder/model-availability evidence, expected run

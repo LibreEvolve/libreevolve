@@ -8371,6 +8371,36 @@ sidecars, tests, and active TODOs.
     updates whenever benchmark profiles, local CLI adapters, or cited run
     evidence change.
 
+- [ ] Add benchmark goal-prompt provenance for external Codex-authenticated
+      runs.
+  - Spec evidence: AlphaEvolve-style benchmark evidence needs the task
+    objective, evaluator contract, model/backend selection, budget, and
+    artifact expectations to be reproducible from committed experiment inputs.
+    When an external Codex-authenticated agent is asked to run a benchmark from
+    a natural-language goal prompt, that prompt becomes part of the experiment
+    protocol rather than an incidental chat message.
+  - Current evidence: active TODOs already track first-class
+    subprocess/CLI-authenticated provider contracts, local Codex profile
+    hygiene, and a clean-checkout `sorting_network_9` run recipe. Those items
+    cover provider lane support and runnable config, but they do not define how
+    a human-authored benchmark goal prompt is stored, bounded, reviewed, tied
+    to a model such as `gpt-5.3-codex-spark`, or linked to the resulting run
+    artifacts. Recent local work also depends on an under-4000-character goal
+    prompt for a Codex-authenticated benchmark handoff, but the repository has
+    no schema or docs surface that would make that prompt replayable evidence.
+  - Current gap: there is no committed benchmark goal-prompt artifact, prompt
+    schema, character-limit check, model/auth-lane binding, redaction policy,
+    reviewer/source provenance, or run-manifest link that can prove which
+    external-agent instruction produced a cited Codex-authenticated benchmark
+    attempt. A successful run could therefore be hard to audit or repeat even
+    if the problem fixture and provider profile are later committed.
+  - Required result: add a versioned benchmark goal-prompt artifact format
+    with stable prompt ids, character counts, model/backend/auth-lane
+    references, problem/evaluator/budget/run-name fields, expected artifact
+    outputs, secret-redaction and transcript-retention policy, reviewer/source
+    metadata, and validation that cited benchmark runs link back to the exact
+    committed prompt without treating the prompt alone as rediscovery evidence.
+
 - [ ] Align generated prompt-table artifacts with run-directory collision and
       overwrite cleanup policy.
   - Spec evidence: AlphaEvolve-style experiment runs need self-contained,

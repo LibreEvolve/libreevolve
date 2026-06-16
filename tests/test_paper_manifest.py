@@ -2749,6 +2749,89 @@ def test_validate_paper_manifest_requires_documentation_truthfulness_boundary_at
     assert "documentation_truthfulness_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_docs_status_ledger_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    (tmp_path / "docs" / "todo").mkdir(parents=True)
+    (tmp_path / "papers").mkdir(exist_ok=True)
+    (tmp_path / "README.md").write_text("[docs/status.md](docs/status.md)\n", encoding="utf-8")
+    (tmp_path / "docs" / "README.md").write_text(
+        "[Current Status](./status.md)\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "docs" / "todo" / "readme.md").write_text(
+        "Add `docs/status.md` ledger freshness and coverage evidence.\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "docs" / "status.md").write_text(
+        "# Current Implementation Status\n"
+        "\n"
+        "Implemented today:\n"
+        "- Implemented local smoke support.\n"
+        "\n"
+        "Important limits:\n"
+        "- Missing semantic freshness proof.\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "papers" / "README.md").write_text(
+        "papers/status_claim_inventory.json\n",
+        encoding="utf-8",
+    )
+    sidecar = tmp_path / paper_manifest.DOCS_STATUS_LEDGER_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.docs_status_ledger_boundary_record(tmp_path),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_docs_status_ledger_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.docs_status_ledger_boundary_record(tmp_path)
+    record["claim_ready"] = True
+    record["boundary_status"] = "docs_status_semantic_freshness_verified"
+    record["missing_evidence"]["owner_review_signoff"] = "recorded"
+    sidecar = tmp_path / paper_manifest.DOCS_STATUS_LEDGER_BOUNDARY_FILE
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "docs_status_ledger_boundary_claim_ready_overclaim" in codes
+    assert "docs_status_ledger_boundary_invalid_boundary_status" in codes
+    assert (
+        "docs_status_ledger_boundary_invalid_missing_evidence_owner_review_signoff"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_docs_status_ledger_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "docs_status_ledger_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_documentation_claim_inventory(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

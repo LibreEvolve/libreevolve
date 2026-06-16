@@ -19,6 +19,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "completed_todo_ledgers",
     "docs_readme_routing",
     "docs_index_reader_path_inventory",
+    "docs_status_ledger_inventory",
     "github_actions_docs_path_filters",
     "paper_manifest_readme_consistency",
     "paper_manifest_papers_index_consistency",
@@ -82,7 +83,7 @@ def documentation_truthfulness_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has README status scoping, "
             "ROADMAP status scoping, papers-index status scoping, active and "
             "completed TODO ledgers, docs/README routing, docs-index reader-path "
-            "inventory, GitHub Actions docs path filters, paper-manifest README and papers-index consistency "
+            "inventory, docs/status.md ledger inventory, GitHub Actions docs path filters, paper-manifest README and papers-index consistency "
             "checks, paper-manifest TODO coverage rows, stale source-specific "
             "absence wording checks, a boundary sidecar registry, a top-level "
             "tracked legacy-surface inventory, README AGENTS.md routing "

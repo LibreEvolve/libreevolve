@@ -1314,6 +1314,7 @@ Important limits:
   `papers/roadmap_multi_objective_readiness_boundary.json`,
   `papers/documentation_truthfulness_boundary.json`,
   `papers/docs_index_reader_path_boundary.json`,
+  `papers/docs_status_ledger_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
@@ -1328,6 +1329,13 @@ Important limits:
   AlphaEvolve-alignment cleanup marker. This is not semantic route-purpose
   verification, target-scope agreement verification, new-major-doc detection,
   misplaced-claim detection, or owner review signoff.
+- Docs-status ledger evidence now records the `docs/status.md` heading,
+  implemented-today and important-limits bullet counts, status-signal terms,
+  local backtick path existence checks, README/docs-index/papers-index/TODO
+  route markers, `papers/documentation_claim_inventory.json` status-ledger
+  fields, and `papers/status_claim_inventory.json` summary fields. This is
+  not a per-bullet source/test/sidecar/TODO map, stale status prose detector,
+  orphan status bullet detector, or owner review signoff.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
   classification, obsolete `alphaevolve/*` path signals, legacy checkbox plan

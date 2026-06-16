@@ -2850,6 +2850,14 @@ Implemented:
   cleanup marker. It is not semantic route-purpose verification,
   target-scope agreement verification, new-major-doc detection,
   misplaced-claim detection, or owner review signoff.
+- `papers/docs_status_ledger_boundary.json`: docs-status ledger sidecar. It
+  records the `docs/status.md` heading, implemented-today and important-limits
+  bullet counts, status-signal terms, local backtick path existence checks,
+  README/docs-index/papers-index/TODO route markers,
+  `papers/documentation_claim_inventory.json` status-ledger fields, and
+  `papers/status_claim_inventory.json` summary fields. It is not a per-bullet
+  source/test/sidecar/TODO map, stale status prose detector, orphan status
+  bullet detector, or owner review signoff.
 - `papers/tracked_legacy_surface_boundary.json`: tracked legacy-surface
   sidecar for `old/**` planning material. It records the committed legacy
   Markdown inventory, archival/non-authoritative classification, self-

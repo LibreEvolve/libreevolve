@@ -267,6 +267,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     tracks selected README/ROADMAP/papers-index claims plus a structural
     `docs/status.md` ledger inventory for implemented/limit bullet spans,
     hashes, status-signal terms, and local backtick-path existence records.
+    `papers/docs_status_ledger_boundary.json` now adds a narrower
+    status-ledger freshness boundary that checks the status heading,
+    implemented/limit bullet counts, local path refs, README/docs-index/
+    papers-index/TODO route markers, documentation-claim status fields, and
+    `papers/status_claim_inventory.json` summary fields.
     Existing paper status-claim inventory validation checks
     `papers/README.md` row claims in much more detail than the larger
     `docs/status.md` ledger.
@@ -274,8 +279,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and missing-status bullet to source modules, tests, ROADMAP entries, paper
     sidecars, active/completed TODO anchors, and `papers/README.md` rows, or
     detect stale status prose when code, ROADMAP, paper status rows, or TODO
-    coverage changes. This leaves the README's "full implemented-versus-
-    missing ledger" claim weaker than the paper-index status inventory.
+    coverage changes. The new status-ledger sidecar catches structural drift
+    and route/count freshness, but the README's "full implemented-versus-
+    missing ledger" claim is still weaker than the paper-index row-level
+    status inventory.
     A resolved narrow drift example is embedded-evaluator status wording:
     after the embedded-evaluator TODOs were tightened, active code/paper TODOs
     named the missing generated/interactive task-input replay contract for
@@ -314,8 +321,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     status-ledger bullet structure, but this is only structural/count coverage;
     the broader status-ledger evidence mapping and cross-surface freshness
     matrix are still missing.
-  - Required result: add a status-ledger freshness artifact and validator that
-    inventories `docs/status.md` bullets, links each claim to current
+  - Required result: extend the status-ledger freshness artifact into a
+    semantic validator that links each `docs/status.md` claim to current
     implementation/sidecar/TODO evidence or explicit absence scope, compares
     overlapping claims with README, ROADMAP, `papers/README.md`, and paper
     sidecars, and fails when status wording drifts from authoritative current

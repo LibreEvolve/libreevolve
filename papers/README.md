@@ -2841,8 +2841,8 @@ Implemented:
   README/ROADMAP/papers-index claim-inventory, backend CLI-provider guardrail
   inventory, backend-guide contract drift inventory, plugin-guide contract
   drift inventory, README Problem Layout inventory, problem-format loader-
-  contract inventory, README provider-example matrix inventory, README
-  CLI-provider guardrail inventory, and focused
+  contract inventory, README Example Scope inventory, README provider-example
+  matrix inventory, README CLI-provider guardrail inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
@@ -2944,6 +2944,14 @@ Implemented:
   path, sidecar, and TODO anchors. It is not semantic problem-format claim
   verification, per-manifest-key executable traces, a docs CI drift gate, new
   problem-surface detection, or owner review signoff.
+- `papers/readme_example_scope_boundary.json`: README Example Scope sidecar.
+  It records README section markers, the shipped-example scope registry, the
+  committed example-scope JSON sidecar, example path existence, smoke and
+  benchmark-candidate classifications, sorting-network boundary anchors,
+  benchmark fixture-readiness anchors, hardening and validator test anchors,
+  status/papers index anchors, and active TODO ownership. It is not semantic
+  scope-claim verification, runtime metadata comparison, a paper-comparable
+  certification gate, new example-surface detection, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

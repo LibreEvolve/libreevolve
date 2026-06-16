@@ -666,25 +666,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     evidence. That distinction is central to AlphaEvolve-alignment truthfulness
     because examples can otherwise be mistaken for reproduced benchmark
     results.
-  - Current evidence: README says bundled examples are intentionally small,
-    distinguishes optimization-pressure seeds from neutral plateau/diversity
-    fixtures, scopes `sorting_network_8` and `sorting_network_9` as bounded
-    benchmark candidates rather than paper-comparable evidence, and points to
-    `papers/sorting_network_rediscovery_boundary.json`. Code and paper TODOs
-    already track stronger benchmark fixtures, benchmark-hardening reports,
-    example-scope registries, sorting-network repeated-run/source-citation/
-    certification evidence, matrix and constructive-math benchmark artifacts,
-    and broader representative-benchmark readiness.
-  - Current gap: no README-owned validator, sidecar, or drift check parses the
-    example-scope wording, compares it with the example-scope registry,
-    problem docs, runtime `benchmark_fixture_readiness_report` records,
-    sorting-network boundary sidecars, and `papers/README.md` status rows, or
-    detects when a smoke fixture, benchmark candidate, or paper-comparable
-    claim changes without README/TODO updates.
-  - Required result: add README example-scope evidence that maps each bundled
-    example family to its scope classification, validator strength,
-    benchmark-readiness artifacts, paper-comparability status, and required
-    future certification gates; validate that README, problem docs, ROADMAP,
+  - Current evidence: `papers/readme_example_scope_boundary.json` now records
+    README section markers, the shipped-example scope registry, the committed
+    `papers/example_benchmark_scope.json` sidecar, example path existence,
+    smoke and benchmark-candidate classifications, sorting-network boundary
+    anchors, benchmark fixture-readiness anchors, hardening and validator test
+    anchors, status/papers index anchors, and active TODO ownership. It
+    preserves the current split between six smoke fixtures and two
+    non-comparable benchmark candidates, with zero shipped examples marked as
+    paper-comparable.
+  - Current gap: the new boundary is structural evidence only. It does not
+    semantically verify every scope sentence, compare runtime
+    `benchmark_fixture_readiness_report` records against README wording,
+    enforce paper-comparable certification gates, detect every newly added
+    example surface, or include owner review signoff. A smoke fixture,
+    benchmark candidate, or paper-comparable claim can therefore still require
+    manual review beyond marker/registry/path checks.
+  - Required result: add semantic scope-claim verification, runtime metadata
+    comparison, paper-comparable certification gating, new example-surface
+    detection, and owner review signoff so README, problem docs, ROADMAP,
     papers, and runtime metadata cannot promote smoke examples or benchmark
     candidates into paper-comparable claims until the mapped evidence exists.
 

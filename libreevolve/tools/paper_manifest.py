@@ -227,6 +227,10 @@ from libreevolve.problems.benchmarks.problem_format_loader_contract_boundary imp
     problem_format_loader_contract_boundary_record,
     validate_problem_format_loader_contract_boundary,
 )
+from libreevolve.problems.benchmarks.readme_example_scope_boundary import (
+    readme_example_scope_boundary_record,
+    validate_readme_example_scope_boundary,
+)
 from libreevolve.problems.benchmarks.readme_quick_start_smoke_boundary import (
     readme_quick_start_smoke_boundary_record,
     validate_readme_quick_start_smoke_boundary,
@@ -1005,6 +1009,7 @@ README_DOCUMENTATION_MAP_BOUNDARY_FILE = "papers/readme_documentation_map_bounda
 README_REPOSITORY_LAYOUT_BOUNDARY_FILE = "papers/readme_repository_layout_boundary.json"
 README_PROBLEM_LAYOUT_BOUNDARY_FILE = "papers/readme_problem_layout_boundary.json"
 PROBLEM_FORMAT_LOADER_CONTRACT_BOUNDARY_FILE = "papers/problem_format_loader_contract_boundary.json"
+README_EXAMPLE_SCOPE_BOUNDARY_FILE = "papers/readme_example_scope_boundary.json"
 README_QUICK_START_SMOKE_BOUNDARY_FILE = "papers/readme_quick_start_smoke_boundary.json"
 README_INSTALL_SMOKE_BOUNDARY_FILE = "papers/readme_install_smoke_boundary.json"
 README_PROVIDER_AUTH_BOUNDARY_FILE = "papers/readme_provider_auth_boundary.json"
@@ -1727,6 +1732,7 @@ def validate_paper_manifest(
     issues.extend(_validate_readme_repository_layout_boundary(root_path))
     issues.extend(_validate_readme_problem_layout_boundary(root_path))
     issues.extend(_validate_problem_format_loader_contract_boundary(root_path))
+    issues.extend(_validate_readme_example_scope_boundary(root_path))
     issues.extend(_validate_readme_quick_start_smoke_boundary(root_path))
     issues.extend(_validate_readme_install_smoke_boundary(root_path))
     issues.extend(_validate_readme_provider_auth_boundary(root_path))
@@ -4666,6 +4672,38 @@ def _validate_problem_format_loader_contract_boundary(root_path: Path) -> list[P
             f"problem_format_loader_contract_boundary_{issue.code}",
             issue.message,
             "problem_format_loader_contract",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_readme_example_scope_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / README_EXAMPLE_SCOPE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "readme_example_scope_boundary_manifest_missing",
+                    (
+                        f"{README_EXAMPLE_SCOPE_BOUNDARY_FILE} must emit "
+                        "README example-scope metadata"
+                    ),
+                    "readme_example_scope",
+                )
+            ]
+        return []
+    report = validate_readme_example_scope_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"readme_example_scope_boundary_{issue.code}",
+            issue.message,
+            "readme_example_scope",
         )
         for issue in report.issues
     ]

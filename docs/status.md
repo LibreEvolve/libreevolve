@@ -1442,14 +1442,15 @@ Important limits:
   stale-phase detector is recorded by
   `papers/roadmap_phase_staleness_boundary.json`. The written phase
   promotion/demotion workflow is recorded by
-  `papers/roadmap_phase_promotion_workflow_boundary.json`. This is not a CI
-  phase freshness gate, evidence-status refresh report, or owner review
-  signoff.
+  `papers/roadmap_phase_promotion_workflow_boundary.json`. The bounded CI
+  phase freshness gate is recorded by
+  `papers/roadmap_phase_ci_freshness_gate_boundary.json`. This is not an
+  evidence-status refresh report or owner review signoff.
 - ROADMAP phase freshness evidence now records six readiness criteria for the
   dependency graph, stale-phase detector, promotion/demotion workflow, CI
   phase freshness gate, evidence-status refresh report, and owner review
-  signoff. This is not an implemented CI gate, evidence refresh report, or
-  owner review signoff.
+  signoff. This is not an implemented evidence refresh report or owner review
+  signoff.
 - ROADMAP representative-benchmark portfolio evidence now records five
   portfolio families spanning sorting-network rediscovery, matrix tensor
   targets, constructive-math geometry, systems/kernel/scheduling work, and

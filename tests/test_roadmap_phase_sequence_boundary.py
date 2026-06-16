@@ -14,7 +14,7 @@ def test_roadmap_phase_sequence_accepts_bounded_phase_map():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_phase_sequence_map_with_phase_lifecycle_workflow"
+        == "bounded_phase_sequence_map_with_ci_freshness_gate"
     )
     assert boundary["schema"] == ROADMAP_PHASE_SEQUENCE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -32,11 +32,10 @@ def test_roadmap_phase_sequence_accepts_bounded_phase_map():
     assert all(record["roadmap_heading_present"] for record in boundary["section_records"])
     assert all(record["blocking_todo_present"] for record in boundary["section_records"])
     assert boundary["missing_evidence"] == {
-        "ci_phase_freshness_gate": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert (
-        "phase promotion/demotion workflow are recorded separately"
+        "CI phase freshness gate are recorded separately"
         in boundary["claim_boundary"]
     )
 
@@ -48,7 +47,7 @@ def test_roadmap_phase_sequence_rejects_overclaim_and_reordered_sections():
     boundary["section_sequence_status"] = "roadmap_major_sections_missing_or_reordered"
     boundary["section_records"][0]["roadmap_heading_present"] = False
     boundary["active_blocking_todo_ref_count"] = 9
-    boundary["missing_evidence"]["ci_phase_freshness_gate"] = "recorded"
+    boundary["missing_evidence"]["owner_review_signoff"] = "recorded"
     boundary["required_evidence_fields"] = ["phase_headings"]
 
     validation = validate_roadmap_phase_sequence_boundary(boundary)
@@ -62,7 +61,7 @@ def test_roadmap_phase_sequence_rejects_overclaim_and_reordered_sections():
     assert "invalid_active_blocking_todo_ref_count" in codes
     assert "invalid_section_sequence" in codes
     assert "missing_blocking_todo_ref" in codes
-    assert "invalid_missing_evidence_ci_phase_freshness_gate" in codes
+    assert "invalid_missing_evidence_owner_review_signoff" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -74,9 +73,9 @@ def test_render_roadmap_phase_sequence_summary_reports_shape():
     assert "ROADMAP phase sequence boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_phase_sequence_map_with_phase_lifecycle_workflow |"
+        "| boundary_status | bounded_phase_sequence_map_with_ci_freshness_gate |"
         in summary
     )
     assert "| phase_count | 3 |" in summary
     assert "| section_count | 10 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

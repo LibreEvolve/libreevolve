@@ -144,7 +144,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7919,
+          "line_start": 7935,
           "normalized_title": "add abnormal run finalization to runtime manifests",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -173,7 +173,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7643,
+          "line_start": 7659,
           "normalized_title": "add aggregate workspace syntax diagnostics to evaluator feedback work",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -231,7 +231,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7939,
+          "line_start": 7955,
           "normalized_title": "add atomic manifest write durability to runtime hardening",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -337,7 +337,7 @@
       "records": [
         {
           "ledger_kind": "completed",
-          "line_start": 15421,
+          "line_start": 15437,
           "normalized_title": "add bounded roadmap evaluation cascade readiness matrix",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -346,7 +346,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 15740,
+          "line_start": 15755,
           "normalized_title": "add bounded roadmap evaluation cascade readiness matrix",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -375,7 +375,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6660,
+          "line_start": 6676,
           "normalized_title": "add candidate path collision handling to candidate fidelity",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -404,7 +404,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6369,
+          "line_start": 6385,
           "normalized_title": "add cli config precedence semantics to runtime hardening",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -433,7 +433,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6314,
+          "line_start": 6330,
           "normalized_title": "add cli problem load error normalization to operational maturity",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -462,7 +462,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6198,
+          "line_start": 6214,
           "normalized_title": "add configuration schema validation to runtime hardening",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -549,7 +549,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7799,
+          "line_start": 7815,
           "normalized_title": "add evaluate only seed baseline mode to runtime work",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -578,7 +578,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6618,
+          "line_start": 6634,
           "normalized_title": "add file section path grammar hardening to candidate fidelity",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -636,7 +636,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 9976,
+          "line_start": 9992,
           "normalized_title": "add first run level rendered prompt character budget",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -694,7 +694,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7206,
+          "line_start": 7222,
           "normalized_title": "add live retrieval provenance to prompt plugin context work",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -723,7 +723,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7782,
+          "line_start": 7798,
           "normalized_title": "add llm backend preflight ordering to runtime artifact safety",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -781,7 +781,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6673,
+          "line_start": 6689,
           "normalized_title": "add mutation envelope diagnostics for partial parses",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -810,7 +810,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7499,
+          "line_start": 7515,
           "normalized_title": "add normalized llm call telemetry to backend scheduling work",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -868,7 +868,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6509,
+          "line_start": 6525,
           "normalized_title": "add run directory path confinement to runtime hardening",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -897,7 +897,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7899,
+          "line_start": 7915,
           "normalized_title": "add run wide compute budget accounting to runtime work",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -926,7 +926,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7310,
+          "line_start": 7326,
           "normalized_title": "add seed proposal source markers to prompt history traceability",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1013,7 +1013,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 7605,
+          "line_start": 7621,
           "normalized_title": "add validity archive aware run inspection to operational work",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1332,7 +1332,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5071,
+          "line_start": 5087,
           "normalized_title": "document committed alphaevolve companion colab source manifest",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1361,7 +1361,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5036,
+          "line_start": 5052,
           "normalized_title": "document committed follow on alphaevolve math source manifest",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1390,7 +1390,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5061,
+          "line_start": 5077,
           "normalized_title": "document companion notebook selection scope provenance",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1419,7 +1419,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5050,
+          "line_start": 5066,
           "normalized_title": "document companion repository rights rows on generated artifacts",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1448,7 +1448,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5150,
+          "line_start": 5166,
           "normalized_title": "document evolve block inner span mapping in prompt current binding",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1477,7 +1477,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 13368,
+          "line_start": 13384,
           "normalized_title": "document figure 3 marker source artifacts and final classification in",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1506,7 +1506,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5124,
+          "line_start": 5140,
           "normalized_title": "document full mode target span and block id records in prompt current",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1535,7 +1535,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5133,
+          "line_start": 5149,
           "normalized_title": "document prompt history row joins in prompt current binding evidence",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1564,7 +1564,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 13295,
+          "line_start": 13311,
           "normalized_title": "document the appendix a matrix suite publication artifact boundary in",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1593,7 +1593,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 13274,
+          "line_start": 13290,
           "normalized_title": "document the figure 4 matrix discovery artifact and lineage boundary in",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1622,7 +1622,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 13132,
+          "line_start": 13148,
           "normalized_title": "document the local appendix a matrix resource frontier absence boundary",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -1680,7 +1680,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 5141,
+          "line_start": 5157,
           "normalized_title": "document workspace file section span records in prompt current binding",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -2927,7 +2927,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6183,
+          "line_start": 6199,
           "normalized_title": "reframe the roadmap from mostly tightening contracts to closing major",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -2985,7 +2985,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 6164,
+          "line_start": 6180,
           "normalized_title": "refresh the roadmap date and status",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -3631,19 +3631,19 @@
       "active_ledger_completed_marker_count": 0,
       "active_ledger_exists": true,
       "active_path": "docs/todo/roadmap.md",
-      "completed_count": 1202,
+      "completed_count": 1203,
       "completed_ledger_active_marker_count": 0,
       "completed_ledger_exists": true,
       "completed_path": "docs/todo/Completed/roadmap.md",
       "owner_id": "roadmap",
       "owner_scope": "planning_priority_and_phase_evidence",
-      "total_count": 1218
+      "total_count": 1219
     }
   ],
   "raw_todo_ledger_active_count": 506,
-  "raw_todo_ledger_completed_count": 4676,
-  "raw_todo_ledger_completion_percent": 90.235,
-  "raw_todo_ledger_total_count": 5182,
+  "raw_todo_ledger_completed_count": 4677,
+  "raw_todo_ledger_completion_percent": 90.237,
+  "raw_todo_ledger_total_count": 5183,
   "required_evidence_fields": [
     "ledger_owner_inventory",
     "active_completed_marker_policy",

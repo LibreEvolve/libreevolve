@@ -14,7 +14,7 @@ def test_roadmap_phase_promotion_workflow_accepts_current_doc():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "phase_promotion_demotion_workflow_recorded_without_ci_or_signoff"
+        == "phase_promotion_demotion_workflow_recorded_with_ci_gate"
     )
     assert boundary["schema"] == ROADMAP_PHASE_PROMOTION_WORKFLOW_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -22,8 +22,8 @@ def test_roadmap_phase_promotion_workflow_accepts_current_doc():
     assert boundary["workflow_doc_exists"] is True
     assert validation.workflow_phrase_count == 9
     assert validation.claim_surface_count == 6
-    assert validation.sidecar_ref_count == 7
-    assert validation.missing_evidence_count == 3
+    assert validation.sidecar_ref_count == 8
+    assert validation.missing_evidence_count == 2
     assert all(record["present"] for record in boundary["workflow_phrases"].values())
     assert all(
         record["exists"] and record["listed_in_workflow"]
@@ -34,7 +34,6 @@ def test_roadmap_phase_promotion_workflow_accepts_current_doc():
         for record in boundary["sidecar_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "ci_phase_freshness_gate": "not_recorded_locally",
         "evidence_status_refresh": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
@@ -72,10 +71,10 @@ def test_render_roadmap_phase_promotion_workflow_summary_reports_shape():
     assert "ROADMAP phase promotion workflow boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | phase_promotion_demotion_workflow_recorded_without_ci_or_signoff |"
+        "| boundary_status | phase_promotion_demotion_workflow_recorded_with_ci_gate |"
         in summary
     )
     assert "| workflow_phrase_count | 9 |" in summary
     assert "| claim_surface_count | 6 |" in summary
-    assert "| sidecar_ref_count | 7 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| sidecar_ref_count | 8 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

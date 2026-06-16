@@ -14,7 +14,7 @@ def test_roadmap_phase_freshness_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_phase_freshness_matrix_with_promotion_workflow"
+        == "bounded_phase_freshness_matrix_with_ci_freshness_gate"
     )
     assert boundary["schema"] == ROADMAP_PHASE_FRESHNESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -48,12 +48,19 @@ def test_roadmap_phase_freshness_accepts_bounded_matrix():
     )
     assert (
         boundary["phase_promotion_workflow_status"]
-        == "phase_promotion_demotion_workflow_recorded_without_ci_or_signoff"
+        == "phase_promotion_demotion_workflow_recorded_with_ci_gate"
     )
     assert boundary["phase_promotion_workflow_phrase_count"] == 9
-    assert boundary["phase_promotion_workflow_sidecar_ref_count"] == 7
+    assert boundary["phase_promotion_workflow_sidecar_ref_count"] == 8
+    assert (
+        boundary["phase_ci_freshness_gate_input"]
+        == "papers/roadmap_phase_ci_freshness_gate_boundary.json"
+    )
+    assert boundary["phase_ci_freshness_gate_status"] == "phase_freshness_gate_present"
+    assert boundary["phase_ci_freshness_gate_record_count"] == 16
+    assert boundary["phase_ci_freshness_missing_gate_record_count"] == 0
     assert boundary["freshness_criterion_count"] == 6
-    assert boundary["sidecar_ref_count"] == 15
+    assert boundary["sidecar_ref_count"] == 16
     assert boundary["active_todo_ref_count"] == 12
     assert [record["criterion_id"] for record in boundary["freshness_criteria"]] == [
         "dependency_graph",
@@ -74,7 +81,6 @@ def test_roadmap_phase_freshness_accepts_bounded_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "ci_phase_freshness_gate": "not_recorded_locally",
         "evidence_status_refresh": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
@@ -88,7 +94,7 @@ def test_roadmap_phase_freshness_rejects_overclaim_and_drift():
     boundary["freshness_criterion_count"] = 0
     boundary["source_section_sequence_status"] = "roadmap_major_sections_missing_or_reordered"
     boundary["freshness_criteria"][0]["sidecar_refs"][0]["exists"] = False
-    boundary["missing_evidence"]["ci_phase_freshness_gate"] = "recorded"
+    boundary["missing_evidence"]["evidence_status_refresh"] = "recorded"
     boundary["required_evidence_fields"] = ["dependency_graph"]
 
     validation = validate_roadmap_phase_freshness_boundary(boundary)
@@ -101,7 +107,7 @@ def test_roadmap_phase_freshness_rejects_overclaim_and_drift():
     assert "invalid_source_section_sequence_status" in codes
     assert "invalid_freshness_criteria" in codes
     assert "invalid_source_section_sequence" in codes
-    assert "invalid_missing_evidence_ci_phase_freshness_gate" in codes
+    assert "invalid_missing_evidence_evidence_status_refresh" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -113,10 +119,10 @@ def test_render_roadmap_phase_freshness_summary_reports_shape():
     assert "ROADMAP phase freshness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_phase_freshness_matrix_with_promotion_workflow |"
+        "| boundary_status | bounded_phase_freshness_matrix_with_ci_freshness_gate |"
         in summary
     )
     assert "| freshness_criterion_count | 6 |" in summary
-    assert "| sidecar_ref_count | 15 |" in summary
+    assert "| sidecar_ref_count | 16 |" in summary
     assert "| active_todo_ref_count | 12 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

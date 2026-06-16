@@ -1,6 +1,6 @@
 {
-  "boundary_status": "bounded_phase_staleness_detector_with_promotion_workflow",
-  "claim_boundary": "This boundary records a bounded stale-phase detector for the current ROADMAP Near Term, Mid Term, and Longer Term sections by joining the phase sequence map, phase dependency graph, active blocker TODO refs, section sidecar presence, and dependency edge status. It rejects stale phase records. The phase promotion/demotion workflow is recorded separately. CI phase freshness gating, evidence-status refresh reporting, and owner review signoff remain missing.",
+  "boundary_status": "bounded_phase_staleness_detector_with_ci_freshness_gate",
+  "claim_boundary": "This boundary records a bounded stale-phase detector for the current ROADMAP Near Term, Mid Term, and Longer Term sections by joining the phase sequence map, phase dependency graph, active blocker TODO refs, section sidecar presence, and dependency edge status. It rejects stale phase records. The phase promotion/demotion workflow and CI phase freshness gate are recorded separately. Evidence-status refresh reporting and owner review signoff remain missing.",
   "claim_ready": false,
   "dependency_edge_count": 22,
   "dependency_graph_stale_edge_count": 0,
@@ -139,7 +139,6 @@
   ],
   "detector_scope": "bounded static phase-staleness detector joined to current ROADMAP heading order, active blocker TODO refs, committed section sidecars, and dependency graph edge status",
   "missing_evidence": {
-    "ci_phase_freshness_gate": "not_recorded_locally",
     "evidence_status_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },

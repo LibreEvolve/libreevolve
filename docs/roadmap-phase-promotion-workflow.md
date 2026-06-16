@@ -24,6 +24,7 @@ The phase change must refresh these machine-readable evidence sidecars:
 - `papers/roadmap_phase_dependency_graph_boundary.json`
 - `papers/roadmap_phase_staleness_boundary.json`
 - `papers/roadmap_phase_freshness_boundary.json`
+- `papers/roadmap_phase_ci_freshness_gate_boundary.json`
 - `papers/roadmap_claim_evidence_boundary.json`
 - `papers/documentation_claim_inventory.json`
 - `papers/status_claim_inventory.json`

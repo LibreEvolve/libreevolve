@@ -18,7 +18,7 @@ ROADMAP_PHASE_STALENESS_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_phase_staleness_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_phase_staleness_detector_with_promotion_workflow"
+    "bounded_phase_staleness_detector_with_ci_freshness_gate"
 )
 SOURCE_PHASE_BOUNDARY_INPUT = "papers/roadmap_phase_sequence_boundary.json"
 SOURCE_DEPENDENCY_GRAPH_INPUT = "papers/roadmap_phase_dependency_graph_boundary.json"
@@ -37,7 +37,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "ci_phase_freshness_gate": "not_recorded_locally",
     "evidence_status_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
@@ -142,8 +141,8 @@ def roadmap_phase_staleness_boundary_record(root: str | Path = ".") -> dict[str,
             "joining the phase sequence map, phase dependency graph, active "
             "blocker TODO refs, section sidecar presence, and dependency edge "
             "status. It rejects stale phase records. The phase "
-            "promotion/demotion workflow is recorded separately. CI phase "
-            "freshness gating, evidence-status refresh reporting, and owner "
+            "promotion/demotion workflow and CI phase freshness gate are "
+            "recorded separately. Evidence-status refresh reporting and owner "
             "review signoff remain missing."
         ),
     }
@@ -206,8 +205,8 @@ def validate_roadmap_phase_staleness_boundary(
         not isinstance(boundary_text, str)
         or "bounded stale-phase detector" not in boundary_text
         or "rejects stale phase records" not in boundary_text
-        or "phase promotion/demotion workflow is recorded separately" not in boundary_text
-        or "CI phase freshness gating" not in boundary_text
+        or "CI phase freshness gate are recorded separately" not in boundary_text
+        or "Evidence-status refresh reporting" not in boundary_text
         or "owner review signoff" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate stale detection from workflow, CI, refresh, and owner signoff"))

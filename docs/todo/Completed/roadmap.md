@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add bounded ROADMAP phase CI freshness gate.
+  - Status: `papers/roadmap_phase_ci_freshness_gate_boundary.json` now
+    records the bounded CI freshness gate for the ROADMAP phase lifecycle,
+    including committed phase sidecars, paper-manifest validator markers,
+    docs/libreevolve/papers/tests path filters, and docs/paper/boundary
+    GitHub Actions workflow markers, with zero missing gate records.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_phase_ci_freshness_gate_boundary.py`
+    derives the gate from current phase sidecars, `libreevolve/tools/paper_manifest.py`,
+    and `.github/workflows/tests.yml`; the paper-manifest gate requires the
+    checked sidecar to match those inputs.
+  - Remaining guard: evidence-status refresh report and owner review signoff
+    remain active in `docs/todo/roadmap.md`.
+  - Verification: focused phase CI freshness tests and paper-manifest
+    validation cover the bounded gate contract.
+
 - [x] Add bounded ROADMAP phase promotion/demotion workflow.
   - Status: `papers/roadmap_phase_promotion_workflow_boundary.json` now
     records the written ROADMAP phase promotion/demotion workflow in
@@ -14,8 +30,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     claim-surface refs, required phase sidecar refs, and manifest-gate phrase;
     the paper-manifest gate requires the checked sidecar to match those
     inputs.
-  - Remaining guard: CI phase freshness gate, evidence-status refresh report,
-    and owner review signoff remain active in `docs/todo/roadmap.md`.
+  - Remaining guard: evidence-status refresh report and owner review signoff
+    remain active in `docs/todo/roadmap.md`.
   - Verification: focused phase promotion-workflow tests and paper-manifest
     validation cover the bounded workflow contract.
 
@@ -31,8 +47,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     graph boundary, ROADMAP headings, committed section sidecars, and active
     ROADMAP TODO blockers; the paper-manifest gate requires the checked
     sidecar to match those inputs.
-  - Remaining guard: CI phase freshness gate, evidence-status refresh report,
-    and owner review signoff remain active in `docs/todo/roadmap.md`.
+  - Remaining guard: evidence-status refresh report and owner review signoff
+    remain active in `docs/todo/roadmap.md`.
   - Verification: focused phase staleness tests and paper-manifest validation
     cover the bounded detector contract.
 
@@ -47,8 +63,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     section ids, committed readiness sidecars, and active ROADMAP TODO
     blockers; the paper-manifest gate requires the checked sidecar to match
     those inputs.
-  - Remaining guard: CI phase freshness gate, evidence-status refresh report,
-    and owner review signoff remain active in `docs/todo/roadmap.md`.
+  - Remaining guard: evidence-status refresh report and owner review signoff
+    remain active in `docs/todo/roadmap.md`.
   - Verification: focused phase dependency-graph tests and paper-manifest
     validation cover the bounded graph contract.
 
@@ -15627,9 +15643,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     labels, readiness labels, and explicit missing-evidence fields. The
     paper-manifest gate now requires and validates the sidecar at the repo
     root.
-  - Remaining roadmap gap: the actual CI phase freshness gate,
-    evidence-status refresh report, and owner review signoff remain active in
-    `docs/todo/roadmap.md`.
+  - Remaining roadmap gap: the actual evidence-status refresh report and
+    owner review signoff remain active in `docs/todo/roadmap.md`.
 - [x] Add bounded ROADMAP operational readiness matrix.
   - Spec evidence: ROADMAP operational maturity claims require stronger proof
     than individual release, CI, config, artifact, and docs sidecars.

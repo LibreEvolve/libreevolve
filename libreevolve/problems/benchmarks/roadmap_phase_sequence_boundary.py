@@ -9,9 +9,7 @@ from typing import Any
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_phase_sequence_boundary.v1"
 )
-EXPECTED_BOUNDARY_STATUS = (
-    "bounded_phase_sequence_map_with_phase_lifecycle_workflow"
-)
+EXPECTED_BOUNDARY_STATUS = "bounded_phase_sequence_map_with_ci_freshness_gate"
 EXPECTED_PHASE_ORDER = ("near_term", "mid_term", "longer_term")
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "phase_headings",
@@ -25,7 +23,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_phase_freshness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "ci_phase_freshness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 
@@ -182,9 +179,9 @@ def roadmap_phase_sequence_boundary_record(root: str | Path = ".") -> dict[str, 
             "This boundary records the current ROADMAP Near Term, Mid Term, "
             "and Longer Term section sequence with active blocker TODO refs, "
             "validation gate labels, and promotion criteria. It does not claim "
-            "a CI phase freshness gate or owner review signoff. The bounded "
-            "dependency graph, stale-phase detector, and phase "
-            "promotion/demotion workflow are recorded separately."
+            "owner review signoff. The bounded dependency graph, stale-phase "
+            "detector, phase promotion/demotion workflow, and CI phase "
+            "freshness gate are recorded separately."
         ),
     }
 
@@ -230,8 +227,8 @@ def validate_roadmap_phase_sequence_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "phase promotion/demotion workflow are recorded separately" not in boundary_text
-        or "CI phase freshness gate" not in boundary_text
+        or "CI phase freshness gate are recorded separately" not in boundary_text
+        or "owner review signoff" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate bounded phase map from full sequencing freshness proof"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

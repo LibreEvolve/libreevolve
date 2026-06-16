@@ -1,10 +1,9 @@
 {
   "active_blocking_todo_ref_count": 10,
-  "boundary_status": "bounded_phase_sequence_map_with_phase_lifecycle_workflow",
-  "claim_boundary": "This boundary records the current ROADMAP Near Term, Mid Term, and Longer Term section sequence with active blocker TODO refs, validation gate labels, and promotion criteria. It does not claim a CI phase freshness gate or owner review signoff. The bounded dependency graph, stale-phase detector, and phase promotion/demotion workflow are recorded separately.",
+  "boundary_status": "bounded_phase_sequence_map_with_ci_freshness_gate",
+  "claim_boundary": "This boundary records the current ROADMAP Near Term, Mid Term, and Longer Term section sequence with active blocker TODO refs, validation gate labels, and promotion criteria. It does not claim owner review signoff. The bounded dependency graph, stale-phase detector, phase promotion/demotion workflow, and CI phase freshness gate are recorded separately.",
   "claim_ready": false,
   "missing_evidence": {
-    "ci_phase_freshness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
   "phase_count": 3,

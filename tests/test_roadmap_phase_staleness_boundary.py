@@ -14,7 +14,7 @@ def test_roadmap_phase_staleness_accepts_current_phase_records():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_phase_staleness_detector_with_promotion_workflow"
+        == "bounded_phase_staleness_detector_with_ci_freshness_gate"
     )
     assert boundary["schema"] == ROADMAP_PHASE_STALENESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -50,12 +50,11 @@ def test_roadmap_phase_staleness_accepts_current_phase_records():
         for record in boundary["detector_records"]
     )
     assert boundary["missing_evidence"] == {
-        "ci_phase_freshness_gate": "not_recorded_locally",
         "evidence_status_refresh": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "bounded stale-phase detector" in boundary["claim_boundary"]
-    assert "phase promotion/demotion workflow is recorded separately" in boundary["claim_boundary"]
+    assert "CI phase freshness gate are recorded separately" in boundary["claim_boundary"]
 
 
 def test_roadmap_phase_staleness_rejects_overclaim_and_stale_record():
@@ -67,7 +66,7 @@ def test_roadmap_phase_staleness_rejects_overclaim_and_stale_record():
     boundary["detector_records"][0]["phase_detector_status"] = "stale_phase_detected"
     boundary["detector_records"][0]["stale_reasons"] = ["roadmap_heading_missing"]
     boundary["stale_phase_records"] = [boundary["detector_records"][0]]
-    boundary["missing_evidence"]["ci_phase_freshness_gate"] = "recorded"
+    boundary["missing_evidence"]["evidence_status_refresh"] = "recorded"
     boundary["required_evidence_fields"] = ["source_phase_sequence"]
 
     validation = validate_roadmap_phase_staleness_boundary(boundary)
@@ -81,7 +80,7 @@ def test_roadmap_phase_staleness_rejects_overclaim_and_stale_record():
     assert "invalid_stale_phase_records" in codes
     assert "invalid_detector_records" in codes
     assert "stale_phase_record_detected" in codes
-    assert "invalid_missing_evidence_ci_phase_freshness_gate" in codes
+    assert "invalid_missing_evidence_evidence_status_refresh" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -93,10 +92,10 @@ def test_render_roadmap_phase_staleness_summary_reports_shape():
     assert "ROADMAP phase staleness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_phase_staleness_detector_with_promotion_workflow |"
+        "| boundary_status | bounded_phase_staleness_detector_with_ci_freshness_gate |"
         in summary
     )
     assert "| phase_record_count | 10 |" in summary
     assert "| dependency_edge_count | 22 |" in summary
     assert "| stale_phase_record_count | 0 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

@@ -10,7 +10,7 @@ ROADMAP_PHASE_PROMOTION_WORKFLOW_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_phase_promotion_workflow_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "phase_promotion_demotion_workflow_recorded_without_ci_or_signoff"
+    "phase_promotion_demotion_workflow_recorded_with_ci_gate"
 )
 EXPECTED_WORKFLOW_DOC = "docs/roadmap-phase-promotion-workflow.md"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -32,7 +32,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "ci_phase_freshness_gate": "not_recorded_locally",
     "evidence_status_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
@@ -60,6 +59,7 @@ EXPECTED_SIDECARS = (
     "papers/roadmap_phase_dependency_graph_boundary.json",
     "papers/roadmap_phase_staleness_boundary.json",
     "papers/roadmap_phase_freshness_boundary.json",
+    "papers/roadmap_phase_ci_freshness_gate_boundary.json",
     "papers/roadmap_claim_evidence_boundary.json",
     "papers/documentation_claim_inventory.json",
     "papers/status_claim_inventory.json",
@@ -133,8 +133,8 @@ def roadmap_phase_promotion_workflow_boundary_record(
             "workflow with required updates for ROADMAP, README, papers, "
             "status, TODO ledgers, phase sidecars, dependency graph refresh, "
             "stale phase record resolution, and the paper manifest gate. It "
-            "does not claim a CI phase freshness gate, evidence-status "
-            "refresh report, or owner review signoff."
+            "does not claim an evidence-status refresh report or owner review "
+            "signoff. The CI phase freshness gate is recorded separately."
         ),
     }
 
@@ -186,7 +186,7 @@ def validate_roadmap_phase_promotion_workflow_boundary(
         or "dependency graph refresh" not in boundary_text
         or "stale phase record resolution" not in boundary_text
         or "paper manifest gate" not in boundary_text
-        or "does not claim a CI phase freshness gate" not in boundary_text
+        or "CI phase freshness gate is recorded separately" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate phase workflow from CI, refresh, and signoff"))
     return RoadmapPhasePromotionWorkflowBoundaryValidation(

@@ -1,0 +1,132 @@
+{
+  "boundary_status": "phase_ci_freshness_gate_recorded_without_evidence_refresh_or_signoff",
+  "ci_gate_status": "phase_freshness_gate_present",
+  "claim_boundary": "This boundary records a bounded ROADMAP phase CI freshness gate through committed phase sidecars, paper-manifest validation, docs/libreevolve/papers/tests path filters, and the existing docs/paper/boundary GitHub Actions workflow. It does not claim an evidence-status refresh report or owner review signoff.",
+  "claim_ready": false,
+  "dependency_edge_count": 22,
+  "freshness_criterion_count": 6,
+  "gate_record_count": 16,
+  "gate_records": [
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_phase_sequence_boundary.json",
+      "required_marker": "papers/roadmap_phase_sequence_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_phase_dependency_graph_boundary.json",
+      "required_marker": "papers/roadmap_phase_dependency_graph_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_phase_staleness_boundary.json",
+      "required_marker": "papers/roadmap_phase_staleness_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_phase_promotion_workflow_boundary.json",
+      "required_marker": "papers/roadmap_phase_promotion_workflow_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_phase_freshness_boundary.json",
+      "required_marker": "papers/roadmap_phase_freshness_boundary.json"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_phase_sequence_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_phase_dependency_graph_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_phase_staleness_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_phase_promotion_workflow_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_phase_freshness_boundary"
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "python -m libreevolve.tools.paper_manifest --root ."
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "test_*boundary.py"
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "docs/**"
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "libreevolve/**"
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "papers/**"
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "tests/**"
+    }
+  ],
+  "missing_evidence": {
+    "evidence_status_refresh": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "missing_gate_record_count": 0,
+  "missing_gate_records": [],
+  "paper_manifest_path": "libreevolve/tools/paper_manifest.py",
+  "promotion_workflow_phrase_count": 9,
+  "required_evidence_fields": [
+    "phase_sequence_boundary",
+    "phase_dependency_graph_boundary",
+    "phase_staleness_detector",
+    "phase_promotion_workflow",
+    "phase_freshness_matrix",
+    "paper_manifest_gate",
+    "boundary_test_workflow_gate",
+    "path_filter_coverage",
+    "evidence_status_refresh",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_phase_ci_freshness_gate_boundary.v1",
+  "source_phase_count": 3,
+  "source_section_count": 10,
+  "stale_phase_record_count": 0,
+  "workflow_path": ".github/workflows/tests.yml"
+}

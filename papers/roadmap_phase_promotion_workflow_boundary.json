@@ -1,6 +1,6 @@
 {
-  "boundary_status": "phase_promotion_demotion_workflow_recorded_without_ci_or_signoff",
-  "claim_boundary": "This boundary records a written ROADMAP phase promotion/demotion workflow with required updates for ROADMAP, README, papers, status, TODO ledgers, phase sidecars, dependency graph refresh, stale phase record resolution, and the paper manifest gate. It does not claim a CI phase freshness gate, evidence-status refresh report, or owner review signoff.",
+  "boundary_status": "phase_promotion_demotion_workflow_recorded_with_ci_gate",
+  "claim_boundary": "This boundary records a written ROADMAP phase promotion/demotion workflow with required updates for ROADMAP, README, papers, status, TODO ledgers, phase sidecars, dependency graph refresh, stale phase record resolution, and the paper manifest gate. It does not claim an evidence-status refresh report or owner review signoff. The CI phase freshness gate is recorded separately.",
   "claim_ready": false,
   "claim_surface_count": 6,
   "claim_surfaces": [
@@ -36,7 +36,6 @@
     }
   ],
   "missing_evidence": {
-    "ci_phase_freshness_gate": "not_recorded_locally",
     "evidence_status_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
@@ -59,7 +58,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_phase_promotion_workflow_boundary.v1",
-  "sidecar_ref_count": 7,
+  "sidecar_ref_count": 8,
   "sidecar_refs": [
     {
       "exists": true,
@@ -80,6 +79,11 @@
       "exists": true,
       "listed_in_workflow": true,
       "path": "papers/roadmap_phase_freshness_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_phase_ci_freshness_gate_boundary.json"
     },
     {
       "exists": true,

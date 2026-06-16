@@ -9,7 +9,7 @@ from typing import Any
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_phase_sequence_boundary.v1"
 )
-EXPECTED_BOUNDARY_STATUS = "bounded_phase_sequence_map_without_dependency_graph"
+EXPECTED_BOUNDARY_STATUS = "bounded_phase_sequence_map_with_dependency_graph"
 EXPECTED_PHASE_ORDER = ("near_term", "mid_term", "longer_term")
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "phase_headings",
@@ -17,13 +17,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "active_blocking_todo_refs",
     "validation_gate_labels",
     "promotion_criteria",
-    "dependency_graph",
+    "dependency_graph_boundary",
     "phase_staleness_detector",
     "promotion_demotion_workflow",
     "ci_phase_freshness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "dependency_graph": "not_recorded_locally",
     "phase_staleness_detector": "not_recorded_locally",
     "promotion_demotion_workflow": "not_recorded_locally",
     "ci_phase_freshness_gate": "not_recorded_locally",
@@ -183,8 +182,9 @@ def roadmap_phase_sequence_boundary_record(root: str | Path = ".") -> dict[str, 
             "This boundary records the current ROADMAP Near Term, Mid Term, "
             "and Longer Term section sequence with active blocker TODO refs, "
             "validation gate labels, and promotion criteria. It does not claim "
-            "a full dependency graph, stale-phase detector, promotion/demotion "
-            "workflow, CI phase freshness gate, or owner review signoff."
+            "a stale-phase detector, promotion/demotion workflow, CI phase "
+            "freshness gate, or owner review signoff. The bounded dependency "
+            "graph is recorded separately."
         ),
     }
 
@@ -230,7 +230,7 @@ def validate_roadmap_phase_sequence_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim a full dependency graph" not in boundary_text
+        or "bounded dependency graph is recorded separately" not in boundary_text
         or "stale-phase detector" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate bounded phase map from full sequencing freshness proof"))

@@ -14,7 +14,7 @@ def test_roadmap_phase_sequence_accepts_bounded_phase_map():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_phase_sequence_map_without_dependency_graph"
+        == "bounded_phase_sequence_map_with_dependency_graph"
     )
     assert boundary["schema"] == ROADMAP_PHASE_SEQUENCE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -32,13 +32,12 @@ def test_roadmap_phase_sequence_accepts_bounded_phase_map():
     assert all(record["roadmap_heading_present"] for record in boundary["section_records"])
     assert all(record["blocking_todo_present"] for record in boundary["section_records"])
     assert boundary["missing_evidence"] == {
-        "dependency_graph": "not_recorded_locally",
         "phase_staleness_detector": "not_recorded_locally",
         "promotion_demotion_workflow": "not_recorded_locally",
         "ci_phase_freshness_gate": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "does not claim a full dependency graph" in boundary["claim_boundary"]
+    assert "bounded dependency graph is recorded separately" in boundary["claim_boundary"]
 
 
 def test_roadmap_phase_sequence_rejects_overclaim_and_reordered_sections():
@@ -48,7 +47,7 @@ def test_roadmap_phase_sequence_rejects_overclaim_and_reordered_sections():
     boundary["section_sequence_status"] = "roadmap_major_sections_missing_or_reordered"
     boundary["section_records"][0]["roadmap_heading_present"] = False
     boundary["active_blocking_todo_ref_count"] = 9
-    boundary["missing_evidence"]["dependency_graph"] = "recorded"
+    boundary["missing_evidence"]["phase_staleness_detector"] = "recorded"
     boundary["required_evidence_fields"] = ["phase_headings"]
 
     validation = validate_roadmap_phase_sequence_boundary(boundary)
@@ -62,7 +61,7 @@ def test_roadmap_phase_sequence_rejects_overclaim_and_reordered_sections():
     assert "invalid_active_blocking_todo_ref_count" in codes
     assert "invalid_section_sequence" in codes
     assert "missing_blocking_todo_ref" in codes
-    assert "invalid_missing_evidence_dependency_graph" in codes
+    assert "invalid_missing_evidence_phase_staleness_detector" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -74,9 +73,9 @@ def test_render_roadmap_phase_sequence_summary_reports_shape():
     assert "ROADMAP phase sequence boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_phase_sequence_map_without_dependency_graph |"
+        "| boundary_status | bounded_phase_sequence_map_with_dependency_graph |"
         in summary
     )
     assert "| phase_count | 3 |" in summary
     assert "| section_count | 10 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

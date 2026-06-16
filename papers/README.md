@@ -3032,15 +3032,21 @@ Implemented:
 - `papers/roadmap_phase_sequence_boundary.json`: ROADMAP phase-sequencing
   sidecar with the current Near Term, Mid Term, and Longer Term sequence for
   ten major ROADMAP sections, active blocker TODO refs, validation-gate labels,
-  and promotion criteria. It is not evidence of a full dependency graph,
-  stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
-  or owner review signoff.
+  and promotion criteria. It is not evidence of a stale-phase detector,
+  promotion/demotion workflow, CI phase freshness gate, evidence-status
+  refresh report, or owner review signoff.
+- `papers/roadmap_phase_dependency_graph_boundary.json`: ROADMAP phase
+  dependency-graph sidecar with ten section nodes, prerequisite section edges,
+  section evidence sidecars, active blocker TODO refs, and zero stale
+  dependency edges. It is not evidence of a stale-phase detector,
+  promotion/demotion workflow, CI phase freshness gate, evidence-status
+  refresh report, or owner review signoff.
 - `papers/roadmap_phase_freshness_boundary.json`: ROADMAP phase freshness
   readiness sidecar with six criteria for the dependency graph,
   stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
   evidence-status refresh, and owner review signoff. It is not evidence that
-  those graph, detector, workflow, CI gate, refresh-report, or signoff
-  mechanisms are implemented.
+  those detector, workflow, CI gate, refresh-report, or signoff mechanisms are
+  implemented.
 - `papers/roadmap_operational_maturity_boundary.json`: ROADMAP operational
   maturity sidecar with six section-level criteria, risk classes, current
   sidecar refs, active TODO refs, and acceptance-gate labels. It is not

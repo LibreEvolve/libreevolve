@@ -8,12 +8,15 @@ from typing import Any
 from libreevolve.problems.benchmarks.roadmap_phase_sequence_boundary import (
     roadmap_phase_sequence_boundary_record,
 )
+from libreevolve.problems.benchmarks.roadmap_phase_dependency_graph_boundary import (
+    roadmap_phase_dependency_graph_boundary_record,
+)
 
 
 ROADMAP_PHASE_FRESHNESS_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_phase_freshness_boundary.v1"
 )
-EXPECTED_BOUNDARY_STATUS = "bounded_phase_freshness_matrix_without_dependency_gate"
+EXPECTED_BOUNDARY_STATUS = "bounded_phase_freshness_matrix_with_dependency_graph"
 SOURCE_PHASE_BOUNDARY_INPUT = "papers/roadmap_phase_sequence_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "dependency_graph",
@@ -24,7 +27,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "dependency_graph": "not_recorded_locally",
     "phase_staleness_detector": "not_recorded_locally",
     "promotion_demotion_workflow": "not_recorded_locally",
     "ci_phase_freshness_gate": "not_recorded_locally",
@@ -37,11 +39,12 @@ CRITERION_SPECS = (
     {
         "criterion_id": "dependency_graph",
         "phase_surface": "Near Term, Mid Term, and Longer Term section prerequisites",
-        "current_scope": "static phase labels and active blocker TODO refs for ten sections",
-        "missing_readiness": "dependency graph connecting each major section to prerequisites and blocking TODOs",
+        "current_scope": "bounded dependency graph connecting each major section to prerequisites and blocking TODOs",
+        "missing_readiness": "staleness and CI freshness gates that refresh dependency edges after evidence changes",
         "sidecars": (
             "papers/roadmap_phase_sequence_boundary.json",
             "papers/todo_canonical_gap_boundary.json",
+            "papers/roadmap_phase_dependency_graph_boundary.json",
         ),
         "active_todos": (
             {
@@ -54,7 +57,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "ROADMAP phase dependency graph",
-        "readiness_status": "static_phase_map_only",
+        "readiness_status": "phase_dependency_graph_recorded_without_freshness_gate",
     },
     {
         "criterion_id": "phase_staleness_detector",
@@ -191,6 +194,7 @@ def roadmap_phase_freshness_boundary_record(root: str | Path = ".") -> dict[str,
 
     root_path = Path(root)
     source_boundary = roadmap_phase_sequence_boundary_record(root_path)
+    dependency_graph = roadmap_phase_dependency_graph_boundary_record(root_path)
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
@@ -202,6 +206,10 @@ def roadmap_phase_freshness_boundary_record(root: str | Path = ".") -> dict[str,
         "source_phase_count": source_boundary["phase_count"],
         "source_section_count": source_boundary["section_count"],
         "source_section_sequence_status": source_boundary["section_sequence_status"],
+        "phase_dependency_graph_boundary_input": "papers/roadmap_phase_dependency_graph_boundary.json",
+        "phase_dependency_graph_status": dependency_graph["dependency_graph_status"],
+        "phase_dependency_graph_edge_count": dependency_graph["edge_count"],
+        "phase_dependency_graph_stale_edge_count": dependency_graph["stale_dependency_edge_count"],
         "freshness_criterion_count": len(records),
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
@@ -210,10 +218,10 @@ def roadmap_phase_freshness_boundary_record(root: str | Path = ".") -> dict[str,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records ROADMAP phase freshness readiness criteria "
-            "tied to the bounded static phase sequence map. It does not claim "
-            "a dependency graph, stale-phase detector, promotion/demotion "
-            "workflow, CI phase freshness gate, evidence-status refresh "
-            "report, or owner review signoff."
+            "tied to the bounded static phase sequence map and phase "
+            "dependency graph. It does not claim a stale-phase detector, "
+            "promotion/demotion workflow, CI phase freshness gate, "
+            "evidence-status refresh report, or owner review signoff."
         ),
     }
 
@@ -246,6 +254,10 @@ def validate_roadmap_phase_freshness_boundary(
         "source_phase_count",
         "source_section_count",
         "source_section_sequence_status",
+        "phase_dependency_graph_boundary_input",
+        "phase_dependency_graph_status",
+        "phase_dependency_graph_edge_count",
+        "phase_dependency_graph_stale_edge_count",
         "freshness_criterion_count",
         "sidecar_ref_count",
         "active_todo_ref_count",
@@ -260,7 +272,7 @@ def validate_roadmap_phase_freshness_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim a dependency graph" not in boundary_text
+        or "phase dependency graph" not in boundary_text
         or "stale-phase detector" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate phase freshness readiness from implemented phase refresh gates"))

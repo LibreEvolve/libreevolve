@@ -284,6 +284,10 @@ from libreevolve.problems.benchmarks.roadmap_phase_sequence_boundary import (
     roadmap_phase_sequence_boundary_record,
     validate_roadmap_phase_sequence_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_phase_dependency_graph_boundary import (
+    roadmap_phase_dependency_graph_boundary_record,
+    validate_roadmap_phase_dependency_graph_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_phase_freshness_boundary import (
     roadmap_phase_freshness_boundary_record,
     validate_roadmap_phase_freshness_boundary,
@@ -928,6 +932,7 @@ ROADMAP_GOOD_FIRST_CI_PRIORITY_GATE_BOUNDARY_FILE = "papers/roadmap_good_first_c
 ROADMAP_GOOD_FIRST_VALIDATION_ARTIFACT_BOUNDARY_FILE = "papers/roadmap_good_first_validation_artifact_boundary.json"
 ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_good_first_freshness_boundary.json"
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_FILE = "papers/roadmap_phase_sequence_boundary.json"
+ROADMAP_PHASE_DEPENDENCY_GRAPH_BOUNDARY_FILE = "papers/roadmap_phase_dependency_graph_boundary.json"
 ROADMAP_PHASE_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_phase_freshness_boundary.json"
 ROADMAP_OPERATIONAL_MATURITY_BOUNDARY_FILE = "papers/roadmap_operational_maturity_boundary.json"
 ROADMAP_OPERATIONAL_READINESS_BOUNDARY_FILE = "papers/roadmap_operational_readiness_boundary.json"
@@ -1627,6 +1632,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_good_first_validation_artifact_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_freshness_boundary(root_path))
     issues.extend(_validate_roadmap_phase_sequence_boundary(root_path))
+    issues.extend(_validate_roadmap_phase_dependency_graph_boundary(root_path))
     issues.extend(_validate_roadmap_phase_freshness_boundary(root_path))
     issues.extend(_validate_roadmap_operational_maturity_boundary(root_path))
     issues.extend(_validate_roadmap_operational_readiness_boundary(root_path))
@@ -5068,6 +5074,41 @@ def _validate_roadmap_phase_sequence_boundary(root_path: Path) -> list[PaperMani
             f"roadmap_phase_sequence_boundary_{issue.code}",
             issue.message,
             "roadmap_phase_sequence",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_phase_dependency_graph_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_PHASE_DEPENDENCY_GRAPH_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_phase_dependency_graph_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_PHASE_DEPENDENCY_GRAPH_BOUNDARY_FILE} must emit "
+                        "ROADMAP phase dependency graph metadata"
+                    ),
+                    "roadmap_phase_dependency_graph",
+                )
+            ]
+        return []
+    report = validate_roadmap_phase_dependency_graph_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_phase_dependency_graph_boundary_{issue.code}",
+            issue.message,
+            "roadmap_phase_dependency_graph",
         )
         for issue in report.issues
     ]

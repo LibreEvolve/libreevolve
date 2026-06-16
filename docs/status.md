@@ -1436,13 +1436,15 @@ Important limits:
   report, and owner review signoff. This is not owner review signoff.
 - ROADMAP phase-sequencing evidence now records the Near Term, Mid Term, and
   Longer Term sequence for ten major ROADMAP sections, active blocker TODO
-  refs, validation-gate labels, and promotion criteria. This is not a full
-  dependency graph, stale-phase detector, promotion/demotion workflow, CI
-  phase freshness gate, or owner review signoff.
+  refs, validation-gate labels, and promotion criteria. The bounded phase
+  dependency graph is recorded by
+  `papers/roadmap_phase_dependency_graph_boundary.json`. This is not a
+  stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
+  evidence-status refresh report, or owner review signoff.
 - ROADMAP phase freshness evidence now records six readiness criteria for the
   dependency graph, stale-phase detector, promotion/demotion workflow, CI
   phase freshness gate, evidence-status refresh report, and owner review
-  signoff. This is not an implemented dependency graph, stale-phase detector,
+  signoff. This is not an implemented stale-phase detector,
   promotion/demotion workflow, CI gate, evidence refresh report, or owner
   review signoff.
 - ROADMAP representative-benchmark portfolio evidence now records five

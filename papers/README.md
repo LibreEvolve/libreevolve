@@ -2879,6 +2879,12 @@ Implemented:
   is not evidence of a runtime metadata scan, plugin docstring scan,
   exhaustive Markdown corpus scan, CI promotion gate, or intentional non-goal
   promotion workflow.
+- `papers/roadmap_good_first_followups_boundary.json`: ROADMAP Good First
+  Follow-Ups priority sidecar with the four current priority items, active
+  TODO refs, priority rationale, dependency-readiness labels, validation gates,
+  and AlphaEvolve impact labels. It is not evidence of dependency-state
+  refresh automation, stale-priority detection, calibrated priority scoring,
+  CI freshness gating, or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

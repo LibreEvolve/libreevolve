@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add bounded ROADMAP Good First Follow-Ups priority map.
+  - Status: `papers/roadmap_good_first_followups_boundary.json` now records
+    the four current ROADMAP Good First Follow-Ups with stable ids, active TODO
+    refs, priority rationale, dependency-readiness labels, validation gates,
+    and AlphaEvolve impact labels.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_good_first_followups_boundary.py`
+    derives the boundary from the current ROADMAP and TODO text, and the
+    paper-manifest gate requires the checked sidecar to match those inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks dependency-state
+    refresh automation, stale-priority detection, calibrated priority scoring,
+    CI freshness gating, and owner review signoff.
+  - Verification: focused Good First Follow-Ups boundary tests and
+    paper-manifest validation cover the bounded sidecar contract.
+
 - [x] Add bounded ROADMAP non-goal contradiction boundary.
   - Status: `papers/roadmap_non_goal_contradiction_boundary.json` now records
     stable ids for the three ROADMAP non-goals, maps nine constrained

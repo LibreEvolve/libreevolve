@@ -1266,6 +1266,7 @@ Important limits:
   `papers/roadmap_readiness_boundary.json`,
   `papers/roadmap_source_span_disposition_boundary.json`,
   `papers/roadmap_non_goal_contradiction_boundary.json`,
+  `papers/roadmap_good_first_followups_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1280,6 +1281,11 @@ Important limits:
   support-claim phrase matches for that bounded surface set. This is not a
   runtime metadata scan, plugin docstring scan, exhaustive Markdown corpus
   scan, CI non-goal promotion gate, or intentional-promotion workflow.
+- ROADMAP Good First Follow-Ups evidence now records the four current priority
+  items with stable ids, active TODO refs, priority rationale,
+  dependency-readiness labels, validation gates, and AlphaEvolve impact labels.
+  This is not dependency-state refresh automation, stale-priority detection,
+  calibrated priority scoring, CI freshness gating, or owner review signoff.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark

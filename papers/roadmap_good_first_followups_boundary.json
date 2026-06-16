@@ -1,0 +1,157 @@
+{
+  "active_todo_ref_count": 9,
+  "boundary_status": "bounded_good_first_followups_priority_map_without_freshness_gate",
+  "claim_boundary": "This boundary records the four current ROADMAP Good First Follow-Ups, links each to active TODO evidence, dependency readiness labels, validation gates, and AlphaEvolve impact labels. It does not claim dependency-state refresh automation, stale priority detection, a calibrated priority score model, CI priority freshness gating, or owner review signoff.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "ci_priority_freshness_gate": "not_recorded_locally",
+    "dependency_state_refresh": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "priority_score_model": "not_recorded_locally",
+    "stale_priority_detector": "not_recorded_locally"
+  },
+  "priority_item_count": 4,
+  "priority_records": [
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Replace bounded run-local resurfacing indexes with a durable evolutionary database",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "add durable query/report surfaces over every candidate",
+          "required_phrase_present": true
+        }
+      ],
+      "alphaevolve_impact": "program_database_resurfacing",
+      "dependency_readiness": "has_run_local_indexes_needs_durable_tables",
+      "freshness_status": "bounded_static_map_no_stale_priority_detector",
+      "item_id": "durable_query_indexes",
+      "ordinal": 1,
+      "priority_rationale": "Query surfaces are a small, bounded step from existing run-local resurfacing indexes toward AlphaEvolve-style database inspection.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Persist database query indexes beyond run-local",
+      "validation_gates": [
+        "durable database/query index tests",
+        "run-artifact query/report sidecar",
+        "paper-manifest validation"
+      ]
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add a rigorous sorting-network rediscovery benchmark fixture",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Add paper-facing sorting-network rediscovery evidence as a realistic",
+          "required_phrase_present": true
+        }
+      ],
+      "alphaevolve_impact": "representative_benchmark_reproduction",
+      "dependency_readiness": "sorting_network_candidates_exist_needs_run_evidence",
+      "freshness_status": "bounded_static_map_no_stale_priority_detector",
+      "item_id": "non_toy_benchmark_fixture",
+      "ordinal": 2,
+      "priority_rationale": "A bounded benchmark fixture can convert existing executable scaffolding into repeatable AlphaEvolve-style evidence.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Add one non-toy benchmark run fixture",
+      "validation_gates": [
+        "repeated-seed run reports",
+        "target-hit-rate summaries",
+        "benchmark hardening certification"
+      ]
+    },
+    {
+      "active_todo_ref_count": 3,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Replay archive event logs as an ordered migration restore engine",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add async/pending-work controller resume state",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "`best_workspace/`, `evaluator_artifacts/`, or `plugin_artifacts/`",
+          "required_phrase_present": true
+        }
+      ],
+      "alphaevolve_impact": "resumable_evolutionary_database",
+      "dependency_readiness": "archive_restore_exists_needs_full_workspace_resume_contract",
+      "freshness_status": "bounded_static_map_no_stale_priority_detector",
+      "item_id": "workspace_resume_coverage",
+      "ordinal": 3,
+      "priority_rationale": "Resume coverage builds from current archive snapshots and best workspace export toward auditable long-running experiments.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Add workspace resume coverage beyond current `best_workspace/` export",
+      "validation_gates": [
+        "archive event replay restore tests",
+        "pending-work resume tests",
+        "workspace artifact integrity report"
+      ]
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "emit real LLM feedback calibration reports",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "No runtime feedback-calibration fixture emits",
+          "required_phrase_present": true
+        }
+      ],
+      "alphaevolve_impact": "multi_score_feedback_quality",
+      "dependency_readiness": "report_contract_exists_needs_runtime_runner",
+      "freshness_status": "bounded_static_map_no_stale_priority_detector",
+      "item_id": "feedback_calibration_reports",
+      "ordinal": 4,
+      "priority_rationale": "The report schema already exists, so the next useful step is an executed calibration fixture rather than more schema-only proof.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Emit real LLM feedback calibration reports",
+      "validation_gates": [
+        "runtime feedback-calibration fixture",
+        "grader ablation outputs",
+        "feedback-calibration artifact inventory"
+      ]
+    }
+  ],
+  "required_evidence_fields": [
+    "roadmap_priority_items",
+    "active_todo_refs",
+    "priority_rationale",
+    "dependency_readiness_labels",
+    "validation_gate_refs",
+    "alphaevolve_impact_labels",
+    "dependency_state_refresh",
+    "stale_priority_detector",
+    "priority_score_model",
+    "ci_priority_freshness_gate"
+  ],
+  "roadmap_section": "## Good First Follow-Ups",
+  "roadmap_section_present": true,
+  "schema": "libreevolve.roadmap_good_first_followups_boundary.v1"
+}

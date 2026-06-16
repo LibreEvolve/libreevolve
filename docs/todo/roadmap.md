@@ -174,14 +174,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: ROADMAP lists four good first follow-ups, and active
     code/paper TODOs already track the underlying implementation gaps for
     durable query indexes, benchmark fixtures, workspace resume, and
-    feedback-calibration reports. The documentation claim inventory records
-    the `Good First Follow-Ups` heading as uncovered, while the broad ROADMAP
-    semantic-evidence TODO covers priority claims only at a whole-document
-    level.
-  - Current gap: there is no per-item priority rationale, dependency/readiness
-    record, owner/scope label, estimated validation gate, or stale-priority
-    detector proving these four items remain the best first follow-ups after
-    new ROADMAP, code, README, or paper-sidecar work lands.
+    feedback-calibration reports.
+    `papers/roadmap_good_first_followups_boundary.json` now records those four
+    priority items with stable ids, active TODO refs, priority rationale,
+    dependency-readiness labels, validation gates, and AlphaEvolve impact
+    labels.
+  - Current gap: the sidecar is a bounded static priority map, not a freshness
+    model. There is still no dependency-state refresh automation,
+    stale-priority detector, calibrated priority score model, CI freshness
+    gate, or owner review signoff proving these four items remain the best
+    first follow-ups after new ROADMAP, code, README, or paper-sidecar work
+    lands.
   - Required result: add a ROADMAP priority-evidence map for good-first items
     that links each follow-up to active implementation TODOs, current
     blockers, expected validation artifacts, and AlphaEvolve-alignment impact,

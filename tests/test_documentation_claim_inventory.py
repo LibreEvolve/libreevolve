@@ -20,7 +20,7 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert validation.readme_claim_count == 3
     assert validation.roadmap_claim_count == 3
     assert validation.papers_claim_count == 2
-    assert validation.missing_evidence_count == 8
+    assert validation.missing_evidence_count == 9
     assert inventory["schema"] == DOCUMENTATION_CLAIM_INVENTORY_SCHEMA
     assert inventory["claim_ready"] is False
     assert inventory["source_anchor_status"] == "all_claim_source_anchors_recorded"
@@ -77,13 +77,26 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     }
     assert inventory["status_ledger_signal_term_count"] == 11
     assert inventory["status_ledger_signal_record_count"] == 428
-    assert inventory["status_ledger_unique_local_path_ref_count"] == 115
-    assert inventory["status_ledger_local_path_ref_count"] == 154
+    assert inventory["status_ledger_unique_local_path_ref_count"] == 116
+    assert inventory["status_ledger_local_path_ref_count"] == 155
     assert inventory["status_ledger_missing_local_path_refs"] == []
     assert "paper_artifacts/..." not in inventory["status_ledger_unique_local_path_refs"]
     assert (
         inventory["status_ledger_local_path_ref_status"]
         == "all_status_ledger_local_path_refs_present"
+    )
+    assert inventory["run_artifact_documented_count"] == 22
+    assert inventory["run_artifact_cleanup_count"] == 20
+    assert inventory["run_artifact_documented_without_cleanup_names"] == [
+        "prompt_current_binding_table.jsonl",
+        "prompt_prior_score_table.jsonl",
+    ]
+    assert inventory["run_artifact_cleanup_without_documented_names"] == []
+    assert inventory["run_artifact_documented_without_cleanup_count"] == 2
+    assert inventory["run_artifact_cleanup_without_documented_count"] == 0
+    assert (
+        inventory["run_artifact_lifecycle_alignment_status"]
+        == "documented_artifacts_missing_cleanup_coverage"
     )
     assert inventory["status_ledger_bullet_records"][0] == {
         "bullet_ordinal": 1,
@@ -186,6 +199,8 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     )
     assert "structural docs/status.md ledger inventory" in inventory["claim_boundary"]
     assert "semantic docs/status.md freshness" in inventory["claim_boundary"]
+    assert "structural run-artifacts guide inventory" in inventory["claim_boundary"]
+    assert "complete run-artifact lifecycle proof" in inventory["claim_boundary"]
 
 
 def test_documentation_claim_inventory_rejects_semantic_proof_overclaim():
@@ -262,6 +277,23 @@ def test_documentation_claim_inventory_rejects_status_ledger_inventory_drift():
     assert "invalid_status_ledger_bullet_records" in codes
 
 
+def test_documentation_claim_inventory_rejects_run_artifact_inventory_drift():
+    inventory = documentation_claim_inventory_record()
+    inventory["run_artifact_documented_count"] = 0
+    inventory["run_artifact_documented_without_cleanup_names"] = []
+    inventory["run_artifact_lifecycle_alignment_status"] = (
+        "documented_and_cleanup_artifact_sets_match"
+    )
+
+    validation = validate_documentation_claim_inventory(inventory)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_run_artifact_documented_count" in codes
+    assert "invalid_run_artifact_documented_without_cleanup_names" in codes
+    assert "invalid_run_artifact_lifecycle_alignment_status" in codes
+
+
 def test_render_documentation_claim_inventory_summary_reports_shape():
     summary = render_documentation_claim_inventory_summary(
         documentation_claim_inventory_record()
@@ -277,9 +309,12 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| readme_claim_count | 3 |" in summary
     assert "| roadmap_claim_count | 3 |" in summary
     assert "| papers_claim_count | 2 |" in summary
-    assert "| missing_evidence_count | 8 |" in summary
+    assert "| missing_evidence_count | 9 |" in summary
     assert "| claim_surface_heading_count | 34 |" in summary
     assert "| uncovered_claim_surface_heading_count | 28 |" in summary
     assert "| uncovered_heading_todo_link_count | 3 |" in summary
     assert "| status_ledger_bullet_count | 181 |" in summary
-    assert "| status_ledger_local_path_ref_count | 154 |" in summary
+    assert "| status_ledger_local_path_ref_count | 155 |" in summary
+    assert "| run_artifact_documented_count | 22 |" in summary
+    assert "| run_artifact_cleanup_count | 20 |" in summary
+    assert "| run_artifact_documented_without_cleanup_count | 2 |" in summary

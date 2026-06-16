@@ -1249,9 +1249,11 @@ Important limits:
   audited surface heading records with uncovered heading-to-claim gap records
   linked to active TODO owners, and status-ledger implemented/limit bullet
   spans, hashes, status-signal terms, and local backtick-path existence
-  records. These are not semantic proof that every README, ROADMAP,
-  papers-index, TODO, or `docs/status.md` statement is current; that boundary
-  is tracked by
+  records. It also records a structural run-artifacts guide inventory comparing
+  the documented top-level artifact tree with the current overwrite-cleanup
+  artifact set. These are not semantic proof that every README, ROADMAP,
+  papers-index, TODO, `docs/run-artifacts.md`, or `docs/status.md` statement is
+  current; that boundary is tracked by
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors

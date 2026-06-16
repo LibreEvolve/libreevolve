@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 import re
@@ -33,6 +34,9 @@ STATUS_LEDGER_SIGNAL_RE = re.compile(
     flags=re.IGNORECASE,
 )
 BACKTICK_VALUE_RE = re.compile(r"`([^`]+)`")
+RUN_ARTIFACT_TREE_ENTRY_RE = re.compile(
+    r"^    [├└]──\s+([^#]+?)(?:\s+#.*)?$"
+)
 LOCAL_REPO_PATH_RE = re.compile(
     r"^(?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+(?:\.[A-Za-z0-9_.-]+)?$"
     r"|^(?:README|ROADMAP)\.md$"
@@ -58,6 +62,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "complete_roadmap_claim_inventory": "not_recorded_locally",
     "complete_paper_index_status_row_inventory": "not_recorded_locally",
     "status_ledger_semantic_freshness_matrix": "not_recorded_locally",
+    "run_artifact_lifecycle_semantic_map": "not_recorded_locally",
     "semantic_claim_verifier": "not_recorded_locally",
     "stale_completed_entry_detection": "not_recorded_locally",
     "generated_alignment_report": "not_recorded_locally",
@@ -255,6 +260,7 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
         root_path
     )
     status_ledger_inventory = _status_ledger_inventory(root_path)
+    run_artifact_inventory = _run_artifacts_guide_inventory(root_path)
     claims = []
     for claim in EXPECTED_CLAIMS:
         claim_record = dict(claim)
@@ -400,6 +406,7 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
         ),
         "uncovered_heading_todo_link_records": uncovered_heading_todo_link_records,
         **status_ledger_inventory,
+        **run_artifact_inventory,
         "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -414,10 +421,13 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             "It also records a structural docs/status.md ledger inventory "
             "for implemented-today and important-limits bullets, including "
             "bullet spans, hashes, status-signal terms, and local backtick "
-            "path existence records. "
+            "path existence records. It records a structural run-artifacts "
+            "guide inventory that compares top-level documented run outputs "
+            "with the current overwrite cleanup artifact set. "
             "It does not claim complete README coverage, "
             "complete ROADMAP coverage, complete papers index coverage, "
             "semantic docs/status.md freshness, "
+            "complete run-artifact lifecycle proof, "
             "semantic claim verification, stale completed-entry detection, "
             "generated alignment reports, or full proof that every documentation "
             "claim is current."
@@ -705,6 +715,7 @@ def validate_documentation_claim_inventory(
             )
         )
     _validate_status_ledger_inventory(data, issues, Path(root))
+    _validate_run_artifacts_guide_inventory(data, issues, Path(root))
     claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
         data.get("claims"),
         issues,
@@ -718,6 +729,8 @@ def validate_documentation_claim_inventory(
         or "complete papers index coverage" not in boundary_text
         or "structural docs/status.md ledger inventory" not in boundary_text
         or "semantic docs/status.md freshness" not in boundary_text
+        or "structural run-artifacts guide inventory" not in boundary_text
+        or "complete run-artifact lifecycle proof" not in boundary_text
         or "semantic claim verification" not in boundary_text
         or "full proof that every documentation claim is current" not in boundary_text
     ):
@@ -754,6 +767,9 @@ def render_documentation_claim_inventory_summary(inventory: dict[str, Any]) -> s
         f"| uncovered_heading_todo_link_count | {inventory.get('uncovered_heading_todo_link_record_count', '<unknown>')} |",
         f"| status_ledger_bullet_count | {inventory.get('status_ledger_bullet_count', '<unknown>')} |",
         f"| status_ledger_local_path_ref_count | {inventory.get('status_ledger_local_path_ref_count', '<unknown>')} |",
+        f"| run_artifact_documented_count | {inventory.get('run_artifact_documented_count', '<unknown>')} |",
+        f"| run_artifact_cleanup_count | {inventory.get('run_artifact_cleanup_count', '<unknown>')} |",
+        f"| run_artifact_documented_without_cleanup_count | {inventory.get('run_artifact_documented_without_cleanup_count', '<unknown>')} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -883,6 +899,155 @@ def _validate_status_ledger_inventory(
     for key, message in checks:
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", message))
+
+
+def _validate_run_artifacts_guide_inventory(
+    data: dict[str, Any],
+    issues: list[DocumentationClaimInventoryIssue],
+    root: Path,
+) -> None:
+    expected = _run_artifacts_guide_inventory(root)
+    checks = (
+        ("run_artifact_source_path", "run-artifact source path drifted"),
+        ("run_artifact_cleanup_source_path", "run-artifact cleanup source path drifted"),
+        ("run_artifact_documented_count", "documented run-artifact count drifted"),
+        ("run_artifact_documented_names", "documented run-artifact names drifted"),
+        ("run_artifact_cleanup_count", "cleanup run-artifact count drifted"),
+        ("run_artifact_cleanup_names", "cleanup run-artifact names drifted"),
+        (
+            "run_artifact_documented_without_cleanup_names",
+            "documented-without-cleanup artifact names drifted",
+        ),
+        (
+            "run_artifact_cleanup_without_documented_names",
+            "cleanup-without-documented artifact names drifted",
+        ),
+        (
+            "run_artifact_documented_without_cleanup_count",
+            "documented-without-cleanup artifact count drifted",
+        ),
+        (
+            "run_artifact_cleanup_without_documented_count",
+            "cleanup-without-documented artifact count drifted",
+        ),
+        (
+            "run_artifact_lifecycle_alignment_status",
+            "run-artifact lifecycle alignment status drifted",
+        ),
+        (
+            "run_artifact_documented_records",
+            "documented run-artifact records drifted",
+        ),
+        (
+            "run_artifact_cleanup_records",
+            "cleanup run-artifact records drifted",
+        ),
+    )
+    for key, message in checks:
+        if data.get(key) != expected[key]:
+            issues.append(_issue(f"invalid_{key}", message))
+
+
+def _run_artifacts_guide_inventory(root: Path) -> dict[str, Any]:
+    documented_records = _documented_run_artifact_records(
+        root / "docs" / "run-artifacts.md"
+    )
+    cleanup_records = _run_artifact_cleanup_records(
+        root / "libreevolve" / "core" / "database.py"
+    )
+    documented_names = sorted(record["name"] for record in documented_records)
+    cleanup_names = sorted(record["name"] for record in cleanup_records)
+    documented_without_cleanup = sorted(set(documented_names) - set(cleanup_names))
+    cleanup_without_documented = sorted(set(cleanup_names) - set(documented_names))
+    return {
+        "run_artifact_source_path": "docs/run-artifacts.md",
+        "run_artifact_cleanup_source_path": "libreevolve/core/database.py",
+        "run_artifact_documented_count": len(documented_names),
+        "run_artifact_documented_names": documented_names,
+        "run_artifact_cleanup_count": len(cleanup_names),
+        "run_artifact_cleanup_names": cleanup_names,
+        "run_artifact_documented_without_cleanup_names": documented_without_cleanup,
+        "run_artifact_cleanup_without_documented_names": cleanup_without_documented,
+        "run_artifact_documented_without_cleanup_count": len(documented_without_cleanup),
+        "run_artifact_cleanup_without_documented_count": len(cleanup_without_documented),
+        "run_artifact_lifecycle_alignment_status": (
+            "documented_artifacts_missing_cleanup_coverage"
+            if documented_without_cleanup
+            else (
+                "cleanup_artifacts_missing_documentation"
+                if cleanup_without_documented
+                else "documented_and_cleanup_artifact_sets_match"
+            )
+        ),
+        "run_artifact_documented_records": documented_records,
+        "run_artifact_cleanup_records": cleanup_records,
+    }
+
+
+def _documented_run_artifact_records(path: Path) -> list[dict[str, Any]]:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return []
+    try:
+        directory_heading = text.index("## Directory layout")
+        block_start = text.index("```text", directory_heading)
+        block_end = text.index("```", block_start + len("```text"))
+    except ValueError:
+        return []
+    block = text[block_start:block_end]
+    block_start_line = text.count("\n", 0, block_start) + 1
+    records: list[dict[str, Any]] = []
+    for offset, line in enumerate(block.splitlines(), start=0):
+        match = RUN_ARTIFACT_TREE_ENTRY_RE.match(line)
+        if match is None:
+            continue
+        name = match.group(1).strip().rstrip("/")
+        records.append(
+            {
+                "name": name,
+                "line_start": block_start_line + offset,
+                "line_end": block_start_line + offset,
+                "entry_kind": "directory" if "." not in name else "file",
+            }
+        )
+    return records
+
+
+def _run_artifact_cleanup_records(path: Path) -> list[dict[str, Any]]:
+    try:
+        text = path.read_text(encoding="utf-8")
+        tree = ast.parse(text)
+    except (OSError, UnicodeDecodeError, SyntaxError):
+        return []
+    names: list[str] = []
+    line_number: int | None = None
+    for node in tree.body:
+        if not isinstance(node, ast.Assign):
+            continue
+        if not any(
+            isinstance(target, ast.Name) and target.id == "RUN_ARTIFACT_NAMES"
+            for target in node.targets
+        ):
+            continue
+        try:
+            raw_names = ast.literal_eval(node.value)
+        except (TypeError, ValueError):
+            return []
+        if not isinstance(raw_names, set):
+            return []
+        names = sorted(name for name in raw_names if isinstance(name, str))
+        line_number = getattr(node, "lineno", None)
+        break
+    return [
+        {
+            "name": name,
+            "line_start": line_number,
+            "line_end": line_number,
+            "entry_kind": "directory" if "." not in name else "file",
+        }
+        for name in names
+    ]
 
 
 def _status_ledger_inventory(root: Path) -> dict[str, Any]:

@@ -892,9 +892,10 @@
     "without"
   ],
   "status_ledger_signal_record_count": 428,
-  "status_ledger_unique_local_path_ref_count": 115,
+  "status_ledger_unique_local_path_ref_count": 116,
   "status_ledger_unique_local_path_refs": [
     "ROADMAP.md",
+    "docs/run-artifacts.md",
     "docs/status.md",
     "papers/README.md",
     "papers/adaptive_mutation_mode_boundary.json",
@@ -1011,7 +1012,7 @@
     "papers/workspace_materialization_boundary.json"
   ],
   "status_ledger_missing_local_path_refs": [],
-  "status_ledger_local_path_ref_count": 154,
+  "status_ledger_local_path_ref_count": 155,
   "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
   "status_ledger_bullet_records": [
     {
@@ -4825,10 +4826,10 @@
       "bullet_ordinal": 163,
       "section": "important_limits",
       "line_start": 1244,
-      "line_end": 1256,
+      "line_end": 1258,
       "file_text_char_start": 87282,
-      "file_text_char_end": 88138,
-      "text_sha256": "6101812906c10971fbabb3341f4b189b4533b9660074ef08fdfcaeeaa85f0283",
+      "file_text_char_end": 88324,
+      "text_sha256": "6893be2a9e06f4400ff5ade5aec394396687991beeb6825afadc8f5b2cb6371e",
       "signal_terms": [
         "boundary",
         "implemented",
@@ -4839,6 +4840,7 @@
       "signal_term_count": 5,
       "local_path_refs": [
         "docs/status.md",
+        "docs/run-artifacts.md",
         "docs/status.md",
         "papers/documentation_truthfulness_boundary.json",
         "papers/documentation_claim_inventory.json"
@@ -4851,21 +4853,27 @@
           "exists": true
         },
         {
+          "path": "docs/run-artifacts.md",
+          "text_char_start": 844,
+          "text_char_end": 865,
+          "exists": true
+        },
+        {
           "path": "docs/status.md",
-          "text_char_start": 686,
-          "text_char_end": 700,
+          "text_char_start": 872,
+          "text_char_end": 886,
           "exists": true
         },
         {
           "path": "papers/documentation_truthfulness_boundary.json",
-          "text_char_start": 757,
-          "text_char_end": 804,
+          "text_char_start": 943,
+          "text_char_end": 990,
           "exists": true
         },
         {
           "path": "papers/documentation_claim_inventory.json",
-          "text_char_start": 813,
-          "text_char_end": 854,
+          "text_char_start": 999,
+          "text_char_end": 1040,
           "exists": true
         }
       ]
@@ -4873,10 +4881,10 @@
     {
       "bullet_ordinal": 164,
       "section": "important_limits",
-      "line_start": 1257,
-      "line_end": 1277,
-      "file_text_char_start": 88139,
-      "file_text_char_end": 89524,
+      "line_start": 1259,
+      "line_end": 1279,
+      "file_text_char_start": 88325,
+      "file_text_char_end": 89710,
       "text_sha256": "caaa1de784d3cf4080dd3072bce2a83b998815b77caf2d30f459f8de81f6ddf0",
       "signal_terms": [
         "boundary",
@@ -4915,10 +4923,10 @@
     {
       "bullet_ordinal": 165,
       "section": "important_limits",
-      "line_start": 1278,
-      "line_end": 1290,
-      "file_text_char_start": 89525,
-      "file_text_char_end": 90430,
+      "line_start": 1280,
+      "line_end": 1292,
+      "file_text_char_start": 89711,
+      "file_text_char_end": 90616,
       "text_sha256": "217f085100b4126ddd6b8c8abca06ed2e16acd58ff6781d55abfd417ed5a8fbf",
       "signal_terms": [
         "missing",
@@ -4932,10 +4940,10 @@
     {
       "bullet_ordinal": 166,
       "section": "important_limits",
-      "line_start": 1291,
-      "line_end": 1305,
-      "file_text_char_start": 90431,
-      "file_text_char_end": 91547,
+      "line_start": 1293,
+      "line_end": 1307,
+      "file_text_char_start": 90617,
+      "file_text_char_end": 91733,
       "text_sha256": "cd0a3b1006d7d7435c2e10e7db7a0629a1b51b040fbd029a75d82c5a2a66b3c2",
       "signal_terms": [
         "not"
@@ -4947,10 +4955,10 @@
     {
       "bullet_ordinal": 167,
       "section": "important_limits",
-      "line_start": 1306,
-      "line_end": 1317,
-      "file_text_char_start": 91548,
-      "file_text_char_end": 92384,
+      "line_start": 1308,
+      "line_end": 1319,
+      "file_text_char_start": 91734,
+      "file_text_char_end": 92570,
       "text_sha256": "2592de9f85665aac7d9679f7ea2bab9ea9a2f7ae7d2e1f191cd4ea1624d9f766",
       "signal_terms": [
         "implemented",
@@ -4965,10 +4973,10 @@
     {
       "bullet_ordinal": 168,
       "section": "important_limits",
-      "line_start": 1318,
-      "line_end": 1323,
-      "file_text_char_start": 92385,
-      "file_text_char_end": 92840,
+      "line_start": 1320,
+      "line_end": 1325,
+      "file_text_char_start": 92571,
+      "file_text_char_end": 93026,
       "text_sha256": "3874d3a0727d10d999b81d4482e243061d2903cea0f0d419c24682766e09a815",
       "signal_terms": [
         "boundary",
@@ -4991,10 +4999,10 @@
     {
       "bullet_ordinal": 169,
       "section": "important_limits",
-      "line_start": 1324,
-      "line_end": 1327,
-      "file_text_char_start": 92841,
-      "file_text_char_end": 93091,
+      "line_start": 1326,
+      "line_end": 1329,
+      "file_text_char_start": 93027,
+      "file_text_char_end": 93277,
       "text_sha256": "96b9ffa308c727d371222636d8f2c7af9f116c14d50285654a15353cd95ab565",
       "signal_terms": [
         "boundary",
@@ -5017,10 +5025,10 @@
     {
       "bullet_ordinal": 170,
       "section": "important_limits",
-      "line_start": 1328,
-      "line_end": 1331,
-      "file_text_char_start": 93092,
-      "file_text_char_end": 93368,
+      "line_start": 1330,
+      "line_end": 1333,
+      "file_text_char_start": 93278,
+      "file_text_char_end": 93554,
       "text_sha256": "08e65f53d27397f06f6006f30b9526e6824d97b88e34aad422055a4e294adcf3",
       "signal_terms": [
         "boundary",
@@ -5043,10 +5051,10 @@
     {
       "bullet_ordinal": 171,
       "section": "important_limits",
-      "line_start": 1332,
-      "line_end": 1338,
-      "file_text_char_start": 93369,
-      "file_text_char_end": 93824,
+      "line_start": 1334,
+      "line_end": 1340,
+      "file_text_char_start": 93555,
+      "file_text_char_end": 94010,
       "text_sha256": "cef2d51655b8a9231d73ad2b491888ee8aeb06146fc7ebebb50c2e4ca88a6b02",
       "signal_terms": [
         "implemented",
@@ -5060,10 +5068,10 @@
     {
       "bullet_ordinal": 172,
       "section": "important_limits",
-      "line_start": 1339,
-      "line_end": 1344,
-      "file_text_char_start": 93825,
-      "file_text_char_end": 94278,
+      "line_start": 1341,
+      "line_end": 1346,
+      "file_text_char_start": 94011,
+      "file_text_char_end": 94464,
       "text_sha256": "74ab9a684c541fd5753ec199eff88ad4a6438682eda77fe0eec3d6234fd55444",
       "signal_terms": [
         "record"
@@ -5075,10 +5083,10 @@
     {
       "bullet_ordinal": 173,
       "section": "important_limits",
-      "line_start": 1345,
-      "line_end": 1348,
-      "file_text_char_start": 94279,
-      "file_text_char_end": 94563,
+      "line_start": 1347,
+      "line_end": 1350,
+      "file_text_char_start": 94465,
+      "file_text_char_end": 94749,
       "text_sha256": "19b485e815354e8e95b534752944a2a21eaad4a6dd39abd570d914e90b78ab70",
       "signal_terms": [
         "boundary",
@@ -5102,10 +5110,10 @@
     {
       "bullet_ordinal": 174,
       "section": "important_limits",
-      "line_start": 1349,
-      "line_end": 1354,
-      "file_text_char_start": 94564,
-      "file_text_char_end": 94992,
+      "line_start": 1351,
+      "line_end": 1356,
+      "file_text_char_start": 94750,
+      "file_text_char_end": 95178,
       "text_sha256": "dbdc50623d7ca15669d136a4831a035f8205bbc0edb9528cb10d054b7d706deb",
       "signal_terms": [
         "boundary",
@@ -5128,10 +5136,10 @@
     {
       "bullet_ordinal": 175,
       "section": "important_limits",
-      "line_start": 1355,
-      "line_end": 1358,
-      "file_text_char_start": 94993,
-      "file_text_char_end": 95293,
+      "line_start": 1357,
+      "line_end": 1360,
+      "file_text_char_start": 95179,
+      "file_text_char_end": 95479,
       "text_sha256": "8b01566d962b7001a047941df18433f2d609d12bb6b803a51f4f15c0a4d29508",
       "signal_terms": [
         "boundary",
@@ -5154,10 +5162,10 @@
     {
       "bullet_ordinal": 176,
       "section": "important_limits",
-      "line_start": 1359,
-      "line_end": 1365,
-      "file_text_char_start": 95294,
-      "file_text_char_end": 95753,
+      "line_start": 1361,
+      "line_end": 1367,
+      "file_text_char_start": 95480,
+      "file_text_char_end": 95939,
       "text_sha256": "d781ff70e0d9740d64b2e1d5ddc424b41133a79206981c739d9fc819575c82e9",
       "signal_terms": [
         "boundary",
@@ -5181,10 +5189,10 @@
     {
       "bullet_ordinal": 177,
       "section": "important_limits",
-      "line_start": 1366,
-      "line_end": 1370,
-      "file_text_char_start": 95754,
-      "file_text_char_end": 96130,
+      "line_start": 1368,
+      "line_end": 1372,
+      "file_text_char_start": 95940,
+      "file_text_char_end": 96316,
       "text_sha256": "732a8cc88b44f6d2c42634a3ba77b0755f29ba9b822e4f2fdae05b216a3b849f",
       "signal_terms": [
         "boundary",
@@ -5207,10 +5215,10 @@
     {
       "bullet_ordinal": 178,
       "section": "important_limits",
-      "line_start": 1371,
-      "line_end": 1377,
-      "file_text_char_start": 96131,
-      "file_text_char_end": 96660,
+      "line_start": 1373,
+      "line_end": 1379,
+      "file_text_char_start": 96317,
+      "file_text_char_end": 96846,
       "text_sha256": "35b89459b10fe09980a96f749a7c6c9d6978b31fc2017286a112c582b5013b6f",
       "signal_terms": [
         "boundary",
@@ -5233,10 +5241,10 @@
     {
       "bullet_ordinal": 179,
       "section": "important_limits",
-      "line_start": 1378,
-      "line_end": 1381,
-      "file_text_char_start": 96661,
-      "file_text_char_end": 96907,
+      "line_start": 1380,
+      "line_end": 1383,
+      "file_text_char_start": 96847,
+      "file_text_char_end": 97093,
       "text_sha256": "ca3162ffe470661248d4fbaf8e7b9f3046e7d8b8bd3e3f08ba15777e7bcbf6dd",
       "signal_terms": [
         "boundary",
@@ -5259,10 +5267,10 @@
     {
       "bullet_ordinal": 180,
       "section": "important_limits",
-      "line_start": 1382,
-      "line_end": 1383,
-      "file_text_char_start": 96908,
-      "file_text_char_end": 97035,
+      "line_start": 1384,
+      "line_end": 1385,
+      "file_text_char_start": 97094,
+      "file_text_char_end": 97221,
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
       "signal_terms": [],
       "signal_term_count": 0,
@@ -5272,10 +5280,10 @@
     {
       "bullet_ordinal": 181,
       "section": "important_limits",
-      "line_start": 1384,
-      "line_end": 1386,
-      "file_text_char_start": 97036,
-      "file_text_char_end": 97255,
+      "line_start": 1386,
+      "line_end": 1388,
+      "file_text_char_start": 97222,
+      "file_text_char_end": 97441,
       "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
       "signal_terms": [
         "not",
@@ -5300,6 +5308,320 @@
           "exists": true
         }
       ]
+    }
+  ],
+  "run_artifact_source_path": "docs/run-artifacts.md",
+  "run_artifact_cleanup_source_path": "libreevolve/core/database.py",
+  "run_artifact_documented_count": 22,
+  "run_artifact_documented_names": [
+    "archive_events.jsonl",
+    "archive_events_invalid.jsonl",
+    "best.py",
+    "best_workspace",
+    "controller_budget_events.jsonl",
+    "controller_budget_events_invalid.jsonl",
+    "evaluator_artifacts",
+    "evaluator_results.jsonl",
+    "failure_history.jsonl",
+    "failure_history_invalid.jsonl",
+    "history.jsonl",
+    "history_invalid.jsonl",
+    "llm_calls.jsonl",
+    "llm_calls_invalid.jsonl",
+    "manifest.json",
+    "manifest_invalid.jsonl",
+    "plugin_artifacts",
+    "prompt_current_binding_table.jsonl",
+    "prompt_history.jsonl",
+    "prompt_history_invalid.jsonl",
+    "prompt_prior_score_table.jsonl",
+    "task_specification.json"
+  ],
+  "run_artifact_cleanup_count": 20,
+  "run_artifact_cleanup_names": [
+    "archive_events.jsonl",
+    "archive_events_invalid.jsonl",
+    "best.py",
+    "best_workspace",
+    "controller_budget_events.jsonl",
+    "controller_budget_events_invalid.jsonl",
+    "evaluator_artifacts",
+    "evaluator_results.jsonl",
+    "failure_history.jsonl",
+    "failure_history_invalid.jsonl",
+    "history.jsonl",
+    "history_invalid.jsonl",
+    "llm_calls.jsonl",
+    "llm_calls_invalid.jsonl",
+    "manifest.json",
+    "manifest_invalid.jsonl",
+    "plugin_artifacts",
+    "prompt_history.jsonl",
+    "prompt_history_invalid.jsonl",
+    "task_specification.json"
+  ],
+  "run_artifact_documented_without_cleanup_names": [
+    "prompt_current_binding_table.jsonl",
+    "prompt_prior_score_table.jsonl"
+  ],
+  "run_artifact_cleanup_without_documented_names": [],
+  "run_artifact_documented_without_cleanup_count": 2,
+  "run_artifact_cleanup_without_documented_count": 0,
+  "run_artifact_lifecycle_alignment_status": "documented_artifacts_missing_cleanup_coverage",
+  "run_artifact_documented_records": [
+    {
+      "name": "manifest.json",
+      "line_start": 392,
+      "line_end": 392,
+      "entry_kind": "file"
+    },
+    {
+      "name": "task_specification.json",
+      "line_start": 393,
+      "line_end": 393,
+      "entry_kind": "file"
+    },
+    {
+      "name": "history.jsonl",
+      "line_start": 394,
+      "line_end": 394,
+      "entry_kind": "file"
+    },
+    {
+      "name": "evaluator_results.jsonl",
+      "line_start": 395,
+      "line_end": 395,
+      "entry_kind": "file"
+    },
+    {
+      "name": "failure_history.jsonl",
+      "line_start": 396,
+      "line_end": 396,
+      "entry_kind": "file"
+    },
+    {
+      "name": "archive_events.jsonl",
+      "line_start": 397,
+      "line_end": 397,
+      "entry_kind": "file"
+    },
+    {
+      "name": "controller_budget_events.jsonl",
+      "line_start": 398,
+      "line_end": 398,
+      "entry_kind": "file"
+    },
+    {
+      "name": "history_invalid.jsonl",
+      "line_start": 399,
+      "line_end": 399,
+      "entry_kind": "file"
+    },
+    {
+      "name": "failure_history_invalid.jsonl",
+      "line_start": 400,
+      "line_end": 400,
+      "entry_kind": "file"
+    },
+    {
+      "name": "archive_events_invalid.jsonl",
+      "line_start": 401,
+      "line_end": 401,
+      "entry_kind": "file"
+    },
+    {
+      "name": "controller_budget_events_invalid.jsonl",
+      "line_start": 402,
+      "line_end": 402,
+      "entry_kind": "file"
+    },
+    {
+      "name": "llm_calls.jsonl",
+      "line_start": 403,
+      "line_end": 403,
+      "entry_kind": "file"
+    },
+    {
+      "name": "llm_calls_invalid.jsonl",
+      "line_start": 404,
+      "line_end": 404,
+      "entry_kind": "file"
+    },
+    {
+      "name": "manifest_invalid.jsonl",
+      "line_start": 405,
+      "line_end": 405,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_history.jsonl",
+      "line_start": 406,
+      "line_end": 406,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_history_invalid.jsonl",
+      "line_start": 407,
+      "line_end": 407,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_current_binding_table.jsonl",
+      "line_start": 408,
+      "line_end": 408,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_prior_score_table.jsonl",
+      "line_start": 409,
+      "line_end": 409,
+      "entry_kind": "file"
+    },
+    {
+      "name": "best.py",
+      "line_start": 410,
+      "line_end": 410,
+      "entry_kind": "file"
+    },
+    {
+      "name": "evaluator_artifacts",
+      "line_start": 411,
+      "line_end": 411,
+      "entry_kind": "directory"
+    },
+    {
+      "name": "plugin_artifacts",
+      "line_start": 413,
+      "line_end": 413,
+      "entry_kind": "directory"
+    },
+    {
+      "name": "best_workspace",
+      "line_start": 417,
+      "line_end": 417,
+      "entry_kind": "directory"
+    }
+  ],
+  "run_artifact_cleanup_records": [
+    {
+      "name": "archive_events.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "archive_events_invalid.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "best.py",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "best_workspace",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "directory"
+    },
+    {
+      "name": "controller_budget_events.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "controller_budget_events_invalid.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "evaluator_artifacts",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "directory"
+    },
+    {
+      "name": "evaluator_results.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "failure_history.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "failure_history_invalid.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "history.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "history_invalid.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "llm_calls.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "llm_calls_invalid.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "manifest.json",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "manifest_invalid.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "plugin_artifacts",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "directory"
+    },
+    {
+      "name": "prompt_history.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_history_invalid.jsonl",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
+    },
+    {
+      "name": "task_specification.json",
+      "line_start": 66,
+      "line_end": 66,
+      "entry_kind": "file"
     }
   ],
   "claims": [
@@ -6042,10 +6364,11 @@
     "complete_roadmap_claim_inventory": "not_recorded_locally",
     "complete_paper_index_status_row_inventory": "not_recorded_locally",
     "status_ledger_semantic_freshness_matrix": "not_recorded_locally",
+    "run_artifact_lifecycle_semantic_map": "not_recorded_locally",
     "semantic_claim_verifier": "not_recorded_locally",
     "stale_completed_entry_detection": "not_recorded_locally",
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution, and audited surface headings are enumerated for the README, ROADMAP, and papers index with explicit heading-to-claim coverage records. It also records a structural docs/status.md ledger inventory for implemented-today and important-limits bullets, including bullet spans, hashes, status-signal terms, and local backtick path existence records. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic docs/status.md freshness, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution, and audited surface headings are enumerated for the README, ROADMAP, and papers index with explicit heading-to-claim coverage records. It also records a structural docs/status.md ledger inventory for implemented-today and important-limits bullets, including bullet spans, hashes, status-signal terms, and local backtick path existence records. It records a structural run-artifacts guide inventory that compares top-level documented run outputs with the current overwrite cleanup artifact set. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic docs/status.md freshness, complete run-artifact lifecycle proof, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

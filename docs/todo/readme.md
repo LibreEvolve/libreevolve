@@ -707,6 +707,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `libreevolve/core/jsonl.py`, `libreevolve/core/loop.py`,
     `libreevolve/core/best_artifacts.py`, `libreevolve/cli.py`,
     artifact-schema metadata, `tests/core/test_loop.py`, and paper sidecars.
+    `papers/documentation_claim_inventory.json` now structurally records the
+    guide's top-level documented artifact names, the current
+    `RUN_ARTIFACT_NAMES` overwrite-cleanup set, and the documented-without-
+    cleanup mismatch for `prompt_current_binding_table.jsonl` and
+    `prompt_prior_score_table.jsonl`.
     Its artifact tree includes `task_specification.json`,
     `prompt_current_binding_table.jsonl`, and
     `prompt_prior_score_table.jsonl`, and later sections document
@@ -724,11 +729,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     the guide's artifact tree includes `prompt_current_binding_table.jsonl`
     and `prompt_prior_score_table.jsonl`, while the implementation cleanup set
     still omits both prompt-table exports.
-  - Current gap: there is no committed run-artifacts guide claim inventory or
-    drift validator that maps each documented artifact, schema field, invalid
-    stream, restore command, overwrite rule, show behavior, and
-    AlphaEvolve-facing limitation to writer/reader code, tests, manifest
-    sidecars, and active TODO owners. New runtime reports, artifact streams,
+  - Current gap: the committed structural inventory does not yet map each
+    documented artifact, schema field, invalid stream, restore command,
+    overwrite rule, show behavior, and AlphaEvolve-facing limitation to
+    writer/reader code, tests, manifest sidecars, and active TODO owners. New
+    runtime reports, artifact streams,
     restore semantics, quarantine policies, collision/overwrite cleanup lists,
     or inspection behavior can drift without a page-specific validation
     failure. Current guide prose can therefore present one artifact set in the

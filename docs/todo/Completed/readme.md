@@ -4,6 +4,24 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Add structural run-artifacts guide inventory to documentation claim
+      evidence.
+  - Status: `papers/documentation_claim_inventory.json` now records
+    top-level artifact names documented in `docs/run-artifacts.md`, the
+    current `RUN_ARTIFACT_NAMES` overwrite-cleanup set from
+    `libreevolve/core/database.py`, and their mismatch lists.
+  - Evidence: the structural inventory currently records 22 documented
+    top-level artifacts, 20 cleanup-owned artifacts, and two
+    documented-without-cleanup prompt table exports:
+    `prompt_current_binding_table.jsonl` and
+    `prompt_prior_score_table.jsonl`.
+  - Remaining guard: this is only structural drift evidence. The active
+    run-artifacts guide TODO still needs writer/reader code anchors, schema
+    anchors, restore/show behavior mapping, optional-versus-required status,
+    and lifecycle proof for every documented artifact.
+  - Verification: focused documentation-claim inventory tests cover matching
+    and stale run-artifact inventory records.
+
 - [x] Expose embedded-evaluator task-input replay gap in `docs/status.md`.
   - Status: the `docs/status.md` embedded-evaluator boundary now names the
     missing generated/interactive task-input replay policy shared across

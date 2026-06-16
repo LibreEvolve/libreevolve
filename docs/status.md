@@ -1264,6 +1264,7 @@ Important limits:
   those boundaries are tracked by
   `papers/todo_ledger_ownership_boundary.json`,
   `papers/roadmap_readiness_boundary.json`,
+  `papers/roadmap_claim_evidence_boundary.json`,
   `papers/roadmap_source_span_disposition_boundary.json`,
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
@@ -1279,6 +1280,16 @@ Important limits:
   `papers/roadmap_multi_objective_search_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
+- ROADMAP claim-evidence mapping now records six claim surfaces for the
+  ROADMAP scope preamble, current-state bullet inventory, implementation
+  evidence links, good-first priority claims, cross-document claim sync, and
+  alignment-report publication. It parses the current ROADMAP current-state
+  bullet count and good-first item count, and records sidecar refs, active
+  TODO refs, validation-gate labels, and readiness labels. This is not
+  complete per-bullet claim ids, per-bullet code/test/runtime evidence maps,
+  semantic evidence-sufficiency verification, stale current-state detection,
+  stale-priority detection, cross-document claim freshness, a generated
+  alignment report, a CI semantic claim gate, or owner review signoff.
 - ROADMAP source-span disposition evidence currently maps the six core
   AlphaEvolve anchors from `papers/implementation_evidence_map_boundary.json`
   to ROADMAP section ids, phase buckets, sidecars, and TODO links, and records

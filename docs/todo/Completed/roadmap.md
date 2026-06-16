@@ -15359,3 +15359,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     divergence benchmark evidence, static/binary replay policy, topology
     resume replay proof, stale-readiness detector, and owner review signoff
     remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP current-state and priority claim evidence map.
+  - Spec evidence: the ROADMAP is the planning bridge between code, README,
+    paper-index evidence, and TODO owners, so its current-state bullets and
+    good-first priorities need explicit evidence scope before they can be read
+    as AlphaEvolve-alignment proof.
+  - Status: `papers/roadmap_claim_evidence_boundary.json` now records six
+    claim surfaces for the ROADMAP scope preamble, current-state bullet
+    inventory, implementation-evidence links, good-first priority claims,
+    cross-document claim sync, and alignment-report publication. It parses the
+    current ROADMAP current-state bullet count and good-first item count,
+    records sidecar refs, active TODO refs, validation-gate labels, readiness
+    labels, and explicit missing semantic-proof fields. The paper-manifest gate
+    now requires and validates the sidecar at the repo root.
+  - Remaining roadmap gap: complete current-state claim inventory, per-bullet
+    code/test/runtime evidence maps, semantic evidence-sufficiency
+    verification, stale current-state detection, stale-priority detection,
+    cross-document claim freshness reports, generated alignment reports, CI
+    semantic claim gates, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

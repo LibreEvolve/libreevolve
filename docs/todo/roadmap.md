@@ -25,13 +25,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and AlphaEvolve-gap claims. It also records audited README, ROADMAP, and
     papers-index Markdown headings plus uncovered heading-to-claim gaps with
     active TODO-owner links.
-  - Current gap: there is no complete machine-readable claim inventory for
-    every ROADMAP current-state bullet, no per-bullet code/test/runtime-
-    artifact/sidecar/TODO evidence map, no stale-priority detector, and no
-    generated alignment report that proves each ROADMAP statement is current.
-  - Required result: add ROADMAP claim ids, evidence links, freshness checks,
-    and CI validation before treating ROADMAP as semantically complete
-    AlphaEvolve-alignment proof.
+    `papers/roadmap_claim_evidence_boundary.json` now records a ROADMAP-
+    specific current-state and priority claim evidence map with parsed
+    current-state bullet and good-first item counts, sidecar refs, active TODO
+    refs, validation-gate labels, and explicit missing semantic-proof fields.
+  - Current gap: the ROADMAP-specific sidecar is a bounded structural evidence
+    map, not a semantic verifier. There is still no complete machine-readable
+    claim inventory for every ROADMAP current-state bullet, no per-bullet
+    code/test/runtime-artifact sufficiency proof, no stale current-state or
+    stale-priority detector, and no generated alignment report that proves
+    each ROADMAP statement is current.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: complete current-state claim inventory, per-bullet
+    code/test/runtime evidence map, semantic evidence-sufficiency verifier,
+    stale current-state detector, stale-priority detector, cross-document
+    claim freshness report, generated alignment report, CI semantic claim
+    gate, and owner review signoff before treating ROADMAP as semantically
+    complete AlphaEvolve-alignment proof.
 
 - [ ] Add ROADMAP readiness taxonomy and weighted completion evidence.
   - Spec evidence: the active project goal is not simply to accumulate TODO

@@ -2856,6 +2856,15 @@ Implemented:
   readiness, canonical underlying-gap deduplication, source-span disposition
   completeness, per-category test-gate coverage, benchmark reproduction
   certification, or operational release readiness.
+- `papers/roadmap_claim_evidence_boundary.json`: ROADMAP current-state and
+  priority claim-evidence sidecar with six claim surfaces, parsed
+  current-state bullet count, parsed good-first item count, sidecar refs,
+  active TODO refs, validation-gate labels, and readiness labels. It is not
+  evidence of complete per-bullet claim ids, per-bullet code/test/runtime
+  evidence maps, semantic evidence-sufficiency verification, stale
+  current-state detection, stale-priority detection, cross-document claim
+  freshness, a generated alignment report, a CI semantic claim gate, or owner
+  review signoff.
 - `papers/todo_ledger_ownership_boundary.json`: TODO-ledger ownership sidecar
   with the four owner files, active/completed counts, active-ledger checked
   marker drift, raw checklist completion, and exact normalized-title duplicate

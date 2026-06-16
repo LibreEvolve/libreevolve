@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Expose embedded-evaluator task-input replay gap in `docs/status.md`.
+  - Status: the `docs/status.md` embedded-evaluator boundary now names the
+    missing generated/interactive task-input replay policy shared across
+    embedded `evaluate(eval_inputs)` stages and external validators.
+  - Evidence: active code/paper TODOs already document that embedded stages
+    only receive JSON-safe configured `eval_inputs`, while external-validator
+    stdin provenance still lacks generated-input replay and interactive
+    task-input capture policy.
+  - Remaining guard: this is status-ledger wording alignment only. Full Figure
+    3 parity still needs first-class/default candidate-owned evaluator loading,
+    typed eval-input schemas, replayable generated/interactive input artifacts,
+    build/runtime isolation, and non-static/external-validator causal score
+    linkage.
+  - Verification: regenerated documentation/status sidecars and focused
+    manifest checks include the updated status-ledger bullet hash.
+
 - [x] Expose prompt-table run-artifact lifecycle boundaries in `docs/status.md`.
   - Status: the `docs/status.md` run-artifact bullet now names prompt
     current-binding/prior-score tables and keeps the missing unified

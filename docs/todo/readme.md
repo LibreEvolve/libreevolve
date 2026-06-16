@@ -242,15 +242,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     detect stale status prose when code, ROADMAP, paper status rows, or TODO
     coverage changes. This leaves the README's "full implemented-versus-
     missing ledger" claim weaker than the paper-index status inventory.
-    Current drift evidence: after the embedded-evaluator TODOs were tightened,
-    active code/paper TODOs now name the missing generated/interactive
-    task-input replay contract for `evaluate(eval_inputs)` and external
-    validators, while `docs/status.md` still summarizes the embedded evaluator
-    boundary only as default loading, Figure 3 fixture identity, typed
-    eval-input contracts beyond JSON-safe config, build/runtime isolation, and
-    non-static/external-validator causal linkage. That omission shows the
-    status ledger can lag behind newly identified AlphaEvolve-facing gaps even
-    when README, ROADMAP, paper, and active TODO surfaces stay conservative.
+    A resolved narrow drift example is embedded-evaluator status wording:
+    after the embedded-evaluator TODOs were tightened, active code/paper TODOs
+    named the missing generated/interactive task-input replay contract for
+    `evaluate(eval_inputs)` and external validators, while `docs/status.md`
+    summarized the embedded evaluator boundary only as default loading, Figure
+    3 fixture identity, typed eval-input contracts beyond JSON-safe config,
+    build/runtime isolation, and non-static/external-validator causal linkage.
+    The status ledger now includes the generated/interactive task-input replay
+    policy gap shared across embedded and external-validator stages, but the
+    broader semantic freshness matrix is still missing.
     A resolved narrow drift example is the top-level `docs/status.md` run-
     artifact bullet: it previously summarized `runs/` outputs only as
     manifests, histories, prompts, failures, best candidates, and

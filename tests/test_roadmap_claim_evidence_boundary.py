@@ -23,7 +23,7 @@ def test_roadmap_claim_evidence_accepts_bounded_claim_map():
     assert boundary["roadmap_current_state_bullet_count"] == 61
     assert boundary["roadmap_good_first_item_count"] == 4
     assert boundary["claim_surface_count"] == 6
-    assert boundary["sidecar_ref_count"] == 12
+    assert boundary["sidecar_ref_count"] == 13
     assert boundary["active_todo_ref_count"] == 12
     assert [record["surface_id"] for record in boundary["claim_surface_records"]] == [
         "roadmap_scope_preamble",
@@ -49,7 +49,6 @@ def test_roadmap_claim_evidence_accepts_bounded_claim_map():
         "per_bullet_code_test_runtime_evidence_map": "not_recorded_locally",
         "semantic_evidence_sufficiency_verifier": "not_recorded_locally",
         "stale_current_state_detector": "not_recorded_locally",
-        "stale_priority_detector": "not_recorded_locally",
         "cross_document_claim_freshness_report": "not_recorded_locally",
         "generated_alignment_report": "not_recorded_locally",
         "ci_semantic_claim_gate": "not_recorded_locally",
@@ -93,4 +92,4 @@ def test_render_roadmap_claim_evidence_summary_reports_shape():
     assert "| claim_surface_count | 6 |" in summary
     assert "| current_state_bullet_count | 61 |" in summary
     assert "| good_first_item_count | 4 |" in summary
-    assert "| missing_evidence_count | 9 |" in summary
+    assert "| missing_evidence_count | 8 |" in summary

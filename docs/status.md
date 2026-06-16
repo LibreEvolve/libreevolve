@@ -1288,6 +1288,7 @@ Important limits:
   `papers/roadmap_non_goal_runtime_metadata_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
   `papers/roadmap_good_first_dependency_refresh_boundary.json`,
+  `papers/roadmap_good_first_stale_priority_boundary.json`,
   `papers/roadmap_good_first_freshness_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
   `papers/roadmap_phase_freshness_boundary.json`,
@@ -1319,8 +1320,8 @@ Important limits:
   TODO refs, validation-gate labels, and readiness labels. This is not
   complete per-bullet claim ids, per-bullet code/test/runtime evidence maps,
   semantic evidence-sufficiency verification, stale current-state detection,
-  stale-priority detection, cross-document claim freshness, a generated
-  alignment report, a CI semantic claim gate, or owner review signoff.
+  cross-document claim freshness, a generated alignment report, a CI semantic
+  claim gate, or owner review signoff.
 - TODO canonical-gap evidence now records nine criteria for canonical gap ids,
   canonical owner ledgers, derivative relationships, source/paper anchor
   mapping, implementation evidence links, cross-document rollup rules,
@@ -1418,15 +1419,17 @@ Important limits:
   items with stable ids, active TODO refs, priority rationale,
   dependency-readiness labels, validation gates, and AlphaEvolve impact labels.
   Dependency-state refresh is recorded by
-  `papers/roadmap_good_first_dependency_refresh_boundary.json`. This is not
-  stale-priority detection, calibrated priority scoring, CI freshness gating,
-  or owner review signoff.
+  `papers/roadmap_good_first_dependency_refresh_boundary.json`, and bounded
+  stale-priority detection is recorded by
+  `papers/roadmap_good_first_stale_priority_boundary.json`. This is not
+  calibrated priority scoring, CI freshness gating, validation-artifact
+  freshness, or owner review signoff.
 - ROADMAP Good First Follow-Ups freshness evidence now records six readiness
   criteria for dependency-state refresh, stale-priority detection,
   calibrated priority scoring, CI freshness gating, validation-artifact
-  refresh, and owner review signoff. This is not stale-priority detection, a
-  priority score model, CI freshness enforcement, validation-artifact
-  freshness, or owner review signoff.
+  refresh, and owner review signoff. This is not a calibrated priority score
+  model, CI freshness enforcement, validation-artifact freshness, or owner
+  review signoff.
 - ROADMAP phase-sequencing evidence now records the Near Term, Mid Term, and
   Longer Term sequence for ten major ROADMAP sections, active blocker TODO
   refs, validation-gate labels, and promotion criteria. This is not a full

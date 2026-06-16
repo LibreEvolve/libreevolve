@@ -1,0 +1,94 @@
+{
+  "boundary_status": "good_first_stale_priority_detector_recorded_without_score_model",
+  "claim_boundary": "This boundary records a bounded stale-priority detector for the current ROADMAP Good First Follow-Ups by joining the static priority map to dependency-state refresh records, ordinal order, live dependency refs, blocker labels, and ROADMAP phrase checks. It rejects stale priority records. It does not claim a calibrated priority score model, CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
+  "claim_ready": false,
+  "dependency_refresh_boundary_input": "papers/roadmap_good_first_dependency_refresh_boundary.json",
+  "dependency_refresh_record_count": 4,
+  "detector_records": [
+    {
+      "current_blocker_label": "durable_tables",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "item_id": "durable_query_indexes",
+      "ordinal": 1,
+      "priority_detector_status": "priority_current",
+      "roadmap_phrase_present": true,
+      "source_spec_ordinal": 1,
+      "stale_dependency_ref_count": 0,
+      "stale_reasons": []
+    },
+    {
+      "current_blocker_label": "run_evidence",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "item_id": "non_toy_benchmark_fixture",
+      "ordinal": 2,
+      "priority_detector_status": "priority_current",
+      "roadmap_phrase_present": true,
+      "source_spec_ordinal": 2,
+      "stale_dependency_ref_count": 0,
+      "stale_reasons": []
+    },
+    {
+      "current_blocker_label": "full_workspace_resume_contract",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "item_id": "workspace_resume_coverage",
+      "ordinal": 3,
+      "priority_detector_status": "priority_current",
+      "roadmap_phrase_present": true,
+      "source_spec_ordinal": 3,
+      "stale_dependency_ref_count": 0,
+      "stale_reasons": []
+    },
+    {
+      "current_blocker_label": "runtime_runner",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "item_id": "feedback_calibration_reports",
+      "ordinal": 4,
+      "priority_detector_status": "priority_current",
+      "roadmap_phrase_present": true,
+      "source_spec_ordinal": 4,
+      "stale_dependency_ref_count": 0,
+      "stale_reasons": []
+    }
+  ],
+  "detector_scope": "bounded static priority-order detector joined to dependency refresh records; not a calibrated priority score model",
+  "missing_evidence": {
+    "calibrated_priority_score_model": "not_recorded_locally",
+    "ci_priority_freshness_gate": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "validation_artifact_refresh": "not_recorded_locally"
+  },
+  "ordinal_sequence_check": {
+    "expected_ordinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "observed_ordinals": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "status": "ordinal_sequence_current"
+  },
+  "priority_detector_status": "no_stale_good_first_priorities_detected",
+  "priority_item_count": 4,
+  "required_evidence_fields": [
+    "source_good_first_priority_items",
+    "dependency_refresh_records",
+    "ordinal_sequence_check",
+    "live_dependency_ref_check",
+    "blocker_label_check",
+    "stale_priority_records",
+    "calibrated_priority_score_model",
+    "ci_priority_freshness_gate",
+    "validation_artifact_refresh",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_good_first_stale_priority_boundary.v1",
+  "source_good_first_boundary_input": "papers/roadmap_good_first_followups_boundary.json",
+  "source_priority_item_count": 4,
+  "stale_priority_count": 0,
+  "stale_priority_records": []
+}

@@ -271,18 +271,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the four current priority items against their live active TODO dependency
     refs, current blocker labels, validation gate expectations, and
     AlphaEvolve impact labels, with zero stale dependency refs.
+    `papers/roadmap_good_first_stale_priority_boundary.json` now joins the
+    static priority map to dependency-refresh records, ordinal order, live
+    dependency refs, blocker labels, and ROADMAP phrase checks, with zero
+    stale priority records.
   - Current gap: the sidecars are bounded static-priority, dependency-refresh,
-    and freshness readiness maps, not an implemented freshness model. There
-    is still no stale-priority detector, calibrated priority score model, CI
-    freshness gate, validation-artifact freshness report, or owner review
-    signoff proving these four items remain the best first follow-ups after
-    new ROADMAP, code, README, or paper-sidecar work lands.
+    stale-priority, and freshness readiness maps, not an implemented
+    calibrated freshness model. There is still no calibrated priority score
+    model, CI freshness gate, validation-artifact freshness report, or owner
+    review signoff proving these four items remain the best first follow-ups
+    after new ROADMAP, code, README, or paper-sidecar work lands.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: stale-priority detector, calibrated priority score model, CI
-    freshness gate, validation-artifact freshness report for expected
-    validation artifacts, and owner review signoff. The drift check must force
-    the section to be refreshed when dependencies or implementation states
-    change.
+    sidecar: calibrated priority score model, CI freshness gate,
+    validation-artifact freshness report for expected validation artifacts,
+    and owner review signoff. The drift check must force the section to be
+    refreshed when dependencies or implementation states change.
 
 - [ ] Add ROADMAP phase-boundary and sequencing evidence.
   - Spec evidence: the `Near Term`, `Mid Term`, and `Longer Term` headings are

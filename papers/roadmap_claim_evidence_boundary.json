@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 12,
   "boundary_status": "bounded_roadmap_claim_evidence_map_without_semantic_freshness_verifier",
-  "claim_boundary": "This boundary records a ROADMAP-specific current-state and priority claim evidence map with parsed current-state bullet and good-first item counts, linked sidecars, active TODO anchors, and validation-gate labels. It does not claim complete per-bullet claim ids, per-bullet code/test/runtime evidence maps, semantic evidence sufficiency verification, stale current-state detection, stale priority detection, cross-document claim freshness, a generated alignment report, a CI semantic claim gate, or owner review signoff.",
+  "claim_boundary": "This boundary records a ROADMAP-specific current-state and priority claim evidence map with parsed current-state bullet and good-first item counts, linked sidecars, active TODO anchors, and validation-gate labels. It does not claim complete per-bullet claim ids, per-bullet code/test/runtime evidence maps, semantic evidence sufficiency verification, stale current-state detection, cross-document claim freshness, a generated alignment report, a CI semantic claim gate, or owner review signoff.",
   "claim_ready": false,
   "claim_surface_count": 6,
   "claim_surface_records": [
@@ -105,19 +105,19 @@
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "stale-priority detector",
+          "required_phrase": "calibrated priority score model",
           "required_phrase_present": true
         },
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "live active TODO dependency refs",
+          "required_phrase": "CI freshness gate",
           "required_phrase_present": true
         }
       ],
-      "current_scope": "four parsed good-first items, bounded static priority map, and dependency refresh records",
-      "missing_readiness": "stale-priority detector and calibrated priority freshness model",
-      "readiness_status": "static_priority_map_only",
+      "current_scope": "four parsed good-first items, bounded static priority map, dependency refresh records, and stale-priority detector",
+      "missing_readiness": "calibrated priority freshness model and CI freshness gate",
+      "readiness_status": "stale_priority_detector_recorded_without_score_model",
       "roadmap_phrase_present": true,
       "roadmap_required_phrase": "## Good First Follow-Ups",
       "sidecar_refs": [
@@ -128,6 +128,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_good_first_dependency_refresh_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_good_first_stale_priority_boundary.json"
         }
       ],
       "surface_id": "good_first_priority_claims",
@@ -214,8 +218,7 @@
     "owner_review_signoff": "not_recorded_locally",
     "per_bullet_code_test_runtime_evidence_map": "not_recorded_locally",
     "semantic_evidence_sufficiency_verifier": "not_recorded_locally",
-    "stale_current_state_detector": "not_recorded_locally",
-    "stale_priority_detector": "not_recorded_locally"
+    "stale_current_state_detector": "not_recorded_locally"
   },
   "required_evidence_fields": [
     "roadmap_current_state_bullet_count",
@@ -232,5 +235,5 @@
   "roadmap_current_state_bullet_count": 61,
   "roadmap_good_first_item_count": 4,
   "schema": "libreevolve.roadmap_claim_evidence_boundary.v1",
-  "sidecar_ref_count": 12
+  "sidecar_ref_count": 13
 }

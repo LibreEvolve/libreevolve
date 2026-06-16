@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add ROADMAP Good First Follow-Ups stale-priority detector.
+  - Status: `papers/roadmap_good_first_stale_priority_boundary.json` now joins
+    the static Good First priority map to dependency-refresh records, ordinal
+    order, live dependency refs, blocker labels, and ROADMAP phrase checks,
+    with zero stale priority records.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_good_first_stale_priority_boundary.py`
+    derives the detector from current ROADMAP/TODO text and the dependency
+    refresh boundary, and the paper-manifest gate requires the checked sidecar
+    to match those inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks calibrated priority
+    scoring, CI freshness gating, validation-artifact freshness, and owner
+    review signoff.
+  - Verification: focused Good First stale-priority tests and paper-manifest
+    validation cover the bounded detector contract.
+
 - [x] Add bounded ROADMAP operational-maturity criteria map.
   - Status: `papers/roadmap_operational_maturity_boundary.json` now records
     six section-level operational-maturity criteria with risk classes, current

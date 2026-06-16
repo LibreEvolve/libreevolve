@@ -2990,22 +2990,29 @@ Implemented:
 - `papers/roadmap_good_first_followups_boundary.json`: ROADMAP Good First
   Follow-Ups priority sidecar with the four current priority items, active
   TODO refs, priority rationale, dependency-readiness labels, validation gates,
-  and AlphaEvolve impact labels. It is not evidence of stale-priority
-  detection, calibrated priority scoring, CI freshness gating, or owner review
-  signoff.
+  and AlphaEvolve impact labels. Dependency-state refresh and stale-priority
+  detection are recorded separately. It is not evidence of calibrated priority
+  scoring, CI freshness gating, or owner review signoff.
 - `papers/roadmap_good_first_dependency_refresh_boundary.json`: ROADMAP Good
   First Follow-Ups dependency-refresh sidecar that rechecks the four current
   priority items against live active TODO dependency refs, current blocker
   labels, validation gate expectations, and AlphaEvolve impact labels, with
-  zero stale dependency refs. It is not evidence of stale-priority detection,
-  calibrated priority scoring, CI freshness gating, validation-artifact
-  freshness, or owner review signoff.
+  zero stale dependency refs. Stale-priority detection is recorded separately.
+  It is not evidence of calibrated priority scoring, CI freshness gating,
+  validation-artifact freshness, or owner review signoff.
+- `papers/roadmap_good_first_stale_priority_boundary.json`: ROADMAP Good
+  First Follow-Ups stale-priority detector sidecar that joins the static
+  priority map to dependency-refresh records, ordinal order, live dependency
+  refs, blocker labels, and ROADMAP phrase checks, with zero stale priority
+  records. It is not evidence of a calibrated priority score model, CI
+  freshness enforcement, validation-artifact freshness, or owner review
+  signoff.
 - `papers/roadmap_good_first_freshness_boundary.json`: ROADMAP Good First
   Follow-Ups freshness readiness sidecar with six criteria for dependency-
   state refresh, stale-priority detection, calibrated priority scoring, CI
   freshness gating, validation-artifact refresh, and owner review signoff. It
-  is not evidence that stale detectors, scoring models, CI gates, artifact
-  freshness reports, or signoffs are implemented.
+  is not evidence that calibrated scoring models, CI gates, artifact freshness
+  reports, or signoffs are implemented.
 - `papers/roadmap_phase_sequence_boundary.json`: ROADMAP phase-sequencing
   sidecar with the current Near Term, Mid Term, and Longer Term sequence for
   ten major ROADMAP sections, active blocker TODO refs, validation-gate labels,

@@ -32,7 +32,6 @@ EXPECTED_MISSING_EVIDENCE = {
     "per_bullet_code_test_runtime_evidence_map": "not_recorded_locally",
     "semantic_evidence_sufficiency_verifier": "not_recorded_locally",
     "stale_current_state_detector": "not_recorded_locally",
-    "stale_priority_detector": "not_recorded_locally",
     "cross_document_claim_freshness_report": "not_recorded_locally",
     "generated_alignment_report": "not_recorded_locally",
     "ci_semantic_claim_gate": "not_recorded_locally",
@@ -107,24 +106,25 @@ CLAIM_SURFACE_SPECS = (
     {
         "surface_id": "good_first_priority_claims",
         "roadmap_required_phrase": "## Good First Follow-Ups",
-        "current_scope": "four parsed good-first items, bounded static priority map, and dependency refresh records",
-        "missing_readiness": "stale-priority detector and calibrated priority freshness model",
+        "current_scope": "four parsed good-first items, bounded static priority map, dependency refresh records, and stale-priority detector",
+        "missing_readiness": "calibrated priority freshness model and CI freshness gate",
         "sidecars": (
             "papers/roadmap_good_first_followups_boundary.json",
             "papers/roadmap_good_first_dependency_refresh_boundary.json",
+            "papers/roadmap_good_first_stale_priority_boundary.json",
         ),
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "stale-priority detector",
+                "required_phrase": "calibrated priority score model",
             },
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "live active TODO dependency refs",
+                "required_phrase": "CI freshness gate",
             },
         ),
         "validation_gate": "priority freshness gate tied to dependency state",
-        "readiness_status": "static_priority_map_only",
+        "readiness_status": "stale_priority_detector_recorded_without_score_model",
     },
     {
         "surface_id": "cross_document_claim_sync",
@@ -224,9 +224,8 @@ def roadmap_claim_evidence_boundary_record(root: str | Path = ".") -> dict[str, 
             "validation-gate labels. It does not claim complete per-bullet "
             "claim ids, per-bullet code/test/runtime evidence maps, semantic "
             "evidence sufficiency verification, stale current-state detection, "
-            "stale priority detection, cross-document claim freshness, a "
-            "generated alignment report, a CI semantic claim gate, or owner "
-            "review signoff."
+            "cross-document claim freshness, a generated alignment report, a "
+            "CI semantic claim gate, or owner review signoff."
         ),
     }
 

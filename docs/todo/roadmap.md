@@ -176,14 +176,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ids to the three ROADMAP non-goals, maps nine constrained documentation
     surfaces, validates required safe-scope phrases, and records zero exact
     forbidden support-claim phrase matches for the bounded surface set.
-  - Current gap: the sidecar is a bounded documentation-surface inventory, not
-    a full cross-document contradiction detector. There is still no runtime
-    metadata scan, plugin docstring scan, exhaustive Markdown corpus scan, CI
-    promotion gate, or workflow proving future ROADMAP edits cannot
-    accidentally promote a non-goal into a supported AlphaEvolve-parity claim.
-  - Required result: add stable ROADMAP non-goal claim ids and a verifier that
-    maps each non-goal to the code/docs/paper surfaces it constrains, rejects
-    contradictory support claims, and updates ROADMAP/TODO evidence whenever a
+    `papers/roadmap_non_goal_drift_boundary.json` now records a seven-
+    criterion non-goal drift and promotion readiness matrix for runtime
+    metadata scans, plugin docstring scans, exhaustive Markdown corpus scans,
+    CI promotion gates, intentional-promotion workflow, contradiction
+    remediation, and runtime/plugin/docs/paper scope joins.
+  - Current gap: the sidecars are bounded documentation and readiness
+    inventories, not a full cross-document contradiction detector or promotion
+    gate. There is still no implemented runtime metadata scan, plugin
+    docstring scan, exhaustive Markdown corpus scan, CI promotion gate,
+    intentional-promotion workflow, contradiction-remediation report,
+    runtime/plugin/docs/paper scope join, or owner review signoff proving
+    future ROADMAP edits cannot accidentally promote a non-goal into a
+    supported AlphaEvolve-parity claim.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: runtime metadata scan, plugin docstring scan, exhaustive Markdown
+    corpus scan, CI promotion gate, intentional promotion workflow,
+    contradiction-remediation report that rejects contradictory support
+    claims, code/docs/paper surfaces plus runtime/plugin scope join, and owner
+    review signoff. The workflow must update ROADMAP/TODO evidence whenever a
     non-goal is completed, removed, or intentionally promoted into active
     implementation work.
 

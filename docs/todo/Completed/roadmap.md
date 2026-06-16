@@ -15417,3 +15417,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     map, missing/partial TODO proof, non-goal decision map, phase-priority map,
     CI source-span exhaustiveness gate, and owner review signoff remain active
     in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP non-goal drift and promotion readiness matrix.
+  - Spec evidence: ROADMAP non-goals are overclaim guardrails, so future
+    support claims need a way to distinguish a bounded exact-phrase
+    contradiction scan from a full runtime/docs/plugin/papers promotion gate.
+  - Status: `papers/roadmap_non_goal_drift_boundary.json` now records seven
+    readiness criteria for runtime metadata scans, plugin docstring scans,
+    exhaustive Markdown corpus scans, CI non-goal promotion gates,
+    intentional-promotion workflow, contradiction remediation, and joined
+    runtime/plugin/docs/paper scope maps. It links the existing non-goal
+    contradiction input, sidecar refs, active TODO refs, validation-gate
+    labels, readiness labels, and explicit missing-evidence fields. The
+    paper-manifest gate now requires and validates the sidecar at the repo
+    root.
+  - Remaining roadmap gap: the actual runtime metadata scan, plugin docstring
+    scan, exhaustive Markdown corpus scan, CI promotion gate,
+    intentional-promotion workflow, contradiction-remediation report,
+    runtime/plugin/docs/paper scope join, and owner review signoff remain
+    active in `docs/todo/roadmap.md`.

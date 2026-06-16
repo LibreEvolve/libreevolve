@@ -1,0 +1,259 @@
+{
+  "active_todo_ref_count": 14,
+  "boundary_status": "bounded_non_goal_drift_matrix_without_full_promotion_gate",
+  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. It does not claim runtime metadata scanning, plugin docstring scanning, exhaustive Markdown corpus scanning, CI promotion enforcement, an intentional promotion workflow, or owner-reviewed remediation readiness.",
+  "claim_ready": false,
+  "criterion_count": 7,
+  "missing_evidence": {
+    "ci_non_goal_promotion_gate": "not_recorded_locally",
+    "claim_surface_remediation": "not_recorded_locally",
+    "full_markdown_corpus_scan": "not_recorded_locally",
+    "intentional_promotion_workflow": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "plugin_docstring_scan": "not_recorded_locally",
+    "runtime_metadata_scan": "not_recorded_locally",
+    "runtime_plugin_scope_join": "not_recorded_locally"
+  },
+  "readiness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "runtime metadata scan",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "machine-readable evidence map",
+          "required_phrase_present": true
+        }
+      ],
+      "constrained_surface": "run manifests, runtime finalization, and provider/plugin metadata",
+      "criterion_id": "runtime_metadata_scan",
+      "current_scope": "selected ROADMAP and documentation surfaces only",
+      "missing_readiness": "machine-readable scan of runtime metadata claims constrained by ROADMAP non-goals",
+      "readiness_status": "documentation_surface_inventory_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_contradiction_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/status_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "runtime metadata contradiction scan tied to stable non-goal ids"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "plugin docstring scan",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "paper-facing classification of local plugin/retrieval/failure sections",
+          "required_phrase_present": true
+        }
+      ],
+      "constrained_surface": "plugin source modules, docstrings, aliases, and paper-inspiration labels",
+      "criterion_id": "plugin_docstring_scan",
+      "current_scope": "README, architecture, status, and ROADMAP scope wording",
+      "missing_readiness": "plugin source/docstring scan proving paper-inspired plugins are not advertised as faithful implementations",
+      "readiness_status": "selected_documentation_phrase_checks_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_plugin_extensibility_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "plugin docstring and metadata scan for faithful-implementation overclaims"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "exhaustive Markdown corpus scan",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "required_phrase": "complete cross-document claim inventory",
+          "required_phrase_present": true
+        }
+      ],
+      "constrained_surface": "README, ROADMAP, docs, papers index, and TODO ledgers",
+      "criterion_id": "full_markdown_corpus_scan",
+      "current_scope": "nine constrained documentation surfaces from the non-goal inventory",
+      "missing_readiness": "exhaustive Markdown corpus scan for promoted support claims and stale non-goal wording",
+      "readiness_status": "bounded_surface_list_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_truthfulness_boundary.json"
+        }
+      ],
+      "validation_gate": "whole-corpus Markdown contradiction scan with source spans"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "CI promotion gate",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "required_phrase": "drift check",
+          "required_phrase_present": true
+        }
+      ],
+      "constrained_surface": "CI and paper-manifest validation gates",
+      "criterion_id": "ci_non_goal_promotion_gate",
+      "current_scope": "manifest validation of committed sidecar shape",
+      "missing_readiness": "CI gate that fails when a ROADMAP non-goal is removed, completed, or promoted without evidence updates",
+      "readiness_status": "local_manifest_shape_check_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/ci_workflow_coverage_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_contradiction_boundary.json"
+        }
+      ],
+      "validation_gate": "CI non-goal promotion/removal gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "intentionally promoted",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "update ROADMAP/TODO evidence",
+          "required_phrase_present": true
+        }
+      ],
+      "constrained_surface": "ROADMAP non-goal lifecycle and TODO evidence updates",
+      "criterion_id": "intentional_promotion_workflow",
+      "current_scope": "static current non-goal inventory",
+      "missing_readiness": "workflow proving intentional promotion updates ROADMAP, README, papers, and TODO evidence",
+      "readiness_status": "no_promotion_workflow_recorded",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_canonical_gap_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_phase_sequence_boundary.json"
+        }
+      ],
+      "validation_gate": "intentional non-goal promotion workflow with evidence checklist"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "contradictory support claims",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "required_phrase": "implementation-evidence mapping for every README claim",
+          "required_phrase_present": true
+        }
+      ],
+      "constrained_surface": "contradictory claim report and TODO remediation routing",
+      "criterion_id": "claim_surface_remediation",
+      "current_scope": "zero exact forbidden phrase matches in selected docs",
+      "missing_readiness": "remediation report that links each contradiction to an owner, TODO, and claim update",
+      "readiness_status": "no_claim_remediation_report",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_canonical_gap_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_claim_evidence_boundary.json"
+        }
+      ],
+      "validation_gate": "non-goal contradiction remediation report"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "code/docs/paper surfaces",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "broader plugin registry gap",
+          "required_phrase_present": true
+        }
+      ],
+      "constrained_surface": "joined runtime metadata, plugin docs, paper claims, and docs claims",
+      "criterion_id": "runtime_plugin_scope_join",
+      "current_scope": "independent sidecars for plugin scope, status claims, and non-goal wording",
+      "missing_readiness": "joined map proving code, docs, papers, and runtime metadata agree on non-goal scope",
+      "readiness_status": "sidecars_are_not_joined",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_plugin_extensibility_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/status_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "runtime/plugin/docs/papers non-goal scope join"
+    }
+  ],
+  "required_evidence_fields": [
+    "runtime_metadata_scan",
+    "plugin_docstring_scan",
+    "full_markdown_corpus_scan",
+    "ci_non_goal_promotion_gate",
+    "intentional_promotion_workflow",
+    "claim_surface_remediation",
+    "runtime_plugin_scope_join",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_non_goal_drift_boundary.v1",
+  "sidecar_ref_count": 14,
+  "source_constrained_surface_count": 9,
+  "source_contradiction_count": 0,
+  "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",
+  "source_non_goal_count": 3
+}

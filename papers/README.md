@@ -2909,6 +2909,13 @@ Implemented:
   is not evidence of a runtime metadata scan, plugin docstring scan,
   exhaustive Markdown corpus scan, CI promotion gate, or intentional non-goal
   promotion workflow.
+- `papers/roadmap_non_goal_drift_boundary.json`: ROADMAP non-goal drift and
+  promotion readiness sidecar with seven criteria for runtime metadata scans,
+  plugin docstring scans, exhaustive Markdown corpus scans, CI promotion
+  gates, intentional-promotion workflow, contradiction remediation, and joined
+  runtime/plugin/docs/paper scope maps. It is not evidence that those scans,
+  gates, workflows, remediation reports, scope joins, or owner review signoff
+  are implemented.
 - `papers/roadmap_good_first_followups_boundary.json`: ROADMAP Good First
   Follow-Ups priority sidecar with the four current priority items, active
   TODO refs, priority rationale, dependency-readiness labels, validation gates,

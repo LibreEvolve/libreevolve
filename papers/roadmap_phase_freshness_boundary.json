@@ -1,0 +1,223 @@
+{
+  "active_todo_ref_count": 12,
+  "boundary_status": "bounded_phase_freshness_matrix_without_dependency_gate",
+  "claim_boundary": "This boundary records ROADMAP phase freshness readiness criteria tied to the bounded static phase sequence map. It does not claim a dependency graph, stale-phase detector, promotion/demotion workflow, CI phase freshness gate, evidence-status refresh report, or owner review signoff.",
+  "claim_ready": false,
+  "freshness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "dependency graph",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "prerequisites, blocking TODOs",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "dependency_graph",
+      "current_scope": "static phase labels and active blocker TODO refs for ten sections",
+      "missing_readiness": "dependency graph connecting each major section to prerequisites and blocking TODOs",
+      "phase_surface": "Near Term, Mid Term, and Longer Term section prerequisites",
+      "readiness_status": "static_phase_map_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_phase_sequence_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/todo_canonical_gap_boundary.json"
+        }
+      ],
+      "validation_gate": "ROADMAP phase dependency graph"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "stale-phase detector",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "refreshed when implementation or evidence status changes",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "phase_staleness_detector",
+      "current_scope": "ordered section line-number check without freshness semantics",
+      "missing_readiness": "detector for ROADMAP items that stay in the wrong phase after implementation or evidence changes",
+      "phase_surface": "phase labels and section ordering",
+      "readiness_status": "no_phase_staleness_detector",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_claim_evidence_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "phase staleness detector tied to implementation and evidence status"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "promotion/demotion workflow",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "promotion criteria",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "promotion_demotion_workflow",
+      "current_scope": "static promotion criteria text on each phase section",
+      "missing_readiness": "workflow proving phase promotions or demotions update ROADMAP, README, paper sidecars, and TODO evidence",
+      "phase_surface": "phase changes, item promotions, item demotions, and replacements",
+      "readiness_status": "promotion_criteria_without_workflow",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_good_first_freshness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_drift_boundary.json"
+        }
+      ],
+      "validation_gate": "phase promotion/demotion evidence workflow"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "CI phase freshness gate",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "required_phrase": "drift check",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "ci_phase_freshness_gate",
+      "current_scope": "repo-root sidecar shape validation",
+      "missing_readiness": "CI gate that fails stale phase labels, missing dependency edges, or incomplete promotion records",
+      "phase_surface": "CI and paper-manifest checks for ROADMAP phase drift",
+      "readiness_status": "manifest_shape_check_without_ci_phase_gate",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/ci_workflow_coverage_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_phase_sequence_boundary.json"
+        }
+      ],
+      "validation_gate": "CI phase freshness gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "code, papers, README, or sidecar evidence changes",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "validation gates",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "evidence_status_refresh",
+      "current_scope": "phase sidecar records validation-gate labels but no current evidence-state refresh",
+      "missing_readiness": "freshness report that refreshes phase labels when code, papers, README, or sidecar evidence changes",
+      "phase_surface": "code, papers, README, sidecars, and ROADMAP evidence status",
+      "readiness_status": "validation_labels_without_evidence_refresh",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/implementation_evidence_map_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/status_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "phase evidence-status refresh report"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner review signoff",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "phase labels and item ordering",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "owner_review_signoff",
+      "current_scope": "no owner-reviewed signoff record for phase labels or ordering",
+      "missing_readiness": "review signoff for phase moves, deferrals, dependency changes, and scope changes",
+      "phase_surface": "owner-reviewed ROADMAP phase lifecycle decisions",
+      "readiness_status": "no_owner_review_signoff",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        }
+      ],
+      "validation_gate": "owner-reviewed phase freshness signoff"
+    }
+  ],
+  "freshness_criterion_count": 6,
+  "missing_evidence": {
+    "ci_phase_freshness_gate": "not_recorded_locally",
+    "dependency_graph": "not_recorded_locally",
+    "evidence_status_refresh": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "phase_staleness_detector": "not_recorded_locally",
+    "promotion_demotion_workflow": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "dependency_graph",
+    "phase_staleness_detector",
+    "promotion_demotion_workflow",
+    "ci_phase_freshness_gate",
+    "evidence_status_refresh",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_phase_freshness_boundary.v1",
+  "sidecar_ref_count": 12,
+  "source_phase_boundary_input": "papers/roadmap_phase_sequence_boundary.json",
+  "source_phase_count": 3,
+  "source_section_count": 10,
+  "source_section_sequence_status": "roadmap_major_sections_in_expected_order"
+}

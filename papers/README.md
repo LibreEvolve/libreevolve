@@ -2934,6 +2934,12 @@ Implemented:
   and promotion criteria. It is not evidence of a full dependency graph,
   stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
   or owner review signoff.
+- `papers/roadmap_phase_freshness_boundary.json`: ROADMAP phase freshness
+  readiness sidecar with six criteria for the dependency graph,
+  stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
+  evidence-status refresh, and owner review signoff. It is not evidence that
+  those graph, detector, workflow, CI gate, refresh-report, or signoff
+  mechanisms are implemented.
 - `papers/roadmap_operational_maturity_boundary.json`: ROADMAP operational
   maturity sidecar with six section-level criteria, risk classes, current
   sidecar refs, active TODO refs, and acceptance-gate labels. It is not

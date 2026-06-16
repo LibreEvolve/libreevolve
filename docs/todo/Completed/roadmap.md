@@ -15451,3 +15451,19 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     stale-priority detector, calibrated priority score model, CI freshness
     gate, validation-artifact freshness report, and owner review signoff
     remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP phase freshness readiness matrix.
+  - Spec evidence: ROADMAP phase labels make implementation-readiness claims,
+    so static Near Term/Mid Term/Longer Term sequencing needs explicit
+    freshness evidence.
+  - Status: `papers/roadmap_phase_freshness_boundary.json` now records six
+    freshness criteria for the phase dependency graph, stale-phase detector,
+    promotion/demotion workflow, CI phase freshness gate, evidence-status
+    refresh report, and owner review signoff. It links the existing phase
+    sequence boundary input, sidecar refs, active TODO refs, validation-gate
+    labels, readiness labels, and explicit missing-evidence fields. The
+    paper-manifest gate now requires and validates the sidecar at the repo
+    root.
+  - Remaining roadmap gap: the actual dependency graph, stale-phase detector,
+    promotion/demotion workflow, CI phase freshness gate, evidence-status
+    refresh report, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

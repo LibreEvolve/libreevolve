@@ -1273,6 +1273,7 @@ Important limits:
   `papers/roadmap_good_first_followups_boundary.json`,
   `papers/roadmap_good_first_freshness_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
+  `papers/roadmap_phase_freshness_boundary.json`,
   `papers/roadmap_operational_maturity_boundary.json`,
   `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
   `papers/roadmap_plugin_extensibility_boundary.json`,
@@ -1352,6 +1353,12 @@ Important limits:
   refs, validation-gate labels, and promotion criteria. This is not a full
   dependency graph, stale-phase detector, promotion/demotion workflow, CI
   phase freshness gate, or owner review signoff.
+- ROADMAP phase freshness evidence now records six readiness criteria for the
+  dependency graph, stale-phase detector, promotion/demotion workflow, CI
+  phase freshness gate, evidence-status refresh report, and owner review
+  signoff. This is not an implemented dependency graph, stale-phase detector,
+  promotion/demotion workflow, CI gate, evidence refresh report, or owner
+  review signoff.
 - ROADMAP representative-benchmark portfolio evidence now records five
   portfolio families spanning sorting-network rediscovery, matrix tensor
   targets, constructive-math geometry, systems/kernel/scheduling work, and

@@ -247,14 +247,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     Near Term, Mid Term, and Longer Term sequence for ten major ROADMAP
     sections, links each section to an active blocker TODO, and records
     validation-gate labels plus promotion criteria.
-  - Current gap: the sidecar is a bounded static phase map, not a full
-    dependency graph or freshness model. There is still no stale-phase
-    detector, promotion/demotion workflow, CI phase freshness gate, or owner
-    review signoff proving that a ROADMAP item still belongs in Near Term,
-    Mid Term, or Longer Term after related code, papers, README, or sidecar
-    evidence changes.
-  - Required result: add ROADMAP phase metadata that links each major section
-    to prerequisites, blocking TODOs, validation gates, and promotion criteria,
+    `papers/roadmap_phase_freshness_boundary.json` now records a six-
+    criterion phase freshness readiness matrix for the dependency graph,
+    stale-phase detector, promotion/demotion workflow, CI phase freshness
+    gate, evidence-status refresh, and owner review signoff.
+  - Current gap: the sidecars are bounded static-sequence and freshness
+    readiness maps, not a full dependency graph or freshness model. There is
+    still no implemented dependency graph, stale-phase detector,
+    promotion/demotion workflow, CI phase freshness gate, evidence-status
+    refresh report, or owner review signoff proving that a ROADMAP item still
+    belongs in Near Term, Mid Term, or Longer Term after related code, papers,
+    README, or sidecar evidence changes.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: dependency graph, stale-phase detector, promotion/demotion
+    workflow, CI phase freshness gate, evidence-status refresh report, and
+    owner review signoff. The verifier must keep each major section linked to
+    prerequisites, blocking TODOs, validation gates, and promotion criteria,
     then validate that phase labels and item ordering are refreshed when
     implementation or evidence status changes.
 

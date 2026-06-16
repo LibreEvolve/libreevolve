@@ -327,15 +327,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     now records five portfolio families, domains, validator-strength labels,
     current sidecar refs, active TODO refs, baseline/SOTA target labels,
     artifact-output requirements, and readiness-status labels.
-  - Current gap: there is no domain-coverage matrix, benchmark admission
-    checklist, repeated-seed run matrix, anti-gaming certification,
-    SOTA/baseline citation sufficiency proof, portfolio-balance score,
-    stale-coverage detector, CI freshness gate, or owner signoff proving the
-    representative-benchmark list is balanced, feasible, non-duplicative, and
-    strong enough to support AlphaEvolve-style claims once individual fixtures
-    improve.
-  - Required result: add a ROADMAP benchmark-portfolio evidence map that
-    classifies candidate benchmark families by domain, validator strength,
+    `papers/roadmap_benchmark_portfolio_readiness_boundary.json` now records
+    a six-criterion readiness matrix for the domain-coverage matrix,
+    benchmark admission checklist, repeated-seed run matrix, anti-gaming
+    certification, SOTA/baseline citation sufficiency proof, and portfolio-
+    balance/CI freshness gate.
+  - Current gap: the sidecars are bounded portfolio and readiness maps, not a
+    representative-readiness gate. There is still no implemented
+    domain-coverage matrix, benchmark admission checklist, repeated-seed run
+    matrix, anti-gaming certification, SOTA/baseline citation sufficiency
+    proof, portfolio-balance score, stale-coverage detector, CI freshness
+    gate, or owner signoff proving the representative-benchmark list is
+    balanced, feasible, non-duplicative, and strong enough to support
+    AlphaEvolve-style claims once individual fixtures improve.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: domain-coverage matrix, benchmark admission checklist,
+    repeated-seed run matrix, anti-gaming certification, SOTA/baseline
+    citation sufficiency proof, portfolio-balance score, stale-coverage
+    detector, CI freshness gate, and owner review signoff. The verifier must
+    classify candidate benchmark families by domain, validator strength,
     baseline/SOTA target, repeated-run/certification needs, anti-gaming
     evidence, artifact outputs, and current readiness, and validate that
     README/papers/ROADMAP wording cannot promote smoke fixtures or one narrow

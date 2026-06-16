@@ -1277,6 +1277,7 @@ Important limits:
   `papers/roadmap_operational_maturity_boundary.json`,
   `papers/roadmap_operational_readiness_boundary.json`,
   `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
+  `papers/roadmap_benchmark_portfolio_readiness_boundary.json`,
   `papers/roadmap_plugin_extensibility_boundary.json`,
   `papers/roadmap_backend_scheduling_critique_boundary.json`,
   `papers/roadmap_async_resumable_runtime_boundary.json`,
@@ -1369,6 +1370,11 @@ Important limits:
   matrix, benchmark admission checklist, repeated-seed run matrix, anti-gaming
   certification, SOTA/baseline citation sufficiency proof, portfolio-balance
   score, CI freshness gate, or owner review signoff.
+- ROADMAP benchmark-portfolio readiness evidence now records six criteria for
+  domain coverage, benchmark admission, repeated-seed run evidence,
+  anti-gaming certification, SOTA/baseline citation sufficiency, and
+  portfolio-balance/CI freshness. This is not an implemented representative
+  benchmark gate or proof that those readiness mechanisms exist.
 - ROADMAP plugin-extensibility evidence now records six plugin surfaces:
   built-in catalog, entry-point plugins, direct instances, future custom
   registries, hook isolation, and plugin artifact lifecycle, with

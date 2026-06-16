@@ -15482,3 +15482,19 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     generated-artifact lifecycle inventory, semantic docs verification, signed
     release provenance, cross-platform CI policy, and owner review signoff
     remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP benchmark portfolio readiness matrix.
+  - Spec evidence: representative-benchmark claims require more than a static
+    list of example families; they need portfolio-level readiness criteria.
+  - Status: `papers/roadmap_benchmark_portfolio_readiness_boundary.json` now
+    records six readiness criteria for domain coverage, benchmark admission,
+    repeated-seed run evidence, anti-gaming certification, SOTA/baseline
+    citation sufficiency, and portfolio-balance/CI freshness. It links the
+    existing representative-benchmark portfolio input, sidecar refs, active
+    TODO refs, validation-gate labels, readiness labels, and explicit
+    missing-evidence fields. The paper-manifest gate now requires and
+    validates the sidecar at the repo root.
+  - Remaining roadmap gap: the actual domain-coverage matrix, benchmark
+    admission checklist, repeated-seed run matrix, anti-gaming certification,
+    SOTA/baseline citation sufficiency proof, portfolio-balance score, CI
+    freshness gate, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

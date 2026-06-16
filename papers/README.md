@@ -2960,6 +2960,12 @@ Implemented:
   benchmark admission checklist, repeated-seed run matrix, anti-gaming
   certification, SOTA/baseline citation sufficiency proof, portfolio-balance
   score, CI freshness gate, or owner review signoff.
+- `papers/roadmap_benchmark_portfolio_readiness_boundary.json`: ROADMAP
+  representative-benchmark readiness sidecar with six criteria for domain
+  coverage, benchmark admission, repeated-seed run evidence, anti-gaming
+  certification, SOTA/baseline citation sufficiency, and portfolio-balance/CI
+  freshness. It is not evidence that those matrix, checklist, run, certification,
+  citation, balance, CI, or signoff mechanisms are implemented.
 - `papers/roadmap_plugin_extensibility_boundary.json`: ROADMAP
   plugin-extensibility sidecar with six plugin surfaces, configuration shape,
   package/source identity, constructor provenance, artifact hashing,

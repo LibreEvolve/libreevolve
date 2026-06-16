@@ -1,0 +1,225 @@
+{
+  "active_todo_ref_count": 12,
+  "boundary_status": "bounded_benchmark_portfolio_readiness_matrix_without_representative_gate",
+  "claim_boundary": "This boundary records representative-benchmark portfolio readiness criteria tied to the bounded static portfolio map. It does not claim a domain-coverage matrix, benchmark admission checklist, repeated-seed run matrix, anti-gaming certification, SOTA/baseline citation sufficiency, portfolio-balance CI freshness, or owner review signoff.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "anti_gaming_certification": "not_recorded_locally",
+    "benchmark_admission_checklist": "not_recorded_locally",
+    "domain_coverage_matrix": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "portfolio_balance_ci_freshness": "not_recorded_locally",
+    "repeated_seed_run_matrix": "not_recorded_locally",
+    "sota_baseline_citation_sufficiency": "not_recorded_locally"
+  },
+  "readiness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "domain-coverage matrix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "required_phrase": "benchmark coverage decisions",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "domain_coverage_matrix",
+      "current_scope": "five static portfolio families with domain labels",
+      "missing_readiness": "domain-coverage matrix proving the portfolio is balanced across algorithm, math, systems, and smoke-guardrail surfaces",
+      "portfolio_surface": "benchmark families, domains, validators, and AlphaEvolve claim scope",
+      "readiness_status": "family_domain_labels_without_coverage_matrix",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_representative_benchmark_portfolio_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/benchmark_coverage_inventory.json"
+        }
+      ],
+      "validation_gate": "representative benchmark domain-coverage matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "benchmark admission checklist",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "required_phrase": "separating smoke fixtures, benchmark candidates, and paper-comparable",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "benchmark_admission_checklist",
+      "current_scope": "static family readiness labels plus smoke-fixture guardrail",
+      "missing_readiness": "admission checklist that prevents smoke fixtures from counting as representative benchmark coverage",
+      "portfolio_surface": "candidate fixtures, smoke examples, benchmark candidates, and paper-comparable evidence",
+      "readiness_status": "smoke_guardrail_without_admission_checklist",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/benchmark_fixture_readiness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/example_benchmark_scope.json"
+        }
+      ],
+      "validation_gate": "benchmark admission checklist with smoke exclusion"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "repeated-seed run matrix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "repeated-seed evidence and exact binomial diagnostics",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "repeated_seed_run_matrix",
+      "current_scope": "sidecars for repeated sampling and sample efficiency without per-family run matrix",
+      "missing_readiness": "per-family repeated-seed matrix with target-hit, confidence, and run-budget evidence",
+      "portfolio_surface": "repeated-seed runs, sample-efficiency claims, and benchmark certification",
+      "readiness_status": "repeated_sampling_sidecars_without_portfolio_matrix",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/repeated_sampling_baseline_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/sample_efficiency_boundary.json"
+        }
+      ],
+      "validation_gate": "repeated-seed benchmark run matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "anti-gaming certification",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect benchmark-grade fixtures to hardening and scope reports.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "anti_gaming_certification",
+      "current_scope": "validator and audit sidecars without benchmark-level anti-gaming certification",
+      "missing_readiness": "anti-gaming certification proving fixtures resist benchmark-specific hacks and evaluator leakage",
+      "portfolio_surface": "validators, evaluator oracles, incorrect suggestions, and hardening reports",
+      "readiness_status": "validator_sidecars_without_certification_bundle",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/evaluator_oracle_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/incorrect_suggestion_audit_boundary.json"
+        }
+      ],
+      "validation_gate": "anti-gaming benchmark certification"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "SOTA/baseline citation sufficiency proof",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "benchmark harness for repeated seeds, SOTA thresholds",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "sota_baseline_citation_sufficiency",
+      "current_scope": "baseline/SOTA target labels on each portfolio family",
+      "missing_readiness": "citation sufficiency proof for every target baseline and benchmark threshold",
+      "portfolio_surface": "baseline/SOTA targets, paper citations, and benchmark target thresholds",
+      "readiness_status": "target_labels_without_citation_sufficiency",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/sorting_network_rediscovery_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/matrix_suite_publication_artifacts.json"
+        }
+      ],
+      "validation_gate": "baseline/SOTA citation sufficiency proof"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "portfolio-balance score",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "CI freshness gate, or owner signoff",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "portfolio_balance_ci_freshness",
+      "current_scope": "static portfolio family map without balance scoring or freshness enforcement",
+      "missing_readiness": "portfolio-balance score and CI freshness gate with owner-reviewed readiness signoff",
+      "portfolio_surface": "portfolio balance score, stale coverage detection, CI freshness, and owner signoff",
+      "readiness_status": "static_portfolio_without_balance_or_freshness",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/sampling_balance_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/ci_workflow_coverage_boundary.json"
+        }
+      ],
+      "validation_gate": "portfolio balance and CI freshness gate"
+    }
+  ],
+  "readiness_criterion_count": 6,
+  "required_evidence_fields": [
+    "domain_coverage_matrix",
+    "benchmark_admission_checklist",
+    "repeated_seed_run_matrix",
+    "anti_gaming_certification",
+    "sota_baseline_citation_sufficiency",
+    "portfolio_balance_ci_freshness",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_benchmark_portfolio_readiness_boundary.v1",
+  "sidecar_ref_count": 12,
+  "source_active_todo_ref_count": 10,
+  "source_family_count": 5,
+  "source_portfolio_boundary_input": "papers/roadmap_representative_benchmark_portfolio_boundary.json",
+  "source_sidecar_ref_count": 12
+}

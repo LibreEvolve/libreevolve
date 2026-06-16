@@ -9096,11 +9096,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 238,
-              "file_text_char_start": 306503,
-              "file_text_char_end": 307400,
-              "line_start": 4783,
-              "line_end": 4797,
+              "block_ordinal": 239,
+              "file_text_char_start": 307793,
+              "file_text_char_end": 308690,
+              "line_start": 4803,
+              "line_end": 4817,
               "block_sha256": "04a7416d60bb899ef05a114abf865e8076c1c076f202ae2c6acc3947b78d69af",
               "matched_source_tokens": [
                 "2506.13131"
@@ -9110,11 +9110,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 245,
-              "file_text_char_start": 310896,
-              "file_text_char_end": 311376,
-              "line_start": 4855,
-              "line_end": 4863,
+              "block_ordinal": 246,
+              "file_text_char_start": 312186,
+              "file_text_char_end": 312666,
+              "line_start": 4875,
+              "line_end": 4883,
               "block_sha256": "d2d400ebfce9de6a5f6a2347c6af9fc5fac0085aca739161eae6145c506b5e41",
               "matched_source_tokens": [
                 "2506.13131"
@@ -10062,11 +10062,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 94,
-              "file_text_char_start": 154641,
-              "file_text_char_end": 155844,
-              "line_start": 2372,
-              "line_end": 2390,
+              "block_ordinal": 95,
+              "file_text_char_start": 155931,
+              "file_text_char_end": 157134,
+              "line_start": 2392,
+              "line_end": 2410,
               "block_sha256": "a45cbe61f44020175820986849736ff24245b9e157c4a0ee32cc2343a614d75a",
               "matched_source_tokens": [
                 "2511.02864"
@@ -10084,11 +10084,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 238,
-              "file_text_char_start": 306503,
-              "file_text_char_end": 307400,
-              "line_start": 4783,
-              "line_end": 4797,
+              "block_ordinal": 239,
+              "file_text_char_start": 307793,
+              "file_text_char_end": 308690,
+              "line_start": 4803,
+              "line_end": 4817,
               "block_sha256": "04a7416d60bb899ef05a114abf865e8076c1c076f202ae2c6acc3947b78d69af",
               "matched_source_tokens": [
                 "2511.02864"
@@ -10500,11 +10500,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 94,
-                "file_text_char_start": 154641,
-                "file_text_char_end": 155844,
-                "line_start": 2372,
-                "line_end": 2390,
+                "block_ordinal": 95,
+                "file_text_char_start": 155931,
+                "file_text_char_end": 157134,
+                "line_start": 2392,
+                "line_end": 2410,
                 "block_sha256": "a45cbe61f44020175820986849736ff24245b9e157c4a0ee32cc2343a614d75a",
                 "matched_source_tokens": [
                   "2511.02864"
@@ -10524,11 +10524,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 238,
-                "file_text_char_start": 306503,
-                "file_text_char_end": 307400,
-                "line_start": 4783,
-                "line_end": 4797,
+                "block_ordinal": 239,
+                "file_text_char_start": 307793,
+                "file_text_char_end": 308690,
+                "line_start": 4803,
+                "line_end": 4817,
                 "block_sha256": "04a7416d60bb899ef05a114abf865e8076c1c076f202ae2c6acc3947b78d69af",
                 "matched_source_tokens": [
                   "2511.02864"
@@ -11296,11 +11296,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 2,
-              "file_text_char_start": 1980,
-              "file_text_char_end": 3762,
-              "line_start": 32,
-              "line_end": 60,
+              "block_ordinal": 3,
+              "file_text_char_start": 3270,
+              "file_text_char_end": 5052,
+              "line_start": 52,
+              "line_end": 80,
               "block_sha256": "e2dd3e7e66e4ef15b901551d7719eb83208bf0f99bcbbae3c8086bc57bc5a519",
               "matched_source_tokens": [
                 "1504.04909"
@@ -11318,11 +11318,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1044,
-              "file_text_char_start": 847496,
-              "file_text_char_end": 848151,
-              "line_start": 13701,
-              "line_end": 13712,
+              "block_ordinal": 1045,
+              "file_text_char_start": 848786,
+              "file_text_char_end": 849441,
+              "line_start": 13721,
+              "line_end": 13732,
               "block_sha256": "42298749eecd44dbed7cfce7597e561069e23521ba49607182dea7189cbb5721",
               "matched_source_tokens": [
                 "1504.04909"
@@ -11796,11 +11796,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 2,
-                "file_text_char_start": 1980,
-                "file_text_char_end": 3762,
-                "line_start": 32,
-                "line_end": 60,
+                "block_ordinal": 3,
+                "file_text_char_start": 3270,
+                "file_text_char_end": 5052,
+                "line_start": 52,
+                "line_end": 80,
                 "block_sha256": "e2dd3e7e66e4ef15b901551d7719eb83208bf0f99bcbbae3c8086bc57bc5a519",
                 "matched_source_tokens": [
                   "1504.04909"
@@ -11820,11 +11820,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1044,
-                "file_text_char_start": 847496,
-                "file_text_char_end": 848151,
-                "line_start": 13701,
-                "line_end": 13712,
+                "block_ordinal": 1045,
+                "file_text_char_start": 848786,
+                "file_text_char_end": 849441,
+                "line_start": 13721,
+                "line_end": 13732,
                 "block_sha256": "42298749eecd44dbed7cfce7597e561069e23521ba49607182dea7189cbb5721",
                 "matched_source_tokens": [
                   "1504.04909"
@@ -12549,11 +12549,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 10,
-              "file_text_char_start": 16614,
-              "file_text_char_end": 18252,
-              "line_start": 256,
-              "line_end": 283,
+              "block_ordinal": 11,
+              "file_text_char_start": 17904,
+              "file_text_char_end": 19542,
+              "line_start": 276,
+              "line_end": 303,
               "block_sha256": "df1353c23b1425e1e3865ed4bd74ad827382c7ecf6dc56933935408b33792cbb",
               "matched_source_tokens": [
                 "auer-cesa-bianchi-fischer-2002"
@@ -12571,11 +12571,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1060,
-              "file_text_char_start": 860528,
-              "file_text_char_end": 861217,
-              "line_start": 13912,
-              "line_end": 13923,
+              "block_ordinal": 1061,
+              "file_text_char_start": 861818,
+              "file_text_char_end": 862507,
+              "line_start": 13932,
+              "line_end": 13943,
               "block_sha256": "010fa7d91704d02d06f8cc845747bb535faf99efd229078255e7ade52170cee5",
               "matched_source_tokens": [
                 "auer-cesa-bianchi-fischer-2002"
@@ -13113,11 +13113,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 10,
-                "file_text_char_start": 16614,
-                "file_text_char_end": 18252,
-                "line_start": 256,
-                "line_end": 283,
+                "block_ordinal": 11,
+                "file_text_char_start": 17904,
+                "file_text_char_end": 19542,
+                "line_start": 276,
+                "line_end": 303,
                 "block_sha256": "df1353c23b1425e1e3865ed4bd74ad827382c7ecf6dc56933935408b33792cbb",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002"
@@ -13137,11 +13137,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1060,
-                "file_text_char_start": 860528,
-                "file_text_char_end": 861217,
-                "line_start": 13912,
-                "line_end": 13923,
+                "block_ordinal": 1061,
+                "file_text_char_start": 861818,
+                "file_text_char_end": 862507,
+                "line_start": 13932,
+                "line_end": 13943,
                 "block_sha256": "010fa7d91704d02d06f8cc845747bb535faf99efd229078255e7ade52170cee5",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002"
@@ -13797,11 +13797,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 9,
-              "file_text_char_start": 14931,
-              "file_text_char_end": 16614,
-              "line_start": 229,
-              "line_end": 256,
+              "block_ordinal": 10,
+              "file_text_char_start": 16221,
+              "file_text_char_end": 17904,
+              "line_start": 249,
+              "line_end": 276,
               "block_sha256": "988dc1604a16f6daa0f3c5e865fb0671efb46d656b685bdad7b41a06be21073e",
               "matched_source_tokens": [
                 "2511.17592"
@@ -13819,11 +13819,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1046,
-              "file_text_char_start": 848795,
-              "file_text_char_end": 849462,
-              "line_start": 13724,
-              "line_end": 13735,
+              "block_ordinal": 1047,
+              "file_text_char_start": 850085,
+              "file_text_char_end": 850752,
+              "line_start": 13744,
+              "line_end": 13755,
               "block_sha256": "c7ad9cee50693999bf2b39c9a8be7c6a764981d7fd2cc50d74d3464d0d6ada71",
               "matched_source_tokens": [
                 "2511.17592"
@@ -14234,11 +14234,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 9,
-                "file_text_char_start": 14931,
-                "file_text_char_end": 16614,
-                "line_start": 229,
-                "line_end": 256,
+                "block_ordinal": 10,
+                "file_text_char_start": 16221,
+                "file_text_char_end": 17904,
+                "line_start": 249,
+                "line_end": 276,
                 "block_sha256": "988dc1604a16f6daa0f3c5e865fb0671efb46d656b685bdad7b41a06be21073e",
                 "matched_source_tokens": [
                   "2511.17592"
@@ -14258,11 +14258,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1046,
-                "file_text_char_start": 848795,
-                "file_text_char_end": 849462,
-                "line_start": 13724,
-                "line_end": 13735,
+                "block_ordinal": 1047,
+                "file_text_char_start": 850085,
+                "file_text_char_end": 850752,
+                "line_start": 13744,
+                "line_end": 13755,
                 "block_sha256": "c7ad9cee50693999bf2b39c9a8be7c6a764981d7fd2cc50d74d3464d0d6ada71",
                 "matched_source_tokens": [
                   "2511.17592"
@@ -14918,11 +14918,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 8,
-              "file_text_char_start": 13110,
-              "file_text_char_end": 14931,
-              "line_start": 201,
-              "line_end": 229,
+              "block_ordinal": 9,
+              "file_text_char_start": 14400,
+              "file_text_char_end": 16221,
+              "line_start": 221,
+              "line_end": 249,
               "block_sha256": "d1c029cb1ffa86512ecaf3628f47743c3fc1a4b80fd443355f7478343e02f449",
               "matched_source_tokens": [
                 "2510.14150"
@@ -14940,11 +14940,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1047,
-              "file_text_char_start": 849462,
-              "file_text_char_end": 850270,
-              "line_start": 13735,
-              "line_end": 13748,
+              "block_ordinal": 1048,
+              "file_text_char_start": 850752,
+              "file_text_char_end": 851560,
+              "line_start": 13755,
+              "line_end": 13768,
               "block_sha256": "b8429e52225e72efb12240c1a6e51517b7e2af0272685fcbc7267a2cede9a945",
               "matched_source_tokens": [
                 "2510.14150"
@@ -15275,11 +15275,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 8,
-                "file_text_char_start": 13110,
-                "file_text_char_end": 14931,
-                "line_start": 201,
-                "line_end": 229,
+                "block_ordinal": 9,
+                "file_text_char_start": 14400,
+                "file_text_char_end": 16221,
+                "line_start": 221,
+                "line_end": 249,
                 "block_sha256": "d1c029cb1ffa86512ecaf3628f47743c3fc1a4b80fd443355f7478343e02f449",
                 "matched_source_tokens": [
                   "2510.14150"
@@ -15299,11 +15299,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1047,
-                "file_text_char_start": 849462,
-                "file_text_char_end": 850270,
-                "line_start": 13735,
-                "line_end": 13748,
+                "block_ordinal": 1048,
+                "file_text_char_start": 850752,
+                "file_text_char_end": 851560,
+                "line_start": 13755,
+                "line_end": 13768,
                 "block_sha256": "b8429e52225e72efb12240c1a6e51517b7e2af0272685fcbc7267a2cede9a945",
                 "matched_source_tokens": [
                   "2510.14150"
@@ -15960,11 +15960,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 7,
-              "file_text_char_start": 11339,
-              "file_text_char_end": 13110,
-              "line_start": 174,
-              "line_end": 201,
+              "block_ordinal": 8,
+              "file_text_char_start": 12629,
+              "file_text_char_end": 14400,
+              "line_start": 194,
+              "line_end": 221,
               "block_sha256": "bd913695fcb6a87af3cc4bede7547c232a756bf0f165e83f695c771857a69d8e",
               "matched_source_tokens": [
                 "2511.23473"
@@ -15982,11 +15982,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1048,
-              "file_text_char_start": 850270,
-              "file_text_char_end": 851038,
-              "line_start": 13748,
-              "line_end": 13761,
+              "block_ordinal": 1049,
+              "file_text_char_start": 851560,
+              "file_text_char_end": 852328,
+              "line_start": 13768,
+              "line_end": 13781,
               "block_sha256": "9d1632bb3384730a3f25c1805686430d65012396d08354683d9771979251f9b8",
               "matched_source_tokens": [
                 "2511.23473"
@@ -16598,11 +16598,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 7,
-                "file_text_char_start": 11339,
-                "file_text_char_end": 13110,
-                "line_start": 174,
-                "line_end": 201,
+                "block_ordinal": 8,
+                "file_text_char_start": 12629,
+                "file_text_char_end": 14400,
+                "line_start": 194,
+                "line_end": 221,
                 "block_sha256": "bd913695fcb6a87af3cc4bede7547c232a756bf0f165e83f695c771857a69d8e",
                 "matched_source_tokens": [
                   "2511.23473"
@@ -16622,11 +16622,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1048,
-                "file_text_char_start": 850270,
-                "file_text_char_end": 851038,
-                "line_start": 13748,
-                "line_end": 13761,
+                "block_ordinal": 1049,
+                "file_text_char_start": 851560,
+                "file_text_char_end": 852328,
+                "line_start": 13768,
+                "line_end": 13781,
                 "block_sha256": "9d1632bb3384730a3f25c1805686430d65012396d08354683d9771979251f9b8",
                 "matched_source_tokens": [
                   "2511.23473"
@@ -17283,11 +17283,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 6,
-              "file_text_char_start": 9604,
-              "file_text_char_end": 11339,
-              "line_start": 148,
-              "line_end": 174,
+              "block_ordinal": 7,
+              "file_text_char_start": 10894,
+              "file_text_char_end": 12629,
+              "line_start": 168,
+              "line_end": 194,
               "block_sha256": "75c83df4c6859d62ece410074cf59e9e5b4a0b6f570d1a870170d31285171fbc",
               "matched_source_tokens": [
                 "2602.10233"
@@ -17305,11 +17305,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1049,
-              "file_text_char_start": 851038,
-              "file_text_char_end": 851884,
-              "line_start": 13761,
-              "line_end": 13775,
+              "block_ordinal": 1050,
+              "file_text_char_start": 852328,
+              "file_text_char_end": 853174,
+              "line_start": 13781,
+              "line_end": 13795,
               "block_sha256": "8fa1f1622683a2264daa1404e7b8d58da4aa751499a90a992ea89a5f9a895993",
               "matched_source_tokens": [
                 "2602.10233"
@@ -17759,11 +17759,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 6,
-                "file_text_char_start": 9604,
-                "file_text_char_end": 11339,
-                "line_start": 148,
-                "line_end": 174,
+                "block_ordinal": 7,
+                "file_text_char_start": 10894,
+                "file_text_char_end": 12629,
+                "line_start": 168,
+                "line_end": 194,
                 "block_sha256": "75c83df4c6859d62ece410074cf59e9e5b4a0b6f570d1a870170d31285171fbc",
                 "matched_source_tokens": [
                   "2602.10233"
@@ -17783,11 +17783,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1049,
-                "file_text_char_start": 851038,
-                "file_text_char_end": 851884,
-                "line_start": 13761,
-                "line_end": 13775,
+                "block_ordinal": 1050,
+                "file_text_char_start": 852328,
+                "file_text_char_end": 853174,
+                "line_start": 13781,
+                "line_end": 13795,
                 "block_sha256": "8fa1f1622683a2264daa1404e7b8d58da4aa751499a90a992ea89a5f9a895993",
                 "matched_source_tokens": [
                   "2602.10233"
@@ -18439,11 +18439,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 5,
-              "file_text_char_start": 7761,
-              "file_text_char_end": 9604,
-              "line_start": 120,
-              "line_end": 148,
+              "block_ordinal": 6,
+              "file_text_char_start": 9051,
+              "file_text_char_end": 10894,
+              "line_start": 140,
+              "line_end": 168,
               "block_sha256": "150f01abf007c0aa680051bcde4e981c0a0e84a3906fdf7dd32d97d335be767e",
               "matched_source_tokens": [
                 "2602.15951"
@@ -18461,11 +18461,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1050,
-              "file_text_char_start": 851884,
-              "file_text_char_end": 852724,
-              "line_start": 13775,
-              "line_end": 13789,
+              "block_ordinal": 1051,
+              "file_text_char_start": 853174,
+              "file_text_char_end": 854014,
+              "line_start": 13795,
+              "line_end": 13809,
               "block_sha256": "c64dc10fc2544cf7531fb42ce6ba50308c3618c1f63be4653761e68f5d01bf2a",
               "matched_source_tokens": [
                 "2602.15951"
@@ -18860,11 +18860,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 5,
-                "file_text_char_start": 7761,
-                "file_text_char_end": 9604,
-                "line_start": 120,
-                "line_end": 148,
+                "block_ordinal": 6,
+                "file_text_char_start": 9051,
+                "file_text_char_end": 10894,
+                "line_start": 140,
+                "line_end": 168,
                 "block_sha256": "150f01abf007c0aa680051bcde4e981c0a0e84a3906fdf7dd32d97d335be767e",
                 "matched_source_tokens": [
                   "2602.15951"
@@ -18884,11 +18884,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1050,
-                "file_text_char_start": 851884,
-                "file_text_char_end": 852724,
-                "line_start": 13775,
-                "line_end": 13789,
+                "block_ordinal": 1051,
+                "file_text_char_start": 853174,
+                "file_text_char_end": 854014,
+                "line_start": 13795,
+                "line_end": 13809,
                 "block_sha256": "c64dc10fc2544cf7531fb42ce6ba50308c3618c1f63be4653761e68f5d01bf2a",
                 "matched_source_tokens": [
                   "2602.15951"
@@ -19556,11 +19556,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 4,
-              "file_text_char_start": 5752,
-              "file_text_char_end": 7761,
-              "line_start": 89,
-              "line_end": 120,
+              "block_ordinal": 5,
+              "file_text_char_start": 7042,
+              "file_text_char_end": 9051,
+              "line_start": 109,
+              "line_end": 140,
               "block_sha256": "7e7e1bcbb80e96d1bb770604ce8ff7d569b8d5a3ea895c6082950cc221faa459",
               "matched_source_tokens": [
                 "2603.14575"
@@ -19578,11 +19578,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1051,
-              "file_text_char_start": 852724,
-              "file_text_char_end": 853599,
-              "line_start": 13789,
-              "line_end": 13803,
+              "block_ordinal": 1052,
+              "file_text_char_start": 854014,
+              "file_text_char_end": 854889,
+              "line_start": 13809,
+              "line_end": 13823,
               "block_sha256": "212f01fa5258399751dddbd6cfc8fa69d0bbb32a8271b207b3257687771250ed",
               "matched_source_tokens": [
                 "2603.14575"
@@ -20137,11 +20137,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 4,
-                "file_text_char_start": 5752,
-                "file_text_char_end": 7761,
-                "line_start": 89,
-                "line_end": 120,
+                "block_ordinal": 5,
+                "file_text_char_start": 7042,
+                "file_text_char_end": 9051,
+                "line_start": 109,
+                "line_end": 140,
                 "block_sha256": "7e7e1bcbb80e96d1bb770604ce8ff7d569b8d5a3ea895c6082950cc221faa459",
                 "matched_source_tokens": [
                   "2603.14575"
@@ -20161,11 +20161,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1051,
-                "file_text_char_start": 852724,
-                "file_text_char_end": 853599,
-                "line_start": 13789,
-                "line_end": 13803,
+                "block_ordinal": 1052,
+                "file_text_char_start": 854014,
+                "file_text_char_end": 854889,
+                "line_start": 13809,
+                "line_end": 13823,
                 "block_sha256": "212f01fa5258399751dddbd6cfc8fa69d0bbb32a8271b207b3257687771250ed",
                 "matched_source_tokens": [
                   "2603.14575"
@@ -20849,11 +20849,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 3,
-              "file_text_char_start": 3762,
-              "file_text_char_end": 5752,
-              "line_start": 60,
-              "line_end": 89,
+              "block_ordinal": 4,
+              "file_text_char_start": 5052,
+              "file_text_char_end": 7042,
+              "line_start": 80,
+              "line_end": 109,
               "block_sha256": "1d28603138a6885f9d2894e21cc088d77b3e459b09bb0884f3b2f14beac68ed5",
               "matched_source_tokens": [
                 "2510.06056"
@@ -20871,11 +20871,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1052,
-              "file_text_char_start": 853599,
-              "file_text_char_end": 854647,
-              "line_start": 13803,
-              "line_end": 13819,
+              "block_ordinal": 1053,
+              "file_text_char_start": 854889,
+              "file_text_char_end": 855937,
+              "line_start": 13823,
+              "line_end": 13839,
               "block_sha256": "cb6c3ac476ff8ac1d9442728719831555de8bc22cb0bc139076b7961d0128cb7",
               "matched_source_tokens": [
                 "2510.06056"
@@ -21430,11 +21430,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 3,
-                "file_text_char_start": 3762,
-                "file_text_char_end": 5752,
-                "line_start": 60,
-                "line_end": 89,
+                "block_ordinal": 4,
+                "file_text_char_start": 5052,
+                "file_text_char_end": 7042,
+                "line_start": 80,
+                "line_end": 109,
                 "block_sha256": "1d28603138a6885f9d2894e21cc088d77b3e459b09bb0884f3b2f14beac68ed5",
                 "matched_source_tokens": [
                   "2510.06056"
@@ -21454,11 +21454,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1052,
-                "file_text_char_start": 853599,
-                "file_text_char_end": 854647,
-                "line_start": 13803,
-                "line_end": 13819,
+                "block_ordinal": 1053,
+                "file_text_char_start": 854889,
+                "file_text_char_end": 855937,
+                "line_start": 13823,
+                "line_end": 13839,
                 "block_sha256": "cb6c3ac476ff8ac1d9442728719831555de8bc22cb0bc139076b7961d0128cb7",
                 "matched_source_tokens": [
                   "2510.06056"
@@ -22077,11 +22077,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 19,
-              "file_text_char_start": 33262,
-              "file_text_char_end": 35297,
-              "line_start": 513,
-              "line_end": 545,
+              "block_ordinal": 20,
+              "file_text_char_start": 34552,
+              "file_text_char_end": 36587,
+              "line_start": 533,
+              "line_end": 565,
               "block_sha256": "df80fac7745a089640bd6d4b2e7c7f9d6ca094021ef98f1b08246bc071400be9",
               "matched_source_tokens": [
                 "2601.21096"
@@ -22099,11 +22099,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 178,
-              "file_text_char_start": 256945,
-              "file_text_char_end": 257318,
-              "line_start": 3963,
-              "line_end": 3970,
+              "block_ordinal": 179,
+              "file_text_char_start": 258235,
+              "file_text_char_end": 258608,
+              "line_start": 3983,
+              "line_end": 3990,
               "block_sha256": "9a9ca5a907708f9105826d7fe8e0f75a92ade0e631bfb6ac4c9b4921816e5688",
               "matched_source_tokens": [
                 "2601.21096"
@@ -22121,11 +22121,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 483,
-              "file_text_char_start": 498472,
-              "file_text_char_end": 499279,
-              "line_start": 7923,
-              "line_end": 7936,
+              "block_ordinal": 484,
+              "file_text_char_start": 499762,
+              "file_text_char_end": 500569,
+              "line_start": 7943,
+              "line_end": 7956,
               "block_sha256": "f2aa498dcfda35f3ac264c1b318b66396d0b995a36b83df9694d47490986da1e",
               "matched_source_tokens": [
                 "2601.21096",
@@ -22514,11 +22514,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 19,
-                "file_text_char_start": 33262,
-                "file_text_char_end": 35297,
-                "line_start": 513,
-                "line_end": 545,
+                "block_ordinal": 20,
+                "file_text_char_start": 34552,
+                "file_text_char_end": 36587,
+                "line_start": 533,
+                "line_end": 565,
                 "block_sha256": "df80fac7745a089640bd6d4b2e7c7f9d6ca094021ef98f1b08246bc071400be9",
                 "matched_source_tokens": [
                   "2601.21096"
@@ -22538,11 +22538,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 178,
-                "file_text_char_start": 256945,
-                "file_text_char_end": 257318,
-                "line_start": 3963,
-                "line_end": 3970,
+                "block_ordinal": 179,
+                "file_text_char_start": 258235,
+                "file_text_char_end": 258608,
+                "line_start": 3983,
+                "line_end": 3990,
                 "block_sha256": "9a9ca5a907708f9105826d7fe8e0f75a92ade0e631bfb6ac4c9b4921816e5688",
                 "matched_source_tokens": [
                   "2601.21096"
@@ -23129,11 +23129,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 51,
-              "file_text_char_start": 94862,
-              "file_text_char_end": 96073,
-              "line_start": 1442,
-              "line_end": 1461,
+              "block_ordinal": 52,
+              "file_text_char_start": 96152,
+              "file_text_char_end": 97363,
+              "line_start": 1462,
+              "line_end": 1481,
               "block_sha256": "b62eeb5abbc4a41f2718feea4de44af112f30bf56e920950c0d59fdafe1c77c0",
               "matched_source_tokens": [
                 "2605.14718"
@@ -23143,11 +23143,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1062,
-              "file_text_char_start": 861801,
-              "file_text_char_end": 862511,
-              "line_start": 13933,
-              "line_end": 13944,
+              "block_ordinal": 1063,
+              "file_text_char_start": 863091,
+              "file_text_char_end": 863801,
+              "line_start": 13953,
+              "line_end": 13964,
               "block_sha256": "88f5fb2a667c9d26f085e121f196f6ad406cfc549b2eb6a2e5c164a61f1bec48",
               "matched_source_tokens": [
                 "2605.14718",
@@ -23412,11 +23412,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1062,
-                "file_text_char_start": 861801,
-                "file_text_char_end": 862511,
-                "line_start": 13933,
-                "line_end": 13944,
+                "block_ordinal": 1063,
+                "file_text_char_start": 863091,
+                "file_text_char_end": 863801,
+                "line_start": 13953,
+                "line_end": 13964,
                 "block_sha256": "88f5fb2a667c9d26f085e121f196f6ad406cfc549b2eb6a2e5c164a61f1bec48",
                 "matched_source_tokens": [
                   "2605.14718",
@@ -23984,11 +23984,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 50,
-              "file_text_char_start": 93336,
-              "file_text_char_end": 94862,
-              "line_start": 1419,
-              "line_end": 1442,
+              "block_ordinal": 51,
+              "file_text_char_start": 94626,
+              "file_text_char_end": 96152,
+              "line_start": 1439,
+              "line_end": 1462,
               "block_sha256": "3783a3da44d453f2e66afbdab059a8e21f3d51755cc83e3b963b5bdc0e3afdee",
               "matched_source_tokens": [
                 "2605.05921"
@@ -23998,11 +23998,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1063,
-              "file_text_char_start": 862511,
-              "file_text_char_end": 863311,
-              "line_start": 13944,
-              "line_end": 13957,
+              "block_ordinal": 1064,
+              "file_text_char_start": 863801,
+              "file_text_char_end": 864601,
+              "line_start": 13964,
+              "line_end": 13977,
               "block_sha256": "ab46012701eb37c902c7c456989f14ccd71150cbb3a35e6f6fc270cc1dcd2982",
               "matched_source_tokens": [
                 "2605.05921",
@@ -24240,11 +24240,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1063,
-                "file_text_char_start": 862511,
-                "file_text_char_end": 863311,
-                "line_start": 13944,
-                "line_end": 13957,
+                "block_ordinal": 1064,
+                "file_text_char_start": 863801,
+                "file_text_char_end": 864601,
+                "line_start": 13964,
+                "line_end": 13977,
                 "block_sha256": "ab46012701eb37c902c7c456989f14ccd71150cbb3a35e6f6fc270cc1dcd2982",
                 "matched_source_tokens": [
                   "2605.05921",
@@ -24812,11 +24812,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 49,
-              "file_text_char_start": 91737,
-              "file_text_char_end": 93336,
-              "line_start": 1395,
-              "line_end": 1419,
+              "block_ordinal": 50,
+              "file_text_char_start": 93027,
+              "file_text_char_end": 94626,
+              "line_start": 1415,
+              "line_end": 1439,
               "block_sha256": "d58d903f9f93894926ba079aba1ff07aa972a602d70677412a643fae10d396ac",
               "matched_source_tokens": [
                 "2605.01794"
@@ -24826,11 +24826,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1064,
-              "file_text_char_start": 863311,
-              "file_text_char_end": 864023,
-              "line_start": 13957,
-              "line_end": 13969,
+              "block_ordinal": 1065,
+              "file_text_char_start": 864601,
+              "file_text_char_end": 865313,
+              "line_start": 13977,
+              "line_end": 13989,
               "block_sha256": "a3aca2700d8d5900d1ea795567f3bf13c83f0b0006ab69175a99aa120c1b7f81",
               "matched_source_tokens": [
                 "2605.01794",
@@ -25068,11 +25068,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1064,
-                "file_text_char_start": 863311,
-                "file_text_char_end": 864023,
-                "line_start": 13957,
-                "line_end": 13969,
+                "block_ordinal": 1065,
+                "file_text_char_start": 864601,
+                "file_text_char_end": 865313,
+                "line_start": 13977,
+                "line_end": 13989,
                 "block_sha256": "a3aca2700d8d5900d1ea795567f3bf13c83f0b0006ab69175a99aa120c1b7f81",
                 "matched_source_tokens": [
                   "2605.01794",
@@ -25640,11 +25640,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 48,
-              "file_text_char_start": 90169,
-              "file_text_char_end": 91737,
-              "line_start": 1371,
-              "line_end": 1395,
+              "block_ordinal": 49,
+              "file_text_char_start": 91459,
+              "file_text_char_end": 93027,
+              "line_start": 1391,
+              "line_end": 1415,
               "block_sha256": "eda5502b38df225283c792dc8471a452add3a5b53c76214b28df79339d33096a",
               "matched_source_tokens": [
                 "2602.23413"
@@ -25654,11 +25654,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1065,
-              "file_text_char_start": 864023,
-              "file_text_char_end": 864740,
-              "line_start": 13969,
-              "line_end": 13980,
+              "block_ordinal": 1066,
+              "file_text_char_start": 865313,
+              "file_text_char_end": 866030,
+              "line_start": 13989,
+              "line_end": 14000,
               "block_sha256": "1ba1aa3d0469dc4dd38c735217bdfb717c866422034049f5d5e4655634c906fd",
               "matched_source_tokens": [
                 "2602.23413",
@@ -25896,11 +25896,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1065,
-                "file_text_char_start": 864023,
-                "file_text_char_end": 864740,
-                "line_start": 13969,
-                "line_end": 13980,
+                "block_ordinal": 1066,
+                "file_text_char_start": 865313,
+                "file_text_char_end": 866030,
+                "line_start": 13989,
+                "line_end": 14000,
                 "block_sha256": "1ba1aa3d0469dc4dd38c735217bdfb717c866422034049f5d5e4655634c906fd",
                 "matched_source_tokens": [
                   "2602.23413",
@@ -26468,11 +26468,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 47,
-              "file_text_char_start": 88516,
-              "file_text_char_end": 90169,
-              "line_start": 1347,
-              "line_end": 1371,
+              "block_ordinal": 48,
+              "file_text_char_start": 89806,
+              "file_text_char_end": 91459,
+              "line_start": 1367,
+              "line_end": 1391,
               "block_sha256": "093fa2447f675bf784d1e596b35838446a226d2b38177dda180ffcf624f1e2d0",
               "matched_source_tokens": [
                 "2602.02919"
@@ -26482,11 +26482,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1066,
-              "file_text_char_start": 864740,
-              "file_text_char_end": 865559,
-              "line_start": 13980,
-              "line_end": 13993,
+              "block_ordinal": 1067,
+              "file_text_char_start": 866030,
+              "file_text_char_end": 866849,
+              "line_start": 14000,
+              "line_end": 14013,
               "block_sha256": "ffabcf02652aa47d11f3d14467db292eca5658d97b1f4b8d5c076e62cf3af33c",
               "matched_source_tokens": [
                 "2602.02919",
@@ -26724,11 +26724,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1066,
-                "file_text_char_start": 864740,
-                "file_text_char_end": 865559,
-                "line_start": 13980,
-                "line_end": 13993,
+                "block_ordinal": 1067,
+                "file_text_char_start": 866030,
+                "file_text_char_end": 866849,
+                "line_start": 14000,
+                "line_end": 14013,
                 "block_sha256": "ffabcf02652aa47d11f3d14467db292eca5658d97b1f4b8d5c076e62cf3af33c",
                 "matched_source_tokens": [
                   "2602.02919",
@@ -27296,11 +27296,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 46,
-              "file_text_char_start": 86830,
-              "file_text_char_end": 88516,
-              "line_start": 1322,
-              "line_end": 1347,
+              "block_ordinal": 47,
+              "file_text_char_start": 88120,
+              "file_text_char_end": 89806,
+              "line_start": 1342,
+              "line_end": 1367,
               "block_sha256": "95797c12c9d7e5ef35f24ee9d1160e3794ddb422abf914b775ee8c115b5a79a5",
               "matched_source_tokens": [
                 "2606.06473"
@@ -27310,11 +27310,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1067,
-              "file_text_char_start": 865559,
-              "file_text_char_end": 866401,
-              "line_start": 13993,
-              "line_end": 14006,
+              "block_ordinal": 1068,
+              "file_text_char_start": 866849,
+              "file_text_char_end": 867691,
+              "line_start": 14013,
+              "line_end": 14026,
               "block_sha256": "5a1d58152b4ffcda5bc6a8f2117d31cd998b830a045ff25c8e5c380500db3c06",
               "matched_source_tokens": [
                 "2606.06473",
@@ -27552,11 +27552,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1067,
-                "file_text_char_start": 865559,
-                "file_text_char_end": 866401,
-                "line_start": 13993,
-                "line_end": 14006,
+                "block_ordinal": 1068,
+                "file_text_char_start": 866849,
+                "file_text_char_end": 867691,
+                "line_start": 14013,
+                "line_end": 14026,
                 "block_sha256": "5a1d58152b4ffcda5bc6a8f2117d31cd998b830a045ff25c8e5c380500db3c06",
                 "matched_source_tokens": [
                   "2606.06473",
@@ -28124,11 +28124,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 45,
-              "file_text_char_start": 85035,
-              "file_text_char_end": 86830,
-              "line_start": 1295,
-              "line_end": 1322,
+              "block_ordinal": 46,
+              "file_text_char_start": 86325,
+              "file_text_char_end": 88120,
+              "line_start": 1315,
+              "line_end": 1342,
               "block_sha256": "ec40cd7e2975e0b1953070192df6c386def73a773b7356c0e55a5aaf05d664af",
               "matched_source_tokens": [
                 "2605.09764"
@@ -28138,11 +28138,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1068,
-              "file_text_char_start": 866401,
-              "file_text_char_end": 867253,
-              "line_start": 14006,
-              "line_end": 14019,
+              "block_ordinal": 1069,
+              "file_text_char_start": 867691,
+              "file_text_char_end": 868543,
+              "line_start": 14026,
+              "line_end": 14039,
               "block_sha256": "4173826db03080c7b4d6a2a58eebc861eac35a7a69a461da7b9066592ee809da",
               "matched_source_tokens": [
                 "2605.09764",
@@ -28380,11 +28380,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1068,
-                "file_text_char_start": 866401,
-                "file_text_char_end": 867253,
-                "line_start": 14006,
-                "line_end": 14019,
+                "block_ordinal": 1069,
+                "file_text_char_start": 867691,
+                "file_text_char_end": 868543,
+                "line_start": 14026,
+                "line_end": 14039,
                 "block_sha256": "4173826db03080c7b4d6a2a58eebc861eac35a7a69a461da7b9066592ee809da",
                 "matched_source_tokens": [
                   "2605.09764",
@@ -28952,11 +28952,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 44,
-              "file_text_char_start": 83259,
-              "file_text_char_end": 85035,
-              "line_start": 1268,
-              "line_end": 1295,
+              "block_ordinal": 45,
+              "file_text_char_start": 84549,
+              "file_text_char_end": 86325,
+              "line_start": 1288,
+              "line_end": 1315,
               "block_sha256": "4f86fbadb53579c895aa97a01b1ce9040665adace3efd2c96f66691718597fe5",
               "matched_source_tokens": [
                 "2601.10657"
@@ -28966,11 +28966,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1069,
-              "file_text_char_start": 867253,
-              "file_text_char_end": 868097,
-              "line_start": 14019,
-              "line_end": 14032,
+              "block_ordinal": 1070,
+              "file_text_char_start": 868543,
+              "file_text_char_end": 869387,
+              "line_start": 14039,
+              "line_end": 14052,
               "block_sha256": "7847e4a19ab83c2b3aed3f2cd1a834a7b2773e7af83a6252d82d9ebd03a52f03",
               "matched_source_tokens": [
                 "2601.10657",
@@ -29208,11 +29208,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1069,
-                "file_text_char_start": 867253,
-                "file_text_char_end": 868097,
-                "line_start": 14019,
-                "line_end": 14032,
+                "block_ordinal": 1070,
+                "file_text_char_start": 868543,
+                "file_text_char_end": 869387,
+                "line_start": 14039,
+                "line_end": 14052,
                 "block_sha256": "7847e4a19ab83c2b3aed3f2cd1a834a7b2773e7af83a6252d82d9ebd03a52f03",
                 "matched_source_tokens": [
                   "2601.10657",
@@ -29794,11 +29794,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 43,
-              "file_text_char_start": 81349,
-              "file_text_char_end": 83259,
-              "line_start": 1239,
-              "line_end": 1268,
+              "block_ordinal": 44,
+              "file_text_char_start": 82639,
+              "file_text_char_end": 84549,
+              "line_start": 1259,
+              "line_end": 1288,
               "block_sha256": "f192d9e6fbd3adbfaa34f256c7b7b34ca9cda5e14bf9ac858ce16ff8fb4c28fd",
               "matched_source_tokens": [
                 "2605.08520"
@@ -29808,11 +29808,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1070,
-              "file_text_char_start": 868097,
-              "file_text_char_end": 868956,
-              "line_start": 14032,
-              "line_end": 14045,
+              "block_ordinal": 1071,
+              "file_text_char_start": 869387,
+              "file_text_char_end": 870246,
+              "line_start": 14052,
+              "line_end": 14065,
               "block_sha256": "348f600c5bd24d848fc06f19604fd6555f839c4678f5899b9fe015d3a83b8152",
               "matched_source_tokens": [
                 "2605.08520",
@@ -30050,11 +30050,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1070,
-                "file_text_char_start": 868097,
-                "file_text_char_end": 868956,
-                "line_start": 14032,
-                "line_end": 14045,
+                "block_ordinal": 1071,
+                "file_text_char_start": 869387,
+                "file_text_char_end": 870246,
+                "line_start": 14052,
+                "line_end": 14065,
                 "block_sha256": "348f600c5bd24d848fc06f19604fd6555f839c4678f5899b9fe015d3a83b8152",
                 "matched_source_tokens": [
                   "2605.08520",
@@ -30622,11 +30622,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 42,
-              "file_text_char_start": 79497,
-              "file_text_char_end": 81349,
-              "line_start": 1211,
-              "line_end": 1239,
+              "block_ordinal": 43,
+              "file_text_char_start": 80787,
+              "file_text_char_end": 82639,
+              "line_start": 1231,
+              "line_end": 1259,
               "block_sha256": "257391ddc237a9fa347bb247e1bc0b6831da4de980daa4a78a9192f3f61f170b",
               "matched_source_tokens": [
                 "2605.20086"
@@ -30636,11 +30636,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1071,
-              "file_text_char_start": 868956,
-              "file_text_char_end": 869896,
-              "line_start": 14045,
-              "line_end": 14060,
+              "block_ordinal": 1072,
+              "file_text_char_start": 870246,
+              "file_text_char_end": 871186,
+              "line_start": 14065,
+              "line_end": 14080,
               "block_sha256": "76957233290dc2b4f27f3f47ca307e6e1a5ac48d770798d497f02c39472cbaee",
               "matched_source_tokens": [
                 "2605.20086",
@@ -30878,11 +30878,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1071,
-                "file_text_char_start": 868956,
-                "file_text_char_end": 869896,
-                "line_start": 14045,
-                "line_end": 14060,
+                "block_ordinal": 1072,
+                "file_text_char_start": 870246,
+                "file_text_char_end": 871186,
+                "line_start": 14065,
+                "line_end": 14080,
                 "block_sha256": "76957233290dc2b4f27f3f47ca307e6e1a5ac48d770798d497f02c39472cbaee",
                 "matched_source_tokens": [
                   "2605.20086",
@@ -31450,11 +31450,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 41,
-              "file_text_char_start": 77733,
-              "file_text_char_end": 79497,
-              "line_start": 1184,
-              "line_end": 1211,
+              "block_ordinal": 42,
+              "file_text_char_start": 79023,
+              "file_text_char_end": 80787,
+              "line_start": 1204,
+              "line_end": 1231,
               "block_sha256": "82dce200dab63dc1d65df67ad35d3a486d92c5bb092796383f54cb674968ae7a",
               "matched_source_tokens": [
                 "2605.01120"
@@ -31464,11 +31464,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1072,
-              "file_text_char_start": 869896,
-              "file_text_char_end": 870792,
-              "line_start": 14060,
-              "line_end": 14074,
+              "block_ordinal": 1073,
+              "file_text_char_start": 871186,
+              "file_text_char_end": 872082,
+              "line_start": 14080,
+              "line_end": 14094,
               "block_sha256": "c89dba11f1f31571f8070d2e7243536e73fcbef3da5adcdcb1f902863e19a1f1",
               "matched_source_tokens": [
                 "2605.01120",
@@ -31798,11 +31798,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1072,
-                "file_text_char_start": 869896,
-                "file_text_char_end": 870792,
-                "line_start": 14060,
-                "line_end": 14074,
+                "block_ordinal": 1073,
+                "file_text_char_start": 871186,
+                "file_text_char_end": 872082,
+                "line_start": 14080,
+                "line_end": 14094,
                 "block_sha256": "c89dba11f1f31571f8070d2e7243536e73fcbef3da5adcdcb1f902863e19a1f1",
                 "matched_source_tokens": [
                   "2605.01120",
@@ -32370,11 +32370,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 40,
-              "file_text_char_start": 75803,
-              "file_text_char_end": 77733,
-              "line_start": 1154,
-              "line_end": 1184,
+              "block_ordinal": 41,
+              "file_text_char_start": 77093,
+              "file_text_char_end": 79023,
+              "line_start": 1174,
+              "line_end": 1204,
               "block_sha256": "5066b5296334907407e3a159276a7cec2d2ecdba3c51fd736b8908c749b9cbec",
               "matched_source_tokens": [
                 "2604.01658"
@@ -32384,11 +32384,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1073,
-              "file_text_char_start": 870792,
-              "file_text_char_end": 871765,
-              "line_start": 14074,
-              "line_end": 14089,
+              "block_ordinal": 1074,
+              "file_text_char_start": 872082,
+              "file_text_char_end": 873055,
+              "line_start": 14094,
+              "line_end": 14109,
               "block_sha256": "0bd6017aa2ef8f8805fa766f23fd100a6c41943a58801882b64704c359f98218",
               "matched_source_tokens": [
                 "2604.01658",
@@ -32626,11 +32626,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1073,
-                "file_text_char_start": 870792,
-                "file_text_char_end": 871765,
-                "line_start": 14074,
-                "line_end": 14089,
+                "block_ordinal": 1074,
+                "file_text_char_start": 872082,
+                "file_text_char_end": 873055,
+                "line_start": 14094,
+                "line_end": 14109,
                 "block_sha256": "0bd6017aa2ef8f8805fa766f23fd100a6c41943a58801882b64704c359f98218",
                 "matched_source_tokens": [
                   "2604.01658",
@@ -33198,11 +33198,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 39,
-              "file_text_char_start": 74005,
-              "file_text_char_end": 75803,
-              "line_start": 1127,
-              "line_end": 1154,
+              "block_ordinal": 40,
+              "file_text_char_start": 75295,
+              "file_text_char_end": 77093,
+              "line_start": 1147,
+              "line_end": 1174,
               "block_sha256": "e7ddd0d9a6452f4158aeb2a285db07e086b3dfe72273b8cf24b1aba3e6d9eb13",
               "matched_source_tokens": [
                 "2605.13821"
@@ -33212,11 +33212,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1074,
-              "file_text_char_start": 871765,
-              "file_text_char_end": 872739,
-              "line_start": 14089,
-              "line_end": 14104,
+              "block_ordinal": 1075,
+              "file_text_char_start": 873055,
+              "file_text_char_end": 874029,
+              "line_start": 14109,
+              "line_end": 14124,
               "block_sha256": "8593dd2a447ac6100c48040e3d60bfa2b8f1cf80321cc0090868be2dd7bf5c96",
               "matched_source_tokens": [
                 "2605.13821",
@@ -33454,11 +33454,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1074,
-                "file_text_char_start": 871765,
-                "file_text_char_end": 872739,
-                "line_start": 14089,
-                "line_end": 14104,
+                "block_ordinal": 1075,
+                "file_text_char_start": 873055,
+                "file_text_char_end": 874029,
+                "line_start": 14109,
+                "line_end": 14124,
                 "block_sha256": "8593dd2a447ac6100c48040e3d60bfa2b8f1cf80321cc0090868be2dd7bf5c96",
                 "matched_source_tokens": [
                   "2605.13821",
@@ -34026,11 +34026,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 38,
-              "file_text_char_start": 71998,
-              "file_text_char_end": 74005,
-              "line_start": 1096,
-              "line_end": 1127,
+              "block_ordinal": 39,
+              "file_text_char_start": 73288,
+              "file_text_char_end": 75295,
+              "line_start": 1116,
+              "line_end": 1147,
               "block_sha256": "6ebee1759c7398a2d5d826363c695e7d49edf7755734f4b5990cf0b64526150d",
               "matched_source_tokens": [
                 "2605.09959"
@@ -34040,11 +34040,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1075,
-              "file_text_char_start": 872739,
-              "file_text_char_end": 873653,
-              "line_start": 14104,
-              "line_end": 14119,
+              "block_ordinal": 1076,
+              "file_text_char_start": 874029,
+              "file_text_char_end": 874943,
+              "line_start": 14124,
+              "line_end": 14139,
               "block_sha256": "622ee4f86e32351717efe838a263d159d140e4c8cde02eab0e675e753443d073",
               "matched_source_tokens": [
                 "2605.09959",
@@ -34282,11 +34282,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1075,
-                "file_text_char_start": 872739,
-                "file_text_char_end": 873653,
-                "line_start": 14104,
-                "line_end": 14119,
+                "block_ordinal": 1076,
+                "file_text_char_start": 874029,
+                "file_text_char_end": 874943,
+                "line_start": 14124,
+                "line_end": 14139,
                 "block_sha256": "622ee4f86e32351717efe838a263d159d140e4c8cde02eab0e675e753443d073",
                 "matched_source_tokens": [
                   "2605.09959",
@@ -34854,11 +34854,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 37,
-              "file_text_char_start": 69922,
-              "file_text_char_end": 71998,
-              "line_start": 1065,
-              "line_end": 1096,
+              "block_ordinal": 38,
+              "file_text_char_start": 71212,
+              "file_text_char_end": 73288,
+              "line_start": 1085,
+              "line_end": 1116,
               "block_sha256": "7bdde4a88940e1dc2d64580b78caa8ae17610799c490b758868dd425032b1a29",
               "matched_source_tokens": [
                 "2605.21605"
@@ -34868,11 +34868,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1083,
-              "file_text_char_start": 877820,
-              "file_text_char_end": 878830,
-              "line_start": 14190,
-              "line_end": 14205,
+              "block_ordinal": 1084,
+              "file_text_char_start": 879110,
+              "file_text_char_end": 880120,
+              "line_start": 14210,
+              "line_end": 14225,
               "block_sha256": "3edcdb676d65e7cc8f9eab29f47afca5721c9f7baa33001648af09ab9194e466",
               "matched_source_tokens": [
                 "2605.21605",
@@ -35110,11 +35110,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1083,
-                "file_text_char_start": 877820,
-                "file_text_char_end": 878830,
-                "line_start": 14190,
-                "line_end": 14205,
+                "block_ordinal": 1084,
+                "file_text_char_start": 879110,
+                "file_text_char_end": 880120,
+                "line_start": 14210,
+                "line_end": 14225,
                 "block_sha256": "3edcdb676d65e7cc8f9eab29f47afca5721c9f7baa33001648af09ab9194e466",
                 "matched_source_tokens": [
                   "2605.21605",
@@ -35682,11 +35682,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 36,
-              "file_text_char_start": 68027,
-              "file_text_char_end": 69922,
-              "line_start": 1036,
-              "line_end": 1065,
+              "block_ordinal": 37,
+              "file_text_char_start": 69317,
+              "file_text_char_end": 71212,
+              "line_start": 1056,
+              "line_end": 1085,
               "block_sha256": "6a4ed797080e782b83d97a4f8db99fd71205ca7eec457851f1b5e035c0fc864e",
               "matched_source_tokens": [
                 "2605.29847"
@@ -35696,11 +35696,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1084,
-              "file_text_char_start": 878830,
-              "file_text_char_end": 879761,
-              "line_start": 14205,
-              "line_end": 14220,
+              "block_ordinal": 1085,
+              "file_text_char_start": 880120,
+              "file_text_char_end": 881051,
+              "line_start": 14225,
+              "line_end": 14240,
               "block_sha256": "03a5b351538043c8f86b0f327da52a834db27215a9689650db8a1c5254965fcb",
               "matched_source_tokens": [
                 "2605.29847",
@@ -35938,11 +35938,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1084,
-                "file_text_char_start": 878830,
-                "file_text_char_end": 879761,
-                "line_start": 14205,
-                "line_end": 14220,
+                "block_ordinal": 1085,
+                "file_text_char_start": 880120,
+                "file_text_char_end": 881051,
+                "line_start": 14225,
+                "line_end": 14240,
                 "block_sha256": "03a5b351538043c8f86b0f327da52a834db27215a9689650db8a1c5254965fcb",
                 "matched_source_tokens": [
                   "2605.29847",
@@ -36510,11 +36510,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 35,
-              "file_text_char_start": 66025,
-              "file_text_char_end": 68027,
-              "line_start": 1006,
-              "line_end": 1036,
+              "block_ordinal": 36,
+              "file_text_char_start": 67315,
+              "file_text_char_end": 69317,
+              "line_start": 1026,
+              "line_end": 1056,
               "block_sha256": "0f318619c6dbfe4cdc558762c00bdbc7c7613be5ec731215236e2d8d2d0f6059",
               "matched_source_tokens": [
                 "2605.29293"
@@ -36524,11 +36524,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1085,
-              "file_text_char_start": 879761,
-              "file_text_char_end": 880723,
-              "line_start": 14220,
-              "line_end": 14235,
+              "block_ordinal": 1086,
+              "file_text_char_start": 881051,
+              "file_text_char_end": 882013,
+              "line_start": 14240,
+              "line_end": 14255,
               "block_sha256": "41309cda894bc94a9a2da51b5441e880dbd5a29f0b14e02aa753937a9c8d8e30",
               "matched_source_tokens": [
                 "2605.29293",
@@ -36766,11 +36766,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1085,
-                "file_text_char_start": 879761,
-                "file_text_char_end": 880723,
-                "line_start": 14220,
-                "line_end": 14235,
+                "block_ordinal": 1086,
+                "file_text_char_start": 881051,
+                "file_text_char_end": 882013,
+                "line_start": 14240,
+                "line_end": 14255,
                 "block_sha256": "41309cda894bc94a9a2da51b5441e880dbd5a29f0b14e02aa753937a9c8d8e30",
                 "matched_source_tokens": [
                   "2605.29293",
@@ -37338,11 +37338,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 34,
-              "file_text_char_start": 64164,
-              "file_text_char_end": 66025,
-              "line_start": 978,
-              "line_end": 1006,
+              "block_ordinal": 35,
+              "file_text_char_start": 65454,
+              "file_text_char_end": 67315,
+              "line_start": 998,
+              "line_end": 1026,
               "block_sha256": "8306132c420de14083ffde48a3e76612a6a916c7c08d1022003eccc6f729086d",
               "matched_source_tokens": [
                 "2512.18746"
@@ -37352,11 +37352,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1086,
-              "file_text_char_start": 880723,
-              "file_text_char_end": 881593,
-              "line_start": 14235,
-              "line_end": 14248,
+              "block_ordinal": 1087,
+              "file_text_char_start": 882013,
+              "file_text_char_end": 882883,
+              "line_start": 14255,
+              "line_end": 14268,
               "block_sha256": "3dd3faf049519f45e613dcfc15775c38b0eb51e1a741c718761f3f0c1c409bcb",
               "matched_source_tokens": [
                 "2512.18746",
@@ -37594,11 +37594,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1086,
-                "file_text_char_start": 880723,
-                "file_text_char_end": 881593,
-                "line_start": 14235,
-                "line_end": 14248,
+                "block_ordinal": 1087,
+                "file_text_char_start": 882013,
+                "file_text_char_end": 882883,
+                "line_start": 14255,
+                "line_end": 14268,
                 "block_sha256": "3dd3faf049519f45e613dcfc15775c38b0eb51e1a741c718761f3f0c1c409bcb",
                 "matched_source_tokens": [
                   "2512.18746",
@@ -38166,11 +38166,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 33,
-              "file_text_char_start": 62270,
-              "file_text_char_end": 64164,
-              "line_start": 949,
-              "line_end": 978,
+              "block_ordinal": 34,
+              "file_text_char_start": 63560,
+              "file_text_char_end": 65454,
+              "line_start": 969,
+              "line_end": 998,
               "block_sha256": "0a3dd9f1ad8eb2ae28b79c0b17e5fb2482b2d9a6ed41394bdec89803f05e81b1",
               "matched_source_tokens": [
                 "2606.06114"
@@ -38180,11 +38180,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1087,
-              "file_text_char_start": 881593,
-              "file_text_char_end": 882530,
-              "line_start": 14248,
-              "line_end": 14262,
+              "block_ordinal": 1088,
+              "file_text_char_start": 882883,
+              "file_text_char_end": 883820,
+              "line_start": 14268,
+              "line_end": 14282,
               "block_sha256": "48e1be6f656342777c7272d56fc317b94bf08fb09695235cb6eda868ebea3c58",
               "matched_source_tokens": [
                 "2606.06114",
@@ -38422,11 +38422,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1087,
-                "file_text_char_start": 881593,
-                "file_text_char_end": 882530,
-                "line_start": 14248,
-                "line_end": 14262,
+                "block_ordinal": 1088,
+                "file_text_char_start": 882883,
+                "file_text_char_end": 883820,
+                "line_start": 14268,
+                "line_end": 14282,
                 "block_sha256": "48e1be6f656342777c7272d56fc317b94bf08fb09695235cb6eda868ebea3c58",
                 "matched_source_tokens": [
                   "2606.06114",
@@ -38994,11 +38994,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 32,
-              "file_text_char_start": 60086,
-              "file_text_char_end": 62270,
-              "line_start": 917,
-              "line_end": 949,
+              "block_ordinal": 33,
+              "file_text_char_start": 61376,
+              "file_text_char_end": 63560,
+              "line_start": 937,
+              "line_end": 969,
               "block_sha256": "ffc839dd271c971bb722d03fe5975feeafe05c713e938093f4d5b0c040da3e87",
               "matched_source_tokens": [
                 "2605.27276"
@@ -39008,11 +39008,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1088,
-              "file_text_char_start": 882530,
-              "file_text_char_end": 883419,
-              "line_start": 14262,
-              "line_end": 14275,
+              "block_ordinal": 1089,
+              "file_text_char_start": 883820,
+              "file_text_char_end": 884709,
+              "line_start": 14282,
+              "line_end": 14295,
               "block_sha256": "ed07bf63734df481e4cc69fafaedd8341da2c7d17bd7db3e72e548055e044bcc",
               "matched_source_tokens": [
                 "2605.27276",
@@ -39250,11 +39250,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1088,
-                "file_text_char_start": 882530,
-                "file_text_char_end": 883419,
-                "line_start": 14262,
-                "line_end": 14275,
+                "block_ordinal": 1089,
+                "file_text_char_start": 883820,
+                "file_text_char_end": 884709,
+                "line_start": 14282,
+                "line_end": 14295,
                 "block_sha256": "ed07bf63734df481e4cc69fafaedd8341da2c7d17bd7db3e72e548055e044bcc",
                 "matched_source_tokens": [
                   "2605.27276",
@@ -39822,11 +39822,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 31,
-              "file_text_char_start": 58063,
-              "file_text_char_end": 60086,
-              "line_start": 886,
-              "line_end": 917,
+              "block_ordinal": 32,
+              "file_text_char_start": 59353,
+              "file_text_char_end": 61376,
+              "line_start": 906,
+              "line_end": 937,
               "block_sha256": "98fcbbc95b3d19a321951d5f78c6a5a1599c354b0553ac8a655b31b1cc3dfb67",
               "matched_source_tokens": [
                 "2606.06324"
@@ -39836,11 +39836,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1089,
-              "file_text_char_start": 883419,
-              "file_text_char_end": 884503,
-              "line_start": 14275,
-              "line_end": 14291,
+              "block_ordinal": 1090,
+              "file_text_char_start": 884709,
+              "file_text_char_end": 885793,
+              "line_start": 14295,
+              "line_end": 14311,
               "block_sha256": "e81a3a0449c36a7edeb0966b7648f15a9541de1af11668bbd1a1fb6452495ff2",
               "matched_source_tokens": [
                 "2606.06324",
@@ -40078,11 +40078,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1089,
-                "file_text_char_start": 883419,
-                "file_text_char_end": 884503,
-                "line_start": 14275,
-                "line_end": 14291,
+                "block_ordinal": 1090,
+                "file_text_char_start": 884709,
+                "file_text_char_end": 885793,
+                "line_start": 14295,
+                "line_end": 14311,
                 "block_sha256": "e81a3a0449c36a7edeb0966b7648f15a9541de1af11668bbd1a1fb6452495ff2",
                 "matched_source_tokens": [
                   "2606.06324",
@@ -40650,11 +40650,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 30,
-              "file_text_char_start": 55944,
-              "file_text_char_end": 58063,
-              "line_start": 855,
-              "line_end": 886,
+              "block_ordinal": 31,
+              "file_text_char_start": 57234,
+              "file_text_char_end": 59353,
+              "line_start": 875,
+              "line_end": 906,
               "block_sha256": "3f9985f1767bb040385cc999329ee5895c5c251a79b8817e2692d6c8c65b505e",
               "matched_source_tokens": [
                 "2606.05922"
@@ -40664,11 +40664,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1090,
-              "file_text_char_start": 884503,
-              "file_text_char_end": 885530,
-              "line_start": 14291,
-              "line_end": 14306,
+              "block_ordinal": 1091,
+              "file_text_char_start": 885793,
+              "file_text_char_end": 886820,
+              "line_start": 14311,
+              "line_end": 14326,
               "block_sha256": "5c43f4d4e21c2c9511ecd5f6e13d48b3ce7e6350a44413a95d6c8ec58976f088",
               "matched_source_tokens": [
                 "2606.05922",
@@ -40906,11 +40906,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1090,
-                "file_text_char_start": 884503,
-                "file_text_char_end": 885530,
-                "line_start": 14291,
-                "line_end": 14306,
+                "block_ordinal": 1091,
+                "file_text_char_start": 885793,
+                "file_text_char_end": 886820,
+                "line_start": 14311,
+                "line_end": 14326,
                 "block_sha256": "5c43f4d4e21c2c9511ecd5f6e13d48b3ce7e6350a44413a95d6c8ec58976f088",
                 "matched_source_tokens": [
                   "2606.05922",
@@ -41478,11 +41478,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 29,
-              "file_text_char_start": 53874,
-              "file_text_char_end": 55944,
-              "line_start": 824,
-              "line_end": 855,
+              "block_ordinal": 30,
+              "file_text_char_start": 55164,
+              "file_text_char_end": 57234,
+              "line_start": 844,
+              "line_end": 875,
               "block_sha256": "3264229aa526f737f37438808f323766365e6b29819657bd62f6aa8b98cf60be",
               "matched_source_tokens": [
                 "2605.30621"
@@ -41492,11 +41492,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1091,
-              "file_text_char_start": 885530,
-              "file_text_char_end": 886515,
-              "line_start": 14306,
-              "line_end": 14322,
+              "block_ordinal": 1092,
+              "file_text_char_start": 886820,
+              "file_text_char_end": 887805,
+              "line_start": 14326,
+              "line_end": 14342,
               "block_sha256": "4d294d45844c83a63a525c2f9df72e19304fb75bd1ea2d0f2ce8c4f5ae81100e",
               "matched_source_tokens": [
                 "2605.30621",
@@ -41734,11 +41734,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1091,
-                "file_text_char_start": 885530,
-                "file_text_char_end": 886515,
-                "line_start": 14306,
-                "line_end": 14322,
+                "block_ordinal": 1092,
+                "file_text_char_start": 886820,
+                "file_text_char_end": 887805,
+                "line_start": 14326,
+                "line_end": 14342,
                 "block_sha256": "4d294d45844c83a63a525c2f9df72e19304fb75bd1ea2d0f2ce8c4f5ae81100e",
                 "matched_source_tokens": [
                   "2605.30621",
@@ -42306,11 +42306,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 28,
-              "file_text_char_start": 51780,
-              "file_text_char_end": 53874,
-              "line_start": 793,
-              "line_end": 824,
+              "block_ordinal": 29,
+              "file_text_char_start": 53070,
+              "file_text_char_end": 55164,
+              "line_start": 813,
+              "line_end": 844,
               "block_sha256": "476006f78985b2decf5c020316dc4766b97e9e38014b86050d6306a799bbce05",
               "matched_source_tokens": [
                 "2604.25850"
@@ -42320,11 +42320,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1092,
-              "file_text_char_start": 886515,
-              "file_text_char_end": 887526,
-              "line_start": 14322,
-              "line_end": 14337,
+              "block_ordinal": 1093,
+              "file_text_char_start": 887805,
+              "file_text_char_end": 888816,
+              "line_start": 14342,
+              "line_end": 14357,
               "block_sha256": "cd96b876db4ce0d9653c475a408c3b57d18dc3347248f4ef34fc07d7a28d22b7",
               "matched_source_tokens": [
                 "2604.25850",
@@ -42562,11 +42562,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1092,
-                "file_text_char_start": 886515,
-                "file_text_char_end": 887526,
-                "line_start": 14322,
-                "line_end": 14337,
+                "block_ordinal": 1093,
+                "file_text_char_start": 887805,
+                "file_text_char_end": 888816,
+                "line_start": 14342,
+                "line_end": 14357,
                 "block_sha256": "cd96b876db4ce0d9653c475a408c3b57d18dc3347248f4ef34fc07d7a28d22b7",
                 "matched_source_tokens": [
                   "2604.25850",
@@ -43134,11 +43134,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 27,
-              "file_text_char_start": 49717,
-              "file_text_char_end": 51780,
-              "line_start": 762,
-              "line_end": 793,
+              "block_ordinal": 28,
+              "file_text_char_start": 51007,
+              "file_text_char_end": 53070,
+              "line_start": 782,
+              "line_end": 813,
               "block_sha256": "f0640137feba7371272ce72f35a914a3b6148bddfe71ceb8865e6b3474b6176d",
               "matched_source_tokens": [
                 "2605.13357"
@@ -43148,11 +43148,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1093,
-              "file_text_char_start": 887526,
-              "file_text_char_end": 888478,
-              "line_start": 14337,
-              "line_end": 14352,
+              "block_ordinal": 1094,
+              "file_text_char_start": 888816,
+              "file_text_char_end": 889768,
+              "line_start": 14357,
+              "line_end": 14372,
               "block_sha256": "41235a0c5d177fe2214b7e2716caa545d29d89b7ccb6a7764f6551f93a133a30",
               "matched_source_tokens": [
                 "2605.13357",
@@ -43390,11 +43390,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1093,
-                "file_text_char_start": 887526,
-                "file_text_char_end": 888478,
-                "line_start": 14337,
-                "line_end": 14352,
+                "block_ordinal": 1094,
+                "file_text_char_start": 888816,
+                "file_text_char_end": 889768,
+                "line_start": 14357,
+                "line_end": 14372,
                 "block_sha256": "41235a0c5d177fe2214b7e2716caa545d29d89b7ccb6a7764f6551f93a133a30",
                 "matched_source_tokens": [
                   "2605.13357",
@@ -44082,11 +44082,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 26,
-              "file_text_char_start": 47618,
-              "file_text_char_end": 49717,
-              "line_start": 731,
-              "line_end": 762,
+              "block_ordinal": 27,
+              "file_text_char_start": 48908,
+              "file_text_char_end": 51007,
+              "line_start": 751,
+              "line_end": 782,
               "block_sha256": "2e93af51bf699666b1fcb62cb93d2c3bac291f4a869f8711131beed7cc5666b2",
               "matched_source_tokens": [
                 "2605.21516"
@@ -44096,11 +44096,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1094,
-              "file_text_char_start": 888478,
-              "file_text_char_end": 889478,
-              "line_start": 14352,
-              "line_end": 14368,
+              "block_ordinal": 1095,
+              "file_text_char_start": 889768,
+              "file_text_char_end": 890768,
+              "line_start": 14372,
+              "line_end": 14388,
               "block_sha256": "83d65457cb23e22bf34195a46d0a2bc1949558bb441f25a099b08462938a3240",
               "matched_source_tokens": [
                 "2605.21516",
@@ -44338,11 +44338,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1094,
-                "file_text_char_start": 888478,
-                "file_text_char_end": 889478,
-                "line_start": 14352,
-                "line_end": 14368,
+                "block_ordinal": 1095,
+                "file_text_char_start": 889768,
+                "file_text_char_end": 890768,
+                "line_start": 14372,
+                "line_end": 14388,
                 "block_sha256": "83d65457cb23e22bf34195a46d0a2bc1949558bb441f25a099b08462938a3240",
                 "matched_source_tokens": [
                   "2605.21516",
@@ -44910,11 +44910,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 25,
-              "file_text_char_start": 45386,
-              "file_text_char_end": 47618,
-              "line_start": 697,
-              "line_end": 731,
+              "block_ordinal": 26,
+              "file_text_char_start": 46676,
+              "file_text_char_end": 48908,
+              "line_start": 717,
+              "line_end": 751,
               "block_sha256": "760a4be1d10d72f81c6e33b0f20762dbd55a7d6793531b6c881de4104751e0e4",
               "matched_source_tokens": [
                 "2606.01770"
@@ -44924,11 +44924,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1095,
-              "file_text_char_start": 889478,
-              "file_text_char_end": 890555,
-              "line_start": 14368,
-              "line_end": 14385,
+              "block_ordinal": 1096,
+              "file_text_char_start": 890768,
+              "file_text_char_end": 891845,
+              "line_start": 14388,
+              "line_end": 14405,
               "block_sha256": "e566f4f2d5b9d200be5d53c0b506c41ee3753db6690b9cbb09bd4c4a71ad860d",
               "matched_source_tokens": [
                 "2606.01770",
@@ -45166,11 +45166,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1095,
-                "file_text_char_start": 889478,
-                "file_text_char_end": 890555,
-                "line_start": 14368,
-                "line_end": 14385,
+                "block_ordinal": 1096,
+                "file_text_char_start": 890768,
+                "file_text_char_end": 891845,
+                "line_start": 14388,
+                "line_end": 14405,
                 "block_sha256": "e566f4f2d5b9d200be5d53c0b506c41ee3753db6690b9cbb09bd4c4a71ad860d",
                 "matched_source_tokens": [
                   "2606.01770",
@@ -45738,11 +45738,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 24,
-              "file_text_char_start": 43249,
-              "file_text_char_end": 45386,
-              "line_start": 665,
-              "line_end": 697,
+              "block_ordinal": 25,
+              "file_text_char_start": 44539,
+              "file_text_char_end": 46676,
+              "line_start": 685,
+              "line_end": 717,
               "block_sha256": "16703ff2c5ee59298cf9726fa6a1c157e031151e100d3512855d1490c1d72a8a",
               "matched_source_tokens": [
                 "2603.28052"
@@ -45752,11 +45752,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1082,
-              "file_text_char_start": 876878,
-              "file_text_char_end": 877820,
-              "line_start": 14175,
-              "line_end": 14190,
+              "block_ordinal": 1083,
+              "file_text_char_start": 878168,
+              "file_text_char_end": 879110,
+              "line_start": 14195,
+              "line_end": 14210,
               "block_sha256": "277c279cef792e4f51fd05fe82f555eefdd1025bba5f373bbee0e4c6636e214e",
               "matched_source_tokens": [
                 "2603.28052",
@@ -45994,11 +45994,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1082,
-                "file_text_char_start": 876878,
-                "file_text_char_end": 877820,
-                "line_start": 14175,
-                "line_end": 14190,
+                "block_ordinal": 1083,
+                "file_text_char_start": 878168,
+                "file_text_char_end": 879110,
+                "line_start": 14195,
+                "line_end": 14210,
                 "block_sha256": "277c279cef792e4f51fd05fe82f555eefdd1025bba5f373bbee0e4c6636e214e",
                 "matched_source_tokens": [
                   "2603.28052",
@@ -46629,11 +46629,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 18,
-              "file_text_char_start": 31271,
-              "file_text_char_end": 33262,
-              "line_start": 482,
-              "line_end": 513,
+              "block_ordinal": 19,
+              "file_text_char_start": 32561,
+              "file_text_char_end": 34552,
+              "line_start": 502,
+              "line_end": 533,
               "block_sha256": "bbe74bc3ede497cb6c1745c0bd8475577a5eef58e315e831bfd43649b724fb04",
               "matched_source_tokens": [
                 "2602.22425"
@@ -46651,11 +46651,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 177,
-              "file_text_char_start": 256566,
-              "file_text_char_end": 256945,
-              "line_start": 3956,
-              "line_end": 3963,
+              "block_ordinal": 178,
+              "file_text_char_start": 257856,
+              "file_text_char_end": 258235,
+              "line_start": 3976,
+              "line_end": 3983,
               "block_sha256": "0cee7ccf6212b320a9a40ea836bfa57506722b5b8d97c1a00c17c55e9403ef95",
               "matched_source_tokens": [
                 "2602.22425"
@@ -46673,11 +46673,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 483,
-              "file_text_char_start": 498472,
-              "file_text_char_end": 499279,
-              "line_start": 7923,
-              "line_end": 7936,
+              "block_ordinal": 484,
+              "file_text_char_start": 499762,
+              "file_text_char_end": 500569,
+              "line_start": 7943,
+              "line_end": 7956,
               "block_sha256": "f2aa498dcfda35f3ac264c1b318b66396d0b995a36b83df9694d47490986da1e",
               "matched_source_tokens": [
                 "2602.22425",
@@ -47042,11 +47042,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 18,
-                "file_text_char_start": 31271,
-                "file_text_char_end": 33262,
-                "line_start": 482,
-                "line_end": 513,
+                "block_ordinal": 19,
+                "file_text_char_start": 32561,
+                "file_text_char_end": 34552,
+                "line_start": 502,
+                "line_end": 533,
                 "block_sha256": "bbe74bc3ede497cb6c1745c0bd8475577a5eef58e315e831bfd43649b724fb04",
                 "matched_source_tokens": [
                   "2602.22425"
@@ -47066,11 +47066,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 177,
-                "file_text_char_start": 256566,
-                "file_text_char_end": 256945,
-                "line_start": 3956,
-                "line_end": 3963,
+                "block_ordinal": 178,
+                "file_text_char_start": 257856,
+                "file_text_char_end": 258235,
+                "line_start": 3976,
+                "line_end": 3983,
                 "block_sha256": "0cee7ccf6212b320a9a40ea836bfa57506722b5b8d97c1a00c17c55e9403ef95",
                 "matched_source_tokens": [
                   "2602.22425"
@@ -47692,11 +47692,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 23,
-              "file_text_char_start": 41170,
-              "file_text_char_end": 43249,
-              "line_start": 634,
-              "line_end": 665,
+              "block_ordinal": 24,
+              "file_text_char_start": 42460,
+              "file_text_char_end": 44539,
+              "line_start": 654,
+              "line_end": 685,
               "block_sha256": "3a361afe93cdcde31c14b0ed38fbf4e0ba32734c37a76866fe3e4ed5534f0992",
               "matched_source_tokens": [
                 "2602.16928"
@@ -47714,11 +47714,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 176,
-              "file_text_char_start": 256134,
-              "file_text_char_end": 256566,
-              "line_start": 3949,
-              "line_end": 3956,
+              "block_ordinal": 177,
+              "file_text_char_start": 257424,
+              "file_text_char_end": 257856,
+              "line_start": 3969,
+              "line_end": 3976,
               "block_sha256": "4277e3c15611c2000935f6cb99576c275656d4033bbbba6842c0d3a4156530ff",
               "matched_source_tokens": [
                 "2602.16928"
@@ -48113,11 +48113,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 23,
-                "file_text_char_start": 41170,
-                "file_text_char_end": 43249,
-                "line_start": 634,
-                "line_end": 665,
+                "block_ordinal": 24,
+                "file_text_char_start": 42460,
+                "file_text_char_end": 44539,
+                "line_start": 654,
+                "line_end": 685,
                 "block_sha256": "3a361afe93cdcde31c14b0ed38fbf4e0ba32734c37a76866fe3e4ed5534f0992",
                 "matched_source_tokens": [
                   "2602.16928"
@@ -48137,11 +48137,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 176,
-                "file_text_char_start": 256134,
-                "file_text_char_end": 256566,
-                "line_start": 3949,
-                "line_end": 3956,
+                "block_ordinal": 177,
+                "file_text_char_start": 257424,
+                "file_text_char_end": 257856,
+                "line_start": 3969,
+                "line_end": 3976,
                 "block_sha256": "4277e3c15611c2000935f6cb99576c275656d4033bbbba6842c0d3a4156530ff",
                 "matched_source_tokens": [
                   "2602.16928"
@@ -48740,11 +48740,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 22,
-              "file_text_char_start": 39245,
-              "file_text_char_end": 41170,
-              "line_start": 605,
-              "line_end": 634,
+              "block_ordinal": 23,
+              "file_text_char_start": 40535,
+              "file_text_char_end": 42460,
+              "line_start": 625,
+              "line_end": 654,
               "block_sha256": "a1825acb54bdd69765206a744941099f91297375517109f0fe04260889a81dc0",
               "matched_source_tokens": [
                 "2603.09172"
@@ -48762,11 +48762,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 175,
-              "file_text_char_start": 255732,
-              "file_text_char_end": 256134,
-              "line_start": 3942,
-              "line_end": 3949,
+              "block_ordinal": 176,
+              "file_text_char_start": 257022,
+              "file_text_char_end": 257424,
+              "line_start": 3962,
+              "line_end": 3969,
               "block_sha256": "c92eac5650a0972c07cdcd953d83984b1c262031b3420308de93ae2a4a63ef2f",
               "matched_source_tokens": [
                 "2603.09172"
@@ -49259,11 +49259,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 22,
-                "file_text_char_start": 39245,
-                "file_text_char_end": 41170,
-                "line_start": 605,
-                "line_end": 634,
+                "block_ordinal": 23,
+                "file_text_char_start": 40535,
+                "file_text_char_end": 42460,
+                "line_start": 625,
+                "line_end": 654,
                 "block_sha256": "a1825acb54bdd69765206a744941099f91297375517109f0fe04260889a81dc0",
                 "matched_source_tokens": [
                   "2603.09172"
@@ -49283,11 +49283,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 175,
-                "file_text_char_start": 255732,
-                "file_text_char_end": 256134,
-                "line_start": 3942,
-                "line_end": 3949,
+                "block_ordinal": 176,
+                "file_text_char_start": 257022,
+                "file_text_char_end": 257424,
+                "line_start": 3962,
+                "line_end": 3969,
                 "block_sha256": "c92eac5650a0972c07cdcd953d83984b1c262031b3420308de93ae2a4a63ef2f",
                 "matched_source_tokens": [
                   "2603.09172"
@@ -49933,11 +49933,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 1,
-              "file_text_char_start": 188,
-              "file_text_char_end": 1980,
-              "line_start": 5,
-              "line_end": 32,
+              "block_ordinal": 2,
+              "file_text_char_start": 1478,
+              "file_text_char_end": 3270,
+              "line_start": 25,
+              "line_end": 52,
               "block_sha256": "4f9df8a541569e95950b190bda9e56bb4154abb6301698ff2a784a8e0e1e0d42",
               "matched_source_tokens": [
                 "2509.18057"
@@ -49955,11 +49955,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 234,
-              "file_text_char_start": 303229,
-              "file_text_char_end": 304030,
-              "line_start": 4730,
-              "line_end": 4743,
+              "block_ordinal": 235,
+              "file_text_char_start": 304519,
+              "file_text_char_end": 305320,
+              "line_start": 4750,
+              "line_end": 4763,
               "block_sha256": "a87c3fe7394002dff9e5445bebbd3e04b52730cfc358aea3227d460412f707d3",
               "matched_source_tokens": [
                 "2509.18057"
@@ -50256,11 +50256,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1,
-                "file_text_char_start": 188,
-                "file_text_char_end": 1980,
-                "line_start": 5,
-                "line_end": 32,
+                "block_ordinal": 2,
+                "file_text_char_start": 1478,
+                "file_text_char_end": 3270,
+                "line_start": 25,
+                "line_end": 52,
                 "block_sha256": "4f9df8a541569e95950b190bda9e56bb4154abb6301698ff2a784a8e0e1e0d42",
                 "matched_source_tokens": [
                   "2509.18057"
@@ -50280,11 +50280,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 234,
-                "file_text_char_start": 303229,
-                "file_text_char_end": 304030,
-                "line_start": 4730,
-                "line_end": 4743,
+                "block_ordinal": 235,
+                "file_text_char_start": 304519,
+                "file_text_char_end": 305320,
+                "line_start": 4750,
+                "line_end": 4763,
                 "block_sha256": "a87c3fe7394002dff9e5445bebbd3e04b52730cfc358aea3227d460412f707d3",
                 "matched_source_tokens": [
                   "2509.18057"
@@ -50808,11 +50808,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 21,
-              "file_text_char_start": 37201,
-              "file_text_char_end": 39245,
-              "line_start": 574,
-              "line_end": 605,
+              "block_ordinal": 22,
+              "file_text_char_start": 38491,
+              "file_text_char_end": 40535,
+              "line_start": 594,
+              "line_end": 625,
               "block_sha256": "4434f7665d99481f1236abb75cebd4d1d1cb4e754f17c8387538179ee849e916",
               "matched_source_tokens": [
                 "2603.06692"
@@ -50830,11 +50830,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 174,
-              "file_text_char_start": 255227,
-              "file_text_char_end": 255732,
-              "line_start": 3933,
-              "line_end": 3942,
+              "block_ordinal": 175,
+              "file_text_char_start": 256517,
+              "file_text_char_end": 257022,
+              "line_start": 3953,
+              "line_end": 3962,
               "block_sha256": "ffb19f4a4f212e8bd4d198cbe5394ae0ecdb45ec621f48389d7fc619ec9ceaf1",
               "matched_source_tokens": [
                 "2603.06692"
@@ -51402,11 +51402,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 21,
-                "file_text_char_start": 37201,
-                "file_text_char_end": 39245,
-                "line_start": 574,
-                "line_end": 605,
+                "block_ordinal": 22,
+                "file_text_char_start": 38491,
+                "file_text_char_end": 40535,
+                "line_start": 594,
+                "line_end": 625,
                 "block_sha256": "4434f7665d99481f1236abb75cebd4d1d1cb4e754f17c8387538179ee849e916",
                 "matched_source_tokens": [
                   "2603.06692"
@@ -51426,11 +51426,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 174,
-                "file_text_char_start": 255227,
-                "file_text_char_end": 255732,
-                "line_start": 3933,
-                "line_end": 3942,
+                "block_ordinal": 175,
+                "file_text_char_start": 256517,
+                "file_text_char_end": 257022,
+                "line_start": 3953,
+                "line_end": 3962,
                 "block_sha256": "ffb19f4a4f212e8bd4d198cbe5394ae0ecdb45ec621f48389d7fc619ec9ceaf1",
                 "matched_source_tokens": [
                   "2603.06692"
@@ -51968,11 +51968,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 16,
-              "file_text_char_start": 27530,
-              "file_text_char_end": 29315,
-              "line_start": 425,
-              "line_end": 452,
+              "block_ordinal": 17,
+              "file_text_char_start": 28820,
+              "file_text_char_end": 30605,
+              "line_start": 445,
+              "line_end": 472,
               "block_sha256": "482ac316936ac661a37ec3b2159e5f7893e34c85d7f073234946168d91a13c6e",
               "matched_source_tokens": [
                 "2601.16175"
@@ -51990,11 +51990,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1053,
-              "file_text_char_start": 854647,
-              "file_text_char_end": 855422,
-              "line_start": 13819,
-              "line_end": 13832,
+              "block_ordinal": 1054,
+              "file_text_char_start": 855937,
+              "file_text_char_end": 856712,
+              "line_start": 13839,
+              "line_end": 13852,
               "block_sha256": "cb1cc25ad37916038b63c79f973bcc223ed27587668f7d9ae18ac330d9012857",
               "matched_source_tokens": [
                 "2601.16175"
@@ -52451,11 +52451,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 16,
-                "file_text_char_start": 27530,
-                "file_text_char_end": 29315,
-                "line_start": 425,
-                "line_end": 452,
+                "block_ordinal": 17,
+                "file_text_char_start": 28820,
+                "file_text_char_end": 30605,
+                "line_start": 445,
+                "line_end": 472,
                 "block_sha256": "482ac316936ac661a37ec3b2159e5f7893e34c85d7f073234946168d91a13c6e",
                 "matched_source_tokens": [
                   "2601.16175"
@@ -52475,11 +52475,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1053,
-                "file_text_char_start": 854647,
-                "file_text_char_end": 855422,
-                "line_start": 13819,
-                "line_end": 13832,
+                "block_ordinal": 1054,
+                "file_text_char_start": 855937,
+                "file_text_char_end": 856712,
+                "line_start": 13839,
+                "line_end": 13852,
                 "block_sha256": "cb1cc25ad37916038b63c79f973bcc223ed27587668f7d9ae18ac330d9012857",
                 "matched_source_tokens": [
                   "2601.16175"
@@ -53021,11 +53021,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 20,
-              "file_text_char_start": 35297,
-              "file_text_char_end": 37201,
-              "line_start": 545,
-              "line_end": 574,
+              "block_ordinal": 21,
+              "file_text_char_start": 36587,
+              "file_text_char_end": 38491,
+              "line_start": 565,
+              "line_end": 594,
               "block_sha256": "0f79b3b311bcd96fc306ef054c25d3155279ad87d7a2aafae70aa696f826c38f",
               "matched_source_tokens": [
                 "2603.08679"
@@ -53043,11 +53043,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 173,
-              "file_text_char_start": 254799,
-              "file_text_char_end": 255227,
-              "line_start": 3926,
-              "line_end": 3933,
+              "block_ordinal": 174,
+              "file_text_char_start": 256089,
+              "file_text_char_end": 256517,
+              "line_start": 3946,
+              "line_end": 3953,
               "block_sha256": "ab535660aa2da8a906850758fccd605f2ebd00e1f99ad56b80074aeaf52e0580",
               "matched_source_tokens": [
                 "2603.08679"
@@ -53517,11 +53517,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 20,
-                "file_text_char_start": 35297,
-                "file_text_char_end": 37201,
-                "line_start": 545,
-                "line_end": 574,
+                "block_ordinal": 21,
+                "file_text_char_start": 36587,
+                "file_text_char_end": 38491,
+                "line_start": 565,
+                "line_end": 594,
                 "block_sha256": "0f79b3b311bcd96fc306ef054c25d3155279ad87d7a2aafae70aa696f826c38f",
                 "matched_source_tokens": [
                   "2603.08679"
@@ -53541,11 +53541,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 173,
-                "file_text_char_start": 254799,
-                "file_text_char_end": 255227,
-                "line_start": 3926,
-                "line_end": 3933,
+                "block_ordinal": 174,
+                "file_text_char_start": 256089,
+                "file_text_char_end": 256517,
+                "line_start": 3946,
+                "line_end": 3953,
                 "block_sha256": "ab535660aa2da8a906850758fccd605f2ebd00e1f99ad56b80074aeaf52e0580",
                 "matched_source_tokens": [
                   "2603.08679"
@@ -54083,11 +54083,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 15,
-              "file_text_char_start": 25568,
-              "file_text_char_end": 27530,
-              "line_start": 395,
-              "line_end": 425,
+              "block_ordinal": 16,
+              "file_text_char_start": 26858,
+              "file_text_char_end": 28820,
+              "line_start": 415,
+              "line_end": 445,
               "block_sha256": "ad712391355e49cd3b3e23dea31d6ec8fb609dfc2a3df28f7f7e35106d491ae6",
               "matched_source_tokens": [
                 "2601.01235"
@@ -54105,11 +54105,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1054,
-              "file_text_char_start": 855422,
-              "file_text_char_end": 856295,
-              "line_start": 13832,
-              "line_end": 13846,
+              "block_ordinal": 1055,
+              "file_text_char_start": 856712,
+              "file_text_char_end": 857585,
+              "line_start": 13852,
+              "line_end": 13866,
               "block_sha256": "232189cc8a6b5896255c73cc732d794f41e99bfeacfe44a59272362055e4da62",
               "matched_source_tokens": [
                 "2601.01235"
@@ -54664,11 +54664,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 15,
-                "file_text_char_start": 25568,
-                "file_text_char_end": 27530,
-                "line_start": 395,
-                "line_end": 425,
+                "block_ordinal": 16,
+                "file_text_char_start": 26858,
+                "file_text_char_end": 28820,
+                "line_start": 415,
+                "line_end": 445,
                 "block_sha256": "ad712391355e49cd3b3e23dea31d6ec8fb609dfc2a3df28f7f7e35106d491ae6",
                 "matched_source_tokens": [
                   "2601.01235"
@@ -54688,11 +54688,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1054,
-                "file_text_char_start": 855422,
-                "file_text_char_end": 856295,
-                "line_start": 13832,
-                "line_end": 13846,
+                "block_ordinal": 1055,
+                "file_text_char_start": 856712,
+                "file_text_char_end": 857585,
+                "line_start": 13852,
+                "line_end": 13866,
                 "block_sha256": "232189cc8a6b5896255c73cc732d794f41e99bfeacfe44a59272362055e4da62",
                 "matched_source_tokens": [
                   "2601.01235"
@@ -55310,11 +55310,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 17,
-              "file_text_char_start": 29315,
-              "file_text_char_end": 31271,
-              "line_start": 452,
-              "line_end": 482,
+              "block_ordinal": 18,
+              "file_text_char_start": 30605,
+              "file_text_char_end": 32561,
+              "line_start": 472,
+              "line_end": 502,
               "block_sha256": "2013f4a572da08e7cfdefa62595dce104588e9aa29300ed7db8574dd9a3e6a2e",
               "matched_source_tokens": [
                 "2511.12916"
@@ -55332,11 +55332,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1055,
-              "file_text_char_start": 856295,
-              "file_text_char_end": 857144,
-              "line_start": 13846,
-              "line_end": 13860,
+              "block_ordinal": 1056,
+              "file_text_char_start": 857585,
+              "file_text_char_end": 858434,
+              "line_start": 13866,
+              "line_end": 13880,
               "block_sha256": "bc9d758c839b9a6180ee4faf84f0a2b023d8e05d9d92096ee7f4668b3ae97bbe",
               "matched_source_tokens": [
                 "2511.12916"
@@ -55731,11 +55731,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 17,
-                "file_text_char_start": 29315,
-                "file_text_char_end": 31271,
-                "line_start": 452,
-                "line_end": 482,
+                "block_ordinal": 18,
+                "file_text_char_start": 30605,
+                "file_text_char_end": 32561,
+                "line_start": 472,
+                "line_end": 502,
                 "block_sha256": "2013f4a572da08e7cfdefa62595dce104588e9aa29300ed7db8574dd9a3e6a2e",
                 "matched_source_tokens": [
                   "2511.12916"
@@ -55755,11 +55755,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1055,
-                "file_text_char_start": 856295,
-                "file_text_char_end": 857144,
-                "line_start": 13846,
-                "line_end": 13860,
+                "block_ordinal": 1056,
+                "file_text_char_start": 857585,
+                "file_text_char_end": 858434,
+                "line_start": 13866,
+                "line_end": 13880,
                 "block_sha256": "bc9d758c839b9a6180ee4faf84f0a2b023d8e05d9d92096ee7f4668b3ae97bbe",
                 "matched_source_tokens": [
                   "2511.12916"
@@ -56377,11 +56377,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 14,
-              "file_text_char_start": 23757,
-              "file_text_char_end": 25568,
-              "line_start": 368,
-              "line_end": 395,
+              "block_ordinal": 15,
+              "file_text_char_start": 25047,
+              "file_text_char_end": 26858,
+              "line_start": 388,
+              "line_end": 415,
               "block_sha256": "f5e71890feff5d98e8478008f7b109ed4b8ce43dc87f0884b080c69b277b37d0",
               "matched_source_tokens": [
                 "2601.05943"
@@ -56399,11 +56399,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1056,
-              "file_text_char_start": 857144,
-              "file_text_char_end": 858066,
-              "line_start": 13860,
-              "line_end": 13874,
+              "block_ordinal": 1057,
+              "file_text_char_start": 858434,
+              "file_text_char_end": 859356,
+              "line_start": 13880,
+              "line_end": 13894,
               "block_sha256": "2d93108d8d8f6a859a75fa850735e320d06cb76ccdee2650362f739546dcaf0f",
               "matched_source_tokens": [
                 "2601.05943"
@@ -56896,11 +56896,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 14,
-                "file_text_char_start": 23757,
-                "file_text_char_end": 25568,
-                "line_start": 368,
-                "line_end": 395,
+                "block_ordinal": 15,
+                "file_text_char_start": 25047,
+                "file_text_char_end": 26858,
+                "line_start": 388,
+                "line_end": 415,
                 "block_sha256": "f5e71890feff5d98e8478008f7b109ed4b8ce43dc87f0884b080c69b277b37d0",
                 "matched_source_tokens": [
                   "2601.05943"
@@ -56920,11 +56920,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1056,
-                "file_text_char_start": 857144,
-                "file_text_char_end": 858066,
-                "line_start": 13860,
-                "line_end": 13874,
+                "block_ordinal": 1057,
+                "file_text_char_start": 858434,
+                "file_text_char_end": 859356,
+                "line_start": 13880,
+                "line_end": 13894,
                 "block_sha256": "2d93108d8d8f6a859a75fa850735e320d06cb76ccdee2650362f739546dcaf0f",
                 "matched_source_tokens": [
                   "2601.05943"
@@ -57524,11 +57524,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 13,
-              "file_text_char_start": 21912,
-              "file_text_char_end": 23757,
-              "line_start": 339,
-              "line_end": 368,
+              "block_ordinal": 14,
+              "file_text_char_start": 23202,
+              "file_text_char_end": 25047,
+              "line_start": 359,
+              "line_end": 388,
               "block_sha256": "c71dab5c9dbe498b2ad3bf9734c1fb6ad1399cb60c29a6a4fa33af8043033467",
               "matched_source_tokens": [
                 "2506.16750"
@@ -57546,11 +57546,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1057,
-              "file_text_char_start": 858066,
-              "file_text_char_end": 858936,
-              "line_start": 13874,
-              "line_end": 13887,
+              "block_ordinal": 1058,
+              "file_text_char_start": 859356,
+              "file_text_char_end": 860226,
+              "line_start": 13894,
+              "line_end": 13907,
               "block_sha256": "133f9d98280c4ea777e44a67e029dad2178deb35270ffb053b9ff0111458d212",
               "matched_source_tokens": [
                 "2506.16750"
@@ -58043,11 +58043,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 13,
-                "file_text_char_start": 21912,
-                "file_text_char_end": 23757,
-                "line_start": 339,
-                "line_end": 368,
+                "block_ordinal": 14,
+                "file_text_char_start": 23202,
+                "file_text_char_end": 25047,
+                "line_start": 359,
+                "line_end": 388,
                 "block_sha256": "c71dab5c9dbe498b2ad3bf9734c1fb6ad1399cb60c29a6a4fa33af8043033467",
                 "matched_source_tokens": [
                   "2506.16750"
@@ -58067,11 +58067,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1057,
-                "file_text_char_start": 858066,
-                "file_text_char_end": 858936,
-                "line_start": 13874,
-                "line_end": 13887,
+                "block_ordinal": 1058,
+                "file_text_char_start": 859356,
+                "file_text_char_end": 860226,
+                "line_start": 13894,
+                "line_end": 13907,
                 "block_sha256": "133f9d98280c4ea777e44a67e029dad2178deb35270ffb053b9ff0111458d212",
                 "matched_source_tokens": [
                   "2506.16750"
@@ -58637,11 +58637,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 11,
-              "file_text_char_start": 18252,
-              "file_text_char_end": 20085,
-              "line_start": 283,
-              "line_end": 312,
+              "block_ordinal": 12,
+              "file_text_char_start": 19542,
+              "file_text_char_end": 21375,
+              "line_start": 303,
+              "line_end": 332,
               "block_sha256": "dff9ba1e47e89eb6136b50819f913b954a1d987f519ef94c0402cf9e0b078014",
               "matched_source_tokens": [
                 "2505.16105"
@@ -58651,11 +58651,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 12,
-              "file_text_char_start": 20085,
-              "file_text_char_end": 21912,
-              "line_start": 312,
-              "line_end": 339,
+              "block_ordinal": 13,
+              "file_text_char_start": 21375,
+              "file_text_char_end": 23202,
+              "line_start": 332,
+              "line_end": 359,
               "block_sha256": "58feff8716c9d85119668a0e2dc1db223d0a979b4bd65f33048f370febde382b",
               "matched_source_tokens": [
                 "2505.16105"
@@ -58673,11 +58673,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1058,
-              "file_text_char_start": 858936,
-              "file_text_char_end": 859728,
-              "line_start": 13887,
-              "line_end": 13899,
+              "block_ordinal": 1059,
+              "file_text_char_start": 860226,
+              "file_text_char_end": 861018,
+              "line_start": 13907,
+              "line_end": 13919,
               "block_sha256": "e5ef5f0edf0c36eb8e88b625e7579045879d26341aa5cb531b942b154ed84f80",
               "matched_source_tokens": [
                 "2505.16105"
@@ -59246,11 +59246,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 12,
-                "file_text_char_start": 20085,
-                "file_text_char_end": 21912,
-                "line_start": 312,
-                "line_end": 339,
+                "block_ordinal": 13,
+                "file_text_char_start": 21375,
+                "file_text_char_end": 23202,
+                "line_start": 332,
+                "line_end": 359,
                 "block_sha256": "58feff8716c9d85119668a0e2dc1db223d0a979b4bd65f33048f370febde382b",
                 "matched_source_tokens": [
                   "2505.16105"
@@ -59270,11 +59270,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1058,
-                "file_text_char_start": 858936,
-                "file_text_char_end": 859728,
-                "line_start": 13887,
-                "line_end": 13899,
+                "block_ordinal": 1059,
+                "file_text_char_start": 860226,
+                "file_text_char_end": 861018,
+                "line_start": 13907,
+                "line_end": 13919,
                 "block_sha256": "e5ef5f0edf0c36eb8e88b625e7579045879d26341aa5cb531b942b154ed84f80",
                 "matched_source_tokens": [
                   "2505.16105"
@@ -59812,11 +59812,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "completed",
-              "block_ordinal": 11,
-              "file_text_char_start": 18252,
-              "file_text_char_end": 20085,
-              "line_start": 283,
-              "line_end": 312,
+              "block_ordinal": 12,
+              "file_text_char_start": 19542,
+              "file_text_char_end": 21375,
+              "line_start": 303,
+              "line_end": 332,
               "block_sha256": "dff9ba1e47e89eb6136b50819f913b954a1d987f519ef94c0402cf9e0b078014",
               "matched_source_tokens": [
                 "2506.01896"
@@ -59834,11 +59834,11 @@
             },
             {
               "block_kind": "completed",
-              "block_ordinal": 1059,
-              "file_text_char_start": 859728,
-              "file_text_char_end": 860528,
-              "line_start": 13899,
-              "line_end": 13912,
+              "block_ordinal": 1060,
+              "file_text_char_start": 861018,
+              "file_text_char_end": 861818,
+              "line_start": 13919,
+              "line_end": 13932,
               "block_sha256": "fbd70d80907989094334ad16992994941055279d0394caa9e3f837c9d47c0d0f",
               "matched_source_tokens": [
                 "2506.01896"
@@ -60393,11 +60393,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 11,
-                "file_text_char_start": 18252,
-                "file_text_char_end": 20085,
-                "line_start": 283,
-                "line_end": 312,
+                "block_ordinal": 12,
+                "file_text_char_start": 19542,
+                "file_text_char_end": 21375,
+                "line_start": 303,
+                "line_end": 332,
                 "block_sha256": "dff9ba1e47e89eb6136b50819f913b954a1d987f519ef94c0402cf9e0b078014",
                 "matched_source_tokens": [
                   "2506.01896"
@@ -60417,11 +60417,11 @@
                 "path": "docs/todo/Completed/roadmap.md",
                 "evidence_kind": "completed",
                 "block_kind": "completed",
-                "block_ordinal": 1059,
-                "file_text_char_start": 859728,
-                "file_text_char_end": 860528,
-                "line_start": 13899,
-                "line_end": 13912,
+                "block_ordinal": 1060,
+                "file_text_char_start": 861018,
+                "file_text_char_end": 861818,
+                "line_start": 13919,
+                "line_end": 13932,
                 "block_sha256": "fbd70d80907989094334ad16992994941055279d0394caa9e3f837c9d47c0d0f",
                 "matched_source_tokens": [
                   "2506.01896"

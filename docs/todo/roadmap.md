@@ -40,23 +40,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     should therefore distinguish technical implementation parity, benchmark
     reproduction, operational/release maturity, documentation truthfulness,
     paper-source metadata, and source-only fixture evidence.
-  - Current evidence: raw TODO counting currently reports a useful ledger
-    ratio, but it weights every checklist item equally. Source-publication
-    metadata boundaries such as title-page affiliation and system-contribution
+  - Current evidence: raw TODO counting reports a useful ledger ratio, and
+    `papers/roadmap_readiness_boundary.json` now records a machine-readable
+    readiness taxonomy with stable categories, weights summing to 100,
+    per-category active/completed TODO counts, raw TODO-ledger completion, and
+    weighted TODO-ledger completion. The paper-manifest gate validates that the
+    sidecar matches the current TODO files. Source-publication metadata
+    boundaries such as title-page affiliation and system-contribution
     provenance can be claim-ready for narrow fixture facts, while many
     technical AlphaEvolve boundaries remain explicitly false for async
     topology, Gemini Flash/Pro parity, realistic codebase benchmarks,
     sandbox/resource enforcement, representative benchmark reproduction, and
     full resume/replay proof. README and `docs/status.md` correctly say this
-    is not a full AlphaEvolve reproduction, but ROADMAP has no formal
-    denominator or weighting model for the implementation-completion
-    percentage readers ask for.
-  - Current gap: there is no machine-readable readiness taxonomy, weighted
-    denominator, category rollup, confidence label, or stale-count detector
-    separating raw TODO-ledger completion from actual AlphaEvolve
-    implementation parity. There is also no guard that prevents paper-source
-    metadata readiness, documentation-routing work, or fixture-level
-    provenance from inflating technical implementation completion.
+    is not a full AlphaEvolve reproduction.
+  - Current gap: the weighted readiness sidecar is still TODO-ledger evidence,
+    not semantic AlphaEvolve implementation parity. There is no requirement-
+    level source-span mapping, canonical underlying-gap deduplication,
+    per-category code/test/runtime-artifact proof map, benchmark reproduction
+    certification, operational release-readiness gate, or stale-count detector
+    preventing paper-source metadata readiness, documentation-routing work, or
+    fixture-level provenance from inflating technical implementation
+    completion.
   - Required result: add a ROADMAP readiness model with stable categories,
     weights, source requirements, TODO/sidecar/test evidence links,
     per-category completion counts, uncertainty labels, and a validator that

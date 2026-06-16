@@ -1243,7 +1243,8 @@ Important limits:
   both artifacts as `not_yet_linked`.
 - Documentation alignment checks are path, manifest, TODO-coverage,
   sidecar-registry, top-level README/ROADMAP/papers-index claim-inventory
-  guards, and structural `docs/status.md` ledger inventory. The checked
+  guards, structural `docs/status.md` ledger inventory, and a ROADMAP
+  readiness taxonomy boundary. The checked
   documentation-claim inventory records file-offset source anchors, local
   evidence-ref existence records, Markdown fragment-anchor resolution records,
   audited surface heading records with uncovered heading-to-claim gap records
@@ -1253,7 +1254,11 @@ Important limits:
   the documented top-level artifact tree with the current overwrite-cleanup
   artifact set. These are not semantic proof that every README, ROADMAP,
   papers-index, TODO, `docs/run-artifacts.md`, or `docs/status.md` statement is
-  current; that boundary is tracked by
+  current. `papers/roadmap_readiness_boundary.json` separately records
+  stable readiness categories, weights, raw TODO-ledger completion, and
+  weighted TODO-ledger completion while keeping semantic AlphaEvolve
+  implementation readiness false; those boundaries are tracked by
+  `papers/roadmap_readiness_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors

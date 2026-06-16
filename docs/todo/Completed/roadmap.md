@@ -2,6 +2,26 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add structural ROADMAP readiness weighting evidence.
+  - Status: `papers/roadmap_readiness_boundary.json` now records a
+    machine-readable readiness taxonomy with four stable categories,
+    category weights summing to 100, per-category active/completed TODO-ledger
+    counts, raw TODO-ledger completion, and weighted TODO-ledger completion.
+  - Current evidence: `libreevolve/problems/benchmarks/roadmap_readiness_boundary.py`
+    derives the sidecar from `docs/todo/code.md`, `docs/todo/papers.md`,
+    `docs/todo/readme.md`, `docs/todo/roadmap.md`, and their completed-ledger
+    companions; `tests/test_roadmap_readiness_boundary.py` rejects readiness
+    overclaims, category drift, and missing-evidence drift; and
+    `libreevolve/tools/paper_manifest.py` requires the checked-in sidecar to
+    match the current TODO ledger.
+  - Remaining guard: the active ROADMAP TODO still tracks semantic
+    AlphaEvolve-readiness gaps: requirement-level source-span mapping,
+    canonical underlying-gap deduplication, per-category code/test/runtime
+    proof maps, benchmark reproduction certification, operational release
+    gates, and stale-count detection.
+  - Verification: focused ROADMAP readiness tests and paper-manifest
+    validation cover the structural sidecar contract.
+
 - [x] Archive hardness-of-approximation proof-element roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary
     was restored. `README.md`, `ROADMAP.md`, `papers/README.md`,

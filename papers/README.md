@@ -2849,6 +2849,13 @@ Implemented:
   Markdown fragment-anchor resolution records, audited surface heading records,
   uncovered heading-to-claim gap records, active TODO-owner links, and explicit
   missing-evidence fields for complete coverage and semantic proof.
+- `papers/roadmap_readiness_boundary.json`: ROADMAP readiness taxonomy
+  sidecar with stable readiness categories, weights summing to 100,
+  per-category TODO-ledger counts, raw TODO-ledger completion, and weighted
+  TODO-ledger completion. It is not semantic AlphaEvolve implementation
+  readiness, canonical underlying-gap deduplication, source-span disposition
+  completeness, per-category test-gate coverage, benchmark reproduction
+  certification, or operational release readiness.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

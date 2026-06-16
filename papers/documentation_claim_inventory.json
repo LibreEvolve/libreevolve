@@ -892,7 +892,7 @@
     "without"
   ],
   "status_ledger_signal_record_count": 428,
-  "status_ledger_unique_local_path_ref_count": 116,
+  "status_ledger_unique_local_path_ref_count": 117,
   "status_ledger_unique_local_path_refs": [
     "ROADMAP.md",
     "docs/run-artifacts.md",
@@ -994,6 +994,7 @@
     "papers/ramsey_numbers_boundary.json",
     "papers/related_work_taxonomy_boundary.json",
     "papers/repeated_sampling_baseline_boundary.json",
+    "papers/roadmap_readiness_boundary.json",
     "papers/runtime_rng_replay_boundary.json",
     "papers/sample_efficiency_boundary.json",
     "papers/sampling_balance_boundary.json",
@@ -1012,7 +1013,7 @@
     "papers/workspace_materialization_boundary.json"
   ],
   "status_ledger_missing_local_path_refs": [],
-  "status_ledger_local_path_ref_count": 155,
+  "status_ledger_local_path_ref_count": 157,
   "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
   "status_ledger_bullet_records": [
     {
@@ -4826,10 +4827,10 @@
       "bullet_ordinal": 163,
       "section": "important_limits",
       "line_start": 1244,
-      "line_end": 1258,
+      "line_end": 1263,
       "file_text_char_start": 87282,
-      "file_text_char_end": 88324,
-      "text_sha256": "6893be2a9e06f4400ff5ade5aec394396687991beeb6825afadc8f5b2cb6371e",
+      "file_text_char_end": 88648,
+      "text_sha256": "2f8aadbc65759c9f36b2fa01b563e9c59f65d1eb89cabb7ea2d2dbb3b9bb2238",
       "signal_terms": [
         "boundary",
         "implemented",
@@ -4842,38 +4843,52 @@
         "docs/status.md",
         "docs/run-artifacts.md",
         "docs/status.md",
+        "papers/roadmap_readiness_boundary.json",
+        "papers/roadmap_readiness_boundary.json",
         "papers/documentation_truthfulness_boundary.json",
         "papers/documentation_claim_inventory.json"
       ],
       "local_path_ref_records": [
         {
           "path": "docs/status.md",
-          "text_char_start": 168,
-          "text_char_end": 182,
+          "text_char_start": 164,
+          "text_char_end": 178,
           "exists": true
         },
         {
           "path": "docs/run-artifacts.md",
-          "text_char_start": 844,
-          "text_char_end": 865,
+          "text_char_start": 885,
+          "text_char_end": 906,
           "exists": true
         },
         {
           "path": "docs/status.md",
-          "text_char_start": 872,
-          "text_char_end": 886,
+          "text_char_start": 913,
+          "text_char_end": 927,
+          "exists": true
+        },
+        {
+          "path": "papers/roadmap_readiness_boundary.json",
+          "text_char_start": 954,
+          "text_char_end": 992,
+          "exists": true
+        },
+        {
+          "path": "papers/roadmap_readiness_boundary.json",
+          "text_char_start": 1223,
+          "text_char_end": 1261,
           "exists": true
         },
         {
           "path": "papers/documentation_truthfulness_boundary.json",
-          "text_char_start": 943,
-          "text_char_end": 990,
+          "text_char_start": 1267,
+          "text_char_end": 1314,
           "exists": true
         },
         {
           "path": "papers/documentation_claim_inventory.json",
-          "text_char_start": 999,
-          "text_char_end": 1040,
+          "text_char_start": 1323,
+          "text_char_end": 1364,
           "exists": true
         }
       ]
@@ -4881,10 +4896,10 @@
     {
       "bullet_ordinal": 164,
       "section": "important_limits",
-      "line_start": 1259,
-      "line_end": 1279,
-      "file_text_char_start": 88325,
-      "file_text_char_end": 89710,
+      "line_start": 1264,
+      "line_end": 1284,
+      "file_text_char_start": 88649,
+      "file_text_char_end": 90034,
       "text_sha256": "caaa1de784d3cf4080dd3072bce2a83b998815b77caf2d30f459f8de81f6ddf0",
       "signal_terms": [
         "boundary",
@@ -4923,10 +4938,10 @@
     {
       "bullet_ordinal": 165,
       "section": "important_limits",
-      "line_start": 1280,
-      "line_end": 1292,
-      "file_text_char_start": 89711,
-      "file_text_char_end": 90616,
+      "line_start": 1285,
+      "line_end": 1297,
+      "file_text_char_start": 90035,
+      "file_text_char_end": 90940,
       "text_sha256": "217f085100b4126ddd6b8c8abca06ed2e16acd58ff6781d55abfd417ed5a8fbf",
       "signal_terms": [
         "missing",
@@ -4940,10 +4955,10 @@
     {
       "bullet_ordinal": 166,
       "section": "important_limits",
-      "line_start": 1293,
-      "line_end": 1307,
-      "file_text_char_start": 90617,
-      "file_text_char_end": 91733,
+      "line_start": 1298,
+      "line_end": 1312,
+      "file_text_char_start": 90941,
+      "file_text_char_end": 92057,
       "text_sha256": "cd0a3b1006d7d7435c2e10e7db7a0629a1b51b040fbd029a75d82c5a2a66b3c2",
       "signal_terms": [
         "not"
@@ -4955,10 +4970,10 @@
     {
       "bullet_ordinal": 167,
       "section": "important_limits",
-      "line_start": 1308,
-      "line_end": 1319,
-      "file_text_char_start": 91734,
-      "file_text_char_end": 92570,
+      "line_start": 1313,
+      "line_end": 1324,
+      "file_text_char_start": 92058,
+      "file_text_char_end": 92894,
       "text_sha256": "2592de9f85665aac7d9679f7ea2bab9ea9a2f7ae7d2e1f191cd4ea1624d9f766",
       "signal_terms": [
         "implemented",
@@ -4973,10 +4988,10 @@
     {
       "bullet_ordinal": 168,
       "section": "important_limits",
-      "line_start": 1320,
-      "line_end": 1325,
-      "file_text_char_start": 92571,
-      "file_text_char_end": 93026,
+      "line_start": 1325,
+      "line_end": 1330,
+      "file_text_char_start": 92895,
+      "file_text_char_end": 93350,
       "text_sha256": "3874d3a0727d10d999b81d4482e243061d2903cea0f0d419c24682766e09a815",
       "signal_terms": [
         "boundary",
@@ -4999,10 +5014,10 @@
     {
       "bullet_ordinal": 169,
       "section": "important_limits",
-      "line_start": 1326,
-      "line_end": 1329,
-      "file_text_char_start": 93027,
-      "file_text_char_end": 93277,
+      "line_start": 1331,
+      "line_end": 1334,
+      "file_text_char_start": 93351,
+      "file_text_char_end": 93601,
       "text_sha256": "96b9ffa308c727d371222636d8f2c7af9f116c14d50285654a15353cd95ab565",
       "signal_terms": [
         "boundary",
@@ -5025,10 +5040,10 @@
     {
       "bullet_ordinal": 170,
       "section": "important_limits",
-      "line_start": 1330,
-      "line_end": 1333,
-      "file_text_char_start": 93278,
-      "file_text_char_end": 93554,
+      "line_start": 1335,
+      "line_end": 1338,
+      "file_text_char_start": 93602,
+      "file_text_char_end": 93878,
       "text_sha256": "08e65f53d27397f06f6006f30b9526e6824d97b88e34aad422055a4e294adcf3",
       "signal_terms": [
         "boundary",
@@ -5051,10 +5066,10 @@
     {
       "bullet_ordinal": 171,
       "section": "important_limits",
-      "line_start": 1334,
-      "line_end": 1340,
-      "file_text_char_start": 93555,
-      "file_text_char_end": 94010,
+      "line_start": 1339,
+      "line_end": 1345,
+      "file_text_char_start": 93879,
+      "file_text_char_end": 94334,
       "text_sha256": "cef2d51655b8a9231d73ad2b491888ee8aeb06146fc7ebebb50c2e4ca88a6b02",
       "signal_terms": [
         "implemented",
@@ -5068,10 +5083,10 @@
     {
       "bullet_ordinal": 172,
       "section": "important_limits",
-      "line_start": 1341,
-      "line_end": 1346,
-      "file_text_char_start": 94011,
-      "file_text_char_end": 94464,
+      "line_start": 1346,
+      "line_end": 1351,
+      "file_text_char_start": 94335,
+      "file_text_char_end": 94788,
       "text_sha256": "74ab9a684c541fd5753ec199eff88ad4a6438682eda77fe0eec3d6234fd55444",
       "signal_terms": [
         "record"
@@ -5083,10 +5098,10 @@
     {
       "bullet_ordinal": 173,
       "section": "important_limits",
-      "line_start": 1347,
-      "line_end": 1350,
-      "file_text_char_start": 94465,
-      "file_text_char_end": 94749,
+      "line_start": 1352,
+      "line_end": 1355,
+      "file_text_char_start": 94789,
+      "file_text_char_end": 95073,
       "text_sha256": "19b485e815354e8e95b534752944a2a21eaad4a6dd39abd570d914e90b78ab70",
       "signal_terms": [
         "boundary",
@@ -5110,10 +5125,10 @@
     {
       "bullet_ordinal": 174,
       "section": "important_limits",
-      "line_start": 1351,
-      "line_end": 1356,
-      "file_text_char_start": 94750,
-      "file_text_char_end": 95178,
+      "line_start": 1356,
+      "line_end": 1361,
+      "file_text_char_start": 95074,
+      "file_text_char_end": 95502,
       "text_sha256": "dbdc50623d7ca15669d136a4831a035f8205bbc0edb9528cb10d054b7d706deb",
       "signal_terms": [
         "boundary",
@@ -5136,10 +5151,10 @@
     {
       "bullet_ordinal": 175,
       "section": "important_limits",
-      "line_start": 1357,
-      "line_end": 1360,
-      "file_text_char_start": 95179,
-      "file_text_char_end": 95479,
+      "line_start": 1362,
+      "line_end": 1365,
+      "file_text_char_start": 95503,
+      "file_text_char_end": 95803,
       "text_sha256": "8b01566d962b7001a047941df18433f2d609d12bb6b803a51f4f15c0a4d29508",
       "signal_terms": [
         "boundary",
@@ -5162,10 +5177,10 @@
     {
       "bullet_ordinal": 176,
       "section": "important_limits",
-      "line_start": 1361,
-      "line_end": 1367,
-      "file_text_char_start": 95480,
-      "file_text_char_end": 95939,
+      "line_start": 1366,
+      "line_end": 1372,
+      "file_text_char_start": 95804,
+      "file_text_char_end": 96263,
       "text_sha256": "d781ff70e0d9740d64b2e1d5ddc424b41133a79206981c739d9fc819575c82e9",
       "signal_terms": [
         "boundary",
@@ -5189,10 +5204,10 @@
     {
       "bullet_ordinal": 177,
       "section": "important_limits",
-      "line_start": 1368,
-      "line_end": 1372,
-      "file_text_char_start": 95940,
-      "file_text_char_end": 96316,
+      "line_start": 1373,
+      "line_end": 1377,
+      "file_text_char_start": 96264,
+      "file_text_char_end": 96640,
       "text_sha256": "732a8cc88b44f6d2c42634a3ba77b0755f29ba9b822e4f2fdae05b216a3b849f",
       "signal_terms": [
         "boundary",
@@ -5215,10 +5230,10 @@
     {
       "bullet_ordinal": 178,
       "section": "important_limits",
-      "line_start": 1373,
-      "line_end": 1379,
-      "file_text_char_start": 96317,
-      "file_text_char_end": 96846,
+      "line_start": 1378,
+      "line_end": 1384,
+      "file_text_char_start": 96641,
+      "file_text_char_end": 97170,
       "text_sha256": "35b89459b10fe09980a96f749a7c6c9d6978b31fc2017286a112c582b5013b6f",
       "signal_terms": [
         "boundary",
@@ -5241,10 +5256,10 @@
     {
       "bullet_ordinal": 179,
       "section": "important_limits",
-      "line_start": 1380,
-      "line_end": 1383,
-      "file_text_char_start": 96847,
-      "file_text_char_end": 97093,
+      "line_start": 1385,
+      "line_end": 1388,
+      "file_text_char_start": 97171,
+      "file_text_char_end": 97417,
       "text_sha256": "ca3162ffe470661248d4fbaf8e7b9f3046e7d8b8bd3e3f08ba15777e7bcbf6dd",
       "signal_terms": [
         "boundary",
@@ -5267,10 +5282,10 @@
     {
       "bullet_ordinal": 180,
       "section": "important_limits",
-      "line_start": 1384,
-      "line_end": 1385,
-      "file_text_char_start": 97094,
-      "file_text_char_end": 97221,
+      "line_start": 1389,
+      "line_end": 1390,
+      "file_text_char_start": 97418,
+      "file_text_char_end": 97545,
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
       "signal_terms": [],
       "signal_term_count": 0,
@@ -5280,10 +5295,10 @@
     {
       "bullet_ordinal": 181,
       "section": "important_limits",
-      "line_start": 1386,
-      "line_end": 1388,
-      "file_text_char_start": 97222,
-      "file_text_char_end": 97441,
+      "line_start": 1391,
+      "line_end": 1393,
+      "file_text_char_start": 97546,
+      "file_text_char_end": 97765,
       "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
       "signal_terms": [
         "not",

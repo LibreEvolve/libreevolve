@@ -1283,6 +1283,7 @@ Important limits:
   `papers/roadmap_backend_scheduling_critique_boundary.json`,
   `papers/roadmap_backend_control_plane_readiness_boundary.json`,
   `papers/roadmap_async_resumable_runtime_boundary.json`,
+  `papers/roadmap_async_runtime_readiness_boundary.json`,
   `papers/roadmap_prompt_context_system_boundary.json`,
   `papers/roadmap_evaluation_cascade_boundary.json`,
   `papers/roadmap_candidate_workspace_fidelity_boundary.json`,
@@ -1422,6 +1423,12 @@ Important limits:
   migration restore engine, provider-output replay, plugin RNG replay, async
   budget accounting, external environment replay, end-to-end resumed trace
   proof, stale-readiness detector, or owner review signoff.
+- ROADMAP async runtime readiness evidence now records eight criteria for
+  async-state inventory, replay-resume acceptance, controller/sampler task
+  checkpoints, evaluator pending work and merge order, archive/migration
+  restore, provider/plugin replay, async budget/environment replay, and stale
+  readiness/owner signoff. This is not an implemented async runtime
+  control-plane gate or proof of async/resumable replay parity.
 - ROADMAP prompt/context-system evidence now records nine criteria for
   role-template compatibility, context-source selection, token section packing,
   stochastic prompt-format provenance, retention/replay policy, retrieval

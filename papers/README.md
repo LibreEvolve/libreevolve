@@ -3011,6 +3011,13 @@ Implemented:
   engine, provider-output replay, plugin RNG replay, async budget accounting,
   external environment replay, end-to-end resumed trace proof,
   stale-readiness detector, or owner review signoff.
+- `papers/roadmap_async_runtime_readiness_boundary.json`: ROADMAP async runtime
+  readiness sidecar with eight criteria for async-state inventory,
+  replay-resume acceptance, controller/sampler task checkpoints, evaluator
+  pending work and merge order, archive/migration restore, provider/plugin
+  replay, async budget/environment replay, and stale readiness/owner signoff.
+  It is not evidence that those async, replay, provider, plugin, or
+  environment-readiness mechanisms are implemented.
 - `papers/roadmap_prompt_context_system_boundary.json`: ROADMAP
   prompt/context-system sidecar with nine criteria for role-template
   compatibility, context-source selection, token section packing, stochastic

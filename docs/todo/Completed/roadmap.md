@@ -15534,3 +15534,23 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     cancellation, equal-budget comparator, first-class Gemini lane, async
     reviewer isolation, stale-readiness detector, and owner signoff remain
     active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP async runtime readiness matrix.
+  - Spec evidence: async/resumable-runtime claims require more than
+    synchronous topology reports, sample-worker fan-out, terminal restore
+    snapshots, and component replay sidecars.
+  - Status: `papers/roadmap_async_runtime_readiness_boundary.json` now records
+    eight readiness criteria for async-state inventory, replay-resume
+    acceptance, controller/sampler task checkpoints, evaluator pending work
+    and merge order, archive/migration restore, provider/plugin replay, async
+    budget/environment replay, and stale readiness/owner signoff. It links the
+    existing async/resumable-runtime boundary input, sidecar refs, active TODO
+    refs, validation-gate labels, readiness labels, and explicit
+    missing-evidence fields. The paper-manifest gate now requires and
+    validates the sidecar at the repo root.
+  - Remaining roadmap gap: the actual async-state inventory, replay-resume
+    checklist, controller queue checkpoints, LLM sampler task state, evaluator
+    pending-work state, deterministic async merge/admission order, ordered
+    migration restore engine, provider-output replay, plugin RNG replay, async
+    budget accounting, external environment replay, end-to-end resumed trace
+    proof, stale-readiness detector, and owner signoff remain active in
+    `docs/todo/roadmap.md`.

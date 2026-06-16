@@ -476,6 +476,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     budget resume, environment replay, and resumed-trace proof, with current
     scope, missing-readiness, sidecar-ref, active-TODO, validation-gate, and
     readiness labels.
+    The bounded `papers/roadmap_async_runtime_readiness_boundary.json`
+    sidecar now records eight readiness criteria for async-state inventory,
+    replay-resume acceptance, controller/sampler task checkpoints, evaluator
+    pending work and merge order, archive/migration restore, provider/plugin
+    replay, async budget/environment replay, and stale readiness/owner
+    signoff.
   - Current gap: there is no async-state inventory, replay-resume acceptance
     checklist, controller queue checkpoint, LLM sampler task state, evaluator
     pending-work state, deterministic async merge/admission order, ordered
@@ -483,15 +489,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     budget accounting, external environment replay, end-to-end resumed trace
     proof, stale-readiness detector, or owner signoff tying those runtime
     pieces together, so partial synchronous restore or sample-worker fan-out
-    could be mistaken for full async/resumable runtime parity.
+    could be mistaken for full async/resumable runtime parity. The sidecars are
+    bounded criteria/readiness maps, not an async runtime control-plane gate.
   - Required result: add ROADMAP async/resumable-runtime criteria that classify
     controller queues, LLM sampler tasks, evaluator workers, pending-work
     checkpoints, deterministic merge/admission order, archive/event replay,
     RNG and lineage replay, provider/plugin nondeterminism, budget accounting,
     environment replay, and resumed-trace proof status; map each criterion to
-    code/tests/runtime artifacts/sidecars/TODOs; and reject README, ROADMAP,
-    and paper wording that implies async or resumable parity before the full
-    checklist is satisfied.
+    code/tests/runtime artifacts/sidecars/TODOs; implement the missing
+    readiness fields recorded by the async runtime readiness sidecar; and
+    reject README, ROADMAP, and paper wording that implies async or resumable
+    parity before the full checklist is satisfied.
 
 - [ ] Add ROADMAP prompt/context-system readiness criteria.
   - Spec evidence: the `4. Prompt and context work` section defines the

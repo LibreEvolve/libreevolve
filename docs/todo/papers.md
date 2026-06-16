@@ -9552,3 +9552,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     points to a live source-specific open gap, and require coverage refreshes
     when the paper row's role, implementation status, benchmark qualifier, or
     source-span evidence changes.
+
+- [ ] Add freshness checks for generated paper-index sidecar summaries.
+  - Paper evidence: `papers/README.md` is the paper-facing index and also
+    summarizes generated sidecars such as `papers/status_claim_inventory.json`
+    for reviewers. Those summaries should not drift from the generated JSON
+    sidecars they describe.
+  - Current evidence: the current `papers/status_claim_inventory.json` records
+    `1054` row-specific TODO block records and `405` TODO content artifact
+    mention records. The `papers/README.md` sidecar summary still reports
+    `1048` and `404` for those same generated-inventory fields.
+  - Current gap: `validate_paper_manifest()` verifies the sidecar JSON and
+    many `papers/README.md` structures, but there is no freshness check tying
+    generated count summaries in the paper index back to the current generated
+    sidecar values. A reviewer can therefore see stale count evidence even
+    while the sidecar and manifest gate are otherwise valid.
+  - Required result: add a generated-summary freshness validator for
+    `papers/README.md` that maps sidecar-summary count claims to the current
+    JSON fields, updates paper-index prose when regenerated sidecars change,
+    and fails when count summaries drift from their source sidecars.

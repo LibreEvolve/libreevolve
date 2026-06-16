@@ -79,6 +79,38 @@ sidecars, tests, and active TODOs.
     sidecar/TODO links, claim status, freshness checks, and CI validation
     before treating the code audit as exhaustive.
 
+- [ ] Classify tracked legacy implementation-plan surfaces.
+  - Spec evidence: an AlphaEvolve-facing repository audit should make clear
+    which tracked files are authoritative implementation evidence, active
+    plans, historical scaffolds, or deliberately excluded archive material.
+    Otherwise stale planning files can look like current design or completed
+    implementation scope even when the package, CLI, docs, and tests have
+    moved on.
+  - Current evidence: `git ls-files` includes
+    `old/superpowers/plans/2026-03-17-alphaevolve.md`. That file is titled
+    `LibreEvolve Implementation Plan`, uses obsolete `alphaevolve/*` package
+    paths, includes checkbox implementation steps and commit messages, and
+    describes no-op or stub plugin behavior such as a pluggable DeepEvolve
+    search stub. The README documentation map points readers to `docs/`,
+    `ROADMAP.md`, `papers/README.md`, and `docs/todo/`, but does not classify
+    `old/` as archival or non-authoritative. The GitHub workflow path filters
+    run docs/tests for `docs/**`, `libreevolve/**`, `papers/**`, README,
+    ROADMAP, package metadata, and tests, but not `old/**`.
+  - Current gap: there is no machine-readable inventory or validation rule
+    that classifies tracked legacy planning files under `old/` as archival,
+    non-authoritative, migrated, or intentionally retained. A future change to
+    that plan, or a reader following its obsolete `alphaevolve/*` file map,
+    could bypass documentation truthfulness checks and confuse historical
+    scaffold text with current LibreEvolve behavior or AlphaEvolve-alignment
+    evidence.
+  - Required result: add a tracked legacy-surface inventory and validation
+    gate that lists any committed `old/**` planning artifacts, records whether
+    each is archival/non-authoritative or still active, checks README/ROADMAP
+    routing for that status, and either includes policy-critical legacy
+    surfaces in CI path filters or explicitly excludes them with a documented
+    rationale. Remove or migrate stale implementation-plan text if it is not
+    meant to remain a repository evidence surface.
+
 ## Candidate Workspace Fidelity
 
 - [ ] Extend the Python-primary candidate-language policy to real language and

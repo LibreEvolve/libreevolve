@@ -580,11 +580,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 7,
-              "file_text_char_start": 23066,
-              "file_text_char_end": 28392,
-              "line_start": 350,
-              "line_end": 431,
+              "block_ordinal": 8,
+              "file_text_char_start": 25209,
+              "file_text_char_end": 30535,
+              "line_start": 382,
+              "line_end": 463,
               "block_sha256": "181c8ae7cd39d7b8b5f21f363761f080d30c8f021d7d4d362dbe73c79dac4081",
               "matched_source_tokens": [
                 "2506.13131"
@@ -10817,11 +10817,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 206,
-              "file_text_char_start": 559521,
-              "file_text_char_end": 563316,
-              "line_start": 8237,
-              "line_end": 8292,
+              "block_ordinal": 207,
+              "file_text_char_start": 561664,
+              "file_text_char_end": 565459,
+              "line_start": 8269,
+              "line_end": 8324,
               "block_sha256": "f04065878b45d11444c1b6d9a09c37fd744ae840fc141d8bcfd68f50ba586931",
               "matched_source_tokens": [
                 "1504.04909"
@@ -10851,10 +10851,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "1504.04909"
@@ -11471,11 +11471,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 206,
-                "file_text_char_start": 559521,
-                "file_text_char_end": 563316,
-                "line_start": 8237,
-                "line_end": 8292,
+                "block_ordinal": 207,
+                "file_text_char_start": 561664,
+                "file_text_char_end": 565459,
+                "line_start": 8269,
+                "line_end": 8324,
                 "block_sha256": "f04065878b45d11444c1b6d9a09c37fd744ae840fc141d8bcfd68f50ba586931",
                 "matched_source_tokens": [
                   "1504.04909"
@@ -11496,10 +11496,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "1504.04909"
@@ -11844,11 +11844,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 206,
-                "file_text_char_start": 559521,
-                "file_text_char_end": 563316,
-                "line_start": 8237,
-                "line_end": 8292,
+                "block_ordinal": 207,
+                "file_text_char_start": 561664,
+                "file_text_char_end": 565459,
+                "line_start": 8269,
+                "line_end": 8324,
                 "block_sha256": "f04065878b45d11444c1b6d9a09c37fd744ae840fc141d8bcfd68f50ba586931",
                 "matched_source_tokens": [
                   "1504.04909"
@@ -11874,10 +11874,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "1504.04909"
@@ -12252,11 +12252,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 198,
-              "file_text_char_start": 530272,
-              "file_text_char_end": 533677,
-              "line_start": 7816,
-              "line_end": 7866,
+              "block_ordinal": 199,
+              "file_text_char_start": 532415,
+              "file_text_char_end": 535820,
+              "line_start": 7848,
+              "line_end": 7898,
               "block_sha256": "88f109b7967df7e718b7b6b9817a65773e852a62d6042cb0eda7e435908422c9",
               "matched_source_tokens": [
                 "auer-cesa-bianchi-fischer-2002"
@@ -12281,10 +12281,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "auer-cesa-bianchi-fischer-2002"
@@ -12788,11 +12788,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 198,
-                "file_text_char_start": 530272,
-                "file_text_char_end": 533677,
-                "line_start": 7816,
-                "line_end": 7866,
+                "block_ordinal": 199,
+                "file_text_char_start": 532415,
+                "file_text_char_end": 535820,
+                "line_start": 7848,
+                "line_end": 7898,
                 "block_sha256": "88f109b7967df7e718b7b6b9817a65773e852a62d6042cb0eda7e435908422c9",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002"
@@ -12813,10 +12813,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002"
@@ -13161,11 +13161,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 198,
-                "file_text_char_start": 530272,
-                "file_text_char_end": 533677,
-                "line_start": 7816,
-                "line_end": 7866,
+                "block_ordinal": 199,
+                "file_text_char_start": 532415,
+                "file_text_char_end": 535820,
+                "line_start": 7848,
+                "line_end": 7898,
                 "block_sha256": "88f109b7967df7e718b7b6b9817a65773e852a62d6042cb0eda7e435908422c9",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002"
@@ -13186,10 +13186,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "auer-cesa-bianchi-fischer-2002"
@@ -13435,11 +13435,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 199,
-              "file_text_char_start": 533677,
-              "file_text_char_end": 537298,
-              "line_start": 7866,
-              "line_end": 7918,
+              "block_ordinal": 200,
+              "file_text_char_start": 535820,
+              "file_text_char_end": 539441,
+              "line_start": 7898,
+              "line_end": 7950,
               "block_sha256": "a075de6db0458b24f97f716fd6f0f316832873ea7e71dd3c718edc0dea03f323",
               "matched_source_tokens": [
                 "2511.17592"
@@ -13463,10 +13463,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2511.17592"
@@ -14282,11 +14282,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 199,
-                "file_text_char_start": 533677,
-                "file_text_char_end": 537298,
-                "line_start": 7866,
-                "line_end": 7918,
+                "block_ordinal": 200,
+                "file_text_char_start": 535820,
+                "file_text_char_end": 539441,
+                "line_start": 7898,
+                "line_end": 7950,
                 "block_sha256": "a075de6db0458b24f97f716fd6f0f316832873ea7e71dd3c718edc0dea03f323",
                 "matched_source_tokens": [
                   "2511.17592"
@@ -14312,10 +14312,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2511.17592"
@@ -14562,11 +14562,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 200,
-              "file_text_char_start": 537298,
-              "file_text_char_end": 541263,
-              "line_start": 7918,
-              "line_end": 7975,
+              "block_ordinal": 201,
+              "file_text_char_start": 539441,
+              "file_text_char_end": 543406,
+              "line_start": 7950,
+              "line_end": 8007,
               "block_sha256": "1765ebb7e04d574c6283b0709c4bf7458e63edc04225b43aee06c2f3f6d505d0",
               "matched_source_tokens": [
                 "2510.14150"
@@ -14585,10 +14585,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2510.14150"
@@ -15323,11 +15323,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 200,
-                "file_text_char_start": 537298,
-                "file_text_char_end": 541263,
-                "line_start": 7918,
-                "line_end": 7975,
+                "block_ordinal": 201,
+                "file_text_char_start": 539441,
+                "file_text_char_end": 543406,
+                "line_start": 7950,
+                "line_end": 8007,
                 "block_sha256": "1765ebb7e04d574c6283b0709c4bf7458e63edc04225b43aee06c2f3f6d505d0",
                 "matched_source_tokens": [
                   "2510.14150"
@@ -15348,10 +15348,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2510.14150"
@@ -15612,11 +15612,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 201,
-              "file_text_char_start": 541263,
-              "file_text_char_end": 544648,
-              "line_start": 7975,
-              "line_end": 8023,
+              "block_ordinal": 202,
+              "file_text_char_start": 543406,
+              "file_text_char_end": 546791,
+              "line_start": 8007,
+              "line_end": 8055,
               "block_sha256": "e5a8bcebbb4c3ce3f50033463ad86d19300ff3dc1391687e70e0126699d1b984",
               "matched_source_tokens": [
                 "2511.23473"
@@ -15635,10 +15635,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2511.23473"
@@ -16646,11 +16646,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 201,
-                "file_text_char_start": 541263,
-                "file_text_char_end": 544648,
-                "line_start": 7975,
-                "line_end": 8023,
+                "block_ordinal": 202,
+                "file_text_char_start": 543406,
+                "file_text_char_end": 546791,
+                "line_start": 8007,
+                "line_end": 8055,
                 "block_sha256": "e5a8bcebbb4c3ce3f50033463ad86d19300ff3dc1391687e70e0126699d1b984",
                 "matched_source_tokens": [
                   "2511.23473"
@@ -16671,10 +16671,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2511.23473"
@@ -16935,11 +16935,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 202,
-              "file_text_char_start": 544648,
-              "file_text_char_end": 548114,
-              "line_start": 8023,
-              "line_end": 8073,
+              "block_ordinal": 203,
+              "file_text_char_start": 546791,
+              "file_text_char_end": 550257,
+              "line_start": 8055,
+              "line_end": 8105,
               "block_sha256": "bbfcff4dd71a750ca6432a00538311346276224398ea3b97e27990a7c9f2e066",
               "matched_source_tokens": [
                 "2602.10233"
@@ -16958,10 +16958,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2602.10233"
@@ -17807,11 +17807,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 202,
-                "file_text_char_start": 544648,
-                "file_text_char_end": 548114,
-                "line_start": 8023,
-                "line_end": 8073,
+                "block_ordinal": 203,
+                "file_text_char_start": 546791,
+                "file_text_char_end": 550257,
+                "line_start": 8055,
+                "line_end": 8105,
                 "block_sha256": "bbfcff4dd71a750ca6432a00538311346276224398ea3b97e27990a7c9f2e066",
                 "matched_source_tokens": [
                   "2602.10233"
@@ -17832,10 +17832,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2602.10233"
@@ -18077,11 +18077,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 203,
-              "file_text_char_start": 548114,
-              "file_text_char_end": 551878,
-              "line_start": 8073,
-              "line_end": 8126,
+              "block_ordinal": 204,
+              "file_text_char_start": 550257,
+              "file_text_char_end": 554021,
+              "line_start": 8105,
+              "line_end": 8158,
               "block_sha256": "4c56ed644bb1b1e3b95976186fcf38520ac95f235524933558eada564fd211da",
               "matched_source_tokens": [
                 "2602.15951"
@@ -18100,10 +18100,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2602.15951"
@@ -18908,11 +18908,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 203,
-                "file_text_char_start": 548114,
-                "file_text_char_end": 551878,
-                "line_start": 8073,
-                "line_end": 8126,
+                "block_ordinal": 204,
+                "file_text_char_start": 550257,
+                "file_text_char_end": 554021,
+                "line_start": 8105,
+                "line_end": 8158,
                 "block_sha256": "4c56ed644bb1b1e3b95976186fcf38520ac95f235524933558eada564fd211da",
                 "matched_source_tokens": [
                   "2602.15951"
@@ -18933,10 +18933,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2602.15951"
@@ -19197,11 +19197,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 204,
-              "file_text_char_start": 551878,
-              "file_text_char_end": 555651,
-              "line_start": 8126,
-              "line_end": 8181,
+              "block_ordinal": 205,
+              "file_text_char_start": 554021,
+              "file_text_char_end": 557794,
+              "line_start": 8158,
+              "line_end": 8213,
               "block_sha256": "4cfd9c632d378d341a99e6c74423fc369b77bda48d91cfd7c71d52ace3158891",
               "matched_source_tokens": [
                 "2603.14575"
@@ -19226,10 +19226,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2603.14575"
@@ -19731,11 +19731,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 204,
-                "file_text_char_start": 551878,
-                "file_text_char_end": 555651,
-                "line_start": 8126,
-                "line_end": 8181,
+                "block_ordinal": 205,
+                "file_text_char_start": 554021,
+                "file_text_char_end": 557794,
+                "line_start": 8158,
+                "line_end": 8213,
                 "block_sha256": "4cfd9c632d378d341a99e6c74423fc369b77bda48d91cfd7c71d52ace3158891",
                 "matched_source_tokens": [
                   "2603.14575"
@@ -19756,10 +19756,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2603.14575"
@@ -20185,11 +20185,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 204,
-                "file_text_char_start": 551878,
-                "file_text_char_end": 555651,
-                "line_start": 8126,
-                "line_end": 8181,
+                "block_ordinal": 205,
+                "file_text_char_start": 554021,
+                "file_text_char_end": 557794,
+                "line_start": 8158,
+                "line_end": 8213,
                 "block_sha256": "4cfd9c632d378d341a99e6c74423fc369b77bda48d91cfd7c71d52ace3158891",
                 "matched_source_tokens": [
                   "2603.14575"
@@ -20210,10 +20210,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2603.14575"
@@ -20474,11 +20474,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 205,
-              "file_text_char_start": 555651,
-              "file_text_char_end": 559521,
-              "line_start": 8181,
-              "line_end": 8237,
+              "block_ordinal": 206,
+              "file_text_char_start": 557794,
+              "file_text_char_end": 561664,
+              "line_start": 8213,
+              "line_end": 8269,
               "block_sha256": "b3051fd23468f261259d75e53ad68501df6cfa8c95d3f3e01454b54d1232da49",
               "matched_source_tokens": [
                 "2510.06056"
@@ -20503,10 +20503,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2510.06056"
@@ -21024,11 +21024,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 205,
-                "file_text_char_start": 555651,
-                "file_text_char_end": 559521,
-                "line_start": 8181,
-                "line_end": 8237,
+                "block_ordinal": 206,
+                "file_text_char_start": 557794,
+                "file_text_char_end": 561664,
+                "line_start": 8213,
+                "line_end": 8269,
                 "block_sha256": "b3051fd23468f261259d75e53ad68501df6cfa8c95d3f3e01454b54d1232da49",
                 "matched_source_tokens": [
                   "2510.06056"
@@ -21049,10 +21049,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2510.06056"
@@ -21478,11 +21478,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 205,
-                "file_text_char_start": 555651,
-                "file_text_char_end": 559521,
-                "line_start": 8181,
-                "line_end": 8237,
+                "block_ordinal": 206,
+                "file_text_char_start": 557794,
+                "file_text_char_end": 561664,
+                "line_start": 8213,
+                "line_end": 8269,
                 "block_sha256": "b3051fd23468f261259d75e53ad68501df6cfa8c95d3f3e01454b54d1232da49",
                 "matched_source_tokens": [
                   "2510.06056"
@@ -21503,10 +21503,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2510.06056"
@@ -21748,11 +21748,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 189,
-              "file_text_char_start": 497318,
-              "file_text_char_end": 499879,
-              "line_start": 7351,
-              "line_end": 7387,
+              "block_ordinal": 190,
+              "file_text_char_start": 499461,
+              "file_text_char_end": 502022,
+              "line_start": 7383,
+              "line_end": 7419,
               "block_sha256": "4197941a9575a602ce655392ff91a4805259deffed8465cb719456f9d0a07781",
               "matched_source_tokens": [
                 "2601.21096"
@@ -21771,10 +21771,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2601.21096"
@@ -22562,11 +22562,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 189,
-                "file_text_char_start": 497318,
-                "file_text_char_end": 499879,
-                "line_start": 7351,
-                "line_end": 7387,
+                "block_ordinal": 190,
+                "file_text_char_start": 499461,
+                "file_text_char_end": 502022,
+                "line_start": 7383,
+                "line_end": 7419,
                 "block_sha256": "4197941a9575a602ce655392ff91a4805259deffed8465cb719456f9d0a07781",
                 "matched_source_tokens": [
                   "2601.21096"
@@ -22587,10 +22587,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2601.21096"
@@ -22823,11 +22823,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 157,
-              "file_text_char_start": 414957,
-              "file_text_char_end": 416775,
-              "line_start": 6132,
-              "line_end": 6159,
+              "block_ordinal": 158,
+              "file_text_char_start": 417100,
+              "file_text_char_end": 418918,
+              "line_start": 6164,
+              "line_end": 6191,
               "block_sha256": "257cc7a072817b78c7711e81730e6fa18fb0d11b8cb47c41dc9e41c28c09b164",
               "matched_source_tokens": [
                 "2605.14718",
@@ -22849,10 +22849,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.14718",
@@ -23439,11 +23439,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 157,
-                "file_text_char_start": 414957,
-                "file_text_char_end": 416775,
-                "line_start": 6132,
-                "line_end": 6159,
+                "block_ordinal": 158,
+                "file_text_char_start": 417100,
+                "file_text_char_end": 418918,
+                "line_start": 6164,
+                "line_end": 6191,
                 "block_sha256": "257cc7a072817b78c7711e81730e6fa18fb0d11b8cb47c41dc9e41c28c09b164",
                 "matched_source_tokens": [
                   "2605.14718",
@@ -23467,10 +23467,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.14718",
@@ -23712,11 +23712,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 158,
-              "file_text_char_start": 416775,
-              "file_text_char_end": 418709,
-              "line_start": 6159,
-              "line_end": 6187,
+              "block_ordinal": 159,
+              "file_text_char_start": 418918,
+              "file_text_char_end": 420852,
+              "line_start": 6191,
+              "line_end": 6219,
               "block_sha256": "b98dc2293ae15891fec36ecdb69af20063a9706b598166a0c2bcda71c1e640cd",
               "matched_source_tokens": [
                 "2605.05921",
@@ -23738,10 +23738,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.05921",
@@ -24267,11 +24267,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 158,
-                "file_text_char_start": 416775,
-                "file_text_char_end": 418709,
-                "line_start": 6159,
-                "line_end": 6187,
+                "block_ordinal": 159,
+                "file_text_char_start": 418918,
+                "file_text_char_end": 420852,
+                "line_start": 6191,
+                "line_end": 6219,
                 "block_sha256": "b98dc2293ae15891fec36ecdb69af20063a9706b598166a0c2bcda71c1e640cd",
                 "matched_source_tokens": [
                   "2605.05921",
@@ -24295,10 +24295,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.05921",
@@ -24540,11 +24540,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 159,
-              "file_text_char_start": 418709,
-              "file_text_char_end": 420714,
-              "line_start": 6187,
-              "line_end": 6219,
+              "block_ordinal": 160,
+              "file_text_char_start": 420852,
+              "file_text_char_end": 422857,
+              "line_start": 6219,
+              "line_end": 6251,
               "block_sha256": "725fa5ce80875a99af3cb639a76c72d0ed92dc26234e1e26cced5b3273a9a0db",
               "matched_source_tokens": [
                 "2605.01794",
@@ -24566,10 +24566,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.01794",
@@ -25095,11 +25095,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 159,
-                "file_text_char_start": 418709,
-                "file_text_char_end": 420714,
-                "line_start": 6187,
-                "line_end": 6219,
+                "block_ordinal": 160,
+                "file_text_char_start": 420852,
+                "file_text_char_end": 422857,
+                "line_start": 6219,
+                "line_end": 6251,
                 "block_sha256": "725fa5ce80875a99af3cb639a76c72d0ed92dc26234e1e26cced5b3273a9a0db",
                 "matched_source_tokens": [
                   "2605.01794",
@@ -25123,10 +25123,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.01794",
@@ -25368,11 +25368,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 160,
-              "file_text_char_start": 420714,
-              "file_text_char_end": 422687,
-              "line_start": 6219,
-              "line_end": 6249,
+              "block_ordinal": 161,
+              "file_text_char_start": 422857,
+              "file_text_char_end": 424830,
+              "line_start": 6251,
+              "line_end": 6281,
               "block_sha256": "4518d14505d55bd63682db0d569ea11a6616bc57351a403cc21aa4def48b0431",
               "matched_source_tokens": [
                 "2602.23413",
@@ -25394,10 +25394,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2602.23413",
@@ -25923,11 +25923,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 160,
-                "file_text_char_start": 420714,
-                "file_text_char_end": 422687,
-                "line_start": 6219,
-                "line_end": 6249,
+                "block_ordinal": 161,
+                "file_text_char_start": 422857,
+                "file_text_char_end": 424830,
+                "line_start": 6251,
+                "line_end": 6281,
                 "block_sha256": "4518d14505d55bd63682db0d569ea11a6616bc57351a403cc21aa4def48b0431",
                 "matched_source_tokens": [
                   "2602.23413",
@@ -25951,10 +25951,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2602.23413",
@@ -26196,11 +26196,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 161,
-              "file_text_char_start": 422687,
-              "file_text_char_end": 424961,
-              "line_start": 6249,
-              "line_end": 6283,
+              "block_ordinal": 162,
+              "file_text_char_start": 424830,
+              "file_text_char_end": 427104,
+              "line_start": 6281,
+              "line_end": 6315,
               "block_sha256": "67577dbb1ab31f8170e4c3bed7b1356dc67546cd30dd37adc5394b36da53e93f",
               "matched_source_tokens": [
                 "2602.02919",
@@ -26222,10 +26222,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2602.02919",
@@ -26751,11 +26751,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 161,
-                "file_text_char_start": 422687,
-                "file_text_char_end": 424961,
-                "line_start": 6249,
-                "line_end": 6283,
+                "block_ordinal": 162,
+                "file_text_char_start": 424830,
+                "file_text_char_end": 427104,
+                "line_start": 6281,
+                "line_end": 6315,
                 "block_sha256": "67577dbb1ab31f8170e4c3bed7b1356dc67546cd30dd37adc5394b36da53e93f",
                 "matched_source_tokens": [
                   "2602.02919",
@@ -26779,10 +26779,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2602.02919",
@@ -27024,11 +27024,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 162,
-              "file_text_char_start": 424961,
-              "file_text_char_end": 427334,
-              "line_start": 6283,
-              "line_end": 6319,
+              "block_ordinal": 163,
+              "file_text_char_start": 427104,
+              "file_text_char_end": 429477,
+              "line_start": 6315,
+              "line_end": 6351,
               "block_sha256": "d01effe60256518851f052fbb26238e7fb56026824c5370050673c1eb8631393",
               "matched_source_tokens": [
                 "2606.06473",
@@ -27050,10 +27050,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2606.06473",
@@ -27579,11 +27579,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 162,
-                "file_text_char_start": 424961,
-                "file_text_char_end": 427334,
-                "line_start": 6283,
-                "line_end": 6319,
+                "block_ordinal": 163,
+                "file_text_char_start": 427104,
+                "file_text_char_end": 429477,
+                "line_start": 6315,
+                "line_end": 6351,
                 "block_sha256": "d01effe60256518851f052fbb26238e7fb56026824c5370050673c1eb8631393",
                 "matched_source_tokens": [
                   "2606.06473",
@@ -27607,10 +27607,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2606.06473",
@@ -27852,11 +27852,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 163,
-              "file_text_char_start": 427334,
-              "file_text_char_end": 429668,
-              "line_start": 6319,
-              "line_end": 6354,
+              "block_ordinal": 164,
+              "file_text_char_start": 429477,
+              "file_text_char_end": 431811,
+              "line_start": 6351,
+              "line_end": 6386,
               "block_sha256": "8a2ce7c3e780ccc92dbfa6f2eda1f9181eba433840411fbed385f3c303dac41d",
               "matched_source_tokens": [
                 "2605.09764",
@@ -27878,10 +27878,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.09764",
@@ -28407,11 +28407,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 163,
-                "file_text_char_start": 427334,
-                "file_text_char_end": 429668,
-                "line_start": 6319,
-                "line_end": 6354,
+                "block_ordinal": 164,
+                "file_text_char_start": 429477,
+                "file_text_char_end": 431811,
+                "line_start": 6351,
+                "line_end": 6386,
                 "block_sha256": "8a2ce7c3e780ccc92dbfa6f2eda1f9181eba433840411fbed385f3c303dac41d",
                 "matched_source_tokens": [
                   "2605.09764",
@@ -28435,10 +28435,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.09764",
@@ -28680,11 +28680,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 164,
-              "file_text_char_start": 429668,
-              "file_text_char_end": 431985,
-              "line_start": 6354,
-              "line_end": 6389,
+              "block_ordinal": 165,
+              "file_text_char_start": 431811,
+              "file_text_char_end": 434128,
+              "line_start": 6386,
+              "line_end": 6421,
               "block_sha256": "23d9f3442579df4a013ab6677fc8e60be0e4c36774ee34106f0e2487895a725f",
               "matched_source_tokens": [
                 "2601.10657",
@@ -28706,10 +28706,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2601.10657",
@@ -29235,11 +29235,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 164,
-                "file_text_char_start": 429668,
-                "file_text_char_end": 431985,
-                "line_start": 6354,
-                "line_end": 6389,
+                "block_ordinal": 165,
+                "file_text_char_start": 431811,
+                "file_text_char_end": 434128,
+                "line_start": 6386,
+                "line_end": 6421,
                 "block_sha256": "23d9f3442579df4a013ab6677fc8e60be0e4c36774ee34106f0e2487895a725f",
                 "matched_source_tokens": [
                   "2601.10657",
@@ -29263,10 +29263,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2601.10657",
@@ -29508,11 +29508,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 165,
-              "file_text_char_start": 431985,
-              "file_text_char_end": 434354,
-              "line_start": 6389,
-              "line_end": 6424,
+              "block_ordinal": 166,
+              "file_text_char_start": 434128,
+              "file_text_char_end": 436497,
+              "line_start": 6421,
+              "line_end": 6456,
               "block_sha256": "8a1995a2699c0cb484be6a8f0e8526ff3063a01a09634aca01205933e47862bb",
               "matched_source_tokens": [
                 "2605.08520",
@@ -29534,10 +29534,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.08520",
@@ -30077,11 +30077,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 165,
-                "file_text_char_start": 431985,
-                "file_text_char_end": 434354,
-                "line_start": 6389,
-                "line_end": 6424,
+                "block_ordinal": 166,
+                "file_text_char_start": 434128,
+                "file_text_char_end": 436497,
+                "line_start": 6421,
+                "line_end": 6456,
                 "block_sha256": "8a1995a2699c0cb484be6a8f0e8526ff3063a01a09634aca01205933e47862bb",
                 "matched_source_tokens": [
                   "2605.08520",
@@ -30105,10 +30105,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.08520",
@@ -30350,11 +30350,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 166,
-              "file_text_char_start": 434354,
-              "file_text_char_end": 436738,
-              "line_start": 6424,
-              "line_end": 6461,
+              "block_ordinal": 167,
+              "file_text_char_start": 436497,
+              "file_text_char_end": 438881,
+              "line_start": 6456,
+              "line_end": 6493,
               "block_sha256": "0fad1431bdc527dd58ef9ac9c41a64935e065500c047f64fd5990b2c9375872c",
               "matched_source_tokens": [
                 "2605.20086",
@@ -30376,10 +30376,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.20086",
@@ -30905,11 +30905,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 166,
-                "file_text_char_start": 434354,
-                "file_text_char_end": 436738,
-                "line_start": 6424,
-                "line_end": 6461,
+                "block_ordinal": 167,
+                "file_text_char_start": 436497,
+                "file_text_char_end": 438881,
+                "line_start": 6456,
+                "line_end": 6493,
                 "block_sha256": "0fad1431bdc527dd58ef9ac9c41a64935e065500c047f64fd5990b2c9375872c",
                 "matched_source_tokens": [
                   "2605.20086",
@@ -30933,10 +30933,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.20086",
@@ -31178,11 +31178,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 167,
-              "file_text_char_start": 436738,
-              "file_text_char_end": 438855,
-              "line_start": 6461,
-              "line_end": 6493,
+              "block_ordinal": 168,
+              "file_text_char_start": 438881,
+              "file_text_char_end": 440998,
+              "line_start": 6493,
+              "line_end": 6525,
               "block_sha256": "e0aa392978afdaef7897db569c7a7409f6196cbca624a82ee2ad80a2967d598d",
               "matched_source_tokens": [
                 "2605.01120",
@@ -31204,10 +31204,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.01120",
@@ -31825,11 +31825,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 167,
-                "file_text_char_start": 436738,
-                "file_text_char_end": 438855,
-                "line_start": 6461,
-                "line_end": 6493,
+                "block_ordinal": 168,
+                "file_text_char_start": 438881,
+                "file_text_char_end": 440998,
+                "line_start": 6493,
+                "line_end": 6525,
                 "block_sha256": "e0aa392978afdaef7897db569c7a7409f6196cbca624a82ee2ad80a2967d598d",
                 "matched_source_tokens": [
                   "2605.01120",
@@ -31853,10 +31853,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.01120",
@@ -32098,11 +32098,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 168,
-              "file_text_char_start": 438855,
-              "file_text_char_end": 441490,
-              "line_start": 6493,
-              "line_end": 6532,
+              "block_ordinal": 169,
+              "file_text_char_start": 440998,
+              "file_text_char_end": 443633,
+              "line_start": 6525,
+              "line_end": 6564,
               "block_sha256": "f53923c3b2442331ffbe385cfe65d761978ecc1ac975168d02e138f18a6c486e",
               "matched_source_tokens": [
                 "2604.01658",
@@ -32124,10 +32124,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2604.01658",
@@ -32653,11 +32653,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 168,
-                "file_text_char_start": 438855,
-                "file_text_char_end": 441490,
-                "line_start": 6493,
-                "line_end": 6532,
+                "block_ordinal": 169,
+                "file_text_char_start": 440998,
+                "file_text_char_end": 443633,
+                "line_start": 6525,
+                "line_end": 6564,
                 "block_sha256": "f53923c3b2442331ffbe385cfe65d761978ecc1ac975168d02e138f18a6c486e",
                 "matched_source_tokens": [
                   "2604.01658",
@@ -32681,10 +32681,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2604.01658",
@@ -32926,11 +32926,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 169,
-              "file_text_char_start": 441490,
-              "file_text_char_end": 443965,
-              "line_start": 6532,
-              "line_end": 6568,
+              "block_ordinal": 170,
+              "file_text_char_start": 443633,
+              "file_text_char_end": 446108,
+              "line_start": 6564,
+              "line_end": 6600,
               "block_sha256": "7afc41cd40f4146afd40b32afb3001c758746b04fec55dd90a364fe58d824b44",
               "matched_source_tokens": [
                 "2605.13821",
@@ -32952,10 +32952,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.13821",
@@ -33481,11 +33481,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 169,
-                "file_text_char_start": 441490,
-                "file_text_char_end": 443965,
-                "line_start": 6532,
-                "line_end": 6568,
+                "block_ordinal": 170,
+                "file_text_char_start": 443633,
+                "file_text_char_end": 446108,
+                "line_start": 6564,
+                "line_end": 6600,
                 "block_sha256": "7afc41cd40f4146afd40b32afb3001c758746b04fec55dd90a364fe58d824b44",
                 "matched_source_tokens": [
                   "2605.13821",
@@ -33509,10 +33509,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.13821",
@@ -33754,11 +33754,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 170,
-              "file_text_char_start": 443965,
-              "file_text_char_end": 446425,
-              "line_start": 6568,
-              "line_end": 6603,
+              "block_ordinal": 171,
+              "file_text_char_start": 446108,
+              "file_text_char_end": 448568,
+              "line_start": 6600,
+              "line_end": 6635,
               "block_sha256": "f75fd8f92427380eefb17427784489508f0793d108a5e87c880a2658b4d612e2",
               "matched_source_tokens": [
                 "2605.09959",
@@ -33780,10 +33780,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.09959",
@@ -34309,11 +34309,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 170,
-                "file_text_char_start": 443965,
-                "file_text_char_end": 446425,
-                "line_start": 6568,
-                "line_end": 6603,
+                "block_ordinal": 171,
+                "file_text_char_start": 446108,
+                "file_text_char_end": 448568,
+                "line_start": 6600,
+                "line_end": 6635,
                 "block_sha256": "f75fd8f92427380eefb17427784489508f0793d108a5e87c880a2658b4d612e2",
                 "matched_source_tokens": [
                   "2605.09959",
@@ -34337,10 +34337,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.09959",
@@ -34582,11 +34582,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 171,
-              "file_text_char_start": 446425,
-              "file_text_char_end": 449136,
-              "line_start": 6603,
-              "line_end": 6643,
+              "block_ordinal": 172,
+              "file_text_char_start": 448568,
+              "file_text_char_end": 451279,
+              "line_start": 6635,
+              "line_end": 6675,
               "block_sha256": "d84fa9da4cc54d5e8ce6a979ad30effe0b1184d36e62cf10aef079eed12a8be8",
               "matched_source_tokens": [
                 "2605.21605",
@@ -34608,10 +34608,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.21605",
@@ -35137,11 +35137,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 171,
-                "file_text_char_start": 446425,
-                "file_text_char_end": 449136,
-                "line_start": 6603,
-                "line_end": 6643,
+                "block_ordinal": 172,
+                "file_text_char_start": 448568,
+                "file_text_char_end": 451279,
+                "line_start": 6635,
+                "line_end": 6675,
                 "block_sha256": "d84fa9da4cc54d5e8ce6a979ad30effe0b1184d36e62cf10aef079eed12a8be8",
                 "matched_source_tokens": [
                   "2605.21605",
@@ -35165,10 +35165,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.21605",
@@ -35410,11 +35410,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 172,
-              "file_text_char_start": 449136,
-              "file_text_char_end": 451563,
-              "line_start": 6643,
-              "line_end": 6679,
+              "block_ordinal": 173,
+              "file_text_char_start": 451279,
+              "file_text_char_end": 453706,
+              "line_start": 6675,
+              "line_end": 6711,
               "block_sha256": "613a953f3136a754861daa6f78860c0c5fdd6c24bbea584b1bd38e5b38a90ef2",
               "matched_source_tokens": [
                 "2605.29847",
@@ -35436,10 +35436,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.29847",
@@ -35965,11 +35965,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 172,
-                "file_text_char_start": 449136,
-                "file_text_char_end": 451563,
-                "line_start": 6643,
-                "line_end": 6679,
+                "block_ordinal": 173,
+                "file_text_char_start": 451279,
+                "file_text_char_end": 453706,
+                "line_start": 6675,
+                "line_end": 6711,
                 "block_sha256": "613a953f3136a754861daa6f78860c0c5fdd6c24bbea584b1bd38e5b38a90ef2",
                 "matched_source_tokens": [
                   "2605.29847",
@@ -35993,10 +35993,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.29847",
@@ -36238,11 +36238,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 173,
-              "file_text_char_start": 451563,
-              "file_text_char_end": 454032,
-              "line_start": 6679,
-              "line_end": 6715,
+              "block_ordinal": 174,
+              "file_text_char_start": 453706,
+              "file_text_char_end": 456175,
+              "line_start": 6711,
+              "line_end": 6747,
               "block_sha256": "0cbdd39b634add0673b17baab12a09b63569d6989464c09c6c777ef3ad399a57",
               "matched_source_tokens": [
                 "2605.29293",
@@ -36264,10 +36264,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.29293",
@@ -36793,11 +36793,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 173,
-                "file_text_char_start": 451563,
-                "file_text_char_end": 454032,
-                "line_start": 6679,
-                "line_end": 6715,
+                "block_ordinal": 174,
+                "file_text_char_start": 453706,
+                "file_text_char_end": 456175,
+                "line_start": 6711,
+                "line_end": 6747,
                 "block_sha256": "0cbdd39b634add0673b17baab12a09b63569d6989464c09c6c777ef3ad399a57",
                 "matched_source_tokens": [
                   "2605.29293",
@@ -36821,10 +36821,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.29293",
@@ -37066,11 +37066,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 174,
-              "file_text_char_start": 454032,
-              "file_text_char_end": 456434,
-              "line_start": 6715,
-              "line_end": 6751,
+              "block_ordinal": 175,
+              "file_text_char_start": 456175,
+              "file_text_char_end": 458577,
+              "line_start": 6747,
+              "line_end": 6783,
               "block_sha256": "920927bb830e6bddee855ccdc747da23652068670f7e17e270013d5aac3eb95f",
               "matched_source_tokens": [
                 "2512.18746",
@@ -37092,10 +37092,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2512.18746",
@@ -37621,11 +37621,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 174,
-                "file_text_char_start": 454032,
-                "file_text_char_end": 456434,
-                "line_start": 6715,
-                "line_end": 6751,
+                "block_ordinal": 175,
+                "file_text_char_start": 456175,
+                "file_text_char_end": 458577,
+                "line_start": 6747,
+                "line_end": 6783,
                 "block_sha256": "920927bb830e6bddee855ccdc747da23652068670f7e17e270013d5aac3eb95f",
                 "matched_source_tokens": [
                   "2512.18746",
@@ -37649,10 +37649,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2512.18746",
@@ -37894,11 +37894,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 175,
-              "file_text_char_start": 456434,
-              "file_text_char_end": 458863,
-              "line_start": 6751,
-              "line_end": 6788,
+              "block_ordinal": 176,
+              "file_text_char_start": 458577,
+              "file_text_char_end": 461006,
+              "line_start": 6783,
+              "line_end": 6820,
               "block_sha256": "e717c678f7467a2b472a9d51af410df1e4cf9cd0afd678accd25c70b431a0a9a",
               "matched_source_tokens": [
                 "2606.06114",
@@ -37920,10 +37920,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2606.06114",
@@ -38449,11 +38449,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 175,
-                "file_text_char_start": 456434,
-                "file_text_char_end": 458863,
-                "line_start": 6751,
-                "line_end": 6788,
+                "block_ordinal": 176,
+                "file_text_char_start": 458577,
+                "file_text_char_end": 461006,
+                "line_start": 6783,
+                "line_end": 6820,
                 "block_sha256": "e717c678f7467a2b472a9d51af410df1e4cf9cd0afd678accd25c70b431a0a9a",
                 "matched_source_tokens": [
                   "2606.06114",
@@ -38477,10 +38477,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2606.06114",
@@ -38722,11 +38722,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 176,
-              "file_text_char_start": 458863,
-              "file_text_char_end": 461627,
-              "line_start": 6788,
-              "line_end": 6829,
+              "block_ordinal": 177,
+              "file_text_char_start": 461006,
+              "file_text_char_end": 463770,
+              "line_start": 6820,
+              "line_end": 6861,
               "block_sha256": "2d9f766dac366649c6e46ee82cee1291e464b90ff5b7ca127e94572835a3fc36",
               "matched_source_tokens": [
                 "2605.27276",
@@ -38748,10 +38748,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.27276",
@@ -39277,11 +39277,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 176,
-                "file_text_char_start": 458863,
-                "file_text_char_end": 461627,
-                "line_start": 6788,
-                "line_end": 6829,
+                "block_ordinal": 177,
+                "file_text_char_start": 461006,
+                "file_text_char_end": 463770,
+                "line_start": 6820,
+                "line_end": 6861,
                 "block_sha256": "2d9f766dac366649c6e46ee82cee1291e464b90ff5b7ca127e94572835a3fc36",
                 "matched_source_tokens": [
                   "2605.27276",
@@ -39305,10 +39305,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.27276",
@@ -39550,11 +39550,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 177,
-              "file_text_char_start": 461627,
-              "file_text_char_end": 464293,
-              "line_start": 6829,
-              "line_end": 6868,
+              "block_ordinal": 178,
+              "file_text_char_start": 463770,
+              "file_text_char_end": 466436,
+              "line_start": 6861,
+              "line_end": 6900,
               "block_sha256": "f84299d3277b561ae37ca6a45e7b916b89f0d3d68d79c2d4596686cb4010d324",
               "matched_source_tokens": [
                 "2606.06324",
@@ -39576,10 +39576,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2606.06324",
@@ -40105,11 +40105,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 177,
-                "file_text_char_start": 461627,
-                "file_text_char_end": 464293,
-                "line_start": 6829,
-                "line_end": 6868,
+                "block_ordinal": 178,
+                "file_text_char_start": 463770,
+                "file_text_char_end": 466436,
+                "line_start": 6861,
+                "line_end": 6900,
                 "block_sha256": "f84299d3277b561ae37ca6a45e7b916b89f0d3d68d79c2d4596686cb4010d324",
                 "matched_source_tokens": [
                   "2606.06324",
@@ -40133,10 +40133,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2606.06324",
@@ -40378,11 +40378,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 178,
-              "file_text_char_start": 464293,
-              "file_text_char_end": 466909,
-              "line_start": 6868,
-              "line_end": 6906,
+              "block_ordinal": 179,
+              "file_text_char_start": 466436,
+              "file_text_char_end": 469052,
+              "line_start": 6900,
+              "line_end": 6938,
               "block_sha256": "302db5bc629563c5d4f2360436b089e73d35dc8ba495032ae3851f073bc1295d",
               "matched_source_tokens": [
                 "2606.05922",
@@ -40404,10 +40404,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2606.05922",
@@ -40933,11 +40933,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 178,
-                "file_text_char_start": 464293,
-                "file_text_char_end": 466909,
-                "line_start": 6868,
-                "line_end": 6906,
+                "block_ordinal": 179,
+                "file_text_char_start": 466436,
+                "file_text_char_end": 469052,
+                "line_start": 6900,
+                "line_end": 6938,
                 "block_sha256": "302db5bc629563c5d4f2360436b089e73d35dc8ba495032ae3851f073bc1295d",
                 "matched_source_tokens": [
                   "2606.05922",
@@ -40961,10 +40961,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2606.05922",
@@ -41206,11 +41206,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 179,
-              "file_text_char_start": 466909,
-              "file_text_char_end": 469528,
-              "line_start": 6906,
-              "line_end": 6945,
+              "block_ordinal": 180,
+              "file_text_char_start": 469052,
+              "file_text_char_end": 471671,
+              "line_start": 6938,
+              "line_end": 6977,
               "block_sha256": "e6fa00b7708fb3823b403e7bbf1a736f683d29329d9601834c9d7993a3382a7b",
               "matched_source_tokens": [
                 "2605.30621",
@@ -41232,10 +41232,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.30621",
@@ -41761,11 +41761,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 179,
-                "file_text_char_start": 466909,
-                "file_text_char_end": 469528,
-                "line_start": 6906,
-                "line_end": 6945,
+                "block_ordinal": 180,
+                "file_text_char_start": 469052,
+                "file_text_char_end": 471671,
+                "line_start": 6938,
+                "line_end": 6977,
                 "block_sha256": "e6fa00b7708fb3823b403e7bbf1a736f683d29329d9601834c9d7993a3382a7b",
                 "matched_source_tokens": [
                   "2605.30621",
@@ -41789,10 +41789,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.30621",
@@ -42034,11 +42034,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 180,
-              "file_text_char_start": 469528,
-              "file_text_char_end": 472354,
-              "line_start": 6945,
-              "line_end": 6987,
+              "block_ordinal": 181,
+              "file_text_char_start": 471671,
+              "file_text_char_end": 474497,
+              "line_start": 6977,
+              "line_end": 7019,
               "block_sha256": "5e594461701bee3273fdf6a468568f1fe58bd00eed2de7060eaf3c402a8bdbf1",
               "matched_source_tokens": [
                 "2604.25850",
@@ -42060,10 +42060,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2604.25850",
@@ -42589,11 +42589,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 180,
-                "file_text_char_start": 469528,
-                "file_text_char_end": 472354,
-                "line_start": 6945,
-                "line_end": 6987,
+                "block_ordinal": 181,
+                "file_text_char_start": 471671,
+                "file_text_char_end": 474497,
+                "line_start": 6977,
+                "line_end": 7019,
                 "block_sha256": "5e594461701bee3273fdf6a468568f1fe58bd00eed2de7060eaf3c402a8bdbf1",
                 "matched_source_tokens": [
                   "2604.25850",
@@ -42617,10 +42617,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2604.25850",
@@ -42862,11 +42862,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 181,
-              "file_text_char_start": 472354,
-              "file_text_char_end": 474944,
-              "line_start": 6987,
-              "line_end": 7025,
+              "block_ordinal": 182,
+              "file_text_char_start": 474497,
+              "file_text_char_end": 477087,
+              "line_start": 7019,
+              "line_end": 7057,
               "block_sha256": "cdd6ee5e25449cf8b9cb07a1996a9c09cefd0ca04a5eb4c19ef2919df9eb6391",
               "matched_source_tokens": [
                 "2605.13357",
@@ -42888,10 +42888,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.13357",
@@ -43417,11 +43417,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 181,
-                "file_text_char_start": 472354,
-                "file_text_char_end": 474944,
-                "line_start": 6987,
-                "line_end": 7025,
+                "block_ordinal": 182,
+                "file_text_char_start": 474497,
+                "file_text_char_end": 477087,
+                "line_start": 7019,
+                "line_end": 7057,
                 "block_sha256": "cdd6ee5e25449cf8b9cb07a1996a9c09cefd0ca04a5eb4c19ef2919df9eb6391",
                 "matched_source_tokens": [
                   "2605.13357",
@@ -43445,10 +43445,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.13357",
@@ -43810,11 +43810,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 182,
-              "file_text_char_start": 474944,
-              "file_text_char_end": 477658,
-              "line_start": 7025,
-              "line_end": 7066,
+              "block_ordinal": 183,
+              "file_text_char_start": 477087,
+              "file_text_char_end": 479801,
+              "line_start": 7057,
+              "line_end": 7098,
               "block_sha256": "fa30bca0f270f57e0259c6ba56e929c809df5b590eeb852b00aa1fdabd2647b0",
               "matched_source_tokens": [
                 "2605.21516",
@@ -43836,10 +43836,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2605.21516",
@@ -44365,11 +44365,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 182,
-                "file_text_char_start": 474944,
-                "file_text_char_end": 477658,
-                "line_start": 7025,
-                "line_end": 7066,
+                "block_ordinal": 183,
+                "file_text_char_start": 477087,
+                "file_text_char_end": 479801,
+                "line_start": 7057,
+                "line_end": 7098,
                 "block_sha256": "fa30bca0f270f57e0259c6ba56e929c809df5b590eeb852b00aa1fdabd2647b0",
                 "matched_source_tokens": [
                   "2605.21516",
@@ -44393,10 +44393,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2605.21516",
@@ -44638,11 +44638,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 183,
-              "file_text_char_start": 477658,
-              "file_text_char_end": 480503,
-              "line_start": 7066,
-              "line_end": 7109,
+              "block_ordinal": 184,
+              "file_text_char_start": 479801,
+              "file_text_char_end": 482646,
+              "line_start": 7098,
+              "line_end": 7141,
               "block_sha256": "ac94a6d3b5d5acd8fb93a1e79554b52f0fc9d7e725e410da315c96f0d8c9b03f",
               "matched_source_tokens": [
                 "2606.01770",
@@ -44664,10 +44664,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2606.01770",
@@ -45193,11 +45193,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 183,
-                "file_text_char_start": 477658,
-                "file_text_char_end": 480503,
-                "line_start": 7066,
-                "line_end": 7109,
+                "block_ordinal": 184,
+                "file_text_char_start": 479801,
+                "file_text_char_end": 482646,
+                "line_start": 7098,
+                "line_end": 7141,
                 "block_sha256": "ac94a6d3b5d5acd8fb93a1e79554b52f0fc9d7e725e410da315c96f0d8c9b03f",
                 "matched_source_tokens": [
                   "2606.01770",
@@ -45221,10 +45221,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2606.01770",
@@ -45466,11 +45466,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 184,
-              "file_text_char_start": 480503,
-              "file_text_char_end": 482998,
-              "line_start": 7109,
-              "line_end": 7146,
+              "block_ordinal": 185,
+              "file_text_char_start": 482646,
+              "file_text_char_end": 485141,
+              "line_start": 7141,
+              "line_end": 7178,
               "block_sha256": "c00ed43021d4113053a7fe362abb72b29134772feacbda4c7398a16d3d530026",
               "matched_source_tokens": [
                 "2603.28052",
@@ -45492,10 +45492,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2603.28052",
@@ -46021,11 +46021,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 184,
-                "file_text_char_start": 480503,
-                "file_text_char_end": 482998,
-                "line_start": 7109,
-                "line_end": 7146,
+                "block_ordinal": 185,
+                "file_text_char_start": 482646,
+                "file_text_char_end": 485141,
+                "line_start": 7141,
+                "line_end": 7178,
                 "block_sha256": "c00ed43021d4113053a7fe362abb72b29134772feacbda4c7398a16d3d530026",
                 "matched_source_tokens": [
                   "2603.28052",
@@ -46049,10 +46049,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2603.28052",
@@ -46303,11 +46303,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 190,
-              "file_text_char_start": 499879,
-              "file_text_char_end": 502615,
-              "line_start": 7387,
-              "line_end": 7425,
+              "block_ordinal": 191,
+              "file_text_char_start": 502022,
+              "file_text_char_end": 504758,
+              "line_start": 7419,
+              "line_end": 7457,
               "block_sha256": "9e3d12181daf7a3547d86f2750f87253c89bf624cea3d7e9ca4becdd14523296",
               "matched_source_tokens": [
                 "2602.22425"
@@ -46326,10 +46326,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2602.22425"
@@ -47090,11 +47090,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 190,
-                "file_text_char_start": 499879,
-                "file_text_char_end": 502615,
-                "line_start": 7387,
-                "line_end": 7425,
+                "block_ordinal": 191,
+                "file_text_char_start": 502022,
+                "file_text_char_end": 504758,
+                "line_start": 7419,
+                "line_end": 7457,
                 "block_sha256": "9e3d12181daf7a3547d86f2750f87253c89bf624cea3d7e9ca4becdd14523296",
                 "matched_source_tokens": [
                   "2602.22425"
@@ -47115,10 +47115,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2602.22425"
@@ -47365,11 +47365,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 185,
-              "file_text_char_start": 482998,
-              "file_text_char_end": 485482,
-              "line_start": 7146,
-              "line_end": 7182,
+              "block_ordinal": 186,
+              "file_text_char_start": 485141,
+              "file_text_char_end": 487625,
+              "line_start": 7178,
+              "line_end": 7214,
               "block_sha256": "fb09861e430e56cb810c1e3c83e01fcec84c6fc587b6de09c975bd1d4ce62240",
               "matched_source_tokens": [
                 "2602.16928"
@@ -47388,10 +47388,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2602.16928"
@@ -48161,11 +48161,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 185,
-                "file_text_char_start": 482998,
-                "file_text_char_end": 485482,
-                "line_start": 7146,
-                "line_end": 7182,
+                "block_ordinal": 186,
+                "file_text_char_start": 485141,
+                "file_text_char_end": 487625,
+                "line_start": 7178,
+                "line_end": 7214,
                 "block_sha256": "fb09861e430e56cb810c1e3c83e01fcec84c6fc587b6de09c975bd1d4ce62240",
                 "matched_source_tokens": [
                   "2602.16928"
@@ -48186,10 +48186,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2602.16928"
@@ -48431,11 +48431,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 186,
-              "file_text_char_start": 485482,
-              "file_text_char_end": 488865,
-              "line_start": 7182,
-              "line_end": 7230,
+              "block_ordinal": 187,
+              "file_text_char_start": 487625,
+              "file_text_char_end": 491008,
+              "line_start": 7214,
+              "line_end": 7262,
               "block_sha256": "1262921127edf46c1deac461213cd5190ce8e274e6bc955a080fdc5fb5ddd28d",
               "matched_source_tokens": [
                 "2603.09172"
@@ -48454,10 +48454,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2603.09172"
@@ -49307,11 +49307,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 186,
-                "file_text_char_start": 485482,
-                "file_text_char_end": 488865,
-                "line_start": 7182,
-                "line_end": 7230,
+                "block_ordinal": 187,
+                "file_text_char_start": 487625,
+                "file_text_char_end": 491008,
+                "line_start": 7214,
+                "line_end": 7262,
                 "block_sha256": "1262921127edf46c1deac461213cd5190ce8e274e6bc955a080fdc5fb5ddd28d",
                 "matched_source_tokens": [
                   "2603.09172"
@@ -49332,10 +49332,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2603.09172"
@@ -49577,11 +49577,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 207,
-              "file_text_char_start": 563316,
-              "file_text_char_end": 566755,
-              "line_start": 8292,
-              "line_end": 8341,
+              "block_ordinal": 208,
+              "file_text_char_start": 565459,
+              "file_text_char_end": 568898,
+              "line_start": 8324,
+              "line_end": 8373,
               "block_sha256": "82f1d502d3b5416a3adc9a7c576e0f8de2b56a61f8502411b3ee219452c7f449",
               "matched_source_tokens": [
                 "2509.18057"
@@ -49600,10 +49600,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2509.18057"
@@ -50304,11 +50304,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 207,
-                "file_text_char_start": 563316,
-                "file_text_char_end": 566755,
-                "line_start": 8292,
-                "line_end": 8341,
+                "block_ordinal": 208,
+                "file_text_char_start": 565459,
+                "file_text_char_end": 568898,
+                "line_start": 8324,
+                "line_end": 8373,
                 "block_sha256": "82f1d502d3b5416a3adc9a7c576e0f8de2b56a61f8502411b3ee219452c7f449",
                 "matched_source_tokens": [
                   "2509.18057"
@@ -50329,10 +50329,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2509.18057"
@@ -50574,11 +50574,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 187,
-              "file_text_char_start": 488865,
-              "file_text_char_end": 493205,
-              "line_start": 7230,
-              "line_end": 7291,
+              "block_ordinal": 188,
+              "file_text_char_start": 491008,
+              "file_text_char_end": 495348,
+              "line_start": 7262,
+              "line_end": 7323,
               "block_sha256": "6571a9651465e53f5b242d28f3a2a42d04528dc8941bd8c989349280aedfea79",
               "matched_source_tokens": [
                 "2603.06692"
@@ -50597,10 +50597,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2603.06692"
@@ -51450,11 +51450,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 187,
-                "file_text_char_start": 488865,
-                "file_text_char_end": 493205,
-                "line_start": 7230,
-                "line_end": 7291,
+                "block_ordinal": 188,
+                "file_text_char_start": 491008,
+                "file_text_char_end": 495348,
+                "line_start": 7262,
+                "line_end": 7323,
                 "block_sha256": "6571a9651465e53f5b242d28f3a2a42d04528dc8941bd8c989349280aedfea79",
                 "matched_source_tokens": [
                   "2603.06692"
@@ -51475,10 +51475,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2603.06692"
@@ -51720,11 +51720,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 192,
-              "file_text_char_start": 507124,
-              "file_text_char_end": 511336,
-              "line_start": 7488,
-              "line_end": 7547,
+              "block_ordinal": 193,
+              "file_text_char_start": 509267,
+              "file_text_char_end": 513479,
+              "line_start": 7520,
+              "line_end": 7579,
               "block_sha256": "4274f459f0a920cac2ffd5ba5fcaac83448306bd369791dafc07c886aaf37178",
               "matched_source_tokens": [
                 "2601.16175"
@@ -51743,10 +51743,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2601.16175"
@@ -52499,11 +52499,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 192,
-                "file_text_char_start": 507124,
-                "file_text_char_end": 511336,
-                "line_start": 7488,
-                "line_end": 7547,
+                "block_ordinal": 193,
+                "file_text_char_start": 509267,
+                "file_text_char_end": 513479,
+                "line_start": 7520,
+                "line_end": 7579,
                 "block_sha256": "4274f459f0a920cac2ffd5ba5fcaac83448306bd369791dafc07c886aaf37178",
                 "matched_source_tokens": [
                   "2601.16175"
@@ -52524,10 +52524,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2601.16175"
@@ -52769,11 +52769,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 188,
-              "file_text_char_start": 493205,
-              "file_text_char_end": 497318,
-              "line_start": 7291,
-              "line_end": 7351,
+              "block_ordinal": 189,
+              "file_text_char_start": 495348,
+              "file_text_char_end": 499461,
+              "line_start": 7323,
+              "line_end": 7383,
               "block_sha256": "5d0fa40229227119c0043d1d66e8f58625a50d52167c374428088dc83681004d",
               "matched_source_tokens": [
                 "2603.08679"
@@ -52792,10 +52792,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2603.08679"
@@ -53565,11 +53565,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 188,
-                "file_text_char_start": 493205,
-                "file_text_char_end": 497318,
-                "line_start": 7291,
-                "line_end": 7351,
+                "block_ordinal": 189,
+                "file_text_char_start": 495348,
+                "file_text_char_end": 499461,
+                "line_start": 7323,
+                "line_end": 7383,
                 "block_sha256": "5d0fa40229227119c0043d1d66e8f58625a50d52167c374428088dc83681004d",
                 "matched_source_tokens": [
                   "2603.08679"
@@ -53590,10 +53590,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2603.08679"
@@ -53835,11 +53835,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 193,
-              "file_text_char_start": 511336,
-              "file_text_char_end": 515584,
-              "line_start": 7547,
-              "line_end": 7606,
+              "block_ordinal": 194,
+              "file_text_char_start": 513479,
+              "file_text_char_end": 517727,
+              "line_start": 7579,
+              "line_end": 7638,
               "block_sha256": "fcf50b988dd135476dc988fe0892ec2015609410bd9c96e7655689cefc6770fc",
               "matched_source_tokens": [
                 "2601.01235"
@@ -53858,10 +53858,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2601.01235"
@@ -54712,11 +54712,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 193,
-                "file_text_char_start": 511336,
-                "file_text_char_end": 515584,
-                "line_start": 7547,
-                "line_end": 7606,
+                "block_ordinal": 194,
+                "file_text_char_start": 513479,
+                "file_text_char_end": 517727,
+                "line_start": 7579,
+                "line_end": 7638,
                 "block_sha256": "fcf50b988dd135476dc988fe0892ec2015609410bd9c96e7655689cefc6770fc",
                 "matched_source_tokens": [
                   "2601.01235"
@@ -54737,10 +54737,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2601.01235"
@@ -54982,11 +54982,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 191,
-              "file_text_char_start": 502615,
-              "file_text_char_end": 507124,
-              "line_start": 7425,
-              "line_end": 7488,
+              "block_ordinal": 192,
+              "file_text_char_start": 504758,
+              "file_text_char_end": 509267,
+              "line_start": 7457,
+              "line_end": 7520,
               "block_sha256": "b05c575e330838417f3ea5206a9bd28fc483f589352f74925b2f5b88cbaa5641",
               "matched_source_tokens": [
                 "2511.12916"
@@ -55005,10 +55005,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2511.12916"
@@ -55779,11 +55779,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 191,
-                "file_text_char_start": 502615,
-                "file_text_char_end": 507124,
-                "line_start": 7425,
-                "line_end": 7488,
+                "block_ordinal": 192,
+                "file_text_char_start": 504758,
+                "file_text_char_end": 509267,
+                "line_start": 7457,
+                "line_end": 7520,
                 "block_sha256": "b05c575e330838417f3ea5206a9bd28fc483f589352f74925b2f5b88cbaa5641",
                 "matched_source_tokens": [
                   "2511.12916"
@@ -55804,10 +55804,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2511.12916"
@@ -56049,11 +56049,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 194,
-              "file_text_char_start": 515584,
-              "file_text_char_end": 519709,
-              "line_start": 7606,
-              "line_end": 7663,
+              "block_ordinal": 195,
+              "file_text_char_start": 517727,
+              "file_text_char_end": 521852,
+              "line_start": 7638,
+              "line_end": 7695,
               "block_sha256": "e220b79da16d6be395a88e9b82eb4788f62e613e34a065f33370a7bd9df4a0a8",
               "matched_source_tokens": [
                 "2601.05943"
@@ -56072,10 +56072,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2601.05943"
@@ -56944,11 +56944,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 194,
-                "file_text_char_start": 515584,
-                "file_text_char_end": 519709,
-                "line_start": 7606,
-                "line_end": 7663,
+                "block_ordinal": 195,
+                "file_text_char_start": 517727,
+                "file_text_char_end": 521852,
+                "line_start": 7638,
+                "line_end": 7695,
                 "block_sha256": "e220b79da16d6be395a88e9b82eb4788f62e613e34a065f33370a7bd9df4a0a8",
                 "matched_source_tokens": [
                   "2601.05943"
@@ -56969,10 +56969,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2601.05943"
@@ -57214,11 +57214,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 195,
-              "file_text_char_start": 519709,
-              "file_text_char_end": 523477,
-              "line_start": 7663,
-              "line_end": 7718,
+              "block_ordinal": 196,
+              "file_text_char_start": 521852,
+              "file_text_char_end": 525620,
+              "line_start": 7695,
+              "line_end": 7750,
               "block_sha256": "9b5f17f6fc9b794e9b25e2cd36e82d245570bccbd04b2c277c5f069a6fedc184",
               "matched_source_tokens": [
                 "2506.16750"
@@ -57237,10 +57237,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2506.16750"
@@ -58091,11 +58091,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 195,
-                "file_text_char_start": 519709,
-                "file_text_char_end": 523477,
-                "line_start": 7663,
-                "line_end": 7718,
+                "block_ordinal": 196,
+                "file_text_char_start": 521852,
+                "file_text_char_end": 525620,
+                "line_start": 7695,
+                "line_end": 7750,
                 "block_sha256": "9b5f17f6fc9b794e9b25e2cd36e82d245570bccbd04b2c277c5f069a6fedc184",
                 "matched_source_tokens": [
                   "2506.16750"
@@ -58116,10 +58116,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2506.16750"
@@ -58361,11 +58361,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 196,
-              "file_text_char_start": 523477,
-              "file_text_char_end": 526896,
-              "line_start": 7718,
-              "line_end": 7767,
+              "block_ordinal": 197,
+              "file_text_char_start": 525620,
+              "file_text_char_end": 529039,
+              "line_start": 7750,
+              "line_end": 7799,
               "block_sha256": "27fd8435c978a850258d2f934babd446776ddc5cf57ad97e7e0e79500b7a59bc",
               "matched_source_tokens": [
                 "2505.16105"
@@ -58383,11 +58383,11 @@
             },
             {
               "block_kind": "active",
-              "block_ordinal": 197,
-              "file_text_char_start": 526896,
-              "file_text_char_end": 530272,
-              "line_start": 7767,
-              "line_end": 7816,
+              "block_ordinal": 198,
+              "file_text_char_start": 529039,
+              "file_text_char_end": 532415,
+              "line_start": 7799,
+              "line_end": 7848,
               "block_sha256": "aed8e35f4a153888f0316b3999c61555ea9be61a2b3a48621f5ddef7bc3cd84c",
               "matched_source_tokens": [
                 "2505.16105"
@@ -58398,10 +58398,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2505.16105"
@@ -59294,11 +59294,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 196,
-                "file_text_char_start": 523477,
-                "file_text_char_end": 526896,
-                "line_start": 7718,
-                "line_end": 7767,
+                "block_ordinal": 197,
+                "file_text_char_start": 525620,
+                "file_text_char_end": 529039,
+                "line_start": 7750,
+                "line_end": 7799,
                 "block_sha256": "27fd8435c978a850258d2f934babd446776ddc5cf57ad97e7e0e79500b7a59bc",
                 "matched_source_tokens": [
                   "2505.16105"
@@ -59319,10 +59319,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2505.16105"
@@ -59564,11 +59564,11 @@
           "row_specific_block_records": [
             {
               "block_kind": "active",
-              "block_ordinal": 197,
-              "file_text_char_start": 526896,
-              "file_text_char_end": 530272,
-              "line_start": 7767,
-              "line_end": 7816,
+              "block_ordinal": 198,
+              "file_text_char_start": 529039,
+              "file_text_char_end": 532415,
+              "line_start": 7799,
+              "line_end": 7848,
               "block_sha256": "aed8e35f4a153888f0316b3999c61555ea9be61a2b3a48621f5ddef7bc3cd84c",
               "matched_source_tokens": [
                 "2506.01896"
@@ -59587,10 +59587,10 @@
             {
               "block_kind": "completed",
               "block_ordinal": 5,
-              "file_text_char_start": 245023,
-              "file_text_char_end": 581403,
-              "line_start": 3619,
-              "line_end": 8555,
+              "file_text_char_start": 247166,
+              "file_text_char_end": 583546,
+              "line_start": 3651,
+              "line_end": 8587,
               "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
               "matched_source_tokens": [
                 "2506.01896"
@@ -60441,11 +60441,11 @@
                 "path": "docs/todo/code.md",
                 "evidence_kind": "active",
                 "block_kind": "active",
-                "block_ordinal": 197,
-                "file_text_char_start": 526896,
-                "file_text_char_end": 530272,
-                "line_start": 7767,
-                "line_end": 7816,
+                "block_ordinal": 198,
+                "file_text_char_start": 529039,
+                "file_text_char_end": 532415,
+                "line_start": 7799,
+                "line_end": 7848,
                 "block_sha256": "aed8e35f4a153888f0316b3999c61555ea9be61a2b3a48621f5ddef7bc3cd84c",
                 "matched_source_tokens": [
                   "2506.01896"
@@ -60466,10 +60466,10 @@
                 "evidence_kind": "active",
                 "block_kind": "completed",
                 "block_ordinal": 5,
-                "file_text_char_start": 245023,
-                "file_text_char_end": 581403,
-                "line_start": 3619,
-                "line_end": 8555,
+                "file_text_char_start": 247166,
+                "file_text_char_end": 583546,
+                "line_start": 3651,
+                "line_end": 8587,
                 "block_sha256": "22a28cb99fe482599244de404d0d0407edd5f7250b67a9963f6af10f593a75af",
                 "matched_source_tokens": [
                   "2506.01896"

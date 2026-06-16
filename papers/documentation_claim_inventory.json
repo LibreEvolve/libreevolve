@@ -831,10 +831,10 @@
         "path": "docs/todo/readme.md",
         "anchor_text": "- [ ] Add semantic README claim verification and evidence mapping.",
         "found": true,
-        "file_text_char_start": 6379,
-        "file_text_char_end": 6445,
-        "line_start": 107,
-        "line_end": 107
+        "file_text_char_start": 8628,
+        "file_text_char_end": 8694,
+        "line_start": 140,
+        "line_end": 140
       }
     },
     {

@@ -57,6 +57,39 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Python/pip/package versions and expected command success, and updates
     README/TODO evidence whenever the requirements or install command change.
 
+- [ ] Add `.env.example` provider-auth setup drift evidence.
+  - Spec evidence: provider-backed AlphaEvolve-style runs depend on repeatable,
+    secret-safe credential setup before model calls, benchmark attempts, or
+    integration tests can be interpreted. The README, backend docs, and
+    example environment file should agree on which provider environment
+    variables exist, which providers require them, which values are
+    placeholders, and which secrets must never be committed.
+  - Current evidence: README says optional provider credentials live in
+    `.env`, provider-backed runs can fail when credentials, model ids, local
+    Ollama state, or account access are unavailable, and integration tests
+    require provider credentials. `docs/backends.md` and
+    `docs/configuration.md` document `.env` loading with `override=True`,
+    provider credential names, non-secret dotenv provenance, and credential
+    preflight for OpenAI and Anthropic. `.env.example` currently lists
+    `OPENAI_API_KEY=sk-your-openai-key-here`,
+    `ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here`, and
+    `OLLAMA_HOST=http://localhost:11434`. Separate TODOs already cover broad
+    provider smoke wording, backend-guide drift, contributor secret-scan
+    mapping, and CLI-authenticated provider overclaiming.
+  - Current gap: there is no README/docs-owned inventory or validation gate
+    tying `.env.example` to the supported backend registry, documented
+    credential names, dotenv provenance, integration-test requirements,
+    placeholder safety policy, and detect-secrets baseline. A provider can be
+    added, removed, renamed, or moved to a different authentication lane while
+    `.env.example`, README quick-start guidance, backend docs, and secret-scan
+    expectations drift independently.
+  - Required result: add a provider-auth setup evidence map or test that parses
+    `.env.example`, verifies each variable against backend/config docs and
+    credential preflight code, rejects real-looking committed secrets while
+    allowing documented placeholders, links integration-test credential needs,
+    and requires README/docs/TODO updates whenever provider auth, dotenv
+    loading, placeholder policy, or secret-scan handling changes.
+
 ## Research References and Bundled Papers
 
 - [ ] Add README paper-cache topical classification evidence.

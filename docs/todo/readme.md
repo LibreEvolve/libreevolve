@@ -78,16 +78,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and dependency ranges, the README tells this Windows machine to use
     `py -3.12`, and CI/release checks cover package metadata, wheel/sdist
     smoke, and environment provenance at broader runtime/release boundaries.
-  - Current gap: no committed README-specific install transcript, CI
-    assertion, or sidecar proves the exact
-    `py -3.12 -m pip install -e ".[dev]"` onboarding command succeeds with the
-    documented Python version, that dev dependencies are available after
-    install, or that failures are reported distinctly from later
-    quick-start/provider smoke failures.
-  - Required result: add a README install smoke proof or CI job that runs the
-    documented editable-install command in a clean environment, records
-    Python/pip/package versions and expected command success, and updates
-    README/TODO evidence whenever the requirements or install command change.
+    `papers/readme_install_smoke_boundary.json` now records the exact README
+    editable-install command `py -3.12 -m pip install -e ".[dev]"`, README
+    Python launcher guidance, pyproject Python/dev-extra markers, GitHub
+    Actions Python 3.12 setup, CI editable-install commands, and the
+    development-guide editable-install command.
+  - Current gap: the sidecar is a bounded marker inventory, not a clean
+    environment transcript. It does not prove the documented Windows launcher
+    command succeeded from a clean environment, record Python, pip, and package
+    versions for that command, import-smoke dev dependencies after install, or
+    classify install failures separately from provider quick-start failures.
+  - Required result: add a clean-environment README install transcript or CI
+    job that runs the documented editable-install command, records Python, pip,
+    and package versions, smoke-imports dev dependencies, classifies install
+    failures distinctly from provider/runtime failures, and records owner
+    review signoff.
 
 - [ ] Add `.env.example` provider-auth setup drift evidence.
   - Spec evidence: provider-backed AlphaEvolve-style runs depend on repeatable,

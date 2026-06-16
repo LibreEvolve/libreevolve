@@ -2862,6 +2862,13 @@ Implemented:
   archival `old/` routing, and AGENTS.md routing. It is not semantic
   route-purpose verification, new-major-doc detection, misplaced-claim
   detection, or owner review signoff.
+- `papers/readme_install_smoke_boundary.json`: README install-smoke sidecar.
+  It records the README editable-install command, Python launcher guidance,
+  pyproject Python/dev-extra markers, GitHub Actions Python 3.12 setup,
+  CI editable-install commands, and the development-guide editable-install
+  command. It is not a clean-environment install transcript, Python and pip
+  version record, dev-dependency import smoke, install-failure classifier, or
+  owner review signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

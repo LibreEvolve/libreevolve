@@ -207,6 +207,10 @@ from libreevolve.problems.benchmarks.roadmap_phase_sequence_boundary import (
     roadmap_phase_sequence_boundary_record,
     validate_roadmap_phase_sequence_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_operational_maturity_boundary import (
+    roadmap_operational_maturity_boundary_record,
+    validate_roadmap_operational_maturity_boundary,
+)
 from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import (
     implementation_evidence_map_boundary_record,
     validate_implementation_evidence_map_boundary,
@@ -755,6 +759,7 @@ ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_FILE = "papers/roadmap_source_span_disp
 ROADMAP_NON_GOAL_CONTRADICTION_BOUNDARY_FILE = "papers/roadmap_non_goal_contradiction_boundary.json"
 ROADMAP_GOOD_FIRST_FOLLOWUPS_BOUNDARY_FILE = "papers/roadmap_good_first_followups_boundary.json"
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_FILE = "papers/roadmap_phase_sequence_boundary.json"
+ROADMAP_OPERATIONAL_MATURITY_BOUNDARY_FILE = "papers/roadmap_operational_maturity_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
 BENCHMARK_COVERAGE_INVENTORY_FILE = "papers/benchmark_coverage_inventory.json"
 STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
@@ -1415,6 +1420,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_non_goal_contradiction_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_followups_boundary(root_path))
     issues.extend(_validate_roadmap_phase_sequence_boundary(root_path))
+    issues.extend(_validate_roadmap_operational_maturity_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
@@ -4149,6 +4155,41 @@ def _validate_roadmap_phase_sequence_boundary(root_path: Path) -> list[PaperMani
             f"roadmap_phase_sequence_boundary_{issue.code}",
             issue.message,
             "roadmap_phase_sequence",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_operational_maturity_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_OPERATIONAL_MATURITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_operational_maturity_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_OPERATIONAL_MATURITY_BOUNDARY_FILE} must emit "
+                        "ROADMAP operational maturity criteria metadata"
+                    ),
+                    "roadmap_operational_maturity",
+                )
+            ]
+        return []
+    report = validate_roadmap_operational_maturity_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_operational_maturity_boundary_{issue.code}",
+            issue.message,
+            "roadmap_operational_maturity",
         )
         for issue in report.issues
     ]

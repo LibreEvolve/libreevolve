@@ -1,0 +1,194 @@
+{
+  "active_todo_ref_count": 10,
+  "boundary_status": "bounded_operational_maturity_criteria_without_acceptance_threshold",
+  "claim_boundary": "This boundary records a section-level operational-maturity criteria map for validation, packaging, observability, reproducibility, CI, release, and run-artifact lifecycle evidence. It does not claim a global acceptance threshold, unified run artifact lifecycle inventory, semantic documentation verification, signed release provenance, cross-platform CI policy, or owner review signoff.",
+  "claim_ready": false,
+  "criteria_records": [
+    {
+      "acceptance_gate": "plugin/provider config schema and live compatibility policy",
+      "active_todo_ref_count": 1,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "missing plugin-specific config schemas, provider/model compatibility",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "config_validation",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/config_validation_boundary.json"
+        }
+      ],
+      "readiness_status": "not_operationally_mature",
+      "risk_class": "provider_and_plugin_configuration",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Extend current config validation beyond"
+    },
+    {
+      "acceptance_gate": "all accepted and quarantine streams have schema ownership",
+      "active_todo_ref_count": 1,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add schema-level coverage for invalid/quarantine run streams.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "strict_jsonl_diagnostics",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "readiness_status": "not_operationally_mature",
+      "risk_class": "artifact_integrity",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Extend strict finite JSONL coverage and diagnostics"
+    },
+    {
+      "acceptance_gate": "whole-run query, replay, and source/workspace inspection coverage",
+      "active_todo_ref_count": 1,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Add whole-run source/workspace integrity reports for run inspection.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "run_inspection",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/whole_run_source_workspace_integrity_boundary.json"
+        }
+      ],
+      "readiness_status": "not_operationally_mature",
+      "risk_class": "observability_and_replay",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Improve run inspection beyond the current"
+    },
+    {
+      "acceptance_gate": "signed release provenance and index verification",
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add release artifact and install-from-wheel verification.",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add untracked-source hygiene to release artifact provenance.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "release_provenance",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/release_artifact_reproducibility_boundary.json"
+        }
+      ],
+      "readiness_status": "not_operationally_mature",
+      "risk_class": "packaging_and_distribution",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Extend current `pyproject.toml` metadata"
+    },
+    {
+      "acceptance_gate": "cross-platform paper/docs/release/integration CI policy",
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Expand GitHub Actions workflow coverage beyond path-scoped",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track CI workflow coverage separately from local validation commands.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "ci_workflow_coverage",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/ci_workflow_coverage_boundary.json"
+        }
+      ],
+      "readiness_status": "not_operationally_mature",
+      "risk_class": "automation_policy",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Extend the current path-scoped GitHub Actions workflow"
+    },
+    {
+      "acceptance_gate": "unified lifecycle inventory for runtime and paper artifacts",
+      "active_todo_ref_count": 3,
+      "active_todo_refs": [
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bring generated `paper_artifacts/` directories under the run-artifact",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add schema-level coverage for non-JSONL run artifacts.",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Paper-facing generated-artifact lifecycle evidence is still incomplete",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "run_artifact_lifecycle",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "readiness_status": "not_operationally_mature",
+      "risk_class": "run_bundle_lifecycle",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "durable query views over run artifacts"
+    }
+  ],
+  "criterion_count": 6,
+  "missing_evidence": {
+    "acceptance_threshold": "not_recorded_locally",
+    "ci_cross_platform_policy": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "semantic_docs_verification": "not_recorded_locally",
+    "signed_release_provenance": "not_recorded_locally",
+    "unified_run_artifact_lifecycle_inventory": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "criteria_records",
+    "roadmap_section_presence",
+    "current_sidecar_refs",
+    "active_todo_refs",
+    "risk_classification",
+    "acceptance_threshold",
+    "unified_run_artifact_lifecycle_inventory",
+    "semantic_docs_verification",
+    "signed_release_provenance",
+    "ci_cross_platform_policy"
+  ],
+  "roadmap_heading": "### 10. Operational maturity",
+  "roadmap_heading_present": true,
+  "schema": "libreevolve.roadmap_operational_maturity_boundary.v1"
+}

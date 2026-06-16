@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add bounded ROADMAP operational-maturity criteria map.
+  - Status: `papers/roadmap_operational_maturity_boundary.json` now records
+    six section-level operational-maturity criteria with risk classes, current
+    sidecar refs, active TODO refs, and acceptance-gate labels.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_operational_maturity_boundary.py`
+    derives the boundary from current ROADMAP and TODO text, and the
+    paper-manifest gate requires the checked sidecar to match those inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks the missing global
+    acceptance threshold, unified run-artifact lifecycle inventory, semantic
+    docs verification, signed release provenance, cross-platform CI policy,
+    and owner review signoff.
+  - Verification: focused operational-maturity boundary tests and
+    paper-manifest validation cover the bounded sidecar contract.
+
 - [x] Add bounded ROADMAP phase and sequencing map.
   - Status: `papers/roadmap_phase_sequence_boundary.json` now records the
     current Near Term, Mid Term, and Longer Term sequence for ten major

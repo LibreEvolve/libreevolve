@@ -1268,6 +1268,7 @@ Important limits:
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
+  `papers/roadmap_operational_maturity_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1292,6 +1293,11 @@ Important limits:
   refs, validation-gate labels, and promotion criteria. This is not a full
   dependency graph, stale-phase detector, promotion/demotion workflow, CI
   phase freshness gate, or owner review signoff.
+- ROADMAP operational-maturity evidence now records six section-level criteria
+  with risk classes, current sidecar refs, active TODO refs, and
+  acceptance-gate labels. This is not a global acceptance threshold, unified
+  run-artifact lifecycle inventory, semantic docs verification, signed release
+  provenance, cross-platform CI policy, or owner review signoff.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark

@@ -2891,6 +2891,12 @@ Implemented:
   and promotion criteria. It is not evidence of a full dependency graph,
   stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
   or owner review signoff.
+- `papers/roadmap_operational_maturity_boundary.json`: ROADMAP operational
+  maturity sidecar with six section-level criteria, risk classes, current
+  sidecar refs, active TODO refs, and acceptance-gate labels. It is not
+  evidence of a global acceptance threshold, unified run-artifact lifecycle
+  inventory, semantic docs verification, signed release provenance,
+  cross-platform CI policy, or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

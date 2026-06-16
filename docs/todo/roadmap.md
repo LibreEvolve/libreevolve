@@ -236,14 +236,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     lifecycle drift for generated prompt-table artifacts and
     `paper_artifacts/` directories that are documented or emitted but not yet
     consistently represented in collision/overwrite cleanup policy.
-  - Current gap: there is no section-level operational-maturity checklist,
-    risk classification, acceptance threshold, or evidence map that ties those
-    subitems together and prevents one green release/CI boundary from being
-    mistaken for overall operational readiness. In particular, the roadmap
-    does not require a unified generated-artifact inventory proving that every
-    documented runtime artifact, derived JSONL export, source/paper exhibit
-    directory, overwrite target, schema row, and `show`/restore reader is
-    lifecycle-managed before operational maturity is claimed.
+    `papers/roadmap_operational_maturity_boundary.json` now records six
+    section-level criteria with risk classes, current sidecar refs, active TODO
+    refs, and acceptance-gate labels.
+  - Current gap: the sidecar is a bounded criteria map, not an operational
+    readiness gate. There is still no global acceptance threshold, unified
+    generated-artifact lifecycle inventory, semantic docs verification, signed
+    release provenance, cross-platform CI policy, or owner signoff preventing
+    one green release/CI boundary from being mistaken for overall operational
+    readiness.
   - Required result: add ROADMAP operational-maturity criteria that classify
     required validation, packaging, observability, reproducibility, CI, release,
     run-artifact lifecycle, and policy evidence; map each criterion to

@@ -251,6 +251,10 @@ from libreevolve.problems.benchmarks.roadmap_plugin_extensibility_boundary impor
     roadmap_plugin_extensibility_boundary_record,
     validate_roadmap_plugin_extensibility_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_plugin_readiness_boundary import (
+    roadmap_plugin_readiness_boundary_record,
+    validate_roadmap_plugin_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_backend_scheduling_critique_boundary import (
     roadmap_backend_scheduling_critique_boundary_record,
     validate_roadmap_backend_scheduling_critique_boundary,
@@ -834,6 +838,7 @@ ROADMAP_OPERATIONAL_READINESS_BOUNDARY_FILE = "papers/roadmap_operational_readin
 ROADMAP_REPRESENTATIVE_BENCHMARK_PORTFOLIO_BOUNDARY_FILE = "papers/roadmap_representative_benchmark_portfolio_boundary.json"
 ROADMAP_BENCHMARK_PORTFOLIO_READINESS_BOUNDARY_FILE = "papers/roadmap_benchmark_portfolio_readiness_boundary.json"
 ROADMAP_PLUGIN_EXTENSIBILITY_BOUNDARY_FILE = "papers/roadmap_plugin_extensibility_boundary.json"
+ROADMAP_PLUGIN_READINESS_BOUNDARY_FILE = "papers/roadmap_plugin_readiness_boundary.json"
 ROADMAP_BACKEND_SCHEDULING_CRITIQUE_BOUNDARY_FILE = "papers/roadmap_backend_scheduling_critique_boundary.json"
 ROADMAP_ASYNC_RESUMABLE_RUNTIME_BOUNDARY_FILE = "papers/roadmap_async_resumable_runtime_boundary.json"
 ROADMAP_PROMPT_CONTEXT_SYSTEM_BOUNDARY_FILE = "papers/roadmap_prompt_context_system_boundary.json"
@@ -1511,6 +1516,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_representative_benchmark_portfolio_boundary(root_path))
     issues.extend(_validate_roadmap_benchmark_portfolio_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_plugin_extensibility_boundary(root_path))
+    issues.extend(_validate_roadmap_plugin_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_backend_scheduling_critique_boundary(root_path))
     issues.extend(_validate_roadmap_async_resumable_runtime_boundary(root_path))
     issues.extend(_validate_roadmap_prompt_context_system_boundary(root_path))
@@ -4635,6 +4641,41 @@ def _validate_roadmap_plugin_extensibility_boundary(root_path: Path) -> list[Pap
             f"roadmap_plugin_extensibility_boundary_{issue.code}",
             issue.message,
             "roadmap_plugin_extensibility",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_plugin_readiness_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_PLUGIN_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_plugin_readiness_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_PLUGIN_READINESS_BOUNDARY_FILE} must emit "
+                        "ROADMAP plugin readiness metadata"
+                    ),
+                    "roadmap_plugin_readiness",
+                )
+            ]
+        return []
+    report = validate_roadmap_plugin_readiness_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_plugin_readiness_boundary_{issue.code}",
+            issue.message,
+            "roadmap_plugin_readiness",
         )
         for issue in report.issues
     ]

@@ -1279,6 +1279,7 @@ Important limits:
   `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
   `papers/roadmap_benchmark_portfolio_readiness_boundary.json`,
   `papers/roadmap_plugin_extensibility_boundary.json`,
+  `papers/roadmap_plugin_readiness_boundary.json`,
   `papers/roadmap_backend_scheduling_critique_boundary.json`,
   `papers/roadmap_async_resumable_runtime_boundary.json`,
   `papers/roadmap_prompt_context_system_boundary.json`,
@@ -1385,6 +1386,11 @@ Important limits:
   value/schema registry, versioned custom plugin registry, artifact lifecycle
   hash policy, runtime isolation policy, paper-scope attribution policy,
   stale-readiness detector, or owner review signoff.
+- ROADMAP plugin-readiness evidence now records seven readiness criteria for
+  trust boundaries, admission, direct constructor value/schema registry,
+  versioned custom registry, artifact lifecycle hashes, runtime isolation, and
+  paper-scope/staleness guards. This is not an implemented external-plugin
+  readiness gate.
 - ROADMAP backend-scheduling and critique evidence now records nine tracks:
   heuristic UCB rewards, role-scoped routing, provider diagnostics/pricing,
   cancellation/quarantine, fast/strong model mix, sample efficiency,

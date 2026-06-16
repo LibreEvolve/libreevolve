@@ -15498,3 +15498,20 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     SOTA/baseline citation sufficiency proof, portfolio-balance score, CI
     freshness gate, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP plugin readiness matrix.
+  - Spec evidence: plugin-extensibility claims require more than a surface map
+    of built-in, entry-point, direct-instance, and future custom-registry
+    plugin modes.
+  - Status: `papers/roadmap_plugin_readiness_boundary.json` now records seven
+    readiness criteria for the plugin trust-boundary matrix, plugin admission
+    checklist, direct constructor value/schema registry, versioned custom
+    plugin registry, artifact lifecycle hash policy, runtime isolation policy,
+    and paper-scope attribution/stale-readiness guard. It links the existing
+    plugin-extensibility boundary input, sidecar refs, active TODO refs,
+    validation-gate labels, readiness labels, and explicit missing-evidence
+    fields. The paper-manifest gate now requires and validates the sidecar at
+    the repo root.
+  - Remaining roadmap gap: the actual trust-boundary matrix, admission
+    checklist, constructor registry, versioned registry, lifecycle hash policy,
+    runtime isolation policy, paper-scope policy, stale-readiness detector, and
+    owner review signoff remain active in `docs/todo/roadmap.md`.

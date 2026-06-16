@@ -374,19 +374,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     lifecycle, with configuration shape, package/source identity, constructor
     provenance, artifact hashing, trust-boundary, paper-scope attribution,
     validation-gate, code-ref, sidecar-ref, active-TODO, and readiness labels.
-  - Current gap: there is no plugin trust-boundary matrix, plugin admission
-    checklist, direct constructor value/schema registry, versioned custom
-    plugin registry, artifact lifecycle hash policy, runtime isolation policy,
-    paper-scope attribution policy, stale-readiness detector, or owner signoff
-    tying those plugin subfeatures together, so a partial entry-point or
-    provenance improvement could be mistaken for broad custom-plugin support.
-  - Required result: add ROADMAP plugin-extensibility criteria that classify
-    built-in, entry-point, direct-instance, and future custom-registry plugins
-    by supported configuration shape, package/source identity, constructor
-    provenance, artifact hashing, runtime isolation/trust assumptions,
-    paper-scope attribution, and validation gates, and add checks that README,
-    papers, runtime metadata, and plugin docs cannot overclaim external plugin
-    readiness until the full matrix is satisfied.
+    `papers/roadmap_plugin_readiness_boundary.json` now records a seven-
+    criterion readiness matrix for the plugin trust-boundary matrix, plugin
+    admission checklist, direct constructor value/schema registry, versioned
+    custom plugin registry, artifact lifecycle hash policy, runtime isolation
+    policy, and paper-scope attribution/stale-readiness guard.
+  - Current gap: the sidecars are bounded plugin-surface and readiness maps,
+    not an external plugin readiness gate. There is still no implemented
+    plugin trust-boundary matrix, plugin admission checklist, direct
+    constructor value/schema registry, versioned custom plugin registry,
+    artifact lifecycle hash policy, runtime isolation policy, paper-scope
+    attribution policy, stale-readiness detector, or owner signoff tying those
+    plugin subfeatures together, so a partial entry-point or provenance
+    improvement could be mistaken for broad custom-plugin support.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: plugin trust-boundary matrix, plugin admission checklist, direct
+    constructor value/schema registry, versioned custom plugin registry,
+    artifact lifecycle hash policy, runtime isolation policy, paper-scope
+    attribution policy, stale-readiness detector, and owner review signoff. The
+    verifier must classify built-in, entry-point, direct-instance, and future
+    custom-registry plugins by supported configuration shape, package/source
+    identity, constructor provenance, artifact hashing, runtime
+    isolation/trust assumptions, paper-scope attribution, and validation
+    gates, and add checks that README, papers, runtime metadata, and plugin
+    docs cannot overclaim external plugin readiness until the full matrix is
+    satisfied.
 
 - [ ] Add ROADMAP backend-scheduling and critique readiness criteria.
   - Spec evidence: the `7. Backend scheduling and critique` section combines

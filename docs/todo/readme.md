@@ -792,6 +792,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     exhaustive CLI/configuration contract map covers the underlying
     code/config surface, but not the guide as a standalone documentation
     claim surface.
+    A current drift example is LLM budget/accounting wording:
+    `docs/configuration.md` correctly documents live `max_llm_provider_attempts`,
+    `max_llm_tokens`, `max_llm_cost_microusd`, per-role provider/token/cost
+    caps, and `max_llm_seconds`, and `libreevolve/core/budget.py` enforces
+    those cooperative stop reasons through the runtime budget snapshot. Later
+    in the same guide, however, the `runtime.llm_accounting` paragraph still
+    says the summary is "not for live stop enforcement" without routing readers
+    to `runtime.budget` as the authoritative stop-policy record. That can make
+    implemented LLM budget stops look like audit-only metadata rather than
+    cooperative runtime limits with a separate accounting summary.
   - Current gap: there is no page-specific inventory or drift validator that
     parses `docs/configuration.md`, maps each documented field/default,
     allowed enum, CLI option, YAML key, manifest/provenance output,

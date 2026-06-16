@@ -2840,8 +2840,9 @@ Implemented:
   TODO-coverage, stale source-specific wording, sidecar-registry, top-level
   README/ROADMAP/papers-index claim-inventory, backend CLI-provider guardrail
   inventory, backend-guide contract drift inventory, plugin-guide contract
-  drift inventory, README Problem Layout inventory, README provider-example
-  matrix inventory, README CLI-provider guardrail inventory, and focused
+  drift inventory, README Problem Layout inventory, problem-format loader-
+  contract inventory, README provider-example matrix inventory, README
+  CLI-provider guardrail inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
@@ -2933,6 +2934,16 @@ Implemented:
   is not semantic loader-contract verification, a dedicated minimal-problem
   smoke fixture, full problem-format long-contract drift validation, a new
   problem-surface detector, or owner review signoff.
+- `papers/problem_format_loader_contract_boundary.json`: problem-format
+  loader-contract sidecar. It records `docs/problem-format.md` section and
+  claim markers for required layout, context manifests, codebase-integration
+  metadata, task and metrics files, validator signatures, configured evaluator
+  stages, candidate runner declarations, evaluation semantics, seed
+  workspaces, seed policy, mutation modes, and unsupported runner scope, plus
+  loader/config/evaluator, focused loader/evaluator/example test, example
+  path, sidecar, and TODO anchors. It is not semantic problem-format claim
+  verification, per-manifest-key executable traces, a docs CI drift gate, new
+  problem-surface detection, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

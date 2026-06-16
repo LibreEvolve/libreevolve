@@ -1,0 +1,453 @@
+{
+  "schema": "libreevolve.problem_format_loader_contract_boundary.v1",
+  "boundary_status": "problem_format_structural_map_without_semantic_loader_contract_proof",
+  "claim_ready": false,
+  "problem_format_path": "docs/problem-format.md",
+  "source_paths": [
+    "libreevolve/problems/loader.py",
+    "libreevolve/core/config.py",
+    "libreevolve/core/evaluator.py"
+  ],
+  "test_paths": [
+    "tests/core/test_loader.py",
+    "tests/core/test_evaluator.py",
+    "tests/test_examples.py"
+  ],
+  "example_paths": [
+    "libreevolve/problems/examples/workspace_math",
+    "libreevolve/problems/examples/embedded_evaluate_math"
+  ],
+  "sidecar_paths": [
+    "papers/readme_problem_layout_boundary.json",
+    "papers/validator_execution_boundary.json",
+    "papers/embedded_evaluator_boundary.json",
+    "papers/workspace_materialization_boundary.json",
+    "papers/candidate_language_runner_boundary.json",
+    "papers/benchmark_fixture_readiness_boundary.json",
+    "papers/problem_formulation_provenance_boundary.json"
+  ],
+  "todo_paths": [
+    "docs/todo/readme.md",
+    "docs/todo/code.md",
+    "docs/todo/papers.md"
+  ],
+  "guide_marker_count": 22,
+  "missing_guide_marker_count": 0,
+  "missing_guide_marker_records": [],
+  "guide_marker_records": [
+    {
+      "record_id": "title",
+      "path": "docs/problem-format.md",
+      "required_marker": "# Problem Format",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_route",
+      "path": "docs/problem-format.md",
+      "required_marker": "[`libreevolve/problems/loader.py`](../libreevolve/problems/loader.py)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "required_layout",
+      "path": "docs/problem-format.md",
+      "required_marker": "## Required layout",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "context_manifest_tree",
+      "path": "docs/problem-format.md",
+      "required_marker": "Optional context files can be placed in:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "codebase_integration_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## `codebase_integration.yaml`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "task_description_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## `task_description.txt`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "metrics_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## `metrics.yaml`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "validate_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## `validate.py`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_runner_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## Candidate Runner Declarations",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluation_semantics_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## Evaluation semantics",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "initial_programs_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## `initial_programs`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "multi_file_seeds",
+      "path": "docs/problem-format.md",
+      "required_marker": "### Multi-file seeds",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "mutation_modes_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## Mutation modes",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "design_guidance_section",
+      "path": "docs/problem-format.md",
+      "required_marker": "## Design guidance",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "context_manifest_keys",
+      "path": "docs/problem-format.md",
+      "required_marker": "Context manifests accept\nonly `include`, `exclude`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "codebase_manifest_exclusivity",
+      "path": "docs/problem-format.md",
+      "required_marker": "Use either `codebase_integration.yaml` or `codebase_integration.yml`, not both.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "validator_signatures",
+      "path": "docs/problem-format.md",
+      "required_marker": "`validate.py` must expose either the legacy one-argument signature",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "configured_eval_stages",
+      "path": "docs/problem-format.md",
+      "required_marker": "Problem `config.yaml` stages accept\nonly the documented `eval_stages` keys",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_runner_declarations",
+      "path": "docs/problem-format.md",
+      "required_marker": "`config.yaml` can declare future candidate-language and build-system runner",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluation_validity_gate",
+      "path": "docs/problem-format.md",
+      "required_marker": "The evaluator treats `is_valid` as a required boolean validity gate",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "seed_policy",
+      "path": "docs/problem-format.md",
+      "required_marker": "add `initial_programs/seed_policy.yaml`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "unsupported_runner_scope",
+      "path": "docs/problem-format.md",
+      "required_marker": "These records are manifest metadata only.",
+      "marker_status": "marker_present"
+    }
+  ],
+  "evidence_anchor_count": 41,
+  "missing_evidence_anchor_count": 0,
+  "missing_evidence_anchor_records": [],
+  "evidence_anchor_records": [
+    {
+      "record_id": "loader_problem_dataclass",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "class Problem:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_load_problem",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def load_problem(problem_dir: str | Path) -> Problem:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_task_file",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "task_path = d / \"task_description.txt\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_metrics_file",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "metrics_path = d / \"metrics.yaml\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_validate_file",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "validate_path = d / \"validate.py\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_seed_dir",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "seed_dir = d / \"initial_programs\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_context_manifest_names",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "_CONTEXT_MANIFEST_NAMES = (\"context.yaml\", \"context.yml\")",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_seed_policy_names",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "_SEED_POLICY_MANIFEST_NAMES = (\"seed_policy.yaml\", \"seed_policy.yml\")",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_codebase_integration_names",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "_CODEBASE_INTEGRATION_METADATA_NAMES",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_context_files",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def _load_context_files",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_initial_workspaces",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def _load_initial_workspaces",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_seed_policy",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def _load_seed_workspace_policy",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_metric_schema",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def _normalize_metric_schema",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_config_embedded_only",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def _problem_config_declares_embedded_only_evaluation",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_eval_stages",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "eval_stages:            list[dict] = field(default_factory=list)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_candidate_language_runners",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "candidate_language_runners: list[dict] = field(default_factory=list)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_candidate_build_systems",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "candidate_build_systems: list[dict] = field(default_factory=list)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_eval_stage_validation",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "def _validate_eval_stages",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_candidate_runner_validation",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "def _validate_candidate_language_runners",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_cascade",
+      "path": "libreevolve/core/evaluator.py",
+      "required_marker": "class CascadeEvaluator:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_stage_preflight",
+      "path": "libreevolve/core/evaluator.py",
+      "required_marker": "preflight_evaluator_contracts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_validate_path_metadata",
+      "path": "libreevolve/core/evaluator.py",
+      "required_marker": "\"validate_path\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_tests_minimal",
+      "path": "tests/core/test_loader.py",
+      "required_marker": "assert isinstance(load_problem(_make(t)), Problem)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_tests_context",
+      "path": "tests/core/test_loader.py",
+      "required_marker": "context.yaml",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_tests_seed_policy",
+      "path": "tests/core/test_loader.py",
+      "required_marker": "seed_policy",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_tests_embedded_only",
+      "path": "tests/core/test_loader.py",
+      "required_marker": "test_allows_missing_validate_py_for_embedded_only_problem_config",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_tests_stage_validate",
+      "path": "tests/core/test_evaluator.py",
+      "required_marker": "stage_validate.py",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "examples_workspace_math",
+      "path": "tests/test_examples.py",
+      "required_marker": "test_workspace_math_loader_records_nested_static_seed_workspace",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "examples_embedded_evaluate",
+      "path": "tests/test_examples.py",
+      "required_marker": "test_embedded_evaluate_example_loads_without_external_validate_py",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "workspace_math_example",
+      "path": "libreevolve/problems/examples/workspace_math",
+      "required_marker": "codebase_integration.yaml",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "embedded_evaluate_example",
+      "path": "libreevolve/problems/examples/embedded_evaluate_math",
+      "required_marker": "config.yaml",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_problem_layout_sidecar",
+      "path": "papers/readme_problem_layout_boundary.json",
+      "required_marker": "readme_problem_layout",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "validator_execution_sidecar",
+      "path": "papers/validator_execution_boundary.json",
+      "required_marker": "validator_execution_boundary",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "embedded_evaluator_sidecar",
+      "path": "papers/embedded_evaluator_boundary.json",
+      "required_marker": "embedded_entrypoint_without_full_figure3_parity",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "workspace_materialization_sidecar",
+      "path": "papers/workspace_materialization_boundary.json",
+      "required_marker": "workspace_materialization_boundary",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_language_sidecar",
+      "path": "papers/candidate_language_runner_boundary.json",
+      "required_marker": "candidate_language_runner_boundary",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "benchmark_fixture_sidecar",
+      "path": "papers/benchmark_fixture_readiness_boundary.json",
+      "required_marker": "benchmark_fixture_readiness_boundary",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "problem_formulation_sidecar",
+      "path": "papers/problem_formulation_provenance_boundary.json",
+      "required_marker": "problem_formulation_provenance_boundary",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_todo_owner",
+      "path": "docs/todo/readme.md",
+      "required_marker": "Add problem-format guide loader-contract drift evidence.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "code_todo_candidate_workspace",
+      "path": "docs/todo/code.md",
+      "required_marker": "Candidate Workspace Fidelity",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "papers_todo_validator",
+      "path": "docs/todo/papers.md",
+      "required_marker": "validator",
+      "marker_status": "marker_present"
+    }
+  ],
+  "problem_format_contract_map_status": "problem_format_structural_loader_contract_map_present",
+  "required_evidence_fields": [
+    "problem_format_section_inventory",
+    "required_layout_file_markers",
+    "context_manifest_semantics_markers",
+    "codebase_integration_metadata_markers",
+    "task_and_metrics_contract_markers",
+    "validator_signature_and_stage_markers",
+    "candidate_runner_declaration_markers",
+    "evaluation_semantics_markers",
+    "initial_program_and_seed_policy_markers",
+    "mutation_mode_markers",
+    "loader_source_anchor_map",
+    "config_and_evaluator_anchor_map",
+    "focused_loader_evaluator_example_tests",
+    "sidecar_boundary_anchor_map",
+    "active_todo_owner_anchor",
+    "semantic_problem_format_claim_verifier",
+    "per_manifest_key_executable_trace",
+    "problem_format_docs_ci_drift_gate",
+    "new_problem_surface_detector",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "semantic_problem_format_claim_verifier": "not_recorded_locally",
+    "per_manifest_key_executable_trace": "not_recorded_locally",
+    "problem_format_docs_ci_drift_gate": "not_recorded_locally",
+    "new_problem_surface_detector": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records docs/problem-format.md section and claim markers for required layout, context manifests, codebase integration metadata, task and metrics files, validator signatures, configured evaluator stages, candidate runner declarations, evaluation semantics, seed workspaces, seed policy, mutation modes, and unsupported runner scope. It also records loader/config/evaluator source anchors, focused loader/evaluator/example test anchors, example path anchors, sidecar anchors, and active TODO ownership. It does not claim semantic problem-format claim verification, per-manifest-key executable traces, a problem-format docs CI drift gate, a new problem-surface detector, or owner review signoff."
+}

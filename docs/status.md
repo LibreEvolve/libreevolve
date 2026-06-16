@@ -1324,6 +1324,7 @@ Important limits:
   `papers/readme_documentation_map_boundary.json`,
   `papers/readme_repository_layout_boundary.json`,
   `papers/readme_problem_layout_boundary.json`,
+  `papers/problem_format_loader_contract_boundary.json`,
   `papers/readme_quick_start_smoke_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
@@ -1408,6 +1409,15 @@ Important limits:
   active TODO ownership. This is not semantic loader-contract verification, a
   dedicated minimal-problem smoke fixture, full problem-format long-contract
   drift validation, a new problem-surface detector, or owner review signoff.
+- Problem-format loader-contract evidence now records `docs/problem-format.md`
+  section and claim markers for required layout, context manifests,
+  codebase-integration metadata, task and metrics files, validator signatures,
+  configured evaluator stages, candidate runner declarations, evaluation
+  semantics, seed workspaces, seed policy, mutation modes, and unsupported
+  runner scope, plus loader/config/evaluator, focused loader/evaluator/example
+  test, example path, sidecar, and TODO anchors. This is not semantic
+  problem-format claim verification, per-manifest-key executable traces, a
+  docs CI drift gate, new problem-surface detection, or owner review signoff.
 - README quick-start smoke evidence now records the no-provider README command
   markers, focused smoke-test markers, expected `readme_smoke_sorting` run
   name, sorting example path, `max_llm_calls` stop reason, `Best fitness`

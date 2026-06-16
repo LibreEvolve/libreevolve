@@ -251,15 +251,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     non-static/external-validator causal linkage. That omission shows the
     status ledger can lag behind newly identified AlphaEvolve-facing gaps even
     when README, ROADMAP, paper, and active TODO surfaces stay conservative.
-    A second current drift example is the top-level `docs/status.md` run-
-    artifact bullet: it still summarizes `runs/` outputs as manifests,
-    histories, prompts, failures, best candidates, and plugin/evaluator
-    artifacts, while active code/paper TODOs now identify generated
-    `prompt_current_binding_table.jsonl`, `prompt_prior_score_table.jsonl`,
-    and `paper_artifacts/...` as documented or emitted run artifacts whose
-    collision/overwrite lifecycle is not yet unified. The status ledger does
-    not expose that artifact-lifecycle boundary in its high-level run-artifact
-    summary.
+    A resolved narrow drift example is the top-level `docs/status.md` run-
+    artifact bullet: it previously summarized `runs/` outputs only as
+    manifests, histories, prompts, failures, best candidates, and
+    plugin/evaluator artifacts, while active code/paper TODOs identified
+    generated `prompt_current_binding_table.jsonl`,
+    `prompt_prior_score_table.jsonl`, and `paper_artifacts/...` as documented
+    or emitted run artifacts whose collision/overwrite lifecycle is not yet
+    unified. The status ledger now names the prompt-table artifacts and keeps
+    the unified collision/overwrite, artifact-hash, schema, restore, and
+    `show` inspection proof as an explicit open paper-facing lifecycle
+    boundary.
     A resolved narrow drift example is backend support: `docs/status.md`
     previously listed only OpenAI, Anthropic, and Ollama under "Implemented
     today", while the root README and `docs/backends.md` described custom

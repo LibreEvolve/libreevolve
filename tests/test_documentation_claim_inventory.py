@@ -80,6 +80,7 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert inventory["status_ledger_unique_local_path_ref_count"] == 115
     assert inventory["status_ledger_local_path_ref_count"] == 154
     assert inventory["status_ledger_missing_local_path_refs"] == []
+    assert "paper_artifacts/..." not in inventory["status_ledger_unique_local_path_refs"]
     assert (
         inventory["status_ledger_local_path_ref_status"]
         == "all_status_ledger_local_path_refs_present"

@@ -1033,6 +1033,8 @@ def _status_ledger_local_path_records(root: Path, text: str) -> list[dict[str, A
     records: list[dict[str, Any]] = []
     for match in BACKTICK_VALUE_RE.finditer(text):
         value = match.group(1).strip()
+        if "..." in value:
+            continue
         if not LOCAL_REPO_PATH_RE.match(value):
             continue
         path = root / value

@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Expose prompt-table run-artifact lifecycle boundaries in `docs/status.md`.
+  - Status: the `docs/status.md` run-artifact bullet now names prompt
+    current-binding/prior-score tables and keeps the missing unified
+    collision/overwrite cleanup, artifact-hash, schema, restore, and `show`
+    inspection proof for prompt-table exports and `paper_artifacts/...`
+    evidence explicitly scoped as open.
+  - Evidence: the root README lists `prompt_current_binding_table.jsonl` and
+    `prompt_prior_score_table.jsonl`; active paper/readme TODOs still track
+    lifecycle proof for prompt-table and `paper_artifacts/...` outputs.
+  - Remaining guard: the active run-artifacts guide TODO still needs a full
+    page-specific evidence map for artifact trees, lifecycle policy,
+    collision/overwrite cleanup lists, restore behavior, and inspection
+    semantics.
+  - Verification: regenerated documentation/status sidecars and focused
+    manifest checks include the updated status-ledger bullet hash.
+
 - [x] Align `docs/status.md` implemented backend support with README/backend
       docs.
   - Status: the `docs/status.md` "Implemented today" list now includes

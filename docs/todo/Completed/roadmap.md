@@ -2,6 +2,28 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add structural TODO-ledger ownership inventory.
+  - Status: `papers/todo_ledger_ownership_boundary.json` now records the
+    four canonical TODO owner files, active/completed counts by owner,
+    active-versus-completed marker drift, raw checklist completion, and an
+    exact normalized-title duplicate scan across active and completed TODO
+    ledgers.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/todo_ledger_ownership_boundary.py`
+    derives the sidecar from `docs/todo/code.md`, `docs/todo/papers.md`,
+    `docs/todo/readme.md`, `docs/todo/roadmap.md`, and their completed-ledger
+    companions. `tests/test_todo_ledger_ownership_boundary.py` rejects
+    canonical-gap overclaims, owner-count drift, duplicate-scan drift, and
+    missing-evidence drift. `libreevolve/tools/paper_manifest.py` requires the
+    checked-in sidecar to match the current TODO ledgers.
+  - Remaining guard: the active ROADMAP TODO still tracks the real missing
+    canonical gap model: stable underlying-gap ids, derivative/documentation
+    relationships, cross-document rollup rules, source/paper anchors,
+    implementation evidence links, stale duplicate detection, and canonical
+    gap completion percentages.
+  - Verification: focused TODO-ledger ownership tests and paper-manifest
+    validation cover the structural sidecar contract.
+
 - [x] Add structural ROADMAP readiness weighting evidence.
   - Status: `papers/roadmap_readiness_boundary.json` now records a
     machine-readable readiness taxonomy with four stable categories,

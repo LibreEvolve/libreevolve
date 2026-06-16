@@ -2856,6 +2856,13 @@ Implemented:
   readiness, canonical underlying-gap deduplication, source-span disposition
   completeness, per-category test-gate coverage, benchmark reproduction
   certification, or operational release readiness.
+- `papers/todo_ledger_ownership_boundary.json`: TODO-ledger ownership sidecar
+  with the four owner files, active/completed counts, active-ledger checked
+  marker drift, raw checklist completion, and exact normalized-title duplicate
+  groups. It is not evidence of canonical underlying-gap ids,
+  derivative/documentation relationships, rollup rules, source/paper anchor
+  mappings, implementation evidence links, stale duplicate detection, or
+  canonical-gap completion percentages.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

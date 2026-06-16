@@ -78,17 +78,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: `docs/todo/code.md`, `docs/todo/roadmap.md`,
     `docs/todo/readme.md`, and `docs/todo/papers.md` all carry legitimate
     open items, and the paper-manifest gate validates selected active and
-    completed TODO evidence paths for paper-index rows. The current raw
-    percentage is derived from checklist counts only, while active TODOs can
+    completed TODO evidence paths for paper-index rows.
+    `papers/todo_ledger_ownership_boundary.json` now records the four owner
+    ledgers, active/completed counts, active-versus-completed marker drift,
+    raw checklist completion, and an exact normalized-title duplicate scan.
+    `papers/roadmap_readiness_boundary.json` separately records the weighted
+    TODO-ledger readiness model. The current raw and weighted percentages are
+    still derived from checklist counts only, while active TODOs can
     intentionally overlap around provider parity, benchmark evidence,
     documentation drift, readiness criteria, and paper-source boundaries.
-  - Current gap: there is no canonical underlying-gap id, owner ledger,
-    duplicate/derivative relationship, consolidation report, or stale-duplicate
-    detector across active and completed TODO ledgers. A newly identified
-    problem can be counted multiple times, a completed document-specific TODO
-    can leave its implementation owner ambiguous, and repeated audit slices can
-    inflate the denominator without proving that a distinct AlphaEvolve
-    requirement was discovered.
+  - Current gap: there is no canonical underlying-gap id,
+    duplicate/derivative relationship, consolidation report, semantic
+    duplicate detector, or stale-duplicate detector across active and completed
+    TODO ledgers. A newly identified problem can be counted multiple times, a
+    completed document-specific TODO can leave its implementation owner
+    ambiguous, and repeated audit slices can inflate the denominator without
+    proving that a distinct AlphaEvolve requirement was discovered.
   - Required result: add a TODO-ledger ownership model that assigns stable
     gap ids, canonical owner ledgers, derivative/documentation relationships,
     source/paper anchors, implementation evidence links, and completion

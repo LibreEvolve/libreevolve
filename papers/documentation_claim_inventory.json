@@ -892,7 +892,7 @@
     "without"
   ],
   "status_ledger_signal_record_count": 428,
-  "status_ledger_unique_local_path_ref_count": 117,
+  "status_ledger_unique_local_path_ref_count": 118,
   "status_ledger_unique_local_path_refs": [
     "ROADMAP.md",
     "docs/run-artifacts.md",
@@ -1007,13 +1007,14 @@
     "papers/systems_result_readiness_boundary.json",
     "papers/table1_capability_exhibit_boundary.json",
     "papers/task_specification_boundary.json",
+    "papers/todo_ledger_ownership_boundary.json",
     "papers/validator_artifact_promotion_boundary.json",
     "papers/validator_execution_boundary.json",
     "papers/whole_run_source_workspace_integrity_boundary.json",
     "papers/workspace_materialization_boundary.json"
   ],
   "status_ledger_missing_local_path_refs": [],
-  "status_ledger_local_path_ref_count": 157,
+  "status_ledger_local_path_ref_count": 159,
   "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
   "status_ledger_bullet_records": [
     {
@@ -4827,10 +4828,10 @@
       "bullet_ordinal": 163,
       "section": "important_limits",
       "line_start": 1244,
-      "line_end": 1263,
+      "line_end": 1268,
       "file_text_char_start": 87282,
-      "file_text_char_end": 88648,
-      "text_sha256": "2f8aadbc65759c9f36b2fa01b563e9c59f65d1eb89cabb7ea2d2dbb3b9bb2238",
+      "file_text_char_end": 88968,
+      "text_sha256": "e9aba04257d5ae2861aba67d6e82eabbda0823f635cb8752dc69fa77731533cf",
       "signal_terms": [
         "boundary",
         "implemented",
@@ -4844,6 +4845,8 @@
         "docs/run-artifacts.md",
         "docs/status.md",
         "papers/roadmap_readiness_boundary.json",
+        "papers/todo_ledger_ownership_boundary.json",
+        "papers/todo_ledger_ownership_boundary.json",
         "papers/roadmap_readiness_boundary.json",
         "papers/documentation_truthfulness_boundary.json",
         "papers/documentation_claim_inventory.json"
@@ -4874,21 +4877,33 @@
           "exists": true
         },
         {
+          "path": "papers/todo_ledger_ownership_boundary.json",
+          "text_char_start": 1189,
+          "text_char_end": 1231,
+          "exists": true
+        },
+        {
+          "path": "papers/todo_ledger_ownership_boundary.json",
+          "text_char_start": 1495,
+          "text_char_end": 1537,
+          "exists": true
+        },
+        {
           "path": "papers/roadmap_readiness_boundary.json",
-          "text_char_start": 1223,
-          "text_char_end": 1261,
+          "text_char_start": 1543,
+          "text_char_end": 1581,
           "exists": true
         },
         {
           "path": "papers/documentation_truthfulness_boundary.json",
-          "text_char_start": 1267,
-          "text_char_end": 1314,
+          "text_char_start": 1587,
+          "text_char_end": 1634,
           "exists": true
         },
         {
           "path": "papers/documentation_claim_inventory.json",
-          "text_char_start": 1323,
-          "text_char_end": 1364,
+          "text_char_start": 1643,
+          "text_char_end": 1684,
           "exists": true
         }
       ]
@@ -4896,10 +4911,10 @@
     {
       "bullet_ordinal": 164,
       "section": "important_limits",
-      "line_start": 1264,
-      "line_end": 1284,
-      "file_text_char_start": 88649,
-      "file_text_char_end": 90034,
+      "line_start": 1269,
+      "line_end": 1289,
+      "file_text_char_start": 88969,
+      "file_text_char_end": 90354,
       "text_sha256": "caaa1de784d3cf4080dd3072bce2a83b998815b77caf2d30f459f8de81f6ddf0",
       "signal_terms": [
         "boundary",
@@ -4938,10 +4953,10 @@
     {
       "bullet_ordinal": 165,
       "section": "important_limits",
-      "line_start": 1285,
-      "line_end": 1297,
-      "file_text_char_start": 90035,
-      "file_text_char_end": 90940,
+      "line_start": 1290,
+      "line_end": 1302,
+      "file_text_char_start": 90355,
+      "file_text_char_end": 91260,
       "text_sha256": "217f085100b4126ddd6b8c8abca06ed2e16acd58ff6781d55abfd417ed5a8fbf",
       "signal_terms": [
         "missing",
@@ -4955,10 +4970,10 @@
     {
       "bullet_ordinal": 166,
       "section": "important_limits",
-      "line_start": 1298,
-      "line_end": 1312,
-      "file_text_char_start": 90941,
-      "file_text_char_end": 92057,
+      "line_start": 1303,
+      "line_end": 1317,
+      "file_text_char_start": 91261,
+      "file_text_char_end": 92377,
       "text_sha256": "cd0a3b1006d7d7435c2e10e7db7a0629a1b51b040fbd029a75d82c5a2a66b3c2",
       "signal_terms": [
         "not"
@@ -4970,10 +4985,10 @@
     {
       "bullet_ordinal": 167,
       "section": "important_limits",
-      "line_start": 1313,
-      "line_end": 1324,
-      "file_text_char_start": 92058,
-      "file_text_char_end": 92894,
+      "line_start": 1318,
+      "line_end": 1329,
+      "file_text_char_start": 92378,
+      "file_text_char_end": 93214,
       "text_sha256": "2592de9f85665aac7d9679f7ea2bab9ea9a2f7ae7d2e1f191cd4ea1624d9f766",
       "signal_terms": [
         "implemented",
@@ -4988,10 +5003,10 @@
     {
       "bullet_ordinal": 168,
       "section": "important_limits",
-      "line_start": 1325,
-      "line_end": 1330,
-      "file_text_char_start": 92895,
-      "file_text_char_end": 93350,
+      "line_start": 1330,
+      "line_end": 1335,
+      "file_text_char_start": 93215,
+      "file_text_char_end": 93670,
       "text_sha256": "3874d3a0727d10d999b81d4482e243061d2903cea0f0d419c24682766e09a815",
       "signal_terms": [
         "boundary",
@@ -5014,10 +5029,10 @@
     {
       "bullet_ordinal": 169,
       "section": "important_limits",
-      "line_start": 1331,
-      "line_end": 1334,
-      "file_text_char_start": 93351,
-      "file_text_char_end": 93601,
+      "line_start": 1336,
+      "line_end": 1339,
+      "file_text_char_start": 93671,
+      "file_text_char_end": 93921,
       "text_sha256": "96b9ffa308c727d371222636d8f2c7af9f116c14d50285654a15353cd95ab565",
       "signal_terms": [
         "boundary",
@@ -5040,10 +5055,10 @@
     {
       "bullet_ordinal": 170,
       "section": "important_limits",
-      "line_start": 1335,
-      "line_end": 1338,
-      "file_text_char_start": 93602,
-      "file_text_char_end": 93878,
+      "line_start": 1340,
+      "line_end": 1343,
+      "file_text_char_start": 93922,
+      "file_text_char_end": 94198,
       "text_sha256": "08e65f53d27397f06f6006f30b9526e6824d97b88e34aad422055a4e294adcf3",
       "signal_terms": [
         "boundary",
@@ -5066,10 +5081,10 @@
     {
       "bullet_ordinal": 171,
       "section": "important_limits",
-      "line_start": 1339,
-      "line_end": 1345,
-      "file_text_char_start": 93879,
-      "file_text_char_end": 94334,
+      "line_start": 1344,
+      "line_end": 1350,
+      "file_text_char_start": 94199,
+      "file_text_char_end": 94654,
       "text_sha256": "cef2d51655b8a9231d73ad2b491888ee8aeb06146fc7ebebb50c2e4ca88a6b02",
       "signal_terms": [
         "implemented",
@@ -5083,10 +5098,10 @@
     {
       "bullet_ordinal": 172,
       "section": "important_limits",
-      "line_start": 1346,
-      "line_end": 1351,
-      "file_text_char_start": 94335,
-      "file_text_char_end": 94788,
+      "line_start": 1351,
+      "line_end": 1356,
+      "file_text_char_start": 94655,
+      "file_text_char_end": 95108,
       "text_sha256": "74ab9a684c541fd5753ec199eff88ad4a6438682eda77fe0eec3d6234fd55444",
       "signal_terms": [
         "record"
@@ -5098,10 +5113,10 @@
     {
       "bullet_ordinal": 173,
       "section": "important_limits",
-      "line_start": 1352,
-      "line_end": 1355,
-      "file_text_char_start": 94789,
-      "file_text_char_end": 95073,
+      "line_start": 1357,
+      "line_end": 1360,
+      "file_text_char_start": 95109,
+      "file_text_char_end": 95393,
       "text_sha256": "19b485e815354e8e95b534752944a2a21eaad4a6dd39abd570d914e90b78ab70",
       "signal_terms": [
         "boundary",
@@ -5125,10 +5140,10 @@
     {
       "bullet_ordinal": 174,
       "section": "important_limits",
-      "line_start": 1356,
-      "line_end": 1361,
-      "file_text_char_start": 95074,
-      "file_text_char_end": 95502,
+      "line_start": 1361,
+      "line_end": 1366,
+      "file_text_char_start": 95394,
+      "file_text_char_end": 95822,
       "text_sha256": "dbdc50623d7ca15669d136a4831a035f8205bbc0edb9528cb10d054b7d706deb",
       "signal_terms": [
         "boundary",
@@ -5151,10 +5166,10 @@
     {
       "bullet_ordinal": 175,
       "section": "important_limits",
-      "line_start": 1362,
-      "line_end": 1365,
-      "file_text_char_start": 95503,
-      "file_text_char_end": 95803,
+      "line_start": 1367,
+      "line_end": 1370,
+      "file_text_char_start": 95823,
+      "file_text_char_end": 96123,
       "text_sha256": "8b01566d962b7001a047941df18433f2d609d12bb6b803a51f4f15c0a4d29508",
       "signal_terms": [
         "boundary",
@@ -5177,10 +5192,10 @@
     {
       "bullet_ordinal": 176,
       "section": "important_limits",
-      "line_start": 1366,
-      "line_end": 1372,
-      "file_text_char_start": 95804,
-      "file_text_char_end": 96263,
+      "line_start": 1371,
+      "line_end": 1377,
+      "file_text_char_start": 96124,
+      "file_text_char_end": 96583,
       "text_sha256": "d781ff70e0d9740d64b2e1d5ddc424b41133a79206981c739d9fc819575c82e9",
       "signal_terms": [
         "boundary",
@@ -5204,10 +5219,10 @@
     {
       "bullet_ordinal": 177,
       "section": "important_limits",
-      "line_start": 1373,
-      "line_end": 1377,
-      "file_text_char_start": 96264,
-      "file_text_char_end": 96640,
+      "line_start": 1378,
+      "line_end": 1382,
+      "file_text_char_start": 96584,
+      "file_text_char_end": 96960,
       "text_sha256": "732a8cc88b44f6d2c42634a3ba77b0755f29ba9b822e4f2fdae05b216a3b849f",
       "signal_terms": [
         "boundary",
@@ -5230,10 +5245,10 @@
     {
       "bullet_ordinal": 178,
       "section": "important_limits",
-      "line_start": 1378,
-      "line_end": 1384,
-      "file_text_char_start": 96641,
-      "file_text_char_end": 97170,
+      "line_start": 1383,
+      "line_end": 1389,
+      "file_text_char_start": 96961,
+      "file_text_char_end": 97490,
       "text_sha256": "35b89459b10fe09980a96f749a7c6c9d6978b31fc2017286a112c582b5013b6f",
       "signal_terms": [
         "boundary",
@@ -5256,10 +5271,10 @@
     {
       "bullet_ordinal": 179,
       "section": "important_limits",
-      "line_start": 1385,
-      "line_end": 1388,
-      "file_text_char_start": 97171,
-      "file_text_char_end": 97417,
+      "line_start": 1390,
+      "line_end": 1393,
+      "file_text_char_start": 97491,
+      "file_text_char_end": 97737,
       "text_sha256": "ca3162ffe470661248d4fbaf8e7b9f3046e7d8b8bd3e3f08ba15777e7bcbf6dd",
       "signal_terms": [
         "boundary",
@@ -5282,10 +5297,10 @@
     {
       "bullet_ordinal": 180,
       "section": "important_limits",
-      "line_start": 1389,
-      "line_end": 1390,
-      "file_text_char_start": 97418,
-      "file_text_char_end": 97545,
+      "line_start": 1394,
+      "line_end": 1395,
+      "file_text_char_start": 97738,
+      "file_text_char_end": 97865,
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
       "signal_terms": [],
       "signal_term_count": 0,
@@ -5295,10 +5310,10 @@
     {
       "bullet_ordinal": 181,
       "section": "important_limits",
-      "line_start": 1391,
-      "line_end": 1393,
-      "file_text_char_start": 97546,
-      "file_text_char_end": 97765,
+      "line_start": 1396,
+      "line_end": 1398,
+      "file_text_char_start": 97866,
+      "file_text_char_end": 98085,
       "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
       "signal_terms": [
         "not",

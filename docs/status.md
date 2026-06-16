@@ -1257,7 +1257,12 @@ Important limits:
   current. `papers/roadmap_readiness_boundary.json` separately records
   stable readiness categories, weights, raw TODO-ledger completion, and
   weighted TODO-ledger completion while keeping semantic AlphaEvolve
-  implementation readiness false; those boundaries are tracked by
+  implementation readiness false. `papers/todo_ledger_ownership_boundary.json`
+  records TODO owner files, active/completed counts, active-ledger checked
+  marker drift, and exact normalized-title duplicate groups while keeping
+  canonical underlying-gap ids and canonical completion percentages absent;
+  those boundaries are tracked by
+  `papers/todo_ledger_ownership_boundary.json`,
   `papers/roadmap_readiness_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.

@@ -1,0 +1,295 @@
+{
+  "active_todo_ref_count": 16,
+  "boundary_status": "bounded_prompt_context_readiness_matrix_without_full_prompt_system_gate",
+  "claim_boundary": "This boundary records prompt/context readiness criteria tied to the bounded prompt/context-system matrix. It does not claim a prompt-role capability matrix, deterministic context summarization, all-role provider-token section packing, separate prompt-format source provenance, full prompt replay-retention policy, audit-grade retrieval source integrity, semantic proposal memory, calibrated meta-prompt rewards, prompt-database archive lifecycle, prompt/context benchmark evidence, stale-readiness detector, or owner review signoff.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "all_role_provider_token_section_packing": "not_recorded_locally",
+    "audit_grade_retrieval_source_integrity": "not_recorded_locally",
+    "calibrated_meta_prompt_rewards": "not_recorded_locally",
+    "deterministic_context_summarization": "not_recorded_locally",
+    "full_prompt_replay_retention_policy": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "prompt_context_benchmark_evidence": "not_recorded_locally",
+    "prompt_database_archive_lifecycle": "not_recorded_locally",
+    "prompt_role_capability_matrix": "not_recorded_locally",
+    "semantic_proposal_memory": "not_recorded_locally",
+    "separate_prompt_format_source_provenance": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally"
+  },
+  "readiness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "prompt-role capability matrix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "role-specific template compatibility",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "prompt_role_capability_matrix",
+      "current_scope": "mutation-template schema/dry-run checks and bounded role evidence",
+      "missing_readiness": "prompt-role capability matrix proving role-specific template compatibility and ownership",
+      "prompt_surface": "mutation, critique, feedback, meta-prompt, and custom role templates",
+      "readiness_status": "mutation_template_evidence_without_role_matrix",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_prompt_context_system_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/prompt_example_copy_boundary.json"
+        }
+      ],
+      "validation_gate": "prompt-role capability matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "deterministic context summarization",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "context-source selection",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "context_selection_and_summarization",
+      "current_scope": "deterministic include/source provenance and first-N truncation",
+      "missing_readiness": "deterministic context summarization and source-selection policy",
+      "prompt_surface": "context source selection, ranking, truncation, and summarization",
+      "readiness_status": "source_provenance_without_summarization_policy",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/task_specification_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_truthfulness_boundary.json"
+        }
+      ],
+      "validation_gate": "context-source selection and summarization policy"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "all-role provider-token section packing",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "token section packing",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "all_role_token_section_packing",
+      "current_scope": "mutation-path section packing and role token diagnostics",
+      "missing_readiness": "all-role provider-token section packing",
+      "prompt_surface": "selected-backend token caps and all prompt-role section packing",
+      "readiness_status": "mutation_packing_without_all_role_provider_tokens",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/prompt_section_packing_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/provider_diagnostics_replay_boundary.json"
+        }
+      ],
+      "validation_gate": "all-role provider-token section packing"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "separate prompt-format source provenance",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "full prompt replay-retention policy",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "prompt_format_and_replay_retention",
+      "current_scope": "effective prompt-format distribution plus bounded retention surfaces",
+      "missing_readiness": "separate prompt-format source provenance and full prompt replay-retention policy",
+      "prompt_surface": "prompt-format alternatives, source provenance, retained prompts, and replay policy",
+      "readiness_status": "effective_format_and_bounded_retention_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/stochastic_prompt_format_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/runtime_rng_replay_boundary.json"
+        }
+      ],
+      "validation_gate": "prompt-format source provenance and replay-retention policy"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "audit-grade retrieval source integrity",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "semantic proposal memory",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "retrieval_and_proposal_memory_integrity",
+      "current_scope": "bounded retrieval provenance and current-run proposal reports",
+      "missing_readiness": "audit-grade retrieval source integrity and semantic proposal memory",
+      "prompt_surface": "retrieval sources, proposal memory, hypotheses, and failed-proposal reuse",
+      "readiness_status": "bounded_retrieval_and_exact_proposal_reports",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/deepevolve_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/proposal_diversity_boundary.json"
+        }
+      ],
+      "validation_gate": "retrieval integrity and semantic proposal-memory policy"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "calibrated meta-prompt rewards",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "prompt-database archive lifecycle",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "meta_prompt_and_prompt_database_lifecycle",
+      "current_scope": "child-score prompt rewards and local prompt-arm database",
+      "missing_readiness": "calibrated meta-prompt rewards and prompt-database archive lifecycle",
+      "prompt_surface": "meta-prompt rewards, PromptDatabase, prompt archives, and prompt-side replay",
+      "readiness_status": "child_score_rewards_and_local_prompt_arm_history",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/llm_role_scheduler_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/implementation_evidence_map_boundary.json"
+        }
+      ],
+      "validation_gate": "meta-prompt reward calibration and prompt database lifecycle"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "prompt/context benchmark evidence",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "complete AlphaEvolve prompt/context readiness",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "prompt_context_benchmark_evidence",
+      "current_scope": "bounded sidecars without prompt/context benchmark acceptance evidence",
+      "missing_readiness": "prompt/context benchmark evidence before full prompt-system readiness claims",
+      "prompt_surface": "prompt/context benchmarks, ablations, and cross-document readiness claims",
+      "readiness_status": "sidecar_matrix_without_benchmark_acceptance",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_prompt_context_system_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/proposal_score_boundary.json"
+        }
+      ],
+      "validation_gate": "prompt/context benchmark evidence"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "stale-readiness detector",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner review signoff",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "current_scope": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "missing_readiness": "stale-readiness detector and owner signoff before prompt/context parity claims",
+      "prompt_surface": "README, ROADMAP, papers, generated inventories, prompt docs, and owner readiness claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "readiness_criterion_count": 8,
+  "required_evidence_fields": [
+    "prompt_role_capability_matrix",
+    "context_selection_and_summarization",
+    "all_role_token_section_packing",
+    "prompt_format_and_replay_retention",
+    "retrieval_and_proposal_memory_integrity",
+    "meta_prompt_and_prompt_database_lifecycle",
+    "prompt_context_benchmark_evidence",
+    "stale_readiness_and_owner_signoff"
+  ],
+  "schema": "libreevolve.roadmap_prompt_context_readiness_boundary.v1",
+  "sidecar_ref_count": 16,
+  "source_active_todo_ref_count": 18,
+  "source_criterion_count": 9,
+  "source_prompt_boundary_input": "papers/roadmap_prompt_context_system_boundary.json",
+  "source_sidecar_ref_count": 17
+}

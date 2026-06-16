@@ -3031,6 +3031,13 @@ Implemented:
   semantic proposal memory, calibrated meta-prompt rewards,
   prompt-database archive lifecycle, prompt/context benchmark evidence,
   stale-readiness detector, or owner review signoff.
+- `papers/roadmap_prompt_context_readiness_boundary.json`: ROADMAP
+  prompt/context readiness sidecar with eight criteria for prompt-role
+  capability, context selection/summarization, all-role token section packing,
+  prompt-format and replay retention, retrieval/proposal-memory integrity,
+  meta-prompt and prompt-database lifecycle, prompt/context benchmark
+  evidence, and stale readiness/owner signoff. It is not evidence that those
+  prompt-system readiness mechanisms are implemented.
 - `papers/roadmap_evaluation_cascade_boundary.json`: ROADMAP
   evaluation-cascade sidecar with ten criteria for cascade transition
   artifacts, artifact schema/hash coverage, budget ownership, feedback

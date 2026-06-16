@@ -15554,3 +15554,23 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     budget accounting, external environment replay, end-to-end resumed trace
     proof, stale-readiness detector, and owner signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP prompt/context readiness matrix.
+  - Spec evidence: prompt/context-system claims require more than individual
+    prompt-template, context, token-packing, retrieval, proposal-memory,
+    meta-prompt, and PromptDatabase sidecars.
+  - Status: `papers/roadmap_prompt_context_readiness_boundary.json` now records
+    eight readiness criteria for prompt-role capability, context
+    selection/summarization, all-role token section packing, prompt-format and
+    replay retention, retrieval/proposal-memory integrity, meta-prompt and
+    prompt-database lifecycle, prompt/context benchmark evidence, and stale
+    readiness/owner signoff. It links the existing prompt/context-system
+    boundary input, sidecar refs, active TODO refs, validation-gate labels,
+    readiness labels, and explicit missing-evidence fields. The paper-manifest
+    gate now requires and validates the sidecar at the repo root.
+  - Remaining roadmap gap: the actual prompt-role capability matrix,
+    deterministic context summarization, all-role provider-token section
+    packing, separate prompt-format source provenance, full prompt
+    replay-retention policy, audit-grade retrieval source integrity, semantic
+    proposal memory, calibrated meta-prompt rewards, prompt-database archive
+    lifecycle, prompt/context benchmark evidence, stale-readiness detector, and
+    owner review signoff remain active in `docs/todo/roadmap.md`.

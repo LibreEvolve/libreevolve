@@ -521,6 +521,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     context-source selection, token section packing, stochastic prompt-format
     provenance, retention/replay policy, retrieval integrity, proposal-memory
     semantics, meta-prompt reward evidence, and prompt-database lifecycle.
+    `papers/roadmap_prompt_context_readiness_boundary.json` now records a
+    bounded eight-criterion readiness matrix for prompt-role capability,
+    context selection/summarization, all-role token section packing,
+    prompt-format and replay retention, retrieval/proposal-memory integrity,
+    meta-prompt and prompt-database lifecycle, prompt/context benchmark
+    evidence, and stale readiness/owner signoff.
     Active code and paper TODOs already track role-specific template
     compatibility, all-role provider-token packing, separate stochastic format
     source provenance, structured prompt-context policy expansion,
@@ -529,9 +535,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current gap: there is no section-level prompt/context readiness rubric,
     capability matrix, or stale-readiness detector that proves these features
     compose into a safe AlphaEvolve-style prompt system, nor a guard preventing
-    one bounded prompt feature from implying full prompt/context parity.
+    one bounded prompt feature from implying full prompt/context parity. The
+    sidecars are bounded feature/readiness maps, not a full prompt-system gate.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: prompt-role capability matrix, deterministic context
+    readiness sidecar: prompt-role capability matrix, deterministic context
     summarization, all-role provider-token section packing, separate
     prompt-format source provenance, full prompt replay-retention policy,
     audit-grade retrieval source integrity, semantic proposal memory,

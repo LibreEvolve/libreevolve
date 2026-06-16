@@ -1285,6 +1285,7 @@ Important limits:
   `papers/roadmap_async_resumable_runtime_boundary.json`,
   `papers/roadmap_async_runtime_readiness_boundary.json`,
   `papers/roadmap_prompt_context_system_boundary.json`,
+  `papers/roadmap_prompt_context_readiness_boundary.json`,
   `papers/roadmap_evaluation_cascade_boundary.json`,
   `papers/roadmap_candidate_workspace_fidelity_boundary.json`,
   `papers/roadmap_multi_objective_search_boundary.json`,
@@ -1441,6 +1442,13 @@ Important limits:
   source integrity, semantic proposal memory, calibrated meta-prompt rewards,
   prompt-database archive lifecycle, prompt/context benchmark evidence,
   stale-readiness detector, or owner review signoff.
+- ROADMAP prompt/context readiness evidence now records eight criteria for
+  prompt-role capability, context selection/summarization, all-role token
+  section packing, prompt-format and replay retention, retrieval/proposal-
+  memory integrity, meta-prompt and prompt-database lifecycle, prompt/context
+  benchmark evidence, and stale readiness/owner signoff. This is not an
+  implemented prompt-system gate or proof of complete AlphaEvolve
+  prompt/context readiness.
 - ROADMAP evaluation-cascade evidence now records ten criteria for cascade
   transition artifacts, artifact schema/hash coverage, budget ownership,
   feedback calibration, statistical promotion policy, oracle independence,

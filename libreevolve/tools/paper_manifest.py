@@ -275,6 +275,10 @@ from libreevolve.problems.benchmarks.roadmap_prompt_context_system_boundary impo
     roadmap_prompt_context_system_boundary_record,
     validate_roadmap_prompt_context_system_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_prompt_context_readiness_boundary import (
+    roadmap_prompt_context_readiness_boundary_record,
+    validate_roadmap_prompt_context_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_evaluation_cascade_boundary import (
     roadmap_evaluation_cascade_boundary_record,
     validate_roadmap_evaluation_cascade_boundary,
@@ -852,6 +856,7 @@ ROADMAP_BACKEND_CONTROL_PLANE_READINESS_BOUNDARY_FILE = "papers/roadmap_backend_
 ROADMAP_ASYNC_RESUMABLE_RUNTIME_BOUNDARY_FILE = "papers/roadmap_async_resumable_runtime_boundary.json"
 ROADMAP_ASYNC_RUNTIME_READINESS_BOUNDARY_FILE = "papers/roadmap_async_runtime_readiness_boundary.json"
 ROADMAP_PROMPT_CONTEXT_SYSTEM_BOUNDARY_FILE = "papers/roadmap_prompt_context_system_boundary.json"
+ROADMAP_PROMPT_CONTEXT_READINESS_BOUNDARY_FILE = "papers/roadmap_prompt_context_readiness_boundary.json"
 ROADMAP_EVALUATION_CASCADE_BOUNDARY_FILE = "papers/roadmap_evaluation_cascade_boundary.json"
 ROADMAP_CANDIDATE_WORKSPACE_FIDELITY_BOUNDARY_FILE = "papers/roadmap_candidate_workspace_fidelity_boundary.json"
 ROADMAP_MULTI_OBJECTIVE_SEARCH_BOUNDARY_FILE = "papers/roadmap_multi_objective_search_boundary.json"
@@ -1532,6 +1537,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_async_resumable_runtime_boundary(root_path))
     issues.extend(_validate_roadmap_async_runtime_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_prompt_context_system_boundary(root_path))
+    issues.extend(_validate_roadmap_prompt_context_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_roadmap_candidate_workspace_fidelity_boundary(root_path))
     issues.extend(_validate_roadmap_multi_objective_search_boundary(root_path))
@@ -4867,6 +4873,43 @@ def _validate_roadmap_prompt_context_system_boundary(root_path: Path) -> list[Pa
             f"roadmap_prompt_context_system_boundary_{issue.code}",
             issue.message,
             "roadmap_prompt_context_system",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_prompt_context_readiness_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_PROMPT_CONTEXT_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_prompt_context_readiness_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_PROMPT_CONTEXT_READINESS_BOUNDARY_FILE} "
+                        "must emit ROADMAP prompt/context readiness metadata"
+                    ),
+                    "roadmap_prompt_context_readiness",
+                )
+            ]
+        return []
+    report = validate_roadmap_prompt_context_readiness_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_prompt_context_readiness_boundary_{issue.code}",
+            issue.message,
+            "roadmap_prompt_context_readiness",
         )
         for issue in report.issues
     ]

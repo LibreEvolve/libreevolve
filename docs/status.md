@@ -1326,6 +1326,7 @@ Important limits:
   `papers/readme_problem_layout_boundary.json`,
   `papers/problem_format_loader_contract_boundary.json`,
   `papers/readme_example_scope_boundary.json`,
+  `papers/readme_example_runs_boundary.json`,
   `papers/readme_quick_start_smoke_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
@@ -1427,6 +1428,14 @@ Important limits:
   active TODO ownership. This is not semantic scope-claim verification,
   runtime metadata comparison, a paper-comparable certification gate, new
   example-surface detection, or owner review signoff.
+- README example-runs evidence now records `examples/runs/README.md` markers,
+  checked-in fixture history row counts, best-program markers, legacy artifact
+  presence, modern artifact absence, documented `show` commands, CLI
+  legacy-show anchors, run-artifacts guide anchors, focused CLI show test
+  anchors, and active TODO ownership. This is not retained show-command
+  transcript evidence, per-fixture behavior semantic verification, current
+  run-artifact parity, AlphaEvolve-level reproducibility evidence, or owner
+  review signoff.
 - README quick-start smoke evidence now records the no-provider README command
   markers, focused smoke-test markers, expected `readme_smoke_sorting` run
   name, sorting example path, `max_llm_calls` stop reason, `Best fitness`

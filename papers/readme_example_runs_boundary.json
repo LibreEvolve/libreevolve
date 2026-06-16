@@ -1,0 +1,282 @@
+{
+  "schema": "libreevolve.readme_example_runs_boundary.v1",
+  "boundary_status": "example_runs_readme_structural_fixture_map_without_reproducibility_proof",
+  "claim_ready": false,
+  "example_runs_readme_path": "examples/runs/README.md",
+  "fixture_ids": [
+    "hello_world_ensemble",
+    "sorting_ttt_rl"
+  ],
+  "source_paths": [
+    "examples/runs/README.md",
+    "docs/run-artifacts.md",
+    "libreevolve/cli.py"
+  ],
+  "test_paths": [
+    "tests/test_cli.py"
+  ],
+  "todo_paths": [
+    "docs/todo/readme.md"
+  ],
+  "readme_marker_count": 13,
+  "missing_readme_marker_count": 0,
+  "missing_readme_marker_records": [],
+  "readme_marker_records": [
+    {
+      "record_id": "title",
+      "path": "examples/runs/README.md",
+      "required_marker": "# Example Runs",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "curated_examples",
+      "path": "examples/runs/README.md",
+      "required_marker": "curated examples",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "legacy_history_fixtures",
+      "path": "examples/runs/README.md",
+      "required_marker": "legacy history fixtures",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "history_jsonl",
+      "path": "examples/runs/README.md",
+      "required_marker": "`history.jsonl`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "best_py",
+      "path": "examples/runs/README.md",
+      "required_marker": "`best.py`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "missing_manifest",
+      "path": "examples/runs/README.md",
+      "required_marker": "`manifest.json`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "missing_archive_events",
+      "path": "examples/runs/README.md",
+      "required_marker": "`archive_events.jsonl`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "missing_llm_calls",
+      "path": "examples/runs/README.md",
+      "required_marker": "`llm_calls.jsonl`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "missing_prompt_history",
+      "path": "examples/runs/README.md",
+      "required_marker": "`prompt_history.jsonl`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "missing_failure_history",
+      "path": "examples/runs/README.md",
+      "required_marker": "`failure_history.jsonl`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "missing_best_workspace",
+      "path": "examples/runs/README.md",
+      "required_marker": "`best_workspace/`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "kept_examples",
+      "path": "examples/runs/README.md",
+      "required_marker": "## Kept examples",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "inspect_heading",
+      "path": "examples/runs/README.md",
+      "required_marker": "## How to inspect them",
+      "marker_status": "marker_present"
+    }
+  ],
+  "fixture_count": 2,
+  "fixture_drift_count": 0,
+  "fixture_drift_records": [],
+  "fixture_records": [
+    {
+      "fixture_id": "hello_world_ensemble",
+      "path": "examples/runs/hello_world_ensemble",
+      "history_path": "examples/runs/hello_world_ensemble/history.jsonl",
+      "best_path": "examples/runs/hello_world_ensemble/best.py",
+      "expected_record_count": 11,
+      "actual_record_count": 11,
+      "expected_best_fitness": 1.0,
+      "actual_best_fitness": 1.0,
+      "actual_best_generation": 0,
+      "best_code_marker": "return f\"Hello, {name}!\"",
+      "present_artifacts": [
+        "best.py",
+        "history.jsonl"
+      ],
+      "expected_missing_modern_artifacts": [
+        "manifest.json",
+        "archive_events.jsonl",
+        "llm_calls.jsonl",
+        "prompt_history.jsonl",
+        "failure_history.jsonl",
+        "best_workspace"
+      ],
+      "actual_missing_modern_artifacts": [
+        "manifest.json",
+        "archive_events.jsonl",
+        "llm_calls.jsonl",
+        "prompt_history.jsonl",
+        "failure_history.jsonl",
+        "best_workspace"
+      ],
+      "show_command": "py -3.12 -m libreevolve show examples/runs/hello_world_ensemble",
+      "status_checks": {
+        "readme_marker_present": true,
+        "behavior_marker_present": true,
+        "show_command_present": true,
+        "record_count_matches": true,
+        "best_fitness_matches": true,
+        "best_code_marker_present": true,
+        "legacy_artifacts_present": true,
+        "modern_artifacts_absent": true
+      },
+      "fixture_status": "fixture_claims_match"
+    },
+    {
+      "fixture_id": "sorting_ttt_rl",
+      "path": "examples/runs/sorting_ttt_rl",
+      "history_path": "examples/runs/sorting_ttt_rl/history.jsonl",
+      "best_path": "examples/runs/sorting_ttt_rl/best.py",
+      "expected_record_count": 56,
+      "actual_record_count": 56,
+      "expected_best_fitness": 1.0,
+      "actual_best_fitness": 1.0,
+      "actual_best_generation": 0,
+      "best_code_marker": "for i in range(len(lst)):",
+      "present_artifacts": [
+        "best.py",
+        "history.jsonl"
+      ],
+      "expected_missing_modern_artifacts": [
+        "manifest.json",
+        "archive_events.jsonl",
+        "llm_calls.jsonl",
+        "prompt_history.jsonl",
+        "failure_history.jsonl",
+        "best_workspace"
+      ],
+      "actual_missing_modern_artifacts": [
+        "manifest.json",
+        "archive_events.jsonl",
+        "llm_calls.jsonl",
+        "prompt_history.jsonl",
+        "failure_history.jsonl",
+        "best_workspace"
+      ],
+      "show_command": "py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl",
+      "status_checks": {
+        "readme_marker_present": true,
+        "behavior_marker_present": true,
+        "show_command_present": true,
+        "record_count_matches": true,
+        "best_fitness_matches": true,
+        "best_code_marker_present": true,
+        "legacy_artifacts_present": true,
+        "modern_artifacts_absent": true
+      },
+      "fixture_status": "fixture_claims_match"
+    }
+  ],
+  "evidence_anchor_count": 9,
+  "missing_evidence_anchor_count": 0,
+  "missing_evidence_anchor_records": [],
+  "evidence_anchor_records": [
+    {
+      "record_id": "run_artifacts_doc_route",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "[`examples/runs/`](../examples/runs/README.md)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_show_hello",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "py -3.12 -m libreevolve show examples/runs/hello_world_ensemble",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_show_sorting",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "py -3.12 -m libreevolve show examples/runs/sorting_ttt_rl",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_legacy_boundary",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "Those checked-in examples are legacy history fixtures.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_fallback",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "falls back to the highest top-level `fitness`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "cli_legacy_status",
+      "path": "libreevolve/cli.py",
+      "required_marker": "legacy history-only (manifest.json missing)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "cli_test_legacy_status",
+      "path": "tests/test_cli.py",
+      "required_marker": "test_show_prints_best",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "cli_test_legacy_highest",
+      "path": "tests/test_cli.py",
+      "required_marker": "legacy highest-fitness",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_todo_owner",
+      "path": "docs/todo/readme.md",
+      "required_marker": "Add example-runs README fixture-claim drift evidence.",
+      "marker_status": "marker_present"
+    }
+  ],
+  "example_runs_readme_map_status": "example_runs_readme_structural_fixture_map_present",
+  "required_evidence_fields": [
+    "example_runs_readme_markers",
+    "fixture_history_row_counts",
+    "fixture_best_program_markers",
+    "legacy_artifact_presence",
+    "modern_artifact_absence",
+    "documented_show_commands",
+    "cli_legacy_show_status_anchor",
+    "run_artifacts_guide_anchor",
+    "focused_cli_show_test_anchor",
+    "active_todo_owner_anchor",
+    "show_command_execution_transcript",
+    "per_fixture_behavior_semantic_verifier",
+    "current_run_artifact_parity_check",
+    "alphaevolve_reproducibility_boundary",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "show_command_execution_transcript": "not_recorded_locally",
+    "per_fixture_behavior_semantic_verifier": "not_recorded_locally",
+    "current_run_artifact_parity_check": "not_recorded_locally",
+    "alphaevolve_reproducibility_boundary": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records examples/runs README markers, fixture history row counts, best-program markers, legacy artifact presence, modern artifact absence, documented show commands, CLI legacy-show anchors, run-artifacts guide anchors, focused CLI show test anchors, and active TODO ownership. It does not claim retained show-command execution transcripts, per-fixture behavior semantic verification, current run-artifact parity, AlphaEvolve-level reproducibility evidence, or owner review signoff."
+}

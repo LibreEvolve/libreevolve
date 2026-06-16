@@ -694,24 +694,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     summaries, and `libreevolve show` inspection commands should stay true
     while remaining clearly scoped away from full current run-artifact or
     AlphaEvolve-comparable result evidence.
-  - Current evidence: `examples/runs/README.md` says
-    `hello_world_ensemble/` has 11 records and reaches the correct greeting in
-    generation 0, says `sorting_ttt_rl/` has 56 records and demonstrates
-    neutral implementation diversity, and documents two `py -3.12 -m
-    libreevolve show examples/runs/...` commands. Existing tests only prove
-    that the checked-in run directories are legacy history fixtures containing
-    non-empty `history.jsonl` and `best.py`, and that the README names missing
-    modern artifacts.
-  - Current gap: no page-specific validator parses the example-runs README
-    rows, counts JSONL records, checks the described first/best behavior,
-    validates the constant-fitness or neutral-diversity narrative, exercises
-    the documented `show` commands against legacy fixtures, or flags fixture
-    updates that require README/TODO/paper-boundary refresh.
-  - Required result: add an example-runs README evidence map and validation
-    gate that ties each fixture row and inspect command to the checked-in
-    histories, expected summary semantics, legacy `show` compatibility, and
-    explicit non-claim boundaries for full run artifacts and AlphaEvolve-level
-    reproducibility.
+  - Current evidence: `papers/readme_example_runs_boundary.json` now records
+    `examples/runs/README.md` markers, checked-in fixture history row counts,
+    best-program markers, legacy artifact presence, modern artifact absence,
+    documented `show` commands, CLI legacy-show anchors, run-artifacts guide
+    anchors, focused CLI show test anchors, and active TODO ownership. The
+    focused test invokes both documented `py -3.12 -m libreevolve show
+    examples/runs/...` commands and checks legacy history-only status plus
+    selected best-program output.
+  - Current gap: the new boundary still does not retain show-command execution
+    transcripts as committed artifacts, semantically verify every fixture
+    behavior narrative, compare these directories with the current complete
+    run-artifact schema, prove AlphaEvolve-level reproducibility, or include
+    owner review signoff. The neutral-drift and immediate-improvement claims
+    therefore remain structurally anchored but not semantically certified.
+  - Required result: add retained show-command transcripts, per-fixture
+    behavior semantic verification, current run-artifact parity checks,
+    explicit AlphaEvolve-reproducibility boundaries, and owner review signoff
+    for the checked-in example histories.
 
 ## Run Artifacts
 

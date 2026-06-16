@@ -2841,8 +2841,9 @@ Implemented:
   README/ROADMAP/papers-index claim-inventory, backend CLI-provider guardrail
   inventory, backend-guide contract drift inventory, plugin-guide contract
   drift inventory, README Problem Layout inventory, problem-format loader-
-  contract inventory, README Example Scope inventory, README provider-example
-  matrix inventory, README CLI-provider guardrail inventory, and focused
+  contract inventory, README Example Scope inventory, README example-runs
+  inventory, README provider-example matrix inventory, README CLI-provider
+  guardrail inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
@@ -2952,6 +2953,14 @@ Implemented:
   status/papers index anchors, and active TODO ownership. It is not semantic
   scope-claim verification, runtime metadata comparison, a paper-comparable
   certification gate, new example-surface detection, or owner review signoff.
+- `papers/readme_example_runs_boundary.json`: README example-runs sidecar. It
+  records `examples/runs/README.md` markers, checked-in fixture history row
+  counts, best-program markers, legacy artifact presence, modern artifact
+  absence, documented `show` commands, CLI legacy-show anchors, run-artifacts
+  guide anchors, focused CLI show test anchors, and active TODO ownership. It
+  is not retained show-command transcript evidence, per-fixture behavior
+  semantic verification, current run-artifact parity, AlphaEvolve-level
+  reproducibility evidence, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

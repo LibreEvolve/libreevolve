@@ -21,6 +21,9 @@ def test_roadmap_non_goal_contradiction_accepts_bounded_inventory():
     assert boundary["non_goal_count"] == 3
     assert boundary["constrained_surface_count"] == 9
     assert boundary["contradiction_count"] == 0
+    assert boundary["evidence_sidecars"] == {
+        "full_markdown_corpus_scan": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+    }
     assert [record["non_goal_id"] for record in boundary["non_goal_records"]] == [
         "normal_local_use_no_service_database_required",
         "no_arbitrary_language_codebase_support_before_runners",
@@ -34,11 +37,10 @@ def test_roadmap_non_goal_contradiction_accepts_bounded_inventory():
     assert boundary["missing_evidence"] == {
         "runtime_metadata_scan": "not_recorded_locally",
         "plugin_docstring_scan": "not_recorded_locally",
-        "full_markdown_corpus_scan": "not_recorded_locally",
         "ci_non_goal_promotion_gate": "not_recorded_locally",
         "intentional_promotion_workflow": "not_recorded_locally",
     }
-    assert "does not claim a full runtime metadata scan" in boundary["claim_boundary"]
+    assert "full Markdown corpus scan is tracked" in boundary["claim_boundary"]
 
 
 def test_roadmap_non_goal_contradiction_rejects_overclaim_and_drift():
@@ -78,4 +80,4 @@ def test_render_roadmap_non_goal_contradiction_summary_reports_shape():
     )
     assert "| non_goal_count | 3 |" in summary
     assert "| contradiction_count | 0 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

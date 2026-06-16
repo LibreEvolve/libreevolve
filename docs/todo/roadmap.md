@@ -202,22 +202,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metadata scans, plugin docstring scans, exhaustive Markdown corpus scans,
     CI promotion gates, intentional-promotion workflow, contradiction
     remediation, and runtime/plugin/docs/paper scope joins.
+    `papers/roadmap_non_goal_markdown_scan_boundary.json` now scans the
+    repository Markdown corpus against the stable ROADMAP non-goal ids, records
+    the scanned Markdown file inventory, checks all configured forbidden
+    support-claim phrases, and retains zero line-level contradiction hits.
   - Current gap: the sidecars are bounded documentation and readiness
-    inventories, not a full cross-document contradiction detector or promotion
-    gate. There is still no implemented runtime metadata scan, plugin
-    docstring scan, exhaustive Markdown corpus scan, CI promotion gate,
+    inventories plus a Markdown-corpus phrase scan, not a full runtime
+    contradiction detector or promotion gate. There is still no implemented
+    runtime metadata scan, plugin docstring scan, CI promotion gate,
     intentional-promotion workflow, contradiction-remediation report,
     runtime/plugin/docs/paper scope join, or owner review signoff proving
     future ROADMAP edits cannot accidentally promote a non-goal into a
     supported AlphaEvolve-parity claim.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: runtime metadata scan, plugin docstring scan, exhaustive Markdown
-    corpus scan, CI promotion gate, intentional promotion workflow,
-    contradiction-remediation report that rejects contradictory support
-    claims, code/docs/paper surfaces plus runtime/plugin scope join, and owner
-    review signoff. The workflow must update ROADMAP/TODO evidence whenever a
-    non-goal is completed, removed, or intentionally promoted into active
-    implementation work.
+    sidecars: runtime metadata scan, plugin docstring scan, CI promotion gate,
+    intentional promotion workflow, contradiction-remediation report that
+    rejects contradictory support claims, code/docs/paper surfaces plus
+    runtime/plugin scope join, and owner review signoff. The workflow must
+    update ROADMAP/TODO evidence whenever a non-goal is completed, removed, or
+    intentionally promoted into active implementation work.
 
 - [ ] Add ROADMAP Good First Follow-Ups priority freshness evidence.
   - Spec evidence: the `Good First Follow-Ups` section is a prioritization

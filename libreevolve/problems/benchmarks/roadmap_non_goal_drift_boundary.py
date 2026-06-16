@@ -30,7 +30,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "runtime_metadata_scan": "not_recorded_locally",
     "plugin_docstring_scan": "not_recorded_locally",
-    "full_markdown_corpus_scan": "not_recorded_locally",
     "ci_non_goal_promotion_gate": "not_recorded_locally",
     "intentional_promotion_workflow": "not_recorded_locally",
     "claim_surface_remediation": "not_recorded_locally",
@@ -92,6 +91,7 @@ CRITERION_SPECS = (
         "sidecars": (
             "papers/documentation_claim_inventory.json",
             "papers/documentation_truthfulness_boundary.json",
+            "papers/roadmap_non_goal_markdown_scan_boundary.json",
         ),
         "active_todos": (
             {
@@ -104,7 +104,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "whole-corpus Markdown contradiction scan with source spans",
-        "readiness_status": "bounded_surface_list_only",
+        "readiness_status": "markdown_corpus_scan_recorded_without_runtime_join",
     },
     {
         "criterion_id": "ci_non_goal_promotion_gate",
@@ -239,10 +239,10 @@ def roadmap_non_goal_drift_boundary_record(root: str | Path = ".") -> dict[str, 
         "claim_boundary": (
             "This boundary records a non-goal drift and promotion readiness "
             "matrix tied to the bounded ROADMAP non-goal contradiction "
-            "inventory. It does not claim runtime metadata scanning, plugin "
-            "docstring scanning, exhaustive Markdown corpus scanning, CI "
-            "promotion enforcement, an intentional promotion workflow, or "
-            "owner-reviewed remediation readiness."
+            "inventory. The Markdown corpus scan is recorded separately, but "
+            "this boundary does not claim runtime metadata scanning, plugin "
+            "docstring scanning, CI promotion enforcement, an intentional "
+            "promotion workflow, or owner-reviewed remediation readiness."
         ),
     }
 
@@ -287,6 +287,7 @@ def validate_roadmap_non_goal_drift_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
+        or "Markdown corpus scan is recorded separately" not in boundary_text
         or "does not claim runtime metadata scanning" not in boundary_text
         or "CI promotion enforcement" not in boundary_text
     ):

@@ -2926,16 +2926,24 @@ Implemented:
   contradiction sidecar with stable ids for the three current non-goals, nine
   constrained documentation surfaces, required safe-scope phrase checks, and
   zero exact forbidden support-claim phrase matches for that bounded set. It
-  is not evidence of a runtime metadata scan, plugin docstring scan,
-  exhaustive Markdown corpus scan, CI promotion gate, or intentional non-goal
-  promotion workflow.
+  links the full Markdown corpus scan sidecar, but it is not evidence of a
+  runtime metadata scan, plugin docstring scan, CI promotion gate, or
+  intentional non-goal promotion workflow.
 - `papers/roadmap_non_goal_drift_boundary.json`: ROADMAP non-goal drift and
   promotion readiness sidecar with seven criteria for runtime metadata scans,
   plugin docstring scans, exhaustive Markdown corpus scans, CI promotion
   gates, intentional-promotion workflow, contradiction remediation, and joined
-  runtime/plugin/docs/paper scope maps. It is not evidence that those scans,
-  gates, workflows, remediation reports, scope joins, or owner review signoff
-  are implemented.
+  runtime/plugin/docs/paper scope maps. It now points to the separate Markdown
+  corpus scan sidecar, but it is not evidence that runtime/plugin scans, gates,
+  workflows, remediation reports, scope joins, or owner review signoff are
+  implemented.
+- `papers/roadmap_non_goal_markdown_scan_boundary.json`: ROADMAP non-goal
+  Markdown corpus scan sidecar with the repository Markdown file inventory,
+  stable non-goal ids, forbidden support-claim phrases, line-level hit records,
+  and zero detected Markdown contradiction hits. It is not evidence of runtime
+  metadata scanning, plugin docstring scanning, CI promotion enforcement,
+  intentional promotion workflow, joined runtime/plugin/docs/paper scope proof,
+  or owner-reviewed remediation readiness.
 - `papers/roadmap_good_first_followups_boundary.json`: ROADMAP Good First
   Follow-Ups priority sidecar with the four current priority items, active
   TODO refs, priority rationale, dependency-readiness labels, validation gates,

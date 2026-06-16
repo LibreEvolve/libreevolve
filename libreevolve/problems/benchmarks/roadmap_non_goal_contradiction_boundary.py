@@ -16,18 +16,18 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "constrained_document_surfaces",
     "forbidden_claim_phrase_scan",
     "contradiction_count",
+    "full_markdown_corpus_scan",
     "runtime_metadata_scan",
     "plugin_docstring_scan",
-    "full_markdown_corpus_scan",
     "ci_non_goal_promotion_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "runtime_metadata_scan": "not_recorded_locally",
     "plugin_docstring_scan": "not_recorded_locally",
-    "full_markdown_corpus_scan": "not_recorded_locally",
     "ci_non_goal_promotion_gate": "not_recorded_locally",
     "intentional_promotion_workflow": "not_recorded_locally",
 }
+MARKDOWN_CORPUS_SCAN_SIDECAR = "papers/roadmap_non_goal_markdown_scan_boundary.json"
 
 
 NON_GOAL_SPECS = (
@@ -188,15 +188,19 @@ def roadmap_non_goal_contradiction_boundary_record(
         "contradiction_count": contradiction_count,
         "non_goal_records": records,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
+        "evidence_sidecars": {
+            "full_markdown_corpus_scan": MARKDOWN_CORPUS_SCAN_SIDECAR,
+        },
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary assigns stable ids to the three ROADMAP non-goals, "
             "checks selected constrained documentation surfaces for required "
             "safe-scope wording, and records exact forbidden support-claim "
-            "phrase matches. It does not claim a full runtime metadata scan, "
-            "plugin docstring scan, exhaustive Markdown corpus contradiction "
-            "scan, CI promotion gate, or workflow for intentionally promoting "
-            "a non-goal into active implementation scope."
+            "phrase matches. The full Markdown corpus scan is tracked by "
+            f"{MARKDOWN_CORPUS_SCAN_SIDECAR}. This boundary does not claim a "
+            "runtime metadata scan, plugin docstring scan, CI promotion gate, "
+            "or workflow for intentionally promoting a non-goal into active "
+            "implementation scope."
         ),
     }
 
@@ -239,10 +243,13 @@ def validate_roadmap_non_goal_contradiction_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim a full runtime metadata scan" not in boundary_text
-        or "exhaustive Markdown corpus contradiction scan" not in boundary_text
+        or "full Markdown corpus scan is tracked" not in boundary_text
+        or "does not claim a runtime metadata scan" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate bounded non-goal inventory from full contradiction coverage"))
+    evidence_sidecars = data.get("evidence_sidecars")
+    if not isinstance(evidence_sidecars, dict) or evidence_sidecars.get("full_markdown_corpus_scan") != MARKDOWN_CORPUS_SCAN_SIDECAR:
+        issues.append(_issue("invalid_evidence_sidecars", "full Markdown corpus scan sidecar must be linked"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return RoadmapNonGoalContradictionBoundaryValidation(

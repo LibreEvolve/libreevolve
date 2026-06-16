@@ -15697,3 +15697,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     divergence benchmark evidence, static/binary replay policy, topology
     resume replay proof, stale-readiness detector, and owner review signoff
     remain active in `docs/todo/roadmap.md`.
+- [x] Add ROADMAP non-goal Markdown corpus contradiction scan.
+  - Spec evidence: ROADMAP non-goals are overclaim guardrails, so the
+    documentation corpus needs a repeatable check that support claims do not
+    contradict service-database, arbitrary-language/codebase, or faithful
+    paper-plugin non-goals.
+  - Status: `papers/roadmap_non_goal_markdown_scan_boundary.json` now records
+    the repository Markdown file inventory, stable non-goal ids, forbidden
+    support-claim phrases, line-level hit records, and zero detected Markdown
+    contradictions. The paper-manifest gate now requires and validates the
+    sidecar at the repo root.
+  - Remaining roadmap gap: runtime metadata scanning, plugin docstring
+    scanning, CI promotion enforcement, intentional non-goal promotion
+    workflow, contradiction-remediation reporting, runtime/plugin/docs/paper
+    scope joins, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

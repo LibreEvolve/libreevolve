@@ -1279,6 +1279,7 @@ Important limits:
   `papers/roadmap_source_span_exhaustiveness_boundary.json`,
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_non_goal_drift_boundary.json`,
+  `papers/roadmap_non_goal_markdown_scan_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
   `papers/roadmap_good_first_freshness_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
@@ -1356,16 +1357,24 @@ Important limits:
 - ROADMAP non-goal contradiction evidence now assigns stable ids to the three
   current ROADMAP non-goals, maps nine constrained documentation surfaces,
   validates required safe-scope phrases, and records zero exact forbidden
-  support-claim phrase matches for that bounded surface set. This is not a
-  runtime metadata scan, plugin docstring scan, exhaustive Markdown corpus
-  scan, CI non-goal promotion gate, or intentional-promotion workflow.
+  support-claim phrase matches for that bounded surface set. It links the full
+  Markdown corpus scan sidecar, but this is not a runtime metadata scan,
+  plugin docstring scan, CI non-goal promotion gate, or
+  intentional-promotion workflow.
 - ROADMAP non-goal drift evidence now records seven readiness criteria for
   runtime metadata scans, plugin docstring scans, exhaustive Markdown corpus
   scans, CI non-goal promotion gates, intentional-promotion workflow,
   contradiction remediation, and joined runtime/plugin/docs/paper scope maps.
-  This is not implemented runtime/plugin/corpus scanning, CI promotion
-  enforcement, an intentional-promotion workflow, contradiction remediation,
-  a joined scope verifier, or owner review signoff.
+  The Markdown corpus scan is recorded separately, but this is not implemented
+  runtime/plugin scanning, CI promotion enforcement, an intentional-promotion
+  workflow, contradiction remediation, a joined scope verifier, or owner review
+  signoff.
+- ROADMAP non-goal Markdown scan evidence now records the repository Markdown
+  file inventory, stable non-goal ids, forbidden support-claim phrases,
+  line-level hit records, and zero detected Markdown contradiction hits. This
+  is not runtime metadata scanning, plugin docstring scanning, CI promotion
+  enforcement, intentional-promotion workflow, joined runtime/plugin/docs/paper
+  scope proof, or owner-reviewed remediation readiness.
 - ROADMAP Good First Follow-Ups evidence now records the four current priority
   items with stable ids, active TODO refs, priority rationale,
   dependency-readiness labels, validation gates, and AlphaEvolve impact labels.

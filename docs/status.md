@@ -1289,6 +1289,7 @@ Important limits:
   `papers/roadmap_evaluation_cascade_boundary.json`,
   `papers/roadmap_evaluation_cascade_readiness_boundary.json`,
   `papers/roadmap_candidate_workspace_fidelity_boundary.json`,
+  `papers/roadmap_candidate_workspace_readiness_boundary.json`,
   `papers/roadmap_multi_objective_search_boundary.json`,
   `papers/roadmap_multi_objective_readiness_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
@@ -1485,6 +1486,14 @@ Important limits:
   benchmark evidence, initial-pool divergence benchmark evidence,
   static/binary replay policy, topology resume replay proof,
   stale-readiness detector, or owner review signoff.
+- ROADMAP candidate-workspace readiness evidence now records eight criteria
+  for language/build runner and candidate API readiness, embedded evaluator
+  and codebase-scale readiness, materialization/topology readiness,
+  mutation-mode and operator provenance, prompt-copy and cross-file
+  consistency, initial-pool/static-binary policy, resume replay and
+  manifest/workspace-doc policy, and stale readiness/owner signoff. This is
+  not an implemented candidate-workspace fidelity gate or proof of full
+  AlphaEvolve-style workspace readiness.
 - ROADMAP multi-objective search evidence now records eight criteria for paper
   metric bundles, objective-archive policy, metric-diverse sampling balance,
   duplicate-work memory, descriptor authority, MAP-Elites illumination,

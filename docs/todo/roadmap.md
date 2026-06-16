@@ -672,18 +672,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ten-criterion section-level readiness matrix with current scope,
     missing-readiness, sidecar-ref, active-TODO, validation-gate, and readiness
     labels.
-  - Current gap: the section-level matrix is only a bounded readiness boundary,
-    not evidence that the missing candidate-workspace capabilities are
-    implemented. A passing Python workspace fixture, fixed diff parser,
-    snapshot restore, or materialization diagnostic still must not be mistaken
-    for complete AlphaEvolve-style workspace support.
+    `papers/roadmap_candidate_workspace_readiness_boundary.json` now records a
+    bounded eight-criterion readiness matrix for language/build runner and
+    candidate API readiness, embedded evaluator and codebase-scale readiness,
+    materialization/topology readiness, mutation-mode and operator provenance,
+    prompt-copy and cross-file consistency, initial-pool/static-binary policy,
+    resume replay and manifest/workspace-doc policy, and stale
+    readiness/owner signoff.
+  - Current gap: the section-level matrix and readiness sidecar are bounded
+    readiness maps, not evidence that the missing candidate-workspace
+    capabilities are implemented. A passing Python workspace fixture, fixed
+    diff parser, snapshot restore, or materialization diagnostic still must
+    not be mistaken for complete AlphaEvolve-style workspace support.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: configured language/build runners, flexible solution abstraction
-    API, candidate-embedded evaluator contracts, realistic codebase fixtures,
-    adaptive mutation-mode selection, mutation-operator family provenance,
-    semantic prompt-example-copy detection, cross-file consistency benchmark
-    evidence, initial-pool divergence benchmark evidence, static/binary replay
-    policy, topology resume replay proof, stale-readiness detector, and owner
-    review signoff; then validate README, ROADMAP, papers, run manifests, and
-    workspace docs against implying full candidate-workspace fidelity before
-    those criteria are satisfied.
+    readiness sidecar: configured language/build runners, flexible solution
+    abstraction API, candidate-embedded evaluator contracts, realistic codebase
+    fixtures, adaptive mutation-mode selection, mutation-operator family
+    provenance, semantic prompt-example-copy detection, cross-file consistency
+    benchmark evidence, initial-pool divergence benchmark evidence,
+    static/binary replay policy, topology resume replay proof,
+    stale-readiness detector, and owner review signoff; then validate README,
+    ROADMAP, papers, run manifests, and workspace docs against implying full
+    candidate-workspace fidelity before those criteria are satisfied.

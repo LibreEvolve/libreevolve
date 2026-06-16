@@ -19,8 +19,8 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     assert boundary["schema"] == TODO_CANONICAL_GAP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert boundary["raw_todo_ledger_active_count"] == 506
-    assert boundary["raw_todo_ledger_completed_count"] == 4657
-    assert boundary["raw_todo_ledger_total_count"] == 5163
+    assert boundary["raw_todo_ledger_completed_count"] == 4658
+    assert boundary["raw_todo_ledger_total_count"] == 5164
     assert boundary["exact_duplicate_group_count"] == 123
     assert boundary["duplicate_detection_policy"] == "exact_normalized_title_only"
     assert boundary["canonical_gap_completion_status"] == "not_available_without_gap_ids"

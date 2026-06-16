@@ -3094,6 +3094,14 @@ Implemented:
   evidence, initial-pool divergence benchmark evidence, static/binary replay
   policy, topology resume replay proof, stale-readiness detector, or owner
   review signoff.
+- `papers/roadmap_candidate_workspace_readiness_boundary.json`: ROADMAP
+  candidate-workspace readiness sidecar with eight criteria for language/build
+  runner and candidate API readiness, embedded evaluator and codebase-scale
+  readiness, materialization/topology readiness, mutation-mode and operator
+  provenance, prompt-copy and cross-file consistency, initial-pool/static-
+  binary policy, resume replay and manifest/workspace-doc policy, and stale
+  readiness/owner signoff. It is not evidence that those candidate-workspace
+  readiness mechanisms are implemented.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

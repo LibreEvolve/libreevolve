@@ -291,6 +291,10 @@ from libreevolve.problems.benchmarks.roadmap_candidate_workspace_fidelity_bounda
     roadmap_candidate_workspace_fidelity_boundary_record,
     validate_roadmap_candidate_workspace_fidelity_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_candidate_workspace_readiness_boundary import (
+    roadmap_candidate_workspace_readiness_boundary_record,
+    validate_roadmap_candidate_workspace_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_multi_objective_search_boundary import (
     roadmap_multi_objective_search_boundary_record,
     validate_roadmap_multi_objective_search_boundary,
@@ -868,6 +872,7 @@ ROADMAP_PROMPT_CONTEXT_READINESS_BOUNDARY_FILE = "papers/roadmap_prompt_context_
 ROADMAP_EVALUATION_CASCADE_BOUNDARY_FILE = "papers/roadmap_evaluation_cascade_boundary.json"
 ROADMAP_EVALUATION_CASCADE_READINESS_BOUNDARY_FILE = "papers/roadmap_evaluation_cascade_readiness_boundary.json"
 ROADMAP_CANDIDATE_WORKSPACE_FIDELITY_BOUNDARY_FILE = "papers/roadmap_candidate_workspace_fidelity_boundary.json"
+ROADMAP_CANDIDATE_WORKSPACE_READINESS_BOUNDARY_FILE = "papers/roadmap_candidate_workspace_readiness_boundary.json"
 ROADMAP_MULTI_OBJECTIVE_SEARCH_BOUNDARY_FILE = "papers/roadmap_multi_objective_search_boundary.json"
 ROADMAP_MULTI_OBJECTIVE_READINESS_BOUNDARY_FILE = "papers/roadmap_multi_objective_readiness_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
@@ -1551,6 +1556,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_roadmap_evaluation_cascade_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_candidate_workspace_fidelity_boundary(root_path))
+    issues.extend(_validate_roadmap_candidate_workspace_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_multi_objective_search_boundary(root_path))
     issues.extend(_validate_roadmap_multi_objective_readiness_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
@@ -5029,6 +5035,41 @@ def _validate_roadmap_candidate_workspace_fidelity_boundary(root_path: Path) -> 
             f"roadmap_candidate_workspace_fidelity_boundary_{issue.code}",
             issue.message,
             "roadmap_candidate_workspace_fidelity",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_candidate_workspace_readiness_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_CANDIDATE_WORKSPACE_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = roadmap_candidate_workspace_readiness_boundary_record(root_path)
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_candidate_workspace_readiness_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_CANDIDATE_WORKSPACE_READINESS_BOUNDARY_FILE} must emit "
+                        "ROADMAP candidate-workspace readiness metadata"
+                    ),
+                    "roadmap_candidate_workspace_readiness",
+                )
+            ]
+    report = validate_roadmap_candidate_workspace_readiness_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_candidate_workspace_readiness_boundary_{issue.code}",
+            issue.message,
+            "roadmap_candidate_workspace_readiness",
         )
         for issue in report.issues
     ]

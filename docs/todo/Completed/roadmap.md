@@ -15616,3 +15616,27 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     metric-specific CLI drill-downs, equal-budget multi-objective benchmarks,
     stale-readiness detector, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP candidate-workspace readiness matrix.
+  - Spec evidence: candidate-workspace fidelity claims require more than
+    manifest-only language declarations, Python-local evolve blocks,
+    workspace smoke fixtures, fixed parser surfaces, bounded topology
+    diagnostics, and snapshot restore evidence.
+  - Status: `papers/roadmap_candidate_workspace_readiness_boundary.json` now
+    records eight readiness criteria for language/build runner and candidate
+    API readiness, embedded evaluator and codebase-scale readiness,
+    materialization/topology readiness, mutation-mode and operator provenance,
+    prompt-copy and cross-file consistency, initial-pool/static-binary policy,
+    resume replay and manifest/workspace-doc policy, and stale
+    readiness/owner signoff. It links the existing candidate-workspace
+    fidelity boundary input, sidecar refs, active TODO refs, validation-gate
+    labels, readiness labels, and explicit missing-evidence fields. The
+    paper-manifest gate now requires and validates the sidecar at the repo
+    root.
+  - Remaining roadmap gap: the actual configured language/build runners,
+    flexible solution abstraction API, candidate-embedded evaluator contracts,
+    realistic codebase fixtures, adaptive mutation-mode selection,
+    mutation-operator family provenance, semantic prompt-example-copy
+    detection, cross-file consistency benchmark evidence, initial-pool
+    divergence benchmark evidence, static/binary replay policy, topology
+    resume replay proof, stale-readiness detector, and owner review signoff
+    remain active in `docs/todo/roadmap.md`.

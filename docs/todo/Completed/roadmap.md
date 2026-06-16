@@ -15378,3 +15378,23 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     cross-document claim freshness reports, generated alignment reports, CI
     semantic claim gates, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded TODO canonical-gap readiness matrix.
+  - Spec evidence: the project goal spans code, ROADMAP, README, and papers,
+    so raw checklist percentages need a canonical underlying-gap model before
+    they can be interpreted as distinct AlphaEvolve requirement completion.
+  - Status: `papers/todo_canonical_gap_boundary.json` now records nine
+    criteria for canonical gap ids, canonical owner ledgers, derivative
+    relationships, source/paper anchor mapping, implementation evidence links,
+    cross-document rollup rules, semantic duplicate detection, stale duplicate
+    and orphan detection, and raw-count inflation reporting. It links current
+    raw owner-ledger counts, exact duplicate-title group count, sidecar refs,
+    active TODO refs, validation-gate labels, readiness labels, and explicit
+    missing canonical-rollup fields. The paper-manifest gate now requires and
+    validates the sidecar at the repo root.
+  - Remaining roadmap gap: canonical gap ids, canonical owner assignments,
+    derivative documentation relationships, source/paper anchor mappings,
+    implementation evidence links, cross-document rollup rules, semantic
+    duplicate detection, stale completed duplicate detection, orphaned
+    derivative detection, canonical gap completion percent, raw-count
+    inflation report, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

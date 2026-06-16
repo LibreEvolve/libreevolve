@@ -1263,6 +1263,7 @@ Important limits:
   canonical underlying-gap ids and canonical completion percentages absent;
   those boundaries are tracked by
   `papers/todo_ledger_ownership_boundary.json`,
+  `papers/todo_canonical_gap_boundary.json`,
   `papers/roadmap_readiness_boundary.json`,
   `papers/roadmap_claim_evidence_boundary.json`,
   `papers/roadmap_source_span_disposition_boundary.json`,
@@ -1290,6 +1291,18 @@ Important limits:
   semantic evidence-sufficiency verification, stale current-state detection,
   stale-priority detection, cross-document claim freshness, a generated
   alignment report, a CI semantic claim gate, or owner review signoff.
+- TODO canonical-gap evidence now records nine criteria for canonical gap ids,
+  canonical owner ledgers, derivative relationships, source/paper anchor
+  mapping, implementation evidence links, cross-document rollup rules,
+  semantic duplicate detection, stale duplicate and orphan detection, and
+  raw-count inflation reporting. It links current raw owner-ledger counts,
+  exact duplicate-title group count, sidecar refs, active TODO refs,
+  validation-gate labels, and readiness labels. This is not canonical gap ids,
+  canonical owner assignments, derivative documentation relationships, source
+  or paper anchor mappings, implementation evidence links, cross-document
+  rollup rules, semantic duplicate detection, stale completed duplicate
+  detection, orphaned derivative detection, raw-count inflation reporting,
+  canonical gap completion percentages, or owner review signoff.
 - ROADMAP source-span disposition evidence currently maps the six core
   AlphaEvolve anchors from `papers/implementation_evidence_map_boundary.json`
   to ROADMAP section ids, phase buckets, sidecars, and TODO links, and records

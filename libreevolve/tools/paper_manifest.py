@@ -195,6 +195,10 @@ from libreevolve.problems.benchmarks.todo_ledger_ownership_boundary import (
     todo_ledger_ownership_boundary_record,
     validate_todo_ledger_ownership_boundary,
 )
+from libreevolve.problems.benchmarks.todo_canonical_gap_boundary import (
+    todo_canonical_gap_boundary_record,
+    validate_todo_canonical_gap_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_source_span_disposition_boundary import (
     roadmap_source_span_disposition_boundary_record,
     validate_roadmap_source_span_disposition_boundary,
@@ -792,6 +796,7 @@ DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 ROADMAP_READINESS_BOUNDARY_FILE = "papers/roadmap_readiness_boundary.json"
 ROADMAP_CLAIM_EVIDENCE_BOUNDARY_FILE = "papers/roadmap_claim_evidence_boundary.json"
 TODO_LEDGER_OWNERSHIP_BOUNDARY_FILE = "papers/todo_ledger_ownership_boundary.json"
+TODO_CANONICAL_GAP_BOUNDARY_FILE = "papers/todo_canonical_gap_boundary.json"
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_FILE = "papers/roadmap_source_span_disposition_boundary.json"
 ROADMAP_NON_GOAL_CONTRADICTION_BOUNDARY_FILE = "papers/roadmap_non_goal_contradiction_boundary.json"
 ROADMAP_GOOD_FIRST_FOLLOWUPS_BOUNDARY_FILE = "papers/roadmap_good_first_followups_boundary.json"
@@ -1462,6 +1467,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_claim_evidence_boundary(root_path))
     issues.extend(_validate_todo_ledger_ownership_boundary(root_path))
+    issues.extend(_validate_todo_canonical_gap_boundary(root_path))
     issues.extend(_validate_roadmap_source_span_disposition_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_contradiction_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_followups_boundary(root_path))
@@ -4101,6 +4107,38 @@ def _validate_todo_ledger_ownership_boundary(root_path: Path) -> list[PaperManif
             f"todo_ledger_ownership_boundary_{issue.code}",
             issue.message,
             "todo_ledger_ownership",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_todo_canonical_gap_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / TODO_CANONICAL_GAP_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "todo_canonical_gap_boundary_manifest_missing",
+                    (
+                        f"{TODO_CANONICAL_GAP_BOUNDARY_FILE} must emit "
+                        "TODO canonical-gap readiness metadata"
+                    ),
+                    "todo_canonical_gap",
+                )
+            ]
+        return []
+    report = validate_todo_canonical_gap_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"todo_canonical_gap_boundary_{issue.code}",
+            issue.message,
+            "todo_canonical_gap",
         )
         for issue in report.issues
     ]

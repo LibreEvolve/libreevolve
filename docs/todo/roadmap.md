@@ -97,19 +97,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     still derived from checklist counts only, while active TODOs can
     intentionally overlap around provider parity, benchmark evidence,
     documentation drift, readiness criteria, and paper-source boundaries.
-  - Current gap: there is no canonical underlying-gap id,
-    duplicate/derivative relationship, consolidation report, semantic
-    duplicate detector, or stale-duplicate detector across active and completed
-    TODO ledgers. A newly identified problem can be counted multiple times, a
-    completed document-specific TODO can leave its implementation owner
-    ambiguous, and repeated audit slices can inflate the denominator without
-    proving that a distinct AlphaEvolve requirement was discovered.
-  - Required result: add a TODO-ledger ownership model that assigns stable
-    gap ids, canonical owner ledgers, derivative/documentation relationships,
-    source/paper anchors, implementation evidence links, and completion
-    rollup rules; add a validator/report that detects likely duplicate active
-    TODOs, stale completed duplicates, orphaned derivative entries, and raw-
-    count inflation; and publish raw checklist completion separately from
+    `papers/todo_canonical_gap_boundary.json` now records a nine-criterion
+    canonical-gap readiness matrix over the current raw owner-ledger counts
+    and exact duplicate-title groups, with sidecar refs, active TODO refs,
+    validation-gate labels, readiness labels, and explicit missing rollup
+    fields.
+  - Current gap: the canonical-gap sidecar is a bounded readiness matrix, not a
+    canonical underlying-gap registry. There is still no canonical
+    underlying-gap id, duplicate/derivative relationship registry,
+    consolidation report, semantic duplicate detector, or stale-duplicate
+    detector across active and completed TODO ledgers. A newly identified
+    problem can be counted multiple times, a completed document-specific TODO
+    can leave its implementation owner ambiguous, and repeated audit slices
+    can inflate the denominator without proving that a distinct AlphaEvolve
+    requirement was discovered.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: canonical gap ids, canonical owner assignments, derivative
+    documentation relationships, source/paper anchor mapping, implementation
+    evidence links, cross-document rollup rules, semantic duplicate detection,
+    stale completed duplicate detection, orphaned derivative detection,
+    canonical gap completion percent, raw-count inflation report, and owner
+    review signoff; then publish raw checklist completion separately from
     canonical underlying-gap completion.
 
 ## Missing Roadmap Items

@@ -2872,6 +2872,17 @@ Implemented:
   derivative/documentation relationships, rollup rules, source/paper anchor
   mappings, implementation evidence links, stale duplicate detection, or
   canonical-gap completion percentages.
+- `papers/todo_canonical_gap_boundary.json`: TODO canonical-gap readiness
+  sidecar with nine criteria for canonical gap ids, canonical owner ledgers,
+  derivative relationships, source/paper anchor mapping, implementation
+  evidence links, cross-document rollup rules, semantic duplicate detection,
+  stale duplicate/orphan detection, and raw-count inflation reporting. It is
+  not evidence of canonical gap ids, canonical owner assignments, derivative
+  documentation relationships, source or paper anchor mappings,
+  implementation evidence links, cross-document rollup rules, semantic
+  duplicate detection, stale completed duplicate detection, orphaned
+  derivative detection, raw-count inflation reporting, canonical gap
+  completion percentages, or owner review signoff.
 - `papers/roadmap_source_span_disposition_boundary.json`: ROADMAP source-span
   disposition sidecar for the six core AlphaEvolve anchors already present in
   `papers/implementation_evidence_map_boundary.json`. It records source refs,

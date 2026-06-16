@@ -1313,6 +1313,7 @@ Important limits:
   `papers/roadmap_multi_objective_search_boundary.json`,
   `papers/roadmap_multi_objective_readiness_boundary.json`,
   `papers/documentation_truthfulness_boundary.json`,
+  `papers/docs_index_reader_path_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
@@ -1321,6 +1322,12 @@ Important limits:
   `papers/readme_paper_cache_topic_boundary.json`,
   `papers/readme_paper_cache_rehydrate_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
+- Docs-index reader-path evidence now records `docs/README.md` reader paths,
+  operational-guide routes, documentation-boundary markers, route target
+  existence checks, target heading marker checks, and the whole-documentation
+  AlphaEvolve-alignment cleanup marker. This is not semantic route-purpose
+  verification, target-scope agreement verification, new-major-doc detection,
+  misplaced-claim detection, or owner review signoff.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
   classification, obsolete `alphaevolve/*` path signals, legacy checkbox plan

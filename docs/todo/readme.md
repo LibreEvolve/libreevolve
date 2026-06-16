@@ -238,12 +238,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README documentation-map TODO covers the root README's `Documentation Map`,
     while `papers/documentation_truthfulness_boundary.json` records
     docs/README routing as broad boundary evidence.
-  - Current gap: there is no page-specific inventory or drift validator that
-    parses `docs/README.md`, verifies each reader path and operational-guide
-    link, checks that route descriptions match target document scope, flags
-    newly added major docs that need index placement, or detects boundary
-    violations such as paper-derived claims outside `papers/` or long-term
-    roadmap work outside ROADMAP/TODO ledgers.
+    `papers/docs_index_reader_path_boundary.json` now records `docs/README.md`
+    reader paths, operational-guide routes, documentation-boundary markers,
+    route target existence checks, target heading marker checks, and the
+    whole-documentation AlphaEvolve-alignment cleanup marker.
+  - Current gap: the sidecar is a page-specific route and marker inventory,
+    not a semantic drift validator. It does not prove that route descriptions
+    match target document scope, flag newly added major docs that need index
+    placement, detect paper-derived claims outside `papers/`, or detect
+    long-term roadmap work outside ROADMAP/TODO ledgers.
   - Required result: add a docs-index evidence map and validation gate that
     inventories reader paths, operational guide entries, and documentation
     boundary bullets; verifies link existence and target-scope agreement; and

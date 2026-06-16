@@ -2843,6 +2843,13 @@ Implemented:
   complete implementation-evidence mapping, stale completed-entry detection,
   generated alignment reports, or full proof that every AlphaEvolve-facing
   claim is current.
+- `papers/docs_index_reader_path_boundary.json`: docs-index reader-path
+  sidecar. It records `docs/README.md` reader paths, operational-guide routes,
+  documentation-boundary markers, route target existence checks, target
+  heading marker checks, and the whole-documentation AlphaEvolve-alignment
+  cleanup marker. It is not semantic route-purpose verification,
+  target-scope agreement verification, new-major-doc detection,
+  misplaced-claim detection, or owner review signoff.
 - `papers/tracked_legacy_surface_boundary.json`: tracked legacy-surface
   sidecar for `old/**` planning material. It records the committed legacy
   Markdown inventory, archival/non-authoritative classification, self-

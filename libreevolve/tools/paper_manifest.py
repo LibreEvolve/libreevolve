@@ -179,6 +179,10 @@ from libreevolve.problems.benchmarks.documentation_truthfulness_boundary import 
     documentation_truthfulness_boundary_record,
     validate_documentation_truthfulness_boundary,
 )
+from libreevolve.problems.benchmarks.docs_index_reader_path_boundary import (
+    docs_index_reader_path_boundary_record,
+    validate_docs_index_reader_path_boundary,
+)
 from libreevolve.problems.benchmarks.tracked_legacy_surface_boundary import (
     tracked_legacy_surface_boundary_record,
     validate_tracked_legacy_surface_boundary,
@@ -945,6 +949,7 @@ CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.j
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
 STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_boundary.json"
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
+DOCS_INDEX_READER_PATH_BOUNDARY_FILE = "papers/docs_index_reader_path_boundary.json"
 TRACKED_LEGACY_SURFACE_BOUNDARY_FILE = "papers/tracked_legacy_surface_boundary.json"
 README_AGENT_ROUTING_BOUNDARY_FILE = "papers/readme_agent_routing_boundary.json"
 README_DOCUMENTATION_MAP_BOUNDARY_FILE = "papers/readme_documentation_map_boundary.json"
@@ -1655,6 +1660,7 @@ def validate_paper_manifest(
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
     issues.extend(_validate_stochastic_prompt_format_boundary(root_path))
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
+    issues.extend(_validate_docs_index_reader_path_boundary(root_path))
     issues.extend(_validate_tracked_legacy_surface_boundary(root_path))
     issues.extend(_validate_readme_agent_routing_boundary(root_path))
     issues.extend(_validate_readme_documentation_map_boundary(root_path))
@@ -4210,6 +4216,38 @@ def _validate_documentation_truthfulness_boundary(root_path: Path) -> list[Paper
             f"documentation_truthfulness_boundary_{issue.code}",
             issue.message,
             "documentation_truthfulness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_docs_index_reader_path_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / DOCS_INDEX_READER_PATH_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "docs_index_reader_path_boundary_manifest_missing",
+                    (
+                        f"{DOCS_INDEX_READER_PATH_BOUNDARY_FILE} must emit "
+                        "docs/README reader-path metadata"
+                    ),
+                    "docs_index_reader_path",
+                )
+            ]
+        return []
+    report = validate_docs_index_reader_path_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"docs_index_reader_path_boundary_{issue.code}",
+            issue.message,
+            "docs_index_reader_path",
         )
         for issue in report.issues
     ]

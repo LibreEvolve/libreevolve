@@ -16,12 +16,13 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
         validation.boundary_status
         == "cross_document_guards_without_semantic_claim_proof"
     )
-    assert validation.required_evidence_field_count == 26
+    assert validation.required_evidence_field_count == 27
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert "documentation_claim_inventory" in boundary["required_evidence_fields"]
     assert "tracked_legacy_surface_inventory" in boundary["required_evidence_fields"]
+    assert "docs_index_reader_path_inventory" in boundary["required_evidence_fields"]
     assert "readme_agent_routing_inventory" in boundary["required_evidence_fields"]
     assert "readme_documentation_map_inventory" in boundary["required_evidence_fields"]
     assert "readme_install_smoke_inventory" in boundary["required_evidence_fields"]
@@ -33,6 +34,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
         in boundary["claim_boundary"]
     )
     assert "tracked legacy-surface inventory" in boundary["claim_boundary"]
+    assert "docs-index reader-path inventory" in boundary["claim_boundary"]
     assert "README AGENTS.md routing inventory" in boundary["claim_boundary"]
     assert "README Documentation Map inventory" in boundary["claim_boundary"]
     assert "README install-smoke inventory" in boundary["claim_boundary"]
@@ -69,5 +71,5 @@ def test_render_documentation_truthfulness_boundary_summary_reports_shape():
         "| boundary_status | cross_document_guards_without_semantic_claim_proof |"
         in summary
     )
-    assert "| required_evidence_field_count | 26 |" in summary
+    assert "| required_evidence_field_count | 27 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

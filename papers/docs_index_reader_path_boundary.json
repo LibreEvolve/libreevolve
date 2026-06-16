@@ -1,0 +1,226 @@
+{
+  "schema": "libreevolve.docs_index_reader_path_boundary.v1",
+  "boundary_status": "docs_index_routes_recorded_without_semantic_scope_verifier",
+  "claim_ready": false,
+  "docs_readme_path": "docs/README.md",
+  "route_record_count": 14,
+  "route_group_counts": {
+    "intro": 1,
+    "operational_guide": 3,
+    "reader_path": 10
+  },
+  "missing_route_record_count": 0,
+  "missing_route_records": [],
+  "route_records": [
+    {
+      "route_id": "root_readme_entry",
+      "route_group": "intro",
+      "link_marker": "[README](../README.md)",
+      "target_path": "README.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "new_user_problem_format",
+      "route_group": "reader_path",
+      "link_marker": "[Problem Format](./problem-format.md)",
+      "target_path": "docs/problem-format.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "operator_run_artifacts",
+      "route_group": "reader_path",
+      "link_marker": "[Run Artifacts](./run-artifacts.md)",
+      "target_path": "docs/run-artifacts.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "operator_configuration",
+      "route_group": "reader_path",
+      "link_marker": "[Configuration](./configuration.md)",
+      "target_path": "docs/configuration.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "operator_backends",
+      "route_group": "reader_path",
+      "link_marker": "[Backends](./backends.md)",
+      "target_path": "docs/backends.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "contributor_development",
+      "route_group": "reader_path",
+      "link_marker": "[Development](./development.md)",
+      "target_path": "docs/development.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "contributor_todo",
+      "route_group": "reader_path",
+      "link_marker": "[todo](./todo/)",
+      "target_path": "docs/todo",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "contributor_agents",
+      "route_group": "reader_path",
+      "link_marker": "[AGENTS.md](../AGENTS.md)",
+      "target_path": "AGENTS.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "paper_reviewer_status",
+      "route_group": "reader_path",
+      "link_marker": "[Current Status](./status.md)",
+      "target_path": "docs/status.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "paper_reviewer_roadmap",
+      "route_group": "reader_path",
+      "link_marker": "[ROADMAP](../ROADMAP.md)",
+      "target_path": "ROADMAP.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "paper_reviewer_papers",
+      "route_group": "reader_path",
+      "link_marker": "[papers/README.md](../papers/README.md)",
+      "target_path": "papers/README.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "guide_architecture",
+      "route_group": "operational_guide",
+      "link_marker": "[Architecture](./architecture.md)",
+      "target_path": "docs/architecture.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "guide_plugins",
+      "route_group": "operational_guide",
+      "link_marker": "[Plugins](./plugins.md)",
+      "target_path": "docs/plugins.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    },
+    {
+      "route_id": "guide_paper_cache",
+      "route_group": "operational_guide",
+      "link_marker": "[Paper Cache](../papers/README.md)",
+      "target_path": "papers/README.md",
+      "link_status": "link_present",
+      "target_status": "target_present",
+      "missing_target_markers": [],
+      "route_status": "route_target_and_markers_present"
+    }
+  ],
+  "boundary_marker_count": 7,
+  "missing_boundary_marker_count": 0,
+  "missing_boundary_marker_records": [],
+  "boundary_marker_records": [
+    {
+      "record_kind": "documentation_boundary",
+      "path": "docs/README.md",
+      "required_marker": "The root README should stay short enough to be useful on a first read.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "documentation_boundary",
+      "path": "docs/README.md",
+      "required_marker": "Detailed runtime behavior belongs in the operational guides above.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "documentation_boundary",
+      "path": "docs/README.md",
+      "required_marker": "The full implementation and absence-boundary ledger belongs in",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "documentation_boundary",
+      "path": "docs/README.md",
+      "required_marker": "Long-term status belongs in `ROADMAP.md` and `docs/todo/`.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "documentation_boundary",
+      "path": "docs/README.md",
+      "required_marker": "Paper-derived claims belong in `papers/README.md` and validated JSON sidecars.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "documentation_boundary",
+      "path": "docs/README.md",
+      "required_marker": "Tracked material under `old/` is archival and non-authoritative.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "documentation_boundary",
+      "path": "docs/README.md",
+      "required_marker": "AlphaEvolve-alignment cleanup is a whole-documentation task.",
+      "marker_status": "marker_present"
+    }
+  ],
+  "whole_documentation_cleanup_status": "marker_present",
+  "docs_index_marker_status": "docs_index_routes_and_boundary_markers_present",
+  "required_evidence_fields": [
+    "docs_index_reader_path_inventory",
+    "docs_index_operational_guide_inventory",
+    "docs_index_boundary_marker_inventory",
+    "route_target_existence_checks",
+    "target_heading_marker_checks",
+    "whole_documentation_cleanup_marker",
+    "route_purpose_semantic_verifier",
+    "target_scope_agreement_verifier",
+    "new_major_doc_detector",
+    "misplaced_claim_detector",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "route_purpose_semantic_verifier": "not_recorded_locally",
+    "target_scope_agreement_verifier": "not_recorded_locally",
+    "new_major_doc_detector": "not_recorded_locally",
+    "misplaced_claim_detector": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records docs/README reader paths, operational-guide routes, documentation-boundary markers, route target existence checks, target heading marker checks, and the whole-documentation AlphaEvolve-alignment cleanup marker. It does not claim semantic route-purpose verification, target-scope agreement verification, new-major-doc detection, misplaced-claim detection, or owner review signoff."
+}

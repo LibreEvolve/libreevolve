@@ -1317,7 +1317,8 @@ Important limits:
   `papers/readme_agent_routing_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
-  `papers/readme_provider_auth_boundary.json`, and
+  `papers/readme_provider_auth_boundary.json`,
+  `papers/readme_paper_cache_topic_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
@@ -1349,6 +1350,13 @@ Important limits:
   GitHub Actions Anthropic secret markers, and the secret-scan baseline marker.
   This is not complete backend-registry auth reflection, live provider account
   probes, a provider-auth drift CI gate, or owner review signoff.
+- README paper-cache topic evidence now records the README topic sentence,
+  download-manifest row count, papers-index implementation-status row count,
+  papers-index role inventory, and bounded heuristic topic-family signals for
+  LLM-guided evolution, program synthesis, quality-diversity optimization, and
+  related benchmarks. This is not a row-level reviewed topic taxonomy,
+  taxonomy reviewer signoff, semantic verification of the README topic phrase,
+  a new-paper out-of-scope detector, or owner review signoff.
 - ROADMAP claim-evidence mapping now records six claim surfaces for the
   ROADMAP scope preamble, current-state bullet inventory, implementation
   evidence links, good-first priority claims, cross-document claim sync, and

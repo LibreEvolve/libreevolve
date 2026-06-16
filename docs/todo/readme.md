@@ -147,12 +147,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implementation status, and benchmark coverage decisions, while
     `papers/related_work_taxonomy_boundary.json` records that AlphaEvolve
     Related Work positioning taxonomy and README/ROADMAP claim gates are not
-    yet ready.
-  - Current gap: there is no committed row-level topic taxonomy proving which
-    cached papers belong to the README-listed topic families, no validator
-    checking README topic wording against paper-index categories, and no drift
-    report when new papers fall outside those categories or when the README
-    topic sentence changes.
+    yet ready. `papers/readme_paper_cache_topic_boundary.json` now records the
+    README paper-cache topic sentence, download-manifest row count, papers-
+    index implementation-status row count, papers-index role inventory, and
+    bounded heuristic topic-family signals for LLM-guided evolution, program
+    synthesis, quality-diversity optimization, and related benchmarks.
+  - Current gap: the sidecar is a bounded marker and heuristic-signal
+    inventory, not a reviewed topic taxonomy. There is still no committed
+    row-level topic taxonomy proving which cached papers belong to the
+    README-listed topic families, no semantic validator checking README topic
+    wording against paper-index categories, and no drift report when new papers
+    fall outside those categories or when the README topic sentence changes.
   - Required result: add paper-cache topic/category fields or a sidecar
     taxonomy, validate README topic wording from those records, and update
     README/TODO/paper docs when the cache scope changes.

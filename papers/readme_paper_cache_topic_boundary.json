@@ -1,0 +1,309 @@
+{
+  "schema": "libreevolve.readme_paper_cache_topic_boundary.v1",
+  "boundary_status": "readme_paper_cache_topic_markers_without_row_level_taxonomy",
+  "claim_ready": false,
+  "readme_path": "README.md",
+  "papers_readme_path": "papers/README.md",
+  "download_manifest_path": "papers/download_manifest.json",
+  "readme_topic_phrase": "The local paper cache contains 53 PDFs on LLM-guided evolution, program\nsynthesis, quality-diversity optimization, and related benchmarks.",
+  "manifest_row_count": 53,
+  "status_row_count": 53,
+  "manifest_status": "manifest_and_status_rows_aligned",
+  "status_role_count": 45,
+  "status_role_counts": {
+    "AI harness runtime-substrate context": 1,
+    "Adaptive auto-harness deployment context": 1,
+    "Agent harness-plus-weight self-improvement context": 1,
+    "Agentic code-evolution inspiration": 1,
+    "Agentic harness observability context": 1,
+    "AlphaEvolve HCI/user-study context": 1,
+    "AlphaEvolve MARL algorithm-discovery result context": 1,
+    "AlphaEvolve compiler-optimization application context": 2,
+    "AlphaEvolve complexity-theory result context": 1,
+    "AlphaEvolve computer-architecture application context": 1,
+    "AlphaEvolve healthy-evolution oversight context": 1,
+    "AlphaEvolve mechanism-design result context": 1,
+    "AlphaEvolve radar/resource-allocation application context": 1,
+    "AlphaEvolve-optimized workflow application context": 1,
+    "Asynchronous-stage orchestration context": 1,
+    "Autonomous multi-agent evolution context": 1,
+    "Causal-guidance inspiration": 1,
+    "Constructive math benchmark candidate": 8,
+    "Context-memory framework context": 1,
+    "Cost-aware search-architecture context": 1,
+    "Domain evolution inspiration": 1,
+    "Foundational archive algorithm": 1,
+    "Foundational bandit policy": 1,
+    "Framework inspiration": 1,
+    "Harness-capability disentanglement context": 1,
+    "Harnessed meta-editing context": 1,
+    "Inference-time trajectory-alignment context": 1,
+    "Learning-signal optimization context": 1,
+    "Long-horizon MLE framework context": 1,
+    "Long-horizon consistency framework context": 1,
+    "Memory-architecture evolution context": 1,
+    "Meta-evolution framework context": 1,
+    "Modular search inspiration": 1,
+    "Multimodal trajectory-distillation context": 1,
+    "Optimization benchmark comparator": 1,
+    "Outer-loop harness-code optimization context": 1,
+    "Primary specification target": 1,
+    "Retrieval/debug loop inspiration": 1,
+    "Retrospective harness optimization context": 1,
+    "Self-evolving reward-rubric context": 1,
+    "Test-time discovery context": 1,
+    "Test-time training inspiration": 1,
+    "Trace-diagnostic evaluation context": 1,
+    "Trace-grounded harness repair context": 1,
+    "Verifier-free co-evolution context": 1
+  },
+  "topic_family_count": 4,
+  "topic_family_records": [
+    {
+      "topic_family": "llm_guided_evolution",
+      "classification_method": "bounded_keyword_signal_not_reviewed_taxonomy",
+      "row_signal_count": 43,
+      "row_signal_records": [
+        {
+          "id": "2506.13131",
+          "line": 462,
+          "role": "Primary specification target"
+        },
+        {
+          "id": "1504.04909",
+          "line": 464,
+          "role": "Foundational archive algorithm"
+        },
+        {
+          "id": "auer-cesa-bianchi-fischer-2002",
+          "line": 465,
+          "role": "Foundational bandit policy"
+        },
+        {
+          "id": "2510.14150",
+          "line": 467,
+          "role": "Agentic code-evolution inspiration"
+        },
+        {
+          "id": "2511.23473",
+          "line": 468,
+          "role": "Test-time training inspiration"
+        },
+        {
+          "id": "2602.10233",
+          "line": 469,
+          "role": "Modular search inspiration"
+        },
+        {
+          "id": "2602.15951",
+          "line": 470,
+          "role": "Domain evolution inspiration"
+        },
+        {
+          "id": "2603.14575",
+          "line": 471,
+          "role": "Causal-guidance inspiration"
+        },
+        {
+          "id": "2510.06056",
+          "line": 472,
+          "role": "Retrieval/debug loop inspiration"
+        },
+        {
+          "id": "2601.21096",
+          "line": 473,
+          "role": "AlphaEvolve compiler-optimization application context"
+        },
+        {
+          "id": "2605.14718",
+          "line": 474,
+          "role": "AlphaEvolve compiler-optimization application context"
+        },
+        {
+          "id": "2605.05921",
+          "line": 475,
+          "role": "AlphaEvolve HCI/user-study context"
+        }
+      ]
+    },
+    {
+      "topic_family": "program_synthesis",
+      "classification_method": "bounded_keyword_signal_not_reviewed_taxonomy",
+      "row_signal_count": 6,
+      "row_signal_records": [
+        {
+          "id": "2510.14150",
+          "line": 467,
+          "role": "Agentic code-evolution inspiration"
+        },
+        {
+          "id": "2510.06056",
+          "line": 472,
+          "role": "Retrieval/debug loop inspiration"
+        },
+        {
+          "id": "2601.21096",
+          "line": 473,
+          "role": "AlphaEvolve compiler-optimization application context"
+        },
+        {
+          "id": "2605.14718",
+          "line": 474,
+          "role": "AlphaEvolve compiler-optimization application context"
+        },
+        {
+          "id": "2512.18746",
+          "line": 491,
+          "role": "Memory-architecture evolution context"
+        },
+        {
+          "id": "2603.28052",
+          "line": 501,
+          "role": "Outer-loop harness-code optimization context"
+        }
+      ]
+    },
+    {
+      "topic_family": "quality_diversity",
+      "classification_method": "bounded_keyword_signal_not_reviewed_taxonomy",
+      "row_signal_count": 3,
+      "row_signal_records": [
+        {
+          "id": "1504.04909",
+          "line": 464,
+          "role": "Foundational archive algorithm"
+        },
+        {
+          "id": "auer-cesa-bianchi-fischer-2002",
+          "line": 465,
+          "role": "Foundational bandit policy"
+        },
+        {
+          "id": "2605.09764",
+          "line": 480,
+          "role": "Cost-aware search-architecture context"
+        }
+      ]
+    },
+    {
+      "topic_family": "related_benchmarks",
+      "classification_method": "bounded_keyword_signal_not_reviewed_taxonomy",
+      "row_signal_count": 24,
+      "row_signal_records": [
+        {
+          "id": "2511.02864",
+          "line": 463,
+          "role": "Constructive math benchmark candidate"
+        },
+        {
+          "id": "2511.17592",
+          "line": 466,
+          "role": "Framework inspiration"
+        },
+        {
+          "id": "2602.10233",
+          "line": 469,
+          "role": "Modular search inspiration"
+        },
+        {
+          "id": "2601.21096",
+          "line": 473,
+          "role": "AlphaEvolve compiler-optimization application context"
+        },
+        {
+          "id": "2605.14718",
+          "line": 474,
+          "role": "AlphaEvolve compiler-optimization application context"
+        },
+        {
+          "id": "2605.01794",
+          "line": 476,
+          "role": "AlphaEvolve radar/resource-allocation application context"
+        },
+        {
+          "id": "2602.23413",
+          "line": 477,
+          "role": "Meta-evolution framework context"
+        },
+        {
+          "id": "2602.02919",
+          "line": 478,
+          "role": "Context-memory framework context"
+        },
+        {
+          "id": "2606.06473",
+          "line": 479,
+          "role": "Long-horizon MLE framework context"
+        },
+        {
+          "id": "2601.10657",
+          "line": 481,
+          "role": "Long-horizon consistency framework context"
+        },
+        {
+          "id": "2605.01120",
+          "line": 484,
+          "role": "Constructive math benchmark candidate"
+        },
+        {
+          "id": "2605.13821",
+          "line": 486,
+          "role": "Harnessed meta-editing context"
+        }
+      ]
+    }
+  ],
+  "missing_topic_family_count": 0,
+  "missing_topic_family_records": [],
+  "marker_record_count": 4,
+  "missing_marker_count": 0,
+  "missing_marker_records": [],
+  "marker_records": [
+    {
+      "record_kind": "readme_topic_phrase",
+      "path": "README.md",
+      "required_marker": "The local paper cache contains 53 PDFs on LLM-guided evolution, program\nsynthesis, quality-diversity optimization, and related benchmarks.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "papers_cache_count",
+      "path": "papers/README.md",
+      "required_marker": "contains 53\nlocally cached PDFs",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "papers_role_status_table",
+      "path": "papers/README.md",
+      "required_marker": "| ID | Title | Role | Current LibreEvolve status |",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "papers_role_taxonomy_statement",
+      "path": "papers/README.md",
+      "required_marker": "the declared role taxonomy",
+      "marker_status": "marker_present"
+    }
+  ],
+  "topic_marker_status": "readme_paper_cache_topic_markers_present",
+  "required_evidence_fields": [
+    "readme_topic_sentence",
+    "readme_manifest_count",
+    "download_manifest_rows",
+    "papers_status_table_rows",
+    "papers_role_inventory",
+    "heuristic_topic_family_signals",
+    "row_level_topic_taxonomy",
+    "topic_taxonomy_reviewer_signoff",
+    "topic_phrase_semantic_verifier",
+    "new_paper_out_of_scope_detector",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "row_level_topic_taxonomy": "not_recorded_locally",
+    "topic_taxonomy_reviewer_signoff": "not_recorded_locally",
+    "topic_phrase_semantic_verifier": "not_recorded_locally",
+    "new_paper_out_of_scope_detector": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the README paper-cache topic sentence, download-manifest row count, papers-index implementation-status row count, papers-index role inventory, and bounded heuristic topic-family signals for LLM-guided evolution, program synthesis, quality-diversity optimization, and related benchmarks. It does not claim a row-level reviewed topic taxonomy, taxonomy reviewer signoff, semantic verification of the README topic phrase, a new-paper out-of-scope detector, or owner review signoff."
+}

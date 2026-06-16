@@ -2877,6 +2877,14 @@ Implemented:
   markers, and the secret-scan baseline marker. It is not complete
   backend-registry auth reflection, live provider account probes, a
   provider-auth drift CI gate, or owner review signoff.
+- `papers/readme_paper_cache_topic_boundary.json`: README paper-cache topic
+  sidecar. It records the README paper-cache topic sentence,
+  download-manifest row count, papers-index implementation-status row count,
+  papers-index role inventory, and bounded heuristic topic-family signals for
+  LLM-guided evolution, program synthesis, quality-diversity optimization, and
+  related benchmarks. It is not a row-level reviewed topic taxonomy, taxonomy
+  reviewer signoff, semantic verification of the README topic phrase, a
+  new-paper out-of-scope detector, or owner review signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

@@ -221,19 +221,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     the `paper_docs` job runs the committed paper manifest, and the boundary
     verifier suite includes the ROADMAP non-goal contradiction, drift,
     Markdown, plugin docstring, and runtime metadata tests.
+    `papers/roadmap_non_goal_promotion_workflow_boundary.json` now records the
+    written intentional promotion workflow in
+    `docs/roadmap-non-goal-promotion-workflow.md`, including required updates
+    for ROADMAP, README, papers, status, TODO ledgers, non-goal sidecars, and
+    the paper-manifest gate.
   - Current gap: the sidecars are bounded documentation and readiness
     inventories plus runtime, Markdown, plugin-source phrase scans, and CI
-    workflow-shape promotion gating, not a full lifecycle gate. There is still
-    no intentional-promotion workflow, contradiction-remediation report,
+    workflow-shape promotion gating plus a written promotion workflow, not a
+    full lifecycle gate. There is still no contradiction-remediation report,
     runtime/plugin/docs/paper scope join, or owner review signoff proving
     future ROADMAP edits cannot accidentally promote a non-goal into a
     supported AlphaEvolve-parity claim.
   - Required result: implement the missing readiness fields recorded by the
-    sidecars: intentional promotion workflow, contradiction-remediation report
-    that rejects contradictory support claims, code/docs/paper surfaces plus
-    runtime/plugin scope join, and owner review signoff. The workflow must
-    update ROADMAP/TODO evidence whenever a non-goal is completed, removed, or
-    intentionally promoted into active implementation work.
+    sidecars: contradiction-remediation report that rejects contradictory
+    support claims, code/docs/paper surfaces plus runtime/plugin scope join,
+    and owner review signoff.
 
 - [ ] Add ROADMAP Good First Follow-Ups priority freshness evidence.
   - Spec evidence: the `Good First Follow-Ups` section is a prioritization

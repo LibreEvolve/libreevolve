@@ -14,7 +14,7 @@ def test_roadmap_non_goal_drift_accepts_bounded_readiness_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_non_goal_drift_matrix_with_ci_gate_without_full_lifecycle"
+        == "bounded_non_goal_drift_matrix_with_ci_gate_and_promotion_workflow"
     )
     assert boundary["schema"] == ROADMAP_NON_GOAL_DRIFT_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -26,7 +26,7 @@ def test_roadmap_non_goal_drift_accepts_bounded_readiness_matrix():
     assert boundary["source_constrained_surface_count"] == 9
     assert boundary["source_contradiction_count"] == 0
     assert boundary["criterion_count"] == 7
-    assert boundary["sidecar_ref_count"] == 18
+    assert boundary["sidecar_ref_count"] == 19
     assert boundary["active_todo_ref_count"] == 14
     assert [record["criterion_id"] for record in boundary["readiness_criteria"]] == [
         "runtime_metadata_scan",
@@ -48,7 +48,6 @@ def test_roadmap_non_goal_drift_accepts_bounded_readiness_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "intentional_promotion_workflow": "not_recorded_locally",
         "claim_surface_remediation": "not_recorded_locally",
         "runtime_plugin_scope_join": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
@@ -58,6 +57,7 @@ def test_roadmap_non_goal_drift_accepts_bounded_readiness_matrix():
         in boundary["claim_boundary"]
     )
     assert "CI promotion-gate workflow coverage" in boundary["claim_boundary"]
+    assert "intentional promotion workflow is recorded separately" in boundary["claim_boundary"]
 
 
 def test_roadmap_non_goal_drift_rejects_overclaim_and_drift():
@@ -89,10 +89,10 @@ def test_render_roadmap_non_goal_drift_summary_reports_shape():
     assert "ROADMAP non-goal drift boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_non_goal_drift_matrix_with_ci_gate_without_full_lifecycle |"
+        "| boundary_status | bounded_non_goal_drift_matrix_with_ci_gate_and_promotion_workflow |"
         in summary
     )
     assert "| criterion_count | 7 |" in summary
-    assert "| sidecar_ref_count | 18 |" in summary
+    assert "| sidecar_ref_count | 19 |" in summary
     assert "| active_todo_ref_count | 14 |" in summary
-    assert "| missing_evidence_count | 4 |" in summary
+    assert "| missing_evidence_count | 3 |" in summary

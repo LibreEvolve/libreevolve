@@ -1,12 +1,11 @@
 {
   "active_todo_ref_count": 14,
-  "boundary_status": "bounded_non_goal_drift_matrix_with_ci_gate_without_full_lifecycle",
-  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans and CI promotion-gate workflow coverage are recorded separately, but this boundary does not claim an intentional promotion workflow, owner-reviewed remediation readiness, or joined runtime/plugin/docs/paper scope proof.",
+  "boundary_status": "bounded_non_goal_drift_matrix_with_ci_gate_and_promotion_workflow",
+  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans and CI promotion-gate workflow coverage are recorded separately, and the intentional promotion workflow is recorded separately. This boundary does not claim owner-reviewed remediation readiness, joined runtime/plugin/docs/paper scope proof, or owner review signoff.",
   "claim_ready": false,
   "criterion_count": 7,
   "missing_evidence": {
     "claim_surface_remediation": "not_recorded_locally",
-    "intentional_promotion_workflow": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
     "runtime_plugin_scope_join": "not_recorded_locally"
   },
@@ -159,14 +158,14 @@
       "active_todo_refs": [
         {
           "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "intentionally promoted",
+          "path": "docs/todo/Completed/roadmap.md",
+          "required_phrase": "intentional promotion workflow boundary",
           "required_phrase_present": true
         },
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "update ROADMAP/TODO evidence",
+          "required_phrase": "written promotion workflow",
           "required_phrase_present": true
         }
       ],
@@ -174,7 +173,7 @@
       "criterion_id": "intentional_promotion_workflow",
       "current_scope": "static current non-goal inventory",
       "missing_readiness": "workflow proving intentional promotion updates ROADMAP, README, papers, and TODO evidence",
-      "readiness_status": "no_promotion_workflow_recorded",
+      "readiness_status": "promotion_workflow_recorded_without_remediation_or_signoff",
       "sidecar_refs": [
         {
           "exists": true,
@@ -183,6 +182,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_phase_sequence_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_promotion_workflow_boundary.json"
         }
       ],
       "validation_gate": "intentional non-goal promotion workflow with evidence checklist"
@@ -263,7 +266,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_non_goal_drift_boundary.v1",
-  "sidecar_ref_count": 18,
+  "sidecar_ref_count": 19,
   "source_constrained_surface_count": 9,
   "source_contradiction_count": 0,
   "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",

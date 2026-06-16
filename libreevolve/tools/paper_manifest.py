@@ -230,6 +230,9 @@ from libreevolve.problems.benchmarks.roadmap_non_goal_drift_boundary import (
 from libreevolve.problems.benchmarks.roadmap_non_goal_ci_promotion_gate_boundary import (
     validate_roadmap_non_goal_ci_promotion_gate_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_non_goal_promotion_workflow_boundary import (
+    validate_roadmap_non_goal_promotion_workflow_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_non_goal_markdown_scan_boundary import (
     roadmap_non_goal_markdown_scan_boundary_record,
     validate_roadmap_non_goal_markdown_scan_boundary,
@@ -884,6 +887,7 @@ ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_FILE = "papers/roadmap_source_span_e
 ROADMAP_NON_GOAL_CONTRADICTION_BOUNDARY_FILE = "papers/roadmap_non_goal_contradiction_boundary.json"
 ROADMAP_NON_GOAL_DRIFT_BOUNDARY_FILE = "papers/roadmap_non_goal_drift_boundary.json"
 ROADMAP_NON_GOAL_CI_PROMOTION_GATE_BOUNDARY_FILE = "papers/roadmap_non_goal_ci_promotion_gate_boundary.json"
+ROADMAP_NON_GOAL_PROMOTION_WORKFLOW_BOUNDARY_FILE = "papers/roadmap_non_goal_promotion_workflow_boundary.json"
 ROADMAP_NON_GOAL_MARKDOWN_SCAN_BOUNDARY_FILE = "papers/roadmap_non_goal_markdown_scan_boundary.json"
 ROADMAP_NON_GOAL_PLUGIN_DOCSTRING_BOUNDARY_FILE = "papers/roadmap_non_goal_plugin_docstring_boundary.json"
 ROADMAP_NON_GOAL_RUNTIME_METADATA_BOUNDARY_FILE = "papers/roadmap_non_goal_runtime_metadata_boundary.json"
@@ -1575,6 +1579,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_non_goal_contradiction_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_drift_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_ci_promotion_gate_boundary(root_path))
+    issues.extend(_validate_roadmap_non_goal_promotion_workflow_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_markdown_scan_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_plugin_docstring_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_runtime_metadata_boundary(root_path))
@@ -4532,6 +4537,41 @@ def _validate_roadmap_non_goal_ci_promotion_gate_boundary(root_path: Path) -> li
             f"roadmap_non_goal_ci_promotion_gate_boundary_{issue.code}",
             issue.message,
             "roadmap_non_goal_ci_promotion_gate",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_non_goal_promotion_workflow_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_NON_GOAL_PROMOTION_WORKFLOW_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_non_goal_promotion_workflow_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_NON_GOAL_PROMOTION_WORKFLOW_BOUNDARY_FILE} must emit "
+                        "ROADMAP non-goal intentional promotion workflow metadata"
+                    ),
+                    "roadmap_non_goal_promotion_workflow",
+                )
+            ]
+        return []
+    report = validate_roadmap_non_goal_promotion_workflow_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_non_goal_promotion_workflow_boundary_{issue.code}",
+            issue.message,
+            "roadmap_non_goal_promotion_workflow",
         )
         for issue in report.issues
     ]

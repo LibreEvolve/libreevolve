@@ -1,0 +1,125 @@
+{
+  "boundary_status": "intentional_promotion_workflow_recorded_without_remediation_or_signoff",
+  "claim_boundary": "This boundary records a written intentional ROADMAP non-goal promotion workflow with required updates for ROADMAP, README, papers, status, TODO ledgers, non-goal sidecars, and the paper manifest gate. It does not claim a contradiction-remediation report, joined runtime/plugin/docs/paper scope proof, or owner review signoff.",
+  "claim_ready": false,
+  "claim_surface_count": 6,
+  "claim_surfaces": [
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "ROADMAP.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "README.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/README.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "docs/status.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "docs/todo/roadmap.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "docs/todo/Completed/roadmap.md"
+    }
+  ],
+  "missing_evidence": {
+    "claim_surface_remediation": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "runtime_plugin_scope_join": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "workflow_doc",
+    "stable_non_goal_id_update",
+    "roadmap_update",
+    "readme_update",
+    "papers_index_update",
+    "status_update",
+    "todo_active_update",
+    "todo_completed_update",
+    "non_goal_sidecar_refresh",
+    "paper_manifest_gate",
+    "claim_surface_remediation",
+    "runtime_plugin_scope_join",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_non_goal_promotion_workflow_boundary.v1",
+  "sidecar_ref_count": 6,
+  "sidecar_refs": [
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_non_goal_contradiction_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_non_goal_drift_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_non_goal_ci_promotion_gate_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_non_goal_markdown_scan_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
+    }
+  ],
+  "workflow_doc": "docs/roadmap-non-goal-promotion-workflow.md",
+  "workflow_doc_exists": true,
+  "workflow_phrase_count": 7,
+  "workflow_phrases": {
+    "contradiction_routing": {
+      "phrase": "Contradictory support claims must be routed",
+      "present": true
+    },
+    "manifest_gate": {
+      "phrase": "py -3.12 -m libreevolve.tools.paper_manifest --root . --require-local-pdfs --json",
+      "present": true
+    },
+    "not_valid_if_only_prose": {
+      "phrase": "not valid if it only changes prose",
+      "present": true
+    },
+    "owner_signoff_boundary": {
+      "phrase": "not an owner review signoff record",
+      "present": true
+    },
+    "promotion_scope": {
+      "phrase": "removed, completed, or intentionally promoted",
+      "present": true
+    },
+    "same_pull_request": {
+      "phrase": "same pull request",
+      "present": true
+    },
+    "stable_non_goal_id": {
+      "phrase": "stable non-goal id record",
+      "present": true
+    }
+  }
+}

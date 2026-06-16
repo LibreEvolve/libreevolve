@@ -1280,6 +1280,7 @@ Important limits:
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_non_goal_drift_boundary.json`,
   `papers/roadmap_non_goal_ci_promotion_gate_boundary.json`,
+  `papers/roadmap_non_goal_promotion_workflow_boundary.json`,
   `papers/roadmap_non_goal_markdown_scan_boundary.json`,
   `papers/roadmap_non_goal_plugin_docstring_boundary.json`,
   `papers/roadmap_non_goal_runtime_metadata_boundary.json`,
@@ -1368,8 +1369,8 @@ Important limits:
   scans, CI non-goal promotion gates, intentional-promotion workflow,
   contradiction remediation, and joined runtime/plugin/docs/paper scope maps.
   The runtime metadata, Markdown corpus, plugin docstring, and CI
-  promotion-gate workflow-shape checks are recorded separately, but this is
-  not an intentional-promotion workflow, contradiction remediation, a joined
+  promotion-gate workflow-shape checks and intentional-promotion workflow are
+  recorded separately, but this is not contradiction remediation, a joined
   scope verifier, or owner review signoff.
 - ROADMAP non-goal CI promotion-gate evidence now records that GitHub Actions
   path filters cover ROADMAP/docs/papers/test/source changes, the `paper_docs`
@@ -1378,6 +1379,12 @@ Important limits:
   docstring, and runtime metadata tests. This is not an intentional-promotion
   workflow, contradiction-remediation report, joined runtime/plugin/docs/paper
   scope proof, or owner-reviewed signoff.
+- ROADMAP non-goal promotion-workflow evidence now records the committed
+  workflow document for intentionally removing, completing, or promoting a
+  non-goal, including required updates for ROADMAP, README, papers, status,
+  TODO ledgers, non-goal sidecars, and the paper-manifest gate. This is not a
+  contradiction-remediation report, joined runtime/plugin/docs/paper scope
+  proof, or owner-reviewed signoff.
 - ROADMAP non-goal Markdown scan evidence now records the repository Markdown
   file inventory, stable non-goal ids, forbidden support-claim phrases,
   line-level hit records, and zero detected Markdown contradiction hits. This

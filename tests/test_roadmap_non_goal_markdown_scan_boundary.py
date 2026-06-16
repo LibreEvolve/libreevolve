@@ -25,8 +25,8 @@ def test_roadmap_non_goal_markdown_scan_accepts_current_corpus():
     assert boundary["source_non_goal_count"] == 3
     assert boundary["source_constrained_surface_count"] == 9
     assert boundary["markdown_corpus_status"] == "all_repo_markdown_files_scanned"
-    assert boundary["markdown_file_count"] == 25
-    assert boundary["readable_markdown_file_count"] == 25
+    assert boundary["markdown_file_count"] == 26
+    assert boundary["readable_markdown_file_count"] == 26
     assert boundary["unreadable_markdown_file_count"] == 0
     assert boundary["markdown_read_error_records"] == []
     assert "README.md" in boundary["markdown_files"]
@@ -92,7 +92,7 @@ def test_render_roadmap_non_goal_markdown_scan_summary_reports_shape():
         "| boundary_status | markdown_corpus_scan_without_runtime_or_promotion_gate |"
         in summary
     )
-    assert "| markdown_file_count | 25 |" in summary
+    assert "| markdown_file_count | 26 |" in summary
     assert "| non_goal_count | 3 |" in summary
     assert "| forbidden_phrase_count | 17 |" in summary
     assert "| contradiction_count | 0 |" in summary

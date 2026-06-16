@@ -14,7 +14,7 @@ ROADMAP_NON_GOAL_DRIFT_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_non_goal_drift_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_non_goal_drift_matrix_with_ci_gate_without_full_lifecycle"
+    "bounded_non_goal_drift_matrix_with_ci_gate_and_promotion_workflow"
 )
 SOURCE_NON_GOAL_BOUNDARY_INPUT = "papers/roadmap_non_goal_contradiction_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -28,7 +28,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "intentional_promotion_workflow": "not_recorded_locally",
     "claim_surface_remediation": "not_recorded_locally",
     "runtime_plugin_scope_join": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
@@ -136,19 +135,20 @@ CRITERION_SPECS = (
         "sidecars": (
             "papers/todo_canonical_gap_boundary.json",
             "papers/roadmap_phase_sequence_boundary.json",
+            "papers/roadmap_non_goal_promotion_workflow_boundary.json",
         ),
         "active_todos": (
             {
-                "path": "docs/todo/roadmap.md",
-                "required_phrase": "intentionally promoted",
+                "path": "docs/todo/Completed/roadmap.md",
+                "required_phrase": "intentional promotion workflow boundary",
             },
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "update ROADMAP/TODO evidence",
+                "required_phrase": "written promotion workflow",
             },
         ),
         "validation_gate": "intentional non-goal promotion workflow with evidence checklist",
-        "readiness_status": "no_promotion_workflow_recorded",
+        "readiness_status": "promotion_workflow_recorded_without_remediation_or_signoff",
     },
     {
         "criterion_id": "claim_surface_remediation",
@@ -241,9 +241,10 @@ def roadmap_non_goal_drift_boundary_record(root: str | Path = ".") -> dict[str, 
             "matrix tied to the bounded ROADMAP non-goal contradiction "
             "inventory. The runtime metadata, Markdown corpus, and plugin "
             "docstring scans and CI promotion-gate workflow coverage are "
-            "recorded separately, but this boundary does not claim an "
-            "intentional promotion workflow, owner-reviewed remediation "
-            "readiness, or joined runtime/plugin/docs/paper scope proof."
+            "recorded separately, and the intentional promotion workflow is "
+            "recorded separately. This boundary does not claim "
+            "owner-reviewed remediation readiness, joined "
+            "runtime/plugin/docs/paper scope proof, or owner review signoff."
         ),
     }
 
@@ -290,7 +291,8 @@ def validate_roadmap_non_goal_drift_boundary(
         not isinstance(boundary_text, str)
         or "runtime metadata, Markdown corpus, and plugin docstring scans" not in boundary_text
         or "CI promotion-gate workflow coverage" not in boundary_text
-        or "does not claim an intentional promotion workflow" not in boundary_text
+        or "intentional promotion workflow is recorded separately" not in boundary_text
+        or "does not claim owner-reviewed remediation readiness" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from full drift/promotion enforcement"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

@@ -15757,3 +15757,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: intentional non-goal promotion workflow,
     contradiction-remediation reporting, runtime/plugin/docs/paper scope
     joins, and owner review signoff remain active in `docs/todo/roadmap.md`.
+- [x] Add ROADMAP non-goal intentional promotion workflow boundary.
+  - Spec evidence: ROADMAP non-goals need an intentional lifecycle path so a
+    future removal, completion, or promotion updates the evidence surfaces
+    instead of silently turning a guardrail into an unsupported claim.
+  - Status: `docs/roadmap-non-goal-promotion-workflow.md` now records the
+    required promotion checklist for ROADMAP, README, papers, status, TODO
+    ledgers, non-goal sidecars, and the paper-manifest gate.
+    `papers/roadmap_non_goal_promotion_workflow_boundary.json` validates that
+    workflow doc and the referenced local evidence paths. The paper-manifest
+    gate now requires and validates the sidecar at the repo root.
+  - Remaining roadmap gap: contradiction-remediation reporting,
+    runtime/plugin/docs/paper scope joins, and owner review signoff remain
+    active in `docs/todo/roadmap.md`.

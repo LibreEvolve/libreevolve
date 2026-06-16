@@ -1257,7 +1257,13 @@ Important limits:
   current. `papers/roadmap_readiness_boundary.json` separately records
   stable readiness categories, weights, raw TODO-ledger completion, and
   weighted TODO-ledger completion while keeping semantic AlphaEvolve
-  implementation readiness false. `papers/todo_ledger_ownership_boundary.json`
+  implementation readiness false. `papers/roadmap_readiness_publication_boundary.json`
+  records eight criteria for semantic requirement source mapping, canonical
+  gap completion policy, per-category evidence gates, benchmark reproduction
+  certification, operational release readiness, uncertainty/percentage
+  labels, stale-count detection, and publication-claim scoping; it is not a
+  certification that readiness percentages can be published as semantic
+  AlphaEvolve implementation parity. `papers/todo_ledger_ownership_boundary.json`
   records TODO owner files, active/completed counts, active-ledger checked
   marker drift, and exact normalized-title duplicate groups while keeping
   canonical underlying-gap ids and canonical completion percentages absent;
@@ -1265,6 +1271,7 @@ Important limits:
   `papers/todo_ledger_ownership_boundary.json`,
   `papers/todo_canonical_gap_boundary.json`,
   `papers/roadmap_readiness_boundary.json`,
+  `papers/roadmap_readiness_publication_boundary.json`,
   `papers/roadmap_claim_evidence_boundary.json`,
   `papers/roadmap_source_span_disposition_boundary.json`,
   `papers/roadmap_source_span_coverage_boundary.json`,

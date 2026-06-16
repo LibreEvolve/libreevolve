@@ -63,14 +63,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     sandbox/resource enforcement, representative benchmark reproduction, and
     full resume/replay proof. README and `docs/status.md` correctly say this
     is not a full AlphaEvolve reproduction.
+    `papers/roadmap_readiness_publication_boundary.json` now records a
+    bounded eight-criterion publication/certification gate for semantic
+    requirement source mapping, canonical gap completion policy, per-category
+    evidence gates, benchmark reproduction certification, operational release
+    readiness, uncertainty/percentage labels, stale-count detection, and
+    publication-claim scoping.
   - Current gap: the weighted readiness sidecar is still TODO-ledger evidence,
-    not semantic AlphaEvolve implementation parity. There is no requirement-
-    level source-span mapping, canonical underlying-gap deduplication,
-    per-category code/test/runtime-artifact proof map, benchmark reproduction
-    certification, operational release-readiness gate, or stale-count detector
-    preventing paper-source metadata readiness, documentation-routing work, or
-    fixture-level provenance from inflating technical implementation
-    completion.
+    and the new publication sidecar is still a bounded certification map, not
+    semantic AlphaEvolve implementation parity. There is no requirement-level
+    source-span mapping, canonical underlying-gap deduplication, per-category
+    code/test/runtime-artifact proof map, benchmark reproduction
+    certification, operational release-readiness gate, uncertainty model, or
+    stale-count detector preventing paper-source metadata readiness,
+    documentation-routing work, or fixture-level provenance from inflating
+    technical implementation completion.
   - Required result: add a ROADMAP readiness model with stable categories,
     weights, source requirements, TODO/sidecar/test evidence links,
     per-category completion counts, uncertainty labels, and a validator that

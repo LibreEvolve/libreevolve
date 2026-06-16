@@ -1,0 +1,292 @@
+{
+  "active_todo_ref_count": 16,
+  "boundary_status": "bounded_readiness_publication_gate_without_semantic_alphaevolve_certification",
+  "claim_boundary": "This boundary records the publication gate for ROADMAP readiness percentages. It does not claim requirement-level source-span mapping, canonical underlying-gap deduplication, per-category code/test/runtime-artifact proof maps, benchmark reproduction certification, operational release-readiness gate, readiness uncertainty labels, stale-count detector, or a policy allowing weighted TODO completion to be published as semantic AlphaEvolve implementation parity.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "benchmark_reproduction_certification": "not_recorded_locally",
+    "canonical_underlying_gap_deduplication": "not_recorded_locally",
+    "operational_release_readiness_gate": "not_recorded_locally",
+    "per_category_code_test_runtime_artifact_proof_map": "not_recorded_locally",
+    "readiness_percentage_publication_policy": "not_recorded_locally",
+    "readiness_uncertainty_labels": "not_recorded_locally",
+    "requirement_level_source_span_mapping": "not_recorded_locally",
+    "stale_count_detector": "not_recorded_locally"
+  },
+  "publication_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "source requirements",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "level source-span mapping",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "semantic_requirement_source_mapping",
+      "current_scope": "weighted TODO-ledger categories without requirement-level source-span proof",
+      "missing_readiness": "requirement-level source-span mapping tied to readiness categories",
+      "readiness_status": "todo_categories_without_requirement_level_source_map",
+      "search_surface": "source requirements, ROADMAP readiness categories, and AlphaEvolve requirement spans",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/implementation_evidence_map_boundary.json"
+        }
+      ],
+      "validation_gate": "semantic requirement to source-span readiness map"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "canonical underlying-gap deduplication",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "project-completion percentages",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "canonical_gap_completion_policy",
+      "current_scope": "raw owner-ledger counts and exact duplicate-title diagnostics",
+      "missing_readiness": "canonical underlying-gap deduplication before publishing completion percentages as capability progress",
+      "readiness_status": "raw_todo_counts_without_canonical_gap_completion",
+      "search_surface": "canonical underlying gaps, duplicate TODOs, and published completion percentages",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_canonical_gap_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "canonical gap rollup before percent publication"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "TODO/sidecar/test evidence links",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "per-category code/test/runtime-artifact proof map",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "per_category_evidence_gate",
+      "current_scope": "structural sidecar refs without per-category semantic sufficiency proof",
+      "missing_readiness": "per-category code/test/runtime-artifact proof map",
+      "readiness_status": "structural_refs_without_evidence_sufficiency_gate",
+      "search_surface": "TODO, sidecar, code, test, and runtime-artifact evidence links",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/implementation_evidence_map_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_claim_evidence_boundary.json"
+        }
+      ],
+      "validation_gate": "per-category evidence sufficiency map"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "benchmark reproduction certification",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "paper-source metadata readiness",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "benchmark_reproduction_certification",
+      "current_scope": "benchmark coverage inventories and readiness sidecars without reproduction certification",
+      "missing_readiness": "benchmark reproduction certification that separates paper-source metadata readiness from technical reproduction",
+      "readiness_status": "coverage_inventory_without_reproduction_certification",
+      "search_surface": "benchmark reproduction, paper-source metadata readiness, and representative benchmark claims",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/benchmark_coverage_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_benchmark_portfolio_readiness_boundary.json"
+        }
+      ],
+      "validation_gate": "benchmark reproduction certification gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "operational release-readiness gate",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "fixture-level provenance",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "operational_release_readiness_gate",
+      "current_scope": "operational readiness boundaries and reproducibility sidecars without release-readiness gate",
+      "missing_readiness": "operational release-readiness gate that prevents fixture-level provenance from inflating implementation readiness",
+      "readiness_status": "release_sidecars_without_operational_readiness_certification",
+      "search_surface": "operational/release maturity, fixture-level provenance, and release artifacts",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_operational_readiness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/release_artifact_reproducibility_boundary.json"
+        }
+      ],
+      "validation_gate": "operational release-readiness publication gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "uncertainty labels",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "weighted AlphaEvolve implementation readiness",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "uncertainty_and_percentage_labels",
+      "current_scope": "raw and weighted TODO-ledger percentages with non-readiness status labels",
+      "missing_readiness": "uncertainty labels that distinguish ledger completion from weighted AlphaEvolve implementation readiness",
+      "readiness_status": "todo_percentages_without_uncertainty_model",
+      "search_surface": "uncertainty labels, raw TODO percentages, and weighted AlphaEvolve implementation readiness",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "readiness percentage uncertainty-label gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "stale-count detector",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "raw TODO completion separately from weighted AlphaEvolve",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "stale_count_detector",
+      "current_scope": "regenerated structural sidecars without semantic stale-count detector",
+      "missing_readiness": "stale-count detector that validates raw TODO completion separately from weighted AlphaEvolve readiness",
+      "readiness_status": "regenerated_counts_without_stale_count_semantics",
+      "search_surface": "stale TODO counts, raw TODO completion, and weighted readiness calculation",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "stale-count and percent freshness detector"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "semantic AlphaEvolve implementation parity",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "more than a ledger statistic",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "publication_claim_boundary",
+      "current_scope": "documentation that scopes TODO percentages as ledger statistics",
+      "missing_readiness": "publication policy forbidding weighted TODO completion from being presented as semantic AlphaEvolve implementation parity",
+      "readiness_status": "ledger_statistic_claim_boundary_without_semantic_readiness",
+      "search_surface": "README, ROADMAP, status, papers index, and user-facing project-completion percentages",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "readiness percentage publication claim boundary"
+    }
+  ],
+  "publication_criterion_count": 8,
+  "required_evidence_fields": [
+    "semantic_requirement_source_mapping",
+    "canonical_gap_completion_policy",
+    "per_category_evidence_gate",
+    "benchmark_reproduction_certification",
+    "operational_release_readiness_gate",
+    "uncertainty_and_percentage_labels",
+    "stale_count_detector",
+    "publication_claim_boundary"
+  ],
+  "schema": "libreevolve.roadmap_readiness_publication_boundary.v1",
+  "sidecar_ref_count": 16,
+  "source_category_count": 4,
+  "source_category_weight_total": 100,
+  "source_missing_evidence_count": 6,
+  "source_readiness_boundary_input": "papers/roadmap_readiness_boundary.json",
+  "source_readiness_percent_status": "todo_ledger_only_not_semantic_alphaevolve_readiness"
+}

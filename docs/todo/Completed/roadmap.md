@@ -126,6 +126,25 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     gates, and stale-count detection.
   - Verification: focused ROADMAP readiness tests and paper-manifest
     validation cover the structural sidecar contract.
+- [x] Add bounded ROADMAP readiness publication gate.
+  - Status: `papers/roadmap_readiness_publication_boundary.json` now records
+    eight publication/certification criteria for semantic requirement source
+    mapping, canonical gap completion policy, per-category evidence gates,
+    benchmark reproduction certification, operational release readiness,
+    uncertainty/percentage labels, stale-count detection, and
+    publication-claim scoping.
+  - Current evidence: `libreevolve/problems/benchmarks/roadmap_readiness_publication_boundary.py`
+    links the existing readiness taxonomy input, sidecar refs, active TODO
+    refs, validation-gate labels, readiness labels, and explicit
+    missing-evidence fields. `tests/test_roadmap_readiness_publication_boundary.py`
+    rejects publication overclaims, source-count drift, criterion drift,
+    missing-evidence drift, and required-field drift. The paper-manifest gate
+    now requires and validates the sidecar at the repo root.
+  - Remaining guard: the actual requirement-level source-span mapping,
+    canonical underlying-gap deduplication, per-category code/test/runtime
+    proof map, benchmark reproduction certification, operational
+    release-readiness gate, uncertainty labels, stale-count detector, and
+    percentage-publication policy remain active in `docs/todo/roadmap.md`.
 
 - [x] Archive hardness-of-approximation proof-element roadmap wording TODO.
   - Status: the roadmap-specific TODO was stale once the live README boundary

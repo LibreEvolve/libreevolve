@@ -187,6 +187,10 @@ from libreevolve.problems.benchmarks.roadmap_readiness_boundary import (
     roadmap_readiness_boundary_record,
     validate_roadmap_readiness_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_readiness_publication_boundary import (
+    roadmap_readiness_publication_boundary_record,
+    validate_roadmap_readiness_publication_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_claim_evidence_boundary import (
     roadmap_claim_evidence_boundary_record,
     validate_roadmap_claim_evidence_boundary,
@@ -846,6 +850,7 @@ STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_bounda
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 ROADMAP_READINESS_BOUNDARY_FILE = "papers/roadmap_readiness_boundary.json"
+ROADMAP_READINESS_PUBLICATION_BOUNDARY_FILE = "papers/roadmap_readiness_publication_boundary.json"
 ROADMAP_CLAIM_EVIDENCE_BOUNDARY_FILE = "papers/roadmap_claim_evidence_boundary.json"
 TODO_LEDGER_OWNERSHIP_BOUNDARY_FILE = "papers/todo_ledger_ownership_boundary.json"
 TODO_CANONICAL_GAP_BOUNDARY_FILE = "papers/todo_canonical_gap_boundary.json"
@@ -1530,6 +1535,7 @@ def validate_paper_manifest(
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
     issues.extend(_validate_documentation_claim_inventory(root_path))
     issues.extend(_validate_roadmap_readiness_boundary(root_path))
+    issues.extend(_validate_roadmap_readiness_publication_boundary(root_path))
     issues.extend(_validate_roadmap_claim_evidence_boundary(root_path))
     issues.extend(_validate_todo_ledger_ownership_boundary(root_path))
     issues.extend(_validate_todo_canonical_gap_boundary(root_path))
@@ -4121,6 +4127,38 @@ def _validate_roadmap_readiness_boundary(root_path: Path) -> list[PaperManifestI
             f"roadmap_readiness_boundary_{issue.code}",
             issue.message,
             "roadmap_readiness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_readiness_publication_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_READINESS_PUBLICATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = roadmap_readiness_publication_boundary_record(root_path)
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_readiness_publication_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_READINESS_PUBLICATION_BOUNDARY_FILE} must emit "
+                        "ROADMAP readiness publication metadata"
+                    ),
+                    "roadmap_readiness_publication",
+                )
+            ]
+    report = validate_roadmap_readiness_publication_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"roadmap_readiness_publication_boundary_{issue.code}",
+            issue.message,
+            "roadmap_readiness_publication",
         )
         for issue in report.issues
     ]

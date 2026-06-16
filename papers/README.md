@@ -2856,6 +2856,13 @@ Implemented:
   readiness, canonical underlying-gap deduplication, source-span disposition
   completeness, per-category test-gate coverage, benchmark reproduction
   certification, or operational release readiness.
+- `papers/roadmap_readiness_publication_boundary.json`: ROADMAP readiness
+  publication sidecar with eight criteria for semantic requirement source
+  mapping, canonical gap completion policy, per-category evidence gates,
+  benchmark reproduction certification, operational release readiness,
+  uncertainty/percentage labels, stale-count detection, and
+  publication-claim scoping. It is not evidence that readiness percentages can
+  be published as semantic AlphaEvolve implementation parity.
 - `papers/roadmap_claim_evidence_boundary.json`: ROADMAP current-state and
   priority claim-evidence sidecar with six claim surfaces, parsed
   current-state bullet count, parsed good-first item count, sidecar refs,

@@ -2977,6 +2977,21 @@ Implemented:
   memory, semantic near-duplicate detection, metric-specific CLI drill-downs,
   equal-budget multi-objective benchmarks, stale-readiness detector, or owner
   review signoff.
+- `papers/roadmap_candidate_workspace_fidelity_boundary.json`: ROADMAP
+  candidate-workspace fidelity sidecar with ten criteria for language/build
+  runner support, candidate abstraction API, marker/materialization policy,
+  embedded evaluator boundaries, codebase-scale fixtures, mutation-mode/
+  operator provenance, prompt-example-copy guards, cross-file consistency,
+  initial-pool/static-binary handling, and source/workspace resume integrity,
+  with current scope, missing-readiness, sidecar-ref, active-TODO,
+  validation-gate, and readiness labels. It is not evidence of configured
+  language/build runners, a flexible solution abstraction API,
+  candidate-embedded evaluator contracts, realistic codebase fixtures,
+  adaptive mutation-mode selection, mutation-operator family provenance,
+  semantic prompt-example-copy detection, cross-file consistency benchmark
+  evidence, initial-pool divergence benchmark evidence, static/binary replay
+  policy, topology resume replay proof, stale-readiness detector, or owner
+  review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

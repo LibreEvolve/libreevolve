@@ -1275,6 +1275,7 @@ Important limits:
   `papers/roadmap_async_resumable_runtime_boundary.json`,
   `papers/roadmap_prompt_context_system_boundary.json`,
   `papers/roadmap_evaluation_cascade_boundary.json`,
+  `papers/roadmap_candidate_workspace_fidelity_boundary.json`,
   `papers/roadmap_multi_objective_search_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
@@ -1369,6 +1370,20 @@ Important limits:
   fixtures, OS/container resource sandboxing, replayable environment/release
   bundles, benchmark-sufficiency signoff, stale-readiness detector, or owner
   review signoff.
+- ROADMAP candidate-workspace fidelity evidence now records ten criteria for
+  language/build runner support, candidate abstraction API,
+  marker/materialization policy, embedded evaluator boundaries,
+  codebase-scale fixtures, mutation-mode/operator provenance,
+  prompt-example-copy guards, cross-file consistency, initial-pool/static-
+  binary handling, and source/workspace resume integrity, with current scope,
+  missing-readiness, sidecar-ref, active-TODO, validation-gate, and readiness
+  labels. This is not configured language/build runners, a flexible solution
+  abstraction API, candidate-embedded evaluator contracts, realistic codebase
+  fixtures, adaptive mutation-mode selection, mutation-operator family
+  provenance, semantic prompt-example-copy detection, cross-file consistency
+  benchmark evidence, initial-pool divergence benchmark evidence,
+  static/binary replay policy, topology resume replay proof,
+  stale-readiness detector, or owner review signoff.
 - ROADMAP multi-objective search evidence now records eight criteria for paper
   metric bundles, objective-archive policy, metric-diverse sampling balance,
   duplicate-work memory, descriptor authority, MAP-Elites illumination,

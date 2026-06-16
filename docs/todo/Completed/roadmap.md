@@ -15335,3 +15335,27 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     drill-downs, equal-budget multi-objective benchmarks, stale-readiness
     detector, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP candidate-workspace fidelity readiness matrix.
+  - Spec evidence: AlphaEvolve candidate-workspace fidelity requires more than
+    Python-local workspace fixtures or fixed edit parser support: language and
+    build runners, flexible candidate abstraction, candidate-owned evaluator
+    contracts, codebase-scale fixtures, mutation provenance, consistency
+    evidence, static/binary policy, and replay semantics must be classified
+    before claiming workspace parity.
+  - Status: `papers/roadmap_candidate_workspace_fidelity_boundary.json` now
+    records ten criteria for language/build runner support, candidate
+    abstraction API, marker/materialization policy, embedded evaluator
+    boundaries, codebase-scale fixtures, mutation-mode/operator provenance,
+    prompt-example-copy guards, cross-file consistency, initial-pool/static-
+    binary handling, and source/workspace resume integrity, with current scope,
+    missing-readiness, sidecar-ref, active-TODO, validation-gate, and readiness
+    labels. The paper-manifest gate now requires and validates the sidecar at
+    the repo root.
+  - Remaining roadmap gap: configured language/build runners, flexible
+    solution abstraction API, candidate-embedded evaluator contracts,
+    realistic codebase fixtures, adaptive mutation-mode selection,
+    mutation-operator family provenance, semantic prompt-example-copy
+    detection, cross-file consistency benchmark evidence, initial-pool
+    divergence benchmark evidence, static/binary replay policy, topology
+    resume replay proof, stale-readiness detector, and owner review signoff
+    remain active in `docs/todo/roadmap.md`.

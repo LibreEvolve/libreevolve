@@ -2934,9 +2934,16 @@ Implemented:
   plugin docstring scans, exhaustive Markdown corpus scans, CI promotion
   gates, intentional-promotion workflow, contradiction remediation, and joined
   runtime/plugin/docs/paper scope maps. It now points to separate runtime
-  metadata, Markdown corpus, and plugin docstring scan sidecars, but it is not
-  evidence that gates, workflows, remediation reports, scope joins, or owner
-  review signoff are implemented.
+  metadata, Markdown corpus, plugin docstring, and CI promotion-gate sidecars,
+  but it is not evidence that intentional promotion workflows, remediation
+  reports, scope joins, or owner review signoff are implemented.
+- `papers/roadmap_non_goal_ci_promotion_gate_boundary.json`: ROADMAP non-goal
+  CI promotion gate sidecar with committed GitHub Actions path-filter,
+  paper-manifest, and boundary-test evidence for ROADMAP non-goal
+  contradiction, drift, Markdown, plugin docstring, and runtime metadata
+  checks. It is not evidence of an intentional promotion workflow,
+  contradiction-remediation report, joined runtime/plugin/docs/paper scope
+  proof, or owner-reviewed signoff.
 - `papers/roadmap_non_goal_markdown_scan_boundary.json`: ROADMAP non-goal
   Markdown corpus scan sidecar with the repository Markdown file inventory,
   stable non-goal ids, forbidden support-claim phrases, line-level hit records,
@@ -2958,9 +2965,9 @@ Implemented:
   runtime plugin state, runtime plugin artifact metadata, and built-in plugin
   registry paper-inspiration labels. It records required safe-scope phrases,
   zero missing safe phrases at the repo root, and zero contradictory
-  support-claim hits. It is not evidence of CI promotion enforcement,
-  intentional promotion workflow, joined runtime/plugin/docs/paper scope proof,
-  or owner-reviewed remediation readiness.
+  support-claim hits. It is not evidence of intentional promotion workflow,
+  joined runtime/plugin/docs/paper scope proof, or owner-reviewed remediation
+  readiness.
 - `papers/roadmap_good_first_followups_boundary.json`: ROADMAP Good First
   Follow-Ups priority sidecar with the four current priority items, active
   TODO refs, priority rationale, dependency-readiness labels, validation gates,

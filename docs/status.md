@@ -1279,6 +1279,7 @@ Important limits:
   `papers/roadmap_source_span_exhaustiveness_boundary.json`,
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_non_goal_drift_boundary.json`,
+  `papers/roadmap_non_goal_ci_promotion_gate_boundary.json`,
   `papers/roadmap_non_goal_markdown_scan_boundary.json`,
   `papers/roadmap_non_goal_plugin_docstring_boundary.json`,
   `papers/roadmap_non_goal_runtime_metadata_boundary.json`,
@@ -1361,16 +1362,22 @@ Important limits:
   validates required safe-scope phrases, and records zero exact forbidden
   support-claim phrase matches for that bounded surface set. It links the full
   Markdown corpus scan sidecar, but this is not a runtime metadata scan,
-  plugin docstring scan, CI non-goal promotion gate, or
-  intentional-promotion workflow.
+  plugin docstring scan, or intentional-promotion workflow.
 - ROADMAP non-goal drift evidence now records seven readiness criteria for
   runtime metadata scans, plugin docstring scans, exhaustive Markdown corpus
   scans, CI non-goal promotion gates, intentional-promotion workflow,
   contradiction remediation, and joined runtime/plugin/docs/paper scope maps.
-  The runtime metadata, Markdown corpus, and plugin docstring scans are
-  recorded separately, but this is not CI promotion enforcement, an
-  intentional-promotion workflow, contradiction remediation, a joined scope
-  verifier, or owner review signoff.
+  The runtime metadata, Markdown corpus, plugin docstring, and CI
+  promotion-gate workflow-shape checks are recorded separately, but this is
+  not an intentional-promotion workflow, contradiction remediation, a joined
+  scope verifier, or owner review signoff.
+- ROADMAP non-goal CI promotion-gate evidence now records that GitHub Actions
+  path filters cover ROADMAP/docs/papers/test/source changes, the `paper_docs`
+  job runs the committed paper manifest, and the boundary verifier suite
+  includes the ROADMAP non-goal contradiction, drift, Markdown, plugin
+  docstring, and runtime metadata tests. This is not an intentional-promotion
+  workflow, contradiction-remediation report, joined runtime/plugin/docs/paper
+  scope proof, or owner-reviewed signoff.
 - ROADMAP non-goal Markdown scan evidence now records the repository Markdown
   file inventory, stable non-goal ids, forbidden support-claim phrases,
   line-level hit records, and zero detected Markdown contradiction hits. This
@@ -1389,9 +1396,9 @@ Important limits:
   candidate-language runner policy, runtime plugin state, runtime plugin
   artifact metadata, and built-in plugin registry paper-inspiration labels. It
   records zero missing safe-scope phrases and zero contradictory support-claim
-  hits at the repo root. This is not CI promotion enforcement,
-  intentional-promotion workflow, joined runtime/plugin/docs/paper scope proof,
-  or owner-reviewed remediation readiness.
+  hits at the repo root. This is not intentional-promotion workflow, joined
+  runtime/plugin/docs/paper scope proof, or owner-reviewed remediation
+  readiness.
 - ROADMAP Good First Follow-Ups evidence now records the four current priority
   items with stable ids, active TODO refs, priority rationale,
   dependency-readiness labels, validation gates, and AlphaEvolve impact labels.

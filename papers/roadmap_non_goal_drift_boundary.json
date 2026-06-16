@@ -1,11 +1,10 @@
 {
   "active_todo_ref_count": 14,
-  "boundary_status": "bounded_non_goal_drift_matrix_without_full_promotion_gate",
-  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans are recorded separately, but this boundary does not claim CI promotion enforcement, an intentional promotion workflow, or owner-reviewed remediation readiness.",
+  "boundary_status": "bounded_non_goal_drift_matrix_with_ci_gate_without_full_lifecycle",
+  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans and CI promotion-gate workflow coverage are recorded separately, but this boundary does not claim an intentional promotion workflow, owner-reviewed remediation readiness, or joined runtime/plugin/docs/paper scope proof.",
   "claim_ready": false,
   "criterion_count": 7,
   "missing_evidence": {
-    "ci_non_goal_promotion_gate": "not_recorded_locally",
     "claim_surface_remediation": "not_recorded_locally",
     "intentional_promotion_workflow": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
@@ -139,7 +138,7 @@
       "criterion_id": "ci_non_goal_promotion_gate",
       "current_scope": "manifest validation of committed sidecar shape",
       "missing_readiness": "CI gate that fails when a ROADMAP non-goal is removed, completed, or promoted without evidence updates",
-      "readiness_status": "local_manifest_shape_check_only",
+      "readiness_status": "ci_promotion_gate_recorded_without_lifecycle_workflow",
       "sidecar_refs": [
         {
           "exists": true,
@@ -148,6 +147,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_non_goal_contradiction_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_ci_promotion_gate_boundary.json"
         }
       ],
       "validation_gate": "CI non-goal promotion/removal gate"
@@ -260,7 +263,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_non_goal_drift_boundary.v1",
-  "sidecar_ref_count": 17,
+  "sidecar_ref_count": 18,
   "source_constrained_surface_count": 9,
   "source_contradiction_count": 0,
   "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",

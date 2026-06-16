@@ -15743,3 +15743,17 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     promotion workflow, contradiction-remediation reporting,
     runtime/plugin/docs/paper scope joins, and owner review signoff remain
     active in `docs/todo/roadmap.md`.
+- [x] Add ROADMAP non-goal CI promotion gate boundary.
+  - Spec evidence: ROADMAP non-goals are overclaim guardrails, so CI should
+    fail when ROADMAP/docs/papers/source/test changes drift away from the
+    committed non-goal sidecars and verifier tests.
+  - Status: `papers/roadmap_non_goal_ci_promotion_gate_boundary.json` now
+    records that `.github/workflows/tests.yml` path filters include ROADMAP,
+    docs, papers, tests, and source changes, that the `paper_docs` job runs
+    the committed paper manifest, and that the boundary verifier suite
+    includes the ROADMAP non-goal contradiction, drift, Markdown, plugin
+    docstring, and runtime metadata tests. The paper-manifest gate now
+    requires and validates the sidecar at the repo root.
+  - Remaining roadmap gap: intentional non-goal promotion workflow,
+    contradiction-remediation reporting, runtime/plugin/docs/paper scope
+    joins, and owner review signoff remain active in `docs/todo/roadmap.md`.

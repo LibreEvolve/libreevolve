@@ -20,7 +20,7 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert validation.readme_claim_count == 3
     assert validation.roadmap_claim_count == 3
     assert validation.papers_claim_count == 2
-    assert validation.missing_evidence_count == 7
+    assert validation.missing_evidence_count == 8
     assert inventory["schema"] == DOCUMENTATION_CLAIM_INVENTORY_SCHEMA
     assert inventory["claim_ready"] is False
     assert inventory["source_anchor_status"] == "all_claim_source_anchors_recorded"
@@ -65,6 +65,38 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     assert inventory["uncovered_heading_todo_link_records"][0]["todo_span"][
         "line_start"
     ] == 164
+    assert (
+        inventory["status_ledger_inventory_status"]
+        == "status_ledger_structural_bullet_inventory_without_semantic_verifier"
+    )
+    assert inventory["status_ledger_source_path"] == "docs/status.md"
+    assert inventory["status_ledger_bullet_count"] == 181
+    assert inventory["status_ledger_section_counts"] == {
+        "implemented_today": 9,
+        "important_limits": 172,
+    }
+    assert inventory["status_ledger_signal_term_count"] == 11
+    assert inventory["status_ledger_signal_record_count"] == 427
+    assert inventory["status_ledger_unique_local_path_ref_count"] == 115
+    assert inventory["status_ledger_local_path_ref_count"] == 154
+    assert inventory["status_ledger_missing_local_path_refs"] == []
+    assert (
+        inventory["status_ledger_local_path_ref_status"]
+        == "all_status_ledger_local_path_refs_present"
+    )
+    assert inventory["status_ledger_bullet_records"][0] == {
+        "bullet_ordinal": 1,
+        "section": "implemented_today",
+        "line_start": 18,
+        "line_end": 18,
+        "file_text_char_start": 589,
+        "file_text_char_end": 645,
+        "text_sha256": "2f52aff907fdb291196e46d2e05f56b5755f2e00aa3260a8235926e93ab261e8",
+        "signal_terms": [],
+        "signal_term_count": 0,
+        "local_path_refs": [],
+        "local_path_ref_records": [],
+    }
     assert inventory["claim_surface_heading_records"][0] == {
         "path": "README.md",
         "line_start": 1,
@@ -151,6 +183,8 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         "does not claim complete README coverage"
         in inventory["claim_boundary"]
     )
+    assert "structural docs/status.md ledger inventory" in inventory["claim_boundary"]
+    assert "semantic docs/status.md freshness" in inventory["claim_boundary"]
 
 
 def test_documentation_claim_inventory_rejects_semantic_proof_overclaim():
@@ -212,6 +246,21 @@ def test_documentation_claim_inventory_rejects_anchor_drift():
     assert "invalid_uncovered_heading_todo_link_records" in codes
 
 
+def test_documentation_claim_inventory_rejects_status_ledger_inventory_drift():
+    inventory = documentation_claim_inventory_record()
+    inventory["status_ledger_bullet_count"] = 0
+    inventory["status_ledger_section_counts"] = {}
+    inventory["status_ledger_bullet_records"] = []
+
+    validation = validate_documentation_claim_inventory(inventory)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_status_ledger_bullet_count" in codes
+    assert "invalid_status_ledger_section_counts" in codes
+    assert "invalid_status_ledger_bullet_records" in codes
+
+
 def test_render_documentation_claim_inventory_summary_reports_shape():
     summary = render_documentation_claim_inventory_summary(
         documentation_claim_inventory_record()
@@ -227,6 +276,9 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| readme_claim_count | 3 |" in summary
     assert "| roadmap_claim_count | 3 |" in summary
     assert "| papers_claim_count | 2 |" in summary
+    assert "| missing_evidence_count | 8 |" in summary
     assert "| claim_surface_heading_count | 34 |" in summary
     assert "| uncovered_claim_surface_heading_count | 28 |" in summary
     assert "| uncovered_heading_todo_link_count | 3 |" in summary
+    assert "| status_ledger_bullet_count | 181 |" in summary
+    assert "| status_ledger_local_path_ref_count | 154 |" in summary

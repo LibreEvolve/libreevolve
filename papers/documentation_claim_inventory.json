@@ -870,6 +870,4436 @@
       }
     }
   ],
+  "status_ledger_source_path": "docs/status.md",
+  "status_ledger_inventory_status": "status_ledger_structural_bullet_inventory_without_semantic_verifier",
+  "status_ledger_bullet_count": 181,
+  "status_ledger_section_counts": {
+    "implemented_today": 9,
+    "important_limits": 172
+  },
+  "status_ledger_signal_term_count": 11,
+  "status_ledger_signal_terms": [
+    "boundary",
+    "implemented",
+    "lacks",
+    "missing",
+    "not",
+    "record",
+    "records",
+    "support",
+    "supports",
+    "tracked",
+    "without"
+  ],
+  "status_ledger_signal_record_count": 427,
+  "status_ledger_unique_local_path_ref_count": 115,
+  "status_ledger_unique_local_path_refs": [
+    "ROADMAP.md",
+    "docs/status.md",
+    "papers/README.md",
+    "papers/adaptive_mutation_mode_boundary.json",
+    "papers/alphaevolve_2026_impact_boundary.json",
+    "papers/appendix_a_matrix_excluded_target_curation.json",
+    "papers/appendix_a_matrix_local_resource_frontier.json",
+    "papers/appendix_a_matrix_resource_frontier.json",
+    "papers/archive_event_replay_boundary.json",
+    "papers/artifact_index_boundary.json",
+    "papers/arxiv_abstract_snapshot.json",
+    "papers/automated_evaluator_scope_boundary.json",
+    "papers/benchmark_coverage_inventory.json",
+    "papers/benchmark_fixture_readiness_boundary.json",
+    "papers/bilateral_trade_boundary.json",
+    "papers/candidate_abstraction_bias_matrix.json",
+    "papers/candidate_abstraction_boundary.json",
+    "papers/candidate_language_runner_boundary.json",
+    "papers/cascade_hypothesis_test_boundary.json",
+    "papers/codebase_scale_benchmark_boundary.json",
+    "papers/collaborator_feedback_provenance_boundary.json",
+    "papers/combinatorics_berczy_boundary.json",
+    "papers/compiler_adoption_path_boundary.json",
+    "papers/compiler_ir_reference_check_boundary.json",
+    "papers/compiler_stack_context_boundary.json",
+    "papers/config_validation_boundary.json",
+    "papers/controller_backtracking_boundary.json",
+    "papers/controller_pending_work_resume_boundary.json",
+    "papers/critique_reviewer_pool_boundary.json",
+    "papers/distributed_pipeline_topology_boundary.json",
+    "papers/documentation_claim_inventory.json",
+    "papers/documentation_truthfulness_boundary.json",
+    "papers/duplicate_work_policy_boundary.json",
+    "papers/embedded_evaluator_boundary.json",
+    "papers/evaluation_cascade_boundary.json",
+    "papers/evaluator_oracle_boundary.json",
+    "papers/existing_codebase_integration_boundary.json",
+    "papers/expensive_evaluation_budget_boundary.json",
+    "papers/failure_memory_boundary.json",
+    "papers/fast_strong_model_mix_boundary.json",
+    "papers/feedback_calibration_boundary.json",
+    "papers/figure3_supervised_exhibit_boundary.json",
+    "papers/figure4_matrix_discovery_artifacts.json",
+    "papers/figure6_scheduling_exhibit_boundary.json",
+    "papers/figure7_pallas_tiling_exhibit_boundary.json",
+    "papers/figure8_ablation_artifacts.json",
+    "papers/figure9_matrix_diff_artifacts.json",
+    "papers/gemini_provider_parity_boundary.json",
+    "papers/gemini_self_training_loop_boundary.json",
+    "papers/hardware_contribution_attribution_boundary.json",
+    "papers/hardware_rewrite_artifact_boundary.json",
+    "papers/hardware_rtl_eda_evidence_boundary.json",
+    "papers/implementation_evidence_map_boundary.json",
+    "papers/incorrect_suggestion_audit_boundary.json",
+    "papers/initial_pool_divergence_boundary.json",
+    "papers/initial_program_idea_provenance_boundary.json",
+    "papers/initial_program_seed_variant_matrix.json",
+    "papers/initial_program_validity_boundary.json",
+    "papers/kernel_tiling_shape_corpus_boundary.json",
+    "papers/lineage_replay_boundary.json",
+    "papers/llm_budget_policy_boundary.json",
+    "papers/llm_role_scheduler_boundary.json",
+    "papers/llm_stochastic_reproducibility_boundary.json",
+    "papers/magellan_boundary.json",
+    "papers/map_elites_descriptor_boundary.json",
+    "papers/math_heuristic_handoff_boundary.json",
+    "papers/math_heuristic_stage_sequence_boundary.json",
+    "papers/math_outcome_boundary.json",
+    "papers/math_starting_construction_boundary.json",
+    "papers/matrix_baseline_component_runtime_boundary.json",
+    "papers/matrix_cascade_run_runtime_boundary.json",
+    "papers/matrix_near_integrality_runtime_boundary.json",
+    "papers/matrix_scalar_field_runtime_boundary.json",
+    "papers/matrix_suite_publication_artifacts.json",
+    "papers/matrix_sweep_space_runtime_boundary.json",
+    "papers/matrix_tensor_rank_runtime_boundary.json",
+    "papers/metric_diverse_prompt_boundary.json",
+    "papers/multiagent_learning_boundary.json",
+    "papers/mutation_consistency_boundary.json",
+    "papers/mutation_operator_boundary.json",
+    "papers/natural_language_preamble_boundary.json",
+    "papers/objective_archive_boundary.json",
+    "papers/pallas_workflow_baseline_boundary.json",
+    "papers/parallel_evaluation_readiness_boundary.json",
+    "papers/problem_formulation_provenance_boundary.json",
+    "papers/process_exhibit_boundary.json",
+    "papers/program_output_boundary.json",
+    "papers/programmatic_representation_boundary.json",
+    "papers/prompt_example_copy_boundary.json",
+    "papers/prompt_section_packing_boundary.json",
+    "papers/proposal_diversity_boundary.json",
+    "papers/proposal_score_boundary.json",
+    "papers/provider_cancellation_boundary.json",
+    "papers/provider_diagnostics_replay_boundary.json",
+    "papers/provider_pricing_boundary.json",
+    "papers/qualitative_feedback_boundary.json",
+    "papers/ramsey_numbers_boundary.json",
+    "papers/related_work_taxonomy_boundary.json",
+    "papers/repeated_sampling_baseline_boundary.json",
+    "papers/runtime_rng_replay_boundary.json",
+    "papers/sample_efficiency_boundary.json",
+    "papers/sampling_balance_boundary.json",
+    "papers/self_improvement_cadence_boundary.json",
+    "papers/self_improvement_distillation_boundary.json",
+    "papers/sorting_network_rediscovery_boundary.json",
+    "papers/source_versions.json",
+    "papers/status_claim_inventory.json",
+    "papers/stochastic_prompt_format_boundary.json",
+    "papers/systems_result_readiness_boundary.json",
+    "papers/table1_capability_exhibit_boundary.json",
+    "papers/task_specification_boundary.json",
+    "papers/validator_artifact_promotion_boundary.json",
+    "papers/validator_execution_boundary.json",
+    "papers/whole_run_source_workspace_integrity_boundary.json",
+    "papers/workspace_materialization_boundary.json"
+  ],
+  "status_ledger_missing_local_path_refs": [],
+  "status_ledger_local_path_ref_count": 154,
+  "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
+  "status_ledger_bullet_records": [
+    {
+      "bullet_ordinal": 1,
+      "section": "implemented_today",
+      "line_start": 18,
+      "line_end": 18,
+      "file_text_char_start": 589,
+      "file_text_char_end": 645,
+      "text_sha256": "2f52aff907fdb291196e46d2e05f56b5755f2e00aa3260a8235926e93ab261e8",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 2,
+      "section": "implemented_today",
+      "line_start": 19,
+      "line_end": 19,
+      "file_text_char_start": 646,
+      "file_text_char_end": 713,
+      "text_sha256": "1a16f8632dacf0733ba7ca5964bf87aebdecf992e002b270808f93bf0454bae8",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 3,
+      "section": "implemented_today",
+      "line_start": 20,
+      "line_end": 20,
+      "file_text_char_start": 714,
+      "file_text_char_end": 759,
+      "text_sha256": "b43ee65b03e779165b76b63d67e13b1c383400a290eb6934bbb81a7d28632350",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 4,
+      "section": "implemented_today",
+      "line_start": 21,
+      "line_end": 21,
+      "file_text_char_start": 760,
+      "file_text_char_end": 809,
+      "text_sha256": "9f9432303de5a944d3269917e19475386695637afa64f005ebcc56ce34044098",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 5,
+      "section": "implemented_today",
+      "line_start": 22,
+      "line_end": 22,
+      "file_text_char_start": 810,
+      "file_text_char_end": 851,
+      "text_sha256": "db3517418c9e968b27adb8da469a8ef2af856448afcf5b688bf1745525984104",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 6,
+      "section": "implemented_today",
+      "line_start": 23,
+      "line_end": 23,
+      "file_text_char_start": 852,
+      "file_text_char_end": 927,
+      "text_sha256": "ac792f74c8db777232c344536d32050eb3c2d1e045599dbec4a40098108abfb2",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 7,
+      "section": "implemented_today",
+      "line_start": 24,
+      "line_end": 24,
+      "file_text_char_start": 928,
+      "file_text_char_end": 988,
+      "text_sha256": "4827a188c97a2f75d21a02a6157fa983939510d4c2471bdf67c58a197cf44a73",
+      "signal_terms": [
+        "support"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 8,
+      "section": "implemented_today",
+      "line_start": 25,
+      "line_end": 25,
+      "file_text_char_start": 989,
+      "file_text_char_end": 1037,
+      "text_sha256": "5ae00740d0c13c7e456feaf50705e50913610e7f32b93eb89544f7b9cb4c15a4",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 9,
+      "section": "implemented_today",
+      "line_start": 26,
+      "line_end": 28,
+      "file_text_char_start": 1038,
+      "file_text_char_end": 1171,
+      "text_sha256": "975a09a77b1f6481842a5d20cba6091162cc909d99f5080fbf44206baa0f6d65",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 10,
+      "section": "important_limits",
+      "line_start": 31,
+      "line_end": 31,
+      "file_text_char_start": 1191,
+      "file_text_char_end": 1263,
+      "text_sha256": "2a21213679900e4498188c20cefc129b9bf117c9de675b14d49cf86bd402e069",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 11,
+      "section": "important_limits",
+      "line_start": 32,
+      "line_end": 44,
+      "file_text_char_start": 1264,
+      "file_text_char_end": 2174,
+      "text_sha256": "e68752074427b5ec79183957385e1ede3bea7a94949aa23d957d2e5c94df483e",
+      "signal_terms": [
+        "boundary",
+        "missing",
+        "not",
+        "record",
+        "records"
+      ],
+      "signal_term_count": 5,
+      "local_path_refs": [
+        "papers/distributed_pipeline_topology_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/distributed_pipeline_topology_boundary.json",
+          "text_char_start": 502,
+          "text_char_end": 552,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 12,
+      "section": "important_limits",
+      "line_start": 45,
+      "line_end": 56,
+      "file_text_char_start": 2175,
+      "file_text_char_end": 3019,
+      "text_sha256": "f55330c1d74f13656321ca703870a346afb47bd558d4b2bedd8511aff30e598f",
+      "signal_terms": [
+        "boundary",
+        "missing",
+        "not",
+        "record"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/gemini_provider_parity_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/gemini_provider_parity_boundary.json",
+          "text_char_start": 356,
+          "text_char_end": 399,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 13,
+      "section": "important_limits",
+      "line_start": 57,
+      "line_end": 83,
+      "file_text_char_start": 3020,
+      "file_text_char_end": 4971,
+      "text_sha256": "4a291092fcc945bb418bf222148de63394067d1abce209c268f801146f34f0b7",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/source_versions.json",
+        "papers/arxiv_abstract_snapshot.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/source_versions.json",
+          "text_char_start": 113,
+          "text_char_end": 140,
+          "exists": true
+        },
+        {
+          "path": "papers/arxiv_abstract_snapshot.json",
+          "text_char_start": 292,
+          "text_char_end": 327,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 14,
+      "section": "important_limits",
+      "line_start": 84,
+      "line_end": 92,
+      "file_text_char_start": 4972,
+      "file_text_char_end": 5629,
+      "text_sha256": "90308a67f3d309fb55a0379d021c565c780954106f9c1237bb99c346743ca244",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/process_exhibit_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/process_exhibit_boundary.json",
+          "text_char_start": 619,
+          "text_char_end": 655,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 15,
+      "section": "important_limits",
+      "line_start": 93,
+      "line_end": 101,
+      "file_text_char_start": 5630,
+      "file_text_char_end": 6261,
+      "text_sha256": "f2493a6e4b21e7f7575bc8e3dfdb2aaa2d4997489add7c919f7be21379eb3c15",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/existing_codebase_integration_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/existing_codebase_integration_boundary.json",
+          "text_char_start": 579,
+          "text_char_end": 629,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 16,
+      "section": "important_limits",
+      "line_start": 102,
+      "line_end": 110,
+      "file_text_char_start": 6262,
+      "file_text_char_end": 6927,
+      "text_sha256": "ba66d4805d24510ee3cfaa89af66815fea251a67f9d2c2312f5cefac2539f393",
+      "signal_terms": [
+        "boundary",
+        "implemented",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/workspace_materialization_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/workspace_materialization_boundary.json",
+          "text_char_start": 617,
+          "text_char_end": 663,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 17,
+      "section": "important_limits",
+      "line_start": 111,
+      "line_end": 120,
+      "file_text_char_start": 6928,
+      "file_text_char_end": 7630,
+      "text_sha256": "b354e568f54886302d5f6306d22696497cc1fdb07d575ed0f72aca50b26af912",
+      "signal_terms": [
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [
+        "papers/codebase_scale_benchmark_boundary.json",
+        "papers/candidate_language_runner_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/codebase_scale_benchmark_boundary.json",
+          "text_char_start": 600,
+          "text_char_end": 645,
+          "exists": true
+        },
+        {
+          "path": "papers/candidate_language_runner_boundary.json",
+          "text_char_start": 654,
+          "text_char_end": 700,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 18,
+      "section": "important_limits",
+      "line_start": 121,
+      "line_end": 127,
+      "file_text_char_start": 7631,
+      "file_text_char_end": 8084,
+      "text_sha256": "e7be19349c6a82e560de9c59cece8e51e40df8d1b6f519ca5c719bfc097e3895",
+      "signal_terms": [
+        "boundary",
+        "not"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [
+        "papers/table1_capability_exhibit_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/table1_capability_exhibit_boundary.json",
+          "text_char_start": 334,
+          "text_char_end": 380,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 19,
+      "section": "important_limits",
+      "line_start": 128,
+      "line_end": 138,
+      "file_text_char_start": 8085,
+      "file_text_char_end": 8869,
+      "text_sha256": "7e6a3075c4db61e0c1c41ae0efee48460ee9ea3c6cf2eae26d0aaeac57c73716",
+      "signal_terms": [
+        "boundary",
+        "lacks",
+        "not"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/sorting_network_rediscovery_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/sorting_network_rediscovery_boundary.json",
+          "text_char_start": 670,
+          "text_char_end": 718,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 20,
+      "section": "important_limits",
+      "line_start": 139,
+      "line_end": 149,
+      "file_text_char_start": 8870,
+      "file_text_char_end": 9635,
+      "text_sha256": "739d8c3168258bff4b29619624a9413921993fbc041e984446d2e7fd636a3bf5",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/sample_efficiency_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/sample_efficiency_boundary.json",
+          "text_char_start": 725,
+          "text_char_end": 763,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 21,
+      "section": "important_limits",
+      "line_start": 150,
+      "line_end": 161,
+      "file_text_char_start": 9636,
+      "file_text_char_end": 10438,
+      "text_sha256": "6e44361a4a2098a60ea989a81280a78f1313f4dceee98fcf332ccfefb00a2782",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/repeated_sampling_baseline_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/repeated_sampling_baseline_boundary.json",
+          "text_char_start": 753,
+          "text_char_end": 800,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 22,
+      "section": "important_limits",
+      "line_start": 162,
+      "line_end": 171,
+      "file_text_char_start": 10439,
+      "file_text_char_end": 11169,
+      "text_sha256": "d4e8917e4ad2fbd544467be837529de7c1f18ac5a06d6ab50a387052f7582c87",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/task_specification_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/task_specification_boundary.json",
+          "text_char_start": 689,
+          "text_char_end": 728,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 23,
+      "section": "important_limits",
+      "line_start": 172,
+      "line_end": 175,
+      "file_text_char_start": 11170,
+      "file_text_char_end": 11461,
+      "text_sha256": "084c6610adaa528f88f2149ebf0cc2dcc81281e6eef56c776ef465b4ec656e2f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/archive_event_replay_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/archive_event_replay_boundary.json",
+          "text_char_start": 248,
+          "text_char_end": 289,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 24,
+      "section": "important_limits",
+      "line_start": 176,
+      "line_end": 180,
+      "file_text_char_start": 11462,
+      "file_text_char_end": 11806,
+      "text_sha256": "8e409f77770f781a63d40a435b6a1bef455073d6538c9b0318a442ceddf35285",
+      "signal_terms": [
+        "tracked"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/automated_evaluator_scope_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/automated_evaluator_scope_boundary.json",
+          "text_char_start": 296,
+          "text_char_end": 342,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 25,
+      "section": "important_limits",
+      "line_start": 181,
+      "line_end": 191,
+      "file_text_char_start": 11807,
+      "file_text_char_end": 12584,
+      "text_sha256": "aca0eaa36507cecd401b67aa2f331c2144061c4ad64e71f956ecfe81f56cb768",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/evaluation_cascade_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/evaluation_cascade_boundary.json",
+          "text_char_start": 736,
+          "text_char_end": 775,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 26,
+      "section": "important_limits",
+      "line_start": 192,
+      "line_end": 196,
+      "file_text_char_start": 12585,
+      "file_text_char_end": 12946,
+      "text_sha256": "2ecca5424cdb2ea72df7c0c798f2852e49d872d96c6f7fe6a3502decbb7bea2c",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/cascade_hypothesis_test_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/cascade_hypothesis_test_boundary.json",
+          "text_char_start": 315,
+          "text_char_end": 359,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 27,
+      "section": "important_limits",
+      "line_start": 197,
+      "line_end": 203,
+      "file_text_char_start": 12947,
+      "file_text_char_end": 13414,
+      "text_sha256": "52a57894461c11019d2f2de8405601608ffbba2ff40840a33ca234608432a1a5",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/evaluator_oracle_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/evaluator_oracle_boundary.json",
+          "text_char_start": 428,
+          "text_char_end": 465,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 28,
+      "section": "important_limits",
+      "line_start": 204,
+      "line_end": 208,
+      "file_text_char_start": 13415,
+      "file_text_char_end": 13745,
+      "text_sha256": "b20891f0ce506ede137e91c0155a2ec8cc0318ef030ab7c6c293a9c1c6b07247",
+      "signal_terms": [
+        "not",
+        "record"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 29,
+      "section": "important_limits",
+      "line_start": 209,
+      "line_end": 215,
+      "file_text_char_start": 13746,
+      "file_text_char_end": 14208,
+      "text_sha256": "418b54311844215df9ad1e83d2705d8aaa6e9e30f3d16f77dbf3b017e23134b0",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "support",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/embedded_evaluator_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/embedded_evaluator_boundary.json",
+          "text_char_start": 421,
+          "text_char_end": 460,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 30,
+      "section": "important_limits",
+      "line_start": 216,
+      "line_end": 225,
+      "file_text_char_start": 14209,
+      "file_text_char_end": 14940,
+      "text_sha256": "128775c6a3d79390dd7a0606e99cebb4ff4ca9485784d5c2adddb98f4eda3ee5",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/validator_execution_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/validator_execution_boundary.json",
+          "text_char_start": 689,
+          "text_char_end": 729,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 31,
+      "section": "important_limits",
+      "line_start": 226,
+      "line_end": 233,
+      "file_text_char_start": 14941,
+      "file_text_char_end": 15532,
+      "text_sha256": "17557265064df33d9ef695dfd55e02f53dda1bc6d5241b64156289fe059a2a9f",
+      "signal_terms": [
+        "boundary",
+        "missing",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/validator_artifact_promotion_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/validator_artifact_promotion_boundary.json",
+          "text_char_start": 540,
+          "text_char_end": 589,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 32,
+      "section": "important_limits",
+      "line_start": 234,
+      "line_end": 241,
+      "file_text_char_start": 15533,
+      "file_text_char_end": 16092,
+      "text_sha256": "512943228512b221a661dd6902a1810865ac08a51b1bd9c7e2b566be160c3f01",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/incorrect_suggestion_audit_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/incorrect_suggestion_audit_boundary.json",
+          "text_char_start": 510,
+          "text_char_end": 557,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 33,
+      "section": "important_limits",
+      "line_start": 242,
+      "line_end": 248,
+      "file_text_char_start": 16093,
+      "file_text_char_end": 16578,
+      "text_sha256": "6a51291903d388d4724e13d2fe42be333a4d842ce6ceece9174e1a7437722728",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/controller_backtracking_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/controller_backtracking_boundary.json",
+          "text_char_start": 439,
+          "text_char_end": 483,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 34,
+      "section": "important_limits",
+      "line_start": 249,
+      "line_end": 252,
+      "file_text_char_start": 16579,
+      "file_text_char_end": 16867,
+      "text_sha256": "8038729353eb119a456437bd4e67590b86c6172db4f0ab8b4626ae057dcb8f6b",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/qualitative_feedback_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/qualitative_feedback_boundary.json",
+          "text_char_start": 245,
+          "text_char_end": 286,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 35,
+      "section": "important_limits",
+      "line_start": 253,
+      "line_end": 256,
+      "file_text_char_start": 16868,
+      "file_text_char_end": 17132,
+      "text_sha256": "ef9dc979af2cb6197236cf43ebd90177cb4e4d9d9b8567fce5cfa69bc1ac2a68",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/feedback_calibration_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/feedback_calibration_boundary.json",
+          "text_char_start": 221,
+          "text_char_end": 262,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 36,
+      "section": "important_limits",
+      "line_start": 257,
+      "line_end": 265,
+      "file_text_char_start": 17133,
+      "file_text_char_end": 17732,
+      "text_sha256": "fe3c752d49cf55ac244ac205538756d22f94f343a77f6e861f1f6ce92e8afbb3",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/llm_role_scheduler_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/llm_role_scheduler_boundary.json",
+          "text_char_start": 558,
+          "text_char_end": 597,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 37,
+      "section": "important_limits",
+      "line_start": 266,
+      "line_end": 274,
+      "file_text_char_start": 17733,
+      "file_text_char_end": 18351,
+      "text_sha256": "05e18b06feedebc7cce4ef35c40a281f264b20c0d179191c00c14366962f465d",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/fast_strong_model_mix_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "text_char_start": 574,
+          "text_char_end": 616,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 38,
+      "section": "important_limits",
+      "line_start": 275,
+      "line_end": 279,
+      "file_text_char_start": 18352,
+      "file_text_char_end": 18729,
+      "text_sha256": "f94a2b3302b8acde9908a00951fb55dea3991173af35eadb5f055d742762ffe2",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/programmatic_representation_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "text_char_start": 327,
+          "text_char_end": 375,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 39,
+      "section": "important_limits",
+      "line_start": 280,
+      "line_end": 285,
+      "file_text_char_start": 18730,
+      "file_text_char_end": 19110,
+      "text_sha256": "d1f16803fb0f19d8bcf6d3999dc9fecf42f3842ed3f5608620d98ad26d7f523b",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/natural_language_preamble_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/natural_language_preamble_boundary.json",
+          "text_char_start": 332,
+          "text_char_end": 378,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 40,
+      "section": "important_limits",
+      "line_start": 286,
+      "line_end": 291,
+      "file_text_char_start": 19111,
+      "file_text_char_end": 19507,
+      "text_sha256": "30cbe6f39d53805511687e87f16ce20404cb38393707d1f718d3e96838e8dd55",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/prompt_example_copy_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/prompt_example_copy_boundary.json",
+          "text_char_start": 354,
+          "text_char_end": 394,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 41,
+      "section": "important_limits",
+      "line_start": 292,
+      "line_end": 297,
+      "file_text_char_start": 19508,
+      "file_text_char_end": 19918,
+      "text_sha256": "7009172459b89154875da9ba8983ac3ea0eeb6752e01e53b4d0e9b42c1eaf4a4",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/mutation_consistency_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/mutation_consistency_boundary.json",
+          "text_char_start": 367,
+          "text_char_end": 408,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 42,
+      "section": "important_limits",
+      "line_start": 298,
+      "line_end": 303,
+      "file_text_char_start": 19919,
+      "file_text_char_end": 20303,
+      "text_sha256": "7a49d632aca785bad053620dfc20b1f1c0e359bbd7ac39b1cafcb7f0d934e9a1",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/mutation_operator_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/mutation_operator_boundary.json",
+          "text_char_start": 344,
+          "text_char_end": 382,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 43,
+      "section": "important_limits",
+      "line_start": 304,
+      "line_end": 309,
+      "file_text_char_start": 20304,
+      "file_text_char_end": 20713,
+      "text_sha256": "6c89f358ea8d6a47d6d32d89cce8670498fe5735d1be957c15dacde9da7b374c",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/adaptive_mutation_mode_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/adaptive_mutation_mode_boundary.json",
+          "text_char_start": 364,
+          "text_char_end": 407,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 44,
+      "section": "important_limits",
+      "line_start": 310,
+      "line_end": 316,
+      "file_text_char_start": 20714,
+      "file_text_char_end": 21189,
+      "text_sha256": "abd8808b993d24be638dab4bd5bb6dc813623d546dd45e4f49cd3c3768bea99d",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/initial_pool_divergence_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/initial_pool_divergence_boundary.json",
+          "text_char_start": 429,
+          "text_char_end": 473,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 45,
+      "section": "important_limits",
+      "line_start": 317,
+      "line_end": 326,
+      "file_text_char_start": 21190,
+      "file_text_char_end": 21895,
+      "text_sha256": "44212ea254c4bf45000240502e130713398288d67cc7e75bf2cd2dd8dcfeb621",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/initial_program_idea_provenance_boundary.json",
+        "papers/initial_program_seed_variant_matrix.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/initial_program_idea_provenance_boundary.json",
+          "text_char_start": 595,
+          "text_char_end": 647,
+          "exists": true
+        },
+        {
+          "path": "papers/initial_program_seed_variant_matrix.json",
+          "text_char_start": 656,
+          "text_char_end": 703,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 46,
+      "section": "important_limits",
+      "line_start": 327,
+      "line_end": 337,
+      "file_text_char_start": 21896,
+      "file_text_char_end": 22624,
+      "text_sha256": "991499aa228b70d2baac3bede7e5a1587071a27abcfc45715373a2fe8ecf6b0f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/initial_program_validity_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/initial_program_validity_boundary.json",
+          "text_char_start": 681,
+          "text_char_end": 726,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 47,
+      "section": "important_limits",
+      "line_start": 338,
+      "line_end": 348,
+      "file_text_char_start": 22625,
+      "file_text_char_end": 23377,
+      "text_sha256": "fc89e9a731490352c0ace15289dbac768eb931dd33cbf0712ef9b8b40f495fec",
+      "signal_terms": [
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/problem_formulation_provenance_boundary.json",
+        "papers/benchmark_fixture_readiness_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/problem_formulation_provenance_boundary.json",
+          "text_char_start": 642,
+          "text_char_end": 693,
+          "exists": true
+        },
+        {
+          "path": "papers/benchmark_fixture_readiness_boundary.json",
+          "text_char_start": 702,
+          "text_char_end": 750,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 48,
+      "section": "important_limits",
+      "line_start": 349,
+      "line_end": 355,
+      "file_text_char_start": 23378,
+      "file_text_char_end": 23867,
+      "text_sha256": "28e40cc33d27991c45cb6cc23ba00163703abcdd40278e94e18fcf976c8569a4",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/math_heuristic_handoff_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/math_heuristic_handoff_boundary.json",
+          "text_char_start": 444,
+          "text_char_end": 487,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 49,
+      "section": "important_limits",
+      "line_start": 356,
+      "line_end": 362,
+      "file_text_char_start": 23868,
+      "file_text_char_end": 24379,
+      "text_sha256": "5eb21579624aeead0e35ecc5f75f7af0774b96a8f5c76b4618d709f66d35df77",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/math_heuristic_stage_sequence_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/math_heuristic_stage_sequence_boundary.json",
+          "text_char_start": 459,
+          "text_char_end": 509,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 50,
+      "section": "important_limits",
+      "line_start": 363,
+      "line_end": 369,
+      "file_text_char_start": 24380,
+      "file_text_char_end": 24867,
+      "text_sha256": "d33f0c6efef7509989fffedfab25c66e45c3e28435f138efb18d5376ab10f65f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/math_outcome_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/math_outcome_boundary.json",
+          "text_char_start": 452,
+          "text_char_end": 485,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 51,
+      "section": "important_limits",
+      "line_start": 370,
+      "line_end": 375,
+      "file_text_char_start": 24868,
+      "file_text_char_end": 25305,
+      "text_sha256": "12985eb748ae944826f9badf292845879fa6dadfa520c647c84e25da464218aa",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/math_starting_construction_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/math_starting_construction_boundary.json",
+          "text_char_start": 388,
+          "text_char_end": 435,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 52,
+      "section": "important_limits",
+      "line_start": 376,
+      "line_end": 381,
+      "file_text_char_start": 25306,
+      "file_text_char_end": 25757,
+      "text_sha256": "3da14dc6d4868047ea34d7cb397728ba165143252a186a9936833136411fccde",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 53,
+      "section": "important_limits",
+      "line_start": 382,
+      "line_end": 387,
+      "file_text_char_start": 25758,
+      "file_text_char_end": 26193,
+      "text_sha256": "ec244d89788976078df82563d670328c3de55f6d830f179ecaa9fb09227781b5",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 54,
+      "section": "important_limits",
+      "line_start": 388,
+      "line_end": 395,
+      "file_text_char_start": 26194,
+      "file_text_char_end": 26693,
+      "text_sha256": "d93716ca0c6914e4123e08daf30a7114404586ce737319a082cf5ca3464888c4",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 55,
+      "section": "important_limits",
+      "line_start": 396,
+      "line_end": 402,
+      "file_text_char_start": 26694,
+      "file_text_char_end": 27220,
+      "text_sha256": "c91b8a11802117b3ca6ca4f462076dca3ce509b627b565e5d774737e28643c93",
+      "signal_terms": [
+        "not",
+        "records"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 56,
+      "section": "important_limits",
+      "line_start": 403,
+      "line_end": 409,
+      "file_text_char_start": 27221,
+      "file_text_char_end": 27690,
+      "text_sha256": "2e93756d6a96a9b9313985aad52f7d25cacf2affe6a7052e9a6c9fde5c070e0f",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 57,
+      "section": "important_limits",
+      "line_start": 410,
+      "line_end": 416,
+      "file_text_char_start": 27691,
+      "file_text_char_end": 28203,
+      "text_sha256": "9d00f6ce5223264bf99fb4c6202a6a66d3b4d4168887a3b11ea2cddcd8b8579f",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 58,
+      "section": "important_limits",
+      "line_start": 417,
+      "line_end": 425,
+      "file_text_char_start": 28204,
+      "file_text_char_end": 28793,
+      "text_sha256": "57b1abcca24644ee058ef1f795bf8c5b812bbd4df957a2bcc2118fe092f99a21",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 59,
+      "section": "important_limits",
+      "line_start": 426,
+      "line_end": 433,
+      "file_text_char_start": 28794,
+      "file_text_char_end": 29353,
+      "text_sha256": "638c11f775585a5f6aa54efcf1e1f1a2f7a55acee6466da25966f0c7b89b7d7a",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 60,
+      "section": "important_limits",
+      "line_start": 434,
+      "line_end": 441,
+      "file_text_char_start": 29354,
+      "file_text_char_end": 29903,
+      "text_sha256": "ce592efb90aa9ad56ee391ee35abfd5da88148385d5326ddb596995824deca24",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 61,
+      "section": "important_limits",
+      "line_start": 442,
+      "line_end": 451,
+      "file_text_char_start": 29904,
+      "file_text_char_end": 30574,
+      "text_sha256": "ef5fac777f9ea8f98665d932dad9bae60e8d39513a851391f605dc0171e6a78f",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 62,
+      "section": "important_limits",
+      "line_start": 452,
+      "line_end": 461,
+      "file_text_char_start": 30575,
+      "file_text_char_end": 31302,
+      "text_sha256": "24fb327fbb830f02a4f2ec435ed6e938072317bcf5a6413e0f18abb352fe914c",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 63,
+      "section": "important_limits",
+      "line_start": 462,
+      "line_end": 471,
+      "file_text_char_start": 31303,
+      "file_text_char_end": 32032,
+      "text_sha256": "47f309425875e2eef4cc77254fd995d44c32404e00c1fa782953441866fa0883",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 64,
+      "section": "important_limits",
+      "line_start": 472,
+      "line_end": 478,
+      "file_text_char_start": 32033,
+      "file_text_char_end": 32521,
+      "text_sha256": "440322cfe84a9dd7c19adbacaf2e63381cb73b687768e2cde7268d5dc119464d",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 65,
+      "section": "important_limits",
+      "line_start": 479,
+      "line_end": 485,
+      "file_text_char_start": 32522,
+      "file_text_char_end": 33027,
+      "text_sha256": "d41b4ca9ce52ac5709cf95ae9e24f70f4c648a7bb6b331fef4ff559c33f680cd",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 66,
+      "section": "important_limits",
+      "line_start": 486,
+      "line_end": 492,
+      "file_text_char_start": 33028,
+      "file_text_char_end": 33514,
+      "text_sha256": "54661fe27e59dcf907b436b2dbd4e68fca7546bdd4eb7859e6089e124491e7cd",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 67,
+      "section": "important_limits",
+      "line_start": 493,
+      "line_end": 499,
+      "file_text_char_start": 33515,
+      "file_text_char_end": 33989,
+      "text_sha256": "56334bd10c605706d4c9b36fbeb5e3a7bcdca6bec20cd9c6a703143b0beca29d",
+      "signal_terms": [
+        "not",
+        "supports"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 68,
+      "section": "important_limits",
+      "line_start": 500,
+      "line_end": 505,
+      "file_text_char_start": 33990,
+      "file_text_char_end": 34398,
+      "text_sha256": "31b5bad9bd8dd66b7ac7edb1c8ddee09aff8ac6f3086910705178790e8861042",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/matrix_suite_publication_artifacts.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "text_char_start": 360,
+          "text_char_end": 406,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 69,
+      "section": "important_limits",
+      "line_start": 506,
+      "line_end": 511,
+      "file_text_char_start": 34399,
+      "file_text_char_end": 34793,
+      "text_sha256": "534d539f7b1fff13d486c20d2b62f013667f9b87a24428ae3bb778cdb84d3489",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/matrix_cascade_run_runtime_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/matrix_cascade_run_runtime_boundary.json",
+          "text_char_start": 345,
+          "text_char_end": 392,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 70,
+      "section": "important_limits",
+      "line_start": 512,
+      "line_end": 516,
+      "file_text_char_start": 34794,
+      "file_text_char_end": 35166,
+      "text_sha256": "ad1a4c7b7bb24279c3251ed09a3ec2a32b03e8f28b179596ccb8a25dace506ee",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/appendix_a_matrix_excluded_target_curation.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/appendix_a_matrix_excluded_target_curation.json",
+          "text_char_start": 316,
+          "text_char_end": 370,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 71,
+      "section": "important_limits",
+      "line_start": 517,
+      "line_end": 523,
+      "file_text_char_start": 35167,
+      "file_text_char_end": 35659,
+      "text_sha256": "e08bb1ef6aa105b073797760490c7a8b1624abc212c6010aea0160dab1497e9a",
+      "signal_terms": [
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/appendix_a_matrix_resource_frontier.json",
+        "papers/appendix_a_matrix_local_resource_frontier.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/appendix_a_matrix_resource_frontier.json",
+          "text_char_start": 381,
+          "text_char_end": 428,
+          "exists": true
+        },
+        {
+          "path": "papers/appendix_a_matrix_local_resource_frontier.json",
+          "text_char_start": 437,
+          "text_char_end": 490,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 72,
+      "section": "important_limits",
+      "line_start": 524,
+      "line_end": 529,
+      "file_text_char_start": 35660,
+      "file_text_char_end": 36057,
+      "text_sha256": "95891c6173c669a9cf26c219f08d37fd34d521c47d3ff23f551a3e55ba28c18a",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/matrix_near_integrality_runtime_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/matrix_near_integrality_runtime_boundary.json",
+          "text_char_start": 343,
+          "text_char_end": 395,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 73,
+      "section": "important_limits",
+      "line_start": 530,
+      "line_end": 535,
+      "file_text_char_start": 36058,
+      "file_text_char_end": 36469,
+      "text_sha256": "70ae4c6ae9937ab1213854b979871e8490702f54a24373979f316614eea674b5",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/matrix_sweep_space_runtime_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/matrix_sweep_space_runtime_boundary.json",
+          "text_char_start": 362,
+          "text_char_end": 409,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 74,
+      "section": "important_limits",
+      "line_start": 536,
+      "line_end": 541,
+      "file_text_char_start": 36470,
+      "file_text_char_end": 36912,
+      "text_sha256": "80db46b35f8fa678f5dace150159fef6482f3abbf1d9f4b63e48c333e1e5d29d",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/figure9_matrix_diff_artifacts.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/figure9_matrix_diff_artifacts.json",
+          "text_char_start": 399,
+          "text_char_end": 440,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 75,
+      "section": "important_limits",
+      "line_start": 542,
+      "line_end": 548,
+      "file_text_char_start": 36913,
+      "file_text_char_end": 37409,
+      "text_sha256": "381ef304b4a528c5fcd811cdda535f9ebb08c76d54bcdb8f2783c6710f0da83e",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/figure4_matrix_discovery_artifacts.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/figure4_matrix_discovery_artifacts.json",
+          "text_char_start": 448,
+          "text_char_end": 494,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 76,
+      "section": "important_limits",
+      "line_start": 549,
+      "line_end": 555,
+      "file_text_char_start": 37410,
+      "file_text_char_end": 37880,
+      "text_sha256": "3869e7d80ce9eb11ea89e276df1026dcaff3364893dd129da7a5db914e215999",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/matrix_baseline_component_runtime_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/matrix_baseline_component_runtime_boundary.json",
+          "text_char_start": 414,
+          "text_char_end": 468,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 77,
+      "section": "important_limits",
+      "line_start": 556,
+      "line_end": 561,
+      "file_text_char_start": 37881,
+      "file_text_char_end": 38306,
+      "text_sha256": "81c074a622d8e7ee693e739284a5f683381ede9d8bee129e966026420f3886ac",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/matrix_scalar_field_runtime_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/matrix_scalar_field_runtime_boundary.json",
+          "text_char_start": 375,
+          "text_char_end": 423,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 78,
+      "section": "important_limits",
+      "line_start": 562,
+      "line_end": 567,
+      "file_text_char_start": 38307,
+      "file_text_char_end": 38747,
+      "text_sha256": "b9330083272039804edfdafac2e8afb0002bdbd549b40741d8268558fecf61a7",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/matrix_tensor_rank_runtime_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/matrix_tensor_rank_runtime_boundary.json",
+          "text_char_start": 391,
+          "text_char_end": 438,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 79,
+      "section": "important_limits",
+      "line_start": 568,
+      "line_end": 578,
+      "file_text_char_start": 38748,
+      "file_text_char_end": 39483,
+      "text_sha256": "a13819a42fd86d840b984877320634ca0d67f300c88be0cd7bc3a3a64cc2cd4f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/collaborator_feedback_provenance_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/collaborator_feedback_provenance_boundary.json",
+          "text_char_start": 680,
+          "text_char_end": 733,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 80,
+      "section": "important_limits",
+      "line_start": 579,
+      "line_end": 584,
+      "file_text_char_start": 39484,
+      "file_text_char_end": 39924,
+      "text_sha256": "e6cda9e9b83f679b38821cdb6c734d595341318ed5127c26628f2ad7d783aa7f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/duplicate_work_policy_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/duplicate_work_policy_boundary.json",
+          "text_char_start": 396,
+          "text_char_end": 438,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 81,
+      "section": "important_limits",
+      "line_start": 585,
+      "line_end": 589,
+      "file_text_char_start": 39925,
+      "file_text_char_end": 40261,
+      "text_sha256": "d83b219ed94e337c7dd28d0e718f4cf939191d7b4f15765949c327f4f3a9709d",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/failure_memory_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/failure_memory_boundary.json",
+          "text_char_start": 299,
+          "text_char_end": 334,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 82,
+      "section": "important_limits",
+      "line_start": 590,
+      "line_end": 593,
+      "file_text_char_start": 40262,
+      "file_text_char_end": 40567,
+      "text_sha256": "9ec0468a128aef6fc42b299bbca0a3fb482b19bb4f7d41f73bea40cc8dd4fa1f",
+      "signal_terms": [
+        "missing",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/related_work_taxonomy_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/related_work_taxonomy_boundary.json",
+          "text_char_start": 261,
+          "text_char_end": 303,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 83,
+      "section": "important_limits",
+      "line_start": 594,
+      "line_end": 603,
+      "file_text_char_start": 40568,
+      "file_text_char_end": 41248,
+      "text_sha256": "cd7b1a5c37661acfd8a17774804d4f97dd8318f066b084ccd80223d6d548c7e2",
+      "signal_terms": [
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/candidate_abstraction_boundary.json",
+        "papers/candidate_abstraction_bias_matrix.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "text_char_start": 582,
+          "text_char_end": 624,
+          "exists": true
+        },
+        {
+          "path": "papers/candidate_abstraction_bias_matrix.json",
+          "text_char_start": 633,
+          "text_char_end": 678,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 84,
+      "section": "important_limits",
+      "line_start": 604,
+      "line_end": 610,
+      "file_text_char_start": 41249,
+      "file_text_char_end": 41773,
+      "text_sha256": "0c96136a28597c7515f3b730d08b2dd5861124924be78525269a52b847ad96d9",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "record",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/candidate_language_runner_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/candidate_language_runner_boundary.json",
+          "text_char_start": 476,
+          "text_char_end": 522,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 85,
+      "section": "important_limits",
+      "line_start": 611,
+      "line_end": 613,
+      "file_text_char_start": 41774,
+      "file_text_char_end": 41936,
+      "text_sha256": "b3d7ba1e281dde06adbc78d893bceb0e40a87a29155df0eb2e69b2d5709cfb12",
+      "signal_terms": [
+        "tracked"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/config_validation_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/config_validation_boundary.json",
+          "text_char_start": 122,
+          "text_char_end": 160,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 86,
+      "section": "important_limits",
+      "line_start": 614,
+      "line_end": 622,
+      "file_text_char_start": 41937,
+      "file_text_char_end": 42618,
+      "text_sha256": "7ba6802d0c1f1d06a7e17b154ba3b03e3a21ca0d5339ac5231d0c9176f119e95",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 87,
+      "section": "important_limits",
+      "line_start": 623,
+      "line_end": 627,
+      "file_text_char_start": 42619,
+      "file_text_char_end": 42946,
+      "text_sha256": "2914e163627446f8200fb0deb0d7eb1987e0aa384d8a0ee7b0b7d23792ee122a",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/expensive_evaluation_budget_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "text_char_start": 277,
+          "text_char_end": 325,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 88,
+      "section": "important_limits",
+      "line_start": 628,
+      "line_end": 638,
+      "file_text_char_start": 42947,
+      "file_text_char_end": 43708,
+      "text_sha256": "2c887f9e1d4f4f608adc18678d4236c2f5e2ac2dc0101621c18147870a827c06",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/llm_budget_policy_boundary.json",
+        "papers/controller_pending_work_resume_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/llm_budget_policy_boundary.json",
+          "text_char_start": 578,
+          "text_char_end": 616,
+          "exists": true
+        },
+        {
+          "path": "papers/controller_pending_work_resume_boundary.json",
+          "text_char_start": 708,
+          "text_char_end": 759,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 89,
+      "section": "important_limits",
+      "line_start": 639,
+      "line_end": 649,
+      "file_text_char_start": 43709,
+      "file_text_char_end": 44494,
+      "text_sha256": "24e00ddc2c47ccaaa00eba6e4d7a28dbf28c54a8da59bb4f3b7d0fe3c1f33904",
+      "signal_terms": [
+        "boundary",
+        "tracked"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [
+        "papers/lineage_replay_boundary.json",
+        "papers/controller_pending_work_resume_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/lineage_replay_boundary.json",
+          "text_char_start": 623,
+          "text_char_end": 658,
+          "exists": true
+        },
+        {
+          "path": "papers/controller_pending_work_resume_boundary.json",
+          "text_char_start": 732,
+          "text_char_end": 783,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 90,
+      "section": "important_limits",
+      "line_start": 650,
+      "line_end": 659,
+      "file_text_char_start": 44495,
+      "file_text_char_end": 45166,
+      "text_sha256": "aab42f791ff342e60cf3925382d20ac840344f076a223f22ea6d0d08f0cb5f49",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/parallel_evaluation_readiness_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/parallel_evaluation_readiness_boundary.json",
+          "text_char_start": 619,
+          "text_char_end": 669,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 91,
+      "section": "important_limits",
+      "line_start": 660,
+      "line_end": 666,
+      "file_text_char_start": 45167,
+      "file_text_char_end": 45676,
+      "text_sha256": "3537f645de5051da1f2f3c6dafb6aa7c215f888437836b3e0577efb8b981339b",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "support"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/figure8_ablation_artifacts.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "text_char_start": 216,
+          "text_char_end": 254,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 92,
+      "section": "important_limits",
+      "line_start": 667,
+      "line_end": 670,
+      "file_text_char_start": 45677,
+      "file_text_char_end": 45963,
+      "text_sha256": "de079d67e09fbd4626c52ae44c1f2f108c1d78d0203fdbf83cf74fa7cb5cafa9",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/provider_pricing_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/provider_pricing_boundary.json",
+          "text_char_start": 247,
+          "text_char_end": 284,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 93,
+      "section": "important_limits",
+      "line_start": 671,
+      "line_end": 674,
+      "file_text_char_start": 45964,
+      "file_text_char_end": 46259,
+      "text_sha256": "258487ca251d5dee98f103af3dbdbaab66c6c463a620b83353711842e9b91ed1",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/provider_diagnostics_replay_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/provider_diagnostics_replay_boundary.json",
+          "text_char_start": 245,
+          "text_char_end": 293,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 94,
+      "section": "important_limits",
+      "line_start": 675,
+      "line_end": 680,
+      "file_text_char_start": 46260,
+      "file_text_char_end": 46707,
+      "text_sha256": "d3862f797a69e7d1cbe7136adab381ad25261c0ea0335a0221b9bd1fb660ef11",
+      "signal_terms": [
+        "boundary",
+        "tracked"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [
+        "papers/llm_stochastic_reproducibility_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/llm_stochastic_reproducibility_boundary.json",
+          "text_char_start": 394,
+          "text_char_end": 445,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 95,
+      "section": "important_limits",
+      "line_start": 681,
+      "line_end": 685,
+      "file_text_char_start": 46708,
+      "file_text_char_end": 47037,
+      "text_sha256": "cd398c5712fffe51ef774f079995ec0fa70b28002684ebbc3946b07e1d8aa5e5",
+      "signal_terms": [
+        "not",
+        "without"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 96,
+      "section": "important_limits",
+      "line_start": 686,
+      "line_end": 691,
+      "file_text_char_start": 47038,
+      "file_text_char_end": 47470,
+      "text_sha256": "4d1f4de16a4dcc5b302637258474180d5495619a923fee16b4041aa7da0dfd9b",
+      "signal_terms": [
+        "not",
+        "records"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 97,
+      "section": "important_limits",
+      "line_start": 692,
+      "line_end": 697,
+      "file_text_char_start": 47471,
+      "file_text_char_end": 47895,
+      "text_sha256": "f20504c7bde38676cb51f3300f6387e25e49adafdf4137369a4da9c9f8d90475",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/provider_cancellation_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/provider_cancellation_boundary.json",
+          "text_char_start": 380,
+          "text_char_end": 422,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 98,
+      "section": "important_limits",
+      "line_start": 698,
+      "line_end": 706,
+      "file_text_char_start": 47896,
+      "file_text_char_end": 48512,
+      "text_sha256": "052a8c1a5ec4990f8caa55fac3c7309d8ed4f5168574ed48c91984837ff09276",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/critique_reviewer_pool_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/critique_reviewer_pool_boundary.json",
+          "text_char_start": 571,
+          "text_char_end": 614,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 99,
+      "section": "important_limits",
+      "line_start": 707,
+      "line_end": 711,
+      "file_text_char_start": 48513,
+      "file_text_char_end": 48884,
+      "text_sha256": "c7cbb57b9c6de3269e34684edafca871394146bcffd07d898cdfa6cd071ab990",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/prompt_section_packing_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/prompt_section_packing_boundary.json",
+          "text_char_start": 326,
+          "text_char_end": 369,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 100,
+      "section": "important_limits",
+      "line_start": 712,
+      "line_end": 718,
+      "file_text_char_start": 48885,
+      "file_text_char_end": 49381,
+      "text_sha256": "21dca8c19409aa17076f166af42185ac079d500dd9580af08c4c5a129d1a0725",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 101,
+      "section": "important_limits",
+      "line_start": 719,
+      "line_end": 726,
+      "file_text_char_start": 49382,
+      "file_text_char_end": 49953,
+      "text_sha256": "83f7e8a3be582e64db88f8116934458ec9841bff3fe7fdf0087b5695175ff521",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "record",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/stochastic_prompt_format_boundary.json",
+        "papers/runtime_rng_replay_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/stochastic_prompt_format_boundary.json",
+          "text_char_start": 422,
+          "text_char_end": 467,
+          "exists": true
+        },
+        {
+          "path": "papers/runtime_rng_replay_boundary.json",
+          "text_char_start": 530,
+          "text_char_end": 569,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 102,
+      "section": "important_limits",
+      "line_start": 727,
+      "line_end": 732,
+      "file_text_char_start": 49954,
+      "file_text_char_end": 50378,
+      "text_sha256": "588360c80cc3b997d9f45586570355d194a173523035478ecd3efe3382fe16a4",
+      "signal_terms": [
+        "not",
+        "records"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 103,
+      "section": "important_limits",
+      "line_start": 733,
+      "line_end": 739,
+      "file_text_char_start": 50379,
+      "file_text_char_end": 50870,
+      "text_sha256": "d266292057b9918929e831934fdeaddeb1cfa4a037afc8b744ad6b333ce4e675",
+      "signal_terms": [
+        "records"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 104,
+      "section": "important_limits",
+      "line_start": 740,
+      "line_end": 745,
+      "file_text_char_start": 50871,
+      "file_text_char_end": 51324,
+      "text_sha256": "aeb88e62921e039231d8d1a4ac617fbd8a11f5ff64f879cee1466bd066771937",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 105,
+      "section": "important_limits",
+      "line_start": 746,
+      "line_end": 751,
+      "file_text_char_start": 51325,
+      "file_text_char_end": 51750,
+      "text_sha256": "80d438f6358ac86464d7bb398cc3be2a418357e007a5ce12a715481919ea4fa6",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 106,
+      "section": "important_limits",
+      "line_start": 752,
+      "line_end": 759,
+      "file_text_char_start": 51751,
+      "file_text_char_end": 52331,
+      "text_sha256": "eb3aa8d37b67e3cceb8d79d3b17498ab9f896d46b91f15867efc456e4ea71ef8",
+      "signal_terms": [
+        "boundary",
+        "without"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 107,
+      "section": "important_limits",
+      "line_start": 760,
+      "line_end": 766,
+      "file_text_char_start": 52332,
+      "file_text_char_end": 52818,
+      "text_sha256": "7764cfacff92cae2dbdc1c71efcb9ee9bf46a2c08745a5b470d2e0f8b4ffb3a0",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 108,
+      "section": "important_limits",
+      "line_start": 767,
+      "line_end": 776,
+      "file_text_char_start": 52819,
+      "file_text_char_end": 53505,
+      "text_sha256": "a9a0f8e721083af05ffe00f27a1fd02ece787642b5a4aaf09f6be09f185033c8",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/systems_result_readiness_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "text_char_start": 639,
+          "text_char_end": 684,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 109,
+      "section": "important_limits",
+      "line_start": 777,
+      "line_end": 791,
+      "file_text_char_start": 53506,
+      "file_text_char_end": 54624,
+      "text_sha256": "7194f580aa61f710586e50423638e39a04cbc33e3263d918dba7ad076dc20954",
+      "signal_terms": [
+        "boundary",
+        "implemented",
+        "not",
+        "support",
+        "tracked"
+      ],
+      "signal_term_count": 5,
+      "local_path_refs": [
+        "papers/alphaevolve_2026_impact_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/alphaevolve_2026_impact_boundary.json",
+          "text_char_start": 1072,
+          "text_char_end": 1116,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 110,
+      "section": "important_limits",
+      "line_start": 792,
+      "line_end": 798,
+      "file_text_char_start": 54625,
+      "file_text_char_end": 55148,
+      "text_sha256": "5a3b52e38a67267c35d4c80d3f6ca34ffced6a0de2a740aa5a531c46fac3ea74",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 134,
+          "text_char_end": 150,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 111,
+      "section": "important_limits",
+      "line_start": 799,
+      "line_end": 806,
+      "file_text_char_start": 55149,
+      "file_text_char_end": 55717,
+      "text_sha256": "06abcfe0c39255a10bd8fd002ead4db71341b5cb50a3d844b69db08837b8228c",
+      "signal_terms": [
+        "records",
+        "support"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 126,
+          "text_char_end": 142,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 112,
+      "section": "important_limits",
+      "line_start": 807,
+      "line_end": 815,
+      "file_text_char_start": 55718,
+      "file_text_char_end": 56337,
+      "text_sha256": "53c0b5d921671f202bff2613bd086cb4072fac41c3ddafae1a12e477f7622a8c",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 151,
+          "text_char_end": 167,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 113,
+      "section": "important_limits",
+      "line_start": 816,
+      "line_end": 823,
+      "file_text_char_start": 56338,
+      "file_text_char_end": 56885,
+      "text_sha256": "e56ea40ae63e63521bfaac076d2d478ee1fc27e7da0c0df30738afa998f76a44",
+      "signal_terms": [
+        "records"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 123,
+          "text_char_end": 139,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 114,
+      "section": "important_limits",
+      "line_start": 824,
+      "line_end": 831,
+      "file_text_char_start": 56886,
+      "file_text_char_end": 57416,
+      "text_sha256": "f2d7d908f4a6dce8ca86f26d38474baca0cf9321a0d939733e39a58249a34aab",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 125,
+          "text_char_end": 141,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 115,
+      "section": "important_limits",
+      "line_start": 832,
+      "line_end": 840,
+      "file_text_char_start": 57417,
+      "file_text_char_end": 58019,
+      "text_sha256": "b182ef4ea94ceb7ee97a36981f0036945d473ba69405204ec0bda2acec468add",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 126,
+          "text_char_end": 142,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 116,
+      "section": "important_limits",
+      "line_start": 841,
+      "line_end": 847,
+      "file_text_char_start": 58020,
+      "file_text_char_end": 58580,
+      "text_sha256": "98d26b4d8eb205b271492b63adc519ab5f1e35151341b71d4b12b97f1b0c7f1a",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 130,
+          "text_char_end": 146,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 117,
+      "section": "important_limits",
+      "line_start": 848,
+      "line_end": 855,
+      "file_text_char_start": 58581,
+      "file_text_char_end": 59151,
+      "text_sha256": "2a36eeb8ae7edb8d07b2ada12ac931a0e9c49d5c185337531c4f492c55216393",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 134,
+          "text_char_end": 150,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 118,
+      "section": "important_limits",
+      "line_start": 856,
+      "line_end": 862,
+      "file_text_char_start": 59152,
+      "file_text_char_end": 59724,
+      "text_sha256": "3367b780df383c78354f0f94810568bca530cf2ec1d4480d024dbd538c1a70ce",
+      "signal_terms": [
+        "records"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 132,
+          "text_char_end": 148,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 119,
+      "section": "important_limits",
+      "line_start": 863,
+      "line_end": 871,
+      "file_text_char_start": 59725,
+      "file_text_char_end": 60375,
+      "text_sha256": "0bba851bb2ce33c79846c7fdddce56ca478ab05ed625fa3c026f07f27a7537da",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 127,
+          "text_char_end": 143,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 120,
+      "section": "important_limits",
+      "line_start": 872,
+      "line_end": 880,
+      "file_text_char_start": 60376,
+      "file_text_char_end": 61039,
+      "text_sha256": "88bbe733f81ef434c2967507a683e2c248fc15457a5eb714484c1751849437c6",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 143,
+          "text_char_end": 159,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 121,
+      "section": "important_limits",
+      "line_start": 881,
+      "line_end": 889,
+      "file_text_char_start": 61040,
+      "file_text_char_end": 61734,
+      "text_sha256": "d425d792ecbddb17ba185426a180aa37bb300cb657c8beb2a00803130baa35f6",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 132,
+          "text_char_end": 148,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 122,
+      "section": "important_limits",
+      "line_start": 890,
+      "line_end": 900,
+      "file_text_char_start": 61735,
+      "file_text_char_end": 62534,
+      "text_sha256": "f524ba1c9a35b1db732ce7dff29dc8c7afea70cd4a161151d6fb563e74dc0450",
+      "signal_terms": [
+        "boundary"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 122,
+          "text_char_end": 138,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 123,
+      "section": "important_limits",
+      "line_start": 901,
+      "line_end": 910,
+      "file_text_char_start": 62535,
+      "file_text_char_end": 63233,
+      "text_sha256": "19e60b7186f0eaccde360881dd636a50081ffca06d3e0671ce4b10abb6566a89",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 126,
+          "text_char_end": 142,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 124,
+      "section": "important_limits",
+      "line_start": 911,
+      "line_end": 919,
+      "file_text_char_start": 63234,
+      "file_text_char_end": 63923,
+      "text_sha256": "9678a27d14e518432803ea4a40a42a29347e32a2bcabdc1a66f21ee16c8206b4",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 134,
+          "text_char_end": 150,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 125,
+      "section": "important_limits",
+      "line_start": 920,
+      "line_end": 928,
+      "file_text_char_start": 63924,
+      "file_text_char_end": 64547,
+      "text_sha256": "ee8755a97b4934fa7b447765aa9f823c5c3cf21afe500b4c0d3074a0e9af5d72",
+      "signal_terms": [
+        "records"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 127,
+          "text_char_end": 143,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 126,
+      "section": "important_limits",
+      "line_start": 929,
+      "line_end": 937,
+      "file_text_char_start": 64548,
+      "file_text_char_end": 65188,
+      "text_sha256": "a20233c867691712a2f74914e256247c06e221e0a128edd2141d215f34dbf5a9",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 128,
+          "text_char_end": 144,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 127,
+      "section": "important_limits",
+      "line_start": 938,
+      "line_end": 946,
+      "file_text_char_start": 65189,
+      "file_text_char_end": 65793,
+      "text_sha256": "89369ec72f0be04919c853b9d4317e9f690bf195376ff023914fd425d054d67a",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 129,
+          "text_char_end": 145,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 128,
+      "section": "important_limits",
+      "line_start": 947,
+      "line_end": 954,
+      "file_text_char_start": 65794,
+      "file_text_char_end": 66384,
+      "text_sha256": "76dd8c471034cdbf0294cc7094c826d0244397b4183d7ea25b2edb1b2d25801e",
+      "signal_terms": [
+        "records"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 127,
+          "text_char_end": 143,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 129,
+      "section": "important_limits",
+      "line_start": 955,
+      "line_end": 963,
+      "file_text_char_start": 66385,
+      "file_text_char_end": 67045,
+      "text_sha256": "8c233190210ef122d76202b5540f5d724093b433a7e42f107dbc0acffc31106b",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 136,
+          "text_char_end": 152,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 130,
+      "section": "important_limits",
+      "line_start": 964,
+      "line_end": 974,
+      "file_text_char_start": 67046,
+      "file_text_char_end": 67825,
+      "text_sha256": "1f840ccac79312f83ae822310acbac58f0c1251b11982b623ae1ba42d2f20744",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 129,
+          "text_char_end": 145,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 131,
+      "section": "important_limits",
+      "line_start": 975,
+      "line_end": 984,
+      "file_text_char_start": 67826,
+      "file_text_char_end": 68567,
+      "text_sha256": "aa7aa9567bf7025444fa2e81f6ecebcbf0579e17bd14edaca2a1cb6d46c91054",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 134,
+          "text_char_end": 150,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 132,
+      "section": "important_limits",
+      "line_start": 985,
+      "line_end": 991,
+      "file_text_char_start": 68568,
+      "file_text_char_end": 69151,
+      "text_sha256": "7399bd8cab6065f9505967ba473ee4a6333c94e367c0a126269359b1d952edc3",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 134,
+          "text_char_end": 150,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 133,
+      "section": "important_limits",
+      "line_start": 992,
+      "line_end": 1001,
+      "file_text_char_start": 69152,
+      "file_text_char_end": 69854,
+      "text_sha256": "5b1d8bd3bd2e57007d0f074df3977626be81c269c75a5ad11a0c343afd011d78",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 129,
+          "text_char_end": 145,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 134,
+      "section": "important_limits",
+      "line_start": 1002,
+      "line_end": 1010,
+      "file_text_char_start": 69855,
+      "file_text_char_end": 70474,
+      "text_sha256": "5c3ed4cb6d0a4c7e26cdad1b0a56ef4516a2865fbec0383253049c6ae05a08b7",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 128,
+          "text_char_end": 144,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 135,
+      "section": "important_limits",
+      "line_start": 1011,
+      "line_end": 1019,
+      "file_text_char_start": 70475,
+      "file_text_char_end": 71165,
+      "text_sha256": "d69d5c859b63da3a1741028239cacc8529dc90ef1a93c155c46f7644fda2758c",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 135,
+          "text_char_end": 151,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 136,
+      "section": "important_limits",
+      "line_start": 1020,
+      "line_end": 1028,
+      "file_text_char_start": 71166,
+      "file_text_char_end": 71872,
+      "text_sha256": "8f19a4b182d7071f3d729d1e1343c95f64d22774bf8ae7ede98cf3a11a5874ec",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 132,
+          "text_char_end": 148,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 137,
+      "section": "important_limits",
+      "line_start": 1029,
+      "line_end": 1038,
+      "file_text_char_start": 71873,
+      "file_text_char_end": 72599,
+      "text_sha256": "092547befa3aecbb1a07374c32f3e59d32763bd6d317107c1881d12a64939719",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [
+        "papers/README.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 136,
+          "text_char_end": 152,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 138,
+      "section": "important_limits",
+      "line_start": 1039,
+      "line_end": 1048,
+      "file_text_char_start": 72600,
+      "file_text_char_end": 73354,
+      "text_sha256": "689142398e4ee2e8a3034a61d74dca5990cd64981778ef14ad25ad69d28141aa",
+      "signal_terms": [
+        "boundary",
+        "record",
+        "records"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/README.md",
+        "papers/multiagent_learning_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 136,
+          "text_char_end": 152,
+          "exists": true
+        },
+        {
+          "path": "papers/multiagent_learning_boundary.json",
+          "text_char_start": 680,
+          "text_char_end": 720,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 139,
+      "section": "important_limits",
+      "line_start": 1049,
+      "line_end": 1059,
+      "file_text_char_start": 73355,
+      "file_text_char_end": 74135,
+      "text_sha256": "fef872f8e7992be8e687cf93d488c79d56d094aa8087daebba461073be1e9ea0",
+      "signal_terms": [
+        "boundary",
+        "record",
+        "records"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/README.md",
+        "papers/ramsey_numbers_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 140,
+          "text_char_end": 156,
+          "exists": true
+        },
+        {
+          "path": "papers/ramsey_numbers_boundary.json",
+          "text_char_start": 711,
+          "text_char_end": 746,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 140,
+      "section": "important_limits",
+      "line_start": 1060,
+      "line_end": 1070,
+      "file_text_char_start": 74136,
+      "file_text_char_end": 74930,
+      "text_sha256": "e9a3463ffe7e6bc6efaa36e11002ef2a2578295004f30010633dbbbefbd07c2a",
+      "signal_terms": [
+        "boundary",
+        "record",
+        "records"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/README.md",
+        "papers/combinatorics_berczy_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 153,
+          "text_char_end": 169,
+          "exists": true
+        },
+        {
+          "path": "papers/combinatorics_berczy_boundary.json",
+          "text_char_start": 719,
+          "text_char_end": 760,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 141,
+      "section": "important_limits",
+      "line_start": 1071,
+      "line_end": 1081,
+      "file_text_char_start": 74931,
+      "file_text_char_end": 75775,
+      "text_sha256": "b9cb2fc766d3bbf3dd21d51e8fae2f487b8819ece136d6cbd6771ab5fc4798f0",
+      "signal_terms": [
+        "boundary",
+        "record",
+        "records"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/README.md",
+        "papers/bilateral_trade_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 135,
+          "text_char_end": 151,
+          "exists": true
+        },
+        {
+          "path": "papers/bilateral_trade_boundary.json",
+          "text_char_start": 774,
+          "text_char_end": 810,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 142,
+      "section": "important_limits",
+      "line_start": 1082,
+      "line_end": 1093,
+      "file_text_char_start": 75776,
+      "file_text_char_end": 76637,
+      "text_sha256": "68575a8082d348987d3f01994870aeed186426759a873688faf9003b1962efe3",
+      "signal_terms": [
+        "boundary",
+        "record",
+        "records"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/README.md",
+        "papers/magellan_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 147,
+          "text_char_end": 163,
+          "exists": true
+        },
+        {
+          "path": "papers/magellan_boundary.json",
+          "text_char_start": 798,
+          "text_char_end": 827,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 143,
+      "section": "important_limits",
+      "line_start": 1094,
+      "line_end": 1098,
+      "file_text_char_start": 76638,
+      "file_text_char_end": 77006,
+      "text_sha256": "3137c0ab0d2d96159c73c13952b48f2272adf078d4ce94e220d45965af396c2c",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/systems_result_readiness_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "text_char_start": 321,
+          "text_char_end": 366,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 144,
+      "section": "important_limits",
+      "line_start": 1099,
+      "line_end": 1104,
+      "file_text_char_start": 77007,
+      "file_text_char_end": 77445,
+      "text_sha256": "3d12dad4228c0f8cf113c074666691fd3d34195679a554ad17fd0586b2f2c36e",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/systems_result_readiness_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "text_char_start": 391,
+          "text_char_end": 436,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 145,
+      "section": "important_limits",
+      "line_start": 1105,
+      "line_end": 1110,
+      "file_text_char_start": 77446,
+      "file_text_char_end": 77905,
+      "text_sha256": "13f704ff7ae87752789d6e09f9e12146a9fc3fb9fafc8e7b2907498ea28d71cf",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/systems_result_readiness_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "text_char_start": 412,
+          "text_char_end": 457,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 146,
+      "section": "important_limits",
+      "line_start": 1111,
+      "line_end": 1116,
+      "file_text_char_start": 77906,
+      "file_text_char_end": 78364,
+      "text_sha256": "62589f42cb574e4b6cc31d3e088882aabc141da6e533eb7d68f720958b7b59f0",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/figure6_scheduling_exhibit_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "text_char_start": 409,
+          "text_char_end": 456,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 147,
+      "section": "important_limits",
+      "line_start": 1117,
+      "line_end": 1123,
+      "file_text_char_start": 78365,
+      "file_text_char_end": 78852,
+      "text_sha256": "9d4367ca63ed4276ce6f3402a79fcf4ce5a3d1f7c58c15778bd35da33ba41d74",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/figure7_pallas_tiling_exhibit_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "text_char_start": 435,
+          "text_char_end": 485,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 148,
+      "section": "important_limits",
+      "line_start": 1124,
+      "line_end": 1130,
+      "file_text_char_start": 78853,
+      "file_text_char_end": 79380,
+      "text_sha256": "74d6e5751ad1d99aeb84254a638186bf255848324bb2b8ffbbd7d62f046f136f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/kernel_tiling_shape_corpus_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "text_char_start": 478,
+          "text_char_end": 525,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 149,
+      "section": "important_limits",
+      "line_start": 1131,
+      "line_end": 1137,
+      "file_text_char_start": 79381,
+      "file_text_char_end": 79862,
+      "text_sha256": "95f4848655bea4ebb5666669cb977e1837c84edcfc7dbbc4fbe990300741d687",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/pallas_workflow_baseline_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "text_char_start": 434,
+          "text_char_end": 479,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 150,
+      "section": "important_limits",
+      "line_start": 1138,
+      "line_end": 1144,
+      "file_text_char_start": 79863,
+      "file_text_char_end": 80365,
+      "text_sha256": "cdd1665ac7843b57fef9d7ac23612bd04626c9a260dbe26d6cf83426c7af6853",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/gemini_self_training_loop_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "text_char_start": 454,
+          "text_char_end": 500,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 151,
+      "section": "important_limits",
+      "line_start": 1145,
+      "line_end": 1153,
+      "file_text_char_start": 80366,
+      "file_text_char_end": 80999,
+      "text_sha256": "ef3b7c90482897855aebfafab0605f951e38bcac1c979c943163b0b6817bad4f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/hardware_rtl_eda_evidence_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/hardware_rtl_eda_evidence_boundary.json",
+          "text_char_start": 585,
+          "text_char_end": 631,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 152,
+      "section": "important_limits",
+      "line_start": 1154,
+      "line_end": 1160,
+      "file_text_char_start": 81000,
+      "file_text_char_end": 81523,
+      "text_sha256": "4287ed29ea9d5e207a50afe57c5ab23d70a093f9e38dca947834f4adf6141077",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/hardware_rewrite_artifact_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/hardware_rewrite_artifact_boundary.json",
+          "text_char_start": 475,
+          "text_char_end": 521,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 153,
+      "section": "important_limits",
+      "line_start": 1161,
+      "line_end": 1169,
+      "file_text_char_start": 81524,
+      "file_text_char_end": 82134,
+      "text_sha256": "3ec9cc336d09a0974044afcde90edfff1f5e1a323444c05b28d140b2c4c8aaa4",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/hardware_contribution_attribution_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/hardware_contribution_attribution_boundary.json",
+          "text_char_start": 554,
+          "text_char_end": 608,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 154,
+      "section": "important_limits",
+      "line_start": 1170,
+      "line_end": 1177,
+      "file_text_char_start": 82135,
+      "file_text_char_end": 82694,
+      "text_sha256": "7c676e77ab37b686f22548d2399e02f74077ea165beb747defa03a0e02028f53",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/compiler_ir_reference_check_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/compiler_ir_reference_check_boundary.json",
+          "text_char_start": 509,
+          "text_char_end": 557,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 155,
+      "section": "important_limits",
+      "line_start": 1178,
+      "line_end": 1185,
+      "file_text_char_start": 82695,
+      "file_text_char_end": 83236,
+      "text_sha256": "2d755a20b846453cb060d4c9b39bf09aeff6fae1ede7bda7aebdac821a27fbe0",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/compiler_stack_context_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/compiler_stack_context_boundary.json",
+          "text_char_start": 496,
+          "text_char_end": 539,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 156,
+      "section": "important_limits",
+      "line_start": 1186,
+      "line_end": 1193,
+      "file_text_char_start": 83237,
+      "file_text_char_end": 83790,
+      "text_sha256": "f337648612622ca18f4e6cde873f491d2f6ebacc15062e94cac120dda0010128",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/compiler_adoption_path_boundary.json",
+          "text_char_start": 508,
+          "text_char_end": 551,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 157,
+      "section": "important_limits",
+      "line_start": 1194,
+      "line_end": 1201,
+      "file_text_char_start": 83791,
+      "file_text_char_end": 84374,
+      "text_sha256": "13d2db19717938cc5ccafe7e1ddbbf8373ea0538fc8950f1d7e92a7ec67f0035",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "record"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/self_improvement_distillation_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/self_improvement_distillation_boundary.json",
+          "text_char_start": 458,
+          "text_char_end": 508,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 158,
+      "section": "important_limits",
+      "line_start": 1202,
+      "line_end": 1208,
+      "file_text_char_start": 84375,
+      "file_text_char_end": 84898,
+      "text_sha256": "182fda0f2d9c3cf5a121a781131aeae1c594cd475c0aefb87130fe9e224f147b",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "record"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/self_improvement_cadence_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/self_improvement_cadence_boundary.json",
+          "text_char_start": 392,
+          "text_char_end": 437,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 159,
+      "section": "important_limits",
+      "line_start": 1209,
+      "line_end": 1215,
+      "file_text_char_start": 84899,
+      "file_text_char_end": 85391,
+      "text_sha256": "075c7af815c60d556d8bcdf1c8b5a6fea5135f234dec009805dfa59b4864c9fd",
+      "signal_terms": [
+        "not",
+        "records"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 160,
+      "section": "important_limits",
+      "line_start": 1216,
+      "line_end": 1222,
+      "file_text_char_start": 85392,
+      "file_text_char_end": 85841,
+      "text_sha256": "82d78366798be35343ce919aefa9c43618a98619c468ba8d00366ebce180c873",
+      "signal_terms": [
+        "not",
+        "records"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 161,
+      "section": "important_limits",
+      "line_start": 1223,
+      "line_end": 1229,
+      "file_text_char_start": 85842,
+      "file_text_char_end": 86313,
+      "text_sha256": "39c134d8ec2108aa01ff48f9c1d53f4d1185291fd0d234b64419e0dfd74e577f",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 162,
+      "section": "important_limits",
+      "line_start": 1230,
+      "line_end": 1236,
+      "file_text_char_start": 86314,
+      "file_text_char_end": 86809,
+      "text_sha256": "75c81b5ec31a62fd3797ace68e6a85ace0990d335b91579da8c9e0c3fc015ffc",
+      "signal_terms": [
+        "not",
+        "records"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 163,
+      "section": "important_limits",
+      "line_start": 1237,
+      "line_end": 1249,
+      "file_text_char_start": 86810,
+      "file_text_char_end": 87666,
+      "text_sha256": "6101812906c10971fbabb3341f4b189b4533b9660074ef08fdfcaeeaa85f0283",
+      "signal_terms": [
+        "boundary",
+        "implemented",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 5,
+      "local_path_refs": [
+        "docs/status.md",
+        "docs/status.md",
+        "papers/documentation_truthfulness_boundary.json",
+        "papers/documentation_claim_inventory.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "docs/status.md",
+          "text_char_start": 168,
+          "text_char_end": 182,
+          "exists": true
+        },
+        {
+          "path": "docs/status.md",
+          "text_char_start": 686,
+          "text_char_end": 700,
+          "exists": true
+        },
+        {
+          "path": "papers/documentation_truthfulness_boundary.json",
+          "text_char_start": 757,
+          "text_char_end": 804,
+          "exists": true
+        },
+        {
+          "path": "papers/documentation_claim_inventory.json",
+          "text_char_start": 813,
+          "text_char_end": 854,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 164,
+      "section": "important_limits",
+      "line_start": 1250,
+      "line_end": 1270,
+      "file_text_char_start": 87667,
+      "file_text_char_end": 89052,
+      "text_sha256": "caaa1de784d3cf4080dd3072bce2a83b998815b77caf2d30f459f8de81f6ddf0",
+      "signal_terms": [
+        "boundary",
+        "implemented",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 5,
+      "local_path_refs": [
+        "papers/status_claim_inventory.json",
+        "papers/benchmark_coverage_inventory.json",
+        "papers/implementation_evidence_map_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/status_claim_inventory.json",
+          "text_char_start": 249,
+          "text_char_end": 283,
+          "exists": true
+        },
+        {
+          "path": "papers/benchmark_coverage_inventory.json",
+          "text_char_start": 781,
+          "text_char_end": 821,
+          "exists": true
+        },
+        {
+          "path": "papers/implementation_evidence_map_boundary.json",
+          "text_char_start": 1335,
+          "text_char_end": 1383,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 165,
+      "section": "important_limits",
+      "line_start": 1271,
+      "line_end": 1283,
+      "file_text_char_start": 89053,
+      "file_text_char_end": 89958,
+      "text_sha256": "217f085100b4126ddd6b8c8abca06ed2e16acd58ff6781d55abfd417ed5a8fbf",
+      "signal_terms": [
+        "missing",
+        "not",
+        "records"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 166,
+      "section": "important_limits",
+      "line_start": 1284,
+      "line_end": 1298,
+      "file_text_char_start": 89959,
+      "file_text_char_end": 91075,
+      "text_sha256": "cd0a3b1006d7d7435c2e10e7db7a0629a1b51b040fbd029a75d82c5a2a66b3c2",
+      "signal_terms": [
+        "not"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 167,
+      "section": "important_limits",
+      "line_start": 1299,
+      "line_end": 1310,
+      "file_text_char_start": 91076,
+      "file_text_char_end": 91912,
+      "text_sha256": "2592de9f85665aac7d9679f7ea2bab9ea9a2f7ae7d2e1f191cd4ea1624d9f766",
+      "signal_terms": [
+        "implemented",
+        "missing",
+        "not",
+        "records"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 168,
+      "section": "important_limits",
+      "line_start": 1311,
+      "line_end": 1316,
+      "file_text_char_start": 91913,
+      "file_text_char_end": 92368,
+      "text_sha256": "3874d3a0727d10d999b81d4482e243061d2903cea0f0d419c24682766e09a815",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/sampling_balance_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/sampling_balance_boundary.json",
+          "text_char_start": 416,
+          "text_char_end": 453,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 169,
+      "section": "important_limits",
+      "line_start": 1317,
+      "line_end": 1320,
+      "file_text_char_start": 92369,
+      "file_text_char_end": 92619,
+      "text_sha256": "96b9ffa308c727d371222636d8f2c7af9f116c14d50285654a15353cd95ab565",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/objective_archive_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/objective_archive_boundary.json",
+          "text_char_start": 210,
+          "text_char_end": 248,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 170,
+      "section": "important_limits",
+      "line_start": 1321,
+      "line_end": 1324,
+      "file_text_char_start": 92620,
+      "file_text_char_end": 92896,
+      "text_sha256": "08e65f53d27397f06f6006f30b9526e6824d97b88e34aad422055a4e294adcf3",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/metric_diverse_prompt_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/metric_diverse_prompt_boundary.json",
+          "text_char_start": 232,
+          "text_char_end": 274,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 171,
+      "section": "important_limits",
+      "line_start": 1325,
+      "line_end": 1331,
+      "file_text_char_start": 92897,
+      "file_text_char_end": 93352,
+      "text_sha256": "cef2d51655b8a9231d73ad2b491888ee8aeb06146fc7ebebb50c2e4ca88a6b02",
+      "signal_terms": [
+        "implemented",
+        "not",
+        "without"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 172,
+      "section": "important_limits",
+      "line_start": 1332,
+      "line_end": 1337,
+      "file_text_char_start": 93353,
+      "file_text_char_end": 93806,
+      "text_sha256": "74ab9a684c541fd5753ec199eff88ad4a6438682eda77fe0eec3d6234fd55444",
+      "signal_terms": [
+        "record"
+      ],
+      "signal_term_count": 1,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 173,
+      "section": "important_limits",
+      "line_start": 1338,
+      "line_end": 1341,
+      "file_text_char_start": 93807,
+      "file_text_char_end": 94091,
+      "text_sha256": "19b485e815354e8e95b534752944a2a21eaad4a6dd39abd570d914e90b78ab70",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/proposal_score_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/proposal_score_boundary.json",
+          "text_char_start": 247,
+          "text_char_end": 282,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 174,
+      "section": "important_limits",
+      "line_start": 1342,
+      "line_end": 1347,
+      "file_text_char_start": 94092,
+      "file_text_char_end": 94520,
+      "text_sha256": "dbdc50623d7ca15669d136a4831a035f8205bbc0edb9528cb10d054b7d706deb",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/proposal_diversity_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/proposal_diversity_boundary.json",
+          "text_char_start": 387,
+          "text_char_end": 426,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 175,
+      "section": "important_limits",
+      "line_start": 1348,
+      "line_end": 1351,
+      "file_text_char_start": 94521,
+      "file_text_char_end": 94821,
+      "text_sha256": "8b01566d962b7001a047941df18433f2d609d12bb6b803a51f4f15c0a4d29508",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/program_output_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/program_output_boundary.json",
+          "text_char_start": 263,
+          "text_char_end": 298,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 176,
+      "section": "important_limits",
+      "line_start": 1352,
+      "line_end": 1358,
+      "file_text_char_start": 94822,
+      "file_text_char_end": 95281,
+      "text_sha256": "d781ff70e0d9740d64b2e1d5ddc424b41133a79206981c739d9fc819575c82e9",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "support",
+        "tracked"
+      ],
+      "signal_term_count": 4,
+      "local_path_refs": [
+        "papers/figure3_supervised_exhibit_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/figure3_supervised_exhibit_boundary.json",
+          "text_char_start": 410,
+          "text_char_end": 457,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 177,
+      "section": "important_limits",
+      "line_start": 1359,
+      "line_end": 1363,
+      "file_text_char_start": 95282,
+      "file_text_char_end": 95658,
+      "text_sha256": "732a8cc88b44f6d2c42634a3ba77b0755f29ba9b822e4f2fdae05b216a3b849f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/artifact_index_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/artifact_index_boundary.json",
+          "text_char_start": 339,
+          "text_char_end": 374,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 178,
+      "section": "important_limits",
+      "line_start": 1364,
+      "line_end": 1370,
+      "file_text_char_start": 95659,
+      "file_text_char_end": 96188,
+      "text_sha256": "35b89459b10fe09980a96f749a7c6c9d6978b31fc2017286a112c582b5013b6f",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/whole_run_source_workspace_integrity_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/whole_run_source_workspace_integrity_boundary.json",
+          "text_char_start": 470,
+          "text_char_end": 527,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 179,
+      "section": "important_limits",
+      "line_start": 1371,
+      "line_end": 1374,
+      "file_text_char_start": 96189,
+      "file_text_char_end": 96435,
+      "text_sha256": "ca3162ffe470661248d4fbaf8e7b9f3046e7d8b8bd3e3f08ba15777e7bcbf6dd",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 3,
+      "local_path_refs": [
+        "papers/map_elites_descriptor_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/map_elites_descriptor_boundary.json",
+          "text_char_start": 202,
+          "text_char_end": 244,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 180,
+      "section": "important_limits",
+      "line_start": 1375,
+      "line_end": 1376,
+      "file_text_char_start": 96436,
+      "file_text_char_end": 96563,
+      "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
+      "signal_terms": [],
+      "signal_term_count": 0,
+      "local_path_refs": [],
+      "local_path_ref_records": []
+    },
+    {
+      "bullet_ordinal": 181,
+      "section": "important_limits",
+      "line_start": 1377,
+      "line_end": 1379,
+      "file_text_char_start": 96564,
+      "file_text_char_end": 96783,
+      "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
+      "signal_terms": [
+        "not",
+        "tracked"
+      ],
+      "signal_term_count": 2,
+      "local_path_refs": [
+        "papers/README.md",
+        "ROADMAP.md"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/README.md",
+          "text_char_start": 165,
+          "text_char_end": 181,
+          "exists": true
+        },
+        {
+          "path": "ROADMAP.md",
+          "text_char_start": 188,
+          "text_char_end": 198,
+          "exists": true
+        }
+      ]
+    }
+  ],
   "claims": [
     {
       "claim_id": "readme_current_status_scope",
@@ -1609,10 +6039,11 @@
     "complete_readme_claim_inventory": "not_recorded_locally",
     "complete_roadmap_claim_inventory": "not_recorded_locally",
     "complete_paper_index_status_row_inventory": "not_recorded_locally",
+    "status_ledger_semantic_freshness_matrix": "not_recorded_locally",
     "semantic_claim_verifier": "not_recorded_locally",
     "stale_completed_entry_detection": "not_recorded_locally",
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution, and audited surface headings are enumerated for the README, ROADMAP, and papers index with explicit heading-to-claim coverage records. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
+  "claim_boundary": "This inventory gives stable ids and evidence anchors for the top-level README, ROADMAP, and papers index AlphaEvolve-facing status claims, including source-anchor file offsets for those top-level claim surfaces and local evidence-ref existence records. Fragment-bearing evidence refs also record exact Markdown heading anchor resolution, and audited surface headings are enumerated for the README, ROADMAP, and papers index with explicit heading-to-claim coverage records. It also records a structural docs/status.md ledger inventory for implemented-today and important-limits bullets, including bullet spans, hashes, status-signal terms, and local backtick path existence records. It does not claim complete README coverage, complete ROADMAP coverage, complete papers index coverage, semantic docs/status.md freshness, semantic claim verification, stale completed-entry detection, generated alignment reports, or full proof that every documentation claim is current."
 }

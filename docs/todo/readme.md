@@ -230,16 +230,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and absence-boundary inventory moved out of the root README; `docs/README.md`
     routes paper/spec reviewers to `docs/status.md`, ROADMAP, and
     `papers/README.md`; and `papers/documentation_claim_inventory.json`
-    tracks selected README/ROADMAP/papers-index claims. Existing paper
-    status-claim inventory validation checks `papers/README.md` row claims,
-    not the much larger `docs/status.md` ledger.
-  - Current gap: there is no structured inventory, sidecar, or CI check that
-    parses `docs/status.md`, maps each implemented and missing-status bullet to
-    source modules, tests, ROADMAP entries, paper sidecars, active/completed
-    TODO anchors, and `papers/README.md` rows, or detects stale status prose
-    when code, ROADMAP, paper status rows, or TODO coverage changes. This
-    leaves the README's "full implemented-versus-missing ledger" claim weaker
-    than the paper-index status inventory.
+    tracks selected README/ROADMAP/papers-index claims plus a structural
+    `docs/status.md` ledger inventory for implemented/limit bullet spans,
+    hashes, status-signal terms, and local backtick-path existence records.
+    Existing paper status-claim inventory validation checks
+    `papers/README.md` row claims in much more detail than the larger
+    `docs/status.md` ledger.
+  - Current gap: the structural inventory does not yet map each implemented
+    and missing-status bullet to source modules, tests, ROADMAP entries, paper
+    sidecars, active/completed TODO anchors, and `papers/README.md` rows, or
+    detect stale status prose when code, ROADMAP, paper status rows, or TODO
+    coverage changes. This leaves the README's "full implemented-versus-
+    missing ledger" claim weaker than the paper-index status inventory.
     Current drift evidence: after the embedded-evaluator TODOs were tightened,
     active code/paper TODOs now name the missing generated/interactive
     task-input replay contract for `evaluate(eval_inputs)` and external
@@ -272,9 +274,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     block records and `405` TODO content artifact mention records while
     `docs/status.md` still reported `1048` and `404`. The paper-manifest gate
     now checks matching `docs/status.md` summaries for those generated
-    sidecar counts, but this is only count-sync coverage for one overlap; the
-    broader status-ledger claim inventory and cross-surface freshness matrix
-    are still missing.
+    sidecar counts, and the documentation-claim inventory now records
+    status-ledger bullet structure, but this is only structural/count coverage;
+    the broader status-ledger evidence mapping and cross-surface freshness
+    matrix are still missing.
   - Required result: add a status-ledger freshness artifact and validator that
     inventories `docs/status.md` bullets, links each claim to current
     implementation/sidecar/TODO evidence or explicit absence scope, compares

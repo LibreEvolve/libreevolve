@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass
@@ -18,6 +19,23 @@ EXPECTED_CLAIM_SURFACE_DOCUMENT_PATHS = (
     "README.md",
     "ROADMAP.md",
     "papers/README.md",
+)
+STATUS_LEDGER_DOCUMENT_PATH = "docs/status.md"
+STATUS_LEDGER_INVENTORY_STATUS = (
+    "status_ledger_structural_bullet_inventory_without_semantic_verifier"
+)
+STATUS_LEDGER_SECTION_LABELS = {
+    "Implemented today:": "implemented_today",
+    "Important limits:": "important_limits",
+}
+STATUS_LEDGER_SIGNAL_RE = re.compile(
+    r"\b(?:implemented|supports?|missing|lacks?|not|without|boundary|tracked|records?)\b",
+    flags=re.IGNORECASE,
+)
+BACKTICK_VALUE_RE = re.compile(r"`([^`]+)`")
+LOCAL_REPO_PATH_RE = re.compile(
+    r"^(?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]+(?:\.[A-Za-z0-9_.-]+)?$"
+    r"|^(?:README|ROADMAP)\.md$"
 )
 UNCOVERED_HEADING_TODO_LINKS = {
     "README.md": {
@@ -39,6 +57,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "complete_readme_claim_inventory": "not_recorded_locally",
     "complete_roadmap_claim_inventory": "not_recorded_locally",
     "complete_paper_index_status_row_inventory": "not_recorded_locally",
+    "status_ledger_semantic_freshness_matrix": "not_recorded_locally",
     "semantic_claim_verifier": "not_recorded_locally",
     "stale_completed_entry_detection": "not_recorded_locally",
     "generated_alignment_report": "not_recorded_locally",
@@ -235,6 +254,7 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
     heading_records, missing_heading_documents = _claim_surface_heading_inventory(
         root_path
     )
+    status_ledger_inventory = _status_ledger_inventory(root_path)
     claims = []
     for claim in EXPECTED_CLAIMS:
         claim_record = dict(claim)
@@ -379,6 +399,7 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             uncovered_heading_todo_link_records
         ),
         "uncovered_heading_todo_link_records": uncovered_heading_todo_link_records,
+        **status_ledger_inventory,
         "claims": claims,
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -390,8 +411,13 @@ def documentation_claim_inventory_record(root: str | Path = ".") -> dict[str, An
             "anchor resolution, and audited surface headings are enumerated "
             "for the README, ROADMAP, and papers index with explicit "
             "heading-to-claim coverage records. "
+            "It also records a structural docs/status.md ledger inventory "
+            "for implemented-today and important-limits bullets, including "
+            "bullet spans, hashes, status-signal terms, and local backtick "
+            "path existence records. "
             "It does not claim complete README coverage, "
             "complete ROADMAP coverage, complete papers index coverage, "
+            "semantic docs/status.md freshness, "
             "semantic claim verification, stale completed-entry detection, "
             "generated alignment reports, or full proof that every documentation "
             "claim is current."
@@ -678,6 +704,7 @@ def validate_documentation_claim_inventory(
                 "uncovered heading TODO link records drifted",
             )
         )
+    _validate_status_ledger_inventory(data, issues, Path(root))
     claim_count, readme_count, roadmap_count, papers_count = _validate_claims(
         data.get("claims"),
         issues,
@@ -689,6 +716,8 @@ def validate_documentation_claim_inventory(
         not isinstance(boundary_text, str)
         or "does not claim complete README coverage" not in boundary_text
         or "complete papers index coverage" not in boundary_text
+        or "structural docs/status.md ledger inventory" not in boundary_text
+        or "semantic docs/status.md freshness" not in boundary_text
         or "semantic claim verification" not in boundary_text
         or "full proof that every documentation claim is current" not in boundary_text
     ):
@@ -723,6 +752,8 @@ def render_documentation_claim_inventory_summary(inventory: dict[str, Any]) -> s
         f"| claim_surface_heading_count | {inventory.get('claim_surface_heading_record_count', '<unknown>')} |",
         f"| uncovered_claim_surface_heading_count | {inventory.get('uncovered_claim_surface_heading_count', '<unknown>')} |",
         f"| uncovered_heading_todo_link_count | {inventory.get('uncovered_heading_todo_link_record_count', '<unknown>')} |",
+        f"| status_ledger_bullet_count | {inventory.get('status_ledger_bullet_count', '<unknown>')} |",
+        f"| status_ledger_local_path_ref_count | {inventory.get('status_ledger_local_path_ref_count', '<unknown>')} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
@@ -811,6 +842,213 @@ def _validate_missing_evidence(
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
+
+
+def _validate_status_ledger_inventory(
+    data: dict[str, Any],
+    issues: list[DocumentationClaimInventoryIssue],
+    root: Path,
+) -> None:
+    expected = _status_ledger_inventory(root)
+    checks = (
+        ("status_ledger_source_path", "status ledger source path drifted"),
+        ("status_ledger_inventory_status", "status ledger inventory status drifted"),
+        ("status_ledger_bullet_count", "status ledger bullet count drifted"),
+        ("status_ledger_section_counts", "status ledger section counts drifted"),
+        ("status_ledger_signal_term_count", "status ledger signal term count drifted"),
+        ("status_ledger_signal_terms", "status ledger signal terms drifted"),
+        ("status_ledger_signal_record_count", "status ledger signal record count drifted"),
+        (
+            "status_ledger_unique_local_path_ref_count",
+            "status ledger local path ref count drifted",
+        ),
+        (
+            "status_ledger_unique_local_path_refs",
+            "status ledger local path refs drifted",
+        ),
+        (
+            "status_ledger_missing_local_path_refs",
+            "status ledger missing local path refs drifted",
+        ),
+        (
+            "status_ledger_local_path_ref_count",
+            "status ledger local path mention count drifted",
+        ),
+        (
+            "status_ledger_local_path_ref_status",
+            "status ledger local path status drifted",
+        ),
+        ("status_ledger_bullet_records", "status ledger bullet records drifted"),
+    )
+    for key, message in checks:
+        if data.get(key) != expected[key]:
+            issues.append(_issue(f"invalid_{key}", message))
+
+
+def _status_ledger_inventory(root: Path) -> dict[str, Any]:
+    path_text = STATUS_LEDGER_DOCUMENT_PATH
+    path = root / path_text
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return {
+            "status_ledger_source_path": path_text,
+            "status_ledger_inventory_status": STATUS_LEDGER_INVENTORY_STATUS,
+            "status_ledger_bullet_count": 0,
+            "status_ledger_section_counts": {},
+            "status_ledger_signal_term_count": 0,
+            "status_ledger_signal_terms": [],
+            "status_ledger_signal_record_count": 0,
+            "status_ledger_unique_local_path_ref_count": 0,
+            "status_ledger_unique_local_path_refs": [],
+            "status_ledger_missing_local_path_refs": [path_text],
+            "status_ledger_local_path_ref_count": 0,
+            "status_ledger_local_path_ref_status": "status_ledger_unreadable_or_missing",
+            "status_ledger_bullet_records": [],
+        }
+
+    line_records = _line_records(text)
+    bullet_records: list[dict[str, Any]] = []
+    current_section: str | None = None
+    index = 0
+    bullet_ordinal = 0
+    while index < len(line_records):
+        line_record = line_records[index]
+        stripped = line_record["text"].strip()
+        if stripped in STATUS_LEDGER_SECTION_LABELS:
+            current_section = STATUS_LEDGER_SECTION_LABELS[stripped]
+            index += 1
+            continue
+        if current_section is None or not line_record["text"].startswith("- "):
+            index += 1
+            continue
+        bullet_start = index
+        index += 1
+        while index < len(line_records):
+            next_line = line_records[index]["text"]
+            next_stripped = next_line.strip()
+            if next_stripped in STATUS_LEDGER_SECTION_LABELS:
+                break
+            if next_line.startswith("- "):
+                break
+            if next_line.startswith("#"):
+                break
+            index += 1
+        bullet_ordinal += 1
+        bullet_lines = line_records[bullet_start:index]
+        bullet_text = "\n".join(line["text"] for line in bullet_lines).rstrip()
+        signal_terms = sorted(
+            {
+                match.group(0).lower()
+                for match in STATUS_LEDGER_SIGNAL_RE.finditer(bullet_text)
+            }
+        )
+        local_path_records = _status_ledger_local_path_records(root, bullet_text)
+        bullet_records.append(
+            {
+                "bullet_ordinal": bullet_ordinal,
+                "section": current_section,
+                "line_start": bullet_lines[0]["line_number"],
+                "line_end": bullet_lines[-1]["line_number"],
+                "file_text_char_start": bullet_lines[0]["char_start"],
+                "file_text_char_end": bullet_lines[-1]["char_end"],
+                "text_sha256": hashlib.sha256(bullet_text.encode("utf-8")).hexdigest(),
+                "signal_terms": signal_terms,
+                "signal_term_count": len(signal_terms),
+                "local_path_refs": [record["path"] for record in local_path_records],
+                "local_path_ref_records": local_path_records,
+            }
+        )
+
+    section_counts: dict[str, int] = {}
+    signal_terms = sorted(
+        {
+            term
+            for record in bullet_records
+            for term in record["signal_terms"]
+        }
+    )
+    local_paths = sorted(
+        {
+            path
+            for record in bullet_records
+            for path in record["local_path_refs"]
+        }
+    )
+    missing_local_paths = sorted(
+        {
+            path
+            for record in bullet_records
+            for ref in record["local_path_ref_records"]
+            if not ref["exists"]
+            for path in [ref["path"]]
+        }
+    )
+    for record in bullet_records:
+        section = record["section"]
+        section_counts[section] = section_counts.get(section, 0) + 1
+    return {
+        "status_ledger_source_path": path_text,
+        "status_ledger_inventory_status": STATUS_LEDGER_INVENTORY_STATUS,
+        "status_ledger_bullet_count": len(bullet_records),
+        "status_ledger_section_counts": dict(sorted(section_counts.items())),
+        "status_ledger_signal_term_count": len(signal_terms),
+        "status_ledger_signal_terms": signal_terms,
+        "status_ledger_signal_record_count": sum(
+            record["signal_term_count"] for record in bullet_records
+        ),
+        "status_ledger_unique_local_path_ref_count": len(local_paths),
+        "status_ledger_unique_local_path_refs": local_paths,
+        "status_ledger_missing_local_path_refs": missing_local_paths,
+        "status_ledger_local_path_ref_count": sum(
+            len(record["local_path_ref_records"]) for record in bullet_records
+        ),
+        "status_ledger_local_path_ref_status": (
+            "all_status_ledger_local_path_refs_present"
+            if not missing_local_paths
+            else "missing_status_ledger_local_path_refs"
+        ),
+        "status_ledger_bullet_records": bullet_records,
+    }
+
+
+def _line_records(text: str) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    char_start = 0
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        char_end = char_start + len(line)
+        records.append(
+            {
+                "line_number": line_number,
+                "text": line,
+                "char_start": char_start,
+                "char_end": char_end,
+            }
+        )
+        char_start = char_end + 1
+    return records
+
+
+def _status_ledger_local_path_records(root: Path, text: str) -> list[dict[str, Any]]:
+    records: list[dict[str, Any]] = []
+    for match in BACKTICK_VALUE_RE.finditer(text):
+        value = match.group(1).strip()
+        if not LOCAL_REPO_PATH_RE.match(value):
+            continue
+        path = root / value
+        try:
+            exists = path.exists()
+        except OSError:
+            exists = False
+        records.append(
+            {
+                "path": value,
+                "text_char_start": match.start(1),
+                "text_char_end": match.end(1),
+                "exists": exists,
+            }
+        )
+    return records
 
 
 def _expected_claims_with_spans(root: Path) -> list[dict[str, Any]]:

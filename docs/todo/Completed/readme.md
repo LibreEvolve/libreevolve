@@ -4,6 +4,22 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Add structural `docs/status.md` ledger inventory to documentation claim
+      evidence.
+  - Status: `papers/documentation_claim_inventory.json` now records
+    `docs/status.md` implemented-today and important-limits bullet spans,
+    text hashes, status-signal terms, local backtick-path references, and
+    local-path existence status.
+  - Evidence: `libreevolve/problems/benchmarks/documentation_claim_inventory.py`
+    validates `status_ledger_bullet_records`, section counts, signal terms,
+    and local path references; the rendered summary now reports the
+    status-ledger bullet and path-reference counts.
+  - Remaining guard: this is structural drift evidence only. The active
+    status-ledger freshness TODO still needs per-bullet implementation/TODO/
+    ROADMAP/paper-row evidence mapping and cross-surface stale-prose checks.
+  - Verification: focused documentation-claim inventory tests cover matching
+    and stale status-ledger inventory records.
+
 - [x] Add `docs/status.md` freshness checks for paper-index status sidecar
       counts.
   - Status: the paper-manifest validator now checks `docs/status.md` summaries

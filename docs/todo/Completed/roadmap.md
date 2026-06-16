@@ -15467,3 +15467,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     promotion/demotion workflow, CI phase freshness gate, evidence-status
     refresh report, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP operational readiness matrix.
+  - Spec evidence: ROADMAP operational maturity claims require stronger proof
+    than individual release, CI, config, artifact, and docs sidecars.
+  - Status: `papers/roadmap_operational_readiness_boundary.json` now records
+    six readiness criteria for the global acceptance threshold, unified
+    generated-artifact lifecycle inventory, semantic docs verification, signed
+    release provenance, cross-platform CI policy, and owner review signoff. It
+    links the existing operational-maturity criteria input, sidecar refs,
+    active TODO refs, validation-gate labels, readiness labels, and explicit
+    missing-evidence fields. The paper-manifest gate now requires and
+    validates the sidecar at the repo root.
+  - Remaining roadmap gap: the actual global acceptance threshold, unified
+    generated-artifact lifecycle inventory, semantic docs verification, signed
+    release provenance, cross-platform CI policy, and owner review signoff
+    remain active in `docs/todo/roadmap.md`.

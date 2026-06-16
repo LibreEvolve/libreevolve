@@ -1275,6 +1275,7 @@ Important limits:
   `papers/roadmap_phase_sequence_boundary.json`,
   `papers/roadmap_phase_freshness_boundary.json`,
   `papers/roadmap_operational_maturity_boundary.json`,
+  `papers/roadmap_operational_readiness_boundary.json`,
   `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
   `papers/roadmap_plugin_extensibility_boundary.json`,
   `papers/roadmap_backend_scheduling_critique_boundary.json`,
@@ -1459,6 +1460,12 @@ Important limits:
   acceptance-gate labels. This is not a global acceptance threshold, unified
   run-artifact lifecycle inventory, semantic docs verification, signed release
   provenance, cross-platform CI policy, or owner review signoff.
+- ROADMAP operational-readiness evidence now records six readiness criteria
+  for the global acceptance threshold, unified generated-artifact lifecycle
+  inventory, semantic docs verification, signed release provenance,
+  cross-platform CI policy, and owner review signoff. This is not an
+  implemented operational maturity gate or proof that those readiness
+  mechanisms exist.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark

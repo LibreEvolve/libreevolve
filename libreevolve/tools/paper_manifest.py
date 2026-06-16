@@ -235,6 +235,10 @@ from libreevolve.problems.benchmarks.roadmap_operational_maturity_boundary impor
     roadmap_operational_maturity_boundary_record,
     validate_roadmap_operational_maturity_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_operational_readiness_boundary import (
+    roadmap_operational_readiness_boundary_record,
+    validate_roadmap_operational_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_representative_benchmark_portfolio_boundary import (
     roadmap_representative_benchmark_portfolio_boundary_record,
     validate_roadmap_representative_benchmark_portfolio_boundary,
@@ -822,6 +826,7 @@ ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_good_first_freshnes
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_FILE = "papers/roadmap_phase_sequence_boundary.json"
 ROADMAP_PHASE_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_phase_freshness_boundary.json"
 ROADMAP_OPERATIONAL_MATURITY_BOUNDARY_FILE = "papers/roadmap_operational_maturity_boundary.json"
+ROADMAP_OPERATIONAL_READINESS_BOUNDARY_FILE = "papers/roadmap_operational_readiness_boundary.json"
 ROADMAP_REPRESENTATIVE_BENCHMARK_PORTFOLIO_BOUNDARY_FILE = "papers/roadmap_representative_benchmark_portfolio_boundary.json"
 ROADMAP_PLUGIN_EXTENSIBILITY_BOUNDARY_FILE = "papers/roadmap_plugin_extensibility_boundary.json"
 ROADMAP_BACKEND_SCHEDULING_CRITIQUE_BOUNDARY_FILE = "papers/roadmap_backend_scheduling_critique_boundary.json"
@@ -1497,6 +1502,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_phase_sequence_boundary(root_path))
     issues.extend(_validate_roadmap_phase_freshness_boundary(root_path))
     issues.extend(_validate_roadmap_operational_maturity_boundary(root_path))
+    issues.extend(_validate_roadmap_operational_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_representative_benchmark_portfolio_boundary(root_path))
     issues.extend(_validate_roadmap_plugin_extensibility_boundary(root_path))
     issues.extend(_validate_roadmap_backend_scheduling_critique_boundary(root_path))
@@ -4478,6 +4484,41 @@ def _validate_roadmap_operational_maturity_boundary(root_path: Path) -> list[Pap
             f"roadmap_operational_maturity_boundary_{issue.code}",
             issue.message,
             "roadmap_operational_maturity",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_operational_readiness_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_OPERATIONAL_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_operational_readiness_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_OPERATIONAL_READINESS_BOUNDARY_FILE} must "
+                        "emit ROADMAP operational readiness metadata"
+                    ),
+                    "roadmap_operational_readiness",
+                )
+            ]
+        return []
+    report = validate_roadmap_operational_readiness_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_operational_readiness_boundary_{issue.code}",
+            issue.message,
+            "roadmap_operational_readiness",
         )
         for issue in report.issues
     ]

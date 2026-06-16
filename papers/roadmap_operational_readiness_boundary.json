@@ -1,0 +1,222 @@
+{
+  "active_todo_ref_count": 12,
+  "boundary_status": "bounded_operational_readiness_matrix_without_global_maturity_gate",
+  "claim_boundary": "This boundary records operational-readiness criteria tied to the bounded operational-maturity criteria map. It does not claim a global acceptance threshold, unified generated-artifact lifecycle inventory, semantic documentation verification, signed release provenance, cross-platform CI policy, or owner review signoff.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "cross_platform_ci_policy": "not_recorded_locally",
+    "global_acceptance_threshold": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "semantic_docs_verification": "not_recorded_locally",
+    "signed_release_provenance": "not_recorded_locally",
+    "unified_generated_artifact_lifecycle_inventory": "not_recorded_locally"
+  },
+  "readiness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "global acceptance threshold",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "full checklist is satisfied",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "global_acceptance_threshold",
+      "current_scope": "six section-level criteria with risk classes and acceptance-gate labels",
+      "maturity_surface": "section-level operational criteria and global maturity decision",
+      "missing_readiness": "global threshold that defines when operational maturity can be claimed",
+      "readiness_status": "criteria_map_without_threshold",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_operational_maturity_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        }
+      ],
+      "validation_gate": "global operational-maturity acceptance threshold"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "unified generated-artifact lifecycle inventory",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bring generated `paper_artifacts/` directories under the run-artifact",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "unified_generated_artifact_lifecycle_inventory",
+      "current_scope": "run-artifact lifecycle gaps are documented in separate code and papers TODOs",
+      "maturity_surface": "runtime artifacts, generated paper artifacts, overwrite policy, and schema ownership",
+      "missing_readiness": "single lifecycle inventory for manifest, history, best workspace, evaluator artifacts, plugin artifacts, prompt tables, and paper_artifacts",
+      "readiness_status": "distributed_lifecycle_todos_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/artifact_index_boundary.json"
+        }
+      ],
+      "validation_gate": "unified generated-artifact lifecycle inventory"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "semantic docs verification",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "required_phrase": "semantic claim verifier",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "semantic_docs_verification",
+      "current_scope": "structural documentation inventories and bounded claim sidecars",
+      "maturity_surface": "README, ROADMAP, docs, papers index, status, and completed TODO claims",
+      "missing_readiness": "semantic verifier that proves operational-maturity claims match implementation evidence",
+      "readiness_status": "structural_docs_inventory_without_semantic_verifier",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_truthfulness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "semantic documentation verification gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "signed release provenance",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add release artifact and install-from-wheel verification.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "signed_release_provenance",
+      "current_scope": "release reproducibility boundary and code TODOs without signed provenance",
+      "maturity_surface": "release artifacts, package metadata, source hygiene, and install verification",
+      "missing_readiness": "signed release provenance and install-from-wheel/index verification",
+      "readiness_status": "unsigned_release_reproducibility_boundary_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/release_artifact_reproducibility_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/config_validation_boundary.json"
+        }
+      ],
+      "validation_gate": "signed release provenance gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "cross-platform CI policy",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track CI workflow coverage separately from local validation commands.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "cross_platform_ci_policy",
+      "current_scope": "path-scoped CI workflow coverage boundary plus local validation commands",
+      "maturity_surface": "GitHub Actions, local validation, integration tests, paper/docs checks, and branch policy",
+      "missing_readiness": "cross-platform CI policy covering code, docs, papers, release, integration, and local-PDF gates",
+      "readiness_status": "path_scoped_ci_without_cross_platform_policy",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/ci_workflow_coverage_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/provider_diagnostics_replay_boundary.json"
+        }
+      ],
+      "validation_gate": "cross-platform CI policy gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner signoff preventing",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "operationally mature",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "owner_review_signoff",
+      "current_scope": "no owner-reviewed maturity signoff record",
+      "maturity_surface": "owner-reviewed operational readiness decision and release/policy exceptions",
+      "missing_readiness": "owner signoff preventing one green release or CI boundary from being mistaken for maturity",
+      "readiness_status": "no_owner_review_signoff",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_operational_maturity_boundary.json"
+        }
+      ],
+      "validation_gate": "owner-reviewed operational-readiness signoff"
+    }
+  ],
+  "readiness_criterion_count": 6,
+  "required_evidence_fields": [
+    "global_acceptance_threshold",
+    "unified_generated_artifact_lifecycle_inventory",
+    "semantic_docs_verification",
+    "signed_release_provenance",
+    "cross_platform_ci_policy",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_operational_readiness_boundary.v1",
+  "sidecar_ref_count": 12,
+  "source_active_todo_ref_count": 10,
+  "source_criterion_count": 6,
+  "source_operational_boundary_input": "papers/roadmap_operational_maturity_boundary.json"
+}

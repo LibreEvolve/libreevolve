@@ -287,13 +287,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/roadmap_operational_maturity_boundary.json` now records six
     section-level criteria with risk classes, current sidecar refs, active TODO
     refs, and acceptance-gate labels.
-  - Current gap: the sidecar is a bounded criteria map, not an operational
-    readiness gate. There is still no global acceptance threshold, unified
+    `papers/roadmap_operational_readiness_boundary.json` now records a six-
+    criterion readiness matrix for the global acceptance threshold, unified
     generated-artifact lifecycle inventory, semantic docs verification, signed
-    release provenance, cross-platform CI policy, or owner signoff preventing
-    one green release/CI boundary from being mistaken for overall operational
-    readiness.
-  - Required result: add ROADMAP operational-maturity criteria that classify
+    release provenance, cross-platform CI policy, and owner review signoff.
+  - Current gap: the sidecars are bounded criteria and readiness maps, not an
+    operational readiness gate. There is still no implemented global
+    acceptance threshold, unified generated-artifact lifecycle inventory,
+    semantic docs verification, signed release provenance, cross-platform CI
+    policy, or owner signoff preventing one green release/CI boundary from
+    being mistaken for overall operational readiness.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: global acceptance threshold, unified generated-artifact lifecycle
+    inventory, semantic docs verification, signed release provenance,
+    cross-platform CI policy, and owner review signoff. The gate must classify
     required validation, packaging, observability, reproducibility, CI, release,
     run-artifact lifecycle, and policy evidence; map each criterion to
     code/tests/sidecars/TODOs; and reject claims that the project is

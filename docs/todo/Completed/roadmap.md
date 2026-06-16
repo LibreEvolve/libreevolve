@@ -15192,3 +15192,21 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: semantic claim inventory, per-bullet evidence
     mapping, stale-priority detection, and generated alignment reports remain
     active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP representative-benchmark portfolio map.
+  - Spec evidence: AlphaEvolve-alignment planning needs ROADMAP representative
+    benchmarks to be evaluated as a portfolio across domain mix, validator
+    strength, baselines, repeated-run evidence, anti-gaming evidence, artifact
+    outputs, and smoke-fixture guardrails.
+  - Status: `papers/roadmap_representative_benchmark_portfolio_boundary.json`
+    now records five portfolio families spanning sorting-network
+    rediscovery, matrix tensor targets, constructive-math geometry,
+    systems/kernel/scheduling work, and smoke-fixture guardrails, with domains,
+    validator-strength labels, current sidecar refs, active TODO refs,
+    baseline/SOTA target labels, artifact-output requirements, and
+    readiness-status labels. The paper-manifest gate now requires and validates
+    the sidecar at the repo root.
+  - Remaining roadmap gap: domain-coverage matrix, benchmark admission
+    checklist, repeated-seed run matrix, anti-gaming certification,
+    SOTA/baseline citation sufficiency proof, portfolio-balance score, CI
+    freshness gate, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

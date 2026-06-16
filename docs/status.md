@@ -1269,6 +1269,7 @@ Important limits:
   `papers/roadmap_good_first_followups_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
   `papers/roadmap_operational_maturity_boundary.json`,
+  `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1293,6 +1294,15 @@ Important limits:
   refs, validation-gate labels, and promotion criteria. This is not a full
   dependency graph, stale-phase detector, promotion/demotion workflow, CI
   phase freshness gate, or owner review signoff.
+- ROADMAP representative-benchmark portfolio evidence now records five
+  portfolio families spanning sorting-network rediscovery, matrix tensor
+  targets, constructive-math geometry, systems/kernel/scheduling work, and
+  smoke-fixture guardrails, with domains, validator-strength labels, current
+  sidecar refs, active TODO refs, baseline/SOTA target labels, artifact-output
+  requirements, and readiness-status labels. This is not a domain-coverage
+  matrix, benchmark admission checklist, repeated-seed run matrix, anti-gaming
+  certification, SOTA/baseline citation sufficiency proof, portfolio-balance
+  score, CI freshness gate, or owner review signoff.
 - ROADMAP operational-maturity evidence now records six section-level criteria
   with risk classes, current sidecar refs, active TODO refs, and
   acceptance-gate labels. This is not a global acceptance threshold, unified

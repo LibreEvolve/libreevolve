@@ -267,12 +267,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     constructive math, and systems/kernel candidates, and
     `papers/example_benchmark_scope.json` plus
     `runtime.history.benchmark_fixture_readiness_report` preserve the current
-    smoke-boundary evidence.
-  - Current gap: there is no portfolio-level readiness rubric,
-    domain-coverage matrix, benchmark admission checklist, or stale-coverage
-    detector proving the representative-benchmark list is balanced, feasible,
-    non-duplicative, and strong enough to support AlphaEvolve-style claims once
-    individual fixtures improve.
+    smoke-boundary evidence. The bounded
+    `papers/roadmap_representative_benchmark_portfolio_boundary.json` sidecar
+    now records five portfolio families, domains, validator-strength labels,
+    current sidecar refs, active TODO refs, baseline/SOTA target labels,
+    artifact-output requirements, and readiness-status labels.
+  - Current gap: there is no domain-coverage matrix, benchmark admission
+    checklist, repeated-seed run matrix, anti-gaming certification,
+    SOTA/baseline citation sufficiency proof, portfolio-balance score,
+    stale-coverage detector, CI freshness gate, or owner signoff proving the
+    representative-benchmark list is balanced, feasible, non-duplicative, and
+    strong enough to support AlphaEvolve-style claims once individual fixtures
+    improve.
   - Required result: add a ROADMAP benchmark-portfolio evidence map that
     classifies candidate benchmark families by domain, validator strength,
     baseline/SOTA target, repeated-run/certification needs, anti-gaming

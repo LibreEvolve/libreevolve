@@ -2897,6 +2897,14 @@ Implemented:
   evidence of a global acceptance threshold, unified run-artifact lifecycle
   inventory, semantic docs verification, signed release provenance,
   cross-platform CI policy, or owner review signoff.
+- `papers/roadmap_representative_benchmark_portfolio_boundary.json`: ROADMAP
+  representative-benchmark portfolio sidecar with five portfolio families,
+  domains, validator-strength labels, current sidecar refs, active TODO refs,
+  baseline/SOTA target labels, artifact-output requirements, and
+  readiness-status labels. It is not evidence of a domain-coverage matrix,
+  benchmark admission checklist, repeated-seed run matrix, anti-gaming
+  certification, SOTA/baseline citation sufficiency proof, portfolio-balance
+  score, CI freshness gate, or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

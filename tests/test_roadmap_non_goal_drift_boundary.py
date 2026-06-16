@@ -26,7 +26,7 @@ def test_roadmap_non_goal_drift_accepts_bounded_readiness_matrix():
     assert boundary["source_constrained_surface_count"] == 9
     assert boundary["source_contradiction_count"] == 0
     assert boundary["criterion_count"] == 7
-    assert boundary["sidecar_ref_count"] == 16
+    assert boundary["sidecar_ref_count"] == 17
     assert boundary["active_todo_ref_count"] == 14
     assert [record["criterion_id"] for record in boundary["readiness_criteria"]] == [
         "runtime_metadata_scan",
@@ -48,7 +48,6 @@ def test_roadmap_non_goal_drift_accepts_bounded_readiness_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "runtime_metadata_scan": "not_recorded_locally",
         "ci_non_goal_promotion_gate": "not_recorded_locally",
         "intentional_promotion_workflow": "not_recorded_locally",
         "claim_surface_remediation": "not_recorded_locally",
@@ -56,7 +55,7 @@ def test_roadmap_non_goal_drift_accepts_bounded_readiness_matrix():
         "owner_review_signoff": "not_recorded_locally",
     }
     assert (
-        "Markdown corpus and plugin docstring scans are recorded separately"
+        "runtime metadata, Markdown corpus, and plugin docstring scans"
         in boundary["claim_boundary"]
     )
 
@@ -94,6 +93,6 @@ def test_render_roadmap_non_goal_drift_summary_reports_shape():
         in summary
     )
     assert "| criterion_count | 7 |" in summary
-    assert "| sidecar_ref_count | 16 |" in summary
+    assert "| sidecar_ref_count | 17 |" in summary
     assert "| active_todo_ref_count | 14 |" in summary
-    assert "| missing_evidence_count | 6 |" in summary
+    assert "| missing_evidence_count | 5 |" in summary

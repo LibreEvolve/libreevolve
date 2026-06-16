@@ -1281,6 +1281,7 @@ Important limits:
   `papers/roadmap_non_goal_drift_boundary.json`,
   `papers/roadmap_non_goal_markdown_scan_boundary.json`,
   `papers/roadmap_non_goal_plugin_docstring_boundary.json`,
+  `papers/roadmap_non_goal_runtime_metadata_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
   `papers/roadmap_good_first_freshness_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
@@ -1366,8 +1367,8 @@ Important limits:
   runtime metadata scans, plugin docstring scans, exhaustive Markdown corpus
   scans, CI non-goal promotion gates, intentional-promotion workflow,
   contradiction remediation, and joined runtime/plugin/docs/paper scope maps.
-  The Markdown corpus and plugin docstring scans are recorded separately, but
-  this is not implemented runtime scanning, CI promotion enforcement, an
+  The runtime metadata, Markdown corpus, and plugin docstring scans are
+  recorded separately, but this is not CI promotion enforcement, an
   intentional-promotion workflow, contradiction remediation, a joined scope
   verifier, or owner review signoff.
 - ROADMAP non-goal Markdown scan evidence now records the repository Markdown
@@ -1383,6 +1384,14 @@ Important limits:
   paper-inspired built-ins. This is not runtime metadata scanning, CI promotion
   enforcement, intentional-promotion workflow, joined runtime/plugin/docs/paper
   scope proof, or owner-reviewed remediation readiness.
+- ROADMAP non-goal runtime metadata scan evidence now records source-defined
+  runtime metadata surfaces for startup manifest plugin/config fields,
+  candidate-language runner policy, runtime plugin state, runtime plugin
+  artifact metadata, and built-in plugin registry paper-inspiration labels. It
+  records zero missing safe-scope phrases and zero contradictory support-claim
+  hits at the repo root. This is not CI promotion enforcement,
+  intentional-promotion workflow, joined runtime/plugin/docs/paper scope proof,
+  or owner-reviewed remediation readiness.
 - ROADMAP Good First Follow-Ups evidence now records the four current priority
   items with stable ids, active TODO refs, priority rationale,
   dependency-readiness labels, validation gates, and AlphaEvolve impact labels.

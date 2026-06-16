@@ -1,0 +1,189 @@
+{
+  "boundary_status": "runtime_metadata_scan_without_ci_or_promotion_gate",
+  "builtin_plugin_registry_count": 4,
+  "builtin_plugin_registry_records": [
+    {
+      "label": "causal",
+      "option_names": [
+        "history_limit"
+      ],
+      "paper_inspiration": "CausalEvolve",
+      "plugin_class": "CausalPlugin",
+      "plugin_module": "libreevolve.plugins.causal"
+    },
+    {
+      "label": "deep_research",
+      "option_names": [
+        "cache_dir",
+        "cache_mode",
+        "max_events",
+        "retrieval_body_retention_mode",
+        "search_every",
+        "source_ranking_policy"
+      ],
+      "paper_inspiration": "DeepEvolve",
+      "plugin_class": "DeepResearchPlugin",
+      "plugin_module": "libreevolve.plugins.deep_research"
+    },
+    {
+      "label": "modular",
+      "option_names": [],
+      "paper_inspiration": "ImprovEvolve",
+      "plugin_class": "ModularPlugin",
+      "plugin_module": "libreevolve.plugins.modular"
+    },
+    {
+      "label": "ttt_rl",
+      "option_names": [
+        "log_dir",
+        "max_payload_field_chars",
+        "max_payload_total_chars",
+        "max_retained_examples",
+        "train_every"
+      ],
+      "paper_inspiration": "ThetaEvolve",
+      "plugin_class": "TTTRLPlugin",
+      "plugin_module": "libreevolve.plugins.ttt_rl"
+    }
+  ],
+  "claim_boundary": "This boundary scans source-defined runtime metadata surfaces for ROADMAP non-goal support-claim contradictions: startup manifest config fields, candidate language runner policy, runtime plugin state, runtime plugin artifact metadata, and built-in plugin registry paper-inspiration labels. It does not claim CI promotion enforcement, an intentional promotion workflow, joined runtime/plugin/docs/paper scope proof, or owner-reviewed remediation readiness.",
+  "claim_ready": false,
+  "contradiction_count": 0,
+  "contradiction_records": [],
+  "forbidden_phrase_count": 10,
+  "missing_evidence": {
+    "ci_non_goal_promotion_gate": "not_recorded_locally",
+    "claim_surface_remediation": "not_recorded_locally",
+    "intentional_promotion_workflow": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "runtime_plugin_scope_join": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "stable_non_goal_ids",
+    "runtime_metadata_source_inventory",
+    "startup_manifest_config_scan",
+    "candidate_language_policy_scan",
+    "runtime_plugin_state_scan",
+    "runtime_plugin_artifacts_scan",
+    "builtin_plugin_registry_metadata_scan",
+    "forbidden_support_claim_phrase_scan",
+    "ci_non_goal_promotion_gate",
+    "intentional_promotion_workflow",
+    "claim_surface_remediation",
+    "runtime_plugin_scope_join",
+    "owner_review_signoff"
+  ],
+  "runtime_metadata_path_count": 13,
+  "runtime_surface_count": 4,
+  "runtime_surface_records": [
+    {
+      "forbidden_support_claim_hit_records": [],
+      "missing_safe_phrase_records": [],
+      "path": "libreevolve/core/database.py",
+      "present_safe_phrases": [
+        "\"plugins\": config.plugins",
+        "\"candidate_language_runners\": list(config.candidate_language_runners)",
+        "\"candidate_build_systems\": list(config.candidate_build_systems)",
+        "\"arbitrary_language_runners\": \"unsupported\"",
+        "\"build_system_runners\": \"unsupported\"",
+        "\"declaration_scope\": \"manifest_metadata_only_not_executed\"",
+        "\"language_runner_ready\": False"
+      ],
+      "required_safe_phrases": [
+        "\"plugins\": config.plugins",
+        "\"candidate_language_runners\": list(config.candidate_language_runners)",
+        "\"candidate_build_systems\": list(config.candidate_build_systems)",
+        "\"arbitrary_language_runners\": \"unsupported\"",
+        "\"build_system_runners\": \"unsupported\"",
+        "\"declaration_scope\": \"manifest_metadata_only_not_executed\"",
+        "\"language_runner_ready\": False"
+      ],
+      "runtime_metadata_paths": [
+        "config.plugins",
+        "config.candidate_language_runners",
+        "config.candidate_build_systems",
+        "policies.candidate_language"
+      ],
+      "source_status": "present",
+      "surface_id": "startup_manifest_config_plugins"
+    },
+    {
+      "forbidden_support_claim_hit_records": [],
+      "missing_safe_phrase_records": [],
+      "path": "libreevolve/core/loop.py",
+      "present_safe_phrases": [
+        "runtime[\"plugin_state\"] = _runtime_plugin_state",
+        "\"loaded_specs\": loaded_specs",
+        "\"paper_scope_policy\": paper_scope_policy",
+        "\"core_resolves_config_plugins\": core_resolves_config_plugins"
+      ],
+      "required_safe_phrases": [
+        "runtime[\"plugin_state\"] = _runtime_plugin_state",
+        "\"loaded_specs\": loaded_specs",
+        "\"paper_scope_policy\": paper_scope_policy",
+        "\"core_resolves_config_plugins\": core_resolves_config_plugins"
+      ],
+      "runtime_metadata_paths": [
+        "runtime.plugin_state",
+        "runtime.plugin_state.loaded_specs",
+        "runtime.plugin_state.core_resolves_config_plugins"
+      ],
+      "source_status": "present",
+      "surface_id": "runtime_plugin_state"
+    },
+    {
+      "forbidden_support_claim_hit_records": [],
+      "missing_safe_phrase_records": [],
+      "path": "libreevolve/core/loop.py",
+      "present_safe_phrases": [
+        "runtime[\"plugin_artifacts\"] = plugin_artifacts",
+        "runtime[\"plugin_artifact_failures\"] = plugin_artifact_failures",
+        "\"hook\": \"run_artifacts_metadata\"",
+        "\"policy\": \"recorded_during_abort_finalization\""
+      ],
+      "required_safe_phrases": [
+        "runtime[\"plugin_artifacts\"] = plugin_artifacts",
+        "runtime[\"plugin_artifact_failures\"] = plugin_artifact_failures",
+        "\"hook\": \"run_artifacts_metadata\"",
+        "\"policy\": \"recorded_during_abort_finalization\""
+      ],
+      "runtime_metadata_paths": [
+        "runtime.plugin_artifacts",
+        "runtime.plugin_artifact_failures",
+        "plugin.run_artifacts_metadata"
+      ],
+      "source_status": "present",
+      "surface_id": "runtime_plugin_artifacts"
+    },
+    {
+      "forbidden_support_claim_hit_records": [],
+      "missing_safe_phrase_records": [],
+      "path": "libreevolve/plugins/registry.py",
+      "present_safe_phrases": [
+        "paper_inspiration: str",
+        "\"paper_inspiration\": definition.paper_inspiration",
+        "\"paper_inspiration\": entry_point[\"paper_inspiration\"]",
+        "\"external_plugin_entry_point\""
+      ],
+      "required_safe_phrases": [
+        "paper_inspiration: str",
+        "\"paper_inspiration\": definition.paper_inspiration",
+        "\"paper_inspiration\": entry_point[\"paper_inspiration\"]",
+        "\"external_plugin_entry_point\""
+      ],
+      "runtime_metadata_paths": [
+        "builtin_plugin_registry.*.paper_inspiration",
+        "validate_plugin_spec.paper_inspiration",
+        "entry_point.paper_inspiration"
+      ],
+      "source_status": "present",
+      "surface_id": "builtin_plugin_registry"
+    }
+  ],
+  "safe_phrase_missing_count": 0,
+  "safe_phrase_missing_records": [],
+  "schema": "libreevolve.roadmap_non_goal_runtime_metadata_boundary.v1",
+  "source_missing_count": 0,
+  "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",
+  "source_non_goal_count": 3
+}

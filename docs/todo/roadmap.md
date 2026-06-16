@@ -211,20 +211,25 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     paper-inspiration labels for faithful-implementation overclaims, with zero
     detected faithful-claim hits and no missing non-faithful disclaimers for
     the paper-inspired built-ins.
+    `papers/roadmap_non_goal_runtime_metadata_boundary.json` now scans
+    source-defined runtime metadata surfaces for startup manifest plugin/config
+    fields, candidate-language runner policy, runtime plugin state, runtime
+    plugin artifact metadata, and built-in plugin registry paper-inspiration
+    labels, with zero contradictory support-claim hits.
   - Current gap: the sidecars are bounded documentation and readiness
-    inventories plus Markdown and plugin-source phrase scans, not a full
-    runtime contradiction detector or promotion gate. There is still no
-    implemented runtime metadata scan, CI promotion gate, intentional-promotion
-    workflow, contradiction-remediation report, runtime/plugin/docs/paper scope
-    join, or owner review signoff proving future ROADMAP edits cannot
-    accidentally promote a non-goal into a supported AlphaEvolve-parity claim.
+    inventories plus runtime, Markdown, and plugin-source phrase scans, not a
+    full promotion gate. There is still no implemented CI promotion gate,
+    intentional-promotion workflow, contradiction-remediation report,
+    runtime/plugin/docs/paper scope join, or owner review signoff proving
+    future ROADMAP edits cannot accidentally promote a non-goal into a
+    supported AlphaEvolve-parity claim.
   - Required result: implement the missing readiness fields recorded by the
-    sidecars: runtime metadata scan, CI promotion gate, intentional promotion
-    workflow, contradiction-remediation report that rejects contradictory
-    support claims, code/docs/paper surfaces plus runtime/plugin scope join,
-    and owner review signoff. The workflow must update ROADMAP/TODO evidence
-    whenever a non-goal is completed, removed, or intentionally promoted into
-    active implementation work.
+    sidecars: CI promotion gate, intentional promotion workflow,
+    contradiction-remediation report that rejects contradictory support claims,
+    code/docs/paper surfaces plus runtime/plugin scope join, and owner review
+    signoff. The workflow must update ROADMAP/TODO evidence whenever a
+    non-goal is completed, removed, or intentionally promoted into active
+    implementation work.
 
 - [ ] Add ROADMAP Good First Follow-Ups priority freshness evidence.
   - Spec evidence: the `Good First Follow-Ups` section is a prioritization

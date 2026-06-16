@@ -28,7 +28,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "runtime_metadata_scan": "not_recorded_locally",
     "ci_non_goal_promotion_gate": "not_recorded_locally",
     "intentional_promotion_workflow": "not_recorded_locally",
     "claim_surface_remediation": "not_recorded_locally",
@@ -46,6 +45,7 @@ CRITERION_SPECS = (
         "sidecars": (
             "papers/roadmap_non_goal_contradiction_boundary.json",
             "papers/status_claim_inventory.json",
+            "papers/roadmap_non_goal_runtime_metadata_boundary.json",
         ),
         "active_todos": (
             {
@@ -58,7 +58,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "runtime metadata contradiction scan tied to stable non-goal ids",
-        "readiness_status": "documentation_surface_inventory_only",
+        "readiness_status": "runtime_metadata_scan_recorded_without_promotion_gate",
     },
     {
         "criterion_id": "plugin_docstring_scan",
@@ -239,10 +239,10 @@ def roadmap_non_goal_drift_boundary_record(root: str | Path = ".") -> dict[str, 
         "claim_boundary": (
             "This boundary records a non-goal drift and promotion readiness "
             "matrix tied to the bounded ROADMAP non-goal contradiction "
-            "inventory. The Markdown corpus and plugin docstring scans are "
-            "recorded separately, but this boundary does not claim runtime "
-            "metadata scanning, CI promotion enforcement, an intentional "
-            "promotion workflow, or owner-reviewed remediation readiness."
+            "inventory. The runtime metadata, Markdown corpus, and plugin "
+            "docstring scans are recorded separately, but this boundary does "
+            "not claim CI promotion enforcement, an intentional promotion "
+            "workflow, or owner-reviewed remediation readiness."
         ),
     }
 
@@ -287,8 +287,8 @@ def validate_roadmap_non_goal_drift_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "Markdown corpus and plugin docstring scans are recorded separately" not in boundary_text
-        or "does not claim runtime metadata scanning" not in boundary_text
+        or "runtime metadata, Markdown corpus, and plugin docstring scans" not in boundary_text
+        or "does not claim CI promotion enforcement" not in boundary_text
         or "CI promotion enforcement" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from full drift/promotion enforcement"))

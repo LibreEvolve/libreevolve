@@ -15727,3 +15727,19 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     intentional non-goal promotion workflow, contradiction-remediation
     reporting, runtime/plugin/docs/paper scope joins, and owner review signoff
     remain active in `docs/todo/roadmap.md`.
+- [x] Add ROADMAP non-goal runtime metadata scan.
+  - Spec evidence: ROADMAP non-goals must also be protected where runtime
+    manifests, plugin state, plugin artifacts, and registry metadata describe
+    supported capabilities.
+  - Status: `papers/roadmap_non_goal_runtime_metadata_boundary.json` now
+    records source-defined runtime metadata surfaces for startup manifest
+    plugin/config fields, candidate-language runner policy, runtime plugin
+    state, runtime plugin artifact metadata, and built-in plugin registry
+    paper-inspiration labels. It records required safe-scope phrases, zero
+    missing safe phrases at the repo root, and zero contradictory support-claim
+    hits. The paper-manifest gate now requires and validates the sidecar at
+    the repo root.
+  - Remaining roadmap gap: CI promotion enforcement, intentional non-goal
+    promotion workflow, contradiction-remediation reporting,
+    runtime/plugin/docs/paper scope joins, and owner review signoff remain
+    active in `docs/todo/roadmap.md`.

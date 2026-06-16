@@ -3631,19 +3631,19 @@
       "active_ledger_completed_marker_count": 0,
       "active_ledger_exists": true,
       "active_path": "docs/todo/roadmap.md",
-      "completed_count": 1189,
+      "completed_count": 1190,
       "completed_ledger_active_marker_count": 0,
       "completed_ledger_exists": true,
       "completed_path": "docs/todo/Completed/roadmap.md",
       "owner_id": "roadmap",
       "owner_scope": "planning_priority_and_phase_evidence",
-      "total_count": 1205
+      "total_count": 1206
     }
   ],
   "raw_todo_ledger_active_count": 506,
-  "raw_todo_ledger_completed_count": 4663,
-  "raw_todo_ledger_completion_percent": 90.211,
-  "raw_todo_ledger_total_count": 5169,
+  "raw_todo_ledger_completed_count": 4664,
+  "raw_todo_ledger_completion_percent": 90.213,
+  "raw_todo_ledger_total_count": 5170,
   "required_evidence_fields": [
     "ledger_owner_inventory",
     "active_completed_marker_policy",

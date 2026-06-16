@@ -179,6 +179,10 @@ from libreevolve.problems.benchmarks.documentation_truthfulness_boundary import 
     documentation_truthfulness_boundary_record,
     validate_documentation_truthfulness_boundary,
 )
+from libreevolve.problems.benchmarks.tracked_legacy_surface_boundary import (
+    tracked_legacy_surface_boundary_record,
+    validate_tracked_legacy_surface_boundary,
+)
 from libreevolve.problems.benchmarks.documentation_claim_inventory import (
     documentation_claim_inventory_record,
     validate_documentation_claim_inventory,
@@ -917,6 +921,7 @@ CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.j
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
 STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_boundary.json"
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
+TRACKED_LEGACY_SURFACE_BOUNDARY_FILE = "papers/tracked_legacy_surface_boundary.json"
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 ROADMAP_READINESS_BOUNDARY_FILE = "papers/roadmap_readiness_boundary.json"
 ROADMAP_READINESS_PUBLICATION_BOUNDARY_FILE = "papers/roadmap_readiness_publication_boundary.json"
@@ -1620,6 +1625,7 @@ def validate_paper_manifest(
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
     issues.extend(_validate_stochastic_prompt_format_boundary(root_path))
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
+    issues.extend(_validate_tracked_legacy_surface_boundary(root_path))
     issues.extend(_validate_documentation_claim_inventory(root_path))
     issues.extend(_validate_roadmap_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_readiness_publication_boundary(root_path))
@@ -4168,6 +4174,38 @@ def _validate_documentation_truthfulness_boundary(root_path: Path) -> list[Paper
             f"documentation_truthfulness_boundary_{issue.code}",
             issue.message,
             "documentation_truthfulness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_tracked_legacy_surface_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / TRACKED_LEGACY_SURFACE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = tracked_legacy_surface_boundary_record(root_path)
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "tracked_legacy_surface_boundary_manifest_missing",
+                    (
+                        f"{TRACKED_LEGACY_SURFACE_BOUNDARY_FILE} must emit "
+                        "tracked old/** archival surface classification metadata"
+                    ),
+                    "tracked_legacy_surface",
+                )
+            ]
+    report = validate_tracked_legacy_surface_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"tracked_legacy_surface_boundary_{issue.code}",
+            issue.message,
+            "tracked_legacy_surface",
         )
         for issue in report.issues
     ]

@@ -1,5 +1,11 @@
 # LibreEvolve Implementation Plan
 
+> Historical archive: this tracked plan is non-authoritative and is not current
+> LibreEvolve implementation evidence. It is retained only as historical
+> planning context; use the root README, `docs/`, `ROADMAP.md`, `papers/`, and
+> `docs/todo/` for current project behavior, AlphaEvolve-alignment status, and
+> active work.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build LibreEvolve — an independent Python research platform for LLM-guided evolutionary program discovery, inspired by AlphaEvolve, autoresearch, and 23 related papers.

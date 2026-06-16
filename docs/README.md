@@ -48,6 +48,9 @@ paper/source status and claim boundaries.
   [status.md](./status.md).
 - Long-term status belongs in `ROADMAP.md` and `docs/todo/`.
 - Paper-derived claims belong in `papers/README.md` and validated JSON sidecars.
+- Tracked material under `old/` is archival and non-authoritative. It is not a
+  source of current implementation evidence unless a current README, docs,
+  ROADMAP, paper sidecar, or TODO entry explicitly promotes a specific item.
 - AlphaEvolve-alignment cleanup is a whole-documentation task. When a claim is
   tightened or a missing feature is identified, check the root README,
   operational guides, `docs/status.md`, `ROADMAP.md`, `papers/README.md`, paper

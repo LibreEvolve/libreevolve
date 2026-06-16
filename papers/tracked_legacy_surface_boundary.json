@@ -1,0 +1,48 @@
+{
+  "schema": "libreevolve.tracked_legacy_surface_boundary.v1",
+  "boundary_status": "tracked_legacy_surface_inventory_without_owner_review_signoff",
+  "claim_ready": false,
+  "legacy_root": "old",
+  "workflow_path": ".github/workflows/tests.yml",
+  "readme_path": "README.md",
+  "docs_readme_path": "docs/README.md",
+  "legacy_surface_count": 1,
+  "archival_surface_count": 1,
+  "missing_route_count": 0,
+  "missing_route_records": [],
+  "legacy_surface_records": [
+    {
+      "path": "old/superpowers/plans/2026-03-17-alphaevolve.md",
+      "exists": true,
+      "classification": "archival_non_authoritative",
+      "classification_reason": "tracked historical implementation plan with obsolete alphaevolve/* paths and checkbox task steps; retained for context, not current evidence",
+      "first_heading": "LibreEvolve Implementation Plan",
+      "byte_count": 78972,
+      "sha256": "a0e0eed841921685c13482f05d6516afcd88be8003dcea5bc4ba474388a80ae7",
+      "obsolete_alphaevolve_path_count": 113,
+      "legacy_checkbox_count": 93,
+      "self_classification_status": "self_classified_archival",
+      "readme_route_status": "archival_route_present",
+      "docs_readme_route_status": "archival_route_present",
+      "routing_status": "legacy_surface_routed_as_archival",
+      "ci_path_filter_status": "legacy_path_filter_present",
+      "implementation_evidence_status": "not_current_implementation_evidence"
+    }
+  ],
+  "required_evidence_fields": [
+    "tracked_old_markdown_inventory",
+    "archival_classification",
+    "self_classification_banner",
+    "obsolete_package_path_detection",
+    "legacy_plan_checkbox_detection",
+    "readme_repository_layout_routing",
+    "docs_readme_boundary_routing",
+    "ci_path_filter_policy",
+    "paper_manifest_validation",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records tracked old/** Markdown planning surfaces, their archival non-authoritative classification, self-classification banners, obsolete alphaevolve/* package-path signals, legacy checkbox plan signals, README/docs routing, and old/** GitHub Actions path filter coverage. It does not claim owner review signoff or that archival plans are implementation evidence."
+}

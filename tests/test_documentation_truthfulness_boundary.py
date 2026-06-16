@@ -16,16 +16,17 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
         validation.boundary_status
         == "cross_document_guards_without_semantic_claim_proof"
     )
-    assert validation.required_evidence_field_count == 19
+    assert validation.required_evidence_field_count == 20
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert "documentation_claim_inventory" in boundary["required_evidence_fields"]
+    assert "tracked_legacy_surface_inventory" in boundary["required_evidence_fields"]
     assert (
         "does not claim semantic documentation-claim verification"
         in boundary["claim_boundary"]
     )
-    assert "top-level README/ROADMAP claim inventory" in boundary["claim_boundary"]
+    assert "tracked legacy-surface inventory" in boundary["claim_boundary"]
 
 
 def test_documentation_truthfulness_boundary_rejects_semantic_proof_overclaim():
@@ -56,5 +57,5 @@ def test_render_documentation_truthfulness_boundary_summary_reports_shape():
         "| boundary_status | cross_document_guards_without_semantic_claim_proof |"
         in summary
     )
-    assert "| required_evidence_field_count | 19 |" in summary
+    assert "| required_evidence_field_count | 20 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

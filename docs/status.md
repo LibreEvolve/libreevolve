@@ -1312,8 +1312,15 @@ Important limits:
   `papers/roadmap_candidate_workspace_readiness_boundary.json`,
   `papers/roadmap_multi_objective_search_boundary.json`,
   `papers/roadmap_multi_objective_readiness_boundary.json`,
-  `papers/documentation_truthfulness_boundary.json` and
+  `papers/documentation_truthfulness_boundary.json`,
+  `papers/tracked_legacy_surface_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
+- Tracked legacy-surface evidence now records the committed `old/**`
+  Markdown planning inventory, archival/non-authoritative self-
+  classification, obsolete `alphaevolve/*` path signals, legacy checkbox plan
+  signals, README/docs routing, and `old/**` CI path-filter coverage. This is
+  not owner review signoff for archival retention and not evidence that
+  archival plans are current implementation evidence.
 - ROADMAP claim-evidence mapping now records six claim surfaces for the
   ROADMAP scope preamble, current-state bullet inventory, implementation
   evidence links, good-first priority claims, cross-document claim sync, and

@@ -2843,6 +2843,13 @@ Implemented:
   complete implementation-evidence mapping, stale completed-entry detection,
   generated alignment reports, or full proof that every AlphaEvolve-facing
   claim is current.
+- `papers/tracked_legacy_surface_boundary.json`: tracked legacy-surface
+  sidecar for `old/**` planning material. It records the committed legacy
+  Markdown inventory, archival/non-authoritative classification, self-
+  classification banner, obsolete `alphaevolve/*` path signals, legacy
+  checkbox-plan signals, README/docs routing, and `old/**` GitHub Actions
+  path-filter coverage. It is not owner review signoff or evidence that
+  archival plans are current implementation evidence.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

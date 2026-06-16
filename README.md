@@ -214,7 +214,8 @@ streams, restore behavior, and inspection details.
 The docs are split by purpose. Setup and first-run usage belongs here;
 operational details belong in `docs/`; paper-derived claim evidence belongs in
 `papers/`; active and completed gap tracking belongs in `docs/todo/` and
-`ROADMAP.md`.
+`ROADMAP.md`. Tracked material under `old/` is archival and non-authoritative;
+it is retained for historical context, not current implementation evidence.
 
 ## Research Sources
 
@@ -266,6 +267,7 @@ libreevolve/
   tools/         paper/source manifest validation
 docs/            architecture, configuration, backend, plugin, and artifact docs
 papers/          tracked manifests plus ignored PDF cache and retained source artifacts
+old/             archival, non-authoritative historical planning material
 runs/            gitignored run outputs
 tests/           unit and integration tests
 ```

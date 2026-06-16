@@ -96,20 +96,22 @@ sidecars, tests, and active TODOs.
     `old/` as archival or non-authoritative. The GitHub workflow path filters
     run docs/tests for `docs/**`, `libreevolve/**`, `papers/**`, README,
     ROADMAP, package metadata, and tests, but not `old/**`.
-  - Current gap: there is no machine-readable inventory or validation rule
-    that classifies tracked legacy planning files under `old/` as archival,
-    non-authoritative, migrated, or intentionally retained. A future change to
-    that plan, or a reader following its obsolete `alphaevolve/*` file map,
-    could bypass documentation truthfulness checks and confuse historical
-    scaffold text with current LibreEvolve behavior or AlphaEvolve-alignment
-    evidence.
-  - Required result: add a tracked legacy-surface inventory and validation
-    gate that lists any committed `old/**` planning artifacts, records whether
-    each is archival/non-authoritative or still active, checks README/ROADMAP
-    routing for that status, and either includes policy-critical legacy
-    surfaces in CI path filters or explicitly excludes them with a documented
-    rationale. Remove or migrate stale implementation-plan text if it is not
-    meant to remain a repository evidence surface.
+  - Current evidence: `papers/tracked_legacy_surface_boundary.json` now
+    records the committed `old/superpowers/plans/2026-03-17-alphaevolve.md`
+    surface, its archival/non-authoritative classification, a self-
+    classification banner, obsolete `alphaevolve/*` package-path signal count,
+    legacy checkbox-plan signal count, README/docs routing, and `old/**`
+    GitHub Actions path-filter coverage. The root README and `docs/README.md`
+    route `old/` as archival, non-authoritative historical planning material.
+  - Current gap: the boundary is a tracked-surface inventory and routing gate,
+    not owner-reviewed evidence that every historical plan is still useful,
+    should remain tracked indefinitely, or has been fully migrated into the
+    current implementation/docs/TODO system.
+  - Required result: add owner review signoff for the archival-retention
+    decision, and if future `old/**` planning artifacts are added, require the
+    same self-classification, README/docs routing, CI path-filter coverage, and
+    migration/removal decision before treating them as governed repository
+    evidence surfaces.
 
 ## Candidate Workspace Fidelity
 

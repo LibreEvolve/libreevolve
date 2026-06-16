@@ -2892,6 +2892,16 @@ Implemented:
   figure/table/appendix/application-result matrix, complete paper-index row to
   ROADMAP disposition map, missing/partial TODO proof, or CI source-span
   exhaustiveness gate.
+- `papers/roadmap_source_span_coverage_boundary.json`: ROADMAP AlphaEvolve
+  source-span coverage sidecar with eight coverage surfaces for main-text
+  sections, figures, tables, Appendix A, Appendix B, application-result
+  claims, paper-status rows, and TODO/non-goal/phase proof. It records current
+  sidecar refs, active TODO refs, validation gates, readiness labels, core
+  anchor disposition counts, and paper-status row counts. It is not evidence
+  of an exhaustive PDF section walk, complete figure/table/appendix matrix,
+  complete application-result claim matrix, status-row to ROADMAP disposition
+  map, missing/partial TODO proof, non-goal decision map, phase-priority map,
+  CI source-span exhaustiveness gate, or owner review signoff.
 - `papers/roadmap_non_goal_contradiction_boundary.json`: ROADMAP non-goal
   contradiction sidecar with stable ids for the three current non-goals, nine
   constrained documentation surfaces, required safe-scope phrase checks, and

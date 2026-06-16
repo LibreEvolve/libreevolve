@@ -1267,6 +1267,7 @@ Important limits:
   `papers/roadmap_readiness_boundary.json`,
   `papers/roadmap_claim_evidence_boundary.json`,
   `papers/roadmap_source_span_disposition_boundary.json`,
+  `papers/roadmap_source_span_coverage_boundary.json`,
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
@@ -1309,6 +1310,17 @@ Important limits:
   53 paper-index rows with only the AlphaEvolve source row dispositioned by
   this core matrix. This is not an exhaustive retained-PDF section/figure/
   table/appendix/application-result coverage matrix.
+- ROADMAP source-span coverage evidence now records eight coverage surfaces
+  for main-text section walk, figure exhibits, table/capability rows, Appendix
+  A matrix targets, Appendix B constructive math, application-result claims,
+  paper-status row dispositions, and TODO/non-goal/phase proof. It links the
+  existing core source-span disposition input, paper-status row counts, sidecar
+  refs, active TODO refs, validation-gate labels, and readiness labels. This
+  is not an exhaustive PDF section walk, complete figure/table/appendix
+  matrix, complete application-result claim matrix, status-row to ROADMAP
+  disposition map, missing/partial TODO proof, non-goal decision map,
+  phase-priority map, CI source-span exhaustiveness gate, or owner review
+  signoff.
 - ROADMAP non-goal contradiction evidence now assigns stable ids to the three
   current ROADMAP non-goals, maps nine constrained documentation surfaces,
   validates required safe-scope phrases, and records zero exact forbidden

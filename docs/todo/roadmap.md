@@ -140,19 +140,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/README.md` and the Appendix A/B registries provide many
     source-specific status rows, but those records are not an exhaustive
     ROADMAP coverage proof.
-  - Current gap: there is no exhaustive ROADMAP-level matrix that walks the
-    retained AlphaEvolve source PDF by section, figure, table, appendix,
-    benchmark family, and application-result claim; classifies each span as
-    implemented, partially implemented, missing, background-only, or non-goal;
-    and proves that every missing or partial span has a linked code/paper/
-    README TODO or ROADMAP priority. There is also no detector for
-    AlphaEvolve source spans beyond the current six core anchors, or for all
-    paper/status sidecar rows, that have no roadmap disposition.
-  - Required result: add a source-span disposition matrix for the ROADMAP that
-    links AlphaEvolve sections, figures, tables, appendices, and application
-    claims to implementation status, evidence artifacts, active TODO anchors,
-    non-goal decisions, and phase priority; validate it in CI or the paper
-    manifest so new source-span evidence cannot remain unroadmapped.
+    `papers/roadmap_source_span_coverage_boundary.json` now records a
+    ROADMAP-level coverage readiness matrix for main-text sections, figures,
+    tables, Appendix A, Appendix B, application-result claims, paper-status
+    rows, and TODO/non-goal/phase proof.
+  - Current gap: the coverage sidecar is a bounded readiness matrix, not an
+    exhaustive ROADMAP-level matrix that walks the retained AlphaEvolve source
+    PDF by section, figure, table, appendix, benchmark family, and
+    application-result claim. It does not classify each span as implemented,
+    partially implemented, missing, background-only, or non-goal, and it does
+    not prove that every missing or partial span has a linked code/paper/README
+    TODO or ROADMAP priority. There is also no detector for AlphaEvolve source
+    spans beyond the current six core anchors, or for all paper/status sidecar
+    rows, that have no roadmap disposition.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: exhaustive PDF section walk, figure/table/appendix matrix,
+    application-result claim matrix, status-row to ROADMAP disposition map,
+    missing/partial TODO proof, non-goal decision map, phase-priority map, CI
+    source-span exhaustiveness gate, and owner review signoff.
 
 ## Existing Items That Need Tightening
 

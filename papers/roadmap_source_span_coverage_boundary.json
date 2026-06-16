@@ -1,0 +1,358 @@
+{
+  "active_todo_ref_count": 15,
+  "boundary_status": "bounded_source_span_coverage_matrix_without_exhaustive_alphaevolve_walk",
+  "claim_boundary": "This boundary records a ROADMAP-level AlphaEvolve source-span coverage readiness matrix for main-text sections, figures, tables, Appendix A, Appendix B, application-result claims, paper-status rows, and TODO/non-goal/phase proof. It does not claim an exhaustive PDF section walk, complete figure/table/appendix matrix, complete application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff.",
+  "claim_ready": false,
+  "core_anchor_disposition_count": 6,
+  "core_anchor_disposition_input": "papers/roadmap_source_span_disposition_boundary.json",
+  "coverage_surface_count": 8,
+  "coverage_surface_records": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "retained AlphaEvolve source PDF by section",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "six core requirement anchors mapped by the existing source-span disposition sidecar",
+      "missing_readiness": "retained-PDF section-by-section walk with status and TODO disposition for every relevant source span",
+      "readiness_status": "six_core_anchors_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_disposition_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/implementation_evidence_map_boundary.json"
+        }
+      ],
+      "source_surface": "AlphaEvolve main-text sections and requirement claims",
+      "surface_id": "main_text_section_walk",
+      "validation_gate": "section-level source-span disposition matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "figures",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "rendered diagram",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "selected Figure 1/2/3/6/7/8 exhibit boundaries and matrix Figure 4/9 artifacts",
+      "missing_readiness": "complete figure matrix with source page, local status, evidence artifacts, and TODO proof",
+      "readiness_status": "selected_figure_sidecars_without_exhaustive_figure_walk",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/process_exhibit_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/figure3_supervised_exhibit_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/figure6_scheduling_exhibit_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/figure8_ablation_artifacts.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/figure4_matrix_discovery_artifacts.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/figure9_matrix_diff_artifacts.json"
+        }
+      ],
+      "source_surface": "AlphaEvolve figures and process/result exhibits",
+      "surface_id": "figure_exhibit_matrix",
+      "validation_gate": "figure/table artifact disposition matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "tables",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Table 1",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "Table 1 capability exhibit and selected matrix table artifacts",
+      "missing_readiness": "complete table matrix with row-level ROADMAP disposition and missing/partial TODO proof",
+      "readiness_status": "selected_table_sidecars_without_exhaustive_table_walk",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/table1_capability_exhibit_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/matrix_rank_table_artifacts.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/matrix_suite_publication_artifacts.json"
+        }
+      ],
+      "source_surface": "AlphaEvolve tables and capability/result comparison claims",
+      "surface_id": "table_capability_matrix",
+      "validation_gate": "table row to ROADMAP/TODO disposition matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "appendix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Appendix A",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "Appendix A target identities, curation/resource boundaries, and selected runtime artifacts",
+      "missing_readiness": "all Appendix A target rows linked to ROADMAP phases, implementation status, and TODO proof",
+      "readiness_status": "appendix_a_artifacts_without_roadmap_exhaustiveness",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/appendix_a_matrix_curation.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/appendix_a_matrix_resource_frontier.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/appendix_a_matrix_row_note_artifacts.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/matrix_tensor_rank_runtime_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/matrix_cascade_run_runtime_boundary.json"
+        }
+      ],
+      "source_surface": "Appendix A matrix-target registry and related artifacts",
+      "surface_id": "appendix_a_matrix_targets",
+      "validation_gate": "Appendix A row-to-roadmap disposition matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "benchmark family",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Appendix B",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "math outcome, starting-construction, and heuristic-stage boundaries",
+      "missing_readiness": "Appendix B family/result rows linked to implementation status, evidence artifacts, TODOs, and non-goal decisions",
+      "readiness_status": "math_boundaries_without_full_appendix_b_disposition",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/math_outcome_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/math_starting_construction_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/math_heuristic_handoff_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/math_heuristic_stage_sequence_boundary.json"
+        }
+      ],
+      "source_surface": "Appendix B constructive-math families and result claims",
+      "surface_id": "appendix_b_constructive_math",
+      "validation_gate": "Appendix B family/result disposition matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "application-result claim",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Keep named AlphaEvolve application-context rows background-only",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "systems, scheduling, Pallas, compiler, hardware, Magellan, and ArchAgent absence/readiness boundaries",
+      "missing_readiness": "application-result claim matrix with evidence artifacts, phase priority, and TODO/non-goal proof",
+      "readiness_status": "application_sidecars_without_complete_claim_matrix",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/systems_result_readiness_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/compiler_stack_context_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/compiler_adoption_path_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/hardware_rtl_eda_evidence_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/hardware_rewrite_artifact_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/magellan_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/archagent_boundary.json"
+        }
+      ],
+      "source_surface": "AlphaEvolve application-result claims for systems, kernels, hardware, and compiler work",
+      "surface_id": "application_result_claims",
+      "validation_gate": "application-result claim to ROADMAP/TODO disposition matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "paper/status sidecar rows",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "semantic evidence mapping for every paper-index status row",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "paper-index rows and structural status-claim inventory without complete ROADMAP disposition",
+      "missing_readiness": "all paper/status sidecar rows mapped to ROADMAP dispositions or explicit non-goals",
+      "readiness_status": "status_rows_not_exhaustively_roadmapped",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/status_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_disposition_boundary.json"
+        }
+      ],
+      "source_surface": "paper-index status rows and source-specific sidecars",
+      "surface_id": "paper_status_row_dispositions",
+      "validation_gate": "paper-status row to ROADMAP disposition map"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "missing or partial span",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "phase-priority map",
+          "required_phrase_present": true
+        }
+      ],
+      "current_scope": "separate TODO, non-goal, and phase-sequence boundaries",
+      "missing_readiness": "proof every missing/partial span has an active TODO, non-goal decision, and phase priority",
+      "readiness_status": "separate_boundaries_without_span_level_join",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_canonical_gap_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_contradiction_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_phase_sequence_boundary.json"
+        }
+      ],
+      "source_surface": "missing/partial source spans, non-goals, and phase priority",
+      "surface_id": "todo_non_goal_phase_proof",
+      "validation_gate": "missing/partial source-span TODO and phase proof"
+    }
+  ],
+  "missing_evidence": {
+    "application_result_claim_matrix": "not_recorded_locally",
+    "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
+    "exhaustive_pdf_section_walk": "not_recorded_locally",
+    "figure_table_appendix_matrix": "not_recorded_locally",
+    "missing_partial_todo_proof": "not_recorded_locally",
+    "non_goal_decision_map": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "phase_priority_map": "not_recorded_locally",
+    "status_row_to_roadmap_disposition_map": "not_recorded_locally"
+  },
+  "paper_status_row_count": 53,
+  "paper_status_row_dispositioned_count": 1,
+  "required_evidence_fields": [
+    "coverage_surface_records",
+    "core_anchor_disposition_input",
+    "paper_status_row_count",
+    "exhaustive_pdf_section_walk",
+    "figure_table_appendix_matrix",
+    "application_result_claim_matrix",
+    "status_row_to_roadmap_disposition_map",
+    "missing_partial_todo_proof",
+    "non_goal_decision_map",
+    "phase_priority_map",
+    "ci_source_span_exhaustiveness_gate"
+  ],
+  "schema": "libreevolve.roadmap_source_span_coverage_boundary.v1",
+  "sidecar_ref_count": 33,
+  "source_paper_id": "2506.13131"
+}

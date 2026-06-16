@@ -15398,3 +15398,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     derivative detection, canonical gap completion percent, raw-count
     inflation report, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP AlphaEvolve source-span coverage matrix.
+  - Spec evidence: bringing LibreEvolve toward AlphaEvolve requires the
+    ROADMAP to account for paper sections, figures, tables, appendices,
+    benchmark families, and application-result claims rather than only six
+    core requirement anchors.
+  - Status: `papers/roadmap_source_span_coverage_boundary.json` now records
+    eight coverage surfaces for main-text section walk, figure exhibits,
+    table/capability rows, Appendix A matrix targets, Appendix B constructive
+    math, application-result claims, paper-status row dispositions, and
+    TODO/non-goal/phase proof. It links the existing core source-span
+    disposition input, paper-status row counts, sidecar refs, active TODO refs,
+    validation-gate labels, readiness labels, and explicit missing
+    exhaustiveness fields. The paper-manifest gate now requires and validates
+    the sidecar at the repo root.
+  - Remaining roadmap gap: exhaustive PDF section walk, figure/table/appendix
+    matrix, application-result claim matrix, status-row to ROADMAP disposition
+    map, missing/partial TODO proof, non-goal decision map, phase-priority map,
+    CI source-span exhaustiveness gate, and owner review signoff remain active
+    in `docs/todo/roadmap.md`.

@@ -94,7 +94,7 @@
     {
       "active_count": 16,
       "category_id": "roadmap_priority_and_phase_evidence",
-      "completed_count": 1171,
+      "completed_count": 1172,
       "ledger_counts": [
         {
           "active_count": 16,
@@ -105,19 +105,19 @@
         },
         {
           "active_count": 0,
-          "completed_count": 1171,
+          "completed_count": 1172,
           "exists": true,
           "path": "docs/todo/Completed/roadmap.md",
-          "total_count": 1171
+          "total_count": 1172
         }
       ],
       "ledger_paths": [
         "docs/todo/roadmap.md",
         "docs/todo/Completed/roadmap.md"
       ],
-      "raw_todo_completion_percent": 98.652,
+      "raw_todo_completion_percent": 98.653,
       "scope": "ROADMAP readiness taxonomy, priority freshness, source-span disposition, and phase-boundary evidence gaps.",
-      "total_count": 1187,
+      "total_count": 1188,
       "weight": 10,
       "weighted_todo_completion_points": 9.865
     }
@@ -135,9 +135,9 @@
     "source_span_disposition_matrix": "not_recorded_locally"
   },
   "raw_todo_ledger_active_count": 506,
-  "raw_todo_ledger_completed_count": 4645,
-  "raw_todo_ledger_completion_percent": 90.177,
-  "raw_todo_ledger_total_count": 5151,
+  "raw_todo_ledger_completed_count": 4646,
+  "raw_todo_ledger_completion_percent": 90.179,
+  "raw_todo_ledger_total_count": 5152,
   "readiness_percent_status": "todo_ledger_only_not_semantic_alphaevolve_readiness",
   "required_evidence_fields": [
     "stable_readiness_categories",

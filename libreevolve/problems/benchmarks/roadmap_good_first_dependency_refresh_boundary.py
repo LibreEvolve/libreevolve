@@ -15,7 +15,7 @@ ROADMAP_GOOD_FIRST_DEPENDENCY_REFRESH_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_good_first_dependency_refresh_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "good_first_dependency_state_refresh_recorded_with_priority_score_model"
+    "good_first_dependency_state_refresh_recorded_with_ci_priority_gate"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "source_good_first_priority_items",
@@ -30,7 +30,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "ci_priority_freshness_gate": "not_recorded_locally",
     "validation_artifact_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
@@ -92,9 +91,9 @@ def roadmap_good_first_dependency_refresh_boundary_record(
             "dependency refs, current blocker labels, validation gate "
             "expectations, and AlphaEvolve impact labels. It rejects stale or "
             "missing dependency refs. Stale-priority detection is recorded "
-            "separately and priority scoring is recorded separately. It does "
-            "not claim CI freshness enforcement, validation-artifact "
-            "freshness, or owner review signoff."
+            "separately, priority scoring is recorded separately, and CI "
+            "freshness gating is recorded separately. It does not claim "
+            "validation-artifact freshness or owner review signoff."
         ),
     }
 
@@ -145,7 +144,8 @@ def validate_roadmap_good_first_dependency_refresh_boundary(
         or "rejects stale or missing dependency refs" not in boundary_text
         or "Stale-priority detection is recorded separately" not in boundary_text
         or "priority scoring is recorded separately" not in boundary_text
-        or "does not claim CI freshness enforcement" not in boundary_text
+        or "CI freshness gating is recorded separately" not in boundary_text
+        or "does not claim validation-artifact freshness" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate dependency refresh from priority freshness gates"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

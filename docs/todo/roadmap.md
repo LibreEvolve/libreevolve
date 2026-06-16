@@ -279,17 +279,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     bounded deterministic priority score model with feature weights,
     dependency-readiness scores, AlphaEvolve-impact scores, score records,
     ranked item ids, and zero rank mismatches.
+    `papers/roadmap_good_first_ci_priority_gate_boundary.json` now records the
+    committed sidecars, paper-manifest validators, and docs/paper/boundary
+    GitHub Actions workflow markers that gate Good First priority freshness,
+    with zero missing gate records.
   - Current gap: the sidecars are bounded static-priority, dependency-refresh,
-    stale-priority, priority-score, and freshness readiness maps, not an
-    implemented CI-backed freshness model. There is still no CI freshness
-    gate, validation-artifact freshness report, or owner review signoff
-    proving these four items remain the best first follow-ups after new
-    ROADMAP, code, README, or paper-sidecar work lands.
+    stale-priority, priority-score, CI-gate, and freshness readiness maps, not
+    an implemented validation-artifact freshness model. There is still no
+    validation-artifact freshness report or owner review signoff proving these
+    four items remain the best first follow-ups after new ROADMAP, code,
+    README, or paper-sidecar work lands.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: CI freshness gate, validation-artifact freshness report for
-    expected validation artifacts, and owner review signoff. The drift check
-    must force the section to be refreshed when dependencies or implementation
-    states change.
+    sidecar: validation-artifact freshness report for expected validation
+    artifacts and owner review signoff. The drift check must force the section
+    to be refreshed when dependencies or implementation states change.
 
 - [ ] Add ROADMAP phase-boundary and sequencing evidence.
   - Spec evidence: the `Near Term`, `Mid Term`, and `Longer Term` headings are

@@ -1,10 +1,9 @@
 {
   "active_todo_ref_count": 9,
   "boundary_status": "bounded_good_first_followups_priority_map_without_freshness_gate",
-  "claim_boundary": "This boundary records the four current ROADMAP Good First Follow-Ups, links each to active TODO evidence, dependency readiness labels, validation gates, and AlphaEvolve impact labels. Dependency-state refresh, stale-priority detection, and priority scoring are recorded separately. It does not claim CI priority freshness gating or owner review signoff.",
+  "claim_boundary": "This boundary records the four current ROADMAP Good First Follow-Ups, links each to active TODO evidence, dependency readiness labels, validation gates, and AlphaEvolve impact labels. Dependency-state refresh, stale-priority detection, priority scoring, and CI priority freshness gating are recorded separately. It does not claim owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
-    "ci_priority_freshness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
   "priority_item_count": 4,

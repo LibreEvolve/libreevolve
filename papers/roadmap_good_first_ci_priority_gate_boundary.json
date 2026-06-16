@@ -1,0 +1,107 @@
+{
+  "boundary_status": "good_first_ci_priority_freshness_gate_recorded_without_artifact_signoff",
+  "ci_gate_status": "good_first_priority_freshness_gate_present",
+  "claim_boundary": "This boundary records a bounded Good First priority freshness gate through committed sidecars, paper-manifest validation, and the existing docs/paper/boundary GitHub Actions workflow. It does not claim per-item validation-artifact freshness or owner review signoff.",
+  "claim_ready": false,
+  "dependency_refresh_record_count": 4,
+  "freshness_criterion_count": 6,
+  "gate_record_count": 12,
+  "gate_records": [
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_good_first_followups_boundary.json",
+      "required_marker": "papers/roadmap_good_first_followups_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_good_first_dependency_refresh_boundary.json",
+      "required_marker": "papers/roadmap_good_first_dependency_refresh_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_good_first_stale_priority_boundary.json",
+      "required_marker": "papers/roadmap_good_first_stale_priority_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_good_first_priority_score_boundary.json",
+      "required_marker": "papers/roadmap_good_first_priority_score_boundary.json"
+    },
+    {
+      "gate_kind": "committed_sidecar",
+      "gate_status": "gate_marker_present",
+      "path": "papers/roadmap_good_first_freshness_boundary.json",
+      "required_marker": "papers/roadmap_good_first_freshness_boundary.json"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_good_first_followups_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_good_first_dependency_refresh_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_good_first_stale_priority_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_good_first_priority_score_boundary"
+    },
+    {
+      "gate_kind": "paper_manifest_gate",
+      "gate_status": "gate_marker_present",
+      "path": "libreevolve/tools/paper_manifest.py",
+      "required_marker": "_validate_roadmap_good_first_freshness_boundary"
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "python -m libreevolve.tools.paper_manifest --root ."
+    },
+    {
+      "gate_kind": "boundary_test_workflow_gate",
+      "gate_status": "gate_marker_present",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "test_*boundary.py"
+    }
+  ],
+  "missing_evidence": {
+    "owner_review_signoff": "not_recorded_locally",
+    "validation_artifact_refresh": "not_recorded_locally"
+  },
+  "missing_gate_record_count": 0,
+  "missing_gate_records": [],
+  "paper_manifest_path": "libreevolve/tools/paper_manifest.py",
+  "priority_score_order_match": true,
+  "priority_score_rank_mismatch_count": 0,
+  "required_evidence_fields": [
+    "source_good_first_priority_items",
+    "dependency_refresh_records",
+    "stale_priority_detector",
+    "priority_score_model",
+    "freshness_matrix",
+    "paper_manifest_gate",
+    "boundary_test_workflow_gate",
+    "validation_artifact_refresh",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_good_first_ci_priority_gate_boundary.v1",
+  "source_priority_item_count": 4,
+  "stale_priority_count": 0,
+  "workflow_path": ".github/workflows/tests.yml"
+}

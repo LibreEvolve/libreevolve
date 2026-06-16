@@ -1,7 +1,10 @@
 {
   "active_todo_ref_count": 12,
-  "boundary_status": "bounded_good_first_freshness_matrix_with_priority_score_model_without_ci_gate",
-  "claim_boundary": "This boundary records Good First Follow-Ups freshness readiness criteria tied to the bounded static priority map and the recorded dependency-state refresh, stale-priority detector, and priority score model boundaries. It does not claim CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
+  "boundary_status": "bounded_good_first_freshness_matrix_with_ci_priority_gate_without_artifact_signoff",
+  "ci_priority_gate_boundary_input": "papers/roadmap_good_first_ci_priority_gate_boundary.json",
+  "ci_priority_gate_missing_record_count": 0,
+  "ci_priority_gate_status": "good_first_priority_freshness_gate_present",
+  "claim_boundary": "This boundary records Good First Follow-Ups freshness readiness criteria tied to the bounded static priority map and the recorded dependency-state refresh, stale-priority detector, and priority score model, and CI priority gate boundaries. It does not claim validation-artifact freshness or owner review signoff.",
   "claim_ready": false,
   "dependency_refresh_boundary_input": "papers/roadmap_good_first_dependency_refresh_boundary.json",
   "dependency_refresh_record_count": 4,
@@ -25,8 +28,8 @@
       "criterion_id": "dependency_state_refresh",
       "current_scope": "dependency-state refresh records for the four current good-first items",
       "freshness_surface": "active implementation TODO state and blocking prerequisites",
-      "missing_readiness": "CI freshness gate tied to refreshed dependency state and the priority score model",
-      "readiness_status": "dependency_state_refresh_recorded_with_priority_score_model",
+      "missing_readiness": "validation-artifact freshness tied to refreshed dependency state and the priority score model",
+      "readiness_status": "dependency_state_refresh_recorded_with_ci_priority_gate",
       "sidecar_refs": [
         {
           "exists": true,
@@ -61,8 +64,8 @@
       "criterion_id": "stale_priority_detector",
       "current_scope": "bounded stale-priority detector joined to dependency refresh records",
       "freshness_surface": "ROADMAP Good First Follow-Ups section ordering",
-      "missing_readiness": "CI gate that promotes or demotes priorities after broader evidence changes",
-      "readiness_status": "stale_priority_detector_recorded_with_separate_score_model",
+      "missing_readiness": "validation-artifact freshness that promotes or demotes priorities after broader evidence changes",
+      "readiness_status": "stale_priority_detector_recorded_with_ci_priority_gate",
       "sidecar_refs": [
         {
           "exists": true,
@@ -97,8 +100,8 @@
       "criterion_id": "calibrated_priority_score_model",
       "current_scope": "bounded deterministic score model combining dependency readiness, stale-priority state, validation gates, and AlphaEvolve impact",
       "freshness_surface": "priority ordering rationale and AlphaEvolve-gap impact",
-      "missing_readiness": "CI gate and validation-artifact freshness that enforce the score model after broader evidence changes",
-      "readiness_status": "priority_score_model_recorded_without_ci_gate",
+      "missing_readiness": "validation-artifact freshness that enforces the score model after broader evidence changes",
+      "readiness_status": "priority_score_model_recorded_with_ci_priority_gate",
       "sidecar_refs": [
         {
           "exists": true,
@@ -131,10 +134,10 @@
         }
       ],
       "criterion_id": "ci_priority_freshness_gate",
-      "current_scope": "local paper-manifest sidecar validation",
+      "current_scope": "paper-manifest sidecar validation plus docs/paper/boundary workflow gate",
       "freshness_surface": "CI and manifest checks for priority drift",
-      "missing_readiness": "CI gate that fails stale Good First Follow-Ups ordering or missing dependency refresh records",
-      "readiness_status": "manifest_shape_check_without_ci_freshness",
+      "missing_readiness": "validation-artifact freshness and owner signoff after CI gate execution",
+      "readiness_status": "ci_priority_freshness_gate_recorded_without_artifact_signoff",
       "sidecar_refs": [
         {
           "exists": true,
@@ -143,6 +146,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_good_first_followups_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_good_first_ci_priority_gate_boundary.json"
         }
       ],
       "validation_gate": "CI priority freshness gate"
@@ -214,7 +221,6 @@
   ],
   "freshness_criterion_count": 6,
   "missing_evidence": {
-    "ci_priority_freshness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
     "validation_artifact_refresh": "not_recorded_locally"
   },
@@ -231,7 +237,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_good_first_freshness_boundary.v1",
-  "sidecar_ref_count": 15,
+  "sidecar_ref_count": 16,
   "source_active_todo_ref_count": 9,
   "source_good_first_boundary_input": "papers/roadmap_good_first_followups_boundary.json",
   "source_priority_item_count": 4,

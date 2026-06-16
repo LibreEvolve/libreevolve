@@ -2992,33 +2992,36 @@ Implemented:
   TODO refs, priority rationale, dependency-readiness labels, validation gates,
   and AlphaEvolve impact labels. Dependency-state refresh and stale-priority
   detection plus priority scoring are recorded separately. It is not evidence
-  of CI freshness gating or owner review signoff.
+  of owner review signoff.
 - `papers/roadmap_good_first_dependency_refresh_boundary.json`: ROADMAP Good
   First Follow-Ups dependency-refresh sidecar that rechecks the four current
   priority items against live active TODO dependency refs, current blocker
   labels, validation gate expectations, and AlphaEvolve impact labels, with
   zero stale dependency refs. Stale-priority detection is recorded separately.
-  Priority scoring is recorded separately. It is not evidence of CI freshness
-  gating, validation-artifact freshness, or owner review signoff.
+  Priority scoring and CI freshness gating are recorded separately. It is not
+  evidence of validation-artifact freshness or owner review signoff.
 - `papers/roadmap_good_first_stale_priority_boundary.json`: ROADMAP Good
   First Follow-Ups stale-priority detector sidecar that joins the static
   priority map to dependency-refresh records, ordinal order, live dependency
   refs, blocker labels, and ROADMAP phrase checks, with zero stale priority
-  records. Priority scoring is recorded separately. It is not evidence of CI
-  freshness enforcement, validation-artifact freshness, or owner review
-  signoff.
+  records. Priority scoring and CI freshness gating are recorded separately.
+  It is not evidence of validation-artifact freshness or owner review signoff.
 - `papers/roadmap_good_first_priority_score_boundary.json`: ROADMAP Good
   First Follow-Ups priority-score sidecar with deterministic feature weights,
   dependency-readiness scores, AlphaEvolve-impact scores, per-item score
   records, ranked item ids, and zero rank mismatches for the current Good
-  First ordering. It is not evidence of CI freshness enforcement, validation-
-  artifact freshness, or owner review signoff.
+  First ordering. CI freshness gating is recorded separately. It is not
+  evidence of validation-artifact freshness or owner review signoff.
+- `papers/roadmap_good_first_ci_priority_gate_boundary.json`: ROADMAP Good
+  First Follow-Ups CI priority freshness gate sidecar with committed sidecar
+  checks, paper-manifest validator markers, and docs/paper/boundary GitHub
+  Actions workflow markers, with zero missing gate records. It is not evidence
+  of per-item validation-artifact freshness or owner review signoff.
 - `papers/roadmap_good_first_freshness_boundary.json`: ROADMAP Good First
   Follow-Ups freshness readiness sidecar with six criteria for dependency-
   state refresh, stale-priority detection, calibrated priority scoring, CI
   freshness gating, validation-artifact refresh, and owner review signoff. It
-  is not evidence that CI gates, artifact freshness reports, or signoffs are
-  implemented.
+  is not evidence that artifact freshness reports or signoffs are implemented.
 - `papers/roadmap_phase_sequence_boundary.json`: ROADMAP phase-sequencing
   sidecar with the current Near Term, Mid Term, and Longer Term sequence for
   ten major ROADMAP sections, active blocker TODO refs, validation-gate labels,

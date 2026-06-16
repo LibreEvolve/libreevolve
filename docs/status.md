@@ -1290,6 +1290,7 @@ Important limits:
   `papers/roadmap_good_first_dependency_refresh_boundary.json`,
   `papers/roadmap_good_first_stale_priority_boundary.json`,
   `papers/roadmap_good_first_priority_score_boundary.json`,
+  `papers/roadmap_good_first_ci_priority_gate_boundary.json`,
   `papers/roadmap_good_first_freshness_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
   `papers/roadmap_phase_freshness_boundary.json`,
@@ -1424,13 +1425,14 @@ Important limits:
   stale-priority detection is recorded by
   `papers/roadmap_good_first_stale_priority_boundary.json`. Priority scoring
   is recorded by `papers/roadmap_good_first_priority_score_boundary.json`.
-  This is not CI freshness gating, validation-artifact freshness, or owner
-  review signoff.
+  CI priority freshness gating is recorded by
+  `papers/roadmap_good_first_ci_priority_gate_boundary.json`. This is not
+  validation-artifact freshness or owner review signoff.
 - ROADMAP Good First Follow-Ups freshness evidence now records six readiness
   criteria for dependency-state refresh, stale-priority detection,
   calibrated priority scoring, CI freshness gating, validation-artifact
-  refresh, and owner review signoff. This is not CI freshness enforcement,
-  validation-artifact freshness, or owner review signoff.
+  refresh, and owner review signoff. This is not validation-artifact
+  freshness or owner review signoff.
 - ROADMAP phase-sequencing evidence now records the Near Term, Mid Term, and
   Longer Term sequence for ten major ROADMAP sections, active blocker TODO
   refs, validation-gate labels, and promotion criteria. This is not a full

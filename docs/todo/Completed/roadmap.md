@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add ROADMAP Good First Follow-Ups CI priority freshness gate.
+  - Status: `papers/roadmap_good_first_ci_priority_gate_boundary.json` now
+    records the committed Good First sidecars, paper-manifest validator
+    markers, and docs/paper/boundary GitHub Actions workflow markers, with
+    zero missing gate records.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_good_first_ci_priority_gate_boundary.py`
+    derives the gate from the current Good First evidence sidecars,
+    `libreevolve/tools/paper_manifest.py`, and `.github/workflows/tests.yml`;
+    the paper-manifest gate requires the checked sidecar to match those inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks validation-artifact
+    freshness and owner review signoff.
+  - Verification: focused Good First CI priority-gate tests and paper-manifest
+    validation cover the bounded gate contract.
+
 - [x] Add ROADMAP Good First Follow-Ups bounded priority score model.
   - Status: `papers/roadmap_good_first_priority_score_boundary.json` now
     records deterministic score weights, dependency-readiness scores,
@@ -12,8 +27,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     derives the score model from the current Good First priority map,
     dependency-refresh boundary, and stale-priority detector, and the
     paper-manifest gate requires the checked sidecar to match those inputs.
-  - Remaining guard: the active ROADMAP TODO still tracks CI freshness gating,
-    validation-artifact freshness, and owner review signoff.
+  - Remaining guard: the active ROADMAP TODO still tracks validation-artifact
+    freshness and owner review signoff.
   - Verification: focused Good First priority-score tests and paper-manifest
     validation cover the bounded score-model contract.
 
@@ -27,9 +42,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     derives the detector from current ROADMAP/TODO text and the dependency
     refresh boundary, and the paper-manifest gate requires the checked sidecar
     to match those inputs.
-  - Remaining guard: the active ROADMAP TODO still tracks calibrated priority
-    scoring, CI freshness gating, validation-artifact freshness, and owner
-    review signoff.
+  - Remaining guard: the active ROADMAP TODO still tracks validation-artifact
+    freshness and owner review signoff.
   - Verification: focused Good First stale-priority tests and paper-manifest
     validation cover the bounded detector contract.
 
@@ -73,9 +87,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     `libreevolve/problems/benchmarks/roadmap_good_first_followups_boundary.py`
     derives the boundary from the current ROADMAP and TODO text, and the
     paper-manifest gate requires the checked sidecar to match those inputs.
-  - Remaining guard: the active ROADMAP TODO still tracks dependency-state
-    refresh automation, stale-priority detection, calibrated priority scoring,
-    CI freshness gating, and owner review signoff.
+  - Remaining guard: the active ROADMAP TODO still tracks validation-artifact
+    freshness and owner review signoff.
   - Verification: focused Good First Follow-Ups boundary tests and
     paper-manifest validation cover the bounded sidecar contract.
 
@@ -15535,8 +15548,7 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     TODO refs, validation-gate labels, readiness labels, and explicit
     missing-evidence fields. The paper-manifest gate now requires and
     validates the sidecar at the repo root.
-  - Remaining roadmap gap: stale-priority detector, calibrated priority score
-    model, CI freshness gate, validation-artifact freshness report, and owner
+  - Remaining roadmap gap: validation-artifact freshness report and owner
     review signoff remain active in `docs/todo/roadmap.md`.
 - [x] Add bounded ROADMAP phase freshness readiness matrix.
   - Spec evidence: ROADMAP phase labels make implementation-readiness claims,
@@ -15834,6 +15846,5 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     AlphaEvolve impact labels, with zero stale dependency refs. The
     paper-manifest gate now requires and validates the sidecar at the repo
     root.
-  - Remaining roadmap gap: stale-priority detection, calibrated priority
-    scoring, CI freshness gating, validation-artifact freshness, and owner
-    review signoff remain active in `docs/todo/roadmap.md`.
+  - Remaining roadmap gap: validation-artifact freshness and owner review
+    signoff remain active in `docs/todo/roadmap.md`.

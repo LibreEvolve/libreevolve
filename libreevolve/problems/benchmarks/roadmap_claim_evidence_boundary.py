@@ -107,25 +107,26 @@ CLAIM_SURFACE_SPECS = (
         "surface_id": "good_first_priority_claims",
         "roadmap_required_phrase": "## Good First Follow-Ups",
         "current_scope": "four parsed good-first items, bounded static priority map, dependency refresh records, stale-priority detector, and priority score model",
-        "missing_readiness": "CI freshness gate, validation-artifact freshness, and owner review signoff",
+        "missing_readiness": "validation-artifact freshness and owner review signoff",
         "sidecars": (
             "papers/roadmap_good_first_followups_boundary.json",
             "papers/roadmap_good_first_dependency_refresh_boundary.json",
             "papers/roadmap_good_first_stale_priority_boundary.json",
             "papers/roadmap_good_first_priority_score_boundary.json",
+            "papers/roadmap_good_first_ci_priority_gate_boundary.json",
         ),
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "CI freshness gate",
+                "required_phrase": "validation-artifact freshness report",
             },
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "validation-artifact freshness report",
+                "required_phrase": "owner review signoff",
             },
         ),
         "validation_gate": "priority freshness gate tied to dependency state",
-        "readiness_status": "priority_score_model_recorded_without_ci_gate",
+        "readiness_status": "ci_priority_gate_recorded_without_artifact_signoff",
     },
     {
         "surface_id": "cross_document_claim_sync",

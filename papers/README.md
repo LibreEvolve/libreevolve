@@ -2839,8 +2839,9 @@ Implemented:
   routing, GitHub Actions docs path-filter, paper-manifest consistency,
   TODO-coverage, stale source-specific wording, sidecar-registry, top-level
   README/ROADMAP/papers-index claim-inventory, backend CLI-provider guardrail
-  inventory, README provider-example matrix inventory, README CLI-provider
-  guardrail inventory, and focused boundary-test evidence. It is not evidence of
+  inventory, backend-guide contract drift inventory, README provider-example
+  matrix inventory, README CLI-provider guardrail inventory, and focused
+  boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
   full proof that every AlphaEvolve-facing claim is current.
@@ -2878,6 +2879,16 @@ Implemented:
   surfaces. It is not a first-class CLI backend contract, CLI backend manifest
   schema, credential-safe CLI backend smoke, CLI provider attempt accounting,
   or CLI provider diagnostics.
+- `papers/backend_guide_contract_drift_boundary.json`: backend-guide contract
+  drift sidecar. It records `docs/backends.md` section and claim markers for
+  provider lanes, scheduler/reward accounting, call-history and
+  `llm_calls.jsonl` replay, scheduler restore, prompt validation, provider
+  metadata, role routing, provider failures, timeouts, OpenAI API-mode policy,
+  credential preflight, custom backends, and CLI-provider guardrails, plus
+  source-module, focused-test, sidecar, and active TODO anchors. It is not
+  semantic backend-claim verification, a per-constructor-field evidence map, a
+  per-telemetry-field evidence map, a backend-docs CI drift gate, or owner
+  review signoff.
 - `papers/tracked_legacy_surface_boundary.json`: tracked legacy-surface
   sidecar for `old/**` planning material. It records the committed legacy
   Markdown inventory, archival/non-authoritative classification, self-

@@ -195,6 +195,10 @@ from libreevolve.problems.benchmarks.backend_cli_provider_guardrail_boundary imp
     backend_cli_provider_guardrail_boundary_record,
     validate_backend_cli_provider_guardrail_boundary,
 )
+from libreevolve.problems.benchmarks.backend_guide_contract_drift_boundary import (
+    backend_guide_contract_drift_boundary_record,
+    validate_backend_guide_contract_drift_boundary,
+)
 from libreevolve.problems.benchmarks.tracked_legacy_surface_boundary import (
     tracked_legacy_surface_boundary_record,
     validate_tracked_legacy_surface_boundary,
@@ -981,6 +985,7 @@ DOCS_INDEX_READER_PATH_BOUNDARY_FILE = "papers/docs_index_reader_path_boundary.j
 DOCS_STATUS_LEDGER_BOUNDARY_FILE = "papers/docs_status_ledger_boundary.json"
 DOCS_ARCHITECTURE_RUNTIME_FLOW_BOUNDARY_FILE = "papers/docs_architecture_runtime_flow_boundary.json"
 BACKEND_CLI_PROVIDER_GUARDRAIL_BOUNDARY_FILE = "papers/backend_cli_provider_guardrail_boundary.json"
+BACKEND_GUIDE_CONTRACT_DRIFT_BOUNDARY_FILE = "papers/backend_guide_contract_drift_boundary.json"
 TRACKED_LEGACY_SURFACE_BOUNDARY_FILE = "papers/tracked_legacy_surface_boundary.json"
 README_AGENT_ROUTING_BOUNDARY_FILE = "papers/readme_agent_routing_boundary.json"
 README_DOCUMENTATION_MAP_BOUNDARY_FILE = "papers/readme_documentation_map_boundary.json"
@@ -1699,6 +1704,7 @@ def validate_paper_manifest(
     issues.extend(_validate_docs_status_ledger_boundary(root_path))
     issues.extend(_validate_docs_architecture_runtime_flow_boundary(root_path))
     issues.extend(_validate_backend_cli_provider_guardrail_boundary(root_path))
+    issues.extend(_validate_backend_guide_contract_drift_boundary(root_path))
     issues.extend(_validate_tracked_legacy_surface_boundary(root_path))
     issues.extend(_validate_readme_agent_routing_boundary(root_path))
     issues.extend(_validate_readme_documentation_map_boundary(root_path))
@@ -4386,6 +4392,38 @@ def _validate_backend_cli_provider_guardrail_boundary(root_path: Path) -> list[P
             f"backend_cli_provider_guardrail_boundary_{issue.code}",
             issue.message,
             "backend_cli_provider_guardrail",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_backend_guide_contract_drift_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / BACKEND_GUIDE_CONTRACT_DRIFT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "backend_guide_contract_drift_boundary_manifest_missing",
+                    (
+                        f"{BACKEND_GUIDE_CONTRACT_DRIFT_BOUNDARY_FILE} must emit "
+                        "backend-guide contract drift metadata"
+                    ),
+                    "backend_guide_contract_drift",
+                )
+            ]
+        return []
+    report = validate_backend_guide_contract_drift_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"backend_guide_contract_drift_boundary_{issue.code}",
+            issue.message,
+            "backend_guide_contract_drift",
         )
         for issue in report.issues
     ]

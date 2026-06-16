@@ -1,0 +1,345 @@
+{
+  "schema": "libreevolve.backend_guide_contract_drift_boundary.v1",
+  "boundary_status": "backend_guide_structural_evidence_map_without_semantic_contract_proof",
+  "claim_ready": false,
+  "backend_guide_path": "docs/backends.md",
+  "source_paths": [
+    "libreevolve/llm/ensemble.py",
+    "libreevolve/llm/backend_registry.py",
+    "libreevolve/llm/openai.py",
+    "libreevolve/llm/anthropic.py",
+    "libreevolve/llm/ollama.py",
+    "libreevolve/core/config.py",
+    "libreevolve/cli.py"
+  ],
+  "test_paths": [
+    "tests/llm/test_ensemble.py",
+    "tests/core/test_config.py",
+    "tests/core/test_loop.py"
+  ],
+  "sidecar_paths": [
+    "papers/gemini_provider_parity_boundary.json",
+    "papers/provider_pricing_boundary.json",
+    "papers/provider_diagnostics_replay_boundary.json",
+    "papers/provider_cancellation_boundary.json",
+    "papers/llm_budget_policy_boundary.json",
+    "papers/backend_cli_provider_guardrail_boundary.json"
+  ],
+  "todo_paths": [
+    "docs/todo/readme.md",
+    "docs/todo/code.md"
+  ],
+  "guide_marker_count": 20,
+  "missing_guide_marker_count": 0,
+  "missing_guide_marker_records": [],
+  "guide_marker_records": [
+    {
+      "record_id": "provider_lanes",
+      "path": "docs/backends.md",
+      "required_marker": "## Provider lanes",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "selection_and_reward",
+      "path": "docs/backends.md",
+      "required_marker": "## Selection and reward",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "openai_backend",
+      "path": "docs/backends.md",
+      "required_marker": "## OpenAI backend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "anthropic_backend",
+      "path": "docs/backends.md",
+      "required_marker": "## Anthropic backend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ollama_backend",
+      "path": "docs/backends.md",
+      "required_marker": "## Ollama backend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "environment_setup",
+      "path": "docs/backends.md",
+      "required_marker": "## Environment setup",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "adding_new_backend",
+      "path": "docs/backends.md",
+      "required_marker": "## Adding a new backend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "practical_guidance",
+      "path": "docs/backends.md",
+      "required_marker": "## Practical guidance",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "call_history_claim",
+      "path": "docs/backends.md",
+      "required_marker": "`LLMEnsemble.call_history` records normalized call telemetry",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "llm_calls_replay_claim",
+      "path": "docs/backends.md",
+      "required_marker": "`load_llm_call_ledger()` validates durable `llm_calls.jsonl`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "scheduler_restore_claim",
+      "path": "docs/backends.md",
+      "required_marker": "`LLMEnsemble.restore_scheduler_state()` is the supported direct restore path",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "prompt_validation_claim",
+      "path": "docs/backends.md",
+      "required_marker": "`LLMEnsemble.generate()` validates prompt payloads",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "provider_metadata_claim",
+      "path": "docs/backends.md",
+      "required_marker": "built-in adapters copy safe provider usage counts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "role_backend_indices_claim",
+      "path": "docs/backends.md",
+      "required_marker": "`llm_role_backend_indices` can route a validated call role",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "provider_failure_claim",
+      "path": "docs/backends.md",
+      "required_marker": "failed provider calls are recorded in ensemble telemetry",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "timeout_claim",
+      "path": "docs/backends.md",
+      "required_marker": "Run-level `llm_call_timeout_sec` adds an ensemble deadline around",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "openai_api_mode_claim",
+      "path": "docs/backends.md",
+      "required_marker": "api_mode=\"auto\"` preserves legacy routing: Chat Completions",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "custom_backend_claim",
+      "path": "docs/backends.md",
+      "required_marker": "Configured custom backends use `type: custom` plus an importable",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "credential_preflight_claim",
+      "path": "docs/backends.md",
+      "required_marker": "startup checks required credentials for\nOpenAI",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "cli_provider_guardrail_claim",
+      "path": "docs/backends.md",
+      "required_marker": "Subprocess/CLI-authenticated providers: Codex-authenticated",
+      "marker_status": "marker_present"
+    }
+  ],
+  "evidence_anchor_count": 26,
+  "missing_evidence_anchor_count": 0,
+  "missing_evidence_anchor_records": [],
+  "evidence_anchor_records": [
+    {
+      "record_id": "ensemble_class",
+      "path": "libreevolve/llm/ensemble.py",
+      "required_marker": "class LLMEnsemble:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ensemble_call_history",
+      "path": "libreevolve/llm/ensemble.py",
+      "required_marker": "call_history",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "llm_call_ledger_loader",
+      "path": "libreevolve/llm/ensemble.py",
+      "required_marker": "def load_llm_call_ledger",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "scheduler_restore",
+      "path": "libreevolve/llm/ensemble.py",
+      "required_marker": "def restore_scheduler_state",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "prompt_validation",
+      "path": "libreevolve/llm/ensemble.py",
+      "required_marker": "LLM prompt must be non-empty text",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "build_llm",
+      "path": "libreevolve/llm/ensemble.py",
+      "required_marker": "def build_llm(config)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "custom_backend_builder",
+      "path": "libreevolve/llm/ensemble.py",
+      "required_marker": "def build_custom_backend_from_spec",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "backend_registry",
+      "path": "libreevolve/llm/backend_registry.py",
+      "required_marker": "def builtin_backend_registry",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "openai_backend",
+      "path": "libreevolve/llm/openai.py",
+      "required_marker": "class OpenAIBackend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "anthropic_backend",
+      "path": "libreevolve/llm/anthropic.py",
+      "required_marker": "class AnthropicBackend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ollama_backend",
+      "path": "libreevolve/llm/ollama.py",
+      "required_marker": "class OllamaBackend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_llm_role_backend_indices",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "llm_role_backend_indices",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_custom_backend_class_path",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "_require_custom_backend_class_path",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "cli_credential_preflight",
+      "path": "libreevolve/cli.py",
+      "required_marker": "_preflight_llm_backends_if_needed",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ensemble_tests",
+      "path": "tests/llm/test_ensemble.py",
+      "required_marker": "LLMEnsemble",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "config_role_backend_tests",
+      "path": "tests/core/test_config.py",
+      "required_marker": "test_accepts_llm_role_backend_indices",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "runtime_budget_tests",
+      "path": "tests/core/test_loop.py",
+      "required_marker": "max_llm_provider_attempts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "configuration_role_routing_note",
+      "path": "docs/configuration.md",
+      "required_marker": "llm_role_backend_indices",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_todo_owner",
+      "path": "docs/todo/readme.md",
+      "required_marker": "Add backend-guide provider contract drift evidence.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "code_todo_cli_contract",
+      "path": "docs/todo/code.md",
+      "required_marker": "Define a first-class subprocess/CLI LLM backend contract",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "gemini_boundary_sidecar",
+      "path": "papers/gemini_provider_parity_boundary.json",
+      "required_marker": "gemini",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "provider_pricing_sidecar",
+      "path": "papers/provider_pricing_boundary.json",
+      "required_marker": "provider_pricing",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "provider_diagnostics_sidecar",
+      "path": "papers/provider_diagnostics_replay_boundary.json",
+      "required_marker": "provider_diagnostics",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "provider_cancellation_sidecar",
+      "path": "papers/provider_cancellation_boundary.json",
+      "required_marker": "provider_cancellation",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "llm_budget_sidecar",
+      "path": "papers/llm_budget_policy_boundary.json",
+      "required_marker": "llm_budget",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "backend_cli_guardrail_sidecar",
+      "path": "papers/backend_cli_provider_guardrail_boundary.json",
+      "required_marker": "backend_cli_provider_guardrail",
+      "marker_status": "marker_present"
+    }
+  ],
+  "backend_guide_contract_map_status": "backend_guide_structural_evidence_map_present",
+  "required_evidence_fields": [
+    "backend_guide_section_inventory",
+    "backend_guide_provider_lane_markers",
+    "backend_guide_scheduler_and_reward_markers",
+    "backend_guide_call_history_and_ledger_markers",
+    "backend_guide_provider_adapter_markers",
+    "backend_guide_credential_and_custom_backend_markers",
+    "backend_guide_cli_provider_guardrail_marker",
+    "source_module_anchor_map",
+    "focused_test_anchor_map",
+    "sidecar_boundary_anchor_map",
+    "active_todo_owner_anchor",
+    "semantic_backend_claim_verifier",
+    "per_constructor_field_evidence_map",
+    "per_telemetry_field_evidence_map",
+    "backend_docs_ci_drift_gate",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "semantic_backend_claim_verifier": "not_recorded_locally",
+    "per_constructor_field_evidence_map": "not_recorded_locally",
+    "per_telemetry_field_evidence_map": "not_recorded_locally",
+    "backend_docs_ci_drift_gate": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records docs/backends.md section and claim markers for provider lanes, scheduler/reward accounting, call-history and llm_calls replay, restore, prompt validation, provider metadata, role routing, provider failures, timeouts, OpenAI API-mode policy, credential preflight, custom backends, and CLI-provider guardrails. It also records source-module, focused-test, sidecar, and active TODO anchors. It does not claim semantic backend-claim verification, a per-constructor-field evidence map, a per-telemetry-field evidence map, a backend-docs CI drift gate, or owner review signoff."
+}

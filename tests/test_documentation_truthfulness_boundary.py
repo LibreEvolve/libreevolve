@@ -16,7 +16,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
         validation.boundary_status
         == "cross_document_guards_without_semantic_claim_proof"
     )
-    assert validation.required_evidence_field_count == 34
+    assert validation.required_evidence_field_count == 35
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -26,6 +26,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
     assert "docs_status_ledger_inventory" in boundary["required_evidence_fields"]
     assert "docs_architecture_runtime_flow_inventory" in boundary["required_evidence_fields"]
     assert "backend_cli_provider_guardrail_inventory" in boundary["required_evidence_fields"]
+    assert "backend_guide_contract_drift_inventory" in boundary["required_evidence_fields"]
     assert "readme_agent_routing_inventory" in boundary["required_evidence_fields"]
     assert "readme_documentation_map_inventory" in boundary["required_evidence_fields"]
     assert "readme_repository_layout_inventory" in boundary["required_evidence_fields"]
@@ -45,6 +46,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
     assert "docs/architecture.md runtime-flow inventory" in boundary["claim_boundary"]
     assert "docs/status.md ledger inventory" in boundary["claim_boundary"]
     assert "backend CLI-provider guardrail inventory" in boundary["claim_boundary"]
+    assert "backend-guide contract drift inventory" in boundary["claim_boundary"]
     assert "README AGENTS.md routing inventory" in boundary["claim_boundary"]
     assert "README Documentation Map inventory" in boundary["claim_boundary"]
     assert "README Repository Layout inventory" in boundary["claim_boundary"]
@@ -85,5 +87,5 @@ def test_render_documentation_truthfulness_boundary_summary_reports_shape():
         "| boundary_status | cross_document_guards_without_semantic_claim_proof |"
         in summary
     )
-    assert "| required_evidence_field_count | 34 |" in summary
+    assert "| required_evidence_field_count | 35 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

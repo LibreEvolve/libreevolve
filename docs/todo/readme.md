@@ -532,10 +532,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     backend routing, failure quarantine, retries, timeouts, prompt-token
     limits, OpenAI Chat/Responses routing, request-parameter surfaces,
     `llm_prompt_roles`, custom backend `class_path` specs, `.env` credential
-    behavior, and Gemini provider-parity absence records. Many individual
-    backend behaviors have focused tests and completed TODOs, but the active
-    backend-doc TODO covers only CLI-authenticated provider overclaiming.
-    A current cross-doc drift example is backend role routing:
+    behavior, Gemini provider-parity absence records, and the backend
+    CLI-provider guardrail. `papers/backend_guide_contract_drift_boundary.json`
+    now records backend-guide section and claim markers for those surfaces and
+    maps them to source-module, focused-test, sidecar, and active TODO anchors.
+    A current cross-doc drift example remains backend role routing:
     `docs/backends.md` says `llm_role_backend_indices` can route call roles to
     explicit backend-index lanes and that roles without explicit routes can
     still use backend metadata `role` lanes, while `docs/configuration.md`
@@ -545,18 +546,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     routing, so the configuration prose can understate implemented routing and
     confuse the remaining gap, which is richer quotas/escalation and stronger
     AlphaEvolve model-mix evidence.
-  - Current gap: there is no page-specific inventory or drift validator that
-    maps each `docs/backends.md` claim, constructor field, allowed parameter,
-    telemetry field, timeout/retry rule, scheduler policy, OpenAI route rule,
-    custom-backend limitation, environment/preflight statement, and
-    AlphaEvolve-facing provider boundary to source modules, tests, run
-    artifacts, paper sidecars, and active TODO owners. Backend behavior can
-    change in `llm/`, `core/config.py`, `cli.py`, ledger replay, or runtime
-    manifest code without a backend-guide failure.
-  - Required result: add a backend-guide evidence map and validation gate that
-    parses provider sections and practical guidance, verifies code/test/
-    artifact anchors for each documented claim, separates built-in SDK
-    support from custom-extension and missing Gemini/Codex-provider parity,
+  - Current gap: the committed backend-guide map is structural evidence only.
+    It does not semantically verify every backend-guide claim, constructor
+    field, allowed parameter, telemetry field, timeout/retry rule, scheduler
+    policy, OpenAI route rule, custom-backend limitation, environment/preflight
+    statement, or AlphaEvolve-facing provider boundary. It also is not a
+    backend-docs CI drift gate or owner review signoff.
+  - Required result: extend the backend-guide map into semantic and per-field
+    validation that parses provider sections and practical guidance, verifies
+    code/test/artifact anchors for each documented claim, separates built-in
+    SDK support from custom-extension and missing Gemini/Codex-provider parity,
     and requires README/docs/TODO updates whenever provider adapters,
     scheduler policy, telemetry, timeout/retry, credential, or custom-backend
     behavior changes.

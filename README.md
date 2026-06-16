@@ -210,6 +210,8 @@ streams, restore behavior, and inspection details.
 - [papers/README.md](papers/README.md): paper cache, status rows, and claim
   boundaries.
 - [docs/todo/](docs/todo/): active and completed gap ledgers.
+- [AGENTS.md](AGENTS.md): agent-facing operating contract for local coding
+  agents.
 
 The docs are split by purpose. Setup and first-run usage belongs here;
 operational details belong in `docs/`; paper-derived claim evidence belongs in
@@ -270,6 +272,7 @@ papers/          tracked manifests plus ignored PDF cache and retained source ar
 old/             archival, non-authoritative historical planning material
 runs/            gitignored run outputs
 tests/           unit and integration tests
+AGENTS.md        agent-facing operating contract for local coding agents
 ```
 
 ## Contributing

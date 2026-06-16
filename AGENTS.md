@@ -55,12 +55,21 @@ libreevolve/
 
 ## Running Tests
 
+Human-facing development workflow details live in `docs/development.md`.
+Agent-doc invariants are checked by `tests/test_agents_docs.py` and the
+`.github/workflows/tests.yml` paper/docs job.
+
 ```bash
 py -3.12 -m pytest tests/ -m "not integration" --tb=short
 py -3.12 -m pytest tests/integration/ -m integration          # needs ANTHROPIC_API_KEY
 ```
 
 ## Running the Tool
+
+Backend details live in `docs/backends.md`, run artifacts in
+`docs/run-artifacts.md`, and paper/source boundaries in `papers/README.md`.
+The built-in backend families are OpenAI, Anthropic, Ollama, and custom
+import-path backends.
 
 ```bash
 py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "openai:<openai-model-id>"

@@ -1,0 +1,156 @@
+{
+  "schema": "libreevolve.readme_agent_routing_boundary.v1",
+  "boundary_status": "agent_operating_contract_routed_without_full_instruction_drift_map",
+  "claim_ready": false,
+  "readme_path": "README.md",
+  "docs_readme_path": "docs/README.md",
+  "development_path": "docs/development.md",
+  "agents_path": "AGENTS.md",
+  "workflow_path": ".github/workflows/tests.yml",
+  "agents_test_path": "tests/test_agents_docs.py",
+  "route_record_count": 6,
+  "missing_route_count": 0,
+  "missing_route_records": [],
+  "route_records": [
+    {
+      "record_kind": "readme_documentation_map_route",
+      "path": "README.md",
+      "required_markers": [
+        "[AGENTS.md](AGENTS.md)",
+        "agent-facing operating contract"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "docs_readme_reader_path_route",
+      "path": "docs/README.md",
+      "required_markers": [
+        "[AGENTS.md](../AGENTS.md)",
+        "agent-facing operating contract"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "development_ci_agent_path_scope",
+      "path": "docs/development.md",
+      "required_markers": [
+        "agent-facing instructions",
+        "AGENTS.md"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "agents_operating_contract_surface",
+      "path": "AGENTS.md",
+      "required_markers": [
+        "# AGENTS.md",
+        "Running Tests",
+        "Running the Tool"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "agents_docs_test_gate",
+      "path": "tests/test_agents_docs.py",
+      "required_markers": [
+        "test_agents_instructions",
+        "AGENTS.md"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "github_actions_agents_path_filter",
+      "path": ".github/workflows/tests.yml",
+      "required_markers": [
+        "AGENTS.md",
+        "tests/test_agents_docs.py"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    }
+  ],
+  "instruction_link_record_count": 5,
+  "missing_instruction_link_count": 0,
+  "missing_instruction_link_records": [],
+  "instruction_link_records": [
+    {
+      "record_kind": "command_instruction_links",
+      "path": "AGENTS.md",
+      "required_markers": [
+        "py -3.12 -m pytest tests/ -m \"not integration\" --tb=short",
+        "docs/development.md"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "test_instruction_links",
+      "path": "AGENTS.md",
+      "required_markers": [
+        "tests/test_agents_docs.py",
+        ".github/workflows/tests.yml"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "backend_instruction_links",
+      "path": "AGENTS.md",
+      "required_markers": [
+        "docs/backends.md",
+        "OpenAI, Anthropic, Ollama"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "artifact_instruction_links",
+      "path": "AGENTS.md",
+      "required_markers": [
+        "docs/run-artifacts.md",
+        "archive_events.jsonl",
+        "llm_calls.jsonl",
+        "best_workspace/"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    },
+    {
+      "record_kind": "alphaevolve_boundary_instruction_links",
+      "path": "AGENTS.md",
+      "required_markers": [
+        "papers/README.md",
+        "SEARCH/REPLACE",
+        "AlphaEvolve"
+      ],
+      "missing_markers": [],
+      "record_status": "all_markers_present"
+    }
+  ],
+  "routing_status": "agents_operating_contract_routed",
+  "required_evidence_fields": [
+    "readme_documentation_map_route",
+    "docs_readme_reader_path_route",
+    "development_ci_agent_path_scope",
+    "agents_operating_contract_surface",
+    "agents_docs_test_gate",
+    "github_actions_agents_path_filter",
+    "command_instruction_links",
+    "test_instruction_links",
+    "backend_instruction_links",
+    "artifact_instruction_links",
+    "alphaevolve_boundary_instruction_links",
+    "complete_instruction_drift_map",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "complete_instruction_drift_map": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records README/docs routing for AGENTS.md as an agent-facing operating contract, development-guide CI path scope, GitHub Actions AGENTS.md path-filter coverage, tests/test_agents_docs.py coverage, and bounded command, test, backend, artifact, and AlphaEvolve instruction links. It does not claim a complete instruction-drift map or owner review signoff."
+}

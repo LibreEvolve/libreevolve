@@ -19,7 +19,8 @@ paper/source status and claim boundaries.
 - Operator/debugger: use [Run Artifacts](./run-artifacts.md),
   [Configuration](./configuration.md), and [Backends](./backends.md).
 - Contributor: use [Development](./development.md), then the active TODO files
-  under [todo](./todo/).
+  under [todo](./todo/). Coding agents should also follow the repository-local
+  [AGENTS.md](../AGENTS.md) agent-facing operating contract.
 - Paper/spec reviewer: use [Current Status](./status.md),
   [ROADMAP](../ROADMAP.md), and [papers/README.md](../papers/README.md).
 
@@ -37,6 +38,8 @@ paper/source status and claim boundaries.
 - [Current Status](./status.md): Detailed implemented-versus-absent capability
   ledger moved out of the root README.
 - [Development](./development.md): Local setup, tests, and contributor workflow.
+- [AGENTS.md](../AGENTS.md): Agent-facing operating contract for local coding
+  agents.
 - [Paper Cache](../papers/README.md): Local paper roles, implementation status,
   and benchmark coverage decisions.
 

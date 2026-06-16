@@ -2850,6 +2850,12 @@ Implemented:
   checkbox-plan signals, README/docs routing, and `old/**` GitHub Actions
   path-filter coverage. It is not owner review signoff or evidence that
   archival plans are current implementation evidence.
+- `papers/readme_agent_routing_boundary.json`: README AGENTS routing sidecar.
+  It records the root README route, docs-index route, development-guide CI
+  path scope, AGENTS.md operating-contract surface, `tests/test_agents_docs.py`
+  coverage, GitHub Actions `AGENTS.md` path-filter coverage, and bounded
+  command, test, backend, artifact, and AlphaEvolve instruction links. It is not a
+  complete AGENTS instruction-drift map or owner review signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

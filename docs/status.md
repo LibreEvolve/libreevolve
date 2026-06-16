@@ -1313,7 +1313,8 @@ Important limits:
   `papers/roadmap_multi_objective_search_boundary.json`,
   `papers/roadmap_multi_objective_readiness_boundary.json`,
   `papers/documentation_truthfulness_boundary.json`,
-  `papers/tracked_legacy_surface_boundary.json`, and
+  `papers/tracked_legacy_surface_boundary.json`,
+  `papers/readme_agent_routing_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
@@ -1321,6 +1322,12 @@ Important limits:
   signals, README/docs routing, and `old/**` CI path-filter coverage. This is
   not owner review signoff for archival retention and not evidence that
   archival plans are current implementation evidence.
+- README AGENTS routing evidence now records the root README route,
+  docs-index route, development-guide CI path scope, AGENTS.md operating-
+  contract surface, `tests/test_agents_docs.py` coverage, GitHub Actions
+  `AGENTS.md` path-filter coverage, and bounded command/test/backend/artifact/
+  AlphaEvolve instruction links. This is not a complete AGENTS instruction-
+  drift map or owner review signoff.
 - ROADMAP claim-evidence mapping now records six claim surfaces for the
   ROADMAP scope preamble, current-state bullet inventory, implementation
   evidence links, good-first priority claims, cross-document claim sync, and

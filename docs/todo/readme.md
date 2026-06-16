@@ -41,22 +41,27 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     runtime, testing, backend, artifact, and AlphaEvolve-diff conventions, the
     root README should route it explicitly or declare why it is excluded from
     the reader-facing documentation map.
-  - Current evidence: the README Documentation Map links `docs/README.md`,
-    architecture, configuration, backends, plugins, run artifacts, status,
-    ROADMAP, `papers/README.md`, and `docs/todo/`, but it does not mention the
-    tracked root `AGENTS.md`. A separate active TODO below tracks AGENTS.md
-    content drift, and `tests/test_agents_docs.py` checks selected agent-doc
-    invariants, but those do not prove that README/docs routing includes the
-    agent-facing operating surface.
-  - Current gap: no README-owned route entry, docs-index entry, or drift check
-    classifies `AGENTS.md` as agent-only, contributor-facing, or hidden
-    operational policy; no validator detects when README, `docs/README.md`,
-    `docs/development.md`, and `AGENTS.md` give overlapping commands or
-    conventions without a declared source of truth.
-  - Required result: add README/docs routing for `AGENTS.md` or a deliberate
-    exclusion policy, then validate that agent-facing command, test, backend,
-    artifact, and AlphaEvolve-boundary instructions stay linked to the
-    corresponding human-facing docs and TODO owners.
+  - Current evidence: the README Documentation Map now links `AGENTS.md` as
+    the agent-facing operating contract for local coding agents, `docs/README.md`
+    routes contributors and coding agents to it, and `docs/development.md`
+    names `AGENTS.md` inside the path-scoped CI boundary. `AGENTS.md` links
+    back to `docs/development.md`, `docs/backends.md`,
+    `docs/run-artifacts.md`, and `papers/README.md`.
+    `papers/readme_agent_routing_boundary.json` records the README route,
+    docs-index route, development-guide CI path scope, AGENTS surface,
+    `tests/test_agents_docs.py` coverage, GitHub Actions `AGENTS.md` path
+    filter, and bounded command/test/backend/artifact/AlphaEvolve instruction
+    links.
+  - Current gap: the sidecar is a routing and bounded-link inventory, not a
+    complete AGENTS instruction-drift map. It does not prove that every
+    overlapping command, backend, artifact, test, API, and TODO convention in
+    AGENTS.md is semantically synchronized with README, docs, ROADMAP, papers,
+    and code.
+  - Required result: add a complete AGENTS instruction-drift map with stable
+    instruction ids, source-of-truth links, per-instruction semantic checks,
+    TODO-owner links for stale or intentionally divergent instructions, and
+    owner review signoff before treating AGENTS.md as fully synchronized with
+    the human-facing documentation set.
 
 ## Requirements
 

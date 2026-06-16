@@ -126,7 +126,8 @@ git diff --check
 
 The GitHub Actions `Tests` workflow runs on manual dispatch and on path-scoped
 `push` / `pull_request` events for source, tests, docs, TODO ledgers,
-agent-facing instructions, workflow config, and paper-index files. It runs the
+agent-facing instructions such as `AGENTS.md`, workflow config, and paper-index
+files. It runs the
 secret scan, non-integration unit tests on Python 3.11 and 3.12, and optional
 integration tests when an Anthropic API key is available. A green `Tests` badge
 means the last completed workflow passed for the paths that triggered it; local

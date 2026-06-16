@@ -25,6 +25,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "paper_manifest_stale_absence_wording_checks",
     "boundary_sidecar_registry",
     "tracked_legacy_surface_inventory",
+    "readme_agent_routing_inventory",
     "documentation_claim_inventory",
     "focused_boundary_tests",
     "semantic_claim_verifier",
@@ -78,8 +79,9 @@ def documentation_truthfulness_boundary_record() -> dict[str, Any]:
             "path filters, paper-manifest README and papers-index consistency "
             "checks, paper-manifest TODO coverage rows, stale source-specific "
             "absence wording checks, a boundary sidecar registry, a top-level "
-            "tracked legacy-surface inventory, README/ROADMAP claim inventory, "
-            "and focused boundary tests. It does not claim semantic "
+            "tracked legacy-surface inventory, README AGENTS.md routing "
+            "inventory, README/ROADMAP claim inventory, and focused boundary "
+            "tests. It does not claim semantic "
             "documentation-claim verification, complete implementation-evidence "
             "mapping, stale completed entry detection, generated alignment "
             "reports, or full proof that every "

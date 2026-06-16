@@ -81,6 +81,23 @@ def test_development_docs_track_detect_secrets_baseline_workflow():
     assert ".secrets.baseline" in pre_commit
 
 
+def test_readme_and_docs_route_agents_operating_contract():
+    readme = Path("README.md").read_text(encoding="utf-8")
+    docs_readme = Path("docs/README.md").read_text(encoding="utf-8")
+    development = Path("docs/development.md").read_text(encoding="utf-8")
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+
+    assert "[AGENTS.md](AGENTS.md)" in readme
+    assert "agent-facing operating contract" in readme
+    assert "[AGENTS.md](../AGENTS.md)" in docs_readme
+    assert "agent-facing operating contract" in docs_readme
+    assert "agent-facing instructions such as `AGENTS.md`" in development
+    assert "docs/development.md" in agents
+    assert "docs/backends.md" in agents
+    assert "docs/run-artifacts.md" in agents
+    assert "papers/README.md" in agents
+
+
 def test_tests_workflow_covers_docs_papers_and_todo_changes():
     workflow = yaml.safe_load(Path(".github/workflows/tests.yml").read_text(encoding="utf-8"))
     triggers = workflow.get("on", workflow.get(True))

@@ -1323,6 +1323,7 @@ Important limits:
   `papers/readme_quick_start_smoke_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
+  `papers/readme_provider_example_matrix_boundary.json`,
   `papers/readme_paper_cache_topic_boundary.json`,
   `papers/readme_paper_cache_rehydrate_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
@@ -1389,6 +1390,16 @@ Important limits:
   GitHub Actions Anthropic secret markers, and the secret-scan baseline marker.
   This is not complete backend-registry auth reflection, live provider account
   probes, a provider-auth drift CI gate, or owner review signoff.
+- README provider-example matrix evidence now records the OpenAI, Anthropic,
+  and Ollama placeholder command markers, account/local-model guidance,
+  provider failure-scope wording, `.env.example` provider placeholders, CLI
+  `type:model` shorthand and built-in credential-preflight markers,
+  custom-backend `class_path`/`kwargs` contract markers, configuration-guide
+  shorthand markers, and the Anthropic-only credential-gated integration-test
+  skip marker. This is not live OpenAI/Anthropic model availability proof,
+  local Ollama inventory, a credential-safe provider smoke matrix,
+  account-specific model-id provenance, a CI provider matrix, or Google/Gemini
+  provider parity.
 - README paper-cache topic evidence now records the README topic sentence,
   download-manifest row count, papers-index implementation-status row count,
   papers-index role inventory, and bounded heuristic topic-family signals for

@@ -2838,11 +2838,11 @@ Implemented:
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README
   routing, GitHub Actions docs path-filter, paper-manifest consistency,
   TODO-coverage, stale source-specific wording, sidecar-registry, top-level
-  README/ROADMAP/papers-index claim-inventory, and focused boundary-test
-  evidence. It is not evidence of semantic documentation-claim verification,
-  complete implementation-evidence mapping, stale completed-entry detection,
-  generated alignment reports, or full proof that every AlphaEvolve-facing
-  claim is current.
+  README/ROADMAP/papers-index claim-inventory, README provider-example matrix
+  inventory, and focused boundary-test evidence. It is not evidence of
+  semantic documentation-claim verification, complete implementation-evidence
+  mapping, stale completed-entry detection, generated alignment reports, or
+  full proof that every AlphaEvolve-facing claim is current.
 - `papers/docs_index_reader_path_boundary.json`: docs-index reader-path
   sidecar. It records `docs/README.md` reader paths, operational-guide routes,
   documentation-boundary markers, route target existence checks, target
@@ -2914,6 +2914,16 @@ Implemented:
   markers, and the secret-scan baseline marker. It is not complete
   backend-registry auth reflection, live provider account probes, a
   provider-auth drift CI gate, or owner review signoff.
+- `papers/readme_provider_example_matrix_boundary.json`: README provider-
+  example matrix sidecar. It records the README OpenAI, Anthropic, and Ollama
+  placeholder command markers, account/local-model guidance, provider failure
+  scope, `.env.example` provider placeholders, CLI `type:model` shorthand and
+  built-in credential-preflight markers, custom-backend `class_path`/`kwargs`
+  contract markers, configuration-guide shorthand markers, and the
+  Anthropic-only credential-gated integration-test skip marker. It is not live
+  OpenAI/Anthropic model availability proof, local Ollama inventory, a
+  credential-safe provider smoke matrix, account-specific model-id provenance,
+  a CI provider matrix, or Google/Gemini provider parity.
 - `papers/readme_paper_cache_topic_boundary.json`: README paper-cache topic
   sidecar. It records the README paper-cache topic sentence,
   download-manifest row count, papers-index implementation-status row count,

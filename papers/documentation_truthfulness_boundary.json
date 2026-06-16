@@ -27,6 +27,7 @@
     "readme_quick_start_smoke_inventory",
     "readme_install_smoke_inventory",
     "readme_provider_auth_inventory",
+    "readme_provider_example_matrix_inventory",
     "readme_paper_cache_topic_inventory",
     "readme_paper_cache_rehydrate_inventory",
     "documentation_claim_inventory",
@@ -44,5 +45,5 @@
     "generated_alignment_report": "not_recorded_locally",
     "full_alphaevolve_claim_truth_proof": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has README status scoping, ROADMAP status scoping, papers-index status scoping, active and completed TODO ledgers, docs/README routing, docs-index reader-path inventory, docs/status.md ledger inventory, docs/architecture.md runtime-flow inventory, GitHub Actions docs path filters, paper-manifest README and papers-index consistency checks, paper-manifest TODO coverage rows, stale source-specific absence wording checks, a boundary sidecar registry, a top-level tracked legacy-surface inventory, README AGENTS.md routing inventory, README Documentation Map inventory, README Repository Layout inventory, README quick-start smoke inventory, README install-smoke inventory, README provider-auth setup inventory, README paper-cache topic inventory, README paper-cache rehydrate inventory, README/ROADMAP claim inventory, and focused boundary tests. It does not claim semantic documentation-claim verification, complete implementation-evidence mapping, stale completed entry detection, generated alignment reports, or full proof that every AlphaEvolve-facing claim is current."
+  "claim_boundary": "This boundary records that LibreEvolve has README status scoping, ROADMAP status scoping, papers-index status scoping, active and completed TODO ledgers, docs/README routing, docs-index reader-path inventory, docs/status.md ledger inventory, docs/architecture.md runtime-flow inventory, GitHub Actions docs path filters, paper-manifest README and papers-index consistency checks, paper-manifest TODO coverage rows, stale source-specific absence wording checks, a boundary sidecar registry, a top-level tracked legacy-surface inventory, README AGENTS.md routing inventory, README Documentation Map inventory, README Repository Layout inventory, README quick-start smoke inventory, README install-smoke inventory, README provider-auth setup inventory, README provider-example matrix inventory, README paper-cache topic inventory, README paper-cache rehydrate inventory, README/ROADMAP claim inventory, and focused boundary tests. It does not claim semantic documentation-claim verification, complete implementation-evidence mapping, stale completed entry detection, generated alignment reports, or full proof that every AlphaEvolve-facing claim is current."
 }

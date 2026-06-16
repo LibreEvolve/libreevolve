@@ -433,26 +433,28 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: the README explicitly tells users to replace
     `<openai-model-id>`, `<anthropic-model-id>`, and
     `<installed-ollama-model>` with models available to their account or local
-    install, and warns that provider-backed runs may fail. The current
-    `tests/integration/test_hello_world.py` coverage is credential-gated on
-    `ANTHROPIC_API_KEY`; it does not prove the README OpenAI example, Ollama
-    example, account-specific model ids, or provider-command parity.
-  - Current gap: there is no committed provider smoke matrix, redacted model
-    availability record, local Ollama inventory, or CI/report artifact that
-    proves each provider-backed README command family remains runnable. This
-    also keeps Google/Gemini AlphaEvolve provider parity separate from the
-    README's generic backend examples.
-    A narrower current gap is CLI-versus-config backend coverage: the README
-    provider examples use the `--backends type:model` shortcut, while
-    `libreevolve/cli.py` turns each shortcut into only `{"type": t,
-    "model": m}` and `libreevolve/core/config.py` requires custom backends to
-    carry `class_path` (and optional JSON-safe `kwargs`) through config. The
-    README therefore has no smoke evidence or reader guardrail proving how
-    custom import-path backends are configured outside the CLI shorthand.
-  - Required result: add provider-family smoke evidence with safe credential
-    handling, account/local model id provenance, expected skip/failure modes,
-    and README/TODO updates whenever provider example commands or supported
-    backend families change.
+    install, and warns that provider-backed runs may fail.
+    `papers/readme_provider_example_matrix_boundary.json` now records those
+    README command markers, account/local-model guidance, provider
+    failure-scope wording, `.env.example` provider placeholders, CLI
+    `type:model` shorthand construction, built-in OpenAI/Anthropic credential
+    preflight markers, custom-backend `class_path`/`kwargs` contract markers,
+    configuration-guide shorthand markers, and the Anthropic-only
+    credential-gated integration-test skip marker.
+  - Current gap: the committed provider-example matrix is static boundary
+    evidence only. It does not prove live OpenAI model availability, live
+    Anthropic model availability, local Ollama inventory, a credential-safe
+    provider smoke matrix, account-specific model-id provenance, a CI provider
+    matrix, or Google/Gemini AlphaEvolve provider parity. The current
+    `tests/integration/test_hello_world.py` coverage remains credential-gated
+    on `ANTHROPIC_API_KEY`; it does not prove the README OpenAI example,
+    Ollama example, account-specific model ids, or equal provider-command
+    parity.
+  - Required result: extend the static provider-example matrix into
+    provider-family smoke evidence with safe credential handling,
+    account/local model id provenance, expected skip/failure modes, CI/report
+    artifacts, and README/TODO updates whenever provider example commands or
+    supported backend families change.
 
 - [ ] Add README guardrail for subprocess/CLI-authenticated LLM providers.
   - Spec evidence: AlphaEvolve-style experiments rely on auditable provider

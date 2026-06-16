@@ -420,24 +420,31 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     distribution evidence, configurable retention surfaces, evaluator-artifact
     content retrieval, bounded DeepEvolve-style retrieval provenance, proposal
     score/diversity/hypothesis/backtracking reports, absolute/improvement
-    meta-prompt rewards, and a local `PromptDatabase`. Active code and paper
-    TODOs already track role-specific template compatibility, all-role
-    provider-token packing, separate stochastic format source provenance,
-    structured prompt-context policy expansion, audit-grade retrieval
-    integrity, semantic proposal retrieval, calibrated meta-prompt rewards,
-    and prompt-database parity.
+    meta-prompt rewards, and a local `PromptDatabase`.
+    `papers/roadmap_prompt_context_system_boundary.json` now records a
+    bounded nine-criterion ROADMAP matrix for role-template compatibility,
+    context-source selection, token section packing, stochastic prompt-format
+    provenance, retention/replay policy, retrieval integrity, proposal-memory
+    semantics, meta-prompt reward evidence, and prompt-database lifecycle.
+    Active code and paper TODOs already track role-specific template
+    compatibility, all-role provider-token packing, separate stochastic format
+    source provenance, structured prompt-context policy expansion,
+    audit-grade retrieval integrity, semantic proposal retrieval, calibrated
+    meta-prompt rewards, and prompt-database parity.
   - Current gap: there is no section-level prompt/context readiness rubric,
     capability matrix, or stale-readiness detector that proves these features
     compose into a safe AlphaEvolve-style prompt system, nor a guard preventing
     one bounded prompt feature from implying full prompt/context parity.
-  - Required result: add ROADMAP prompt/context criteria that classify each
-    prompt role and context source by template compatibility, source
-    selection/summarization policy, token-counter authority, section-packing
-    coverage, retention/replay policy, retrieval provenance, proposal-memory
-    semantics, meta-prompt reward evidence, prompt-database lifecycle,
-    benchmark evidence, and overclaim status, and validate README, ROADMAP,
-    papers, runtime metadata, and prompt docs against implying complete
-    AlphaEvolve prompt/context readiness before the matrix is satisfied.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: prompt-role capability matrix, deterministic context
+    summarization, all-role provider-token section packing, separate
+    prompt-format source provenance, full prompt replay-retention policy,
+    audit-grade retrieval source integrity, semantic proposal memory,
+    calibrated meta-prompt rewards, prompt-database archive lifecycle,
+    prompt/context benchmark evidence, stale-readiness detector, and owner
+    review signoff; then validate README, ROADMAP, papers, runtime metadata,
+    and prompt docs against implying complete AlphaEvolve prompt/context
+    readiness before those criteria are satisfied.
 
 - [ ] Add ROADMAP evaluation-cascade readiness criteria.
   - Spec evidence: the `3. Expand evaluation cascades` section defines the

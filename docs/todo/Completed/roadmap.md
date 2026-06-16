@@ -15269,3 +15269,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     budget accounting, external environment replay, end-to-end resumed trace
     proof, stale-readiness detector, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP prompt/context-system readiness matrix.
+  - Spec evidence: AlphaEvolve prompt/context readiness requires prompt-role
+    template compatibility, context-source selection, token packing,
+    prompt-format provenance, replay-safe retention, retrieval integrity,
+    proposal memory, calibrated meta-prompt rewards, and a prompt-database
+    lifecycle, not isolated prompt features.
+  - Status: `papers/roadmap_prompt_context_system_boundary.json` now records
+    nine criteria for role-template compatibility, context-source selection,
+    token section packing, stochastic prompt-format provenance,
+    retention/replay policy, retrieval integrity, proposal-memory semantics,
+    meta-prompt reward evidence, and prompt-database lifecycle, with current
+    scope, missing-readiness, sidecar-ref, active-TODO, validation-gate, and
+    readiness labels. The paper-manifest gate now requires and validates the
+    sidecar at the repo root.
+  - Remaining roadmap gap: prompt-role capability matrix, deterministic
+    context summarization, all-role provider-token section packing, separate
+    prompt-format source provenance, full prompt replay-retention policy,
+    audit-grade retrieval source integrity, semantic proposal memory,
+    calibrated meta-prompt rewards, prompt-database archive lifecycle,
+    prompt/context benchmark evidence, stale-readiness detector, and owner
+    review signoff remain active in `docs/todo/roadmap.md`.

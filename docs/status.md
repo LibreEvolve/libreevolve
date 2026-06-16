@@ -1273,6 +1273,7 @@ Important limits:
   `papers/roadmap_plugin_extensibility_boundary.json`,
   `papers/roadmap_backend_scheduling_critique_boundary.json`,
   `papers/roadmap_async_resumable_runtime_boundary.json`,
+  `papers/roadmap_prompt_context_system_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1340,6 +1341,18 @@ Important limits:
   migration restore engine, provider-output replay, plugin RNG replay, async
   budget accounting, external environment replay, end-to-end resumed trace
   proof, stale-readiness detector, or owner review signoff.
+- ROADMAP prompt/context-system evidence now records nine criteria for
+  role-template compatibility, context-source selection, token section packing,
+  stochastic prompt-format provenance, retention/replay policy, retrieval
+  integrity, proposal-memory semantics, meta-prompt reward evidence, and
+  prompt-database lifecycle, with current scope, missing-readiness,
+  sidecar-ref, active-TODO, validation-gate, and readiness labels. This is not
+  a prompt-role capability matrix, deterministic context summarization,
+  all-role provider-token section packing, separate prompt-format source
+  provenance, full prompt replay-retention policy, audit-grade retrieval
+  source integrity, semantic proposal memory, calibrated meta-prompt rewards,
+  prompt-database archive lifecycle, prompt/context benchmark evidence,
+  stale-readiness detector, or owner review signoff.
 - ROADMAP operational-maturity evidence now records six section-level criteria
   with risk classes, current sidecar refs, active TODO refs, and
   acceptance-gate labels. This is not a global acceptance threshold, unified

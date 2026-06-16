@@ -2937,6 +2937,19 @@ Implemented:
   engine, provider-output replay, plugin RNG replay, async budget accounting,
   external environment replay, end-to-end resumed trace proof,
   stale-readiness detector, or owner review signoff.
+- `papers/roadmap_prompt_context_system_boundary.json`: ROADMAP
+  prompt/context-system sidecar with nine criteria for role-template
+  compatibility, context-source selection, token section packing, stochastic
+  prompt-format provenance, retention/replay policy, retrieval integrity,
+  proposal-memory semantics, meta-prompt reward evidence, and prompt-database
+  lifecycle, with current scope, missing-readiness, sidecar-ref, active-TODO,
+  validation-gate, and readiness labels. It is not evidence of a prompt-role
+  capability matrix, deterministic context summarization, all-role
+  provider-token section packing, separate prompt-format source provenance,
+  full prompt replay-retention policy, audit-grade retrieval source integrity,
+  semantic proposal memory, calibrated meta-prompt rewards,
+  prompt-database archive lifecycle, prompt/context benchmark evidence,
+  stale-readiness detector, or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

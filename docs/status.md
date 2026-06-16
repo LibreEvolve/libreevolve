@@ -1281,6 +1281,7 @@ Important limits:
   `papers/roadmap_plugin_extensibility_boundary.json`,
   `papers/roadmap_plugin_readiness_boundary.json`,
   `papers/roadmap_backend_scheduling_critique_boundary.json`,
+  `papers/roadmap_backend_control_plane_readiness_boundary.json`,
   `papers/roadmap_async_resumable_runtime_boundary.json`,
   `papers/roadmap_prompt_context_system_boundary.json`,
   `papers/roadmap_evaluation_cascade_boundary.json`,
@@ -1404,6 +1405,12 @@ Important limits:
   raw provider replay, live hard cancellation, equal-budget scheduler
   comparator, first-class Gemini lane evidence, async reviewer isolation,
   stale-readiness detector, or owner review signoff.
+- ROADMAP backend control-plane readiness evidence now records eight criteria
+  for backend-role capability, calibrated reward/quota policy, live
+  pricing/default and raw replay, hard cancellation/resume, equal-budget
+  scheduler comparison, Gemini lane/substitution, critique reviewer isolation,
+  and stale readiness/owner signoff. This is not an implemented backend
+  control-plane gate or proof of scheduler/provider/Gemini/critique parity.
 - ROADMAP async/resumable-runtime evidence now records nine criteria for
   topology, parallel evaluation, controller pending work, archive-event replay,
   RNG/lineage replay, provider/plugin nondeterminism, budget resume,

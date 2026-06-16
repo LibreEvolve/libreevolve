@@ -1,0 +1,295 @@
+{
+  "active_todo_ref_count": 16,
+  "boundary_status": "bounded_backend_control_plane_readiness_matrix_without_scheduler_parity_gate",
+  "claim_boundary": "This boundary records backend control-plane readiness criteria tied to the bounded backend scheduling and critique matrix. It does not claim a backend-role capability matrix, critique-control checklist, calibrated reward policy, role quota ownership, live provider pricing/default evidence, raw provider replay, live hard cancellation, equal-budget scheduler comparator, first-class Gemini lane evidence, async reviewer isolation, stale-readiness detector, or owner review signoff.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "async_reviewer_isolation": "not_recorded_locally",
+    "backend_role_capability_matrix": "not_recorded_locally",
+    "calibrated_reward_policy": "not_recorded_locally",
+    "critique_control_checklist": "not_recorded_locally",
+    "equal_budget_scheduler_comparator": "not_recorded_locally",
+    "first_class_gemini_lane_evidence": "not_recorded_locally",
+    "live_hard_cancellation": "not_recorded_locally",
+    "live_provider_pricing_default_evidence": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "raw_provider_replay": "not_recorded_locally",
+    "role_quota_ownership": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally"
+  },
+  "readiness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "backend-role capability matrix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "role and provider lane",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "backend roles, provider lanes, and scheduler eligibility",
+      "criterion_id": "backend_role_capability_matrix",
+      "current_scope": "nine ROADMAP backend/critique tracks with local sidecar and TODO links",
+      "missing_readiness": "backend-role capability matrix separating selection policy, provider support, quota ownership, replay, cancellation, and reviewer semantics",
+      "readiness_status": "track_matrix_without_control_plane_capability_gate",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_backend_scheduling_critique_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/provider_diagnostics_replay_boundary.json"
+        }
+      ],
+      "validation_gate": "backend-role capability matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "calibrated reward policy",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "role quota ownership",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "role-scoped scheduler rewards, budgets, quotas, and backend choice",
+      "criterion_id": "calibrated_reward_quota_policy",
+      "current_scope": "heuristic reward accounting and role-scoped budget maps",
+      "missing_readiness": "calibrated reward policy and explicit role quota ownership for each backend lane",
+      "readiness_status": "heuristic_rewards_without_owned_role_quotas",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/llm_role_scheduler_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/llm_budget_policy_boundary.json"
+        }
+      ],
+      "validation_gate": "calibrated reward and quota ownership policy"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "live provider pricing/default evidence",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "raw provider replay",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "provider telemetry, pricing defaults, and replayable request/response evidence",
+      "criterion_id": "live_pricing_default_and_raw_replay",
+      "current_scope": "configured token-cost estimates and bounded scalar diagnostics",
+      "missing_readiness": "live provider pricing/default evidence plus raw provider replay policy",
+      "readiness_status": "configured_pricing_without_live_default_or_raw_replay",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/provider_pricing_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/provider_diagnostics_replay_boundary.json"
+        }
+      ],
+      "validation_gate": "live pricing/default and raw replay evidence"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "live hard cancellation",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "resume semantics",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "provider timeout, hard cancellation, scheduler state, and resumed runs",
+      "criterion_id": "hard_cancellation_and_resume",
+      "current_scope": "policy-only cancellation evidence and bounded pending-work resume surfaces",
+      "missing_readiness": "live hard cancellation artifacts and resume semantics that preserve scheduler/provider state",
+      "readiness_status": "policy_cancellation_without_live_hard_cancel_or_resume_gate",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/provider_cancellation_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/controller_pending_work_resume_boundary.json"
+        }
+      ],
+      "validation_gate": "live cancellation and resumed scheduler trace evidence"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "equal-budget scheduler comparator",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "equal-budget comparator evidence",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "fast/strong model mix, proposal budgets, and scheduler comparisons",
+      "criterion_id": "equal_budget_scheduler_comparator",
+      "current_scope": "throughput/depth metadata, sample-efficiency boundaries, and no equal-budget comparator",
+      "missing_readiness": "equal-budget scheduler comparator proving backend policy effects separately from call caps",
+      "readiness_status": "metadata_and_curves_without_equal_budget_comparator",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/fast_strong_model_mix_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/sample_efficiency_boundary.json"
+        }
+      ],
+      "validation_gate": "equal-budget scheduler comparison report"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "first-class Gemini lane evidence",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Gemini substitution status",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "Gemini provider lane, substitution rules, and self-training loop claims",
+      "criterion_id": "gemini_lane_and_substitution",
+      "current_scope": "Gemini absence/parity boundaries and no first-class Gemini lane evidence",
+      "missing_readiness": "first-class Gemini lane evidence and explicit Gemini substitution status",
+      "readiness_status": "absence_boundary_without_first_class_gemini_lane",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/gemini_provider_parity_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/gemini_self_training_loop_boundary.json"
+        }
+      ],
+      "validation_gate": "Gemini lane and substitution policy evidence"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "critique-control checklist",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "critique/reviewer isolation",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "critique reviewer pools, reviewer overlap, and critique-to-revision attribution",
+      "criterion_id": "critique_reviewer_isolation",
+      "current_scope": "synchronous first/last-valid reviewer aggregation without async isolation",
+      "missing_readiness": "critique-control checklist and async reviewer isolation evidence",
+      "readiness_status": "synchronous_aggregation_without_reviewer_isolation",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/critique_reviewer_pool_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/incorrect_suggestion_audit_boundary.json"
+        }
+      ],
+      "validation_gate": "critique-control checklist and reviewer isolation report"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "stale-readiness detector",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner signoff",
+          "required_phrase_present": true
+        }
+      ],
+      "control_plane_surface": "README, papers, ROADMAP, generated inventories, and owner readiness claims",
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "current_scope": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "missing_readiness": "stale-readiness detector and owner signoff before backend-scheduler parity claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "readiness_criterion_count": 8,
+  "required_evidence_fields": [
+    "backend_role_capability_matrix",
+    "calibrated_reward_quota_policy",
+    "live_pricing_default_and_raw_replay",
+    "hard_cancellation_and_resume",
+    "equal_budget_scheduler_comparator",
+    "gemini_lane_and_substitution",
+    "critique_reviewer_isolation",
+    "stale_readiness_and_owner_signoff"
+  ],
+  "schema": "libreevolve.roadmap_backend_control_plane_readiness_boundary.v1",
+  "sidecar_ref_count": 16,
+  "source_active_todo_ref_count": 18,
+  "source_backend_boundary_input": "papers/roadmap_backend_scheduling_critique_boundary.json",
+  "source_sidecar_ref_count": 13,
+  "source_track_count": 9
+}

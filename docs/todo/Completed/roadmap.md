@@ -15515,3 +15515,22 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     checklist, constructor registry, versioned registry, lifecycle hash policy,
     runtime isolation policy, paper-scope policy, stale-readiness detector, and
     owner review signoff remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP backend control-plane readiness matrix.
+  - Spec evidence: backend-scheduling and critique claims require more than
+    separate track records for scheduler heuristics, provider diagnostics,
+    model lanes, Gemini parity, and reviewer pools.
+  - Status: `papers/roadmap_backend_control_plane_readiness_boundary.json` now
+    records eight readiness criteria for backend-role capability, calibrated
+    reward/quota policy, live pricing/default and raw replay, hard
+    cancellation/resume, equal-budget scheduler comparison, Gemini
+    lane/substitution, critique reviewer isolation, and stale readiness/owner
+    signoff. It links the existing backend-scheduling/critique boundary input,
+    sidecar refs, active TODO refs, validation-gate labels, readiness labels,
+    and explicit missing-evidence fields. The paper-manifest gate now requires
+    and validates the sidecar at the repo root.
+  - Remaining roadmap gap: the actual backend-role capability matrix,
+    critique-control checklist, calibrated reward policy, role quota
+    ownership, live pricing/default evidence, raw replay, live hard
+    cancellation, equal-budget comparator, first-class Gemini lane, async
+    reviewer isolation, stale-readiness detector, and owner signoff remain
+    active in `docs/todo/roadmap.md`.

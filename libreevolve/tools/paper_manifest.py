@@ -259,6 +259,10 @@ from libreevolve.problems.benchmarks.roadmap_backend_scheduling_critique_boundar
     roadmap_backend_scheduling_critique_boundary_record,
     validate_roadmap_backend_scheduling_critique_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_backend_control_plane_readiness_boundary import (
+    roadmap_backend_control_plane_readiness_boundary_record,
+    validate_roadmap_backend_control_plane_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_async_resumable_runtime_boundary import (
     roadmap_async_resumable_runtime_boundary_record,
     validate_roadmap_async_resumable_runtime_boundary,
@@ -840,6 +844,7 @@ ROADMAP_BENCHMARK_PORTFOLIO_READINESS_BOUNDARY_FILE = "papers/roadmap_benchmark_
 ROADMAP_PLUGIN_EXTENSIBILITY_BOUNDARY_FILE = "papers/roadmap_plugin_extensibility_boundary.json"
 ROADMAP_PLUGIN_READINESS_BOUNDARY_FILE = "papers/roadmap_plugin_readiness_boundary.json"
 ROADMAP_BACKEND_SCHEDULING_CRITIQUE_BOUNDARY_FILE = "papers/roadmap_backend_scheduling_critique_boundary.json"
+ROADMAP_BACKEND_CONTROL_PLANE_READINESS_BOUNDARY_FILE = "papers/roadmap_backend_control_plane_readiness_boundary.json"
 ROADMAP_ASYNC_RESUMABLE_RUNTIME_BOUNDARY_FILE = "papers/roadmap_async_resumable_runtime_boundary.json"
 ROADMAP_PROMPT_CONTEXT_SYSTEM_BOUNDARY_FILE = "papers/roadmap_prompt_context_system_boundary.json"
 ROADMAP_EVALUATION_CASCADE_BOUNDARY_FILE = "papers/roadmap_evaluation_cascade_boundary.json"
@@ -1518,6 +1523,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_plugin_extensibility_boundary(root_path))
     issues.extend(_validate_roadmap_plugin_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_backend_scheduling_critique_boundary(root_path))
+    issues.extend(_validate_roadmap_backend_control_plane_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_async_resumable_runtime_boundary(root_path))
     issues.extend(_validate_roadmap_prompt_context_system_boundary(root_path))
     issues.extend(_validate_roadmap_evaluation_cascade_boundary(root_path))
@@ -4711,6 +4717,43 @@ def _validate_roadmap_backend_scheduling_critique_boundary(root_path: Path) -> l
             f"roadmap_backend_scheduling_critique_boundary_{issue.code}",
             issue.message,
             "roadmap_backend_scheduling_critique",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_backend_control_plane_readiness_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_BACKEND_CONTROL_PLANE_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_backend_control_plane_readiness_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_BACKEND_CONTROL_PLANE_READINESS_BOUNDARY_FILE} "
+                        "must emit ROADMAP backend control-plane readiness metadata"
+                    ),
+                    "roadmap_backend_control_plane_readiness",
+                )
+            ]
+        return []
+    report = validate_roadmap_backend_control_plane_readiness_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_backend_control_plane_readiness_boundary_{issue.code}",
+            issue.message,
+            "roadmap_backend_control_plane_readiness",
         )
         for issue in report.issues
     ]

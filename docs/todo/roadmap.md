@@ -428,6 +428,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     budget/quota, pricing/default-rate, diagnostics/replay, cancellation,
     resume, equal-budget, reviewer-isolation, Gemini-substitution,
     sidecar-ref, active-TODO, validation-gate, and readiness labels.
+    The bounded
+    `papers/roadmap_backend_control_plane_readiness_boundary.json` sidecar now
+    records eight readiness criteria for backend-role capability, calibrated
+    reward/quota policy, live pricing/default and raw replay, hard
+    cancellation/resume, equal-budget scheduler comparison, Gemini
+    lane/substitution, critique reviewer isolation, and stale readiness/owner
+    signoff.
   - Current gap: there is no backend-role capability matrix,
     critique-control checklist, calibrated reward policy, role quota ownership,
     live provider pricing/default evidence, raw provider replay, live hard
@@ -435,14 +442,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     evidence, async reviewer isolation, stale-readiness detector, or owner
     signoff proving when these scheduler/provider/critique pieces are coherent
     enough to support AlphaEvolve-style claims, nor a guard that prevents one
-    completed subfeature from implying full backend scheduling maturity.
+    completed subfeature from implying full backend scheduling maturity. The
+    sidecars are bounded track/readiness maps, not a backend control-plane gate.
   - Required result: add ROADMAP backend-scheduling criteria that classify each
     role and provider lane by selection policy, reward assumptions, budget and
     quota ownership, pricing/default-rate evidence, diagnostics/replay support,
     cancellation behavior, resume semantics, equal-budget comparator evidence,
     critique/reviewer isolation, Gemini substitution status, and validation
-    gates, then enforce README/papers/ROADMAP wording against overclaiming
-    backend-scheduler or critique parity until the matrix is complete.
+    gates, then implement the missing readiness fields recorded by the
+    control-plane sidecar and enforce README/papers/ROADMAP wording against
+    overclaiming backend-scheduler or critique parity until the matrix is
+    complete.
 
 - [ ] Add ROADMAP async/resumable-runtime readiness criteria.
   - Spec evidence: the `6. Async and resumable runtime` section is the main

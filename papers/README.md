@@ -2992,6 +2992,13 @@ Implemented:
   cancellation, equal-budget scheduler comparator, first-class Gemini lane
   evidence, async reviewer isolation, stale-readiness detector, or owner
   review signoff.
+- `papers/roadmap_backend_control_plane_readiness_boundary.json`: ROADMAP
+  backend control-plane readiness sidecar with eight criteria for backend-role
+  capability, calibrated reward/quota policy, live pricing/default and raw
+  replay, hard cancellation/resume, equal-budget scheduler comparison, Gemini
+  lane/substitution, critique reviewer isolation, and stale readiness/owner
+  signoff. It is not evidence that those scheduler, provider, Gemini, or
+  reviewer-readiness mechanisms are implemented.
 - `papers/roadmap_async_resumable_runtime_boundary.json`: ROADMAP
   async/resumable-runtime sidecar with nine criteria for topology, parallel
   evaluation, controller pending work, archive-event replay, RNG/lineage

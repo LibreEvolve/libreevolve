@@ -213,17 +213,23 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     priority items with stable ids, active TODO refs, priority rationale,
     dependency-readiness labels, validation gates, and AlphaEvolve impact
     labels.
-  - Current gap: the sidecar is a bounded static priority map, not a freshness
-    model. There is still no dependency-state refresh automation,
-    stale-priority detector, calibrated priority score model, CI freshness
-    gate, or owner review signoff proving these four items remain the best
+    `papers/roadmap_good_first_freshness_boundary.json` now records a six-
+    criterion freshness readiness matrix for dependency-state refresh
+    automation, stale-priority detection, calibrated priority scoring, CI
+    freshness gating, validation-artifact refresh, and owner review signoff.
+  - Current gap: the sidecars are bounded static-priority and freshness
+    readiness maps, not an implemented freshness model. There is still no
+    dependency-state refresh automation, stale-priority detector, calibrated
+    priority score model, CI freshness gate, validation-artifact freshness
+    report, or owner review signoff proving these four items remain the best
     first follow-ups after new ROADMAP, code, README, or paper-sidecar work
     lands.
-  - Required result: add a ROADMAP priority-evidence map for good-first items
-    that links each follow-up to active implementation TODOs, current
-    blockers, expected validation artifacts, and AlphaEvolve-alignment impact,
-    and add a drift check that forces the section to be refreshed when those
-    dependencies or implementation states change.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: dependency-state refresh automation, stale-priority detector,
+    calibrated priority score model, CI freshness gate, validation-artifact
+    freshness report for expected validation artifacts, current blockers, and
+    owner review signoff. The drift check must force the section to be
+    refreshed when dependencies or implementation states change.
 
 - [ ] Add ROADMAP phase-boundary and sequencing evidence.
   - Spec evidence: the `Near Term`, `Mid Term`, and `Longer Term` headings are

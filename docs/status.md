@@ -1271,6 +1271,7 @@ Important limits:
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_non_goal_drift_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
+  `papers/roadmap_good_first_freshness_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
   `papers/roadmap_operational_maturity_boundary.json`,
   `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
@@ -1340,6 +1341,12 @@ Important limits:
   dependency-readiness labels, validation gates, and AlphaEvolve impact labels.
   This is not dependency-state refresh automation, stale-priority detection,
   calibrated priority scoring, CI freshness gating, or owner review signoff.
+- ROADMAP Good First Follow-Ups freshness evidence now records six readiness
+  criteria for dependency-state refresh automation, stale-priority detection,
+  calibrated priority scoring, CI freshness gating, validation-artifact
+  refresh, and owner review signoff. This is not implemented dependency-state
+  refresh, stale-priority detection, a priority score model, CI freshness
+  enforcement, validation-artifact freshness, or owner review signoff.
 - ROADMAP phase-sequencing evidence now records the Near Term, Mid Term, and
   Longer Term sequence for ten major ROADMAP sections, active blocker TODO
   refs, validation-gate labels, and promotion criteria. This is not a full

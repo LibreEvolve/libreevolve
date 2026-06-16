@@ -2922,6 +2922,12 @@ Implemented:
   and AlphaEvolve impact labels. It is not evidence of dependency-state
   refresh automation, stale-priority detection, calibrated priority scoring,
   CI freshness gating, or owner review signoff.
+- `papers/roadmap_good_first_freshness_boundary.json`: ROADMAP Good First
+  Follow-Ups freshness readiness sidecar with six criteria for dependency-
+  state refresh automation, stale-priority detection, calibrated priority
+  scoring, CI freshness gating, validation-artifact refresh, and owner review
+  signoff. It is not evidence that those refresh checks, detectors, scoring
+  models, CI gates, artifact freshness reports, or signoffs are implemented.
 - `papers/roadmap_phase_sequence_boundary.json`: ROADMAP phase-sequencing
   sidecar with the current Near Term, Mid Term, and Longer Term sequence for
   ten major ROADMAP sections, active blocker TODO refs, validation-gate labels,

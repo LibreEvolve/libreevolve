@@ -15435,3 +15435,19 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     intentional-promotion workflow, contradiction-remediation report,
     runtime/plugin/docs/paper scope join, and owner review signoff remain
     active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP Good First Follow-Ups freshness readiness matrix.
+  - Spec evidence: the ROADMAP Good First Follow-Ups section is a priority
+    claim, so it needs explicit freshness evidence beyond the current static
+    map of four approachable follow-ups.
+  - Status: `papers/roadmap_good_first_freshness_boundary.json` now records
+    six freshness criteria for dependency-state refresh automation,
+    stale-priority detection, calibrated priority scoring, CI freshness
+    gating, validation-artifact refresh, and owner review signoff. It links
+    the existing Good First Follow-Ups boundary input, sidecar refs, active
+    TODO refs, validation-gate labels, readiness labels, and explicit
+    missing-evidence fields. The paper-manifest gate now requires and
+    validates the sidecar at the repo root.
+  - Remaining roadmap gap: dependency-state refresh automation,
+    stale-priority detector, calibrated priority score model, CI freshness
+    gate, validation-artifact freshness report, and owner review signoff
+    remain active in `docs/todo/roadmap.md`.

@@ -1059,6 +1059,54 @@ STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
 }
+STATUS_CLAIM_INVENTORY_README_SUMMARY_PATTERNS = (
+    (
+        "unique_local_artifact_count",
+        re.compile(r"`?(\d+)`?\s+unique referenced local artifact paths"),
+    ),
+    (
+        "local_artifact_mention_record_count",
+        re.compile(r"`?(\d+)`?\s+row-level artifact mention records"),
+    ),
+    (
+        "phrase_local_artifact_mention_record_count",
+        re.compile(r"`?(\d+)`?\s+phrase-level artifact mention records"),
+    ),
+    (
+        "unique_todo_evidence_path_count",
+        re.compile(r"`?(\d+)`?\s+unique referenced TODO evidence paths"),
+    ),
+    (
+        "todo_evidence_path_mention_count",
+        re.compile(r"`?(\d+)`?\s+TODO evidence path mention records"),
+    ),
+    (
+        "todo_content_matched_source_token_count",
+        re.compile(r"`?(\d+)`?\s+matched TODO content source tokens"),
+    ),
+    (
+        "todo_content_row_specific_block_record_count",
+        re.compile(r"`?(\d+)`?\s+row-specific TODO block hashes/source offsets"),
+    ),
+    (
+        "todo_content_artifact_mention_record_count",
+        re.compile(r"`?(\d+)`?\s+TODO content artifact mention source-offset records"),
+    ),
+    (
+        "phrase_todo_content_block_record_count",
+        re.compile(r"`?(\d+)`?\s+phrase-level TODO block records"),
+    ),
+    (
+        "absence_phrase_count",
+        re.compile(r"`?(\d+)`?\s+status-cell absence-signal phrases"),
+    ),
+    (
+        "absence_signal_record_count",
+        re.compile(
+            r"status-cell\s+absence-signal phrases with\s+`?(\d+)`?\s+source-offset records"
+        ),
+    ),
+)
 STATUS_ABSENCE_SIGNAL_RE = re.compile(
     r"\b(?:no|not|without|missing|lacks?|absence|absent|unimplemented|unsupported)\b"
     r"|\bnot\s+implemented\b|\bnot\s+yet\b|\bout\s+of\s+scope\b|\bremain(?:s)?\s+open\b",
@@ -3988,6 +4036,7 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
                     "status_claim_inventory",
                 )
             )
+    issues.extend(_validate_status_claim_inventory_readme_summary(root_path, data))
     for missing_path in expected["missing_local_artifact_paths"]:
         issues.append(
             PaperManifestIssue(
@@ -4020,6 +4069,55 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
                 _safe_manifest_label(str(missing_path)),
             )
         )
+    return issues
+
+
+def _validate_status_claim_inventory_readme_summary(
+    root_path: Path,
+    inventory: dict[str, Any],
+) -> list[PaperManifestIssue]:
+    readme_path = root_path / "papers" / "README.md"
+    try:
+        text = readme_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return [
+            PaperManifestIssue(
+                "status_claim_inventory_readme_summary_unreadable",
+                _manifest_diagnostic(readme_path, root_path, exc),
+                "status_claim_inventory",
+            )
+        ]
+    if STATUS_CLAIM_INVENTORY_FILE not in text:
+        return []
+    summary_start = text.find(f"`{STATUS_CLAIM_INVENTORY_FILE}`")
+    if summary_start < 0:
+        summary_start = text.find(STATUS_CLAIM_INVENTORY_FILE)
+    line_start = text.rfind("\n- ", 0, summary_start)
+    if line_start < 0:
+        line_start = text.rfind("\n", 0, summary_start)
+    block_start = 0 if line_start < 0 else line_start + 1
+    next_bullet = text.find("\n- `papers/", summary_start + len(STATUS_CLAIM_INVENTORY_FILE))
+    block_end = len(text) if next_bullet < 0 else next_bullet + 1
+    summary_text = text[block_start:block_end]
+
+    issues: list[PaperManifestIssue] = []
+    for key, pattern in STATUS_CLAIM_INVENTORY_README_SUMMARY_PATTERNS:
+        match = pattern.search(summary_text)
+        if match is None:
+            continue
+        documented = int(match.group(1))
+        current = inventory.get(key)
+        if documented != current:
+            issues.append(
+                PaperManifestIssue(
+                    f"status_claim_inventory_readme_summary_{key}_mismatch",
+                    (
+                        "papers/README.md status_claim_inventory summary "
+                        f"documents {key}={documented} but sidecar has {current}"
+                    ),
+                    "status_claim_inventory",
+                )
+            )
     return issues
 
 

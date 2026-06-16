@@ -29,7 +29,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     plus 6 unique status-row TODO evidence paths, 289 TODO evidence path
     mention records, and zero missing referenced TODO evidence paths. It also
     records row-specific TODO content evidence with 175 matched source tokens,
-    1048 row-specific TODO block hashes/source offsets, 404 artifact mention
+    1054 row-specific TODO block hashes/source offsets, 405 artifact mention
     source-offset records, zero status-row local artifact paths, and zero
     status-phrase local artifact paths missing from linked TODO evidence, plus
     393 phrase-level TODO block records. It now structurally classifies 87 status-cell
@@ -9553,21 +9553,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     when the paper row's role, implementation status, benchmark qualifier, or
     source-span evidence changes.
 
-- [ ] Add freshness checks for generated paper-index sidecar summaries.
+- [x] Add freshness checks for generated paper-index sidecar summaries.
   - Paper evidence: `papers/README.md` is the paper-facing index and also
     summarizes generated sidecars such as `papers/status_claim_inventory.json`
     for reviewers. Those summaries should not drift from the generated JSON
     sidecars they describe.
-  - Current evidence: the current `papers/status_claim_inventory.json` records
-    `1054` row-specific TODO block records and `405` TODO content artifact
-    mention records. The `papers/README.md` sidecar summary still reports
-    `1048` and `404` for those same generated-inventory fields.
-  - Current gap: `validate_paper_manifest()` verifies the sidecar JSON and
-    many `papers/README.md` structures, but there is no freshness check tying
-    generated count summaries in the paper index back to the current generated
-    sidecar values. A reviewer can therefore see stale count evidence even
-    while the sidecar and manifest gate are otherwise valid.
-  - Required result: add a generated-summary freshness validator for
-    `papers/README.md` that maps sidecar-summary count claims to the current
-    JSON fields, updates paper-index prose when regenerated sidecars change,
-    and fails when count summaries drift from their source sidecars.
+  - Status: `validate_paper_manifest()` now checks generated count summaries
+    in `papers/README.md` when the paper index mentions
+    `papers/status_claim_inventory.json`. The validator maps those summary
+    phrases back to the current generated JSON fields and emits targeted
+    `status_claim_inventory_readme_summary_*_mismatch` issues when a
+    documented count drifts. The paper-index prose now reports `1054`
+    row-specific TODO block records and `405` TODO content artifact mention
+    records, matching `papers/status_claim_inventory.json`.
+  - Verification: focused paper-manifest tests cover both matching and stale
+    `papers/status_claim_inventory.json` summary counts, so reviewers can no
+    longer see stale generated-count evidence while the manifest gate remains
+    green.

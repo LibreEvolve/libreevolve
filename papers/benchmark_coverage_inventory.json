@@ -7712,7 +7712,7 @@
       "coverage_id": "implemented_benchmark_065",
       "bullet_ordinal": 65,
       "summary_sha256": "c67107e9db74d93b2e27d1bfd392474b20a3abf407d91030140a16bf7f873def",
-      "body_sha256": "b1753d8b3d775c48d86b55e59558956f42701097ed24de7a880d17f80780f00d",
+      "body_sha256": "18b75017d26ec02fbed0d726ff910a722e033fcd57dbde5284526d2ee1dd55d4",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",

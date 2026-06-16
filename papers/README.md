@@ -2875,8 +2875,8 @@ Implemented:
   records, 60 phrase-level artifact mention records, and zero missing
   referenced local artifacts, plus 6 unique referenced TODO evidence paths,
   289 TODO evidence path mention records, and zero missing referenced TODO
-  evidence paths, 175 matched TODO content source tokens, 1048 row-specific
-  TODO block hashes/source offsets, 404 TODO content artifact mention
+  evidence paths, 175 matched TODO content source tokens, 1054 row-specific
+  TODO block hashes/source offsets, 405 TODO content artifact mention
   source-offset records, and zero status-row local artifact paths missing from
   linked row-specific TODO evidence. It also records zero
   status-phrase local artifact paths missing from linked row-specific TODO

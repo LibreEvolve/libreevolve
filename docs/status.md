@@ -1316,6 +1316,7 @@ Important limits:
   `papers/docs_index_reader_path_boundary.json`,
   `papers/docs_status_ledger_boundary.json`,
   `papers/docs_architecture_runtime_flow_boundary.json`,
+  `papers/backend_cli_provider_guardrail_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
@@ -1348,6 +1349,16 @@ Important limits:
   parity boundary. This is not semantic flow-order verification, source-
   function semantic verification, runtime manifest field verification,
   architecture limitation freshness, or owner review signoff.
+- Backend CLI-provider guardrail evidence now records the `docs/backends.md`
+  provider-lane taxonomy, built-in SDK adapter wording, custom import-path
+  backend wording, subprocess/CLI-authenticated provider guardrail wording,
+  custom CLI-wrapper limitation wording, the subprocess/CLI backend contract
+  TODO link, missing CLI contract field markers, README TODO ownership, and a
+  narrow scan for unsupported positive Codex/local CLI provider-support claims
+  across backend, configuration, README, ROADMAP, and papers-index claim
+  surfaces. This is not a first-class CLI backend contract, CLI backend
+  manifest schema, credential-safe CLI backend smoke, CLI provider attempt
+  accounting, or CLI provider diagnostics.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
   classification, obsolete `alphaevolve/*` path signals, legacy checkbox plan

@@ -2838,9 +2838,9 @@ Implemented:
   README, ROADMAP, papers-index, active/completed TODO-ledger, docs/README
   routing, GitHub Actions docs path-filter, paper-manifest consistency,
   TODO-coverage, stale source-specific wording, sidecar-registry, top-level
-  README/ROADMAP/papers-index claim-inventory, README provider-example matrix
-  inventory, README CLI-provider guardrail inventory, and focused boundary-test
-  evidence. It is not evidence of
+  README/ROADMAP/papers-index claim-inventory, backend CLI-provider guardrail
+  inventory, README provider-example matrix inventory, README CLI-provider
+  guardrail inventory, and focused boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
   full proof that every AlphaEvolve-facing claim is current.
@@ -2867,6 +2867,17 @@ Implemented:
   flow-order verification, source-function semantic verification, runtime
   manifest field verification, architecture limitation freshness, or owner
   review signoff.
+- `papers/backend_cli_provider_guardrail_boundary.json`: backend
+  CLI-provider guardrail sidecar. It records the `docs/backends.md`
+  provider-lane taxonomy, built-in SDK adapter wording, custom import-path
+  backend wording, subprocess/CLI-authenticated provider guardrail wording,
+  custom CLI-wrapper limitation wording, the subprocess/CLI backend contract
+  TODO link, missing CLI contract field markers, README TODO ownership, and a
+  narrow scan for unsupported positive Codex/local CLI provider-support claims
+  across backend, configuration, README, ROADMAP, and papers-index claim
+  surfaces. It is not a first-class CLI backend contract, CLI backend manifest
+  schema, credential-safe CLI backend smoke, CLI provider attempt accounting,
+  or CLI provider diagnostics.
 - `papers/tracked_legacy_surface_boundary.json`: tracked legacy-surface
   sidecar for `old/**` planning material. It records the committed legacy
   Markdown inventory, archival/non-authoritative classification, self-

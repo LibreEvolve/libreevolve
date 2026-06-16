@@ -11,6 +11,36 @@ common `generate(prompt, **kwargs) -> str` interface:
 The bandit router that selects among them is implemented in
 [`libreevolve/llm/ensemble.py`](../libreevolve/llm/ensemble.py).
 
+## Provider lanes
+
+Backend support has three distinct lanes:
+
+- Built-in SDK adapters: OpenAI, Anthropic, and Ollama are constructed by
+  LibreEvolve and participate in the standard credential preflight,
+  request-parameter, retry, timeout, scheduler, telemetry, and manifest
+  surfaces documented below.
+- Custom import-path backends: `type: custom` loads an extension-owned Python
+  object by `class_path` and calls its `generate(prompt, **kwargs) -> str`
+  method. This is useful for experiments, but the custom backend owns any
+  provider-specific authentication, command execution, transcript retention,
+  token accounting, model availability checks, and diagnostics that are not
+  exposed through the common interface.
+- Subprocess/CLI-authenticated providers: Codex-authenticated or other local
+  CLI sessions are not a first-class provider lane in the committed backend
+  contract. A user can write a custom wrapper around a CLI, but that wrapper is
+  not portable provider support, benchmark evidence, or paper-facing model-mix
+  parity until the subprocess/CLI backend contract in
+  [docs/todo/code.md](todo/code.md) is implemented with manifest fields,
+  diagnostics, and smoke fixtures.
+
+Do not use custom-wrapper examples to claim Codex-authenticated or local CLI
+provider support in README, ROADMAP, benchmark prompts, or paper-facing
+materials. Required missing pieces include command discovery, auth/session
+provenance without secret capture, stdin/stdout protocol guarantees,
+transcript hashing or retention policy, provider-attempt accounting, timeout
+and cancellation behavior, provider-error classification, model availability
+preflight, manifest/report fields, and credential-safe smoke tests.
+
 ## Selection and reward
 
 `LLMEnsemble` wraps one or more backends and chooses one backend per mutation

@@ -492,28 +492,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     extension points. It should make the current backend boundary clear before
     benchmark prompts or local experiments rely on Codex-authenticated or other
     local CLI sessions as if they were first-class supported providers.
-  - Current evidence: `docs/backends.md` lists OpenAI, Anthropic, Ollama, and
-    custom import-path backends, then documents custom backends as Python
-    `class_path` implementations with JSON-safe kwargs and the common
-    `generate(prompt, **kwargs) -> str` protocol. The active code TODO tracks
-    the missing subprocess/CLI backend contract, and the README TODO tracks
-    top-level provider wording, but the backend docs page itself does not yet
-    separate SDK adapters, extension-owned wrappers, and any future
-    CLI-authenticated provider lane.
-  - Current gap: a reader can treat a custom import-path wrapper around a local
-    CLI as equivalent to supported provider integration, even though
-    `docs/backends.md` currently has no command-discovery, auth-session,
-    transcript-retention, provider-attempt accounting, timeout/cancellation,
-    or diagnostics contract for that lane. There is also no backend-doc drift
-    check preventing examples, configuration snippets, or model-selection
-    guidance from implying Codex-authenticated or local CLI provider support
-    before the tracked backend contract and smoke evidence exist.
-  - Required result: update `docs/backends.md` with an explicit provider-lane
-    taxonomy, custom-wrapper limitation wording, and links to the
-    subprocess/CLI backend contract TODO; add a docs/test guard that rejects
-    CLI-authenticated provider examples or supported-provider claims until the
-    first-class contract, manifest fields, diagnostics, and smoke fixtures are
-    implemented.
+  - Current evidence: `docs/backends.md` now has a provider-lane taxonomy that
+    separates built-in SDK adapters, custom import-path backends, and
+    subprocess/CLI-authenticated providers. It states that a custom wrapper
+    around Codex or another local CLI is not portable provider support,
+    benchmark evidence, or paper-facing model-mix parity until the
+    subprocess/CLI backend contract in `docs/todo/code.md` is implemented.
+    `papers/backend_cli_provider_guardrail_boundary.json` records that
+    taxonomy, the custom-wrapper limitation wording, the code TODO link,
+    missing CLI contract field markers, README TODO ownership, and a narrow
+    scan for unsupported positive Codex/local CLI provider-support claims
+    across backend, configuration, README, ROADMAP, and papers-index claim
+    surfaces.
+  - Current gap: the backend-doc guardrail is documentation-boundary evidence
+    only. It does not implement a first-class CLI backend contract, CLI backend
+    manifest schema, credential-safe CLI backend smoke, CLI provider attempt
+    accounting, or CLI provider diagnostics. The guide still cannot make
+    Codex-authenticated or local CLI providers part of the supported provider
+    set until those missing contract fields and smoke fixtures exist.
+  - Required result: implement the first-class subprocess/CLI backend contract
+    with manifest fields, diagnostics, provider-attempt accounting,
+    timeout/cancellation behavior, auth/session provenance, transcript
+    policy, model availability preflight, and credential-safe smoke fixtures;
+    keep backend docs, README, ROADMAP, benchmark prompts, and paper-facing
+    materials from claiming support until that evidence exists.
 
 - [ ] Add backend-guide provider contract drift evidence.
   - Spec evidence: `docs/backends.md` is the detailed operational contract for

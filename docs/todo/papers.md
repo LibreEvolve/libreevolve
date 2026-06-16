@@ -9570,3 +9570,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/status_claim_inventory.json` summary counts, so reviewers can no
     longer see stale generated-count evidence while the manifest gate remains
     green.
+
+- [x] Add freshness checks for generated benchmark-coverage sidecar summaries.
+  - Paper evidence: `papers/README.md` also summarizes
+    `papers/benchmark_coverage_inventory.json` for reviewers. That sidecar is
+    structural benchmark-coverage evidence, so its paper-index count summary
+    must stay tied to the generated JSON rather than becoming a stale
+    hand-maintained claim.
+  - Status: `validate_paper_manifest()` now checks generated count summaries
+    in `papers/README.md` when the paper index mentions
+    `papers/benchmark_coverage_inventory.json`. The validator maps the
+    summary's referenced-source, source-token-match, local-artifact, and
+    missing-artifact counts back to current generated JSON fields and emits
+    targeted `benchmark_coverage_inventory_readme_summary_*_mismatch` issues
+    when documented counts drift.
+  - Verification: focused paper-manifest tests cover both matching and stale
+    `papers/benchmark_coverage_inventory.json` summary counts, so benchmark
+    coverage summary evidence can no longer drift while the manifest gate
+    remains green.

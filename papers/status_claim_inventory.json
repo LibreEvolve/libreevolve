@@ -13554,10 +13554,10 @@
               "block_kind": "active",
               "block_ordinal": 243,
               "file_text_char_start": 652648,
-              "file_text_char_end": 655011,
+              "file_text_char_end": 656108,
               "line_start": 9537,
-              "line_end": 9573,
-              "block_sha256": "b2d6d3ad9a76a434ba6583cae36aef3ff76545f7bcd0dda5429775ef4c41e29e",
+              "line_end": 9591,
+              "block_sha256": "9bfb747ea56843be1f30c16bbc5b9d5afb78d29090023b4e99ab3833a2d4e566",
               "matched_source_tokens": [
                 "2511.17592"
               ],
@@ -13595,8 +13595,8 @@
             },
             {
               "path": "papers/gigaevo_framework_boundary.json",
-              "evidence_text_char_start": 354199,
-              "evidence_text_char_end": 354237
+              "evidence_text_char_start": 355296,
+              "evidence_text_char_end": 355334
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -14675,10 +14675,10 @@
               "block_kind": "active",
               "block_ordinal": 243,
               "file_text_char_start": 652648,
-              "file_text_char_end": 655011,
+              "file_text_char_end": 656108,
               "line_start": 9537,
-              "line_end": 9573,
-              "block_sha256": "b2d6d3ad9a76a434ba6583cae36aef3ff76545f7bcd0dda5429775ef4c41e29e",
+              "line_end": 9591,
+              "block_sha256": "9bfb747ea56843be1f30c16bbc5b9d5afb78d29090023b4e99ab3833a2d4e566",
               "matched_source_tokens": [
                 "2510.14150"
               ],
@@ -14716,8 +14716,8 @@
             },
             {
               "path": "papers/codeevolve_boundary.json",
-              "evidence_text_char_start": 360023,
-              "evidence_text_char_end": 360054
+              "evidence_text_char_start": 361120,
+              "evidence_text_char_end": 361151
             }
           ],
           "mentioned_local_artifact_paths": [
@@ -29619,10 +29619,10 @@
               "block_kind": "active",
               "block_ordinal": 243,
               "file_text_char_start": 652648,
-              "file_text_char_end": 655011,
+              "file_text_char_end": 656108,
               "line_start": 9537,
-              "line_end": 9573,
-              "block_sha256": "b2d6d3ad9a76a434ba6583cae36aef3ff76545f7bcd0dda5429775ef4c41e29e",
+              "line_end": 9591,
+              "block_sha256": "9bfb747ea56843be1f30c16bbc5b9d5afb78d29090023b4e99ab3833a2d4e566",
               "matched_source_tokens": [
                 "2605.08520"
               ],
@@ -29663,8 +29663,8 @@
             },
             {
               "path": "papers/2605.08520__FlashEvolve.pdf",
-              "evidence_text_char_start": 237426,
-              "evidence_text_char_end": 237460
+              "evidence_text_char_start": 238523,
+              "evidence_text_char_end": 238557
             }
           ],
           "mentioned_local_artifact_paths": [

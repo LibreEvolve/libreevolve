@@ -1119,6 +1119,24 @@ BENCHMARK_COVERAGE_MISSING_EVIDENCE = {
     "benchmark_bullet_freshness_matrix": "not_recorded_locally",
     "benchmark_result_reproduction_links": "not_recorded_locally",
 }
+BENCHMARK_COVERAGE_README_SUMMARY_PATTERNS = (
+    (
+        "source_id_mention_count",
+        re.compile(r"`?(\d+)`?\s+referenced manifest source IDs"),
+    ),
+    (
+        "source_token_match_record_count",
+        re.compile(r"across\s+`?(\d+)`?\s+source-token match records"),
+    ),
+    (
+        "unique_local_artifact_count",
+        re.compile(r"`?(\d+)`?\s+unique referenced local artifact paths"),
+    ),
+    (
+        "missing_local_artifact_path_count",
+        re.compile(r"(zero|`?\d+`?)\s+missing referenced local artifacts", flags=re.IGNORECASE),
+    ),
+)
 
 
 @dataclass(frozen=True)
@@ -4201,6 +4219,7 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
                     "benchmark_coverage_inventory",
                 )
             )
+    issues.extend(_validate_benchmark_coverage_readme_summary(root_path, data))
     for missing_path in expected["missing_local_artifact_paths"]:
         issues.append(
             PaperManifestIssue(
@@ -4210,6 +4229,65 @@ def _validate_benchmark_coverage_inventory(root_path: Path) -> list[PaperManifes
             )
         )
     return issues
+
+
+def _validate_benchmark_coverage_readme_summary(
+    root_path: Path,
+    inventory: dict[str, Any],
+) -> list[PaperManifestIssue]:
+    readme_path = root_path / "papers" / "README.md"
+    try:
+        text = readme_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return [
+            PaperManifestIssue(
+                "benchmark_coverage_inventory_readme_summary_unreadable",
+                _manifest_diagnostic(readme_path, root_path, exc),
+                "benchmark_coverage_inventory",
+            )
+        ]
+    if BENCHMARK_COVERAGE_INVENTORY_FILE not in text:
+        return []
+    summary_start = text.find(f"`{BENCHMARK_COVERAGE_INVENTORY_FILE}`")
+    if summary_start < 0:
+        summary_start = text.find(BENCHMARK_COVERAGE_INVENTORY_FILE)
+    line_start = text.rfind("\n- ", 0, summary_start)
+    if line_start < 0:
+        line_start = text.rfind("\n", 0, summary_start)
+    block_start = 0 if line_start < 0 else line_start + 1
+    next_bullet = text.find("\n- `papers/", summary_start + len(BENCHMARK_COVERAGE_INVENTORY_FILE))
+    block_end = len(text) if next_bullet < 0 else next_bullet + 1
+    summary_text = text[block_start:block_end]
+
+    issues: list[PaperManifestIssue] = []
+    for key, pattern in BENCHMARK_COVERAGE_README_SUMMARY_PATTERNS:
+        match = pattern.search(summary_text)
+        if match is None:
+            continue
+        documented = _documented_summary_count(match.group(1))
+        if key == "missing_local_artifact_path_count":
+            current = len(inventory.get("missing_local_artifact_paths") or [])
+        else:
+            current = inventory.get(key)
+        if documented != current:
+            issues.append(
+                PaperManifestIssue(
+                    f"benchmark_coverage_inventory_readme_summary_{key}_mismatch",
+                    (
+                        "papers/README.md benchmark_coverage_inventory summary "
+                        f"documents {key}={documented} but sidecar has {current}"
+                    ),
+                    "benchmark_coverage_inventory",
+                )
+            )
+    return issues
+
+
+def _documented_summary_count(value: str) -> int:
+    normalized = value.strip().strip("`").lower()
+    if normalized == "zero":
+        return 0
+    return int(normalized)
 
 
 def _validate_release_artifact_reproducibility_boundary(root_path: Path) -> list[PaperManifestIssue]:

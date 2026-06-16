@@ -12378,6 +12378,90 @@ def test_validate_paper_manifest_rejects_benchmark_coverage_inventory_drift(tmp_
     }
 
 
+def test_validate_paper_manifest_accepts_benchmark_coverage_readme_summary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    artifact_path = tmp_path / "libreevolve" / "problems" / "benchmarks" / "matrix_results.py"
+    artifact_path.parent.mkdir(parents=True)
+    artifact_path.write_text("# matrix result evidence\n", encoding="utf-8")
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + f"- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, tracks `{row['id']}` but not yet a full benchmark.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Self-improvement evidence is not implemented.\n",
+        encoding="utf-8",
+    )
+    inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
+    (tmp_path / paper_manifest.BENCHMARK_COVERAGE_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n"
+        + "- `papers/benchmark_coverage_inventory.json`: structural inventory. "
+        + "The current inventory records "
+        + f"{inventory['source_id_mention_count']} referenced manifest source IDs across "
+        + f"{inventory['source_token_match_record_count']} source-token match records, "
+        + f"{inventory['unique_local_artifact_count']} unique referenced local artifact paths, "
+        + "and zero missing referenced local artifacts.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+
+
+def test_validate_paper_manifest_reports_stale_benchmark_coverage_readme_summary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    _write_status_table(tmp_path, [row["id"]])
+    artifact_path = tmp_path / "libreevolve" / "problems" / "benchmarks" / "matrix_results.py"
+    artifact_path.parent.mkdir(parents=True)
+    artifact_path.write_text("# matrix result evidence\n", encoding="utf-8")
+    readme_path = tmp_path / "papers" / "README.md"
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n\n## Benchmark coverage decisions\n\n"
+        + "Implemented:\n\n"
+        + f"- `libreevolve/problems/benchmarks/matrix_results.py`: implemented locally, tracks `{row['id']}` but not yet a full benchmark.\n\n"
+        + "Planned or background-only:\n\n"
+        + "- Self-improvement evidence is not implemented.\n",
+        encoding="utf-8",
+    )
+    inventory = paper_manifest.paper_benchmark_coverage_inventory_record(tmp_path)
+    (tmp_path / paper_manifest.BENCHMARK_COVERAGE_INVENTORY_FILE).write_text(
+        json.dumps(inventory, indent=2),
+        encoding="utf-8",
+    )
+    stale_count = inventory["unique_local_artifact_count"] + 1
+    readme_path.write_text(
+        readme_path.read_text(encoding="utf-8")
+        + "\n"
+        + "- `papers/benchmark_coverage_inventory.json`: structural inventory. "
+        + "The current inventory records "
+        + f"{inventory['source_id_mention_count']} referenced manifest source IDs across "
+        + f"{inventory['source_token_match_record_count']} source-token match records, "
+        + f"{stale_count} unique referenced local artifact paths, "
+        + "and zero missing referenced local artifacts.\n",
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert (
+        "benchmark_coverage_inventory_readme_summary_"
+        "unique_local_artifact_count_mismatch"
+    ) in codes
+
+
 def test_validate_paper_manifest_rejects_missing_benchmark_coverage_local_artifact(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

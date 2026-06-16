@@ -30,6 +30,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "readme_install_smoke_inventory",
     "readme_provider_auth_inventory",
     "readme_paper_cache_topic_inventory",
+    "readme_paper_cache_rehydrate_inventory",
     "documentation_claim_inventory",
     "focused_boundary_tests",
     "semantic_claim_verifier",
@@ -86,7 +87,8 @@ def documentation_truthfulness_boundary_record() -> dict[str, Any]:
             "tracked legacy-surface inventory, README AGENTS.md routing "
             "inventory, README Documentation Map inventory, README install-smoke "
             "inventory, README provider-auth setup inventory, README paper-cache "
-            "topic inventory, README/ROADMAP claim inventory, and "
+            "topic inventory, README paper-cache rehydrate inventory, "
+            "README/ROADMAP claim inventory, and "
             "focused boundary tests. It does not claim semantic "
             "documentation-claim verification, complete implementation-evidence "
             "mapping, stale completed entry detection, generated alignment "

@@ -1318,7 +1318,8 @@ Important limits:
   `papers/readme_documentation_map_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
-  `papers/readme_paper_cache_topic_boundary.json`, and
+  `papers/readme_paper_cache_topic_boundary.json`,
+  `papers/readme_paper_cache_rehydrate_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
@@ -1357,6 +1358,12 @@ Important limits:
   related benchmarks. This is not a row-level reviewed topic taxonomy,
   taxonomy reviewer signoff, semantic verification of the README topic phrase,
   a new-paper out-of-scope detector, or owner review signoff.
+- README paper-cache rehydrate evidence now records the README and papers-
+  index rehydrate commands, manifest row count, paper-manifest CLI flags,
+  rehydrate report fields, missing-PDF download test, existing-PDF skip test,
+  force-redownload test, and redacted network-failure test. This is not a
+  clean-checkout absent-cache transcript, live network outcome matrix, full
+  hash-verification transcript, or owner review signoff.
 - ROADMAP claim-evidence mapping now records six claim surfaces for the
   ROADMAP scope preamble, current-state bullet inventory, implementation
   evidence links, good-first priority claims, cross-document claim sync, and

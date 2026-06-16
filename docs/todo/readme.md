@@ -173,11 +173,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and redacted network failures. The local `--require-local-pdfs` check
     currently proves that this workstation has 53 present PDFs, and
     `papers/README.md` also documents the rehydrate command.
-  - Current gap: no committed README-owned transcript, sidecar, or CI/manual
-    run artifact proves the exact README `--rehydrate` command from a clean
-    checkout with an absent PDF cache, records expected network failure/skip
-    modes, confirms all downloaded files match manifest hashes, or separates
-    rehydrate drift from ordinary local-cache validation.
+    `papers/readme_paper_cache_rehydrate_boundary.json` now records the README
+    and papers-index rehydrate commands, manifest row count, paper-manifest CLI
+    flags, rehydrate report fields, missing-PDF download test, existing-PDF
+    skip test, force-redownload test, and redacted network-failure test.
+  - Current gap: the sidecar is a bounded command and test-marker inventory,
+    not a clean-checkout transcript. No committed README-owned CI/manual run
+    artifact proves the exact README `--rehydrate` command from a clean
+    checkout with an absent PDF cache, records a live network outcome matrix,
+    confirms all downloaded files match manifest hashes in one retained
+    transcript, or separates rehydrate drift from ordinary local-cache
+    validation with owner signoff.
   - Required result: add a fresh-checkout rehydrate proof that runs or
     faithfully simulates the README command from an empty ignored PDF cache,
     records row counts, downloaded/skipped/failure states, byte-count/hash

@@ -2885,6 +2885,13 @@ Implemented:
   related benchmarks. It is not a row-level reviewed topic taxonomy, taxonomy
   reviewer signoff, semantic verification of the README topic phrase, a
   new-paper out-of-scope detector, or owner review signoff.
+- `papers/readme_paper_cache_rehydrate_boundary.json`: README paper-cache
+  rehydrate sidecar. It records the README and papers-index rehydrate
+  commands, manifest row count, paper-manifest CLI flags, rehydrate report
+  fields, missing-PDF download test, existing-PDF skip test, force-redownload
+  test, and redacted network-failure test. It is not a clean-checkout
+  absent-cache transcript, live network outcome matrix, full
+  hash-verification transcript, or owner review signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

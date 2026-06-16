@@ -113,13 +113,20 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `OLLAMA_HOST=http://localhost:11434`. Separate TODOs already cover broad
     provider smoke wording, backend-guide drift, contributor secret-scan
     mapping, and CLI-authenticated provider overclaiming.
-  - Current gap: there is no README/docs-owned inventory or validation gate
-    tying `.env.example` to the supported backend registry, documented
-    credential names, dotenv provenance, integration-test requirements,
-    placeholder safety policy, and detect-secrets baseline. A provider can be
-    added, removed, renamed, or moved to a different authentication lane while
-    `.env.example`, README quick-start guidance, backend docs, and secret-scan
-    expectations drift independently.
+    `papers/readme_provider_auth_boundary.json` now records the `.env.example`
+    provider variables, placeholder safety, README provider-auth guidance,
+    backend/configuration/development dotenv markers, CLI dotenv override and
+    credential-preflight markers, integration-test credential skip markers,
+    GitHub Actions Anthropic secret markers, and the secret-scan baseline
+    marker.
+  - Current gap: the sidecar is a bounded static marker inventory, not a
+    semantic provider-auth drift gate. It does not parse the backend registry
+    to prove every supported auth lane is represented, perform live
+    provider-account probes, enforce a CI gate for provider-auth drift, or
+    record owner review signoff. A provider can still be added, removed,
+    renamed, or moved to a different authentication lane while `.env.example`,
+    README quick-start guidance, backend docs, and secret-scan expectations
+    drift independently outside the recorded marker set.
   - Required result: add a provider-auth setup evidence map or test that parses
     `.env.example`, verifies each variable against backend/config docs and
     credential preflight code, rejects real-looking committed secrets while

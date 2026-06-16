@@ -64,21 +64,21 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     ] == "todo_anchor_recorded"
     assert inventory["uncovered_heading_todo_link_records"][0]["todo_span"][
         "line_start"
-    ] == 177
+    ] == 184
     assert (
         inventory["status_ledger_inventory_status"]
         == "status_ledger_structural_bullet_inventory_without_semantic_verifier"
     )
     assert inventory["status_ledger_source_path"] == "docs/status.md"
-    assert inventory["status_ledger_bullet_count"] == 221
+    assert inventory["status_ledger_bullet_count"] == 222
     assert inventory["status_ledger_section_counts"] == {
         "implemented_today": 9,
-        "important_limits": 212,
+        "important_limits": 213,
     }
     assert inventory["status_ledger_signal_term_count"] == 11
-    assert inventory["status_ledger_signal_record_count"] == 534
-    assert inventory["status_ledger_unique_local_path_ref_count"] == 170
-    assert inventory["status_ledger_local_path_ref_count"] == 217
+    assert inventory["status_ledger_signal_record_count"] == 536
+    assert inventory["status_ledger_unique_local_path_ref_count"] == 171
+    assert inventory["status_ledger_local_path_ref_count"] == 218
     assert inventory["status_ledger_missing_local_path_refs"] == []
     assert "paper_artifacts/..." not in inventory["status_ledger_unique_local_path_refs"]
     assert (
@@ -313,8 +313,8 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| claim_surface_heading_count | 34 |" in summary
     assert "| uncovered_claim_surface_heading_count | 28 |" in summary
     assert "| uncovered_heading_todo_link_count | 3 |" in summary
-    assert "| status_ledger_bullet_count | 221 |" in summary
-    assert "| status_ledger_local_path_ref_count | 217 |" in summary
+    assert "| status_ledger_bullet_count | 222 |" in summary
+    assert "| status_ledger_local_path_ref_count | 218 |" in summary
     assert "| run_artifact_documented_count | 22 |" in summary
     assert "| run_artifact_cleanup_count | 20 |" in summary
     assert "| run_artifact_documented_without_cleanup_count | 2 |" in summary

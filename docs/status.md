@@ -1315,8 +1315,9 @@ Important limits:
   `papers/documentation_truthfulness_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
-  `papers/readme_documentation_map_boundary.json`, plus
-  `papers/readme_install_smoke_boundary.json`, and
+  `papers/readme_documentation_map_boundary.json`,
+  `papers/readme_install_smoke_boundary.json`,
+  `papers/readme_provider_auth_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
@@ -1341,6 +1342,13 @@ Important limits:
   development-guide editable-install command. This is not a clean-environment
   install transcript, Python and pip version record, dev-dependency import smoke,
   install-failure classifier, or owner review signoff.
+- README provider-auth evidence now records the `.env.example` provider
+  variables, placeholder safety, README provider-auth guidance,
+  backend/configuration/development dotenv markers, CLI dotenv override and
+  credential-preflight markers, integration-test credential skip markers,
+  GitHub Actions Anthropic secret markers, and the secret-scan baseline marker.
+  This is not complete backend-registry auth reflection, live provider account
+  probes, a provider-auth drift CI gate, or owner review signoff.
 - ROADMAP claim-evidence mapping now records six claim surfaces for the
   ROADMAP scope preamble, current-state bullet inventory, implementation
   evidence links, good-first priority claims, cross-document claim sync, and

@@ -2869,6 +2869,14 @@ Implemented:
   command. It is not a clean-environment install transcript, Python and pip
   version record, dev-dependency import smoke, install-failure classifier, or
   owner review signoff.
+- `papers/readme_provider_auth_boundary.json`: README provider-auth setup
+  sidecar. It records the `.env.example` provider variables, placeholder
+  safety, README provider-auth guidance, backend/configuration/development
+  dotenv markers, CLI dotenv override and credential-preflight markers,
+  integration-test credential skip markers, GitHub Actions Anthropic secret
+  markers, and the secret-scan baseline marker. It is not complete
+  backend-registry auth reflection, live provider account probes, a
+  provider-auth drift CI gate, or owner review signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

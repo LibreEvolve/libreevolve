@@ -1,0 +1,197 @@
+{
+  "schema": "libreevolve.readme_provider_auth_boundary.v1",
+  "boundary_status": "readme_provider_auth_static_markers_without_live_provider_proof",
+  "claim_ready": false,
+  "env_example_path": ".env.example",
+  "readme_path": "README.md",
+  "docs_paths": [
+    "docs/backends.md",
+    "docs/configuration.md",
+    "docs/development.md"
+  ],
+  "code_paths": [
+    "libreevolve/cli.py",
+    "tests/integration/test_hello_world.py"
+  ],
+  "workflow_path": ".github/workflows/tests.yml",
+  "secret_scan_path": ".secrets.baseline",
+  "expected_provider_variables": {
+    "OPENAI_API_KEY": "sk-your-openai-key-here",
+    "ANTHROPIC_API_KEY": "sk-ant-your-anthropic-key-here",
+    "OLLAMA_HOST": "http://localhost:11434"
+  },
+  "env_variable_count": 3,
+  "env_variable_records": [
+    {
+      "line": 6,
+      "name": "OPENAI_API_KEY",
+      "value": "sk-your-openai-key-here",
+      "record_status": "env_variable_recorded"
+    },
+    {
+      "line": 11,
+      "name": "ANTHROPIC_API_KEY",
+      "value": "sk-ant-your-anthropic-key-here",
+      "record_status": "env_variable_recorded"
+    },
+    {
+      "line": 16,
+      "name": "OLLAMA_HOST",
+      "value": "http://localhost:11434",
+      "record_status": "env_variable_recorded"
+    }
+  ],
+  "env_missing_count": 0,
+  "env_missing_records": [],
+  "placeholder_records": [
+    {
+      "name": "OPENAI_API_KEY",
+      "value": "sk-your-openai-key-here",
+      "placeholder_status": "placeholder_safe"
+    },
+    {
+      "name": "ANTHROPIC_API_KEY",
+      "value": "sk-ant-your-anthropic-key-here",
+      "placeholder_status": "placeholder_safe"
+    },
+    {
+      "name": "OLLAMA_HOST",
+      "value": "http://localhost:11434",
+      "placeholder_status": "placeholder_safe"
+    }
+  ],
+  "unsafe_placeholder_count": 0,
+  "unsafe_placeholder_records": [],
+  "marker_record_count": 17,
+  "missing_marker_count": 0,
+  "missing_marker_records": [],
+  "marker_records": [
+    {
+      "record_kind": "readme_env_file",
+      "path": "README.md",
+      "required_marker": "Optional provider credentials in `.env`",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "readme_provider_failure_scope",
+      "path": "README.md",
+      "required_marker": "credentials, model IDs, local Ollama state, or account access",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "backends_openai_key",
+      "path": "docs/backends.md",
+      "required_marker": "OPENAI_API_KEY=...",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "backends_anthropic_key",
+      "path": "docs/backends.md",
+      "required_marker": "ANTHROPIC_API_KEY=...",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "backends_ollama_host",
+      "path": "docs/backends.md",
+      "required_marker": "OLLAMA_HOST=http://localhost:11434",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "backends_override_true",
+      "path": "docs/backends.md",
+      "required_marker": "override=True",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "configuration_dotenv_override",
+      "path": "docs/configuration.md",
+      "required_marker": "override=True",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "configuration_provider_env_names",
+      "path": "docs/configuration.md",
+      "required_marker": "OPENAI_API_KEY",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "configuration_anthropic_env_name",
+      "path": "docs/configuration.md",
+      "required_marker": "ANTHROPIC_API_KEY",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "configuration_ollama_env_name",
+      "path": "docs/configuration.md",
+      "required_marker": "OLLAMA_HOST",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "development_env_block",
+      "path": "docs/development.md",
+      "required_marker": "Create a `.env` file in the repository root",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "cli_dotenv_load",
+      "path": "libreevolve/cli.py",
+      "required_marker": "load_dotenv(dotenv_path=path, override=True)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "cli_required_env",
+      "path": "libreevolve/cli.py",
+      "required_marker": "\"openai\": \"OPENAI_API_KEY\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "cli_required_anthropic_env",
+      "path": "libreevolve/cli.py",
+      "required_marker": "\"anthropic\": \"ANTHROPIC_API_KEY\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "workflow_anthropic_secret",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "secrets.ANTHROPIC_API_KEY",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "integration_anthropic_skip",
+      "path": "tests/integration/test_hello_world.py",
+      "required_marker": "os.getenv(\"ANTHROPIC_API_KEY\")",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "secret_scan_baseline",
+      "path": ".secrets.baseline",
+      "required_marker": "\"plugins_used\"",
+      "marker_status": "marker_present"
+    }
+  ],
+  "provider_auth_marker_status": "provider_auth_static_markers_present",
+  "required_evidence_fields": [
+    "env_example_provider_variables",
+    "env_example_placeholder_safety",
+    "readme_env_guidance",
+    "backends_env_guidance",
+    "configuration_env_guidance",
+    "development_env_guidance",
+    "cli_dotenv_override",
+    "cli_credential_preflight",
+    "integration_test_credential_skip",
+    "github_actions_integration_secret",
+    "secret_scan_baseline_marker",
+    "backend_registry_auth_reflection",
+    "live_provider_account_probe",
+    "provider_auth_drift_ci_gate",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "backend_registry_auth_reflection": "not_recorded_locally",
+    "live_provider_account_probe": "not_recorded_locally",
+    "provider_auth_drift_ci_gate": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the .env.example provider variables, placeholder safety, README provider-auth guidance, backend, configuration, and development-guide dotenv markers, CLI dotenv override and credential-preflight markers, integration-test credential skip markers, GitHub Actions Anthropic secret markers, and the secret-scan baseline marker. It does not claim complete backend-registry auth reflection, live provider account probes, a provider-auth drift CI gate, or owner review signoff."
+}

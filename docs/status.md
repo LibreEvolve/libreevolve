@@ -1264,8 +1264,15 @@ Important limits:
   those boundaries are tracked by
   `papers/todo_ledger_ownership_boundary.json`,
   `papers/roadmap_readiness_boundary.json`,
+  `papers/roadmap_source_span_disposition_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
+- ROADMAP source-span disposition evidence currently maps the six core
+  AlphaEvolve anchors from `papers/implementation_evidence_map_boundary.json`
+  to ROADMAP section ids, phase buckets, sidecars, and TODO links, and records
+  53 paper-index rows with only the AlphaEvolve source row dispositioned by
+  this core matrix. This is not an exhaustive retained-PDF section/figure/
+  table/appendix/application-result coverage matrix.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark

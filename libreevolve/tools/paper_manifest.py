@@ -191,6 +191,10 @@ from libreevolve.problems.benchmarks.todo_ledger_ownership_boundary import (
     todo_ledger_ownership_boundary_record,
     validate_todo_ledger_ownership_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_source_span_disposition_boundary import (
+    roadmap_source_span_disposition_boundary_record,
+    validate_roadmap_source_span_disposition_boundary,
+)
 from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import (
     implementation_evidence_map_boundary_record,
     validate_implementation_evidence_map_boundary,
@@ -735,6 +739,7 @@ DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_bo
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 ROADMAP_READINESS_BOUNDARY_FILE = "papers/roadmap_readiness_boundary.json"
 TODO_LEDGER_OWNERSHIP_BOUNDARY_FILE = "papers/todo_ledger_ownership_boundary.json"
+ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_FILE = "papers/roadmap_source_span_disposition_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
 BENCHMARK_COVERAGE_INVENTORY_FILE = "papers/benchmark_coverage_inventory.json"
 STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
@@ -1391,6 +1396,7 @@ def validate_paper_manifest(
     issues.extend(_validate_documentation_claim_inventory(root_path))
     issues.extend(_validate_roadmap_readiness_boundary(root_path))
     issues.extend(_validate_todo_ledger_ownership_boundary(root_path))
+    issues.extend(_validate_roadmap_source_span_disposition_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
@@ -3985,6 +3991,41 @@ def _validate_todo_ledger_ownership_boundary(root_path: Path) -> list[PaperManif
             f"todo_ledger_ownership_boundary_{issue.code}",
             issue.message,
             "todo_ledger_ownership",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_source_span_disposition_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = roadmap_source_span_disposition_boundary_record(root_path)
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_source_span_disposition_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_FILE} must emit "
+                        "ROADMAP core source-span dispositions versus exhaustive coverage scope"
+                    ),
+                    "roadmap_source_span_disposition",
+                )
+            ]
+    report = validate_roadmap_source_span_disposition_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_source_span_disposition_boundary_{issue.code}",
+            issue.message,
+            "roadmap_source_span_disposition",
         )
         for issue in report.issues
     ]

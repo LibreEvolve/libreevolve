@@ -2863,6 +2863,15 @@ Implemented:
   derivative/documentation relationships, rollup rules, source/paper anchor
   mappings, implementation evidence links, stale duplicate detection, or
   canonical-gap completion percentages.
+- `papers/roadmap_source_span_disposition_boundary.json`: ROADMAP source-span
+  disposition sidecar for the six core AlphaEvolve anchors already present in
+  `papers/implementation_evidence_map_boundary.json`. It records source refs,
+  local status, ROADMAP section ids, phase buckets, sidecars, TODO links, 53
+  paper-index rows, and only the AlphaEvolve source row dispositioned by this
+  matrix. It is not evidence of an exhaustive retained-PDF section walk,
+  figure/table/appendix/application-result matrix, complete paper-index row to
+  ROADMAP disposition map, missing/partial TODO proof, or CI source-span
+  exhaustiveness gate.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

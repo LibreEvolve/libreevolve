@@ -2,6 +2,26 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add structural ROADMAP source-span disposition boundary.
+  - Status: `papers/roadmap_source_span_disposition_boundary.json` now maps the
+    six core AlphaEvolve anchors from
+    `papers/implementation_evidence_map_boundary.json` to ROADMAP section ids,
+    phase buckets, local status, sidecars, and TODO links.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_source_span_disposition_boundary.py`
+    derives the boundary from the implementation-evidence map and the current
+    `papers/status_claim_inventory.json` row ids. It records 6 disposition
+    rows, 13 source refs, 53 paper-index rows, and only 1 paper-index row
+    dispositioned by this ROADMAP matrix. The paper-manifest gate now requires
+    the checked sidecar to match those current inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks the missing
+    exhaustive source-span matrix: retained-PDF section walk, figure/table/
+    appendix matrix, application-result claim matrix, complete paper-index row
+    disposition map, proof every missing/partial span has a live TODO, and CI
+    source-span exhaustiveness gate.
+  - Verification: focused source-span disposition tests and paper-manifest
+    validation cover the structural sidecar contract.
+
 - [x] Add structural TODO-ledger ownership inventory.
   - Status: `papers/todo_ledger_ownership_boundary.json` now records the
     four canonical TODO owner files, active/completed counts by owner,

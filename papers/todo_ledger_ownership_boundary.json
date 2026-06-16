@@ -49,8 +49,8 @@
       "active_path": "docs/todo/roadmap.md",
       "completed_path": "docs/todo/Completed/roadmap.md",
       "active_count": 16,
-      "completed_count": 1156,
-      "total_count": 1172,
+      "completed_count": 1157,
+      "total_count": 1173,
       "active_ledger_completed_marker_count": 0,
       "completed_ledger_active_marker_count": 0,
       "active_ledger_exists": true,
@@ -58,9 +58,9 @@
     }
   ],
   "raw_todo_ledger_active_count": 506,
-  "raw_todo_ledger_completed_count": 4630,
-  "raw_todo_ledger_total_count": 5136,
-  "raw_todo_ledger_completion_percent": 90.148,
+  "raw_todo_ledger_completed_count": 4631,
+  "raw_todo_ledger_total_count": 5137,
+  "raw_todo_ledger_completion_percent": 90.15,
   "active_ledger_completed_marker_count": 0,
   "completed_ledger_active_marker_count": 0,
   "marker_policy_status": "active_ledgers_unchecked_completed_ledgers_checked",
@@ -205,7 +205,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7708,
+          "line_start": 7728,
           "status": "completed",
           "title": "Add abnormal-run finalization to runtime manifests.",
           "normalized_title": "add abnormal run finalization to runtime manifests"
@@ -234,7 +234,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7432,
+          "line_start": 7452,
           "status": "completed",
           "title": "Add aggregate workspace syntax diagnostics to evaluator feedback work.",
           "normalized_title": "add aggregate workspace syntax diagnostics to evaluator feedback work"
@@ -292,7 +292,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7728,
+          "line_start": 7748,
           "status": "completed",
           "title": "Add atomic manifest-write durability to runtime hardening.",
           "normalized_title": "add atomic manifest write durability to runtime hardening"
@@ -408,7 +408,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6449,
+          "line_start": 6469,
           "status": "completed",
           "title": "Add candidate path-collision handling to candidate fidelity.",
           "normalized_title": "add candidate path collision handling to candidate fidelity"
@@ -437,7 +437,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6158,
+          "line_start": 6178,
           "status": "completed",
           "title": "Add CLI/config precedence semantics to runtime hardening.",
           "normalized_title": "add cli config precedence semantics to runtime hardening"
@@ -466,7 +466,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6103,
+          "line_start": 6123,
           "status": "completed",
           "title": "Add CLI problem-load error normalization to operational maturity.",
           "normalized_title": "add cli problem load error normalization to operational maturity"
@@ -495,7 +495,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5987,
+          "line_start": 6007,
           "status": "completed",
           "title": "Add configuration/schema validation to runtime hardening.",
           "normalized_title": "add configuration schema validation to runtime hardening"
@@ -582,7 +582,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7588,
+          "line_start": 7608,
           "status": "completed",
           "title": "Add evaluate-only/seed-baseline mode to runtime work.",
           "normalized_title": "add evaluate only seed baseline mode to runtime work"
@@ -611,7 +611,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6407,
+          "line_start": 6427,
           "status": "completed",
           "title": "Add file-section path grammar hardening to candidate fidelity.",
           "normalized_title": "add file section path grammar hardening to candidate fidelity"
@@ -669,7 +669,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 9765,
+          "line_start": 9785,
           "status": "completed",
           "title": "Add first run-level rendered prompt character budget.",
           "normalized_title": "add first run level rendered prompt character budget"
@@ -727,7 +727,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6995,
+          "line_start": 7015,
           "status": "completed",
           "title": "Add live retrieval provenance to prompt/plugin context work.",
           "normalized_title": "add live retrieval provenance to prompt plugin context work"
@@ -756,7 +756,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7571,
+          "line_start": 7591,
           "status": "completed",
           "title": "Add LLM backend preflight ordering to runtime/artifact safety.",
           "normalized_title": "add llm backend preflight ordering to runtime artifact safety"
@@ -814,7 +814,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6462,
+          "line_start": 6482,
           "status": "completed",
           "title": "Add mutation-envelope diagnostics for partial parses.",
           "normalized_title": "add mutation envelope diagnostics for partial parses"
@@ -843,7 +843,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7288,
+          "line_start": 7308,
           "status": "completed",
           "title": "Add normalized LLM call telemetry to backend scheduling work.",
           "normalized_title": "add normalized llm call telemetry to backend scheduling work"
@@ -901,7 +901,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6298,
+          "line_start": 6318,
           "status": "completed",
           "title": "Add run-directory path confinement to runtime hardening.",
           "normalized_title": "add run directory path confinement to runtime hardening"
@@ -930,7 +930,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7688,
+          "line_start": 7708,
           "status": "completed",
           "title": "Add run-wide compute-budget accounting to runtime work.",
           "normalized_title": "add run wide compute budget accounting to runtime work"
@@ -959,7 +959,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7099,
+          "line_start": 7119,
           "status": "completed",
           "title": "Add seed/proposal source markers to prompt-history traceability.",
           "normalized_title": "add seed proposal source markers to prompt history traceability"
@@ -1046,7 +1046,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7394,
+          "line_start": 7414,
           "status": "completed",
           "title": "Add validity/archive-aware run inspection to operational work.",
           "normalized_title": "add validity archive aware run inspection to operational work"
@@ -1365,7 +1365,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4860,
+          "line_start": 4880,
           "status": "completed",
           "title": "Document committed AlphaEvolve companion Colab source manifest.",
           "normalized_title": "document committed alphaevolve companion colab source manifest"
@@ -1394,7 +1394,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4825,
+          "line_start": 4845,
           "status": "completed",
           "title": "Document committed follow-on AlphaEvolve math-source manifest.",
           "normalized_title": "document committed follow on alphaevolve math source manifest"
@@ -1423,7 +1423,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4850,
+          "line_start": 4870,
           "status": "completed",
           "title": "Document companion notebook selection-scope provenance.",
           "normalized_title": "document companion notebook selection scope provenance"
@@ -1452,7 +1452,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4839,
+          "line_start": 4859,
           "status": "completed",
           "title": "Document companion repository rights rows on generated artifacts.",
           "normalized_title": "document companion repository rights rows on generated artifacts"
@@ -1481,7 +1481,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4939,
+          "line_start": 4959,
           "status": "completed",
           "title": "Document evolve-block inner span mapping in prompt-current binding",
           "normalized_title": "document evolve block inner span mapping in prompt current binding"
@@ -1510,7 +1510,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 13157,
+          "line_start": 13177,
           "status": "completed",
           "title": "Document Figure 3 marker source artifacts and final classification in",
           "normalized_title": "document figure 3 marker source artifacts and final classification in"
@@ -1539,7 +1539,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4913,
+          "line_start": 4933,
           "status": "completed",
           "title": "Document full-mode target span and block-id records in prompt-current",
           "normalized_title": "document full mode target span and block id records in prompt current"
@@ -1568,7 +1568,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4922,
+          "line_start": 4942,
           "status": "completed",
           "title": "Document prompt-history row joins in prompt-current binding evidence.",
           "normalized_title": "document prompt history row joins in prompt current binding evidence"
@@ -1597,7 +1597,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 13084,
+          "line_start": 13104,
           "status": "completed",
           "title": "Document the Appendix A matrix suite publication-artifact boundary in",
           "normalized_title": "document the appendix a matrix suite publication artifact boundary in"
@@ -1626,7 +1626,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 13063,
+          "line_start": 13083,
           "status": "completed",
           "title": "Document the Figure 4 matrix-discovery artifact and lineage boundary in",
           "normalized_title": "document the figure 4 matrix discovery artifact and lineage boundary in"
@@ -1655,7 +1655,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 12921,
+          "line_start": 12941,
           "status": "completed",
           "title": "Document the local Appendix A matrix resource-frontier absence boundary",
           "normalized_title": "document the local appendix a matrix resource frontier absence boundary"
@@ -1713,7 +1713,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 4930,
+          "line_start": 4950,
           "status": "completed",
           "title": "Document workspace file-section span records in prompt-current binding",
           "normalized_title": "document workspace file section span records in prompt current binding"
@@ -2960,7 +2960,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5972,
+          "line_start": 5992,
           "status": "completed",
           "title": "Reframe the roadmap from \"mostly tightening contracts\" to \"closing major",
           "normalized_title": "reframe the roadmap from mostly tightening contracts to closing major"
@@ -3018,7 +3018,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5953,
+          "line_start": 5973,
           "status": "completed",
           "title": "Refresh the roadmap date and status.",
           "normalized_title": "refresh the roadmap date and status"

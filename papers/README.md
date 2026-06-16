@@ -2858,6 +2858,14 @@ Implemented:
   `papers/status_claim_inventory.json` summary fields. It is not a per-bullet
   source/test/sidecar/TODO map, stale status prose detector, orphan status
   bullet detector, or owner review signoff.
+- `papers/docs_architecture_runtime_flow_boundary.json`: docs-architecture
+  runtime-flow sidecar. It records ten `docs/architecture.md` sections,
+  runtime-flow markers, source path checks, README/docs-index route markers,
+  the active TODO owner anchor, known-gap markers, the synchronous runtime
+  boundary, and the AlphaEvolve provider-parity boundary. It is not semantic
+  flow-order verification, source-function semantic verification, runtime
+  manifest field verification, architecture limitation freshness, or owner
+  review signoff.
 - `papers/tracked_legacy_surface_boundary.json`: tracked legacy-surface
   sidecar for `old/**` planning material. It records the committed legacy
   Markdown inventory, archival/non-authoritative classification, self-

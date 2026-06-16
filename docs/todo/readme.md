@@ -382,18 +382,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     drift, `docs/status.md` ledger freshness, ROADMAP readiness criteria, and
     paper-facing async/topology boundaries, but not the architecture guide as
     a standalone operational contract.
-  - Current gap: there is no committed architecture-claim inventory or drift
-    validator that maps each `docs/architecture.md` flow step, limitation, and
-    component-role statement to concrete source functions, tests, runtime
-    manifest fields, sidecars, and active TODO owners. Hook order, restore
-    semantics, prompt/evaluator surfaces, archive behavior, plugin behavior,
-    or runtime-budget claims can drift without a page-specific failure or
-    source-offset evidence update.
-  - Required result: add an architecture-guide evidence map and validation
-    gate that inventories each major architecture claim with code/test/runtime
-    anchors, flags unsupported or AlphaEvolve-facing parity claims separately,
-    and requires README/docs/TODO updates when implementation flow,
-    persistence semantics, or architecture limitations change.
+    `papers/docs_architecture_runtime_flow_boundary.json` now records ten
+    architecture sections, runtime-flow markers, source path checks,
+    README/docs-index route markers, the active TODO owner anchor, known-gap
+    markers, the synchronous runtime boundary, and the AlphaEvolve provider-
+    parity boundary.
+  - Current gap: the committed architecture inventory still does not map each
+    `docs/architecture.md` flow step, limitation, and component-role statement
+    to concrete source functions, tests, runtime manifest fields, sidecars, and
+    active TODO owners. Hook order, restore semantics, prompt/evaluator
+    surfaces, archive behavior, plugin behavior, or runtime-budget claims can
+    still drift without semantic flow-order or field-level source-offset proof.
+  - Required result: extend the architecture-guide evidence map into a
+    semantic validation gate that inventories each major architecture claim
+    with code/test/runtime anchors, flags unsupported or AlphaEvolve-facing
+    parity claims separately, and requires README/docs/TODO updates when
+    implementation flow, persistence semantics, or architecture limitations
+    change.
 
 ## Quick Start
 

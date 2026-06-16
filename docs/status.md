@@ -1315,6 +1315,7 @@ Important limits:
   `papers/documentation_truthfulness_boundary.json`,
   `papers/docs_index_reader_path_boundary.json`,
   `papers/docs_status_ledger_boundary.json`,
+  `papers/docs_architecture_runtime_flow_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
@@ -1337,6 +1338,13 @@ Important limits:
   fields, and `papers/status_claim_inventory.json` summary fields. This is
   not a per-bullet source/test/sidecar/TODO map, stale status prose detector,
   orphan status bullet detector, or owner review signoff.
+- Docs-architecture runtime-flow evidence now records ten
+  `docs/architecture.md` sections, runtime-flow markers, source path checks,
+  README/docs-index route markers, the active TODO owner anchor, known-gap
+  markers, the synchronous runtime boundary, and the AlphaEvolve provider-
+  parity boundary. This is not semantic flow-order verification, source-
+  function semantic verification, runtime manifest field verification,
+  architecture limitation freshness, or owner review signoff.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
   classification, obsolete `alphaevolve/*` path signals, legacy checkbox plan

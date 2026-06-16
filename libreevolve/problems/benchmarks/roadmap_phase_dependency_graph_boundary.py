@@ -15,7 +15,7 @@ ROADMAP_PHASE_DEPENDENCY_GRAPH_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_phase_dependency_graph_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_phase_dependency_graph_recorded_without_freshness_gate"
+    "bounded_phase_dependency_graph_recorded_with_staleness_detector"
 )
 SOURCE_PHASE_BOUNDARY_INPUT = "papers/roadmap_phase_sequence_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -31,7 +31,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "phase_staleness_detector": "not_recorded_locally",
     "promotion_demotion_workflow": "not_recorded_locally",
     "ci_phase_freshness_gate": "not_recorded_locally",
     "evidence_status_refresh": "not_recorded_locally",
@@ -212,9 +211,9 @@ def roadmap_phase_dependency_graph_boundary_record(root: str | Path = ".") -> di
             "for the ten major sections by linking each section to source "
             "phase-sequence records, section evidence sidecars, active blocker "
             "TODO refs, and prerequisite section edges. It does not claim a "
-            "stale-phase detector, promotion/demotion workflow, CI phase "
-            "freshness gate, evidence-status refresh report, or owner review "
-            "signoff."
+            "promotion/demotion workflow, CI phase freshness gate, "
+            "evidence-status refresh report, or owner review signoff. The "
+            "bounded stale-phase detector is recorded separately."
         ),
     }
 
@@ -271,7 +270,7 @@ def validate_roadmap_phase_dependency_graph_boundary(
         not isinstance(boundary_text, str)
         or "bounded ROADMAP phase dependency graph" not in boundary_text
         or "prerequisite section edges" not in boundary_text
-        or "does not claim a stale-phase detector" not in boundary_text
+        or "bounded stale-phase detector is recorded separately" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate dependency graph from phase freshness gates"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

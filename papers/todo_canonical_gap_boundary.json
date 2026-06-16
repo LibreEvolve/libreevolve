@@ -266,9 +266,9 @@
     "stale_completed_duplicate_detector": "not_recorded_locally"
   },
   "raw_todo_ledger_active_count": 506,
-  "raw_todo_ledger_completed_count": 4674,
-  "raw_todo_ledger_completion_percent": 90.232,
-  "raw_todo_ledger_total_count": 5180,
+  "raw_todo_ledger_completed_count": 4675,
+  "raw_todo_ledger_completion_percent": 90.234,
+  "raw_todo_ledger_total_count": 5181,
   "required_evidence_fields": [
     "canonical_gap_criteria",
     "raw_ledger_counts",

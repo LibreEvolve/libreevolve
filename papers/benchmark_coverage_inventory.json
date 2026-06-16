@@ -1,7 +1,7 @@
 {
   "artifact_existence_status": "all_referenced_local_artifacts_present",
   "claim_boundary": "This inventory records one structured entry for each papers/README.md Implemented benchmark coverage bullet, including source lines and file character offsets, summary/body hashes, source-token match offsets, local artifact mention source offsets, local artifact existence records, limitation-signal terms/source offsets, and contradiction flags. It does not claim semantic verification, benchmark freshness, reproduced result linkage, or proof that the benchmark coverage prose is complete.",
-  "implemented_bullet_count": 129,
+  "implemented_bullet_count": 130,
   "implemented_bullet_ids": [
     "implemented_benchmark_001",
     "implemented_benchmark_002",
@@ -131,7 +131,8 @@
     "implemented_benchmark_126",
     "implemented_benchmark_127",
     "implemented_benchmark_128",
-    "implemented_benchmark_129"
+    "implemented_benchmark_129",
+    "implemented_benchmark_130"
   ],
   "implemented_bullet_mention_source_span_status": "file_character_offsets_recorded",
   "implemented_bullet_source_span_status": "file_character_offsets_recorded",
@@ -9370,7 +9371,7 @@
     {
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
-      "body_sha256": "20bfa108e053b58b6a6e56ad820ab6b9854b606c078451547490e35343e7a89f",
+      "body_sha256": "b0fbb3d917577b851a4af707e932c787350afef489cfc39d874307d70e4f00da",
       "bullet_ordinal": 88,
       "coverage_id": "implemented_benchmark_088",
       "coverage_status": "implemented_bullet_structurally_inventoried",
@@ -9379,15 +9380,15 @@
       "has_not_implemented_contradiction": false,
       "limitation_signal_records": [
         {
-          "bullet_text_char_end": 266,
-          "bullet_text_char_start": 263,
+          "bullet_text_char_end": 339,
+          "bullet_text_char_start": 336,
           "source_span": {
-            "bullet_text_char_end": 266,
-            "bullet_text_char_start": 263,
-            "file_text_char_end": 254183,
-            "file_text_char_start": 254180,
-            "line_end": 3035,
-            "line_start": 3035,
+            "bullet_text_char_end": 339,
+            "bullet_text_char_start": 336,
+            "file_text_char_end": 254256,
+            "file_text_char_start": 254253,
+            "line_end": 3036,
+            "line_start": 3036,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9430,9 +9431,9 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 254334,
+        "file_text_char_end": 254385,
         "file_text_char_start": 253917,
-        "line_end": 3037,
+        "line_end": 3038,
         "line_start": 3032,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
@@ -9444,7 +9445,7 @@
     {
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
-      "body_sha256": "580a8c279d3f21c7d58d666f1fe28706dd0d6d4e408b7ad62dfeca334d76fbb5",
+      "body_sha256": "48dadcacf087365cdfa07224743dba08a008af5ab5273f136f9a50ec3ea04ac7",
       "bullet_ordinal": 89,
       "coverage_id": "implemented_benchmark_089",
       "coverage_status": "implemented_bullet_structurally_inventoried",
@@ -9453,15 +9454,15 @@
       "has_not_implemented_contradiction": false,
       "limitation_signal_records": [
         {
-          "bullet_text_char_end": 249,
-          "bullet_text_char_start": 246,
+          "bullet_text_char_end": 298,
+          "bullet_text_char_start": 295,
           "source_span": {
-            "bullet_text_char_end": 249,
-            "bullet_text_char_start": 246,
-            "file_text_char_end": 254584,
-            "file_text_char_start": 254581,
-            "line_end": 3041,
-            "line_start": 3041,
+            "bullet_text_char_end": 298,
+            "bullet_text_char_start": 295,
+            "file_text_char_end": 254684,
+            "file_text_char_start": 254681,
+            "line_end": 3042,
+            "line_start": 3042,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9481,10 +9482,10 @@
           "source_span": {
             "bullet_text_char_end": 55,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 254390,
-            "file_text_char_start": 254337,
-            "line_end": 3038,
-            "line_start": 3038,
+            "file_text_char_end": 254441,
+            "file_text_char_start": 254388,
+            "line_end": 3039,
+            "line_start": 3039,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -9504,10 +9505,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 254735,
-        "file_text_char_start": 254335,
-        "line_end": 3043,
-        "line_start": 3038,
+        "file_text_char_end": 254813,
+        "file_text_char_start": 254386,
+        "line_end": 3044,
+        "line_start": 3039,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -9518,9 +9519,83 @@
     {
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
-      "body_sha256": "a69d82f2c6fb77a07bab7b38abcc598c069040223ea2adcdea5241469b1a8523",
+      "body_sha256": "c5b55add990c0f16ec6f81acddc6626fa8570066629c341ef0fccde68b567be8",
       "bullet_ordinal": 90,
       "coverage_id": "implemented_benchmark_090",
+      "coverage_status": "implemented_bullet_structurally_inventoried",
+      "has_limitation_boundary": true,
+      "has_local_artifact": true,
+      "has_not_implemented_contradiction": false,
+      "limitation_signal_records": [
+        {
+          "bullet_text_char_end": 287,
+          "bullet_text_char_start": 284,
+          "source_span": {
+            "bullet_text_char_end": 287,
+            "bullet_text_char_start": 284,
+            "file_text_char_end": 255101,
+            "file_text_char_start": 255098,
+            "line_end": 3048,
+            "line_start": 3048,
+            "path": "papers/README.md",
+            "section": "Benchmark coverage decisions"
+          },
+          "term": "not"
+        }
+      ],
+      "limitation_signal_status": "limitation_signals_structurally_classified",
+      "limitation_signal_terms": [
+        "not"
+      ],
+      "local_artifact_existing_count": 1,
+      "local_artifact_mention_records": [
+        {
+          "bullet_text_char_end": 48,
+          "bullet_text_char_start": 2,
+          "path": "papers/roadmap_phase_staleness_boundary.json",
+          "source_span": {
+            "bullet_text_char_end": 48,
+            "bullet_text_char_start": 2,
+            "file_text_char_end": 254862,
+            "file_text_char_start": 254816,
+            "line_end": 3045,
+            "line_start": 3045,
+            "path": "papers/README.md",
+            "section": "Benchmark coverage decisions"
+          }
+        }
+      ],
+      "local_artifact_missing_paths": [],
+      "local_artifact_paths": [
+        "papers/roadmap_phase_staleness_boundary.json"
+      ],
+      "local_artifact_records": [
+        {
+          "exists": true,
+          "kind": "file",
+          "path": "papers/roadmap_phase_staleness_boundary.json"
+        }
+      ],
+      "semantic_status": "not_verified",
+      "source_ids_mentioned": [],
+      "source_span": {
+        "file_text_char_end": 255230,
+        "file_text_char_start": 254814,
+        "line_end": 3050,
+        "line_start": 3045,
+        "path": "papers/README.md",
+        "section": "Benchmark coverage decisions"
+      },
+      "source_token_match_count": 0,
+      "source_token_match_records": [],
+      "summary_sha256": "2d4539a596a81f20158b607a6e1d96deee4a2ab9d170192eb233a1e94c66b1f1"
+    },
+    {
+      "all_local_artifacts_exist": true,
+      "artifact_existence_status": "all_referenced_local_artifacts_present",
+      "body_sha256": "cbc777df4a70bc86577061d6a3555ceb85d91cfbb572d7fd1782ab9e3ec01e03",
+      "bullet_ordinal": 91,
+      "coverage_id": "implemented_benchmark_091",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -9532,10 +9607,10 @@
           "source_span": {
             "bullet_text_char_end": 278,
             "bullet_text_char_start": 275,
-            "file_text_char_end": 255014,
-            "file_text_char_start": 255011,
-            "line_end": 3047,
-            "line_start": 3047,
+            "file_text_char_end": 255509,
+            "file_text_char_start": 255506,
+            "line_end": 3054,
+            "line_start": 3054,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9555,10 +9630,10 @@
           "source_span": {
             "bullet_text_char_end": 48,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 254784,
-            "file_text_char_start": 254738,
-            "line_end": 3044,
-            "line_start": 3044,
+            "file_text_char_end": 255279,
+            "file_text_char_start": 255233,
+            "line_end": 3051,
+            "line_start": 3051,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -9578,10 +9653,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 255122,
-        "file_text_char_start": 254736,
-        "line_end": 3049,
-        "line_start": 3044,
+        "file_text_char_end": 255607,
+        "file_text_char_start": 255231,
+        "line_end": 3056,
+        "line_start": 3051,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -9593,8 +9668,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "816d87841c74a1e5eb34389e1c404226b59cad56615f192fd69fedc5a9182e1a",
-      "bullet_ordinal": 91,
-      "coverage_id": "implemented_benchmark_091",
+      "bullet_ordinal": 92,
+      "coverage_id": "implemented_benchmark_092",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -9606,10 +9681,10 @@
           "source_span": {
             "bullet_text_char_end": 220,
             "bullet_text_char_start": 217,
-            "file_text_char_end": 255343,
-            "file_text_char_start": 255340,
-            "line_end": 3052,
-            "line_start": 3052,
+            "file_text_char_end": 255828,
+            "file_text_char_start": 255825,
+            "line_end": 3059,
+            "line_start": 3059,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9629,10 +9704,10 @@
           "source_span": {
             "bullet_text_char_end": 53,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 255176,
-            "file_text_char_start": 255125,
-            "line_end": 3050,
-            "line_start": 3050,
+            "file_text_char_end": 255661,
+            "file_text_char_start": 255610,
+            "line_end": 3057,
+            "line_start": 3057,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -9652,10 +9727,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 255540,
-        "file_text_char_start": 255123,
-        "line_end": 3055,
-        "line_start": 3050,
+        "file_text_char_end": 256025,
+        "file_text_char_start": 255608,
+        "line_end": 3062,
+        "line_start": 3057,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -9667,8 +9742,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "089f2612e9bb78a6e30e50fa38a5737f629f72b4f4637ad4e6cd105ae262d6c1",
-      "bullet_ordinal": 92,
-      "coverage_id": "implemented_benchmark_092",
+      "bullet_ordinal": 93,
+      "coverage_id": "implemented_benchmark_093",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -9680,10 +9755,10 @@
           "source_span": {
             "bullet_text_char_end": 321,
             "bullet_text_char_start": 318,
-            "file_text_char_end": 255862,
-            "file_text_char_start": 255859,
-            "line_end": 3060,
-            "line_start": 3060,
+            "file_text_char_end": 256347,
+            "file_text_char_start": 256344,
+            "line_end": 3067,
+            "line_start": 3067,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9703,10 +9778,10 @@
           "source_span": {
             "bullet_text_char_end": 54,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 255595,
-            "file_text_char_start": 255543,
-            "line_end": 3056,
-            "line_start": 3056,
+            "file_text_char_end": 256080,
+            "file_text_char_start": 256028,
+            "line_end": 3063,
+            "line_start": 3063,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -9726,10 +9801,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 255980,
-        "file_text_char_start": 255541,
-        "line_end": 3061,
-        "line_start": 3056,
+        "file_text_char_end": 256465,
+        "file_text_char_start": 256026,
+        "line_end": 3068,
+        "line_start": 3063,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -9741,8 +9816,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "93538d59b3d3ce12110bc8fe0d67782f6daf98077cdaed3e34346d1ed76102bd",
-      "bullet_ordinal": 93,
-      "coverage_id": "implemented_benchmark_093",
+      "bullet_ordinal": 94,
+      "coverage_id": "implemented_benchmark_094",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -9754,10 +9829,10 @@
           "source_span": {
             "bullet_text_char_end": 331,
             "bullet_text_char_start": 328,
-            "file_text_char_end": 256312,
-            "file_text_char_start": 256309,
-            "line_end": 3066,
-            "line_start": 3066,
+            "file_text_char_end": 256797,
+            "file_text_char_start": 256794,
+            "line_end": 3073,
+            "line_start": 3073,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9777,10 +9852,10 @@
           "source_span": {
             "bullet_text_char_end": 67,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 256048,
-            "file_text_char_start": 255983,
-            "line_end": 3062,
-            "line_start": 3062,
+            "file_text_char_end": 256533,
+            "file_text_char_start": 256468,
+            "line_end": 3069,
+            "line_start": 3069,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -9800,10 +9875,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 256551,
-        "file_text_char_start": 255981,
-        "line_end": 3069,
-        "line_start": 3062,
+        "file_text_char_end": 257036,
+        "file_text_char_start": 256466,
+        "line_end": 3076,
+        "line_start": 3069,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -9815,8 +9890,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "3ec162c814e11e4783acab586946ace4d2c96a7c61f25d822d7d596e05df994a",
-      "bullet_ordinal": 94,
-      "coverage_id": "implemented_benchmark_094",
+      "bullet_ordinal": 95,
+      "coverage_id": "implemented_benchmark_095",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -9828,10 +9903,10 @@
           "source_span": {
             "bullet_text_char_end": 319,
             "bullet_text_char_start": 316,
-            "file_text_char_end": 256871,
-            "file_text_char_start": 256868,
-            "line_end": 3074,
-            "line_start": 3074,
+            "file_text_char_end": 257356,
+            "file_text_char_start": 257353,
+            "line_end": 3081,
+            "line_start": 3081,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9851,10 +9926,10 @@
           "source_span": {
             "bullet_text_char_end": 62,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 256614,
-            "file_text_char_start": 256554,
-            "line_end": 3070,
-            "line_start": 3070,
+            "file_text_char_end": 257099,
+            "file_text_char_start": 257039,
+            "line_end": 3077,
+            "line_start": 3077,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -9874,10 +9949,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 256994,
-        "file_text_char_start": 256552,
-        "line_end": 3075,
-        "line_start": 3070,
+        "file_text_char_end": 257479,
+        "file_text_char_start": 257037,
+        "line_end": 3082,
+        "line_start": 3077,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -9889,8 +9964,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "bc785922218e9b774afeff7dbcfc44ce87dcf7e6cd3b10d8c03a2a980a33b3ef",
-      "bullet_ordinal": 95,
-      "coverage_id": "implemented_benchmark_095",
+      "bullet_ordinal": 96,
+      "coverage_id": "implemented_benchmark_096",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -9902,10 +9977,10 @@
           "source_span": {
             "bullet_text_char_end": 339,
             "bullet_text_char_start": 336,
-            "file_text_char_end": 257334,
-            "file_text_char_start": 257331,
-            "line_end": 3080,
-            "line_start": 3080,
+            "file_text_char_end": 257819,
+            "file_text_char_start": 257816,
+            "line_end": 3087,
+            "line_start": 3087,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9925,10 +10000,10 @@
           "source_span": {
             "bullet_text_char_end": 53,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 257048,
-            "file_text_char_start": 256997,
-            "line_end": 3076,
-            "line_start": 3076,
+            "file_text_char_end": 257533,
+            "file_text_char_start": 257482,
+            "line_end": 3083,
+            "line_start": 3083,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -9948,10 +10023,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 257631,
-        "file_text_char_start": 256995,
-        "line_end": 3084,
-        "line_start": 3076,
+        "file_text_char_end": 258116,
+        "file_text_char_start": 257480,
+        "line_end": 3091,
+        "line_start": 3083,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -9963,8 +10038,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "0d9524125e195eaa448404789c3d8ab891d39df979020983e32d1347a09b3c03",
-      "bullet_ordinal": 96,
-      "coverage_id": "implemented_benchmark_096",
+      "bullet_ordinal": 97,
+      "coverage_id": "implemented_benchmark_097",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -9976,10 +10051,10 @@
           "source_span": {
             "bullet_text_char_end": 303,
             "bullet_text_char_start": 300,
-            "file_text_char_end": 257935,
-            "file_text_char_start": 257932,
-            "line_end": 3089,
-            "line_start": 3089,
+            "file_text_char_end": 258420,
+            "file_text_char_start": 258417,
+            "line_end": 3096,
+            "line_start": 3096,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -9999,10 +10074,10 @@
           "source_span": {
             "bullet_text_char_end": 49,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 257681,
-            "file_text_char_start": 257634,
-            "line_end": 3085,
-            "line_start": 3085,
+            "file_text_char_end": 258166,
+            "file_text_char_start": 258119,
+            "line_end": 3092,
+            "line_start": 3092,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10022,10 +10097,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 258011,
-        "file_text_char_start": 257632,
-        "line_end": 3090,
-        "line_start": 3085,
+        "file_text_char_end": 258496,
+        "file_text_char_start": 258117,
+        "line_end": 3097,
+        "line_start": 3092,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10037,8 +10112,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "5ca441a2bada75dfb7502d24e3a7f56d3c1204d1aea2588ac43efc3c17601a42",
-      "bullet_ordinal": 97,
-      "coverage_id": "implemented_benchmark_097",
+      "bullet_ordinal": 98,
+      "coverage_id": "implemented_benchmark_098",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10050,10 +10125,10 @@
           "source_span": {
             "bullet_text_char_end": 382,
             "bullet_text_char_start": 379,
-            "file_text_char_end": 258394,
-            "file_text_char_start": 258391,
-            "line_end": 3096,
-            "line_start": 3096,
+            "file_text_char_end": 258879,
+            "file_text_char_start": 258876,
+            "line_end": 3103,
+            "line_start": 3103,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10073,10 +10148,10 @@
           "source_span": {
             "bullet_text_char_end": 60,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 258072,
-            "file_text_char_start": 258014,
-            "line_end": 3091,
-            "line_start": 3091,
+            "file_text_char_end": 258557,
+            "file_text_char_start": 258499,
+            "line_end": 3098,
+            "line_start": 3098,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10096,10 +10171,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 258757,
-        "file_text_char_start": 258012,
-        "line_end": 3101,
-        "line_start": 3091,
+        "file_text_char_end": 259242,
+        "file_text_char_start": 258497,
+        "line_end": 3108,
+        "line_start": 3098,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10111,8 +10186,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "d4a917b928394b5d24f766997e58c7a355c8355265fa8e259742e4a8bd26d277",
-      "bullet_ordinal": 98,
-      "coverage_id": "implemented_benchmark_098",
+      "bullet_ordinal": 99,
+      "coverage_id": "implemented_benchmark_099",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10124,10 +10199,10 @@
           "source_span": {
             "bullet_text_char_end": 402,
             "bullet_text_char_start": 399,
-            "file_text_char_end": 259160,
-            "file_text_char_start": 259157,
-            "line_end": 3107,
-            "line_start": 3107,
+            "file_text_char_end": 259645,
+            "file_text_char_start": 259642,
+            "line_end": 3114,
+            "line_start": 3114,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10147,10 +10222,10 @@
           "source_span": {
             "bullet_text_char_end": 64,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 258822,
-            "file_text_char_start": 258760,
-            "line_end": 3102,
-            "line_start": 3102,
+            "file_text_char_end": 259307,
+            "file_text_char_start": 259245,
+            "line_end": 3109,
+            "line_start": 3109,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10170,10 +10245,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 259261,
-        "file_text_char_start": 258758,
-        "line_end": 3108,
-        "line_start": 3102,
+        "file_text_char_end": 259746,
+        "file_text_char_start": 259243,
+        "line_end": 3115,
+        "line_start": 3109,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10185,8 +10260,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "aa56e158cf201ff0ecc0bd67f621993b1e997825d347b282e05baa9f4e881d95",
-      "bullet_ordinal": 99,
-      "coverage_id": "implemented_benchmark_099",
+      "bullet_ordinal": 100,
+      "coverage_id": "implemented_benchmark_100",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10198,10 +10273,10 @@
           "source_span": {
             "bullet_text_char_end": 346,
             "bullet_text_char_start": 339,
-            "file_text_char_end": 259608,
-            "file_text_char_start": 259601,
-            "line_end": 3113,
-            "line_start": 3113,
+            "file_text_char_end": 260093,
+            "file_text_char_start": 260086,
+            "line_end": 3120,
+            "line_start": 3120,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10213,10 +10288,10 @@
           "source_span": {
             "bullet_text_char_end": 434,
             "bullet_text_char_start": 431,
-            "file_text_char_end": 259696,
-            "file_text_char_start": 259693,
-            "line_end": 3114,
-            "line_start": 3114,
+            "file_text_char_end": 260181,
+            "file_text_char_start": 260178,
+            "line_end": 3121,
+            "line_start": 3121,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10237,10 +10312,10 @@
           "source_span": {
             "bullet_text_char_end": 56,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 259318,
-            "file_text_char_start": 259264,
-            "line_end": 3109,
-            "line_start": 3109,
+            "file_text_char_end": 259803,
+            "file_text_char_start": 259749,
+            "line_end": 3116,
+            "line_start": 3116,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10260,10 +10335,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 260122,
-        "file_text_char_start": 259262,
-        "line_end": 3120,
-        "line_start": 3109,
+        "file_text_char_end": 260607,
+        "file_text_char_start": 259747,
+        "line_end": 3127,
+        "line_start": 3116,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10275,8 +10350,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "9832a5b06af0d3be3be47991857c7a0e77d08833ab178ddd81f8b0cd86af22bc",
-      "bullet_ordinal": 100,
-      "coverage_id": "implemented_benchmark_100",
+      "bullet_ordinal": 101,
+      "coverage_id": "implemented_benchmark_101",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10288,10 +10363,10 @@
           "source_span": {
             "bullet_text_char_end": 386,
             "bullet_text_char_start": 383,
-            "file_text_char_end": 260509,
-            "file_text_char_start": 260506,
-            "line_end": 3126,
-            "line_start": 3126,
+            "file_text_char_end": 260994,
+            "file_text_char_start": 260991,
+            "line_end": 3133,
+            "line_start": 3133,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10311,10 +10386,10 @@
           "source_span": {
             "bullet_text_char_end": 56,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 260179,
-            "file_text_char_start": 260125,
-            "line_end": 3121,
-            "line_start": 3121,
+            "file_text_char_end": 260664,
+            "file_text_char_start": 260610,
+            "line_end": 3128,
+            "line_start": 3128,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10334,10 +10409,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 260617,
-        "file_text_char_start": 260123,
-        "line_end": 3127,
-        "line_start": 3121,
+        "file_text_char_end": 261102,
+        "file_text_char_start": 260608,
+        "line_end": 3134,
+        "line_start": 3128,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10349,8 +10424,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "4d1297d794ff025dac8cb8c54a604e5d648ffd85b87d3816a2a65d47df0b4c57",
-      "bullet_ordinal": 101,
-      "coverage_id": "implemented_benchmark_101",
+      "bullet_ordinal": 102,
+      "coverage_id": "implemented_benchmark_102",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10362,10 +10437,10 @@
           "source_span": {
             "bullet_text_char_end": 402,
             "bullet_text_char_start": 395,
-            "file_text_char_end": 261020,
-            "file_text_char_start": 261013,
-            "line_end": 3133,
-            "line_start": 3133,
+            "file_text_char_end": 261505,
+            "file_text_char_start": 261498,
+            "line_end": 3140,
+            "line_start": 3140,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10377,10 +10452,10 @@
           "source_span": {
             "bullet_text_char_end": 490,
             "bullet_text_char_start": 487,
-            "file_text_char_end": 261108,
-            "file_text_char_start": 261105,
-            "line_end": 3134,
-            "line_start": 3134,
+            "file_text_char_end": 261593,
+            "file_text_char_start": 261590,
+            "line_end": 3141,
+            "line_start": 3141,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10401,10 +10476,10 @@
           "source_span": {
             "bullet_text_char_end": 54,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 260672,
-            "file_text_char_start": 260620,
-            "line_end": 3128,
-            "line_start": 3128,
+            "file_text_char_end": 261157,
+            "file_text_char_start": 261105,
+            "line_end": 3135,
+            "line_start": 3135,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10424,10 +10499,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 261541,
-        "file_text_char_start": 260618,
-        "line_end": 3140,
-        "line_start": 3128,
+        "file_text_char_end": 262026,
+        "file_text_char_start": 261103,
+        "line_end": 3147,
+        "line_start": 3135,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10439,8 +10514,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "b8d7c73ba21404ad15213e80c2f4711279027a52aa7fca8e9003015e89082a82",
-      "bullet_ordinal": 102,
-      "coverage_id": "implemented_benchmark_102",
+      "bullet_ordinal": 103,
+      "coverage_id": "implemented_benchmark_103",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10452,10 +10527,10 @@
           "source_span": {
             "bullet_text_char_end": 418,
             "bullet_text_char_start": 415,
-            "file_text_char_end": 261960,
-            "file_text_char_start": 261957,
-            "line_end": 3146,
-            "line_start": 3146,
+            "file_text_char_end": 262445,
+            "file_text_char_start": 262442,
+            "line_end": 3153,
+            "line_start": 3153,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10475,10 +10550,10 @@
           "source_span": {
             "bullet_text_char_end": 57,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 261599,
-            "file_text_char_start": 261544,
-            "line_end": 3141,
-            "line_start": 3141,
+            "file_text_char_end": 262084,
+            "file_text_char_start": 262029,
+            "line_end": 3148,
+            "line_start": 3148,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10498,10 +10573,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 262034,
-        "file_text_char_start": 261542,
-        "line_end": 3147,
-        "line_start": 3141,
+        "file_text_char_end": 262519,
+        "file_text_char_start": 262027,
+        "line_end": 3154,
+        "line_start": 3148,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10513,8 +10588,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "d44b93250890a64e28af662a2f4be569e5cfaf3a0faa6e8a281a3fbbec98dbff",
-      "bullet_ordinal": 103,
-      "coverage_id": "implemented_benchmark_103",
+      "bullet_ordinal": 104,
+      "coverage_id": "implemented_benchmark_104",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10526,10 +10601,10 @@
           "source_span": {
             "bullet_text_char_end": 458,
             "bullet_text_char_start": 451,
-            "file_text_char_end": 262493,
-            "file_text_char_start": 262486,
-            "line_end": 3154,
-            "line_start": 3154,
+            "file_text_char_end": 262978,
+            "file_text_char_start": 262971,
+            "line_end": 3161,
+            "line_start": 3161,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10541,10 +10616,10 @@
           "source_span": {
             "bullet_text_char_end": 546,
             "bullet_text_char_start": 543,
-            "file_text_char_end": 262581,
-            "file_text_char_start": 262578,
-            "line_end": 3155,
-            "line_start": 3155,
+            "file_text_char_end": 263066,
+            "file_text_char_start": 263063,
+            "line_end": 3162,
+            "line_start": 3162,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10565,10 +10640,10 @@
           "source_span": {
             "bullet_text_char_end": 51,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 262086,
-            "file_text_char_start": 262037,
-            "line_end": 3148,
-            "line_start": 3148,
+            "file_text_char_end": 262571,
+            "file_text_char_start": 262522,
+            "line_end": 3155,
+            "line_start": 3155,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10588,10 +10663,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 263061,
-        "file_text_char_start": 262035,
-        "line_end": 3161,
-        "line_start": 3148,
+        "file_text_char_end": 263546,
+        "file_text_char_start": 262520,
+        "line_end": 3168,
+        "line_start": 3155,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10603,8 +10678,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "6d8229b8ac323a27c0eab6bb7a78b0742b6fa9398d1fc96f9da1682ccd169a6c",
-      "bullet_ordinal": 104,
-      "coverage_id": "implemented_benchmark_104",
+      "bullet_ordinal": 105,
+      "coverage_id": "implemented_benchmark_105",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10616,10 +10691,10 @@
           "source_span": {
             "bullet_text_char_end": 393,
             "bullet_text_char_start": 390,
-            "file_text_char_end": 263455,
-            "file_text_char_start": 263452,
-            "line_end": 3167,
-            "line_start": 3167,
+            "file_text_char_end": 263940,
+            "file_text_char_start": 263937,
+            "line_end": 3174,
+            "line_start": 3174,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10639,10 +10714,10 @@
           "source_span": {
             "bullet_text_char_end": 61,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 263123,
-            "file_text_char_start": 263064,
-            "line_end": 3162,
-            "line_start": 3162,
+            "file_text_char_end": 263608,
+            "file_text_char_start": 263549,
+            "line_end": 3169,
+            "line_start": 3169,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10662,10 +10737,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 263523,
-        "file_text_char_start": 263062,
-        "line_end": 3168,
-        "line_start": 3162,
+        "file_text_char_end": 264008,
+        "file_text_char_start": 263547,
+        "line_end": 3175,
+        "line_start": 3169,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10677,8 +10752,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "dfbec1c060bc0d0f01ccc5f2adecbbaf330f31109578e8db249a6baf60d3facf",
-      "bullet_ordinal": 105,
-      "coverage_id": "implemented_benchmark_105",
+      "bullet_ordinal": 106,
+      "coverage_id": "implemented_benchmark_106",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10690,10 +10765,10 @@
           "source_span": {
             "bullet_text_char_end": 372,
             "bullet_text_char_start": 365,
-            "file_text_char_end": 263896,
-            "file_text_char_start": 263889,
-            "line_end": 3174,
-            "line_start": 3174,
+            "file_text_char_end": 264381,
+            "file_text_char_start": 264374,
+            "line_end": 3181,
+            "line_start": 3181,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10705,10 +10780,10 @@
           "source_span": {
             "bullet_text_char_end": 460,
             "bullet_text_char_start": 457,
-            "file_text_char_end": 263984,
-            "file_text_char_start": 263981,
-            "line_end": 3175,
-            "line_start": 3175,
+            "file_text_char_end": 264469,
+            "file_text_char_start": 264466,
+            "line_end": 3182,
+            "line_start": 3182,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10729,10 +10804,10 @@
           "source_span": {
             "bullet_text_char_end": 55,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 263579,
-            "file_text_char_start": 263526,
-            "line_end": 3169,
-            "line_start": 3169,
+            "file_text_char_end": 264064,
+            "file_text_char_start": 264011,
+            "line_end": 3176,
+            "line_start": 3176,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10752,10 +10827,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 264438,
-        "file_text_char_start": 263524,
-        "line_end": 3181,
-        "line_start": 3169,
+        "file_text_char_end": 264923,
+        "file_text_char_start": 264009,
+        "line_end": 3188,
+        "line_start": 3176,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10767,8 +10842,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "2be25410001717a3f1850aa3acfe5fa465b5845cafa31601c6f0701765f99530",
-      "bullet_ordinal": 106,
-      "coverage_id": "implemented_benchmark_106",
+      "bullet_ordinal": 107,
+      "coverage_id": "implemented_benchmark_107",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10780,10 +10855,10 @@
           "source_span": {
             "bullet_text_char_end": 390,
             "bullet_text_char_start": 387,
-            "file_text_char_end": 264829,
-            "file_text_char_start": 264826,
-            "line_end": 3187,
-            "line_start": 3187,
+            "file_text_char_end": 265314,
+            "file_text_char_start": 265311,
+            "line_end": 3194,
+            "line_start": 3194,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10803,10 +10878,10 @@
           "source_span": {
             "bullet_text_char_end": 58,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 264497,
-            "file_text_char_start": 264441,
-            "line_end": 3182,
-            "line_start": 3182,
+            "file_text_char_end": 264982,
+            "file_text_char_start": 264926,
+            "line_end": 3189,
+            "line_start": 3189,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10826,10 +10901,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 264905,
-        "file_text_char_start": 264439,
-        "line_end": 3188,
-        "line_start": 3182,
+        "file_text_char_end": 265390,
+        "file_text_char_start": 264924,
+        "line_end": 3195,
+        "line_start": 3189,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10841,8 +10916,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "311f653fe8dcef8cc9a54b67579b6c2e16e832e90264f6fd110818b9687dc84e",
-      "bullet_ordinal": 107,
-      "coverage_id": "implemented_benchmark_107",
+      "bullet_ordinal": 108,
+      "coverage_id": "implemented_benchmark_108",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10854,10 +10929,10 @@
           "source_span": {
             "bullet_text_char_end": 478,
             "bullet_text_char_start": 471,
-            "file_text_char_end": 265384,
-            "file_text_char_start": 265377,
-            "line_end": 3195,
-            "line_start": 3195,
+            "file_text_char_end": 265869,
+            "file_text_char_start": 265862,
+            "line_end": 3202,
+            "line_start": 3202,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10869,10 +10944,10 @@
           "source_span": {
             "bullet_text_char_end": 566,
             "bullet_text_char_start": 563,
-            "file_text_char_end": 265472,
-            "file_text_char_start": 265469,
-            "line_end": 3196,
-            "line_start": 3196,
+            "file_text_char_end": 265957,
+            "file_text_char_start": 265954,
+            "line_end": 3203,
+            "line_start": 3203,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10893,10 +10968,10 @@
           "source_span": {
             "bullet_text_char_end": 61,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 264967,
-            "file_text_char_start": 264908,
-            "line_end": 3189,
-            "line_start": 3189,
+            "file_text_char_end": 265452,
+            "file_text_char_start": 265393,
+            "line_end": 3196,
+            "line_start": 3196,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10916,10 +10991,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 265947,
-        "file_text_char_start": 264906,
-        "line_end": 3203,
-        "line_start": 3189,
+        "file_text_char_end": 266432,
+        "file_text_char_start": 265391,
+        "line_end": 3210,
+        "line_start": 3196,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -10931,8 +11006,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "badd2fa24b9c8222a89c0609c7f316cbd184ba95a4fea0af5e0e58527082edf0",
-      "bullet_ordinal": 108,
-      "coverage_id": "implemented_benchmark_108",
+      "bullet_ordinal": 109,
+      "coverage_id": "implemented_benchmark_109",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -10944,10 +11019,10 @@
           "source_span": {
             "bullet_text_char_end": 490,
             "bullet_text_char_start": 487,
-            "file_text_char_end": 266438,
-            "file_text_char_start": 266435,
-            "line_end": 3210,
-            "line_start": 3210,
+            "file_text_char_end": 266923,
+            "file_text_char_start": 266920,
+            "line_end": 3217,
+            "line_start": 3217,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -10967,10 +11042,10 @@
           "source_span": {
             "bullet_text_char_end": 62,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 266010,
-            "file_text_char_start": 265950,
-            "line_end": 3204,
-            "line_start": 3204,
+            "file_text_char_end": 266495,
+            "file_text_char_start": 266435,
+            "line_end": 3211,
+            "line_start": 3211,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -10990,10 +11065,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 266518,
-        "file_text_char_start": 265948,
-        "line_end": 3211,
-        "line_start": 3204,
+        "file_text_char_end": 267003,
+        "file_text_char_start": 266433,
+        "line_end": 3218,
+        "line_start": 3211,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11005,8 +11080,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "21524d5598a8391089e91e3ee27e6e93341edd043ea8c9685263594feaafb6e7",
-      "bullet_ordinal": 109,
-      "coverage_id": "implemented_benchmark_109",
+      "bullet_ordinal": 110,
+      "coverage_id": "implemented_benchmark_110",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11018,10 +11093,10 @@
           "source_span": {
             "bullet_text_char_end": 189,
             "bullet_text_char_start": 182,
-            "file_text_char_end": 266708,
-            "file_text_char_start": 266701,
-            "line_end": 3214,
-            "line_start": 3214,
+            "file_text_char_end": 267193,
+            "file_text_char_start": 267186,
+            "line_end": 3221,
+            "line_start": 3221,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11041,10 +11116,10 @@
           "source_span": {
             "bullet_text_char_end": 52,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 266571,
-            "file_text_char_start": 266521,
-            "line_end": 3212,
-            "line_start": 3212,
+            "file_text_char_end": 267056,
+            "file_text_char_start": 267006,
+            "line_end": 3219,
+            "line_start": 3219,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11064,10 +11139,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 266925,
-        "file_text_char_start": 266519,
-        "line_end": 3217,
-        "line_start": 3212,
+        "file_text_char_end": 267410,
+        "file_text_char_start": 267004,
+        "line_end": 3224,
+        "line_start": 3219,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11079,8 +11154,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "0b80482b8074b1f761318bbb57c2d09d83773251b8e969d2c325019c73238e91",
-      "bullet_ordinal": 110,
-      "coverage_id": "implemented_benchmark_110",
+      "bullet_ordinal": 111,
+      "coverage_id": "implemented_benchmark_111",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11092,10 +11167,10 @@
           "source_span": {
             "bullet_text_char_end": 550,
             "bullet_text_char_start": 543,
-            "file_text_char_end": 267476,
-            "file_text_char_start": 267469,
-            "line_end": 3224,
-            "line_start": 3224,
+            "file_text_char_end": 267961,
+            "file_text_char_start": 267954,
+            "line_end": 3231,
+            "line_start": 3231,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11107,10 +11182,10 @@
           "source_span": {
             "bullet_text_char_end": 590,
             "bullet_text_char_start": 587,
-            "file_text_char_end": 267516,
-            "file_text_char_start": 267513,
-            "line_end": 3225,
-            "line_start": 3225,
+            "file_text_char_end": 268001,
+            "file_text_char_start": 267998,
+            "line_end": 3232,
+            "line_start": 3232,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11131,10 +11206,10 @@
           "source_span": {
             "bullet_text_char_end": 44,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 266970,
-            "file_text_char_start": 266928,
-            "line_end": 3218,
-            "line_start": 3218,
+            "file_text_char_end": 267455,
+            "file_text_char_start": 267413,
+            "line_end": 3225,
+            "line_start": 3225,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11146,10 +11221,10 @@
           "source_span": {
             "bullet_text_char_end": 91,
             "bullet_text_char_start": 73,
-            "file_text_char_end": 267017,
-            "file_text_char_start": 266999,
-            "line_end": 3219,
-            "line_start": 3219,
+            "file_text_char_end": 267502,
+            "file_text_char_start": 267484,
+            "line_end": 3226,
+            "line_start": 3226,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11175,10 +11250,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 267603,
-        "file_text_char_start": 266926,
-        "line_end": 3227,
-        "line_start": 3218,
+        "file_text_char_end": 268088,
+        "file_text_char_start": 267411,
+        "line_end": 3234,
+        "line_start": 3225,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11190,8 +11265,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "f520184397111b6dabe35ca5bbe677799c19aaae120823359ccb9ee67b7725bc",
-      "bullet_ordinal": 111,
-      "coverage_id": "implemented_benchmark_111",
+      "bullet_ordinal": 112,
+      "coverage_id": "implemented_benchmark_112",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11203,10 +11278,10 @@
           "source_span": {
             "bullet_text_char_end": 601,
             "bullet_text_char_start": 594,
-            "file_text_char_end": 268205,
-            "file_text_char_start": 268198,
-            "line_end": 3235,
-            "line_start": 3235,
+            "file_text_char_end": 268690,
+            "file_text_char_start": 268683,
+            "line_end": 3242,
+            "line_start": 3242,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11218,10 +11293,10 @@
           "source_span": {
             "bullet_text_char_end": 736,
             "bullet_text_char_start": 729,
-            "file_text_char_end": 268340,
-            "file_text_char_start": 268333,
-            "line_end": 3237,
-            "line_start": 3237,
+            "file_text_char_end": 268825,
+            "file_text_char_start": 268818,
+            "line_end": 3244,
+            "line_start": 3244,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11233,10 +11308,10 @@
           "source_span": {
             "bullet_text_char_end": 971,
             "bullet_text_char_start": 964,
-            "file_text_char_end": 268575,
-            "file_text_char_start": 268568,
-            "line_end": 3240,
-            "line_start": 3240,
+            "file_text_char_end": 269060,
+            "file_text_char_start": 269053,
+            "line_end": 3247,
+            "line_start": 3247,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11248,10 +11323,10 @@
           "source_span": {
             "bullet_text_char_end": 1079,
             "bullet_text_char_start": 1072,
-            "file_text_char_end": 268683,
-            "file_text_char_start": 268676,
-            "line_end": 3242,
-            "line_start": 3242,
+            "file_text_char_end": 269168,
+            "file_text_char_start": 269161,
+            "line_end": 3249,
+            "line_start": 3249,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11263,10 +11338,10 @@
           "source_span": {
             "bullet_text_char_end": 1267,
             "bullet_text_char_start": 1264,
-            "file_text_char_end": 268871,
-            "file_text_char_start": 268868,
-            "line_end": 3244,
-            "line_start": 3244,
+            "file_text_char_end": 269356,
+            "file_text_char_start": 269353,
+            "line_end": 3251,
+            "line_start": 3251,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11287,10 +11362,10 @@
           "source_span": {
             "bullet_text_char_end": 38,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 267642,
-            "file_text_char_start": 267606,
-            "line_end": 3228,
-            "line_start": 3228,
+            "file_text_char_end": 268127,
+            "file_text_char_start": 268091,
+            "line_end": 3235,
+            "line_start": 3235,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11310,10 +11385,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 268996,
-        "file_text_char_start": 267604,
-        "line_end": 3246,
-        "line_start": 3228,
+        "file_text_char_end": 269481,
+        "file_text_char_start": 268089,
+        "line_end": 3253,
+        "line_start": 3235,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11325,8 +11400,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "1860825e03a49b25b865486497cf6175efde4a496a639fcbaca8c1d0e0005537",
-      "bullet_ordinal": 112,
-      "coverage_id": "implemented_benchmark_112",
+      "bullet_ordinal": 113,
+      "coverage_id": "implemented_benchmark_113",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11338,10 +11413,10 @@
           "source_span": {
             "bullet_text_char_end": 268,
             "bullet_text_char_start": 265,
-            "file_text_char_end": 269265,
-            "file_text_char_start": 269262,
-            "line_end": 3250,
-            "line_start": 3250,
+            "file_text_char_end": 269750,
+            "file_text_char_start": 269747,
+            "line_end": 3257,
+            "line_start": 3257,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11361,10 +11436,10 @@
           "source_span": {
             "bullet_text_char_end": 39,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 269036,
-            "file_text_char_start": 268999,
-            "line_end": 3247,
-            "line_start": 3247,
+            "file_text_char_end": 269521,
+            "file_text_char_start": 269484,
+            "line_end": 3254,
+            "line_start": 3254,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11386,10 +11461,10 @@
         "2506.13131"
       ],
       "source_span": {
-        "file_text_char_end": 269330,
-        "file_text_char_start": 268997,
-        "line_end": 3251,
-        "line_start": 3247,
+        "file_text_char_end": 269815,
+        "file_text_char_start": 269482,
+        "line_end": 3258,
+        "line_start": 3254,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11402,10 +11477,10 @@
           "source_span": {
             "bullet_text_char_end": 119,
             "bullet_text_char_start": 109,
-            "file_text_char_end": 269116,
-            "file_text_char_start": 269106,
-            "line_end": 3248,
-            "line_start": 3248,
+            "file_text_char_end": 269601,
+            "file_text_char_start": 269591,
+            "line_end": 3255,
+            "line_start": 3255,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11418,8 +11493,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "feaf6f921b3130aff7bedc56b50715c59d646501f6a87185e3df999e50b85a13",
-      "bullet_ordinal": 113,
-      "coverage_id": "implemented_benchmark_113",
+      "bullet_ordinal": 114,
+      "coverage_id": "implemented_benchmark_114",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11431,10 +11506,10 @@
           "source_span": {
             "bullet_text_char_end": 331,
             "bullet_text_char_start": 328,
-            "file_text_char_end": 269662,
-            "file_text_char_start": 269659,
-            "line_end": 3256,
-            "line_start": 3256,
+            "file_text_char_end": 270147,
+            "file_text_char_start": 270144,
+            "line_end": 3263,
+            "line_start": 3263,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11454,10 +11529,10 @@
           "source_span": {
             "bullet_text_char_end": 49,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 269380,
-            "file_text_char_start": 269333,
-            "line_end": 3252,
-            "line_start": 3252,
+            "file_text_char_end": 269865,
+            "file_text_char_start": 269818,
+            "line_end": 3259,
+            "line_start": 3259,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11477,10 +11552,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 269687,
-        "file_text_char_start": 269331,
-        "line_end": 3256,
-        "line_start": 3252,
+        "file_text_char_end": 270172,
+        "file_text_char_start": 269816,
+        "line_end": 3263,
+        "line_start": 3259,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11492,8 +11567,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "61b45ee042b8f05f4146d54340a1430391a037209a5bbfb684105fcfc9f7003c",
-      "bullet_ordinal": 114,
-      "coverage_id": "implemented_benchmark_114",
+      "bullet_ordinal": 115,
+      "coverage_id": "implemented_benchmark_115",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11505,10 +11580,10 @@
           "source_span": {
             "bullet_text_char_end": 341,
             "bullet_text_char_start": 338,
-            "file_text_char_end": 270029,
-            "file_text_char_start": 270026,
-            "line_end": 3261,
-            "line_start": 3261,
+            "file_text_char_end": 270514,
+            "file_text_char_start": 270511,
+            "line_end": 3268,
+            "line_start": 3268,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11528,10 +11603,10 @@
           "source_span": {
             "bullet_text_char_end": 59,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 269747,
-            "file_text_char_start": 269690,
-            "line_end": 3257,
-            "line_start": 3257,
+            "file_text_char_end": 270232,
+            "file_text_char_start": 270175,
+            "line_end": 3264,
+            "line_start": 3264,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11551,10 +11626,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 270065,
-        "file_text_char_start": 269688,
-        "line_end": 3261,
-        "line_start": 3257,
+        "file_text_char_end": 270550,
+        "file_text_char_start": 270173,
+        "line_end": 3268,
+        "line_start": 3264,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11566,8 +11641,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "c2a2e4bc6071a5fb9fc423ba84eb6ef94f6b60482329c89401a00146e763d15d",
-      "bullet_ordinal": 115,
-      "coverage_id": "implemented_benchmark_115",
+      "bullet_ordinal": 116,
+      "coverage_id": "implemented_benchmark_116",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11579,10 +11654,10 @@
           "source_span": {
             "bullet_text_char_end": 344,
             "bullet_text_char_start": 341,
-            "file_text_char_end": 270410,
-            "file_text_char_start": 270407,
-            "line_end": 3266,
-            "line_start": 3266,
+            "file_text_char_end": 270895,
+            "file_text_char_start": 270892,
+            "line_end": 3273,
+            "line_start": 3273,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11602,10 +11677,10 @@
           "source_span": {
             "bullet_text_char_end": 59,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 270125,
-            "file_text_char_start": 270068,
-            "line_end": 3262,
-            "line_start": 3262,
+            "file_text_char_end": 270610,
+            "file_text_char_start": 270553,
+            "line_end": 3269,
+            "line_start": 3269,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11625,10 +11700,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 270488,
-        "file_text_char_start": 270066,
-        "line_end": 3267,
-        "line_start": 3262,
+        "file_text_char_end": 270973,
+        "file_text_char_start": 270551,
+        "line_end": 3274,
+        "line_start": 3269,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11640,8 +11715,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "2a0a605c33ea37b2b23693677fefaa39b2c3d3b8386c6dccaba5b6bfed17a663",
-      "bullet_ordinal": 116,
-      "coverage_id": "implemented_benchmark_116",
+      "bullet_ordinal": 117,
+      "coverage_id": "implemented_benchmark_117",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11653,10 +11728,10 @@
           "source_span": {
             "bullet_text_char_end": 264,
             "bullet_text_char_start": 261,
-            "file_text_char_end": 270753,
-            "file_text_char_start": 270750,
-            "line_end": 3271,
-            "line_start": 3271,
+            "file_text_char_end": 271238,
+            "file_text_char_start": 271235,
+            "line_end": 3278,
+            "line_start": 3278,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11676,10 +11751,10 @@
           "source_span": {
             "bullet_text_char_end": 47,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 270536,
-            "file_text_char_start": 270491,
-            "line_end": 3268,
-            "line_start": 3268,
+            "file_text_char_end": 271021,
+            "file_text_char_start": 270976,
+            "line_end": 3275,
+            "line_start": 3275,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11701,10 +11776,10 @@
         "2506.13131"
       ],
       "source_span": {
-        "file_text_char_end": 270840,
-        "file_text_char_start": 270489,
-        "line_end": 3272,
-        "line_start": 3268,
+        "file_text_char_end": 271325,
+        "file_text_char_start": 270974,
+        "line_end": 3279,
+        "line_start": 3275,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11717,10 +11792,10 @@
           "source_span": {
             "bullet_text_char_end": 242,
             "bullet_text_char_start": 232,
-            "file_text_char_end": 270731,
-            "file_text_char_start": 270721,
-            "line_end": 3271,
-            "line_start": 3271,
+            "file_text_char_end": 271216,
+            "file_text_char_start": 271206,
+            "line_end": 3278,
+            "line_start": 3278,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11733,8 +11808,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "a06bb051c4878ce5e55c57896fca33364e467a768d44060cf3afdb9dfbc6314d",
-      "bullet_ordinal": 117,
-      "coverage_id": "implemented_benchmark_117",
+      "bullet_ordinal": 118,
+      "coverage_id": "implemented_benchmark_118",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11746,10 +11821,10 @@
           "source_span": {
             "bullet_text_char_end": 313,
             "bullet_text_char_start": 310,
-            "file_text_char_end": 271154,
-            "file_text_char_start": 271151,
-            "line_end": 3277,
-            "line_start": 3277,
+            "file_text_char_end": 271639,
+            "file_text_char_start": 271636,
+            "line_end": 3284,
+            "line_start": 3284,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11769,10 +11844,10 @@
           "source_span": {
             "bullet_text_char_end": 58,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 270899,
-            "file_text_char_start": 270843,
-            "line_end": 3273,
-            "line_start": 3273,
+            "file_text_char_end": 271384,
+            "file_text_char_start": 271328,
+            "line_end": 3280,
+            "line_start": 3280,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11784,10 +11859,10 @@
           "source_span": {
             "bullet_text_char_end": 178,
             "bullet_text_char_start": 132,
-            "file_text_char_end": 271019,
-            "file_text_char_start": 270973,
-            "line_end": 3275,
-            "line_start": 3275,
+            "file_text_char_end": 271504,
+            "file_text_char_start": 271458,
+            "line_end": 3282,
+            "line_start": 3282,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11815,10 +11890,10 @@
         "2506.13131"
       ],
       "source_span": {
-        "file_text_char_end": 271252,
-        "file_text_char_start": 270841,
-        "line_end": 3278,
-        "line_start": 3273,
+        "file_text_char_end": 271737,
+        "file_text_char_start": 271326,
+        "line_end": 3285,
+        "line_start": 3280,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11831,10 +11906,10 @@
           "source_span": {
             "bullet_text_char_end": 222,
             "bullet_text_char_start": 212,
-            "file_text_char_end": 271063,
-            "file_text_char_start": 271053,
-            "line_end": 3276,
-            "line_start": 3276,
+            "file_text_char_end": 271548,
+            "file_text_char_start": 271538,
+            "line_end": 3283,
+            "line_start": 3283,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11847,8 +11922,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "01e9e2f74238ceaaed706ad3d38b50a02b7541b5fcf71eba8f251e233d3aed73",
-      "bullet_ordinal": 118,
-      "coverage_id": "implemented_benchmark_118",
+      "bullet_ordinal": 119,
+      "coverage_id": "implemented_benchmark_119",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11860,10 +11935,10 @@
           "source_span": {
             "bullet_text_char_end": 391,
             "bullet_text_char_start": 388,
-            "file_text_char_end": 271644,
-            "file_text_char_start": 271641,
-            "line_end": 3284,
-            "line_start": 3284,
+            "file_text_char_end": 272129,
+            "file_text_char_start": 272126,
+            "line_end": 3291,
+            "line_start": 3291,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11883,10 +11958,10 @@
           "source_span": {
             "bullet_text_char_end": 52,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 271305,
-            "file_text_char_start": 271255,
-            "line_end": 3279,
-            "line_start": 3279,
+            "file_text_char_end": 271790,
+            "file_text_char_start": 271740,
+            "line_end": 3286,
+            "line_start": 3286,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11906,10 +11981,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 271728,
-        "file_text_char_start": 271253,
-        "line_end": 3285,
-        "line_start": 3279,
+        "file_text_char_end": 272213,
+        "file_text_char_start": 271738,
+        "line_end": 3292,
+        "line_start": 3286,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11921,8 +11996,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "7b2d99247183346646b2a41468a7b29584cb7cbf602b4457aa115b98d24a2249",
-      "bullet_ordinal": 119,
-      "coverage_id": "implemented_benchmark_119",
+      "bullet_ordinal": 120,
+      "coverage_id": "implemented_benchmark_120",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -11934,10 +12009,10 @@
           "source_span": {
             "bullet_text_char_end": 296,
             "bullet_text_char_start": 293,
-            "file_text_char_end": 272025,
-            "file_text_char_start": 272022,
-            "line_end": 3289,
-            "line_start": 3289,
+            "file_text_char_end": 272510,
+            "file_text_char_start": 272507,
+            "line_end": 3296,
+            "line_start": 3296,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -11957,10 +12032,10 @@
           "source_span": {
             "bullet_text_char_end": 66,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 271795,
-            "file_text_char_start": 271731,
-            "line_end": 3286,
-            "line_start": 3286,
+            "file_text_char_end": 272280,
+            "file_text_char_start": 272216,
+            "line_end": 3293,
+            "line_start": 3293,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -11980,10 +12055,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 272072,
-        "file_text_char_start": 271729,
-        "line_end": 3290,
-        "line_start": 3286,
+        "file_text_char_end": 272557,
+        "file_text_char_start": 272214,
+        "line_end": 3297,
+        "line_start": 3293,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -11995,8 +12070,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "1eaef42973bfe7d851cf64bb45772b094596fab558b1e93806f5b64efef31010",
-      "bullet_ordinal": 120,
-      "coverage_id": "implemented_benchmark_120",
+      "bullet_ordinal": 121,
+      "coverage_id": "implemented_benchmark_121",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12008,10 +12083,10 @@
           "source_span": {
             "bullet_text_char_end": 350,
             "bullet_text_char_start": 347,
-            "file_text_char_end": 272423,
-            "file_text_char_start": 272420,
-            "line_end": 3295,
-            "line_start": 3295,
+            "file_text_char_end": 272908,
+            "file_text_char_start": 272905,
+            "line_end": 3302,
+            "line_start": 3302,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12031,10 +12106,10 @@
           "source_span": {
             "bullet_text_char_end": 63,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 272136,
-            "file_text_char_start": 272075,
-            "line_end": 3291,
-            "line_start": 3291,
+            "file_text_char_end": 272621,
+            "file_text_char_start": 272560,
+            "line_end": 3298,
+            "line_start": 3298,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12054,10 +12129,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 272458,
-        "file_text_char_start": 272073,
-        "line_end": 3295,
-        "line_start": 3291,
+        "file_text_char_end": 272943,
+        "file_text_char_start": 272558,
+        "line_end": 3302,
+        "line_start": 3298,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12069,8 +12144,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "b0cef48ebc9b369b379a2dfd237ba50326d114eb1debade6cbb98ec64fbbea11",
-      "bullet_ordinal": 121,
-      "coverage_id": "implemented_benchmark_121",
+      "bullet_ordinal": 122,
+      "coverage_id": "implemented_benchmark_122",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12082,10 +12157,10 @@
           "source_span": {
             "bullet_text_char_end": 402,
             "bullet_text_char_start": 399,
-            "file_text_char_end": 272861,
-            "file_text_char_start": 272858,
-            "line_end": 3301,
-            "line_start": 3301,
+            "file_text_char_end": 273346,
+            "file_text_char_start": 273343,
+            "line_end": 3308,
+            "line_start": 3308,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12105,10 +12180,10 @@
           "source_span": {
             "bullet_text_char_end": 56,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 272515,
-            "file_text_char_start": 272461,
-            "line_end": 3296,
-            "line_start": 3296,
+            "file_text_char_end": 273000,
+            "file_text_char_start": 272946,
+            "line_end": 3303,
+            "line_start": 3303,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12128,10 +12203,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 272926,
-        "file_text_char_start": 272459,
-        "line_end": 3302,
-        "line_start": 3296,
+        "file_text_char_end": 273411,
+        "file_text_char_start": 272944,
+        "line_end": 3309,
+        "line_start": 3303,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12143,8 +12218,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "de4aecbe0a88d2bf2b3a152710c5c9ed81c2f6f2e7ab4699869d4c46b5dc1ed5",
-      "bullet_ordinal": 122,
-      "coverage_id": "implemented_benchmark_122",
+      "bullet_ordinal": 123,
+      "coverage_id": "implemented_benchmark_123",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12156,10 +12231,10 @@
           "source_span": {
             "bullet_text_char_end": 224,
             "bullet_text_char_start": 217,
-            "file_text_char_end": 273151,
-            "file_text_char_start": 273144,
-            "line_end": 3305,
-            "line_start": 3305,
+            "file_text_char_end": 273636,
+            "file_text_char_start": 273629,
+            "line_end": 3312,
+            "line_start": 3312,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12171,10 +12246,10 @@
           "source_span": {
             "bullet_text_char_end": 283,
             "bullet_text_char_start": 280,
-            "file_text_char_end": 273210,
-            "file_text_char_start": 273207,
-            "line_end": 3306,
-            "line_start": 3306,
+            "file_text_char_end": 273695,
+            "file_text_char_start": 273692,
+            "line_end": 3313,
+            "line_start": 3313,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12195,10 +12270,10 @@
           "source_span": {
             "bullet_text_char_end": 57,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 272984,
-            "file_text_char_start": 272929,
-            "line_end": 3303,
-            "line_start": 3303,
+            "file_text_char_end": 273469,
+            "file_text_char_start": 273414,
+            "line_end": 3310,
+            "line_start": 3310,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12218,10 +12293,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 273240,
-        "file_text_char_start": 272927,
-        "line_end": 3306,
-        "line_start": 3303,
+        "file_text_char_end": 273725,
+        "file_text_char_start": 273412,
+        "line_end": 3313,
+        "line_start": 3310,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12233,8 +12308,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "5c474c9ce767bc6ca0a3e0897096fa49ae6eecdb675031776a596e5bd138d9bb",
-      "bullet_ordinal": 123,
-      "coverage_id": "implemented_benchmark_123",
+      "bullet_ordinal": 124,
+      "coverage_id": "implemented_benchmark_124",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12246,10 +12321,10 @@
           "source_span": {
             "bullet_text_char_end": 211,
             "bullet_text_char_start": 208,
-            "file_text_char_end": 273452,
-            "file_text_char_start": 273449,
-            "line_end": 3309,
-            "line_start": 3309,
+            "file_text_char_end": 273937,
+            "file_text_char_start": 273934,
+            "line_end": 3316,
+            "line_start": 3316,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12261,10 +12336,10 @@
           "source_span": {
             "bullet_text_char_end": 307,
             "bullet_text_char_start": 304,
-            "file_text_char_end": 273548,
-            "file_text_char_start": 273545,
-            "line_end": 3310,
-            "line_start": 3310,
+            "file_text_char_end": 274033,
+            "file_text_char_start": 274030,
+            "line_end": 3317,
+            "line_start": 3317,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12284,10 +12359,10 @@
           "source_span": {
             "bullet_text_char_end": 61,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 273302,
-            "file_text_char_start": 273243,
-            "line_end": 3307,
-            "line_start": 3307,
+            "file_text_char_end": 273787,
+            "file_text_char_start": 273728,
+            "line_end": 3314,
+            "line_start": 3314,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12307,10 +12382,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 273584,
-        "file_text_char_start": 273241,
-        "line_end": 3311,
-        "line_start": 3307,
+        "file_text_char_end": 274069,
+        "file_text_char_start": 273726,
+        "line_end": 3318,
+        "line_start": 3314,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12322,8 +12397,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "1cffaea9281237064900c58e238a3277ef8cd6705fdb9e057ac229bc2e01e090",
-      "bullet_ordinal": 124,
-      "coverage_id": "implemented_benchmark_124",
+      "bullet_ordinal": 125,
+      "coverage_id": "implemented_benchmark_125",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12335,10 +12410,10 @@
           "source_span": {
             "bullet_text_char_end": 337,
             "bullet_text_char_start": 334,
-            "file_text_char_end": 273922,
-            "file_text_char_start": 273919,
-            "line_end": 3316,
-            "line_start": 3316,
+            "file_text_char_end": 274407,
+            "file_text_char_start": 274404,
+            "line_end": 3323,
+            "line_start": 3323,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12358,10 +12433,10 @@
           "source_span": {
             "bullet_text_char_end": 53,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 273638,
-            "file_text_char_start": 273587,
-            "line_end": 3312,
-            "line_start": 3312,
+            "file_text_char_end": 274123,
+            "file_text_char_start": 274072,
+            "line_end": 3319,
+            "line_start": 3319,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12381,10 +12456,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 273992,
-        "file_text_char_start": 273585,
-        "line_end": 3317,
-        "line_start": 3312,
+        "file_text_char_end": 274477,
+        "file_text_char_start": 274070,
+        "line_end": 3324,
+        "line_start": 3319,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12396,8 +12471,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "6991c8074a2774af8b129e467508ea05b13049f6b7519d1260528cc8891b97f9",
-      "bullet_ordinal": 125,
-      "coverage_id": "implemented_benchmark_125",
+      "bullet_ordinal": 126,
+      "coverage_id": "implemented_benchmark_126",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12409,10 +12484,10 @@
           "source_span": {
             "bullet_text_char_end": 354,
             "bullet_text_char_start": 351,
-            "file_text_char_end": 274347,
-            "file_text_char_start": 274344,
-            "line_end": 3322,
-            "line_start": 3322,
+            "file_text_char_end": 274832,
+            "file_text_char_start": 274829,
+            "line_end": 3329,
+            "line_start": 3329,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12424,10 +12499,10 @@
           "source_span": {
             "bullet_text_char_end": 361,
             "bullet_text_char_start": 358,
-            "file_text_char_end": 274354,
-            "file_text_char_start": 274351,
-            "line_end": 3322,
-            "line_start": 3322,
+            "file_text_char_end": 274839,
+            "file_text_char_start": 274836,
+            "line_end": 3329,
+            "line_start": 3329,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12448,10 +12523,10 @@
           "source_span": {
             "bullet_text_char_end": 49,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 274042,
-            "file_text_char_start": 273995,
-            "line_end": 3318,
-            "line_start": 3318,
+            "file_text_char_end": 274527,
+            "file_text_char_start": 274480,
+            "line_end": 3325,
+            "line_start": 3325,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12471,10 +12546,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 274396,
-        "file_text_char_start": 273993,
-        "line_end": 3323,
-        "line_start": 3318,
+        "file_text_char_end": 274881,
+        "file_text_char_start": 274478,
+        "line_end": 3330,
+        "line_start": 3325,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12486,8 +12561,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "92a8f349c7ffe4c0f382cdab24b66ecfc0eca055bcbac1a8e3de2ecff4d57a25",
-      "bullet_ordinal": 126,
-      "coverage_id": "implemented_benchmark_126",
+      "bullet_ordinal": 127,
+      "coverage_id": "implemented_benchmark_127",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12499,10 +12574,10 @@
           "source_span": {
             "bullet_text_char_end": 223,
             "bullet_text_char_start": 220,
-            "file_text_char_end": 274620,
-            "file_text_char_start": 274617,
-            "line_end": 3326,
-            "line_start": 3326,
+            "file_text_char_end": 275105,
+            "file_text_char_start": 275102,
+            "line_end": 3333,
+            "line_start": 3333,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12522,10 +12597,10 @@
           "source_span": {
             "bullet_text_char_end": 64,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 274461,
-            "file_text_char_start": 274399,
-            "line_end": 3324,
-            "line_start": 3324,
+            "file_text_char_end": 274946,
+            "file_text_char_start": 274884,
+            "line_end": 3331,
+            "line_start": 3331,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12545,10 +12620,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 274662,
-        "file_text_char_start": 274397,
-        "line_end": 3327,
-        "line_start": 3324,
+        "file_text_char_end": 275147,
+        "file_text_char_start": 274882,
+        "line_end": 3334,
+        "line_start": 3331,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12560,8 +12635,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "b2554aa1a1048eb9b16c2a64250b795fb7fa236400ca9e8b58b5aef423c09a4b",
-      "bullet_ordinal": 127,
-      "coverage_id": "implemented_benchmark_127",
+      "bullet_ordinal": 128,
+      "coverage_id": "implemented_benchmark_128",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12573,10 +12648,10 @@
           "source_span": {
             "bullet_text_char_end": 207,
             "bullet_text_char_start": 204,
-            "file_text_char_end": 274870,
-            "file_text_char_start": 274867,
-            "line_end": 3330,
-            "line_start": 3330,
+            "file_text_char_end": 275355,
+            "file_text_char_start": 275352,
+            "line_end": 3337,
+            "line_start": 3337,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12596,10 +12671,10 @@
           "source_span": {
             "bullet_text_char_end": 49,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 274712,
-            "file_text_char_start": 274665,
-            "line_end": 3328,
-            "line_start": 3328,
+            "file_text_char_end": 275197,
+            "file_text_char_start": 275150,
+            "line_end": 3335,
+            "line_start": 3335,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12619,10 +12694,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 274950,
-        "file_text_char_start": 274663,
-        "line_end": 3331,
-        "line_start": 3328,
+        "file_text_char_end": 275435,
+        "file_text_char_start": 275148,
+        "line_end": 3338,
+        "line_start": 3335,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12634,8 +12709,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "3d04fcbf55c7cbedaf5a4fa6154506c7d739bf64008640da9ede633b50b75ca4",
-      "bullet_ordinal": 128,
-      "coverage_id": "implemented_benchmark_128",
+      "bullet_ordinal": 129,
+      "coverage_id": "implemented_benchmark_129",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12647,10 +12722,10 @@
           "source_span": {
             "bullet_text_char_end": 237,
             "bullet_text_char_start": 234,
-            "file_text_char_end": 275188,
-            "file_text_char_start": 275185,
-            "line_end": 3335,
-            "line_start": 3335,
+            "file_text_char_end": 275673,
+            "file_text_char_start": 275670,
+            "line_end": 3342,
+            "line_start": 3342,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12662,10 +12737,10 @@
           "source_span": {
             "bullet_text_char_end": 244,
             "bullet_text_char_start": 241,
-            "file_text_char_end": 275195,
-            "file_text_char_start": 275192,
-            "line_end": 3335,
-            "line_start": 3335,
+            "file_text_char_end": 275680,
+            "file_text_char_start": 275677,
+            "line_end": 3342,
+            "line_start": 3342,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12686,10 +12761,10 @@
           "source_span": {
             "bullet_text_char_end": 41,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 274992,
-            "file_text_char_start": 274953,
-            "line_end": 3332,
-            "line_start": 3332,
+            "file_text_char_end": 275477,
+            "file_text_char_start": 275438,
+            "line_end": 3339,
+            "line_start": 3339,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12709,10 +12784,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 275240,
-        "file_text_char_start": 274951,
-        "line_end": 3335,
-        "line_start": 3332,
+        "file_text_char_end": 275725,
+        "file_text_char_start": 275436,
+        "line_end": 3342,
+        "line_start": 3339,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12724,8 +12799,8 @@
       "all_local_artifacts_exist": true,
       "artifact_existence_status": "all_referenced_local_artifacts_present",
       "body_sha256": "7bad87df186fa93c570d0d24dcee91faa2ebd564f52428c9fbab690d88ffa2e9",
-      "bullet_ordinal": 129,
-      "coverage_id": "implemented_benchmark_129",
+      "bullet_ordinal": 130,
+      "coverage_id": "implemented_benchmark_130",
       "coverage_status": "implemented_bullet_structurally_inventoried",
       "has_limitation_boundary": true,
       "has_local_artifact": true,
@@ -12737,10 +12812,10 @@
           "source_span": {
             "bullet_text_char_end": 269,
             "bullet_text_char_start": 266,
-            "file_text_char_end": 275510,
-            "file_text_char_start": 275507,
-            "line_end": 3339,
-            "line_start": 3339,
+            "file_text_char_end": 275995,
+            "file_text_char_start": 275992,
+            "line_end": 3346,
+            "line_start": 3346,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12752,10 +12827,10 @@
           "source_span": {
             "bullet_text_char_end": 506,
             "bullet_text_char_start": 503,
-            "file_text_char_end": 275747,
-            "file_text_char_start": 275744,
-            "line_end": 3343,
-            "line_start": 3343,
+            "file_text_char_end": 276232,
+            "file_text_char_start": 276229,
+            "line_end": 3350,
+            "line_start": 3350,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12767,10 +12842,10 @@
           "source_span": {
             "bullet_text_char_end": 518,
             "bullet_text_char_start": 515,
-            "file_text_char_end": 275759,
-            "file_text_char_start": 275756,
-            "line_end": 3343,
-            "line_start": 3343,
+            "file_text_char_end": 276244,
+            "file_text_char_start": 276241,
+            "line_end": 3350,
+            "line_start": 3350,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           },
@@ -12791,10 +12866,10 @@
           "source_span": {
             "bullet_text_char_end": 51,
             "bullet_text_char_start": 2,
-            "file_text_char_end": 275292,
-            "file_text_char_start": 275243,
-            "line_end": 3336,
-            "line_start": 3336,
+            "file_text_char_end": 275777,
+            "file_text_char_start": 275728,
+            "line_end": 3343,
+            "line_start": 3343,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12806,10 +12881,10 @@
           "source_span": {
             "bullet_text_char_end": 107,
             "bullet_text_char_start": 58,
-            "file_text_char_end": 275348,
-            "file_text_char_start": 275299,
-            "line_end": 3337,
-            "line_start": 3337,
+            "file_text_char_end": 275833,
+            "file_text_char_start": 275784,
+            "line_end": 3344,
+            "line_start": 3344,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12821,10 +12896,10 @@
           "source_span": {
             "bullet_text_char_end": 621,
             "bullet_text_char_start": 571,
-            "file_text_char_end": 275862,
-            "file_text_char_start": 275812,
-            "line_end": 3344,
-            "line_start": 3344,
+            "file_text_char_end": 276347,
+            "file_text_char_start": 276297,
+            "line_end": 3351,
+            "line_start": 3351,
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions"
           }
@@ -12856,10 +12931,10 @@
       "semantic_status": "not_verified",
       "source_ids_mentioned": [],
       "source_span": {
-        "file_text_char_end": 275923,
-        "file_text_char_start": 275241,
-        "line_end": 3345,
-        "line_start": 3336,
+        "file_text_char_end": 276408,
+        "file_text_char_start": 275726,
+        "line_end": 3352,
+        "line_start": 3343,
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions"
       },
@@ -12869,7 +12944,7 @@
     }
   ],
   "inventory_status": "implemented_bullet_inventory_without_semantic_verifier",
-  "limitation_bullet_count": 129,
+  "limitation_bullet_count": 130,
   "limitation_bullet_ids": [
     "implemented_benchmark_001",
     "implemented_benchmark_002",
@@ -12999,10 +13074,11 @@
     "implemented_benchmark_126",
     "implemented_benchmark_127",
     "implemented_benchmark_128",
-    "implemented_benchmark_129"
+    "implemented_benchmark_129",
+    "implemented_benchmark_130"
   ],
   "limitation_signal_inventory_status": "limitation_signals_structurally_classified_without_semantic_verifier",
-  "limitation_signal_record_count": 238,
+  "limitation_signal_record_count": 239,
   "limitation_signal_terms": [
     "but",
     "lack",
@@ -13015,7 +13091,7 @@
     "still",
     "without"
   ],
-  "local_artifact_mention_record_count": 188,
+  "local_artifact_mention_record_count": 189,
   "missing_evidence": {
     "benchmark_bullet_freshness_matrix": "not_recorded_locally",
     "benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -13034,7 +13110,7 @@
   "source_path": "papers/README.md#benchmark-coverage-decisions",
   "source_token_coverage_status": "source_tokens_structurally_recorded_without_semantic_verifier",
   "source_token_match_record_count": 15,
-  "unique_local_artifact_count": 163,
+  "unique_local_artifact_count": 164,
   "unique_local_artifact_paths": [
     "docs/status.md",
     "libreevolve/core/evaluator.py",
@@ -13175,6 +13251,7 @@
     "papers/roadmap_phase_dependency_graph_boundary.json",
     "papers/roadmap_phase_freshness_boundary.json",
     "papers/roadmap_phase_sequence_boundary.json",
+    "papers/roadmap_phase_staleness_boundary.json",
     "papers/roadmap_plugin_extensibility_boundary.json",
     "papers/roadmap_plugin_readiness_boundary.json",
     "papers/roadmap_prompt_context_readiness_boundary.json",

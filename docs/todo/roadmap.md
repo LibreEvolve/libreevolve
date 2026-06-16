@@ -318,24 +318,29 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     bounded dependency graph for the ten major ROADMAP sections, linking each
     section to prerequisite section edges, section evidence sidecars, and
     active blocker TODO refs, with zero stale dependency edges.
+    `papers/roadmap_phase_staleness_boundary.json` now records a bounded
+    stale-phase detector for the ten major ROADMAP sections by joining the
+    phase sequence map, dependency graph, active blocker TODO refs, section
+    sidecar presence, and dependency edge status, with zero stale phase
+    records.
     `papers/roadmap_phase_freshness_boundary.json` now records a six-
     criterion phase freshness readiness matrix for the dependency graph,
     stale-phase detector, promotion/demotion workflow, CI phase freshness
     gate, evidence-status refresh, and owner review signoff.
   - Current gap: the sidecars are bounded static-sequence, dependency-graph,
-    and freshness readiness maps, not a full freshness model. There is still
-    no implemented stale-phase detector, promotion/demotion workflow, CI phase
+    stale-detector, and freshness readiness maps, not a full phase-lifecycle
+    model. There is still no implemented promotion/demotion workflow, CI phase
     freshness gate, evidence-status refresh report, or owner review signoff
     proving that a ROADMAP item still belongs in Near Term, Mid Term, or
     Longer Term after related code, papers, README, or sidecar evidence
     changes.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: stale-phase detector, promotion/demotion workflow, CI phase
-    freshness gate, evidence-status refresh report, and owner review signoff.
-    The verifier must keep each major section linked to prerequisites,
-    blocking TODOs, validation gates, and promotion criteria, then validate
-    that phase labels and item ordering are refreshed when implementation or
-    evidence status changes.
+    sidecar: promotion/demotion workflow, CI phase freshness gate,
+    evidence-status refresh report, and owner review signoff. The verifier
+    must keep each major section linked to prerequisites, blocking TODOs,
+    validation gates, and promotion criteria, then validate that phase labels
+    and item ordering are refreshed when implementation or evidence status
+    changes.
 
 - [ ] Add ROADMAP operational-maturity acceptance criteria.
   - Spec evidence: the `10. Operational maturity` section groups config

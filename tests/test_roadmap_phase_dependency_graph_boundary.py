@@ -14,7 +14,7 @@ def test_roadmap_phase_dependency_graph_accepts_bounded_graph():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_phase_dependency_graph_recorded_without_freshness_gate"
+        == "bounded_phase_dependency_graph_recorded_with_staleness_detector"
     )
     assert boundary["schema"] == ROADMAP_PHASE_DEPENDENCY_GRAPH_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -59,13 +59,13 @@ def test_roadmap_phase_dependency_graph_accepts_bounded_graph():
         for edge in boundary["phase_dependency_edges"]
     )
     assert boundary["missing_evidence"] == {
-        "phase_staleness_detector": "not_recorded_locally",
         "promotion_demotion_workflow": "not_recorded_locally",
         "ci_phase_freshness_gate": "not_recorded_locally",
         "evidence_status_refresh": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "bounded ROADMAP phase dependency graph" in boundary["claim_boundary"]
+    assert "bounded stale-phase detector is recorded separately" in boundary["claim_boundary"]
 
 
 def test_roadmap_phase_dependency_graph_rejects_overclaim_and_stale_edges():
@@ -77,7 +77,7 @@ def test_roadmap_phase_dependency_graph_rejects_overclaim_and_stale_edges():
     boundary["phase_dependency_edges"][0]["dependency_edge_status"] = (
         "dependency_edge_stale_or_incomplete"
     )
-    boundary["missing_evidence"]["phase_staleness_detector"] = "recorded"
+    boundary["missing_evidence"]["promotion_demotion_workflow"] = "recorded"
     boundary["required_evidence_fields"] = ["source_phase_sequence"]
 
     validation = validate_roadmap_phase_dependency_graph_boundary(boundary)
@@ -90,7 +90,7 @@ def test_roadmap_phase_dependency_graph_rejects_overclaim_and_stale_edges():
     assert "invalid_dependency_graph_status" in codes
     assert "invalid_phase_dependency_edges" in codes
     assert "stale_dependency_edge" in codes
-    assert "invalid_missing_evidence_phase_staleness_detector" in codes
+    assert "invalid_missing_evidence_promotion_demotion_workflow" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -102,10 +102,10 @@ def test_render_roadmap_phase_dependency_graph_summary_reports_shape():
     assert "ROADMAP phase dependency graph boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_phase_dependency_graph_recorded_without_freshness_gate |"
+        "| boundary_status | bounded_phase_dependency_graph_recorded_with_staleness_detector |"
         in summary
     )
     assert "| node_count | 10 |" in summary
     assert "| edge_count | 22 |" in summary
     assert "| stale_dependency_edge_count | 0 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

@@ -266,12 +266,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     extension-point support and blur the distinction between built-in adapters,
     custom wrappers, and still-missing first-class CLI/Codex-authenticated
     provider lanes.
-    A fourth current drift example is generated-inventory count freshness:
+    A resolved narrow drift example is generated-inventory count freshness:
     after the paper-index TODO coverage update, the current
-    `papers/status_claim_inventory.json` records `1054` row-specific TODO
-    block records and `405` TODO content artifact mention records, while
-    `docs/status.md` still reports `1048` and `404`. This shows the status
-    ledger has no count-sync check for generated inventory summaries.
+    `papers/status_claim_inventory.json` recorded `1054` row-specific TODO
+    block records and `405` TODO content artifact mention records while
+    `docs/status.md` still reported `1048` and `404`. The paper-manifest gate
+    now checks matching `docs/status.md` summaries for those generated
+    sidecar counts, but this is only count-sync coverage for one overlap; the
+    broader status-ledger claim inventory and cross-surface freshness matrix
+    are still missing.
   - Required result: add a status-ledger freshness artifact and validator that
     inventories `docs/status.md` bullets, links each claim to current
     implementation/sidecar/TODO evidence or explicit absence scope, compares

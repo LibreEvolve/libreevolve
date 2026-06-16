@@ -4,6 +4,24 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Add `docs/status.md` freshness checks for paper-index status sidecar
+      counts.
+  - Status: the paper-manifest validator now checks `docs/status.md` summaries
+    that mention `papers/status_claim_inventory.json` against the current
+    generated sidecar counts, matching the existing `papers/README.md` summary
+    freshness guard.
+  - Evidence: `libreevolve/tools/paper_manifest.py` reports
+    `status_claim_inventory_status_ledger_summary_*_mismatch` issues when
+    `docs/status.md` count prose drifts from
+    `papers/status_claim_inventory.json`; `docs/status.md` now reports `1054`
+    row-specific TODO block records and `405` TODO content artifact mention
+    records.
+  - Remaining guard: the broader active `docs/status.md` ledger TODO still
+    needs a full implemented/missing claim inventory, source-evidence mapping,
+    and cross-surface freshness matrix.
+  - Verification: focused paper-manifest tests cover matching and stale
+    status-ledger sidecar summaries.
+
 - [x] Surface the candidate-abstraction boundary in the realistic README.
   - Status: the root README Important Limits section now states that current
     candidates are code-file/workspace based and that problem-defined direct

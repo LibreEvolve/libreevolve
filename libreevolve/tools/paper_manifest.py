@@ -1053,6 +1053,7 @@ STATUS_TABLE_POSITIVE_IMPLEMENTATION_RE = re.compile(
 )
 STATUS_TABLE_NOT_IMPLEMENTED_AS_DESCRIBED_PREFIXES = ("Not implemented as described:",)
 STATUS_CLAIM_INVENTORY_SCHEMA = "libreevolve.paper_index_status_claim_inventory.v1"
+STATUS_LEDGER_FILE = "docs/status.md"
 STATUS_CLAIM_INVENTORY_STATUS = "phrase_evidence_link_inventory_without_semantic_verifier"
 STATUS_CLAIM_INVENTORY_MISSING_EVIDENCE = {
     "status_cell_semantic_verifier": "not_recorded_locally",
@@ -4055,6 +4056,7 @@ def _validate_status_claim_inventory(root_path: Path) -> list[PaperManifestIssue
                 )
             )
     issues.extend(_validate_status_claim_inventory_readme_summary(root_path, data))
+    issues.extend(_validate_status_claim_inventory_status_ledger_summary(root_path, data))
     for missing_path in expected["missing_local_artifact_paths"]:
         issues.append(
             PaperManifestIssue(
@@ -4131,6 +4133,53 @@ def _validate_status_claim_inventory_readme_summary(
                     f"status_claim_inventory_readme_summary_{key}_mismatch",
                     (
                         "papers/README.md status_claim_inventory summary "
+                        f"documents {key}={documented} but sidecar has {current}"
+                    ),
+                    "status_claim_inventory",
+                )
+            )
+    return issues
+
+
+def _validate_status_claim_inventory_status_ledger_summary(
+    root_path: Path,
+    inventory: dict[str, Any],
+) -> list[PaperManifestIssue]:
+    status_path = root_path / STATUS_LEDGER_FILE
+    if not status_path.exists():
+        return []
+    try:
+        text = status_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        return [
+            PaperManifestIssue(
+                "status_claim_inventory_status_ledger_summary_unreadable",
+                _manifest_diagnostic(status_path, root_path, exc),
+                "status_claim_inventory",
+            )
+        ]
+    if STATUS_CLAIM_INVENTORY_FILE not in text:
+        return []
+    summary_marker = "Paper-index implementation-status validation now records"
+    summary_start = text.find(summary_marker)
+    if summary_start < 0:
+        return []
+    next_bullet = text.find("\n-", summary_start + len(summary_marker))
+    summary_text = text[summary_start:] if next_bullet < 0 else text[summary_start:next_bullet]
+
+    issues: list[PaperManifestIssue] = []
+    for key, pattern in STATUS_CLAIM_INVENTORY_README_SUMMARY_PATTERNS:
+        match = pattern.search(summary_text)
+        if match is None:
+            continue
+        documented = _documented_summary_count(match.group(1))
+        current = inventory.get(key)
+        if documented != current:
+            issues.append(
+                PaperManifestIssue(
+                    f"status_claim_inventory_status_ledger_summary_{key}_mismatch",
+                    (
+                        "docs/status.md status_claim_inventory summary "
                         f"documents {key}={documented} but sidecar has {current}"
                     ),
                     "status_claim_inventory",

@@ -2905,6 +2905,15 @@ Implemented:
   benchmark admission checklist, repeated-seed run matrix, anti-gaming
   certification, SOTA/baseline citation sufficiency proof, portfolio-balance
   score, CI freshness gate, or owner review signoff.
+- `papers/roadmap_plugin_extensibility_boundary.json`: ROADMAP
+  plugin-extensibility sidecar with six plugin surfaces, configuration shape,
+  package/source identity, constructor provenance, artifact hashing,
+  trust-boundary, paper-scope attribution, validation-gate, code-ref,
+  sidecar-ref, active-TODO, and readiness labels. It is not evidence of a
+  plugin trust-boundary matrix, plugin admission checklist, direct constructor
+  value/schema registry, versioned custom plugin registry, artifact lifecycle
+  hash policy, runtime isolation policy, paper-scope attribution policy,
+  stale-readiness detector, or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

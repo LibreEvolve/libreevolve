@@ -302,9 +302,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifact lifecycle hashes, and strategy-choice evidence. Active code and
     paper TODOs already track direct custom plugin provenance, custom plugin
     package-registry attribution, constructor-value/schema evidence, and
-    paper-inspired plugin scope boundaries.
-  - Current gap: there is no section-level plugin-extensibility rubric,
-    trust-boundary matrix, admission checklist, or stale-readiness detector
+    paper-inspired plugin scope boundaries. The bounded
+    `papers/roadmap_plugin_extensibility_boundary.json` sidecar now records
+    six plugin surfaces: built-in catalog, entry-point plugins, direct
+    instances, future custom registries, hook isolation, and plugin artifact
+    lifecycle, with configuration shape, package/source identity, constructor
+    provenance, artifact hashing, trust-boundary, paper-scope attribution,
+    validation-gate, code-ref, sidecar-ref, active-TODO, and readiness labels.
+  - Current gap: there is no plugin trust-boundary matrix, plugin admission
+    checklist, direct constructor value/schema registry, versioned custom
+    plugin registry, artifact lifecycle hash policy, runtime isolation policy,
+    paper-scope attribution policy, stale-readiness detector, or owner signoff
     tying those plugin subfeatures together, so a partial entry-point or
     provenance improvement could be mistaken for broad custom-plugin support.
   - Required result: add ROADMAP plugin-extensibility criteria that classify

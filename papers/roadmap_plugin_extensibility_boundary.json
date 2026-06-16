@@ -1,0 +1,346 @@
+{
+  "active_todo_ref_count": 10,
+  "boundary_status": "bounded_plugin_extensibility_matrix_without_external_plugin_readiness",
+  "claim_boundary": "This boundary records a ROADMAP-level plugin-extensibility matrix for built-in, entry-point, direct-instance, future custom-registry, hook-isolation, and plugin-artifact lifecycle surfaces. It does not claim a plugin trust-boundary matrix, plugin admission checklist, direct constructor value/schema registry, versioned custom registry, artifact lifecycle hash policy, runtime isolation policy, paper-scope attribution policy, stale-readiness detector, or owner review signoff.",
+  "claim_ready": false,
+  "code_ref_count": 11,
+  "missing_evidence": {
+    "artifact_lifecycle_hash_policy": "not_recorded_locally",
+    "direct_constructor_value_schema_registry": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "paper_scope_attribution_policy": "not_recorded_locally",
+    "plugin_admission_checklist": "not_recorded_locally",
+    "plugin_trust_boundary_matrix": "not_recorded_locally",
+    "runtime_isolation_policy": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally",
+    "versioned_custom_plugin_registry": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "surface_records",
+    "roadmap_section_presence",
+    "plugin_trust_boundary_matrix",
+    "plugin_admission_checklist",
+    "configuration_schema_policy",
+    "package_source_identity_policy",
+    "constructor_provenance_policy",
+    "artifact_lifecycle_hash_policy",
+    "runtime_isolation_policy",
+    "paper_scope_attribution_policy",
+    "stale_readiness_detector"
+  ],
+  "roadmap_heading": "### 8. Plugin extensibility",
+  "roadmap_heading_present": true,
+  "schema": "libreevolve.roadmap_plugin_extensibility_boundary.v1",
+  "sidecar_ref_count": 14,
+  "surface_count": 6,
+  "surface_records": [
+    {
+      "active_todo_ref_count": 1,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep built-in paper-inspired plugin behavior scoped to approximation",
+          "required_phrase_present": true
+        }
+      ],
+      "artifact_hashing": "plugin-provided summaries only; no unified lifecycle hash policy",
+      "configuration_shape": "validated scalar and path constructor options",
+      "constructor_provenance": "validated built-in parameters recorded for known plugin classes",
+      "current_code_refs": [
+        {
+          "exists": true,
+          "path": "libreevolve/plugins/registry.py",
+          "required_phrase": "paper_inspiration=\"CausalEvolve\"",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "libreevolve/plugins/registry.py",
+          "required_phrase": "option_schema={\"history_limit\": _POSITIVE_INT}",
+          "required_phrase_present": true
+        }
+      ],
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/causalevolve_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/deepevolve_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/thetaevolve_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/improvevolve_boundary.json"
+        }
+      ],
+      "package_source_identity": "in-repo module identity and source-tree provenance",
+      "paper_scope_attribution": "paper inspiration label scoped to approximation metadata",
+      "plugin_surface": "built_in",
+      "readiness_status": "trusted_builtin_approximation_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "built-in scalar/path options",
+      "runtime_trust_boundary": "trusted in-repo plugin code",
+      "surface_id": "builtin_plugin_catalog",
+      "validation_gate": "built-in option schemas and approximation metadata stay explicit"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "richer package policy, direct custom constructor schemas",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "richer custom package policy beyond entry-point distribution records",
+          "required_phrase_present": true
+        }
+      ],
+      "artifact_hashing": "manifest-safe emitted artifact summaries without lifecycle ownership matrix",
+      "configuration_shape": "manifest-safe constructor options and declared constructor schemas",
+      "constructor_provenance": "declared option schema validation before construction",
+      "current_code_refs": [
+        {
+          "exists": true,
+          "path": "libreevolve/plugins/registry.py",
+          "required_phrase": "entry_point_distribution_name_version_hash_v1",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "libreevolve/plugins/registry.py",
+          "required_phrase": "_entry_point_constructor_option_schema",
+          "required_phrase_present": true
+        }
+      ],
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/artifact_index_boundary.json"
+        }
+      ],
+      "package_source_identity": "entry-point distribution name/version plus RECORD/WHEEL metadata when available",
+      "paper_scope_attribution": "configured entry-point paper-inspiration label",
+      "plugin_surface": "entry_point",
+      "readiness_status": "entry_point_metadata_available_without_external_plugin_readiness",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "entry-point distribution metadata",
+      "runtime_trust_boundary": "configured package entry point loaded in the local process",
+      "surface_id": "entry_point_plugins",
+      "validation_gate": "entry-point constructor schemas and distribution metadata remain bounded"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend direct custom plugin provenance beyond signature-only records.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Add remaining full-run replay, lineage, provider, and custom-plugin",
+          "required_phrase_present": true
+        }
+      ],
+      "artifact_hashing": "plugin artifacts summarized when hooks return safe metadata",
+      "configuration_shape": "constructor signature shape only",
+      "constructor_provenance": "constructor values and arbitrary instance state explicitly excluded",
+      "current_code_refs": [
+        {
+          "exists": true,
+          "path": "libreevolve/core/loop.py",
+          "required_phrase": "libreevolve.direct_plugin_policy.v1",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "libreevolve/core/loop.py",
+          "required_phrase": "direct_instance_constructor_values",
+          "required_phrase_present": true
+        }
+      ],
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        }
+      ],
+      "package_source_identity": "module, qualname, file hash, and exposed version metadata",
+      "paper_scope_attribution": "not safely attributable without a declaration path",
+      "plugin_surface": "direct_instance",
+      "readiness_status": "direct_instance_signature_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "direct-instance signature-only policy",
+      "runtime_trust_boundary": "trusted live object supplied by caller",
+      "surface_id": "direct_instance_plugins",
+      "validation_gate": "direct-plugin policy keeps constructor values and schemas false until declared"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "add a versioned direct custom plugin registry or",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "future custom-registry plugins",
+          "required_phrase_present": true
+        }
+      ],
+      "artifact_hashing": "not implemented as registry-owned lifecycle hashes",
+      "configuration_shape": "not implemented; needs versioned declaration path",
+      "constructor_provenance": "not implemented for arbitrary custom constructor values or schemas",
+      "current_code_refs": [
+        {
+          "exists": true,
+          "path": "libreevolve/core/loop.py",
+          "required_phrase": "direct_custom_plugin_registry",
+          "required_phrase_present": true
+        }
+      ],
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "package_source_identity": "not implemented beyond entry-point distributions and direct module hashes",
+      "paper_scope_attribution": "not implemented as versioned custom registry metadata",
+      "plugin_surface": "custom_registry",
+      "readiness_status": "not_implemented",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "versioned custom registries",
+      "runtime_trust_boundary": "not implemented as an external plugin admission policy",
+      "surface_id": "future_custom_registry",
+      "validation_gate": "versioned custom registry and admission checklist exist before external support claims"
+    },
+    {
+      "active_todo_ref_count": 1,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add configurable non-fatal plugin hook isolation for optional extension",
+          "required_phrase_present": true
+        }
+      ],
+      "artifact_hashing": "optional artifact hook failures are recorded but not isolated by policy",
+      "configuration_shape": "fatal hook policy only for current core hook execution",
+      "constructor_provenance": "inherits loaded spec provenance",
+      "current_code_refs": [
+        {
+          "exists": true,
+          "path": "libreevolve/core/loop.py",
+          "required_phrase": "fatal_run_abort",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "libreevolve/core/loop.py",
+          "required_phrase": "plugin_artifact_failures",
+          "required_phrase_present": true
+        }
+      ],
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/artifact_index_boundary.json"
+        }
+      ],
+      "package_source_identity": "uses loaded plugin identity records",
+      "paper_scope_attribution": "no hook-failure isolation report proving optional extension behavior",
+      "plugin_surface": "runtime_hooks",
+      "readiness_status": "fatal_policy_visible_without_nonfatal_isolation",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "current prompt-context/configuration/artifact records",
+      "runtime_trust_boundary": "plugin failures abort rather than quarantine by default",
+      "surface_id": "plugin_hook_isolation",
+      "validation_gate": "per-hook failure policy and quarantine records exist before optional-plugin robustness claims"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Paper-facing generated-artifact lifecycle evidence is still incomplete",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "artifact hashing",
+          "required_phrase_present": true
+        }
+      ],
+      "artifact_hashing": "aggregate emitted-artifact hashes exist without unified paper/plugin lifecycle inventory",
+      "configuration_shape": "plugin artifact summaries can be emitted by hooks",
+      "constructor_provenance": "artifact records inherit loaded spec context when present",
+      "current_code_refs": [
+        {
+          "exists": true,
+          "path": "libreevolve/core/loop.py",
+          "required_phrase": "runtime[\"plugin_artifacts\"]",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "libreevolve/plugins/base.py",
+          "required_phrase": "run_artifacts_metadata",
+          "required_phrase_present": true
+        }
+      ],
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/artifact_index_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "package_source_identity": "artifact summaries do not establish package ownership by themselves",
+      "paper_scope_attribution": "paper-facing artifact lifecycle remains incomplete",
+      "plugin_surface": "generated_artifacts",
+      "readiness_status": "summary_hashes_without_lifecycle_policy",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "stronger artifact lifecycle hashes",
+      "runtime_trust_boundary": "artifact summaries are local run metadata, not external plugin certification",
+      "surface_id": "plugin_artifact_lifecycle",
+      "validation_gate": "unified lifecycle inventory and artifact hash ownership exist"
+    }
+  ]
+}

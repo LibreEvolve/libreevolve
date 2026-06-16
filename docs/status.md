@@ -1270,6 +1270,7 @@ Important limits:
   `papers/roadmap_phase_sequence_boundary.json`,
   `papers/roadmap_operational_maturity_boundary.json`,
   `papers/roadmap_representative_benchmark_portfolio_boundary.json`,
+  `papers/roadmap_plugin_extensibility_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1303,6 +1304,16 @@ Important limits:
   matrix, benchmark admission checklist, repeated-seed run matrix, anti-gaming
   certification, SOTA/baseline citation sufficiency proof, portfolio-balance
   score, CI freshness gate, or owner review signoff.
+- ROADMAP plugin-extensibility evidence now records six plugin surfaces:
+  built-in catalog, entry-point plugins, direct instances, future custom
+  registries, hook isolation, and plugin artifact lifecycle, with
+  configuration shape, package/source identity, constructor provenance,
+  artifact hashing, trust-boundary, paper-scope attribution, validation-gate,
+  code-ref, sidecar-ref, active-TODO, and readiness labels. This is not a
+  plugin trust-boundary matrix, plugin admission checklist, direct constructor
+  value/schema registry, versioned custom plugin registry, artifact lifecycle
+  hash policy, runtime isolation policy, paper-scope attribution policy,
+  stale-readiness detector, or owner review signoff.
 - ROADMAP operational-maturity evidence now records six section-level criteria
   with risk classes, current sidecar refs, active TODO refs, and
   acceptance-gate labels. This is not a global acceptance threshold, unified

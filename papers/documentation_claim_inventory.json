@@ -1680,7 +1680,7 @@
   "source_anchor_missing_claim_ids": [],
   "source_anchor_status": "all_claim_source_anchors_recorded",
   "source_paper_id": "2506.13131",
-  "status_ledger_bullet_count": 187,
+  "status_ledger_bullet_count": 188,
   "status_ledger_bullet_records": [
     {
       "bullet_ordinal": 1,
@@ -5491,9 +5491,9 @@
     },
     {
       "bullet_ordinal": 163,
-      "file_text_char_end": 89311,
+      "file_text_char_end": 89366,
       "file_text_char_start": 87282,
-      "line_end": 1274,
+      "line_end": 1275,
       "line_start": 1244,
       "local_path_ref_records": [
         {
@@ -5576,15 +5576,21 @@
         },
         {
           "exists": true,
-          "path": "papers/documentation_truthfulness_boundary.json",
-          "text_char_end": 1977,
+          "path": "papers/roadmap_plugin_extensibility_boundary.json",
+          "text_char_end": 1979,
           "text_char_start": 1930
         },
         {
           "exists": true,
+          "path": "papers/documentation_truthfulness_boundary.json",
+          "text_char_end": 2032,
+          "text_char_start": 1985
+        },
+        {
+          "exists": true,
           "path": "papers/documentation_claim_inventory.json",
-          "text_char_end": 2027,
-          "text_char_start": 1986
+          "text_char_end": 2082,
+          "text_char_start": 2041
         }
       ],
       "local_path_refs": [
@@ -5601,6 +5607,7 @@
         "papers/roadmap_phase_sequence_boundary.json",
         "papers/roadmap_operational_maturity_boundary.json",
         "papers/roadmap_representative_benchmark_portfolio_boundary.json",
+        "papers/roadmap_plugin_extensibility_boundary.json",
         "papers/documentation_truthfulness_boundary.json",
         "papers/documentation_claim_inventory.json"
       ],
@@ -5613,14 +5620,14 @@
         "records",
         "tracked"
       ],
-      "text_sha256": "9838f618cb86a34f4edc121c66699aebebfb9dec19730187b46918d3bfeb0080"
+      "text_sha256": "8630d4a27f36ef2715a29bde80e78bceb867dfb00cdf2336bc10f57781822c9a"
     },
     {
       "bullet_ordinal": 164,
-      "file_text_char_end": 89743,
-      "file_text_char_start": 89312,
-      "line_end": 1280,
-      "line_start": 1275,
+      "file_text_char_end": 89798,
+      "file_text_char_start": 89367,
+      "line_end": 1281,
+      "line_start": 1276,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -5642,10 +5649,10 @@
     },
     {
       "bullet_ordinal": 165,
-      "file_text_char_end": 90191,
-      "file_text_char_start": 89744,
-      "line_end": 1286,
-      "line_start": 1281,
+      "file_text_char_end": 90246,
+      "file_text_char_start": 89799,
+      "line_end": 1287,
+      "line_start": 1282,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5659,10 +5666,10 @@
     },
     {
       "bullet_ordinal": 166,
-      "file_text_char_end": 90567,
-      "file_text_char_start": 90192,
-      "line_end": 1291,
-      "line_start": 1287,
+      "file_text_char_end": 90622,
+      "file_text_char_start": 90247,
+      "line_end": 1292,
+      "line_start": 1288,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5675,10 +5682,10 @@
     },
     {
       "bullet_ordinal": 167,
-      "file_text_char_end": 90917,
-      "file_text_char_start": 90568,
-      "line_end": 1296,
-      "line_start": 1292,
+      "file_text_char_end": 90972,
+      "file_text_char_start": 90623,
+      "line_end": 1297,
+      "line_start": 1293,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5691,10 +5698,10 @@
     },
     {
       "bullet_ordinal": 168,
-      "file_text_char_end": 91576,
-      "file_text_char_start": 90918,
-      "line_end": 1305,
-      "line_start": 1297,
+      "file_text_char_end": 91631,
+      "file_text_char_start": 90973,
+      "line_end": 1306,
+      "line_start": 1298,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5707,10 +5714,27 @@
     },
     {
       "bullet_ordinal": 169,
-      "file_text_char_end": 91941,
-      "file_text_char_start": 91577,
-      "line_end": 1310,
-      "line_start": 1306,
+      "file_text_char_end": 92350,
+      "file_text_char_start": 91632,
+      "line_end": 1316,
+      "line_start": 1307,
+      "local_path_ref_records": [],
+      "local_path_refs": [],
+      "section": "important_limits",
+      "signal_term_count": 3,
+      "signal_terms": [
+        "boundary",
+        "not",
+        "records"
+      ],
+      "text_sha256": "1863dcb748b54ec408d93f891381cbb4c8a93b26ae659d7102d25d911541b748"
+    },
+    {
+      "bullet_ordinal": 170,
+      "file_text_char_end": 92715,
+      "file_text_char_start": 92351,
+      "line_end": 1321,
+      "line_start": 1317,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5722,11 +5746,11 @@
       "text_sha256": "80c1c0da834050abdf7a375590f0d427dd44495fdce3ff2994c35c3515dce5f0"
     },
     {
-      "bullet_ordinal": 170,
-      "file_text_char_end": 93327,
-      "file_text_char_start": 91942,
-      "line_end": 1331,
-      "line_start": 1311,
+      "bullet_ordinal": 171,
+      "file_text_char_end": 94101,
+      "file_text_char_start": 92716,
+      "line_end": 1342,
+      "line_start": 1322,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -5764,11 +5788,11 @@
       "text_sha256": "caaa1de784d3cf4080dd3072bce2a83b998815b77caf2d30f459f8de81f6ddf0"
     },
     {
-      "bullet_ordinal": 171,
-      "file_text_char_end": 94232,
-      "file_text_char_start": 93328,
-      "line_end": 1344,
-      "line_start": 1332,
+      "bullet_ordinal": 172,
+      "file_text_char_end": 95006,
+      "file_text_char_start": 94102,
+      "line_end": 1355,
+      "line_start": 1343,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5781,11 +5805,11 @@
       "text_sha256": "5b7d3e41a9819df31559b52bd26f1a35bc9579780338dcc5baccbff6048cbe99"
     },
     {
-      "bullet_ordinal": 172,
-      "file_text_char_end": 95349,
-      "file_text_char_start": 94233,
-      "line_end": 1359,
-      "line_start": 1345,
+      "bullet_ordinal": 173,
+      "file_text_char_end": 96123,
+      "file_text_char_start": 95007,
+      "line_end": 1370,
+      "line_start": 1356,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5796,11 +5820,11 @@
       "text_sha256": "cd0a3b1006d7d7435c2e10e7db7a0629a1b51b040fbd029a75d82c5a2a66b3c2"
     },
     {
-      "bullet_ordinal": 173,
-      "file_text_char_end": 96186,
-      "file_text_char_start": 95350,
-      "line_end": 1371,
-      "line_start": 1360,
+      "bullet_ordinal": 174,
+      "file_text_char_end": 96960,
+      "file_text_char_start": 96124,
+      "line_end": 1382,
+      "line_start": 1371,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5814,11 +5838,11 @@
       "text_sha256": "2592de9f85665aac7d9679f7ea2bab9ea9a2f7ae7d2e1f191cd4ea1624d9f766"
     },
     {
-      "bullet_ordinal": 174,
-      "file_text_char_end": 96642,
-      "file_text_char_start": 96187,
-      "line_end": 1377,
-      "line_start": 1372,
+      "bullet_ordinal": 175,
+      "file_text_char_end": 97416,
+      "file_text_char_start": 96961,
+      "line_end": 1388,
+      "line_start": 1383,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -5840,11 +5864,11 @@
       "text_sha256": "3874d3a0727d10d999b81d4482e243061d2903cea0f0d419c24682766e09a815"
     },
     {
-      "bullet_ordinal": 175,
-      "file_text_char_end": 96893,
-      "file_text_char_start": 96643,
-      "line_end": 1381,
-      "line_start": 1378,
+      "bullet_ordinal": 176,
+      "file_text_char_end": 97667,
+      "file_text_char_start": 97417,
+      "line_end": 1392,
+      "line_start": 1389,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -5866,11 +5890,11 @@
       "text_sha256": "96b9ffa308c727d371222636d8f2c7af9f116c14d50285654a15353cd95ab565"
     },
     {
-      "bullet_ordinal": 176,
-      "file_text_char_end": 97170,
-      "file_text_char_start": 96894,
-      "line_end": 1385,
-      "line_start": 1382,
+      "bullet_ordinal": 177,
+      "file_text_char_end": 97944,
+      "file_text_char_start": 97668,
+      "line_end": 1396,
+      "line_start": 1393,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -5892,11 +5916,11 @@
       "text_sha256": "08e65f53d27397f06f6006f30b9526e6824d97b88e34aad422055a4e294adcf3"
     },
     {
-      "bullet_ordinal": 177,
-      "file_text_char_end": 97626,
-      "file_text_char_start": 97171,
-      "line_end": 1392,
-      "line_start": 1386,
+      "bullet_ordinal": 178,
+      "file_text_char_end": 98400,
+      "file_text_char_start": 97945,
+      "line_end": 1403,
+      "line_start": 1397,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5909,11 +5933,11 @@
       "text_sha256": "cef2d51655b8a9231d73ad2b491888ee8aeb06146fc7ebebb50c2e4ca88a6b02"
     },
     {
-      "bullet_ordinal": 178,
-      "file_text_char_end": 98080,
-      "file_text_char_start": 97627,
-      "line_end": 1398,
-      "line_start": 1393,
+      "bullet_ordinal": 179,
+      "file_text_char_end": 98854,
+      "file_text_char_start": 98401,
+      "line_end": 1409,
+      "line_start": 1404,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -5924,11 +5948,11 @@
       "text_sha256": "74ab9a684c541fd5753ec199eff88ad4a6438682eda77fe0eec3d6234fd55444"
     },
     {
-      "bullet_ordinal": 179,
-      "file_text_char_end": 98365,
-      "file_text_char_start": 98081,
-      "line_end": 1402,
-      "line_start": 1399,
+      "bullet_ordinal": 180,
+      "file_text_char_end": 99139,
+      "file_text_char_start": 98855,
+      "line_end": 1413,
+      "line_start": 1410,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -5951,11 +5975,11 @@
       "text_sha256": "19b485e815354e8e95b534752944a2a21eaad4a6dd39abd570d914e90b78ab70"
     },
     {
-      "bullet_ordinal": 180,
-      "file_text_char_end": 98794,
-      "file_text_char_start": 98366,
-      "line_end": 1408,
-      "line_start": 1403,
+      "bullet_ordinal": 181,
+      "file_text_char_end": 99568,
+      "file_text_char_start": 99140,
+      "line_end": 1419,
+      "line_start": 1414,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -5977,11 +6001,11 @@
       "text_sha256": "dbdc50623d7ca15669d136a4831a035f8205bbc0edb9528cb10d054b7d706deb"
     },
     {
-      "bullet_ordinal": 181,
-      "file_text_char_end": 99095,
-      "file_text_char_start": 98795,
-      "line_end": 1412,
-      "line_start": 1409,
+      "bullet_ordinal": 182,
+      "file_text_char_end": 99869,
+      "file_text_char_start": 99569,
+      "line_end": 1423,
+      "line_start": 1420,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -6003,11 +6027,11 @@
       "text_sha256": "8b01566d962b7001a047941df18433f2d609d12bb6b803a51f4f15c0a4d29508"
     },
     {
-      "bullet_ordinal": 182,
-      "file_text_char_end": 99555,
-      "file_text_char_start": 99096,
-      "line_end": 1419,
-      "line_start": 1413,
+      "bullet_ordinal": 183,
+      "file_text_char_end": 100329,
+      "file_text_char_start": 99870,
+      "line_end": 1430,
+      "line_start": 1424,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -6030,11 +6054,11 @@
       "text_sha256": "d781ff70e0d9740d64b2e1d5ddc424b41133a79206981c739d9fc819575c82e9"
     },
     {
-      "bullet_ordinal": 183,
-      "file_text_char_end": 99932,
-      "file_text_char_start": 99556,
-      "line_end": 1424,
-      "line_start": 1420,
+      "bullet_ordinal": 184,
+      "file_text_char_end": 100706,
+      "file_text_char_start": 100330,
+      "line_end": 1435,
+      "line_start": 1431,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -6056,11 +6080,11 @@
       "text_sha256": "732a8cc88b44f6d2c42634a3ba77b0755f29ba9b822e4f2fdae05b216a3b849f"
     },
     {
-      "bullet_ordinal": 184,
-      "file_text_char_end": 100462,
-      "file_text_char_start": 99933,
-      "line_end": 1431,
-      "line_start": 1425,
+      "bullet_ordinal": 185,
+      "file_text_char_end": 101236,
+      "file_text_char_start": 100707,
+      "line_end": 1442,
+      "line_start": 1436,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -6082,11 +6106,11 @@
       "text_sha256": "35b89459b10fe09980a96f749a7c6c9d6978b31fc2017286a112c582b5013b6f"
     },
     {
-      "bullet_ordinal": 185,
-      "file_text_char_end": 100709,
-      "file_text_char_start": 100463,
-      "line_end": 1435,
-      "line_start": 1432,
+      "bullet_ordinal": 186,
+      "file_text_char_end": 101483,
+      "file_text_char_start": 101237,
+      "line_end": 1446,
+      "line_start": 1443,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -6108,11 +6132,11 @@
       "text_sha256": "ca3162ffe470661248d4fbaf8e7b9f3046e7d8b8bd3e3f08ba15777e7bcbf6dd"
     },
     {
-      "bullet_ordinal": 186,
-      "file_text_char_end": 100837,
-      "file_text_char_start": 100710,
-      "line_end": 1437,
-      "line_start": 1436,
+      "bullet_ordinal": 187,
+      "file_text_char_end": 101611,
+      "file_text_char_start": 101484,
+      "line_end": 1448,
+      "line_start": 1447,
       "local_path_ref_records": [],
       "local_path_refs": [],
       "section": "important_limits",
@@ -6121,11 +6145,11 @@
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d"
     },
     {
-      "bullet_ordinal": 187,
-      "file_text_char_end": 101057,
-      "file_text_char_start": 100838,
-      "line_end": 1440,
-      "line_start": 1438,
+      "bullet_ordinal": 188,
+      "file_text_char_end": 101831,
+      "file_text_char_start": 101612,
+      "line_end": 1451,
+      "line_start": 1449,
       "local_path_ref_records": [
         {
           "exists": true,
@@ -6154,14 +6178,14 @@
     }
   ],
   "status_ledger_inventory_status": "status_ledger_structural_bullet_inventory_without_semantic_verifier",
-  "status_ledger_local_path_ref_count": 166,
+  "status_ledger_local_path_ref_count": 167,
   "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
   "status_ledger_missing_local_path_refs": [],
   "status_ledger_section_counts": {
     "implemented_today": 9,
-    "important_limits": 178
+    "important_limits": 179
   },
-  "status_ledger_signal_record_count": 441,
+  "status_ledger_signal_record_count": 444,
   "status_ledger_signal_term_count": 11,
   "status_ledger_signal_terms": [
     "boundary",
@@ -6177,7 +6201,7 @@
     "without"
   ],
   "status_ledger_source_path": "docs/status.md",
-  "status_ledger_unique_local_path_ref_count": 124,
+  "status_ledger_unique_local_path_ref_count": 125,
   "status_ledger_unique_local_path_refs": [
     "ROADMAP.md",
     "docs/run-artifacts.md",
@@ -6283,6 +6307,7 @@
     "papers/roadmap_non_goal_contradiction_boundary.json",
     "papers/roadmap_operational_maturity_boundary.json",
     "papers/roadmap_phase_sequence_boundary.json",
+    "papers/roadmap_plugin_extensibility_boundary.json",
     "papers/roadmap_readiness_boundary.json",
     "papers/roadmap_representative_benchmark_portfolio_boundary.json",
     "papers/roadmap_source_span_disposition_boundary.json",

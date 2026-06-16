@@ -23,7 +23,7 @@ def test_roadmap_claim_evidence_accepts_bounded_claim_map():
     assert boundary["roadmap_current_state_bullet_count"] == 61
     assert boundary["roadmap_good_first_item_count"] == 4
     assert boundary["claim_surface_count"] == 6
-    assert boundary["sidecar_ref_count"] == 11
+    assert boundary["sidecar_ref_count"] == 12
     assert boundary["active_todo_ref_count"] == 12
     assert [record["surface_id"] for record in boundary["claim_surface_records"]] == [
         "roadmap_scope_preamble",

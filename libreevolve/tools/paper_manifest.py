@@ -256,6 +256,10 @@ from libreevolve.problems.benchmarks.roadmap_good_first_followups_boundary impor
     roadmap_good_first_followups_boundary_record,
     validate_roadmap_good_first_followups_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_good_first_dependency_refresh_boundary import (
+    roadmap_good_first_dependency_refresh_boundary_record,
+    validate_roadmap_good_first_dependency_refresh_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_good_first_freshness_boundary import (
     roadmap_good_first_freshness_boundary_record,
     validate_roadmap_good_first_freshness_boundary,
@@ -901,6 +905,7 @@ ROADMAP_NON_GOAL_MARKDOWN_SCAN_BOUNDARY_FILE = "papers/roadmap_non_goal_markdown
 ROADMAP_NON_GOAL_PLUGIN_DOCSTRING_BOUNDARY_FILE = "papers/roadmap_non_goal_plugin_docstring_boundary.json"
 ROADMAP_NON_GOAL_RUNTIME_METADATA_BOUNDARY_FILE = "papers/roadmap_non_goal_runtime_metadata_boundary.json"
 ROADMAP_GOOD_FIRST_FOLLOWUPS_BOUNDARY_FILE = "papers/roadmap_good_first_followups_boundary.json"
+ROADMAP_GOOD_FIRST_DEPENDENCY_REFRESH_BOUNDARY_FILE = "papers/roadmap_good_first_dependency_refresh_boundary.json"
 ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_good_first_freshness_boundary.json"
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_FILE = "papers/roadmap_phase_sequence_boundary.json"
 ROADMAP_PHASE_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_phase_freshness_boundary.json"
@@ -1595,6 +1600,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_non_goal_plugin_docstring_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_runtime_metadata_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_followups_boundary(root_path))
+    issues.extend(_validate_roadmap_good_first_dependency_refresh_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_freshness_boundary(root_path))
     issues.extend(_validate_roadmap_phase_sequence_boundary(root_path))
     issues.extend(_validate_roadmap_phase_freshness_boundary(root_path))
@@ -4793,6 +4799,41 @@ def _validate_roadmap_good_first_followups_boundary(root_path: Path) -> list[Pap
             f"roadmap_good_first_followups_boundary_{issue.code}",
             issue.message,
             "roadmap_good_first_followups",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_good_first_dependency_refresh_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_GOOD_FIRST_DEPENDENCY_REFRESH_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_good_first_dependency_refresh_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_GOOD_FIRST_DEPENDENCY_REFRESH_BOUNDARY_FILE} "
+                        "must emit ROADMAP Good First dependency-state refresh metadata"
+                    ),
+                    "roadmap_good_first_dependency_refresh",
+                )
+            ]
+        return []
+    report = validate_roadmap_good_first_dependency_refresh_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_good_first_dependency_refresh_boundary_{issue.code}",
+            issue.message,
+            "roadmap_good_first_dependency_refresh",
         )
         for issue in report.issues
     ]

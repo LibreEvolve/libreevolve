@@ -1287,6 +1287,7 @@ Important limits:
   `papers/roadmap_non_goal_plugin_docstring_boundary.json`,
   `papers/roadmap_non_goal_runtime_metadata_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
+  `papers/roadmap_good_first_dependency_refresh_boundary.json`,
   `papers/roadmap_good_first_freshness_boundary.json`,
   `papers/roadmap_phase_sequence_boundary.json`,
   `papers/roadmap_phase_freshness_boundary.json`,
@@ -1416,14 +1417,16 @@ Important limits:
 - ROADMAP Good First Follow-Ups evidence now records the four current priority
   items with stable ids, active TODO refs, priority rationale,
   dependency-readiness labels, validation gates, and AlphaEvolve impact labels.
-  This is not dependency-state refresh automation, stale-priority detection,
-  calibrated priority scoring, CI freshness gating, or owner review signoff.
+  Dependency-state refresh is recorded by
+  `papers/roadmap_good_first_dependency_refresh_boundary.json`. This is not
+  stale-priority detection, calibrated priority scoring, CI freshness gating,
+  or owner review signoff.
 - ROADMAP Good First Follow-Ups freshness evidence now records six readiness
-  criteria for dependency-state refresh automation, stale-priority detection,
+  criteria for dependency-state refresh, stale-priority detection,
   calibrated priority scoring, CI freshness gating, validation-artifact
-  refresh, and owner review signoff. This is not implemented dependency-state
-  refresh, stale-priority detection, a priority score model, CI freshness
-  enforcement, validation-artifact freshness, or owner review signoff.
+  refresh, and owner review signoff. This is not stale-priority detection, a
+  priority score model, CI freshness enforcement, validation-artifact
+  freshness, or owner review signoff.
 - ROADMAP phase-sequencing evidence now records the Near Term, Mid Term, and
   Longer Term sequence for ten major ROADMAP sections, active blocker TODO
   refs, validation-gate labels, and promotion criteria. This is not a full

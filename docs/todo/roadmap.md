@@ -267,19 +267,22 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     criterion freshness readiness matrix for dependency-state refresh
     automation, stale-priority detection, calibrated priority scoring, CI
     freshness gating, validation-artifact refresh, and owner review signoff.
-  - Current gap: the sidecars are bounded static-priority and freshness
-    readiness maps, not an implemented freshness model. There is still no
-    dependency-state refresh automation, stale-priority detector, calibrated
-    priority score model, CI freshness gate, validation-artifact freshness
-    report, or owner review signoff proving these four items remain the best
-    first follow-ups after new ROADMAP, code, README, or paper-sidecar work
-    lands.
+    `papers/roadmap_good_first_dependency_refresh_boundary.json` now refreshes
+    the four current priority items against their live active TODO dependency
+    refs, current blocker labels, validation gate expectations, and
+    AlphaEvolve impact labels, with zero stale dependency refs.
+  - Current gap: the sidecars are bounded static-priority, dependency-refresh,
+    and freshness readiness maps, not an implemented freshness model. There
+    is still no stale-priority detector, calibrated priority score model, CI
+    freshness gate, validation-artifact freshness report, or owner review
+    signoff proving these four items remain the best first follow-ups after
+    new ROADMAP, code, README, or paper-sidecar work lands.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: dependency-state refresh automation, stale-priority detector,
-    calibrated priority score model, CI freshness gate, validation-artifact
-    freshness report for expected validation artifacts, current blockers, and
-    owner review signoff. The drift check must force the section to be
-    refreshed when dependencies or implementation states change.
+    sidecar: stale-priority detector, calibrated priority score model, CI
+    freshness gate, validation-artifact freshness report for expected
+    validation artifacts, and owner review signoff. The drift check must force
+    the section to be refreshed when dependencies or implementation states
+    change.
 
 - [ ] Add ROADMAP phase-boundary and sequencing evidence.
   - Spec evidence: the `Near Term`, `Mid Term`, and `Longer Term` headings are

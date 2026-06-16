@@ -1,33 +1,40 @@
 {
   "active_todo_ref_count": 12,
-  "boundary_status": "bounded_good_first_freshness_matrix_without_dependency_refresh_gate",
-  "claim_boundary": "This boundary records Good First Follow-Ups freshness readiness criteria tied to the bounded static priority map. It does not claim dependency-state refresh automation, stale-priority detection, a calibrated priority score model, CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
+  "boundary_status": "bounded_good_first_freshness_matrix_with_dependency_refresh_without_stale_priority_gate",
+  "claim_boundary": "This boundary records Good First Follow-Ups freshness readiness criteria tied to the bounded static priority map and the recorded dependency-state refresh boundary. It does not claim stale-priority detection, a calibrated priority score model, CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
   "claim_ready": false,
+  "dependency_refresh_boundary_input": "papers/roadmap_good_first_dependency_refresh_boundary.json",
+  "dependency_refresh_record_count": 4,
+  "dependency_refresh_stale_ref_count": 0,
   "freshness_criteria": [
     {
       "active_todo_refs": [
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "dependency-state refresh automation",
+          "required_phrase": "live active TODO dependency refs",
           "required_phrase_present": true
         },
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "current blockers",
+          "required_phrase": "current blocker labels",
           "required_phrase_present": true
         }
       ],
       "criterion_id": "dependency_state_refresh",
-      "current_scope": "static dependency-readiness labels on the four current good-first items",
+      "current_scope": "dependency-state refresh records for the four current good-first items",
       "freshness_surface": "active implementation TODO state and blocking prerequisites",
-      "missing_readiness": "automated refresh of dependency state after code, ROADMAP, README, paper, or sidecar changes",
-      "readiness_status": "static_dependency_labels_only",
+      "missing_readiness": "stale-priority detector that reacts to refreshed dependency state after code, ROADMAP, README, paper, or sidecar changes",
+      "readiness_status": "dependency_state_refresh_recorded_without_stale_priority_gate",
       "sidecar_refs": [
         {
           "exists": true,
           "path": "papers/roadmap_good_first_followups_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_good_first_dependency_refresh_boundary.json"
         },
         {
           "exists": true,
@@ -201,7 +208,6 @@
   "missing_evidence": {
     "calibrated_priority_score_model": "not_recorded_locally",
     "ci_priority_freshness_gate": "not_recorded_locally",
-    "dependency_state_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
     "stale_priority_detector": "not_recorded_locally",
     "validation_artifact_refresh": "not_recorded_locally"
@@ -215,7 +221,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_good_first_freshness_boundary.v1",
-  "sidecar_ref_count": 12,
+  "sidecar_ref_count": 13,
   "source_active_todo_ref_count": 9,
   "source_good_first_boundary_input": "papers/roadmap_good_first_followups_boundary.json",
   "source_priority_item_count": 4

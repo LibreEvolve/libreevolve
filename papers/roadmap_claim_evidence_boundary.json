@@ -111,12 +111,12 @@
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "dependency-state refresh automation",
+          "required_phrase": "live active TODO dependency refs",
           "required_phrase_present": true
         }
       ],
-      "current_scope": "four parsed good-first items and bounded static priority map",
-      "missing_readiness": "dependency-state refresh automation and stale-priority detector",
+      "current_scope": "four parsed good-first items, bounded static priority map, and dependency refresh records",
+      "missing_readiness": "stale-priority detector and calibrated priority freshness model",
       "readiness_status": "static_priority_map_only",
       "roadmap_phrase_present": true,
       "roadmap_required_phrase": "## Good First Follow-Ups",
@@ -124,6 +124,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_good_first_followups_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_good_first_dependency_refresh_boundary.json"
         }
       ],
       "surface_id": "good_first_priority_claims",
@@ -228,5 +232,5 @@
   "roadmap_current_state_bullet_count": 61,
   "roadmap_good_first_item_count": 4,
   "schema": "libreevolve.roadmap_claim_evidence_boundary.v1",
-  "sidecar_ref_count": 11
+  "sidecar_ref_count": 12
 }

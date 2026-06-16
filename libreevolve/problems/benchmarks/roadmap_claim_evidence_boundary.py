@@ -107,9 +107,12 @@ CLAIM_SURFACE_SPECS = (
     {
         "surface_id": "good_first_priority_claims",
         "roadmap_required_phrase": "## Good First Follow-Ups",
-        "current_scope": "four parsed good-first items and bounded static priority map",
-        "missing_readiness": "dependency-state refresh automation and stale-priority detector",
-        "sidecars": ("papers/roadmap_good_first_followups_boundary.json",),
+        "current_scope": "four parsed good-first items, bounded static priority map, and dependency refresh records",
+        "missing_readiness": "stale-priority detector and calibrated priority freshness model",
+        "sidecars": (
+            "papers/roadmap_good_first_followups_boundary.json",
+            "papers/roadmap_good_first_dependency_refresh_boundary.json",
+        ),
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
@@ -117,7 +120,7 @@ CLAIM_SURFACE_SPECS = (
             },
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "dependency-state refresh automation",
+                "required_phrase": "live active TODO dependency refs",
             },
         ),
         "validation_gate": "priority freshness gate tied to dependency state",

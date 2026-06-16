@@ -24,7 +24,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_priority_freshness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "dependency_state_refresh": "not_recorded_locally",
     "stale_priority_detector": "not_recorded_locally",
     "priority_score_model": "not_recorded_locally",
     "ci_priority_freshness_gate": "not_recorded_locally",
@@ -197,9 +196,9 @@ def roadmap_good_first_followups_boundary_record(
             "This boundary records the four current ROADMAP Good First "
             "Follow-Ups, links each to active TODO evidence, dependency "
             "readiness labels, validation gates, and AlphaEvolve impact labels. "
-            "It does not claim dependency-state refresh automation, stale "
-            "priority detection, a calibrated priority score model, CI priority "
-            "freshness gating, or owner review signoff."
+            "Dependency-state refresh is recorded separately. It does not "
+            "claim stale priority detection, a calibrated priority score "
+            "model, CI priority freshness gating, or owner review signoff."
         ),
     }
 
@@ -245,8 +244,8 @@ def validate_roadmap_good_first_followups_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim dependency-state refresh automation" not in boundary_text
-        or "stale priority detection" not in boundary_text
+        or "Dependency-state refresh is recorded separately" not in boundary_text
+        or "does not claim stale priority detection" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate bounded priority map from freshness automation"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

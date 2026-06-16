@@ -34,13 +34,12 @@ def test_roadmap_good_first_followups_accepts_bounded_priority_map():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "dependency_state_refresh": "not_recorded_locally",
         "stale_priority_detector": "not_recorded_locally",
         "priority_score_model": "not_recorded_locally",
         "ci_priority_freshness_gate": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "does not claim dependency-state refresh automation" in boundary["claim_boundary"]
+    assert "Dependency-state refresh is recorded separately" in boundary["claim_boundary"]
 
 
 def test_roadmap_good_first_followups_rejects_overclaim_and_drift():
@@ -77,4 +76,4 @@ def test_render_roadmap_good_first_followups_summary_reports_shape():
     )
     assert "| priority_item_count | 4 |" in summary
     assert "| active_todo_ref_count | 9 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

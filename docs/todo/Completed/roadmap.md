@@ -15497,17 +15497,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     claim, so it needs explicit freshness evidence beyond the current static
     map of four approachable follow-ups.
   - Status: `papers/roadmap_good_first_freshness_boundary.json` now records
-    six freshness criteria for dependency-state refresh automation,
+    six freshness criteria for dependency-state refresh,
     stale-priority detection, calibrated priority scoring, CI freshness
     gating, validation-artifact refresh, and owner review signoff. It links
     the existing Good First Follow-Ups boundary input, sidecar refs, active
     TODO refs, validation-gate labels, readiness labels, and explicit
     missing-evidence fields. The paper-manifest gate now requires and
     validates the sidecar at the repo root.
-  - Remaining roadmap gap: dependency-state refresh automation,
-    stale-priority detector, calibrated priority score model, CI freshness
-    gate, validation-artifact freshness report, and owner review signoff
-    remain active in `docs/todo/roadmap.md`.
+  - Remaining roadmap gap: stale-priority detector, calibrated priority score
+    model, CI freshness gate, validation-artifact freshness report, and owner
+    review signoff remain active in `docs/todo/roadmap.md`.
 - [x] Add bounded ROADMAP phase freshness readiness matrix.
   - Spec evidence: ROADMAP phase labels make implementation-readiness claims,
     so static Near Term/Mid Term/Longer Term sequencing needs explicit
@@ -15794,3 +15793,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     the sidecar at the repo root.
   - Remaining roadmap gap: owner review signoff remains active in
     `docs/todo/roadmap.md`.
+- [x] Add ROADMAP Good First Follow-Ups dependency-state refresh.
+  - Spec evidence: Good First Follow-Ups priorities should not depend only on
+    static prose; they need a refreshed view of whether their prerequisite
+    TODOs and current blockers are still live.
+  - Status: `papers/roadmap_good_first_dependency_refresh_boundary.json` now
+    refreshes the four current Good First items against live active TODO
+    dependency refs, current blocker labels, validation gate expectations, and
+    AlphaEvolve impact labels, with zero stale dependency refs. The
+    paper-manifest gate now requires and validates the sidecar at the repo
+    root.
+  - Remaining roadmap gap: stale-priority detection, calibrated priority
+    scoring, CI freshness gating, validation-artifact freshness, and owner
+    review signoff remain active in `docs/todo/roadmap.md`.

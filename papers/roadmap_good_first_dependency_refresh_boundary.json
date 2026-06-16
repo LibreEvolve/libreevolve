@@ -1,0 +1,193 @@
+{
+  "active_dependency_ref_count": 9,
+  "boundary_status": "good_first_dependency_state_refresh_recorded_without_stale_priority_gate",
+  "claim_boundary": "This boundary refreshes the current dependency state for the four ROADMAP Good First Follow-Ups by rechecking their active TODO dependency refs, current blocker labels, validation gate expectations, and AlphaEvolve impact labels. It rejects stale or missing dependency refs. It does not claim stale-priority detection, calibrated priority scoring, CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
+  "claim_ready": false,
+  "dependency_record_count": 4,
+  "dependency_records": [
+    {
+      "alphaevolve_impact": "program_database_resurfacing",
+      "current_blocker_label": "durable_tables",
+      "dependency_readiness": "has_run_local_indexes_needs_durable_tables",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "dependency_todo_ref_count": 2,
+      "dependency_todo_refs": [
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "durable_query_indexes",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Replace bounded run-local resurfacing indexes with a durable evolutionary database",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "durable_query_indexes",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "add durable query/report surfaces over every candidate",
+          "required_phrase_present": true
+        }
+      ],
+      "item_id": "durable_query_indexes",
+      "ordinal": 1,
+      "priority_rationale": "Query surfaces are a small, bounded step from existing run-local resurfacing indexes toward AlphaEvolve-style database inspection.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Persist database query indexes beyond run-local",
+      "source_spec_ordinal": 1,
+      "stale_dependency_ref_count": 0,
+      "validation_gate_count": 3,
+      "validation_gates": [
+        "durable database/query index tests",
+        "run-artifact query/report sidecar",
+        "paper-manifest validation"
+      ]
+    },
+    {
+      "alphaevolve_impact": "representative_benchmark_reproduction",
+      "current_blocker_label": "run_evidence",
+      "dependency_readiness": "sorting_network_candidates_exist_needs_run_evidence",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "dependency_todo_ref_count": 2,
+      "dependency_todo_refs": [
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "non_toy_benchmark_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add a rigorous sorting-network rediscovery benchmark fixture",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "non_toy_benchmark_fixture",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Add paper-facing sorting-network rediscovery evidence as a realistic",
+          "required_phrase_present": true
+        }
+      ],
+      "item_id": "non_toy_benchmark_fixture",
+      "ordinal": 2,
+      "priority_rationale": "A bounded benchmark fixture can convert existing executable scaffolding into repeatable AlphaEvolve-style evidence.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Add one non-toy benchmark run fixture",
+      "source_spec_ordinal": 2,
+      "stale_dependency_ref_count": 0,
+      "validation_gate_count": 3,
+      "validation_gates": [
+        "repeated-seed run reports",
+        "target-hit-rate summaries",
+        "benchmark hardening certification"
+      ]
+    },
+    {
+      "alphaevolve_impact": "resumable_evolutionary_database",
+      "current_blocker_label": "full_workspace_resume_contract",
+      "dependency_readiness": "archive_restore_exists_needs_full_workspace_resume_contract",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "dependency_todo_ref_count": 3,
+      "dependency_todo_refs": [
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "workspace_resume_coverage",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Replay archive event logs as an ordered migration restore engine",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "workspace_resume_coverage",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add async/pending-work controller resume state",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "workspace_resume_coverage",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "`best_workspace/`, `evaluator_artifacts/`, or `plugin_artifacts/`",
+          "required_phrase_present": true
+        }
+      ],
+      "item_id": "workspace_resume_coverage",
+      "ordinal": 3,
+      "priority_rationale": "Resume coverage builds from current archive snapshots and best workspace export toward auditable long-running experiments.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Add workspace resume coverage beyond current `best_workspace/` export",
+      "source_spec_ordinal": 3,
+      "stale_dependency_ref_count": 0,
+      "validation_gate_count": 3,
+      "validation_gates": [
+        "archive event replay restore tests",
+        "pending-work resume tests",
+        "workspace artifact integrity report"
+      ]
+    },
+    {
+      "alphaevolve_impact": "multi_score_feedback_quality",
+      "current_blocker_label": "runtime_runner",
+      "dependency_readiness": "report_contract_exists_needs_runtime_runner",
+      "dependency_refresh_status": "dependency_state_refreshed",
+      "dependency_todo_ref_count": 2,
+      "dependency_todo_refs": [
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "feedback_calibration_reports",
+          "path": "docs/todo/code.md",
+          "required_phrase": "emit real LLM feedback calibration reports",
+          "required_phrase_present": true
+        },
+        {
+          "active_marker_present": true,
+          "dependency_ref_status": "live_active_dependency_ref",
+          "item_id": "feedback_calibration_reports",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "No runtime feedback-calibration fixture emits",
+          "required_phrase_present": true
+        }
+      ],
+      "item_id": "feedback_calibration_reports",
+      "ordinal": 4,
+      "priority_rationale": "The report schema already exists, so the next useful step is an executed calibration fixture rather than more schema-only proof.",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "Emit real LLM feedback calibration reports",
+      "source_spec_ordinal": 4,
+      "stale_dependency_ref_count": 0,
+      "validation_gate_count": 3,
+      "validation_gates": [
+        "runtime feedback-calibration fixture",
+        "grader ablation outputs",
+        "feedback-calibration artifact inventory"
+      ]
+    }
+  ],
+  "missing_evidence": {
+    "calibrated_priority_score_model": "not_recorded_locally",
+    "ci_priority_freshness_gate": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "stale_priority_detector": "not_recorded_locally",
+    "validation_artifact_refresh": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "source_good_first_priority_items",
+    "active_dependency_todo_refs",
+    "current_blocker_labels",
+    "dependency_refresh_records",
+    "validation_gate_expectations",
+    "stale_priority_detector",
+    "calibrated_priority_score_model",
+    "ci_priority_freshness_gate",
+    "validation_artifact_refresh",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_good_first_dependency_refresh_boundary.v1",
+  "source_good_first_boundary_input": "papers/roadmap_good_first_followups_boundary.json",
+  "source_priority_item_count": 4,
+  "stale_dependency_ref_count": 0,
+  "stale_dependency_ref_records": []
+}

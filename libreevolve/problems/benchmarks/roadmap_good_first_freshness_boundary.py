@@ -8,13 +8,16 @@ from typing import Any
 from libreevolve.problems.benchmarks.roadmap_good_first_followups_boundary import (
     roadmap_good_first_followups_boundary_record,
 )
+from libreevolve.problems.benchmarks.roadmap_good_first_dependency_refresh_boundary import (
+    roadmap_good_first_dependency_refresh_boundary_record,
+)
 
 
 ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_good_first_freshness_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_good_first_freshness_matrix_without_dependency_refresh_gate"
+    "bounded_good_first_freshness_matrix_with_dependency_refresh_without_stale_priority_gate"
 )
 SOURCE_GOOD_FIRST_BOUNDARY_INPUT = "papers/roadmap_good_first_followups_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -26,7 +29,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "dependency_state_refresh": "not_recorded_locally",
     "stale_priority_detector": "not_recorded_locally",
     "calibrated_priority_score_model": "not_recorded_locally",
     "ci_priority_freshness_gate": "not_recorded_locally",
@@ -39,24 +41,25 @@ CRITERION_SPECS = (
     {
         "criterion_id": "dependency_state_refresh",
         "freshness_surface": "active implementation TODO state and blocking prerequisites",
-        "current_scope": "static dependency-readiness labels on the four current good-first items",
-        "missing_readiness": "automated refresh of dependency state after code, ROADMAP, README, paper, or sidecar changes",
+        "current_scope": "dependency-state refresh records for the four current good-first items",
+        "missing_readiness": "stale-priority detector that reacts to refreshed dependency state after code, ROADMAP, README, paper, or sidecar changes",
         "sidecars": (
             "papers/roadmap_good_first_followups_boundary.json",
+            "papers/roadmap_good_first_dependency_refresh_boundary.json",
             "papers/todo_canonical_gap_boundary.json",
         ),
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "dependency-state refresh automation",
+                "required_phrase": "live active TODO dependency refs",
             },
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "current blockers",
+                "required_phrase": "current blocker labels",
             },
         ),
         "validation_gate": "dependency-state refresh report for every good-first item",
-        "readiness_status": "static_dependency_labels_only",
+        "readiness_status": "dependency_state_refresh_recorded_without_stale_priority_gate",
     },
     {
         "criterion_id": "stale_priority_detector",
@@ -195,6 +198,7 @@ def roadmap_good_first_freshness_boundary_record(
 
     root_path = Path(root)
     source_boundary = roadmap_good_first_followups_boundary_record(root_path)
+    dependency_refresh = roadmap_good_first_dependency_refresh_boundary_record(root_path)
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
@@ -205,6 +209,9 @@ def roadmap_good_first_freshness_boundary_record(
         "source_good_first_boundary_input": SOURCE_GOOD_FIRST_BOUNDARY_INPUT,
         "source_priority_item_count": source_boundary["priority_item_count"],
         "source_active_todo_ref_count": source_boundary["active_todo_ref_count"],
+        "dependency_refresh_boundary_input": "papers/roadmap_good_first_dependency_refresh_boundary.json",
+        "dependency_refresh_record_count": dependency_refresh["dependency_record_count"],
+        "dependency_refresh_stale_ref_count": dependency_refresh["stale_dependency_ref_count"],
         "freshness_criterion_count": len(records),
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
@@ -213,11 +220,11 @@ def roadmap_good_first_freshness_boundary_record(
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records Good First Follow-Ups freshness readiness "
-            "criteria tied to the bounded static priority map. It does not "
-            "claim dependency-state refresh automation, stale-priority "
-            "detection, a calibrated priority score model, CI freshness "
-            "enforcement, validation-artifact freshness, or owner review "
-            "signoff."
+            "criteria tied to the bounded static priority map and the recorded "
+            "dependency-state refresh boundary. It does not claim stale-"
+            "priority detection, a calibrated priority score model, CI "
+            "freshness enforcement, validation-artifact freshness, or owner "
+            "review signoff."
         ),
     }
 
@@ -249,6 +256,9 @@ def validate_roadmap_good_first_freshness_boundary(
         "source_good_first_boundary_input",
         "source_priority_item_count",
         "source_active_todo_ref_count",
+        "dependency_refresh_boundary_input",
+        "dependency_refresh_record_count",
+        "dependency_refresh_stale_ref_count",
         "freshness_criterion_count",
         "sidecar_ref_count",
         "active_todo_ref_count",
@@ -261,7 +271,8 @@ def validate_roadmap_good_first_freshness_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim dependency-state refresh automation" not in boundary_text
+        or "recorded dependency-state refresh boundary" not in boundary_text
+        or "does not claim stale-priority detection" not in boundary_text
         or "CI freshness enforcement" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate freshness readiness from implemented priority refresh gates"))

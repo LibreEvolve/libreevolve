@@ -639,6 +639,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     specification and prompt-table exports. The active README run-artifact
     TODO covers only the short README output list and smoke presence, not the
     full run-artifacts guide.
+    The current code/docs drift is two-sided: `RUN_ARTIFACT_NAMES` already
+    includes `task_specification.json`, `evaluator_results.jsonl`,
+    `controller_budget_events.jsonl`, `controller_budget_events_invalid.jsonl`,
+    `llm_calls.jsonl`, and `llm_calls_invalid.jsonl`, but the guide's
+    prose list of collision-checked artifacts omits those names. Conversely,
+    the guide's artifact tree includes `prompt_current_binding_table.jsonl`
+    and `prompt_prior_score_table.jsonl`, while the implementation cleanup set
+    still omits both prompt-table exports.
   - Current gap: there is no committed run-artifacts guide claim inventory or
     drift validator that maps each documented artifact, schema field, invalid
     stream, restore command, overwrite rule, show behavior, and

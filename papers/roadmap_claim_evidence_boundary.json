@@ -105,19 +105,19 @@
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "calibrated priority score model",
+          "required_phrase": "CI freshness gate",
           "required_phrase_present": true
         },
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "CI freshness gate",
+          "required_phrase": "validation-artifact freshness report",
           "required_phrase_present": true
         }
       ],
-      "current_scope": "four parsed good-first items, bounded static priority map, dependency refresh records, and stale-priority detector",
-      "missing_readiness": "calibrated priority freshness model and CI freshness gate",
-      "readiness_status": "stale_priority_detector_recorded_without_score_model",
+      "current_scope": "four parsed good-first items, bounded static priority map, dependency refresh records, stale-priority detector, and priority score model",
+      "missing_readiness": "CI freshness gate, validation-artifact freshness, and owner review signoff",
+      "readiness_status": "priority_score_model_recorded_without_ci_gate",
       "roadmap_phrase_present": true,
       "roadmap_required_phrase": "## Good First Follow-Ups",
       "sidecar_refs": [
@@ -132,6 +132,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_good_first_stale_priority_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_good_first_priority_score_boundary.json"
         }
       ],
       "surface_id": "good_first_priority_claims",
@@ -235,5 +239,5 @@
   "roadmap_current_state_bullet_count": 61,
   "roadmap_good_first_item_count": 4,
   "schema": "libreevolve.roadmap_claim_evidence_boundary.v1",
-  "sidecar_ref_count": 13
+  "sidecar_ref_count": 14
 }

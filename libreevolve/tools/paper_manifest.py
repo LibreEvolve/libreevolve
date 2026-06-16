@@ -264,6 +264,10 @@ from libreevolve.problems.benchmarks.roadmap_good_first_stale_priority_boundary 
     roadmap_good_first_stale_priority_boundary_record,
     validate_roadmap_good_first_stale_priority_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_good_first_priority_score_boundary import (
+    roadmap_good_first_priority_score_boundary_record,
+    validate_roadmap_good_first_priority_score_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_good_first_freshness_boundary import (
     roadmap_good_first_freshness_boundary_record,
     validate_roadmap_good_first_freshness_boundary,
@@ -911,6 +915,7 @@ ROADMAP_NON_GOAL_RUNTIME_METADATA_BOUNDARY_FILE = "papers/roadmap_non_goal_runti
 ROADMAP_GOOD_FIRST_FOLLOWUPS_BOUNDARY_FILE = "papers/roadmap_good_first_followups_boundary.json"
 ROADMAP_GOOD_FIRST_DEPENDENCY_REFRESH_BOUNDARY_FILE = "papers/roadmap_good_first_dependency_refresh_boundary.json"
 ROADMAP_GOOD_FIRST_STALE_PRIORITY_BOUNDARY_FILE = "papers/roadmap_good_first_stale_priority_boundary.json"
+ROADMAP_GOOD_FIRST_PRIORITY_SCORE_BOUNDARY_FILE = "papers/roadmap_good_first_priority_score_boundary.json"
 ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_good_first_freshness_boundary.json"
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_FILE = "papers/roadmap_phase_sequence_boundary.json"
 ROADMAP_PHASE_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_phase_freshness_boundary.json"
@@ -1607,6 +1612,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_good_first_followups_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_dependency_refresh_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_stale_priority_boundary(root_path))
+    issues.extend(_validate_roadmap_good_first_priority_score_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_freshness_boundary(root_path))
     issues.extend(_validate_roadmap_phase_sequence_boundary(root_path))
     issues.extend(_validate_roadmap_phase_freshness_boundary(root_path))
@@ -4875,6 +4881,41 @@ def _validate_roadmap_good_first_stale_priority_boundary(root_path: Path) -> lis
             f"roadmap_good_first_stale_priority_boundary_{issue.code}",
             issue.message,
             "roadmap_good_first_stale_priority",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_good_first_priority_score_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_GOOD_FIRST_PRIORITY_SCORE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_good_first_priority_score_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_GOOD_FIRST_PRIORITY_SCORE_BOUNDARY_FILE} "
+                        "must emit ROADMAP Good First priority score metadata"
+                    ),
+                    "roadmap_good_first_priority_score",
+                )
+            ]
+        return []
+    report = validate_roadmap_good_first_priority_score_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_good_first_priority_score_boundary_{issue.code}",
+            issue.message,
+            "roadmap_good_first_priority_score",
         )
         for issue in report.issues
     ]

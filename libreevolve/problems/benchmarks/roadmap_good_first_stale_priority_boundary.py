@@ -17,7 +17,7 @@ ROADMAP_GOOD_FIRST_STALE_PRIORITY_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_good_first_stale_priority_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "good_first_stale_priority_detector_recorded_without_score_model"
+    "good_first_stale_priority_detector_recorded_with_separate_score_model"
 )
 SOURCE_GOOD_FIRST_BOUNDARY_INPUT = "papers/roadmap_good_first_followups_boundary.json"
 DEPENDENCY_REFRESH_BOUNDARY_INPUT = (
@@ -36,7 +36,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "calibrated_priority_score_model": "not_recorded_locally",
     "ci_priority_freshness_gate": "not_recorded_locally",
     "validation_artifact_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
@@ -110,7 +109,7 @@ def roadmap_good_first_stale_priority_boundary_record(
         "detector_records": detector_records,
         "detector_scope": (
             "bounded static priority-order detector joined to dependency refresh "
-            "records; not a calibrated priority score model"
+            "records; priority score model is recorded separately"
         ),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -119,9 +118,9 @@ def roadmap_good_first_stale_priority_boundary_record(
             "current ROADMAP Good First Follow-Ups by joining the static "
             "priority map to dependency-state refresh records, ordinal order, "
             "live dependency refs, blocker labels, and ROADMAP phrase checks. "
-            "It rejects stale priority records. It does not claim a calibrated "
-            "priority score model, CI freshness enforcement, validation-"
-            "artifact freshness, or owner review signoff."
+            "It rejects stale priority records. Priority scoring is recorded "
+            "separately. It does not claim CI freshness enforcement, "
+            "validation-artifact freshness, or owner review signoff."
         ),
     }
 
@@ -173,7 +172,8 @@ def validate_roadmap_good_first_stale_priority_boundary(
         not isinstance(boundary_text, str)
         or "bounded stale-priority detector" not in boundary_text
         or "rejects stale priority records" not in boundary_text
-        or "does not claim a calibrated priority score model" not in boundary_text
+        or "Priority scoring is recorded separately" not in boundary_text
+        or "does not claim CI freshness enforcement" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate stale detection from score and CI gates"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

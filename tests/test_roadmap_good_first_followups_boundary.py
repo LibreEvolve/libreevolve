@@ -34,12 +34,11 @@ def test_roadmap_good_first_followups_accepts_bounded_priority_map():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "priority_score_model": "not_recorded_locally",
         "ci_priority_freshness_gate": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert (
-        "Dependency-state refresh and stale-priority detection are recorded separately"
+        "Dependency-state refresh, stale-priority detection, and priority scoring are recorded separately"
         in boundary["claim_boundary"]
     )
 
@@ -50,7 +49,7 @@ def test_roadmap_good_first_followups_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "priority_freshness_gate_ready"
     boundary["priority_item_count"] = 3
     boundary["priority_records"][0]["roadmap_phrase_present"] = False
-    boundary["missing_evidence"]["priority_score_model"] = "recorded"
+    boundary["missing_evidence"]["ci_priority_freshness_gate"] = "recorded"
     boundary["required_evidence_fields"] = ["roadmap_priority_items"]
 
     validation = validate_roadmap_good_first_followups_boundary(boundary)
@@ -61,7 +60,7 @@ def test_roadmap_good_first_followups_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_priority_item_count" in codes
     assert "invalid_priority_records" in codes
-    assert "invalid_missing_evidence_priority_score_model" in codes
+    assert "invalid_missing_evidence_ci_priority_freshness_gate" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -78,4 +77,4 @@ def test_render_roadmap_good_first_followups_summary_reports_shape():
     )
     assert "| priority_item_count | 4 |" in summary
     assert "| active_todo_ref_count | 9 |" in summary
-    assert "| missing_evidence_count | 3 |" in summary
+    assert "| missing_evidence_count | 2 |" in summary

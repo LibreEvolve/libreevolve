@@ -275,17 +275,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     static priority map to dependency-refresh records, ordinal order, live
     dependency refs, blocker labels, and ROADMAP phrase checks, with zero
     stale priority records.
+    `papers/roadmap_good_first_priority_score_boundary.json` now records a
+    bounded deterministic priority score model with feature weights,
+    dependency-readiness scores, AlphaEvolve-impact scores, score records,
+    ranked item ids, and zero rank mismatches.
   - Current gap: the sidecars are bounded static-priority, dependency-refresh,
-    stale-priority, and freshness readiness maps, not an implemented
-    calibrated freshness model. There is still no calibrated priority score
-    model, CI freshness gate, validation-artifact freshness report, or owner
-    review signoff proving these four items remain the best first follow-ups
-    after new ROADMAP, code, README, or paper-sidecar work lands.
+    stale-priority, priority-score, and freshness readiness maps, not an
+    implemented CI-backed freshness model. There is still no CI freshness
+    gate, validation-artifact freshness report, or owner review signoff
+    proving these four items remain the best first follow-ups after new
+    ROADMAP, code, README, or paper-sidecar work lands.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: calibrated priority score model, CI freshness gate,
-    validation-artifact freshness report for expected validation artifacts,
-    and owner review signoff. The drift check must force the section to be
-    refreshed when dependencies or implementation states change.
+    sidecar: CI freshness gate, validation-artifact freshness report for
+    expected validation artifacts, and owner review signoff. The drift check
+    must force the section to be refreshed when dependencies or implementation
+    states change.
 
 - [ ] Add ROADMAP phase-boundary and sequencing evidence.
   - Spec evidence: the `Near Term`, `Mid Term`, and `Longer Term` headings are

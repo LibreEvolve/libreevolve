@@ -1,6 +1,6 @@
 {
-  "boundary_status": "good_first_stale_priority_detector_recorded_without_score_model",
-  "claim_boundary": "This boundary records a bounded stale-priority detector for the current ROADMAP Good First Follow-Ups by joining the static priority map to dependency-state refresh records, ordinal order, live dependency refs, blocker labels, and ROADMAP phrase checks. It rejects stale priority records. It does not claim a calibrated priority score model, CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
+  "boundary_status": "good_first_stale_priority_detector_recorded_with_separate_score_model",
+  "claim_boundary": "This boundary records a bounded stale-priority detector for the current ROADMAP Good First Follow-Ups by joining the static priority map to dependency-state refresh records, ordinal order, live dependency refs, blocker labels, and ROADMAP phrase checks. It rejects stale priority records. Priority scoring is recorded separately. It does not claim CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
   "claim_ready": false,
   "dependency_refresh_boundary_input": "papers/roadmap_good_first_dependency_refresh_boundary.json",
   "dependency_refresh_record_count": 4,
@@ -50,9 +50,8 @@
       "stale_reasons": []
     }
   ],
-  "detector_scope": "bounded static priority-order detector joined to dependency refresh records; not a calibrated priority score model",
+  "detector_scope": "bounded static priority-order detector joined to dependency refresh records; priority score model is recorded separately",
   "missing_evidence": {
-    "calibrated_priority_score_model": "not_recorded_locally",
     "ci_priority_freshness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
     "validation_artifact_refresh": "not_recorded_locally"

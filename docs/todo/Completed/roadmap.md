@@ -2,6 +2,21 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add ROADMAP Good First Follow-Ups bounded priority score model.
+  - Status: `papers/roadmap_good_first_priority_score_boundary.json` now
+    records deterministic score weights, dependency-readiness scores,
+    AlphaEvolve-impact scores, per-item score records, ranked item ids, and
+    zero rank mismatches for the current Good First ordering.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_good_first_priority_score_boundary.py`
+    derives the score model from the current Good First priority map,
+    dependency-refresh boundary, and stale-priority detector, and the
+    paper-manifest gate requires the checked sidecar to match those inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks CI freshness gating,
+    validation-artifact freshness, and owner review signoff.
+  - Verification: focused Good First priority-score tests and paper-manifest
+    validation cover the bounded score-model contract.
+
 - [x] Add ROADMAP Good First Follow-Ups stale-priority detector.
   - Status: `papers/roadmap_good_first_stale_priority_boundary.json` now joins
     the static Good First priority map to dependency-refresh records, ordinal

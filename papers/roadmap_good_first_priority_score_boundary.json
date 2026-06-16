@@ -1,0 +1,127 @@
+{
+  "alphaevolve_impact_scores": {
+    "multi_score_feedback_quality": 2,
+    "program_database_resurfacing": 5,
+    "representative_benchmark_reproduction": 4,
+    "resumable_evolutionary_database": 3
+  },
+  "boundary_status": "good_first_priority_score_model_recorded_without_ci_gate",
+  "claim_boundary": "This boundary records a bounded deterministic priority score model for the current ROADMAP Good First Follow-Ups, including feature weights, score inputs, ranked item ids, and rank mismatch checks. It does not claim CI freshness enforcement, validation-artifact freshness, or owner review signoff.",
+  "claim_ready": false,
+  "dependency_readiness_scores": {
+    "archive_restore_exists_needs_full_workspace_resume_contract": 3,
+    "has_run_local_indexes_needs_durable_tables": 5,
+    "report_contract_exists_needs_runtime_runner": 2,
+    "sorting_network_candidates_exist_needs_run_evidence": 4
+  },
+  "dependency_refresh_boundary_input": "papers/roadmap_good_first_dependency_refresh_boundary.json",
+  "dependency_refresh_record_count": 4,
+  "missing_evidence": {
+    "ci_priority_freshness_gate": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "validation_artifact_refresh": "not_recorded_locally"
+  },
+  "priority_item_count": 4,
+  "priority_order_match": true,
+  "rank_mismatch_count": 0,
+  "rank_mismatch_records": [],
+  "ranked_item_ids": [
+    "durable_query_indexes",
+    "non_toy_benchmark_fixture",
+    "workspace_resume_coverage",
+    "feedback_calibration_reports"
+  ],
+  "required_evidence_fields": [
+    "source_good_first_priority_items",
+    "dependency_refresh_records",
+    "stale_priority_detector",
+    "score_feature_weights",
+    "dependency_readiness_scores",
+    "alphaevolve_impact_scores",
+    "priority_score_records",
+    "rank_mismatch_records",
+    "ci_priority_freshness_gate",
+    "validation_artifact_refresh",
+    "owner_review_signoff"
+  ],
+  "roadmap_priority_item_ids": [
+    "durable_query_indexes",
+    "non_toy_benchmark_fixture",
+    "workspace_resume_coverage",
+    "feedback_calibration_reports"
+  ],
+  "schema": "libreevolve.roadmap_good_first_priority_score_boundary.v1",
+  "score_feature_weights": {
+    "alphaevolve_impact_score": 10,
+    "dependency_readiness_score": 5,
+    "live_dependency_refresh_score": 3,
+    "stale_priority_penalty": -100,
+    "validation_gate_count": 1
+  },
+  "score_model_features": [
+    "alphaevolve_impact_score",
+    "dependency_readiness_score",
+    "live_dependency_refresh_score",
+    "validation_gate_count",
+    "stale_priority_penalty"
+  ],
+  "score_model_scope": "bounded deterministic priority score model using recorded dependency readiness, AlphaEvolve impact, validation gates, dependency refresh, and stale-priority detector state",
+  "score_records": [
+    {
+      "alphaevolve_impact": "program_database_resurfacing",
+      "alphaevolve_impact_score": 5,
+      "dependency_readiness": "has_run_local_indexes_needs_durable_tables",
+      "dependency_readiness_score": 5,
+      "item_id": "durable_query_indexes",
+      "live_dependency_refresh_score": 1,
+      "ordinal": 1,
+      "priority_score": 81,
+      "score_status": "priority_score_recorded",
+      "stale_priority_penalty": 0,
+      "validation_gate_count": 3
+    },
+    {
+      "alphaevolve_impact": "representative_benchmark_reproduction",
+      "alphaevolve_impact_score": 4,
+      "dependency_readiness": "sorting_network_candidates_exist_needs_run_evidence",
+      "dependency_readiness_score": 4,
+      "item_id": "non_toy_benchmark_fixture",
+      "live_dependency_refresh_score": 1,
+      "ordinal": 2,
+      "priority_score": 66,
+      "score_status": "priority_score_recorded",
+      "stale_priority_penalty": 0,
+      "validation_gate_count": 3
+    },
+    {
+      "alphaevolve_impact": "resumable_evolutionary_database",
+      "alphaevolve_impact_score": 3,
+      "dependency_readiness": "archive_restore_exists_needs_full_workspace_resume_contract",
+      "dependency_readiness_score": 3,
+      "item_id": "workspace_resume_coverage",
+      "live_dependency_refresh_score": 1,
+      "ordinal": 3,
+      "priority_score": 51,
+      "score_status": "priority_score_recorded",
+      "stale_priority_penalty": 0,
+      "validation_gate_count": 3
+    },
+    {
+      "alphaevolve_impact": "multi_score_feedback_quality",
+      "alphaevolve_impact_score": 2,
+      "dependency_readiness": "report_contract_exists_needs_runtime_runner",
+      "dependency_readiness_score": 2,
+      "item_id": "feedback_calibration_reports",
+      "live_dependency_refresh_score": 1,
+      "ordinal": 4,
+      "priority_score": 36,
+      "score_status": "priority_score_recorded",
+      "stale_priority_penalty": 0,
+      "validation_gate_count": 3
+    }
+  ],
+  "source_good_first_boundary_input": "papers/roadmap_good_first_followups_boundary.json",
+  "source_priority_item_count": 4,
+  "stale_priority_boundary_input": "papers/roadmap_good_first_stale_priority_boundary.json",
+  "stale_priority_count": 0
+}

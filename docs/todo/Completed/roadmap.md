@@ -15290,3 +15290,26 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     calibrated meta-prompt rewards, prompt-database archive lifecycle,
     prompt/context benchmark evidence, stale-readiness detector, and owner
     review signoff remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP evaluation-cascade readiness matrix.
+  - Spec evidence: AlphaEvolve cascade readiness requires trusted staged
+    evaluation, artifact evidence, budget accounting, calibrated feedback,
+    statistical promotion, independent oracles, workload contracts, sandbox
+    boundaries, and reproducible release/environment evidence rather than one
+    green local validator or one report contract.
+  - Status: `papers/roadmap_evaluation_cascade_boundary.json` now records ten
+    criteria for cascade transition artifacts, artifact schema/hash coverage,
+    budget ownership, feedback calibration, statistical promotion policy,
+    oracle independence, workload execution contracts, automated scope and
+    programmatic boundaries, validator sandbox dependency boundaries, and
+    environment/release reproducibility, with current scope,
+    missing-readiness, sidecar-ref, active-TODO, validation-gate, and readiness
+    labels. The paper-manifest gate now requires and validates the sidecar at
+    the repo root.
+  - Remaining roadmap gap: validator-authority matrix, complete artifact
+    schema/hash coverage, accelerator/async budget ownership, executed
+    feedback calibration, benchmark-calibrated statistical promotion,
+    independent oracle disagreement records, workload-specific execution
+    contracts, robust automated environment fixtures, OS/container resource
+    sandbox, replayable environment/release bundle, benchmark-sufficiency
+    signoff, stale-readiness detector, and owner review signoff remain active
+    in `docs/todo/roadmap.md`.

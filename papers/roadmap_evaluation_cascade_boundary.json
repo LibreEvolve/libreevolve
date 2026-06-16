@@ -1,0 +1,377 @@
+{
+  "active_todo_ref_count": 20,
+  "boundary_status": "bounded_evaluation_cascade_matrix_without_alphaevolve_cascade_readiness",
+  "claim_boundary": "This boundary records a ROADMAP-level evaluation-cascade criteria map for cascade transitions, artifact schemas, budget ownership, feedback calibration, statistical promotion, oracle independence, workload contracts, automated evaluator scope, validator sandbox boundaries, and release/environment reproducibility. It does not claim a validator-authority matrix, complete artifact schema/hash coverage, accelerator or async budget ownership, executed feedback calibration, benchmark-calibrated statistical promotion, independent oracle disagreement records, workload-specific execution contracts, robust automated environment fixtures, OS/container resource sandboxing, replayable environment/release bundles, benchmark sufficiency signoff, or owner review signoff.",
+  "claim_ready": false,
+  "criterion_count": 10,
+  "criterion_records": [
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Finish paper-facing evaluation-cascade promotion and attrition evidence.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track evaluation-cascade promotion and attrition evidence.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "cascade_transition_artifacts",
+      "current_scope": "runtime cascade summary with bounded candidate-stage records and absent-evidence labels",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/evaluation_cascade_boundary.json"
+        }
+      ],
+      "evaluation_surface": "configured validator stages and candidate promotion/prune flow",
+      "missing_readiness": "candidate transition matrix, promotion/prune attribution, next-stage linkage, denominator reconciliation, and cost-savings proof",
+      "readiness_status": "summary_without_transition_matrix",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "candidate transition matrices",
+      "validation_gate": "candidate transition matrix and promotion/prune proof"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bind evaluator artifact copy-out to stable source-file identity.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track evaluation-cascade promotion and attrition evidence.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "artifact_schema_hash_coverage",
+      "current_scope": "candidate-workspace artifact copy-out and selected hashed sidecars",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/evaluation_cascade_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/validator_artifact_promotion_boundary.json"
+        }
+      ],
+      "evaluation_surface": "candidate, evaluator, and benchmark artifacts",
+      "missing_readiness": "outside-workspace artifacts, aggregate emitted-artifact hashes, and benchmark artifact schemas",
+      "readiness_status": "bounded_copy_out_without_complete_schema",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "outside-workspace artifacts",
+      "validation_gate": "stable artifact schemas and hash coverage for cascade decisions"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add unified expensive-evaluation compute budgets and resumable state.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Complete accelerator/async budgets and executed ablation support.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "budget_ownership",
+      "current_scope": "cooperative local counters plus LLM budget snapshots",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/expensive_evaluation_budget_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/llm_budget_policy_boundary.json"
+        }
+      ],
+      "evaluation_surface": "generation, evaluator, provider, worker, and accelerator budgets",
+      "missing_readiness": "compute-hour, worker/accelerator lease, async queue, partial-evaluation resume, and equal-budget accounting",
+      "readiness_status": "local_cooperative_budget_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "accelerator and async queue budgets",
+      "validation_gate": "first-class async/accelerator/equal-budget enforcement"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add qualitative LLM-feedback criterion provenance.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track qualitative LLM-feedback criterion provenance.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "feedback_calibration",
+      "current_scope": "report contracts and declared qualitative policy metadata",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/feedback_calibration_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/qualitative_feedback_boundary.json"
+        }
+      ],
+      "evaluation_surface": "LLM feedback graders and qualitative criteria",
+      "missing_readiness": "executed calibration task suites, grader ablations, and independent feedback-quality validation",
+      "readiness_status": "declared_policy_without_executed_calibration",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "calibration/ablation runs for LLM feedback graders",
+      "validation_gate": "executed feedback calibration and ablation evidence"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add statistical hypothesis-test gates to evaluation cascades.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track statistical hypothesis-testing semantics for evaluation cascades.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "statistical_promotion_policy",
+      "current_scope": "configured lower-bound and binomial gates with runtime diagnostics",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/cascade_hypothesis_test_boundary.json"
+        }
+      ],
+      "evaluation_surface": "hypothesis-test gates and repeated-seed promotions",
+      "missing_readiness": "benchmark-calibrated thresholds and repeated-seed matrix/tensor fixtures",
+      "readiness_status": "configured_policy_gate_without_benchmark_calibration",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "broader statistical hypothesis-test promotion policies",
+      "validation_gate": "benchmark-calibrated promotion/rejection fixtures"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "runtime.history.evaluator_oracle_registry",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "runtime.history.evaluator_oracle_registry",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "oracle_independence",
+      "current_scope": "local arbitration matrix plus optional synchronous feedback graders",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/evaluator_oracle_boundary.json"
+        }
+      ],
+      "evaluation_surface": "evaluator/oracle registry and cross-oracle disagreement",
+      "missing_readiness": "independent reference/statistical oracles and cross-oracle disagreement records",
+      "readiness_status": "local_arbitration_without_independent_oracles",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "evaluator/oracle registry",
+      "validation_gate": "independent oracle and disagreement-outcome evidence"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add evaluator workload provenance for inner search and ML-training tasks.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track evaluator workload provenance for inner-search and ML-training",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "workload_execution_contract",
+      "current_scope": "declared workload metadata and observed artifact/checkpoint evidence",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/task_specification_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/automated_evaluator_scope_boundary.json"
+        }
+      ],
+      "evaluation_surface": "inner-search, ML-training, and custom evaluator workloads",
+      "missing_readiness": "managed loop runners, checkpoint completeness checks, score-field causality, and stochastic re-evaluation policy",
+      "readiness_status": "declared_workload_metadata_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "evaluator-workload provenance",
+      "validation_gate": "workload-specific runner and checkpoint contract"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend automated-evaluator scope policy into robust environment fixtures.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Extend AlphaEvolve's automated-evaluator scope boundary into robust",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "automated_scope_programmatic_boundary",
+      "current_scope": "machine-feedback/manual-experiment/LLM-feedback classification plus structural code-vs-NL reports",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/automated_evaluator_scope_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/programmatic_representation_boundary.json"
+        }
+      ],
+      "evaluation_surface": "automated evaluator scope and executable-code versus NL hypothesis boundary",
+      "missing_readiness": "robust environment fixtures, manual-to-code transition criteria, hallucination controls, and long-horizon evidence",
+      "readiness_status": "classification_without_robust_environment",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "automated_evaluator_scope_report",
+      "validation_gate": "automated environment fixtures and NL-to-code boundary evidence"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Enforce validator container, filesystem-capability, and resource-limit policy.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Extend paper-facing validator-boundary consistency evidence beyond CLI",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "validator_sandbox_dependency_boundary",
+      "current_scope": "local subprocess policy, environment allowlisting, timeout cleanup, and problem-local dependency provenance",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/validator_execution_boundary.json"
+        }
+      ],
+      "evaluation_surface": "validator subprocesses, filesystem/network access, and dependencies",
+      "missing_readiness": "OS/container sandboxing, CPU/memory/GPU/disk/process quotas, and promotion-time archival blocking",
+      "readiness_status": "local_subprocess_policy_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "OS/container-grade validator network isolation",
+      "validation_gate": "container/resource sandbox and promotion-gate evidence"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add release artifact and install-from-wheel verification.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Add replayable evaluator environment, package-source, and accelerator",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "environment_release_reproducibility",
+      "current_scope": "CI-smoke release packaging and bounded package/version snapshots",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/release_artifact_reproducibility_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/config_validation_boundary.json"
+        }
+      ],
+      "evaluation_surface": "release artifacts, packages, external build state, and accelerator environment",
+      "missing_readiness": "signed release provenance, install-source semantics, external build/package-source records, accelerator lease state, and replay checks",
+      "readiness_status": "ci_smoke_and_bounded_environment_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "release-artifact smoke CI jobs",
+      "validation_gate": "release/environment replay bundle with accelerator/package provenance"
+    }
+  ],
+  "missing_evidence": {
+    "accelerator_async_budget_ownership": "not_recorded_locally",
+    "benchmark_calibrated_statistical_promotion": "not_recorded_locally",
+    "benchmark_sufficiency_signoff": "not_recorded_locally",
+    "complete_artifact_schema_hash_coverage": "not_recorded_locally",
+    "executed_feedback_calibration": "not_recorded_locally",
+    "independent_oracle_disagreement_records": "not_recorded_locally",
+    "os_container_resource_sandbox": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "replayable_environment_release_bundle": "not_recorded_locally",
+    "robust_automated_environment_fixtures": "not_recorded_locally",
+    "validator_authority_matrix": "not_recorded_locally",
+    "workload_specific_execution_contracts": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "criterion_records",
+    "roadmap_section_presence",
+    "validator_authority_matrix",
+    "artifact_schema_hash_policy",
+    "budget_ownership_policy",
+    "feedback_calibration_policy",
+    "statistical_promotion_policy",
+    "oracle_independence_policy",
+    "workload_execution_contract",
+    "automated_environment_scope_policy",
+    "sandbox_dependency_policy",
+    "environment_release_reproducibility_policy",
+    "benchmark_sufficiency_policy",
+    "stale_readiness_detector"
+  ],
+  "roadmap_heading": "### 3. Expand evaluation cascades",
+  "roadmap_heading_present": true,
+  "schema": "libreevolve.roadmap_evaluation_cascade_boundary.v1",
+  "sidecar_ref_count": 16
+}

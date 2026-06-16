@@ -461,8 +461,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     arbitration matrices, workload-provenance boundaries, automated evaluator
     scope reports, executable-code versus natural-language proposal boundaries,
     validator subprocess controls, dependency policy, package/version
-    snapshots, release-smoke boundaries, and reproducibility sidecars. Active
-    code and paper TODOs already track cascade promotion/attrition evidence,
+    snapshots, release-smoke boundaries, and reproducibility sidecars.
+    `papers/roadmap_evaluation_cascade_boundary.json` now records a bounded
+    ten-criterion ROADMAP matrix for cascade transition artifacts, artifact
+    schema/hash coverage, budget ownership, feedback calibration,
+    statistical promotion policy, oracle independence, workload execution
+    contracts, automated scope/programmatic boundaries, validator sandbox
+    dependency boundaries, and environment/release reproducibility. Active code
+    and paper TODOs already track cascade promotion/attrition evidence,
     statistical hypothesis-test semantics, qualitative feedback provenance,
     async/accelerator budgets, evaluator environment replay, validator
     sandbox/resource policy, release artifacts, matrix cascade runs, and
@@ -472,15 +478,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     checklist, or stale-readiness detector tying those pieces together, so a
     green local evaluator, one statistical gate, or one report contract could
     be mistaken for a robust AlphaEvolve-style cascade.
-  - Required result: add ROADMAP evaluation-cascade criteria that classify each
-    stage by validator authority, artifact schema and hash coverage, budget
-    ownership, feedback-calibration evidence, statistical promotion policy,
-    oracle independence, workload-specific execution contract, sandbox and
-    dependency boundary, environment/release reproducibility, benchmark
-    sufficiency, and overclaim status; map the criteria to code/tests/runtime
-    artifacts/sidecars/TODOs; and validate README, ROADMAP, papers, evaluator
-    docs, and runtime metadata against implying full cascade readiness before
-    the checklist is satisfied.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: validator-authority matrix, complete artifact schema/hash
+    coverage, accelerator/async budget ownership, executed feedback
+    calibration, benchmark-calibrated statistical promotion, independent
+    oracle disagreement records, workload-specific execution contracts, robust
+    automated environment fixtures, OS/container resource sandbox,
+    replayable environment/release bundle, benchmark-sufficiency signoff,
+    stale-readiness detector, and owner review signoff; then validate README,
+    ROADMAP, papers, evaluator docs, and runtime metadata against implying
+    full cascade readiness before those criteria are satisfied.
 
 - [ ] Add ROADMAP multi-objective search readiness criteria.
   - Spec evidence: the `2. Strengthen multi-objective search` section defines

@@ -231,6 +231,10 @@ from libreevolve.problems.benchmarks.roadmap_prompt_context_system_boundary impo
     roadmap_prompt_context_system_boundary_record,
     validate_roadmap_prompt_context_system_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_evaluation_cascade_boundary import (
+    roadmap_evaluation_cascade_boundary_record,
+    validate_roadmap_evaluation_cascade_boundary,
+)
 from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import (
     implementation_evidence_map_boundary_record,
     validate_implementation_evidence_map_boundary,
@@ -785,6 +789,7 @@ ROADMAP_PLUGIN_EXTENSIBILITY_BOUNDARY_FILE = "papers/roadmap_plugin_extensibilit
 ROADMAP_BACKEND_SCHEDULING_CRITIQUE_BOUNDARY_FILE = "papers/roadmap_backend_scheduling_critique_boundary.json"
 ROADMAP_ASYNC_RESUMABLE_RUNTIME_BOUNDARY_FILE = "papers/roadmap_async_resumable_runtime_boundary.json"
 ROADMAP_PROMPT_CONTEXT_SYSTEM_BOUNDARY_FILE = "papers/roadmap_prompt_context_system_boundary.json"
+ROADMAP_EVALUATION_CASCADE_BOUNDARY_FILE = "papers/roadmap_evaluation_cascade_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
 BENCHMARK_COVERAGE_INVENTORY_FILE = "papers/benchmark_coverage_inventory.json"
 STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
@@ -1451,6 +1456,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_backend_scheduling_critique_boundary(root_path))
     issues.extend(_validate_roadmap_async_resumable_runtime_boundary(root_path))
     issues.extend(_validate_roadmap_prompt_context_system_boundary(root_path))
+    issues.extend(_validate_roadmap_evaluation_cascade_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
@@ -4397,6 +4403,41 @@ def _validate_roadmap_prompt_context_system_boundary(root_path: Path) -> list[Pa
             f"roadmap_prompt_context_system_boundary_{issue.code}",
             issue.message,
             "roadmap_prompt_context_system",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_evaluation_cascade_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_EVALUATION_CASCADE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_evaluation_cascade_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_EVALUATION_CASCADE_BOUNDARY_FILE} must emit "
+                        "ROADMAP evaluation-cascade metadata"
+                    ),
+                    "roadmap_evaluation_cascade",
+                )
+            ]
+        return []
+    report = validate_roadmap_evaluation_cascade_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_evaluation_cascade_boundary_{issue.code}",
+            issue.message,
+            "roadmap_evaluation_cascade",
         )
         for issue in report.issues
     ]

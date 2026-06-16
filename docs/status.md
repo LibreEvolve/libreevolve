@@ -1274,6 +1274,7 @@ Important limits:
   `papers/roadmap_backend_scheduling_critique_boundary.json`,
   `papers/roadmap_async_resumable_runtime_boundary.json`,
   `papers/roadmap_prompt_context_system_boundary.json`,
+  `papers/roadmap_evaluation_cascade_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1353,6 +1354,20 @@ Important limits:
   source integrity, semantic proposal memory, calibrated meta-prompt rewards,
   prompt-database archive lifecycle, prompt/context benchmark evidence,
   stale-readiness detector, or owner review signoff.
+- ROADMAP evaluation-cascade evidence now records ten criteria for cascade
+  transition artifacts, artifact schema/hash coverage, budget ownership,
+  feedback calibration, statistical promotion policy, oracle independence,
+  workload execution contracts, automated scope and programmatic boundaries,
+  validator sandbox dependency boundaries, and environment/release
+  reproducibility, with current scope, missing-readiness, sidecar-ref,
+  active-TODO, validation-gate, and readiness labels. This is not a
+  validator-authority matrix, complete artifact schema/hash coverage,
+  accelerator/async budget ownership, executed feedback calibration,
+  benchmark-calibrated statistical promotion, independent oracle disagreement
+  records, workload-specific execution contracts, robust automated environment
+  fixtures, OS/container resource sandboxing, replayable environment/release
+  bundles, benchmark-sufficiency signoff, stale-readiness detector, or owner
+  review signoff.
 - ROADMAP operational-maturity evidence now records six section-level criteria
   with risk classes, current sidecar refs, active TODO refs, and
   acceptance-gate labels. This is not a global acceptance threshold, unified

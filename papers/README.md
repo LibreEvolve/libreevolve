@@ -2950,6 +2950,20 @@ Implemented:
   semantic proposal memory, calibrated meta-prompt rewards,
   prompt-database archive lifecycle, prompt/context benchmark evidence,
   stale-readiness detector, or owner review signoff.
+- `papers/roadmap_evaluation_cascade_boundary.json`: ROADMAP
+  evaluation-cascade sidecar with ten criteria for cascade transition
+  artifacts, artifact schema/hash coverage, budget ownership, feedback
+  calibration, statistical promotion policy, oracle independence, workload
+  execution contracts, automated scope and programmatic boundaries, validator
+  sandbox dependency boundaries, and environment/release reproducibility, with
+  current scope, missing-readiness, sidecar-ref, active-TODO, validation-gate,
+  and readiness labels. It is not evidence of a validator-authority matrix,
+  complete artifact schema/hash coverage, accelerator/async budget ownership,
+  executed feedback calibration, benchmark-calibrated statistical promotion,
+  independent oracle disagreement records, workload-specific execution
+  contracts, robust automated environment fixtures, OS/container resource
+  sandboxing, replayable environment/release bundles, benchmark-sufficiency
+  signoff, stale-readiness detector, or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

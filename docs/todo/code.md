@@ -3250,43 +3250,6 @@ sidecars, tests, and active TODOs.
 
 ## Benchmarks and Problem Fixtures
 
-- [x] Complete follow-on notebook artifact flags on emitted per-page rows.
-  - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
-    README says the repository contains problem descriptions for 67
-    mathematical problems, but the current `problems/` directory exposes 68
-    numbered HTML pages. The live raw pages include both `problems/67.html`
-    and `problems/68.html` titled `Logic puzzles`; `67.html` uses a Colab link
-    placeholder `#`, while `68.html` uses a generic
-    `https://colab.research.google.com/` URL and a paper-link placeholder `#`.
-  - Current evidence: `libreevolve.alphaevolve_follow_on_problem_coverage.v1`
-    now reconciles the README/paper declared `67` problem count with `68`
-    observed numbered HTML pages, and `papers/follow_on_sources.json` links
-    that numbered-page evidence boundary. The coverage now classifies page 68
-    as an extra numbered duplicate-title `Logic puzzles` page outside the
-    declared 67-page navigation range and records all-page resource-link
-    diagnostics, including the `25` under-construction Colab placeholders and
-    the page-68 generic Colab plus paper-link placeholder. It also pins raw
-    byte counts and SHA-256 hashes for every numbered page and emits per-page
-    source rows with URL, section, link status, pinned page hash,
-    status-bucket membership, notebook-link mappings, and notebook absence
-    reasons, plus raw SHA-256 hashes for linked pinned notebooks. It still
-    records explicit non-applicable statuses for pages without pinned
-    repository notebooks.
-    `papers/follow_on_sources.json` also now maps the `19` original Appendix B
-    result ids across the `13` Appendix B families to follow-on repository
-    problem pages and notebook-link statuses while leaving normalized result
-    rows, construction payloads, verifier artifacts, recomputed values, and
-    full notebook cell inventories outside the claim.
-    `papers/follow_on_repository_rights.json` now also attaches validated
-    follow-on artifact-rights templates for local generated outputs, adapted
-    verification code, and copied problem statements, while preserving
-    zero-current-local-generated-artifact evidence for copied/adapted follow-on
-    repository material.
-  - Completed result: repository-page inventory validation now records prompt/
-    verifier/initial/final/visualization flags for linked pinned notebooks and
-    README/ROADMAP wording distinguishes paper-declared problem count from full
-    live repository page inventory and full notebook cell inventories.
-
 - [ ] Add paper-artifact creator and assembler provenance for figures and
       companion notebooks.
   - Spec evidence: the AlphaEvolve Contributions section says N.V., E.D.,
@@ -3502,44 +3465,6 @@ sidecars, tests, and active TODOs.
     recomputed bound, and README/ROADMAP wording that distinguishes the three
     autocorrelation witnesses from aggregate Appendix B coverage.
 
-- [x] Add paper-facing Appendix B.1-B.3 autocorrelation label provenance.
-  - Spec evidence: AlphaEvolve Appendix B headings are `B.1. First
-    autocorrelation inequality`, `B.2. Second autocorrelation inequality`, and
-    `B.3. Third autocorrelation inequality`; the constants in those sections
-    are `C1`, `C2`, and `C3`, respectively. The paper does not label these
-    three autocorrelation results as `k=3`, `k=4`, or `k=5`.
-  - Status: `alphaevolve_appendix_b.json` now stores `paper_label` metadata for
-    the three autocorrelation families, including exact source section id,
-    paper heading, constant id, display label, internal family id, and an
-    `internal_id_only_not_paper_label` policy. `appendix_b_registry.py`
-    validates those fields against the AlphaEvolve Appendix B headings and
-    rejects missing label objects, drifted constants, mismatched internal ids,
-    `name`/display-label drift, and `k=` names exposed as paper terminology.
-    README, ROADMAP, and the paper index now describe B.1-B.3 with the paper
-    headings and C1-C3 labels while preserving the internal ids only as local
-    implementation identifiers.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
-- [x] Add Appendix B.8 max/min-distance squared-ratio convention provenance.
-  - Spec evidence: AlphaEvolve Appendix B.8 reports point-set constructions for
-    minimizing the ratio between maximum and minimum pairwise distances, but the
-    displayed values use a squared-ratio convention: 16 points in 2D report
-    `12.889266112`, and 14 points in 3D report `4.165849767`, corresponding to
-    square-root ratios for the geometric objective.
-  - Status: `alphaevolve_appendix_b.json` now records B.8
-    `metric_convention_evidence` rows for the 16-point 2D and 14-point 3D
-    constructions. Each row validates source section, Figure 12 panel, point
-    count, dimension, metric name, `squared_max_min_ratio` convention, raw
-    reported squared value, square-root transform, derived ratio, prior squared
-    bound/source, comparison-unit policy, and explicit missing coordinate-
-    artifact status. `appendix_b_registry.py` rejects missing B.8 convention
-    rows, wrong conventions, derived-ratio drift, bad dimensions, and
-    non-improving squared values. README, ROADMAP, and the paper index now
-    distinguish raw squared values from derived geometric ratios.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
 - [ ] Add Appendix B.8 point-set distance-certificate provenance.
   - Spec evidence: AlphaEvolve Appendix B.8 and Figure 12 report two concrete
     point-set witnesses for minimizing the max/min pairwise-distance ratio:
@@ -3598,28 +3523,6 @@ sidecars, tests, and active TODOs.
     wording that distinguishes validated B.5 minimum-overlap evidence from
     aggregate Appendix B coverage.
 
-- [x] Add Appendix B.5 original-formulation and equivalence provenance.
-  - Spec evidence: AlphaEvolve Appendix B.5 defines `C5` as the largest
-    constant such that
-    `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt >= C5` for all
-    non-negative `f,g: [-1,1] -> [0,1]` with `f + g = 1` on `[-1,1]` and
-    `integral f = 1`, extending `f` and `g` by zero outside `[-1,1]`. It then
-    states, citing `[40]`, that this constant equals the infimum over
-    normalized step functions `h` on `[0,2]`.
-  - Status: `alphaevolve_appendix_b.json` now records B.5
-    `source_formulation_evidence`: `f,g` domain/value bounds,
-    non-negativity, `f + g = 1`, `integral f = 1`, zero-extension policy,
-    `sup_{x in [-2,2]}` objective, known lower/upper bounds and source,
-    `[40]` equivalence citation, normalized `[0,2]` step-function reduction,
-    reduced integral/objective expressions, mapping to the Figure 10
-    step-function evidence, and explicit missing construction-payload status.
-    `appendix_b_registry.py` validates these fields and now enforces the B.5
-    artifact schema as `normalized_step_function` plus
-    `integral_and_shift_overlap_certificate` instead of the previous finite-set
-    placeholder.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
 - [ ] Add Appendix B.6 finite-set witness provenance.
   - Spec evidence: AlphaEvolve Appendix B.6 improves the sums-and-differences
     lower bound by finding a finite set `U1` of size `2003`, yielding
@@ -3647,27 +3550,6 @@ sidecars, tests, and active TODOs.
     recomputed lower-bound values, source section linkage, and README/ROADMAP
     wording that distinguishes the two witness sets from aggregate Appendix B
     coverage.
-
-- [x] Add Appendix B.6 finite-set theorem/admissibility provenance.
-  - Spec evidence: AlphaEvolve Appendix B.6 defines `C6` through arbitrarily
-    large finite integer sets `A` and `B`, the sumset
-    `A + B = {a + b : a in A, b in B}`, the difference set
-    `A - B = {a - b : a in A, b in B}`, and asymptotic notation where
-    `X << Y`/`X >> Y` use constants independent of sufficiently large sets.
-    It then cites `[39, Corollary 3]` for `C6 <= 4/3`, `[39, Theorem 1]` for
-    the prior lower bound, and the Gyarmati et al. finite-set theorem requiring
-    `U` to be a finite set of non-negative integers containing zero with
-    `|U - U| <= 2 max(U) + 1`.
-  - Status: `alphaevolve_appendix_b.json` now records
-    `theorem_condition_evidence` for B.6: the `C6` statement,
-    `A+B`/`A-B` definitions, `<<`/`>>` constant-independence notes, prior
-    `1.14465 <= C6 <= 4/3` bounds and sources, Gyarmati theorem id,
-    admissible-`U` domain, zero-membership requirement, condition
-    `|U - U| <= 2 max(U) + 1`, and lower-bound formula. Registry validation
-    enforces those fields and keeps them separate from witness-payload
-    provenance.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
 
 - [ ] Add Appendix B.7 regular-hexagon packing provenance.
   - Spec evidence: AlphaEvolve Appendix B.7 reports two regular-hexagon

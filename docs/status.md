@@ -1291,10 +1291,10 @@ Important limits:
   local artifact paths across status rows and zero missing referenced local
   artifacts, plus 6 unique referenced TODO evidence paths, 289 TODO evidence
   path mention records, and zero missing referenced TODO evidence paths. It
-  also records 175 matched TODO content source tokens, 1054 row-specific TODO
-  block hashes/source offsets, 405 TODO content artifact mention source-offset
+  also records 175 matched TODO content source tokens, 950 row-specific TODO
+  block hashes/source offsets, 291 TODO content artifact mention source-offset
   records, zero status-row local artifact paths, and zero status-phrase local
-  artifact paths missing from linked row-specific TODO evidence, 393
+  artifact paths missing from linked row-specific TODO evidence, 286
   phrase-level TODO block records, and
   structurally classifies 87 status-cell
   absence-signal phrases with 99 source-offset records. This is path/content

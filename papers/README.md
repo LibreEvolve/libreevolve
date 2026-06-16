@@ -2889,12 +2889,12 @@ Implemented:
   records, 60 phrase-level artifact mention records, and zero missing
   referenced local artifacts, plus 6 unique referenced TODO evidence paths,
   289 TODO evidence path mention records, and zero missing referenced TODO
-  evidence paths, 175 matched TODO content source tokens, 1054 row-specific
-  TODO block hashes/source offsets, 405 TODO content artifact mention
+  evidence paths, 175 matched TODO content source tokens, 950 row-specific
+  TODO block hashes/source offsets, 291 TODO content artifact mention
   source-offset records, and zero status-row local artifact paths missing from
   linked row-specific TODO evidence. It also records zero
   status-phrase local artifact paths missing from linked row-specific TODO
-  evidence, 393 phrase-level TODO block records, and structurally classifies 87 status-cell
+  evidence, 286 phrase-level TODO block records, and structurally classifies 87 status-cell
   absence-signal phrases with 99 source-offset records. It is not status-cell
   phrase-level semantic verification, evidence-link sufficiency proof, or
   absence-sentence freshness evidence.

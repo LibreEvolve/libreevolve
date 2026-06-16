@@ -19,15 +19,15 @@
           "path": "docs/todo/code.md",
           "exists": true,
           "active_count": 215,
-          "completed_count": 5,
-          "total_count": 220
+          "completed_count": 0,
+          "total_count": 215
         },
         {
           "path": "docs/todo/Completed/code.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1231,
-          "total_count": 1231
+          "completed_count": 1236,
+          "total_count": 1236
         }
       ],
       "active_count": 215,
@@ -49,15 +49,15 @@
           "path": "docs/todo/papers.md",
           "exists": true,
           "active_count": 243,
-          "completed_count": 7,
-          "total_count": 250
+          "completed_count": 0,
+          "total_count": 243
         },
         {
           "path": "docs/todo/Completed/papers.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1047,
-          "total_count": 1047
+          "completed_count": 1054,
+          "total_count": 1054
         }
       ],
       "active_count": 243,

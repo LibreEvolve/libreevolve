@@ -29,10 +29,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     plus 6 unique status-row TODO evidence paths, 289 TODO evidence path
     mention records, and zero missing referenced TODO evidence paths. It also
     records row-specific TODO content evidence with 175 matched source tokens,
-    1054 row-specific TODO block hashes/source offsets, 405 artifact mention
+    950 row-specific TODO block hashes/source offsets, 291 artifact mention
     source-offset records, zero status-row local artifact paths, and zero
     status-phrase local artifact paths missing from linked TODO evidence, plus
-    393 phrase-level TODO block records. It now structurally classifies 87 status-cell
+    286 phrase-level TODO block records. It now structurally classifies 87 status-cell
     absence-signal phrases with 99 source-offset records without claiming
     freshness verification.
     `papers/benchmark_coverage_inventory.json` now records 83 implemented
@@ -3340,40 +3340,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     the three autocorrelation claims distinct from broad Appendix B family
     coverage.
 
-- [x] Track Appendix B.1-B.3 paper-heading and constant-label evidence.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B names the three
-    sections `B.1. First autocorrelation inequality`, `B.2. Second
-    autocorrelation inequality`, and `B.3. Third autocorrelation inequality`.
-    Their mathematical constants are `C1`, `C2`, and `C3`; no paper heading or
-    caption labels them as `k=3`, `k=4`, or `k=5`.
-  - Status: the Appendix B registry now records exact B.1-B.3 paper-label
-    metadata for each autocorrelation family: source section id, paper
-    heading, C1-C3 constant id, display label, internal family id, and a policy
-    that marks `autocorrelation_bounds_k*` as internal implementation ids only.
-    Registry validation rejects missing or drifted paper labels and public
-    `k=` display names. README, ROADMAP, and the paper index now use the paper
-    B.1-B.3/C1-C3 labels.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
-- [x] Track Appendix B.8 squared-ratio convention evidence.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 gives point-set
-    constructions for minimizing the ratio of maximum to minimum pairwise
-    distances. The values shown for 16 points in 2D and 14 points in 3D are
-    `12.889266112` and `4.165849767`, respectively, under the paper's squared
-    ratio reporting convention rather than direct square-root distance ratios.
-  - Status: the Appendix B registry now records B.8 metric-convention evidence
-    for both paper rows: 16 points in 2D and 14 points in 3D. Each row preserves
-    the raw squared reported value, `squared_max_min_ratio` convention,
-    square-root-derived ratio, point count, dimension, prior squared bound,
-    source section, Figure 12 panel, comparison-unit policy, and explicit
-    missing coordinate-artifact status. Registry validation rejects missing
-    rows, convention drift, derived-ratio drift, and non-improving squared
-    values. README, ROADMAP, and the paper index now name the squared-ratio
-    convention explicitly.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
 - [ ] Track Appendix B.8 point-set distance-certificate evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.8 and Figure 12
     report two distance-ratio point-set witnesses: 16 points in 2D with
@@ -3432,25 +3398,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     location, and README/ROADMAP text that keeps the minimum-overlap witness
     distinct from broad Appendix B family coverage.
 
-- [x] Track Appendix B.5 source-formulation and equivalence evidence.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.5 defines the
-    Erdos minimum-overlap constant using paired functions
-    `f,g: [-1,1] -> [0,1]`, the complement constraint `f + g = 1`,
-    `integral f = 1`, zero extension outside `[-1,1]`, and the objective
-    `sup_{x in [-2,2]} integral_{-1}^1 f(t) g(x+t) dt`. The appendix then
-    cites `[40]` for equality with the infimum over normalized step functions
-    `h` on `[0,2]`.
-  - Status: the Appendix B registry now records B.5 source-formulation
-    evidence: the `f,g` domain and value range, complement and integral
-    constraints, zero-extension convention, shift-supremum objective domain,
-    known lower/upper bounds and source, `[40]` equivalence source, normalized
-    `[0,2]` `h` formulation, reduced integral/objective expressions, and
-    mapping to the Figure 10 step-function evidence. Registry validation
-    rejects drift in these fields and enforces a step-function construction
-    artifact schema rather than a finite-set placeholder.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
-
 - [ ] Track Appendix B.6 finite-set witness evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 improves the
     sums-and-differences lower bound using two finite integer-set witnesses:
@@ -3477,24 +3424,6 @@ directory and using the AlphaEvolve paper as the primary specification.
     lower-bound value, source section linkage, and README/ROADMAP text that
     separates the two finite-set witnesses from broad Appendix B family
     coverage.
-
-- [x] Track Appendix B.6 theorem-condition evidence.
-  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.6 first defines
-    `C6` using arbitrarily large finite integer sets `A` and `B`, with
-    `A+B` and `A-B` explicitly defined as sumset and difference set. The
-    appendix states that `X << Y` and `X >> Y` use constants independent of
-    sufficiently large sets, cites `[39, Corollary 3]` for `C6 <= 4/3` and
-    `[39, Theorem 1]` for the lower-bound framework, then applies the
-    Gyarmati et al. result for finite `U` consisting of non-negative integers
-    containing zero and satisfying `|U - U| <= 2 max(U) + 1`.
-  - Status: paper-facing Appendix B coverage now preserves B.6
-    `theorem_condition_evidence`: theorem id, source location,
-    sumset/difference-set definitions, `<<`/`>>` semantics, lower/upper source
-    references, admissible-`U` conditions, lower-bound formula, and formula
-    linkage to witness rows. Registry validation keeps theorem-condition
-    evidence separate from witness arithmetic and payload evidence.
-  - Verification: `py -3.12 -m pytest tests/test_appendix_b_registry.py -q`
-    passes.
 
 - [ ] Track Appendix B.7 regular-hexagon packing evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B.7 improves two
@@ -4121,41 +4050,6 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Required result: add scoped follow-on result evidence before claiming
     implementation, benchmark parity, verifier coverage, or recomputed
     mathematical results from `2511.02864`.
-
-- [x] Complete follow-on notebook artifact fields on emitted source rows.
-  - Paper/source evidence: the
-    `google-deepmind/alphaevolve_repository_of_problems` README says the
-    repository contains problem descriptions for 67 mathematical problems, but
-    the current repository `problems/` directory exposes 68 numbered HTML
-    pages. Raw pages `problems/67.html` and `problems/68.html` are both titled
-    `Logic puzzles`; page 67 has a Colab placeholder `#`, while page 68 has a
-    generic Colab URL and a paper-link placeholder `#`.
-  - Current gap: `libreevolve.alphaevolve_follow_on_problem_coverage.v1` now
-    reconciles the README/paper declared `67` problem count with `68`
-    observed numbered HTML pages, and `papers/follow_on_sources.json` links
-    that numbered-page evidence boundary. It now classifies page 68 as an
-    extra numbered duplicate-title `Logic puzzles` page outside the declared
-    67-page navigation range and records all-page resource-link diagnostics:
-    `36` GitHub notebook blob URLs, `6` direct Google Colab URLs, `25`
-    under-construction Colab placeholders, `1` generic Colab landing URL, and
-    `1` paper-link placeholder. It also pins raw-page byte counts and SHA-256
-    hashes for all `68` numbered HTML pages and emits per-page rows with URL,
-    section, link-status, pinned hash reference, status-bucket membership,
-    notebook-link mappings, absence reasons, and scoped artifact-presence
-    fields for linked pinned notebooks.
-    `papers/follow_on_sources.json` also now maps the `19` original Appendix B
-    result ids across the `13` Appendix B families to follow-on repository
-    problem pages and notebook-link statuses while leaving normalized result
-    rows, construction payloads, verifier artifacts, recomputed values, and
-    full notebook cell inventories outside the claim.
-    `papers/follow_on_repository_rights.json` now also attaches validated
-    follow-on artifact-rights templates for local generated outputs, adapted
-    verification code, and copied problem statements, while preserving
-    zero-current-local-generated-artifact evidence for copied/adapted follow-on
-    repository material.
-  - Completed result: source-manifest validation now covers numbered problem
-    pages with artifact-presence flags and README/ROADMAP/papers wording keeps
-    problem-count and full-cell-inventory claims snapshot-scoped.
 
 - [ ] Track paper-artifact creator and assembler roles for figures and Colab.
   - Paper evidence: the Contributions section of
@@ -9552,39 +9446,3 @@ directory and using the AlphaEvolve paper as the primary specification.
     points to a live source-specific open gap, and require coverage refreshes
     when the paper row's role, implementation status, benchmark qualifier, or
     source-span evidence changes.
-
-- [x] Add freshness checks for generated paper-index sidecar summaries.
-  - Paper evidence: `papers/README.md` is the paper-facing index and also
-    summarizes generated sidecars such as `papers/status_claim_inventory.json`
-    for reviewers. Those summaries should not drift from the generated JSON
-    sidecars they describe.
-  - Status: `validate_paper_manifest()` now checks generated count summaries
-    in `papers/README.md` when the paper index mentions
-    `papers/status_claim_inventory.json`. The validator maps those summary
-    phrases back to the current generated JSON fields and emits targeted
-    `status_claim_inventory_readme_summary_*_mismatch` issues when a
-    documented count drifts. The paper-index prose now reports `1054`
-    row-specific TODO block records and `405` TODO content artifact mention
-    records, matching `papers/status_claim_inventory.json`.
-  - Verification: focused paper-manifest tests cover both matching and stale
-    `papers/status_claim_inventory.json` summary counts, so reviewers can no
-    longer see stale generated-count evidence while the manifest gate remains
-    green.
-
-- [x] Add freshness checks for generated benchmark-coverage sidecar summaries.
-  - Paper evidence: `papers/README.md` also summarizes
-    `papers/benchmark_coverage_inventory.json` for reviewers. That sidecar is
-    structural benchmark-coverage evidence, so its paper-index count summary
-    must stay tied to the generated JSON rather than becoming a stale
-    hand-maintained claim.
-  - Status: `validate_paper_manifest()` now checks generated count summaries
-    in `papers/README.md` when the paper index mentions
-    `papers/benchmark_coverage_inventory.json`. The validator maps the
-    summary's referenced-source, source-token-match, local-artifact, and
-    missing-artifact counts back to current generated JSON fields and emits
-    targeted `benchmark_coverage_inventory_readme_summary_*_mismatch` issues
-    when documented counts drift.
-  - Verification: focused paper-manifest tests cover both matching and stale
-    `papers/benchmark_coverage_inventory.json` summary counts, so benchmark
-    coverage summary evidence can no longer drift while the manifest gate
-    remains green.

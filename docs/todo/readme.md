@@ -465,24 +465,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     provider support.
   - Current evidence: the README currently lists OpenAI, Anthropic, Ollama,
     and custom import-path backend support; the quick-start provider examples
-    show only OpenAI, Anthropic, and Ollama placeholders. `docs/backends.md`
-    documents custom backends as Python `class_path` implementations with
-    JSON-safe kwargs, while the active code TODO now tracks the missing
-    subprocess/CLI backend contract for command discovery, auth/session
-    provenance, transcript retention, diagnostics, and budget/cancellation
-    semantics.
-  - Current gap: no README-owned wording, evidence map, or drift check states
-    that custom import-path support is not the same thing as first-class
-    Codex-authenticated or other local CLI provider support. A user could add
-    an ad hoc CLI wrapper through `type: custom` and mistake the README's
-    generic backend claim for supported, reproducible provider parity.
-  - Required result: update README provider/support wording and validation so
-    built-in SDK adapters, custom import-path wrappers, and any future
-    subprocess/CLI-authenticated provider lane are separated; link to the
-    subprocess/CLI backend contract TODO; and prevent README, ROADMAP,
-    benchmark, or paper-facing examples from claiming Codex-authenticated or
-    local CLI providers until the tracked backend contract and smoke evidence
-    exist.
+    show only OpenAI, Anthropic, and Ollama placeholders. The README now states
+    that custom import-path backends are extension points, not first-class
+    Codex-authenticated or other local CLI provider support, and links that
+    boundary to `docs/todo/code.md`. `papers/readme_cli_provider_guardrail_boundary.json`
+    records that README wording, the code TODO contract markers, backend-doc
+    built-in/custom lane markers, and a narrow scan for unsupported positive
+    Codex/local CLI provider-support claims in README, ROADMAP, and
+    papers/README.
+  - Current gap: the guardrail is documentation-boundary evidence only. It
+    does not implement a first-class subprocess/CLI backend contract, CLI
+    backend manifest schema, credential-safe CLI backend smoke, provider budget
+    accounting for CLI backends, or provider diagnostics for CLI backends. A
+    user can still create an ad hoc custom wrapper around a local CLI, but that
+    remains outside supported, reproducible provider parity until the code TODO
+    is implemented and manifest-validated.
+  - Required result: implement the subprocess/CLI provider backend contract
+    with command discovery, auth/session provenance, transcript retention,
+    diagnostics, budget/cancellation semantics, smoke fixtures, and CI/report
+    artifacts before README, ROADMAP, benchmark, or paper-facing examples claim
+    Codex-authenticated or local CLI providers are supported.
 
 - [ ] Add backend-doc guardrail for CLI-authenticated provider support.
   - Spec evidence: `docs/backends.md` is the detailed provider contract that

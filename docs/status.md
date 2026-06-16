@@ -1324,6 +1324,7 @@ Important limits:
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
   `papers/readme_provider_example_matrix_boundary.json`,
+  `papers/readme_cli_provider_guardrail_boundary.json`,
   `papers/readme_paper_cache_topic_boundary.json`,
   `papers/readme_paper_cache_rehydrate_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
@@ -1400,6 +1401,16 @@ Important limits:
   local Ollama inventory, a credential-safe provider smoke matrix,
   account-specific model-id provenance, a CI provider matrix, or Google/Gemini
   provider parity.
+- README CLI-provider guardrail evidence now records the README built-in/custom
+  backend feature bullet, the wording that separates custom import-path
+  extension points from first-class Codex-authenticated or other local CLI
+  provider support, the link to the subprocess/CLI backend contract TODO,
+  code-TODO contract markers, backend-doc built-in/custom lane markers, and a
+  narrow scan for unsupported positive Codex/local CLI provider-support claims
+  in README, ROADMAP, and papers/README. This is not a first-class CLI backend
+  contract, CLI backend manifest schema, credential-safe CLI backend smoke,
+  provider budget accounting for CLI backends, or provider diagnostics for CLI
+  backends.
 - README paper-cache topic evidence now records the README topic sentence,
   download-manifest row count, papers-index implementation-status row count,
   papers-index role inventory, and bounded heuristic topic-family signals for

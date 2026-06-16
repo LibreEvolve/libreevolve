@@ -64,6 +64,11 @@ Important limits:
   cross-abstraction reports are tracked as missing AlphaEvolve-style work.
 - Built-in provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
+- Custom import-path backends are extension points, not first-class
+  Codex-authenticated or other local CLI provider support. Treat those lanes as
+  unsupported for README, ROADMAP, benchmark, and paper-facing evidence until
+  the subprocess/CLI backend contract in [docs/todo/code.md](docs/todo/code.md)
+  is implemented with smoke evidence.
 - The included examples are smoke fixtures unless they explicitly document
   stronger benchmark evidence.
 - The default initial-program policy is permissive; AlphaEvolve-style complete

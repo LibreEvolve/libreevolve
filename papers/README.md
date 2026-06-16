@@ -2839,7 +2839,8 @@ Implemented:
   routing, GitHub Actions docs path-filter, paper-manifest consistency,
   TODO-coverage, stale source-specific wording, sidecar-registry, top-level
   README/ROADMAP/papers-index claim-inventory, README provider-example matrix
-  inventory, and focused boundary-test evidence. It is not evidence of
+  inventory, README CLI-provider guardrail inventory, and focused boundary-test
+  evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
   full proof that every AlphaEvolve-facing claim is current.
@@ -2924,6 +2925,16 @@ Implemented:
   OpenAI/Anthropic model availability proof, local Ollama inventory, a
   credential-safe provider smoke matrix, account-specific model-id provenance,
   a CI provider matrix, or Google/Gemini provider parity.
+- `papers/readme_cli_provider_guardrail_boundary.json`: README CLI-provider
+  guardrail sidecar. It records the README built-in/custom backend feature
+  bullet, the wording separating custom import-path extension points from
+  first-class Codex-authenticated or other local CLI provider support, the
+  link to the subprocess/CLI backend contract TODO, code-TODO contract
+  markers, backend-doc built-in/custom lane markers, and a narrow scan for
+  unsupported positive Codex/local CLI provider-support claims in README,
+  ROADMAP, and papers/README. It is not a first-class CLI backend contract,
+  CLI backend manifest schema, credential-safe CLI backend smoke, provider
+  budget accounting for CLI backends, or provider diagnostics for CLI backends.
 - `papers/readme_paper_cache_topic_boundary.json`: README paper-cache topic
   sidecar. It records the README paper-cache topic sentence,
   download-manifest row count, papers-index implementation-status row count,

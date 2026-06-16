@@ -223,6 +223,10 @@ from libreevolve.problems.benchmarks.readme_provider_example_matrix_boundary imp
     readme_provider_example_matrix_boundary_record,
     validate_readme_provider_example_matrix_boundary,
 )
+from libreevolve.problems.benchmarks.readme_cli_provider_guardrail_boundary import (
+    readme_cli_provider_guardrail_boundary_record,
+    validate_readme_cli_provider_guardrail_boundary,
+)
 from libreevolve.problems.benchmarks.readme_paper_cache_topic_boundary import (
     readme_paper_cache_topic_boundary_record,
     validate_readme_paper_cache_topic_boundary,
@@ -980,6 +984,7 @@ README_QUICK_START_SMOKE_BOUNDARY_FILE = "papers/readme_quick_start_smoke_bounda
 README_INSTALL_SMOKE_BOUNDARY_FILE = "papers/readme_install_smoke_boundary.json"
 README_PROVIDER_AUTH_BOUNDARY_FILE = "papers/readme_provider_auth_boundary.json"
 README_PROVIDER_EXAMPLE_MATRIX_BOUNDARY_FILE = "papers/readme_provider_example_matrix_boundary.json"
+README_CLI_PROVIDER_GUARDRAIL_BOUNDARY_FILE = "papers/readme_cli_provider_guardrail_boundary.json"
 README_PAPER_CACHE_TOPIC_BOUNDARY_FILE = "papers/readme_paper_cache_topic_boundary.json"
 README_PAPER_CACHE_REHYDRATE_BOUNDARY_FILE = "papers/readme_paper_cache_rehydrate_boundary.json"
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
@@ -1696,6 +1701,7 @@ def validate_paper_manifest(
     issues.extend(_validate_readme_install_smoke_boundary(root_path))
     issues.extend(_validate_readme_provider_auth_boundary(root_path))
     issues.extend(_validate_readme_provider_example_matrix_boundary(root_path))
+    issues.extend(_validate_readme_cli_provider_guardrail_boundary(root_path))
     issues.extend(_validate_readme_paper_cache_topic_boundary(root_path))
     issues.extend(_validate_readme_paper_cache_rehydrate_boundary(root_path))
     issues.extend(_validate_documentation_claim_inventory(root_path))
@@ -4598,6 +4604,38 @@ def _validate_readme_provider_example_matrix_boundary(root_path: Path) -> list[P
             f"readme_provider_example_matrix_boundary_{issue.code}",
             issue.message,
             "readme_provider_example_matrix",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_readme_cli_provider_guardrail_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / README_CLI_PROVIDER_GUARDRAIL_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "readme_cli_provider_guardrail_boundary_manifest_missing",
+                    (
+                        f"{README_CLI_PROVIDER_GUARDRAIL_BOUNDARY_FILE} must emit "
+                        "README CLI-provider guardrail metadata"
+                    ),
+                    "readme_cli_provider_guardrail",
+                )
+            ]
+        return []
+    report = validate_readme_cli_provider_guardrail_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"readme_cli_provider_guardrail_boundary_{issue.code}",
+            issue.message,
+            "readme_cli_provider_guardrail",
         )
         for issue in report.issues
     ]

@@ -16,23 +16,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     from being hidden in the wrong surface.
   - Current evidence: README links `docs/README.md`, architecture,
     configuration, backends, plugins, run artifacts, status, ROADMAP,
-    `papers/README.md`, and `docs/todo/`, and says setup belongs in the root
-    README, operational details in `docs/`, paper-derived evidence in
-    `papers/`, and active/completed gap tracking in `docs/todo/` plus
-    `ROADMAP.md`. The broad README semantic-claim TODO and
-    `papers/documentation_truthfulness_boundary.json` already track
-    cross-document truthfulness and docs-routing at a high level.
-  - Current gap: no README-owned validator or sidecar parses the Documentation
-    Map, verifies every linked target exists, checks that each route summary
-    matches the target document's purpose, flags newly added major docs that
-    need routing, or detects content placed in the wrong surface such as
-    paper-derived claims outside `papers/` or implementation priorities
-    outside ROADMAP/TODO ledgers.
-  - Required result: add README documentation-map evidence that inventories
-    each routed document, validates link existence and purpose text, compares
-    route summaries with target headings/front matter or declared scope, flags
-    missing major docs, and checks that README/docs/papers/ROADMAP/TODO content
-    boundaries remain synchronized whenever documentation structure changes.
+    `papers/README.md`, `docs/todo/`, and `AGENTS.md`, and says setup belongs
+    in the root README, operational details in `docs/`, paper-derived evidence
+    in `papers/`, active/completed gap tracking in `docs/todo/` plus
+    `ROADMAP.md`, tracked `old/` material is archival, and AGENTS.md is the
+    agent-facing operating contract. The committed
+    `papers/readme_documentation_map_boundary.json` records a README
+    Documentation Map route inventory with 11 route records, target-existence
+    checks, route summary marker checks, target heading marker checks,
+    docs-index delegation, archival `old/` routing, and AGENTS.md routing, with
+    zero missing route records.
+  - Current gap: the sidecar is a bounded route inventory, not a semantic
+    purpose verifier. It does not prove that each route summary fully matches
+    the target document's purpose, detect newly added major docs that need
+    routing, or detect content placed in the wrong surface such as paper-
+    derived claims outside `papers/` or implementation priorities outside
+    ROADMAP/TODO ledgers.
+  - Required result: add semantic route-purpose verification, a new-major-doc
+    detector, misplaced-claim detection across README/docs/papers/ROADMAP/TODO
+    surfaces, and owner review signoff before treating the README
+    Documentation Map as fully synchronized.
 
 - [ ] Add README routing for `AGENTS.md` as an agent-facing operating contract.
   - Spec evidence: AlphaEvolve-alignment work in this repository is performed

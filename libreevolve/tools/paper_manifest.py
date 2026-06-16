@@ -187,6 +187,10 @@ from libreevolve.problems.benchmarks.readme_agent_routing_boundary import (
     readme_agent_routing_boundary_record,
     validate_readme_agent_routing_boundary,
 )
+from libreevolve.problems.benchmarks.readme_documentation_map_boundary import (
+    readme_documentation_map_boundary_record,
+    validate_readme_documentation_map_boundary,
+)
 from libreevolve.problems.benchmarks.documentation_claim_inventory import (
     documentation_claim_inventory_record,
     validate_documentation_claim_inventory,
@@ -927,6 +931,7 @@ STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_bounda
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
 TRACKED_LEGACY_SURFACE_BOUNDARY_FILE = "papers/tracked_legacy_surface_boundary.json"
 README_AGENT_ROUTING_BOUNDARY_FILE = "papers/readme_agent_routing_boundary.json"
+README_DOCUMENTATION_MAP_BOUNDARY_FILE = "papers/readme_documentation_map_boundary.json"
 DOCUMENTATION_CLAIM_INVENTORY_FILE = "papers/documentation_claim_inventory.json"
 ROADMAP_READINESS_BOUNDARY_FILE = "papers/roadmap_readiness_boundary.json"
 ROADMAP_READINESS_PUBLICATION_BOUNDARY_FILE = "papers/roadmap_readiness_publication_boundary.json"
@@ -1632,6 +1637,7 @@ def validate_paper_manifest(
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
     issues.extend(_validate_tracked_legacy_surface_boundary(root_path))
     issues.extend(_validate_readme_agent_routing_boundary(root_path))
+    issues.extend(_validate_readme_documentation_map_boundary(root_path))
     issues.extend(_validate_documentation_claim_inventory(root_path))
     issues.extend(_validate_roadmap_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_readiness_publication_boundary(root_path))
@@ -4244,6 +4250,38 @@ def _validate_readme_agent_routing_boundary(root_path: Path) -> list[PaperManife
             f"readme_agent_routing_boundary_{issue.code}",
             issue.message,
             "readme_agent_routing",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_readme_documentation_map_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / README_DOCUMENTATION_MAP_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "readme_documentation_map_boundary_manifest_missing",
+                    (
+                        f"{README_DOCUMENTATION_MAP_BOUNDARY_FILE} must emit "
+                        "README Documentation Map route metadata"
+                    ),
+                    "readme_documentation_map",
+                )
+            ]
+        return []
+    report = validate_readme_documentation_map_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"readme_documentation_map_boundary_{issue.code}",
+            issue.message,
+            "readme_documentation_map",
         )
         for issue in report.issues
     ]

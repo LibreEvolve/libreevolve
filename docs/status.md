@@ -1315,6 +1315,7 @@ Important limits:
   `papers/documentation_truthfulness_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`, and
+  `papers/readme_documentation_map_boundary.json`, plus
   `papers/documentation_claim_inventory.json`.
 - Tracked legacy-surface evidence now records the committed `old/**`
   Markdown planning inventory, archival/non-authoritative self-
@@ -1328,6 +1329,11 @@ Important limits:
   `AGENTS.md` path-filter coverage, and bounded command/test/backend/artifact/
   AlphaEvolve instruction links. This is not a complete AGENTS instruction-
   drift map or owner review signoff.
+- README Documentation Map evidence now records 11 README route records,
+  target-existence checks, route summary marker checks, target heading marker
+  checks, docs-index delegation, archival `old/` routing, and AGENTS.md
+  routing. This is not semantic route-purpose verification, new-major-doc
+  detection, misplaced-claim detection, or owner review signoff.
 - ROADMAP claim-evidence mapping now records six claim surfaces for the
   ROADMAP scope preamble, current-state bullet inventory, implementation
   evidence links, good-first priority claims, cross-document claim sync, and

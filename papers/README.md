@@ -2856,6 +2856,12 @@ Implemented:
   coverage, GitHub Actions `AGENTS.md` path-filter coverage, and bounded
   command, test, backend, artifact, and AlphaEvolve instruction links. It is not a
   complete AGENTS instruction-drift map or owner review signoff.
+- `papers/readme_documentation_map_boundary.json`: README Documentation Map
+  sidecar. It records 11 README route records, target-existence checks, route
+  summary marker checks, target heading marker checks, docs-index delegation,
+  archival `old/` routing, and AGENTS.md routing. It is not semantic
+  route-purpose verification, new-major-doc detection, misplaced-claim
+  detection, or owner review signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

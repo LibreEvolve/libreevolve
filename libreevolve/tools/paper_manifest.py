@@ -292,6 +292,10 @@ from libreevolve.problems.benchmarks.roadmap_phase_staleness_boundary import (
     roadmap_phase_staleness_boundary_record,
     validate_roadmap_phase_staleness_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_phase_promotion_workflow_boundary import (
+    roadmap_phase_promotion_workflow_boundary_record,
+    validate_roadmap_phase_promotion_workflow_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_phase_freshness_boundary import (
     roadmap_phase_freshness_boundary_record,
     validate_roadmap_phase_freshness_boundary,
@@ -938,6 +942,7 @@ ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_good_first_freshnes
 ROADMAP_PHASE_SEQUENCE_BOUNDARY_FILE = "papers/roadmap_phase_sequence_boundary.json"
 ROADMAP_PHASE_DEPENDENCY_GRAPH_BOUNDARY_FILE = "papers/roadmap_phase_dependency_graph_boundary.json"
 ROADMAP_PHASE_STALENESS_BOUNDARY_FILE = "papers/roadmap_phase_staleness_boundary.json"
+ROADMAP_PHASE_PROMOTION_WORKFLOW_BOUNDARY_FILE = "papers/roadmap_phase_promotion_workflow_boundary.json"
 ROADMAP_PHASE_FRESHNESS_BOUNDARY_FILE = "papers/roadmap_phase_freshness_boundary.json"
 ROADMAP_OPERATIONAL_MATURITY_BOUNDARY_FILE = "papers/roadmap_operational_maturity_boundary.json"
 ROADMAP_OPERATIONAL_READINESS_BOUNDARY_FILE = "papers/roadmap_operational_readiness_boundary.json"
@@ -1639,6 +1644,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_phase_sequence_boundary(root_path))
     issues.extend(_validate_roadmap_phase_dependency_graph_boundary(root_path))
     issues.extend(_validate_roadmap_phase_staleness_boundary(root_path))
+    issues.extend(_validate_roadmap_phase_promotion_workflow_boundary(root_path))
     issues.extend(_validate_roadmap_phase_freshness_boundary(root_path))
     issues.extend(_validate_roadmap_operational_maturity_boundary(root_path))
     issues.extend(_validate_roadmap_operational_readiness_boundary(root_path))
@@ -5150,6 +5156,41 @@ def _validate_roadmap_phase_staleness_boundary(root_path: Path) -> list[PaperMan
             f"roadmap_phase_staleness_boundary_{issue.code}",
             issue.message,
             "roadmap_phase_staleness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_phase_promotion_workflow_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_PHASE_PROMOTION_WORKFLOW_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_phase_promotion_workflow_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_PHASE_PROMOTION_WORKFLOW_BOUNDARY_FILE} must emit "
+                        "ROADMAP phase promotion/demotion workflow metadata"
+                    ),
+                    "roadmap_phase_promotion_workflow",
+                )
+            ]
+        return []
+    report = validate_roadmap_phase_promotion_workflow_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_phase_promotion_workflow_boundary_{issue.code}",
+            issue.message,
+            "roadmap_phase_promotion_workflow",
         )
         for issue in report.issues
     ]

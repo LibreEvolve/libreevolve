@@ -5,7 +5,7 @@
   "contradiction_count": 0,
   "forbidden_phrase_count": 17,
   "markdown_corpus_status": "all_repo_markdown_files_scanned",
-  "markdown_file_count": 26,
+  "markdown_file_count": 27,
   "markdown_files": [
     "AGENTS.md",
     "README.md",
@@ -19,6 +19,7 @@
     "docs/problem-format.md",
     "docs/release-checklist.md",
     "docs/roadmap-non-goal-promotion-workflow.md",
+    "docs/roadmap-phase-promotion-workflow.md",
     "docs/run-artifacts.md",
     "docs/status.md",
     "docs/todo/Completed/archive_policy.md",
@@ -91,7 +92,7 @@
       "scan_status": "no_forbidden_markdown_claims_detected"
     }
   ],
-  "readable_markdown_file_count": 26,
+  "readable_markdown_file_count": 27,
   "required_evidence_fields": [
     "stable_non_goal_ids",
     "markdown_corpus_file_inventory",

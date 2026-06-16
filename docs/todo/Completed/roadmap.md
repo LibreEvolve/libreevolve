@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add bounded ROADMAP phase promotion/demotion workflow.
+  - Status: `papers/roadmap_phase_promotion_workflow_boundary.json` now
+    records the written ROADMAP phase promotion/demotion workflow in
+    `docs/roadmap-phase-promotion-workflow.md`, including required claim
+    surface updates, phase sidecar refreshes, dependency graph refresh, stale
+    phase record resolution, and paper-manifest validation.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_phase_promotion_workflow_boundary.py`
+    derives the workflow boundary from the committed workflow doc, required
+    claim-surface refs, required phase sidecar refs, and manifest-gate phrase;
+    the paper-manifest gate requires the checked sidecar to match those
+    inputs.
+  - Remaining guard: CI phase freshness gate, evidence-status refresh report,
+    and owner review signoff remain active in `docs/todo/roadmap.md`.
+  - Verification: focused phase promotion-workflow tests and paper-manifest
+    validation cover the bounded workflow contract.
+
 - [x] Add bounded ROADMAP phase staleness detector.
   - Status: `papers/roadmap_phase_staleness_boundary.json` now records a
     bounded stale-phase detector for the ten major ROADMAP sections, including
@@ -14,9 +31,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     graph boundary, ROADMAP headings, committed section sidecars, and active
     ROADMAP TODO blockers; the paper-manifest gate requires the checked
     sidecar to match those inputs.
-  - Remaining guard: promotion/demotion workflow, CI phase freshness gate,
-    evidence-status refresh report, and owner review signoff remain active in
-    `docs/todo/roadmap.md`.
+  - Remaining guard: CI phase freshness gate, evidence-status refresh report,
+    and owner review signoff remain active in `docs/todo/roadmap.md`.
   - Verification: focused phase staleness tests and paper-manifest validation
     cover the bounded detector contract.
 
@@ -31,9 +47,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     section ids, committed readiness sidecars, and active ROADMAP TODO
     blockers; the paper-manifest gate requires the checked sidecar to match
     those inputs.
-  - Remaining guard: promotion/demotion workflow, CI phase freshness gate,
-    evidence-status refresh report, and owner review signoff remain active in
-    `docs/todo/roadmap.md`.
+  - Remaining guard: CI phase freshness gate, evidence-status refresh report,
+    and owner review signoff remain active in `docs/todo/roadmap.md`.
   - Verification: focused phase dependency-graph tests and paper-manifest
     validation cover the bounded graph contract.
 
@@ -123,9 +138,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     derives the boundary from current ROADMAP headings and
     `docs/todo/roadmap.md`, and the paper-manifest gate requires the checked
     sidecar to match those inputs.
-  - Remaining guard: the active ROADMAP TODO still tracks the missing
-    promotion/demotion workflow, CI phase freshness gate, evidence-status
-    refresh report, and owner review signoff.
+  - Remaining guard: the active ROADMAP TODO still tracks the missing CI phase
+    freshness gate, evidence-status refresh report, and owner review signoff.
   - Verification: focused phase-sequence boundary tests and paper-manifest
     validation cover the bounded sidecar contract.
 
@@ -15613,9 +15627,9 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     labels, readiness labels, and explicit missing-evidence fields. The
     paper-manifest gate now requires and validates the sidecar at the repo
     root.
-  - Remaining roadmap gap: the actual promotion/demotion workflow, CI phase
-    freshness gate, evidence-status refresh report, and owner review signoff
-    remain active in `docs/todo/roadmap.md`.
+  - Remaining roadmap gap: the actual CI phase freshness gate,
+    evidence-status refresh report, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.
 - [x] Add bounded ROADMAP operational readiness matrix.
   - Spec evidence: ROADMAP operational maturity claims require stronger proof
     than individual release, CI, config, artifact, and docs sidecars.

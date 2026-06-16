@@ -18,7 +18,7 @@ ROADMAP_PHASE_STALENESS_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_phase_staleness_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_phase_staleness_detector_without_workflow_gate"
+    "bounded_phase_staleness_detector_with_promotion_workflow"
 )
 SOURCE_PHASE_BOUNDARY_INPUT = "papers/roadmap_phase_sequence_boundary.json"
 SOURCE_DEPENDENCY_GRAPH_INPUT = "papers/roadmap_phase_dependency_graph_boundary.json"
@@ -37,7 +37,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "promotion_demotion_workflow": "not_recorded_locally",
     "ci_phase_freshness_gate": "not_recorded_locally",
     "evidence_status_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
@@ -142,10 +141,10 @@ def roadmap_phase_staleness_boundary_record(root: str | Path = ".") -> dict[str,
             "current ROADMAP Near Term, Mid Term, and Longer Term sections by "
             "joining the phase sequence map, phase dependency graph, active "
             "blocker TODO refs, section sidecar presence, and dependency edge "
-            "status. It rejects stale phase records. Promotion/demotion "
-            "workflow, CI phase freshness gating, evidence-status refresh "
-            "reporting, and owner review signoff are recorded separately or "
-            "remain missing."
+            "status. It rejects stale phase records. The phase "
+            "promotion/demotion workflow is recorded separately. CI phase "
+            "freshness gating, evidence-status refresh reporting, and owner "
+            "review signoff remain missing."
         ),
     }
 
@@ -207,7 +206,7 @@ def validate_roadmap_phase_staleness_boundary(
         not isinstance(boundary_text, str)
         or "bounded stale-phase detector" not in boundary_text
         or "rejects stale phase records" not in boundary_text
-        or "Promotion/demotion workflow" not in boundary_text
+        or "phase promotion/demotion workflow is recorded separately" not in boundary_text
         or "CI phase freshness gating" not in boundary_text
         or "owner review signoff" not in boundary_text
     ):

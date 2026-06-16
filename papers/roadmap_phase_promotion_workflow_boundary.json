@@ -1,0 +1,141 @@
+{
+  "boundary_status": "phase_promotion_demotion_workflow_recorded_without_ci_or_signoff",
+  "claim_boundary": "This boundary records a written ROADMAP phase promotion/demotion workflow with required updates for ROADMAP, README, papers, status, TODO ledgers, phase sidecars, dependency graph refresh, stale phase record resolution, and the paper manifest gate. It does not claim a CI phase freshness gate, evidence-status refresh report, or owner review signoff.",
+  "claim_ready": false,
+  "claim_surface_count": 6,
+  "claim_surfaces": [
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "ROADMAP.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "README.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/README.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "docs/status.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "docs/todo/roadmap.md"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "docs/todo/Completed/roadmap.md"
+    }
+  ],
+  "missing_evidence": {
+    "ci_phase_freshness_gate": "not_recorded_locally",
+    "evidence_status_refresh": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "workflow_doc",
+    "stable_phase_section_id",
+    "phase_change_scope",
+    "roadmap_update",
+    "readme_update",
+    "papers_index_update",
+    "status_update",
+    "todo_active_update",
+    "todo_completed_update",
+    "phase_dependency_graph_refresh",
+    "stale_phase_record_resolution",
+    "phase_sidecar_refresh",
+    "paper_manifest_gate",
+    "ci_phase_freshness_gate",
+    "evidence_status_refresh",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_phase_promotion_workflow_boundary.v1",
+  "sidecar_ref_count": 7,
+  "sidecar_refs": [
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_phase_sequence_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_phase_dependency_graph_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_phase_staleness_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_phase_freshness_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/roadmap_claim_evidence_boundary.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/documentation_claim_inventory.json"
+    },
+    {
+      "exists": true,
+      "listed_in_workflow": true,
+      "path": "papers/status_claim_inventory.json"
+    }
+  ],
+  "workflow_doc": "docs/roadmap-phase-promotion-workflow.md",
+  "workflow_doc_exists": true,
+  "workflow_phrase_count": 9,
+  "workflow_phrases": {
+    "ci_refresh_signoff_boundary": {
+      "phrase": "not a CI phase freshness gate",
+      "present": true
+    },
+    "dependency_graph_refresh": {
+      "phrase": "phase dependency graph",
+      "present": true
+    },
+    "manifest_gate": {
+      "phrase": "py -3.12 -m libreevolve.tools.paper_manifest --root . --require-local-pdfs --json",
+      "present": true
+    },
+    "not_valid_if_only_prose": {
+      "phrase": "not valid if it only changes prose",
+      "present": true
+    },
+    "phase_change_scope": {
+      "phrase": "promoted, demoted",
+      "present": true
+    },
+    "same_pull_request": {
+      "phrase": "same pull request",
+      "present": true
+    },
+    "stable_phase_section_id": {
+      "phrase": "stable ROADMAP phase section id",
+      "present": true
+    },
+    "stale_phase_records": {
+      "phrase": "stale phase records",
+      "present": true
+    },
+    "unresolved_evidence_routing": {
+      "phrase": "active TODO ledger",
+      "present": true
+    }
+  }
+}

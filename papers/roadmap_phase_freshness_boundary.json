@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 12,
-  "boundary_status": "bounded_phase_freshness_matrix_with_staleness_detector",
-  "claim_boundary": "This boundary records ROADMAP phase freshness readiness criteria tied to the bounded static phase sequence map and phase dependency graph plus the bounded stale-phase detector. It does not claim a promotion/demotion workflow, CI phase freshness gate, evidence-status refresh report, or owner review signoff.",
+  "boundary_status": "bounded_phase_freshness_matrix_with_promotion_workflow",
+  "claim_boundary": "This boundary records ROADMAP phase freshness readiness criteria tied to the bounded static phase sequence map and phase dependency graph plus the bounded stale-phase detector and phase promotion/demotion workflow. It does not claim a CI phase freshness gate, evidence-status refresh report, or owner review signoff.",
   "claim_ready": false,
   "freshness_criteria": [
     {
@@ -92,10 +92,10 @@
         }
       ],
       "criterion_id": "promotion_demotion_workflow",
-      "current_scope": "static promotion criteria text on each phase section",
-      "missing_readiness": "workflow proving phase promotions or demotions update ROADMAP, README, paper sidecars, and TODO evidence",
+      "current_scope": "written phase promotion/demotion workflow covering claim surfaces, sidecars, dependency graph refresh, stale phase records, and manifest gate",
+      "missing_readiness": "CI gate, evidence refresh report, and owner signoff that enforce the workflow automatically",
       "phase_surface": "phase changes, item promotions, item demotions, and replacements",
-      "readiness_status": "promotion_criteria_without_workflow",
+      "readiness_status": "phase_promotion_demotion_workflow_recorded_without_ci_gate",
       "sidecar_refs": [
         {
           "exists": true,
@@ -104,6 +104,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_non_goal_drift_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_phase_promotion_workflow_boundary.json"
         }
       ],
       "validation_gate": "phase promotion/demotion evidence workflow"
@@ -209,13 +213,16 @@
   "missing_evidence": {
     "ci_phase_freshness_gate": "not_recorded_locally",
     "evidence_status_refresh": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally",
-    "promotion_demotion_workflow": "not_recorded_locally"
+    "owner_review_signoff": "not_recorded_locally"
   },
   "phase_dependency_graph_boundary_input": "papers/roadmap_phase_dependency_graph_boundary.json",
   "phase_dependency_graph_edge_count": 22,
   "phase_dependency_graph_stale_edge_count": 0,
   "phase_dependency_graph_status": "phase_dependency_graph_recorded",
+  "phase_promotion_workflow_input": "papers/roadmap_phase_promotion_workflow_boundary.json",
+  "phase_promotion_workflow_phrase_count": 9,
+  "phase_promotion_workflow_sidecar_ref_count": 7,
+  "phase_promotion_workflow_status": "phase_promotion_demotion_workflow_recorded_without_ci_or_signoff",
   "phase_staleness_boundary_input": "papers/roadmap_phase_staleness_boundary.json",
   "phase_staleness_detector_status": "no_stale_phase_records_detected",
   "phase_staleness_record_count": 10,
@@ -228,7 +235,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_phase_freshness_boundary.v1",
-  "sidecar_ref_count": 14,
+  "sidecar_ref_count": 15,
   "source_phase_boundary_input": "papers/roadmap_phase_sequence_boundary.json",
   "source_phase_count": 3,
   "source_section_count": 10,

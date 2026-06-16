@@ -3033,27 +3033,32 @@ Implemented:
   sidecar with the current Near Term, Mid Term, and Longer Term sequence for
   ten major ROADMAP sections, active blocker TODO refs, validation-gate labels,
   and promotion criteria. The dependency graph and stale-phase detector are
-  recorded separately. It is not evidence of a promotion/demotion workflow, CI
-  phase freshness gate, evidence-status refresh report, or owner review
-  signoff.
+  recorded separately, and the phase promotion/demotion workflow is recorded
+  separately. It is not evidence of a CI phase freshness gate, evidence-status
+  refresh report, or owner review signoff.
 - `papers/roadmap_phase_dependency_graph_boundary.json`: ROADMAP phase
   dependency-graph sidecar with ten section nodes, prerequisite section edges,
   section evidence sidecars, active blocker TODO refs, and zero stale
-  dependency edges. The stale-phase detector is recorded separately. It is not
-  evidence of a promotion/demotion workflow, CI phase freshness gate,
-  evidence-status refresh report, or owner review signoff.
+  dependency edges. The stale-phase detector and phase promotion/demotion
+  workflow are recorded separately. It is not evidence of a CI phase freshness
+  gate, evidence-status refresh report, or owner review signoff.
 - `papers/roadmap_phase_staleness_boundary.json`: ROADMAP phase staleness
   sidecar with ten detector records joined to phase sequence status,
   dependency graph status, active blocker TODO refs, section sidecar presence,
   dependency edge status, and zero stale phase records. It is not evidence of
-  a promotion/demotion workflow, CI phase freshness gate, evidence-status
-  refresh report, or owner review signoff.
+  a CI phase freshness gate, evidence-status refresh report, or owner review
+  signoff.
+- `papers/roadmap_phase_promotion_workflow_boundary.json`: ROADMAP phase
+  promotion/demotion workflow sidecar with the committed workflow doc, claim
+  surface refs, phase sidecar refs, dependency graph refresh requirement,
+  stale phase record resolution requirement, and paper-manifest gate. It is
+  not evidence of a CI phase freshness gate, evidence-status refresh report,
+  or owner review signoff.
 - `papers/roadmap_phase_freshness_boundary.json`: ROADMAP phase freshness
   readiness sidecar with six criteria for the dependency graph,
   stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
   evidence-status refresh, and owner review signoff. It is not evidence that
-  those workflow, CI gate, refresh-report, or signoff mechanisms are
-  implemented.
+  those CI gate, refresh-report, or signoff mechanisms are implemented.
 - `papers/roadmap_operational_maturity_boundary.json`: ROADMAP operational
   maturity sidecar with six section-level criteria, risk classes, current
   sidecar refs, active TODO refs, and acceptance-gate labels. It is not

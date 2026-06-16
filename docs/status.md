@@ -1267,6 +1267,7 @@ Important limits:
   `papers/roadmap_source_span_disposition_boundary.json`,
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
+  `papers/roadmap_phase_sequence_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1286,6 +1287,11 @@ Important limits:
   dependency-readiness labels, validation gates, and AlphaEvolve impact labels.
   This is not dependency-state refresh automation, stale-priority detection,
   calibrated priority scoring, CI freshness gating, or owner review signoff.
+- ROADMAP phase-sequencing evidence now records the Near Term, Mid Term, and
+  Longer Term sequence for ten major ROADMAP sections, active blocker TODO
+  refs, validation-gate labels, and promotion criteria. This is not a full
+  dependency graph, stale-phase detector, promotion/demotion workflow, CI
+  phase freshness gate, or owner review signoff.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark

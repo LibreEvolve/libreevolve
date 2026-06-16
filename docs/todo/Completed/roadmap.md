@@ -2,6 +2,22 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add bounded ROADMAP phase and sequencing map.
+  - Status: `papers/roadmap_phase_sequence_boundary.json` now records the
+    current Near Term, Mid Term, and Longer Term sequence for ten major
+    ROADMAP sections, links each section to an active blocker TODO, and
+    records validation-gate labels plus promotion criteria.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_phase_sequence_boundary.py`
+    derives the boundary from current ROADMAP headings and
+    `docs/todo/roadmap.md`, and the paper-manifest gate requires the checked
+    sidecar to match those inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks the missing full
+    dependency graph, stale-phase detector, promotion/demotion workflow, CI
+    phase freshness gate, and owner review signoff.
+  - Verification: focused phase-sequence boundary tests and paper-manifest
+    validation cover the bounded sidecar contract.
+
 - [x] Add bounded ROADMAP Good First Follow-Ups priority map.
   - Status: `papers/roadmap_good_first_followups_boundary.json` now records
     the four current ROADMAP Good First Follow-Ups with stable ids, active TODO

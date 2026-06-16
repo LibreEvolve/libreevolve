@@ -2885,6 +2885,12 @@ Implemented:
   and AlphaEvolve impact labels. It is not evidence of dependency-state
   refresh automation, stale-priority detection, calibrated priority scoring,
   CI freshness gating, or owner review signoff.
+- `papers/roadmap_phase_sequence_boundary.json`: ROADMAP phase-sequencing
+  sidecar with the current Near Term, Mid Term, and Longer Term sequence for
+  ten major ROADMAP sections, active blocker TODO refs, validation-gate labels,
+  and promotion criteria. It is not evidence of a full dependency graph,
+  stale-phase detector, promotion/demotion workflow, CI phase freshness gate,
+  or owner review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

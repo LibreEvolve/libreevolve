@@ -203,10 +203,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     benchmarks, and operational maturity into staged sections. Active code and
     paper TODOs cover many underlying features, and the documentation claim
     inventory records the phase headings as uncovered claim surfaces.
-  - Current gap: there is no machine-readable phase map, dependency graph,
-    promotion/demotion criterion, or stale-phase detector proving that a
-    ROADMAP item still belongs in Near Term, Mid Term, or Longer Term after
-    related code, papers, README, or sidecar evidence changes.
+    `papers/roadmap_phase_sequence_boundary.json` now records the current
+    Near Term, Mid Term, and Longer Term sequence for ten major ROADMAP
+    sections, links each section to an active blocker TODO, and records
+    validation-gate labels plus promotion criteria.
+  - Current gap: the sidecar is a bounded static phase map, not a full
+    dependency graph or freshness model. There is still no stale-phase
+    detector, promotion/demotion workflow, CI phase freshness gate, or owner
+    review signoff proving that a ROADMAP item still belongs in Near Term,
+    Mid Term, or Longer Term after related code, papers, README, or sidecar
+    evidence changes.
   - Required result: add ROADMAP phase metadata that links each major section
     to prerequisites, blocking TODOs, validation gates, and promotion criteria,
     then validate that phase labels and item ordering are refreshed when

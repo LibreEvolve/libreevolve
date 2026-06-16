@@ -2840,9 +2840,9 @@ Implemented:
   TODO-coverage, stale source-specific wording, sidecar-registry, top-level
   README/ROADMAP/papers-index claim-inventory, backend CLI-provider guardrail
   inventory, backend-guide contract drift inventory, plugin-guide contract
-  drift inventory, README provider-example matrix inventory, README
-  CLI-provider guardrail inventory, and focused boundary-test evidence. It is
-  not evidence of
+  drift inventory, README Problem Layout inventory, README provider-example
+  matrix inventory, README CLI-provider guardrail inventory, and focused
+  boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
   full proof that every AlphaEvolve-facing claim is current.
@@ -2925,6 +2925,14 @@ Implemented:
   It is not semantic module-role verification, new top-level detection, new
   major-doc detection, AlphaEvolve-parity placeholder classification, or
   owner review signoff.
+- `papers/readme_problem_layout_boundary.json`: README Problem Layout
+  sidecar. It records the root README problem-layout block, required/optional
+  file markers, the `docs/problem-format.md` route, loader/config/evaluator
+  anchors, example problem path checks, focused loader/example test anchors,
+  AlphaEvolve problem-surface sidecar anchors, and active TODO ownership. It
+  is not semantic loader-contract verification, a dedicated minimal-problem
+  smoke fixture, full problem-format long-contract drift validation, a new
+  problem-surface detector, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

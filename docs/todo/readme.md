@@ -612,19 +612,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     sorting-network candidates, while broader code/paper TODOs track
     non-Python runners, candidate abstractions, evaluator contracts, context
     manifests, validator metadata, and benchmark fixtures.
-  - Current gap: no README-owned validator, sidecar, or smoke fixture parses
-    the README problem-layout list, compares it with loader/preflight behavior
-    and `docs/problem-format.md`, checks that at least one minimal example
-    still satisfies the listed contract, or flags when new problem surfaces
-    such as context manifests, artifact policies, candidate-language metadata,
-    or benchmark-hardening helpers should be mentioned or explicitly scoped
-    out.
-  - Required result: add a README problem-layout evidence map or drift test
-    that links each listed path to loader behavior, docs, examples, and
-    validation coverage; records required versus optional status and known
-    AlphaEvolve-facing omissions; and updates README/TODO evidence whenever
-    problem-loading, evaluator, context, metrics, config, or example layout
-    semantics change.
+    `papers/readme_problem_layout_boundary.json` now records a structural map
+    from the README problem-layout block to required/optional file markers,
+    `docs/problem-format.md`, loader/config/evaluator anchors, example problem
+    path checks, focused loader/example test anchors, AlphaEvolve
+    problem-surface sidecars, and active TODO ownership.
+  - Current gap: the committed sidecar is structural evidence only. It does not
+    prove every loader branch or problem-format claim semantically, does not
+    add a dedicated minimal-problem smoke fixture, does not validate the full
+    long-form `docs/problem-format.md` contract, and does not detect every new
+    problem surface that should be mentioned or explicitly scoped out in the
+    root README.
+  - Required result: add semantic loader-contract verification, a dedicated
+    minimal-problem smoke fixture, a problem-format long-contract drift gate,
+    and a new problem-surface detector that requires README/TODO updates when
+    problem-loading, evaluator, context, metrics, config, candidate-workspace,
+    or example layout semantics change.
 
 - [ ] Add problem-format guide loader-contract drift evidence.
   - Spec evidence: `docs/problem-format.md` is the full problem-authoring

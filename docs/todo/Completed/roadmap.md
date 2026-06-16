@@ -15456,6 +15456,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     map, missing/partial TODO proof, non-goal decision map, phase-priority map,
     CI source-span exhaustiveness gate, and owner review signoff remain active
     in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP source-span exhaustiveness gate.
+  - Spec evidence: a coverage-surface matrix is not enough to prove that every
+    retained AlphaEvolve source span, paper-index status row, figure, table,
+    appendix row, benchmark family, or application-result claim has a ROADMAP
+    disposition.
+  - Status: `papers/roadmap_source_span_exhaustiveness_boundary.json` now
+    records eight exhaustiveness criteria for PDF section walk,
+    figure/table/appendix matrix, application-result claim matrix, status-row
+    disposition map, span status classification, missing/partial TODO proof,
+    phase-priority map, and CI/owner signoff. It links the existing coverage
+    boundary input, sidecar refs, active TODO refs, validation-gate labels,
+    readiness labels, and explicit missing-evidence fields. The paper-manifest
+    gate now requires and validates the sidecar at the repo root.
+  - Remaining roadmap gap: the actual exhaustive PDF section walk,
+    figure/table/appendix matrix, application-result claim matrix, status-row
+    to ROADMAP disposition map, missing/partial TODO proof, non-goal decision
+    map, phase-priority map, CI source-span exhaustiveness gate, and owner
+    review signoff remain active in `docs/todo/roadmap.md`.
 - [x] Add bounded ROADMAP non-goal drift and promotion readiness matrix.
   - Spec evidence: ROADMAP non-goals are overclaim guardrails, so future
     support claims need a way to distinguish a bounded exact-phrase

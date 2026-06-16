@@ -2916,6 +2916,12 @@ Implemented:
   complete application-result claim matrix, status-row to ROADMAP disposition
   map, missing/partial TODO proof, non-goal decision map, phase-priority map,
   CI source-span exhaustiveness gate, or owner review signoff.
+- `papers/roadmap_source_span_exhaustiveness_boundary.json`: ROADMAP
+  source-span exhaustiveness sidecar with eight criteria for PDF section walk,
+  figure/table/appendix matrix, application-result claim matrix, status-row
+  disposition map, span status classification, missing/partial TODO proof,
+  phase-priority map, and CI/owner signoff. It is not evidence of an
+  exhaustive retained AlphaEvolve source-span walk.
 - `papers/roadmap_non_goal_contradiction_boundary.json`: ROADMAP non-goal
   contradiction sidecar with stable ids for the three current non-goals, nine
   constrained documentation surfaces, required safe-scope phrase checks, and

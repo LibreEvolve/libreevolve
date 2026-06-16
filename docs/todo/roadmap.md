@@ -158,17 +158,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     ROADMAP-level coverage readiness matrix for main-text sections, figures,
     tables, Appendix A, Appendix B, application-result claims, paper-status
     rows, and TODO/non-goal/phase proof.
+    `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
+    bounded eight-criterion exhaustiveness gate for PDF section walk,
+    figure/table/appendix matrix, application-result claim matrix,
+    status-row disposition map, span status classification, missing/partial
+    TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the coverage sidecar is a bounded readiness matrix, not an
-    exhaustive ROADMAP-level matrix that walks the retained AlphaEvolve source
-    PDF by section, figure, table, appendix, benchmark family, and
-    application-result claim. It does not classify each span as implemented,
-    partially implemented, missing, background-only, or non-goal, and it does
-    not prove that every missing or partial span has a linked code/paper/README
-    TODO or ROADMAP priority. There is also no detector for AlphaEvolve source
-    spans beyond the current six core anchors, or for all paper/status sidecar
-    rows, that have no roadmap disposition.
+    exhaustive ROADMAP-level matrix, and the exhaustiveness sidecar is a
+    bounded gate rather than a retained-PDF walk. There is still no matrix
+    that walks the retained AlphaEvolve source PDF by section, figure, table,
+    appendix, benchmark family, and application-result claim. It does not
+    classify each span as implemented, partially implemented, missing,
+    background-only, or non-goal, and it does not prove that every missing or
+    partial span has a linked code/paper/README TODO or ROADMAP priority.
+    There is also no detector for AlphaEvolve source spans beyond the current
+    six core anchors, or for all paper/status sidecar rows, that have no
+    roadmap disposition.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: exhaustive PDF section walk, figure/table/appendix matrix,
+    exhaustiveness sidecar: exhaustive PDF section walk, figure/table/appendix matrix,
     application-result claim matrix, status-row to ROADMAP disposition map,
     missing/partial TODO proof, non-goal decision map, phase-priority map, CI
     source-span exhaustiveness gate, and owner review signoff.

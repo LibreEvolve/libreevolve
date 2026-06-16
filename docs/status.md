@@ -1276,6 +1276,7 @@ Important limits:
   `papers/roadmap_claim_evidence_boundary.json`,
   `papers/roadmap_source_span_disposition_boundary.json`,
   `papers/roadmap_source_span_coverage_boundary.json`,
+  `papers/roadmap_source_span_exhaustiveness_boundary.json`,
   `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/roadmap_non_goal_drift_boundary.json`,
   `papers/roadmap_good_first_followups_boundary.json`,
@@ -1347,6 +1348,11 @@ Important limits:
   disposition map, missing/partial TODO proof, non-goal decision map,
   phase-priority map, CI source-span exhaustiveness gate, or owner review
   signoff.
+- ROADMAP source-span exhaustiveness evidence now records eight criteria for
+  PDF section walk, figure/table/appendix matrix, application-result claim
+  matrix, status-row disposition map, span status classification,
+  missing/partial TODO proof, phase-priority map, and CI/owner signoff. This
+  is not evidence of an exhaustive retained AlphaEvolve source-span walk.
 - ROADMAP non-goal contradiction evidence now assigns stable ids to the three
   current ROADMAP non-goals, maps nine constrained documentation surfaces,
   validates required safe-scope phrases, and records zero exact forbidden

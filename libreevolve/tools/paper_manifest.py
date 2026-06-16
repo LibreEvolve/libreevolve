@@ -215,6 +215,10 @@ from libreevolve.problems.benchmarks.roadmap_source_span_coverage_boundary impor
     roadmap_source_span_coverage_boundary_record,
     validate_roadmap_source_span_coverage_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_source_span_exhaustiveness_boundary import (
+    roadmap_source_span_exhaustiveness_boundary_record,
+    validate_roadmap_source_span_exhaustiveness_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_non_goal_contradiction_boundary import (
     roadmap_non_goal_contradiction_boundary_record,
     validate_roadmap_non_goal_contradiction_boundary,
@@ -861,6 +865,7 @@ TODO_CANONICAL_GAP_BOUNDARY_FILE = "papers/todo_canonical_gap_boundary.json"
 TODO_CANONICAL_GAP_ROLLUP_BOUNDARY_FILE = "papers/todo_canonical_gap_rollup_boundary.json"
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_FILE = "papers/roadmap_source_span_disposition_boundary.json"
 ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_FILE = "papers/roadmap_source_span_coverage_boundary.json"
+ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_FILE = "papers/roadmap_source_span_exhaustiveness_boundary.json"
 ROADMAP_NON_GOAL_CONTRADICTION_BOUNDARY_FILE = "papers/roadmap_non_goal_contradiction_boundary.json"
 ROADMAP_NON_GOAL_DRIFT_BOUNDARY_FILE = "papers/roadmap_non_goal_drift_boundary.json"
 ROADMAP_GOOD_FIRST_FOLLOWUPS_BOUNDARY_FILE = "papers/roadmap_good_first_followups_boundary.json"
@@ -1547,6 +1552,7 @@ def validate_paper_manifest(
     issues.extend(_validate_todo_canonical_gap_rollup_boundary(root_path))
     issues.extend(_validate_roadmap_source_span_disposition_boundary(root_path))
     issues.extend(_validate_roadmap_source_span_coverage_boundary(root_path))
+    issues.extend(_validate_roadmap_source_span_exhaustiveness_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_contradiction_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_drift_boundary(root_path))
     issues.extend(_validate_roadmap_good_first_followups_boundary(root_path))
@@ -4363,6 +4369,41 @@ def _validate_roadmap_source_span_coverage_boundary(root_path: Path) -> list[Pap
             f"roadmap_source_span_coverage_boundary_{issue.code}",
             issue.message,
             "roadmap_source_span_coverage",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_source_span_exhaustiveness_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = roadmap_source_span_exhaustiveness_boundary_record(root_path)
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_source_span_exhaustiveness_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_FILE} must emit "
+                        "ROADMAP source-span exhaustiveness metadata"
+                    ),
+                    "roadmap_source_span_exhaustiveness",
+                )
+            ]
+    report = validate_roadmap_source_span_exhaustiveness_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_source_span_exhaustiveness_boundary_{issue.code}",
+            issue.message,
+            "roadmap_source_span_exhaustiveness",
         )
         for issue in report.issues
     ]

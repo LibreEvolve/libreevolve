@@ -1,0 +1,294 @@
+{
+  "active_todo_ref_count": 16,
+  "boundary_status": "bounded_source_span_exhaustiveness_gate_without_pdf_span_walk",
+  "claim_boundary": "This boundary records a source-span exhaustiveness gate. It does not claim exhaustive PDF section walk, figure/table/appendix matrix, application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff.",
+  "claim_ready": false,
+  "exhaustiveness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "exhaustive PDF section walk",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "every relevant AlphaEvolve source span",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "pdf_section_walk",
+      "current_scope": "six core anchors and bounded coverage surfaces",
+      "missing_exhaustiveness": "exhaustive PDF section walk for every relevant AlphaEvolve source span",
+      "readiness_status": "bounded_surfaces_without_pdf_section_walk",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_coverage_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_disposition_boundary.json"
+        }
+      ],
+      "source_surface": "retained AlphaEvolve source PDF sections and requirement spans",
+      "validation_gate": "retained PDF section-walk exhaustiveness gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "figure/table/appendix matrix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "benchmark family",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "figure_table_appendix_matrix",
+      "current_scope": "selected figure/table/appendix sidecars without one joined matrix",
+      "missing_exhaustiveness": "figure/table/appendix matrix with source status and TODO/non-goal disposition",
+      "readiness_status": "selected_sidecars_without_joined_exhibit_matrix",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_coverage_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/implementation_evidence_map_boundary.json"
+        }
+      ],
+      "source_surface": "figures, tables, appendices, benchmark families, and appendix rows",
+      "validation_gate": "figure/table/appendix joined matrix gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "application-result claim matrix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "application-result claim",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "application_claim_matrix",
+      "current_scope": "application-context sidecars without complete claim-to-roadmap matrix",
+      "missing_exhaustiveness": "application-result claim matrix with implementation/non-goal disposition",
+      "readiness_status": "application_context_rows_without_complete_claim_matrix",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_coverage_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/status_claim_inventory.json"
+        }
+      ],
+      "source_surface": "AlphaEvolve application-result claims and named application contexts",
+      "validation_gate": "application claim disposition matrix gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "status-row to ROADMAP disposition map",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "all paper/status sidecar rows",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "status_row_disposition_map",
+      "current_scope": "53 paper-index rows with only the AlphaEvolve source row dispositioned",
+      "missing_exhaustiveness": "status-row to ROADMAP disposition map for all paper/status sidecar rows",
+      "readiness_status": "one_status_row_dispositioned",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/status_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_disposition_boundary.json"
+        }
+      ],
+      "source_surface": "paper-index status rows and paper/status sidecar rows",
+      "validation_gate": "paper status-row disposition exhaustiveness gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "implemented, partially implemented, missing, background-only, or non-goal",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "non-goal decision map",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "span_status_classification",
+      "current_scope": "separate boundary claims without one per-span classification registry",
+      "missing_exhaustiveness": "classification for each span as implemented, partial, missing, background-only, or non-goal",
+      "readiness_status": "no_joined_per_span_status_registry",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_contradiction_boundary.json"
+        }
+      ],
+      "source_surface": "source-span status labels across implementation, missing, partial, background-only, and non-goal states",
+      "validation_gate": "per-span status classification gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "missing/partial TODO proof",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "missing or partial span",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "missing_partial_todo_proof",
+      "current_scope": "separate TODO owner ledgers and canonical-gap boundaries",
+      "missing_exhaustiveness": "proof every missing or partial span has a linked TODO or explicit non-goal",
+      "readiness_status": "todo_ledgers_without_span_level_join",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_canonical_gap_rollup_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_coverage_boundary.json"
+        }
+      ],
+      "source_surface": "missing and partial source spans linked to code, README, roadmap, or papers TODOs",
+      "validation_gate": "missing/partial span TODO proof gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "phase-priority map",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "phase-priority",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "phase_priority_map",
+      "current_scope": "phase sequence boundary without span-level priority join",
+      "missing_exhaustiveness": "phase-priority map for source spans and application-result claims",
+      "readiness_status": "phase_boundary_without_span_priority_join",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_phase_sequence_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_coverage_boundary.json"
+        }
+      ],
+      "source_surface": "phase priorities for missing, partial, and non-goal source spans",
+      "validation_gate": "source-span phase-priority gate"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "CI source-span exhaustiveness gate",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner review signoff",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "ci_exhaustiveness_and_owner_signoff",
+      "current_scope": "bounded generated sidecars without CI exhaustiveness gate",
+      "missing_exhaustiveness": "CI source-span exhaustiveness gate plus owner review signoff",
+      "readiness_status": "bounded_sidecars_without_ci_exhaustiveness_gate",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_coverage_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "source_surface": "CI source-span exhaustiveness gate, undispositioned row detector, and owner signoff",
+      "validation_gate": "CI source-span exhaustiveness and owner signoff gate"
+    }
+  ],
+  "exhaustiveness_criterion_count": 8,
+  "missing_evidence": {
+    "application_result_claim_matrix": "not_recorded_locally",
+    "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
+    "exhaustive_pdf_section_walk": "not_recorded_locally",
+    "figure_table_appendix_matrix": "not_recorded_locally",
+    "missing_partial_todo_proof": "not_recorded_locally",
+    "non_goal_decision_map": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "phase_priority_map": "not_recorded_locally",
+    "status_row_to_roadmap_disposition_map": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "pdf_section_walk",
+    "figure_table_appendix_matrix",
+    "application_claim_matrix",
+    "status_row_disposition_map",
+    "missing_partial_todo_proof",
+    "non_goal_decision_map",
+    "phase_priority_map",
+    "ci_exhaustiveness_and_owner_signoff"
+  ],
+  "schema": "libreevolve.roadmap_source_span_exhaustiveness_boundary.v1",
+  "sidecar_ref_count": 16,
+  "source_core_anchor_disposition_count": 6,
+  "source_coverage_boundary_input": "papers/roadmap_source_span_coverage_boundary.json",
+  "source_coverage_surface_count": 8,
+  "source_missing_evidence_count": 9,
+  "source_paper_status_row_count": 53,
+  "source_paper_status_row_dispositioned_count": 1
+}

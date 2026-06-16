@@ -1281,6 +1281,7 @@ Important limits:
   `papers/roadmap_non_goal_drift_boundary.json`,
   `papers/roadmap_non_goal_ci_promotion_gate_boundary.json`,
   `papers/roadmap_non_goal_promotion_workflow_boundary.json`,
+  `papers/roadmap_non_goal_remediation_boundary.json`,
   `papers/roadmap_non_goal_markdown_scan_boundary.json`,
   `papers/roadmap_non_goal_plugin_docstring_boundary.json`,
   `papers/roadmap_non_goal_runtime_metadata_boundary.json`,
@@ -1370,8 +1371,8 @@ Important limits:
   contradiction remediation, and joined runtime/plugin/docs/paper scope maps.
   The runtime metadata, Markdown corpus, plugin docstring, and CI
   promotion-gate workflow-shape checks and intentional-promotion workflow are
-  recorded separately, but this is not contradiction remediation, a joined
-  scope verifier, or owner review signoff.
+  recorded separately, and contradiction-remediation reporting is recorded
+  separately, but this is not a joined scope verifier or owner review signoff.
 - ROADMAP non-goal CI promotion-gate evidence now records that GitHub Actions
   path filters cover ROADMAP/docs/papers/test/source changes, the `paper_docs`
   job runs the committed paper manifest, and the boundary verifier suite
@@ -1385,6 +1386,11 @@ Important limits:
   TODO ledgers, non-goal sidecars, and the paper-manifest gate. This is not a
   contradiction-remediation report, joined runtime/plugin/docs/paper scope
   proof, or owner-reviewed signoff.
+- ROADMAP non-goal remediation evidence now aggregates the bounded
+  documentation inventory, Markdown corpus scan, plugin docstring scan, and
+  runtime metadata scan; requires zero unresolved contradiction hits; and
+  routes future hits to TODO ownership plus claim-update surfaces. This is not
+  joined runtime/plugin/docs/paper scope proof or owner-reviewed signoff.
 - ROADMAP non-goal Markdown scan evidence now records the repository Markdown
   file inventory, stable non-goal ids, forbidden support-claim phrases,
   line-level hit records, and zero detected Markdown contradiction hits. This

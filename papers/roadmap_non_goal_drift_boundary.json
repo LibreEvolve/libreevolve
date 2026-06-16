@@ -1,11 +1,10 @@
 {
   "active_todo_ref_count": 14,
-  "boundary_status": "bounded_non_goal_drift_matrix_with_ci_gate_and_promotion_workflow",
-  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans and CI promotion-gate workflow coverage are recorded separately, and the intentional promotion workflow is recorded separately. This boundary does not claim owner-reviewed remediation readiness, joined runtime/plugin/docs/paper scope proof, or owner review signoff.",
+  "boundary_status": "bounded_non_goal_drift_matrix_with_remediation_without_scope_join",
+  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans and CI promotion-gate workflow coverage are recorded separately, and the intentional promotion workflow is recorded separately. The contradiction-remediation report is recorded separately. This boundary does not claim joined runtime/plugin/docs/paper scope proof or owner review signoff.",
   "claim_ready": false,
   "criterion_count": 7,
   "missing_evidence": {
-    "claim_surface_remediation": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
     "runtime_plugin_scope_join": "not_recorded_locally"
   },
@@ -209,7 +208,7 @@
       "criterion_id": "claim_surface_remediation",
       "current_scope": "zero exact forbidden phrase matches in selected docs",
       "missing_readiness": "remediation report that links each contradiction to an owner, TODO, and claim update",
-      "readiness_status": "no_claim_remediation_report",
+      "readiness_status": "remediation_report_recorded_without_scope_join",
       "sidecar_refs": [
         {
           "exists": true,
@@ -218,6 +217,10 @@
         {
           "exists": true,
           "path": "papers/roadmap_claim_evidence_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_remediation_boundary.json"
         }
       ],
       "validation_gate": "non-goal contradiction remediation report"
@@ -266,7 +269,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_non_goal_drift_boundary.v1",
-  "sidecar_ref_count": 19,
+  "sidecar_ref_count": 20,
   "source_constrained_surface_count": 9,
   "source_contradiction_count": 0,
   "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",

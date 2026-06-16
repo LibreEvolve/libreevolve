@@ -15770,3 +15770,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: contradiction-remediation reporting,
     runtime/plugin/docs/paper scope joins, and owner review signoff remain
     active in `docs/todo/roadmap.md`.
+- [x] Add ROADMAP non-goal contradiction remediation report.
+  - Spec evidence: non-goal guardrails need a remediation report that rejects
+    contradictory support claims instead of only detecting them.
+  - Status: `papers/roadmap_non_goal_remediation_boundary.json` now aggregates
+    the bounded documentation inventory, Markdown corpus scan, plugin
+    docstring scan, and runtime metadata scan; requires zero unresolved
+    contradiction hits; and routes future hits to TODO ownership plus
+    claim-update surfaces. The paper-manifest gate now requires and validates
+    the sidecar at the repo root.
+  - Remaining roadmap gap: runtime/plugin/docs/paper scope joins and owner
+    review signoff remain active in `docs/todo/roadmap.md`.

@@ -2935,8 +2935,8 @@ Implemented:
   gates, intentional-promotion workflow, contradiction remediation, and joined
   runtime/plugin/docs/paper scope maps. It now points to separate runtime
   metadata, Markdown corpus, plugin docstring, CI promotion-gate, and
-  intentional-promotion workflow sidecars, but it is not evidence that
-  remediation reports, scope joins, or owner review signoff are implemented.
+  intentional-promotion workflow and remediation sidecars, but it is not
+  evidence that scope joins or owner review signoff are implemented.
 - `papers/roadmap_non_goal_ci_promotion_gate_boundary.json`: ROADMAP non-goal
   CI promotion gate sidecar with committed GitHub Actions path-filter,
   paper-manifest, and boundary-test evidence for ROADMAP non-goal
@@ -2949,6 +2949,12 @@ Implemented:
   document, required claim surfaces, required non-goal sidecars, and paper
   manifest gate. It is not evidence of a contradiction-remediation report,
   joined runtime/plugin/docs/paper scope proof, or owner-reviewed signoff.
+- `papers/roadmap_non_goal_remediation_boundary.json`: ROADMAP non-goal
+  contradiction-remediation sidecar that aggregates the bounded documentation
+  inventory, Markdown corpus scan, plugin docstring scan, and runtime metadata
+  scan; requires zero unresolved contradiction hits; and routes future hits to
+  TODO ownership plus claim-update surfaces. It is not evidence of joined
+  runtime/plugin/docs/paper scope proof or owner-reviewed signoff.
 - `papers/roadmap_non_goal_markdown_scan_boundary.json`: ROADMAP non-goal
   Markdown corpus scan sidecar with the repository Markdown file inventory,
   stable non-goal ids, forbidden support-claim phrases, line-level hit records,

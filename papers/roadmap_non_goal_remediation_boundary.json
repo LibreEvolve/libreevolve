@@ -1,0 +1,94 @@
+{
+  "boundary_status": "contradiction_remediation_report_recorded_without_scope_join_or_signoff",
+  "claim_boundary": "This boundary records a non-goal contradiction-remediation report over the bounded documentation inventory, Markdown corpus scan, plugin docstring scan, and runtime metadata scan. It rejects contradictory support claims by requiring zero unresolved hits and routes any future hit to TODO ownership and claim-update surfaces. It does not claim joined runtime/plugin/docs/paper scope proof or owner review signoff.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "owner_review_signoff": "not_recorded_locally",
+    "runtime_plugin_scope_join": "not_recorded_locally"
+  },
+  "remediation_route_count": 3,
+  "remediation_route_records": [
+    {
+      "claim_update_surfaces": [
+        "ROADMAP.md",
+        "README.md",
+        "docs/status.md"
+      ],
+      "owner_todo_exists": true,
+      "owner_todo_path": "docs/todo/roadmap.md",
+      "owner_todo_required_phrase": "contradiction-remediation report",
+      "owner_todo_required_phrase_present": true,
+      "route_id": "normal_local_use_no_service_database_required"
+    },
+    {
+      "claim_update_surfaces": [
+        "README.md",
+        "docs/run-artifacts.md",
+        "docs/status.md"
+      ],
+      "owner_todo_exists": true,
+      "owner_todo_path": "docs/todo/readme.md",
+      "owner_todo_required_phrase": "implementation-evidence mapping",
+      "owner_todo_required_phrase_present": true,
+      "route_id": "no_arbitrary_language_codebase_support_before_runners"
+    },
+    {
+      "claim_update_surfaces": [
+        "README.md",
+        "docs/architecture.md",
+        "docs/status.md",
+        "papers/README.md"
+      ],
+      "owner_todo_exists": true,
+      "owner_todo_path": "docs/todo/papers.md",
+      "owner_todo_required_phrase": "paper-facing classification",
+      "owner_todo_required_phrase_present": true,
+      "route_id": "paper_inspired_plugins_not_faithful_implementations"
+    }
+  ],
+  "required_evidence_fields": [
+    "bounded_contradiction_inventory",
+    "markdown_corpus_contradiction_scan",
+    "plugin_docstring_overclaim_scan",
+    "runtime_metadata_contradiction_scan",
+    "future_hit_todo_routing",
+    "claim_update_routing",
+    "runtime_plugin_scope_join",
+    "owner_review_signoff"
+  ],
+  "schema": "libreevolve.roadmap_non_goal_remediation_boundary.v1",
+  "source_scan_count": 4,
+  "source_scan_records": [
+    {
+      "contradiction_count": 0,
+      "scan_id": "bounded_documentation_inventory",
+      "sidecar": "papers/roadmap_non_goal_contradiction_boundary.json",
+      "unresolved_record_count": 0
+    },
+    {
+      "contradiction_count": 0,
+      "scan_id": "markdown_corpus_scan",
+      "sidecar": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+      "unresolved_record_count": 0
+    },
+    {
+      "contradiction_count": 0,
+      "scan_id": "plugin_docstring_scan",
+      "sidecar": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+      "unresolved_record_count": 0
+    },
+    {
+      "contradiction_count": 0,
+      "scan_id": "runtime_metadata_scan",
+      "sidecar": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+      "unresolved_record_count": 0
+    }
+  ],
+  "source_sidecars": [
+    "papers/roadmap_non_goal_contradiction_boundary.json",
+    "papers/roadmap_non_goal_markdown_scan_boundary.json",
+    "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+    "papers/roadmap_non_goal_runtime_metadata_boundary.json"
+  ],
+  "unresolved_contradiction_count": 0
+}

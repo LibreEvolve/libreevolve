@@ -15595,3 +15595,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     sandbox, replayable environment/release bundle, benchmark-sufficiency
     signoff, stale-readiness detector, and owner review signoff remain active
     in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP multi-objective readiness matrix.
+  - Spec evidence: multi-objective search claims require more than
+    scalar-primary archive overlays, metric reports, prompt-visible diversity,
+    descriptor snapshots, and run-local duplicate caches.
+  - Status: `papers/roadmap_multi_objective_readiness_boundary.json` now
+    records eight readiness criteria for primary archive policy, durable
+    metric storage, sampling/metric policy, descriptor authority and rebin
+    semantics, duplicate-work memory semantics, metric drill-down/CLI policy,
+    equal-budget benchmark evidence, and stale readiness/owner signoff. It
+    links the existing multi-objective search boundary input, sidecar refs,
+    active TODO refs, validation-gate labels, readiness labels, and explicit
+    missing-evidence fields. The paper-manifest gate now requires and
+    validates the sidecar at the repo root.
+  - Remaining roadmap gap: the actual primary Pareto/frontier archive
+    replacement, durable cross-run metric database, calibrated
+    parent/inspiration balance, stable behavior descriptor contracts,
+    learned/evaluator descriptor models, tested archive rebin semantics,
+    durable duplicate-work memory, semantic near-duplicate detection,
+    metric-specific CLI drill-downs, equal-budget multi-objective benchmarks,
+    stale-readiness detector, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

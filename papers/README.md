@@ -3072,6 +3072,13 @@ Implemented:
   memory, semantic near-duplicate detection, metric-specific CLI drill-downs,
   equal-budget multi-objective benchmarks, stale-readiness detector, or owner
   review signoff.
+- `papers/roadmap_multi_objective_readiness_boundary.json`: ROADMAP
+  multi-objective readiness sidecar with eight criteria for primary archive
+  policy, durable metric storage, sampling/metric policy, descriptor
+  authority and rebin semantics, duplicate-work memory semantics, metric
+  drill-down/CLI policy, equal-budget benchmark evidence, and stale
+  readiness/owner signoff. It is not evidence that those multi-objective
+  readiness mechanisms are implemented.
 - `papers/roadmap_candidate_workspace_fidelity_boundary.json`: ROADMAP
   candidate-workspace fidelity sidecar with ten criteria for language/build
   runner support, candidate abstraction API, marker/materialization policy,

@@ -624,21 +624,27 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     optimization, durable resurfacing indexes, durable duplicate-work memory,
     behavior descriptor models, MAP-Elites parity, and benchmark prompt-policy
     evidence.
+    `papers/roadmap_multi_objective_readiness_boundary.json` now records a
+    bounded eight-criterion readiness matrix for primary archive policy,
+    durable metric storage, sampling/metric policy, descriptor authority and
+    rebin semantics, duplicate-work memory semantics, metric drill-down/CLI
+    policy, equal-budget benchmark evidence, and stale readiness/owner signoff.
   - Current gap: there is no section-level multi-objective readiness rubric,
     archive-policy matrix, descriptor/memory capability checklist, or
     stale-readiness detector tying those pieces together, so bounded overlays,
     prompt-visible diversity reports, or run-local duplicate caches could be
-    mistaken for full multi-objective search parity.
+    mistaken for full multi-objective search parity. The sidecars are bounded
+    search/readiness maps, not a full multi-objective search gate.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: primary Pareto/frontier archive replacement, durable cross-run
-    metric database, calibrated parent/inspiration balance, stable behavior
-    descriptor contracts, learned or evaluator-provided descriptor models,
-    tested archive rebin semantics, durable duplicate-work memory, semantic
-    near-duplicate detection, metric-specific CLI drill-downs, equal-budget
-    multi-objective benchmarks, stale-readiness detector, and owner review
-    signoff; then validate README, ROADMAP, papers, archive reports, and
-    runtime metadata against implying full multi-objective readiness before
-    those criteria are satisfied.
+    readiness sidecar: primary Pareto/frontier archive replacement, durable
+    cross-run metric database, calibrated parent/inspiration balance, stable
+    behavior descriptor contracts, learned or evaluator-provided descriptor
+    models, tested archive rebin semantics, durable duplicate-work memory,
+    semantic near-duplicate detection, metric-specific CLI drill-downs,
+    equal-budget multi-objective benchmarks, stale-readiness detector, and
+    owner review signoff; then validate README, ROADMAP, papers, archive
+    reports, and runtime metadata against implying full multi-objective
+    readiness before those criteria are satisfied.
 
 - [ ] Add ROADMAP candidate-workspace fidelity readiness criteria.
   - Spec evidence: the `1. Finish candidate workspace fidelity` section is the

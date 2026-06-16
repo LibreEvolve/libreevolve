@@ -1290,6 +1290,7 @@ Important limits:
   `papers/roadmap_evaluation_cascade_readiness_boundary.json`,
   `papers/roadmap_candidate_workspace_fidelity_boundary.json`,
   `papers/roadmap_multi_objective_search_boundary.json`,
+  `papers/roadmap_multi_objective_readiness_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP claim-evidence mapping now records six claim surfaces for the
@@ -1496,6 +1497,12 @@ Important limits:
   memory, semantic near-duplicate detection, metric-specific CLI drill-downs,
   equal-budget multi-objective benchmarks, stale-readiness detector, or owner
   review signoff.
+- ROADMAP multi-objective readiness evidence now records eight criteria for
+  primary archive policy, durable metric storage, sampling/metric policy,
+  descriptor authority and rebin semantics, duplicate-work memory semantics,
+  metric drill-down/CLI policy, equal-budget benchmark evidence, and stale
+  readiness/owner signoff. This is not an implemented multi-objective search
+  gate or proof of full multi-objective readiness.
 - ROADMAP operational-maturity evidence now records six section-level criteria
   with risk classes, current sidecar refs, active TODO refs, and
   acceptance-gate labels. This is not a global acceptance threshold, unified

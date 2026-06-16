@@ -2892,6 +2892,13 @@ Implemented:
   It is not semantic module-role verification, new top-level detection, new
   major-doc detection, AlphaEvolve-parity placeholder classification, or
   owner review signoff.
+- `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
+  sidecar. It records the no-provider README command markers, focused smoke-
+  test markers, expected `readme_smoke_sorting` run name, sorting example
+  path, `max_llm_calls` stop reason, `Best fitness` output, and provider-
+  preflight skip policy. The focused test executes the documented no-provider
+  path, but this is not CI job integration, cross-platform shell transcript
+  retention, fresh-checkout transcript retention, or owner review signoff.
 - `papers/readme_install_smoke_boundary.json`: README install-smoke sidecar.
   It records the README editable-install command, Python launcher guidance,
   pyproject Python/dev-extra markers, GitHub Actions Python 3.12 setup,

@@ -411,15 +411,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and `py -3.12 -m libreevolve show runs/readme_smoke_sorting` both
     completed locally. The run stopped with `stop_reason: max_llm_calls`,
     selected an archive-retained valid seed program, and reported
-    `Best fitness: 1.000000`.
-  - Current gap: the successful run artifacts live under gitignored `runs/`;
-    there is no committed README quick-start smoke transcript, sidecar, or CI
-    check proving that the exact README commands keep working across future
-    changes.
-  - Required result: add a committed smoke-proof artifact or CI job that runs
-    the README no-provider quick-start path, validates expected stop reason and
-    `show` output fields, and updates README/TODO evidence when the command
-    changes.
+    `Best fitness: 1.000000`. `papers/readme_quick_start_smoke_boundary.json`
+    now records the README command markers, expected run name/problem path,
+    `max_llm_calls` stop reason, `Best fitness` output, provider-preflight
+    skip policy, and focused smoke-test markers. The focused test executes the
+    documented no-provider path and validates the manifest plus `show` output.
+  - Current gap: the successful run artifacts still live under gitignored
+    `runs/`, and the focused smoke test is not yet wired into a CI job or
+    retained as a cross-platform/fresh-checkout shell transcript.
+  - Required result: extend the committed smoke proof into CI or transcript
+    evidence that runs the README no-provider quick-start path in a fresh
+    checkout, validates expected stop reason and `show` output fields, and
+    updates README/TODO evidence when the command changes.
 
 - [ ] Add provider-backed README example smoke matrix.
   - Spec evidence: AlphaEvolve depends on a managed model mix and provider

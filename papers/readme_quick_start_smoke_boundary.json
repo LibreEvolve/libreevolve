@@ -1,0 +1,116 @@
+{
+  "schema": "libreevolve.readme_quick_start_smoke_boundary.v1",
+  "boundary_status": "readme_quick_start_smoke_test_recorded_without_ci_matrix",
+  "claim_ready": false,
+  "readme_path": "README.md",
+  "smoke_test_path": "tests/test_readme_quick_start_smoke_boundary.py",
+  "run_command": "py -3.12 -m libreevolve run libreevolve/problems/examples/sorting --run-name readme_smoke_sorting --max-llm-calls 0 --overwrite",
+  "show_command": "py -3.12 -m libreevolve show runs/readme_smoke_sorting",
+  "readme_marker_count": 6,
+  "missing_readme_marker_count": 0,
+  "missing_readme_marker_records": [],
+  "readme_marker_records": [
+    {
+      "record_kind": "readme_quick_start",
+      "path": "README.md",
+      "required_marker": "## Quick Start",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "readme_quick_start",
+      "path": "README.md",
+      "required_marker": "Verify the CLI and artifact writer without making provider calls",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "readme_quick_start",
+      "path": "README.md",
+      "required_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/sorting --run-name readme_smoke_sorting --max-llm-calls 0 --overwrite",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "readme_quick_start",
+      "path": "README.md",
+      "required_marker": "py -3.12 -m libreevolve show runs/readme_smoke_sorting",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "readme_quick_start",
+      "path": "README.md",
+      "required_marker": "That evaluates the bundled sorting seed",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "readme_quick_start",
+      "path": "README.md",
+      "required_marker": "It is a smoke check, not an evolution run.",
+      "marker_status": "marker_present"
+    }
+  ],
+  "test_marker_count": 6,
+  "missing_test_marker_count": 0,
+  "missing_test_marker_records": [],
+  "test_marker_records": [
+    {
+      "record_kind": "focused_smoke_test",
+      "path": "tests/test_readme_quick_start_smoke_boundary.py",
+      "required_marker": "test_readme_quick_start_smoke_executes_documented_no_provider_path",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "focused_smoke_test",
+      "path": "tests/test_readme_quick_start_smoke_boundary.py",
+      "required_marker": "readme_smoke_sorting",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "focused_smoke_test",
+      "path": "tests/test_readme_quick_start_smoke_boundary.py",
+      "required_marker": "max_llm_calls",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "focused_smoke_test",
+      "path": "tests/test_readme_quick_start_smoke_boundary.py",
+      "required_marker": "stop_reason",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "focused_smoke_test",
+      "path": "tests/test_readme_quick_start_smoke_boundary.py",
+      "required_marker": "max_llm_calls",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "focused_smoke_test",
+      "path": "tests/test_readme_quick_start_smoke_boundary.py",
+      "required_marker": "Best fitness:   1.000000",
+      "marker_status": "marker_present"
+    }
+  ],
+  "expected_run_name": "readme_smoke_sorting",
+  "expected_problem_path": "libreevolve/problems/examples/sorting",
+  "expected_stop_reason": "max_llm_calls",
+  "expected_best_fitness": "1.000000",
+  "provider_call_policy": "max_llm_calls_zero_before_provider_construction",
+  "required_evidence_fields": [
+    "readme_quick_start_command_markers",
+    "focused_smoke_test_file",
+    "run_command_exit_code_check",
+    "show_command_exit_code_check",
+    "manifest_stop_reason_check",
+    "show_best_fitness_check",
+    "provider_preflight_skip_check",
+    "ci_job_integration",
+    "cross_platform_shell_transcript",
+    "fresh_checkout_transcript",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "ci_job_integration": "not_recorded_locally",
+    "cross_platform_shell_transcript": "not_recorded_locally",
+    "fresh_checkout_transcript": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the README Quick Start no-provider command markers, focused smoke-test file markers, expected run name, problem path, max_llm_calls stop reason, show-output best fitness, and provider-preflight skip policy. It does not claim CI job integration, a cross-platform shell transcript, fresh-checkout transcript retention, or owner review signoff."
+}

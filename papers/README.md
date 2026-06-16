@@ -2964,6 +2964,19 @@ Implemented:
   contracts, robust automated environment fixtures, OS/container resource
   sandboxing, replayable environment/release bundles, benchmark-sufficiency
   signoff, stale-readiness detector, or owner review signoff.
+- `papers/roadmap_multi_objective_search_boundary.json`: ROADMAP
+  multi-objective search sidecar with eight criteria for paper metric bundles,
+  objective-archive policy, metric-diverse sampling balance, duplicate-work
+  memory, descriptor authority, MAP-Elites illumination, metric-specific
+  drill-downs, and benchmark comparison evidence, with current scope,
+  missing-readiness, sidecar-ref, active-TODO, validation-gate, and readiness
+  labels. It is not evidence of primary Pareto/frontier archive replacement,
+  durable cross-run metric databases, calibrated parent/inspiration balance,
+  stable behavior descriptor contracts, learned or evaluator-provided
+  descriptor models, tested archive rebin semantics, durable duplicate-work
+  memory, semantic near-duplicate detection, metric-specific CLI drill-downs,
+  equal-budget multi-objective benchmarks, stale-readiness detector, or owner
+  review signoff.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

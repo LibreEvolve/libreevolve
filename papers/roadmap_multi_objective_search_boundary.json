@@ -1,0 +1,296 @@
+{
+  "active_todo_ref_count": 16,
+  "boundary_status": "bounded_multi_objective_search_matrix_without_primary_archive_readiness",
+  "claim_boundary": "This boundary records a ROADMAP-level multi-objective search criteria map for metric bundles, objective-archive policy, metric-diverse sampling, duplicate-work memory, descriptor authority, MAP-Elites illumination, metric-specific drill-downs, and benchmark comparison evidence. It does not claim primary Pareto/frontier archive replacement, durable cross-run metric databases, calibrated parent/inspiration balance, stable behavior descriptor contracts, learned or evaluator-provided descriptor models, tested archive rebin semantics, durable duplicate-work memory, semantic near-duplicate detection, metric-specific CLI drill-downs, equal-budget multi-objective benchmarks, or owner review signoff.",
+  "claim_ready": false,
+  "criterion_count": 8,
+  "criterion_records": [
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "multi-objective",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "multi-objective diagnostic history bundle",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "paper_metric_bundles",
+      "current_scope": "selected paper metric reports without persisted benchmark bundles",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/benchmark_coverage_inventory.json"
+        }
+      ],
+      "missing_readiness": "persisted benchmark bundles and generated CSV/JSON artifacts",
+      "readiness_status": "report_rows_without_bundle_artifacts",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "persisted benchmark bundles and generated CSV/JSON artifacts",
+      "search_surface": "cross-run paper metric reports",
+      "validation_gate": "persisted benchmark bundle and artifact export evidence"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote multi-objective overlays to primary archive optimization.",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Pareto/frontier archive replacement and durable",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "objective_archive_policy",
+      "current_scope": "scalar primary MAP-Elites grid plus bounded Pareto/frontier and metric-cell retained overlays",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/objective_archive_boundary.json"
+        }
+      ],
+      "missing_readiness": "Pareto/frontier primary replacement or durable metric-specific optimization",
+      "readiness_status": "diagnostic_retained_overlays_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "first-class multi-objective policy",
+      "search_surface": "archive ranking and retained objective overlays",
+      "validation_gate": "primary Pareto/frontier archive policy or equivalent tested policy"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "runtime.history.metric_diverse_inspiration_report",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "runtime.history.metric_diverse_inspiration_report",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "metric_diverse_sampling_balance",
+      "current_scope": "current-run strategy counts and prompt-visible metric-niche evidence",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/metric_diverse_prompt_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/sampling_balance_boundary.json"
+        }
+      ],
+      "missing_readiness": "calibrated balance policy, fallback provenance, repetition tables, and equal-budget strategy comparisons",
+      "readiness_status": "current_run_counts_and_prompt_visibility_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "runtime.history.metric_diverse_inspiration_report",
+      "search_surface": "parent/inspiration sampling and metric-diverse prompt evidence",
+      "validation_gate": "calibrated parent/inspiration balance and equal-budget comparisons"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend run-local duplicate-work cache into durable source/workspace",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Extend run-local duplicate-work cache into durable paper-visible memory.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "duplicate_work_memory",
+      "current_scope": "run-local exact workspace/evaluator-contract cache and no-op cache-hit events",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/duplicate_work_policy_boundary.json"
+        }
+      ],
+      "missing_readiness": "durable cross-run cache, resume replay, invalidation/migration, stochastic re-evaluation, and semantic near-duplicate detection",
+      "readiness_status": "run_local_exact_cache_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "AlphaEvolve-grade duplicate-work memory",
+      "search_surface": "workspace hashes, evaluator cache, and duplicate-work memory",
+      "validation_gate": "durable duplicate-work and near-duplicate memory"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote MAP-Elites descriptor modeling beyond insertion-time TF-IDF",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Stable behavior descriptor models and archive rebin semantics.",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "descriptor_authority",
+      "current_scope": "insertion-time TF-IDF/default axes or configured numeric axes with false readiness flags",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/map_elites_descriptor_boundary.json"
+        }
+      ],
+      "missing_readiness": "stable task descriptors, learned/evaluator models, descriptor training inputs, and tested rebin semantics",
+      "readiness_status": "insertion_time_descriptor_snapshot_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "evaluator-provided behavior descriptors",
+      "search_surface": "MAP-Elites descriptor axes and descriptor model snapshots",
+      "validation_gate": "stable descriptor contract and rebin/snapshot compatibility"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "feature-descriptor schema",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "MAP-Elites illumination",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "map_elites_illumination",
+      "current_scope": "local MAP-Elites archive with source-specific illumination absence boundary",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/map_elites_illumination_boundary.json"
+        }
+      ],
+      "missing_readiness": "explicit b(x)/f(x), P/X map exports, illumination metrics, visualizations, lineage artifacts, and paper-domain reproductions",
+      "readiness_status": "local_archive_without_illumination_exports",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "MAP-Elites illumination boundary",
+      "search_surface": "quality-diversity map exports and illumination evidence",
+      "validation_gate": "paper-visible illumination map and descriptor/performance contracts"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "ProgramDatabase.resurface_candidates(target_metric=...)",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "multi-objective diagnostic history bundle",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "metric_specific_drilldowns",
+      "current_scope": "selected-row show summaries and manifest-level metric archive summaries",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/objective_archive_boundary.json"
+        }
+      ],
+      "missing_readiness": "metric-specific CLI/report drill-downs and durable query surfaces",
+      "readiness_status": "selected_row_summary_only",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "CLI/report drill-downs for metric-specific archives",
+      "search_surface": "CLI and runtime reports for metric-specific archives",
+      "validation_gate": "metric-specific drill-down commands and reports"
+    },
+    {
+      "active_todo_ref_count": 2,
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "equal-budget comparisons",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "equal-budget comparison",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "benchmark_comparison_evidence",
+      "current_scope": "boundary records without equal-budget multi-objective benchmark curves",
+      "current_sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/metric_diverse_prompt_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/objective_archive_boundary.json"
+        }
+      ],
+      "missing_readiness": "scalar-only baselines, single-metric baselines, equal-budget comparisons, and benchmark prompt-policy enforcement",
+      "readiness_status": "no_equal_budget_multi_objective_benchmarks",
+      "roadmap_phrase_present": true,
+      "roadmap_required_phrase": "equal-budget comparison reports",
+      "search_surface": "multi-objective search benchmark comparisons",
+      "validation_gate": "equal-budget multi-objective benchmark comparisons"
+    }
+  ],
+  "missing_evidence": {
+    "calibrated_parent_inspiration_balance": "not_recorded_locally",
+    "durable_cross_run_metric_database": "not_recorded_locally",
+    "durable_duplicate_work_memory": "not_recorded_locally",
+    "equal_budget_multi_objective_benchmarks": "not_recorded_locally",
+    "learned_or_evaluator_descriptor_models": "not_recorded_locally",
+    "metric_specific_cli_drilldowns": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "primary_pareto_frontier_archive_replacement": "not_recorded_locally",
+    "semantic_near_duplicate_detection": "not_recorded_locally",
+    "stable_behavior_descriptor_contracts": "not_recorded_locally",
+    "tested_archive_rebin_semantics": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "criterion_records",
+    "roadmap_section_presence",
+    "primary_archive_policy_matrix",
+    "metric_normalization_policy",
+    "pareto_frontier_replacement_policy",
+    "durable_cross_run_storage_policy",
+    "parent_inspiration_balance_policy",
+    "descriptor_authority_policy",
+    "duplicate_work_memory_policy",
+    "metric_drilldown_report_policy",
+    "benchmark_comparison_policy",
+    "stale_readiness_detector"
+  ],
+  "roadmap_heading": "### 2. Strengthen multi-objective search",
+  "roadmap_heading_present": true,
+  "schema": "libreevolve.roadmap_multi_objective_search_boundary.v1",
+  "sidecar_ref_count": 10
+}

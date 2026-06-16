@@ -15313,3 +15313,25 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     sandbox, replayable environment/release bundle, benchmark-sufficiency
     signoff, stale-readiness detector, and owner review signoff remain active
     in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP multi-objective search readiness matrix.
+  - Spec evidence: AlphaEvolve multi-objective search readiness requires a
+    coherent archive policy, metric normalization, Pareto/frontier support,
+    durable metric storage, sampling-balance evidence, descriptor authority,
+    duplicate-work memory, metric drill-downs, and benchmark comparisons rather
+    than bounded diagnostic overlays alone.
+  - Status: `papers/roadmap_multi_objective_search_boundary.json` now records
+    eight criteria for paper metric bundles, objective-archive policy,
+    metric-diverse sampling balance, duplicate-work memory, descriptor
+    authority, MAP-Elites illumination, metric-specific drill-downs, and
+    benchmark comparison evidence, with current scope, missing-readiness,
+    sidecar-ref, active-TODO, validation-gate, and readiness labels. The
+    paper-manifest gate now requires and validates the sidecar at the repo
+    root.
+  - Remaining roadmap gap: primary Pareto/frontier archive replacement,
+    durable cross-run metric database, calibrated parent/inspiration balance,
+    stable behavior descriptor contracts, learned or evaluator-provided
+    descriptor models, tested archive rebin semantics, durable duplicate-work
+    memory, semantic near-duplicate detection, metric-specific CLI
+    drill-downs, equal-budget multi-objective benchmarks, stale-readiness
+    detector, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.

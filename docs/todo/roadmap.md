@@ -504,7 +504,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     archive objective-vector summaries, manifest-level metric archive
     summaries, and sidecars for metric-diverse prompts, sampling balance,
     duplicate-work policy, descriptor readiness, MAP-Elites illumination, and
-    objective-archive boundaries. Active code and paper TODOs already track
+    objective-archive boundaries.
+    `papers/roadmap_multi_objective_search_boundary.json` now records a
+    bounded eight-criterion ROADMAP matrix for paper metric bundles,
+    objective-archive policy, metric-diverse sampling balance, duplicate-work
+    memory, descriptor authority, MAP-Elites illumination, metric-specific
+    drill-downs, and benchmark comparison evidence. Active code and paper
+    TODOs already track
     primary Pareto/frontier archive replacement, durable metric-specific
     optimization, durable resurfacing indexes, durable duplicate-work memory,
     behavior descriptor models, MAP-Elites parity, and benchmark prompt-policy
@@ -514,15 +520,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     stale-readiness detector tying those pieces together, so bounded overlays,
     prompt-visible diversity reports, or run-local duplicate caches could be
     mistaken for full multi-objective search parity.
-  - Required result: add ROADMAP multi-objective criteria that classify each
-    objective surface by primary/archive policy, metric normalization,
-    Pareto/frontier support, durable cross-run storage, parent/inspiration
-    balance evidence, descriptor authority, duplicate-work memory scope,
-    metric-specific CLI/report drill-downs, benchmark comparison evidence, and
-    overclaim status; map each criterion to code/tests/runtime
-    artifacts/sidecars/TODOs; and validate README, ROADMAP, papers, archive
-    reports, and runtime metadata against implying full multi-objective
-    readiness before the matrix is satisfied.
+  - Required result: implement the missing readiness fields recorded by the
+    sidecar: primary Pareto/frontier archive replacement, durable cross-run
+    metric database, calibrated parent/inspiration balance, stable behavior
+    descriptor contracts, learned or evaluator-provided descriptor models,
+    tested archive rebin semantics, durable duplicate-work memory, semantic
+    near-duplicate detection, metric-specific CLI drill-downs, equal-budget
+    multi-objective benchmarks, stale-readiness detector, and owner review
+    signoff; then validate README, ROADMAP, papers, archive reports, and
+    runtime metadata against implying full multi-objective readiness before
+    those criteria are satisfied.
 
 - [ ] Add ROADMAP candidate-workspace fidelity readiness criteria.
   - Spec evidence: the `1. Finish candidate workspace fidelity` section is the

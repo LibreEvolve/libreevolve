@@ -1270,6 +1270,7 @@ Important limits:
   those boundaries are tracked by
   `papers/todo_ledger_ownership_boundary.json`,
   `papers/todo_canonical_gap_boundary.json`,
+  `papers/todo_canonical_gap_rollup_boundary.json`,
   `papers/roadmap_readiness_boundary.json`,
   `papers/roadmap_readiness_publication_boundary.json`,
   `papers/roadmap_claim_evidence_boundary.json`,
@@ -1323,6 +1324,12 @@ Important limits:
   rollup rules, semantic duplicate detection, stale completed duplicate
   detection, orphaned derivative detection, raw-count inflation reporting,
   canonical gap completion percentages, or owner review signoff.
+- TODO canonical-gap rollup evidence now records eight criteria for canonical
+  gap registry, canonical owner policy, derivative relationships, source and
+  implementation evidence links, cross-document rollup policy,
+  duplicate/orphan detection, canonical completion reporting, and
+  owner-reviewed publication scoping. This is not evidence that raw checklist
+  completion is canonical underlying-gap completion.
 - ROADMAP source-span disposition evidence currently maps the six core
   AlphaEvolve anchors from `papers/implementation_evidence_map_boundary.json`
   to ROADMAP section ids, phase buckets, sidecars, and TODO links, and records

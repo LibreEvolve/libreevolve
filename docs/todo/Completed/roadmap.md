@@ -15417,6 +15417,26 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     derivative detection, canonical gap completion percent, raw-count
     inflation report, and owner review signoff remain active in
     `docs/todo/roadmap.md`.
+- [x] Add bounded TODO canonical-gap rollup publication gate.
+  - Spec evidence: raw checklist percentages can overcount one AlphaEvolve
+    requirement when code, ROADMAP, README, and papers TODOs deliberately
+    describe different facets of the same missing capability.
+  - Status: `papers/todo_canonical_gap_rollup_boundary.json` now records eight
+    rollup criteria for canonical gap registry, canonical owner policy,
+    derivative relationships, source and implementation evidence links,
+    cross-document rollup policy, duplicate/orphan detection, canonical
+    completion reporting, and owner-reviewed publication scoping. It links the
+    existing canonical-gap boundary input, sidecar refs, active TODO refs,
+    validation-gate labels, readiness labels, and explicit missing-evidence
+    fields. The paper-manifest gate now requires and validates the sidecar at
+    the repo root.
+  - Remaining roadmap gap: the actual canonical gap ids, canonical owner
+    assignments, derivative documentation relationships, source/paper anchor
+    mappings, implementation evidence links, cross-document rollup rules,
+    semantic duplicate detection, stale completed duplicate detection,
+    orphaned derivative detection, canonical gap completion percent,
+    raw-count inflation report, and owner review signoff remain active in
+    `docs/todo/roadmap.md`.
 - [x] Add bounded ROADMAP AlphaEvolve source-span coverage matrix.
   - Spec evidence: bringing LibreEvolve toward AlphaEvolve requires the
     ROADMAP to account for paper sections, figures, tables, appendices,

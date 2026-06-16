@@ -2890,6 +2890,13 @@ Implemented:
   duplicate detection, stale completed duplicate detection, orphaned
   derivative detection, raw-count inflation reporting, canonical gap
   completion percentages, or owner review signoff.
+- `papers/todo_canonical_gap_rollup_boundary.json`: TODO canonical-gap rollup
+  sidecar with eight criteria for canonical gap registry, canonical owner
+  policy, derivative relationships, source and implementation evidence links,
+  cross-document rollup policy, duplicate/orphan detection, canonical
+  completion reporting, and owner-reviewed publication scoping. It is not
+  evidence that raw checklist completion is canonical underlying-gap
+  completion.
 - `papers/roadmap_source_span_disposition_boundary.json`: ROADMAP source-span
   disposition sidecar for the six core AlphaEvolve anchors already present in
   `papers/implementation_evidence_map_boundary.json`. It records source refs,

@@ -346,7 +346,7 @@
         },
         {
           "ledger_kind": "completed",
-          "line_start": 15596,
+          "line_start": 15616,
           "normalized_title": "add bounded roadmap evaluation cascade readiness matrix",
           "owner_id": "roadmap",
           "path": "docs/todo/Completed/roadmap.md",
@@ -3631,19 +3631,19 @@
       "active_ledger_completed_marker_count": 0,
       "active_ledger_exists": true,
       "active_path": "docs/todo/roadmap.md",
-      "completed_count": 1185,
+      "completed_count": 1186,
       "completed_ledger_active_marker_count": 0,
       "completed_ledger_exists": true,
       "completed_path": "docs/todo/Completed/roadmap.md",
       "owner_id": "roadmap",
       "owner_scope": "planning_priority_and_phase_evidence",
-      "total_count": 1201
+      "total_count": 1202
     }
   ],
   "raw_todo_ledger_active_count": 506,
-  "raw_todo_ledger_completed_count": 4659,
-  "raw_todo_ledger_completion_percent": 90.203,
-  "raw_todo_ledger_total_count": 5165,
+  "raw_todo_ledger_completed_count": 4660,
+  "raw_todo_ledger_completion_percent": 90.205,
+  "raw_todo_ledger_total_count": 5166,
   "required_evidence_fields": [
     "ledger_owner_inventory",
     "active_completed_marker_policy",

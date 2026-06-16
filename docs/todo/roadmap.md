@@ -109,9 +109,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     and exact duplicate-title groups, with sidecar refs, active TODO refs,
     validation-gate labels, readiness labels, and explicit missing rollup
     fields.
+    `papers/todo_canonical_gap_rollup_boundary.json` now records a bounded
+    eight-criterion rollup/publication gate for canonical gap registry,
+    canonical owner policy, derivative relationships, source and
+    implementation evidence links, cross-document rollup policy,
+    duplicate/orphan detection, canonical completion reporting, and
+    owner-reviewed publication scoping.
   - Current gap: the canonical-gap sidecar is a bounded readiness matrix, not a
-    canonical underlying-gap registry. There is still no canonical
-    underlying-gap id, duplicate/derivative relationship registry,
+    canonical underlying-gap registry, and the rollup sidecar is a bounded
+    publication gate rather than a canonical completion model. There is still
+    no canonical underlying-gap id, duplicate/derivative relationship registry,
     consolidation report, semantic duplicate detector, or stale-duplicate
     detector across active and completed TODO ledgers. A newly identified
     problem can be counted multiple times, a completed document-specific TODO
@@ -119,7 +126,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     can inflate the denominator without proving that a distinct AlphaEvolve
     requirement was discovered.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: canonical gap ids, canonical owner assignments, derivative
+    rollup sidecar: canonical gap ids, canonical owner assignments, derivative
     documentation relationships, source/paper anchor mapping, implementation
     evidence links, cross-document rollup rules, semantic duplicate detection,
     stale completed duplicate detection, orphaned derivative detection,

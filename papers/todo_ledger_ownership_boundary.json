@@ -6,7 +6,7 @@
   "claim_ready": false,
   "completed_ledger_active_marker_count": 0,
   "duplicate_detection_policy": "exact_normalized_title_only",
-  "likely_duplicate_title_group_count": 122,
+  "likely_duplicate_title_group_count": 123,
   "likely_duplicate_title_groups": [
     {
       "cross_owner": true,
@@ -324,6 +324,34 @@
           "path": "docs/todo/Completed/papers.md",
           "status": "completed",
           "title": "Add bounded prompt-visible evaluator artifact content excerpts."
+        }
+      ]
+    },
+    {
+      "cross_owner": false,
+      "normalized_title": "add bounded roadmap evaluation cascade readiness matrix",
+      "owner_ids": [
+        "roadmap"
+      ],
+      "record_count": 2,
+      "records": [
+        {
+          "ledger_kind": "completed",
+          "line_start": 15293,
+          "normalized_title": "add bounded roadmap evaluation cascade readiness matrix",
+          "owner_id": "roadmap",
+          "path": "docs/todo/Completed/roadmap.md",
+          "status": "completed",
+          "title": "Add bounded ROADMAP evaluation-cascade readiness matrix."
+        },
+        {
+          "ledger_kind": "completed",
+          "line_start": 15577,
+          "normalized_title": "add bounded roadmap evaluation cascade readiness matrix",
+          "owner_id": "roadmap",
+          "path": "docs/todo/Completed/roadmap.md",
+          "status": "completed",
+          "title": "Add bounded ROADMAP evaluation-cascade readiness matrix."
         }
       ]
     },
@@ -3603,19 +3631,19 @@
       "active_ledger_completed_marker_count": 0,
       "active_ledger_exists": true,
       "active_path": "docs/todo/roadmap.md",
-      "completed_count": 1181,
+      "completed_count": 1182,
       "completed_ledger_active_marker_count": 0,
       "completed_ledger_exists": true,
       "completed_path": "docs/todo/Completed/roadmap.md",
       "owner_id": "roadmap",
       "owner_scope": "planning_priority_and_phase_evidence",
-      "total_count": 1197
+      "total_count": 1198
     }
   ],
   "raw_todo_ledger_active_count": 506,
-  "raw_todo_ledger_completed_count": 4655,
-  "raw_todo_ledger_completion_percent": 90.196,
-  "raw_todo_ledger_total_count": 5161,
+  "raw_todo_ledger_completed_count": 4656,
+  "raw_todo_ledger_completion_percent": 90.198,
+  "raw_todo_ledger_total_count": 5162,
   "required_evidence_fields": [
     "ledger_owner_inventory",
     "active_completed_marker_policy",

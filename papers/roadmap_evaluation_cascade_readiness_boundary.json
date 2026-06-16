@@ -1,0 +1,296 @@
+{
+  "active_todo_ref_count": 16,
+  "boundary_status": "bounded_evaluation_cascade_readiness_matrix_without_alphaevolve_cascade_gate",
+  "claim_boundary": "This boundary records evaluation-cascade readiness criteria tied to the bounded evaluation-cascade matrix. It does not claim a validator-authority matrix, complete artifact schema/hash coverage, accelerator/async budget ownership, executed feedback calibration, benchmark-calibrated statistical promotion, independent oracle disagreement records, workload-specific execution contracts, robust automated environment fixtures, OS/container resource sandbox, replayable environment/release bundle, benchmark-sufficiency signoff, stale-readiness detector, or owner review signoff.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "accelerator_async_budget_ownership": "not_recorded_locally",
+    "benchmark_calibrated_statistical_promotion": "not_recorded_locally",
+    "benchmark_sufficiency_signoff": "not_recorded_locally",
+    "complete_artifact_schema_hash_coverage": "not_recorded_locally",
+    "executed_feedback_calibration": "not_recorded_locally",
+    "independent_oracle_disagreement_records": "not_recorded_locally",
+    "os_container_resource_sandbox": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "replayable_environment_release_bundle": "not_recorded_locally",
+    "robust_automated_environment_fixtures": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally",
+    "validator_authority_matrix": "not_recorded_locally",
+    "workload_specific_execution_contracts": "not_recorded_locally"
+  },
+  "readiness_criteria": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "validator-authority matrix",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "evaluator/oracle capability matrix",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "validator authority, transition records, and promotion/prune decisions",
+      "criterion_id": "validator_authority_matrix",
+      "current_scope": "bounded cascade-transition and validator-artifact sidecars",
+      "missing_readiness": "validator-authority matrix proving which evaluator can promote, reject, quarantine, or trigger further stages",
+      "readiness_status": "transition_sidecars_without_authority_matrix",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_evaluation_cascade_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/evaluation_cascade_boundary.json"
+        }
+      ],
+      "validation_gate": "validator authority and transition matrix"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "artifact-and-budget sufficiency checklist",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "accelerator/async budget ownership",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "candidate artifacts, evaluator artifacts, hashes, schemas, and budgets",
+      "criterion_id": "artifact_and_budget_sufficiency",
+      "current_scope": "candidate artifact copy-out, selected sidecar hashes, and cooperative local budgets",
+      "missing_readiness": "complete artifact schema/hash coverage and accelerator/async budget ownership",
+      "readiness_status": "bounded_artifacts_and_local_budgets_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/validator_artifact_promotion_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/expensive_evaluation_budget_boundary.json"
+        }
+      ],
+      "validation_gate": "artifact/hash schema and budget sufficiency checklist"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "executed feedback calibration",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "benchmark-calibrated statistical promotion",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "LLM feedback calibration, qualitative policy, and statistical promotion gates",
+      "criterion_id": "feedback_and_statistical_promotion",
+      "current_scope": "feedback report contracts, qualitative metadata, and configured statistical gates",
+      "missing_readiness": "executed feedback calibration and benchmark-calibrated statistical promotion",
+      "readiness_status": "declared_feedback_and_policy_gates_without_calibration",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/feedback_calibration_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/cascade_hypothesis_test_boundary.json"
+        }
+      ],
+      "validation_gate": "executed feedback calibration and benchmark-calibrated promotion"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "independent oracle disagreement records",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "workload-specific execution contracts",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "independent oracles, disagreement records, and workload-specific evaluator contracts",
+      "criterion_id": "oracle_and_workload_contracts",
+      "current_scope": "local arbitration matrix and declared workload metadata",
+      "missing_readiness": "independent oracle disagreement records and workload-specific execution contracts",
+      "readiness_status": "local_arbitration_and_declared_workload_metadata",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/evaluator_oracle_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/task_specification_boundary.json"
+        }
+      ],
+      "validation_gate": "oracle disagreement and workload execution contracts"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "robust automated environment fixtures",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "OS/container resource sandbox",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "automated evaluator fixtures, programmatic boundaries, validator subprocesses, and resource isolation",
+      "criterion_id": "automated_environment_and_sandbox",
+      "current_scope": "scope classification, code-vs-NL reports, local subprocess policy, and dependency provenance",
+      "missing_readiness": "robust automated environment fixtures and OS/container resource sandbox",
+      "readiness_status": "classification_and_subprocess_policy_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/automated_evaluator_scope_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/validator_execution_boundary.json"
+        }
+      ],
+      "validation_gate": "automated environment fixtures and OS/container resource sandbox"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "replayable environment/release bundle",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "release artifacts",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "release artifacts, config validation, package/version snapshots, and evaluator environment replay",
+      "criterion_id": "release_environment_reproducibility",
+      "current_scope": "CI-smoke release packaging and bounded config/environment sidecars",
+      "missing_readiness": "replayable environment/release bundle",
+      "readiness_status": "ci_smoke_without_replayable_environment_bundle",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/release_artifact_reproducibility_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/config_validation_boundary.json"
+        }
+      ],
+      "validation_gate": "replayable release and evaluator-environment bundle"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "benchmark-sufficiency signoff",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "matrix cascade runs",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "benchmark cascade runs, matrix/tensor fixtures, workload-specific provenance, and sufficiency claims",
+      "criterion_id": "benchmark_sufficiency_signoff",
+      "current_scope": "bounded benchmark sidecars without cascade-readiness signoff",
+      "missing_readiness": "benchmark-sufficiency signoff proving cascade readiness across target workloads",
+      "readiness_status": "bounded_reports_without_benchmark_signoff",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/evaluation_cascade_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/programmatic_representation_boundary.json"
+        }
+      ],
+      "validation_gate": "benchmark-sufficiency signoff for cascade readiness"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "stale-readiness detector",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner review signoff",
+          "required_phrase_present": true
+        }
+      ],
+      "cascade_surface": "README, ROADMAP, papers, evaluator docs, runtime metadata, and owner readiness claims",
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "current_scope": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "missing_readiness": "stale-readiness detector and owner signoff before cascade parity claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "readiness_criterion_count": 8,
+  "required_evidence_fields": [
+    "validator_authority_matrix",
+    "artifact_and_budget_sufficiency",
+    "feedback_and_statistical_promotion",
+    "oracle_and_workload_contracts",
+    "automated_environment_and_sandbox",
+    "release_environment_reproducibility",
+    "benchmark_sufficiency_signoff",
+    "stale_readiness_and_owner_signoff"
+  ],
+  "schema": "libreevolve.roadmap_evaluation_cascade_readiness_boundary.v1",
+  "sidecar_ref_count": 16,
+  "source_active_todo_ref_count": 20,
+  "source_cascade_boundary_input": "papers/roadmap_evaluation_cascade_boundary.json",
+  "source_criterion_count": 10,
+  "source_sidecar_ref_count": 16
+}

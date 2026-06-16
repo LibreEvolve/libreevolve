@@ -1287,6 +1287,7 @@ Important limits:
   `papers/roadmap_prompt_context_system_boundary.json`,
   `papers/roadmap_prompt_context_readiness_boundary.json`,
   `papers/roadmap_evaluation_cascade_boundary.json`,
+  `papers/roadmap_evaluation_cascade_readiness_boundary.json`,
   `papers/roadmap_candidate_workspace_fidelity_boundary.json`,
   `papers/roadmap_multi_objective_search_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
@@ -1463,6 +1464,12 @@ Important limits:
   fixtures, OS/container resource sandboxing, replayable environment/release
   bundles, benchmark-sufficiency signoff, stale-readiness detector, or owner
   review signoff.
+- ROADMAP evaluation-cascade readiness evidence now records eight criteria for
+  validator authority, artifact/budget sufficiency, feedback/statistical
+  promotion, oracle/workload contracts, automated environment/sandbox policy,
+  release/environment reproducibility, benchmark sufficiency, and stale
+  readiness/owner signoff. This is not an implemented AlphaEvolve-style
+  cascade gate or proof of full cascade readiness.
 - ROADMAP candidate-workspace fidelity evidence now records ten criteria for
   language/build runner support, candidate abstraction API,
   marker/materialization policy, embedded evaluator boundaries,

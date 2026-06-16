@@ -283,6 +283,10 @@ from libreevolve.problems.benchmarks.roadmap_evaluation_cascade_boundary import 
     roadmap_evaluation_cascade_boundary_record,
     validate_roadmap_evaluation_cascade_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_evaluation_cascade_readiness_boundary import (
+    roadmap_evaluation_cascade_readiness_boundary_record,
+    validate_roadmap_evaluation_cascade_readiness_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_candidate_workspace_fidelity_boundary import (
     roadmap_candidate_workspace_fidelity_boundary_record,
     validate_roadmap_candidate_workspace_fidelity_boundary,
@@ -858,6 +862,7 @@ ROADMAP_ASYNC_RUNTIME_READINESS_BOUNDARY_FILE = "papers/roadmap_async_runtime_re
 ROADMAP_PROMPT_CONTEXT_SYSTEM_BOUNDARY_FILE = "papers/roadmap_prompt_context_system_boundary.json"
 ROADMAP_PROMPT_CONTEXT_READINESS_BOUNDARY_FILE = "papers/roadmap_prompt_context_readiness_boundary.json"
 ROADMAP_EVALUATION_CASCADE_BOUNDARY_FILE = "papers/roadmap_evaluation_cascade_boundary.json"
+ROADMAP_EVALUATION_CASCADE_READINESS_BOUNDARY_FILE = "papers/roadmap_evaluation_cascade_readiness_boundary.json"
 ROADMAP_CANDIDATE_WORKSPACE_FIDELITY_BOUNDARY_FILE = "papers/roadmap_candidate_workspace_fidelity_boundary.json"
 ROADMAP_MULTI_OBJECTIVE_SEARCH_BOUNDARY_FILE = "papers/roadmap_multi_objective_search_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
@@ -1539,6 +1544,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_prompt_context_system_boundary(root_path))
     issues.extend(_validate_roadmap_prompt_context_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_evaluation_cascade_boundary(root_path))
+    issues.extend(_validate_roadmap_evaluation_cascade_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_candidate_workspace_fidelity_boundary(root_path))
     issues.extend(_validate_roadmap_multi_objective_search_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
@@ -4945,6 +4951,43 @@ def _validate_roadmap_evaluation_cascade_boundary(root_path: Path) -> list[Paper
             f"roadmap_evaluation_cascade_boundary_{issue.code}",
             issue.message,
             "roadmap_evaluation_cascade",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_evaluation_cascade_readiness_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_EVALUATION_CASCADE_READINESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_evaluation_cascade_readiness_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_EVALUATION_CASCADE_READINESS_BOUNDARY_FILE} "
+                        "must emit ROADMAP evaluation-cascade readiness metadata"
+                    ),
+                    "roadmap_evaluation_cascade_readiness",
+                )
+            ]
+        return []
+    report = validate_roadmap_evaluation_cascade_readiness_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_evaluation_cascade_readiness_boundary_{issue.code}",
+            issue.message,
+            "roadmap_evaluation_cascade_readiness",
         )
         for issue in report.issues
     ]

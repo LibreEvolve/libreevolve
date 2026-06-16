@@ -3052,6 +3052,13 @@ Implemented:
   contracts, robust automated environment fixtures, OS/container resource
   sandboxing, replayable environment/release bundles, benchmark-sufficiency
   signoff, stale-readiness detector, or owner review signoff.
+- `papers/roadmap_evaluation_cascade_readiness_boundary.json`: ROADMAP
+  evaluation-cascade readiness sidecar with eight criteria for validator
+  authority, artifact/budget sufficiency, feedback/statistical promotion,
+  oracle/workload contracts, automated environment/sandbox policy,
+  release/environment reproducibility, benchmark sufficiency, and stale
+  readiness/owner signoff. It is not evidence that those cascade-readiness
+  mechanisms are implemented.
 - `papers/roadmap_multi_objective_search_boundary.json`: ROADMAP
   multi-objective search sidecar with eight criteria for paper metric bundles,
   objective-archive policy, metric-diverse sampling balance, duplicate-work

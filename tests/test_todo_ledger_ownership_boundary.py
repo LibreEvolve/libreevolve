@@ -20,8 +20,8 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     assert boundary["claim_ready"] is False
     assert boundary["owner_record_count"] == 4
     assert boundary["raw_todo_ledger_active_count"] == 506
-    assert boundary["raw_todo_ledger_completed_count"] == 4655
-    assert boundary["raw_todo_ledger_total_count"] == 5161
+    assert boundary["raw_todo_ledger_completed_count"] == 4656
+    assert boundary["raw_todo_ledger_total_count"] == 5162
     assert boundary["active_ledger_completed_marker_count"] == 0
     assert boundary["completed_ledger_active_marker_count"] == 0
     assert (
@@ -29,7 +29,7 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
         == "active_ledgers_unchecked_completed_ledgers_checked"
     )
     assert boundary["duplicate_detection_policy"] == "exact_normalized_title_only"
-    assert boundary["likely_duplicate_title_group_count"] == 122
+    assert boundary["likely_duplicate_title_group_count"] == 123
     assert boundary["canonical_gap_completion_status"] == "not_available_without_gap_ids"
     owner_ids = {record["owner_id"] for record in boundary["owner_records"]}
     assert owner_ids == {"code", "papers", "readme", "roadmap"}

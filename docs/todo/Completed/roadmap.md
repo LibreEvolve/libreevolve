@@ -15574,3 +15574,24 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     proposal memory, calibrated meta-prompt rewards, prompt-database archive
     lifecycle, prompt/context benchmark evidence, stale-readiness detector, and
     owner review signoff remain active in `docs/todo/roadmap.md`.
+- [x] Add bounded ROADMAP evaluation-cascade readiness matrix.
+  - Spec evidence: evaluation-cascade claims require more than individual
+    transition, artifact, budget, feedback, statistical, oracle, workload,
+    sandbox, and environment sidecars.
+  - Status: `papers/roadmap_evaluation_cascade_readiness_boundary.json` now
+    records eight readiness criteria for validator authority, artifact/budget
+    sufficiency, feedback/statistical promotion, oracle/workload contracts,
+    automated environment/sandbox policy, release/environment reproducibility,
+    benchmark sufficiency, and stale readiness/owner signoff. It links the
+    existing evaluation-cascade boundary input, sidecar refs, active TODO refs,
+    validation-gate labels, readiness labels, and explicit missing-evidence
+    fields. The paper-manifest gate now requires and validates the sidecar at
+    the repo root.
+  - Remaining roadmap gap: the actual validator-authority matrix, complete
+    artifact schema/hash coverage, accelerator/async budget ownership,
+    executed feedback calibration, benchmark-calibrated statistical promotion,
+    independent oracle disagreement records, workload-specific execution
+    contracts, robust automated environment fixtures, OS/container resource
+    sandbox, replayable environment/release bundle, benchmark-sufficiency
+    signoff, stale-readiness detector, and owner review signoff remain active
+    in `docs/todo/roadmap.md`.

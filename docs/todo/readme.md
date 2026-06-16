@@ -34,6 +34,30 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     missing major docs, and checks that README/docs/papers/ROADMAP/TODO content
     boundaries remain synchronized whenever documentation structure changes.
 
+- [ ] Add README routing for `AGENTS.md` as an agent-facing operating contract.
+  - Spec evidence: AlphaEvolve-alignment work in this repository is performed
+    by agents as well as humans, and the tracked `AGENTS.md` file is the
+    repository-local operating contract for agent runs. Because it repeats
+    runtime, testing, backend, artifact, and AlphaEvolve-diff conventions, the
+    root README should route it explicitly or declare why it is excluded from
+    the reader-facing documentation map.
+  - Current evidence: the README Documentation Map links `docs/README.md`,
+    architecture, configuration, backends, plugins, run artifacts, status,
+    ROADMAP, `papers/README.md`, and `docs/todo/`, but it does not mention the
+    tracked root `AGENTS.md`. A separate active TODO below tracks AGENTS.md
+    content drift, and `tests/test_agents_docs.py` checks selected agent-doc
+    invariants, but those do not prove that README/docs routing includes the
+    agent-facing operating surface.
+  - Current gap: no README-owned route entry, docs-index entry, or drift check
+    classifies `AGENTS.md` as agent-only, contributor-facing, or hidden
+    operational policy; no validator detects when README, `docs/README.md`,
+    `docs/development.md`, and `AGENTS.md` give overlapping commands or
+    conventions without a declared source of truth.
+  - Required result: add README/docs routing for `AGENTS.md` or a deliberate
+    exclusion policy, then validate that agent-facing command, test, backend,
+    artifact, and AlphaEvolve-boundary instructions stay linked to the
+    corresponding human-facing docs and TODO owners.
+
 ## Requirements
 
 - [ ] Add durable README install and requirements smoke evidence.

@@ -262,7 +262,7 @@ py -3.12 -m pytest tests/integration/ -m integration --tb=short
 ```text
 libreevolve/
   core/          orchestration, prompting, evaluation, diffing, database, config
-  llm/           OpenAI, Anthropic, Ollama, and ensemble routing
+  llm/           OpenAI, Anthropic, Ollama, custom backends, and ensemble routing
   population/    program records, MAP-Elites, island migration
   plugins/       optional lifecycle hooks and paper-inspired plugins
   problems/      examples and problem loading

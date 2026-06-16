@@ -343,23 +343,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     documentation-claim inventory records the README headings and selected
     evidence refs, but it does not validate the repository-layout code block
     as a structured architecture claim.
-  - Current gap: no committed layout inventory, test, or sidecar compares the
-    README repository-layout entries against the current source/docs tree,
-    validates that each role summary is still accurate, flags new top-level
-    packages or docs that should be mentioned, or distinguishes implemented
-    module roles from AlphaEvolve-parity placeholders.
+    `papers/readme_repository_layout_boundary.json` now records 13 README
+    layout entries, path-existence checks, summary-marker checks, module
+    evidence paths, the `llm/` custom-backend marker, archival `old/` scope,
+    and gitignored `runs/` scope.
+  - Current gap: the committed layout inventory still does not semantically
+    validate that each role summary is accurate, flag new top-level packages
+    or docs that should be mentioned, or distinguish implemented module roles
+    from AlphaEvolve-parity placeholders.
     Current drift evidence: the README `Runnable today` list says LibreEvolve
     supports OpenAI, Anthropic, Ollama, and custom import-path backends, and
     the docs map links `docs/backends.md` for "provider adapters and custom
-    backends"; however, the repository-layout block still describes `llm/` as
-    only "OpenAI, Anthropic, Ollama, and ensemble routing." Without a layout
-    inventory, module-role summaries can understate implemented extension
-    points while nearby feature bullets advertise them.
-  - Required result: add a README layout/schema drift check or generated
-    sidecar that parses the layout block, compares it with the package and
-    documentation tree, maps each role summary to concrete modules/docs/tests,
-    and updates README/TODO evidence whenever module ownership or layout
-    changes.
+    backends"; the repository-layout block previously described `llm/` as
+    only "OpenAI, Anthropic, Ollama, and ensemble routing." That narrow drift
+    is fixed: the layout now names custom backends, and the sidecar fails if
+    the marker disappears.
+  - Required result: extend the README layout/schema drift check into a
+    semantic role verifier that maps each role summary to concrete
+    modules/docs/tests, flags new top-level packages or major docs, classifies
+    AlphaEvolve-parity placeholders, and updates README/TODO evidence whenever
+    module ownership or layout changes.
 
 - [ ] Add architecture-guide runtime-flow drift evidence.
   - Spec evidence: `docs/architecture.md` is the detailed end-to-end runtime

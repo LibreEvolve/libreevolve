@@ -2877,6 +2877,13 @@ Implemented:
   archival `old/` routing, and AGENTS.md routing. It is not semantic
   route-purpose verification, new-major-doc detection, misplaced-claim
   detection, or owner review signoff.
+- `papers/readme_repository_layout_boundary.json`: README Repository Layout
+  sidecar. It records 13 README layout entries, layout-entry path existence
+  checks, summary marker checks, module evidence path checks, the `llm/`
+  custom-backend marker, archival `old/` scope, and gitignored `runs/` scope.
+  It is not semantic module-role verification, new top-level detection, new
+  major-doc detection, AlphaEvolve-parity placeholder classification, or
+  owner review signoff.
 - `papers/readme_install_smoke_boundary.json`: README install-smoke sidecar.
   It records the README editable-install command, Python launcher guidance,
   pyproject Python/dev-extra markers, GitHub Actions Python 3.12 setup,

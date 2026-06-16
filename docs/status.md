@@ -1318,6 +1318,7 @@ Important limits:
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
+  `papers/readme_repository_layout_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
   `papers/readme_paper_cache_topic_boundary.json`,
@@ -1353,6 +1354,12 @@ Important limits:
   checks, docs-index delegation, archival `old/` routing, and AGENTS.md
   routing. This is not semantic route-purpose verification, new-major-doc
   detection, misplaced-claim detection, or owner review signoff.
+- README Repository Layout evidence now records 13 README layout entries,
+  layout-entry path existence checks, summary marker checks, module evidence
+  path checks, the `llm/` custom-backend marker, archival `old/` scope, and
+  gitignored `runs/` scope. This is not semantic module-role verification,
+  new top-level detection, new major-doc detection, AlphaEvolve-parity
+  placeholder classification, or owner review signoff.
 - README install-smoke evidence now records the README editable-install
   command, Python launcher guidance, pyproject Python/dev-extra markers,
   GitHub Actions Python 3.12 setup, CI editable-install commands, and the

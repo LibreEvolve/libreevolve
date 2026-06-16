@@ -20,7 +20,7 @@ ROADMAP_GOOD_FIRST_PRIORITY_SCORE_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_good_first_priority_score_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "good_first_priority_score_model_recorded_with_ci_priority_gate"
+    "good_first_priority_score_model_recorded_with_validation_artifact_report"
 )
 SOURCE_GOOD_FIRST_BOUNDARY_INPUT = "papers/roadmap_good_first_followups_boundary.json"
 DEPENDENCY_REFRESH_BOUNDARY_INPUT = (
@@ -37,11 +37,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "priority_score_records",
     "rank_mismatch_records",
     "ci_priority_freshness_gate",
-    "validation_artifact_refresh",
+    "validation_artifact_report",
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "validation_artifact_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 
@@ -158,8 +157,8 @@ def roadmap_good_first_priority_score_boundary_record(
             "This boundary records a bounded deterministic priority score "
             "model for the current ROADMAP Good First Follow-Ups, including "
             "feature weights, score inputs, ranked item ids, and rank mismatch "
-            "checks. CI freshness gating is recorded separately. It does not "
-            "claim validation-artifact freshness or owner review signoff."
+            "checks. CI freshness gating and validation-artifact reporting are "
+            "recorded separately. It does not claim owner review signoff."
         ),
     }
 
@@ -220,8 +219,8 @@ def validate_roadmap_good_first_priority_score_boundary(
         not isinstance(boundary_text, str)
         or "bounded deterministic priority score model" not in boundary_text
         or "rank mismatch checks" not in boundary_text
-        or "CI freshness gating is recorded separately" not in boundary_text
-        or "does not claim validation-artifact freshness" not in boundary_text
+        or "CI freshness gating and validation-artifact reporting are recorded separately" not in boundary_text
+        or "does not claim owner review signoff" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate priority scoring from CI and signoff readiness"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

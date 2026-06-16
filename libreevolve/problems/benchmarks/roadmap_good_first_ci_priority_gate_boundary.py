@@ -23,7 +23,7 @@ ROADMAP_GOOD_FIRST_CI_PRIORITY_GATE_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_good_first_ci_priority_gate_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "good_first_ci_priority_freshness_gate_recorded_without_artifact_signoff"
+    "good_first_ci_priority_freshness_gate_recorded_with_validation_artifact_report"
 )
 WORKFLOW_PATH = ".github/workflows/tests.yml"
 PAPER_MANIFEST_PATH = "libreevolve/tools/paper_manifest.py"
@@ -32,6 +32,7 @@ REQUIRED_SIDECARS = (
     "papers/roadmap_good_first_dependency_refresh_boundary.json",
     "papers/roadmap_good_first_stale_priority_boundary.json",
     "papers/roadmap_good_first_priority_score_boundary.json",
+    "papers/roadmap_good_first_validation_artifact_boundary.json",
     "papers/roadmap_good_first_freshness_boundary.json",
 )
 REQUIRED_MANIFEST_MARKERS = (
@@ -39,6 +40,7 @@ REQUIRED_MANIFEST_MARKERS = (
     "_validate_roadmap_good_first_dependency_refresh_boundary",
     "_validate_roadmap_good_first_stale_priority_boundary",
     "_validate_roadmap_good_first_priority_score_boundary",
+    "_validate_roadmap_good_first_validation_artifact_boundary",
     "_validate_roadmap_good_first_freshness_boundary",
 )
 REQUIRED_WORKFLOW_MARKERS = (
@@ -54,11 +56,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "freshness_matrix",
     "paper_manifest_gate",
     "boundary_test_workflow_gate",
-    "validation_artifact_refresh",
+    "validation_artifact_report",
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "validation_artifact_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 
@@ -133,8 +134,7 @@ def roadmap_good_first_ci_priority_gate_boundary_record(
             "This boundary records a bounded Good First priority freshness gate "
             "through committed sidecars, paper-manifest validation, and the "
             "existing docs/paper/boundary GitHub Actions workflow. It does not "
-            "claim per-item validation-artifact freshness or owner review "
-            "signoff."
+            "claim owner review signoff."
         ),
     }
 
@@ -188,7 +188,7 @@ def validate_roadmap_good_first_ci_priority_gate_boundary(
         not isinstance(boundary_text, str)
         or "paper-manifest validation" not in boundary_text
         or "GitHub Actions workflow" not in boundary_text
-        or "does not claim per-item validation-artifact freshness" not in boundary_text
+        or "does not claim owner review signoff" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate CI priority gate from artifact freshness and signoff"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

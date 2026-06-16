@@ -14,7 +14,7 @@ def test_roadmap_good_first_stale_priority_accepts_current_priority_order():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "good_first_stale_priority_detector_recorded_with_ci_priority_gate"
+        == "good_first_stale_priority_detector_recorded_with_validation_artifact_report"
     )
     assert boundary["schema"] == ROADMAP_GOOD_FIRST_STALE_PRIORITY_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -38,14 +38,13 @@ def test_roadmap_good_first_stale_priority_accepts_current_priority_order():
     )
     assert validation.priority_item_count == 4
     assert validation.stale_priority_count == 0
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert boundary["stale_priority_records"] == []
     assert all(
         record["priority_detector_status"] == "priority_current"
         for record in boundary["detector_records"]
     )
     assert boundary["missing_evidence"] == {
-        "validation_artifact_refresh": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "priority score model is recorded separately" in boundary["detector_scope"]
@@ -74,7 +73,7 @@ def test_roadmap_good_first_stale_priority_rejects_overclaim_and_stale_record():
     boundary["detector_records"][0]["priority_detector_status"] = (
         "stale_priority_detected"
     )
-    boundary["missing_evidence"]["validation_artifact_refresh"] = "recorded"
+    boundary["missing_evidence"]["owner_review_signoff"] = "recorded"
     boundary["required_evidence_fields"] = ["source_good_first_priority_items"]
 
     validation = validate_roadmap_good_first_stale_priority_boundary(boundary)
@@ -88,7 +87,7 @@ def test_roadmap_good_first_stale_priority_rejects_overclaim_and_stale_record():
     assert "invalid_stale_priority_records" in codes
     assert "invalid_detector_records" in codes
     assert "stale_priority_detected" in codes
-    assert "invalid_missing_evidence_validation_artifact_refresh" in codes
+    assert "invalid_missing_evidence_owner_review_signoff" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -100,9 +99,9 @@ def test_render_roadmap_good_first_stale_priority_summary_reports_shape():
     assert "ROADMAP Good First stale-priority boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | good_first_stale_priority_detector_recorded_with_ci_priority_gate |"
+        "| boundary_status | good_first_stale_priority_detector_recorded_with_validation_artifact_report |"
         in summary
     )
     assert "| priority_item_count | 4 |" in summary
     assert "| stale_priority_count | 0 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

@@ -14,7 +14,7 @@ def test_roadmap_good_first_dependency_refresh_accepts_current_dependencies():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "good_first_dependency_state_refresh_recorded_with_ci_priority_gate"
+        == "good_first_dependency_state_refresh_recorded_with_validation_artifact_report"
     )
     assert boundary["schema"] == ROADMAP_GOOD_FIRST_DEPENDENCY_REFRESH_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -22,7 +22,7 @@ def test_roadmap_good_first_dependency_refresh_accepts_current_dependencies():
     assert validation.dependency_record_count == 4
     assert validation.active_dependency_ref_count == 9
     assert validation.stale_dependency_ref_count == 0
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert [record["item_id"] for record in boundary["dependency_records"]] == [
         "durable_query_indexes",
         "non_toy_benchmark_fixture",
@@ -39,7 +39,6 @@ def test_roadmap_good_first_dependency_refresh_accepts_current_dependencies():
         for record in boundary["dependency_records"]
     )
     assert boundary["missing_evidence"] == {
-        "validation_artifact_refresh": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "rejects stale or missing dependency refs" in boundary["claim_boundary"]
@@ -63,7 +62,7 @@ def test_roadmap_good_first_dependency_refresh_rejects_overclaim_and_stale_ref()
     boundary["dependency_records"][0]["dependency_refresh_status"] = (
         "dependency_state_stale_or_incomplete"
     )
-    boundary["missing_evidence"]["validation_artifact_refresh"] = "recorded"
+    boundary["missing_evidence"]["owner_review_signoff"] = "recorded"
     boundary["required_evidence_fields"] = ["source_good_first_priority_items"]
 
     validation = validate_roadmap_good_first_dependency_refresh_boundary(boundary)
@@ -76,7 +75,7 @@ def test_roadmap_good_first_dependency_refresh_rejects_overclaim_and_stale_ref()
     assert "invalid_stale_dependency_ref_records" in codes
     assert "invalid_dependency_records" in codes
     assert "stale_dependency_ref_detected" in codes
-    assert "invalid_missing_evidence_validation_artifact_refresh" in codes
+    assert "invalid_missing_evidence_owner_review_signoff" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -88,10 +87,10 @@ def test_render_roadmap_good_first_dependency_refresh_summary_reports_shape():
     assert "ROADMAP Good First dependency refresh boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | good_first_dependency_state_refresh_recorded_with_ci_priority_gate |"
+        "| boundary_status | good_first_dependency_state_refresh_recorded_with_validation_artifact_report |"
         in summary
     )
     assert "| dependency_record_count | 4 |" in summary
     assert "| active_dependency_ref_count | 9 |" in summary
     assert "| stale_dependency_ref_count | 0 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

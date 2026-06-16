@@ -283,16 +283,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     committed sidecars, paper-manifest validators, and docs/paper/boundary
     GitHub Actions workflow markers that gate Good First priority freshness,
     with zero missing gate records.
+    `papers/roadmap_good_first_validation_artifact_boundary.json` now records
+    the expected validation artifacts for those four priority items by joining
+    each validation gate to artifact-family labels, committed sidecar refs,
+    active TODO anchors, and the CI priority freshness gate, with zero stale
+    validation-artifact records.
   - Current gap: the sidecars are bounded static-priority, dependency-refresh,
-    stale-priority, priority-score, CI-gate, and freshness readiness maps, not
-    an implemented validation-artifact freshness model. There is still no
-    validation-artifact freshness report or owner review signoff proving these
-    four items remain the best first follow-ups after new ROADMAP, code,
-    README, or paper-sidecar work lands.
+    stale-priority, priority-score, CI-gate, validation-artifact, and
+    freshness readiness maps, not owner-reviewed priority approval. There is
+    still no owner review signoff proving these four items remain the best
+    first follow-ups after new ROADMAP, code, README, or paper-sidecar work
+    lands.
   - Required result: implement the missing readiness fields recorded by the
-    sidecar: validation-artifact freshness report for expected validation
-    artifacts and owner review signoff. The drift check must force the section
-    to be refreshed when dependencies or implementation states change.
+    sidecar: owner review signoff. The drift check must force the section to
+    be refreshed when dependencies or implementation states change.
 
 - [ ] Add ROADMAP phase-boundary and sequencing evidence.
   - Spec evidence: the `Near Term`, `Mid Term`, and `Longer Term` headings are

@@ -14,7 +14,7 @@ def test_roadmap_good_first_freshness_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_good_first_freshness_matrix_with_ci_priority_gate_without_artifact_signoff"
+        == "bounded_good_first_freshness_matrix_with_validation_artifact_report_without_owner_signoff"
     )
     assert boundary["schema"] == ROADMAP_GOOD_FIRST_FRESHNESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -52,15 +52,24 @@ def test_roadmap_good_first_freshness_accepts_bounded_matrix():
         "good_first_priority_freshness_gate_present"
     )
     assert boundary["ci_priority_gate_missing_record_count"] == 0
+    assert (
+        boundary["validation_artifact_boundary_input"]
+        == "papers/roadmap_good_first_validation_artifact_boundary.json"
+    )
+    assert boundary["validation_artifact_record_count"] == 12
+    assert boundary["stale_validation_artifact_record_count"] == 0
+    assert boundary["validation_artifact_report_status"] == (
+        "validation_artifact_freshness_report_current"
+    )
     assert boundary["freshness_criterion_count"] == 6
-    assert boundary["sidecar_ref_count"] == 16
+    assert boundary["sidecar_ref_count"] == 17
     assert boundary["active_todo_ref_count"] == 12
     assert [record["criterion_id"] for record in boundary["freshness_criteria"]] == [
         "dependency_state_refresh",
         "stale_priority_detector",
         "calibrated_priority_score_model",
         "ci_priority_freshness_gate",
-        "validation_artifact_refresh",
+        "validation_artifact_report",
         "owner_review_signoff",
     ]
     assert all(
@@ -74,13 +83,9 @@ def test_roadmap_good_first_freshness_accepts_bounded_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "validation_artifact_refresh": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert (
-        "CI priority gate boundaries"
-        in boundary["claim_boundary"]
-    )
+    assert "validation-artifact report boundaries" in boundary["claim_boundary"]
 
 
 def test_roadmap_good_first_freshness_rejects_overclaim_and_drift():
@@ -89,7 +94,7 @@ def test_roadmap_good_first_freshness_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "good_first_freshness_gate_ready"
     boundary["freshness_criterion_count"] = 0
     boundary["freshness_criteria"][0]["sidecar_refs"][0]["exists"] = False
-    boundary["missing_evidence"]["validation_artifact_refresh"] = "recorded"
+    boundary["missing_evidence"]["owner_review_signoff"] = "recorded"
     boundary["required_evidence_fields"] = ["dependency_state_refresh"]
 
     validation = validate_roadmap_good_first_freshness_boundary(boundary)
@@ -100,7 +105,7 @@ def test_roadmap_good_first_freshness_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_freshness_criterion_count" in codes
     assert "invalid_freshness_criteria" in codes
-    assert "invalid_missing_evidence_validation_artifact_refresh" in codes
+    assert "invalid_missing_evidence_owner_review_signoff" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -112,10 +117,10 @@ def test_render_roadmap_good_first_freshness_summary_reports_shape():
     assert "ROADMAP Good First Follow-Ups freshness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_good_first_freshness_matrix_with_ci_priority_gate_without_artifact_signoff |"
+        "| boundary_status | bounded_good_first_freshness_matrix_with_validation_artifact_report_without_owner_signoff |"
         in summary
     )
     assert "| freshness_criterion_count | 6 |" in summary
-    assert "| sidecar_ref_count | 16 |" in summary
+    assert "| sidecar_ref_count | 17 |" in summary
     assert "| active_todo_ref_count | 12 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

@@ -17,7 +17,7 @@ ROADMAP_GOOD_FIRST_STALE_PRIORITY_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_good_first_stale_priority_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "good_first_stale_priority_detector_recorded_with_ci_priority_gate"
+    "good_first_stale_priority_detector_recorded_with_validation_artifact_report"
 )
 SOURCE_GOOD_FIRST_BOUNDARY_INPUT = "papers/roadmap_good_first_followups_boundary.json"
 DEPENDENCY_REFRESH_BOUNDARY_INPUT = (
@@ -32,11 +32,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_priority_records",
     "calibrated_priority_score_model",
     "ci_priority_freshness_gate",
-    "validation_artifact_refresh",
+    "validation_artifact_report",
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "validation_artifact_refresh": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 
@@ -118,9 +117,9 @@ def roadmap_good_first_stale_priority_boundary_record(
             "priority map to dependency-state refresh records, ordinal order, "
             "live dependency refs, blocker labels, and ROADMAP phrase checks. "
             "It rejects stale priority records. Priority scoring is recorded "
-            "separately and CI freshness gating is recorded separately. It "
-            "does not claim validation-artifact freshness or owner review "
-            "signoff."
+            "separately, while CI freshness gating and validation-artifact "
+            "reporting are recorded separately. It does not claim owner "
+            "review signoff."
         ),
     }
 
@@ -173,8 +172,8 @@ def validate_roadmap_good_first_stale_priority_boundary(
         or "bounded stale-priority detector" not in boundary_text
         or "rejects stale priority records" not in boundary_text
         or "Priority scoring is recorded separately" not in boundary_text
-        or "CI freshness gating is recorded separately" not in boundary_text
-        or "does not claim validation-artifact freshness" not in boundary_text
+        or "CI freshness gating and validation-artifact reporting are recorded separately" not in boundary_text
+        or "does not claim owner review signoff" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate stale detection from score and CI gates"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

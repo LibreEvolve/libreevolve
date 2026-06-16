@@ -1,7 +1,7 @@
 {
   "active_dependency_ref_count": 9,
-  "boundary_status": "good_first_dependency_state_refresh_recorded_with_ci_priority_gate",
-  "claim_boundary": "This boundary refreshes the current dependency state for the four ROADMAP Good First Follow-Ups by rechecking their active TODO dependency refs, current blocker labels, validation gate expectations, and AlphaEvolve impact labels. It rejects stale or missing dependency refs. Stale-priority detection is recorded separately, priority scoring is recorded separately, and CI freshness gating is recorded separately. It does not claim validation-artifact freshness or owner review signoff.",
+  "boundary_status": "good_first_dependency_state_refresh_recorded_with_validation_artifact_report",
+  "claim_boundary": "This boundary refreshes the current dependency state for the four ROADMAP Good First Follow-Ups by rechecking their active TODO dependency refs, current blocker labels, validation gate expectations, and AlphaEvolve impact labels. It rejects stale or missing dependency refs. Stale-priority detection is recorded separately, priority scoring is recorded separately, and CI freshness gating and validation-artifact reporting are recorded separately. It does not claim owner review signoff.",
   "claim_ready": false,
   "dependency_record_count": 4,
   "dependency_records": [
@@ -167,8 +167,7 @@
     }
   ],
   "missing_evidence": {
-    "owner_review_signoff": "not_recorded_locally",
-    "validation_artifact_refresh": "not_recorded_locally"
+    "owner_review_signoff": "not_recorded_locally"
   },
   "required_evidence_fields": [
     "source_good_first_priority_items",
@@ -179,7 +178,7 @@
     "stale_priority_detector",
     "calibrated_priority_score_model",
     "ci_priority_freshness_gate",
-    "validation_artifact_refresh",
+    "validation_artifact_report",
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_good_first_dependency_refresh_boundary.v1",

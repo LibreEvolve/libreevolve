@@ -9533,3 +9533,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     absence/presence of code-repository URLs, lifting-framework statements, and
     README/ROADMAP/code wording that keeps complexity-theory proof-element
     support missing unless those artifacts are locally represented and verified.
+
+- [ ] Add row-specific anchors for repeated broad paper-index TODO coverage
+      cells.
+  - Paper evidence: the `papers/README.md` TODO coverage cross-reference
+    table is treated as backlog traceability for each paper-cache row, so
+    repeated active cells should not hide distinct source-specific gaps.
+  - Current evidence: source rows with very different status claims, including
+    `2511.17592` GigaEvo framework-parity absence, `2510.14150` CodeEvolve
+    prompt/solution-fitness absence, and `2605.08520` FlashEvolve
+    asynchronous-stage orchestration absence, currently use the same active
+    coverage cell: `docs/todo/code.md`; `docs/todo/papers.md`.
+  - Current gap: the current table proves that broad active ledgers exist, but
+    it does not provide row-specific active anchors, source-span dispositions,
+    or claim-refresh triggers for those materially different paper rows.
+  - Required result: give repeated broad TODO coverage cells stable
+    row-specific anchors or grouped-label records, validate that each anchor
+    points to a live source-specific open gap, and require coverage refreshes
+    when the paper row's role, implementation status, benchmark qualifier, or
+    source-span evidence changes.

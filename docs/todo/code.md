@@ -8437,3 +8437,32 @@ sidecars, tests, and active TODOs.
     paper-artifact directories; add stale-paper-artifact reuse tests; and
     validate that manifest/documented `paper_artifacts/...` paths cannot exist
     outside collision, cleanup, and run-artifact summary policy.
+
+- [ ] Add schema-level coverage for invalid/quarantine run streams.
+  - Spec evidence: AlphaEvolve-style long-running experiment artifacts must be
+    self-describing enough for resume, inspection, and audit tooling to tell
+    accepted state streams from rejected-record diagnostics. A quarantine
+    stream can be essential evidence, but it should not be invisible to the
+    run's machine-readable artifact contract.
+  - Current evidence: `libreevolve.core.database.RUN_ARTIFACT_NAMES` includes
+    `history_invalid.jsonl`, `failure_history_invalid.jsonl`,
+    `archive_events_invalid.jsonl`, `controller_budget_events_invalid.jsonl`,
+    `llm_calls_invalid.jsonl`, `prompt_history_invalid.jsonl`, and
+    `manifest_invalid.jsonl` for collision detection and overwrite cleanup.
+    `ProgramDatabase` and `PromptDatabase` write those streams through
+    `append_quarantine_record()`, and `docs/run-artifacts.md` documents them
+    as optional quarantine outputs. Separately, `run_artifact_schema()` only
+    exposes accepted JSONL streams under `artifact_schema.jsonl_records`.
+  - Current gap: completed manifests do not publish a machine-readable schema
+    or source-stream mapping for the invalid/quarantine JSONL files that the
+    runtime can write and lifecycle-manage. Audit tools can therefore discover
+    accepted row schemas from `manifest.json.artifact_schema`, while needing
+    ad hoc documentation knowledge to interpret quarantine rows, source stream
+    ownership, retention modes, and cleanup expectations.
+  - Required result: extend the run artifact schema contract with
+    invalid/quarantine stream records that map each quarantine path to its
+    source stream, diagnostic record shape, retention policy fields, and
+    lifecycle status; add tests that manifest schemas, `RUN_ARTIFACT_NAMES`,
+    docs, and actual writer paths remain in sync; and keep README/ROADMAP
+    wording clear that quarantine streams are diagnostic evidence, not
+    accepted candidate or controller state.

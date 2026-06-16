@@ -445,17 +445,23 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     direct plugin-object validation, hook ordering, prompt-context metadata,
     score-composition behavior, artifact metadata, fatal hook failures, and
     built-in `causal`, `deep_research`, `modular`, and `ttt_rl` limitations.
+    It also documents external plugin entry points under the
+    `libreevolve.plugins` group, constructor option schemas, captured
+    constructor options, distribution name/version hashes, hash-only
+    `RECORD` / `WHEEL` summaries, and the direct-plugin policy distinction
+    between entry-point packages and explicit direct plugin instances.
     Active roadmap and code TODOs cover broader plugin extensibility and
     paper-inspired plugin overclaiming, but there is no plugin-guide-specific
     drift check comparable to the README, backend-doc, development-doc, and
     AGENTS.md documentation guardrails.
   - Current gap: there is no committed inventory that maps each
     `docs/plugins.md` hook, validation rule, failure policy, built-in option,
-    and limitation statement to `PluginBase`, the registry, loop call sites,
-    tests, runtime metadata, and paper-boundary TODOs. There is also no guard
-    that fails when hook order, plugin config schemas, score/admission
-    semantics, or built-in plugin capabilities change without updating the
-    plugin guide and its AlphaEvolve scope wording.
+    entry-point package-provenance claim, and limitation statement to
+    `PluginBase`, the registry, loop call sites, tests, runtime metadata, and
+    paper-boundary TODOs. There is also no guard that fails when hook order,
+    plugin config schemas, score/admission semantics, entry-point provenance
+    policy, direct-plugin policy, or built-in plugin capabilities change
+    without updating the plugin guide and its AlphaEvolve scope wording.
   - Required result: add a plugin-guide contract map and drift validator that
     links each documented hook and built-in plugin claim to code/tests/runtime
     artifacts, separates local synchronous hook support from AlphaEvolve-style

@@ -702,6 +702,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `papers/README.md`, the package tree, and active TODO ledgers. For
     example, AGENTS.md has a manually maintained examples list while newer
     benchmark-candidate examples and related scope boundaries live elsewhere.
+    Current drift evidence: the actual `libreevolve/problems/examples/`
+    directory includes `embedded_evaluate_math`, `sorting_network_8`, and
+    `sorting_network_9`, while AGENTS.md's architecture block still lists only
+    `hello_world`, `circle_packing`, `sorting`, `matrix_multiplication`, and
+    `workspace_math`. Its `runs/` summary also omits current run artifacts
+    such as `controller_budget_events.jsonl`,
+    `prompt_current_binding_table.jsonl`, `prompt_prior_score_table.jsonl`,
+    and `task_specification.json`, even though README and
+    `docs/run-artifacts.md` now document those surfaces.
   - Required result: add an AGENTS.md evidence map or validator that links each
     operational instruction to authoritative code/docs/tests/sidecar sources,
     detects stale architecture/example/dependency/provider/test-command

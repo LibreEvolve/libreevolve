@@ -2872,6 +2872,13 @@ Implemented:
   figure/table/appendix/application-result matrix, complete paper-index row to
   ROADMAP disposition map, missing/partial TODO proof, or CI source-span
   exhaustiveness gate.
+- `papers/roadmap_non_goal_contradiction_boundary.json`: ROADMAP non-goal
+  contradiction sidecar with stable ids for the three current non-goals, nine
+  constrained documentation surfaces, required safe-scope phrase checks, and
+  zero exact forbidden support-claim phrase matches for that bounded set. It
+  is not evidence of a runtime metadata scan, plugin docstring scan,
+  exhaustive Markdown corpus scan, CI promotion gate, or intentional non-goal
+  promotion workflow.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

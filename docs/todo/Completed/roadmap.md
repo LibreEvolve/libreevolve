@@ -2,6 +2,23 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add bounded ROADMAP non-goal contradiction boundary.
+  - Status: `papers/roadmap_non_goal_contradiction_boundary.json` now records
+    stable ids for the three ROADMAP non-goals, maps nine constrained
+    documentation surfaces, validates required safe-scope phrases, and records
+    zero exact forbidden support-claim phrase matches in that bounded surface
+    set.
+  - Current evidence:
+    `libreevolve/problems/benchmarks/roadmap_non_goal_contradiction_boundary.py`
+    derives the boundary from the current ROADMAP/README/docs text and the
+    paper-manifest gate requires the checked sidecar to match those inputs.
+  - Remaining guard: the active ROADMAP TODO still tracks the missing full
+    runtime metadata scan, plugin docstring scan, exhaustive Markdown corpus
+    contradiction scan, CI promotion gate, and intentional non-goal promotion
+    workflow.
+  - Verification: focused non-goal contradiction tests and paper-manifest
+    validation cover the bounded sidecar contract.
+
 - [x] Add structural ROADMAP source-span disposition boundary.
   - Status: `papers/roadmap_source_span_disposition_boundary.json` now maps the
     six core AlphaEvolve anchors from

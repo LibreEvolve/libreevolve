@@ -47,6 +47,9 @@ Important limits:
   that the underlying feature or benchmark has been reproduced.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
+- Paper-inspired plugins are approximations and optional hooks, not faithful
+  implementations of the cited methods unless a specific plugin document says
+  otherwise.
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed Python `asyncio` AlphaEvolve service.

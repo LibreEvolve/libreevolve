@@ -148,14 +148,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current evidence: `ROADMAP.md` lists the three current non-goals, README
     limits already scope arbitrary-language runners, Google/Gemini parity,
     smoke examples, and paper-inspired claims, and active code/paper TODOs keep
-    plugin behavior scoped to approximation/background metadata. The
-    documentation claim inventory records the `Non-Goals For Now` heading but
-    marks it as having no claim record.
-  - Current gap: there is no machine-readable non-goal inventory, no
-    cross-document contradiction detector, and no CI or sidecar check proving
-    README, papers rows, plugin docstrings, runtime metadata, and future
-    ROADMAP edits do not accidentally promote a non-goal into a supported
-    AlphaEvolve-parity claim.
+    plugin behavior scoped to approximation/background metadata.
+    `papers/roadmap_non_goal_contradiction_boundary.json` now assigns stable
+    ids to the three ROADMAP non-goals, maps nine constrained documentation
+    surfaces, validates required safe-scope phrases, and records zero exact
+    forbidden support-claim phrase matches for the bounded surface set.
+  - Current gap: the sidecar is a bounded documentation-surface inventory, not
+    a full cross-document contradiction detector. There is still no runtime
+    metadata scan, plugin docstring scan, exhaustive Markdown corpus scan, CI
+    promotion gate, or workflow proving future ROADMAP edits cannot
+    accidentally promote a non-goal into a supported AlphaEvolve-parity claim.
   - Required result: add stable ROADMAP non-goal claim ids and a verifier that
     maps each non-goal to the code/docs/paper surfaces it constrains, rejects
     contradictory support claims, and updates ROADMAP/TODO evidence whenever a

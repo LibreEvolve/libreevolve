@@ -1265,6 +1265,7 @@ Important limits:
   `papers/todo_ledger_ownership_boundary.json`,
   `papers/roadmap_readiness_boundary.json`,
   `papers/roadmap_source_span_disposition_boundary.json`,
+  `papers/roadmap_non_goal_contradiction_boundary.json`,
   `papers/documentation_truthfulness_boundary.json` and
   `papers/documentation_claim_inventory.json`.
 - ROADMAP source-span disposition evidence currently maps the six core
@@ -1273,6 +1274,12 @@ Important limits:
   53 paper-index rows with only the AlphaEvolve source row dispositioned by
   this core matrix. This is not an exhaustive retained-PDF section/figure/
   table/appendix/application-result coverage matrix.
+- ROADMAP non-goal contradiction evidence now assigns stable ids to the three
+  current ROADMAP non-goals, maps nine constrained documentation surfaces,
+  validates required safe-scope phrases, and records zero exact forbidden
+  support-claim phrase matches for that bounded surface set. This is not a
+  runtime metadata scan, plugin docstring scan, exhaustive Markdown corpus
+  scan, CI non-goal promotion gate, or intentional-promotion workflow.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark

@@ -8495,3 +8495,30 @@ sidecars, tests, and active TODOs.
     docs/run-artifacts claims, startup/finalization writers, and `show`/restore
     readers so documented artifacts cannot drift from machine-readable bundle
     metadata.
+
+- [ ] Add a clean-checkout run contract for `sorting_network_9`.
+  - Spec evidence: AlphaEvolve benchmark claims require reproducible problem
+    setup, evaluator invocation, model/backend configuration, and run artifacts
+    that can be replayed from the committed repository. A bounded rediscovery
+    candidate is useful only if an operator can run the same task without
+    relying on local untracked files or workstation-specific provider state.
+  - Current evidence: `README.md` and `ROADMAP.md` describe
+    `sorting_network_8` and `sorting_network_9` as bounded benchmark
+    candidates, and tracked tests load `sorting_network_9`, validate the
+    exhaustive zero-one evaluator, and check a known 25-comparator target.
+    The tracked `libreevolve/problems/examples/sorting_network_9/` directory
+    contains `task_description.txt`, `metrics.yaml`, `validate.py`, and the
+    seed program, but the current worktree also has an untracked
+    `libreevolve/problems/examples/sorting_network_9/config.yaml` that appears
+    to encode the intended `gpt-5.3-codex-spark` Codex CLI backend run.
+  - Current gap: a clean checkout can load and test the validator, but it does
+    not include a non-secret runnable benchmark recipe, provider-auth boundary,
+    expected command, or sample manifest contract for `sorting_network_9`.
+    That means README/ROADMAP can truthfully claim the bounded evaluator
+    exists, but cannot yet claim a reproducible AlphaEvolve-style run setup for
+    the 9-input fixture under the intended model/backend path.
+  - Required result: add a tracked, secret-free `sorting_network_9` run recipe
+    or template plus tests/docs that prove it can be invoked from a clean
+    checkout with explicit backend/auth placeholders, expected run artifacts,
+    validator budget settings, and overclaim wording that separates a runnable
+    fixture from certified rediscovery evidence.

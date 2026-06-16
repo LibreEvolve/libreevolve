@@ -232,15 +232,21 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     metadata scan, rejects contradictory support claims through a zero
     unresolved-hit requirement, and routes any future hit to TODO ownership
     and claim-update surfaces.
+    `papers/roadmap_non_goal_scope_join_boundary.json` now joins the three
+    stable ROADMAP non-goal ids across bounded documentation surfaces, the full
+    Markdown corpus scan, runtime metadata source scans, built-in plugin
+    docstring and registry scans, paper sidecar records, `docs/status.md`
+    references, and remediation-route ownership with zero joined
+    contradictions.
   - Current gap: the sidecars are bounded documentation and readiness
     inventories plus runtime, Markdown, plugin-source phrase scans, and CI
-    workflow-shape promotion gating plus a written promotion workflow, not a
-    full lifecycle gate. There is still no runtime/plugin/docs/paper scope
-    join or owner review signoff proving future ROADMAP edits cannot
-    accidentally promote a non-goal into a supported AlphaEvolve-parity claim.
+    workflow-shape promotion gating plus a written promotion workflow,
+    contradiction-remediation report, and runtime/plugin/docs/paper scope
+    join, not a full lifecycle gate. There is still no owner review signoff
+    proving future ROADMAP edits cannot accidentally promote a non-goal into a
+    supported AlphaEvolve-parity claim.
   - Required result: implement the missing readiness fields recorded by the
-    sidecars: code/docs/paper surfaces plus runtime/plugin scope join and
-    owner review signoff.
+    sidecars: owner review signoff.
 
 - [ ] Add ROADMAP Good First Follow-Ups priority freshness evidence.
   - Spec evidence: the `Good First Follow-Ups` section is a prioritization

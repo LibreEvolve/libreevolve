@@ -1282,6 +1282,7 @@ Important limits:
   `papers/roadmap_non_goal_ci_promotion_gate_boundary.json`,
   `papers/roadmap_non_goal_promotion_workflow_boundary.json`,
   `papers/roadmap_non_goal_remediation_boundary.json`,
+  `papers/roadmap_non_goal_scope_join_boundary.json`,
   `papers/roadmap_non_goal_markdown_scan_boundary.json`,
   `papers/roadmap_non_goal_plugin_docstring_boundary.json`,
   `papers/roadmap_non_goal_runtime_metadata_boundary.json`,

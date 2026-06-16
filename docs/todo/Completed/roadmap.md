@@ -15779,5 +15779,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     contradiction hits; and routes future hits to TODO ownership plus
     claim-update surfaces. The paper-manifest gate now requires and validates
     the sidecar at the repo root.
-  - Remaining roadmap gap: runtime/plugin/docs/paper scope joins and owner
-    review signoff remain active in `docs/todo/roadmap.md`.
+  - Remaining roadmap gap: owner review signoff remains active in
+    `docs/todo/roadmap.md`.
+- [x] Add ROADMAP non-goal runtime/plugin/docs/paper scope join.
+  - Spec evidence: non-goal guardrails need joined evidence across code,
+    docs, papers, runtime metadata, plugin scope, status references, and
+    remediation routing so independent sidecars cannot drift apart.
+  - Status: `papers/roadmap_non_goal_scope_join_boundary.json` now joins the
+    three stable ROADMAP non-goal ids across bounded documentation surfaces,
+    the full Markdown corpus scan, runtime metadata source scans, built-in
+    plugin docstring and registry scans, paper sidecar records,
+    `docs/status.md` references, and remediation-route ownership with zero
+    joined contradictions. The paper-manifest gate now requires and validates
+    the sidecar at the repo root.
+  - Remaining roadmap gap: owner review signoff remains active in
+    `docs/todo/roadmap.md`.

@@ -236,6 +236,10 @@ from libreevolve.problems.benchmarks.roadmap_non_goal_promotion_workflow_boundar
 from libreevolve.problems.benchmarks.roadmap_non_goal_remediation_boundary import (
     validate_roadmap_non_goal_remediation_boundary,
 )
+from libreevolve.problems.benchmarks.roadmap_non_goal_scope_join_boundary import (
+    roadmap_non_goal_scope_join_boundary_record,
+    validate_roadmap_non_goal_scope_join_boundary,
+)
 from libreevolve.problems.benchmarks.roadmap_non_goal_markdown_scan_boundary import (
     roadmap_non_goal_markdown_scan_boundary_record,
     validate_roadmap_non_goal_markdown_scan_boundary,
@@ -892,6 +896,7 @@ ROADMAP_NON_GOAL_DRIFT_BOUNDARY_FILE = "papers/roadmap_non_goal_drift_boundary.j
 ROADMAP_NON_GOAL_CI_PROMOTION_GATE_BOUNDARY_FILE = "papers/roadmap_non_goal_ci_promotion_gate_boundary.json"
 ROADMAP_NON_GOAL_PROMOTION_WORKFLOW_BOUNDARY_FILE = "papers/roadmap_non_goal_promotion_workflow_boundary.json"
 ROADMAP_NON_GOAL_REMEDIATION_BOUNDARY_FILE = "papers/roadmap_non_goal_remediation_boundary.json"
+ROADMAP_NON_GOAL_SCOPE_JOIN_BOUNDARY_FILE = "papers/roadmap_non_goal_scope_join_boundary.json"
 ROADMAP_NON_GOAL_MARKDOWN_SCAN_BOUNDARY_FILE = "papers/roadmap_non_goal_markdown_scan_boundary.json"
 ROADMAP_NON_GOAL_PLUGIN_DOCSTRING_BOUNDARY_FILE = "papers/roadmap_non_goal_plugin_docstring_boundary.json"
 ROADMAP_NON_GOAL_RUNTIME_METADATA_BOUNDARY_FILE = "papers/roadmap_non_goal_runtime_metadata_boundary.json"
@@ -1585,6 +1590,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_non_goal_ci_promotion_gate_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_promotion_workflow_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_remediation_boundary(root_path))
+    issues.extend(_validate_roadmap_non_goal_scope_join_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_markdown_scan_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_plugin_docstring_boundary(root_path))
     issues.extend(_validate_roadmap_non_goal_runtime_metadata_boundary(root_path))
@@ -4612,6 +4618,41 @@ def _validate_roadmap_non_goal_remediation_boundary(root_path: Path) -> list[Pap
             f"roadmap_non_goal_remediation_boundary_{issue.code}",
             issue.message,
             "roadmap_non_goal_remediation",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_roadmap_non_goal_scope_join_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ROADMAP_NON_GOAL_SCOPE_JOIN_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "roadmap_non_goal_scope_join_boundary_manifest_missing",
+                    (
+                        f"{ROADMAP_NON_GOAL_SCOPE_JOIN_BOUNDARY_FILE} must emit "
+                        "ROADMAP non-goal runtime/plugin/docs/paper scope join metadata"
+                    ),
+                    "roadmap_non_goal_scope_join",
+                )
+            ]
+        return []
+    report = validate_roadmap_non_goal_scope_join_boundary(
+        recordset,
+        root=root_path,
+    )
+    return [
+        PaperManifestIssue(
+            f"roadmap_non_goal_scope_join_boundary_{issue.code}",
+            issue.message,
+            "roadmap_non_goal_scope_join",
         )
         for issue in report.issues
     ]

@@ -1,10 +1,9 @@
 {
-  "boundary_status": "contradiction_remediation_report_recorded_without_scope_join_or_signoff",
-  "claim_boundary": "This boundary records a non-goal contradiction-remediation report over the bounded documentation inventory, Markdown corpus scan, plugin docstring scan, and runtime metadata scan. It rejects contradictory support claims by requiring zero unresolved hits and routes any future hit to TODO ownership and claim-update surfaces. It does not claim joined runtime/plugin/docs/paper scope proof or owner review signoff.",
+  "boundary_status": "contradiction_remediation_report_with_scope_join_without_signoff",
+  "claim_boundary": "This boundary records a non-goal contradiction-remediation report over the bounded documentation inventory, Markdown corpus scan, plugin docstring scan, and runtime metadata scan. It rejects contradictory support claims by requiring zero unresolved hits and routes any future hit to TODO ownership and claim-update surfaces. The joined runtime/plugin/docs/paper scope proof is recorded separately. It does not claim owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
-    "owner_review_signoff": "not_recorded_locally",
-    "runtime_plugin_scope_join": "not_recorded_locally"
+    "owner_review_signoff": "not_recorded_locally"
   },
   "remediation_route_count": 3,
   "remediation_route_records": [
@@ -57,7 +56,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_non_goal_remediation_boundary.v1",
-  "source_scan_count": 4,
+  "source_scan_count": 5,
   "source_scan_records": [
     {
       "contradiction_count": 0,
@@ -82,13 +81,20 @@
       "scan_id": "runtime_metadata_scan",
       "sidecar": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
       "unresolved_record_count": 0
+    },
+    {
+      "contradiction_count": 0,
+      "scan_id": "runtime_plugin_docs_paper_scope_join",
+      "sidecar": "papers/roadmap_non_goal_scope_join_boundary.json",
+      "unresolved_record_count": 0
     }
   ],
   "source_sidecars": [
     "papers/roadmap_non_goal_contradiction_boundary.json",
     "papers/roadmap_non_goal_markdown_scan_boundary.json",
     "papers/roadmap_non_goal_plugin_docstring_boundary.json",
-    "papers/roadmap_non_goal_runtime_metadata_boundary.json"
+    "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+    "papers/roadmap_non_goal_scope_join_boundary.json"
   ],
   "unresolved_contradiction_count": 0
 }

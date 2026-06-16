@@ -1,12 +1,11 @@
 {
   "active_todo_ref_count": 14,
-  "boundary_status": "bounded_non_goal_drift_matrix_with_remediation_without_scope_join",
-  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans and CI promotion-gate workflow coverage are recorded separately, and the intentional promotion workflow is recorded separately. The contradiction-remediation report is recorded separately. This boundary does not claim joined runtime/plugin/docs/paper scope proof or owner review signoff.",
+  "boundary_status": "bounded_non_goal_drift_matrix_with_scope_join_without_owner_signoff",
+  "claim_boundary": "This boundary records a non-goal drift and promotion readiness matrix tied to the bounded ROADMAP non-goal contradiction inventory. The runtime metadata, Markdown corpus, and plugin docstring scans and CI promotion-gate workflow coverage are recorded separately, and the intentional promotion workflow is recorded separately. The contradiction-remediation report is recorded separately, and the runtime/plugin/docs/paper scope join is recorded separately. This boundary does not claim owner review signoff.",
   "claim_ready": false,
   "criterion_count": 7,
   "missing_evidence": {
-    "owner_review_signoff": "not_recorded_locally",
-    "runtime_plugin_scope_join": "not_recorded_locally"
+    "owner_review_signoff": "not_recorded_locally"
   },
   "readiness_criteria": [
     {
@@ -230,7 +229,7 @@
         {
           "exists": true,
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "code/docs/paper surfaces",
+          "required_phrase": "owner review signoff",
           "required_phrase_present": true
         },
         {
@@ -244,7 +243,7 @@
       "criterion_id": "runtime_plugin_scope_join",
       "current_scope": "independent sidecars for plugin scope, status claims, and non-goal wording",
       "missing_readiness": "joined map proving code, docs, papers, and runtime metadata agree on non-goal scope",
-      "readiness_status": "sidecars_are_not_joined",
+      "readiness_status": "scope_join_recorded_without_owner_signoff",
       "sidecar_refs": [
         {
           "exists": true,
@@ -253,6 +252,10 @@
         {
           "exists": true,
           "path": "papers/status_claim_inventory.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_non_goal_scope_join_boundary.json"
         }
       ],
       "validation_gate": "runtime/plugin/docs/papers non-goal scope join"
@@ -269,7 +272,7 @@
     "owner_review_signoff"
   ],
   "schema": "libreevolve.roadmap_non_goal_drift_boundary.v1",
-  "sidecar_ref_count": 20,
+  "sidecar_ref_count": 21,
   "source_constrained_surface_count": 9,
   "source_contradiction_count": 0,
   "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",

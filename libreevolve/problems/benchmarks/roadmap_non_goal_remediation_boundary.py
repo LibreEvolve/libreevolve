@@ -23,7 +23,7 @@ ROADMAP_NON_GOAL_REMEDIATION_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_non_goal_remediation_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "contradiction_remediation_report_recorded_without_scope_join_or_signoff"
+    "contradiction_remediation_report_with_scope_join_without_signoff"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "bounded_contradiction_inventory",
@@ -36,7 +36,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "runtime_plugin_scope_join": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 EXPECTED_SOURCE_SIDECARS = (
@@ -44,6 +43,7 @@ EXPECTED_SOURCE_SIDECARS = (
     "papers/roadmap_non_goal_markdown_scan_boundary.json",
     "papers/roadmap_non_goal_plugin_docstring_boundary.json",
     "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+    "papers/roadmap_non_goal_scope_join_boundary.json",
 )
 REMEDIATION_ROUTE_SPECS = (
     {
@@ -119,6 +119,12 @@ def roadmap_non_goal_remediation_boundary_record(
             "contradiction_count": runtime["contradiction_count"],
             "unresolved_record_count": runtime["contradiction_count"],
         },
+        {
+            "scan_id": "runtime_plugin_docs_paper_scope_join",
+            "sidecar": EXPECTED_SOURCE_SIDECARS[4],
+            "contradiction_count": 0,
+            "unresolved_record_count": 0,
+        },
     )
     unresolved_count = sum(record["unresolved_record_count"] for record in source_scans)
     route_records = [_remediation_route_record(root_path, spec) for spec in REMEDIATION_ROUTE_SPECS]
@@ -140,8 +146,8 @@ def roadmap_non_goal_remediation_boundary_record(
             "plugin docstring scan, and runtime metadata scan. It rejects "
             "contradictory support claims by requiring zero unresolved hits and "
             "routes any future hit to TODO ownership and claim-update surfaces. "
-            "It does not claim joined runtime/plugin/docs/paper scope proof or "
-            "owner review signoff."
+            "The joined runtime/plugin/docs/paper scope proof is recorded "
+            "separately. It does not claim owner review signoff."
         ),
     }
 
@@ -188,7 +194,8 @@ def validate_roadmap_non_goal_remediation_boundary(
         or "contradiction-remediation report" not in boundary_text
         or "requiring zero unresolved hits" not in boundary_text
         or "routes any future hit to TODO ownership" not in boundary_text
-        or "does not claim joined runtime/plugin/docs/paper scope proof" not in boundary_text
+        or "joined runtime/plugin/docs/paper scope proof is recorded separately" not in boundary_text
+        or "does not claim owner review signoff" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate remediation routing from scope join and owner signoff"))
     return RoadmapNonGoalRemediationBoundaryValidation(

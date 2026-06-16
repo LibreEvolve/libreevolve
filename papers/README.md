@@ -2953,8 +2953,16 @@ Implemented:
   contradiction-remediation sidecar that aggregates the bounded documentation
   inventory, Markdown corpus scan, plugin docstring scan, and runtime metadata
   scan; requires zero unresolved contradiction hits; and routes future hits to
-  TODO ownership plus claim-update surfaces. It is not evidence of joined
-  runtime/plugin/docs/paper scope proof or owner-reviewed signoff.
+  TODO ownership plus claim-update surfaces. It is not evidence of
+  owner-reviewed signoff.
+- `papers/roadmap_non_goal_scope_join_boundary.json`: ROADMAP non-goal
+  runtime/plugin/docs/paper scope-join sidecar that joins the three stable
+  non-goal ids across bounded documentation surfaces, the full Markdown corpus
+  scan, runtime metadata source scans, built-in plugin docstring and registry
+  scans, paper sidecar records, `docs/status.md` references, and
+  remediation-route ownership with zero joined contradictions. It is not
+  evidence of owner-reviewed signoff or a complete future-proof non-goal
+  lifecycle gate.
 - `papers/roadmap_non_goal_markdown_scan_boundary.json`: ROADMAP non-goal
   Markdown corpus scan sidecar with the repository Markdown file inventory,
   stable non-goal ids, forbidden support-claim phrases, line-level hit records,

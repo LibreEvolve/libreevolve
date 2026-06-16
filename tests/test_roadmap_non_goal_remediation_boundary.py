@@ -14,14 +14,14 @@ def test_roadmap_non_goal_remediation_accepts_zero_unresolved_report():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "contradiction_remediation_report_recorded_without_scope_join_or_signoff"
+        == "contradiction_remediation_report_with_scope_join_without_signoff"
     )
     assert boundary["schema"] == ROADMAP_NON_GOAL_REMEDIATION_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
-    assert validation.source_scan_count == 4
+    assert validation.source_scan_count == 5
     assert validation.unresolved_contradiction_count == 0
     assert validation.remediation_route_count == 3
-    assert validation.missing_evidence_count == 2
+    assert validation.missing_evidence_count == 1
     assert all(
         record["contradiction_count"] == 0
         for record in boundary["source_scan_records"]
@@ -31,7 +31,6 @@ def test_roadmap_non_goal_remediation_accepts_zero_unresolved_report():
         for record in boundary["remediation_route_records"]
     )
     assert boundary["missing_evidence"] == {
-        "runtime_plugin_scope_join": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "requiring zero unresolved hits" in boundary["claim_boundary"]
@@ -70,10 +69,10 @@ def test_render_roadmap_non_goal_remediation_summary_reports_shape():
     assert "ROADMAP non-goal remediation boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | contradiction_remediation_report_recorded_without_scope_join_or_signoff |"
+        "| boundary_status | contradiction_remediation_report_with_scope_join_without_signoff |"
         in summary
     )
-    assert "| source_scan_count | 4 |" in summary
+    assert "| source_scan_count | 5 |" in summary
     assert "| unresolved_contradiction_count | 0 |" in summary
     assert "| remediation_route_count | 3 |" in summary
-    assert "| missing_evidence_count | 2 |" in summary
+    assert "| missing_evidence_count | 1 |" in summary

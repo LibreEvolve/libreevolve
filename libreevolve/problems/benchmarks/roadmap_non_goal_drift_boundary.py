@@ -14,7 +14,7 @@ ROADMAP_NON_GOAL_DRIFT_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_non_goal_drift_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_non_goal_drift_matrix_with_remediation_without_scope_join"
+    "bounded_non_goal_drift_matrix_with_scope_join_without_owner_signoff"
 )
 SOURCE_NON_GOAL_BOUNDARY_INPUT = "papers/roadmap_non_goal_contradiction_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -28,7 +28,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "runtime_plugin_scope_join": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 
@@ -180,11 +179,12 @@ CRITERION_SPECS = (
         "sidecars": (
             "papers/roadmap_plugin_extensibility_boundary.json",
             "papers/status_claim_inventory.json",
+            "papers/roadmap_non_goal_scope_join_boundary.json",
         ),
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "code/docs/paper surfaces",
+                "required_phrase": "owner review signoff",
             },
             {
                 "path": "docs/todo/papers.md",
@@ -192,7 +192,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "runtime/plugin/docs/papers non-goal scope join",
-        "readiness_status": "sidecars_are_not_joined",
+        "readiness_status": "scope_join_recorded_without_owner_signoff",
     },
 )
 
@@ -243,8 +243,9 @@ def roadmap_non_goal_drift_boundary_record(root: str | Path = ".") -> dict[str, 
             "docstring scans and CI promotion-gate workflow coverage are "
             "recorded separately, and the intentional promotion workflow is "
             "recorded separately. The contradiction-remediation report is "
-            "recorded separately. This boundary does not claim joined "
-            "runtime/plugin/docs/paper scope proof or owner review signoff."
+            "recorded separately, and the runtime/plugin/docs/paper scope "
+            "join is recorded separately. This boundary does not claim owner "
+            "review signoff."
         ),
     }
 
@@ -293,7 +294,8 @@ def validate_roadmap_non_goal_drift_boundary(
         or "CI promotion-gate workflow coverage" not in boundary_text
         or "intentional promotion workflow is recorded separately" not in boundary_text
         or "contradiction-remediation report is recorded separately" not in boundary_text
-        or "does not claim joined runtime/plugin/docs/paper scope proof" not in boundary_text
+        or "runtime/plugin/docs/paper scope join is recorded separately" not in boundary_text
+        or "does not claim owner review signoff" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from full drift/promotion enforcement"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

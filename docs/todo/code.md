@@ -8396,12 +8396,17 @@ sidecars, tests, and active TODOs.
     `runtime.artifacts.paper_artifacts` directory pointer, and the emitted
     marker-spelling/process-exhibit/Table 1 `paper_artifacts/...` report paths
     as one bundle; focused tests cover the valid manifest case plus an
-    unregistered emitted subpath.
+    unregistered emitted subpath. The same validator can now consume
+    `docs/run-artifacts.md` text and checks that every schema-declared exact
+    `paper_artifacts/...` path is documented and every documented backtick
+    reference under `paper_artifacts/` resolves to the schema root, a schema
+    directory, or a schema path; focused tests cover missing and unregistered
+    docs references.
   - Current gap: stale `paper_artifacts/` cleanup and manifest/report/schema
-    subpath consistency are fixed, but generated paper/source evidence still
-    lacks behavioral show/restore reader coverage and a docs-anchor verifier
-    that proves every documented `paper_artifacts/...` entry is exercised
-    end to end.
+    subpath consistency are fixed, and docs anchors are schema-checked, but
+    generated paper/source evidence still lacks behavioral show/restore reader
+    coverage that proves the documented `paper_artifacts/...` entries are
+    exercised end to end.
   - Required result: validate that manifest/documented
     `paper_artifacts/...` paths cannot exist outside collision, cleanup,
     run-artifact summary, restore/show, docs, and schema expectations; and keep

@@ -7241,10 +7241,18 @@ def test_runtime_history_reports_marker_spelling_provenance():
     )
 
     manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
-    lifecycle_validation = validate_paper_artifact_lifecycle_manifest(manifest)
+    run_artifacts_doc_text = Path("docs/run-artifacts.md").read_text(
+        encoding="utf-8"
+    )
+    lifecycle_validation = validate_paper_artifact_lifecycle_manifest(
+        manifest,
+        run_artifacts_doc_text=run_artifacts_doc_text,
+    )
     assert lifecycle_validation["ok"] is True
     assert lifecycle_validation["unknown_paths"] == []
     assert lifecycle_validation["missing_paths"] == []
+    assert lifecycle_validation["missing_doc_paths"] == []
+    assert lifecycle_validation["unknown_doc_refs"] == []
     report = manifest["runtime"]["history"]["marker_spelling_provenance_report"]
 
     assert report["schema"] == "libreevolve.marker_spelling_provenance_report.v1"
@@ -7341,6 +7349,27 @@ def test_runtime_history_reports_marker_spelling_provenance():
     assert {
         "unknown_paper_artifact_paths",
         "missing_paper_artifact_schema_paths",
+    }.issubset({issue["code"] for issue in lifecycle_validation["issues"]})
+
+    forged_doc_text = run_artifacts_doc_text.replace(
+        "paper_artifacts/process_exhibit/figure_1.mmd",
+        "paper_artifacts/process_exhibit/unregistered.mmd",
+        1,
+    )
+    lifecycle_validation = validate_paper_artifact_lifecycle_manifest(
+        manifest,
+        run_artifacts_doc_text=forged_doc_text,
+    )
+    assert lifecycle_validation["ok"] is False
+    assert "paper_artifacts/process_exhibit/figure_1.mmd" in (
+        lifecycle_validation["missing_doc_paths"]
+    )
+    assert "paper_artifacts/process_exhibit/unregistered.mmd" in (
+        lifecycle_validation["unknown_doc_refs"]
+    )
+    assert {
+        "missing_paper_artifact_doc_paths",
+        "unknown_paper_artifact_doc_refs",
     }.issubset({issue["code"] for issue in lifecycle_validation["issues"]})
 
 

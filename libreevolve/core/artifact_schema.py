@@ -408,7 +408,11 @@ def paper_artifact_subpath_paths() -> set[str]:
     }
 
 
-def validate_paper_artifact_lifecycle_manifest(manifest: object) -> dict:
+def validate_paper_artifact_lifecycle_manifest(
+    manifest: object,
+    *,
+    run_artifacts_doc_text: str | None = None,
+) -> dict:
     """Validate a manifest's paper_artifacts runtime paths against schema.
 
     This is deliberately a bundle-level check: it joins the manifest artifact
@@ -528,6 +532,22 @@ def validate_paper_artifact_lifecycle_manifest(manifest: object) -> dict:
     emitted_paths = _paper_artifact_paths_from_runtime_history(history)
     unknown_paths = sorted(emitted_paths - expected_paths)
     missing_paths = sorted(expected_paths - emitted_paths)
+    documented_refs: list[str] = []
+    missing_doc_paths: list[str] = []
+    unknown_doc_refs: list[str] = []
+    if run_artifacts_doc_text is not None:
+        documented_refs = _paper_artifact_doc_refs(run_artifacts_doc_text)
+        documented_exact_paths = {
+            ref
+            for ref in documented_refs
+            if _paper_artifact_doc_ref_kind(ref, expected_paths) == "exact_path"
+        }
+        missing_doc_paths = sorted(expected_paths - documented_exact_paths)
+        unknown_doc_refs = sorted(
+            ref
+            for ref in documented_refs
+            if _paper_artifact_doc_ref_kind(ref, expected_paths) == "unknown"
+        )
     if unknown_paths:
         issues.append(
             {
@@ -542,6 +562,20 @@ def validate_paper_artifact_lifecycle_manifest(manifest: object) -> dict:
                 "message": "runtime reports did not emit every schema-declared paper artifact path",
             }
         )
+    if missing_doc_paths:
+        issues.append(
+            {
+                "code": "missing_paper_artifact_doc_paths",
+                "message": "run-artifacts guide does not document every schema-declared paper artifact path",
+            }
+        )
+    if unknown_doc_refs:
+        issues.append(
+            {
+                "code": "unknown_paper_artifact_doc_refs",
+                "message": "run-artifacts guide references paper_artifacts paths outside schema",
+            }
+        )
     return {
         "schema": schema,
         "ok": not issues,
@@ -552,6 +586,9 @@ def validate_paper_artifact_lifecycle_manifest(manifest: object) -> dict:
         "emitted_paths": sorted(emitted_paths),
         "unknown_paths": unknown_paths,
         "missing_paths": missing_paths,
+        "documented_refs": documented_refs,
+        "missing_doc_paths": missing_doc_paths,
+        "unknown_doc_refs": unknown_doc_refs,
     }
 
 
@@ -576,6 +613,30 @@ def _collect_paper_artifact_paths(value: object, paths: set[str]) -> None:
     elif isinstance(value, list):
         for item in value:
             _collect_paper_artifact_paths(item, paths)
+
+
+def _paper_artifact_doc_refs(text: str) -> list[str]:
+    refs: set[str] = set()
+    chunks = text.split("`")
+    for index, chunk in enumerate(chunks):
+        if index % 2 == 0:
+            continue
+        if chunk == "paper_artifacts" or chunk.startswith("paper_artifacts/"):
+            refs.add(chunk)
+    return sorted(refs)
+
+
+def _paper_artifact_doc_ref_kind(ref: str, expected_paths: set[str]) -> str:
+    if ref in {"paper_artifacts", "paper_artifacts/", "paper_artifacts/..."}:
+        return "root"
+    normalized = ref[:-4] if ref.endswith("/...") else ref
+    if normalized.endswith("/"):
+        normalized = normalized[:-1]
+    if ref in expected_paths:
+        return "exact_path"
+    if any(path.startswith(f"{normalized}/") for path in expected_paths):
+        return "directory"
+    return "unknown"
 
 
 def _quarantine_record(

@@ -926,7 +926,20 @@ completed manifest's `artifact_schema.paper_artifact_subpaths`, the
 `generated_artifact_inventory.paper_artifacts` schema pointer, the
 `runtime.artifacts.paper_artifacts` directory pointer, and the
 `paper_artifacts/...` paths emitted by the marker-spelling, process-exhibit,
-and Table 1 runtime reports.
+and Table 1 runtime reports. The exact schema-declared paper artifact subpaths
+are:
+
+- `paper_artifacts/marker_spelling/alphaevolve_page_4_text.txt`
+- `paper_artifacts/marker_spelling/alphaevolve_page_6_text.txt`
+- `paper_artifacts/marker_spelling/alphaevolve_figure_3a_marker_text.txt`
+- `paper_artifacts/process_exhibit/figure_1.mmd`
+- `paper_artifacts/process_exhibit/figure_1_accessibility.txt`
+- `paper_artifacts/process_exhibit/figure_2.mmd`
+- `paper_artifacts/process_exhibit/figure_2_accessibility.txt`
+- `paper_artifacts/process_exhibit/source_alphaevolve_figure_1_page_3_text.txt`
+- `paper_artifacts/process_exhibit/source_alphaevolve_figure_2_page_4_text.txt`
+- `paper_artifacts/table1_capability_comparison/table_1.md`
+- `paper_artifacts/table1_capability_comparison/table_1_accessibility.txt`
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.

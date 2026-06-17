@@ -10,7 +10,7 @@ README_CONTRIBUTOR_GATE_BOUNDARY_SCHEMA = (
     "libreevolve.readme_contributor_gate_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "readme_contributor_gate_static_map_without_policy_drift_proof"
+    "readme_contributor_gate_static_map_with_sentence_artifact_map_without_policy_drift_proof"
 )
 README_PATH = "README.md"
 DEVELOPMENT_PATH = "docs/development.md"
@@ -72,6 +72,59 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("ci_workflow_boundary_paper_docs", CI_BOUNDARY_PATH, "paper/docs job"),
     ("readme_todo_owner", README_TODO_PATH, "Add README contributor-gate and secret-scan evidence mapping."),
 )
+EXPECTED_SENTENCE_ARTIFACT_MAP = (
+    {
+        "map_id": "readme_scope_sentence",
+        "readme_marker_id": "readme_scope",
+        "evidence_anchor_ids": ("readme_todo_owner",),
+    },
+    {
+        "map_id": "docs_scope_sentence",
+        "readme_marker_id": "docs_scope",
+        "evidence_anchor_ids": ("development_precommit_command",),
+    },
+    {
+        "map_id": "papers_scope_sentence",
+        "readme_marker_id": "papers_scope",
+        "evidence_anchor_ids": ("workflow_paper_manifest_gate", "ci_workflow_boundary_paper_docs"),
+    },
+    {
+        "map_id": "roadmap_todo_scope_sentence",
+        "readme_marker_id": "roadmap_todo_scope",
+        "evidence_anchor_ids": ("readme_todo_owner",),
+    },
+    {
+        "map_id": "focused_tests_sentence",
+        "readme_marker_id": "focused_tests",
+        "evidence_anchor_ids": ("development_precommit_command", "workflow_boundary_tests"),
+    },
+    {
+        "map_id": "paper_manifest_gate_sentence",
+        "readme_marker_id": "paper_manifest_gate",
+        "evidence_anchor_ids": ("development_paper_manifest_command", "workflow_paper_manifest_gate"),
+    },
+    {
+        "map_id": "secret_baseline_sentence",
+        "readme_marker_id": "secret_baseline",
+        "evidence_anchor_ids": (
+            "development_secret_baseline",
+            "precommit_baseline_arg",
+            "secrets_baseline_plugins",
+            "workflow_secret_baseline_path_filter",
+            "agents_secret_baseline_assertion",
+        ),
+    },
+    {
+        "map_id": "allowlist_pragma_sentence",
+        "readme_marker_id": "allowlist_pragma",
+        "evidence_anchor_ids": ("development_allowlist_pragma", "agents_allowlist_assertion"),
+    },
+    {
+        "map_id": "baseline_stage_policy_sentence",
+        "readme_marker_id": "baseline_stage_policy",
+        "evidence_anchor_ids": ("development_unstaged_policy", "workflow_detect_secrets_run"),
+    },
+)
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "readme_contributing_markers",
     "docs_scope_routing_markers",
@@ -95,7 +148,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "complete_sentence_to_artifact_map": "not_recorded_locally",
     "precommit_drift_gate": "not_recorded_locally",
     "source_boundary_file_change_detector": "not_recorded_locally",
     "semantic_secret_policy_verifier": "not_recorded_locally",
@@ -117,6 +169,7 @@ class ReadmeContributorGateBoundaryValidation:
     missing_readme_marker_count: int
     evidence_anchor_count: int
     missing_evidence_anchor_count: int
+    sentence_artifact_map_count: int
     missing_evidence_count: int
     issues: list[ReadmeContributorGateBoundaryIssue]
 
@@ -152,6 +205,14 @@ def readme_contributor_gate_boundary_record(root: str | Path = ".") -> dict[str,
     missing_evidence_anchors = [
         record for record in evidence_anchor_records if record["marker_status"] != "marker_present"
     ]
+    sentence_artifact_map_records = [
+        _sentence_artifact_map_record(
+            spec,
+            readme_marker_records=readme_marker_records,
+            evidence_anchor_records=evidence_anchor_records,
+        )
+        for spec in EXPECTED_SENTENCE_ARTIFACT_MAP
+    ]
     return {
         "schema": README_CONTRIBUTOR_GATE_BOUNDARY_SCHEMA,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
@@ -172,6 +233,13 @@ def readme_contributor_gate_boundary_record(root: str | Path = ".") -> dict[str,
         "missing_evidence_anchor_count": len(missing_evidence_anchors),
         "missing_evidence_anchor_records": missing_evidence_anchors,
         "evidence_anchor_records": evidence_anchor_records,
+        "sentence_artifact_map_count": len(sentence_artifact_map_records),
+        "sentence_artifact_map_records": sentence_artifact_map_records,
+        "sentence_artifact_map_status": (
+            "all_readme_contributing_sentences_mapped_to_artifacts"
+            if all(record["map_status"] == "mapped" for record in sentence_artifact_map_records)
+            else "readme_contributing_sentence_artifact_map_incomplete"
+        ),
         "contributor_gate_map_status": (
             "readme_contributor_gate_static_map_present"
             if not missing_readme_markers and not missing_evidence_anchors
@@ -187,10 +255,10 @@ def readme_contributor_gate_boundary_record(root: str | Path = ".") -> dict[str,
             "the pre-commit detect-secrets hook, .secrets.baseline detector "
             "inventory markers, GitHub Actions secret-scan and paper/docs jobs, "
             "tests/test_agents_docs.py drift assertions, CI workflow sidecar "
-            "anchors, and active TODO ownership. It does not claim a complete "
-            "sentence-to-artifact map, pre-commit drift gate, source-boundary "
-            "file-change detector, semantic secret-policy verifier, or owner "
-            "review signoff."
+            "anchors, active TODO ownership, and a bounded README contributing "
+            "sentence-to-artifact map. It does not claim a pre-commit drift "
+            "gate, source-boundary file-change detector, semantic "
+            "secret-policy verifier, or owner review signoff."
         ),
     }
 
@@ -205,7 +273,7 @@ def validate_readme_contributor_gate_boundary(
     )
     if read_issues:
         return ReadmeContributorGateBoundaryValidation(
-            False, None, 0, 0, 0, 0, 0, read_issues
+            False, None, 0, 0, 0, 0, 0, 0, read_issues
         )
     assert isinstance(data, dict)
     expected = readme_contributor_gate_boundary_record(root)
@@ -233,6 +301,9 @@ def validate_readme_contributor_gate_boundary(
         "missing_evidence_anchor_count",
         "missing_evidence_anchor_records",
         "evidence_anchor_records",
+        "sentence_artifact_map_count",
+        "sentence_artifact_map_records",
+        "sentence_artifact_map_status",
         "contributor_gate_map_status",
     ):
         if data.get(key) != expected[key]:
@@ -241,6 +312,10 @@ def validate_readme_contributor_gate_boundary(
         issues.append(_issue("missing_readme_contributor_marker", "README contributor markers are incomplete"))
     if data.get("missing_evidence_anchor_count") != 0:
         issues.append(_issue("missing_contributor_gate_evidence_anchor", "README contributor evidence anchors are incomplete"))
+    if data.get("sentence_artifact_map_count") != len(EXPECTED_SENTENCE_ARTIFACT_MAP):
+        issues.append(_issue("invalid_sentence_artifact_map_count", "README contributing sentence map count changed"))
+    if data.get("sentence_artifact_map_status") != "all_readme_contributing_sentences_mapped_to_artifacts":
+        issues.append(_issue("invalid_sentence_artifact_map_status", "README contributing sentence map is incomplete"))
     if data.get("contributor_gate_map_status") != "readme_contributor_gate_static_map_present":
         issues.append(_issue("invalid_contributor_gate_map_status", "README contributor static map must be present"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -252,7 +327,8 @@ def validate_readme_contributor_gate_boundary(
         not isinstance(boundary_text, str)
         or "README Contributing markers" not in boundary_text
         or "pre-commit detect-secrets hook" not in boundary_text
-        or "does not claim a complete sentence-to-artifact map" not in boundary_text
+        or "bounded README contributing sentence-to-artifact map" not in boundary_text
+        or "pre-commit drift gate" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate contributor static map from policy drift proof"))
     return ReadmeContributorGateBoundaryValidation(
@@ -262,6 +338,7 @@ def validate_readme_contributor_gate_boundary(
         missing_readme_marker_count=data.get("missing_readme_marker_count") if isinstance(data.get("missing_readme_marker_count"), int) else 0,
         evidence_anchor_count=data.get("evidence_anchor_count") if isinstance(data.get("evidence_anchor_count"), int) else 0,
         missing_evidence_anchor_count=data.get("missing_evidence_anchor_count") if isinstance(data.get("missing_evidence_anchor_count"), int) else 0,
+        sentence_artifact_map_count=data.get("sentence_artifact_map_count") if isinstance(data.get("sentence_artifact_map_count"), int) else 0,
         missing_evidence_count=missing_count,
         issues=issues,
     )
@@ -280,12 +357,61 @@ def render_readme_contributor_gate_boundary_summary(boundary: dict[str, Any]) ->
         f"| missing_readme_marker_count | {validation.missing_readme_marker_count} |",
         f"| evidence_anchor_count | {validation.evidence_anchor_count} |",
         f"| missing_evidence_anchor_count | {validation.missing_evidence_anchor_count} |",
+        f"| sentence_artifact_map_count | {validation.sentence_artifact_map_count} |",
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
     ]
     if validation.issues:
         lines.extend(["", "Issues:"])
         lines.extend(f"- {issue.code}: {issue.message}" for issue in validation.issues)
     return "\n".join(lines)
+
+
+def _sentence_artifact_map_record(
+    spec: dict[str, Any],
+    *,
+    readme_marker_records: list[dict[str, Any]],
+    evidence_anchor_records: list[dict[str, Any]],
+) -> dict[str, Any]:
+    readme_records_by_id = {record["record_id"]: record for record in readme_marker_records}
+    evidence_records_by_id = {
+        record["record_id"]: record
+        for record in evidence_anchor_records
+    }
+    readme_marker_id = str(spec["readme_marker_id"])
+    evidence_anchor_ids = tuple(str(record_id) for record_id in spec["evidence_anchor_ids"])
+    readme_record = readme_records_by_id.get(readme_marker_id)
+    evidence_records = [evidence_records_by_id.get(record_id) for record_id in evidence_anchor_ids]
+    evidence_anchor_statuses = [
+        {
+            "evidence_anchor_id": record_id,
+            "marker_status": (
+                evidence_records_by_id[record_id]["marker_status"]
+                if record_id in evidence_records_by_id
+                else "marker_missing"
+            ),
+        }
+        for record_id in evidence_anchor_ids
+    ]
+    readme_present = (
+        readme_record is not None
+        and readme_record.get("marker_status") == "marker_present"
+    )
+    evidence_present = all(
+        record is not None and record.get("marker_status") == "marker_present"
+        for record in evidence_records
+    )
+    return {
+        "map_id": spec["map_id"],
+        "readme_marker_id": readme_marker_id,
+        "readme_marker_status": (
+            readme_record["marker_status"]
+            if readme_record is not None
+            else "marker_missing"
+        ),
+        "evidence_anchor_ids": list(evidence_anchor_ids),
+        "evidence_anchor_statuses": evidence_anchor_statuses,
+        "map_status": "mapped" if readme_present and evidence_present else "missing_marker",
+    }
 
 
 def _marker_record(record_id: str, path: str, text: str, marker: str) -> dict[str, Any]:

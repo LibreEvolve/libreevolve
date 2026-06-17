@@ -1069,14 +1069,15 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     anchors, the pre-commit detect-secrets hook, `.secrets.baseline` detector
     inventory markers, GitHub Actions secret-scan and paper/docs jobs,
     existing agent-doc drift assertions, CI workflow sidecar anchors, and this
-    active TODO owner.
+    active TODO owner. It also maps the README Contributing guidance sentences
+    to the concrete docs, hook, workflow, baseline, sidecar, and focused-test
+    artifacts that currently support them.
   - Current gap: the README-owned sidecar is a static marker map, not a
-    complete contributor-policy verifier. It does not map every README
-    contributing sentence to a specific hook/workflow/test/validator/source-
-    boundary artifact, prove that pre-commit hook changes force README/TODO
-    updates, detect source-boundary file changes that need paper-manifest
-    guidance updates, semantically verify secret-policy wording, or record
-    owner review signoff.
+    complete contributor-policy verifier. It maps README contributing
+    sentences to marker-level artifacts, but does not prove that pre-commit
+    hook changes force README/TODO updates, detect source-boundary file changes
+    that need paper-manifest guidance updates, semantically verify
+    secret-policy wording, or record owner review signoff.
   - Required result: add a README contributing-policy evidence map or test
     that links each contributing sentence to concrete hook/workflow/validator
     artifacts, checks secret-scan allowlist and baseline regeneration guidance

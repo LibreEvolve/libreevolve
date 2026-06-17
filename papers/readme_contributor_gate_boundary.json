@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.readme_contributor_gate_boundary.v1",
-  "boundary_status": "readme_contributor_gate_static_map_without_policy_drift_proof",
+  "boundary_status": "readme_contributor_gate_static_map_with_sentence_artifact_map_without_policy_drift_proof",
   "claim_ready": false,
   "readme_path": "README.md",
   "development_path": "docs/development.md",
@@ -234,6 +234,190 @@
       "marker_status": "marker_present"
     }
   ],
+  "sentence_artifact_map_count": 9,
+  "sentence_artifact_map_records": [
+    {
+      "map_id": "readme_scope_sentence",
+      "readme_marker_id": "readme_scope",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "docs_scope_sentence",
+      "readme_marker_id": "docs_scope",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "development_precommit_command"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "development_precommit_command",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "papers_scope_sentence",
+      "readme_marker_id": "papers_scope",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "workflow_paper_manifest_gate",
+        "ci_workflow_boundary_paper_docs"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "workflow_paper_manifest_gate",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "ci_workflow_boundary_paper_docs",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "roadmap_todo_scope_sentence",
+      "readme_marker_id": "roadmap_todo_scope",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "focused_tests_sentence",
+      "readme_marker_id": "focused_tests",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "development_precommit_command",
+        "workflow_boundary_tests"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "development_precommit_command",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "workflow_boundary_tests",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "paper_manifest_gate_sentence",
+      "readme_marker_id": "paper_manifest_gate",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "development_paper_manifest_command",
+        "workflow_paper_manifest_gate"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "development_paper_manifest_command",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "workflow_paper_manifest_gate",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "secret_baseline_sentence",
+      "readme_marker_id": "secret_baseline",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "development_secret_baseline",
+        "precommit_baseline_arg",
+        "secrets_baseline_plugins",
+        "workflow_secret_baseline_path_filter",
+        "agents_secret_baseline_assertion"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "development_secret_baseline",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "precommit_baseline_arg",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "secrets_baseline_plugins",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "workflow_secret_baseline_path_filter",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "agents_secret_baseline_assertion",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "allowlist_pragma_sentence",
+      "readme_marker_id": "allowlist_pragma",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "development_allowlist_pragma",
+        "agents_allowlist_assertion"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "development_allowlist_pragma",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "agents_allowlist_assertion",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "map_id": "baseline_stage_policy_sentence",
+      "readme_marker_id": "baseline_stage_policy",
+      "readme_marker_status": "marker_present",
+      "evidence_anchor_ids": [
+        "development_unstaged_policy",
+        "workflow_detect_secrets_run"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "development_unstaged_policy",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "workflow_detect_secrets_run",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    }
+  ],
+  "sentence_artifact_map_status": "all_readme_contributing_sentences_mapped_to_artifacts",
   "contributor_gate_map_status": "readme_contributor_gate_static_map_present",
   "required_evidence_fields": [
     "readme_contributing_markers",
@@ -258,11 +442,10 @@
     "owner_review_signoff"
   ],
   "missing_evidence": {
-    "complete_sentence_to_artifact_map": "not_recorded_locally",
     "precommit_drift_gate": "not_recorded_locally",
     "source_boundary_file_change_detector": "not_recorded_locally",
     "semantic_secret_policy_verifier": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records README Contributing markers, docs/papers/ROADMAP/TODO routing markers, focused-test and paper-manifest guidance, secret-scan baseline policy, allowlist-pragma policy, baseline-staging policy, development-guide secret-scan anchors, the pre-commit detect-secrets hook, .secrets.baseline detector inventory markers, GitHub Actions secret-scan and paper/docs jobs, tests/test_agents_docs.py drift assertions, CI workflow sidecar anchors, and active TODO ownership. It does not claim a complete sentence-to-artifact map, pre-commit drift gate, source-boundary file-change detector, semantic secret-policy verifier, or owner review signoff."
+  "claim_boundary": "This boundary records README Contributing markers, docs/papers/ROADMAP/TODO routing markers, focused-test and paper-manifest guidance, secret-scan baseline policy, allowlist-pragma policy, baseline-staging policy, development-guide secret-scan anchors, the pre-commit detect-secrets hook, .secrets.baseline detector inventory markers, GitHub Actions secret-scan and paper/docs jobs, tests/test_agents_docs.py drift assertions, CI workflow sidecar anchors, active TODO ownership, and a bounded README contributing sentence-to-artifact map. It does not claim a pre-commit drift gate, source-boundary file-change detector, semantic secret-policy verifier, or owner review signoff."
 }

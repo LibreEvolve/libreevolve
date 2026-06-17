@@ -14,7 +14,7 @@ def test_readme_contributor_gate_boundary_accepts_current_static_map():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "readme_contributor_gate_static_map_without_policy_drift_proof"
+        == "readme_contributor_gate_static_map_with_sentence_artifact_map_without_policy_drift_proof"
     )
     assert boundary["schema"] == README_CONTRIBUTOR_GATE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -28,13 +28,19 @@ def test_readme_contributor_gate_boundary_accepts_current_static_map():
     assert boundary["missing_readme_marker_records"] == []
     assert validation.evidence_anchor_count == 25
     assert validation.missing_evidence_anchor_count == 0
+    assert validation.sentence_artifact_map_count == 9
     assert boundary["missing_evidence_anchor_records"] == []
+    assert (
+        boundary["sentence_artifact_map_status"]
+        == "all_readme_contributing_sentences_mapped_to_artifacts"
+    )
+    assert boundary["sentence_artifact_map_records"][0]["map_id"] == "readme_scope_sentence"
+    assert boundary["sentence_artifact_map_records"][0]["map_status"] == "mapped"
     assert (
         boundary["contributor_gate_map_status"]
         == "readme_contributor_gate_static_map_present"
     )
     assert boundary["missing_evidence"] == {
-        "complete_sentence_to_artifact_map": "not_recorded_locally",
         "precommit_drift_gate": "not_recorded_locally",
         "source_boundary_file_change_detector": "not_recorded_locally",
         "semantic_secret_policy_verifier": "not_recorded_locally",
@@ -43,7 +49,7 @@ def test_readme_contributor_gate_boundary_accepts_current_static_map():
     assert "README Contributing markers" in boundary["claim_boundary"]
     assert "pre-commit detect-secrets hook" in boundary["claim_boundary"]
     assert (
-        "does not claim a complete sentence-to-artifact map"
+        "bounded README contributing sentence-to-artifact map"
         in boundary["claim_boundary"]
     )
 
@@ -62,6 +68,11 @@ def test_readme_contributor_gate_boundary_rejects_overclaim_and_drift():
         boundary["evidence_anchor_records"][0]
     ]
     boundary["evidence_anchor_records"][0]["marker_status"] = "marker_missing"
+    boundary["sentence_artifact_map_count"] = 0
+    boundary["sentence_artifact_map_status"] = (
+        "readme_contributing_sentence_artifact_map_incomplete"
+    )
+    boundary["sentence_artifact_map_records"][0]["map_status"] = "missing_marker"
     boundary["contributor_gate_map_status"] = (
         "readme_contributor_gate_static_map_incomplete"
     )
@@ -84,6 +95,9 @@ def test_readme_contributor_gate_boundary_rejects_overclaim_and_drift():
     assert "invalid_missing_evidence_anchor_records" in codes
     assert "invalid_evidence_anchor_records" in codes
     assert "missing_contributor_gate_evidence_anchor" in codes
+    assert "invalid_sentence_artifact_map_count" in codes
+    assert "invalid_sentence_artifact_map_records" in codes
+    assert "invalid_sentence_artifact_map_status" in codes
     assert "invalid_contributor_gate_map_status" in codes
     assert "invalid_missing_evidence_precommit_drift_gate" in codes
     assert "missing_required_evidence_field" in codes
@@ -97,11 +111,12 @@ def test_render_readme_contributor_gate_boundary_summary_reports_shape():
     assert "README contributor-gate boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | readme_contributor_gate_static_map_without_policy_drift_proof |"
+        "| boundary_status | readme_contributor_gate_static_map_with_sentence_artifact_map_without_policy_drift_proof |"
         in summary
     )
     assert "| readme_marker_count | 10 |" in summary
     assert "| missing_readme_marker_count | 0 |" in summary
     assert "| evidence_anchor_count | 25 |" in summary
     assert "| missing_evidence_anchor_count | 0 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| sentence_artifact_map_count | 9 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

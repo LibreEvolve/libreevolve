@@ -1524,10 +1524,10 @@ Important limits:
   staging policy, development-guide secret-scan anchors, the pre-commit
   detect-secrets hook, `.secrets.baseline` detector inventory markers, GitHub
   Actions secret-scan and paper/docs jobs, existing agent-doc drift assertions,
-  CI workflow sidecar anchors, and active TODO ownership. This is not a
-  complete sentence-to-artifact map, pre-commit drift gate, source-boundary
-  file-change detector, semantic secret-policy verifier, or owner review
-  signoff.
+  CI workflow sidecar anchors, active TODO ownership, and a bounded README
+  contributing sentence-to-artifact map. This is not a pre-commit drift gate,
+  source-boundary file-change detector, semantic secret-policy verifier, or
+  owner review signoff.
 - README license evidence now records the README License heading and MIT
   sentence, `LICENSE` file MIT text markers, pyproject license metadata,
   `papers/source_rights.json` policy markers, paper-source-rights module

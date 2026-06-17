@@ -3039,9 +3039,10 @@ Implemented:
   development-guide secret-scan anchors, the pre-commit detect-secrets hook,
   `.secrets.baseline` detector inventory markers, GitHub Actions secret-scan
   and paper/docs jobs, existing agent-doc drift assertions, CI workflow
-  sidecar anchors, and active TODO ownership. It is not a complete sentence-
-  to-artifact map, pre-commit drift gate, source-boundary file-change detector,
-  semantic secret-policy verifier, or owner review signoff.
+  sidecar anchors, active TODO ownership, and a bounded README contributing
+  sentence-to-artifact map. It is not a pre-commit drift gate,
+  source-boundary file-change detector, semantic secret-policy verifier, or
+  owner review signoff.
 - `papers/readme_license_boundary.json`: README license sidecar. It records
   the README License heading and MIT sentence, `LICENSE` file MIT text markers,
   pyproject license metadata, `papers/source_rights.json` policy markers,

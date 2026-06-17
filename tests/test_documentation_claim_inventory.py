@@ -70,15 +70,15 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         == "status_ledger_structural_bullet_inventory_without_semantic_verifier"
     )
     assert inventory["status_ledger_source_path"] == "docs/status.md"
-    assert inventory["status_ledger_bullet_count"] == 249
+    assert inventory["status_ledger_bullet_count"] == 250
     assert inventory["status_ledger_section_counts"] == {
         "implemented_today": 9,
-        "important_limits": 240,
+        "important_limits": 241,
     }
     assert inventory["status_ledger_signal_term_count"] == 11
-    assert inventory["status_ledger_signal_record_count"] == 604
-    assert inventory["status_ledger_unique_local_path_ref_count"] == 210
-    assert inventory["status_ledger_local_path_ref_count"] == 265
+    assert inventory["status_ledger_signal_record_count"] == 607
+    assert inventory["status_ledger_unique_local_path_ref_count"] == 211
+    assert inventory["status_ledger_local_path_ref_count"] == 266
     assert inventory["status_ledger_missing_local_path_refs"] == []
     assert "paper_artifacts/..." not in inventory["status_ledger_unique_local_path_refs"]
     assert (
@@ -312,8 +312,8 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| claim_surface_heading_count | 34 |" in summary
     assert "| uncovered_claim_surface_heading_count | 28 |" in summary
     assert "| uncovered_heading_todo_link_count | 3 |" in summary
-    assert "| status_ledger_bullet_count | 249 |" in summary
-    assert "| status_ledger_local_path_ref_count | 265 |" in summary
+    assert "| status_ledger_bullet_count | 250 |" in summary
+    assert "| status_ledger_local_path_ref_count | 266 |" in summary
     assert "| run_artifact_documented_count | 22 |" in summary
     assert "| run_artifact_cleanup_count | 23 |" in summary
     assert "| run_artifact_documented_without_cleanup_count | 0 |" in summary

@@ -1284,6 +1284,14 @@ feed current-run resurfacing evidence. `resurface_by_program_output()` can
 return defensive current-run candidates by exact output source key and/or
 output hash. The committed `papers/program_output_boundary.json` sidecar keeps
 this exact current-run output lookup scope machine-validated.
+The committed `papers/evolutionary_database_boundary.json` sidecar now records
+the broader current-run resurfacing boundary: append-only accepted/failure/
+archive streams, manifest archive snapshots, bounded rank-fusion resurfacing,
+and defensive current-run metric/lineage/descriptor/novelty/feedback/artifact/
+hypothesis/failure/program-output query snapshots. It is not evidence of a
+durable cross-run query store, schema-versioned database migrations, semantic
+retrieval indexes, replayable sampling policies, cross-run failure memory,
+learned novelty models, or AlphaEvolve-grade evolutionary database parity.
 `runtime.history.artifact_index` exposes bounded evaluator artifact
 path/hash/redaction/skipped/stage/content-excerpt evidence, and valid
 artifact-bearing candidates can feed current-run resurfacing evidence. The
@@ -3135,6 +3143,16 @@ Implemented:
   Markdown fragment-anchor resolution records, audited surface heading records,
   uncovered heading-to-claim gap records, active TODO-owner links, and explicit
   missing-evidence fields for complete coverage and semantic proof.
+- `papers/evolutionary_database_boundary.json`: AlphaEvolve evolutionary
+  database sidecar for current-run resurfacing versus durable database parity.
+  It records append-only accepted/failure/archive streams, archive-state
+  snapshots, bounded rank-fusion resurfacing summaries, and defensive
+  current-run query snapshots by metric, lineage, descriptor, novelty,
+  feedback, artifact, hypothesis, failure, and exact program-output evidence.
+  It is not a durable cross-run query store, schema-versioned database
+  migration proof, semantic retrieval index, replayable sampling policy,
+  cross-run failure memory, learned novelty model, or AlphaEvolve-grade
+  evolutionary database.
 - `papers/roadmap_readiness_boundary.json`: ROADMAP readiness taxonomy
   sidecar with stable readiness categories, weights summing to 100,
   per-category TODO-ledger counts, raw TODO-ledger completion, and weighted
@@ -3181,8 +3199,8 @@ Implemented:
   sidecar with nine criteria for canonical gap ids, canonical owner ledgers,
   derivative relationships, source/paper anchor mapping, implementation
   evidence links, cross-document rollup rules, semantic duplicate detection,
-  stale duplicate/orphan detection, and raw-count inflation reporting. It is
-  now records active TODO coverage for all 12 missing evidence keys. It is not
+  stale duplicate/orphan detection, and raw-count inflation reporting. It now
+  records active TODO coverage for all 12 missing evidence keys. It is not
   evidence of canonical gap ids, canonical owner assignments, derivative
   documentation relationships, source or paper anchor mappings,
   implementation evidence links, cross-document rollup rules, semantic

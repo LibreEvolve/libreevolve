@@ -739,6 +739,10 @@ from libreevolve.problems.benchmarks.sampling_balance_boundary import (
     sampling_balance_boundary_record,
     validate_sampling_balance_boundary,
 )
+from libreevolve.problems.benchmarks.evolutionary_database_boundary import (
+    evolutionary_database_boundary_record,
+    validate_evolutionary_database_boundary,
+)
 from libreevolve.problems.benchmarks.sample_efficiency_boundary import (
     sample_efficiency_boundary_record,
     validate_sample_efficiency_boundary,
@@ -1151,6 +1155,7 @@ PROPOSAL_LIFECYCLE_AUDIT_BOUNDARY_FILE = "papers/proposal_lifecycle_audit_bounda
 INCORRECT_SUGGESTION_AUDIT_BOUNDARY_FILE = "papers/incorrect_suggestion_audit_boundary.json"
 REPEATED_SAMPLING_BASELINE_BOUNDARY_FILE = "papers/repeated_sampling_baseline_boundary.json"
 SAMPLING_BALANCE_BOUNDARY_FILE = "papers/sampling_balance_boundary.json"
+EVOLUTIONARY_DATABASE_BOUNDARY_FILE = "papers/evolutionary_database_boundary.json"
 SAMPLE_EFFICIENCY_BOUNDARY_FILE = "papers/sample_efficiency_boundary.json"
 PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE = "papers/parallel_evaluation_readiness_boundary.json"
 EXPENSIVE_EVALUATION_BUDGET_BOUNDARY_FILE = "papers/expensive_evaluation_budget_boundary.json"
@@ -1883,6 +1888,7 @@ def validate_paper_manifest(
     issues.extend(_validate_incorrect_suggestion_audit_boundary(root_path))
     issues.extend(_validate_repeated_sampling_baseline_boundary(root_path))
     issues.extend(_validate_sampling_balance_boundary(root_path))
+    issues.extend(_validate_evolutionary_database_boundary(root_path))
     issues.extend(_validate_sample_efficiency_boundary(root_path))
     issues.extend(_validate_parallel_evaluation_readiness_boundary(root_path))
     issues.extend(_validate_expensive_evaluation_budget_boundary(root_path))
@@ -8088,6 +8094,38 @@ def _validate_sampling_balance_boundary(root_path: Path) -> list[PaperManifestIs
             f"sampling_balance_boundary_{issue.code}",
             issue.message,
             "sampling_balance",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_evolutionary_database_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / EVOLUTIONARY_DATABASE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = evolutionary_database_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "evolutionary_database_boundary_manifest_missing",
+                    (
+                        f"{EVOLUTIONARY_DATABASE_BOUNDARY_FILE} must emit "
+                        "current-run resurfacing versus durable database scope"
+                    ),
+                    "evolutionary_database",
+                )
+            ]
+    report = validate_evolutionary_database_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"evolutionary_database_boundary_{issue.code}",
+            issue.message,
+            "evolutionary_database",
         )
         for issue in report.issues
     ]

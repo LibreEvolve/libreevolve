@@ -2633,6 +2633,12 @@ sidecars, tests, and active TODOs.
     manifest-safe program ids, finite scores, source contribution sums,
     supported source records, normalized objective evidence, and deterministic
     ranking order while keeping `durable_database_ready: false`. However, these
+    current-run query/resurfacing surfaces are now summarized by
+    `papers/evolutionary_database_boundary.json`, which keeps durable
+    cross-run query stores, schema-versioned database migrations, semantic
+    retrieval indexes, replayable sampling policies, cross-run failure memory,
+    learned novelty models, and AlphaEvolve-grade database parity explicitly
+    false. These
     are still append-only logs plus an in-memory archive and manifest-visible
     rebuilt indexes, not a persisted query/index database. There is no durable
     index over full metric vectors, feedback embeddings/full-text ranking,

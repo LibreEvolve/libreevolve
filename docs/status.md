@@ -2012,6 +2012,13 @@ Important limits:
   bounded output summaries, not durable output tables, schema-aware retrieval,
   semantic output similarity search, or replayable output-driven sampling;
   that boundary is tracked by `papers/program_output_boundary.json`.
+- Evolutionary database resurfacing remains bounded current-run rank fusion and
+  defensive query snapshots over append-only streams, manifest archive
+  snapshots, artifacts, hypotheses, failures, and exact program outputs. It is
+  not a durable cross-run query store with schema migrations, semantic
+  retrieval indexes, replayable sampling policies, cross-run failure memory, or
+  learned novelty models; that boundary is tracked by
+  `papers/evolutionary_database_boundary.json`.
 - Figure 3 supervised-learning example support is generic embedded-evaluator,
   prompt-history, candidate-history, SEARCH/REPLACE, and preamble handling,
   not reproduced paper subfigure evidence with source/evaluate/prompt/output

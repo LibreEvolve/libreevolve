@@ -1717,7 +1717,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.restore_certification`, with `libreevolve show`, CLI restore
     preflight, direct runtime loaders, and direct archive restore loaders
     validating the persisted record and rejecting forged certification
-    overclaims before trusting the manifest.
+    overclaims before trusting the manifest. The committed
+    `papers/restore_certification_boundary.json` sidecar now preserves this
+    compatible-surface certification boundary for paper-manifest validation
+    while keeping full replay, provider raw-payload replay, controller
+    pending-work checkpoint replay, artifact payload reconstruction hashes,
+    cross-run restore/replay evidence, and independent restore/replay audit
+    missing.
     The paper manifest now requires
     `papers/lineage_replay_boundary.json` to preserve the deterministic
     lineage-id policy, direct UUID exclusions, and provider-output non-replay
@@ -1794,7 +1800,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     accepting the manifest. CLI and direct restore loaders also validate
     manifest-advertised quarantine streams before consuming restored runtime,
     scheduler, budget, lineage, or archive state, preserving quarantine rows as
-    diagnostics rather than accepted replay state.
+    diagnostics rather than accepted replay state. The committed
+    `papers/restore_certification_boundary.json` sidecar records the
+    compatible-surface restore-certification boundary and rejects treating that
+    accepted/quarantine separation as full provider/controller/artifact replay
+    proof.
     Paper-facing generated-artifact lifecycle evidence is still incomplete:
     those anchors prove source/docs text presence plus current behavior-test
     coverage, show-time bundle reconciliation, persisted and reader-validated

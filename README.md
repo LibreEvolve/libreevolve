@@ -70,6 +70,11 @@ Important limits:
 - Evaluators run in local subprocesses, not hardened security sandboxes.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed Python `asyncio` AlphaEvolve service.
+- Runtime restore certification is compatible-surface evidence only;
+  `papers/restore_certification_boundary.json` records accepted/quarantine
+  separation and overclaim rejection, but not provider raw-payload replay,
+  controller pending-work replay, artifact payload reconstruction, or
+  independent restore/replay audit.
 - Candidate execution is Python-primary. Non-Python files can be workspace
   members, metadata-only runner/build declarations can be recorded, and the
   current Python runner links to bounded environment provenance, but

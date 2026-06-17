@@ -5812,11 +5812,13 @@ sidecars, tests, and active TODOs.
     events as an ordered restore engine. The paper manifest now requires
     `papers/controller_pending_work_resume_boundary.json`, which preserves the
     terminal controller-state scope and rejects controller queue/pending-work
-    resume overclaims. Remaining gaps are no provider-output replay or
-    independently certified exclusion in a resumed trace, no controller queue
-    or pending-evaluation state, no migration-event replay engine, and no
-    end-to-end resumed trace proving parent/inspiration/prompt/archive/
-    controller continuity.
+    resume overclaims. The paper manifest now also requires
+    `papers/restore_certification_boundary.json`, preserving the compatible
+    restore-certification surface and accepted/quarantine diagnostic boundary.
+    Remaining gaps are no provider-output replay in a resumed trace, no
+    controller queue or pending-evaluation state, no migration-event replay
+    engine, no artifact payload reconstruction proof, and no end-to-end resumed
+    trace proving parent/inspiration/prompt/archive/controller continuity.
   - Required result: add one direct and CLI resume entrypoint that validates
     and composes population/database state, backend bandit state, prompt
     database state, RNG state, provider-output boundaries, migration replay or
@@ -8541,23 +8543,21 @@ sidecars, tests, and active TODOs.
     scheduler, budget, lineage, or archive state, with focused tests proving
     malformed quarantine diagnostics and bundle-report overclaims stop restore.
   - Current gap: quarantine stream schema coverage, row validation, inventory
-    ownership, overwrite cleanup, show-time diagnostics, and show-time
-    run-bundle reconciliation plus persisted and reader-validated bundle
-    reports, promotion-gate status, and restore-side rejection guards are
-    present, but quarantine diagnostics are still not part of a restored-run
-    certification model. Restore loaders correctly treat quarantine rows as
-    diagnostics rather than accepted state, but the persisted bundle report is
-    still an audit boundary, not a certificate that replayed provider outputs,
-    pending controller work, or artifact payload reconstruction match a resumed
-    trace.
-  - Required result: connect quarantine schemas and row validators to the
-    broader generated-artifact inventory, restore/show behavior, and non-JSONL
-    artifact schema work so rejected diagnostics remain auditable without being
-    confused with accepted candidate or controller state; then extend the
-    persisted audit report into a restore certification report
-    proving accepted-state streams and quarantine diagnostics stay separated
-    across restore and replay surfaces while replayed provider/controller and
-    artifact payload boundaries are enforced.
+    ownership, overwrite cleanup, show-time diagnostics, show-time run-bundle
+    reconciliation, persisted and reader-validated bundle reports,
+    promotion-gate status, restore-side rejection guards, and a persisted
+    compatible-surface restore-certification model are present. The committed
+    `papers/restore_certification_boundary.json` sidecar now records that
+    `runtime.restore_certification` validates accepted/quarantine separation
+    and rejects show/CLI/direct-loader overclaims. Restore loaders correctly
+    treat quarantine rows as diagnostics rather than accepted state, but the
+    certification is still not proof that replayed provider outputs, pending
+    controller work, or artifact payload reconstruction match a resumed trace.
+  - Required result: extend the compatible restore-certification report into
+    an end-to-end restore/replay certification that proves accepted-state
+    streams and quarantine diagnostics stay separated while replayed
+    provider/controller payloads, pending-work checkpoints, artifact payload
+    reconstruction hashes, and cross-run replay evidence are enforced.
 
 - [ ] Add schema-level coverage for non-JSONL run artifacts.
   - Spec evidence: AlphaEvolve-style experiment directories should be

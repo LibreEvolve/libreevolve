@@ -910,6 +910,10 @@ from libreevolve.problems.benchmarks.lineage_replay_boundary import (
     lineage_replay_boundary_record,
     validate_lineage_replay_boundary,
 )
+from libreevolve.problems.benchmarks.restore_certification_boundary import (
+    restore_certification_boundary_record,
+    validate_restore_certification_boundary,
+)
 from libreevolve.problems.benchmarks.runtime_rng_replay_boundary import (
     runtime_rng_replay_boundary_record,
     validate_runtime_rng_replay_boundary,
@@ -1213,6 +1217,7 @@ ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE = "papers/archive_event_replay_boundary.json"
 JSONL_DURABILITY_BOUNDARY_FILE = "papers/jsonl_durability_boundary.json"
 CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_FILE = "papers/controller_pending_work_resume_boundary.json"
 LINEAGE_REPLAY_BOUNDARY_FILE = "papers/lineage_replay_boundary.json"
+RESTORE_CERTIFICATION_BOUNDARY_FILE = "papers/restore_certification_boundary.json"
 RUNTIME_RNG_REPLAY_BOUNDARY_FILE = "papers/runtime_rng_replay_boundary.json"
 VALIDATOR_EXECUTION_BOUNDARY_FILE = "papers/validator_execution_boundary.json"
 VALIDATOR_ARTIFACT_PROMOTION_BOUNDARY_FILE = "papers/validator_artifact_promotion_boundary.json"
@@ -1947,6 +1952,7 @@ def validate_paper_manifest(
     issues.extend(_validate_jsonl_durability_boundary(root_path))
     issues.extend(_validate_controller_pending_work_resume_boundary(root_path))
     issues.extend(_validate_lineage_replay_boundary(root_path))
+    issues.extend(_validate_restore_certification_boundary(root_path))
     issues.extend(_validate_runtime_rng_replay_boundary(root_path))
     issues.extend(_validate_validator_execution_boundary(root_path))
     issues.extend(_validate_validator_artifact_promotion_boundary(root_path))
@@ -9130,6 +9136,40 @@ def _validate_lineage_replay_boundary(root_path: Path) -> list[PaperManifestIssu
             f"lineage_replay_boundary_{issue.code}",
             issue.message,
             "lineage_replay",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_restore_certification_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / RESTORE_CERTIFICATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = restore_certification_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "restore_certification_boundary_manifest_missing",
+                    (
+                        f"{RESTORE_CERTIFICATION_BOUNDARY_FILE} must emit "
+                        "compatible restore certification versus full replay scope"
+                    ),
+                    "restore_certification",
+                )
+            ]
+    report = validate_restore_certification_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"restore_certification_boundary_{issue.code}",
+            issue.message,
+            "restore_certification",
         )
         for issue in report.issues
     ]

@@ -1064,7 +1064,12 @@ is not yet an AlphaEvolve reproduction.
   `papers/controller_pending_work_resume_boundary.json` sidecar preserves the
   current terminal controller-state evidence while keeping queue checkpoint,
   running-work resume, provider handoff replay, and end-to-end resumed-trace
-  proof open.
+  proof open. The committed `papers/restore_certification_boundary.json`
+  sidecar records the current compatible restore-certification surface and
+  accepted/quarantine diagnostic separation while keeping full replay,
+  provider raw-payload replay, controller pending-work checkpoint replay,
+  artifact payload reconstruction, cross-run replay evidence, and independent
+  restore/replay audit open.
 - Extend the current restorable MAP-Elites cell/island snapshots, elite
   snapshots, and island cursor/counter state with descriptor-value replay
   semantics, ordered migration-event replay, controller queues, and pending-work

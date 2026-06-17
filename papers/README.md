@@ -3227,6 +3227,15 @@ Implemented:
   coverage, multi-writer serialization, append ordering ownership,
   repair/quarantine atomicity, cross-platform locking, concurrent-writer tests,
   or AlphaEvolve-grade durable async run-state parity.
+- `papers/restore_certification_boundary.json`: restore-certification sidecar
+  for compatible local manifest restore surfaces versus full replay proof. It
+  records the current `runtime.restore_certification` and
+  `runtime.run_artifact_bundle_report` schemas, accepted-stream and quarantine
+  diagnostic validation, show/CLI/direct-loader overclaim rejection, and the
+  explicit accepted-state/quarantine-diagnostic boundary. It is not evidence of
+  full replay proof, provider raw-payload replay, controller pending-work
+  checkpoint replay, artifact payload reconstruction hashes, cross-run
+  restore/replay evidence, or independent restore/replay audit.
 - `papers/roadmap_readiness_boundary.json`: ROADMAP readiness taxonomy
   sidecar with stable readiness categories, weights summing to 100,
   per-category TODO-ledger counts, raw TODO-ledger completion, and weighted

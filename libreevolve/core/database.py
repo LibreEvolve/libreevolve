@@ -17,6 +17,7 @@ from libreevolve.core.artifact_schema import (
     LLM_REWARD_RECORD_SCHEMA,
     RUN_ARTIFACT_NAMES,
     run_artifact_schema,
+    validate_non_jsonl_artifact_policy_manifest,
     versioned_record,
 )
 from libreevolve.core.budget import (
@@ -1838,6 +1839,7 @@ def load_runtime_archive_state_snapshot(manifest_path: str | Path) -> dict:
         manifest = load_strict_json_object(Path(manifest_path), source="manifest.json")
     except StrictJsonlError as exc:
         raise ArchiveStateRestoreError(str(exc)) from exc
+    _validate_archive_non_jsonl_artifact_policy(manifest)
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise ArchiveStateRestoreError("manifest runtime must be an object")
@@ -1847,6 +1849,25 @@ def load_runtime_archive_state_snapshot(manifest_path: str | Path) -> dict:
     if "archive_state" not in history:
         raise ArchiveStateRestoreError("manifest runtime.history missing archive_state")
     return validate_archive_state_snapshot(history["archive_state"])
+
+
+def _validate_archive_non_jsonl_artifact_policy(manifest: object) -> None:
+    if not isinstance(manifest, Mapping):
+        return
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, Mapping)
+        or "non_jsonl_artifacts" not in artifact_schema
+    ):
+        return
+    validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise ArchiveStateRestoreError(
+        "non-JSONL artifact policy validation failed: "
+        f"{issue['code']}: {issue['message']}"
+    )
 
 
 def validate_archive_state_snapshot(snapshot: object) -> dict:

@@ -8498,13 +8498,15 @@ sidecars, tests, and active TODOs.
     `artifact_schema.non_jsonl_artifacts`, with parameterized focused tests
     proving a present file artifact without `sha256` stops runtime, RNG, LLM
     scheduler, budget, archive cursor, and full archive restore before
-    `evolve()` runs.
+    `evolve()` runs. Direct core restore loaders now run the same guard before
+    loading runtime RNG, LLM scheduler, runtime budget, lineage replay policy,
+    full runtime resume bundles, archive cursor snapshots, and full archive
+    restore bundles.
   - Current gap: the top-level schema inventory now exists, but there is not
-    yet behavioral coverage for lower-level direct restore loader entrypoints
-    and every optional non-JSONL artifact emission mode. `paper_artifacts/...`
-    now have a central subpath schema and show/restore-source-manifest
-    rejection guards, but full restored-run replay or carry-forward semantics
-    remain open.
+    yet behavioral coverage for every optional non-JSONL artifact emission
+    mode. `paper_artifacts/...` now have a central subpath schema and
+    show/restore-source-manifest rejection guards, but full restored-run replay
+    or carry-forward semantics remain open.
   - Required result: add behavioral tests or validators that exercise
     `non_jsonl_artifacts` through startup/finalization writers and
     `show`/restore readers so documented artifacts cannot drift from

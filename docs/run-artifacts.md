@@ -910,6 +910,10 @@ Each CLI `--restore-*-from-manifest` reader runs the same non-JSONL policy
 check when the restore source manifest advertises
 `artifact_schema.non_jsonl_artifacts`, rejecting drifted file or directory
 pointers before restored runtime state is passed into a new run.
+The direct restore loaders for runtime RNG, LLM scheduler, runtime budget,
+lineage replay policy, full runtime resume bundles, archive cursor snapshots,
+and full archive restore bundles run the same guard before loading their
+specific restore payloads.
 `manifest.json.artifact_schema.generated_artifact_inventory` is the checked
 rollup across JSONL streams, quarantine streams, and non-JSONL artifacts. It
 maps every known cleanup-managed artifact to its schema pointer, writer owner,

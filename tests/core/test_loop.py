@@ -42,6 +42,7 @@ from libreevolve.core.loop import (
     RETRIEVAL_EVIDENCE_COVERAGE_SCHEMA,
     RETRIEVAL_EVIDENCE_COVERAGE_VALIDATION_SCHEMA,
     RuntimeFullResumeBundleError,
+    RuntimeBudgetStateError,
     RuntimeLineageReplayPolicyError,
     RuntimeLLMSchedulerStateError,
     RuntimeRngStateError,
@@ -3010,6 +3011,57 @@ def test_runtime_llm_scheduler_state_snapshot_validation_and_manifest_loading(tm
     assert loaded["state"] == snapshot["state"]
     loaded["state"]["counts"][0] = 999
     assert snapshot["state"]["counts"][0] == 1
+
+
+def _write_non_jsonl_policy_drift_manifest(path: Path) -> Path:
+    manifest = {
+        "artifact_schema": run_artifact_schema(),
+        "runtime": {
+            "artifacts": {
+                name: {
+                    "path": artifact["path"],
+                    "exists": False,
+                    "present": False,
+                }
+                for name, artifact in run_artifact_schema()[
+                    "non_jsonl_artifacts"
+                ].items()
+            }
+        },
+    }
+    manifest["runtime"]["artifacts"]["task_specification.json"] = {
+        "path": "task_specification.json",
+        "exists": True,
+        "present": True,
+        "kind": "file",
+        "hash_scope": "file_bytes",
+    }
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    return path
+
+
+@pytest.mark.parametrize(
+    ("loader", "error_type"),
+    [
+        (load_runtime_rng_state_snapshot, RuntimeRngStateError),
+        (load_runtime_llm_scheduler_state_snapshot, RuntimeLLMSchedulerStateError),
+        (load_runtime_budget_state_snapshot, RuntimeBudgetStateError),
+        (
+            load_runtime_lineage_replay_policy_snapshot,
+            RuntimeLineageReplayPolicyError,
+        ),
+        (load_full_resume_bundle, RuntimeFullResumeBundleError),
+    ],
+)
+def test_direct_runtime_restore_loaders_reject_non_jsonl_policy_drift(
+    tmp_path,
+    loader,
+    error_type,
+):
+    manifest = _write_non_jsonl_policy_drift_manifest(tmp_path / "manifest.json")
+
+    with pytest.raises(error_type, match="non-JSONL artifact policy validation failed"):
+        loader(manifest)
 
 
 def test_runtime_budget_state_snapshot_manifest_loading(tmp_path):

@@ -26,6 +26,7 @@ from libreevolve.core.artifact_schema import (
     PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
     PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
     RUN_ARTIFACT_NAMES,
+    validate_non_jsonl_artifact_policy_manifest,
     versioned_record,
 )
 from libreevolve.core.best_artifacts import (
@@ -3390,6 +3391,10 @@ def load_runtime_llm_scheduler_state_snapshot(manifest_path: str | Path) -> dict
         manifest = load_strict_json_object(Path(manifest_path))
     except StrictJsonlError as exc:
         raise RuntimeLLMSchedulerStateError(str(exc)) from exc
+    _validate_runtime_non_jsonl_artifact_policy(
+        manifest,
+        error_type=RuntimeLLMSchedulerStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLLMSchedulerStateError("manifest runtime must be an object")
@@ -3405,6 +3410,10 @@ def load_runtime_budget_state_snapshot(manifest_path: str | Path) -> dict:
         manifest = load_strict_json_object(Path(manifest_path))
     except StrictJsonlError as exc:
         raise RuntimeBudgetStateError(str(exc)) from exc
+    _validate_runtime_non_jsonl_artifact_policy(
+        manifest,
+        error_type=RuntimeBudgetStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeBudgetStateError("manifest runtime must be an object")
@@ -3456,6 +3465,11 @@ def load_full_resume_bundle(
         else manifest.parent / "controller_budget_events.jsonl"
     )
     try:
+        manifest_obj = load_strict_json_object(manifest, source="manifest.json")
+        _validate_runtime_non_jsonl_artifact_policy(
+            manifest_obj,
+            error_type=RuntimeFullResumeBundleError,
+        )
         rng_snapshot = load_runtime_rng_state_snapshot(manifest)
         llm_scheduler_snapshot = load_runtime_llm_scheduler_state_snapshot(manifest)
         budget_snapshot = load_runtime_budget_state_snapshot(manifest)
@@ -4789,6 +4803,10 @@ def load_runtime_lineage_replay_policy_snapshot(manifest_path: str | Path) -> di
         manifest = load_strict_json_object(Path(manifest_path), source="manifest.json")
     except StrictJsonlError as exc:
         raise RuntimeLineageReplayPolicyError(str(exc)) from exc
+    _validate_runtime_non_jsonl_artifact_policy(
+        manifest,
+        error_type=RuntimeLineageReplayPolicyError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLineageReplayPolicyError("manifest runtime must be an object")
@@ -4869,12 +4887,39 @@ def load_runtime_rng_state_snapshot(manifest_path: str | Path) -> dict:
         manifest = load_strict_json_object(Path(manifest_path), source="manifest.json")
     except StrictJsonlError as exc:
         raise RuntimeRngStateError(str(exc)) from exc
+    _validate_runtime_non_jsonl_artifact_policy(
+        manifest,
+        error_type=RuntimeRngStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeRngStateError("manifest runtime must be an object")
     if "rng" not in runtime:
         raise RuntimeRngStateError("manifest runtime missing rng snapshot")
     return validate_runtime_rng_state_snapshot(runtime["rng"])
+
+
+def _validate_runtime_non_jsonl_artifact_policy(
+    manifest: object,
+    *,
+    error_type: type[ValueError],
+) -> None:
+    if not isinstance(manifest, Mapping):
+        return
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, Mapping)
+        or "non_jsonl_artifacts" not in artifact_schema
+    ):
+        return
+    validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise error_type(
+        "non-JSONL artifact policy validation failed: "
+        f"{issue['code']}: {issue['message']}"
+    )
 
 
 def validate_runtime_rng_state_snapshot(snapshot: object) -> dict:

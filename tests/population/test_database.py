@@ -6163,6 +6163,48 @@ def test_load_runtime_archive_state_snapshot_validates_manifest_runtime(tmp_path
     assert restored["islands"][0]["island_id"] == 0
 
 
+def _write_non_jsonl_policy_drift_manifest(path: Path) -> Path:
+    schema = run_artifact_schema()
+    manifest = {
+        "artifact_schema": schema,
+        "runtime": {
+            "artifacts": {
+                name: {
+                    "path": artifact["path"],
+                    "exists": False,
+                    "present": False,
+                }
+                for name, artifact in schema["non_jsonl_artifacts"].items()
+            }
+        },
+    }
+    manifest["runtime"]["artifacts"]["task_specification.json"] = {
+        "path": "task_specification.json",
+        "exists": True,
+        "present": True,
+        "kind": "file",
+        "hash_scope": "file_bytes",
+    }
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    return path
+
+
+def test_direct_archive_restore_loaders_reject_non_jsonl_policy_drift(tmp_path):
+    manifest = _write_non_jsonl_policy_drift_manifest(tmp_path / "manifest.json")
+    history = tmp_path / "history.jsonl"
+
+    with pytest.raises(
+        ArchiveStateRestoreError,
+        match="non-JSONL artifact policy validation failed",
+    ):
+        load_runtime_archive_state_snapshot(manifest)
+    with pytest.raises(
+        ArchiveStateRestoreError,
+        match="non-JSONL artifact policy validation failed",
+    ):
+        load_archive_restore_bundle(manifest, history)
+
+
 def test_load_runtime_archive_state_snapshot_rejects_missing_archive_state(tmp_path):
     manifest = tmp_path / "manifest.json"
     manifest.write_text('{"runtime": {"history": {}}}', encoding="utf-8")

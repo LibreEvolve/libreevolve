@@ -763,8 +763,12 @@ def evolve(
     runtime_archive_state_snapshot: Mapping[str, object] | None = None,
     runtime_archive_programs_by_id: Mapping[str, Program] | None = None,
     runtime_budget_state_snapshot: Mapping[str, object] | None = None,
+    runtime_restore_certification: Mapping[str, object] | None = None,
 ) -> "Program | None":
     config.validate()
+    runtime_restore_certification = _validate_runtime_restore_certification_record(
+        runtime_restore_certification
+    )
     run_dir = (Path(config.log_dir) / config.problem_name).resolve(strict=False)
     core_resolved_config_plugins = False
     if plugins is None:
@@ -1623,6 +1627,7 @@ def evolve(
             run_rng=run_rng,
             rng_resume_status=rng_resume_status,
             llm_scheduler_resume_status=llm_scheduler_resume_status,
+            runtime_restore_certification=runtime_restore_certification,
             core_resolves_config_plugins=core_resolved_config_plugins,
         )
         return best
@@ -1639,6 +1644,7 @@ def evolve(
             run_rng=run_rng,
             rng_resume_status=rng_resume_status,
             llm_scheduler_resume_status=llm_scheduler_resume_status,
+            runtime_restore_certification=runtime_restore_certification,
             core_resolves_config_plugins=core_resolved_config_plugins,
         )
         raise
@@ -1656,6 +1662,7 @@ def _write_completed_runtime(
     run_rng: random.Random,
     rng_resume_status: str,
     llm_scheduler_resume_status: str,
+    runtime_restore_certification: Mapping[str, object] | None = None,
     core_resolves_config_plugins: bool = False,
 ) -> None:
     runtime = budget.finish(best_found=best is not None)
@@ -1673,6 +1680,8 @@ def _write_completed_runtime(
     runtime["history"] = _runtime_history_summary(db, run_dir, budget)
     _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
+    if runtime_restore_certification is not None:
+        runtime["restore_certification"] = copy.deepcopy(runtime_restore_certification)
     runtime["run_artifact_bundle_report"] = _run_artifact_bundle_report(
         run_dir,
         runtime,
@@ -1704,6 +1713,7 @@ def _write_aborted_runtime(
     run_rng: random.Random,
     rng_resume_status: str,
     llm_scheduler_resume_status: str,
+    runtime_restore_certification: Mapping[str, object] | None = None,
     core_resolves_config_plugins: bool = False,
 ) -> None:
     budget.stop_reason = "aborted"
@@ -1730,6 +1740,8 @@ def _write_aborted_runtime(
     runtime["history"] = _runtime_history_summary(db, run_dir, budget)
     _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
+    if runtime_restore_certification is not None:
+        runtime["restore_certification"] = copy.deepcopy(runtime_restore_certification)
     runtime["run_artifact_bundle_report"] = _run_artifact_bundle_report(
         run_dir,
         runtime,
@@ -3533,12 +3545,14 @@ def load_full_resume_bundle(
             f"full resume bundle restore failed: {message}"
         ) from exc
 
+    restore_certification = _full_resume_restore_certification(manifest_obj)
     evolve_kwargs = {
         "runtime_rng_state_snapshot": rng_snapshot,
         "runtime_llm_scheduler_state_snapshot": llm_scheduler_snapshot,
         "runtime_archive_state_snapshot": archive_bundle["archive_state_snapshot"],
         "runtime_archive_programs_by_id": archive_bundle["archive_programs_by_id"],
         "runtime_budget_state_snapshot": budget_snapshot,
+        "runtime_restore_certification": restore_certification,
     }
     bundle = {
         "schema": _FULL_RESUME_BUNDLE_SCHEMA,
@@ -3556,7 +3570,7 @@ def load_full_resume_bundle(
             "replay_entrypoint": "apply_controller_budget_event",
             "runtime_seconds_policy": "manifest_snapshot_authoritative",
         },
-        "restore_certification": _full_resume_restore_certification(manifest_obj),
+        "restore_certification": restore_certification,
         "resumed_trace_proof_ready": False,
         "unsupported_surfaces": list(_FULL_RESUME_UNSUPPORTED_SURFACES),
     }
@@ -3852,6 +3866,22 @@ def _validate_full_resume_restore_certification(
         )
 
 
+def _validate_runtime_restore_certification_record(
+    certification: Mapping[str, object] | None,
+) -> dict | None:
+    if certification is None:
+        return None
+    issues: list[dict[str, str]] = []
+    _validate_full_resume_restore_certification(
+        {"restore_certification": certification},
+        issues,
+    )
+    if issues:
+        codes = ",".join(issue["code"] for issue in issues[:5])
+        raise ValueError(f"runtime restore certification validation failed: {codes}")
+    return copy.deepcopy(dict(certification))
+
+
 def _validate_full_resume_bundle_kwargs(
     kwargs: Mapping[str, object],
     issues: list[dict[str, str]],
@@ -3862,6 +3892,7 @@ def _validate_full_resume_bundle_kwargs(
         "runtime_archive_state_snapshot",
         "runtime_archive_programs_by_id",
         "runtime_budget_state_snapshot",
+        "runtime_restore_certification",
     }
     missing = sorted(expected - set(kwargs))
     if missing:
@@ -3898,6 +3929,19 @@ def _validate_full_resume_bundle_kwargs(
         "invalid_runtime_budget_state_snapshot",
         lambda: validate_restored_budget_snapshot(
             kwargs.get("runtime_budget_state_snapshot")
+        ),
+    )
+    _record_validation_issue(
+        issues,
+        "invalid_runtime_restore_certification",
+        lambda: _validate_runtime_restore_certification_record(
+            kwargs.get("runtime_restore_certification")
+            if isinstance(kwargs.get("runtime_restore_certification"), Mapping)
+            else None
+        )
+        if isinstance(kwargs.get("runtime_restore_certification"), Mapping)
+        else (_ for _ in ()).throw(
+            ValueError("runtime_restore_certification must be an object")
         ),
     )
     archive_state = kwargs.get("runtime_archive_state_snapshot")

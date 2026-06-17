@@ -5786,7 +5786,10 @@ sidecars, tests, and active TODOs.
     It now also includes `libreevolve.full_resume_restore_certification.v1`,
     certifying only compatible local manifest restore inputs plus the
     accepted/quarantine boundary while keeping provider-output replay,
-    pending-work resume, and end-to-end resumed-trace proof false. Validation
+    pending-work resume, and end-to-end resumed-trace proof false. Direct
+    `evolve()` and CLI `--restore-runtime-from-manifest` now pass that
+    certification into the resumed run, and completed/aborted resumed-run
+    manifests persist it under `runtime.restore_certification`. Validation
     rejects forged resumed-trace proof and restore-certification overclaims.
     Archive restore
     explicitly covers current cell/elite placements without replaying migration

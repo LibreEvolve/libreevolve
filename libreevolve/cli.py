@@ -259,6 +259,9 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
             runtime_budget_state_snapshot = evolve_kwargs[
                 "runtime_budget_state_snapshot"
             ]
+            runtime_restore_certification = evolve_kwargs[
+                "runtime_restore_certification"
+            ]
             runtime_archive_state_snapshot = evolve_kwargs[
                 "runtime_archive_state_snapshot"
             ]
@@ -278,6 +281,7 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
             runtime_budget_state_snapshot = _load_cli_runtime_budget_snapshot(
                 restore_budget_from_manifest
             )
+            runtime_restore_certification = None
             if restore_archive_cursor_from_manifest and restore_archive_from_manifest:
                 raise click.ClickException(
                     "Use either --restore-archive-cursor-from-manifest or "
@@ -311,6 +315,7 @@ def run(problem_dir, max_generations, max_evaluations, max_evaluator_seconds,
         runtime_archive_state_snapshot=runtime_archive_state_snapshot,
         runtime_archive_programs_by_id=runtime_archive_programs_by_id,
         runtime_budget_state_snapshot=runtime_budget_state_snapshot,
+        runtime_restore_certification=runtime_restore_certification,
     )
     if best is None:
         raise click.ClickException("Evolution produced no valid programs.")

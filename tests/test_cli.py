@@ -1242,6 +1242,13 @@ def test_run_can_restore_composed_runtime_bundle_from_manifest(tmp_path):
         "restore_status"
     ] == "snapshot_persisted_full_archive_restore_supported"
     assert kwargs["runtime_archive_programs_by_id"]
+    assert kwargs["runtime_restore_certification"]["schema"] == (
+        "libreevolve.full_resume_restore_certification.v1"
+    )
+    assert kwargs["runtime_restore_certification"]["status"] == (
+        "compatible_surfaces_certified"
+    )
+    assert kwargs["runtime_restore_certification"]["provider_output_replay_ready"] is False
 
 
 def test_run_rejects_composed_runtime_restore_with_individual_restore_flags(tmp_path):

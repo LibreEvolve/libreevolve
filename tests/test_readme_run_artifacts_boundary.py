@@ -25,18 +25,15 @@ def test_readme_run_artifacts_boundary_accepts_current_list_map():
     assert validation.missing_readme_marker_count == 0
     assert validation.common_artifact_count == 14
     assert validation.missing_common_artifact_count == 0
-    assert validation.cleanup_artifact_count == 20
+    assert validation.cleanup_artifact_count == 23
     assert validation.scoped_omission_count == 9
-    assert validation.evidence_anchor_count == 14
+    assert validation.evidence_anchor_count == 18
     assert validation.missing_evidence_anchor_count == 0
     assert boundary["missing_readme_marker_records"] == []
     assert boundary["missing_common_artifact_records"] == []
     assert boundary["missing_evidence_anchor_records"] == []
     assert boundary["scope_omission_drift_records"] == []
-    assert boundary["readme_common_without_cleanup_names"] == [
-        "prompt_current_binding_table.jsonl",
-        "prompt_prior_score_table.jsonl",
-    ]
+    assert boundary["readme_common_without_cleanup_names"] == []
     assert boundary["cleanup_without_readme_common_names"] == [
         "archive_events_invalid.jsonl",
         "controller_budget_events_invalid.jsonl",
@@ -44,6 +41,7 @@ def test_readme_run_artifacts_boundary_accepts_current_list_map():
         "history_invalid.jsonl",
         "llm_calls_invalid.jsonl",
         "manifest_invalid.jsonl",
+        "paper_artifacts",
         "prompt_history_invalid.jsonl",
         "task_specification.json",
     ]
@@ -61,6 +59,12 @@ def test_readme_run_artifacts_boundary_accepts_current_list_map():
         "prompt_history_invalid.jsonl": "documented_outside_readme_common_list",
         "paper_artifacts": "documented_outside_readme_common_list",
     }
+    paper_artifacts = next(
+        record
+        for record in boundary["scope_omission_records"]
+        if record["name"] == "paper_artifacts"
+    )
+    assert paper_artifacts["present_in_cleanup_set"] is True
     assert boundary["readme_run_artifacts_map_status"] == (
         "readme_run_artifacts_structural_list_map_present"
     )
@@ -151,8 +155,8 @@ def test_render_readme_run_artifacts_boundary_summary_reports_shape():
     assert "| missing_readme_marker_count | 0 |" in summary
     assert "| common_artifact_count | 14 |" in summary
     assert "| missing_common_artifact_count | 0 |" in summary
-    assert "| cleanup_artifact_count | 20 |" in summary
+    assert "| cleanup_artifact_count | 23 |" in summary
     assert "| scoped_omission_count | 9 |" in summary
-    assert "| evidence_anchor_count | 14 |" in summary
+    assert "| evidence_anchor_count | 18 |" in summary
     assert "| missing_evidence_anchor_count | 0 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

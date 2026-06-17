@@ -15,6 +15,7 @@ README_PATH = "README.md"
 README_TODO_PATH = "docs/todo/readme.md"
 RUN_ARTIFACTS_DOC_PATH = "docs/run-artifacts.md"
 DATABASE_PATH = "libreevolve/core/database.py"
+DATABASE_TEST_PATH = "tests/population/test_database.py"
 CLI_TEST_PATH = "tests/test_cli.py"
 QUICK_START_TEST_PATH = "tests/test_readme_quick_start_smoke_boundary.py"
 DOCUMENTATION_CLAIM_INVENTORY_PATH = "papers/documentation_claim_inventory.json"
@@ -66,7 +67,11 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("database_run_artifact_names", DATABASE_PATH, "RUN_ARTIFACT_NAMES = {"),
     ("database_prepare_run_directory", DATABASE_PATH, "def prepare_run_directory"),
     ("database_task_spec_path", DATABASE_PATH, "task_specification.json"),
+    ("database_prompt_table_artifacts", DATABASE_PATH, "prompt_current_binding_table.jsonl"),
+    ("database_paper_artifacts", DATABASE_PATH, "paper_artifacts"),
     ("cli_overwrite_test", CLI_TEST_PATH, "test_run_overwrite_clears_target_artifacts"),
+    ("database_prompt_table_overwrite_test", DATABASE_TEST_PATH, "prompt_current_binding_table.jsonl"),
+    ("database_paper_artifacts_overwrite_test", DATABASE_TEST_PATH, "paper_artifacts"),
     ("quick_start_smoke_test", QUICK_START_TEST_PATH, "test_readme_quick_start_smoke_executes_documented_no_provider_path"),
     ("documentation_claim_inventory", DOCUMENTATION_CLAIM_INVENTORY_PATH, "run_artifact_documented_count"),
     ("task_spec_boundary", TASK_SPEC_BOUNDARY_PATH, "task_specification_json_artifact_recorded"),
@@ -83,6 +88,8 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "invalid_quarantine_stream_scope_anchor",
     "paper_artifacts_scope_anchor",
     "overwrite_cleanup_test_anchor",
+    "prompt_table_cleanup_test_anchor",
+    "paper_artifacts_cleanup_test_anchor",
     "quick_start_smoke_artifact_anchor",
     "active_todo_owner_anchor",
     "fresh_smoke_run_artifact_presence_matrix",
@@ -133,6 +140,7 @@ def readme_run_artifacts_boundary_record(root: str | Path = ".") -> dict[str, An
         for path in (
             RUN_ARTIFACTS_DOC_PATH,
             DATABASE_PATH,
+            DATABASE_TEST_PATH,
             CLI_TEST_PATH,
             QUICK_START_TEST_PATH,
             DOCUMENTATION_CLAIM_INVENTORY_PATH,

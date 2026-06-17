@@ -735,11 +735,13 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     documented scope omissions for `task_specification.json`, invalid/
     quarantine streams, and `paper_artifacts/`, overwrite-cleanup test anchors,
     quick-start smoke artifact anchors, sidecar anchors, and active TODO
-    ownership. It explicitly records that
+    ownership. It now records an empty README-common-without-cleanup list after
     `prompt_current_binding_table.jsonl` and
-    `prompt_prior_score_table.jsonl` are README-listed but not cleanup-owned,
-    while task-specification and invalid/quarantine streams are detailed-guide
-    or cleanup-owned surfaces outside the README common-output list.
+    `prompt_prior_score_table.jsonl` were added to cleanup ownership, and it
+    records `paper_artifacts` as cleanup-owned while still documented outside
+    the README common-output list. Task-specification and invalid/quarantine
+    streams remain detailed-guide or cleanup-owned surfaces outside the README
+    common-output list.
   - Current gap: the new boundary is still structural. It does not run a fresh
     smoke-run artifact presence matrix, map every artifact to writer/reader
     code and schema validators, prove restore/show lifecycle behavior,
@@ -769,8 +771,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `papers/documentation_claim_inventory.json` now structurally records the
     guide's top-level documented artifact names, the current
     `RUN_ARTIFACT_NAMES` overwrite-cleanup set, and the documented-without-
-    cleanup mismatch for `prompt_current_binding_table.jsonl` and
-    `prompt_prior_score_table.jsonl`.
+    cleanup inventory. The prompt-table cleanup mismatch for
+    `prompt_current_binding_table.jsonl` and
+    `prompt_prior_score_table.jsonl` is now resolved in
+    `RUN_ARTIFACT_NAMES`, and `paper_artifacts` is also cleanup-owned.
     Its artifact tree includes `task_specification.json`,
     `prompt_current_binding_table.jsonl`, and
     `prompt_prior_score_table.jsonl`, and later sections document
@@ -783,11 +787,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     The current code/docs drift is two-sided: `RUN_ARTIFACT_NAMES` already
     includes `task_specification.json`, `evaluator_results.jsonl`,
     `controller_budget_events.jsonl`, `controller_budget_events_invalid.jsonl`,
-    `llm_calls.jsonl`, and `llm_calls_invalid.jsonl`, but the guide's
-    prose list of collision-checked artifacts omits those names. Conversely,
-    the guide's artifact tree includes `prompt_current_binding_table.jsonl`
-    and `prompt_prior_score_table.jsonl`, while the implementation cleanup set
-    still omits both prompt-table exports.
+    `llm_calls.jsonl`, `llm_calls_invalid.jsonl`, the prompt-table exports,
+    and `paper_artifacts`, but the guide's prose list of collision-checked
+    artifacts omits some of those names.
   - Current gap: the committed structural inventory does not yet map each
     documented artifact, schema field, invalid stream, restore command,
     overwrite rule, show behavior, and AlphaEvolve-facing limitation to

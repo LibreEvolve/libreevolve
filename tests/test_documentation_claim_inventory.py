@@ -86,17 +86,16 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         == "all_status_ledger_local_path_refs_present"
     )
     assert inventory["run_artifact_documented_count"] == 22
-    assert inventory["run_artifact_cleanup_count"] == 20
-    assert inventory["run_artifact_documented_without_cleanup_names"] == [
-        "prompt_current_binding_table.jsonl",
-        "prompt_prior_score_table.jsonl",
+    assert inventory["run_artifact_cleanup_count"] == 23
+    assert inventory["run_artifact_documented_without_cleanup_names"] == []
+    assert inventory["run_artifact_cleanup_without_documented_names"] == [
+        "paper_artifacts",
     ]
-    assert inventory["run_artifact_cleanup_without_documented_names"] == []
-    assert inventory["run_artifact_documented_without_cleanup_count"] == 2
-    assert inventory["run_artifact_cleanup_without_documented_count"] == 0
+    assert inventory["run_artifact_documented_without_cleanup_count"] == 0
+    assert inventory["run_artifact_cleanup_without_documented_count"] == 1
     assert (
         inventory["run_artifact_lifecycle_alignment_status"]
-        == "documented_artifacts_missing_cleanup_coverage"
+        == "cleanup_artifacts_missing_documentation"
     )
     assert inventory["status_ledger_bullet_records"][0] == {
         "bullet_ordinal": 1,
@@ -280,7 +279,7 @@ def test_documentation_claim_inventory_rejects_status_ledger_inventory_drift():
 def test_documentation_claim_inventory_rejects_run_artifact_inventory_drift():
     inventory = documentation_claim_inventory_record()
     inventory["run_artifact_documented_count"] = 0
-    inventory["run_artifact_documented_without_cleanup_names"] = []
+    inventory["run_artifact_documented_without_cleanup_names"] = ["stale.jsonl"]
     inventory["run_artifact_lifecycle_alignment_status"] = (
         "documented_and_cleanup_artifact_sets_match"
     )
@@ -316,5 +315,5 @@ def test_render_documentation_claim_inventory_summary_reports_shape():
     assert "| status_ledger_bullet_count | 248 |" in summary
     assert "| status_ledger_local_path_ref_count | 263 |" in summary
     assert "| run_artifact_documented_count | 22 |" in summary
-    assert "| run_artifact_cleanup_count | 20 |" in summary
-    assert "| run_artifact_documented_without_cleanup_count | 2 |" in summary
+    assert "| run_artifact_cleanup_count | 23 |" in summary
+    assert "| run_artifact_documented_without_cleanup_count | 0 |" in summary

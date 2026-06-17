@@ -166,7 +166,7 @@
       "entry_kind": "directory"
     }
   ],
-  "cleanup_artifact_count": 20,
+  "cleanup_artifact_count": 23,
   "cleanup_artifact_names": [
     "archive_events.jsonl",
     "archive_events_invalid.jsonl",
@@ -184,9 +184,12 @@
     "llm_calls_invalid.jsonl",
     "manifest.json",
     "manifest_invalid.jsonl",
+    "paper_artifacts",
     "plugin_artifacts",
+    "prompt_current_binding_table.jsonl",
     "prompt_history.jsonl",
     "prompt_history_invalid.jsonl",
+    "prompt_prior_score_table.jsonl",
     "task_specification.json"
   ],
   "cleanup_artifact_records": [
@@ -271,7 +274,17 @@
       "present_in_run_artifacts_doc": true
     },
     {
+      "name": "paper_artifacts",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
       "name": "plugin_artifacts",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "prompt_current_binding_table.jsonl",
       "present_in_readme_common_list": true,
       "present_in_run_artifacts_doc": true
     },
@@ -286,15 +299,17 @@
       "present_in_run_artifacts_doc": true
     },
     {
+      "name": "prompt_prior_score_table.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
       "name": "task_specification.json",
       "present_in_readme_common_list": false,
       "present_in_run_artifacts_doc": true
     }
   ],
-  "readme_common_without_cleanup_names": [
-    "prompt_current_binding_table.jsonl",
-    "prompt_prior_score_table.jsonl"
-  ],
+  "readme_common_without_cleanup_names": [],
   "cleanup_without_readme_common_names": [
     "archive_events_invalid.jsonl",
     "controller_budget_events_invalid.jsonl",
@@ -302,6 +317,7 @@
     "history_invalid.jsonl",
     "llm_calls_invalid.jsonl",
     "manifest_invalid.jsonl",
+    "paper_artifacts",
     "prompt_history_invalid.jsonl",
     "task_specification.json"
   ],
@@ -369,11 +385,11 @@
       "name": "paper_artifacts",
       "present_in_readme_common_list": false,
       "present_in_run_artifacts_doc": true,
-      "present_in_cleanup_set": false,
+      "present_in_cleanup_set": true,
       "scope_status": "documented_outside_readme_common_list"
     }
   ],
-  "evidence_anchor_count": 14,
+  "evidence_anchor_count": 18,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -432,9 +448,33 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "database_prompt_table_artifacts",
+      "path": "libreevolve/core/database.py",
+      "required_marker": "prompt_current_binding_table.jsonl",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "database_paper_artifacts",
+      "path": "libreevolve/core/database.py",
+      "required_marker": "paper_artifacts",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "cli_overwrite_test",
       "path": "tests/test_cli.py",
       "required_marker": "test_run_overwrite_clears_target_artifacts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "database_prompt_table_overwrite_test",
+      "path": "tests/population/test_database.py",
+      "required_marker": "prompt_current_binding_table.jsonl",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "database_paper_artifacts_overwrite_test",
+      "path": "tests/population/test_database.py",
+      "required_marker": "paper_artifacts",
       "marker_status": "marker_present"
     },
     {
@@ -474,6 +514,8 @@
     "invalid_quarantine_stream_scope_anchor",
     "paper_artifacts_scope_anchor",
     "overwrite_cleanup_test_anchor",
+    "prompt_table_cleanup_test_anchor",
+    "paper_artifacts_cleanup_test_anchor",
     "quick_start_smoke_artifact_anchor",
     "active_todo_owner_anchor",
     "fresh_smoke_run_artifact_presence_matrix",

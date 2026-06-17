@@ -78,12 +78,15 @@ RUN_ARTIFACT_NAMES = {
     "llm_calls_invalid.jsonl",
     "prompt_history.jsonl",
     "prompt_history_invalid.jsonl",
+    "prompt_current_binding_table.jsonl",
+    "prompt_prior_score_table.jsonl",
     "manifest.json",
     "manifest_invalid.jsonl",
     "best.py",
     "best_workspace",
     "evaluator_artifacts",
     "plugin_artifacts",
+    "paper_artifacts",
 }
 _MAX_CONTEXT_PROVENANCE_STRING_CHARS = 4096
 _MAX_CONTEXT_PROVENANCE_ITEMS = 5000

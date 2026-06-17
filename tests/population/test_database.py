@@ -5541,6 +5541,8 @@ def test_database_overwrite_clears_known_run_artifacts_only():
     run_dir.mkdir()
     (run_dir / "history.jsonl").write_text("{}\n", encoding="utf-8")
     (run_dir / "prompt_history.jsonl").write_text("{}\n", encoding="utf-8")
+    (run_dir / "prompt_current_binding_table.jsonl").write_text("{}\n", encoding="utf-8")
+    (run_dir / "prompt_prior_score_table.jsonl").write_text("{}\n", encoding="utf-8")
     (run_dir / "manifest_invalid.jsonl").write_text("{}\n", encoding="utf-8")
     (run_dir / "best_workspace").mkdir()
     (run_dir / "best_workspace" / "old.py").write_text("old", encoding="utf-8")
@@ -5548,6 +5550,8 @@ def test_database_overwrite_clears_known_run_artifacts_only():
     (run_dir / "evaluator_artifacts" / "old.txt").write_text("old", encoding="utf-8")
     (run_dir / "plugin_artifacts").mkdir()
     (run_dir / "plugin_artifacts" / "old.jsonl").write_text("old", encoding="utf-8")
+    (run_dir / "paper_artifacts").mkdir()
+    (run_dir / "paper_artifacts" / "old.txt").write_text("old", encoding="utf-8")
     (run_dir / "notes.txt").write_text("keep", encoding="utf-8")
 
     ProgramDatabase(Config(
@@ -5558,10 +5562,13 @@ def test_database_overwrite_clears_known_run_artifacts_only():
 
     assert not (run_dir / "history.jsonl").exists()
     assert not (run_dir / "prompt_history.jsonl").exists()
+    assert not (run_dir / "prompt_current_binding_table.jsonl").exists()
+    assert not (run_dir / "prompt_prior_score_table.jsonl").exists()
     assert not (run_dir / "manifest_invalid.jsonl").exists()
     assert not (run_dir / "best_workspace").exists()
     assert not (run_dir / "evaluator_artifacts").exists()
     assert not (run_dir / "plugin_artifacts").exists()
+    assert not (run_dir / "paper_artifacts").exists()
     assert (run_dir / "manifest.json").exists()
     assert (run_dir / "notes.txt").read_text(encoding="utf-8") == "keep"
     manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))

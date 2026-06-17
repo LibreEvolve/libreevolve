@@ -8328,23 +8328,24 @@ sidecars, tests, and active TODOs.
     `_write_prompt_prior_score_table()` write those files during runtime
     finalization. Separately, `libreevolve.core.database.RUN_ARTIFACT_NAMES`
     is the source used by `prepare_run_directory()` to detect existing run
-    artifacts, remove known artifacts during `overwrite`, and classify foreign
-    run-directory entries. That set still omits both prompt-table artifact
-    names.
-  - Current gap: reusing a run directory with `--overwrite` can leave old
-    prompt-table JSONL files behind because they are not part of the cleanup
-    artifact-name set, while a new finalized manifest may still expose current
-    artifact metadata for those same paths. The stale files are also treated as
-    preserved foreign entries rather than known LibreEvolve run artifacts. This
-    is narrower than the multi-writer JSONL gap: it is a run-directory
-    lifecycle and artifact-inventory consistency gap for already generated
-    prompt-table exports.
+    artifacts, remove known artifacts during `overwrite`, and classify
+    foreign run-directory entries. That set now includes both prompt-table
+    artifact names, and
+    `test_database_overwrite_clears_known_run_artifacts_only` verifies stale
+    `prompt_current_binding_table.jsonl` and
+    `prompt_prior_score_table.jsonl` files are removed on overwrite.
+    `papers/readme_run_artifacts_boundary.json` now records an empty
+    README-common-without-cleanup list for those prompt-table exports.
+  - Current gap: prompt-table stale-file cleanup is fixed, but the broader
+    inventory is still not centralized. README, manifest schemas, runtime
+    artifact summaries, and finalization writers can still drift unless a
+    checked generated-artifact inventory maps every declared artifact name to
+    its writer, schema, lifecycle status, and restore/show handling.
   - Required result: make every generated run artifact name declared by README,
     manifest schemas, runtime artifact summaries, and finalization writers flow
-    through one checked artifact inventory; include prompt binding/prior-score
-    tables in collision detection and overwrite cleanup; add stale-file tests
-    for reused run directories; and validate that documented/schema-listed run
-    artifacts cannot be omitted from cleanup policy.
+    through one checked artifact inventory; add drift tests proving
+    documented/schema-listed run artifacts cannot be omitted from cleanup
+    policy; and connect that inventory to restore/show lifecycle expectations.
 
 - [ ] Bring generated `paper_artifacts/` directories under the run-artifact
       lifecycle policy.
@@ -8362,23 +8363,25 @@ sidecars, tests, and active TODOs.
     `paper_artifacts/process_exhibit/figure_1.mmd`, and
     `paper_artifacts/table1_capability_comparison/table_1.md`.
     `docs/run-artifacts.md` also documents those `paper_artifacts/...` paths.
-    Separately, `ProgramDatabase.RUN_ARTIFACT_NAMES` drives startup collision
-    detection, overwrite cleanup, and foreign-entry classification, but it
-    does not include `paper_artifacts`.
-  - Current gap: `paper_artifacts/` can be generated and cited by runtime
-    manifest reports while remaining outside the central cleanup/collision
-    artifact set. `--overwrite` may preserve stale paper/source evidence from a
-    previous run, and stale `paper_artifacts` entries are classified as foreign
-    preserved files rather than known LibreEvolve run artifacts. This is a
-    lifecycle/inventory gap, separate from the already tracked paper-artifact
-    creator/assembler-role attribution and the availability/linkage sidecars in
-    `papers/`.
-  - Required result: add `paper_artifacts` to the checked run-artifact
-    inventory or centralize generated artifact registration so every writer is
-    lifecycle-managed; make overwrite remove or explicitly version old
-    paper-artifact directories; add stale-paper-artifact reuse tests; and
-    validate that manifest/documented `paper_artifacts/...` paths cannot exist
-    outside collision, cleanup, and run-artifact summary policy.
+    `ProgramDatabase.RUN_ARTIFACT_NAMES` drives startup collision detection,
+    overwrite cleanup, and foreign-entry classification, and it now includes
+    `paper_artifacts`. `test_database_overwrite_clears_known_run_artifacts_only`
+    verifies stale `paper_artifacts/` directories are removed on overwrite,
+    and `papers/readme_run_artifacts_boundary.json` records
+    `paper_artifacts` as present in the cleanup set while remaining outside the
+    README common-output list.
+  - Current gap: stale `paper_artifacts/` cleanup is fixed, but generated
+    paper/source evidence is still not governed by a single writer/schema/
+    manifest lifecycle registry. Runtime reports can cite individual
+    `paper_artifacts/...` paths, but there is no central validation that every
+    paper-artifact writer, manifest pointer, docs entry, restore/show reader,
+    and cleanup rule stays synchronized.
+  - Required result: centralize generated artifact registration so every
+    paper/source artifact writer is lifecycle-managed; validate that
+    manifest/documented `paper_artifacts/...` paths cannot exist outside
+    collision, cleanup, run-artifact summary, restore/show, and schema
+    expectations; and keep stale-paper-artifact reuse tests in the lifecycle
+    gate.
 
 - [ ] Add schema-level coverage for invalid/quarantine run streams.
   - Spec evidence: AlphaEvolve-style long-running experiment artifacts must be

@@ -27,10 +27,10 @@ Implemented today:
 - Run artifacts under `runs/`, including manifests, histories, prompts,
   failures, prompt current-binding/prior-score tables, best candidates,
   best workspaces, and plugin/evaluator artifacts. The generated-artifact
-  lifecycle remains incomplete for prompt-table exports and
-  `paper_artifacts/...` evidence: active TODOs still track unified
-  collision/overwrite cleanup, artifact-hash, schema, restore, and
-  `show` inspection proof for those paper-facing outputs.
+  collision/overwrite cleanup set now includes prompt-table exports and
+  `paper_artifacts/...` evidence, but active TODOs still track unified
+  artifact-hash, schema, restore, and `show` inspection proof for those
+  paper-facing outputs.
 
 Important limits:
 

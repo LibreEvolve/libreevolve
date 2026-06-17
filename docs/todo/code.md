@@ -8403,10 +8403,13 @@ sidecars, tests, and active TODOs.
     directory, or a schema path; focused tests cover missing and unregistered
     docs references.
   - Current gap: stale `paper_artifacts/` cleanup and manifest/report/schema
-    subpath consistency are fixed, and docs anchors are schema-checked, but
-    generated paper/source evidence still lacks behavioral show/restore reader
-    coverage that proves the documented `paper_artifacts/...` entries are
-    exercised end to end.
+    subpath consistency are fixed, docs anchors are schema-checked, and
+    `libreevolve show` now runs the lifecycle validator for manifest-backed
+    runs that include `artifact_schema.paper_artifact_subpaths`, failing
+    inspection on drifted runtime report paths or drifted docs references.
+    Generated paper/source evidence still lacks restore-reader coverage that
+    proves the documented `paper_artifacts/...` entries are exercised end to
+    end across replay/restore paths.
   - Required result: validate that manifest/documented
     `paper_artifacts/...` paths cannot exist outside collision, cleanup,
     run-artifact summary, restore/show, docs, and schema expectations; and keep

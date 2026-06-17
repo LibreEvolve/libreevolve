@@ -941,6 +941,11 @@ are:
 - `paper_artifacts/table1_capability_comparison/table_1.md`
 - `paper_artifacts/table1_capability_comparison/table_1_accessibility.txt`
 
+`libreevolve show` runs the same paper-artifact lifecycle validation for
+manifest-backed runs that include `artifact_schema.paper_artifact_subpaths`;
+drifted runtime report paths or drifted guide references fail inspection
+before the selected best program/workspace is printed.
+
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.
 Use a fresh `--run-name` for independent runs, or pass `--overwrite` / set

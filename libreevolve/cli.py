@@ -18,6 +18,9 @@ from libreevolve.core.jsonl import (
     load_strict_json_object,
     strict_json_dump,
 )
+from libreevolve.core.artifact_schema import (
+    validate_paper_artifact_lifecycle_manifest,
+)
 from libreevolve.core.loop import (
     RuntimeBudgetStateError,
     RuntimeFullResumeBundleError,
@@ -408,6 +411,7 @@ def show(run_dir, source_display_chars, full_source, redact_source):
     feedback_summary = _feedback_summary(best, best_line_number)
     failure_summary = _failure_statistics_summary(run_path)
     validator_boundary_summary = _validator_boundary_artifact_summary(run_path)
+    paper_artifact_summary = _paper_artifact_lifecycle_summary(run_path)
     metrics = best.get("metrics")
     workspace = _history_record_workspace(best, best_line_number)
     click.echo(f"Total programs: {total}")
@@ -428,6 +432,8 @@ def show(run_dir, source_display_chars, full_source, redact_source):
         click.echo(failure_summary)
     if validator_boundary_summary:
         click.echo(validator_boundary_summary)
+    if paper_artifact_summary:
+        click.echo(paper_artifact_summary)
     if metrics:
         click.echo(f"Metrics:        {json.dumps(metrics, sort_keys=True, allow_nan=False)}")
     if workspace is None:
@@ -507,6 +513,42 @@ def _validator_boundary_artifact_summary(run_dir: Path) -> str | None:
         "Validator boundary: "
         f"checked_attempts={validation.checked_attempts}; streams={streams}"
     )
+
+
+def _paper_artifact_lifecycle_summary(run_dir: Path) -> str | None:
+    manifest_path = run_dir / "manifest.json"
+    if not manifest_path.exists():
+        return None
+    manifest = _read_show_manifest(manifest_path)
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, dict)
+        or "paper_artifact_subpaths" not in artifact_schema
+    ):
+        return None
+    validation = validate_paper_artifact_lifecycle_manifest(
+        manifest,
+        run_artifacts_doc_text=_show_run_artifacts_doc_text(),
+    )
+    if not validation["ok"]:
+        issue = validation["issues"][0]
+        raise click.ClickException(
+            "Paper artifact lifecycle validation failed: "
+            f"{issue['code']}: {issue['message']}"
+        )
+    return (
+        "Paper artifacts: "
+        f"checked_paths={validation['emitted_path_count']}; "
+        f"docs_refs={len(validation['documented_refs'])}"
+    )
+
+
+def _show_run_artifacts_doc_text() -> str | None:
+    doc_path = Path(__file__).resolve().parents[1] / "docs" / "run-artifacts.md"
+    try:
+        return doc_path.read_text(encoding="utf-8")
+    except OSError:
+        return None
 
 
 def _show_archive_cell_upper_bound(run_dir: Path) -> int | None:

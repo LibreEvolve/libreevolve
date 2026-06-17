@@ -19,6 +19,10 @@ from libreevolve.core.config import Config
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.database import ProgramDatabase, _validator_execution_policy
 from libreevolve.core.evaluator import _validator_boundary_metadata
+from libreevolve.core.artifact_schema import (
+    paper_artifact_subpath_schema,
+    run_artifact_schema,
+)
 from libreevolve.core.loop import _runtime_llm_scheduler_state, _runtime_rng_state
 from libreevolve.llm.ensemble import LLMEnsemble
 from libreevolve.plugins.base import PluginBase
@@ -152,6 +156,68 @@ def _write_show_manifest(
     if config is not None:
         manifest["config"] = config
     (run_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+
+def _write_show_paper_artifact_manifest(run_dir: Path) -> dict:
+    schema = paper_artifact_subpath_schema()
+    paths_by_family = {
+        family_name: [
+            record["path"] for record in family["path_records"]
+        ]
+        for family_name, family in schema["families"].items()
+    }
+    manifest = {
+        "artifact_schema": run_artifact_schema(),
+        "runtime": {
+            "status": "completed",
+            "stop_reason": "max_generations",
+            "history": {
+                "programs_logged": 1,
+                "marker_spelling_provenance_report": {
+                    "source_artifacts": {
+                        "page_artifacts": {
+                            "4": {
+                                "artifact_path": paths_by_family[
+                                    "marker_spelling"
+                                ][0]
+                            },
+                            "6": {
+                                "artifact_path": paths_by_family[
+                                    "marker_spelling"
+                                ][1]
+                            },
+                        },
+                        "figure_3_marker_text_artifact": {
+                            "artifact_path": paths_by_family["marker_spelling"][2]
+                        },
+                    }
+                },
+                "alphaevolve_process_exhibit_report": {
+                    "artifact_evidence": [
+                        {"path": path}
+                        for path in paths_by_family["process_exhibit"]
+                    ]
+                },
+                "alphaevolve_table1_capability_exhibit_report": {
+                    "rendered_artifacts": [
+                        {"path": path}
+                        for path in paths_by_family[
+                            "table1_capability_comparison"
+                        ]
+                    ]
+                },
+            },
+            "artifacts": {
+                "paper_artifacts": {
+                    "path": "paper_artifacts",
+                    "present": False,
+                }
+            },
+        },
+        "policies": {"validator_execution": _validator_execution_policy("host")},
+    }
+    (run_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    return manifest
 
 def test_help(): assert "run" in CliRunner().invoke(cli, ["--help"]).output
 def test_run_help(): assert "PROBLEM_DIR" in CliRunner().invoke(cli, ["run", "--help"]).output
@@ -1707,6 +1773,32 @@ def test_show_reports_completed_manifest_runtime_status(tmp_path):
     assert "Run status:     completed (stop_reason: max_generations)" in r.output
     assert "Selection:      archive-retained valid" in r.output
     assert "Validator boundary: checked_attempts=1; streams=history.jsonl" in r.output
+
+
+def test_show_reports_paper_artifact_lifecycle_summary(tmp_path):
+    _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
+    _write_show_paper_artifact_manifest(tmp_path)
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code == 0
+    assert "Paper artifacts: checked_paths=11" in r.output
+    assert "docs_refs=" in r.output
+
+
+def test_show_rejects_paper_artifact_lifecycle_drift(tmp_path):
+    _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
+    manifest = _write_show_paper_artifact_manifest(tmp_path)
+    manifest["runtime"]["history"]["alphaevolve_table1_capability_exhibit_report"][
+        "rendered_artifacts"
+    ][0]["path"] = "paper_artifacts/table1_capability_comparison/unregistered.md"
+    (tmp_path / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code != 0
+    assert "Paper artifact lifecycle validation failed" in r.output
+    assert "unknown_paper_artifact_paths" in r.output
 
 
 def test_show_rejects_manifest_backed_row_without_validator_boundary(tmp_path):

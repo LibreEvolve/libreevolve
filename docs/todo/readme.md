@@ -1028,16 +1028,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     bullets, release-artifact workflow markers, release-provenance tool
     markers, release reproducibility and CI sidecar anchors, development/run-
     artifact/ROADMAP/papers-index anchors, focused tests, and this active TODO
-    owner.
+    owner. It also maps each checklist bullet to the matching release-artifact
+    workflow markers and maps the release-provenance JSON fields to the local
+    provenance writer.
   - Current gap: the page-specific inventory is a static marker drift record,
-    not a semantic per-bullet map. It does not map each
-    `docs/release-checklist.md` bullet to a specific workflow step,
-    release-provenance schema field, package-content check, CLI smoke,
-    uploaded artifact name, signed-release proof, published-index proof,
-    maintainer release event, or owner review signoff. A future release
-    workflow, artifact name, provenance schema, local command, or signed/
-    published-release boundary could still drift unless this validator and the
-    broader release boundaries are updated together.
+    not an executed release transcript or semantic release-readiness proof. It
+    maps local checklist bullets to workflow/tool markers, but does not prove
+    the workflow was run for a specific release version, sign the provenance,
+    verify a published or private package index, record a maintainer release
+    event, or capture owner review signoff. A future release workflow, artifact
+    name, provenance schema, local command, or signed/published-release
+    boundary could still drift unless this validator and the broader release
+    boundaries are updated together.
   - Required result: add a release-checklist evidence map and validation gate
     that parses the checklist bullets, verifies workflow/tool/test/sidecar
     anchors, distinguishes local smoke evidence from signed or index-published

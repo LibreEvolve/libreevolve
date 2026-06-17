@@ -1412,10 +1412,11 @@ The committed `papers/release_checklist_documentation_boundary.json` sidecar
 preserves the release-checklist documentation boundary: required local smoke
 bullets, out-of-scope signed/published/approved release bullets, workflow
 markers, provenance-tool markers, cross-document anchors, focused tests, and
-active TODO ownership are recorded, while per-bullet workflow-step mapping,
-provenance schema field mapping, signed release provenance, published-index
-verification, maintainer release events, and owner review signoff remain
-absent.
+active TODO ownership are recorded. It also maps each local checklist bullet
+to release-artifact workflow evidence and maps release-provenance JSON fields
+to the local provenance writer, while signed release provenance,
+published-index verification, maintainer release events, and owner review
+signoff remain absent.
 The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves
 the current path-scoped GitHub Actions boundary: manual dispatch,
 push/pull_request path filters, secret scan, Python 3.11/3.12 unit jobs on
@@ -3122,9 +3123,10 @@ Implemented:
   GitHub Actions release-artifact workflow markers,
   `libreevolve/tools/release_artifact_provenance.py` markers, release
   reproducibility and CI sidecar anchors, cross-document anchors, focused
-  tests, and active TODO ownership. It is not a per-checklist-bullet workflow-
-  step map, provenance schema field map, signed release provenance, published-
-  index verification, maintainer release event, or owner review signoff.
+  tests, active TODO ownership, a per-checklist-bullet workflow-step map, and
+  a provenance schema field map. It is not signed release provenance,
+  published-index verification, maintainer release event, or owner review
+  signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

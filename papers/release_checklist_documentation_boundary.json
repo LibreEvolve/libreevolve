@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.release_checklist_documentation_boundary.v1",
-  "boundary_status": "release_checklist_static_drift_record_without_signed_release_proof",
+  "boundary_status": "release_checklist_static_drift_record_with_local_workflow_map_without_signed_release_proof",
   "claim_ready": false,
   "checklist_path": "docs/release-checklist.md",
   "workflow_path": ".github/workflows/tests.yml",
@@ -222,6 +222,210 @@
       "marker_status": "marker_present"
     }
   ],
+  "checklist_workflow_map_count": 6,
+  "checklist_workflow_map_records": [
+    {
+      "checklist_marker": "Build exactly one wheel and one source distribution",
+      "workflow_job": "release_artifact",
+      "workflow_step": "Build wheel and sdist",
+      "workflow_markers": [
+        "python -m build --wheel --sdist",
+        "expected one wheel and one sdist"
+      ],
+      "checklist_marker_status": "marker_present",
+      "workflow_marker_records": [
+        {
+          "marker": "python -m build --wheel --sdist",
+          "marker_status": "marker_present"
+        },
+        {
+          "marker": "expected one wheel and one sdist",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "checklist_marker": "Verify every file under the `libreevolve/` package tree",
+      "workflow_job": "release_artifact",
+      "workflow_step": "Check distribution artifacts",
+      "workflow_markers": [
+        "Path(\"libreevolve\").rglob(\"*\")",
+        "wheel is missing package files",
+        "sdist is missing package files"
+      ],
+      "checklist_marker_status": "marker_present",
+      "workflow_marker_records": [
+        {
+          "marker": "Path(\"libreevolve\").rglob(\"*\")",
+          "marker_status": "marker_present"
+        },
+        {
+          "marker": "wheel is missing package files",
+          "marker_status": "marker_present"
+        },
+        {
+          "marker": "sdist is missing package files",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "checklist_marker": "Install the built wheel into an isolated virtual environment",
+      "workflow_job": "release_artifact",
+      "workflow_step": "Install wheel and smoke CLI",
+      "workflow_markers": [
+        "python -m venv .venv-wheel-smoke",
+        "python -m pip install dist/*.whl"
+      ],
+      "checklist_marker_status": "marker_present",
+      "workflow_marker_records": [
+        {
+          "marker": "python -m venv .venv-wheel-smoke",
+          "marker_status": "marker_present"
+        },
+        {
+          "marker": "python -m pip install dist/*.whl",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "checklist_marker": "Smoke both command entrypoints",
+      "workflow_job": "release_artifact",
+      "workflow_step": "Install wheel and smoke CLI",
+      "workflow_markers": [
+        "libreevolve --help",
+        "python -m libreevolve --help"
+      ],
+      "checklist_marker_status": "marker_present",
+      "workflow_marker_records": [
+        {
+          "marker": "libreevolve --help",
+          "marker_status": "marker_present"
+        },
+        {
+          "marker": "python -m libreevolve --help",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "checklist_marker": "Write `dist/release_artifact_provenance.json`",
+      "workflow_job": "release_artifact",
+      "workflow_step": "Write release artifact provenance",
+      "workflow_markers": [
+        "python -m libreevolve.tools.release_artifact_provenance --root ."
+      ],
+      "checklist_marker_status": "marker_present",
+      "workflow_marker_records": [
+        {
+          "marker": "python -m libreevolve.tools.release_artifact_provenance --root .",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "checklist_marker": "Upload or otherwise preserve the wheel",
+      "workflow_job": "release_artifact",
+      "workflow_step": "Upload release smoke artifacts",
+      "workflow_markers": [
+        "actions/upload-artifact@v4",
+        "libreevolve-release-smoke-artifacts",
+        "dist/*"
+      ],
+      "checklist_marker_status": "marker_present",
+      "workflow_marker_records": [
+        {
+          "marker": "actions/upload-artifact@v4",
+          "marker_status": "marker_present"
+        },
+        {
+          "marker": "libreevolve-release-smoke-artifacts",
+          "marker_status": "marker_present"
+        },
+        {
+          "marker": "dist/*",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    }
+  ],
+  "checklist_workflow_map_status": "all_required_checklist_bullets_mapped_to_release_workflow",
+  "provenance_schema_field_map_count": 13,
+  "provenance_schema_field_map_records": [
+    {
+      "field_path": "schema",
+      "tool_marker": "RELEASE_ARTIFACT_PROVENANCE_SCHEMA",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "dist_dir",
+      "tool_marker": "\"dist_dir\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "artifact_count",
+      "tool_marker": "\"artifact_count\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "artifacts",
+      "tool_marker": "\"artifacts\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "artifacts[].filename",
+      "tool_marker": "\"filename\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "artifacts[].kind",
+      "tool_marker": "\"kind\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "artifacts[].size_bytes",
+      "tool_marker": "\"size_bytes\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "artifacts[].sha256",
+      "tool_marker": "\"sha256\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "source",
+      "tool_marker": "\"source\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "source.git_commit",
+      "tool_marker": "\"git_commit\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "source.tracked_files_dirty",
+      "tool_marker": "\"tracked_files_dirty\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "source.source_file_sha256",
+      "tool_marker": "\"source_file_sha256\"",
+      "field_status": "field_marker_present"
+    },
+    {
+      "field_path": "wheel_and_sdist_validation",
+      "tool_marker": "provenance must include at least one wheel and one sdist",
+      "field_status": "field_marker_present"
+    }
+  ],
+  "provenance_schema_field_map_status": "release_provenance_schema_fields_mapped_to_tool",
   "evidence_anchor_count": 8,
   "evidence_anchor_records": [
     {
@@ -293,12 +497,10 @@
     "owner_review_signoff"
   ],
   "missing_evidence": {
-    "per_checklist_bullet_to_workflow_step_map": "not_recorded_locally",
-    "provenance_schema_field_map": "not_recorded_locally",
     "signed_release_provenance": "not_recorded_locally",
     "published_index_verification": "not_recorded_locally",
     "maintainer_release_event": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records static release-checklist documentation evidence: the required local smoke bullets, out-of-scope signed/published/approved release bullets, release_artifact workflow markers, release_artifact_provenance tool markers, release reproducibility and CI sidecar anchors, development/run-artifact/ROADMAP/papers anchors, focused agent-doc tests, and active TODO ownership. It does not claim a per-checklist-bullet workflow-step map, provenance schema field map, signed release provenance, published-index verification, maintainer release event, or owner review signoff."
+  "claim_boundary": "This boundary records static release-checklist documentation evidence: the required local smoke bullets, out-of-scope signed/published/approved release bullets, release_artifact workflow markers, release_artifact_provenance tool markers, release reproducibility and CI sidecar anchors, development/run-artifact/ROADMAP/papers anchors, focused agent-doc tests, active TODO ownership, a per-checklist-bullet workflow-step map, and a release-provenance schema field map. It does not claim signed release provenance, published-index verification, maintainer release event, or owner review signoff."
 }

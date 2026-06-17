@@ -14,7 +14,7 @@ def test_release_checklist_documentation_boundary_accepts_current_static_record(
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "release_checklist_static_drift_record_without_signed_release_proof"
+        == "release_checklist_static_drift_record_with_local_workflow_map_without_signed_release_proof"
     )
     assert boundary["schema"] == RELEASE_CHECKLIST_DOCUMENTATION_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -22,13 +22,23 @@ def test_release_checklist_documentation_boundary_accepts_current_static_record(
     assert validation.outside_scope_count == 3
     assert validation.workflow_marker_count == 14
     assert validation.provenance_tool_marker_count == 8
+    assert validation.checklist_workflow_map_count == 6
+    assert validation.provenance_schema_field_map_count == 13
     assert validation.evidence_anchor_count == 8
     assert validation.missing_marker_count == 0
-    assert validation.missing_evidence_count == 6
+    assert validation.missing_evidence_count == 4
     assert boundary["missing_marker_records"] == []
+    assert (
+        boundary["checklist_workflow_map_status"]
+        == "all_required_checklist_bullets_mapped_to_release_workflow"
+    )
+    assert boundary["checklist_workflow_map_records"][0]["workflow_step"] == "Build wheel and sdist"
+    assert (
+        boundary["provenance_schema_field_map_status"]
+        == "release_provenance_schema_fields_mapped_to_tool"
+    )
+    assert boundary["provenance_schema_field_map_records"][0]["field_path"] == "schema"
     assert boundary["missing_evidence"] == {
-        "per_checklist_bullet_to_workflow_step_map": "not_recorded_locally",
-        "provenance_schema_field_map": "not_recorded_locally",
         "signed_release_provenance": "not_recorded_locally",
         "published_index_verification": "not_recorded_locally",
         "maintainer_release_event": "not_recorded_locally",
@@ -49,6 +59,12 @@ def test_release_checklist_documentation_boundary_rejects_overclaim_and_drift():
     boundary["outside_scope_count"] = 0
     boundary["workflow_marker_count"] = 0
     boundary["workflow_marker_records"][0]["marker_status"] = "marker_missing"
+    boundary["checklist_workflow_map_count"] = 0
+    boundary["checklist_workflow_map_status"] = "missing_release_checklist_workflow_map"
+    boundary["checklist_workflow_map_records"][0]["map_status"] = "missing_marker"
+    boundary["provenance_schema_field_map_count"] = 0
+    boundary["provenance_schema_field_map_status"] = "missing_release_provenance_schema_field_marker"
+    boundary["provenance_schema_field_map_records"][0]["field_status"] = "field_marker_missing"
     boundary["missing_marker_count"] = 1
     boundary["missing_marker_records"] = [boundary["workflow_marker_records"][0]]
     boundary["missing_evidence"]["signed_release_provenance"] = "recorded"
@@ -65,6 +81,12 @@ def test_release_checklist_documentation_boundary_rejects_overclaim_and_drift():
     assert "invalid_outside_scope_count" in codes
     assert "invalid_workflow_marker_count" in codes
     assert "invalid_workflow_marker_records" in codes
+    assert "invalid_checklist_workflow_map_count" in codes
+    assert "invalid_checklist_workflow_map_records" in codes
+    assert "invalid_checklist_workflow_map_status" in codes
+    assert "invalid_provenance_schema_field_map_count" in codes
+    assert "invalid_provenance_schema_field_map_records" in codes
+    assert "invalid_provenance_schema_field_map_status" in codes
     assert "invalid_missing_marker_count" in codes
     assert "invalid_missing_marker_records" in codes
     assert "missing_release_checklist_marker" in codes
@@ -80,13 +102,15 @@ def test_render_release_checklist_documentation_boundary_summary_reports_shape()
     assert "Release checklist documentation boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | release_checklist_static_drift_record_without_signed_release_proof |"
+        "| boundary_status | release_checklist_static_drift_record_with_local_workflow_map_without_signed_release_proof |"
         in summary
     )
     assert "| required_local_evidence_count | 6 |" in summary
     assert "| outside_scope_count | 3 |" in summary
     assert "| workflow_marker_count | 14 |" in summary
     assert "| provenance_tool_marker_count | 8 |" in summary
+    assert "| checklist_workflow_map_count | 6 |" in summary
+    assert "| provenance_schema_field_map_count | 13 |" in summary
     assert "| evidence_anchor_count | 8 |" in summary
     assert "| missing_marker_count | 0 |" in summary
-    assert "| missing_evidence_count | 6 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

@@ -10,7 +10,7 @@ RELEASE_CHECKLIST_DOCUMENTATION_BOUNDARY_SCHEMA = (
     "libreevolve.release_checklist_documentation_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "release_checklist_static_drift_record_without_signed_release_proof"
+    "release_checklist_static_drift_record_with_local_workflow_map_without_signed_release_proof"
 )
 CHECKLIST_PATH = "docs/release-checklist.md"
 WORKFLOW_PATH = ".github/workflows/tests.yml"
@@ -73,6 +73,63 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("agents_release_tests", AGENTS_TEST_PATH, "test_release_checklist_documents_smoke_and_remaining_release_gates"),
     ("readme_todo_owner", README_TODO_PATH, "Add release-checklist documentation drift evidence."),
 )
+EXPECTED_CHECKLIST_WORKFLOW_STEP_MAP = (
+    {
+        "checklist_marker": "Build exactly one wheel and one source distribution",
+        "workflow_job": "release_artifact",
+        "workflow_step": "Build wheel and sdist",
+        "workflow_markers": ("python -m build --wheel --sdist", "expected one wheel and one sdist"),
+    },
+    {
+        "checklist_marker": "Verify every file under the `libreevolve/` package tree",
+        "workflow_job": "release_artifact",
+        "workflow_step": "Check distribution artifacts",
+        "workflow_markers": (
+            "Path(\"libreevolve\").rglob(\"*\")",
+            "wheel is missing package files",
+            "sdist is missing package files",
+        ),
+    },
+    {
+        "checklist_marker": "Install the built wheel into an isolated virtual environment",
+        "workflow_job": "release_artifact",
+        "workflow_step": "Install wheel and smoke CLI",
+        "workflow_markers": ("python -m venv .venv-wheel-smoke", "python -m pip install dist/*.whl"),
+    },
+    {
+        "checklist_marker": "Smoke both command entrypoints",
+        "workflow_job": "release_artifact",
+        "workflow_step": "Install wheel and smoke CLI",
+        "workflow_markers": ("libreevolve --help", "python -m libreevolve --help"),
+    },
+    {
+        "checklist_marker": "Write `dist/release_artifact_provenance.json`",
+        "workflow_job": "release_artifact",
+        "workflow_step": "Write release artifact provenance",
+        "workflow_markers": ("python -m libreevolve.tools.release_artifact_provenance --root .",),
+    },
+    {
+        "checklist_marker": "Upload or otherwise preserve the wheel",
+        "workflow_job": "release_artifact",
+        "workflow_step": "Upload release smoke artifacts",
+        "workflow_markers": ("actions/upload-artifact@v4", "libreevolve-release-smoke-artifacts", "dist/*"),
+    },
+)
+EXPECTED_PROVENANCE_SCHEMA_FIELD_MAP = (
+    ("schema", "RELEASE_ARTIFACT_PROVENANCE_SCHEMA"),
+    ("dist_dir", '"dist_dir"'),
+    ("artifact_count", '"artifact_count"'),
+    ("artifacts", '"artifacts"'),
+    ("artifacts[].filename", '"filename"'),
+    ("artifacts[].kind", '"kind"'),
+    ("artifacts[].size_bytes", '"size_bytes"'),
+    ("artifacts[].sha256", '"sha256"'),
+    ("source", '"source"'),
+    ("source.git_commit", '"git_commit"'),
+    ("source.tracked_files_dirty", '"tracked_files_dirty"'),
+    ("source.source_file_sha256", '"source_file_sha256"'),
+    ("wheel_and_sdist_validation", "provenance must include at least one wheel and one sdist"),
+)
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "release_checklist_required_local_evidence_bullets",
     "release_checklist_outside_scope_bullets",
@@ -91,8 +148,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "per_checklist_bullet_to_workflow_step_map": "not_recorded_locally",
-    "provenance_schema_field_map": "not_recorded_locally",
     "signed_release_provenance": "not_recorded_locally",
     "published_index_verification": "not_recorded_locally",
     "maintainer_release_event": "not_recorded_locally",
@@ -114,6 +169,8 @@ class ReleaseChecklistDocumentationBoundaryValidation:
     outside_scope_count: int
     workflow_marker_count: int
     provenance_tool_marker_count: int
+    checklist_workflow_map_count: int
+    provenance_schema_field_map_count: int
     evidence_anchor_count: int
     missing_marker_count: int
     missing_evidence_count: int
@@ -163,6 +220,14 @@ def release_checklist_documentation_boundary_record(
         _marker_record(record_id, path, texts[path], marker)
         for record_id, path, marker in EXPECTED_EVIDENCE_ANCHORS
     ]
+    checklist_workflow_map_records = [
+        _checklist_workflow_map_record(checklist_text, workflow_text, record)
+        for record in EXPECTED_CHECKLIST_WORKFLOW_STEP_MAP
+    ]
+    provenance_schema_field_map_records = [
+        _provenance_field_record(provenance_tool_text, field_path, marker)
+        for field_path, marker in EXPECTED_PROVENANCE_SCHEMA_FIELD_MAP
+    ]
     all_marker_records = (
         required_records
         + outside_records
@@ -196,6 +261,20 @@ def release_checklist_documentation_boundary_record(
         "workflow_marker_records": workflow_records,
         "provenance_tool_marker_count": len(provenance_tool_records),
         "provenance_tool_marker_records": provenance_tool_records,
+        "checklist_workflow_map_count": len(checklist_workflow_map_records),
+        "checklist_workflow_map_records": checklist_workflow_map_records,
+        "checklist_workflow_map_status": (
+            "all_required_checklist_bullets_mapped_to_release_workflow"
+            if all(record["map_status"] == "mapped" for record in checklist_workflow_map_records)
+            else "missing_release_checklist_workflow_map"
+        ),
+        "provenance_schema_field_map_count": len(provenance_schema_field_map_records),
+        "provenance_schema_field_map_records": provenance_schema_field_map_records,
+        "provenance_schema_field_map_status": (
+            "release_provenance_schema_fields_mapped_to_tool"
+            if all(record["field_status"] == "field_marker_present" for record in provenance_schema_field_map_records)
+            else "missing_release_provenance_schema_field_marker"
+        ),
         "evidence_anchor_count": len(evidence_anchor_records),
         "evidence_anchor_records": evidence_anchor_records,
         "missing_marker_count": len(missing_marker_records),
@@ -208,10 +287,11 @@ def release_checklist_documentation_boundary_record(
             "published/approved release bullets, release_artifact workflow "
             "markers, release_artifact_provenance tool markers, release "
             "reproducibility and CI sidecar anchors, development/run-artifact/"
-            "ROADMAP/papers anchors, focused agent-doc tests, and active TODO "
-            "ownership. It does not claim a per-checklist-bullet workflow-step "
-            "map, provenance schema field map, signed release provenance, "
-            "published-index verification, maintainer release event, or owner "
+            "ROADMAP/papers anchors, focused agent-doc tests, active TODO "
+            "ownership, a per-checklist-bullet workflow-step map, and a "
+            "release-provenance schema field map. It does not claim signed "
+            "release provenance, published-index verification, maintainer "
+            "release event, or owner "
             "review signoff."
         ),
     }
@@ -229,7 +309,7 @@ def validate_release_checklist_documentation_boundary(
     )
     if read_issues:
         return ReleaseChecklistDocumentationBoundaryValidation(
-            False, None, 0, 0, 0, 0, 0, 0, 0, read_issues
+            False, None, 0, 0, 0, 0, 0, 0, 0, 0, 0, read_issues
         )
     assert isinstance(data, dict)
     expected = release_checklist_documentation_boundary_record(root)
@@ -260,6 +340,12 @@ def validate_release_checklist_documentation_boundary(
         "workflow_marker_records",
         "provenance_tool_marker_count",
         "provenance_tool_marker_records",
+        "checklist_workflow_map_count",
+        "checklist_workflow_map_records",
+        "checklist_workflow_map_status",
+        "provenance_schema_field_map_count",
+        "provenance_schema_field_map_records",
+        "provenance_schema_field_map_status",
         "evidence_anchor_count",
         "evidence_anchor_records",
         "missing_marker_count",
@@ -273,6 +359,14 @@ def validate_release_checklist_documentation_boundary(
         issues.append(_issue("invalid_outside_scope_count", "release checklist should record three out-of-scope evidence bullets"))
     if data.get("missing_marker_count") != 0:
         issues.append(_issue("missing_release_checklist_marker", "release checklist documentation anchors are incomplete"))
+    if data.get("checklist_workflow_map_count") != 6:
+        issues.append(_issue("invalid_checklist_workflow_map_count", "release checklist should map six required bullets to workflow evidence"))
+    if data.get("checklist_workflow_map_status") != "all_required_checklist_bullets_mapped_to_release_workflow":
+        issues.append(_issue("invalid_checklist_workflow_map_status", "release checklist workflow-step map is incomplete"))
+    if data.get("provenance_schema_field_map_count") != len(EXPECTED_PROVENANCE_SCHEMA_FIELD_MAP):
+        issues.append(_issue("invalid_provenance_schema_field_map_count", "release provenance schema field map count changed"))
+    if data.get("provenance_schema_field_map_status") != "release_provenance_schema_fields_mapped_to_tool":
+        issues.append(_issue("invalid_provenance_schema_field_map_status", "release provenance schema field map is incomplete"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
@@ -281,7 +375,8 @@ def validate_release_checklist_documentation_boundary(
     if (
         not isinstance(boundary_text, str)
         or "static release-checklist documentation evidence" not in boundary_text
-        or "does not claim a per-checklist-bullet workflow-step map" not in boundary_text
+        or "per-checklist-bullet workflow-step map" not in boundary_text
+        or "release-provenance schema field map" not in boundary_text
         or "signed release provenance" not in boundary_text
         or "published-index verification" not in boundary_text
         or "maintainer release event" not in boundary_text
@@ -294,6 +389,8 @@ def validate_release_checklist_documentation_boundary(
         outside_scope_count=data.get("outside_scope_count") if isinstance(data.get("outside_scope_count"), int) else 0,
         workflow_marker_count=data.get("workflow_marker_count") if isinstance(data.get("workflow_marker_count"), int) else 0,
         provenance_tool_marker_count=data.get("provenance_tool_marker_count") if isinstance(data.get("provenance_tool_marker_count"), int) else 0,
+        checklist_workflow_map_count=data.get("checklist_workflow_map_count") if isinstance(data.get("checklist_workflow_map_count"), int) else 0,
+        provenance_schema_field_map_count=data.get("provenance_schema_field_map_count") if isinstance(data.get("provenance_schema_field_map_count"), int) else 0,
         evidence_anchor_count=data.get("evidence_anchor_count") if isinstance(data.get("evidence_anchor_count"), int) else 0,
         missing_marker_count=data.get("missing_marker_count") if isinstance(data.get("missing_marker_count"), int) else 0,
         missing_evidence_count=missing_count,
@@ -316,6 +413,8 @@ def render_release_checklist_documentation_boundary_summary(
         f"| outside_scope_count | {validation.outside_scope_count} |",
         f"| workflow_marker_count | {validation.workflow_marker_count} |",
         f"| provenance_tool_marker_count | {validation.provenance_tool_marker_count} |",
+        f"| checklist_workflow_map_count | {validation.checklist_workflow_map_count} |",
+        f"| provenance_schema_field_map_count | {validation.provenance_schema_field_map_count} |",
         f"| evidence_anchor_count | {validation.evidence_anchor_count} |",
         f"| missing_marker_count | {validation.missing_marker_count} |",
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
@@ -349,6 +448,52 @@ def _section_bullets(text: str, heading: str) -> list[str]:
     if in_section and current:
         bullets.append(" ".join(current))
     return bullets
+
+
+def _checklist_workflow_map_record(
+    checklist_text: str,
+    workflow_text: str,
+    spec: dict[str, Any],
+) -> dict[str, Any]:
+    checklist_marker = str(spec["checklist_marker"])
+    workflow_markers = tuple(str(marker) for marker in spec["workflow_markers"])
+    workflow_marker_records = [
+        {
+            "marker": marker,
+            "marker_status": "marker_present" if marker in workflow_text else "marker_missing",
+        }
+        for marker in workflow_markers
+    ]
+    checklist_present = checklist_marker in checklist_text
+    workflow_present = all(
+        record["marker_status"] == "marker_present"
+        for record in workflow_marker_records
+    )
+    return {
+        "checklist_marker": checklist_marker,
+        "workflow_job": spec["workflow_job"],
+        "workflow_step": spec["workflow_step"],
+        "workflow_markers": list(workflow_markers),
+        "checklist_marker_status": "marker_present" if checklist_present else "marker_missing",
+        "workflow_marker_records": workflow_marker_records,
+        "map_status": "mapped" if checklist_present and workflow_present else "missing_marker",
+    }
+
+
+def _provenance_field_record(
+    provenance_tool_text: str,
+    field_path: str,
+    marker: str,
+) -> dict[str, Any]:
+    return {
+        "field_path": field_path,
+        "tool_marker": marker,
+        "field_status": (
+            "field_marker_present"
+            if marker in provenance_tool_text
+            else "field_marker_missing"
+        ),
+    }
 
 
 def _marker_record(record_id: str, path: str, text: str, marker: str) -> dict[str, Any]:

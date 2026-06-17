@@ -633,10 +633,10 @@ Important limits:
   the checklist, GitHub Actions `release_artifact` workflow markers,
   `libreevolve/tools/release_artifact_provenance.py` markers, release
   reproducibility and CI sidecar anchors, development/run-artifact/ROADMAP/
-  papers-index anchors, focused agent-doc tests, and active TODO ownership.
-  This is not a per-checklist-bullet workflow-step map, provenance schema
-  field map, signed release provenance, published-index verification,
-  maintainer release event, or owner review signoff.
+  papers-index anchors, focused agent-doc tests, active TODO ownership, a
+  per-checklist-bullet workflow-step map, and a release-provenance schema
+  field map. This is not signed release provenance, published-index
+  verification, maintainer release event, or owner review signoff.
 - Runtime budgets are local cooperative generation/evaluation/evaluator-second/
   wall-clock/LLM/provider counters, not per-candidate compute-hour accounting,
   accelerator/worker leases, async queue budgets, or equal-budget execution

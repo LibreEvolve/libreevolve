@@ -1697,6 +1697,10 @@ by `papers/lineage_replay_boundary.json`.
   reference currently resolves as HTTP 404, so title/subtitle snapshots,
   navigation placement, outbound links, media assets, access statements,
   independent availability checks, and compatibility claims remain open.
+  `papers/alphaevolve_impact_claim_policy_boundary.json` normalizes the 22
+  official 2026 impact values and holds every row at release-note-ineligible
+  until source snapshots, local fixtures, reproduction artifacts, customer
+  confirmation where relevant, and independent verification exist.
 - Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
   `papers/download_manifest.*` and `papers/README.md` now include arXiv
   `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic

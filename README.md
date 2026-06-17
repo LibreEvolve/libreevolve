@@ -53,6 +53,9 @@ Important limits:
 - The DeepMind AlphaEvolve product/science page reference is source context
   only; `papers/alphaevolve_product_page_boundary.json` records the current
   HTTP 404 result and does not prove product-page availability.
+- `papers/alphaevolve_impact_claim_policy_boundary.json` normalizes official
+  2026 impact values for review, but no row is release-note eligible without
+  local fixtures, reproduction artifacts, and independent verification.
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.

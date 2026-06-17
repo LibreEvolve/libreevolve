@@ -51,6 +51,10 @@ from libreevolve.problems.benchmarks.alphaevolve_product_page_boundary import (
     alphaevolve_product_page_boundary_record,
     validate_alphaevolve_product_page_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_impact_claim_policy_boundary import (
+    alphaevolve_impact_claim_policy_boundary_record,
+    validate_alphaevolve_impact_claim_policy_boundary,
+)
 from libreevolve.problems.benchmarks.arxiv_abstract_snapshot import (
     alphaevolve_arxiv_abstract_snapshot_record,
     validate_alphaevolve_arxiv_abstract_snapshot,
@@ -1249,6 +1253,7 @@ ALPHAEVOLVE_CLOUD_ACCESS_BOUNDARY_FILE = "papers/alphaevolve_cloud_access_bounda
 ALPHAEVOLVE_KEYWORD_CUSTOMER_BOUNDARY_FILE = "papers/alphaevolve_keyword_customer_boundary.json"
 ALPHAEVOLVE_UI_API_ATTRIBUTION_BOUNDARY_FILE = "papers/alphaevolve_ui_api_attribution_boundary.json"
 ALPHAEVOLVE_PRODUCT_PAGE_BOUNDARY_FILE = "papers/alphaevolve_product_page_boundary.json"
+ALPHAEVOLVE_IMPACT_CLAIM_POLICY_BOUNDARY_FILE = "papers/alphaevolve_impact_claim_policy_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -1981,6 +1986,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_keyword_customer_boundary(root_path))
     issues.extend(_validate_alphaevolve_ui_api_attribution_boundary(root_path))
     issues.extend(_validate_alphaevolve_product_page_boundary(root_path))
+    issues.extend(_validate_alphaevolve_impact_claim_policy_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -10532,6 +10538,38 @@ def _validate_alphaevolve_product_page_boundary(root_path: Path) -> list[PaperMa
             f"alphaevolve_product_page_boundary_{issue.code}",
             issue.message,
             "alphaevolve_product_page",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_impact_claim_policy_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_IMPACT_CLAIM_POLICY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_impact_claim_policy_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_impact_claim_policy_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_IMPACT_CLAIM_POLICY_BOUNDARY_FILE} must "
+                        "emit AlphaEvolve impact claim normalization boundaries"
+                    ),
+                    "alphaevolve_impact_claim_policy",
+                )
+            ]
+    report = validate_alphaevolve_impact_claim_policy_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_impact_claim_policy_boundary_{issue.code}",
+            issue.message,
+            "alphaevolve_impact_claim_policy",
         )
         for issue in report.issues
     ]

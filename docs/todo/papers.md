@@ -5328,18 +5328,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     business outcomes, and source-only outbound links. The same boundary lists
     `claim_value_normalization_policy` as not recorded and
     `release_note_claim_gate` as not implemented.
-  - Current gap: existing README, ROADMAP, paper-index, and TODO wording keeps
-    the claims source-scoped, but there is no dedicated normalization policy
-    explaining how to compare or promote values such as `30%` error reduction,
-    `14% to over 88%` feasibility, `5%` accuracy gain, `10x` lower error,
-    `20%` write-amplification reduction, `nearly 9%` storage-footprint
-    reduction, `2x` training speed, `10.4%` routing efficiency, `4x` MLFF
-    speedup, `two days vs months`, public-gallery qualitative claims, private-
-    preview access claims, or customer-availability claims. There is also no
-    release-note gate requiring source snapshot, local fixture status,
-    independent verification, customer confirmation, and overclaim checks
-    before any impact value is described as implemented, reproduced, or
-    LibreEvolve-supported.
+  - Current gap: `papers/alphaevolve_impact_claim_policy_boundary.json` now
+    emits one normalized row for each of the 22 official impact claim ids,
+    including source URL/hash, raw value, value type, unit, baseline,
+    comparison direction, approximation wording, result class, unsupported
+    local-evidence flag, downgrade wording, and `release_note_eligible=false`.
+    Per-claim linked source snapshots, local fixture status, reproduction
+    artifact links, customer confirmation, independent verification, and an
+    implemented release-note promotion gate remain missing before any impact
+    value can be described as implemented, reproduced, or LibreEvolve-supported.
   - Required result: add a machine-checkable claim-normalization and promotion
     policy for the 2026 impact source set: canonical claim ids, source URL and
     retrieval hash, value type, unit, denominator, baseline identity,

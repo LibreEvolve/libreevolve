@@ -2558,6 +2558,15 @@ Implemented:
   statements, product-page snapshot verification, independent availability
   checks, local LibreEvolve support, and managed AlphaEvolve compatibility
   claims open until a reachable source snapshot exists.
+- `papers/alphaevolve_impact_claim_policy_boundary.json`: official 2026
+  AlphaEvolve impact-claim normalization and release-note gate sidecar, not
+  reproduction or release evidence. It emits one normalized row for each of the
+  22 impact claim ids, carrying source URL/hash, raw value, value type, unit,
+  baseline, comparison direction, approximation wording, result class, local
+  fixture status, independent-verification status, downgrade wording, and
+  `release_note_eligible=false`. It keeps every claim source-scoped until
+  linked source snapshots, local fixtures, reproduction artifacts, customer
+  confirmation where relevant, and independent verification exist.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

@@ -6066,6 +6066,10 @@ sidecars, tests, and active TODOs.
     records that the DeepMind AlphaEvolve product/science page URL currently
     resolves as HTTP 404, so product-page title/subtitle, navigation, outbound
     link, media, access-statement, and compatibility evidence remains missing.
+    `papers/alphaevolve_impact_claim_policy_boundary.json` now normalizes the
+    22 official impact claim values and keeps every claim release-note
+    ineligible until source snapshots, local fixtures, reproduction artifacts,
+    customer confirmation where relevant, and independent verification exist.
   - Required result: implement or explicitly benchmark the named domains before
     promoting impact claims: local DeepConsensus, AC OPF, Earth AI, Willow,
     public-gallery/math, TPU-design, cache-policy, Spanner, compiler-storage,

@@ -180,9 +180,9 @@
       "marker_status": "marker_present"
     },
     {
-      "record_id": "database_run_artifact_names",
-      "path": "libreevolve/core/database.py",
-      "required_marker": "RUN_ARTIFACT_NAMES = {",
+      "record_id": "artifact_schema_run_artifact_names",
+      "path": "libreevolve/core/artifact_schema.py",
+      "required_marker": "RUN_ARTIFACT_NAMES = frozenset(",
       "marker_status": "marker_present"
     },
     {

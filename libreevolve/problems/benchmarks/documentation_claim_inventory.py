@@ -953,7 +953,7 @@ def _run_artifacts_guide_inventory(root: Path) -> dict[str, Any]:
         root / "docs" / "run-artifacts.md"
     )
     cleanup_records = _run_artifact_cleanup_records(
-        root / "libreevolve" / "core" / "database.py"
+        root / "libreevolve" / "core" / "artifact_schema.py"
     )
     documented_names = sorted(record["name"] for record in documented_records)
     cleanup_names = sorted(record["name"] for record in cleanup_records)
@@ -961,7 +961,7 @@ def _run_artifacts_guide_inventory(root: Path) -> dict[str, Any]:
     cleanup_without_documented = sorted(set(cleanup_names) - set(documented_names))
     return {
         "run_artifact_source_path": "docs/run-artifacts.md",
-        "run_artifact_cleanup_source_path": "libreevolve/core/database.py",
+        "run_artifact_cleanup_source_path": "libreevolve/core/artifact_schema.py",
         "run_artifact_documented_count": len(documented_names),
         "run_artifact_documented_names": documented_names,
         "run_artifact_cleanup_count": len(cleanup_names),
@@ -1031,10 +1031,18 @@ def _run_artifact_cleanup_records(path: Path) -> list[dict[str, Any]]:
         ):
             continue
         try:
-            raw_names = ast.literal_eval(node.value)
+            value_node = node.value
+            if (
+                isinstance(value_node, ast.Call)
+                and isinstance(value_node.func, ast.Name)
+                and value_node.func.id == "frozenset"
+                and len(value_node.args) == 1
+            ):
+                value_node = value_node.args[0]
+            raw_names = ast.literal_eval(value_node)
         except (TypeError, ValueError):
             return []
-        if not isinstance(raw_names, set):
+        if not isinstance(raw_names, (frozenset, set)):
             return []
         names = sorted(name for name in raw_names if isinstance(name, str))
         line_number = getattr(node, "lineno", None)

@@ -20,6 +20,82 @@ PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA = (
 CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA = "libreevolve.controller_budget_event.v1"
 QUARANTINE_RECORD_SCHEMA = "libreevolve.strict_jsonl_quarantine_diagnostic.v1"
 LEGACY_RECORD_POLICY = "missing_schema_version_accepted_as_legacy_v0"
+RUN_ARTIFACT_NAMES = frozenset(
+    {
+        "task_specification.json",
+        "evaluator_results.jsonl",
+        "history.jsonl",
+        "history_invalid.jsonl",
+        "failure_history.jsonl",
+        "failure_history_invalid.jsonl",
+        "archive_events.jsonl",
+        "archive_events_invalid.jsonl",
+        "controller_budget_events.jsonl",
+        "controller_budget_events_invalid.jsonl",
+        "llm_calls.jsonl",
+        "llm_calls_invalid.jsonl",
+        "prompt_history.jsonl",
+        "prompt_history_invalid.jsonl",
+        "prompt_current_binding_table.jsonl",
+        "prompt_prior_score_table.jsonl",
+        "manifest.json",
+        "manifest_invalid.jsonl",
+        "best.py",
+        "best_workspace",
+        "evaluator_artifacts",
+        "plugin_artifacts",
+        "paper_artifacts",
+    }
+)
+
+_JSONL_ARTIFACT_OWNERS = {
+    "history.jsonl": (
+        "ProgramDatabase.log",
+        "show inspection, archive restore, lineage reports, and paper validators",
+    ),
+    "evaluator_results.jsonl": (
+        "CascadeEvaluator result logging",
+        "runtime reports, evaluator joins, and paper validators",
+    ),
+    "failure_history.jsonl": (
+        "ProgramDatabase failure logging",
+        "prompt failure memory, proposal audits, and paper validators",
+    ),
+    "archive_events.jsonl": (
+        "ProgramDatabase archive admission logging",
+        "archive replay audits, restore checks, and paper validators",
+    ),
+    "controller_budget_events.jsonl": (
+        "RunBudget controller-event logging",
+        "budget restore, controller-state audits, and paper validators",
+    ),
+    "llm_calls.jsonl": (
+        "LLM call logger",
+        "budget accounting, provider diagnostics, and paper validators",
+    ),
+    "prompt_history.jsonl": (
+        "PromptDatabase",
+        "prompt reports, prompt-table exports, and paper validators",
+    ),
+    "prompt_current_binding_table.jsonl": (
+        "prompt current-binding table finalizer",
+        "prompt current-binding reports and cross-run analysis",
+    ),
+    "prompt_prior_score_table.jsonl": (
+        "prompt prior-score table finalizer",
+        "prompt prior-score reports and cross-run analysis",
+    ),
+}
+
+_NON_JSONL_RESTORE_SHOW_HANDLING = {
+    "manifest.json": "primary show and restore input",
+    "task_specification.json": "resolved by task-spec artifact report",
+    "best.py": "show summary and best-artifact export",
+    "best_workspace": "show summary and best-artifact export",
+    "evaluator_artifacts": "runtime artifact summary and evaluator report inspection",
+    "plugin_artifacts": "plugin artifact manifest and show inspection",
+    "paper_artifacts": "paper-source report validators and docs",
+}
 
 
 def _quarantine_record(
@@ -67,10 +143,72 @@ def _non_jsonl_artifact(
 
 
 def run_artifact_schema() -> dict:
+    schema = _run_artifact_schema_without_inventory()
     return {
         "name": RUN_MANIFEST_SCHEMA,
         "version": ARTIFACT_SCHEMA_VERSION,
         "legacy_record_policy": LEGACY_RECORD_POLICY,
+        **schema,
+        "generated_artifact_inventory": generated_run_artifact_inventory(),
+    }
+
+
+def generated_run_artifact_inventory() -> dict:
+    schema = _run_artifact_schema_without_inventory()
+    inventory: dict[str, dict] = {}
+    for name, record_schema in schema["jsonl_records"].items():
+        writer_owner, reader_owner = _JSONL_ARTIFACT_OWNERS[name]
+        inventory[name] = {
+            "path": name,
+            "artifact_kind": "jsonl_record_stream",
+            "schema_pointer": f'artifact_schema.jsonl_records["{name}"]',
+            "record_schema": record_schema,
+            "writer_owner": writer_owner,
+            "reader_owner": reader_owner,
+            "lifecycle_status": "known_artifact_collision_checked_and_overwrite_managed",
+            "cleanup_managed": True,
+            "runtime_pointer_location": f'runtime.artifacts["{name}"]',
+            "restore_show_handling": "accepted stream reader or summary report input",
+        }
+    for name, record in schema["quarantine_jsonl_records"].items():
+        inventory[name] = {
+            "path": name,
+            "artifact_kind": "quarantine_jsonl_record_stream",
+            "schema_pointer": f'artifact_schema.quarantine_jsonl_records["{name}"]',
+            "record_schema": record["diagnostic_record_schema"],
+            "source_stream": record["source_stream"],
+            "source_record_schema": record["source_record_schema"],
+            "writer_owner": "strict JSONL quarantine writer",
+            "reader_owner": "diagnostic inspection and paper validators",
+            "lifecycle_status": "known_artifact_collision_checked_and_overwrite_managed",
+            "cleanup_managed": True,
+            "runtime_pointer_location": f'runtime.artifacts["{name}"]',
+            "restore_show_handling": "diagnostic stream, never accepted state input",
+        }
+    for name, record in schema["non_jsonl_artifacts"].items():
+        inventory[name] = {
+            "path": name,
+            "artifact_kind": record["kind"],
+            "schema_pointer": f'artifact_schema.non_jsonl_artifacts["{name}"]',
+            "writer_owner": record["writer_owner"],
+            "reader_owner": record["reader_owner"],
+            "lifecycle_status": record["lifecycle_status"],
+            "cleanup_managed": True,
+            "runtime_pointer_location": record["runtime_pointer_location"],
+            "restore_show_handling": _NON_JSONL_RESTORE_SHOW_HANDLING[name],
+        }
+    missing = RUN_ARTIFACT_NAMES - set(inventory)
+    extra = set(inventory) - RUN_ARTIFACT_NAMES
+    if missing or extra:
+        raise RuntimeError(
+            "generated artifact inventory drifted from RUN_ARTIFACT_NAMES: "
+            f"missing={sorted(missing)} extra={sorted(extra)}"
+        )
+    return dict(sorted(inventory.items()))
+
+
+def _run_artifact_schema_without_inventory() -> dict:
+    return {
         "non_jsonl_artifacts": {
             "manifest.json": _non_jsonl_artifact(
                 path="manifest.json",

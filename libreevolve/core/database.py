@@ -15,6 +15,7 @@ from libreevolve.core.artifact_schema import (
     HISTORY_RECORD_SCHEMA,
     LLM_CALL_RECORD_SCHEMA,
     LLM_REWARD_RECORD_SCHEMA,
+    RUN_ARTIFACT_NAMES,
     run_artifact_schema,
     versioned_record,
 )
@@ -63,31 +64,6 @@ from libreevolve.population.program import (
 from libreevolve.population.sampling import validate_exclude_ids, validate_sample_count
 from libreevolve.problems.loader import _normalize_metric_schema
 
-RUN_ARTIFACT_NAMES = {
-    "task_specification.json",
-    "evaluator_results.jsonl",
-    "history.jsonl",
-    "history_invalid.jsonl",
-    "failure_history.jsonl",
-    "failure_history_invalid.jsonl",
-    "archive_events.jsonl",
-    "archive_events_invalid.jsonl",
-    "controller_budget_events.jsonl",
-    "controller_budget_events_invalid.jsonl",
-    "llm_calls.jsonl",
-    "llm_calls_invalid.jsonl",
-    "prompt_history.jsonl",
-    "prompt_history_invalid.jsonl",
-    "prompt_current_binding_table.jsonl",
-    "prompt_prior_score_table.jsonl",
-    "manifest.json",
-    "manifest_invalid.jsonl",
-    "best.py",
-    "best_workspace",
-    "evaluator_artifacts",
-    "plugin_artifacts",
-    "paper_artifacts",
-}
 _MAX_CONTEXT_PROVENANCE_STRING_CHARS = 4096
 _MAX_CONTEXT_PROVENANCE_ITEMS = 5000
 _MAX_CONTEXT_PROVENANCE_DEPTH = 30

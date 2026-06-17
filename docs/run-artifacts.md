@@ -898,6 +898,12 @@ artifact it records the relative path, file/directory kind, generated/required
 presence condition, writer owner, reader owner, file-hash or tree-hash policy,
 overwrite lifecycle status, and the manifest `runtime.artifacts` or
 runtime-history report location that points to the artifact when available.
+`manifest.json.artifact_schema.generated_artifact_inventory` is the checked
+rollup across JSONL streams, quarantine streams, and non-JSONL artifacts. It
+maps every known cleanup-managed artifact to its schema pointer, writer owner,
+reader owner, lifecycle status, runtime pointer or report location, and
+restore/show handling boundary so the documented artifact list, manifest
+schema, and overwrite policy cannot drift independently.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.

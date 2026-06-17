@@ -14,7 +14,10 @@ from libreevolve.core.artifact_schema import (
     LLM_REWARD_RECORD_SCHEMA,
     PROMPT_HISTORY_RECORD_SCHEMA,
     QUARANTINE_RECORD_SCHEMA,
+    RUN_ARTIFACT_NAMES as SCHEMA_RUN_ARTIFACT_NAMES,
     RUN_MANIFEST_SCHEMA,
+    generated_run_artifact_inventory,
+    run_artifact_schema,
 )
 from libreevolve.core.config import Config, ConfigError
 from libreevolve.core.database import (
@@ -2910,6 +2913,47 @@ def test_run_artifacts_include_current_schema_markers():
     assert failure["record_schema"] == FAILURE_RECORD_SCHEMA
     assert llm_call["record_schema"] == LLM_CALL_RECORD_SCHEMA
     assert llm_reward["record_schema"] == LLM_REWARD_RECORD_SCHEMA
+
+
+def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
+    inventory = generated_run_artifact_inventory()
+    manifest_schema = run_artifact_schema()
+    schema_declared = (
+        set(manifest_schema["jsonl_records"])
+        | set(manifest_schema["quarantine_jsonl_records"])
+        | set(manifest_schema["non_jsonl_artifacts"])
+    )
+
+    assert RUN_ARTIFACT_NAMES is SCHEMA_RUN_ARTIFACT_NAMES
+    assert set(inventory) == RUN_ARTIFACT_NAMES
+    assert set(inventory) == schema_declared
+    assert all(record["cleanup_managed"] is True for record in inventory.values())
+    assert all(
+        record["lifecycle_status"]
+        == "known_artifact_collision_checked_and_overwrite_managed"
+        for record in inventory.values()
+    )
+    assert inventory["prompt_current_binding_table.jsonl"] == {
+        "path": "prompt_current_binding_table.jsonl",
+        "artifact_kind": "jsonl_record_stream",
+        "schema_pointer": (
+            'artifact_schema.jsonl_records["prompt_current_binding_table.jsonl"]'
+        ),
+        "record_schema": "libreevolve.prompt_current_binding_table.v1",
+        "writer_owner": "prompt current-binding table finalizer",
+        "reader_owner": "prompt current-binding reports and cross-run analysis",
+        "lifecycle_status": "known_artifact_collision_checked_and_overwrite_managed",
+        "cleanup_managed": True,
+        "runtime_pointer_location": (
+            'runtime.artifacts["prompt_current_binding_table.jsonl"]'
+        ),
+        "restore_show_handling": "accepted stream reader or summary report input",
+    }
+    assert inventory["manifest_invalid.jsonl"]["source_stream"] == "manifest.json"
+    assert inventory["paper_artifacts"]["restore_show_handling"] == (
+        "paper-source report validators and docs"
+    )
+
 
 def test_log_writes_metrics_and_evaluation():
     tmpdir = tempfile.mkdtemp()

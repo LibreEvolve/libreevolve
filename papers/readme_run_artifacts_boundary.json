@@ -4,7 +4,7 @@
   "claim_ready": false,
   "readme_path": "README.md",
   "run_artifacts_doc_path": "docs/run-artifacts.md",
-  "cleanup_source_path": "libreevolve/core/database.py",
+  "cleanup_source_path": "libreevolve/core/artifact_schema.py",
   "test_paths": [
     "tests/test_cli.py",
     "tests/test_readme_quick_start_smoke_boundary.py"
@@ -430,9 +430,9 @@
       "marker_status": "marker_present"
     },
     {
-      "record_id": "database_run_artifact_names",
-      "path": "libreevolve/core/database.py",
-      "required_marker": "RUN_ARTIFACT_NAMES = {",
+      "record_id": "artifact_schema_run_artifact_names",
+      "path": "libreevolve/core/artifact_schema.py",
+      "required_marker": "RUN_ARTIFACT_NAMES = frozenset(",
       "marker_status": "marker_present"
     },
     {
@@ -442,20 +442,20 @@
       "marker_status": "marker_present"
     },
     {
-      "record_id": "database_task_spec_path",
-      "path": "libreevolve/core/database.py",
+      "record_id": "artifact_schema_task_spec_path",
+      "path": "libreevolve/core/artifact_schema.py",
       "required_marker": "task_specification.json",
       "marker_status": "marker_present"
     },
     {
-      "record_id": "database_prompt_table_artifacts",
-      "path": "libreevolve/core/database.py",
+      "record_id": "artifact_schema_prompt_table_artifacts",
+      "path": "libreevolve/core/artifact_schema.py",
       "required_marker": "prompt_current_binding_table.jsonl",
       "marker_status": "marker_present"
     },
     {
-      "record_id": "database_paper_artifacts",
-      "path": "libreevolve/core/database.py",
+      "record_id": "artifact_schema_paper_artifacts",
+      "path": "libreevolve/core/artifact_schema.py",
       "required_marker": "paper_artifacts",
       "marker_status": "marker_present"
     },

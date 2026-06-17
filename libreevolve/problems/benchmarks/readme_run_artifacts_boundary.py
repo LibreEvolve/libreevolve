@@ -14,6 +14,7 @@ EXPECTED_BOUNDARY_STATUS = (
 README_PATH = "README.md"
 README_TODO_PATH = "docs/todo/readme.md"
 RUN_ARTIFACTS_DOC_PATH = "docs/run-artifacts.md"
+ARTIFACT_SCHEMA_PATH = "libreevolve/core/artifact_schema.py"
 DATABASE_PATH = "libreevolve/core/database.py"
 DATABASE_TEST_PATH = "tests/population/test_database.py"
 CLI_TEST_PATH = "tests/test_cli.py"
@@ -64,11 +65,11 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("run_artifacts_paper_artifacts", RUN_ARTIFACTS_DOC_PATH, "paper_artifacts/"),
     ("run_artifacts_collision_policy", RUN_ARTIFACTS_DOC_PATH, "Reusing an existing run directory"),
     ("run_artifacts_overwrite_known", RUN_ARTIFACTS_DOC_PATH, "delete only those known artifacts"),
-    ("database_run_artifact_names", DATABASE_PATH, "RUN_ARTIFACT_NAMES = {"),
+    ("artifact_schema_run_artifact_names", ARTIFACT_SCHEMA_PATH, "RUN_ARTIFACT_NAMES = frozenset("),
     ("database_prepare_run_directory", DATABASE_PATH, "def prepare_run_directory"),
-    ("database_task_spec_path", DATABASE_PATH, "task_specification.json"),
-    ("database_prompt_table_artifacts", DATABASE_PATH, "prompt_current_binding_table.jsonl"),
-    ("database_paper_artifacts", DATABASE_PATH, "paper_artifacts"),
+    ("artifact_schema_task_spec_path", ARTIFACT_SCHEMA_PATH, "task_specification.json"),
+    ("artifact_schema_prompt_table_artifacts", ARTIFACT_SCHEMA_PATH, "prompt_current_binding_table.jsonl"),
+    ("artifact_schema_paper_artifacts", ARTIFACT_SCHEMA_PATH, "paper_artifacts"),
     ("cli_overwrite_test", CLI_TEST_PATH, "test_run_overwrite_clears_target_artifacts"),
     ("database_prompt_table_overwrite_test", DATABASE_TEST_PATH, "prompt_current_binding_table.jsonl"),
     ("database_paper_artifacts_overwrite_test", DATABASE_TEST_PATH, "paper_artifacts"),
@@ -139,6 +140,7 @@ def readme_run_artifacts_boundary_record(root: str | Path = ".") -> dict[str, An
         path: _read_text(root_path / path)
         for path in (
             RUN_ARTIFACTS_DOC_PATH,
+            ARTIFACT_SCHEMA_PATH,
             DATABASE_PATH,
             DATABASE_TEST_PATH,
             CLI_TEST_PATH,
@@ -156,7 +158,7 @@ def readme_run_artifacts_boundary_record(root: str | Path = ".") -> dict[str, An
         _artifact_record(name, readme_text, docs_text)
         for name in EXPECTED_README_COMMON_ARTIFACTS
     ]
-    cleanup_names = _cleanup_artifact_names(root_path / DATABASE_PATH)
+    cleanup_names = _cleanup_artifact_names(root_path / ARTIFACT_SCHEMA_PATH)
     cleanup_records = [
         {
             "name": name,
@@ -201,7 +203,7 @@ def readme_run_artifacts_boundary_record(root: str | Path = ".") -> dict[str, An
         "claim_ready": False,
         "readme_path": README_PATH,
         "run_artifacts_doc_path": RUN_ARTIFACTS_DOC_PATH,
-        "cleanup_source_path": DATABASE_PATH,
+        "cleanup_source_path": ARTIFACT_SCHEMA_PATH,
         "test_paths": [CLI_TEST_PATH, QUICK_START_TEST_PATH],
         "sidecar_paths": [DOCUMENTATION_CLAIM_INVENTORY_PATH, TASK_SPEC_BOUNDARY_PATH],
         "todo_paths": [README_TODO_PATH],
@@ -396,10 +398,18 @@ def _cleanup_artifact_names(path: Path) -> list[str]:
         ):
             continue
         try:
-            value = ast.literal_eval(node.value)
+            value_node = node.value
+            if (
+                isinstance(value_node, ast.Call)
+                and isinstance(value_node.func, ast.Name)
+                and value_node.func.id == "frozenset"
+                and len(value_node.args) == 1
+            ):
+                value_node = value_node.args[0]
+            value = ast.literal_eval(value_node)
         except (TypeError, ValueError):
             return []
-        if isinstance(value, set):
+        if isinstance(value, (frozenset, set)):
             return sorted(name for name in value if isinstance(name, str))
     return []
 

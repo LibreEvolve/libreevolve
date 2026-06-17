@@ -8343,16 +8343,24 @@ sidecars, tests, and active TODOs.
     `prompt_prior_score_table.jsonl` files are removed on overwrite.
     `papers/readme_run_artifacts_boundary.json` now records an empty
     README-common-without-cleanup list for those prompt-table exports.
-  - Current gap: prompt-table stale-file cleanup is fixed, but the broader
-    inventory is still not centralized. README, manifest schemas, runtime
-    artifact summaries, and finalization writers can still drift unless a
-    checked generated-artifact inventory maps every declared artifact name to
-    its writer, schema, lifecycle status, and restore/show handling.
-  - Required result: make every generated run artifact name declared by README,
-    manifest schemas, runtime artifact summaries, and finalization writers flow
-    through one checked artifact inventory; add drift tests proving
-    documented/schema-listed run artifacts cannot be omitted from cleanup
-    policy; and connect that inventory to restore/show lifecycle expectations.
+    `libreevolve.core.artifact_schema.RUN_ARTIFACT_NAMES` is now the shared
+    cleanup/schema source, and
+    `artifact_schema.generated_artifact_inventory` maps every JSONL,
+    quarantine, and non-JSONL run artifact to its schema pointer, writer owner,
+    reader owner, lifecycle status, cleanup ownership, runtime/report pointer,
+    and restore/show handling boundary. Focused tests prove the generated
+    inventory, manifest schema, and cleanup set have identical artifact names,
+    including the prompt-table exports.
+  - Current gap: the generated-artifact inventory is centralized, but it still
+    records owner strings and restore/show boundaries rather than executable
+    per-writer/per-reader contracts. README/docs sections, report validators,
+    and finalization writers can still drift semantically unless each
+    inventory row is linked to a concrete writer function, reader/restore/show
+    test, and docs anchor.
+  - Required result: connect each generated-artifact inventory row to
+    executable writer/reader/docs anchors and add drift tests proving
+    documented/schema-listed run artifacts cannot be emitted, restored, shown,
+    or deleted outside their inventory contract.
 
 - [ ] Bring generated `paper_artifacts/` directories under the run-artifact
       lifecycle policy.

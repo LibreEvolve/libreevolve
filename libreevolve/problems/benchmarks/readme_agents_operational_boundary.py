@@ -20,7 +20,7 @@ BACKENDS_DOC_PATH = "docs/backends.md"
 CONFIGURATION_DOC_PATH = "docs/configuration.md"
 PAPERS_README_PATH = "papers/README.md"
 EXAMPLES_DIR = "libreevolve/problems/examples"
-DATABASE_PATH = "libreevolve/core/database.py"
+ARTIFACT_SCHEMA_PATH = "libreevolve/core/artifact_schema.py"
 AGENTS_TEST_PATH = "tests/test_agents_docs.py"
 WORKFLOW_PATH = ".github/workflows/tests.yml"
 README_TODO_PATH = "docs/todo/readme.md"
@@ -47,7 +47,7 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("readme_agent_operating_contract", README_PATH, "agent-facing operating contract"),
     ("run_artifacts_doc_task_spec", RUN_ARTIFACTS_DOC_PATH, "task_specification.json"),
     ("run_artifacts_doc_controller_budget", RUN_ARTIFACTS_DOC_PATH, "controller_budget_events.jsonl"),
-    ("database_run_artifact_names", DATABASE_PATH, "RUN_ARTIFACT_NAMES = {"),
+    ("artifact_schema_run_artifact_names", ARTIFACT_SCHEMA_PATH, "RUN_ARTIFACT_NAMES = frozenset("),
     ("backend_docs_route", BACKENDS_DOC_PATH, "# Backends"),
     ("configuration_sampling_strategy", CONFIGURATION_DOC_PATH, "parent_selection_strategy"),
     ("papers_index_route", PAPERS_README_PATH, "# Local Paper Cache"),
@@ -137,7 +137,7 @@ def readme_agents_operational_boundary_record(root: str | Path = ".") -> dict[st
             BACKENDS_DOC_PATH,
             CONFIGURATION_DOC_PATH,
             PAPERS_README_PATH,
-            DATABASE_PATH,
+            ARTIFACT_SCHEMA_PATH,
             AGENTS_TEST_PATH,
             WORKFLOW_PATH,
             README_TODO_PATH,

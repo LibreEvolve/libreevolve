@@ -20,7 +20,7 @@ def test_readme_run_artifacts_boundary_accepts_current_list_map():
     assert boundary["claim_ready"] is False
     assert boundary["readme_path"] == "README.md"
     assert boundary["run_artifacts_doc_path"] == "docs/run-artifacts.md"
-    assert boundary["cleanup_source_path"] == "libreevolve/core/database.py"
+    assert boundary["cleanup_source_path"] == "libreevolve/core/artifact_schema.py"
     assert validation.readme_marker_count == 7
     assert validation.missing_readme_marker_count == 0
     assert validation.common_artifact_count == 14

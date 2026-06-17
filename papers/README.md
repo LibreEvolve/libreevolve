@@ -2842,7 +2842,8 @@ Implemented:
   inventory, backend-guide contract drift inventory, plugin-guide contract
   drift inventory, README Problem Layout inventory, problem-format loader-
   contract inventory, README Example Scope inventory, README example-runs
-  inventory, README Run Artifacts inventory, README provider-example matrix
+  inventory, README Run Artifacts inventory, README Testing inventory,
+  README provider-example matrix
   inventory, README CLI-provider guardrail inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
@@ -2971,6 +2972,14 @@ Implemented:
   fresh smoke-run artifact presence matrix, complete writer/reader/schema
   mapping, restore/show lifecycle proof, optional artifact classification
   gating, or owner review signoff.
+- `papers/readme_testing_boundary.json`: README Testing sidecar. It records
+  README non-integration and credential-gated integration command markers,
+  pytest testpaths and integration marker registration, GitHub Actions non-
+  integration and integration commands, Anthropic-key skip wiring, integration-
+  test skip decorators, AGENTS.md command anchors, CI workflow sidecar anchors,
+  and active TODO ownership. It is not Python/pytest version transcript
+  evidence, selected or skipped test counts, credential-skip transcript proof,
+  a failure-attribution matrix, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

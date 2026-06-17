@@ -1,0 +1,189 @@
+{
+  "schema": "libreevolve.readme_testing_boundary.v1",
+  "boundary_status": "readme_testing_commands_structural_map_without_selection_transcript",
+  "claim_ready": false,
+  "readme_path": "README.md",
+  "pytest_config_path": "pyproject.toml",
+  "workflow_path": ".github/workflows/tests.yml",
+  "integration_test_path": "tests/integration/test_hello_world.py",
+  "agent_docs_test_path": "tests/test_agents_docs.py",
+  "sidecar_paths": [
+    "papers/ci_workflow_coverage_boundary.json"
+  ],
+  "todo_paths": [
+    "docs/todo/readme.md"
+  ],
+  "readme_marker_count": 5,
+  "missing_readme_marker_count": 0,
+  "missing_readme_marker_records": [],
+  "readme_marker_records": [
+    {
+      "record_id": "testing_heading",
+      "path": "README.md",
+      "required_marker": "## Testing",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "non_integration_intro",
+      "path": "README.md",
+      "required_marker": "Run the non-integration tests:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "non_integration_command",
+      "path": "README.md",
+      "required_marker": "py -3.12 -m pytest tests/ -m \"not integration\" --tb=short",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "integration_intro",
+      "path": "README.md",
+      "required_marker": "Run integration tests only when the required provider credentials are present:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "integration_command",
+      "path": "README.md",
+      "required_marker": "py -3.12 -m pytest tests/integration/ -m integration --tb=short",
+      "marker_status": "marker_present"
+    }
+  ],
+  "command_record_count": 4,
+  "command_records": [
+    {
+      "command_id": "readme_non_integration",
+      "path": "README.md",
+      "command": "py -3.12 -m pytest tests/ -m \"not integration\" --tb=short",
+      "command_status": "command_present"
+    },
+    {
+      "command_id": "readme_integration",
+      "path": "README.md",
+      "command": "py -3.12 -m pytest tests/integration/ -m integration --tb=short",
+      "command_status": "command_present"
+    },
+    {
+      "command_id": "ci_non_integration",
+      "path": ".github/workflows/tests.yml",
+      "command": "python -m pytest tests/ -m \"not integration\" --tb=short",
+      "command_status": "command_present"
+    },
+    {
+      "command_id": "ci_integration",
+      "path": ".github/workflows/tests.yml",
+      "command": "python -m pytest tests/integration/ -m integration --tb=short -rs",
+      "command_status": "command_present"
+    }
+  ],
+  "pytest_config_record": {
+    "path": "pyproject.toml",
+    "testpaths": [
+      "tests"
+    ],
+    "markers": [
+      "integration: marks tests requiring API keys"
+    ],
+    "integration_marker_registered": true,
+    "config_status": "pytest_config_recorded"
+  },
+  "pytest_marker_count": 1,
+  "integration_test_marker_count": 2,
+  "credential_skip_marker_count": 2,
+  "evidence_anchor_count": 11,
+  "missing_evidence_anchor_count": 0,
+  "missing_evidence_anchor_records": [],
+  "evidence_anchor_records": [
+    {
+      "record_id": "pytest_testpaths",
+      "path": "pyproject.toml",
+      "required_marker": "testpaths = [\"tests\"]",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "pytest_integration_marker",
+      "path": "pyproject.toml",
+      "required_marker": "integration: marks tests requiring API keys",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ci_non_integration_command",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "python -m pytest tests/ -m \"not integration\" --tb=short",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ci_integration_skip_message",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "ANTHROPIC_API_KEY is not configured; skipping integration tests.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ci_integration_command",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "python -m pytest tests/integration/ -m integration --tb=short -rs",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "integration_pytest_marker",
+      "path": "tests/integration/test_hello_world.py",
+      "required_marker": "@pytest.mark.integration",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "integration_skip_marker",
+      "path": "tests/integration/test_hello_world.py",
+      "required_marker": "@pytest.mark.skipif(not os.getenv(\"ANTHROPIC_API_KEY\"), reason=\"no API key\")",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "agents_non_integration_command_anchor",
+      "path": "tests/test_agents_docs.py",
+      "required_marker": "py -3.12 -m pytest tests/ -m \"not integration\" --tb=short",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "agents_workflow_integration_job_anchor",
+      "path": "tests/test_agents_docs.py",
+      "required_marker": "assert \"integration\" in workflow[\"jobs\"]",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "ci_workflow_boundary_optional_integration_anchor",
+      "path": "papers/ci_workflow_coverage_boundary.json",
+      "required_marker": "optional credential-gated integration job",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_todo_owner",
+      "path": "docs/todo/readme.md",
+      "required_marker": "Add README testing-command marker and environment evidence.",
+      "marker_status": "marker_present"
+    }
+  ],
+  "readme_testing_map_status": "readme_testing_structural_map_present",
+  "required_evidence_fields": [
+    "readme_testing_command_markers",
+    "pytest_marker_registration",
+    "ci_non_integration_command_anchor",
+    "ci_credential_gated_integration_command_anchor",
+    "integration_test_skip_markers",
+    "agents_docs_command_anchor",
+    "ci_workflow_boundary_anchor",
+    "active_todo_owner_anchor",
+    "python_pytest_version_transcript",
+    "selected_non_integration_test_count",
+    "selected_integration_test_count",
+    "credential_skip_transcript",
+    "failure_attribution_matrix",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "python_pytest_version_transcript": "not_recorded_locally",
+    "selected_non_integration_test_count": "not_recorded_locally",
+    "selected_integration_test_count": "not_recorded_locally",
+    "credential_skip_transcript": "not_recorded_locally",
+    "failure_attribution_matrix": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records README Testing command markers, pytest testpaths and integration marker registration, GitHub Actions non-integration and credential-gated integration commands, ANTHROPIC_API_KEY skip wiring, integration-test skip decorators, AGENTS.md command-test anchors, CI workflow sidecar anchors, and active TODO ownership. It does not claim Python/pytest version transcripts, selected non-integration or integration test counts, credential-skip transcript proof, a failure-attribution matrix, or owner review signoff."
+}

@@ -812,12 +812,17 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     counts and that the non-integration command string remains present there.
     Broader CI coverage is tracked separately by
     `papers/ci_workflow_coverage_boundary.json` and active code/paper TODOs.
-  - Current gap: no README-owned smoke transcript, generated sidecar, or CI
-    assertion proves that the README commands themselves select the intended
-    test sets, that integration tests are skipped only for missing provider
-    credentials, that marker registration has not drifted, or that test
-    failures can be attributed separately from paper-manifest/source-boundary
-    validation.
+    `papers/readme_testing_boundary.json` now records the README command
+    markers, pytest testpaths and integration marker registration, GitHub
+    Actions non-integration and credential-gated integration commands,
+    Anthropic-key skip wiring, integration-test skip decorators, AGENTS.md
+    command anchors, CI workflow sidecar anchors, and this active TODO owner.
+  - Current gap: the README-owned sidecar is structural evidence, not a smoke
+    transcript. It does not record Python and pytest versions, selected or
+    skipped test counts for the documented commands, credential-skip
+    transcript proof, a failure-attribution matrix that separates pytest
+    failures from paper-manifest/source-boundary validation, or owner review
+    signoff.
   - Required result: add README testing-command evidence that records Python
     and pytest versions, marker registration, selected/skipped test counts,
     credential-gated integration behavior, and a drift check that updates

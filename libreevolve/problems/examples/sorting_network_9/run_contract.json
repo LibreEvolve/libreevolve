@@ -6,6 +6,7 @@
   "config_path": "libreevolve/problems/examples/sorting_network_9/config.yaml",
   "seed_path": "libreevolve/problems/examples/sorting_network_9/initial_programs/seed.py",
   "validator_path": "libreevolve/problems/examples/sorting_network_9/validate.py",
+  "goal_prompt_path": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
   "command": [
     "py",
     "-3.12",

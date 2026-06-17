@@ -401,6 +401,9 @@ def test_sorting_network_9_clean_checkout_run_contract_matches_fixture():
     assert contract["config_path"].endswith("/sorting_network_9/config.yaml")
     assert contract["seed_path"].endswith("/sorting_network_9/initial_programs/seed.py")
     assert contract["validator_path"].endswith("/sorting_network_9/validate.py")
+    assert contract["goal_prompt_path"].endswith(
+        "/sorting_network_9/benchmark_goal_prompt.json"
+    )
     assert contract["command"] == [
         "py",
         "-3.12",
@@ -448,6 +451,49 @@ def test_sorting_network_9_clean_checkout_run_contract_matches_fixture():
     assert "codex CLI missing from PATH" in contract["skip_or_failure_modes"]
     assert "codex_cli_transcript_json_files" in contract["post_run_evidence_bundle"]
     assert "does not certify AlphaEvolve-comparable rediscovery" in contract[
+        "claim_boundary"
+    ]
+
+
+def test_sorting_network_9_benchmark_goal_prompt_matches_contract_and_limit():
+    prompt_path = SORTING_NETWORK_9_EXAMPLE_DIR / "benchmark_goal_prompt.json"
+    contract_path = SORTING_NETWORK_9_EXAMPLE_DIR / "run_contract.json"
+    prompt_record = json.loads(prompt_path.read_text(encoding="utf-8"))
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    config = Config(
+        **yaml.safe_load(
+            (SORTING_NETWORK_9_EXAMPLE_DIR / "config.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+    )
+    backend = config.backends[0]
+    prompt = prompt_record["prompt"]
+
+    assert prompt_record["schema"] == "libreevolve.benchmark_goal_prompt.v1"
+    assert (
+        prompt_record["prompt_id"]
+        == "sorting_network_9_codex_spark_clean_checkout_goal_v1"
+    )
+    assert prompt_record["problem_id"] == contract["problem_id"]
+    assert prompt_record["model"] == backend["model"]
+    assert prompt_record["backend_type"] == backend["type"]
+    assert prompt_record["auth_name"] == backend["auth_name"]
+    assert prompt_record["run_contract_path"] == (
+        "libreevolve/problems/examples/sorting_network_9/run_contract.json"
+    )
+    assert contract["goal_prompt_path"] == (
+        "libreevolve/problems/examples/sorting_network_9/"
+        "benchmark_goal_prompt.json"
+    )
+    assert prompt_record["run_name"] == "sorting_network_9_codex_spark_clean_checkout"
+    assert prompt_record["character_limit"] == 4000
+    assert prompt_record["prompt_character_count"] == len(prompt)
+    assert len(prompt) < prompt_record["character_limit"]
+    assert "gpt-5.3-codex-spark" in prompt
+    assert "target_achieved == 1.0" in prompt
+    assert "not AlphaEvolve-comparable paper evidence" in prompt
+    assert "not evidence that a Codex-authenticated run succeeded" in prompt_record[
         "claim_boundary"
     ]
 

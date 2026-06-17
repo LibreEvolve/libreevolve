@@ -3210,9 +3210,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     also has a tracked clean-checkout run contract for the intended
     `gpt-5.3-codex-spark` Codex CLI lane, including auth expectations,
     validator budget, expected artifacts, manifest assertions, skip/failure
-    modes, and post-run evidence bundle names. The paper ledger still has no
-    source-citation sidecar for the zero-one verifier or known comparator
-    targets, repeated-run evidence, committed run-tied hardening
+    modes, and post-run evidence bundle names. The paired
+    `benchmark_goal_prompt.json` records the bounded external-agent handoff
+    prompt for that protocol and is linked from the run contract. The paper
+    ledger still has no source-citation sidecar for the zero-one verifier or
+    known comparator targets, repeated-run evidence, committed run-tied hardening
     certification, best-candidate artifact hashes, failure/invalid-candidate
     summaries, target-hit-rate summaries, or certification row proving
     rediscovery under fixed evaluator/model/seed conditions. The committed

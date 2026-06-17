@@ -19,6 +19,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "benchmark_scope_registry_records",
     "hardening_bundle_artifacts",
     "clean_checkout_run_contract",
+    "benchmark_goal_prompt_artifact",
     "zero_one_principle_source_citation",
     "known_target_source_citations",
     "fixed_evaluator_model_budget_protocol",
@@ -97,18 +98,23 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
                     "libreevolve/problems/examples/sorting_network_9/"
                     "run_contract.json"
                 ),
+                "benchmark_goal_prompt_artifact": (
+                    "libreevolve/problems/examples/sorting_network_9/"
+                    "benchmark_goal_prompt.json"
+                ),
             },
         },
         "claim_boundary": (
             "This boundary records that LibreEvolve has executable 8- and "
             "9-input sorting-network benchmark candidates with exhaustive "
             "zero-one validation, valid baseline seeds, checked known target "
-            "networks, helper-generated generic hardening artifacts, and a "
-            "clean-checkout run contract for sorting_network_9, but does not "
-            "claim source-cited benchmark calibration, fixed-budget repeated-"
-            "run rediscovery, run-tied hardening certification, best candidate "
-            "artifact hashes, failure/invalid-candidate summaries, paper-"
-            "facing certification rows, or novel SOTA results."
+            "networks, helper-generated generic hardening artifacts, a clean-"
+            "checkout run contract for sorting_network_9, and a bounded "
+            "benchmark goal-prompt artifact, but does not claim source-cited "
+            "benchmark calibration, fixed-budget repeated-run rediscovery, "
+            "run-tied hardening certification, best candidate artifact hashes, "
+            "failure/invalid-candidate summaries, paper-facing certification "
+            "rows, or novel SOTA results."
         ),
     }
 
@@ -281,6 +287,17 @@ def _validate_candidate_evidence(
                     _issue(
                         "invalid_candidate_sorting_network_9_clean_checkout_run_contract",
                         f"sorting_network_9.clean_checkout_run_contract must be {expected_contract!r}",
+                    )
+                )
+            expected_prompt = (
+                "libreevolve/problems/examples/sorting_network_9/"
+                "benchmark_goal_prompt.json"
+            )
+            if record.get("benchmark_goal_prompt_artifact") != expected_prompt:
+                issues.append(
+                    _issue(
+                        "invalid_candidate_sorting_network_9_benchmark_goal_prompt_artifact",
+                        f"sorting_network_9.benchmark_goal_prompt_artifact must be {expected_prompt!r}",
                     )
                 )
 

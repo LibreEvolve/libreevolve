@@ -8294,24 +8294,23 @@ sidecars, tests, and active TODOs.
   - Current evidence: active TODOs already track first-class
     subprocess/CLI-authenticated provider contracts, local Codex profile
     hygiene, and a clean-checkout `sorting_network_9` run recipe. Those items
-    cover provider lane support and runnable config, but they do not define how
-    a human-authored benchmark goal prompt is stored, bounded, reviewed, tied
-    to a model such as `gpt-5.3-codex-spark`, or linked to the resulting run
-    artifacts. Recent local work also depends on an under-4000-character goal
-    prompt for a Codex-authenticated benchmark handoff, but the repository has
-    no schema or docs surface that would make that prompt replayable evidence.
-  - Current gap: there is no committed benchmark goal-prompt artifact, prompt
-    schema, character-limit check, model/auth-lane binding, redaction policy,
-    reviewer/source provenance, or run-manifest link that can prove which
-    external-agent instruction produced a cited Codex-authenticated benchmark
-    attempt. A successful run could therefore be hard to audit or repeat even
-    if the problem fixture and provider profile are later committed.
-  - Required result: add a versioned benchmark goal-prompt artifact format
-    with stable prompt ids, character counts, model/backend/auth-lane
-    references, problem/evaluator/budget/run-name fields, expected artifact
-    outputs, secret-redaction and transcript-retention policy, reviewer/source
-    metadata, and validation that cited benchmark runs link back to the exact
-    committed prompt without treating the prompt alone as rediscovery evidence.
+    cover provider lane support and runnable config. The tracked
+    `benchmark_goal_prompt.json` now provides a versioned prompt artifact with
+    a stable prompt id, character limit/count, model/backend/auth-lane
+    references, run-contract path, run name, redaction/transcript-retention
+    policy, review status, and an under-4000-character external-agent handoff
+    prompt. Tests validate its character count and linkage to `config.yaml`
+    and `run_contract.json`.
+  - Current gap: the prompt artifact is committed and bounded, but no actual
+    Codex-authenticated run manifest, transcript hash bundle, or paper-facing
+    certification row links back to this prompt id yet. There is also no
+    general validator for benchmark goal-prompt artifacts across future
+    examples, and no run-manifest field that records which committed prompt
+    produced a cited external-agent attempt.
+  - Required result: link authenticated benchmark runs back to the exact
+    committed `prompt_id`, preserve redacted transcript/hash evidence, add a
+    reusable benchmark goal-prompt validator, and keep the prompt alone scoped
+    as protocol input rather than rediscovery evidence.
 
 - [ ] Align generated prompt-table artifacts with run-directory collision and
       overwrite cleanup policy.

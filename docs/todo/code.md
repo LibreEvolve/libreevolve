@@ -8451,18 +8451,23 @@ sidecars, tests, and active TODOs.
     path, kind, generated/required presence condition, writer/reader owner,
     file-hash or tree-hash policy, lifecycle/overwrite status, and runtime
     pointer/report location. Tests validate the inventory against
-    `RUN_ARTIFACT_NAMES` and `docs/run-artifacts.md`.
+    `RUN_ARTIFACT_NAMES` and `docs/run-artifacts.md`. `runtime.artifacts` now
+    iterates the schema-owned `RUN_ARTIFACT_NAMES`, records `manifest.json` as
+    a self-reference-deferred artifact, and
+    `runtime.history.whole_run_source_workspace_integrity_report.runtime_artifacts`
+    includes the same complete artifact set with focused tests proving every
+    non-JSONL schema artifact is represented.
   - Current gap: the top-level schema inventory now exists, but there is not
     yet a semantic verifier that walks every startup/finalization writer,
-    runtime report, `show` reader, and restore reader to prove that each
-    artifact's declared owner, pointer path, and hash/tree-hash policy is
-    exercised end to end. `paper_artifacts/...` are also represented at the
-    directory level; per-subdirectory/source-exhibit schemas still live in
-    paper-facing runtime reports instead of a central artifact-subpath schema.
+    `show` reader, and restore reader to prove that each artifact's declared
+    owner and hash/tree-hash policy is exercised end to end.
+    `paper_artifacts/...` are also represented at the directory level;
+    per-subdirectory/source-exhibit schemas still live in paper-facing runtime
+    reports instead of a central artifact-subpath schema.
   - Required result: add a verifier or focused tests that exercise
-    `non_jsonl_artifacts` against startup/finalization writers, runtime
-    pointers/history reports, and `show`/restore readers so documented
-    artifacts cannot drift from machine-readable bundle metadata.
+    `non_jsonl_artifacts` against startup/finalization writers and
+    `show`/restore readers so documented artifacts cannot drift from
+    machine-readable bundle metadata.
 
 - [ ] Add a clean-checkout run contract for `sorting_network_9`.
   - Spec evidence: AlphaEvolve benchmark claims require reproducible problem

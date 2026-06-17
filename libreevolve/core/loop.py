@@ -25,6 +25,7 @@ from libreevolve.core.artifact_schema import (
     EVALUATOR_RESULT_RECORD_SCHEMA,
     PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
     PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
+    RUN_ARTIFACT_NAMES,
     versioned_record,
 )
 from libreevolve.core.best_artifacts import (
@@ -5148,31 +5149,34 @@ def _manifest_safe_type_name(value: object) -> str:
 def _runtime_artifact_pointers(run_dir: Path) -> dict:
     artifacts: dict[str, dict] = {}
     resolved_run_dir = _resolve_path_for_scope(run_dir)
-    for name in (
-        "history.jsonl",
-        "evaluator_results.jsonl",
-        "failure_history.jsonl",
-        "archive_events.jsonl",
-        "history_invalid.jsonl",
-        "failure_history_invalid.jsonl",
-        "archive_events_invalid.jsonl",
-        "controller_budget_events.jsonl",
-        "controller_budget_events_invalid.jsonl",
-        "llm_calls.jsonl",
-        "llm_calls_invalid.jsonl",
-        "prompt_history.jsonl",
-        "prompt_history_invalid.jsonl",
-        "prompt_current_binding_table.jsonl",
-        "prompt_prior_score_table.jsonl",
-        "manifest_invalid.jsonl",
-        "evaluator_artifacts",
-        "plugin_artifacts",
-        "best.py",
-        "best_workspace",
-    ):
-        path = run_dir / name
-        artifacts[name] = _runtime_artifact_pointer(path, name, resolved_run_dir)
+    for name in sorted(RUN_ARTIFACT_NAMES):
+        if name == "manifest.json":
+            artifacts[name] = _manifest_artifact_pointer(run_dir / name, name)
+        else:
+            path = run_dir / name
+            artifacts[name] = _runtime_artifact_pointer(path, name, resolved_run_dir)
     return artifacts
+
+
+def _manifest_artifact_pointer(path: Path, name: str) -> dict:
+    record = {
+        "path": name,
+        "exists": path.exists(),
+        "present": path.exists() or path.is_symlink(),
+        "is_symlink": path.is_symlink(),
+        "is_junction": _path_is_junction(path),
+        "broken_link": False,
+        "hash_scope": "final_manifest_self_reference_deferred",
+    }
+    if record["is_symlink"] or record["is_junction"]:
+        record["kind"] = "link"
+    elif path.is_file():
+        record["kind"] = "file"
+    elif path.is_dir():
+        record["kind"] = "directory"
+    else:
+        record["kind"] = "missing"
+    return record
 
 
 def _runtime_artifact_pointer(path: Path, name: str, resolved_run_dir: Path) -> dict:
@@ -6942,19 +6946,8 @@ def _whole_run_program_integrity_record(program: Program) -> dict:
 
 def _whole_run_runtime_artifact_records(run_dir: Path) -> list[dict]:
     pointers = _runtime_artifact_pointers(run_dir)
-    selected = (
-        "history.jsonl",
-        "evaluator_results.jsonl",
-        "failure_history.jsonl",
-        "archive_events.jsonl",
-        "controller_budget_events.jsonl",
-        "llm_calls.jsonl",
-        "prompt_history.jsonl",
-        "best.py",
-        "best_workspace",
-    )
     records: list[dict] = []
-    for name in selected:
+    for name in sorted(RUN_ARTIFACT_NAMES):
         pointer = pointers.get(name)
         if not isinstance(pointer, Mapping):
             continue

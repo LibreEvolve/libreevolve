@@ -904,6 +904,14 @@ maps every known cleanup-managed artifact to its schema pointer, writer owner,
 reader owner, lifecycle status, runtime pointer or report location, and
 restore/show handling boundary so the documented artifact list, manifest
 schema, and overwrite policy cannot drift independently.
+The `runtime.artifacts` pointer map and
+`runtime.history.whole_run_source_workspace_integrity_report.runtime_artifacts`
+iterate the same schema-owned artifact name set, with `manifest.json` recorded
+as `final_manifest_self_reference_deferred` instead of self-hashing the final
+manifest bytes. This keeps non-JSONL artifacts such as
+`task_specification.json`, `evaluator_artifacts/`, `plugin_artifacts/`, and
+`paper_artifacts/` visible in whole-run artifact integrity reports even when
+they are absent for a particular run.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.

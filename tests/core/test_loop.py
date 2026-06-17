@@ -21,6 +21,7 @@ from libreevolve.core.budget import (
     validate_controller_budget_event,
 )
 from libreevolve.core.config import Config
+from libreevolve.core.artifact_schema import RUN_ARTIFACT_NAMES, run_artifact_schema
 from libreevolve.core.database import validate_task_specification_bundle
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
 from libreevolve.core.loop import (
@@ -1249,9 +1250,34 @@ def test_runtime_history_records_whole_run_source_workspace_integrity():
     assert all(record["primary_file_present"] is True for record in program_records)
     assert all(len(record["workspace_sha256"]) == 64 for record in program_records)
     assert len({record["workspace_sha256"] for record in program_records}) == 2
-    assert report["runtime_artifact_count"] >= 9
+    assert report["runtime_artifact_count"] == len(RUN_ARTIFACT_NAMES)
     artifact_names = {record["name"] for record in report["runtime_artifacts"]}
-    assert {"history.jsonl", "best.py", "best_workspace"}.issubset(artifact_names)
+    assert artifact_names == RUN_ARTIFACT_NAMES
+    non_jsonl_names = set(run_artifact_schema()["non_jsonl_artifacts"])
+    assert non_jsonl_names.issubset(artifact_names)
+    artifacts_by_name = {
+        record["name"]: record for record in report["runtime_artifacts"]
+    }
+    assert artifacts_by_name["manifest.json"]["present"] is True
+    assert (
+        artifacts_by_name["manifest.json"]["hash_scope"]
+        == "final_manifest_self_reference_deferred"
+    )
+    assert artifacts_by_name["task_specification.json"]["name"] in non_jsonl_names
+    for artifact_name in (
+        "best_workspace",
+        "evaluator_artifacts",
+        "plugin_artifacts",
+        "paper_artifacts",
+    ):
+        assert artifact_name in artifacts_by_name
+        record = artifacts_by_name[artifact_name]
+        if record["present"] is True:
+            assert record["kind"] == "directory"
+            assert record["hash_scope"] in {
+                "relative_file_paths_and_sha256",
+                "best_workspace_file_paths_and_sha256",
+            }
     assert report["runtime_artifact_hash_count"] >= 2
 
     overclaimed = copy.deepcopy(report)

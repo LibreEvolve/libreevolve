@@ -15,13 +15,13 @@ from libreevolve.core.best_artifacts import (
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.jsonl import (
     StrictJsonlError,
-    iter_quarantine_records,
     load_strict_json_object,
     strict_json_dump,
 )
 from libreevolve.core.artifact_schema import (
     validate_non_jsonl_artifact_policy_manifest,
     validate_paper_artifact_lifecycle_manifest,
+    validate_quarantine_artifact_policy_manifest,
 )
 from libreevolve.core.loop import (
     RuntimeBudgetStateError,
@@ -618,43 +618,20 @@ def _quarantine_stream_summary(run_dir: Path) -> str | None:
 
 
 def _validate_quarantine_streams(run_dir: Path, artifact_schema: dict) -> dict:
-    quarantine_schema = artifact_schema.get("quarantine_jsonl_records")
-    if not isinstance(quarantine_schema, dict):
+    validation = validate_quarantine_artifact_policy_manifest(
+        {"artifact_schema": artifact_schema},
+        run_dir=run_dir,
+    )
+    if not validation["ok"]:
+        issue = validation["issues"][0]
         raise click.ClickException(
-            "Malformed manifest.json: artifact_schema.quarantine_jsonl_records "
-            "must be an object"
+            "Quarantine stream validation failed: "
+            f"{issue['code']}: {_bounded_redacted_cli_text(issue['message'])}"
         )
-    present_streams: list[str] = []
-    record_count = 0
-    for stream_name in sorted(quarantine_schema):
-        if not isinstance(stream_name, str) or not stream_name:
-            raise click.ClickException(
-                "Malformed manifest.json: quarantine stream names must be "
-                "non-empty strings"
-            )
-        path = run_dir / stream_name
-        if not path.exists():
-            continue
-        try:
-            stream_count = sum(
-                1
-                for _ in iter_quarantine_records(
-                    path,
-                    stream_name=stream_name,
-                )
-            )
-        except StrictJsonlError as exc:
-            message = _bounded_redacted_cli_text(str(exc))
-            raise click.ClickException(
-                "Quarantine stream validation failed: "
-                f"{stream_name}: {message}"
-            ) from exc
-        present_streams.append(stream_name)
-        record_count += stream_count
     return {
-        "stream_count": len(present_streams),
-        "record_count": record_count,
-        "streams": present_streams,
+        "stream_count": validation["checked_stream_count"],
+        "record_count": validation["record_count"],
+        "streams": validation["present_streams"],
     }
 
 
@@ -1090,6 +1067,10 @@ def _load_cli_runtime_rng_snapshot(path: str | None, *, seed: int) -> dict | Non
         path,
         error_prefix="Runtime RNG manifest restore failed",
     )
+    _validate_cli_quarantine_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime RNG manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime RNG manifest restore failed",
@@ -1116,6 +1097,10 @@ def _load_cli_runtime_llm_scheduler_snapshot(path: str | None) -> dict | None:
         path,
         error_prefix="LLM scheduler manifest restore failed",
     )
+    _validate_cli_quarantine_artifact_restore_manifest(
+        path,
+        error_prefix="LLM scheduler manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="LLM scheduler manifest restore failed",
@@ -1133,6 +1118,10 @@ def _load_cli_runtime_budget_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
     _validate_cli_non_jsonl_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime budget manifest restore failed",
+    )
+    _validate_cli_quarantine_artifact_restore_manifest(
         path,
         error_prefix="Runtime budget manifest restore failed",
     )
@@ -1188,6 +1177,10 @@ def _load_cli_full_resume_bundle(path: str) -> dict:
         path,
         error_prefix="Runtime manifest restore failed",
     )
+    _validate_cli_quarantine_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime manifest restore failed",
@@ -1205,6 +1198,10 @@ def _load_cli_runtime_archive_state_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
     _validate_cli_non_jsonl_artifact_restore_manifest(
+        path,
+        error_prefix="Archive cursor manifest restore failed",
+    )
+    _validate_cli_quarantine_artifact_restore_manifest(
         path,
         error_prefix="Archive cursor manifest restore failed",
     )
@@ -1226,6 +1223,10 @@ def _load_cli_archive_restore_bundle(path: str | None) -> dict | None:
         return None
     manifest_path = Path(path)
     _validate_cli_non_jsonl_artifact_restore_manifest(
+        manifest_path,
+        error_prefix="Archive manifest restore failed",
+    )
+    _validate_cli_quarantine_artifact_restore_manifest(
         manifest_path,
         error_prefix="Archive manifest restore failed",
     )
@@ -1265,6 +1266,29 @@ def _validate_cli_non_jsonl_artifact_restore_manifest(
     raise click.ClickException(
         f"{error_prefix}: non-JSONL artifact policy validation failed: "
         f"{issue['code']}: {issue['message']}"
+    )
+
+
+def _validate_cli_quarantine_artifact_restore_manifest(
+    path: str | Path,
+    *,
+    error_prefix: str,
+) -> None:
+    manifest_path = Path(path)
+    try:
+        manifest = _read_show_manifest(manifest_path)
+    except click.ClickException:
+        return
+    validation = validate_quarantine_artifact_policy_manifest(
+        manifest,
+        run_dir=manifest_path.parent,
+    )
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise click.ClickException(
+        f"{error_prefix}: quarantine artifact validation failed: "
+        f"{issue['code']}: {_bounded_redacted_cli_text(issue['message'])}"
     )
 
 

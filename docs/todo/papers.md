@@ -1774,11 +1774,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     `libreevolve show` also emits a bounded run-artifact bundle summary that
     reconciles present accepted JSONL streams, validated quarantine
     diagnostics, non-JSONL policy checks, and paper-artifact lifecycle checks
-    for manifest-backed runs.
+    for manifest-backed runs. CLI and direct restore loaders validate
+    manifest-advertised quarantine streams before consuming restored runtime,
+    scheduler, budget, lineage, or archive state, preserving quarantine rows as
+    diagnostics rather than accepted replay state.
     Paper-facing generated-artifact lifecycle evidence is still incomplete:
     those anchors prove source/docs text presence plus current behavior-test
-    coverage and show-time bundle reconciliation, not end-to-end replay of
-    prompt-table and `paper_artifacts/...` evidence across restored runs.
+    coverage, show-time bundle reconciliation, and restore-side diagnostic
+    guards, not end-to-end replay of prompt-table and `paper_artifacts/...`
+    evidence across restored runs.
     Run names now share the runtime identity secret-safety policy: assignment-
     style secret strings and provider-token-shaped values are rejected before
     filesystem or manifest writes, while ordinary portable run names remain
@@ -1817,7 +1821,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     boundaries, plus restored-run replay/certification evidence for paper-cited
     prompt-table and `paper_artifacts/...` artifacts beyond the current unified
     inventory, source-anchor checks, docs-anchor checks, and behavior-test
-    anchors plus show-time bundle reconciliation.
+    anchors plus show-time bundle reconciliation and restore-side diagnostic
+    guards.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation

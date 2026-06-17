@@ -749,6 +749,80 @@ def test_run_rejects_non_jsonl_artifact_policy_drift_before_restore(
     assert not mock.called
 
 
+@pytest.mark.parametrize(
+    ("restore_flag", "error_prefix"),
+    [
+        ("--restore-rng-from-manifest", "Runtime RNG manifest restore failed"),
+        (
+            "--restore-llm-scheduler-from-manifest",
+            "LLM scheduler manifest restore failed",
+        ),
+        ("--restore-budget-from-manifest", "Runtime budget manifest restore failed"),
+        (
+            "--restore-archive-cursor-from-manifest",
+            "Archive cursor manifest restore failed",
+        ),
+        ("--restore-archive-from-manifest", "Archive manifest restore failed"),
+        ("--restore-runtime-from-manifest", "Runtime manifest restore failed"),
+    ],
+)
+def test_run_rejects_quarantine_artifact_drift_before_restore(
+    tmp_path,
+    restore_flag,
+    error_prefix,
+):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "log_dir": (tmp_path / "runs").as_posix(),
+                "seed": 123,
+            }
+        ),
+        encoding="utf-8",
+    )
+    previous_dir = tmp_path / "previous"
+    previous_dir.mkdir()
+    previous_manifest = previous_dir / "manifest.json"
+    previous_manifest.write_text(
+        json.dumps(
+            {
+                "artifact_schema": {
+                    "quarantine_jsonl_records": run_artifact_schema()[
+                        "quarantine_jsonl_records"
+                    ],
+                },
+                "runtime": {},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (previous_dir / "history_invalid.jsonl").write_text(
+        json.dumps({"error": "ValueError"}) + "\n",
+        encoding="utf-8",
+    )
+
+    with patch("libreevolve.cli.evolve") as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--max-generations",
+                "0",
+                restore_flag,
+                str(previous_manifest),
+            ],
+        )
+
+    assert r.exit_code != 0
+    assert error_prefix in r.output
+    assert "quarantine artifact validation failed" in r.output
+    assert "invalid_quarantine_stream_rows" in r.output
+    assert "history_invalid.jsonl" in r.output
+    assert not mock.called
+
+
 def test_run_can_restore_llm_scheduler_snapshot_from_manifest(tmp_path):
     _make_problem(tmp_path)
     (tmp_path / "config.yaml").write_text(

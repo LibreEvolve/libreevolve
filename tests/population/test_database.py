@@ -2978,6 +2978,7 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
         "overwrite_cleanup",
         "show_bundle_behavior",
         "show_diagnostic_behavior",
+        "restore_diagnostic_behavior",
     }
     assert inventory["paper_artifacts"]["restore_show_handling"] == (
         "paper-source report validators and docs"
@@ -6263,6 +6264,27 @@ def _write_non_jsonl_policy_drift_manifest(path: Path) -> Path:
     return path
 
 
+def _write_quarantine_policy_drift_manifest(path: Path) -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "artifact_schema": {
+                    "quarantine_jsonl_records": run_artifact_schema()[
+                        "quarantine_jsonl_records"
+                    ],
+                },
+                "runtime": {},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (path.parent / "history_invalid.jsonl").write_text(
+        json.dumps({"error": "ValueError"}) + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
 def test_direct_archive_restore_loaders_reject_non_jsonl_policy_drift(tmp_path):
     manifest = _write_non_jsonl_policy_drift_manifest(tmp_path / "manifest.json")
     history = tmp_path / "history.jsonl"
@@ -6275,6 +6297,22 @@ def test_direct_archive_restore_loaders_reject_non_jsonl_policy_drift(tmp_path):
     with pytest.raises(
         ArchiveStateRestoreError,
         match="non-JSONL artifact policy validation failed",
+    ):
+        load_archive_restore_bundle(manifest, history)
+
+
+def test_direct_archive_restore_loaders_reject_quarantine_policy_drift(tmp_path):
+    manifest = _write_quarantine_policy_drift_manifest(tmp_path / "manifest.json")
+    history = tmp_path / "history.jsonl"
+
+    with pytest.raises(
+        ArchiveStateRestoreError,
+        match="quarantine artifact validation failed",
+    ):
+        load_runtime_archive_state_snapshot(manifest)
+    with pytest.raises(
+        ArchiveStateRestoreError,
+        match="quarantine artifact validation failed",
     ):
         load_archive_restore_bundle(manifest, history)
 

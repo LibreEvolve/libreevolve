@@ -8476,15 +8476,19 @@ sidecars, tests, and active TODOs.
     streams, validated quarantine diagnostics, non-JSONL artifact policy, and
     paper-artifact lifecycle checks into one inspection-time report; focused
     tests cover both a quarantine-only schema surface and a full paper-artifact
-    manifest surface.
+    manifest surface. CLI restore flags and direct runtime/archive restore
+    loaders now validate manifest-advertised quarantine streams before
+    consuming restored runtime, scheduler, budget, lineage, or archive state,
+    with focused tests proving malformed quarantine diagnostics stop restore.
   - Current gap: quarantine stream schema coverage, row validation, inventory
     ownership, overwrite cleanup, show-time diagnostics, and show-time
-    run-bundle reconciliation are present, but quarantine diagnostics are still
-    not part of a promotion-time run-bundle validation gate or restored-run
-    certification model. Restore loaders continue to treat quarantine rows as
-    diagnostics rather than accepted state, and there is no persisted bundle
-    certificate that reconciles accepted streams, quarantine streams, and
-    non-JSONL artifact policy across restore/replay surfaces.
+    run-bundle reconciliation plus restore-side rejection guards are present,
+    but quarantine diagnostics are still not part of a promotion-time
+    run-bundle validation gate or restored-run certification model. Restore
+    loaders correctly treat quarantine rows as diagnostics rather than accepted
+    state, but there is no persisted bundle certificate that reconciles
+    accepted streams, quarantine streams, and non-JSONL artifact policy across
+    replay surfaces.
   - Required result: connect quarantine schemas and row validators to the
     broader generated-artifact inventory, restore/show behavior, and non-JSONL
     artifact schema work so rejected diagnostics remain auditable without being

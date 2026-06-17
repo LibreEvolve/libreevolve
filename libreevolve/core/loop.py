@@ -27,6 +27,7 @@ from libreevolve.core.artifact_schema import (
     PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
     RUN_ARTIFACT_NAMES,
     validate_non_jsonl_artifact_policy_manifest,
+    validate_quarantine_artifact_policy_manifest,
     versioned_record,
 )
 from libreevolve.core.best_artifacts import (
@@ -3395,6 +3396,11 @@ def load_runtime_llm_scheduler_state_snapshot(manifest_path: str | Path) -> dict
         manifest,
         error_type=RuntimeLLMSchedulerStateError,
     )
+    _validate_runtime_quarantine_artifact_policy(
+        manifest,
+        manifest_path=manifest_path,
+        error_type=RuntimeLLMSchedulerStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLLMSchedulerStateError("manifest runtime must be an object")
@@ -3412,6 +3418,11 @@ def load_runtime_budget_state_snapshot(manifest_path: str | Path) -> dict:
         raise RuntimeBudgetStateError(str(exc)) from exc
     _validate_runtime_non_jsonl_artifact_policy(
         manifest,
+        error_type=RuntimeBudgetStateError,
+    )
+    _validate_runtime_quarantine_artifact_policy(
+        manifest,
+        manifest_path=manifest_path,
         error_type=RuntimeBudgetStateError,
     )
     runtime = manifest.get("runtime")
@@ -3468,6 +3479,11 @@ def load_full_resume_bundle(
         manifest_obj = load_strict_json_object(manifest, source="manifest.json")
         _validate_runtime_non_jsonl_artifact_policy(
             manifest_obj,
+            error_type=RuntimeFullResumeBundleError,
+        )
+        _validate_runtime_quarantine_artifact_policy(
+            manifest_obj,
+            manifest_path=manifest,
             error_type=RuntimeFullResumeBundleError,
         )
         rng_snapshot = load_runtime_rng_state_snapshot(manifest)
@@ -4807,6 +4823,11 @@ def load_runtime_lineage_replay_policy_snapshot(manifest_path: str | Path) -> di
         manifest,
         error_type=RuntimeLineageReplayPolicyError,
     )
+    _validate_runtime_quarantine_artifact_policy(
+        manifest,
+        manifest_path=manifest_path,
+        error_type=RuntimeLineageReplayPolicyError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLineageReplayPolicyError("manifest runtime must be an object")
@@ -4891,6 +4912,11 @@ def load_runtime_rng_state_snapshot(manifest_path: str | Path) -> dict:
         manifest,
         error_type=RuntimeRngStateError,
     )
+    _validate_runtime_quarantine_artifact_policy(
+        manifest,
+        manifest_path=manifest_path,
+        error_type=RuntimeRngStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeRngStateError("manifest runtime must be an object")
@@ -4918,6 +4944,33 @@ def _validate_runtime_non_jsonl_artifact_policy(
     issue = validation["issues"][0]
     raise error_type(
         "non-JSONL artifact policy validation failed: "
+        f"{issue['code']}: {issue['message']}"
+    )
+
+
+def _validate_runtime_quarantine_artifact_policy(
+    manifest: object,
+    *,
+    manifest_path: str | Path,
+    error_type: type[ValueError],
+) -> None:
+    if not isinstance(manifest, Mapping):
+        return
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, Mapping)
+        or "quarantine_jsonl_records" not in artifact_schema
+    ):
+        return
+    validation = validate_quarantine_artifact_policy_manifest(
+        manifest,
+        run_dir=Path(manifest_path).parent,
+    )
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise error_type(
+        "quarantine artifact validation failed: "
         f"{issue['code']}: {issue['message']}"
     )
 

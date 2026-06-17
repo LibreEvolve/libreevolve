@@ -3040,6 +3040,27 @@ def _write_non_jsonl_policy_drift_manifest(path: Path) -> Path:
     return path
 
 
+def _write_quarantine_policy_drift_manifest(path: Path) -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "artifact_schema": {
+                    "quarantine_jsonl_records": run_artifact_schema()[
+                        "quarantine_jsonl_records"
+                    ],
+                },
+                "runtime": {},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (path.parent / "history_invalid.jsonl").write_text(
+        json.dumps({"error": "ValueError"}) + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
 @pytest.mark.parametrize(
     ("loader", "error_type"),
     [
@@ -3061,6 +3082,30 @@ def test_direct_runtime_restore_loaders_reject_non_jsonl_policy_drift(
     manifest = _write_non_jsonl_policy_drift_manifest(tmp_path / "manifest.json")
 
     with pytest.raises(error_type, match="non-JSONL artifact policy validation failed"):
+        loader(manifest)
+
+
+@pytest.mark.parametrize(
+    ("loader", "error_type"),
+    [
+        (load_runtime_rng_state_snapshot, RuntimeRngStateError),
+        (load_runtime_llm_scheduler_state_snapshot, RuntimeLLMSchedulerStateError),
+        (load_runtime_budget_state_snapshot, RuntimeBudgetStateError),
+        (
+            load_runtime_lineage_replay_policy_snapshot,
+            RuntimeLineageReplayPolicyError,
+        ),
+        (load_full_resume_bundle, RuntimeFullResumeBundleError),
+    ],
+)
+def test_direct_runtime_restore_loaders_reject_quarantine_policy_drift(
+    tmp_path,
+    loader,
+    error_type,
+):
+    manifest = _write_quarantine_policy_drift_manifest(tmp_path / "manifest.json")
+
+    with pytest.raises(error_type, match="quarantine artifact validation failed"):
         loader(manifest)
 
 

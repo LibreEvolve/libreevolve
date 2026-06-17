@@ -7501,140 +7501,140 @@
   "run_artifact_cleanup_records": [
     {
       "name": "archive_events.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "archive_events_invalid.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "best.py",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "best_workspace",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "directory"
     },
     {
       "name": "controller_budget_events.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "controller_budget_events_invalid.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "evaluator_artifacts",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "directory"
     },
     {
       "name": "evaluator_results.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "failure_history.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "failure_history_invalid.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "history.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "history_invalid.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "llm_calls.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "llm_calls_invalid.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "manifest.json",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "manifest_invalid.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "paper_artifacts",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "directory"
     },
     {
       "name": "plugin_artifacts",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "directory"
     },
     {
       "name": "prompt_current_binding_table.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "prompt_history.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "prompt_history_invalid.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "prompt_prior_score_table.jsonl",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     },
     {
       "name": "task_specification.json",
-      "line_start": 25,
-      "line_end": 25,
+      "line_start": 28,
+      "line_end": 28,
       "entry_kind": "file"
     }
   ],

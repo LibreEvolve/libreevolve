@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from copy import deepcopy
+from pathlib import Path
+
+from libreevolve.core.jsonl import StrictJsonlError, iter_quarantine_records
 
 ARTIFACT_SCHEMA_VERSION = 1
 RUN_MANIFEST_SCHEMA = "libreevolve.run_manifest.v1"
@@ -494,6 +497,28 @@ _QUARANTINE_BEHAVIOR_TEST_ANCHORS = {
         {
             "path": "tests/test_cli.py",
             "required_text": "def test_show_rejects_malformed_quarantine_stream",
+        },
+    ],
+    "restore_diagnostic_behavior": [
+        {
+            "path": "tests/test_cli.py",
+            "required_text": (
+                "def test_run_rejects_quarantine_artifact_drift_before_restore"
+            ),
+        },
+        {
+            "path": "tests/core/test_loop.py",
+            "required_text": (
+                "def test_direct_runtime_restore_loaders_reject_"
+                "quarantine_policy_drift"
+            ),
+        },
+        {
+            "path": "tests/population/test_database.py",
+            "required_text": (
+                "def test_direct_archive_restore_loaders_reject_"
+                "quarantine_policy_drift"
+            ),
         },
     ],
 }
@@ -1128,6 +1153,108 @@ def validate_non_jsonl_artifact_policy_manifest(manifest: object) -> dict:
         "issues": issues,
         "checked_artifact_count": len(checked_records),
         "checked_artifacts": checked_records,
+    }
+
+
+def validate_quarantine_artifact_policy_manifest(
+    manifest: object,
+    *,
+    run_dir: str | Path,
+) -> dict:
+    """Validate manifest-advertised quarantine streams as diagnostics."""
+    schema = "libreevolve.quarantine_artifact_policy_manifest_validation.v1"
+    issues: list[dict[str, str]] = []
+    present_streams: list[str] = []
+    record_count = 0
+    if not isinstance(manifest, Mapping):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_manifest",
+                    "message": "manifest must be an object",
+                }
+            ],
+            "checked_stream_count": 0,
+            "record_count": 0,
+            "present_streams": [],
+        }
+    artifact_schema = manifest.get("artifact_schema")
+    if not isinstance(artifact_schema, Mapping):
+        return {
+            "schema": schema,
+            "ok": True,
+            "issues": [],
+            "checked_stream_count": 0,
+            "record_count": 0,
+            "present_streams": [],
+        }
+    quarantine_schema = artifact_schema.get("quarantine_jsonl_records")
+    if quarantine_schema is None:
+        return {
+            "schema": schema,
+            "ok": True,
+            "issues": [],
+            "checked_stream_count": 0,
+            "record_count": 0,
+            "present_streams": [],
+        }
+    expected_schema = run_artifact_schema()["quarantine_jsonl_records"]
+    if quarantine_schema != expected_schema:
+        issues.append(
+            {
+                "code": "quarantine_artifact_schema_drift",
+                "message": "manifest quarantine artifact schema drifted",
+            }
+        )
+        quarantine_schema = expected_schema
+    if not isinstance(quarantine_schema, Mapping):
+        issues.append(
+            {
+                "code": "invalid_quarantine_artifact_schema",
+                "message": "manifest quarantine artifact schema must be an object",
+            }
+        )
+        quarantine_schema = {}
+    root = Path(run_dir)
+    for stream_name in sorted(quarantine_schema):
+        if not isinstance(stream_name, str) or not stream_name:
+            issues.append(
+                {
+                    "code": "invalid_quarantine_stream_name",
+                    "message": "quarantine stream names must be non-empty strings",
+                }
+            )
+            continue
+        path = root / stream_name
+        if not path.exists():
+            continue
+        try:
+            stream_count = sum(
+                1
+                for _ in iter_quarantine_records(
+                    path,
+                    stream_name=stream_name,
+                )
+            )
+        except StrictJsonlError as exc:
+            issues.append(
+                {
+                    "code": "invalid_quarantine_stream_rows",
+                    "message": f"{stream_name}: {exc}",
+                }
+            )
+            continue
+        present_streams.append(stream_name)
+        record_count += stream_count
+    return {
+        "schema": schema,
+        "ok": not issues,
+        "issues": issues,
+        "checked_stream_count": len(present_streams),
+        "record_count": record_count,
+        "present_streams": present_streams,
     }
 
 

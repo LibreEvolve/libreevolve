@@ -43,6 +43,10 @@ from libreevolve.problems.benchmarks.alphaevolve_keyword_customer_boundary impor
     alphaevolve_keyword_customer_boundary_record,
     validate_alphaevolve_keyword_customer_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_ui_api_attribution_boundary import (
+    alphaevolve_ui_api_attribution_boundary_record,
+    validate_alphaevolve_ui_api_attribution_boundary,
+)
 from libreevolve.problems.benchmarks.arxiv_abstract_snapshot import (
     alphaevolve_arxiv_abstract_snapshot_record,
     validate_alphaevolve_arxiv_abstract_snapshot,
@@ -1239,6 +1243,7 @@ UCB1_BOUNDARY_FILE = "papers/ucb1_boundary.json"
 ALPHAEVOLVE_2026_IMPACT_BOUNDARY_FILE = EXPECTED_IMPACT_BOUNDARY_FILE
 ALPHAEVOLVE_CLOUD_ACCESS_BOUNDARY_FILE = "papers/alphaevolve_cloud_access_boundary.json"
 ALPHAEVOLVE_KEYWORD_CUSTOMER_BOUNDARY_FILE = "papers/alphaevolve_keyword_customer_boundary.json"
+ALPHAEVOLVE_UI_API_ATTRIBUTION_BOUNDARY_FILE = "papers/alphaevolve_ui_api_attribution_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -1969,6 +1974,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_2026_impact_boundary(root_path))
     issues.extend(_validate_alphaevolve_cloud_access_boundary(root_path))
     issues.extend(_validate_alphaevolve_keyword_customer_boundary(root_path))
+    issues.extend(_validate_alphaevolve_ui_api_attribution_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -10456,6 +10462,38 @@ def _validate_alphaevolve_keyword_customer_boundary(root_path: Path) -> list[Pap
             f"alphaevolve_keyword_customer_boundary_{issue.code}",
             issue.message,
             "alphaevolve_keyword_customer",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_ui_api_attribution_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_UI_API_ATTRIBUTION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_ui_api_attribution_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_ui_api_attribution_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_UI_API_ATTRIBUTION_BOUNDARY_FILE} must "
+                        "emit AlphaEvolve UI/API attribution claim boundaries"
+                    ),
+                    "alphaevolve_ui_api_attribution",
+                )
+            ]
+    report = validate_alphaevolve_ui_api_attribution_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_ui_api_attribution_boundary_{issue.code}",
+            issue.message,
+            "alphaevolve_ui_api_attribution",
         )
         for issue in report.issues
     ]

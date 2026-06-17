@@ -6039,7 +6039,9 @@ sidecars, tests, and active TODOs.
     write-amplification reduction by 20%, compiler storage footprint reduction
     by nearly 9%, and customer cases involving Klarna, Substrate, FM Logistic,
     WPP, and Schrodinger. The article also introduces public gallery links and
-    names UI/API scaling contributors. It also states that AlphaEvolve has
+    names UI/API scaling contributors; `papers/alphaevolve_ui_api_attribution_boundary.json`
+    now records those source rosters while keeping UI/API artifacts and local
+    support unproven. It also states that AlphaEvolve has
     graduated from pilot testing into a core infrastructure component, is used
     as a regular tool for next-generation TPU design, and is being brought to
     commercial enterprises through Google Cloud.
@@ -6077,6 +6079,10 @@ sidecars, tests, and active TODOs.
     availability matrices/source crosswalks, security/data-use terms, managed-
     agent operational semantics, and a local provider adapter before any Cloud
     AlphaEvolve or Gemini Enterprise claims can be treated as implemented.
+    UI/API parity separately requires UI screenshots or source snapshots,
+    interaction-flow inventory, API endpoint/schema inventory, Cloud customer-
+    engagement artifacts, role-to-artifact links, redaction policy, independent
+    artifact verification, and local UI/managed-API/customer-engagement adapters.
 
 - [ ] Implement AlphaEvolve FHE-on-TPU benchmark boundary beyond paper cache
       coverage.

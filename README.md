@@ -47,6 +47,9 @@ Important limits:
 - Google Keyword one-year AlphaEvolve customer-impact claims are source
   reporting only; `papers/alphaevolve_keyword_customer_boundary.json` does not
   prove customer availability or local managed-service support.
+- AlphaEvolve UI/API collaborator rosters are source attribution only;
+  `papers/alphaevolve_ui_api_attribution_boundary.json` does not prove local
+  UI, managed API, customer-engagement, or role-to-artifact evidence.
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.

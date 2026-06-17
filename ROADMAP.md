@@ -1686,6 +1686,12 @@ by `papers/lineage_replay_boundary.json`.
   availability matrices, account access, console/billing artifacts, rollout
   owners, independent availability checks, local fixtures, and managed-service
   support open.
+  `papers/alphaevolve_ui_api_attribution_boundary.json` separately records the
+  official UI collaborator roster and API/Google Cloud customer-engagement
+  collaborator roster while keeping UI screenshots/source snapshots, API
+  endpoint schemas, customer-engagement artifacts, role-to-artifact links,
+  privacy/contact redaction, independent artifact verification, and local UI/
+  managed-API/customer-engagement adapters open.
 - Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
   `papers/download_manifest.*` and `papers/README.md` now include arXiv
   `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic

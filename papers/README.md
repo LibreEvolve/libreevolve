@@ -2538,6 +2538,17 @@ Implemented:
   artifacts, geography/access-tier notes, rollout owners, independent
   availability checks, local customer-case fixtures, and local managed-service
   support exist.
+- `papers/alphaevolve_ui_api_attribution_boundary.json`: official DeepMind
+  AlphaEvolve impact-article UI/API attribution sidecar, not local UI or
+  managed API support. It records the impact article URL/date/team, retrieval
+  byte count and SHA-256 hash, the 13-person AlphaEvolve UI collaborator roster,
+  the 14-person API and Google Cloud customer-engagement collaborator roster,
+  role-category definitions, and artifact policy boundaries. It keeps the
+  claims source-scoped until UI screenshots or source snapshots, interaction
+  flows, API endpoint/schema inventories, Cloud customer-engagement artifacts,
+  role-to-artifact links, public/private access status, privacy/contact
+  redaction policy, independent artifact verification, and local UI/managed-
+  API/customer-engagement adapters exist.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

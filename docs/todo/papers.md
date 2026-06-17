@@ -5262,15 +5262,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     Stroppa, Nishta Dhawan, Oliver Hilsenbeck, Puneet Jagralapudi, Reah
     Miyara, Skander Hannachi, Tom Beyer, and Vishal Agarwal as API and Google
     Cloud customer collaborators.
-  - Current gap: `papers/alphaevolve_2026_impact_boundary.json` records
-    `ui_api_attribution_records` as boundary-only and records UI/API
-    contributor flags, but `local_role_artifact_links_ready` remains false and
-    `ui_surface_artifact_inventory` plus `api_cloud_customer_artifact_inventory`
-    remain missing. No dedicated TODO, UI screenshot/source snapshot,
-    interaction-flow inventory, API endpoint/schema inventory, Cloud customer
-    engagement artifact, role-to-artifact link table, privacy/contact
-    redaction policy, product-team attribution boundary, or independent
-    artifact verification exists for the article's UI/API claims.
+  - Current gap: `papers/alphaevolve_ui_api_attribution_boundary.json` now
+    records the impact article URL/date/team, retrieval byte count and SHA-256
+    hash, role-category definitions, the 13-person AlphaEvolve UI collaborator
+    roster, the 14-person API and Google Cloud customer-engagement
+    collaborator roster, and artifact-policy boundaries. UI screenshot/source
+    snapshot, interaction-flow inventory, API endpoint/schema inventory, Cloud
+    customer-engagement artifact, role-to-artifact link table, public/private
+    artifact access status, privacy/contact redaction policy, independent
+    artifact verification, local UI support, managed API support, and local
+    customer-engagement adapter evidence remain missing for the article's
+    UI/API claims.
   - Required result: add source-specific evidence for the UI/API attribution
     claims: impact article URL/date/authors, retrieval hash, UI collaborator
     roster, API/Cloud-customer collaborator roster, role-category definitions,

@@ -44,11 +44,103 @@ def _quarantine_record(
     }
 
 
+def _non_jsonl_artifact(
+    *,
+    path: str,
+    kind: str,
+    presence: str,
+    writer_owner: str,
+    reader_owner: str,
+    hash_policy: str,
+    runtime_pointer_location: str,
+) -> dict:
+    return {
+        "path": path,
+        "kind": kind,
+        "presence": presence,
+        "writer_owner": writer_owner,
+        "reader_owner": reader_owner,
+        "hash_policy": hash_policy,
+        "lifecycle_status": "known_artifact_collision_checked_and_overwrite_managed",
+        "runtime_pointer_location": runtime_pointer_location,
+    }
+
+
 def run_artifact_schema() -> dict:
     return {
         "name": RUN_MANIFEST_SCHEMA,
         "version": ARTIFACT_SCHEMA_VERSION,
         "legacy_record_policy": LEGACY_RECORD_POLICY,
+        "non_jsonl_artifacts": {
+            "manifest.json": _non_jsonl_artifact(
+                path="manifest.json",
+                kind="json_file",
+                presence="required_startup_manifest_updated_at_runtime",
+                writer_owner="ProgramDatabase startup manifest and runtime finalization",
+                reader_owner="manifest validation, show inspection, and supported restore loaders",
+                hash_policy="self_describing_manifest_not_independently_self_hashed",
+                runtime_pointer_location="self",
+            ),
+            "task_specification.json": _non_jsonl_artifact(
+                path="task_specification.json",
+                kind="json_file",
+                presence="generated_when_task_specification_bundle_available",
+                writer_owner="ProgramDatabase startup task-specification artifact writer",
+                reader_owner="task-specification artifact resolution report and docs/tests",
+                hash_policy="file_sha256_when_present",
+                runtime_pointer_location=(
+                    "runtime.history.task_spec_artifact_resolution_report."
+                    "standalone_task_spec_artifact"
+                ),
+            ),
+            "best.py": _non_jsonl_artifact(
+                path="best.py",
+                kind="file",
+                presence="generated_when_best_program_available",
+                writer_owner="best artifact export finalization",
+                reader_owner="show inspection and archived-best export consumers",
+                hash_policy="file_sha256_when_present",
+                runtime_pointer_location='runtime.artifacts["best.py"]',
+            ),
+            "best_workspace": _non_jsonl_artifact(
+                path="best_workspace",
+                kind="directory",
+                presence="generated_when_best_program_available",
+                writer_owner="best artifact export finalization",
+                reader_owner="show inspection and archived-best export consumers",
+                hash_policy="tree_hash_when_present",
+                runtime_pointer_location='runtime.artifacts["best_workspace"]',
+            ),
+            "evaluator_artifacts": _non_jsonl_artifact(
+                path="evaluator_artifacts",
+                kind="directory",
+                presence="generated_when_evaluator_artifact_include_matches",
+                writer_owner="cascade evaluator artifact collection",
+                reader_owner="runtime reports, show inspection, and documentation tooling",
+                hash_policy="tree_hash_when_present",
+                runtime_pointer_location='runtime.artifacts["evaluator_artifacts"]',
+            ),
+            "plugin_artifacts": _non_jsonl_artifact(
+                path="plugin_artifacts",
+                kind="directory",
+                presence="generated_when_plugins_export_artifacts",
+                writer_owner="plugin artifact exporters",
+                reader_owner="runtime plugin artifact reports and show inspection",
+                hash_policy="tree_hash_when_present",
+                runtime_pointer_location='runtime.artifacts["plugin_artifacts"]',
+            ),
+            "paper_artifacts": _non_jsonl_artifact(
+                path="paper_artifacts",
+                kind="directory",
+                presence="generated_when_paper_source_exhibits_enabled",
+                writer_owner="paper-facing runtime report artifact writers",
+                reader_owner="paper manifests, docs/tests, and report validators",
+                hash_policy="tree_hash_when_present",
+                runtime_pointer_location=(
+                    "runtime.history paper-source reports with per-artifact paths"
+                ),
+            ),
+        },
         "jsonl_records": {
             "history.jsonl": HISTORY_RECORD_SCHEMA,
             "evaluator_results.jsonl": EVALUATOR_RESULT_RECORD_SCHEMA,

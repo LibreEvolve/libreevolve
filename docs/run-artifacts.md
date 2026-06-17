@@ -890,6 +890,15 @@ artifacts: `history.jsonl`, `history_invalid.jsonl`, `failure_history.jsonl`,
 `manifest_invalid.jsonl`, `best.py`, `best_workspace/`,
 `evaluator_artifacts/`, `plugin_artifacts/`, and `paper_artifacts/`.
 
+`manifest.json.artifact_schema.non_jsonl_artifacts` publishes the same
+non-JSONL bundle surface as machine-readable schema metadata. It enumerates
+`manifest.json`, `task_specification.json`, `best.py`, `best_workspace`,
+`evaluator_artifacts`, `plugin_artifacts`, and `paper_artifacts`; for each
+artifact it records the relative path, file/directory kind, generated/required
+presence condition, writer owner, reader owner, file-hash or tree-hash policy,
+overwrite lifecycle status, and the manifest `runtime.artifacts` or
+runtime-history report location that points to the artifact when available.
+
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.
 Use a fresh `--run-name` for independent runs, or pass `--overwrite` / set

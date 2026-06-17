@@ -8426,23 +8426,25 @@ sidecars, tests, and active TODOs.
     `best_workspace`, `evaluator_artifacts`, and `plugin_artifacts`, while
     docs also describe `paper_artifacts/...` outputs. Runtime manifests expose
     `runtime.artifacts` pointers for several of those paths, and
-    `docs/run-artifacts.md` documents their roles. However,
-    `run_artifact_schema()` currently returns only `jsonl_records` plus the
-    manifest schema name/version/legacy policy.
-  - Current gap: the top-level `manifest.json.artifact_schema` is named like a
-    run-artifact contract but cannot tell tooling which non-JSONL artifacts are
-    expected, optional, generated, lifecycle-managed, directory-valued,
-    independently hashed, or covered only by runtime pointers. This leaves
-    `task_specification.json`, best exports, evaluator/plugin directories, and
-    future paper/source exhibit directories dependent on scattered docs and
-    `runtime.artifacts` conventions instead of one schema inventory.
-  - Required result: extend `run_artifact_schema()` with a non-JSONL artifact
-    inventory that records path, kind, required/optional status, writer/reader
-    ownership, hash/tree-hash policy, lifecycle/overwrite status, and runtime
-    pointer location; validate it against `RUN_ARTIFACT_NAMES`,
-    docs/run-artifacts claims, startup/finalization writers, and `show`/restore
-    readers so documented artifacts cannot drift from machine-readable bundle
-    metadata.
+    `docs/run-artifacts.md` documents their roles. `run_artifact_schema()` now
+    publishes `non_jsonl_artifacts` for `manifest.json`,
+    `task_specification.json`, `best.py`, `best_workspace`,
+    `evaluator_artifacts`, `plugin_artifacts`, and `paper_artifacts`, including
+    path, kind, generated/required presence condition, writer/reader owner,
+    file-hash or tree-hash policy, lifecycle/overwrite status, and runtime
+    pointer/report location. Tests validate the inventory against
+    `RUN_ARTIFACT_NAMES` and `docs/run-artifacts.md`.
+  - Current gap: the top-level schema inventory now exists, but there is not
+    yet a semantic verifier that walks every startup/finalization writer,
+    runtime report, `show` reader, and restore reader to prove that each
+    artifact's declared owner, pointer path, and hash/tree-hash policy is
+    exercised end to end. `paper_artifacts/...` are also represented at the
+    directory level; per-subdirectory/source-exhibit schemas still live in
+    paper-facing runtime reports instead of a central artifact-subpath schema.
+  - Required result: add a verifier or focused tests that exercise
+    `non_jsonl_artifacts` against startup/finalization writers, runtime
+    pointers/history reports, and `show`/restore readers so documented
+    artifacts cannot drift from machine-readable bundle metadata.
 
 - [ ] Add a clean-checkout run contract for `sorting_network_9`.
   - Spec evidence: AlphaEvolve benchmark claims require reproducible problem

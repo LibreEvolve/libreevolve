@@ -5,6 +5,7 @@ import tomllib
 import yaml
 
 from libreevolve.core.artifact_schema import run_artifact_schema
+from libreevolve.core.database import RUN_ARTIFACT_NAMES
 
 
 def test_agents_instructions_do_not_pin_stale_test_counts():
@@ -235,3 +236,30 @@ def test_run_artifact_docs_list_schema_quarantine_streams():
             record["retention_mode_field"]
             == "config.quarantine_snapshot_retention_mode"
         )
+
+
+def test_run_artifact_docs_list_schema_non_jsonl_artifacts():
+    run_artifacts = Path("docs/run-artifacts.md").read_text(encoding="utf-8")
+    schema = run_artifact_schema()
+    artifacts = schema["non_jsonl_artifacts"]
+
+    assert set(artifacts) <= RUN_ARTIFACT_NAMES
+    for artifact_name, record in artifacts.items():
+        assert record["path"] == artifact_name
+        assert f"`{artifact_name}" in run_artifacts
+        assert record["lifecycle_status"] == (
+            "known_artifact_collision_checked_and_overwrite_managed"
+        )
+        assert record["presence"]
+        assert record["writer_owner"]
+        assert record["reader_owner"]
+        assert record["runtime_pointer_location"]
+
+    for artifact_name in (
+        "best_workspace",
+        "evaluator_artifacts",
+        "plugin_artifacts",
+        "paper_artifacts",
+    ):
+        assert artifacts[artifact_name]["kind"] == "directory"
+        assert artifacts[artifact_name]["hash_policy"] == "tree_hash_when_present"

@@ -21,6 +21,7 @@ from libreevolve.core.database import (
     ArchiveEventRestoreError,
     ArchiveStateRestoreError,
     HistoryRestoreError,
+    RUN_ARTIFACT_NAMES,
     archive_event_replay_audit,
     audit_archive_event_records,
     load_archive_restore_bundle,
@@ -2868,6 +2869,42 @@ def test_run_artifacts_include_current_schema_markers():
         "call": LLM_CALL_RECORD_SCHEMA,
         "reward": LLM_REWARD_RECORD_SCHEMA,
     }
+    non_jsonl_schema = manifest["artifact_schema"]["non_jsonl_artifacts"]
+    assert sorted(non_jsonl_schema) == [
+        "best.py",
+        "best_workspace",
+        "evaluator_artifacts",
+        "manifest.json",
+        "paper_artifacts",
+        "plugin_artifacts",
+        "task_specification.json",
+    ]
+    assert set(non_jsonl_schema) <= RUN_ARTIFACT_NAMES
+    assert non_jsonl_schema["manifest.json"]["runtime_pointer_location"] == "self"
+    assert non_jsonl_schema["best.py"]["kind"] == "file"
+    assert non_jsonl_schema["best.py"]["hash_policy"] == "file_sha256_when_present"
+    assert (
+        non_jsonl_schema["best.py"]["runtime_pointer_location"]
+        == 'runtime.artifacts["best.py"]'
+    )
+    for artifact_name in (
+        "best_workspace",
+        "evaluator_artifacts",
+        "plugin_artifacts",
+        "paper_artifacts",
+    ):
+        artifact = non_jsonl_schema[artifact_name]
+        assert artifact["kind"] == "directory"
+        assert artifact["hash_policy"] == "tree_hash_when_present"
+        assert (
+            artifact["lifecycle_status"]
+            == "known_artifact_collision_checked_and_overwrite_managed"
+        )
+    assert (
+        non_jsonl_schema["task_specification.json"]["runtime_pointer_location"]
+        == "runtime.history.task_spec_artifact_resolution_report."
+        "standalone_task_spec_artifact"
+    )
     assert history["schema_version"] == ARTIFACT_SCHEMA_VERSION
     assert history["record_schema"] == HISTORY_RECORD_SCHEMA
     assert failure["record_schema"] == FAILURE_RECORD_SCHEMA

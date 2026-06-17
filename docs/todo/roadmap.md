@@ -125,7 +125,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     canonical owner policy, derivative relationships, source and
     implementation evidence links, cross-document rollup policy,
     duplicate/orphan detection, canonical completion reporting, and
-    owner-reviewed publication scoping.
+    owner-reviewed publication scoping. It also records that all 12 missing
+    rollup evidence keys have active TODO coverage in this roadmap TODO,
+    while keeping each field marked `not_recorded_locally`.
   - Current gap: the canonical-gap sidecar is a bounded readiness matrix, not a
     canonical underlying-gap registry, and the rollup sidecar is a bounded
     publication gate rather than a canonical completion model. There is still

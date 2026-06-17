@@ -54,6 +54,35 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
     assert boundary["rollup_criterion_count"] == 8
     assert boundary["sidecar_ref_count"] == 16
     assert boundary["active_todo_ref_count"] == 16
+    assert (
+        boundary["missing_evidence_todo_coverage_status"]
+        == "all_missing_evidence_keys_have_active_todo_coverage"
+    )
+    assert boundary["missing_evidence_todo_coverage_count"] == 12
+    assert {
+        record["evidence_key"]
+        for record in boundary["missing_evidence_todo_coverage_records"]
+    } == {
+        "canonical_gap_ids",
+        "canonical_owner_assignments",
+        "derivative_documentation_relationships",
+        "source_or_paper_anchor_mapping",
+        "implementation_evidence_links",
+        "cross_document_rollup_rules",
+        "semantic_duplicate_detector",
+        "stale_completed_duplicate_detector",
+        "orphaned_derivative_detector",
+        "canonical_gap_completion_percent",
+        "canonical_raw_count_inflation_report",
+        "owner_review_signoff",
+    }
+    assert all(
+        record["todo_path"] == "docs/todo/roadmap.md"
+        and record["todo_exists"] is True
+        and record["required_phrase_present"] is True
+        and record["coverage_claim"] == "active_todo_ref_only"
+        for record in boundary["missing_evidence_todo_coverage_records"]
+    )
     assert [record["criterion_id"] for record in boundary["rollup_criteria"]] == [
         "canonical_gap_registry",
         "canonical_owner_policy",
@@ -103,6 +132,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
     boundary["source_exact_duplicate_cross_owner_group_count"] = 0
     boundary["source_exact_same_owner_completed_duplicate_group_count"] = 0
     boundary["source_exact_stale_completed_duplicate_group_count"] = 1
+    boundary["missing_evidence_todo_coverage_count"] = 11
     boundary["rollup_criteria"][0]["sidecar_refs"][0]["exists"] = False
     boundary["rollup_criteria"][0]["active_todo_refs"][0][
         "required_phrase_present"
@@ -123,6 +153,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
         "invalid_source_exact_same_owner_completed_duplicate_group_count" in codes
     )
     assert "invalid_source_exact_stale_completed_duplicate_group_count" in codes
+    assert "invalid_missing_evidence_todo_coverage_count" in codes
     assert "invalid_rollup_criterion_count" in codes
     assert "invalid_rollup_criteria" in codes
     assert "invalid_missing_evidence_canonical_gap_ids" in codes

@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 16,
   "boundary_status": "bounded_canonical_gap_rollup_gate_with_exact_same_owner_duplicate_report",
-  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, canonical owner assignment readiness beyond the exact duplicate owner/status profile, stale completed duplicate detection beyond exact normalized-title matches, same-owner completed duplicate cleanup beyond exact title matches, orphaned derivative detection, canonical gap completion percent, canonical raw-count inflation report beyond exact title matches, or owner review signoff.",
+  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, canonical owner assignment readiness beyond the exact duplicate owner/status profile, stale completed duplicate detection beyond exact normalized-title matches, same-owner completed duplicate cleanup beyond exact title matches, orphaned derivative detection, canonical gap completion percent, canonical raw-count inflation report beyond exact title matches, or owner review signoff. It records active TODO coverage for each missing evidence key without claiming those missing fields are implemented.",
   "claim_ready": false,
   "missing_evidence": {
     "canonical_gap_completion_percent": "not_recorded_locally",
@@ -17,6 +17,130 @@
     "source_or_paper_anchor_mapping": "not_recorded_locally",
     "stale_completed_duplicate_detector": "not_recorded_locally"
   },
+  "missing_evidence_todo_coverage_count": 12,
+  "missing_evidence_todo_coverage_records": [
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_gap_registry",
+      "evidence_key": "canonical_gap_ids",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "canonical gap ids",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_owner_policy",
+      "evidence_key": "canonical_owner_assignments",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "canonical owner assignments",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "derivative_relationship_policy",
+      "evidence_key": "derivative_documentation_relationships",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "derivative documentation relationships",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "source_and_implementation_evidence_links",
+      "evidence_key": "source_or_paper_anchor_mapping",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "source/paper anchor mapping",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "source_and_implementation_evidence_links",
+      "evidence_key": "implementation_evidence_links",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "implementation evidence links",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "cross_document_rollup_policy",
+      "evidence_key": "cross_document_rollup_rules",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "cross-document rollup rules",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "duplicate_and_orphan_detection",
+      "evidence_key": "semantic_duplicate_detector",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "semantic duplicate detection",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "duplicate_and_orphan_detection",
+      "evidence_key": "stale_completed_duplicate_detector",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "stale completed duplicate detection",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "derivative_relationship_policy",
+      "evidence_key": "orphaned_derivative_detector",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "orphaned derivative detection",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_completion_reporting",
+      "evidence_key": "canonical_gap_completion_percent",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "canonical gap completion percent",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_completion_reporting",
+      "evidence_key": "canonical_raw_count_inflation_report",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "raw-count inflation report",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    },
+    {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_owner_policy",
+      "evidence_key": "owner_review_signoff",
+      "missing_evidence_status": "not_recorded_locally",
+      "required_phrase": "owner review signoff",
+      "required_phrase_present": true,
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
+    }
+  ],
+  "missing_evidence_todo_coverage_status": "all_missing_evidence_keys_have_active_todo_coverage",
   "required_evidence_fields": [
     "canonical_gap_registry",
     "canonical_owner_policy",

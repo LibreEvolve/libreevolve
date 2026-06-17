@@ -1637,8 +1637,11 @@ Important limits:
   gap registry, canonical owner policy, derivative relationships, source and
   implementation evidence links, cross-document rollup policy,
   duplicate/orphan detection, canonical completion reporting, and
-  owner-reviewed publication scoping. This is not evidence that raw checklist
-  completion is canonical underlying-gap completion.
+  owner-reviewed publication scoping. It also records active TODO coverage
+  for all 12 missing evidence keys in `docs/todo/roadmap.md`, without
+  claiming that those missing canonical-readiness fields are implemented. This
+  is not evidence that raw checklist completion is canonical underlying-gap
+  completion.
 - ROADMAP source-span disposition evidence currently maps the six core
   AlphaEvolve anchors from `papers/implementation_evidence_map_boundary.json`
   to ROADMAP section ids, phase buckets, sidecars, and TODO links, and records

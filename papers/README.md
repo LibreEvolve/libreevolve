@@ -3193,9 +3193,11 @@ Implemented:
   sidecar with eight criteria for canonical gap registry, canonical owner
   policy, derivative relationships, source and implementation evidence links,
   cross-document rollup policy, duplicate/orphan detection, canonical
-  completion reporting, and owner-reviewed publication scoping. It is not
+  completion reporting, and owner-reviewed publication scoping. It also
+  records active TODO coverage for all 12 missing evidence keys, with each
+  coverage row scoped to an active `docs/todo/roadmap.md` phrase. It is not
   evidence that raw checklist completion is canonical underlying-gap
-  completion.
+  completion or that the missing canonical-readiness fields are implemented.
 - `papers/roadmap_source_span_disposition_boundary.json`: ROADMAP source-span
   disposition sidecar for the six core AlphaEvolve anchors already present in
   `papers/implementation_evidence_map_boundary.json`. It records source refs,

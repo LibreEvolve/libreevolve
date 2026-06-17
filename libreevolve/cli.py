@@ -19,6 +19,7 @@ from libreevolve.core.jsonl import (
     strict_json_dump,
 )
 from libreevolve.core.artifact_schema import (
+    validate_non_jsonl_artifact_policy_manifest,
     validate_paper_artifact_lifecycle_manifest,
 )
 from libreevolve.core.loop import (
@@ -411,6 +412,7 @@ def show(run_dir, source_display_chars, full_source, redact_source):
     feedback_summary = _feedback_summary(best, best_line_number)
     failure_summary = _failure_statistics_summary(run_path)
     validator_boundary_summary = _validator_boundary_artifact_summary(run_path)
+    non_jsonl_artifact_summary = _non_jsonl_artifact_policy_summary(run_path)
     paper_artifact_summary = _paper_artifact_lifecycle_summary(run_path)
     metrics = best.get("metrics")
     workspace = _history_record_workspace(best, best_line_number)
@@ -432,6 +434,8 @@ def show(run_dir, source_display_chars, full_source, redact_source):
         click.echo(failure_summary)
     if validator_boundary_summary:
         click.echo(validator_boundary_summary)
+    if non_jsonl_artifact_summary:
+        click.echo(non_jsonl_artifact_summary)
     if paper_artifact_summary:
         click.echo(paper_artifact_summary)
     if metrics:
@@ -540,6 +544,30 @@ def _paper_artifact_lifecycle_summary(run_dir: Path) -> str | None:
         "Paper artifacts: "
         f"checked_paths={validation['emitted_path_count']}; "
         f"docs_refs={len(validation['documented_refs'])}"
+    )
+
+
+def _non_jsonl_artifact_policy_summary(run_dir: Path) -> str | None:
+    manifest_path = run_dir / "manifest.json"
+    if not manifest_path.exists():
+        return None
+    manifest = _read_show_manifest(manifest_path)
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, dict)
+        or "non_jsonl_artifacts" not in artifact_schema
+    ):
+        return None
+    validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+    if not validation["ok"]:
+        issue = validation["issues"][0]
+        raise click.ClickException(
+            "Non-JSONL artifact policy validation failed: "
+            f"{issue['code']}: {issue['message']}"
+        )
+    return (
+        "Non-JSONL artifacts: "
+        f"checked={validation['checked_artifact_count']}"
     )
 
 

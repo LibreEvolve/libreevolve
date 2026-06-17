@@ -160,14 +160,35 @@ def _write_show_manifest(
 
 def _write_show_paper_artifact_manifest(run_dir: Path) -> dict:
     schema = paper_artifact_subpath_schema()
+    artifact_schema = run_artifact_schema()
     paths_by_family = {
         family_name: [
             record["path"] for record in family["path_records"]
         ]
         for family_name, family in schema["families"].items()
     }
+    runtime_artifacts = {
+        name: {
+            "path": artifact["path"],
+            "exists": False,
+            "present": False,
+        }
+        for name, artifact in artifact_schema["non_jsonl_artifacts"].items()
+    }
+    runtime_artifacts["manifest.json"] = {
+        "path": "manifest.json",
+        "exists": True,
+        "present": True,
+        "kind": "file",
+        "hash_scope": "final_manifest_self_reference_deferred",
+    }
+    runtime_artifacts["paper_artifacts"] = {
+        "path": "paper_artifacts",
+        "exists": False,
+        "present": False,
+    }
     manifest = {
-        "artifact_schema": run_artifact_schema(),
+        "artifact_schema": artifact_schema,
         "runtime": {
             "status": "completed",
             "stop_reason": "max_generations",
@@ -207,12 +228,7 @@ def _write_show_paper_artifact_manifest(run_dir: Path) -> dict:
                     ]
                 },
             },
-            "artifacts": {
-                "paper_artifacts": {
-                    "path": "paper_artifacts",
-                    "present": False,
-                }
-            },
+            "artifacts": runtime_artifacts,
         },
         "policies": {"validator_execution": _validator_execution_policy("host")},
     }
@@ -1823,8 +1839,28 @@ def test_show_reports_paper_artifact_lifecycle_summary(tmp_path):
     r = CliRunner().invoke(cli, ["show", str(tmp_path)])
 
     assert r.exit_code == 0
+    assert "Non-JSONL artifacts: checked=7" in r.output
     assert "Paper artifacts: checked_paths=11" in r.output
     assert "docs_refs=" in r.output
+
+
+def test_show_rejects_non_jsonl_artifact_policy_drift(tmp_path):
+    _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
+    manifest = _write_show_paper_artifact_manifest(tmp_path)
+    manifest["runtime"]["artifacts"]["task_specification.json"] = {
+        "path": "task_specification.json",
+        "exists": True,
+        "present": True,
+        "kind": "file",
+        "hash_scope": "file_bytes",
+    }
+    (tmp_path / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code != 0
+    assert "Non-JSONL artifact policy validation failed" in r.output
+    assert "missing_non_jsonl_file_sha256" in r.output
 
 
 def test_show_rejects_paper_artifact_lifecycle_drift(tmp_path):

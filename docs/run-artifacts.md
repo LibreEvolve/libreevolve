@@ -944,7 +944,11 @@ Completed and aborted manifests also persist
 `runtime.run_artifact_bundle_report` with the same accepted-stream,
 quarantine-diagnostic, non-JSONL, and paper-artifact lifecycle boundary. The
 report records `claim_ready: false` and keeps provider-output replay, pending
-controller replay, and full restore certification explicitly false.
+controller replay, and full restore certification explicitly false. New
+reports also include a `promotion_gate` object that records whether the bundle
+report passed schema/overclaim validation during manifest finalization; that
+gate is limited to accepted-state audit validation and is not restored-run
+replay certification.
 `libreevolve show`, CLI restore flags, and direct runtime/archive restore
 loaders validate that persisted report and reject overclaims before accepting
 the manifest. CLI and direct restore loaders also validate

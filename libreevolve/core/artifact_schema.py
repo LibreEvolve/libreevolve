@@ -1382,6 +1382,120 @@ def validate_run_artifact_bundle_report(report: object) -> dict:
                 "message": "full restore replay certification must remain false",
             }
         )
+    report_issue_codes = [issue["code"] for issue in issues]
+    promotion_gate = report.get("promotion_gate")
+    if promotion_gate is not None:
+        if not isinstance(promotion_gate, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_promotion_gate",
+                    "message": "promotion gate must be an object",
+                }
+            )
+        else:
+            if (
+                promotion_gate.get("schema")
+                != "libreevolve.run_artifact_bundle_promotion_gate.v1"
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_promotion_gate_schema",
+                        "message": "promotion gate schema changed",
+                    }
+                )
+            status = promotion_gate.get("status")
+            if status not in {"passed", "failed"}:
+                issues.append(
+                    {
+                        "code": "invalid_promotion_gate_status",
+                        "message": "promotion gate status must be passed or failed",
+                    }
+                )
+            validation_ok = promotion_gate.get("validation_ok")
+            if not isinstance(validation_ok, bool):
+                issues.append(
+                    {
+                        "code": "invalid_promotion_gate_validation_ok",
+                        "message": "promotion gate validation_ok must be boolean",
+                    }
+                )
+            elif status == "passed" and validation_ok is not True:
+                issues.append(
+                    {
+                        "code": "promotion_gate_passed_without_validation",
+                        "message": "passed promotion gate must have validation_ok true",
+                    }
+                )
+            elif status == "failed" and validation_ok is not False:
+                issues.append(
+                    {
+                        "code": "promotion_gate_failed_with_validation",
+                        "message": "failed promotion gate must have validation_ok false",
+                    }
+                )
+            if status == "passed" and report_issue_codes:
+                issues.append(
+                    {
+                        "code": "promotion_gate_passed_with_report_issues",
+                        "message": "passed promotion gate must not mask report issues",
+                    }
+                )
+            if status == "failed" and not report_issue_codes:
+                issues.append(
+                    {
+                        "code": "promotion_gate_failed_without_report_issues",
+                        "message": "failed promotion gate must correspond to report issues",
+                    }
+                )
+            gate_issue_codes = promotion_gate.get("issue_codes")
+            if not isinstance(gate_issue_codes, list) or not all(
+                isinstance(code, str) and code for code in gate_issue_codes
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_promotion_gate_issue_codes",
+                        "message": "promotion gate issue_codes must be a list of names",
+                    }
+                )
+            elif status == "passed" and gate_issue_codes:
+                issues.append(
+                    {
+                        "code": "promotion_gate_passed_with_issues",
+                        "message": "passed promotion gate must not list issues",
+                    }
+                )
+            elif status == "failed" and set(gate_issue_codes) != set(
+                report_issue_codes
+            ):
+                issues.append(
+                    {
+                        "code": "promotion_gate_issue_codes_mismatch",
+                        "message": "failed promotion gate must list report issue codes",
+                    }
+                )
+            for field in (
+                "accepted_state_only",
+                "bundle_report_schema_validated",
+            ):
+                if promotion_gate.get(field) is not True:
+                    issues.append(
+                        {
+                            "code": f"promotion_gate_{field}_missing",
+                            "message": f"promotion gate {field} must be true",
+                        }
+                    )
+            for field in (
+                "provider_output_replay",
+                "pending_controller_work_replay",
+                "full_restore_replay_certification",
+            ):
+                if promotion_gate.get(field) is not False:
+                    issues.append(
+                        {
+                            "code": f"promotion_gate_{field}_overclaim",
+                            "message": f"promotion gate {field} must remain false",
+                        }
+                    )
     return {
         "schema": "libreevolve.run_artifact_bundle_report_validation.v1",
         "ok": not issues,

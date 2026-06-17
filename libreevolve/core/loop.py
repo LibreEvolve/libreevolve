@@ -5382,16 +5382,44 @@ def _run_artifact_bundle_report(run_dir: Path, runtime: Mapping[str, object]) ->
                 paper_validation["ok"] if isinstance(paper_validation, Mapping) else False
             ),
             "persisted_manifest_report": True,
+            "promotion_gate_validated": True,
             "full_restore_replay_certification": False,
             "remaining_gap": [
-                "promotion_time_bundle_certificate",
                 "provider_output_replay_or_exclusion_in_resumed_trace",
                 "pending_controller_work_replay",
+                "restored_run_certification_model",
             ],
         },
     }
+    validation = validate_run_artifact_bundle_report(report)
+    report["promotion_gate"] = _run_artifact_bundle_promotion_gate(validation)
     report["validation"] = validate_run_artifact_bundle_report(report)
     return report
+
+
+def _run_artifact_bundle_promotion_gate(validation: Mapping[str, object]) -> dict:
+    issues = validation.get("issues")
+    issue_codes = []
+    if isinstance(issues, list):
+        issue_codes = [
+            issue["code"]
+            for issue in issues
+            if isinstance(issue, Mapping) and isinstance(issue.get("code"), str)
+        ]
+    ok = validation.get("ok") is True
+    return {
+        "schema": "libreevolve.run_artifact_bundle_promotion_gate.v1",
+        "status": "passed" if ok else "failed",
+        "validation_schema": validation.get("schema"),
+        "validation_ok": ok,
+        "issue_codes": issue_codes,
+        "applied_at": "manifest_runtime_finalization",
+        "accepted_state_only": True,
+        "bundle_report_schema_validated": True,
+        "provider_output_replay": False,
+        "pending_controller_work_replay": False,
+        "full_restore_replay_certification": False,
+    }
 
 
 def _runtime_has_paper_artifact_lifecycle_surface(runtime: Mapping[str, object]) -> bool:

@@ -17076,10 +17076,30 @@ def test_manifest_summarizes_plugin_artifacts_after_first_completed_generation(t
         "pending_controller_work_replay": False,
     }
     assert bundle_report["claim_ready"] is False
+    assert bundle_report["promotion_gate"] == {
+        "schema": "libreevolve.run_artifact_bundle_promotion_gate.v1",
+        "status": "passed",
+        "validation_schema": "libreevolve.run_artifact_bundle_report_validation.v1",
+        "validation_ok": True,
+        "issue_codes": [],
+        "applied_at": "manifest_runtime_finalization",
+        "accepted_state_only": True,
+        "bundle_report_schema_validated": True,
+        "provider_output_replay": False,
+        "pending_controller_work_replay": False,
+        "full_restore_replay_certification": False,
+    }
+    assert bundle_report["claim_readiness"]["promotion_gate_validated"] is True
     assert (
         bundle_report["claim_readiness"]["full_restore_replay_certification"]
         is False
     )
+    assert "promotion_time_bundle_certificate" not in bundle_report[
+        "claim_readiness"
+    ]["remaining_gap"]
+    assert "restored_run_certification_model" in bundle_report[
+        "claim_readiness"
+    ]["remaining_gap"]
     assert manifest["runtime"]["history"]["programs_logged"] == 2
     assert runtime_artifacts["history.jsonl"]["exists"] is True
     assert runtime_artifacts["history.jsonl"]["sha256"]
@@ -17103,12 +17123,14 @@ def test_manifest_summarizes_plugin_artifacts_after_first_completed_generation(t
 
     overclaimed = copy.deepcopy(bundle_report)
     overclaimed["accepted_state_boundary"]["provider_output_replay"] = True
+    overclaimed["promotion_gate"]["provider_output_replay"] = True
     overclaimed["claim_ready"] = True
     overclaimed["claim_readiness"]["full_restore_replay_certification"] = True
     validation = validate_run_artifact_bundle_report(overclaimed)
     assert validation["ok"] is False
     assert {
         "provider_output_replay_overclaim",
+        "promotion_gate_provider_output_replay_overclaim",
         "claim_ready_overclaim",
         "full_replay_certification_overclaim",
     }.issubset({issue["code"] for issue in validation["issues"]})

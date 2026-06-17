@@ -8481,10 +8481,13 @@ sidecars, tests, and active TODOs.
     quarantine diagnostic validation counts, non-JSONL policy status,
     paper-artifact lifecycle status, issue codes, and explicit false
     boundaries for quarantine replay-as-state, provider-output replay, pending
-    controller replay, and full restore certification. `libreevolve show`,
-    CLI restore flags, and direct runtime/archive restore loaders now validate
-    the persisted `runtime.run_artifact_bundle_report` itself and reject report
-    overclaims such as provider-output replay before accepting the manifest.
+    controller replay, and full restore certification. New reports include a
+    `promotion_gate` that records schema/overclaim validation at manifest
+    finalization without claiming restored-run replay certification.
+    `libreevolve show`, CLI restore flags, and direct runtime/archive restore
+    loaders now validate the persisted `runtime.run_artifact_bundle_report`
+    itself and reject report overclaims such as provider-output replay before
+    accepting the manifest.
     CLI restore flags and direct runtime/archive restore loaders also validate
     manifest-advertised quarantine streams before consuming restored runtime,
     scheduler, budget, lineage, or archive state, with focused tests proving
@@ -8492,18 +8495,18 @@ sidecars, tests, and active TODOs.
   - Current gap: quarantine stream schema coverage, row validation, inventory
     ownership, overwrite cleanup, show-time diagnostics, and show-time
     run-bundle reconciliation plus persisted and reader-validated bundle
-    reports and restore-side rejection guards are present, but quarantine
-    diagnostics are still not part of a promotion-time run-bundle validation
-    gate or restored-run certification model. Restore loaders correctly treat
-    quarantine rows as diagnostics rather than accepted state, but the
-    persisted bundle report is still an audit boundary, not a certificate that
-    replayed provider outputs, pending controller work, or artifact payload
-    reconstruction match a resumed trace.
+    reports, promotion-gate status, and restore-side rejection guards are
+    present, but quarantine diagnostics are still not part of a restored-run
+    certification model. Restore loaders correctly treat quarantine rows as
+    diagnostics rather than accepted state, but the persisted bundle report is
+    still an audit boundary, not a certificate that replayed provider outputs,
+    pending controller work, or artifact payload reconstruction match a resumed
+    trace.
   - Required result: connect quarantine schemas and row validators to the
     broader generated-artifact inventory, restore/show behavior, and non-JSONL
     artifact schema work so rejected diagnostics remain auditable without being
     confused with accepted candidate or controller state; then extend the
-    persisted audit report into a promotion/restore certification report
+    persisted audit report into a restore certification report
     proving accepted-state streams and quarantine diagnostics stay separated
     across restore and replay surfaces while replayed provider/controller and
     artifact payload boundaries are enforced.

@@ -2239,6 +2239,13 @@ the shared default redacted behavior. Missing quarantine parent directories
 are created before writing diagnostics; invalid parent paths fail with
 bounded, secret-redacted persistence errors. Treat these files as sensitive run
 artifacts unless snapshot retention is explicitly set to `off`.
+`libreevolve.core.jsonl.validate_quarantine_record()` and
+`iter_quarantine_records()` validate the two supported diagnostic row families:
+rejected-record serialization diagnostics and
+`jsonl_torn_final_record_repaired` repair diagnostics. The validator rejects
+unknown event shapes and rejects retained snapshot text when the retention mode
+is `hash_only` or `off`, so quarantine streams remain inspectable without being
+treated as accepted candidate, controller, prompt, or manifest state.
 
 When plugins render extra prompt context for a generated candidate,
 `metadata.plugin_context` records one entry per plugin with the plugin class,

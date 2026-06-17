@@ -136,6 +136,48 @@ def iter_strict_jsonl_objects(
             )
 
 
+def iter_quarantine_records(
+    path: Path,
+    *,
+    stream_name: str | None = None,
+):
+    label = stream_name or Path(path).name
+    for line_number, record in enumerate(
+        iter_strict_jsonl_objects(path, stream_name=label),
+        start=1,
+    ):
+        yield validate_quarantine_record(
+            record,
+            source=f"{label} at line {line_number}",
+        )
+
+
+def validate_quarantine_record(
+    record: dict[str, Any],
+    *,
+    source: str = "quarantine record",
+) -> dict[str, Any]:
+    """Validate a strict JSONL quarantine diagnostic row.
+
+    Quarantine streams intentionally carry diagnostics, not accepted runtime
+    state. This validator keeps the supported row shapes explicit so audit code
+    can distinguish rejected-record serialization diagnostics from torn-line
+    repair diagnostics.
+    """
+    if not isinstance(record, dict):
+        raise StrictJsonlError(f"Malformed {source}: expected JSON object")
+    event = record.get("event")
+    if event is None:
+        _validate_rejected_record_quarantine_diagnostic(record, source=source)
+    elif event == "jsonl_torn_final_record_repaired":
+        _validate_torn_final_record_quarantine_diagnostic(record, source=source)
+    else:
+        raise StrictJsonlError(
+            f"Malformed {source}: unsupported quarantine event {event!r}"
+        )
+    return record
+
+
 def append_strict_jsonl(
     path: Path,
     record: dict,
@@ -248,6 +290,249 @@ def repair_trailing_partial_jsonl(
         "fragment_bytes": len(fragment),
         "quarantine_path": str(target),
     }
+
+
+def _validate_rejected_record_quarantine_diagnostic(
+    record: dict[str, Any],
+    *,
+    source: str,
+) -> None:
+    _require_string_field(record, "error", source)
+    _require_string_field(record, "message", source)
+    _require_string_field(record, "record_type", source)
+    retention = _require_mapping_field(record, "record_repr_retention", source)
+    retention_mode = _validate_quarantine_retention_metadata(
+        retention,
+        source=f"{source}.record_repr_retention",
+    )
+    text_allowed = retention_mode in {"full", "redacted"}
+    if text_allowed:
+        if "record_repr" not in record:
+            raise StrictJsonlError(f"Malformed {source}: missing record_repr")
+        _require_string_field(record, "record_repr", source)
+        truncated = _require_bool_field(record, "record_repr_truncated", source)
+        if truncated != retention.get("truncated"):
+            raise StrictJsonlError(
+                f"Malformed {source}: record_repr_truncated must match "
+                "record_repr_retention.truncated"
+            )
+    else:
+        for field in ("record_repr", "record_repr_truncated"):
+            if field in record:
+                raise StrictJsonlError(
+                    f"Malformed {source}: {field} is not allowed when "
+                    f"retention_mode is {retention_mode!r}"
+                )
+    if "record_repr_error" in record:
+        _require_string_field(record, "record_repr_error", source)
+
+
+def _validate_torn_final_record_quarantine_diagnostic(
+    record: dict[str, Any],
+    *,
+    source: str,
+) -> None:
+    _require_string_value(
+        record.get("event"),
+        field="event",
+        source=source,
+        expected="jsonl_torn_final_record_repaired",
+    )
+    _require_string_field(record, "stream", source)
+    _require_hash_field(record, "path_sha256", source)
+    _require_string_value(
+        record.get("repair_policy"),
+        field="repair_policy",
+        source=source,
+        expected="truncate_unterminated_final_line",
+    )
+    _require_non_negative_int_field(record, "complete_bytes_preserved", source)
+    fragment_bytes = _require_non_negative_int_field(
+        record,
+        "fragment_bytes",
+        source,
+    )
+    if fragment_bytes == 0:
+        raise StrictJsonlError(f"Malformed {source}: fragment_bytes must be positive")
+    _require_bool_field(record, "fragment_utf8_valid", source)
+    retention = _require_mapping_field(record, "fragment_retention", source)
+    retention_mode = _validate_quarantine_retention_metadata(
+        retention,
+        source=f"{source}.fragment_retention",
+    )
+    if retention_mode in {"full", "redacted"}:
+        _require_hash_field(record, "fragment_sha256", source)
+        _require_string_field(record, "fragment_preview", source)
+    elif retention_mode == "hash_only":
+        _require_hash_field(record, "fragment_sha256", source)
+        if "fragment_preview" in record:
+            raise StrictJsonlError(
+                f"Malformed {source}: fragment_preview is not allowed when "
+                "retention_mode is 'hash_only'"
+            )
+    else:
+        for field in ("fragment_sha256", "fragment_preview"):
+            if field in record:
+                raise StrictJsonlError(
+                    f"Malformed {source}: {field} is not allowed when "
+                    "retention_mode is 'off'"
+                )
+
+
+def _validate_quarantine_retention_metadata(
+    retention: dict[str, Any],
+    *,
+    source: str,
+) -> str:
+    mode = retention.get("retention_mode")
+    if not isinstance(mode, str) or mode not in _QUARANTINE_RETENTION_MODES:
+        raise StrictJsonlError(
+            f"Malformed {source}: retention_mode must be one of "
+            f"{', '.join(sorted(_QUARANTINE_RETENTION_MODES))}"
+        )
+    expected_policy = {
+        "full": "full_secret_redacted_text_with_raw_sha256",
+        "redacted": "redact_then_prefix_truncate_with_sha256",
+        "hash_only": "hash_only_with_raw_sha256",
+        "off": "off_no_text_or_hash",
+    }[mode]
+    _require_string_value(
+        retention.get("retention_policy"),
+        field="retention_policy",
+        source=source,
+        expected=expected_policy,
+    )
+    if mode == "off":
+        _require_none_field(retention, "sha256", source)
+        _require_none_field(retention, "chars", source)
+        _require_integer_value(
+            retention.get("stored_chars"),
+            "stored_chars",
+            source,
+            exact=0,
+        )
+        _require_none_field(retention, "redacted", source)
+        _require_bool_value(
+            retention.get("truncated"),
+            "truncated",
+            source,
+            expected=False,
+        )
+    else:
+        _require_hash_field(retention, "sha256", source)
+        _require_non_negative_int_field(retention, "chars", source)
+        stored_chars = _require_non_negative_int_field(
+            retention,
+            "stored_chars",
+            source,
+        )
+        if mode == "hash_only" and stored_chars != 0:
+            raise StrictJsonlError(
+                f"Malformed {source}: stored_chars must be 0 for hash_only"
+            )
+        if mode in {"full", "redacted"}:
+            _require_bool_field(retention, "redacted", source)
+        else:
+            _require_none_field(retention, "redacted", source)
+        _require_bool_field(retention, "truncated", source)
+    max_chars = _require_non_negative_int_field(retention, "max_chars", source)
+    if max_chars == 0:
+        raise StrictJsonlError(f"Malformed {source}: max_chars must be positive")
+    return mode
+
+
+def _require_mapping_field(
+    record: dict[str, Any],
+    field: str,
+    source: str,
+) -> dict[str, Any]:
+    value = record.get(field)
+    if not isinstance(value, dict):
+        raise StrictJsonlError(f"Malformed {source}: {field} must be an object")
+    return value
+
+
+def _require_string_field(record: dict[str, Any], field: str, source: str) -> str:
+    value = record.get(field)
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(
+            f"Malformed {source}: {field} must be a non-empty string"
+        )
+    return value
+
+
+def _require_string_value(
+    value: Any,
+    *,
+    field: str,
+    source: str,
+    expected: str,
+) -> None:
+    if value != expected:
+        raise StrictJsonlError(
+            f"Malformed {source}: {field} must be {expected!r}"
+        )
+
+
+def _require_hash_field(record: dict[str, Any], field: str, source: str) -> str:
+    value = _require_string_field(record, field, source)
+    if not re.fullmatch(r"[0-9a-f]{64}", value):
+        raise StrictJsonlError(
+            f"Malformed {source}: {field} must be a SHA-256 hex digest"
+        )
+    return value
+
+
+def _require_bool_field(record: dict[str, Any], field: str, source: str) -> bool:
+    value = record.get(field)
+    return _require_bool_value(value, field, source)
+
+
+def _require_bool_value(
+    value: Any,
+    field: str,
+    source: str,
+    *,
+    expected: bool | None = None,
+) -> bool:
+    if not isinstance(value, bool):
+        raise StrictJsonlError(f"Malformed {source}: {field} must be boolean")
+    if expected is not None and value is not expected:
+        raise StrictJsonlError(
+            f"Malformed {source}: {field} must be {expected!r}"
+        )
+    return value
+
+
+def _require_non_negative_int_field(
+    record: dict[str, Any],
+    field: str,
+    source: str,
+) -> int:
+    return _require_integer_value(record.get(field), field, source)
+
+
+def _require_integer_value(
+    value: Any,
+    field: str,
+    source: str,
+    *,
+    exact: int | None = None,
+) -> int:
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        raise StrictJsonlError(
+            f"Malformed {source}: {field} must be a non-negative integer"
+        )
+    if exact is not None and value != exact:
+        raise StrictJsonlError(
+            f"Malformed {source}: {field} must be {exact}"
+        )
+    return value
+
+
+def _require_none_field(record: dict[str, Any], field: str, source: str) -> None:
+    if record.get(field) is not None:
+        raise StrictJsonlError(f"Malformed {source}: {field} must be null")
 
 
 def _append_serialized_jsonl_line(path: Path, line: str) -> None:

@@ -9,10 +9,12 @@ import pytest
 from libreevolve.core.jsonl import (
     StrictJsonlError,
     append_strict_jsonl,
+    iter_quarantine_records,
     iter_strict_jsonl_objects,
     load_strict_json_object,
     repair_trailing_partial_jsonl,
     strict_json_dump,
+    validate_quarantine_record,
 )
 from libreevolve.core.meta_prompt import PromptDatabase
 
@@ -189,6 +191,8 @@ def test_append_strict_jsonl_quarantines_non_string_object_keys(tmp_path):
     assert record["error"] == "TypeError"
     assert "JSON object key" in record["message"]
     assert record["record_repr_truncated"] is False
+    assert validate_quarantine_record(record) == record
+    assert list(iter_quarantine_records(quarantine)) == [record]
 
 
 def test_append_strict_jsonl_creates_missing_parent_directory(tmp_path):
@@ -251,6 +255,7 @@ def test_append_strict_jsonl_repairs_torn_final_line_before_append(tmp_path):
     assert diagnostic["fragment_bytes"] == len(b'{"id":')
     assert diagnostic["fragment_utf8_valid"] is True
     assert diagnostic["fragment_preview"] == '{"id":'
+    assert validate_quarantine_record(diagnostic) == diagnostic
 
 
 def test_repair_trailing_partial_jsonl_can_self_quarantine(tmp_path):
@@ -267,6 +272,65 @@ def test_repair_trailing_partial_jsonl_can_self_quarantine(tmp_path):
     assert records[0] == {"old": True}
     assert records[1]["event"] == "jsonl_torn_final_record_repaired"
     assert records[1]["stream"] == "prompt_history_invalid.jsonl"
+    assert validate_quarantine_record(records[1]) == records[1]
+
+
+def test_validate_quarantine_record_rejects_unknown_shape():
+    with pytest.raises(StrictJsonlError, match="unsupported quarantine event"):
+        validate_quarantine_record({"event": "unexpected"})
+
+
+def test_validate_quarantine_record_rejects_missing_serializer_fields():
+    with pytest.raises(
+        StrictJsonlError,
+        match="record_repr_retention must be an object",
+    ):
+        validate_quarantine_record(
+            {
+                "error": "TypeError",
+                "message": "bad",
+                "record_type": "dict",
+            }
+        )
+
+
+def test_validate_quarantine_record_rejects_hash_only_snapshot_text(tmp_path):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+
+    with pytest.raises(StrictJsonlError):
+        append_strict_jsonl(
+            path,
+            {"metadata": {"bad": object()}},
+            quarantine_path=quarantine,
+            quarantine_snapshot_retention_mode="hash_only",
+        )
+
+    [record] = list(iter_quarantine_records(quarantine))
+    forged = dict(record)
+    forged["record_repr"] = "{'metadata': {'bad': <object object>}}"
+
+    with pytest.raises(StrictJsonlError, match="record_repr is not allowed"):
+        validate_quarantine_record(forged)
+
+
+def test_validate_quarantine_record_rejects_off_fragment_snapshot(tmp_path):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    path.write_bytes(b'{"ok": true}\n{"id":')
+
+    repair_trailing_partial_jsonl(
+        path,
+        quarantine_path=quarantine,
+        quarantine_snapshot_retention_mode="off",
+    )
+
+    [record] = list(iter_quarantine_records(quarantine))
+    forged = dict(record)
+    forged["fragment_preview"] = '{"id":'
+
+    with pytest.raises(StrictJsonlError, match="fragment_preview is not allowed"):
+        validate_quarantine_record(forged)
 
 
 def test_append_strict_jsonl_creates_missing_quarantine_parent_directory(tmp_path):

@@ -8417,18 +8417,21 @@ sidecars, tests, and active TODOs.
     `libreevolve.strict_jsonl_quarantine_diagnostic.v1`, diagnostic fields,
     retention-mode field, and lifecycle status. Focused tests verify the map is
     present in real manifests and that the guide lists every schema-declared
-    quarantine stream.
+    quarantine stream. `libreevolve.core.jsonl.validate_quarantine_record()`
+    and `iter_quarantine_records()` now validate emitted rejected-record
+    serialization diagnostics and `jsonl_torn_final_record_repaired`
+    diagnostics, including retention-policy consistency for `redacted`,
+    `full`, `hash_only`, and `off` modes.
   - Current gap: quarantine stream schema coverage is present, but the broader
     artifact schema is still incomplete for non-JSONL artifacts and for
-    per-writer/per-reader lifecycle linkage. The diagnostic record schema is
-    documented structurally; there is still no dedicated parser/validator for
-    every quarantine row shape across torn-append repair, serialization
-    failures, and manifest-write failures.
-  - Required result: add quarantine-row validators and connect quarantine
-    schemas to the broader generated-artifact inventory, restore/show
-    behavior, and non-JSONL artifact schema work so rejected diagnostics remain
-    auditable without being confused with accepted candidate or controller
-    state.
+    per-writer/per-reader lifecycle linkage. The diagnostic record schema has
+    runtime validation for the framework-emitted row families, but those
+    validators are not yet attached to broad run-bundle validation, restore/show
+    diagnostics, or paper/source artifact lifecycle checks.
+  - Required result: connect quarantine schemas and row validators to the
+    broader generated-artifact inventory, restore/show behavior, and non-JSONL
+    artifact schema work so rejected diagnostics remain auditable without being
+    confused with accepted candidate or controller state.
 
 - [ ] Add schema-level coverage for non-JSONL run artifacts.
   - Spec evidence: AlphaEvolve-style experiment directories should be

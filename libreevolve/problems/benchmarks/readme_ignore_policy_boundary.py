@@ -8,7 +8,7 @@ from typing import Any
 
 README_IGNORE_POLICY_BOUNDARY_SCHEMA = "libreevolve.readme_ignore_policy_boundary.v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "readme_ignore_policy_static_inventory_without_retention_drift_gate"
+    "readme_ignore_policy_static_inventory_with_rule_rationale_map_without_retention_drift_gate"
 )
 GITIGNORE_PATH = ".gitignore"
 README_PATH = "README.md"
@@ -69,6 +69,63 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("agents_workflow_path_filter_test", AGENTS_TEST_PATH, "test_tests_workflow_covers_docs_papers_and_todo_changes"),
     ("readme_todo_owner", README_TODO_PATH, "Add repository ignore-policy evidence-retention drift check."),
 )
+EXPECTED_RULE_RATIONALES = {
+    "__pycache__/": ("python_cache", "local interpreter cache, never evidence"),
+    "*.pyc": ("python_cache", "local bytecode cache, never evidence"),
+    "*.pyo": ("python_cache", "local optimized bytecode cache, never evidence"),
+    "/.pytest_cache/": ("test_cache", "local pytest cache, never evidence"),
+    "/.mypy_cache/": ("typecheck_cache", "local type-check cache, never evidence"),
+    "/.ruff_cache/": ("lint_cache", "local lint cache, never evidence"),
+    "/.hypothesis/": ("property_test_cache", "local property-test cache, never evidence"),
+    "/.tox/": ("test_environment", "local test environment, never evidence"),
+    "/.nox/": ("test_environment", "local test environment, never evidence"),
+    "/.coverage": ("coverage_output", "local coverage output, not committed evidence"),
+    "/.coverage.*": ("coverage_output", "local coverage output, not committed evidence"),
+    "/htmlcov/": ("coverage_output", "local coverage HTML, not committed evidence"),
+    "/.venv/": ("virtual_environment", "local dependency environment, not committed evidence"),
+    "/venv/": ("virtual_environment", "local dependency environment, not committed evidence"),
+    "/build/": ("build_output", "local build output, not committed evidence"),
+    "/dist/": ("release_output", "local release output; provenance is recorded separately"),
+    "/*.egg-info/": ("packaging_metadata", "local editable-install metadata, not committed evidence"),
+    "/runs/": ("run_artifacts", "local run outputs are gitignored by README policy"),
+    "/.env": ("local_secret", "local provider credentials must not be committed"),
+    "/.claude/": ("local_agent_state", "local agent state, not repository evidence"),
+    "/.worktrees/": ("local_worktree_state", "local worktree state, not repository evidence"),
+    "/branding-preview.html": ("preview_output", "local branding preview, not committed evidence"),
+    "/assets/social-preview.html": ("preview_output", "local social preview, not committed evidence"),
+    "/docs/superpowers/plans/": ("local_planning_artifact", "local planning output, not committed evidence"),
+    "/docs/superpowers/specs/2026-03-18-libreevolve-branding.md": ("local_planning_artifact", "local branding spec, not committed evidence"),
+    "/old/superpowers/specs/": ("local_planning_artifact", "archival local planning output, not committed evidence"),
+    "/papers/*": ("paper_cache_and_sidecars", "paper cache is ignored except explicitly allowlisted records"),
+    "!/papers/README.md": ("paper_index", "committed paper index remains repository evidence"),
+    "!/papers/download_manifest.csv": ("paper_manifest", "committed paper download CSV remains repository evidence"),
+    "!/papers/download_manifest.json": ("paper_manifest", "committed paper download JSON remains repository evidence"),
+    "!/papers/benchmark_coverage_inventory.json": ("paper_sidecar", "committed benchmark coverage sidecar remains repository evidence"),
+    "!/papers/status_claim_inventory.json": ("paper_sidecar", "committed status-claim sidecar remains repository evidence"),
+}
+EXPECTED_RULE_RATIONALE_ANCHORS = {
+    "python_cache": ("readme_todo_owner",),
+    "test_cache": ("readme_todo_owner",),
+    "typecheck_cache": ("readme_todo_owner",),
+    "lint_cache": ("readme_todo_owner",),
+    "property_test_cache": ("readme_todo_owner",),
+    "test_environment": ("readme_todo_owner",),
+    "coverage_output": ("readme_todo_owner",),
+    "virtual_environment": ("readme_todo_owner",),
+    "build_output": ("readme_todo_owner",),
+    "release_output": ("readme_todo_owner",),
+    "packaging_metadata": ("readme_todo_owner",),
+    "run_artifacts": ("readme_runs_gitignored", "readme_run_artifacts_gitignored"),
+    "local_secret": ("readme_todo_owner",),
+    "local_agent_state": ("readme_todo_owner",),
+    "local_worktree_state": ("readme_todo_owner",),
+    "preview_output": ("readme_todo_owner",),
+    "local_planning_artifact": ("readme_todo_owner",),
+    "paper_cache_and_sidecars": ("readme_paper_pdfs_gitignored", "papers_readme_pdf_policy"),
+    "paper_index": ("readme_layout_papers_scope", "papers_readme_committed_policy"),
+    "paper_manifest": ("readme_layout_papers_scope", "papers_readme_committed_policy"),
+    "paper_sidecar": ("readme_layout_papers_scope", "papers_readme_committed_policy"),
+}
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "gitignore_ignore_rule_inventory",
     "gitignore_allowlist_rule_inventory",
@@ -86,7 +143,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "owner_review_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "full_ignore_rule_rationale_map": "not_recorded_locally",
     "tracked_vs_ignored_sidecar_inventory": "not_recorded_locally",
     "gitignore_workflow_path_filter": "not_recorded_locally",
     "retention_policy_drift_gate": "not_recorded_locally",
@@ -107,6 +163,7 @@ class ReadmeIgnorePolicyBoundaryValidation:
     ignore_rule_count: int
     allowlist_rule_count: int
     missing_rule_count: int
+    rule_rationale_map_count: int
     evidence_anchor_count: int
     missing_evidence_anchor_count: int
     missing_evidence_count: int
@@ -145,6 +202,10 @@ def readme_ignore_policy_boundary_record(root: str | Path = ".") -> dict[str, An
     missing_evidence_anchors = [
         record for record in evidence_anchor_records if record["marker_status"] != "marker_present"
     ]
+    rule_rationale_records = [
+        _rule_rationale_record(record, evidence_anchor_records)
+        for record in (*ignore_records, *allowlist_records)
+    ]
     workflow_text = texts[WORKFLOW_PATH]
     gitignore_in_workflow = '".gitignore"' in workflow_text or "'.gitignore'" in workflow_text
     static_map_present = (
@@ -168,6 +229,13 @@ def readme_ignore_policy_boundary_record(root: str | Path = ".") -> dict[str, An
         "missing_rule_records": missing_rule_records,
         "ignore_rule_records": ignore_records,
         "allowlist_rule_records": allowlist_records,
+        "rule_rationale_map_count": len(rule_rationale_records),
+        "rule_rationale_map_records": rule_rationale_records,
+        "rule_rationale_map_status": (
+            "all_expected_gitignore_rules_have_rationale_map"
+            if all(record["map_status"] == "mapped" for record in rule_rationale_records)
+            else "gitignore_rule_rationale_map_incomplete"
+        ),
         "papers_ignore_rule_status": (
             "papers_wildcard_ignored"
             if "/papers/*" in rules
@@ -198,13 +266,14 @@ def readme_ignore_policy_boundary_record(root: str | Path = ".") -> dict[str, An
             "This boundary records the .gitignore ignore-rule inventory, "
             "paper-manifest allowlist rules, run-artifact local-only policy, "
             "paper-PDF local-only policy, README Repository Layout ignore "
-            "markers, papers-index ignore-policy markers, GitHub Actions "
-            "README/docs/papers/tests/pyproject path filters, existing agent-doc "
+            "markers, papers-index ignore-policy markers, a rationale map for "
+            "every expected ignore and allowlist rule, GitHub Actions README/"
+            "docs/papers/tests/pyproject path filters, existing agent-doc "
             "workflow assertions, and active TODO ownership. It also records "
             "that .gitignore is not currently included in workflow path filters. "
-            "It does not claim a full ignore-rule rationale map, tracked-vs-"
-            "ignored sidecar inventory, .gitignore workflow path-filter "
-            "coverage, retention-policy drift gating, or owner review signoff."
+            "It does not claim tracked-vs-ignored sidecar inventory, .gitignore "
+            "workflow path-filter coverage, retention-policy drift gating, or "
+            "owner review signoff."
         ),
     }
 
@@ -219,7 +288,7 @@ def validate_readme_ignore_policy_boundary(
     )
     if read_issues:
         return ReadmeIgnorePolicyBoundaryValidation(
-            False, None, 0, 0, 0, 0, 0, 0, read_issues
+            False, None, 0, 0, 0, 0, 0, 0, 0, read_issues
         )
     assert isinstance(data, dict)
     expected = readme_ignore_policy_boundary_record(root)
@@ -243,6 +312,9 @@ def validate_readme_ignore_policy_boundary(
         "missing_rule_records",
         "ignore_rule_records",
         "allowlist_rule_records",
+        "rule_rationale_map_count",
+        "rule_rationale_map_records",
+        "rule_rationale_map_status",
         "papers_ignore_rule_status",
         "paper_manifest_allowlist_status",
         "gitignore_workflow_filter_status",
@@ -256,6 +328,10 @@ def validate_readme_ignore_policy_boundary(
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ignore-policy inputs"))
     if data.get("missing_rule_count") != 0:
         issues.append(_issue("missing_gitignore_rule", "expected .gitignore rules are incomplete"))
+    if data.get("rule_rationale_map_count") != len(EXPECTED_IGNORE_RULES) + len(EXPECTED_ALLOWLIST_RULES):
+        issues.append(_issue("invalid_rule_rationale_map_count", "expected every .gitignore rule to have a rationale map"))
+    if data.get("rule_rationale_map_status") != "all_expected_gitignore_rules_have_rationale_map":
+        issues.append(_issue("invalid_rule_rationale_map_status", "expected .gitignore rationale map is incomplete"))
     if data.get("missing_evidence_anchor_count") != 0:
         issues.append(_issue("missing_ignore_policy_evidence_anchor", "ignore-policy evidence anchors are incomplete"))
     if data.get("gitignore_workflow_filter_status") != "gitignore_not_in_workflow_path_filters":
@@ -271,7 +347,8 @@ def validate_readme_ignore_policy_boundary(
         not isinstance(boundary_text, str)
         or ".gitignore ignore-rule inventory" not in boundary_text
         or ".gitignore is not currently included in workflow path filters" not in boundary_text
-        or "does not claim a full ignore-rule rationale map" not in boundary_text
+        or "rationale map for every expected ignore and allowlist rule" not in boundary_text
+        or "does not claim tracked-vs-ignored sidecar inventory" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate ignore inventory from retention drift proof"))
     return ReadmeIgnorePolicyBoundaryValidation(
@@ -280,6 +357,7 @@ def validate_readme_ignore_policy_boundary(
         ignore_rule_count=data.get("ignore_rule_count") if isinstance(data.get("ignore_rule_count"), int) else 0,
         allowlist_rule_count=data.get("allowlist_rule_count") if isinstance(data.get("allowlist_rule_count"), int) else 0,
         missing_rule_count=data.get("missing_rule_count") if isinstance(data.get("missing_rule_count"), int) else 0,
+        rule_rationale_map_count=data.get("rule_rationale_map_count") if isinstance(data.get("rule_rationale_map_count"), int) else 0,
         evidence_anchor_count=data.get("evidence_anchor_count") if isinstance(data.get("evidence_anchor_count"), int) else 0,
         missing_evidence_anchor_count=data.get("missing_evidence_anchor_count") if isinstance(data.get("missing_evidence_anchor_count"), int) else 0,
         missing_evidence_count=missing_count,
@@ -299,6 +377,7 @@ def render_readme_ignore_policy_boundary_summary(boundary: dict[str, Any]) -> st
         f"| ignore_rule_count | {validation.ignore_rule_count} |",
         f"| allowlist_rule_count | {validation.allowlist_rule_count} |",
         f"| missing_rule_count | {validation.missing_rule_count} |",
+        f"| rule_rationale_map_count | {validation.rule_rationale_map_count} |",
         f"| evidence_anchor_count | {validation.evidence_anchor_count} |",
         f"| missing_evidence_anchor_count | {validation.missing_evidence_anchor_count} |",
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
@@ -322,6 +401,55 @@ def _rule_record(rule: str, rules: list[str]) -> dict[str, Any]:
         "rule": rule,
         "rule_kind": "allowlist" if rule.startswith("!") else "ignore",
         "rule_status": "rule_present" if rule in rules else "rule_missing",
+    }
+
+
+def _rule_rationale_record(
+    rule_record: dict[str, Any],
+    evidence_anchor_records: list[dict[str, Any]],
+) -> dict[str, Any]:
+    rule = str(rule_record["rule"])
+    artifact_class, rationale = EXPECTED_RULE_RATIONALES.get(
+        rule,
+        ("unmapped", "not_recorded_locally"),
+    )
+    expected_anchor_ids = EXPECTED_RULE_RATIONALE_ANCHORS.get(artifact_class, ())
+    anchor_records_by_id = {
+        record["record_id"]: record
+        for record in evidence_anchor_records
+    }
+    evidence_anchor_statuses = [
+        {
+            "evidence_anchor_id": anchor_id,
+            "marker_status": (
+                anchor_records_by_id[anchor_id]["marker_status"]
+                if anchor_id in anchor_records_by_id
+                else "marker_missing"
+            ),
+        }
+        for anchor_id in expected_anchor_ids
+    ]
+    anchor_status = (
+        "anchors_present"
+        if expected_anchor_ids
+        and all(record["marker_status"] == "marker_present" for record in evidence_anchor_statuses)
+        else "anchors_missing"
+    )
+    return {
+        "rule": rule,
+        "rule_kind": rule_record["rule_kind"],
+        "rule_status": rule_record["rule_status"],
+        "artifact_class": artifact_class,
+        "retention_rationale": rationale,
+        "evidence_anchor_ids": list(expected_anchor_ids),
+        "evidence_anchor_statuses": evidence_anchor_statuses,
+        "map_status": (
+            "mapped"
+            if rule_record["rule_status"] == "rule_present"
+            and artifact_class != "unmapped"
+            and anchor_status == "anchors_present"
+            else "missing_rationale_or_anchor"
+        ),
     }
 
 

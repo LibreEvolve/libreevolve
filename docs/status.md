@@ -1540,11 +1540,12 @@ Important limits:
   paper-manifest allowlist rules, run-artifact local-only policy, paper-PDF
   local-only policy, README Repository Layout ignore markers, papers-index
   ignore-policy markers, GitHub Actions README/docs/papers/tests/pyproject
-  path filters, existing agent-doc workflow assertions, and active TODO
-  ownership. It also records that `.gitignore` is not currently in workflow
-  path filters. This is not a full ignore-rule rationale map, tracked-vs-
-  ignored sidecar inventory, `.gitignore` workflow path-filter coverage,
-  retention-policy drift gating, or owner review signoff.
+  path filters, existing agent-doc workflow assertions, active TODO
+  ownership, and a rationale map for every expected ignore and allowlist rule.
+  It also records that `.gitignore` is not currently in workflow path filters.
+  This is not tracked-vs-ignored sidecar inventory, `.gitignore` workflow
+  path-filter coverage, retention-policy drift gating, or owner review
+  signoff.
 - README quick-start smoke evidence now records the no-provider README command
   markers, focused smoke-test markers, expected `readme_smoke_sorting` run
   name, sorting example path, `max_llm_calls` stop reason, `Best fitness`

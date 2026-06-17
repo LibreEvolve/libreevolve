@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.readme_ignore_policy_boundary.v1",
-  "boundary_status": "readme_ignore_policy_static_inventory_without_retention_drift_gate",
+  "boundary_status": "readme_ignore_policy_static_inventory_with_rule_rationale_map_without_retention_drift_gate",
   "claim_ready": false,
   "gitignore_path": ".gitignore",
   "readme_path": "README.md",
@@ -178,6 +178,589 @@
       "rule_status": "rule_present"
     }
   ],
+  "rule_rationale_map_count": 32,
+  "rule_rationale_map_records": [
+    {
+      "rule": "__pycache__/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "python_cache",
+      "retention_rationale": "local interpreter cache, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "*.pyc",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "python_cache",
+      "retention_rationale": "local bytecode cache, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "*.pyo",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "python_cache",
+      "retention_rationale": "local optimized bytecode cache, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.pytest_cache/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "test_cache",
+      "retention_rationale": "local pytest cache, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.mypy_cache/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "typecheck_cache",
+      "retention_rationale": "local type-check cache, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.ruff_cache/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "lint_cache",
+      "retention_rationale": "local lint cache, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.hypothesis/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "property_test_cache",
+      "retention_rationale": "local property-test cache, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.tox/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "test_environment",
+      "retention_rationale": "local test environment, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.nox/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "test_environment",
+      "retention_rationale": "local test environment, never evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.coverage",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "coverage_output",
+      "retention_rationale": "local coverage output, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.coverage.*",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "coverage_output",
+      "retention_rationale": "local coverage output, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/htmlcov/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "coverage_output",
+      "retention_rationale": "local coverage HTML, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.venv/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "virtual_environment",
+      "retention_rationale": "local dependency environment, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/venv/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "virtual_environment",
+      "retention_rationale": "local dependency environment, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/build/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "build_output",
+      "retention_rationale": "local build output, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/dist/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "release_output",
+      "retention_rationale": "local release output; provenance is recorded separately",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/*.egg-info/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "packaging_metadata",
+      "retention_rationale": "local editable-install metadata, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/runs/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "run_artifacts",
+      "retention_rationale": "local run outputs are gitignored by README policy",
+      "evidence_anchor_ids": [
+        "readme_runs_gitignored",
+        "readme_run_artifacts_gitignored"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_runs_gitignored",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "readme_run_artifacts_gitignored",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.env",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "local_secret",
+      "retention_rationale": "local provider credentials must not be committed",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.claude/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "local_agent_state",
+      "retention_rationale": "local agent state, not repository evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/.worktrees/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "local_worktree_state",
+      "retention_rationale": "local worktree state, not repository evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/branding-preview.html",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "preview_output",
+      "retention_rationale": "local branding preview, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/assets/social-preview.html",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "preview_output",
+      "retention_rationale": "local social preview, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/docs/superpowers/plans/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "local_planning_artifact",
+      "retention_rationale": "local planning output, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/docs/superpowers/specs/2026-03-18-libreevolve-branding.md",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "local_planning_artifact",
+      "retention_rationale": "local branding spec, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/old/superpowers/specs/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "local_planning_artifact",
+      "retention_rationale": "archival local planning output, not committed evidence",
+      "evidence_anchor_ids": [
+        "readme_todo_owner"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_todo_owner",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "/papers/*",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present",
+      "artifact_class": "paper_cache_and_sidecars",
+      "retention_rationale": "paper cache is ignored except explicitly allowlisted records",
+      "evidence_anchor_ids": [
+        "readme_paper_pdfs_gitignored",
+        "papers_readme_pdf_policy"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_paper_pdfs_gitignored",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "papers_readme_pdf_policy",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "!/papers/README.md",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present",
+      "artifact_class": "paper_index",
+      "retention_rationale": "committed paper index remains repository evidence",
+      "evidence_anchor_ids": [
+        "readme_layout_papers_scope",
+        "papers_readme_committed_policy"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_layout_papers_scope",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "papers_readme_committed_policy",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "!/papers/download_manifest.csv",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present",
+      "artifact_class": "paper_manifest",
+      "retention_rationale": "committed paper download CSV remains repository evidence",
+      "evidence_anchor_ids": [
+        "readme_layout_papers_scope",
+        "papers_readme_committed_policy"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_layout_papers_scope",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "papers_readme_committed_policy",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "!/papers/download_manifest.json",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present",
+      "artifact_class": "paper_manifest",
+      "retention_rationale": "committed paper download JSON remains repository evidence",
+      "evidence_anchor_ids": [
+        "readme_layout_papers_scope",
+        "papers_readme_committed_policy"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_layout_papers_scope",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "papers_readme_committed_policy",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "!/papers/benchmark_coverage_inventory.json",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present",
+      "artifact_class": "paper_sidecar",
+      "retention_rationale": "committed benchmark coverage sidecar remains repository evidence",
+      "evidence_anchor_ids": [
+        "readme_layout_papers_scope",
+        "papers_readme_committed_policy"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_layout_papers_scope",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "papers_readme_committed_policy",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    },
+    {
+      "rule": "!/papers/status_claim_inventory.json",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present",
+      "artifact_class": "paper_sidecar",
+      "retention_rationale": "committed status-claim sidecar remains repository evidence",
+      "evidence_anchor_ids": [
+        "readme_layout_papers_scope",
+        "papers_readme_committed_policy"
+      ],
+      "evidence_anchor_statuses": [
+        {
+          "evidence_anchor_id": "readme_layout_papers_scope",
+          "marker_status": "marker_present"
+        },
+        {
+          "evidence_anchor_id": "papers_readme_committed_policy",
+          "marker_status": "marker_present"
+        }
+      ],
+      "map_status": "mapped"
+    }
+  ],
+  "rule_rationale_map_status": "all_expected_gitignore_rules_have_rationale_map",
   "papers_ignore_rule_status": "papers_wildcard_ignored",
   "paper_manifest_allowlist_status": "core_paper_manifests_allowlisted",
   "gitignore_workflow_filter_status": "gitignore_not_in_workflow_path_filters",
@@ -288,11 +871,10 @@
     "owner_review_signoff"
   ],
   "missing_evidence": {
-    "full_ignore_rule_rationale_map": "not_recorded_locally",
     "tracked_vs_ignored_sidecar_inventory": "not_recorded_locally",
     "gitignore_workflow_path_filter": "not_recorded_locally",
     "retention_policy_drift_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the .gitignore ignore-rule inventory, paper-manifest allowlist rules, run-artifact local-only policy, paper-PDF local-only policy, README Repository Layout ignore markers, papers-index ignore-policy markers, GitHub Actions README/docs/papers/tests/pyproject path filters, existing agent-doc workflow assertions, and active TODO ownership. It also records that .gitignore is not currently included in workflow path filters. It does not claim a full ignore-rule rationale map, tracked-vs-ignored sidecar inventory, .gitignore workflow path-filter coverage, retention-policy drift gating, or owner review signoff."
+  "claim_boundary": "This boundary records the .gitignore ignore-rule inventory, paper-manifest allowlist rules, run-artifact local-only policy, paper-PDF local-only policy, README Repository Layout ignore markers, papers-index ignore-policy markers, a rationale map for every expected ignore and allowlist rule, GitHub Actions README/docs/papers/tests/pyproject path filters, existing agent-doc workflow assertions, and active TODO ownership. It also records that .gitignore is not currently included in workflow path filters. It does not claim tracked-vs-ignored sidecar inventory, .gitignore workflow path-filter coverage, retention-policy drift gating, or owner review signoff."
 }

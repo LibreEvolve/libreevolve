@@ -2844,7 +2844,7 @@ Implemented:
   contract inventory, README Example Scope inventory, README example-runs
   inventory, README Run Artifacts inventory, README Testing inventory,
   README contributor-gate inventory, README license inventory,
-  README provider-example matrix
+  README ignore-policy inventory, README provider-example matrix
   inventory, README CLI-provider guardrail inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
@@ -2999,6 +2999,16 @@ Implemented:
   LibreEvolve's MIT repository license. It is not packaged license-file
   verification, a complete third-party rights semantic map, license metadata
   drift gating, paper-rights policy drift gating, or owner review signoff.
+- `papers/readme_ignore_policy_boundary.json`: README ignore-policy sidecar.
+  It records `.gitignore` ignore rules, paper-manifest allowlist rules, run-
+  artifact local-only policy, paper-PDF local-only policy, README Repository
+  Layout ignore markers, papers-index ignore-policy markers, GitHub Actions
+  README/docs/papers/tests/pyproject path filters, existing agent-doc workflow
+  assertions, and active TODO ownership. It also records that `.gitignore` is
+  not currently in workflow path filters. It is not a full ignore-rule
+  rationale map, tracked-vs-ignored sidecar inventory, `.gitignore` workflow
+  path-filter coverage, retention-policy drift gating, or owner review
+  signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

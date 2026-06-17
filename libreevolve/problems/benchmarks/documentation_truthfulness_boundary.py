@@ -47,6 +47,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "readme_cli_provider_guardrail_inventory",
     "readme_contributor_gate_inventory",
     "readme_license_inventory",
+    "readme_ignore_policy_inventory",
     "readme_paper_cache_topic_inventory",
     "readme_paper_cache_rehydrate_inventory",
     "documentation_claim_inventory",
@@ -105,7 +106,7 @@ def documentation_truthfulness_boundary_record() -> dict[str, Any]:
             "tracked legacy-surface inventory, README AGENTS.md routing "
             "inventory, README Documentation Map inventory, README Repository Layout inventory, README Problem Layout inventory, problem-format loader-contract inventory, README Example Scope inventory, README example-runs inventory, README Run Artifacts inventory, README Testing inventory, README quick-start smoke inventory, README install-smoke "
             "inventory, README provider-auth setup inventory, README provider-example "
-            "matrix inventory, README CLI-provider guardrail inventory, README contributor-gate inventory, README license inventory, README paper-cache "
+            "matrix inventory, README CLI-provider guardrail inventory, README contributor-gate inventory, README license inventory, README ignore-policy inventory, README paper-cache "
             "topic inventory, README paper-cache rehydrate inventory, "
             "README/ROADMAP claim inventory, and "
             "focused boundary tests. It does not claim semantic "

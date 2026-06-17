@@ -1,0 +1,298 @@
+{
+  "schema": "libreevolve.readme_ignore_policy_boundary.v1",
+  "boundary_status": "readme_ignore_policy_static_inventory_without_retention_drift_gate",
+  "claim_ready": false,
+  "gitignore_path": ".gitignore",
+  "readme_path": "README.md",
+  "papers_readme_path": "papers/README.md",
+  "workflow_path": ".github/workflows/tests.yml",
+  "agent_docs_test_path": "tests/test_agents_docs.py",
+  "todo_paths": [
+    "docs/todo/readme.md"
+  ],
+  "ignore_rule_count": 27,
+  "allowlist_rule_count": 5,
+  "missing_rule_count": 0,
+  "missing_rule_records": [],
+  "ignore_rule_records": [
+    {
+      "rule": "__pycache__/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "*.pyc",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "*.pyo",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.pytest_cache/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.mypy_cache/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.ruff_cache/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.hypothesis/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.tox/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.nox/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.coverage",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.coverage.*",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/htmlcov/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.venv/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/venv/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/build/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/dist/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/*.egg-info/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/runs/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.env",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.claude/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/.worktrees/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/branding-preview.html",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/assets/social-preview.html",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/docs/superpowers/plans/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/docs/superpowers/specs/2026-03-18-libreevolve-branding.md",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/old/superpowers/specs/",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "/papers/*",
+      "rule_kind": "ignore",
+      "rule_status": "rule_present"
+    }
+  ],
+  "allowlist_rule_records": [
+    {
+      "rule": "!/papers/README.md",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "!/papers/download_manifest.csv",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "!/papers/download_manifest.json",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "!/papers/benchmark_coverage_inventory.json",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present"
+    },
+    {
+      "rule": "!/papers/status_claim_inventory.json",
+      "rule_kind": "allowlist",
+      "rule_status": "rule_present"
+    }
+  ],
+  "papers_ignore_rule_status": "papers_wildcard_ignored",
+  "paper_manifest_allowlist_status": "core_paper_manifests_allowlisted",
+  "gitignore_workflow_filter_status": "gitignore_not_in_workflow_path_filters",
+  "evidence_anchor_count": 14,
+  "missing_evidence_anchor_count": 0,
+  "missing_evidence_anchor_records": [],
+  "evidence_anchor_records": [
+    {
+      "record_id": "readme_runs_gitignored",
+      "path": "README.md",
+      "required_marker": "Gitignored run artifacts under `runs/`.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_run_artifacts_gitignored",
+      "path": "README.md",
+      "required_marker": "Runs write to `runs/<run-name>/`, which is gitignored.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_paper_pdfs_gitignored",
+      "path": "README.md",
+      "required_marker": "The PDFs are\ngitignored",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_layout_papers_scope",
+      "path": "README.md",
+      "required_marker": "tracked manifests plus ignored PDF cache and retained source artifacts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_layout_runs_scope",
+      "path": "README.md",
+      "required_marker": "runs/            gitignored run outputs",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "papers_readme_pdf_policy",
+      "path": "papers/README.md",
+      "required_marker": "PDFs are intentionally gitignored",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "papers_readme_committed_policy",
+      "path": "papers/README.md",
+      "required_marker": "The committed repository tracks this README, the CSV/JSON\nmanifests, sidecars, and that retained source artifact.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "workflow_readme_path_filter",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "\"README.md\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "workflow_docs_path_filter",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "\"docs/**\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "workflow_papers_path_filter",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "\"papers/**\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "workflow_pyproject_path_filter",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "\"pyproject.toml\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "workflow_tests_path_filter",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "\"tests/**\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "agents_workflow_path_filter_test",
+      "path": "tests/test_agents_docs.py",
+      "required_marker": "test_tests_workflow_covers_docs_papers_and_todo_changes",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_todo_owner",
+      "path": "docs/todo/readme.md",
+      "required_marker": "Add repository ignore-policy evidence-retention drift check.",
+      "marker_status": "marker_present"
+    }
+  ],
+  "ignore_policy_map_status": "readme_ignore_policy_static_map_present_with_gitignore_filter_gap",
+  "required_evidence_fields": [
+    "gitignore_ignore_rule_inventory",
+    "gitignore_allowlist_rule_inventory",
+    "run_artifact_local_only_policy",
+    "paper_pdf_local_only_policy",
+    "paper_manifest_allowlist_policy",
+    "readme_repository_layout_ignore_markers",
+    "papers_index_ignore_policy_markers",
+    "github_actions_docs_papers_tests_path_filters",
+    "active_todo_owner_anchor",
+    "full_ignore_rule_rationale_map",
+    "tracked_vs_ignored_sidecar_inventory",
+    "gitignore_workflow_path_filter",
+    "retention_policy_drift_gate",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "full_ignore_rule_rationale_map": "not_recorded_locally",
+    "tracked_vs_ignored_sidecar_inventory": "not_recorded_locally",
+    "gitignore_workflow_path_filter": "not_recorded_locally",
+    "retention_policy_drift_gate": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the .gitignore ignore-rule inventory, paper-manifest allowlist rules, run-artifact local-only policy, paper-PDF local-only policy, README Repository Layout ignore markers, papers-index ignore-policy markers, GitHub Actions README/docs/papers/tests/pyproject path filters, existing agent-doc workflow assertions, and active TODO ownership. It also records that .gitignore is not currently included in workflow path filters. It does not claim a full ignore-rule rationale map, tracked-vs-ignored sidecar inventory, .gitignore workflow path-filter coverage, retention-policy drift gating, or owner review signoff."
+}

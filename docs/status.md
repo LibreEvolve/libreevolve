@@ -1331,6 +1331,7 @@ Important limits:
   `papers/readme_testing_boundary.json`,
   `papers/readme_contributor_gate_boundary.json`,
   `papers/readme_license_boundary.json`,
+  `papers/readme_ignore_policy_boundary.json`,
   `papers/readme_quick_start_smoke_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
@@ -1475,6 +1476,15 @@ Important limits:
   repository license. This is not packaged license-file verification, a
   complete third-party rights semantic map, license metadata drift gating,
   paper-rights policy drift gating, or owner review signoff.
+- README ignore-policy evidence now records `.gitignore` ignore rules,
+  paper-manifest allowlist rules, run-artifact local-only policy, paper-PDF
+  local-only policy, README Repository Layout ignore markers, papers-index
+  ignore-policy markers, GitHub Actions README/docs/papers/tests/pyproject
+  path filters, existing agent-doc workflow assertions, and active TODO
+  ownership. It also records that `.gitignore` is not currently in workflow
+  path filters. This is not a full ignore-rule rationale map, tracked-vs-
+  ignored sidecar inventory, `.gitignore` workflow path-filter coverage,
+  retention-policy drift gating, or owner review signoff.
 - README quick-start smoke evidence now records the no-provider README command
   markers, focused smoke-test markers, expected `readme_smoke_sorting` run
   name, sorting example path, `max_llm_calls` stop reason, `Best fitness`

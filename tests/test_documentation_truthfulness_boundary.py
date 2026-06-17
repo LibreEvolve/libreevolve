@@ -16,7 +16,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
         validation.boundary_status
         == "cross_document_guards_without_semantic_claim_proof"
     )
-    assert validation.required_evidence_field_count == 49
+    assert validation.required_evidence_field_count == 50
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -27,6 +27,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
     assert "docs_architecture_runtime_flow_inventory" in boundary["required_evidence_fields"]
     assert "development_provider_example_inventory" in boundary["required_evidence_fields"]
     assert "development_workflow_inventory" in boundary["required_evidence_fields"]
+    assert "configuration_guide_inventory" in boundary["required_evidence_fields"]
     assert "backend_cli_provider_guardrail_inventory" in boundary["required_evidence_fields"]
     assert "backend_guide_contract_drift_inventory" in boundary["required_evidence_fields"]
     assert "plugin_guide_contract_drift_inventory" in boundary["required_evidence_fields"]
@@ -114,5 +115,5 @@ def test_render_documentation_truthfulness_boundary_summary_reports_shape():
         "| boundary_status | cross_document_guards_without_semantic_claim_proof |"
         in summary
     )
-    assert "| required_evidence_field_count | 49 |" in summary
+    assert "| required_evidence_field_count | 50 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

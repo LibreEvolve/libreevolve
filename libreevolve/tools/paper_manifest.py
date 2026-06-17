@@ -199,6 +199,10 @@ from libreevolve.problems.benchmarks.development_workflow_boundary import (
     development_workflow_boundary_record,
     validate_development_workflow_boundary,
 )
+from libreevolve.problems.benchmarks.configuration_guide_boundary import (
+    configuration_guide_boundary_record,
+    validate_configuration_guide_boundary,
+)
 from libreevolve.problems.benchmarks.backend_cli_provider_guardrail_boundary import (
     backend_cli_provider_guardrail_boundary_record,
     validate_backend_cli_provider_guardrail_boundary,
@@ -1041,6 +1045,7 @@ DOCS_STATUS_LEDGER_BOUNDARY_FILE = "papers/docs_status_ledger_boundary.json"
 DOCS_ARCHITECTURE_RUNTIME_FLOW_BOUNDARY_FILE = "papers/docs_architecture_runtime_flow_boundary.json"
 DEVELOPMENT_PROVIDER_EXAMPLE_BOUNDARY_FILE = "papers/development_provider_example_boundary.json"
 DEVELOPMENT_WORKFLOW_BOUNDARY_FILE = "papers/development_workflow_boundary.json"
+CONFIGURATION_GUIDE_BOUNDARY_FILE = "papers/configuration_guide_boundary.json"
 BACKEND_CLI_PROVIDER_GUARDRAIL_BOUNDARY_FILE = "papers/backend_cli_provider_guardrail_boundary.json"
 BACKEND_GUIDE_CONTRACT_DRIFT_BOUNDARY_FILE = "papers/backend_guide_contract_drift_boundary.json"
 PLUGIN_GUIDE_CONTRACT_DRIFT_BOUNDARY_FILE = "papers/plugin_guide_contract_drift_boundary.json"
@@ -1774,6 +1779,7 @@ def validate_paper_manifest(
     issues.extend(_validate_docs_architecture_runtime_flow_boundary(root_path))
     issues.extend(_validate_development_provider_example_boundary(root_path))
     issues.extend(_validate_development_workflow_boundary(root_path))
+    issues.extend(_validate_configuration_guide_boundary(root_path))
     issues.extend(_validate_backend_cli_provider_guardrail_boundary(root_path))
     issues.extend(_validate_backend_guide_contract_drift_boundary(root_path))
     issues.extend(_validate_plugin_guide_contract_drift_boundary(root_path))
@@ -4507,6 +4513,38 @@ def _validate_development_workflow_boundary(root_path: Path) -> list[PaperManife
             f"development_workflow_boundary_{issue.code}",
             issue.message,
             "development_workflow",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_configuration_guide_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / CONFIGURATION_GUIDE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "configuration_guide_boundary_manifest_missing",
+                    (
+                        f"{CONFIGURATION_GUIDE_BOUNDARY_FILE} must emit "
+                        "configuration-guide metadata"
+                    ),
+                    "configuration_guide",
+                )
+            ]
+        return []
+    report = validate_configuration_guide_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"configuration_guide_boundary_{issue.code}",
+            issue.message,
+            "configuration_guide",
         )
         for issue in report.issues
     ]

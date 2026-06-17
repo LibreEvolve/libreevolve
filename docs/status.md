@@ -1328,6 +1328,7 @@ Important limits:
   `papers/docs_architecture_runtime_flow_boundary.json`,
   `papers/development_provider_example_boundary.json`,
   `papers/development_workflow_boundary.json`,
+  `papers/configuration_guide_boundary.json`,
   `papers/backend_cli_provider_guardrail_boundary.json`,
   `papers/backend_guide_contract_drift_boundary.json`,
   `papers/plugin_guide_contract_drift_boundary.json`,
@@ -1395,6 +1396,17 @@ Important limits:
   dependency-version semantic parity, CI path-filter semantic proof,
   fresh-checkout paper-manifest transcripts, release-smoke transcripts,
   repository-convention source mapping, or owner review signoff.
+- Configuration-guide evidence now records `docs/configuration.md` markers for
+  precedence, `config.yaml` provenance, `.env` behavior, validator
+  environment/network policy, representative `Config` fields, CLI override
+  markers, backend/provider capability policy, OpenAI API-mode policy,
+  focused agent-doc tests, status/paper sidecar anchors, and active TODO
+  ownership. It also records the current guide gap that the CLI section omits
+  the provider-attempt, token, cost, and seconds LLM budget flags. This is not
+  a complete field/default map, complete CLI option-to-config map, YAML
+  validation semantic map, manifest provenance field map, restore capability
+  semantic map, reconciliation of the known `runtime.llm_accounting` wording
+  gap, CI configuration-doc drift gate, or owner review signoff.
 - Backend CLI-provider guardrail evidence now records the `docs/backends.md`
   provider-lane taxonomy, built-in SDK adapter wording, custom import-path
   backend wording, subprocess/CLI-authenticated provider guardrail wording,

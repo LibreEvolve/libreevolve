@@ -3041,6 +3041,126 @@ def test_validate_paper_manifest_requires_development_workflow_boundary_at_repo_
     assert "development_workflow_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_configuration_guide_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    marker_files = {
+        "docs/configuration.md": (
+            "Configuration is assembled from three sources\n"
+            "Config` defaults in [`libreevolve/core/config.py`]\n"
+            "optional problem-local `config.yaml`\n"
+            "CLI overrides from [`libreevolve/cli.py`]\n"
+            "validated once after CLI overrides are\napplied\n"
+            "`manifest.provenance.config`\n"
+            "`.env` is loaded by the `run` command during run setup with `override=True`\n"
+            "`manifest.provenance.dotenv`\n"
+            "`validator_env_allowlist`\n"
+            "`validator_network_policy` (`host`)\n"
+            "`max_llm_provider_attempts` (`null`)\n"
+            "`llm_role_provider_attempt_limits` (`{}`)\n"
+            "`prompt_max_estimated_tokens` (`None`)\n"
+            "`runtime.llm_accounting` with policy\n`audit_summary_not_budget_enforced`\n"
+            "## CLI overrides\n"
+            "## Backend spec format\n"
+            "`policies.provider_capability_lookup`\n"
+            "`policies.openai_api_mode.records[]`\n"
+            "## Environment variables\n"
+            "## Known caveats\n"
+            "--max-generations --max-evaluations --max-evaluator-seconds --max-runtime-seconds\n"
+            "--max-llm-calls --backends --mutation-mode --reasoning-effort\n"
+            "--restore-budget-from-manifest --overwrite\n"
+        ),
+        "libreevolve/core/config.py": (
+            "class Config:\n"
+            "max_generations:\n"
+            "validator_env_allowlist: list[str]\n"
+            'validator_network_policy: str = "host"\n'
+            "max_llm_provider_attempts: int | None = None\n"
+            "max_llm_seconds:\n"
+            "llm_role_provider_attempt_limits: dict[str, int]\n"
+            "prompt_max_estimated_tokens: int | None = None\n"
+            "backends:\n"
+            "seed:\n"
+        ),
+        "libreevolve/cli.py": (
+            '@click.option("--max-generations"\n'
+            '@click.option("--max-llm-provider-attempts"\n'
+            '@click.option("--max-llm-seconds"\n'
+            '@click.option("--backends"\n'
+            '"--restore-budget-from-manifest"\n'
+            '@click.option("--overwrite"\n'
+            "load_dotenv\n"
+            "_build_config\n"
+        ),
+        "tests/test_agents_docs.py": (
+            "test_configuration_docs_track_sampling_strategy_fields\n"
+            "test_configuration_docs_track_archive_event_cleanup_stream\n"
+        ),
+        "docs/status.md": "Configuration validation is local effective-config validation\n",
+        "papers/README.md": (
+            "papers/config_validation_boundary.json\n"
+            "capability lookup\n"
+        ),
+        "docs/todo/readme.md": "Add configuration-guide field and override drift evidence.\n",
+    }
+    for relative_path, content in marker_files.items():
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+    sidecar = tmp_path / paper_manifest.CONFIGURATION_GUIDE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.configuration_guide_boundary_record(tmp_path),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_configuration_guide_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.configuration_guide_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "configuration_guide_semantic_drift_gate_ready"
+    record["missing_evidence"]["owner_review_signoff"] = "recorded"
+    sidecar = tmp_path / paper_manifest.CONFIGURATION_GUIDE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "configuration_guide_boundary_claim_ready_overclaim" in codes
+    assert "configuration_guide_boundary_invalid_boundary_status" in codes
+    assert (
+        "configuration_guide_boundary_invalid_missing_evidence_owner_review_signoff"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_configuration_guide_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "configuration_guide_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_documentation_claim_inventory(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

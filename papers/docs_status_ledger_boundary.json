@@ -5,17 +5,17 @@
   "status_ledger_path": "docs/status.md",
   "status_ledger_heading_status": "heading_present",
   "status_ledger_inventory_status": "status_ledger_structural_bullet_inventory_without_semantic_verifier",
-  "status_ledger_bullet_count": 247,
+  "status_ledger_bullet_count": 248,
   "status_ledger_section_counts": {
     "implemented_today": 9,
-    "important_limits": 238
+    "important_limits": 239
   },
   "implemented_today_bullet_count": 9,
-  "important_limits_bullet_count": 238,
+  "important_limits_bullet_count": 239,
   "status_ledger_signal_term_count": 11,
-  "status_ledger_signal_record_count": 596,
-  "status_ledger_local_path_ref_count": 260,
-  "status_ledger_unique_local_path_ref_count": 206,
+  "status_ledger_signal_record_count": 598,
+  "status_ledger_local_path_ref_count": 262,
+  "status_ledger_unique_local_path_ref_count": 208,
   "status_ledger_missing_local_path_refs": [],
   "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
   "route_marker_record_count": 4,

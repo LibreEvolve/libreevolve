@@ -971,7 +971,12 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     and archive-event cleanup stream wording. The active code TODO for an
     exhaustive CLI/configuration contract map covers the underlying
     code/config surface, but not the guide as a standalone documentation
-    claim surface.
+    claim surface. `papers/configuration_guide_boundary.json` now records a
+    page-specific static inventory for precedence, `config.yaml` provenance,
+    `.env` behavior, validator environment/network policy, representative
+    `Config` fields, CLI override markers, backend/provider capability policy,
+    OpenAI API-mode policy, focused agent-doc tests, status/paper sidecar
+    anchors, and this active TODO owner.
     A current drift example is LLM budget/accounting wording:
     `docs/configuration.md` correctly documents live `max_llm_provider_attempts`,
     `max_llm_tokens`, `max_llm_cost_microusd`, per-role provider/token/cost
@@ -981,15 +986,19 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     says the summary is "not for live stop enforcement" without routing readers
     to `runtime.budget` as the authoritative stop-policy record. That can make
     implemented LLM budget stops look like audit-only metadata rather than
-    cooperative runtime limits with a separate accounting summary.
-  - Current gap: there is no page-specific inventory or drift validator that
-    parses `docs/configuration.md`, maps each documented field/default,
-    allowed enum, CLI option, YAML key, manifest/provenance output,
-    validation rule, restore limitation, and provider-boundary statement to
-    `Config`, `cli.py`, source validators, tests, run artifacts, and active
-    code/paper TODO owners. A new `Config` field, changed default, renamed
-    CLI flag, altered validation behavior, or restored-runtime capability can
-    drift without a configuration-guide failure.
+    cooperative runtime limits with a separate accounting summary. The same
+    sidecar also records a more concrete CLI-section drift: the guide's CLI
+    list still omits `--max-llm-provider-attempts`, `--max-llm-tokens`,
+    `--max-llm-cost-microusd`, and `--max-llm-seconds`.
+  - Current gap: the page-specific inventory is a static marker record, not a
+    semantic configuration verifier. It does not parse `docs/configuration.md`
+    into a complete field/default map, complete CLI option-to-config map,
+    YAML-key validation semantic map, manifest/provenance field map, restore-
+    capability semantic map, reconciliation of the known
+    `runtime.llm_accounting` wording gap, CI configuration-doc drift gate, or
+    owner review signoff. A new `Config` field, changed default, renamed CLI
+    flag, altered validation behavior, or restored-runtime capability can
+    still drift without a complete configuration-guide failure.
   - Required result: add a configuration-guide evidence map and validation
     gate that checks documented fields/defaults/options against code and
     tests, links each runtime or AlphaEvolve-facing limitation to sidecars or

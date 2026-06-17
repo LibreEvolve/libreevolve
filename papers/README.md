@@ -2855,8 +2855,8 @@ Implemented:
   README contributor-gate inventory, README license inventory,
   README ignore-policy inventory, README provider-example matrix
   inventory, README CLI-provider guardrail inventory, development-guide
-  provider-example inventory, development-guide workflow inventory, and focused
-  boundary-test evidence. It is not evidence of
+  provider-example inventory, development-guide workflow inventory,
+  configuration-guide inventory, and focused boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
   full proof that every AlphaEvolve-facing claim is current.
@@ -2903,6 +2903,18 @@ Implemented:
   CI path-filter semantic proof, fresh-checkout paper-manifest transcripts,
   release-smoke transcripts, repository-convention source mapping, or owner
   review signoff.
+- `papers/configuration_guide_boundary.json`: configuration-guide sidecar. It
+  records static `docs/configuration.md` markers for precedence,
+  `config.yaml` provenance, `.env` behavior, validator environment/network
+  policy, representative `Config` fields, CLI override markers,
+  backend/provider capability policy, OpenAI API-mode policy, focused
+  agent-doc tests, status/paper sidecar anchors, active TODO ownership, and
+  the current missing CLI-option records for provider-attempt, token, cost,
+  and seconds LLM budget flags. It is not a complete field/default map,
+  complete CLI option-to-config map, YAML validation semantic map, manifest
+  provenance field map, restore capability semantic map, reconciliation of
+  the known `runtime.llm_accounting` wording gap, CI configuration-doc drift
+  gate, or owner review signoff.
 - `papers/backend_cli_provider_guardrail_boundary.json`: backend
   CLI-provider guardrail sidecar. It records the `docs/backends.md`
   provider-lane taxonomy, built-in SDK adapter wording, custom import-path

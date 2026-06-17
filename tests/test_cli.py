@@ -626,6 +626,47 @@ def test_run_can_restore_runtime_rng_snapshot_from_manifest(tmp_path):
     assert mock.call_args.kwargs["runtime_rng_state_snapshot"] == snapshot
 
 
+def test_run_rejects_paper_artifact_lifecycle_drift_before_restore(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "log_dir": (tmp_path / "runs").as_posix(),
+                "seed": 123,
+            }
+        ),
+        encoding="utf-8",
+    )
+    previous_dir = tmp_path / "previous"
+    previous_dir.mkdir()
+    manifest = _write_show_paper_artifact_manifest(previous_dir)
+    manifest["runtime"]["rng"] = _runtime_rng_state(random.Random(123), 123)
+    manifest["runtime"]["history"]["alphaevolve_table1_capability_exhibit_report"][
+        "rendered_artifacts"
+    ][0]["path"] = "paper_artifacts/table1_capability_comparison/unregistered.md"
+    previous_manifest = previous_dir / "manifest.json"
+    previous_manifest.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with patch("libreevolve.cli.evolve") as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--max-generations",
+                "0",
+                "--restore-rng-from-manifest",
+                str(previous_manifest),
+            ],
+        )
+
+    assert r.exit_code != 0
+    assert "Runtime RNG manifest restore failed" in r.output
+    assert "paper artifact lifecycle validation failed" in r.output
+    assert "unknown_paper_artifact_paths" in r.output
+    assert not mock.called
+
+
 def test_run_can_restore_llm_scheduler_snapshot_from_manifest(tmp_path):
     _make_problem(tmp_path)
     (tmp_path / "config.yaml").write_text(

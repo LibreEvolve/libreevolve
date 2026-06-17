@@ -919,6 +919,10 @@ def _mutation_llm_can_run(problem, config) -> bool:
 def _load_cli_runtime_rng_snapshot(path: str | None, *, seed: int) -> dict | None:
     if path is None:
         return None
+    _validate_cli_paper_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime RNG manifest restore failed",
+    )
     try:
         snapshot = load_runtime_rng_state_snapshot(path)
     except RuntimeRngStateError as exc:
@@ -937,6 +941,10 @@ def _load_cli_runtime_rng_snapshot(path: str | None, *, seed: int) -> dict | Non
 def _load_cli_runtime_llm_scheduler_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
+    _validate_cli_paper_artifact_restore_manifest(
+        path,
+        error_prefix="LLM scheduler manifest restore failed",
+    )
     try:
         return load_runtime_llm_scheduler_state_snapshot(path)
     except RuntimeLLMSchedulerStateError as exc:
@@ -949,6 +957,10 @@ def _load_cli_runtime_llm_scheduler_snapshot(path: str | None) -> dict | None:
 def _load_cli_runtime_budget_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
+    _validate_cli_paper_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime budget manifest restore failed",
+    )
     try:
         return load_runtime_budget_state_snapshot(path)
     except RuntimeBudgetStateError as exc:
@@ -993,6 +1005,10 @@ def _validate_cli_runtime_restore_flags(
 
 
 def _load_cli_full_resume_bundle(path: str) -> dict:
+    _validate_cli_paper_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime manifest restore failed",
+    )
     try:
         return load_full_resume_bundle(path)
     except RuntimeFullResumeBundleError as exc:
@@ -1005,6 +1021,10 @@ def _load_cli_full_resume_bundle(path: str) -> dict:
 def _load_cli_runtime_archive_state_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
+    _validate_cli_paper_artifact_restore_manifest(
+        path,
+        error_prefix="Archive cursor manifest restore failed",
+    )
     try:
         return load_runtime_archive_state_snapshot(path)
     except ArchiveStateRestoreError as exc:
@@ -1018,6 +1038,10 @@ def _load_cli_archive_restore_bundle(path: str | None) -> dict | None:
     if path is None:
         return None
     manifest_path = Path(path)
+    _validate_cli_paper_artifact_restore_manifest(
+        manifest_path,
+        error_prefix="Archive manifest restore failed",
+    )
     history_path = manifest_path.parent / "history.jsonl"
     try:
         return load_archive_restore_bundle(manifest_path, history_path)
@@ -1026,6 +1050,53 @@ def _load_cli_archive_restore_bundle(path: str | None) -> dict | None:
         raise click.ClickException(
             f"Archive manifest restore failed: {message}"
         ) from exc
+
+
+def _validate_cli_paper_artifact_restore_manifest(
+    path: str | Path,
+    *,
+    error_prefix: str,
+) -> None:
+    try:
+        manifest = _read_show_manifest(Path(path))
+    except click.ClickException:
+        return
+    if not _manifest_has_paper_artifact_lifecycle_surface(manifest):
+        return
+    validation = validate_paper_artifact_lifecycle_manifest(
+        manifest,
+        run_artifacts_doc_text=_show_run_artifacts_doc_text(),
+    )
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise click.ClickException(
+        f"{error_prefix}: paper artifact lifecycle validation failed: "
+        f"{issue['code']}: {issue['message']}"
+    )
+
+
+def _manifest_has_paper_artifact_lifecycle_surface(manifest: dict) -> bool:
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, dict)
+        or "paper_artifact_subpaths" not in artifact_schema
+    ):
+        return False
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, dict):
+        return False
+    history = runtime.get("history")
+    if not isinstance(history, dict):
+        return False
+    return any(
+        key in history
+        for key in (
+            "marker_spelling_provenance_report",
+            "alphaevolve_process_exhibit_report",
+            "alphaevolve_table1_capability_exhibit_report",
+        )
+    )
 
 
 def _has_archive_metadata(record: dict) -> bool:

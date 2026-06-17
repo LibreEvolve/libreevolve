@@ -945,6 +945,10 @@ are:
 manifest-backed runs that include `artifact_schema.paper_artifact_subpaths`;
 drifted runtime report paths or drifted guide references fail inspection
 before the selected best program/workspace is printed.
+CLI `--restore-*-from-manifest` readers also run that lifecycle validation
+when the restore source manifest contains the paper-artifact report surface, so
+drifted paper/source evidence is rejected before restored runtime state is
+passed into a new run.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.

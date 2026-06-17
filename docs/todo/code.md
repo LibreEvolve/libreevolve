@@ -8407,9 +8407,13 @@ sidecars, tests, and active TODOs.
     `libreevolve show` now runs the lifecycle validator for manifest-backed
     runs that include `artifact_schema.paper_artifact_subpaths`, failing
     inspection on drifted runtime report paths or drifted docs references.
-    Generated paper/source evidence still lacks restore-reader coverage that
-    proves the documented `paper_artifacts/...` entries are exercised end to
-    end across replay/restore paths.
+    CLI `--restore-*-from-manifest` readers also run that validator before
+    loading restored runtime state when the source manifest contains the
+    paper-artifact report surface, with focused tests proving drifted
+    `paper_artifacts/...` paths stop restore before `evolve()` runs. Generated
+    paper/source evidence still lacks full replay semantics that can
+    reconstruct or carry the documented `paper_artifacts/...` entries end to
+    end across a restored run, beyond rejecting drifted source manifests.
   - Required result: validate that manifest/documented
     `paper_artifacts/...` paths cannot exist outside collision, cleanup,
     run-artifact summary, restore/show, docs, and schema expectations; and keep

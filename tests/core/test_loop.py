@@ -2574,6 +2574,24 @@ def test_load_full_resume_bundle_composes_checked_runtime_restore_surfaces(tmp_p
     assert bundle["bundle_validation"]["resumed_trace_proof_ready"] is False
     assert bundle["resumed_trace_proof_ready"] is False
     assert bundle["bundle_validation"]["controller_event_count"] == 6
+    certification = bundle["restore_certification"]
+    assert certification["schema"] == "libreevolve.full_resume_restore_certification.v1"
+    assert certification["status"] == "compatible_surfaces_certified"
+    assert certification["scope"] == "local_manifest_restore_inputs_only"
+    assert certification["run_artifact_bundle_report"] == {
+        "status": "validated",
+        "validation_ok": True,
+        "promotion_gate_status": "passed",
+    }
+    assert certification["accepted_quarantine_boundary"] == {
+        "quarantine_rows_replayed_as_state": False,
+        "quarantine_rows_are_diagnostics": True,
+    }
+    assert certification["compatible_resume_ready"] is True
+    assert certification["full_replay_ready"] is False
+    assert certification["provider_output_replay_ready"] is False
+    assert certification["pending_work_resume_ready"] is False
+    assert certification["resumed_trace_proof_ready"] is False
     assert kwargs["runtime_rng_state_snapshot"]["seed"] == 99
     assert kwargs["runtime_llm_scheduler_state_snapshot"]["state"]["total"] == 1
     assert kwargs["runtime_budget_state_snapshot"]["consumed"]["generations_completed"] == 1
@@ -2647,6 +2665,10 @@ def test_full_resume_bundle_validation_rejects_replay_overclaims(tmp_path):
     edited["unsupported_surfaces"] = ["controller_pending_work"]
     edited["controller_budget_replay"]["event_count"] = 999
     edited["resumed_trace_proof_ready"] = True
+    edited["restore_certification"]["provider_output_replay_ready"] = True
+    edited["restore_certification"]["accepted_quarantine_boundary"][
+        "quarantine_rows_replayed_as_state"
+    ] = True
 
     validation = validate_full_resume_bundle(edited)
     codes = {issue["code"] for issue in validation["issues"]}
@@ -2662,6 +2684,8 @@ def test_full_resume_bundle_validation_rejects_replay_overclaims(tmp_path):
     assert "resumed_trace_proof_overclaim" in codes
     assert "unsupported_surfaces_mismatch" in codes
     assert "controller_budget_replay_event_count_mismatch" in codes
+    assert "restore_certification_provider_output_replay_ready_overclaim" in codes
+    assert "restore_certification_quarantine_replay_overclaim" in codes
 
 
 def test_load_full_resume_bundle_rejects_budget_event_manifest_mismatch(tmp_path):

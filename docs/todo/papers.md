@@ -1709,8 +1709,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     runtime RNG, LLM scheduler, archive restore, runtime budget,
     controller-budget replay, lineage boundary, and unsupported-surface list
     while keeping full replay, provider-output replay, pending-work resume, and
-    resumed-trace proof marked unavailable, with validation rejecting forged
-    resumed-trace proof readiness. The paper manifest now requires
+    resumed-trace proof marked unavailable. It also emits
+    `libreevolve.full_resume_restore_certification.v1`, certifying compatible
+    local manifest restore inputs and the accepted/quarantine boundary without
+    claiming provider-output replay, pending-work resume, or end-to-end resumed
+    trace proof, with validation rejecting forged certification overclaims.
+    The paper manifest now requires
     `papers/lineage_replay_boundary.json` to preserve the deterministic
     lineage-id policy, direct UUID exclusions, and provider-output non-replay
     boundary. But

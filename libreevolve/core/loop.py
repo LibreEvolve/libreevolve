@@ -3556,6 +3556,7 @@ def load_full_resume_bundle(
             "replay_entrypoint": "apply_controller_budget_event",
             "runtime_seconds_policy": "manifest_snapshot_authoritative",
         },
+        "restore_certification": _full_resume_restore_certification(manifest_obj),
         "resumed_trace_proof_ready": False,
         "unsupported_surfaces": list(_FULL_RESUME_UNSUPPORTED_SURFACES),
     }
@@ -3624,6 +3625,7 @@ def validate_full_resume_bundle(bundle: object) -> dict:
     _validate_full_resume_bundle_kwargs(kwargs, issues)
     _validate_full_resume_bundle_boundaries(bundle, kwargs, issues)
     controller_event_count = _validate_full_resume_controller_state(bundle, issues)
+    _validate_full_resume_restore_certification(bundle, issues)
     if bundle.get("resumed_trace_proof_ready") is not False:
         issues.append(
             {
@@ -3655,6 +3657,199 @@ def validate_full_resume_bundle(bundle: object) -> dict:
             "end_to_end_resumed_trace_proof_not_available",
         ],
     }
+
+
+def _full_resume_restore_certification(manifest: Mapping[str, object]) -> dict:
+    runtime = manifest.get("runtime")
+    report = (
+        runtime.get("run_artifact_bundle_report")
+        if isinstance(runtime, Mapping)
+        else None
+    )
+    report_validation = (
+        validate_run_artifact_bundle_report(report)
+        if report is not None
+        else None
+    )
+    promotion_gate = (
+        report.get("promotion_gate")
+        if isinstance(report, Mapping)
+        and isinstance(report.get("promotion_gate"), Mapping)
+        else None
+    )
+    report_validation_ok = (
+        report_validation.get("ok")
+        if isinstance(report_validation, Mapping)
+        else None
+    )
+    report_status = "validated" if report_validation_ok is True else "absent"
+    if report_validation_ok is False:
+        report_status = "invalid"
+    return {
+        "schema": "libreevolve.full_resume_restore_certification.v1",
+        "status": "compatible_surfaces_certified",
+        "scope": "local_manifest_restore_inputs_only",
+        "certified_surfaces": [
+            "runtime_rng_state_snapshot",
+            "runtime_llm_scheduler_state_snapshot",
+            "runtime_archive_state_snapshot",
+            "runtime_archive_programs_by_id",
+            "runtime_budget_state_snapshot",
+            "controller_budget_event_replay",
+            "lineage_provider_boundary",
+            "run_artifact_bundle_report",
+        ],
+        "run_artifact_bundle_report": {
+            "status": report_status,
+            "validation_ok": report_validation_ok,
+            "promotion_gate_status": (
+                promotion_gate.get("status")
+                if isinstance(promotion_gate, Mapping)
+                else None
+            ),
+        },
+        "accepted_quarantine_boundary": {
+            "quarantine_rows_replayed_as_state": False,
+            "quarantine_rows_are_diagnostics": True,
+        },
+        "compatible_resume_ready": report_validation_ok is not False,
+        "full_replay_ready": False,
+        "provider_output_replay_ready": False,
+        "pending_work_resume_ready": False,
+        "resumed_trace_proof_ready": False,
+        "remaining_gap": [
+            "provider_output_replay_or_exclusion_in_resumed_trace",
+            "pending_controller_work_resume",
+            "migration_event_replay_engine",
+            "end_to_end_resumed_trace_proof",
+        ],
+    }
+
+
+def _validate_full_resume_restore_certification(
+    bundle: Mapping[str, object],
+    issues: list[dict[str, str]],
+) -> None:
+    certification = bundle.get("restore_certification")
+    if not isinstance(certification, Mapping):
+        issues.append(
+            {
+                "code": "missing_restore_certification",
+                "message": "full resume bundle must include restore_certification",
+            }
+        )
+        return
+    if certification.get("schema") != "libreevolve.full_resume_restore_certification.v1":
+        issues.append(
+            {
+                "code": "invalid_restore_certification_schema",
+                "message": "restore certification schema changed",
+            }
+        )
+    if certification.get("status") != "compatible_surfaces_certified":
+        issues.append(
+            {
+                "code": "invalid_restore_certification_status",
+                "message": "restore certification must remain scoped to compatible surfaces",
+            }
+        )
+    if certification.get("scope") != "local_manifest_restore_inputs_only":
+        issues.append(
+            {
+                "code": "invalid_restore_certification_scope",
+                "message": "restore certification scope changed",
+            }
+        )
+    expected_surfaces = [
+        "runtime_rng_state_snapshot",
+        "runtime_llm_scheduler_state_snapshot",
+        "runtime_archive_state_snapshot",
+        "runtime_archive_programs_by_id",
+        "runtime_budget_state_snapshot",
+        "controller_budget_event_replay",
+        "lineage_provider_boundary",
+        "run_artifact_bundle_report",
+    ]
+    if certification.get("certified_surfaces") != expected_surfaces:
+        issues.append(
+            {
+                "code": "restore_certification_surfaces_mismatch",
+                "message": "restore certification surface list changed",
+            }
+        )
+    report = certification.get("run_artifact_bundle_report")
+    if not isinstance(report, Mapping):
+        issues.append(
+            {
+                "code": "invalid_restore_certification_bundle_report",
+                "message": "restore certification must summarize bundle report validation",
+            }
+        )
+    else:
+        if report.get("status") not in {"validated", "absent"}:
+            issues.append(
+                {
+                    "code": "invalid_restore_certification_bundle_report_status",
+                    "message": "bundle report status must be validated or absent",
+                }
+            )
+        if report.get("status") == "validated" and report.get("validation_ok") is not True:
+            issues.append(
+                {
+                    "code": "restore_certification_bundle_report_validation_mismatch",
+                    "message": "validated bundle report must have validation_ok true",
+                }
+            )
+        if report.get("status") == "absent" and report.get("validation_ok") is not None:
+            issues.append(
+                {
+                    "code": "restore_certification_absent_report_validation_mismatch",
+                    "message": "absent bundle report must have null validation status",
+                }
+            )
+    boundary = certification.get("accepted_quarantine_boundary")
+    if not isinstance(boundary, Mapping):
+        issues.append(
+            {
+                "code": "invalid_restore_certification_quarantine_boundary",
+                "message": "restore certification must record quarantine boundary",
+            }
+        )
+    else:
+        if boundary.get("quarantine_rows_replayed_as_state") is not False:
+            issues.append(
+                {
+                    "code": "restore_certification_quarantine_replay_overclaim",
+                    "message": "quarantine rows must not be certified as replayed state",
+                }
+            )
+        if boundary.get("quarantine_rows_are_diagnostics") is not True:
+            issues.append(
+                {
+                    "code": "restore_certification_quarantine_diagnostic_missing",
+                    "message": "quarantine diagnostic boundary must be explicit",
+                }
+            )
+    for field in (
+        "full_replay_ready",
+        "provider_output_replay_ready",
+        "pending_work_resume_ready",
+        "resumed_trace_proof_ready",
+    ):
+        if certification.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"restore_certification_{field}_overclaim",
+                    "message": f"restore certification {field} must remain false",
+                }
+            )
+    if certification.get("compatible_resume_ready") is not True:
+        issues.append(
+            {
+                "code": "restore_certification_compatible_resume_not_ready",
+                "message": "restore certification should confirm compatible surfaces",
+            }
+        )
 
 
 def _validate_full_resume_bundle_kwargs(

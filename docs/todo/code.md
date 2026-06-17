@@ -5783,15 +5783,21 @@ sidecars, tests, and active TODOs.
     controller-budget replay, lineage boundary, and unsupported-surface list
     while preserving `full_replay_ready: false`, provider-output non-replay,
     no pending-work resume claim, and `resumed_trace_proof_ready: false`.
-    Validation rejects forged resumed-trace proof claims. Archive restore
+    It now also includes `libreevolve.full_resume_restore_certification.v1`,
+    certifying only compatible local manifest restore inputs plus the
+    accepted/quarantine boundary while keeping provider-output replay,
+    pending-work resume, and end-to-end resumed-trace proof false. Validation
+    rejects forged resumed-trace proof and restore-certification overclaims.
+    Archive restore
     explicitly covers current cell/elite placements without replaying migration
     events as an ordered restore engine. The paper manifest now requires
     `papers/controller_pending_work_resume_boundary.json`, which preserves the
     terminal controller-state scope and rejects controller queue/pending-work
-    resume overclaims. Remaining gaps are no provider-output replay, no
-    controller queue or pending-evaluation state, no migration-event replay
-    engine, and no end-to-end resumed trace proving parent/inspiration/
-    prompt/archive/controller continuity.
+    resume overclaims. Remaining gaps are no provider-output replay or
+    independently certified exclusion in a resumed trace, no controller queue
+    or pending-evaluation state, no migration-event replay engine, and no
+    end-to-end resumed trace proving parent/inspiration/prompt/archive/
+    controller continuity.
   - Required result: add one direct and CLI resume entrypoint that validates
     and composes population/database state, backend bandit state, prompt
     database state, RNG state, provider-output boundaries, migration replay or

@@ -1259,8 +1259,13 @@ The returned bundle also includes `bundle_validation` with schema
 runtime RNG, LLM scheduler, archive restore, runtime budget, controller-budget
 replay, lineage boundary, and unsupported-surface list while keeping
 `full_replay_ready`, `provider_output_replay_ready`, and
-`pending_work_resume_ready` false. The paper-facing version of this terminal
-controller-state versus pending-work resume boundary is preserved in
+`pending_work_resume_ready` false. The bundle also carries
+`restore_certification` with schema
+`libreevolve.full_resume_restore_certification.v1`, certifying only the
+compatible local manifest restore inputs plus the accepted/quarantine boundary.
+It keeps provider-output replay, pending-work resume, and end-to-end resumed
+trace proof false. The paper-facing version of this terminal controller-state
+versus pending-work resume boundary is preserved in
 `papers/controller_pending_work_resume_boundary.json`.
 `llm_budget_resume_artifact_inventory()` emits
 `libreevolve.llm_budget_resume_artifact_inventory.v1` to verify optional

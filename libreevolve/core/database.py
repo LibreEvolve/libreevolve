@@ -20,6 +20,7 @@ from libreevolve.core.artifact_schema import (
     validate_non_jsonl_artifact_policy_manifest,
     validate_quarantine_artifact_policy_manifest,
     validate_run_artifact_bundle_report,
+    validate_runtime_restore_certification_record,
     versioned_record,
 )
 from libreevolve.core.budget import (
@@ -1844,6 +1845,7 @@ def load_runtime_archive_state_snapshot(manifest_path: str | Path) -> dict:
     _validate_archive_non_jsonl_artifact_policy(manifest)
     _validate_archive_quarantine_artifact_policy(manifest, manifest_path)
     _validate_archive_run_artifact_bundle_report(manifest)
+    _validate_archive_restore_certification(manifest)
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise ArchiveStateRestoreError("manifest runtime must be an object")
@@ -1916,6 +1918,21 @@ def _validate_archive_run_artifact_bundle_report(manifest: object) -> None:
         "run artifact bundle report validation failed: "
         f"{issue['code']}: {issue['message']}"
     )
+
+
+def _validate_archive_restore_certification(manifest: object) -> None:
+    if not isinstance(manifest, Mapping):
+        return
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, Mapping):
+        return
+    certification = runtime.get("restore_certification")
+    if certification is None:
+        return
+    try:
+        validate_runtime_restore_certification_record(certification)
+    except ValueError as exc:
+        raise ArchiveStateRestoreError(str(exc)) from exc
 
 
 def validate_archive_state_snapshot(snapshot: object) -> dict:

@@ -31,6 +31,7 @@ from libreevolve.core.artifact_schema import (
     validate_quarantine_artifact_policy_manifest,
     validate_paper_artifact_lifecycle_manifest,
     validate_run_artifact_bundle_report,
+    validate_runtime_restore_certification_record,
     versioned_record,
 )
 from libreevolve.core.best_artifacts import (
@@ -3428,6 +3429,10 @@ def load_runtime_llm_scheduler_state_snapshot(manifest_path: str | Path) -> dict
         manifest,
         error_type=RuntimeLLMSchedulerStateError,
     )
+    _validate_runtime_restore_certification_manifest(
+        manifest,
+        error_type=RuntimeLLMSchedulerStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLLMSchedulerStateError("manifest runtime must be an object")
@@ -3453,6 +3458,10 @@ def load_runtime_budget_state_snapshot(manifest_path: str | Path) -> dict:
         error_type=RuntimeBudgetStateError,
     )
     _validate_runtime_run_artifact_bundle_report(
+        manifest,
+        error_type=RuntimeBudgetStateError,
+    )
+    _validate_runtime_restore_certification_manifest(
         manifest,
         error_type=RuntimeBudgetStateError,
     )
@@ -3518,6 +3527,10 @@ def load_full_resume_bundle(
             error_type=RuntimeFullResumeBundleError,
         )
         _validate_runtime_run_artifact_bundle_report(
+            manifest_obj,
+            error_type=RuntimeFullResumeBundleError,
+        )
+        _validate_runtime_restore_certification_manifest(
             manifest_obj,
             error_type=RuntimeFullResumeBundleError,
         )
@@ -3871,15 +3884,7 @@ def _validate_runtime_restore_certification_record(
 ) -> dict | None:
     if certification is None:
         return None
-    issues: list[dict[str, str]] = []
-    _validate_full_resume_restore_certification(
-        {"restore_certification": certification},
-        issues,
-    )
-    if issues:
-        codes = ",".join(issue["code"] for issue in issues[:5])
-        raise ValueError(f"runtime restore certification validation failed: {codes}")
-    return copy.deepcopy(dict(certification))
+    return validate_runtime_restore_certification_record(certification)
 
 
 def _validate_full_resume_bundle_kwargs(
@@ -5094,6 +5099,10 @@ def load_runtime_lineage_replay_policy_snapshot(manifest_path: str | Path) -> di
         manifest,
         error_type=RuntimeLineageReplayPolicyError,
     )
+    _validate_runtime_restore_certification_manifest(
+        manifest,
+        error_type=RuntimeLineageReplayPolicyError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLineageReplayPolicyError("manifest runtime must be an object")
@@ -5187,6 +5196,10 @@ def load_runtime_rng_state_snapshot(manifest_path: str | Path) -> dict:
         manifest,
         error_type=RuntimeRngStateError,
     )
+    _validate_runtime_restore_certification_manifest(
+        manifest,
+        error_type=RuntimeRngStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeRngStateError("manifest runtime must be an object")
@@ -5266,6 +5279,25 @@ def _validate_runtime_run_artifact_bundle_report(
         "run artifact bundle report validation failed: "
         f"{issue['code']}: {issue['message']}"
     )
+
+
+def _validate_runtime_restore_certification_manifest(
+    manifest: object,
+    *,
+    error_type: type[ValueError],
+) -> None:
+    if not isinstance(manifest, Mapping):
+        return
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, Mapping):
+        return
+    certification = runtime.get("restore_certification")
+    if certification is None:
+        return
+    try:
+        validate_runtime_restore_certification_record(certification)
+    except ValueError as exc:
+        raise error_type(str(exc)) from exc
 
 
 def validate_runtime_rng_state_snapshot(snapshot: object) -> dict:

@@ -1714,8 +1714,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     local manifest restore inputs and the accepted/quarantine boundary without
     claiming provider-output replay, pending-work resume, or end-to-end resumed
     trace proof; resumed runs now persist that certification under
-    `runtime.restore_certification`, with validation rejecting forged
-    certification overclaims.
+    `runtime.restore_certification`, with `libreevolve show`, CLI restore
+    preflight, direct runtime loaders, and direct archive restore loaders
+    validating the persisted record and rejecting forged certification
+    overclaims before trusting the manifest.
     The paper manifest now requires
     `papers/lineage_replay_boundary.json` to preserve the deterministic
     lineage-id policy, direct UUID exclusions, and provider-output non-replay

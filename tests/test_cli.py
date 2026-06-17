@@ -272,6 +272,44 @@ def _run_artifact_bundle_report_overclaim() -> dict:
     }
 
 
+def _restore_certification_overclaim() -> dict:
+    return {
+        "schema": "libreevolve.full_resume_restore_certification.v1",
+        "status": "compatible_surfaces_certified",
+        "scope": "local_manifest_restore_inputs_only",
+        "certified_surfaces": [
+            "runtime_rng_state_snapshot",
+            "runtime_llm_scheduler_state_snapshot",
+            "runtime_archive_state_snapshot",
+            "runtime_archive_programs_by_id",
+            "runtime_budget_state_snapshot",
+            "controller_budget_event_replay",
+            "lineage_provider_boundary",
+            "run_artifact_bundle_report",
+        ],
+        "run_artifact_bundle_report": {
+            "status": "absent",
+            "validation_ok": None,
+            "promotion_gate_status": None,
+        },
+        "accepted_quarantine_boundary": {
+            "quarantine_rows_replayed_as_state": False,
+            "quarantine_rows_are_diagnostics": True,
+        },
+        "compatible_resume_ready": True,
+        "full_replay_ready": False,
+        "provider_output_replay_ready": True,
+        "pending_work_resume_ready": False,
+        "resumed_trace_proof_ready": False,
+        "remaining_gap": [
+            "provider_output_replay_or_exclusion_in_resumed_trace",
+            "pending_controller_work_resume",
+            "migration_event_replay_engine",
+            "end_to_end_resumed_trace_proof",
+        ],
+    }
+
+
 def test_help(): assert "run" in CliRunner().invoke(cli, ["--help"]).output
 def test_run_help(): assert "PROBLEM_DIR" in CliRunner().invoke(cli, ["run", "--help"]).output
 def test_show_help(): assert CliRunner().invoke(cli, ["show", "--help"]).exit_code == 0
@@ -342,6 +380,23 @@ def test_show_rejects_run_artifact_bundle_report_overclaim(tmp_path):
     assert r.exit_code != 0
     assert "run artifact bundle report validation failed" in r.output
     assert "provider_output_replay_overclaim" in r.output
+
+
+def test_show_rejects_restore_certification_overclaim(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    _write_show_history(run_dir, [_show_current_row("p1", 1.0, 0, "x=1")])
+    _write_show_manifest(run_dir)
+    manifest_path = run_dir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["runtime"]["restore_certification"] = _restore_certification_overclaim()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    r = CliRunner().invoke(cli, ["show", str(run_dir)])
+
+    assert r.exit_code != 0
+    assert "Restore certification validation failed" in r.output
+    assert "restore_certification_provider_output_replay_ready_overclaim" in r.output
 
 
 def test_module_help_uses_documented_windows_launcher():
@@ -942,6 +997,70 @@ def test_run_rejects_run_artifact_bundle_report_overclaim_before_restore(
     assert error_prefix in r.output
     assert "run artifact bundle report validation failed" in r.output
     assert "provider_output_replay_overclaim" in r.output
+    assert not mock.called
+
+
+@pytest.mark.parametrize(
+    ("restore_flag", "error_prefix"),
+    [
+        ("--restore-rng-from-manifest", "Runtime RNG manifest restore failed"),
+        (
+            "--restore-llm-scheduler-from-manifest",
+            "LLM scheduler manifest restore failed",
+        ),
+        ("--restore-budget-from-manifest", "Runtime budget manifest restore failed"),
+        (
+            "--restore-archive-cursor-from-manifest",
+            "Archive cursor manifest restore failed",
+        ),
+        ("--restore-archive-from-manifest", "Archive manifest restore failed"),
+        ("--restore-runtime-from-manifest", "Runtime manifest restore failed"),
+    ],
+)
+def test_run_rejects_restore_certification_overclaim_before_restore(
+    tmp_path,
+    restore_flag,
+    error_prefix,
+):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "log_dir": (tmp_path / "runs").as_posix(),
+                "seed": 123,
+            }
+        ),
+        encoding="utf-8",
+    )
+    previous_manifest = tmp_path / "previous-manifest.json"
+    previous_manifest.write_text(
+        json.dumps(
+            {
+                "runtime": {
+                    "restore_certification": _restore_certification_overclaim()
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with patch("libreevolve.cli.evolve") as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--max-generations",
+                "0",
+                restore_flag,
+                str(previous_manifest),
+            ],
+        )
+
+    assert r.exit_code != 0
+    assert error_prefix in r.output
+    assert "runtime restore certification validation failed" in r.output
+    assert "restore_certification_provider_output_replay_ready_overclaim" in r.output
     assert not mock.called
 
 

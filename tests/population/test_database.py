@@ -6321,6 +6321,44 @@ def _run_artifact_bundle_report_overclaim() -> dict:
     }
 
 
+def _restore_certification_overclaim() -> dict:
+    return {
+        "schema": "libreevolve.full_resume_restore_certification.v1",
+        "status": "compatible_surfaces_certified",
+        "scope": "local_manifest_restore_inputs_only",
+        "certified_surfaces": [
+            "runtime_rng_state_snapshot",
+            "runtime_llm_scheduler_state_snapshot",
+            "runtime_archive_state_snapshot",
+            "runtime_archive_programs_by_id",
+            "runtime_budget_state_snapshot",
+            "controller_budget_event_replay",
+            "lineage_provider_boundary",
+            "run_artifact_bundle_report",
+        ],
+        "run_artifact_bundle_report": {
+            "status": "absent",
+            "validation_ok": None,
+            "promotion_gate_status": None,
+        },
+        "accepted_quarantine_boundary": {
+            "quarantine_rows_replayed_as_state": False,
+            "quarantine_rows_are_diagnostics": True,
+        },
+        "compatible_resume_ready": True,
+        "full_replay_ready": False,
+        "provider_output_replay_ready": True,
+        "pending_work_resume_ready": False,
+        "resumed_trace_proof_ready": False,
+        "remaining_gap": [
+            "provider_output_replay_or_exclusion_in_resumed_trace",
+            "pending_controller_work_resume",
+            "migration_event_replay_engine",
+            "end_to_end_resumed_trace_proof",
+        ],
+    }
+
+
 def test_direct_archive_restore_loaders_reject_non_jsonl_policy_drift(tmp_path):
     manifest = _write_non_jsonl_policy_drift_manifest(tmp_path / "manifest.json")
     history = tmp_path / "history.jsonl"
@@ -6379,6 +6417,34 @@ def test_direct_archive_restore_loaders_reject_run_artifact_bundle_report_overcl
     with pytest.raises(
         ArchiveStateRestoreError,
         match="run artifact bundle report validation failed",
+    ):
+        load_archive_restore_bundle(manifest, history)
+
+
+def test_direct_archive_restore_loaders_reject_restore_certification_overclaim(
+    tmp_path,
+):
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(
+        json.dumps(
+            {
+                "runtime": {
+                    "restore_certification": _restore_certification_overclaim()
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    history = tmp_path / "history.jsonl"
+
+    with pytest.raises(
+        ArchiveStateRestoreError,
+        match="runtime restore certification validation failed",
+    ):
+        load_runtime_archive_state_snapshot(manifest)
+    with pytest.raises(
+        ArchiveStateRestoreError,
+        match="runtime restore certification validation failed",
     ):
         load_archive_restore_bundle(manifest, history)
 

@@ -1266,7 +1266,10 @@ compatible local manifest restore inputs plus the accepted/quarantine boundary.
 It keeps provider-output replay, pending-work resume, and end-to-end resumed
 trace proof false. When `evolve()` is called with that certification, completed
 or aborted resumed-run manifests persist it under `runtime.restore_certification`
-so the new run keeps the restore boundary that produced its initial state. The
+so the new run keeps the restore boundary that produced its initial state.
+`libreevolve show`, CLI restore preflight, and direct runtime/archive restore
+loaders validate that persisted certification and reject replay or pending-work
+overclaims before trusting the manifest. The
 paper-facing version of this terminal controller-state versus pending-work
 resume boundary is preserved in
 `papers/controller_pending_work_resume_boundary.json`.

@@ -23,6 +23,7 @@ from libreevolve.core.artifact_schema import (
     validate_paper_artifact_lifecycle_manifest,
     validate_quarantine_artifact_policy_manifest,
     validate_run_artifact_bundle_report,
+    validate_runtime_restore_certification_record,
 )
 from libreevolve.core.loop import (
     RuntimeBudgetStateError,
@@ -420,6 +421,7 @@ def show(run_dir, source_display_chars, full_source, redact_source):
     failure_summary = _failure_statistics_summary(run_path)
     validator_boundary_summary = _validator_boundary_artifact_summary(run_path)
     run_artifact_bundle_summary = _run_artifact_bundle_summary(run_path)
+    restore_certification_summary = _restore_certification_summary(run_path)
     quarantine_summary = _quarantine_stream_summary(run_path)
     non_jsonl_artifact_summary = _non_jsonl_artifact_policy_summary(run_path)
     paper_artifact_summary = _paper_artifact_lifecycle_summary(run_path)
@@ -445,6 +447,8 @@ def show(run_dir, source_display_chars, full_source, redact_source):
         click.echo(validator_boundary_summary)
     if run_artifact_bundle_summary:
         click.echo(run_artifact_bundle_summary)
+    if restore_certification_summary:
+        click.echo(restore_certification_summary)
     if quarantine_summary:
         click.echo(quarantine_summary)
     if non_jsonl_artifact_summary:
@@ -585,6 +589,36 @@ def _run_artifact_bundle_summary(run_dir: Path) -> str | None:
         f"quarantine_records={quarantine['record_count']}; "
         f"non_jsonl_checked={non_jsonl_checked}; "
         f"paper_paths={paper_paths}"
+    )
+
+
+def _restore_certification_summary(run_dir: Path) -> str | None:
+    manifest_path = run_dir / "manifest.json"
+    if not manifest_path.exists():
+        return None
+    manifest = _read_show_manifest(manifest_path)
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, dict):
+        return None
+    certification = runtime.get("restore_certification")
+    if certification is None:
+        return None
+    try:
+        validated = validate_runtime_restore_certification_record(certification)
+    except ValueError as exc:
+        raise click.ClickException(
+            "Restore certification validation failed: "
+            f"{_bounded_redacted_cli_text(str(exc))}"
+        ) from exc
+    surfaces = validated.get("certified_surfaces")
+    surface_count = len(surfaces) if isinstance(surfaces, list) else 0
+    return (
+        "Restore certification: "
+        f"compatible_surfaces={surface_count}; "
+        f"full_replay_ready={str(validated['full_replay_ready']).lower()}; "
+        "provider_output_replay_ready="
+        f"{str(validated['provider_output_replay_ready']).lower()}; "
+        f"pending_work_resume_ready={str(validated['pending_work_resume_ready']).lower()}"
     )
 
 
@@ -1085,6 +1119,10 @@ def _load_cli_runtime_rng_snapshot(path: str | None, *, seed: int) -> dict | Non
         path,
         error_prefix="Runtime RNG manifest restore failed",
     )
+    _validate_cli_restore_certification_restore_manifest(
+        path,
+        error_prefix="Runtime RNG manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime RNG manifest restore failed",
@@ -1119,6 +1157,10 @@ def _load_cli_runtime_llm_scheduler_snapshot(path: str | None) -> dict | None:
         path,
         error_prefix="LLM scheduler manifest restore failed",
     )
+    _validate_cli_restore_certification_restore_manifest(
+        path,
+        error_prefix="LLM scheduler manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="LLM scheduler manifest restore failed",
@@ -1144,6 +1186,10 @@ def _load_cli_runtime_budget_snapshot(path: str | None) -> dict | None:
         error_prefix="Runtime budget manifest restore failed",
     )
     _validate_cli_run_artifact_bundle_report_restore_manifest(
+        path,
+        error_prefix="Runtime budget manifest restore failed",
+    )
+    _validate_cli_restore_certification_restore_manifest(
         path,
         error_prefix="Runtime budget manifest restore failed",
     )
@@ -1207,6 +1253,10 @@ def _load_cli_full_resume_bundle(path: str) -> dict:
         path,
         error_prefix="Runtime manifest restore failed",
     )
+    _validate_cli_restore_certification_restore_manifest(
+        path,
+        error_prefix="Runtime manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime manifest restore failed",
@@ -1232,6 +1282,10 @@ def _load_cli_runtime_archive_state_snapshot(path: str | None) -> dict | None:
         error_prefix="Archive cursor manifest restore failed",
     )
     _validate_cli_run_artifact_bundle_report_restore_manifest(
+        path,
+        error_prefix="Archive cursor manifest restore failed",
+    )
+    _validate_cli_restore_certification_restore_manifest(
         path,
         error_prefix="Archive cursor manifest restore failed",
     )
@@ -1261,6 +1315,10 @@ def _load_cli_archive_restore_bundle(path: str | None) -> dict | None:
         error_prefix="Archive manifest restore failed",
     )
     _validate_cli_run_artifact_bundle_report_restore_manifest(
+        manifest_path,
+        error_prefix="Archive manifest restore failed",
+    )
+    _validate_cli_restore_certification_restore_manifest(
         manifest_path,
         error_prefix="Archive manifest restore failed",
     )
@@ -1339,6 +1397,29 @@ def _validate_cli_run_artifact_bundle_report_restore_manifest(
         manifest,
         error_prefix=error_prefix,
     )
+
+
+def _validate_cli_restore_certification_restore_manifest(
+    path: str | Path,
+    *,
+    error_prefix: str,
+) -> None:
+    try:
+        manifest = _read_show_manifest(Path(path))
+    except click.ClickException:
+        return
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, dict):
+        return
+    certification = runtime.get("restore_certification")
+    if certification is None:
+        return
+    try:
+        validate_runtime_restore_certification_record(certification)
+    except ValueError as exc:
+        raise click.ClickException(
+            f"{error_prefix}: {_bounded_redacted_cli_text(str(exc))}"
+        ) from exc
 
 
 def _validate_manifest_run_artifact_bundle_report(

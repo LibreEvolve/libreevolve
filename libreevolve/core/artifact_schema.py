@@ -89,6 +89,314 @@ _JSONL_ARTIFACT_OWNERS = {
     ),
 }
 
+_JSONL_IMPLEMENTATION_ANCHORS = {
+    "history.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": 'self._jsonl = run_dir / "history.jsonl"',
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "self._jsonl,",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/cli.py",
+                "required_text": "def _iter_history_records",
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def load_archive_restore_bundle",
+            },
+        ],
+    },
+    "evaluator_results.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _write_evaluator_results",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": 'path = run_dir / "evaluator_results.jsonl"',
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "candidate_id_to_evaluator_results_jsonl_row",
+            }
+        ],
+    },
+    "failure_history.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": 'self._failures = run_dir / "failure_history.jsonl"',
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def log_failure",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def load_failure_history_records",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "failure_history.jsonl",
+            },
+        ],
+    },
+    "archive_events.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": 'self._archive_events = run_dir / "archive_events.jsonl"',
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def _log_archive_event",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def load_archive_event_records",
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def archive_event_replay_audit",
+            },
+        ],
+    },
+    "controller_budget_events.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": (
+                    'self._controller_budget_events = run_dir / '
+                    '"controller_budget_events.jsonl"'
+                ),
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def log_controller_budget_event",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _load_controller_budget_events_restore_stream",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _process_controller_event_rows_by_kind",
+            },
+        ],
+    },
+    "llm_calls.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": 'self._llm_calls = run_dir / "llm_calls.jsonl"',
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def log_llm_call",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _process_llm_call_rows_by_id",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "llm_calls_jsonl_row_join_when_provider_ledger_absent",
+            },
+        ],
+    },
+    "prompt_history.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/meta_prompt.py",
+                "required_text": 'self._log_path = Path(log_dir) / "prompt_history.jsonl"',
+            },
+            {
+                "path": "libreevolve/core/meta_prompt.py",
+                "required_text": "append_strict_jsonl(",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/meta_prompt.py",
+                "required_text": "def load_prompt_history_records",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "prompt_history_rows_by_event_and_prompt_program_id",
+            },
+        ],
+    },
+    "prompt_current_binding_table.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _write_prompt_current_binding_table",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": 'table_path = run_dir / "prompt_current_binding_table.jsonl"',
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def validate_prompt_current_binding_report",
+            }
+        ],
+    },
+    "prompt_prior_score_table.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _write_prompt_prior_score_table",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": 'table_path = run_dir / "prompt_prior_score_table.jsonl"',
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def validate_prompt_prior_score_provenance_report",
+            }
+        ],
+    },
+}
+
+_QUARANTINE_PATH_ANCHORS = {
+    "history_invalid.jsonl": {
+        "path": "libreevolve/core/database.py",
+        "required_text": 'self._quarantine = run_dir / "history_invalid.jsonl"',
+    },
+    "failure_history_invalid.jsonl": {
+        "path": "libreevolve/core/database.py",
+        "required_text": 'self._failure_quarantine = run_dir / "failure_history_invalid.jsonl"',
+    },
+    "archive_events_invalid.jsonl": {
+        "path": "libreevolve/core/database.py",
+        "required_text": 'self._archive_event_quarantine = run_dir / "archive_events_invalid.jsonl"',
+    },
+    "controller_budget_events_invalid.jsonl": {
+        "path": "libreevolve/core/database.py",
+        "required_text": (
+            'run_dir / "controller_budget_events_invalid.jsonl"'
+        ),
+    },
+    "llm_calls_invalid.jsonl": {
+        "path": "libreevolve/core/database.py",
+        "required_text": 'self._llm_call_quarantine = run_dir / "llm_calls_invalid.jsonl"',
+    },
+    "prompt_history_invalid.jsonl": {
+        "path": "libreevolve/core/meta_prompt.py",
+        "required_text": 'self._quarantine_path = Path(log_dir) / "prompt_history_invalid.jsonl"',
+    },
+    "manifest_invalid.jsonl": {
+        "path": "libreevolve/core/database.py",
+        "required_text": 'self._manifest_quarantine = run_dir / "manifest_invalid.jsonl"',
+    },
+}
+
+_QUARANTINE_COMMON_IMPLEMENTATION_ANCHORS = {
+    "writer": [
+        {
+            "path": "libreevolve/core/jsonl.py",
+            "required_text": "def append_quarantine_record",
+        },
+        {
+            "path": "libreevolve/core/jsonl.py",
+            "required_text": "validate_quarantine_record",
+        },
+    ],
+    "runtime_pointer": [
+        {
+            "path": "libreevolve/core/loop.py",
+            "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+        }
+    ],
+    "show_restore_reader": [
+        {
+            "path": "libreevolve/core/jsonl.py",
+            "required_text": "def iter_quarantine_records",
+        },
+        {
+            "path": "libreevolve/core/artifact_schema.py",
+            "required_text": "quarantine_jsonl_records",
+        },
+    ],
+}
+
 _NON_JSONL_RESTORE_SHOW_HANDLING = {
     "manifest.json": "primary show and restore input",
     "task_specification.json": "resolved by task-spec artifact report",
@@ -902,8 +1210,13 @@ def generated_run_artifact_inventory() -> dict:
             "cleanup_managed": True,
             "runtime_pointer_location": f'runtime.artifacts["{name}"]',
             "restore_show_handling": "accepted stream reader or summary report input",
+            "implementation_anchors": deepcopy(
+                _JSONL_IMPLEMENTATION_ANCHORS[name]
+            ),
         }
     for name, record in schema["quarantine_jsonl_records"].items():
+        implementation_anchors = deepcopy(_QUARANTINE_COMMON_IMPLEMENTATION_ANCHORS)
+        implementation_anchors["writer"].append(_QUARANTINE_PATH_ANCHORS[name])
         inventory[name] = {
             "path": name,
             "artifact_kind": "quarantine_jsonl_record_stream",
@@ -917,6 +1230,7 @@ def generated_run_artifact_inventory() -> dict:
             "cleanup_managed": True,
             "runtime_pointer_location": f'runtime.artifacts["{name}"]',
             "restore_show_handling": "diagnostic stream, never accepted state input",
+            "implementation_anchors": implementation_anchors,
         }
     for name, record in schema["non_jsonl_artifacts"].items():
         inventory[name] = {

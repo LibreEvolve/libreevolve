@@ -1761,18 +1761,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     `fail` and `overwrite`, treats them as outside the run-owned artifact set,
     and records count, entry type, and hashed immediate names in
     `manifest.json` without exposing raw filenames.
+    Paper-facing generated-artifact lifecycle evidence now has a unified
+    inventory for standalone `task_specification.json`, generated prompt
+    tables, quarantine streams, non-JSONL artifacts, and `paper_artifacts/...`
+    source/exhibit directories. The inventory is tied to collision/overwrite
+    cleanup, schema pointers, runtime pointers, restore/show handling
+    boundaries, and source-level writer/runtime-pointer/show-restore anchors.
     Paper-facing generated-artifact lifecycle evidence is still incomplete:
-    runtime and paper documentation now cite standalone `task_specification.json`,
-    generated prompt tables, and `paper_artifacts/...` source/exhibit
-    directories, but the paper TODO surface does not yet require one unified
-    inventory proving every documented/emitted paper artifact participates in
-    the same collision, overwrite-cleanup, artifact-hash, schema, restore, and
-    `show` inspection contracts. `task_specification.json` is already in the
-    known run-artifact set, while generated
-    `prompt_current_binding_table.jsonl`, `prompt_prior_score_table.jsonl`, and
-    `paper_artifacts/` still need paper-facing lifecycle proof so stale or
-    out-of-band paper evidence cannot be confused with current-run AlphaEvolve
-    provenance.
+    those anchors prove source text presence, not full emitted-row behavior,
+    docs anchor coverage, or end-to-end replay of prompt-table and
+    `paper_artifacts/...` evidence across restored runs.
     Run names now share the runtime identity secret-safety policy: assignment-
     style secret strings and provider-token-shaped values are rejected before
     filesystem or manifest writes, while ordinary portable run names remain
@@ -1808,8 +1806,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     exclusion, the runtime lineage policy validator, or the lineage sidecar; it
     is full resumed lineage proof across provider output, archive/controller
     resume, migration ordering, plugin state, and validator subprocess
-    boundaries, plus a unified generated-artifact lifecycle inventory for
-    paper-cited prompt-table and `paper_artifacts/...` evidence.
+    boundaries, plus behavior-level replay/certification evidence for
+    paper-cited prompt-table and `paper_artifacts/...` artifacts beyond the
+    current unified inventory and source-anchor checks.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation

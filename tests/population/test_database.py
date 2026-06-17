@@ -2934,21 +2934,31 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
         == "known_artifact_collision_checked_and_overwrite_managed"
         for record in inventory.values()
     )
-    assert inventory["prompt_current_binding_table.jsonl"] == {
-        "path": "prompt_current_binding_table.jsonl",
-        "artifact_kind": "jsonl_record_stream",
-        "schema_pointer": (
-            'artifact_schema.jsonl_records["prompt_current_binding_table.jsonl"]'
-        ),
-        "record_schema": "libreevolve.prompt_current_binding_table.v1",
-        "writer_owner": "prompt current-binding table finalizer",
-        "reader_owner": "prompt current-binding reports and cross-run analysis",
-        "lifecycle_status": "known_artifact_collision_checked_and_overwrite_managed",
-        "cleanup_managed": True,
-        "runtime_pointer_location": (
-            'runtime.artifacts["prompt_current_binding_table.jsonl"]'
-        ),
-        "restore_show_handling": "accepted stream reader or summary report input",
+    prompt_binding = inventory["prompt_current_binding_table.jsonl"]
+    assert prompt_binding["path"] == "prompt_current_binding_table.jsonl"
+    assert prompt_binding["artifact_kind"] == "jsonl_record_stream"
+    assert (
+        prompt_binding["schema_pointer"]
+        == 'artifact_schema.jsonl_records["prompt_current_binding_table.jsonl"]'
+    )
+    assert prompt_binding["record_schema"] == "libreevolve.prompt_current_binding_table.v1"
+    assert prompt_binding["writer_owner"] == "prompt current-binding table finalizer"
+    assert (
+        prompt_binding["reader_owner"]
+        == "prompt current-binding reports and cross-run analysis"
+    )
+    assert (
+        prompt_binding["runtime_pointer_location"]
+        == 'runtime.artifacts["prompt_current_binding_table.jsonl"]'
+    )
+    assert (
+        prompt_binding["restore_show_handling"]
+        == "accepted stream reader or summary report input"
+    )
+    assert set(prompt_binding["implementation_anchors"]) == {
+        "writer",
+        "runtime_pointer",
+        "show_restore_reader",
     }
     assert inventory["manifest_invalid.jsonl"]["source_stream"] == "manifest.json"
     assert inventory["paper_artifacts"]["restore_show_handling"] == (
@@ -2956,11 +2966,10 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
     )
 
 
-def test_non_jsonl_artifact_inventory_anchors_resolve_to_source():
+def test_generated_artifact_inventory_anchors_resolve_to_source():
     inventory = generated_run_artifact_inventory()
-    non_jsonl_names = set(run_artifact_schema()["non_jsonl_artifacts"])
 
-    for artifact_name in sorted(non_jsonl_names):
+    for artifact_name in sorted(inventory):
         artifact = inventory[artifact_name]
         anchors = artifact.get("implementation_anchors")
         assert isinstance(anchors, dict), artifact_name

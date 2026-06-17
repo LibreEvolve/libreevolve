@@ -8357,17 +8357,20 @@ sidecars, tests, and active TODOs.
     reader owner, lifecycle status, cleanup ownership, runtime/report pointer,
     and restore/show handling boundary. Focused tests prove the generated
     inventory, manifest schema, and cleanup set have identical artifact names,
-    including the prompt-table exports.
-  - Current gap: the generated-artifact inventory is centralized, but it still
-    records owner strings and restore/show boundaries rather than executable
-    per-writer/per-reader contracts. README/docs sections, report validators,
-    and finalization writers can still drift semantically unless each
-    inventory row is linked to a concrete writer function, reader/restore/show
-    test, and docs anchor.
-  - Required result: connect each generated-artifact inventory row to
-    executable writer/reader/docs anchors and add drift tests proving
-    documented/schema-listed run artifacts cannot be emitted, restored, shown,
-    or deleted outside their inventory contract.
+    including the prompt-table exports. Generated inventory records now include
+    source-level `implementation_anchors` for every JSONL stream, quarantine
+    stream, and non-JSONL artifact, covering writer, runtime-pointer, and
+    show/restore-reader phases; focused tests verify every anchor resolves to
+    current source text.
+  - Current gap: generated-artifact inventory rows now have executable
+    source-anchor checks, but README/docs sections and runtime reports can still
+    drift semantically because the anchors prove source text presence rather
+    than docs anchor coverage, emitted-row behavior, or restore/show execution
+    for every artifact family.
+  - Required result: connect each generated-artifact inventory row to docs
+    anchors and behavior tests proving documented/schema-listed run artifacts
+    cannot be emitted, restored, shown, or deleted outside their inventory
+    contract.
 
 - [ ] Bring generated `paper_artifacts/` directories under the run-artifact
       lifecycle policy.

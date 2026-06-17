@@ -47,6 +47,37 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     assert boundary["exact_duplicate_record_count"] == 246
     assert boundary["exact_duplicate_inflation_count"] == 123
     assert boundary["exact_duplicate_collapsed_total_estimate"] == 5060
+    assert boundary["exact_duplicate_owner_status_report"] == {
+        "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
+        "duplicate_group_count": 123,
+        "duplicate_record_count": 246,
+        "cross_owner_group_count": 122,
+        "cross_owner_record_count": 244,
+        "same_owner_group_count": 1,
+        "same_owner_record_count": 2,
+        "completed_only_group_count": 123,
+        "active_only_group_count": 0,
+        "mixed_status_group_count": 0,
+        "active_involved_group_count": 0,
+        "owner_shape_counts": [
+            {"owner_ids": ["code", "papers"], "group_count": 47},
+            {"owner_ids": ["readme", "roadmap"], "group_count": 31},
+            {"owner_ids": ["code", "readme"], "group_count": 30},
+            {"owner_ids": ["papers", "readme"], "group_count": 13},
+            {"owner_ids": ["code", "roadmap"], "group_count": 1},
+            {"owner_ids": ["roadmap"], "group_count": 1},
+        ],
+        "status_shape_counts": [
+            {
+                "statuses": [{"status": "completed", "count": 2}],
+                "group_count": 123,
+            }
+        ],
+        "canonical_owner_assignments_ready": False,
+    }
+    assert boundary["exact_duplicate_cross_owner_group_count"] == 122
+    assert boundary["exact_duplicate_completed_only_group_count"] == 123
+    assert boundary["exact_duplicate_active_involved_group_count"] == 0
     assert (
         boundary["exact_stale_completed_duplicate_detection_policy"]
         == "completed_record_with_active_same_normalized_title"
@@ -82,6 +113,8 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     boundary["likely_duplicate_title_groups"] = []
     boundary["exact_duplicate_raw_count_inflation_report"]["inflation_count"] = 0
     boundary["exact_duplicate_inflation_count"] = 0
+    boundary["exact_duplicate_owner_status_report"]["cross_owner_group_count"] = 0
+    boundary["exact_duplicate_cross_owner_group_count"] = 0
     boundary["exact_stale_completed_duplicate_group_count"] = 1
     boundary["exact_stale_completed_duplicate_status"] = (
         "exact_stale_completed_duplicates_detected"
@@ -100,6 +133,8 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     assert "invalid_likely_duplicate_title_groups" in codes
     assert "invalid_exact_duplicate_raw_count_inflation_report" in codes
     assert "invalid_exact_duplicate_inflation_count" in codes
+    assert "invalid_exact_duplicate_owner_status_report" in codes
+    assert "invalid_exact_duplicate_cross_owner_group_count" in codes
     assert "invalid_exact_stale_completed_duplicate_group_count" in codes
     assert "invalid_exact_stale_completed_duplicate_status" in codes
     assert "missing_required_evidence_field" in codes

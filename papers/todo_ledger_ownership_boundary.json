@@ -2,12 +2,83 @@
   "active_ledger_completed_marker_count": 0,
   "boundary_status": "ledger_owner_inventory_without_canonical_gap_deduplication",
   "canonical_gap_completion_status": "not_available_without_gap_ids",
-  "claim_boundary": "This boundary records TODO-ledger owner files, active/completed marker policy, raw checklist counts, and an exact normalized-title duplicate scan with an exact-title raw-count inflation estimate, including a bounded exact stale-completed duplicate detector that only compares completed records against active records with the same normalized title. It does not claim canonical underlying-gap ids, derivative cross-document relationships, rollup rules, source or paper anchor mappings, implementation evidence links, semantic stale duplicate detection, orphan derivative detection, or canonical-gap completion percentages.",
+  "claim_boundary": "This boundary records TODO-ledger owner files, active/completed marker policy, raw checklist counts, and an exact normalized-title duplicate scan with an exact-title raw-count inflation estimate, an exact duplicate owner/status profile, including a bounded exact stale-completed duplicate detector that only compares completed records against active records with the same normalized title. It does not claim canonical underlying-gap ids, derivative cross-document relationships, rollup rules, source or paper anchor mappings, implementation evidence links, semantic stale duplicate detection, orphan derivative detection, or canonical-gap completion percentages.",
   "claim_ready": false,
   "completed_ledger_active_marker_count": 0,
   "duplicate_detection_policy": "exact_normalized_title_only",
+  "exact_duplicate_active_involved_group_count": 0,
   "exact_duplicate_collapsed_total_estimate": 5060,
+  "exact_duplicate_completed_only_group_count": 123,
+  "exact_duplicate_cross_owner_group_count": 122,
   "exact_duplicate_inflation_count": 123,
+  "exact_duplicate_owner_status_report": {
+    "active_involved_group_count": 0,
+    "active_only_group_count": 0,
+    "canonical_owner_assignments_ready": false,
+    "completed_only_group_count": 123,
+    "cross_owner_group_count": 122,
+    "cross_owner_record_count": 244,
+    "duplicate_group_count": 123,
+    "duplicate_record_count": 246,
+    "mixed_status_group_count": 0,
+    "owner_shape_counts": [
+      {
+        "group_count": 47,
+        "owner_ids": [
+          "code",
+          "papers"
+        ]
+      },
+      {
+        "group_count": 31,
+        "owner_ids": [
+          "readme",
+          "roadmap"
+        ]
+      },
+      {
+        "group_count": 30,
+        "owner_ids": [
+          "code",
+          "readme"
+        ]
+      },
+      {
+        "group_count": 13,
+        "owner_ids": [
+          "papers",
+          "readme"
+        ]
+      },
+      {
+        "group_count": 1,
+        "owner_ids": [
+          "code",
+          "roadmap"
+        ]
+      },
+      {
+        "group_count": 1,
+        "owner_ids": [
+          "roadmap"
+        ]
+      }
+    ],
+    "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
+    "same_owner_group_count": 1,
+    "same_owner_record_count": 2,
+    "status_shape_counts": [
+      {
+        "group_count": 123,
+        "statuses": [
+          {
+            "count": 2,
+            "status": "completed"
+          }
+        ]
+      }
+    ]
+  },
   "exact_duplicate_raw_count_inflation_report": {
     "canonical_gap_denominator_ready": false,
     "collapsed_total_estimate": 5060,
@@ -3667,6 +3738,7 @@
     "active_completed_marker_policy",
     "exact_normalized_title_duplicate_scan",
     "exact_duplicate_raw_count_inflation_report",
+    "exact_duplicate_owner_status_profile",
     "exact_stale_completed_duplicate_scan",
     "canonical_gap_ids",
     "derivative_relationships",

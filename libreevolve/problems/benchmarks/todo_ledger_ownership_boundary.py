@@ -43,6 +43,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "active_completed_marker_policy",
     "exact_normalized_title_duplicate_scan",
     "exact_duplicate_raw_count_inflation_report",
+    "exact_duplicate_owner_status_profile",
     "exact_stale_completed_duplicate_scan",
     "canonical_gap_ids",
     "derivative_relationships",
@@ -119,6 +120,9 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
         duplicate_groups=duplicate_groups,
         raw_total_count=total_count,
     )
+    exact_duplicate_owner_status_report = _exact_duplicate_owner_status_report(
+        duplicate_groups
+    )
     return {
         "schema": TODO_LEDGER_OWNERSHIP_BOUNDARY_SCHEMA,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
@@ -149,6 +153,16 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
         "exact_duplicate_collapsed_total_estimate": (
             exact_duplicate_inflation_report["collapsed_total_estimate"]
         ),
+        "exact_duplicate_owner_status_report": exact_duplicate_owner_status_report,
+        "exact_duplicate_cross_owner_group_count": (
+            exact_duplicate_owner_status_report["cross_owner_group_count"]
+        ),
+        "exact_duplicate_completed_only_group_count": (
+            exact_duplicate_owner_status_report["completed_only_group_count"]
+        ),
+        "exact_duplicate_active_involved_group_count": (
+            exact_duplicate_owner_status_report["active_involved_group_count"]
+        ),
         "exact_stale_completed_duplicate_detection_policy": (
             "completed_record_with_active_same_normalized_title"
         ),
@@ -168,6 +182,7 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
             "This boundary records TODO-ledger owner files, active/completed "
             "marker policy, raw checklist counts, and an exact normalized-title "
             "duplicate scan with an exact-title raw-count inflation estimate, "
+            "an exact duplicate owner/status profile, "
             "including a bounded exact stale-completed duplicate detector that "
             "only compares completed records against active records with the "
             "same normalized title. It does not claim canonical "
@@ -214,6 +229,10 @@ def validate_todo_ledger_ownership_boundary(
         "exact_duplicate_record_count",
         "exact_duplicate_inflation_count",
         "exact_duplicate_collapsed_total_estimate",
+        "exact_duplicate_owner_status_report",
+        "exact_duplicate_cross_owner_group_count",
+        "exact_duplicate_completed_only_group_count",
+        "exact_duplicate_active_involved_group_count",
         "exact_stale_completed_duplicate_detection_policy",
         "exact_stale_completed_duplicate_group_count",
         "exact_stale_completed_duplicate_groups",
@@ -234,6 +253,7 @@ def validate_todo_ledger_ownership_boundary(
         not isinstance(boundary_text, str)
         or "does not claim canonical underlying-gap ids" not in boundary_text
         or "exact-title raw-count inflation estimate" not in boundary_text
+        or "exact duplicate owner/status profile" not in boundary_text
         or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "canonical-gap completion percentages" not in boundary_text
     ):
@@ -389,6 +409,81 @@ def _exact_duplicate_raw_count_inflation_report(
             raw_total_count,
         ),
         "canonical_gap_denominator_ready": False,
+    }
+
+
+def _exact_duplicate_owner_status_report(
+    duplicate_groups: list[dict[str, Any]],
+) -> dict[str, Any]:
+    owner_shape_counts: dict[tuple[str, ...], int] = defaultdict(int)
+    status_shape_counts: dict[tuple[tuple[str, int], ...], int] = defaultdict(int)
+    cross_owner_group_count = 0
+    cross_owner_record_count = 0
+    same_owner_group_count = 0
+    same_owner_record_count = 0
+    completed_only_group_count = 0
+    active_only_group_count = 0
+    mixed_status_group_count = 0
+    active_involved_group_count = 0
+    for group in duplicate_groups:
+        owners = tuple(group["owner_ids"])
+        owner_shape_counts[owners] += 1
+        status_counts: dict[str, int] = defaultdict(int)
+        for record in group["records"]:
+            status_counts[record["status"]] += 1
+        statuses = tuple(sorted(status_counts.items()))
+        status_shape_counts[statuses] += 1
+        if group["cross_owner"]:
+            cross_owner_group_count += 1
+            cross_owner_record_count += group["record_count"]
+        else:
+            same_owner_group_count += 1
+            same_owner_record_count += group["record_count"]
+        has_active = "active" in status_counts
+        has_completed = "completed" in status_counts
+        if has_active:
+            active_involved_group_count += 1
+        if has_active and has_completed:
+            mixed_status_group_count += 1
+        elif has_active:
+            active_only_group_count += 1
+        elif has_completed:
+            completed_only_group_count += 1
+    return {
+        "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
+        "duplicate_group_count": len(duplicate_groups),
+        "duplicate_record_count": sum(
+            group["record_count"] for group in duplicate_groups
+        ),
+        "cross_owner_group_count": cross_owner_group_count,
+        "cross_owner_record_count": cross_owner_record_count,
+        "same_owner_group_count": same_owner_group_count,
+        "same_owner_record_count": same_owner_record_count,
+        "completed_only_group_count": completed_only_group_count,
+        "active_only_group_count": active_only_group_count,
+        "mixed_status_group_count": mixed_status_group_count,
+        "active_involved_group_count": active_involved_group_count,
+        "owner_shape_counts": [
+            {"owner_ids": list(owner_ids), "group_count": count}
+            for owner_ids, count in sorted(
+                owner_shape_counts.items(),
+                key=lambda item: (-item[1], item[0]),
+            )
+        ],
+        "status_shape_counts": [
+            {
+                "statuses": [
+                    {"status": status, "count": count}
+                    for status, count in status_counts
+                ],
+                "group_count": group_count,
+            }
+            for status_counts, group_count in sorted(
+                status_shape_counts.items(),
+                key=lambda item: (-item[1], item[0]),
+            )
+        ],
+        "canonical_owner_assignments_ready": False,
     }
 
 

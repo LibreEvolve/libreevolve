@@ -3164,9 +3164,12 @@ Implemented:
   groups. It now also records a bounded exact-title raw-count inflation
   estimate: 123 exact duplicate-title groups, 246 duplicate records, 123
   inflated raw checklist rows, and a 5060 collapsed exact-title total
-  estimate. It also records a bounded exact stale-completed duplicate detector
-  with zero active/completed title twins. It is not evidence of canonical
-  underlying-gap ids,
+  estimate. It also records an exact duplicate owner/status profile: all 123
+  exact-title duplicate groups are completed-only, 122 groups are cross-owner,
+  one group is same-owner, and zero groups involve active TODO rows. It also
+  records a bounded exact stale-completed duplicate detector with zero
+  active/completed title twins. It is not evidence of canonical underlying-gap
+  ids,
   derivative/documentation relationships, rollup rules, source/paper anchor
   mappings, implementation evidence links, semantic stale duplicate detection,
   orphan derivative detection, or canonical-gap completion percentages.

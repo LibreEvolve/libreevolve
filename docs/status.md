@@ -1619,14 +1619,16 @@ Important limits:
   raw-count inflation reporting. It links current raw owner-ledger counts,
   exact duplicate-title group count, an exact-title raw-count inflation
   estimate of 123 duplicate rows across 246 duplicate records, sidecar refs,
-  active TODO refs, validation-gate labels, and readiness labels. This is not
-  canonical gap ids, canonical owner assignments, derivative documentation
-  relationships, source or paper anchor mappings, implementation evidence
-  links, cross-document rollup rules, semantic duplicate detection, stale
-  completed duplicate detection beyond exact title matches, orphaned
-  derivative detection, canonical raw-count inflation reporting beyond exact
-  title matches, canonical gap completion percentages, or owner review
-  signoff.
+  active TODO refs, validation-gate labels, and readiness labels. It now also
+  records that all 123 exact-title duplicate groups are completed-only, 122
+  groups are cross-owner duplicates, and zero exact-title duplicate groups
+  involve active TODO rows. This is not canonical gap ids, canonical owner
+  assignments, derivative documentation relationships, source or paper anchor
+  mappings, implementation evidence links, cross-document rollup rules,
+  semantic duplicate detection, stale completed duplicate detection beyond
+  exact title matches, orphaned derivative detection, canonical raw-count
+  inflation reporting beyond exact title matches, canonical gap completion
+  percentages, or owner review signoff.
 - TODO canonical-gap rollup evidence now records eight criteria for canonical
   gap registry, canonical owner policy, derivative relationships, source and
   implementation evidence links, cross-document rollup policy,

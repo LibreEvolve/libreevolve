@@ -102,8 +102,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     bounded exact-title raw-count inflation report. That report records 123
     exact-title duplicate groups, 246 duplicate records, 123 inflated raw
     checklist rows, and a 5060 collapsed exact-title total estimate. It also
-    records a bounded exact stale-completed duplicate detector with zero
-    active/completed title twins.
+    records an exact owner/status profile: all 123 exact-title duplicate
+    groups are completed-only, 122 groups are cross-owner duplicates, one
+    group is same-owner, and zero exact-title duplicate groups involve active
+    TODO rows. It also records a bounded exact stale-completed duplicate
+    detector with zero active/completed title twins.
     `papers/roadmap_readiness_boundary.json` separately records the weighted
     TODO-ledger readiness model. The current raw and weighted percentages are
     still derived from checklist counts only, while active TODOs can

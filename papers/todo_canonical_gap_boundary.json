@@ -1,8 +1,8 @@
 {
   "active_todo_ref_count": 13,
-  "boundary_status": "bounded_todo_canonical_gap_matrix_with_exact_duplicate_inflation_report",
+  "boundary_status": "bounded_todo_canonical_gap_matrix_with_exact_duplicate_owner_status_report",
   "canonical_gap_completion_status": "not_available_without_gap_ids",
-  "claim_boundary": "This boundary records a TODO-ledger canonical-gap readiness matrix over the current raw owner-ledger counts and exact duplicate-title groups, an exact-title raw-count inflation estimate, plus a bounded exact stale-completed duplicate detector from the ownership sidecar. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source or paper anchor mappings, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact title matches, orphaned derivative detection, canonical raw-count inflation reporting beyond exact title matches, canonical gap completion percentages, or owner review signoff.",
+  "claim_boundary": "This boundary records a TODO-ledger canonical-gap readiness matrix over the current raw owner-ledger counts and exact duplicate-title groups, an exact-title raw-count inflation estimate, plus a bounded exact duplicate owner/status profile and a bounded exact stale-completed duplicate detector from the ownership sidecar. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source or paper anchor mappings, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact title matches, orphaned derivative detection, canonical raw-count inflation reporting beyond exact title matches, canonical gap completion percentages, or owner review signoff.",
   "claim_ready": false,
   "criterion_count": 9,
   "criterion_records": [
@@ -250,9 +250,80 @@
     }
   ],
   "duplicate_detection_policy": "exact_normalized_title_only",
+  "exact_duplicate_active_involved_group_count": 0,
   "exact_duplicate_collapsed_total_estimate": 5060,
+  "exact_duplicate_completed_only_group_count": 123,
+  "exact_duplicate_cross_owner_group_count": 122,
   "exact_duplicate_group_count": 123,
   "exact_duplicate_inflation_count": 123,
+  "exact_duplicate_owner_status_report": {
+    "active_involved_group_count": 0,
+    "active_only_group_count": 0,
+    "canonical_owner_assignments_ready": false,
+    "completed_only_group_count": 123,
+    "cross_owner_group_count": 122,
+    "cross_owner_record_count": 244,
+    "duplicate_group_count": 123,
+    "duplicate_record_count": 246,
+    "mixed_status_group_count": 0,
+    "owner_shape_counts": [
+      {
+        "group_count": 47,
+        "owner_ids": [
+          "code",
+          "papers"
+        ]
+      },
+      {
+        "group_count": 31,
+        "owner_ids": [
+          "readme",
+          "roadmap"
+        ]
+      },
+      {
+        "group_count": 30,
+        "owner_ids": [
+          "code",
+          "readme"
+        ]
+      },
+      {
+        "group_count": 13,
+        "owner_ids": [
+          "papers",
+          "readme"
+        ]
+      },
+      {
+        "group_count": 1,
+        "owner_ids": [
+          "code",
+          "roadmap"
+        ]
+      },
+      {
+        "group_count": 1,
+        "owner_ids": [
+          "roadmap"
+        ]
+      }
+    ],
+    "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
+    "same_owner_group_count": 1,
+    "same_owner_record_count": 2,
+    "status_shape_counts": [
+      {
+        "group_count": 123,
+        "statuses": [
+          {
+            "count": 2,
+            "status": "completed"
+          }
+        ]
+      }
+    ]
+  },
   "exact_duplicate_raw_count_inflation_report": {
     "canonical_gap_denominator_ready": false,
     "collapsed_total_estimate": 5060,
@@ -290,6 +361,7 @@
     "raw_ledger_counts",
     "exact_duplicate_group_count",
     "exact_duplicate_raw_count_inflation_report",
+    "exact_duplicate_owner_status_profile",
     "canonical_gap_ids",
     "canonical_owner_ledgers",
     "derivative_relationships",

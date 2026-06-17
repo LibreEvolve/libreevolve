@@ -243,6 +243,10 @@ from libreevolve.problems.benchmarks.readme_testing_boundary import (
     readme_testing_boundary_record,
     validate_readme_testing_boundary,
 )
+from libreevolve.problems.benchmarks.readme_contributor_gate_boundary import (
+    readme_contributor_gate_boundary_record,
+    validate_readme_contributor_gate_boundary,
+)
 from libreevolve.problems.benchmarks.readme_quick_start_smoke_boundary import (
     readme_quick_start_smoke_boundary_record,
     validate_readme_quick_start_smoke_boundary,
@@ -1025,6 +1029,7 @@ README_EXAMPLE_SCOPE_BOUNDARY_FILE = "papers/readme_example_scope_boundary.json"
 README_EXAMPLE_RUNS_BOUNDARY_FILE = "papers/readme_example_runs_boundary.json"
 README_RUN_ARTIFACTS_BOUNDARY_FILE = "papers/readme_run_artifacts_boundary.json"
 README_TESTING_BOUNDARY_FILE = "papers/readme_testing_boundary.json"
+README_CONTRIBUTOR_GATE_BOUNDARY_FILE = "papers/readme_contributor_gate_boundary.json"
 README_QUICK_START_SMOKE_BOUNDARY_FILE = "papers/readme_quick_start_smoke_boundary.json"
 README_INSTALL_SMOKE_BOUNDARY_FILE = "papers/readme_install_smoke_boundary.json"
 README_PROVIDER_AUTH_BOUNDARY_FILE = "papers/readme_provider_auth_boundary.json"
@@ -1751,6 +1756,7 @@ def validate_paper_manifest(
     issues.extend(_validate_readme_example_runs_boundary(root_path))
     issues.extend(_validate_readme_run_artifacts_boundary(root_path))
     issues.extend(_validate_readme_testing_boundary(root_path))
+    issues.extend(_validate_readme_contributor_gate_boundary(root_path))
     issues.extend(_validate_readme_quick_start_smoke_boundary(root_path))
     issues.extend(_validate_readme_install_smoke_boundary(root_path))
     issues.extend(_validate_readme_provider_auth_boundary(root_path))
@@ -4818,6 +4824,38 @@ def _validate_readme_testing_boundary(root_path: Path) -> list[PaperManifestIssu
             f"readme_testing_boundary_{issue.code}",
             issue.message,
             "readme_testing",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_readme_contributor_gate_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / README_CONTRIBUTOR_GATE_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "readme_contributor_gate_boundary_manifest_missing",
+                    (
+                        f"{README_CONTRIBUTOR_GATE_BOUNDARY_FILE} must emit "
+                        "README contributor-gate metadata"
+                    ),
+                    "readme_contributor_gate",
+                )
+            ]
+        return []
+    report = validate_readme_contributor_gate_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"readme_contributor_gate_boundary_{issue.code}",
+            issue.message,
+            "readme_contributor_gate",
         )
         for issue in report.issues
     ]

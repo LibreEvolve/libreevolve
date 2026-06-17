@@ -1026,12 +1026,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     development docs, pre-commit config, and GitHub workflow references for
     `.secrets.baseline` and the allowlist pragma, while broader CI coverage is
     tracked separately by `papers/ci_workflow_coverage_boundary.json`.
-  - Current gap: no README-owned contributor-gate inventory or validator maps
-    each README contributing instruction to the specific hook, workflow, test,
-    paper-manifest command, or source-boundary file it depends on. There is no
-    drift check proving that README guidance changes when pre-commit hooks,
-    CI path filters, detect-secrets baseline policy, or source-boundary
-    validation commands change.
+    `papers/readme_contributor_gate_boundary.json` now records README
+    Contributing markers, docs/papers/ROADMAP/TODO routing markers, focused-
+    test and paper-manifest guidance, secret-scan baseline policy, allowlist-
+    pragma policy, baseline-staging policy, development-guide secret-scan
+    anchors, the pre-commit detect-secrets hook, `.secrets.baseline` detector
+    inventory markers, GitHub Actions secret-scan and paper/docs jobs,
+    existing agent-doc drift assertions, CI workflow sidecar anchors, and this
+    active TODO owner.
+  - Current gap: the README-owned sidecar is a static marker map, not a
+    complete contributor-policy verifier. It does not map every README
+    contributing sentence to a specific hook/workflow/test/validator/source-
+    boundary artifact, prove that pre-commit hook changes force README/TODO
+    updates, detect source-boundary file changes that need paper-manifest
+    guidance updates, semantically verify secret-policy wording, or record
+    owner review signoff.
   - Required result: add a README contributing-policy evidence map or test
     that links each contributing sentence to concrete hook/workflow/validator
     artifacts, checks secret-scan allowlist and baseline regeneration guidance

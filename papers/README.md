@@ -2843,7 +2843,7 @@ Implemented:
   drift inventory, README Problem Layout inventory, problem-format loader-
   contract inventory, README Example Scope inventory, README example-runs
   inventory, README Run Artifacts inventory, README Testing inventory,
-  README provider-example matrix
+  README contributor-gate inventory, README provider-example matrix
   inventory, README CLI-provider guardrail inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
@@ -2980,6 +2980,16 @@ Implemented:
   and active TODO ownership. It is not Python/pytest version transcript
   evidence, selected or skipped test counts, credential-skip transcript proof,
   a failure-attribution matrix, or owner review signoff.
+- `papers/readme_contributor_gate_boundary.json`: README contributor-gate
+  sidecar. It records README Contributing markers, docs/papers/ROADMAP/TODO
+  routing markers, focused-test and paper-manifest guidance, secret-scan
+  baseline policy, allowlist-pragma policy, baseline-staging policy,
+  development-guide secret-scan anchors, the pre-commit detect-secrets hook,
+  `.secrets.baseline` detector inventory markers, GitHub Actions secret-scan
+  and paper/docs jobs, existing agent-doc drift assertions, CI workflow
+  sidecar anchors, and active TODO ownership. It is not a complete sentence-
+  to-artifact map, pre-commit drift gate, source-boundary file-change detector,
+  semantic secret-policy verifier, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

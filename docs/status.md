@@ -1329,6 +1329,7 @@ Important limits:
   `papers/readme_example_runs_boundary.json`,
   `papers/readme_run_artifacts_boundary.json`,
   `papers/readme_testing_boundary.json`,
+  `papers/readme_contributor_gate_boundary.json`,
   `papers/readme_quick_start_smoke_boundary.json`,
   `papers/readme_install_smoke_boundary.json`,
   `papers/readme_provider_auth_boundary.json`,
@@ -1455,6 +1456,16 @@ Important limits:
   This is not Python/pytest version transcript evidence, selected or skipped
   test counts, credential-skip transcript proof, a failure-attribution matrix,
   or owner review signoff.
+- README contributor-gate evidence now records README Contributing markers,
+  docs/papers/ROADMAP/TODO routing markers, focused-test and paper-manifest
+  guidance, secret-scan baseline policy, allowlist-pragma policy, baseline-
+  staging policy, development-guide secret-scan anchors, the pre-commit
+  detect-secrets hook, `.secrets.baseline` detector inventory markers, GitHub
+  Actions secret-scan and paper/docs jobs, existing agent-doc drift assertions,
+  CI workflow sidecar anchors, and active TODO ownership. This is not a
+  complete sentence-to-artifact map, pre-commit drift gate, source-boundary
+  file-change detector, semantic secret-policy verifier, or owner review
+  signoff.
 - README quick-start smoke evidence now records the no-provider README command
   markers, focused smoke-test markers, expected `readme_smoke_sorting` run
   name, sorting example path, `max_llm_calls` stop reason, `Best fitness`

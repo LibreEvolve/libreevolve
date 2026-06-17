@@ -8360,17 +8360,17 @@ sidecars, tests, and active TODOs.
     including the prompt-table exports. Generated inventory records now include
     source-level `implementation_anchors` for every JSONL stream, quarantine
     stream, and non-JSONL artifact, covering writer, runtime-pointer, and
-    show/restore-reader phases; focused tests verify every anchor resolves to
-    current source text.
+    show/restore-reader phases, plus `documentation_anchors` into
+    `docs/run-artifacts.md`; focused tests verify every source and docs anchor
+    resolves to current text.
   - Current gap: generated-artifact inventory rows now have executable
-    source-anchor checks, but README/docs sections and runtime reports can still
-    drift semantically because the anchors prove source text presence rather
-    than docs anchor coverage, emitted-row behavior, or restore/show execution
-    for every artifact family.
-  - Required result: connect each generated-artifact inventory row to docs
-    anchors and behavior tests proving documented/schema-listed run artifacts
-    cannot be emitted, restored, shown, or deleted outside their inventory
-    contract.
+    source-anchor and docs-anchor checks, but runtime reports can still drift
+    semantically because the anchors prove source/docs text presence rather
+    than emitted-row behavior or restore/show execution for every artifact
+    family.
+  - Required result: add behavior tests proving documented/schema-listed run
+    artifacts cannot be emitted, restored, shown, or deleted outside their
+    inventory contract.
 
 - [ ] Bring generated `paper_artifacts/` directories under the run-artifact
       lifecycle policy.

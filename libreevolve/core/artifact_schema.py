@@ -397,6 +397,34 @@ _QUARANTINE_COMMON_IMPLEMENTATION_ANCHORS = {
     ],
 }
 
+_RUN_ARTIFACT_DOCUMENTATION_ANCHORS = {
+    "history.jsonl": "`history.jsonl`",
+    "history_invalid.jsonl": "`history_invalid.jsonl`",
+    "failure_history.jsonl": "`failure_history.jsonl`",
+    "failure_history_invalid.jsonl": "`failure_history_invalid.jsonl`",
+    "archive_events.jsonl": "`archive_events.jsonl`",
+    "archive_events_invalid.jsonl": "`archive_events_invalid.jsonl`",
+    "controller_budget_events.jsonl": "`controller_budget_events.jsonl`",
+    "controller_budget_events_invalid.jsonl": (
+        "`controller_budget_events_invalid.jsonl`"
+    ),
+    "llm_calls.jsonl": "`llm_calls.jsonl`",
+    "llm_calls_invalid.jsonl": "`llm_calls_invalid.jsonl`",
+    "prompt_history.jsonl": "`prompt_history.jsonl`",
+    "prompt_history_invalid.jsonl": "`prompt_history_invalid.jsonl`",
+    "prompt_current_binding_table.jsonl": "`prompt_current_binding_table.jsonl`",
+    "prompt_prior_score_table.jsonl": "`prompt_prior_score_table.jsonl`",
+    "task_specification.json": "`task_specification.json`",
+    "evaluator_results.jsonl": "`evaluator_results.jsonl`",
+    "manifest.json": "`manifest.json`",
+    "manifest_invalid.jsonl": "`manifest_invalid.jsonl`",
+    "best.py": "`best.py`",
+    "best_workspace": "`best_workspace/`",
+    "evaluator_artifacts": "`evaluator_artifacts/`",
+    "plugin_artifacts": "`plugin_artifacts/`",
+    "paper_artifacts": "`paper_artifacts/`",
+}
+
 _NON_JSONL_RESTORE_SHOW_HANDLING = {
     "manifest.json": "primary show and restore input",
     "task_specification.json": "resolved by task-spec artifact report",
@@ -1213,6 +1241,7 @@ def generated_run_artifact_inventory() -> dict:
             "implementation_anchors": deepcopy(
                 _JSONL_IMPLEMENTATION_ANCHORS[name]
             ),
+            "documentation_anchors": _documentation_anchors(name),
         }
     for name, record in schema["quarantine_jsonl_records"].items():
         implementation_anchors = deepcopy(_QUARANTINE_COMMON_IMPLEMENTATION_ANCHORS)
@@ -1231,6 +1260,7 @@ def generated_run_artifact_inventory() -> dict:
             "runtime_pointer_location": f'runtime.artifacts["{name}"]',
             "restore_show_handling": "diagnostic stream, never accepted state input",
             "implementation_anchors": implementation_anchors,
+            "documentation_anchors": _documentation_anchors(name),
         }
     for name, record in schema["non_jsonl_artifacts"].items():
         inventory[name] = {
@@ -1246,6 +1276,7 @@ def generated_run_artifact_inventory() -> dict:
             "implementation_anchors": deepcopy(
                 _NON_JSONL_IMPLEMENTATION_ANCHORS[name]
             ),
+            "documentation_anchors": _documentation_anchors(name),
         }
         if name == "paper_artifacts":
             inventory[name]["subpath_schema_pointer"] = (
@@ -1259,6 +1290,15 @@ def generated_run_artifact_inventory() -> dict:
             f"missing={sorted(missing)} extra={sorted(extra)}"
         )
     return dict(sorted(inventory.items()))
+
+
+def _documentation_anchors(name: str) -> list[dict]:
+    return [
+        {
+            "path": "docs/run-artifacts.md",
+            "required_text": _RUN_ARTIFACT_DOCUMENTATION_ANCHORS[name],
+        }
+    ]
 
 
 def _run_artifact_schema_without_inventory() -> dict:

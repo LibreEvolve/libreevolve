@@ -2960,6 +2960,12 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
         "runtime_pointer",
         "show_restore_reader",
     }
+    assert prompt_binding["documentation_anchors"] == [
+        {
+            "path": "docs/run-artifacts.md",
+            "required_text": "`prompt_current_binding_table.jsonl`",
+        }
+    ]
     assert inventory["manifest_invalid.jsonl"]["source_stream"] == "manifest.json"
     assert inventory["paper_artifacts"]["restore_show_handling"] == (
         "paper-source report validators and docs"
@@ -2985,6 +2991,20 @@ def test_generated_artifact_inventory_anchors_resolve_to_source():
                     phase,
                     record,
                 )
+
+
+def test_generated_artifact_inventory_documentation_anchors_resolve_to_docs():
+    inventory = generated_run_artifact_inventory()
+
+    for artifact_name in sorted(inventory):
+        records = inventory[artifact_name].get("documentation_anchors")
+        assert isinstance(records, list) and records, artifact_name
+        for record in records:
+            path = Path(record["path"])
+            assert path == Path("docs/run-artifacts.md"), artifact_name
+            assert path.is_file(), (artifact_name, path)
+            source = path.read_text(encoding="utf-8")
+            assert record["required_text"] in source, (artifact_name, record)
 
 
 def test_paper_artifact_subpath_schema_covers_known_families():

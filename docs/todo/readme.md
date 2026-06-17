@@ -456,7 +456,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     artifacts, and README/TODO updates whenever provider example commands or
     supported backend families change.
 
-- [ ] Add README guardrail for subprocess/CLI-authenticated LLM providers.
+- [ ] Keep README guardrails for experimental subprocess/CLI-authenticated LLM
+      providers.
   - Spec evidence: AlphaEvolve-style experiments rely on auditable provider
     calls and model-mix claims. A README feature bullet for backend support
     should distinguish built-in SDK adapters, generic custom import-path
@@ -464,58 +465,64 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     use README commands or benchmark prompts as evidence of first-class
     provider support.
   - Current evidence: the README currently lists OpenAI, Anthropic, Ollama,
-    and custom import-path backend support; the quick-start provider examples
-    show only OpenAI, Anthropic, and Ollama placeholders. The README now states
-    that custom import-path backends are extension points, not first-class
-    Codex-authenticated or other local CLI provider support, and links that
-    boundary to `docs/todo/code.md`. `papers/readme_cli_provider_guardrail_boundary.json`
+    experimental Codex CLI, and custom import-path backend support; the
+    quick-start provider examples show only OpenAI, Anthropic, and Ollama
+    placeholders. The README now states that `type: codex` is an experimental
+    authenticated `codex exec` lane with redacted auth/session provenance and
+    optional transcripts, while credential-safe live smoke evidence, model
+    availability preflight, manifest/report integration, provider-native
+    token/cost accounting, and parity diagnostics remain open work in
+    `docs/todo/code.md`. It also keeps custom import-path backends framed as
+    extension points. `papers/readme_cli_provider_guardrail_boundary.json`
     records that README wording, the code TODO contract markers, backend-doc
-    built-in/custom lane markers, and a narrow scan for unsupported positive
-    Codex/local CLI provider-support claims in README, ROADMAP, and
+    built-in/custom/Codex lane markers, and a narrow scan for unsupported
+    positive Codex/local CLI benchmark-parity claims in README, ROADMAP, and
     papers/README.
-  - Current gap: the guardrail is documentation-boundary evidence only. It
-    does not implement a first-class subprocess/CLI backend contract, CLI
-    backend manifest schema, credential-safe CLI backend smoke, provider budget
-    accounting for CLI backends, or provider diagnostics for CLI backends. A
-    user can still create an ad hoc custom wrapper around a local CLI, but that
-    remains outside supported, reproducible provider parity until the code TODO
-    is implemented and manifest-validated.
-  - Required result: implement the subprocess/CLI provider backend contract
-    with command discovery, auth/session provenance, transcript retention,
-    diagnostics, budget/cancellation semantics, smoke fixtures, and CI/report
-    artifacts before README, ROADMAP, benchmark, or paper-facing examples claim
-    Codex-authenticated or local CLI providers are supported.
+  - Current gap: the guardrail now reflects a real experimental Codex adapter,
+    but it does not prove benchmark-claim-ready provider parity. The remaining
+    gaps are credential-safe live smoke evidence, CLI backend manifest/report
+    integration, provider budget accounting for CLI backends, model
+    availability preflight, and provider diagnostics for CLI backends. A user
+    can still create an ad hoc custom wrapper around another local CLI, but
+    that remains outside supported, reproducible provider parity until it has a
+    documented lane and telemetry.
+  - Required result: keep README, ROADMAP, benchmark, and paper-facing wording
+    limited to experimental Codex CLI plumbing until the subprocess/CLI
+    provider contract has live smoke evidence, auth/session provenance,
+    transcript retention, diagnostics, budget/cancellation semantics,
+    CI/report artifacts, and manifest validation.
 
-- [ ] Add backend-doc guardrail for CLI-authenticated provider support.
+- [ ] Keep backend-doc guardrails for experimental CLI-authenticated provider
+      support.
   - Spec evidence: `docs/backends.md` is the detailed provider contract that
     users will follow when choosing between built-in SDK adapters and custom
     extension points. It should make the current backend boundary clear before
     benchmark prompts or local experiments rely on Codex-authenticated or other
     local CLI sessions as if they were first-class supported providers.
   - Current evidence: `docs/backends.md` now has a provider-lane taxonomy that
-    separates built-in SDK adapters, custom import-path backends, and
-    subprocess/CLI-authenticated providers. It states that a custom wrapper
-    around Codex or another local CLI is not portable provider support,
-    benchmark evidence, or paper-facing model-mix parity until the
-    subprocess/CLI backend contract in `docs/todo/code.md` is implemented.
-    `papers/backend_cli_provider_guardrail_boundary.json` records that
-    taxonomy, the custom-wrapper limitation wording, the code TODO link,
-    missing CLI contract field markers, README TODO ownership, and a narrow
-    scan for unsupported positive Codex/local CLI provider-support claims
-    across backend, configuration, README, ROADMAP, and papers-index claim
-    surfaces.
-  - Current gap: the backend-doc guardrail is documentation-boundary evidence
-    only. It does not implement a first-class CLI backend contract, CLI backend
-    manifest schema, credential-safe CLI backend smoke, CLI provider attempt
-    accounting, or CLI provider diagnostics. The guide still cannot make
-    Codex-authenticated or local CLI providers part of the supported provider
-    set until those missing contract fields and smoke fixtures exist.
-  - Required result: implement the first-class subprocess/CLI backend contract
-    with manifest fields, diagnostics, provider-attempt accounting,
-    timeout/cancellation behavior, auth/session provenance, transcript
-    policy, model availability preflight, and credential-safe smoke fixtures;
-    keep backend docs, README, ROADMAP, benchmark prompts, and paper-facing
-    materials from claiming support until that evidence exists.
+    separates built-in SDK adapters, the experimental built-in Codex CLI
+    adapter, custom import-path backends, and unsupported local CLI wrappers.
+    It documents `CodexCLIBackend` constructor fields, auth/session provenance,
+    stdin/`--output-last-message` transport, transcript schema, timeout
+    behavior, JSON-output extraction, and the current lack of live smoke,
+    model preflight, provider-native token/cost accounting, manifest/report
+    integration, and parity diagnostics. `papers/backend_cli_provider_guardrail_boundary.json`
+    records that taxonomy, the Codex limitation wording, the code TODO link,
+    README TODO ownership, and a narrow scan for unsupported positive
+    Codex/local CLI benchmark-parity claims across backend, configuration,
+    README, ROADMAP, and papers-index claim surfaces.
+  - Current gap: the backend-doc guardrail now describes a real adapter, but it
+    remains boundary evidence rather than claim-ready benchmark evidence. The
+    guide still cannot make Codex-authenticated or other local CLI providers
+    part of paper-facing model-mix parity until live smoke fixtures, manifest
+    fields, model availability preflight, provider-attempt accounting, and
+    provider diagnostics exist.
+  - Required result: complete the subprocess/CLI backend contract with
+    manifest fields, diagnostics, provider-attempt accounting,
+    timeout/cancellation behavior, auth/session provenance, transcript policy,
+    model availability preflight, and credential-safe smoke fixtures; keep
+    backend docs, README, ROADMAP, benchmark prompts, and paper-facing
+    materials from claiming benchmark-ready support until that evidence exists.
 
 - [ ] Add backend-guide provider contract drift evidence.
   - Spec evidence: `docs/backends.md` is the detailed operational contract for

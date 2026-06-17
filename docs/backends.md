@@ -1,11 +1,12 @@
 # Backends
 
-LibreEvolve supports configured built-in and custom backend types through a
-common `generate(prompt, **kwargs) -> str` interface:
+LibreEvolve supports configured built-in, CLI, and custom backend types through
+a common `generate(prompt, **kwargs) -> str` interface:
 
 - OpenAI
 - Anthropic
 - Ollama
+- Codex CLI
 - Custom import-path backends
 
 The bandit router that selects among them is implemented in
@@ -13,33 +14,36 @@ The bandit router that selects among them is implemented in
 
 ## Provider lanes
 
-Backend support has three distinct lanes:
+Backend support has four distinct lanes:
 
 - Built-in SDK adapters: OpenAI, Anthropic, and Ollama are constructed by
   LibreEvolve and participate in the standard credential preflight,
   request-parameter, retry, timeout, scheduler, telemetry, and manifest
   surfaces documented below.
+- Built-in CLI adapters: `type: codex` delegates generation to the local
+  `codex exec` command. It supports command discovery, stdin prompt transport,
+  `--output-last-message` response capture, sandbox/profile/auth-home
+  configuration, local timeout cleanup, optional JSON-output extraction, and
+  optional redacted transcript retention. It does not expose provider-native
+  token usage or cost accounting, live model availability preflight, SDK-style
+  retry diagnostics, or complete manifest/report parity yet.
 - Custom import-path backends: `type: custom` loads an extension-owned Python
   object by `class_path` and calls its `generate(prompt, **kwargs) -> str`
   method. This is useful for experiments, but the custom backend owns any
   provider-specific authentication, command execution, transcript retention,
   token accounting, model availability checks, and diagnostics that are not
   exposed through the common interface.
-- Subprocess/CLI-authenticated providers: Codex-authenticated or other local
-  CLI sessions are not a first-class provider lane in the committed backend
-  contract. A user can write a custom wrapper around a CLI, but that wrapper is
-  not portable provider support, benchmark evidence, or paper-facing model-mix
-  parity until the subprocess/CLI backend contract in
-  [docs/todo/code.md](todo/code.md) is implemented with manifest fields,
-  diagnostics, and smoke fixtures.
+- Unsupported local CLI wrappers: a user can still write a custom wrapper
+  around any other local CLI, but that wrapper is not portable provider
+  support, benchmark evidence, or paper-facing model-mix parity until it has a
+  documented provider lane, manifest fields, diagnostics, and smoke fixtures.
 
-Do not use custom-wrapper examples to claim Codex-authenticated or local CLI
-provider support in README, ROADMAP, benchmark prompts, or paper-facing
-materials. Required missing pieces include command discovery, auth/session
-provenance without secret capture, stdin/stdout protocol guarantees,
-transcript hashing or retention policy, provider-attempt accounting, timeout
-and cancellation behavior, provider-error classification, model availability
-preflight, manifest/report fields, and credential-safe smoke tests.
+Do not use Codex CLI or custom-wrapper examples to claim benchmark- or
+paper-ready local CLI provider parity in README, ROADMAP, benchmark prompts, or
+paper-facing materials. Required missing pieces for that stronger claim include
+credential-safe live smoke tests, live model availability preflight,
+manifest/report fields, provider-attempt token/cost limitations, provider-error
+classification, and parity diagnostics.
 
 ## Selection and reward
 
@@ -337,18 +341,20 @@ matched role, message-role list, instruction field names, and hash/length
 metadata, not the raw configured instruction text.
 Custom backends should put provider-specific request settings in their
 JSON-safe `kwargs`; the built-in top-level request-parameter fields are
-rejected for `type: custom`.
+rejected for `type: custom` and `type: codex`.
 
-Built-in backend specs also accept positive `timeout_sec`. LibreEvolve passes
-that value to the bundled provider client constructors as a request timeout:
-OpenAI and Anthropic receive `timeout=...`; Ollama constructs an
-`ollama.Client(..., timeout=...)`, with or without a configured `host`. Custom
-backends should carry provider-specific timeout settings through their
-JSON-safe `kwargs`. Separately, run-level `llm_call_timeout_sec` wraps each
-ensemble backend attempt with a local deadline and structured timeout
-telemetry. Deadline-aware `LLMEnsemble` calls are also clamped to the remaining
-`max_runtime_seconds` budget before each attempt starts, but this is not a hard
-provider cancellation contract.
+Built-in SDK backend specs also accept positive `timeout_sec`. LibreEvolve
+passes that value to the bundled provider client constructors as a request
+timeout: OpenAI and Anthropic receive `timeout=...`; Ollama constructs an
+`ollama.Client(..., timeout=...)`, with or without a configured `host`. The
+Codex CLI backend uses `timeout_sec` as a local process deadline for
+`codex exec`, then attempts process-tree cleanup and writes a transcript when
+configured. Custom backends should carry provider-specific timeout settings
+through their JSON-safe `kwargs`. Separately, run-level
+`llm_call_timeout_sec` wraps each ensemble backend attempt with a local
+deadline and structured timeout telemetry. Deadline-aware `LLMEnsemble` calls
+are also clamped to the remaining `max_runtime_seconds` budget before each
+attempt starts, but this is not a hard provider cancellation contract.
 
 Built-in backend specs also accept `provider_max_retries`, a non-negative
 adapter-internal retry cap. The default `2` preserves the historical three
@@ -493,6 +499,65 @@ Behavior:
 
 This backend is useful for local experimentation where API cost or offline work
 matters more than peak model quality.
+
+## Codex CLI backend
+
+Implemented in [`libreevolve/llm/codex_cli.py`](../libreevolve/llm/codex_cli.py).
+
+Constructor fields:
+
+- `model`
+- `max_tokens` (stored as LibreEvolve metadata only; the current `codex exec`
+  help exposes no direct max-output-token flag for this invocation)
+- `cwd`
+- `sandbox`
+- `timeout_sec`
+- `reasoning_effort`
+- `transcript_dir`
+- `codex_home`
+- `auth_name`
+- `auth_homes`
+- `auth_registry_path`
+- `profile`
+- `approval_policy`
+- `ignore_user_config`
+- `ignore_rules`
+- `ephemeral`
+- `output_json_field`
+- `enable_features`
+- `disable_features`
+
+Behavior:
+
+- runs `codex exec` from the local PATH with the prompt on stdin and captures
+  the final message through `--output-last-message`
+- passes `--model`, `--sandbox`, `--cd`, `--profile`, `--ignore-user-config`,
+  `--ignore-rules`, `--ephemeral`, repeated `--enable`/`--disable` flags, and
+  selected `-c` config overrides when configured
+- supports `auth_name` resolution through explicit `auth_homes`, a JSON auth
+  registry, `LIBREEVOLVE_CODEX_AUTH_<NAME>_HOME`, or the default/current
+  `~/.codex` home without recording secret material
+- when `codex_home` is configured, sets `CODEX_HOME` and removes
+  `OPENAI_API_KEY` from the child process environment so Codex CLI auth remains
+  separate from OpenAI SDK credentials
+- optionally writes transcript JSON records with schema
+  `libreevolve.codex_cli_transcript.v1`, including hashes, redacted auth-home
+  metadata, command settings, stdout/stderr, and the captured final message
+- optionally asks Codex for a JSON-shaped final response and extracts one
+  configured string field
+- treats non-zero exit codes, empty final messages, invalid structured output,
+  and local process timeouts as generation failures
+
+Current limitations:
+
+- no credential-safe live smoke test is committed
+- no live Codex model availability preflight is performed before a run
+- no provider-native token usage, cost accounting, finish reason, request id, or
+  SDK-style retry telemetry is available through this adapter yet
+- no run-manifest/report integration promotes Codex CLI runs to
+  benchmark-claim-ready provider evidence
+- cancellation is local process cleanup, not a provider-side cancellation
+  guarantee
 
 ## Environment setup
 

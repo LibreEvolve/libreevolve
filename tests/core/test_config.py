@@ -1748,6 +1748,39 @@ def test_rejects_request_parameters_on_custom_backend_config():
         )
 
 
+def test_accepts_codex_backend_config():
+    config = Config(
+        backends=[
+            {
+                "type": "codex",
+                "model": "gpt-5.3-codex-spark",
+                "max_tokens": 4096,
+                "auth_name": "current",
+                "transcript_dir": "runs/codex-transcripts",
+                "ignore_user_config": True,
+                "ignore_rules": True,
+                "ephemeral": True,
+            }
+        ]
+    )
+
+    assert config.backends[0]["type"] == "codex"
+    assert config.backends[0]["auth_name"] == "current"
+
+
+def test_rejects_request_parameters_on_codex_backend_config():
+    with pytest.raises(ConfigError, match="codex backends"):
+        Config(
+            backends=[
+                {
+                    "type": "codex",
+                    "model": "gpt-5.3-codex-spark",
+                    "temperature": 0.2,
+                }
+            ]
+        )
+
+
 @pytest.mark.parametrize(
     ("model", "reasoning_effort"),
     [

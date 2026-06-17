@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.readme_cli_provider_guardrail_boundary.v1",
-  "boundary_status": "readme_cli_provider_guardrail_without_first_class_cli_backend_contract",
+  "boundary_status": "readme_codex_cli_lane_without_benchmark_ready_parity",
   "claim_ready": false,
   "readme_path": "README.md",
   "docs_paths": [
@@ -15,26 +15,26 @@
     "ROADMAP.md",
     "papers/README.md"
   ],
-  "marker_record_count": 14,
+  "marker_record_count": 15,
   "missing_marker_count": 0,
   "missing_marker_records": [],
   "marker_records": [
     {
       "record_kind": "readme_backend_feature_bullet",
       "path": "README.md",
-      "required_marker": "OpenAI, Anthropic, Ollama, and custom import-path backend support.",
+      "required_marker": "OpenAI, Anthropic, Ollama, experimental Codex CLI, and custom import-path",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "readme_cli_provider_guardrail",
       "path": "README.md",
-      "required_marker": "Custom import-path backends are extension points, not first-class\n  Codex-authenticated or other local CLI provider support.",
+      "required_marker": "The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI\n  lane for authenticated `codex exec` sessions.",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "readme_cli_provider_evidence_scope",
       "path": "README.md",
-      "required_marker": "unsupported for README, ROADMAP, benchmark, and paper-facing evidence",
+      "required_marker": "not yet benchmark- or\n  paper-claim-ready",
       "marker_status": "marker_present"
     },
     {
@@ -46,49 +46,55 @@
     {
       "record_kind": "code_todo_cli_backend_contract",
       "path": "docs/todo/code.md",
-      "required_marker": "Define a first-class subprocess/CLI LLM backend contract",
+      "required_marker": "Finish the subprocess/CLI LLM backend contract",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "code_todo_command_resolution",
       "path": "docs/todo/code.md",
-      "required_marker": "covering command resolution",
+      "required_marker": "resolves the local `codex exec`\n    command",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "code_todo_auth_session_provenance",
       "path": "docs/todo/code.md",
-      "required_marker": "auth/session provenance without secret\n    capture",
+      "required_marker": "redacted auth-home metadata",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "code_todo_transcript_hashing",
       "path": "docs/todo/code.md",
-      "required_marker": "transcript hashing and optional\n    retention",
+      "required_marker": "libreevolve.codex_cli_transcript.v1",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "code_todo_manifest_report_fields",
       "path": "docs/todo/code.md",
-      "required_marker": "manifest/report fields, docs, and focused tests",
+      "required_marker": "runtime manifest/report field integration",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "readme_todo_cli_guardrail_owner",
       "path": "docs/todo/readme.md",
-      "required_marker": "Add README guardrail for subprocess/CLI-authenticated LLM providers.",
+      "required_marker": "Keep README guardrails for experimental subprocess/CLI-authenticated LLM",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "readme_todo_distinguish_lanes",
       "path": "docs/todo/readme.md",
-      "required_marker": "implement the subprocess/CLI provider backend contract",
+      "required_marker": "limited to experimental Codex CLI plumbing",
       "marker_status": "marker_present"
     },
     {
       "record_kind": "backends_builtin_custom_lanes",
       "path": "docs/backends.md",
-      "required_marker": "LibreEvolve supports configured built-in and custom backend types",
+      "required_marker": "LibreEvolve supports configured built-in, CLI, and custom backend types",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "backends_codex_cli_lane",
+      "path": "docs/backends.md",
+      "required_marker": "Built-in CLI adapters: `type: codex` delegates generation",
       "marker_status": "marker_present"
     },
     {
@@ -105,11 +111,11 @@
     }
   ],
   "forbidden_supported_claim_phrases": [
-    "Codex-authenticated providers are supported",
-    "Codex CLI backend is supported",
-    "first-class Codex-authenticated provider support is implemented",
-    "first-class local CLI provider support is implemented",
-    "local CLI providers are supported"
+    "Codex CLI runs are benchmark-ready",
+    "Codex CLI runs are paper-ready",
+    "Codex CLI backend has provider-native token accounting",
+    "Codex CLI backend has live model preflight",
+    "local CLI providers are benchmark-ready"
   ],
   "forbidden_claim_count": 0,
   "forbidden_claim_records": [],
@@ -125,19 +131,22 @@
     "code_todo_manifest_report_fields",
     "readme_todo_cli_guardrail_owner",
     "backends_builtin_custom_lanes",
+    "backends_codex_cli_lane",
     "claim_surface_forbidden_supported_claim_scan",
-    "first_class_cli_backend_contract",
-    "cli_backend_manifest_schema",
+    "benchmark_ready_cli_provider_contract",
+    "cli_backend_manifest_report_integration",
     "credential_safe_cli_backend_smoke",
+    "cli_model_availability_preflight",
     "provider_budget_accounting_for_cli_backend",
     "provider_diagnostics_for_cli_backend"
   ],
   "missing_evidence": {
-    "first_class_cli_backend_contract": "not_recorded_locally",
-    "cli_backend_manifest_schema": "not_recorded_locally",
+    "benchmark_ready_cli_provider_contract": "not_recorded_locally",
+    "cli_backend_manifest_report_integration": "not_recorded_locally",
     "credential_safe_cli_backend_smoke": "not_recorded_locally",
+    "cli_model_availability_preflight": "not_recorded_locally",
     "provider_budget_accounting_for_cli_backend": "not_recorded_locally",
     "provider_diagnostics_for_cli_backend": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the README built-in/custom backend feature bullet, the README guardrail separating custom import-path extension points from first-class Codex-authenticated or other local CLI provider support, the link to the subprocess/CLI backend contract TODO, code TODO markers for command resolution, auth/session provenance, transcript hashing, manifest/report fields, README TODO ownership, backend-doc built-in/custom lane markers, and a narrow scan for unsupported positive Codex/local CLI provider-support claims in README, ROADMAP, and papers/README. It does not claim a first-class CLI backend contract, CLI backend manifest schema, credential-safe CLI backend smoke, provider budget accounting for CLI backends, or provider diagnostics for CLI backends."
+  "claim_boundary": "This boundary records the README built-in/custom/Codex CLI backend feature bullet, the README guardrail separating experimental Codex CLI plumbing from benchmark-ready provider parity, the link to the subprocess/CLI backend contract TODO, code TODO markers for command resolution, auth/session provenance, transcript hashing, manifest/report gaps, README TODO ownership, backend-doc built-in/custom/Codex lane markers, and a narrow scan for unsupported positive Codex/local CLI benchmark-parity claims in README, ROADMAP, and papers/README. It does not claim benchmark-ready CLI provider parity, CLI backend manifest/report integration, credential-safe CLI backend smoke, model availability preflight, provider budget accounting for CLI backends, or provider diagnostics for CLI backends."
 }

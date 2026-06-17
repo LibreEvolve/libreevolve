@@ -1,0 +1,16 @@
+backends:
+  - type: codex
+    model: gpt-5.3-codex-spark
+    max_tokens: 4096
+    cwd: .
+    sandbox: read-only
+    timeout_sec: 300
+    reasoning_effort: high
+    transcript_dir: runs/codex_sn9_codexcli_transcripts
+    auth_name: current
+    ignore_user_config: true
+    ignore_rules: true
+    ephemeral: true
+    cost: 1.0
+    latency: 1.0
+    depth: 1.0

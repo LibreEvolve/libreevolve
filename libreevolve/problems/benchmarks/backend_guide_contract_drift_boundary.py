@@ -21,9 +21,11 @@ BACKEND_REGISTRY_PATH = "libreevolve/llm/backend_registry.py"
 OPENAI_PATH = "libreevolve/llm/openai.py"
 ANTHROPIC_PATH = "libreevolve/llm/anthropic.py"
 OLLAMA_PATH = "libreevolve/llm/ollama.py"
+CODEX_CLI_PATH = "libreevolve/llm/codex_cli.py"
 CONFIG_PATH = "libreevolve/core/config.py"
 CLI_PATH = "libreevolve/cli.py"
 TEST_ENSEMBLE_PATH = "tests/llm/test_ensemble.py"
+TEST_CODEX_CLI_PATH = "tests/llm/test_codex_cli.py"
 TEST_CONFIG_PATH = "tests/core/test_config.py"
 TEST_LOOP_PATH = "tests/core/test_loop.py"
 GEMINI_BOUNDARY_PATH = "papers/gemini_provider_parity_boundary.json"
@@ -39,6 +41,7 @@ EXPECTED_GUIDE_MARKERS = (
     ("openai_backend", "## OpenAI backend"),
     ("anthropic_backend", "## Anthropic backend"),
     ("ollama_backend", "## Ollama backend"),
+    ("codex_cli_backend", "## Codex CLI backend"),
     ("environment_setup", "## Environment setup"),
     ("adding_new_backend", "## Adding a new backend"),
     ("practical_guidance", "## Practical guidance"),
@@ -53,7 +56,8 @@ EXPECTED_GUIDE_MARKERS = (
     ("openai_api_mode_claim", 'api_mode="auto"` preserves legacy routing: Chat Completions'),
     ("custom_backend_claim", "Configured custom backends use `type: custom` plus an importable"),
     ("credential_preflight_claim", "startup checks required credentials for\nOpenAI"),
-    ("cli_provider_guardrail_claim", "Subprocess/CLI-authenticated providers: Codex-authenticated"),
+    ("cli_provider_guardrail_claim", "Built-in CLI adapters: `type: codex` delegates generation"),
+    ("cli_provider_limit_claim", "no run-manifest/report integration promotes Codex CLI runs"),
 )
 EXPECTED_EVIDENCE_ANCHORS = (
     ("ensemble_class", ENSEMBLE_PATH, "class LLMEnsemble:"),
@@ -67,15 +71,17 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("openai_backend", OPENAI_PATH, "class OpenAIBackend"),
     ("anthropic_backend", ANTHROPIC_PATH, "class AnthropicBackend"),
     ("ollama_backend", OLLAMA_PATH, "class OllamaBackend"),
+    ("codex_cli_backend", CODEX_CLI_PATH, "class CodexCLIBackend"),
     ("config_llm_role_backend_indices", CONFIG_PATH, "llm_role_backend_indices"),
     ("config_custom_backend_class_path", CONFIG_PATH, "_require_custom_backend_class_path"),
     ("cli_credential_preflight", CLI_PATH, "_preflight_llm_backends_if_needed"),
     ("ensemble_tests", TEST_ENSEMBLE_PATH, "LLMEnsemble"),
+    ("codex_cli_tests", TEST_CODEX_CLI_PATH, "test_codex_backend_invokes_codex_exec_and_writes_transcript"),
     ("config_role_backend_tests", TEST_CONFIG_PATH, "test_accepts_llm_role_backend_indices"),
     ("runtime_budget_tests", TEST_LOOP_PATH, "max_llm_provider_attempts"),
     ("configuration_role_routing_note", CONFIGURATION_PATH, "llm_role_backend_indices"),
     ("readme_todo_owner", README_TODO_PATH, "Add backend-guide provider contract drift evidence."),
-    ("code_todo_cli_contract", CODE_TODO_PATH, "Define a first-class subprocess/CLI LLM backend contract"),
+    ("code_todo_cli_contract", CODE_TODO_PATH, "Finish the subprocess/CLI LLM backend contract"),
     ("gemini_boundary_sidecar", GEMINI_BOUNDARY_PATH, "gemini"),
     ("provider_pricing_sidecar", PROVIDER_PRICING_PATH, "provider_pricing"),
     ("provider_diagnostics_sidecar", PROVIDER_DIAGNOSTICS_PATH, "provider_diagnostics"),
@@ -142,9 +148,11 @@ def backend_guide_contract_drift_boundary_record(root: str | Path = ".") -> dict
         OPENAI_PATH,
         ANTHROPIC_PATH,
         OLLAMA_PATH,
+        CODEX_CLI_PATH,
         CONFIG_PATH,
         CLI_PATH,
         TEST_ENSEMBLE_PATH,
+        TEST_CODEX_CLI_PATH,
         TEST_CONFIG_PATH,
         TEST_LOOP_PATH,
         GEMINI_BOUNDARY_PATH,

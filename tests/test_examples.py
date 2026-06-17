@@ -1,6 +1,8 @@
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
+import yaml
+
 from libreevolve.core.config import Config
 from libreevolve.core.evaluator import CascadeEvaluator
 from libreevolve.problems.loader import load_problem
@@ -355,6 +357,24 @@ def test_sorting_network_9_loads_as_problem():
     assert problem.name == "sorting_network_9"
     assert problem.primary_metric == "network_score"
     assert len(problem.initial_programs) == 1
+
+
+def test_sorting_network_9_codex_config_is_secret_free_and_valid():
+    config_path = SORTING_NETWORK_9_EXAMPLE_DIR / "config.yaml"
+    config_data = yaml.safe_load(config_path.read_text(encoding="utf-8"))
+
+    config = Config(**config_data)
+    backend = config.backends[0]
+
+    assert backend["type"] == "codex"
+    assert backend["model"] == "gpt-5.3-codex-spark"
+    assert backend["auth_name"] == "current"
+    assert "codex_home" not in backend
+    assert backend["sandbox"] == "read-only"
+    assert backend["transcript_dir"] == "runs/codex_sn9_codexcli_transcripts"
+    assert backend["ignore_user_config"] is True
+    assert backend["ignore_rules"] is True
+    assert backend["ephemeral"] is True
 
 
 def test_circle_packing_seed_is_valid_and_nontrivial():

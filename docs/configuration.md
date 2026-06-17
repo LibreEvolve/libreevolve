@@ -493,6 +493,7 @@ than it.
   trying fallback or failing the call. This is an ensemble-layer retry count
   after a backend raises; the built-in OpenAI, Anthropic, and Ollama adapters
   have a separate `provider_max_retries` cap for internal provider attempts.
+  The Codex CLI adapter does not have SDK-style internal provider retries.
   Must be between `0` and `10`.
 - `llm_max_call_attempts` (`32`): maximum total original, retry, and fallback
   attempts for one logical ensemble call. This bounds retry multiplication
@@ -591,20 +592,31 @@ ensemble_strategy: throughput_depth
 ```
 
 Backend specs are validated before a run starts. Supported backend types are
-`anthropic`, `openai`, `ollama`, and `custom`; `model` is required and must
-match the manifest-safe grammar `[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` without
-matching the shared secret-redaction patterns; optional `max_tokens`, `cost`,
-`latency`, and `depth` are validated; optional `role` must match the
-manifest-safe call role grammar `[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}`, must not
-end with `:`, and must not look like a secret; OpenAI `api_mode` is accepted
-only as `auto`, `chat_completions`, or `responses`; and `reasoning_effort` is
-accepted only for OpenAI backends with one of `none`, `minimal`, `low`,
-`medium`, `high`, or `xhigh` after a conservative local model-compatibility
-check.
+`anthropic`, `openai`, `ollama`, `codex`, and `custom`; `model` is required
+and must match the manifest-safe grammar
+`[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` without matching the shared
+secret-redaction patterns; optional `max_tokens`, `cost`, `latency`, and
+`depth` are validated; optional `role` must match the manifest-safe call role
+grammar `[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}`, must not end with `:`, and must
+not look like a secret; OpenAI `api_mode` is accepted only as `auto`,
+`chat_completions`, or `responses`; OpenAI `reasoning_effort` is accepted only
+with one of `none`, `minimal`, `low`, `medium`, `high`, or `xhigh` after a
+conservative local model-compatibility check; and Codex `reasoning_effort` is
+passed to `codex exec` as a local CLI config override without OpenAI SDK
+compatibility validation.
 Custom backends require `class_path` in `module.path:ClassName` form. The
 class is instantiated with the top-level `model`, optional `max_tokens`, and
 optional JSON-safe `kwargs`; `kwargs` keys must be manifest-safe keyword labels
 and cannot shadow `model` or `max_tokens`.
+Codex backend specs accept `cwd`, `sandbox`, `timeout_sec`,
+`transcript_dir`, `codex_home`, `auth_name`, `auth_homes`,
+`auth_registry_path`, `profile`, `approval_policy`, `ignore_user_config`,
+`ignore_rules`, `ephemeral`, `output_json_field`, `enable_features`, and
+`disable_features`. `max_tokens` is retained as LibreEvolve metadata for
+config parity, but the current `codex exec` command does not expose a direct
+max-output-token flag. The adapter can write redacted transcript records, but
+live smoke evidence, model availability preflight, manifest/report integration,
+provider-native token/cost accounting, and parity diagnostics remain open work.
 Constructor-supported keys are passed to backend classes; scheduling metadata
 stays in the ensemble.
 Restored/replay backend spec lists can be preflighted with
@@ -616,7 +628,7 @@ consume restored backend specs.
 Completed manifests also include
 `runtime.history.gemini_provider_parity_report`, which compares the configured
 backend specs with the built-in registry. The current supported backend types
-remain `anthropic`, `openai`, `ollama`, and `custom`; custom backend model
+remain `anthropic`, `openai`, `ollama`, `codex`, and `custom`; custom backend model
 names containing `gemini` can be reported as Gemini-like substitutions, but
 they do not provide first-class Google/Gemini credential preflight,
 Gemini client-context configuration, request-parameter mapping,
@@ -654,16 +666,18 @@ Ollama and OpenAI Chat Completions mode. `temperature` is bounded to
 `<= 1`; stop sequences must be non-empty secret-safe strings; and seeds must be
 non-negative 32-bit integers. Custom backends should carry provider-specific
 settings through their JSON-safe `kwargs` rather than these built-in top-level
-fields.
+fields. Codex backend specs also reject these top-level request parameters;
+use Codex-specific CLI settings instead.
 Built-in OpenAI, Anthropic, and Ollama backend specs also accept positive
 `timeout_sec`, which is forwarded to provider client construction as a request
-timeout. Custom backends should carry provider-specific timeout settings
-through JSON-safe `kwargs`. The separate run-level `llm_call_timeout_sec`
-wraps each ensemble backend attempt with a local deadline and records
-`ProviderCallTimeoutError` timeout telemetry when exceeded. This is not a
-provider cancellation token, but deadline-aware `LLMEnsemble` calls are
-clamped to the remaining `max_runtime_seconds` budget before each attempt
-starts.
+timeout. Codex backend specs use positive `timeout_sec` as a local
+`codex exec` process deadline and attempt process cleanup on timeout. Custom
+backends should carry provider-specific timeout settings through JSON-safe
+`kwargs`. The separate run-level `llm_call_timeout_sec` wraps each ensemble
+backend attempt with a local deadline and records `ProviderCallTimeoutError`
+timeout telemetry when exceeded. This is not a provider cancellation token,
+but deadline-aware `LLMEnsemble` calls are clamped to the remaining
+`max_runtime_seconds` budget before each attempt starts.
 Those built-in specs also accept `provider_max_retries`, a non-negative
 adapter-internal retry cap. The default is `2`, meaning one original provider
 call plus up to two internal retries. Each recorded LLM call includes an

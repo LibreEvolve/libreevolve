@@ -4923,7 +4923,7 @@ def build_llm(config) -> LLMEnsemble:
 def _normalize_backend_specs(backends: object) -> list[dict]:
     if not isinstance(backends, list) or not backends:
         raise ValueError("backends must be a non-empty list of mappings")
-    allowed_types = {"anthropic", "custom", "openai", "ollama"}
+    allowed_types = {"anthropic", "codex", "custom", "openai", "ollama"}
     common_keys = {
         "type",
         "model",
@@ -4955,6 +4955,28 @@ def _normalize_backend_specs(backends: object) -> list[dict]:
             allowed.add("timeout_sec")
             allowed.add("provider_max_retries")
             allowed.update({"base_url", "organization", "project"})
+        if backend_type == "codex":
+            allowed.update(
+                {
+                    "cwd",
+                    "sandbox",
+                    "timeout_sec",
+                    "reasoning_effort",
+                    "transcript_dir",
+                    "codex_home",
+                    "auth_name",
+                    "auth_homes",
+                    "auth_registry_path",
+                    "profile",
+                    "approval_policy",
+                    "ignore_user_config",
+                    "ignore_rules",
+                    "ephemeral",
+                    "output_json_field",
+                    "enable_features",
+                    "disable_features",
+                }
+            )
         if backend_type == "anthropic":
             allowed.add("base_url")
             allowed.add("timeout_sec")
@@ -4998,6 +5020,28 @@ def _normalize_backend_specs(backends: object) -> list[dict]:
                     spec["kwargs"],
                     field=f"{label}.kwargs",
                 )
+        if backend_type == "codex":
+            for field_name in (
+                "cwd",
+                "sandbox",
+                "reasoning_effort",
+                "transcript_dir",
+                "codex_home",
+                "auth_name",
+                "auth_registry_path",
+                "profile",
+                "approval_policy",
+                "output_json_field",
+                "enable_features",
+                "disable_features",
+            ):
+                if field_name in spec:
+                    item[field_name] = spec[field_name]
+            if "auth_homes" in spec:
+                item["auth_homes"] = deepcopy(spec["auth_homes"])
+            for field_name in ("ignore_user_config", "ignore_rules", "ephemeral"):
+                if field_name in spec:
+                    item[field_name] = bool(spec[field_name])
         for field_name in ("cost", "latency", "depth"):
             if field_name in spec:
                 item[field_name] = _validate_positive_metadata_number(
@@ -5031,7 +5075,7 @@ def _normalize_backend_specs(backends: object) -> list[dict]:
         _validate_backend_context_window_budget(item, label)
         if "role" in spec:
             item["role"] = validate_llm_call_role(spec["role"])
-        if "reasoning_effort" in spec:
+        if backend_type == "openai" and "reasoning_effort" in spec:
             item["reasoning_effort"] = validate_openai_reasoning_effort(
                 spec["reasoning_effort"],
                 model=item["model"],

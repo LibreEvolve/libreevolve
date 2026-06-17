@@ -38,88 +38,88 @@
     },
     {
       "path": "README.md",
-      "line_start": 110,
-      "line_end": 110,
+      "line_start": 116,
+      "line_end": 116,
       "level": 2,
       "heading_text": "Requirements",
       "heading_slug": "requirements"
     },
     {
       "path": "README.md",
-      "line_start": 122,
-      "line_end": 122,
+      "line_start": 128,
+      "line_end": 128,
       "level": 2,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start"
     },
     {
       "path": "README.md",
-      "line_start": 149,
-      "line_end": 149,
+      "line_start": 155,
+      "line_end": 155,
       "level": 2,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout"
     },
     {
       "path": "README.md",
-      "line_start": 162,
-      "line_end": 162,
+      "line_start": 168,
+      "line_end": 168,
       "level": 2,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope"
     },
     {
       "path": "README.md",
-      "line_start": 182,
-      "line_end": 182,
+      "line_start": 188,
+      "line_end": 188,
       "level": 2,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts"
     },
     {
       "path": "README.md",
-      "line_start": 204,
-      "line_end": 204,
+      "line_start": 210,
+      "line_end": 210,
       "level": 2,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map"
     },
     {
       "path": "README.md",
-      "line_start": 227,
-      "line_end": 227,
+      "line_start": 233,
+      "line_end": 233,
       "level": 2,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources"
     },
     {
       "path": "README.md",
-      "line_start": 251,
-      "line_end": 251,
+      "line_start": 257,
+      "line_end": 257,
       "level": 2,
       "heading_text": "Testing",
       "heading_slug": "testing"
     },
     {
       "path": "README.md",
-      "line_start": 265,
-      "line_end": 265,
+      "line_start": 271,
+      "line_end": 271,
       "level": 2,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout"
     },
     {
       "path": "README.md",
-      "line_start": 283,
-      "line_end": 283,
+      "line_start": 289,
+      "line_end": 289,
       "level": 2,
       "heading_text": "Contributing",
       "heading_slug": "contributing"
     },
     {
       "path": "README.md",
-      "line_start": 295,
-      "line_end": 295,
+      "line_start": 301,
+      "line_end": 301,
       "level": 2,
       "heading_text": "License",
       "heading_slug": "license"
@@ -323,7 +323,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 110,
+      "line_start": 116,
       "level": 2,
       "heading_text": "Requirements",
       "heading_slug": "requirements",
@@ -332,7 +332,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 122,
+      "line_start": 128,
       "level": 2,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start",
@@ -341,7 +341,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 149,
+      "line_start": 155,
       "level": 2,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout",
@@ -350,7 +350,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 162,
+      "line_start": 168,
       "level": 2,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope",
@@ -359,7 +359,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 182,
+      "line_start": 188,
       "level": 2,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts",
@@ -368,7 +368,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 204,
+      "line_start": 210,
       "level": 2,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map",
@@ -377,7 +377,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 227,
+      "line_start": 233,
       "level": 2,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources",
@@ -386,7 +386,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 251,
+      "line_start": 257,
       "level": 2,
       "heading_text": "Testing",
       "heading_slug": "testing",
@@ -395,7 +395,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 265,
+      "line_start": 271,
       "level": 2,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout",
@@ -404,7 +404,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 283,
+      "line_start": 289,
       "level": 2,
       "heading_text": "Contributing",
       "heading_slug": "contributing",
@@ -413,7 +413,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 295,
+      "line_start": 301,
       "level": 2,
       "heading_text": "License",
       "heading_slug": "license",
@@ -630,77 +630,77 @@
     },
     {
       "path": "README.md",
-      "line_start": 110,
+      "line_start": 116,
       "heading_text": "Requirements",
       "heading_slug": "requirements",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 122,
+      "line_start": 128,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 149,
+      "line_start": 155,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 162,
+      "line_start": 168,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 182,
+      "line_start": 188,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 204,
+      "line_start": 210,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 227,
+      "line_start": 233,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 251,
+      "line_start": 257,
       "heading_text": "Testing",
       "heading_slug": "testing",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 265,
+      "line_start": 271,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 283,
+      "line_start": 289,
       "heading_text": "Contributing",
       "heading_slug": "contributing",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 295,
+      "line_start": 301,
       "heading_text": "License",
       "heading_slug": "license",
       "reason": "no_claim_record_for_heading"

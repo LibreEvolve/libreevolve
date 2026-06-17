@@ -10,7 +10,7 @@ BACKEND_CLI_PROVIDER_GUARDRAIL_BOUNDARY_SCHEMA = (
     "libreevolve.backend_cli_provider_guardrail_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "backend_docs_cli_provider_guardrail_without_first_class_cli_backend_contract"
+    "backend_docs_codex_cli_lane_without_benchmark_ready_parity"
 )
 BACKENDS_PATH = "docs/backends.md"
 CODE_TODO_PATH = "docs/todo/code.md"
@@ -31,59 +31,59 @@ EXPECTED_MARKERS = (
         "marker": "Built-in SDK adapters: OpenAI, Anthropic, and Ollama",
     },
     {
+        "record_kind": "backends_builtin_codex_cli_lane",
+        "path": BACKENDS_PATH,
+        "marker": "Built-in CLI adapters: `type: codex` delegates generation",
+    },
+    {
         "record_kind": "backends_custom_import_path_lane",
         "path": BACKENDS_PATH,
         "marker": "Custom import-path backends: `type: custom` loads",
     },
     {
-        "record_kind": "backends_cli_provider_lane",
+        "record_kind": "backends_unsupported_cli_wrapper_lane",
         "path": BACKENDS_PATH,
-        "marker": "Subprocess/CLI-authenticated providers: Codex-authenticated",
+        "marker": "Unsupported local CLI wrappers: a user can still write a custom wrapper",
     },
     {
-        "record_kind": "backends_cli_not_first_class",
+        "record_kind": "backends_codex_not_benchmark_ready",
         "path": BACKENDS_PATH,
-        "marker": "not a first-class provider lane in the committed backend\n  contract",
+        "marker": "Do not use Codex CLI or custom-wrapper examples to claim benchmark- or\npaper-ready local CLI provider parity",
     },
     {
-        "record_kind": "backends_custom_wrapper_limitation",
+        "record_kind": "backends_codex_missing_parity_fields",
         "path": BACKENDS_PATH,
-        "marker": "A user can write a custom wrapper around a CLI",
+        "marker": "credential-safe live smoke tests, live model availability preflight",
     },
     {
-        "record_kind": "backends_code_todo_link",
+        "record_kind": "backends_codex_section",
         "path": BACKENDS_PATH,
-        "marker": "[docs/todo/code.md](todo/code.md)",
+        "marker": "## Codex CLI backend",
     },
     {
-        "record_kind": "backends_forbidden_claim_guidance",
+        "record_kind": "backends_codex_transcript_schema",
         "path": BACKENDS_PATH,
-        "marker": "Do not use custom-wrapper examples to claim Codex-authenticated",
+        "marker": "libreevolve.codex_cli_transcript.v1",
     },
     {
-        "record_kind": "backends_missing_cli_contract_fields",
+        "record_kind": "backends_codex_current_limitations",
         "path": BACKENDS_PATH,
-        "marker": "command discovery, auth/session\nprovenance without secret capture",
-    },
-    {
-        "record_kind": "backends_missing_manifest_smoke_fields",
-        "path": BACKENDS_PATH,
-        "marker": "manifest/report fields, and credential-safe smoke tests",
+        "marker": "no run-manifest/report integration promotes Codex CLI runs",
     },
     {
         "record_kind": "code_todo_cli_backend_contract",
         "path": CODE_TODO_PATH,
-        "marker": "Define a first-class subprocess/CLI LLM backend contract",
+        "marker": "Finish the subprocess/CLI LLM backend contract",
     },
     {
         "record_kind": "readme_todo_backend_doc_guardrail",
         "path": README_TODO_PATH,
-        "marker": "Add backend-doc guardrail for CLI-authenticated provider support.",
+        "marker": "Keep backend-doc guardrails for experimental CLI-authenticated provider",
     },
     {
         "record_kind": "readme_todo_backend_doc_required_result",
         "path": README_TODO_PATH,
-        "marker": "implement the first-class subprocess/CLI backend contract",
+        "marker": "complete the subprocess/CLI backend contract",
     },
 )
 CLAIM_SURFACE_PATHS = (
@@ -94,33 +94,35 @@ CLAIM_SURFACE_PATHS = (
     PAPERS_README_PATH,
 )
 FORBIDDEN_SUPPORTED_CLAIM_PHRASES = (
-    "Codex-authenticated providers are supported",
-    "Codex CLI backend is supported",
-    "first-class Codex-authenticated provider support is implemented",
-    "first-class local CLI provider support is implemented",
-    "local CLI providers are supported",
+    "Codex CLI runs are benchmark-ready",
+    "Codex CLI runs are paper-ready",
+    "Codex CLI backend has provider-native token accounting",
+    "Codex CLI backend has live model preflight",
+    "local CLI providers are benchmark-ready",
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "backends_provider_lane_taxonomy",
     "backends_builtin_sdk_lane",
+    "backends_builtin_codex_cli_lane",
     "backends_custom_import_path_lane",
-    "backends_cli_provider_guardrail",
-    "backends_custom_wrapper_limitation",
-    "backends_subprocess_cli_contract_link",
-    "backends_missing_cli_contract_fields",
+    "backends_unsupported_cli_wrapper_lane",
+    "backends_codex_not_benchmark_ready",
+    "backends_codex_transcript_schema",
     "code_todo_cli_backend_contract",
     "readme_todo_backend_doc_guardrail",
     "claim_surface_forbidden_supported_claim_scan",
-    "first_class_cli_backend_contract",
-    "cli_backend_manifest_schema",
+    "benchmark_ready_cli_provider_contract",
+    "cli_backend_manifest_report_integration",
     "credential_safe_cli_backend_smoke",
+    "cli_model_availability_preflight",
     "cli_provider_attempt_accounting",
     "cli_provider_diagnostics",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "first_class_cli_backend_contract": "not_recorded_locally",
-    "cli_backend_manifest_schema": "not_recorded_locally",
+    "benchmark_ready_cli_provider_contract": "not_recorded_locally",
+    "cli_backend_manifest_report_integration": "not_recorded_locally",
     "credential_safe_cli_backend_smoke": "not_recorded_locally",
+    "cli_model_availability_preflight": "not_recorded_locally",
     "cli_provider_attempt_accounting": "not_recorded_locally",
     "cli_provider_diagnostics": "not_recorded_locally",
 }
@@ -195,15 +197,15 @@ def backend_cli_provider_guardrail_boundary_record(
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records docs/backends.md provider-lane taxonomy, "
-            "built-in SDK adapter wording, custom import-path backend wording, "
-            "subprocess/CLI-authenticated provider guardrail wording, custom "
+            "built-in SDK adapter wording, experimental Codex CLI adapter "
+            "wording, custom import-path backend wording, unsupported local "
             "CLI-wrapper limitation wording, the subprocess/CLI backend "
-            "contract TODO link, missing CLI contract field markers, README "
-            "TODO ownership, and a narrow scan for unsupported positive "
-            "Codex/local CLI provider-support claims across backend, "
-            "configuration, README, ROADMAP, and papers-index claim surfaces. "
-            "It does not claim a first-class CLI backend contract, CLI backend "
-            "manifest schema, credential-safe CLI backend smoke, CLI provider "
+            "contract TODO link, README TODO ownership, and a narrow scan for "
+            "unsupported positive Codex/local CLI benchmark-parity claims "
+            "across backend, configuration, README, ROADMAP, and papers-index "
+            "claim surfaces. It does not claim benchmark-ready CLI provider "
+            "parity, CLI backend manifest/report integration, credential-safe "
+            "CLI backend smoke, model availability preflight, CLI provider "
             "attempt accounting, or CLI provider diagnostics."
         ),
     }
@@ -231,7 +233,7 @@ def validate_backend_cli_provider_guardrail_boundary(
     if data.get("boundary_status") != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
     if data.get("claim_ready") is not False:
-        issues.append(_issue("claim_ready_overclaim", "backend CLI-provider guardrail must not claim first-class CLI backend support"))
+        issues.append(_issue("claim_ready_overclaim", "backend CLI-provider guardrail must not claim benchmark-ready CLI provider parity"))
     for key in (
         "backends_path",
         "todo_paths",
@@ -252,7 +254,7 @@ def validate_backend_cli_provider_guardrail_boundary(
     if data.get("missing_marker_count") != 0:
         issues.append(_issue("missing_backend_cli_provider_guardrail_marker", "backend CLI-provider guardrail markers are incomplete"))
     if data.get("forbidden_claim_count") != 0:
-        issues.append(_issue("forbidden_cli_provider_supported_claim", "claim surfaces include unsupported CLI-provider support wording"))
+        issues.append(_issue("forbidden_cli_provider_supported_claim", "claim surfaces include unsupported CLI-provider parity wording"))
     if data.get("backend_cli_provider_guardrail_status") != "backend_docs_cli_provider_guardrail_present":
         issues.append(_issue("invalid_backend_cli_provider_guardrail_status", "backend CLI-provider guardrail must be present"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -261,10 +263,10 @@ def validate_backend_cli_provider_guardrail_boundary(
     if (
         not isinstance(boundary_text, str)
         or "docs/backends.md provider-lane taxonomy" not in boundary_text
-        or "custom CLI-wrapper limitation wording" not in boundary_text
-        or "does not claim a first-class CLI backend contract" not in boundary_text
+        or "experimental Codex CLI adapter wording" not in boundary_text
+        or "does not claim benchmark-ready CLI provider parity" not in boundary_text
     ):
-        issues.append(_issue("missing_claim_boundary", "claim_boundary must separate backend-doc guardrails from first-class CLI backend support"))
+        issues.append(_issue("missing_claim_boundary", "claim_boundary must separate backend-doc guardrails from benchmark-ready CLI provider parity"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return BackendCliProviderGuardrailBoundaryValidation(

@@ -200,6 +200,169 @@ def test_run_artifact_validator_boundary_consistency_rejects_missing_boundary(tm
     assert "missing_evaluation_attempts" in codes
 
 
+def test_run_artifact_validator_boundary_consistency_skips_synthetic_syntax_rows(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    boundary = _validator_boundary_metadata("host")
+    (run_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "runtime": {"status": "completed"},
+                "policies": {"validator_execution": _validator_execution_policy("host")},
+            }
+        ),
+        encoding="utf-8",
+    )
+    rows = [
+        {"evaluation": {"metadata": {"validator_boundary": boundary}}},
+        {
+            "evaluation": {
+                "error": "syntax_error",
+                "metadata": {
+                    "syntax_errors": [{"path": "candidate.py", "message": "invalid syntax"}],
+                    "synthetic_metrics": {"policy": "declared_metric_penalty"},
+                },
+            }
+        },
+    ]
+    (run_dir / "history.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+
+    assert validation.ok is True
+    assert validation.checked_attempts == 1
+    assert validation.issues == []
+
+
+def test_run_artifact_validator_boundary_consistency_skips_legacy_syntax_rows(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    boundary = _validator_boundary_metadata("host")
+    (run_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "runtime": {"status": "completed"},
+                "policies": {"validator_execution": _validator_execution_policy("host")},
+            }
+        ),
+        encoding="utf-8",
+    )
+    rows = [
+        {"evaluation": {"metadata": {"validator_boundary": boundary}}},
+        {
+            "evaluation": {
+                "error": "syntax_error",
+                "stages": [
+                    {
+                        "name": "syntax",
+                        "passed": False,
+                        "score": -0.2,
+                        "error": "candidate.py: SyntaxError",
+                    }
+                ],
+            }
+        },
+    ]
+    (run_dir / "history.jsonl").write_text(
+        "".join(json.dumps(row) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+
+    assert validation.ok is True
+    assert validation.checked_attempts == 1
+    assert validation.issues == []
+
+
+def test_run_artifact_validator_boundary_consistency_skips_pre_validator_diff_rows(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    boundary = _validator_boundary_metadata("host")
+    (run_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "runtime": {"status": "completed"},
+                "policies": {"validator_execution": _validator_execution_policy("host")},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (run_dir / "history.jsonl").write_text(
+        json.dumps({"evaluation": {"metadata": {"validator_boundary": boundary}}}) + "\n",
+        encoding="utf-8",
+    )
+    (run_dir / "failure_history.jsonl").write_text(
+        json.dumps(
+            {
+                "error": "unknown_diff_error",
+                "diff_error": "seed.py:no_valid_changes",
+                "evaluation": {
+                    "error": "unknown_diff_error",
+                    "stages": [
+                        {
+                            "name": "diff",
+                            "passed": False,
+                            "score": -0.4,
+                            "error": "unknown_diff_error",
+                        }
+                    ],
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+
+    assert validation.ok is True
+    assert validation.checked_attempts == 1
+    assert validation.issues == []
+
+
+def test_run_artifact_validator_boundary_consistency_skips_llm_mutation_failures(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    boundary = _validator_boundary_metadata("host")
+    (run_dir / "manifest.json").write_text(
+        json.dumps(
+            {
+                "runtime": {"status": "completed"},
+                "policies": {"validator_execution": _validator_execution_policy("host")},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (run_dir / "history.jsonl").write_text(
+        json.dumps({"evaluation": {"metadata": {"validator_boundary": boundary}}}) + "\n",
+        encoding="utf-8",
+    )
+    (run_dir / "failure_history.jsonl").write_text(
+        json.dumps(
+            {
+                "error": "llm_mutation_failed",
+                "diff_error": "llm_mutation_failed",
+                "evaluation": {
+                    "error": "llm_mutation_failed",
+                    "stages": [],
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    validation = validate_run_artifact_validator_boundary_consistency(run_dir)
+
+    assert validation.ok is True
+    assert validation.checked_attempts == 1
+    assert validation.issues == []
+
+
 def test_run_artifact_validator_boundary_consistency_rejects_mismatched_failure_row(tmp_path):
     run_dir = tmp_path / "run"
     run_dir.mkdir()

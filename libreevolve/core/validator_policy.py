@@ -316,6 +316,8 @@ def _validate_run_artifact_boundary_record(
 ) -> bool:
     evaluation = record.get("evaluation")
     if evaluation is None:
+        if _is_non_validator_attempt_record(record, None):
+            return False
         issues.append(
             ValidatorBoundaryArtifactIssue(
                 "missing_evaluation",
@@ -334,6 +336,8 @@ def _validate_run_artifact_boundary_record(
                 line_number=line_number,
             )
         )
+        return False
+    if _is_non_validator_attempt_record(record, evaluation):
         return False
     metadata = evaluation.get("metadata")
     if not isinstance(metadata, dict):
@@ -368,6 +372,34 @@ def _validate_run_artifact_boundary_record(
             )
         )
     return True
+
+
+def _is_non_validator_attempt_record(
+    record: dict[str, Any],
+    evaluation: dict[str, Any] | None,
+) -> bool:
+    """Return True for persisted failures that never crossed the validator boundary."""
+    if evaluation is not None:
+        metadata = evaluation.get("metadata")
+        if isinstance(metadata, dict) and (
+            isinstance(metadata.get("syntax_errors"), list)
+            or isinstance(metadata.get("synthetic_metrics"), dict)
+        ):
+            return True
+        stages = evaluation.get("stages")
+        error = evaluation.get("error")
+        if isinstance(stages, list) and stages and not any(
+            isinstance(stage, dict) and stage.get("name") == "validate"
+            for stage in stages
+        ):
+            return True
+        if error == "syntax_error":
+            return True
+        if error == "llm_mutation_failed" and stages == []:
+            return True
+    if record.get("error") == "llm_mutation_failed" or record.get("diff_error") == "llm_mutation_failed":
+        return True
+    return False
 
 
 def _load_policy(

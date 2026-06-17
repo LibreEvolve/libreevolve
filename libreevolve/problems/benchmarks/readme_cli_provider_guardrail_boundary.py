@@ -10,7 +10,7 @@ README_CLI_PROVIDER_GUARDRAIL_BOUNDARY_SCHEMA = (
     "libreevolve.readme_cli_provider_guardrail_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "readme_cli_provider_guardrail_without_first_class_cli_backend_contract"
+    "readme_codex_cli_lane_without_benchmark_ready_parity"
 )
 README_PATH = "README.md"
 BACKENDS_PATH = "docs/backends.md"
@@ -22,20 +22,20 @@ EXPECTED_MARKERS = (
     {
         "record_kind": "readme_backend_feature_bullet",
         "path": README_PATH,
-        "marker": "OpenAI, Anthropic, Ollama, and custom import-path backend support.",
+        "marker": "OpenAI, Anthropic, Ollama, experimental Codex CLI, and custom import-path",
     },
     {
         "record_kind": "readme_cli_provider_guardrail",
         "path": README_PATH,
         "marker": (
-            "Custom import-path backends are extension points, not first-class\n"
-            "  Codex-authenticated or other local CLI provider support."
+            "The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI\n"
+            "  lane for authenticated `codex exec` sessions."
         ),
     },
     {
         "record_kind": "readme_cli_provider_evidence_scope",
         "path": README_PATH,
-        "marker": "unsupported for README, ROADMAP, benchmark, and paper-facing evidence",
+        "marker": "not yet benchmark- or\n  paper-claim-ready",
     },
     {
         "record_kind": "readme_cli_provider_contract_link",
@@ -45,42 +45,47 @@ EXPECTED_MARKERS = (
     {
         "record_kind": "code_todo_cli_backend_contract",
         "path": CODE_TODO_PATH,
-        "marker": "Define a first-class subprocess/CLI LLM backend contract",
+        "marker": "Finish the subprocess/CLI LLM backend contract",
     },
     {
         "record_kind": "code_todo_command_resolution",
         "path": CODE_TODO_PATH,
-        "marker": "covering command resolution",
+        "marker": "resolves the local `codex exec`\n    command",
     },
     {
         "record_kind": "code_todo_auth_session_provenance",
         "path": CODE_TODO_PATH,
-        "marker": "auth/session provenance without secret\n    capture",
+        "marker": "redacted auth-home metadata",
     },
     {
         "record_kind": "code_todo_transcript_hashing",
         "path": CODE_TODO_PATH,
-        "marker": "transcript hashing and optional\n    retention",
+        "marker": "libreevolve.codex_cli_transcript.v1",
     },
     {
         "record_kind": "code_todo_manifest_report_fields",
         "path": CODE_TODO_PATH,
-        "marker": "manifest/report fields, docs, and focused tests",
+        "marker": "runtime manifest/report field integration",
     },
     {
         "record_kind": "readme_todo_cli_guardrail_owner",
         "path": README_TODO_PATH,
-        "marker": "Add README guardrail for subprocess/CLI-authenticated LLM providers.",
+        "marker": "Keep README guardrails for experimental subprocess/CLI-authenticated LLM",
     },
     {
         "record_kind": "readme_todo_distinguish_lanes",
         "path": README_TODO_PATH,
-        "marker": "implement the subprocess/CLI provider backend contract",
+        "marker": "limited to experimental Codex CLI plumbing",
     },
     {
         "record_kind": "backends_builtin_custom_lanes",
         "path": BACKENDS_PATH,
-        "marker": "LibreEvolve supports configured built-in and custom backend types",
+        "marker": "LibreEvolve supports configured built-in, CLI, and custom backend types",
+    },
+    {
+        "record_kind": "backends_codex_cli_lane",
+        "path": BACKENDS_PATH,
+        "marker": "Built-in CLI adapters: `type: codex` delegates generation",
     },
     {
         "record_kind": "backends_custom_import_path_lane",
@@ -95,11 +100,11 @@ EXPECTED_MARKERS = (
 )
 CLAIM_SURFACE_PATHS = (README_PATH, ROADMAP_PATH, PAPERS_README_PATH)
 FORBIDDEN_SUPPORTED_CLAIM_PHRASES = (
-    "Codex-authenticated providers are supported",
-    "Codex CLI backend is supported",
-    "first-class Codex-authenticated provider support is implemented",
-    "first-class local CLI provider support is implemented",
-    "local CLI providers are supported",
+    "Codex CLI runs are benchmark-ready",
+    "Codex CLI runs are paper-ready",
+    "Codex CLI backend has provider-native token accounting",
+    "Codex CLI backend has live model preflight",
+    "local CLI providers are benchmark-ready",
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "readme_backend_feature_bullet",
@@ -112,17 +117,20 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "code_todo_manifest_report_fields",
     "readme_todo_cli_guardrail_owner",
     "backends_builtin_custom_lanes",
+    "backends_codex_cli_lane",
     "claim_surface_forbidden_supported_claim_scan",
-    "first_class_cli_backend_contract",
-    "cli_backend_manifest_schema",
+    "benchmark_ready_cli_provider_contract",
+    "cli_backend_manifest_report_integration",
     "credential_safe_cli_backend_smoke",
+    "cli_model_availability_preflight",
     "provider_budget_accounting_for_cli_backend",
     "provider_diagnostics_for_cli_backend",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "first_class_cli_backend_contract": "not_recorded_locally",
-    "cli_backend_manifest_schema": "not_recorded_locally",
+    "benchmark_ready_cli_provider_contract": "not_recorded_locally",
+    "cli_backend_manifest_report_integration": "not_recorded_locally",
     "credential_safe_cli_backend_smoke": "not_recorded_locally",
+    "cli_model_availability_preflight": "not_recorded_locally",
     "provider_budget_accounting_for_cli_backend": "not_recorded_locally",
     "provider_diagnostics_for_cli_backend": "not_recorded_locally",
 }
@@ -196,19 +204,19 @@ def readme_cli_provider_guardrail_boundary_record(
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records the README built-in/custom backend feature "
-            "bullet, the README guardrail separating custom import-path "
-            "extension points from first-class Codex-authenticated or other "
-            "local CLI provider support, the link to the subprocess/CLI backend "
-            "contract TODO, code TODO markers for command resolution, "
-            "auth/session provenance, transcript hashing, manifest/report "
-            "fields, README TODO ownership, backend-doc built-in/custom lane "
-            "markers, and a narrow scan for unsupported positive Codex/local "
-            "CLI provider-support claims in README, ROADMAP, and papers/README. "
-            "It does not claim a first-class CLI backend contract, CLI backend "
-            "manifest schema, credential-safe CLI backend smoke, provider budget "
-            "accounting for CLI backends, or provider diagnostics for CLI "
-            "backends."
+            "This boundary records the README built-in/custom/Codex CLI "
+            "backend feature bullet, the README guardrail separating "
+            "experimental Codex CLI plumbing from benchmark-ready provider "
+            "parity, the link to the subprocess/CLI backend contract TODO, "
+            "code TODO markers for command resolution, auth/session provenance, "
+            "transcript hashing, manifest/report gaps, README TODO ownership, "
+            "backend-doc built-in/custom/Codex lane markers, and a narrow scan "
+            "for unsupported positive Codex/local CLI benchmark-parity claims "
+            "in README, ROADMAP, and papers/README. It does not claim "
+            "benchmark-ready CLI provider parity, CLI backend manifest/report "
+            "integration, credential-safe CLI backend smoke, model availability "
+            "preflight, provider budget accounting for CLI backends, or "
+            "provider diagnostics for CLI backends."
         ),
     }
 
@@ -235,7 +243,7 @@ def validate_readme_cli_provider_guardrail_boundary(
     if data.get("boundary_status") != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
     if data.get("claim_ready") is not False:
-        issues.append(_issue("claim_ready_overclaim", "README CLI-provider guardrail must not claim first-class CLI backend support"))
+        issues.append(_issue("claim_ready_overclaim", "README CLI-provider guardrail must not claim benchmark-ready CLI provider parity"))
     for key in (
         "readme_path",
         "docs_paths",
@@ -257,7 +265,7 @@ def validate_readme_cli_provider_guardrail_boundary(
     if data.get("missing_marker_count") != 0:
         issues.append(_issue("missing_cli_provider_guardrail_marker", "README CLI-provider guardrail markers are incomplete"))
     if data.get("forbidden_claim_count") != 0:
-        issues.append(_issue("forbidden_cli_provider_supported_claim", "claim surfaces include unsupported CLI-provider support wording"))
+        issues.append(_issue("forbidden_cli_provider_supported_claim", "claim surfaces include unsupported CLI-provider parity wording"))
     if data.get("cli_provider_guardrail_status") != "readme_cli_provider_guardrail_present":
         issues.append(_issue("invalid_cli_provider_guardrail_status", "README CLI-provider guardrail must be present"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -265,11 +273,11 @@ def validate_readme_cli_provider_guardrail_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "separating custom import-path extension points" not in boundary_text
+        or "separating experimental Codex CLI plumbing" not in boundary_text
         or "subprocess/CLI backend contract TODO" not in boundary_text
-        or "does not claim a first-class CLI backend contract" not in boundary_text
+        or "does not claim benchmark-ready CLI provider parity" not in boundary_text
     ):
-        issues.append(_issue("missing_claim_boundary", "claim_boundary must separate README guardrails from first-class CLI backend support"))
+        issues.append(_issue("missing_claim_boundary", "claim_boundary must separate README guardrails from benchmark-ready CLI provider parity"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return ReadmeCliProviderGuardrailBoundaryValidation(

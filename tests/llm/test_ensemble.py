@@ -26,6 +26,7 @@ from libreevolve.llm.backend_registry import (
     builtin_backend_registry,
     validate_backend_registry_specs,
 )
+from libreevolve.llm.codex_cli import CodexCLIBackend
 from libreevolve.population.program import Program
 from libreevolve.problems.loader import Problem
 
@@ -977,12 +978,43 @@ def test_build_registry_backends_constructs_validated_custom_backends():
     assert metadata == [{"cost": 2.0, "latency": 1.0, "depth": 1.0, "role": "general"}]
 
 
+def test_build_registry_backends_constructs_codex_backend(tmp_path):
+    auth_home = tmp_path / "auth"
+    backends, metadata = build_registry_backends(
+        [
+            {
+                "type": "codex",
+                "model": "gpt-5.3-codex-spark",
+                "max_tokens": 1024,
+                "auth_name": "current",
+                "auth_homes": {"current": str(auth_home)},
+                "transcript_dir": "runs/codex-transcripts",
+                "ignore_user_config": True,
+                "ignore_rules": True,
+                "ephemeral": True,
+                "cost": 2,
+            }
+        ]
+    )
+
+    assert isinstance(backends[0], CodexCLIBackend)
+    assert backends[0].name == "codex-cli/gpt-5.3-codex-spark"
+    assert backends[0]._auth_name == "current"
+    assert backends[0]._codex_home == str(auth_home.resolve())
+    assert backends[0]._ignore_user_config is True
+    assert backends[0]._ignore_rules is True
+    assert backends[0]._ephemeral is True
+    assert metadata == [{"cost": 2.0, "latency": 1.0, "depth": 1.0, "role": "general"}]
+
+
 def test_builtin_backend_registry_exposes_validated_constructor_fields():
     registry = builtin_backend_registry()
 
     assert registry["openai"]["schema"] == "libreevolve.backend_registry.v1"
     assert registry["openai"]["constructor"] == "libreevolve.llm.openai:OpenAIBackend"
     assert "reasoning_effort" in registry["openai"]["constructor_fields"]
+    assert registry["codex"]["constructor"] == "libreevolve.llm.codex_cli:CodexCLIBackend"
+    assert "auth_name" in registry["codex"]["constructor_fields"]
     assert "host" in registry["ollama"]["constructor_fields"]
 
 

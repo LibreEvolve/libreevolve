@@ -14,7 +14,7 @@ def test_backend_cli_provider_guardrail_boundary_accepts_current_markers():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "backend_docs_cli_provider_guardrail_without_first_class_cli_backend_contract"
+        == "backend_docs_codex_cli_lane_without_benchmark_ready_parity"
     )
     assert boundary["schema"] == BACKEND_CLI_PROVIDER_GUARDRAIL_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -27,9 +27,10 @@ def test_backend_cli_provider_guardrail_boundary_accepts_current_markers():
     assert boundary["missing_marker_records"] == []
     assert boundary["forbidden_claim_records"] == []
     assert boundary["missing_evidence"] == {
-        "first_class_cli_backend_contract": "not_recorded_locally",
-        "cli_backend_manifest_schema": "not_recorded_locally",
+        "benchmark_ready_cli_provider_contract": "not_recorded_locally",
+        "cli_backend_manifest_report_integration": "not_recorded_locally",
         "credential_safe_cli_backend_smoke": "not_recorded_locally",
+        "cli_model_availability_preflight": "not_recorded_locally",
         "cli_provider_attempt_accounting": "not_recorded_locally",
         "cli_provider_diagnostics": "not_recorded_locally",
     }
@@ -48,14 +49,14 @@ def test_backend_cli_provider_guardrail_boundary_rejects_overclaim_and_drift():
     boundary["forbidden_claim_records"] = [
         {
             "path": "docs/backends.md",
-            "forbidden_phrase": "Codex CLI backend is supported",
+            "forbidden_phrase": "Codex CLI runs are benchmark-ready",
             "claim_status": "forbidden_supported_claim_present",
         }
     ]
     boundary["backend_cli_provider_guardrail_status"] = (
         "backend_docs_cli_provider_guardrail_incomplete"
     )
-    boundary["missing_evidence"]["cli_backend_manifest_schema"] = "recorded"
+    boundary["missing_evidence"]["cli_backend_manifest_report_integration"] = "recorded"
     boundary["required_evidence_fields"] = ["backends_provider_lane_taxonomy"]
 
     validation = validate_backend_cli_provider_guardrail_boundary(boundary)
@@ -73,7 +74,7 @@ def test_backend_cli_provider_guardrail_boundary_rejects_overclaim_and_drift():
     assert "invalid_backend_cli_provider_guardrail_status" in codes
     assert "missing_backend_cli_provider_guardrail_marker" in codes
     assert "forbidden_cli_provider_supported_claim" in codes
-    assert "invalid_missing_evidence_cli_backend_manifest_schema" in codes
+    assert "invalid_missing_evidence_cli_backend_manifest_report_integration" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -85,10 +86,10 @@ def test_render_backend_cli_provider_guardrail_boundary_summary_reports_shape():
     assert "Backend CLI-provider guardrail boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | backend_docs_cli_provider_guardrail_without_first_class_cli_backend_contract |"
+        "| boundary_status | backend_docs_codex_cli_lane_without_benchmark_ready_parity |"
         in summary
     )
     assert "| marker_record_count | 13 |" in summary
     assert "| missing_marker_count | 0 |" in summary
     assert "| forbidden_claim_count | 0 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 6 |" in summary

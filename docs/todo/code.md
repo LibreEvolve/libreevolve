@@ -1097,40 +1097,41 @@ sidecars, tests, and active TODOs.
     current synchronous provider-attempt/token/configured-cost/latency
     controller-event replay.
 
-- [ ] Define a first-class subprocess/CLI LLM backend contract before treating
-      Codex-authenticated providers as supported.
+- [ ] Finish the subprocess/CLI LLM backend contract before treating
+      Codex-authenticated runs as benchmark-claim-ready.
   - Spec evidence: AlphaEvolve-style runs depend on a coherent model ensemble
     whose provider calls, failures, budgets, and outputs are attributable
     across long evolutionary searches. A local authenticated CLI provider can
     be useful for experiments, but it is still a provider boundary and needs
     the same truthfulness, replay, redaction, timeout, and diagnostic treatment
     as SDK-backed providers before being described as supported.
-  - Current evidence: tracked backend configuration accepts only
-    `anthropic`, `openai`, `ollama`, and `custom`; `docs/backends.md` lists
-    OpenAI, Anthropic, Ollama, and custom import-path backends; and
-    `build_llm()` constructs custom backends by importing a Python
-    `class_path` with JSON-safe kwargs and validating the `generate(prompt,
-    **kwargs)` protocol. The current tracked code does not define a
-    subprocess-backed provider adapter contract for command discovery,
-    authenticated CLI session provenance, stdin/stdout protocol, transcript
-    persistence, model-id availability checks, provider attempt accounting,
-    timeout/cancellation semantics, or provider-error classification.
-  - Current gap: a Codex CLI or other authenticated local CLI can be wrapped as
-    an ad hoc custom backend, but that does not make it a first-class or
-    reproducible LibreEvolve backend. There is no committed registry lane,
-    config schema, docs page, safety checklist, smoke fixture, redacted
-    transcript schema, runtime manifest field, or test matrix proving that
-    CLI-authenticated model calls are portable, auditable, budget-accounted,
-    and comparable with SDK-backed providers in AlphaEvolve-style benchmark
-    runs.
-  - Required result: add a tracked subprocess/CLI provider backend contract
-    covering command resolution, auth/session provenance without secret
-    capture, safe prompt/response transport, transcript hashing and optional
-    retention, bounded redacted stderr/stdout diagnostics, model availability
-    preflight, provider-attempt/token/cost limitations, timeout and cancellation
-    behavior, manifest/report fields, docs, and focused tests before README,
-    ROADMAP, benchmark, or paper-facing materials claim Codex-authenticated or
-    other local CLI providers are supported.
+  - Current evidence: tracked backend configuration now accepts `codex` in
+    addition to `anthropic`, `openai`, `ollama`, and `custom`;
+    `builtin_backend_registry()` exposes a `codex` lane backed by
+    `libreevolve.llm.codex_cli.CodexCLIBackend`; `docs/backends.md` documents
+    the Codex CLI constructor fields and limitations; and focused tests cover
+    command construction, auth-home resolution, environment separation,
+    transcript writing, JSON-field extraction, request-parameter rejection, and
+    ensemble construction. The adapter resolves the local `codex exec`
+    command, sends prompts on stdin, captures `--output-last-message`, records
+    optional `libreevolve.codex_cli_transcript.v1` transcript files with
+    redacted auth-home metadata, and uses local timeout cleanup.
+  - Current gap: the Codex CLI lane is experimental provider plumbing, not
+    benchmark- or paper-claim-ready provider parity. There is no committed
+    credential-safe live smoke fixture, live model availability preflight,
+    runtime manifest/report field integration for Codex transcripts,
+    provider-native token usage/cost accounting, provider finish-reason or
+    request-id diagnostics, SDK-style retry policy, or evidence that local
+    process cancellation equals provider-side cancellation. Other local CLI
+    providers still have no documented lane and remain custom-wrapper
+    experiments.
+  - Required result: complete the subprocess/CLI provider backend contract with
+    credential-safe live smoke evidence, model availability preflight,
+    provider-attempt/token/cost limitation records, provider-error
+    classification, manifest/report fields, transcript retention policy in run
+    artifacts, docs, and focused tests before README, ROADMAP, benchmark, or
+    paper-facing materials claim Codex-authenticated or other local CLI runs as
+    reproducible provider evidence.
 
 - [ ] Define a required custom-backend attribution and telemetry contract.
   - Spec evidence: AlphaEvolve-style model ensembles require comparable
@@ -8262,23 +8263,18 @@ sidecars, tests, and active TODOs.
     useful for experiments, but it cannot be treated as project-supported
     benchmark evidence until its provider lane, run profile, and artifacts are
     committed, scoped, and validated.
-  - Current evidence: the current worktree contains local-only experimental
-    Codex CLI backend/profile files under `libreevolve/llm/` and
-    `libreevolve/problems/examples/sorting_network_9/`, while the tracked
-    repository still exposes only the generic custom-backend extension point
-    plus active TODOs for a first-class subprocess/CLI backend contract and
-    README/backend-doc guardrails. Existing benchmark and paper-boundary
-    sidecars track sorting-network fixture scope and repeated-run evidence
-    gaps, but they do not classify untracked local provider profiles as
-    excluded evidence or require a committed profile before a benchmark run is
-    cited.
+  - Current evidence: the repository now includes experimental Codex CLI
+    backend plumbing under `libreevolve/llm/` and a secret-free
+    `libreevolve/problems/examples/sorting_network_9/config.yaml` profile for
+    the intended `gpt-5.3-codex-spark` lane. Existing benchmark and
+    paper-boundary sidecars track sorting-network fixture scope and repeated-
+    run evidence gaps, and the config can be validated from a clean checkout.
   - Current gap: there is no benchmark-run profile schema, local-experiment
-    hygiene check, or CI/report gate that detects provider adapters or problem
-    configs under source/example paths that are untracked, maps each runnable
-    benchmark profile to an explicit provider lane and support status, records
-    safe model/auth provenance, budget limits, transcript retention policy,
-    and expected artifact outputs, or blocks README/ROADMAP/paper claims from
-    citing local-only provider profiles.
+    hygiene check, or CI/report gate that maps each runnable benchmark profile
+    to an explicit provider lane and support status, records safe model/auth
+    provenance, budget limits, transcript retention policy, expected artifact
+    outputs, and result linkage, or blocks README/ROADMAP/paper claims from
+    citing profiles that have not produced validated run artifacts.
   - Required result: add committed benchmark provider-profile records plus a
     validation gate that distinguishes supported, experimental, and
     local-only provider profiles; checks tracked source/config status,
@@ -8453,18 +8449,19 @@ sidecars, tests, and active TODOs.
     candidates, and tracked tests load `sorting_network_9`, validate the
     exhaustive zero-one evaluator, and check a known 25-comparator target.
     The tracked `libreevolve/problems/examples/sorting_network_9/` directory
-    contains `task_description.txt`, `metrics.yaml`, `validate.py`, and the
-    seed program, but the current worktree also has an untracked
-    `libreevolve/problems/examples/sorting_network_9/config.yaml` that appears
-    to encode the intended `gpt-5.3-codex-spark` Codex CLI backend run.
-  - Current gap: a clean checkout can load and test the validator, but it does
-    not include a non-secret runnable benchmark recipe, provider-auth boundary,
-    expected command, or sample manifest contract for `sorting_network_9`.
-    That means README/ROADMAP can truthfully claim the bounded evaluator
-    exists, but cannot yet claim a reproducible AlphaEvolve-style run setup for
-    the 9-input fixture under the intended model/backend path.
-  - Required result: add a tracked, secret-free `sorting_network_9` run recipe
-    or template plus tests/docs that prove it can be invoked from a clean
-    checkout with explicit backend/auth placeholders, expected run artifacts,
-    validator budget settings, and overclaim wording that separates a runnable
-    fixture from certified rediscovery evidence.
+    contains `task_description.txt`, `metrics.yaml`, `validate.py`, the seed
+    program, and a tracked secret-free `config.yaml` that encodes the intended
+    `gpt-5.3-codex-spark` Codex CLI backend run. Focused config tests validate
+    that profile without requiring live Codex credentials.
+  - Current gap: a clean checkout can load the validator and config, but the
+    repository still lacks an executable clean-checkout run contract that names
+    the exact command, auth setup expectations, expected run artifacts, sample
+    manifest assertions, skip/failure modes, and post-run evidence bundle for
+    `sorting_network_9`. That means README/ROADMAP can truthfully claim a
+    bounded evaluator plus experimental run profile exists, but cannot yet
+    claim certified rediscovery evidence under the intended model/backend path.
+  - Required result: add tests/docs that prove the tracked `sorting_network_9`
+    profile can be invoked from a clean checkout with explicit backend/auth
+    placeholders, expected run artifacts, validator budget settings, sample
+    manifest checks, and overclaim wording that separates a runnable fixture
+    from certified rediscovery evidence.

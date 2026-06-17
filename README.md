@@ -27,7 +27,8 @@ Runnable today:
   open work.
 - SEARCH/REPLACE mutation diffs using canonical AlphaEvolve-style fences, plus
   configurable full-code replacement mode.
-- OpenAI, Anthropic, Ollama, and custom import-path backend support.
+- OpenAI, Anthropic, Ollama, experimental Codex CLI, and custom import-path
+  backend support.
 - Heuristic UCB-style backend selection.
 - Local MAP-Elites and island archives, with five islands by default.
 - Local subprocess evaluation with optional staged validators.
@@ -62,13 +63,18 @@ Important limits:
   candidates, paired solution/search representations, abstraction-specific
   prompts/validators/archive descriptors, migration policies, and equal-budget
   cross-abstraction reports are tracked as missing AlphaEvolve-style work.
-- Built-in provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
+- Built-in SDK provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
-- Custom import-path backends are extension points, not first-class
-  Codex-authenticated or other local CLI provider support. Treat those lanes as
-  unsupported for README, ROADMAP, benchmark, and paper-facing evidence until
-  the subprocess/CLI backend contract in [docs/todo/code.md](docs/todo/code.md)
-  is implemented with smoke evidence.
+- The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI
+  lane for authenticated `codex exec` sessions. It records redacted auth/session
+  provenance and optional transcripts, but it is not yet benchmark- or
+  paper-claim-ready because credential-safe live smoke evidence, model
+  availability preflight, manifest/report integration, provider-native
+  token/cost accounting, and parity diagnostics remain open work in
+  [docs/todo/code.md](docs/todo/code.md).
+- Custom import-path backends are extension points. A custom wrapper around a
+  local CLI is not portable provider support or benchmark evidence unless it is
+  promoted to a documented provider lane with its own tests and telemetry.
 - The included examples are smoke fixtures unless they explicitly document
   stronger benchmark evidence.
 - The default initial-program policy is permissive; AlphaEvolve-style complete

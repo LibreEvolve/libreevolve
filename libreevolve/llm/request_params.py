@@ -143,10 +143,10 @@ def _validate_provider_support(
 ) -> None:
     if not normalized:
         return
-    if backend_type == "custom":
+    if backend_type in {"codex", "custom"}:
         raise ValueError(
-            f"{field_prefix} request parameters are not supported for custom backends; "
-            "use kwargs for custom provider-specific settings"
+            f"{field_prefix} request parameters are not supported for {backend_type} backends; "
+            "use backend-specific settings instead"
         )
     if backend_type == "anthropic" and "seed" in normalized:
         raise ValueError(f"{field_prefix}.seed is not supported for anthropic backends")

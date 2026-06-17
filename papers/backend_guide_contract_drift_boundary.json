@@ -29,7 +29,7 @@
     "docs/todo/readme.md",
     "docs/todo/code.md"
   ],
-  "guide_marker_count": 20,
+  "guide_marker_count": 22,
   "missing_guide_marker_count": 0,
   "missing_guide_marker_records": [],
   "guide_marker_records": [
@@ -61,6 +61,12 @@
       "record_id": "ollama_backend",
       "path": "docs/backends.md",
       "required_marker": "## Ollama backend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "codex_cli_backend",
+      "path": "docs/backends.md",
+      "required_marker": "## Codex CLI backend",
       "marker_status": "marker_present"
     },
     {
@@ -150,11 +156,17 @@
     {
       "record_id": "cli_provider_guardrail_claim",
       "path": "docs/backends.md",
-      "required_marker": "Subprocess/CLI-authenticated providers: Codex-authenticated",
+      "required_marker": "Built-in CLI adapters: `type: codex` delegates generation",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "cli_provider_limit_claim",
+      "path": "docs/backends.md",
+      "required_marker": "no run-manifest/report integration promotes Codex CLI runs",
       "marker_status": "marker_present"
     }
   ],
-  "evidence_anchor_count": 26,
+  "evidence_anchor_count": 28,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -225,6 +237,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "codex_cli_backend",
+      "path": "libreevolve/llm/codex_cli.py",
+      "required_marker": "class CodexCLIBackend",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "config_llm_role_backend_indices",
       "path": "libreevolve/core/config.py",
       "required_marker": "llm_role_backend_indices",
@@ -246,6 +264,12 @@
       "record_id": "ensemble_tests",
       "path": "tests/llm/test_ensemble.py",
       "required_marker": "LLMEnsemble",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "codex_cli_tests",
+      "path": "tests/llm/test_codex_cli.py",
+      "required_marker": "test_codex_backend_invokes_codex_exec_and_writes_transcript",
       "marker_status": "marker_present"
     },
     {
@@ -275,7 +299,7 @@
     {
       "record_id": "code_todo_cli_contract",
       "path": "docs/todo/code.md",
-      "required_marker": "Define a first-class subprocess/CLI LLM backend contract",
+      "required_marker": "Finish the subprocess/CLI LLM backend contract",
       "marker_status": "marker_present"
     },
     {

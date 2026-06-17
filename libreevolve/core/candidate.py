@@ -1690,7 +1690,7 @@ def _evolve_marker_comments(code: str, lines: list[str]) -> tuple[list[_EvolveMa
                     line_end=line_start + len(lines[row - 1]),
                 )
             )
-    except tokenize.TokenError:
+    except (IndentationError, tokenize.TokenError):
         tokenizer_failed = True
     return markers, tokenizer_failed
 

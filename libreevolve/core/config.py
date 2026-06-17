@@ -1621,7 +1621,7 @@ def _require_output_check_scalar(name: str, value: object) -> None:
 def _validate_backends(backends: object) -> None:
     if not isinstance(backends, list) or not backends:
         raise ConfigError("backends must be a non-empty list of mappings")
-    allowed_types = {"anthropic", "custom", "openai", "ollama"}
+    allowed_types = {"anthropic", "codex", "custom", "openai", "ollama"}
     common_keys = {
         "type",
         "model",
@@ -1651,6 +1651,28 @@ def _validate_backends(backends: object) -> None:
             allowed.add("timeout_sec")
             allowed.add("provider_max_retries")
             allowed.update({"base_url", "organization", "project"})
+        if backend["type"] == "codex":
+            allowed.update(
+                {
+                    "cwd",
+                    "sandbox",
+                    "timeout_sec",
+                    "reasoning_effort",
+                    "transcript_dir",
+                    "codex_home",
+                    "auth_name",
+                    "auth_homes",
+                    "auth_registry_path",
+                    "profile",
+                    "approval_policy",
+                    "ignore_user_config",
+                    "ignore_rules",
+                    "ephemeral",
+                    "output_json_field",
+                    "enable_features",
+                    "disable_features",
+                }
+            )
         if backend["type"] == "anthropic":
             allowed.add("base_url")
             allowed.add("timeout_sec")
@@ -1728,7 +1750,9 @@ def _validate_backends(backends: object) -> None:
                 )
         if "role" in backend:
             _require_role_label(f"{label}.role", backend["role"])
-        if "reasoning_effort" in backend:
+        if backend["type"] == "codex" and "reasoning_effort" in backend:
+            _require_string(f"{label}.reasoning_effort", backend["reasoning_effort"])
+        if backend["type"] == "openai" and "reasoning_effort" in backend:
             try:
                 validate_openai_reasoning_effort_for_model(
                     backend["reasoning_effort"],

@@ -454,6 +454,24 @@ def test_evolve_block_markers_fail_closed_after_tokenizer_error():
     assert err == "malformed_evolve_blocks:tokenize_error"
 
 
+def test_evolve_block_markers_fail_closed_after_indentation_error():
+    code = (
+        "if True:\n"
+        "    x = 1\n"
+        "  y = 2\n"
+        "# EVOLVE-BLOCK-START core\n"
+        "z = 3\n"
+        "# EVOLVE-BLOCK-END\n"
+    )
+
+    assert extract_evolve_blocks(code) == []
+    assert validate_evolve_blocks(code) == "tokenize_error"
+
+    result, err = apply_candidate_mutation(code, "replacement = True", mutation_mode="full")
+    assert result == code
+    assert err == "malformed_evolve_blocks:tokenize_error"
+
+
 def test_diff_mode_rejects_tokenizer_error_before_marker_lines():
     code = (
         'template = """unterminated\n'

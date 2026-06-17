@@ -78,6 +78,52 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     assert boundary["exact_duplicate_cross_owner_group_count"] == 122
     assert boundary["exact_duplicate_completed_only_group_count"] == 123
     assert boundary["exact_duplicate_active_involved_group_count"] == 0
+    assert boundary["exact_same_owner_completed_duplicate_group_count"] == 1
+    assert (
+        boundary["exact_same_owner_completed_duplicate_status"]
+        == "exact_same_owner_completed_duplicates_detected"
+    )
+    assert boundary["exact_same_owner_completed_duplicate_groups"] == [
+        {
+            "normalized_title": (
+                "add bounded roadmap evaluation cascade readiness matrix"
+            ),
+            "owner_ids": ["roadmap"],
+            "record_count": 2,
+            "records": [
+                {
+                    "owner_id": "roadmap",
+                    "ledger_kind": "completed",
+                    "path": "docs/todo/Completed/roadmap.md",
+                    "line_start": 15437,
+                    "status": "completed",
+                    "title": (
+                        "Add bounded ROADMAP evaluation-cascade readiness matrix."
+                    ),
+                    "normalized_title": (
+                        "add bounded roadmap evaluation cascade readiness matrix"
+                    ),
+                },
+                {
+                    "owner_id": "roadmap",
+                    "ledger_kind": "completed",
+                    "path": "docs/todo/Completed/roadmap.md",
+                    "line_start": 15755,
+                    "status": "completed",
+                    "title": (
+                        "Add bounded ROADMAP evaluation-cascade readiness matrix."
+                    ),
+                    "normalized_title": (
+                        "add bounded roadmap evaluation cascade readiness matrix"
+                    ),
+                },
+            ],
+            "dedupe_scope": (
+                "same_owner_completed_exact_title_duplicate_without_"
+                "canonical_gap_claim"
+            ),
+        }
+    ]
     assert (
         boundary["exact_stale_completed_duplicate_detection_policy"]
         == "completed_record_with_active_same_normalized_title"
@@ -115,6 +161,7 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     boundary["exact_duplicate_inflation_count"] = 0
     boundary["exact_duplicate_owner_status_report"]["cross_owner_group_count"] = 0
     boundary["exact_duplicate_cross_owner_group_count"] = 0
+    boundary["exact_same_owner_completed_duplicate_group_count"] = 0
     boundary["exact_stale_completed_duplicate_group_count"] = 1
     boundary["exact_stale_completed_duplicate_status"] = (
         "exact_stale_completed_duplicates_detected"
@@ -135,6 +182,7 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     assert "invalid_exact_duplicate_inflation_count" in codes
     assert "invalid_exact_duplicate_owner_status_report" in codes
     assert "invalid_exact_duplicate_cross_owner_group_count" in codes
+    assert "invalid_exact_same_owner_completed_duplicate_group_count" in codes
     assert "invalid_exact_stale_completed_duplicate_group_count" in codes
     assert "invalid_exact_stale_completed_duplicate_status" in codes
     assert "missing_required_evidence_field" in codes

@@ -105,7 +105,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     records an exact owner/status profile: all 123 exact-title duplicate
     groups are completed-only, 122 groups are cross-owner duplicates, one
     group is same-owner, and zero exact-title duplicate groups involve active
-    TODO rows. It also records a bounded exact stale-completed duplicate
+    TODO rows. It also records an exact same-owner completed duplicate report
+    identifying the duplicate "Add bounded ROADMAP evaluation-cascade
+    readiness matrix." entries in `docs/todo/Completed/roadmap.md` at lines
+    15437 and 15755. It also records a bounded exact stale-completed duplicate
     detector with zero active/completed title twins.
     `papers/roadmap_readiness_boundary.json` separately records the weighted
     TODO-ledger readiness model. The current raw and weighted percentages are
@@ -127,9 +130,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     canonical underlying-gap registry, and the rollup sidecar is a bounded
     publication gate rather than a canonical completion model. There is still
     no canonical underlying-gap id, duplicate/derivative relationship registry,
-    consolidation report, semantic duplicate detector, semantic stale-duplicate
-    detector beyond exact title matches, or orphaned-derivative detector across
-    active and completed TODO ledgers. A newly identified
+    semantic duplicate detector, semantic stale-duplicate detector beyond
+    exact title matches, same-owner duplicate cleanup beyond exact title
+    matches, or orphaned-derivative detector across active and completed TODO
+    ledgers. A newly identified
     problem can be counted multiple times, a completed document-specific TODO
     can leave its implementation owner ambiguous, and repeated audit slices
     can inflate the denominator without proving that a distinct AlphaEvolve

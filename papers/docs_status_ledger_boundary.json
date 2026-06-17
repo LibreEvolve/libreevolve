@@ -1,56 +1,7 @@
 {
-  "schema": "libreevolve.docs_status_ledger_boundary.v1",
   "boundary_status": "docs_status_structural_freshness_inventory_without_semantic_map",
+  "claim_boundary": "This boundary records the docs/status.md heading, implemented-today and important-limits bullet inventory, status-signal terms, local backtick path existence checks, README and docs-index routes, documentation-claim inventory status fields, paper-index status claim inventory summary fields, and the active TODO owner anchor. It does not claim a per-bullet source/test/sidecar/TODO map, stale status prose detector, orphan status bullet detector, or owner review signoff.",
   "claim_ready": false,
-  "status_ledger_path": "docs/status.md",
-  "status_ledger_heading_status": "heading_present",
-  "status_ledger_inventory_status": "status_ledger_structural_bullet_inventory_without_semantic_verifier",
-  "status_ledger_bullet_count": 248,
-  "status_ledger_section_counts": {
-    "implemented_today": 9,
-    "important_limits": 239
-  },
-  "implemented_today_bullet_count": 9,
-  "important_limits_bullet_count": 239,
-  "status_ledger_signal_term_count": 11,
-  "status_ledger_signal_record_count": 598,
-  "status_ledger_local_path_ref_count": 263,
-  "status_ledger_unique_local_path_ref_count": 208,
-  "status_ledger_missing_local_path_refs": [],
-  "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
-  "route_marker_record_count": 4,
-  "missing_route_marker_count": 0,
-  "missing_route_marker_records": [],
-  "route_marker_records": [
-    {
-      "route_id": "readme_current_status_route",
-      "source_path": "README.md",
-      "target_path": "docs/status.md",
-      "marker": "[docs/status.md](docs/status.md)",
-      "marker_status": "marker_present"
-    },
-    {
-      "route_id": "docs_index_paper_reviewer_status_route",
-      "source_path": "docs/README.md",
-      "target_path": "docs/status.md",
-      "marker": "[Current Status](./status.md)",
-      "marker_status": "marker_present"
-    },
-    {
-      "route_id": "todo_status_ledger_owner_anchor",
-      "source_path": "docs/todo/readme.md",
-      "target_path": "docs/status.md",
-      "marker": "Add `docs/status.md` ledger freshness and coverage evidence.",
-      "marker_status": "marker_present"
-    },
-    {
-      "route_id": "papers_index_status_claim_inventory_entry",
-      "source_path": "papers/README.md",
-      "target_path": "docs/status.md",
-      "marker": "papers/status_claim_inventory.json",
-      "marker_status": "marker_present"
-    }
-  ],
   "documentation_claim_inventory_status_field_names": [
     "status_ledger_bullet_count",
     "status_ledger_bullet_records",
@@ -66,16 +17,16 @@
     "status_ledger_unique_local_path_ref_count",
     "status_ledger_unique_local_path_refs"
   ],
-  "status_claim_inventory_path": "papers/status_claim_inventory.json",
-  "status_claim_inventory_summary": {
-    "summary_status": "status_claim_inventory_summary_recorded",
-    "path": "papers/status_claim_inventory.json",
-    "row_count": 53,
-    "unique_local_artifact_count": 60,
-    "local_artifact_mention_record_count": 60,
-    "absence_phrase_count": 87,
-    "absence_signal_record_count": 99
+  "implemented_today_bullet_count": 9,
+  "important_limits_bullet_count": 239,
+  "missing_evidence": {
+    "orphan_status_bullet_detector": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "per_bullet_source_test_sidecar_todo_map": "not_recorded_locally",
+    "stale_status_prose_detector": "not_recorded_locally"
   },
+  "missing_route_marker_count": 0,
+  "missing_route_marker_records": [],
   "required_evidence_fields": [
     "status_ledger_heading",
     "implemented_today_bullet_inventory",
@@ -92,11 +43,60 @@
     "orphan_status_bullet_detector",
     "owner_review_signoff"
   ],
-  "missing_evidence": {
-    "per_bullet_source_test_sidecar_todo_map": "not_recorded_locally",
-    "stale_status_prose_detector": "not_recorded_locally",
-    "orphan_status_bullet_detector": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally"
+  "route_marker_record_count": 4,
+  "route_marker_records": [
+    {
+      "marker": "[docs/status.md](docs/status.md)",
+      "marker_status": "marker_present",
+      "route_id": "readme_current_status_route",
+      "source_path": "README.md",
+      "target_path": "docs/status.md"
+    },
+    {
+      "marker": "[Current Status](./status.md)",
+      "marker_status": "marker_present",
+      "route_id": "docs_index_paper_reviewer_status_route",
+      "source_path": "docs/README.md",
+      "target_path": "docs/status.md"
+    },
+    {
+      "marker": "Add `docs/status.md` ledger freshness and coverage evidence.",
+      "marker_status": "marker_present",
+      "route_id": "todo_status_ledger_owner_anchor",
+      "source_path": "docs/todo/readme.md",
+      "target_path": "docs/status.md"
+    },
+    {
+      "marker": "papers/status_claim_inventory.json",
+      "marker_status": "marker_present",
+      "route_id": "papers_index_status_claim_inventory_entry",
+      "source_path": "papers/README.md",
+      "target_path": "docs/status.md"
+    }
+  ],
+  "schema": "libreevolve.docs_status_ledger_boundary.v1",
+  "status_claim_inventory_path": "papers/status_claim_inventory.json",
+  "status_claim_inventory_summary": {
+    "absence_phrase_count": 87,
+    "absence_signal_record_count": 99,
+    "local_artifact_mention_record_count": 60,
+    "path": "papers/status_claim_inventory.json",
+    "row_count": 53,
+    "summary_status": "status_claim_inventory_summary_recorded",
+    "unique_local_artifact_count": 60
   },
-  "claim_boundary": "This boundary records the docs/status.md heading, implemented-today and important-limits bullet inventory, status-signal terms, local backtick path existence checks, README and docs-index routes, documentation-claim inventory status fields, paper-index status claim inventory summary fields, and the active TODO owner anchor. It does not claim a per-bullet source/test/sidecar/TODO map, stale status prose detector, orphan status bullet detector, or owner review signoff."
+  "status_ledger_bullet_count": 248,
+  "status_ledger_heading_status": "heading_present",
+  "status_ledger_inventory_status": "status_ledger_structural_bullet_inventory_without_semantic_verifier",
+  "status_ledger_local_path_ref_count": 264,
+  "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
+  "status_ledger_missing_local_path_refs": [],
+  "status_ledger_path": "docs/status.md",
+  "status_ledger_section_counts": {
+    "implemented_today": 9,
+    "important_limits": 239
+  },
+  "status_ledger_signal_record_count": 598,
+  "status_ledger_signal_term_count": 11,
+  "status_ledger_unique_local_path_ref_count": 209
 }

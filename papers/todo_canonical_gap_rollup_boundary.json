@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 16,
-  "boundary_status": "bounded_canonical_gap_rollup_gate_with_exact_duplicate_owner_status_report",
-  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, canonical owner assignment readiness beyond the exact duplicate owner/status profile, stale completed duplicate detection beyond exact normalized-title matches, orphaned derivative detection, canonical gap completion percent, canonical raw-count inflation report beyond exact title matches, or owner review signoff.",
+  "boundary_status": "bounded_canonical_gap_rollup_gate_with_exact_same_owner_duplicate_report",
+  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, canonical owner assignment readiness beyond the exact duplicate owner/status profile, stale completed duplicate detection beyond exact normalized-title matches, same-owner completed duplicate cleanup beyond exact title matches, orphaned derivative detection, canonical gap completion percent, canonical raw-count inflation report beyond exact title matches, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "canonical_gap_completion_percent": "not_recorded_locally",
@@ -377,6 +377,8 @@
     "scope": "bounded_raw_checklist_inflation_estimate_without_semantic_canonical_gap_ids"
   },
   "source_exact_duplicate_record_count": 246,
+  "source_exact_same_owner_completed_duplicate_group_count": 1,
+  "source_exact_same_owner_completed_duplicate_status": "exact_same_owner_completed_duplicates_detected",
   "source_exact_stale_completed_duplicate_group_count": 0,
   "source_exact_stale_completed_duplicate_status": "no_exact_stale_completed_duplicates_detected",
   "source_missing_evidence_count": 12,

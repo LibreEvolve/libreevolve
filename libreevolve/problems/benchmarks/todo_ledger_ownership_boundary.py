@@ -44,6 +44,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "exact_normalized_title_duplicate_scan",
     "exact_duplicate_raw_count_inflation_report",
     "exact_duplicate_owner_status_profile",
+    "exact_same_owner_completed_duplicate_report",
     "exact_stale_completed_duplicate_scan",
     "canonical_gap_ids",
     "derivative_relationships",
@@ -123,6 +124,9 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
     exact_duplicate_owner_status_report = _exact_duplicate_owner_status_report(
         duplicate_groups
     )
+    exact_same_owner_completed_duplicate_groups = (
+        _exact_same_owner_completed_duplicate_groups(duplicate_groups)
+    )
     return {
         "schema": TODO_LEDGER_OWNERSHIP_BOUNDARY_SCHEMA,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
@@ -163,6 +167,17 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
         "exact_duplicate_active_involved_group_count": (
             exact_duplicate_owner_status_report["active_involved_group_count"]
         ),
+        "exact_same_owner_completed_duplicate_group_count": len(
+            exact_same_owner_completed_duplicate_groups
+        ),
+        "exact_same_owner_completed_duplicate_groups": (
+            exact_same_owner_completed_duplicate_groups
+        ),
+        "exact_same_owner_completed_duplicate_status": (
+            "exact_same_owner_completed_duplicates_detected"
+            if exact_same_owner_completed_duplicate_groups
+            else "no_exact_same_owner_completed_duplicates_detected"
+        ),
         "exact_stale_completed_duplicate_detection_policy": (
             "completed_record_with_active_same_normalized_title"
         ),
@@ -183,6 +198,7 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
             "marker policy, raw checklist counts, and an exact normalized-title "
             "duplicate scan with an exact-title raw-count inflation estimate, "
             "an exact duplicate owner/status profile, "
+            "an exact same-owner completed duplicate report, "
             "including a bounded exact stale-completed duplicate detector that "
             "only compares completed records against active records with the "
             "same normalized title. It does not claim canonical "
@@ -233,6 +249,9 @@ def validate_todo_ledger_ownership_boundary(
         "exact_duplicate_cross_owner_group_count",
         "exact_duplicate_completed_only_group_count",
         "exact_duplicate_active_involved_group_count",
+        "exact_same_owner_completed_duplicate_group_count",
+        "exact_same_owner_completed_duplicate_groups",
+        "exact_same_owner_completed_duplicate_status",
         "exact_stale_completed_duplicate_detection_policy",
         "exact_stale_completed_duplicate_group_count",
         "exact_stale_completed_duplicate_groups",
@@ -254,6 +273,7 @@ def validate_todo_ledger_ownership_boundary(
         or "does not claim canonical underlying-gap ids" not in boundary_text
         or "exact-title raw-count inflation estimate" not in boundary_text
         or "exact duplicate owner/status profile" not in boundary_text
+        or "exact same-owner completed duplicate report" not in boundary_text
         or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "canonical-gap completion percentages" not in boundary_text
     ):
@@ -485,6 +505,31 @@ def _exact_duplicate_owner_status_report(
         ],
         "canonical_owner_assignments_ready": False,
     }
+
+
+def _exact_same_owner_completed_duplicate_groups(
+    duplicate_groups: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    same_owner_completed_groups: list[dict[str, Any]] = []
+    for group in duplicate_groups:
+        if group["cross_owner"]:
+            continue
+        records = group["records"]
+        if any(record["status"] != "completed" for record in records):
+            continue
+        same_owner_completed_groups.append(
+            {
+                "normalized_title": group["normalized_title"],
+                "owner_ids": group["owner_ids"],
+                "record_count": group["record_count"],
+                "records": records,
+                "dedupe_scope": (
+                    "same_owner_completed_exact_title_duplicate_without_"
+                    "canonical_gap_claim"
+                ),
+            }
+        )
+    return same_owner_completed_groups
 
 
 def _marker_policy_status(owner_records: list[dict[str, Any]]) -> str:

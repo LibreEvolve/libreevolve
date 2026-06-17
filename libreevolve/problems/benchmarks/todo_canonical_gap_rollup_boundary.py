@@ -14,7 +14,7 @@ TODO_CANONICAL_GAP_ROLLUP_BOUNDARY_SCHEMA = (
     "libreevolve.todo_canonical_gap_rollup_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_canonical_gap_rollup_gate_with_exact_duplicate_owner_status_report"
+    "bounded_canonical_gap_rollup_gate_with_exact_same_owner_duplicate_report"
 )
 SOURCE_CANONICAL_GAP_BOUNDARY_INPUT = "papers/todo_canonical_gap_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -284,6 +284,12 @@ def todo_canonical_gap_rollup_boundary_record(root: str | Path = ".") -> dict[st
         "source_exact_duplicate_active_involved_group_count": source_boundary[
             "exact_duplicate_active_involved_group_count"
         ],
+        "source_exact_same_owner_completed_duplicate_group_count": source_boundary[
+            "exact_same_owner_completed_duplicate_group_count"
+        ],
+        "source_exact_same_owner_completed_duplicate_status": source_boundary[
+            "exact_same_owner_completed_duplicate_status"
+        ],
         "rollup_criterion_count": len(records),
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
@@ -298,7 +304,8 @@ def todo_canonical_gap_rollup_boundary_record(root: str | Path = ".") -> dict[st
             "rules, semantic duplicate detection, canonical owner assignment "
             "readiness beyond the exact duplicate owner/status profile, stale "
             "completed duplicate detection beyond exact normalized-title "
-            "matches, orphaned "
+            "matches, same-owner completed duplicate cleanup beyond exact "
+            "title matches, orphaned "
             "derivative detection, canonical gap completion "
             "percent, canonical raw-count inflation report beyond exact title "
             "matches, or owner review signoff."
@@ -344,6 +351,8 @@ def validate_todo_canonical_gap_rollup_boundary(
         "source_exact_duplicate_cross_owner_group_count",
         "source_exact_duplicate_completed_only_group_count",
         "source_exact_duplicate_active_involved_group_count",
+        "source_exact_same_owner_completed_duplicate_group_count",
+        "source_exact_same_owner_completed_duplicate_status",
         "rollup_criterion_count",
         "sidecar_ref_count",
         "active_todo_ref_count",

@@ -12,7 +12,7 @@ from libreevolve.problems.benchmarks.todo_ledger_ownership_boundary import (
 
 TODO_CANONICAL_GAP_BOUNDARY_SCHEMA = "libreevolve.todo_canonical_gap_boundary.v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_todo_canonical_gap_matrix_with_exact_duplicate_owner_status_report"
+    "bounded_todo_canonical_gap_matrix_with_exact_same_owner_duplicate_report"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "canonical_gap_criteria",
@@ -20,6 +20,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "exact_duplicate_group_count",
     "exact_duplicate_raw_count_inflation_report",
     "exact_duplicate_owner_status_profile",
+    "exact_same_owner_completed_duplicate_report",
     "canonical_gap_ids",
     "canonical_owner_ledgers",
     "derivative_relationships",
@@ -273,6 +274,12 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
         "exact_duplicate_active_involved_group_count": ownership[
             "exact_duplicate_active_involved_group_count"
         ],
+        "exact_same_owner_completed_duplicate_group_count": ownership[
+            "exact_same_owner_completed_duplicate_group_count"
+        ],
+        "exact_same_owner_completed_duplicate_status": ownership[
+            "exact_same_owner_completed_duplicate_status"
+        ],
         "duplicate_detection_policy": ownership["duplicate_detection_policy"],
         "exact_stale_completed_duplicate_group_count": ownership[
             "exact_stale_completed_duplicate_group_count"
@@ -290,8 +297,9 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
         "claim_boundary": (
             "This boundary records a TODO-ledger canonical-gap readiness matrix "
             "over the current raw owner-ledger counts and exact duplicate-title "
-            "groups, an exact-title raw-count inflation estimate, plus a "
-            "bounded exact duplicate owner/status profile and a bounded exact "
+            "groups, an exact-title raw-count inflation estimate, a bounded "
+            "exact duplicate owner/status profile, a bounded exact same-owner "
+            "completed duplicate report, and a bounded exact "
             "stale-completed duplicate detector "
             "from the ownership sidecar. It does not claim canonical gap ids, canonical owner "
             "assignments, derivative documentation relationships, source or "
@@ -338,6 +346,8 @@ def validate_todo_canonical_gap_boundary(
         "exact_duplicate_cross_owner_group_count",
         "exact_duplicate_completed_only_group_count",
         "exact_duplicate_active_involved_group_count",
+        "exact_same_owner_completed_duplicate_group_count",
+        "exact_same_owner_completed_duplicate_status",
         "duplicate_detection_policy",
         "exact_stale_completed_duplicate_group_count",
         "exact_stale_completed_duplicate_status",
@@ -357,6 +367,7 @@ def validate_todo_canonical_gap_boundary(
         or "does not claim canonical gap ids" not in boundary_text
         or "exact-title raw-count inflation estimate" not in boundary_text
         or "exact duplicate owner/status profile" not in boundary_text
+        or "same-owner completed duplicate report" not in boundary_text
         or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "semantic duplicate detection" not in boundary_text
         or "canonical gap completion percentages" not in boundary_text

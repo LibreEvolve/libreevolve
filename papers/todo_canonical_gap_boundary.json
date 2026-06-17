@@ -1,8 +1,8 @@
 {
   "active_todo_ref_count": 13,
-  "boundary_status": "bounded_todo_canonical_gap_matrix_with_exact_duplicate_owner_status_report",
+  "boundary_status": "bounded_todo_canonical_gap_matrix_with_exact_same_owner_duplicate_report",
   "canonical_gap_completion_status": "not_available_without_gap_ids",
-  "claim_boundary": "This boundary records a TODO-ledger canonical-gap readiness matrix over the current raw owner-ledger counts and exact duplicate-title groups, an exact-title raw-count inflation estimate, plus a bounded exact duplicate owner/status profile and a bounded exact stale-completed duplicate detector from the ownership sidecar. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source or paper anchor mappings, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact title matches, orphaned derivative detection, canonical raw-count inflation reporting beyond exact title matches, canonical gap completion percentages, or owner review signoff.",
+  "claim_boundary": "This boundary records a TODO-ledger canonical-gap readiness matrix over the current raw owner-ledger counts and exact duplicate-title groups, an exact-title raw-count inflation estimate, a bounded exact duplicate owner/status profile, a bounded exact same-owner completed duplicate report, and a bounded exact stale-completed duplicate detector from the ownership sidecar. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source or paper anchor mappings, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact title matches, orphaned derivative detection, canonical raw-count inflation reporting beyond exact title matches, canonical gap completion percentages, or owner review signoff.",
   "claim_ready": false,
   "criterion_count": 9,
   "criterion_records": [
@@ -336,6 +336,8 @@
     "scope": "bounded_raw_checklist_inflation_estimate_without_semantic_canonical_gap_ids"
   },
   "exact_duplicate_record_count": 246,
+  "exact_same_owner_completed_duplicate_group_count": 1,
+  "exact_same_owner_completed_duplicate_status": "exact_same_owner_completed_duplicates_detected",
   "exact_stale_completed_duplicate_group_count": 0,
   "exact_stale_completed_duplicate_status": "no_exact_stale_completed_duplicates_detected",
   "missing_evidence": {
@@ -362,6 +364,7 @@
     "exact_duplicate_group_count",
     "exact_duplicate_raw_count_inflation_report",
     "exact_duplicate_owner_status_profile",
+    "exact_same_owner_completed_duplicate_report",
     "canonical_gap_ids",
     "canonical_owner_ledgers",
     "derivative_relationships",

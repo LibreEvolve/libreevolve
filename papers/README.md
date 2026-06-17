@@ -3167,12 +3167,16 @@ Implemented:
   estimate. It also records an exact duplicate owner/status profile: all 123
   exact-title duplicate groups are completed-only, 122 groups are cross-owner,
   one group is same-owner, and zero groups involve active TODO rows. It also
+  records one exact same-owner completed duplicate in
+  `docs/todo/Completed/roadmap.md`, for "Add bounded ROADMAP
+  evaluation-cascade readiness matrix." at lines 15437 and 15755. It also
   records a bounded exact stale-completed duplicate detector with zero
   active/completed title twins. It is not evidence of canonical underlying-gap
   ids,
   derivative/documentation relationships, rollup rules, source/paper anchor
   mappings, implementation evidence links, semantic stale duplicate detection,
-  orphan derivative detection, or canonical-gap completion percentages.
+  same-owner duplicate cleanup beyond exact title matches, orphan derivative
+  detection, or canonical-gap completion percentages.
 - `papers/todo_canonical_gap_boundary.json`: TODO canonical-gap readiness
   sidecar with nine criteria for canonical gap ids, canonical owner ledgers,
   derivative relationships, source/paper anchor mapping, implementation

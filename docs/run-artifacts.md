@@ -903,7 +903,10 @@ rollup across JSONL streams, quarantine streams, and non-JSONL artifacts. It
 maps every known cleanup-managed artifact to its schema pointer, writer owner,
 reader owner, lifecycle status, runtime pointer or report location, and
 restore/show handling boundary so the documented artifact list, manifest
-schema, and overwrite policy cannot drift independently.
+schema, and overwrite policy cannot drift independently. Non-JSONL inventory
+records also include source-level `implementation_anchors` for writer,
+runtime-pointer, and show/restore-reader phases; tests resolve those anchors
+against the current source tree so owner strings are tied to concrete code.
 The `runtime.artifacts` pointer map and
 `runtime.history.whole_run_source_workspace_integrity_report.runtime_artifacts`
 iterate the same schema-owned artifact name set, with `manifest.json` recorded

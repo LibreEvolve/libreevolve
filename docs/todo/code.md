@@ -8456,18 +8456,21 @@ sidecars, tests, and active TODOs.
     a self-reference-deferred artifact, and
     `runtime.history.whole_run_source_workspace_integrity_report.runtime_artifacts`
     includes the same complete artifact set with focused tests proving every
-    non-JSONL schema artifact is represented.
+    non-JSONL schema artifact is represented. Generated inventory records for
+    non-JSONL artifacts now include source-level `implementation_anchors` for
+    writer, runtime-pointer, and show/restore-reader phases; focused tests
+    verify every anchor resolves to current source text.
   - Current gap: the top-level schema inventory now exists, but there is not
-    yet a semantic verifier that walks every startup/finalization writer,
-    `show` reader, and restore reader to prove that each artifact's declared
-    owner and hash/tree-hash policy is exercised end to end.
+    yet a behavioral verifier that executes every `show`/restore path and
+    checks each artifact's declared hash/tree-hash policy end to end.
     `paper_artifacts/...` are also represented at the directory level;
     per-subdirectory/source-exhibit schemas still live in paper-facing runtime
     reports instead of a central artifact-subpath schema.
-  - Required result: add a verifier or focused tests that exercise
-    `non_jsonl_artifacts` against startup/finalization writers and
-    `show`/restore readers so documented artifacts cannot drift from
-    machine-readable bundle metadata.
+  - Required result: add behavioral tests or validators that exercise
+    `non_jsonl_artifacts` through startup/finalization writers and
+    `show`/restore readers, and centralize `paper_artifacts/...` subpath
+    schemas, so documented artifacts cannot drift from machine-readable bundle
+    metadata.
 
 - [ ] Add a clean-checkout run contract for `sorting_network_9`.
   - Spec evidence: AlphaEvolve benchmark claims require reproducible problem

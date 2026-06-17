@@ -97,6 +97,198 @@ _NON_JSONL_RESTORE_SHOW_HANDLING = {
     "paper_artifacts": "paper-source report validators and docs",
 }
 
+_NON_JSONL_IMPLEMENTATION_ANCHORS = {
+    "manifest.json": {
+        "writer": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def _write_manifest",
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "strict_json_dump(manifest, self._manifest",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _manifest_artifact_pointer",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/cli.py",
+                "required_text": "def _read_show_manifest",
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "def load_archive_restore_bundle",
+            },
+        ],
+    },
+    "task_specification.json": {
+        "writer": [
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": (
+                    'self._task_specification_artifact = run_dir / '
+                    '"task_specification.json"'
+                ),
+            },
+            {
+                "path": "libreevolve/core/database.py",
+                "required_text": "self._task_specification_artifact,",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _task_spec_artifact_resolution_report",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": '"standalone_task_specification"',
+            },
+        ],
+    },
+    "best.py": {
+        "writer": [
+            {
+                "path": "libreevolve/core/best_artifacts.py",
+                "required_text": 'best_py = run_dir / "best.py"',
+            },
+            {
+                "path": "libreevolve/core/best_artifacts.py",
+                "required_text": 'artifacts["best.py"] = paths["best.py"]',
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/best_artifacts.py",
+                "required_text": '"best.py": _best_artifact_path_record',
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/cli.py",
+                "required_text": "--- Best program ---",
+            }
+        ],
+    },
+    "best_workspace": {
+        "writer": [
+            {
+                "path": "libreevolve/core/best_artifacts.py",
+                "required_text": 'workspace_dir = run_dir / "best_workspace"',
+            },
+            {
+                "path": "libreevolve/core/best_artifacts.py",
+                "required_text": (
+                    'artifacts["best_workspace"] = paths["best_workspace"]'
+                ),
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/best_artifacts.py",
+                "required_text": '"best_workspace": _best_artifact_path_record',
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/cli.py",
+                "required_text": "--- Best workspace ---",
+            }
+        ],
+    },
+    "evaluator_artifacts": {
+        "writer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": 'artifact_dir=run_dir / "evaluator_artifacts"',
+            }
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _runtime_artifact_pointers",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/cli.py",
+                "required_text": "def _validator_boundary_artifact_summary",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": '"evaluator_artifacts": ["evaluator_copy_out"]',
+            },
+        ],
+    },
+    "plugin_artifacts": {
+        "writer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _plugin_artifact_manifest",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": 'runtime["plugin_artifacts"] = plugin_artifacts',
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _runtime_artifact_pointers",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "include_plugin_artifacts",
+            }
+        ],
+    },
+    "paper_artifacts": {
+        "writer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": 'run_dir / "paper_artifacts" / "marker_spelling"',
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "paper_artifacts/process_exhibit",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "paper_artifacts/table1_capability_comparison",
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _process_exhibit_artifact_evidence",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/tools/paper_manifest.py",
+                "required_text": "TASK_SPECIFICATION_BOUNDARY_FILE",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "validate_alphaevolve_process_exhibit_report",
+            },
+        ],
+    },
+}
+
 
 def _quarantine_record(
     source_stream: str,
@@ -196,6 +388,9 @@ def generated_run_artifact_inventory() -> dict:
             "cleanup_managed": True,
             "runtime_pointer_location": record["runtime_pointer_location"],
             "restore_show_handling": _NON_JSONL_RESTORE_SHOW_HANDLING[name],
+            "implementation_anchors": deepcopy(
+                _NON_JSONL_IMPLEMENTATION_ANCHORS[name]
+            ),
         }
     missing = RUN_ARTIFACT_NAMES - set(inventory)
     extra = set(inventory) - RUN_ARTIFACT_NAMES

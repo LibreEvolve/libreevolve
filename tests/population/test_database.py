@@ -2955,6 +2955,28 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
     )
 
 
+def test_non_jsonl_artifact_inventory_anchors_resolve_to_source():
+    inventory = generated_run_artifact_inventory()
+    non_jsonl_names = set(run_artifact_schema()["non_jsonl_artifacts"])
+
+    for artifact_name in sorted(non_jsonl_names):
+        artifact = inventory[artifact_name]
+        anchors = artifact.get("implementation_anchors")
+        assert isinstance(anchors, dict), artifact_name
+        assert set(anchors) == {"writer", "runtime_pointer", "show_restore_reader"}
+        for phase, records in anchors.items():
+            assert isinstance(records, list) and records, (artifact_name, phase)
+            for record in records:
+                path = Path(record["path"])
+                assert path.is_file(), (artifact_name, phase, path)
+                source = path.read_text(encoding="utf-8")
+                assert record["required_text"] in source, (
+                    artifact_name,
+                    phase,
+                    record,
+                )
+
+
 def test_log_writes_metrics_and_evaluation():
     tmpdir = tempfile.mkdtemp()
     db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))

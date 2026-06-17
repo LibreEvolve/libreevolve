@@ -874,6 +874,10 @@ from libreevolve.problems.benchmarks.archive_event_replay_boundary import (
     archive_event_replay_boundary_record,
     validate_archive_event_replay_boundary,
 )
+from libreevolve.problems.benchmarks.jsonl_durability_boundary import (
+    jsonl_durability_boundary_record,
+    validate_jsonl_durability_boundary,
+)
 from libreevolve.problems.benchmarks.controller_pending_work_resume_boundary import (
     controller_pending_work_resume_boundary_record,
     validate_controller_pending_work_resume_boundary,
@@ -1182,6 +1186,7 @@ MAP_ELITES_ILLUMINATION_BOUNDARY_FILE = "papers/map_elites_illumination_boundary
 MAP_ELITES_DESCRIPTOR_BOUNDARY_FILE = "papers/map_elites_descriptor_boundary.json"
 OBJECTIVE_ARCHIVE_BOUNDARY_FILE = "papers/objective_archive_boundary.json"
 ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE = "papers/archive_event_replay_boundary.json"
+JSONL_DURABILITY_BOUNDARY_FILE = "papers/jsonl_durability_boundary.json"
 CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_FILE = "papers/controller_pending_work_resume_boundary.json"
 LINEAGE_REPLAY_BOUNDARY_FILE = "papers/lineage_replay_boundary.json"
 RUNTIME_RNG_REPLAY_BOUNDARY_FILE = "papers/runtime_rng_replay_boundary.json"
@@ -1909,6 +1914,7 @@ def validate_paper_manifest(
     issues.extend(_validate_map_elites_descriptor_boundary(root_path))
     issues.extend(_validate_objective_archive_boundary(root_path))
     issues.extend(_validate_archive_event_replay_boundary(root_path))
+    issues.extend(_validate_jsonl_durability_boundary(root_path))
     issues.extend(_validate_controller_pending_work_resume_boundary(root_path))
     issues.extend(_validate_lineage_replay_boundary(root_path))
     issues.extend(_validate_runtime_rng_replay_boundary(root_path))
@@ -8990,6 +8996,38 @@ def _validate_archive_event_replay_boundary(root_path: Path) -> list[PaperManife
             f"archive_event_replay_boundary_{issue.code}",
             issue.message,
             "archive_event_replay",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_jsonl_durability_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / JSONL_DURABILITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = jsonl_durability_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "jsonl_durability_boundary_manifest_missing",
+                    (
+                        f"{JSONL_DURABILITY_BOUNDARY_FILE} must emit "
+                        "strict append versus read-repair/multi-writer scope"
+                    ),
+                    "jsonl_durability",
+                )
+            ]
+    report = validate_jsonl_durability_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"jsonl_durability_boundary_{issue.code}",
+            issue.message,
+            "jsonl_durability",
         )
         for issue in report.issues
     ]

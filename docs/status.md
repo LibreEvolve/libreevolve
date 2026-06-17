@@ -2038,6 +2038,12 @@ Important limits:
   source-payload replay, cross-run workspace deduplication, static-file content
   replay, or selected/unselected source-diff views; that boundary is tracked by
   `papers/whole_run_source_workspace_integrity_boundary.json`.
+- Strict JSONL appends validate finite records, repair torn final fragments
+  before managed writes, write newline-terminated records, fsync, and emit
+  quarantine diagnostics. JSONL readers still do not enforce read-side torn
+  final-record repair/fail-closed policy across all inspection and resume
+  paths, and shared streams do not have multi-writer serialization; that
+  boundary is tracked by `papers/jsonl_durability_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
   not stable learned/evaluator-provided behavior descriptors or archive rebin
   semantics; that boundary is tracked by

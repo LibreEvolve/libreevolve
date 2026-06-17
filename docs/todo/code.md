@@ -2702,6 +2702,9 @@ sidecars, tests, and active TODOs.
     than the write-side durability contract and can let interrupted final
     rows influence selected best programs, archive restore bundles, or
     runtime summaries before the next append repairs the stream.
+    `papers/jsonl_durability_boundary.json` now keeps this read-side
+    torn-record gap machine-validated alongside the related multi-writer
+    append-serialization absence boundary.
   - Required result: add read-side strict JSONL repair or fail-closed
     validation for all run artifact readers, including `show`, archive
     restore, controller-budget replay, manifest/runtime summary generation,
@@ -2733,6 +2736,10 @@ sidecars, tests, and active TODOs.
     workers, plugin trainers, or external feedback workers could interleave
     repairs/appends/quarantine writes, duplicate sequence counters, or create
     ambiguous event order without a first-class run-artifact writer.
+    `papers/jsonl_durability_boundary.json` now records the current
+    strict-single-writer append scope and keeps multi-writer serialization,
+    append ordering ownership, repair/quarantine atomicity, cross-platform
+    locking, and concurrent-writer tests explicitly missing.
   - Required result: add a run-artifact write coordinator, interprocess lock, or
     append queue contract for every shared JSONL stream; define
     ordering/sequence ownership, repair/quarantine atomicity, cross-platform

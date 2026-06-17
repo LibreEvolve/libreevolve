@@ -1489,6 +1489,15 @@ metadata. `manifest.json` carries top-level `schema_version` and
 is stable resumable database compatibility: versioned migration rules,
 branching/upgrade policy, and tests proving old and current run artifacts can
 be safely rebuilt into durable query/resume views.
+The committed `papers/jsonl_durability_boundary.json` sidecar separately
+records strict JSONL append durability scope: finite strict JSON serialization,
+append-side torn-final-record repair, newline-terminated writes, fsync,
+quarantine diagnostics, retention modes, and per-line reader validation. It is
+not evidence of read-side torn-final-record repair, fail-closed
+unterminated-record policy for inspection/resume readers, full reader coverage,
+multi-writer serialization, append-order ownership, repair/quarantine
+atomicity, cross-platform locking, concurrent-writer tests, or AlphaEvolve-grade
+durable async run-state parity.
 
 AlphaEvolve best-export note: CLI runs now append a post-`evolve()` manifest
 record under `runtime.best_artifact_export` after best-artifact export
@@ -3153,6 +3162,16 @@ Implemented:
   migration proof, semantic retrieval index, replayable sampling policy,
   cross-run failure memory, learned novelty model, or AlphaEvolve-grade
   evolutionary database.
+- `papers/jsonl_durability_boundary.json`: strict JSONL durability sidecar for
+  append-side stream safety versus read-side repair and async writer parity. It
+  records strict JSON serialization, finite record validation, append-side torn
+  final-record repair, newline-terminated writes, fsync, quarantine
+  diagnostics, retention modes, and strict per-line reader validation. It is
+  not evidence of read-side torn-final-record repair, fail-closed
+  unterminated-record policy for inspection/resume readers, full reader
+  coverage, multi-writer serialization, append ordering ownership,
+  repair/quarantine atomicity, cross-platform locking, concurrent-writer tests,
+  or AlphaEvolve-grade durable async run-state parity.
 - `papers/roadmap_readiness_boundary.json`: ROADMAP readiness taxonomy
   sidecar with stable readiness categories, weights summing to 100,
   per-category TODO-ledger counts, raw TODO-ledger completion, and weighted

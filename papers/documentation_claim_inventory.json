@@ -278,16 +278,16 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1769,
-      "line_end": 1769,
+      "line_start": 1778,
+      "line_end": 1778,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1847,
-      "line_end": 1847,
+      "line_start": 1856,
+      "line_end": 1856,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions"
@@ -603,7 +603,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1769,
+      "line_start": 1778,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
@@ -612,7 +612,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1847,
+      "line_start": 1856,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
@@ -805,14 +805,14 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1769,
+      "line_start": 1778,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1847,
+      "line_start": 1856,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
       "reason": "no_claim_record_for_heading"
@@ -872,10 +872,10 @@
   ],
   "status_ledger_source_path": "docs/status.md",
   "status_ledger_inventory_status": "status_ledger_structural_bullet_inventory_without_semantic_verifier",
-  "status_ledger_bullet_count": 250,
+  "status_ledger_bullet_count": 251,
   "status_ledger_section_counts": {
     "implemented_today": 9,
-    "important_limits": 241
+    "important_limits": 242
   },
   "status_ledger_signal_term_count": 11,
   "status_ledger_signal_terms": [
@@ -891,8 +891,8 @@
     "tracked",
     "without"
   ],
-  "status_ledger_signal_record_count": 607,
-  "status_ledger_unique_local_path_ref_count": 211,
+  "status_ledger_signal_record_count": 612,
+  "status_ledger_unique_local_path_ref_count": 212,
   "status_ledger_unique_local_path_refs": [
     "ROADMAP.md",
     "docs/README.md",
@@ -974,6 +974,7 @@
     "papers/initial_program_idea_provenance_boundary.json",
     "papers/initial_program_seed_variant_matrix.json",
     "papers/initial_program_validity_boundary.json",
+    "papers/jsonl_durability_boundary.json",
     "papers/kernel_tiling_shape_corpus_boundary.json",
     "papers/lineage_replay_boundary.json",
     "papers/llm_budget_policy_boundary.json",
@@ -1107,7 +1108,7 @@
     "tests/test_agents_docs.py"
   ],
   "status_ledger_missing_local_path_refs": [],
-  "status_ledger_local_path_ref_count": 266,
+  "status_ledger_local_path_ref_count": 267,
   "status_ledger_local_path_ref_status": "all_status_ledger_local_path_refs_present",
   "status_ledger_bullet_records": [
     {
@@ -7303,9 +7304,37 @@
       "bullet_ordinal": 248,
       "section": "important_limits",
       "line_start": 2041,
-      "line_end": 2044,
+      "line_end": 2046,
       "file_text_char_start": 142248,
-      "file_text_char_end": 142494,
+      "file_text_char_end": 142687,
+      "text_sha256": "c60fca87da7b5a40153e393531ae8c14a4529d8175c1c2f2e3ddf3bef2ed88c4",
+      "signal_terms": [
+        "boundary",
+        "not",
+        "record",
+        "records",
+        "tracked"
+      ],
+      "signal_term_count": 5,
+      "local_path_refs": [
+        "papers/jsonl_durability_boundary.json"
+      ],
+      "local_path_ref_records": [
+        {
+          "path": "papers/jsonl_durability_boundary.json",
+          "text_char_start": 400,
+          "text_char_end": 437,
+          "exists": true
+        }
+      ]
+    },
+    {
+      "bullet_ordinal": 249,
+      "section": "important_limits",
+      "line_start": 2047,
+      "line_end": 2050,
+      "file_text_char_start": 142688,
+      "file_text_char_end": 142934,
       "text_sha256": "ca3162ffe470661248d4fbaf8e7b9f3046e7d8b8bd3e3f08ba15777e7bcbf6dd",
       "signal_terms": [
         "boundary",
@@ -7326,12 +7355,12 @@
       ]
     },
     {
-      "bullet_ordinal": 249,
+      "bullet_ordinal": 250,
       "section": "important_limits",
-      "line_start": 2045,
-      "line_end": 2046,
-      "file_text_char_start": 142495,
-      "file_text_char_end": 142622,
+      "line_start": 2051,
+      "line_end": 2052,
+      "file_text_char_start": 142935,
+      "file_text_char_end": 143062,
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
       "signal_terms": [],
       "signal_term_count": 0,
@@ -7339,12 +7368,12 @@
       "local_path_ref_records": []
     },
     {
-      "bullet_ordinal": 250,
+      "bullet_ordinal": 251,
       "section": "important_limits",
-      "line_start": 2047,
-      "line_end": 2049,
-      "file_text_char_start": 142623,
-      "file_text_char_end": 142842,
+      "line_start": 2053,
+      "line_end": 2055,
+      "file_text_char_start": 143063,
+      "file_text_char_end": 143282,
       "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
       "signal_terms": [
         "not",

@@ -683,7 +683,28 @@ def test_run_rejects_paper_artifact_lifecycle_drift_before_restore(tmp_path):
     assert not mock.called
 
 
-def test_run_rejects_non_jsonl_artifact_policy_drift_before_restore(tmp_path):
+@pytest.mark.parametrize(
+    ("restore_flag", "error_prefix"),
+    [
+        ("--restore-rng-from-manifest", "Runtime RNG manifest restore failed"),
+        (
+            "--restore-llm-scheduler-from-manifest",
+            "LLM scheduler manifest restore failed",
+        ),
+        ("--restore-budget-from-manifest", "Runtime budget manifest restore failed"),
+        (
+            "--restore-archive-cursor-from-manifest",
+            "Archive cursor manifest restore failed",
+        ),
+        ("--restore-archive-from-manifest", "Archive manifest restore failed"),
+        ("--restore-runtime-from-manifest", "Runtime manifest restore failed"),
+    ],
+)
+def test_run_rejects_non_jsonl_artifact_policy_drift_before_restore(
+    tmp_path,
+    restore_flag,
+    error_prefix,
+):
     _make_problem(tmp_path)
     (tmp_path / "config.yaml").write_text(
         yaml.dump(
@@ -716,13 +737,13 @@ def test_run_rejects_non_jsonl_artifact_policy_drift_before_restore(tmp_path):
                 str(tmp_path),
                 "--max-generations",
                 "0",
-                "--restore-rng-from-manifest",
+                restore_flag,
                 str(previous_manifest),
             ],
         )
 
     assert r.exit_code != 0
-    assert "Runtime RNG manifest restore failed" in r.output
+    assert error_prefix in r.output
     assert "non-JSONL artifact policy validation failed" in r.output
     assert "missing_non_jsonl_file_sha256" in r.output
     assert not mock.called

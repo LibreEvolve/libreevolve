@@ -26,8 +26,10 @@ from libreevolve.core.artifact_schema import (
     PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
     PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
     RUN_ARTIFACT_NAMES,
+    run_artifact_schema,
     validate_non_jsonl_artifact_policy_manifest,
     validate_quarantine_artifact_policy_manifest,
+    validate_paper_artifact_lifecycle_manifest,
     versioned_record,
 )
 from libreevolve.core.best_artifacts import (
@@ -1670,6 +1672,10 @@ def _write_completed_runtime(
     runtime["history"] = _runtime_history_summary(db, run_dir, budget)
     _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
+    runtime["run_artifact_bundle_report"] = _run_artifact_bundle_report(
+        run_dir,
+        runtime,
+    )
     attach_best_artifact_export(runtime, best_export)
     _attach_runtime_summaries(
         runtime,
@@ -1723,6 +1729,10 @@ def _write_aborted_runtime(
     runtime["history"] = _runtime_history_summary(db, run_dir, budget)
     _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
+    runtime["run_artifact_bundle_report"] = _run_artifact_bundle_report(
+        run_dir,
+        runtime,
+    )
     _attach_runtime_summaries(
         runtime,
         db,
@@ -5254,6 +5264,230 @@ def _runtime_artifact_pointers(run_dir: Path) -> dict:
             path = run_dir / name
             artifacts[name] = _runtime_artifact_pointer(path, name, resolved_run_dir)
     return artifacts
+
+
+def _run_artifact_bundle_report(run_dir: Path, runtime: Mapping[str, object]) -> dict:
+    artifact_schema = run_artifact_schema()
+    artifacts = runtime.get("artifacts")
+    if not isinstance(artifacts, Mapping):
+        artifacts = {}
+    manifest_view = {
+        "artifact_schema": artifact_schema,
+        "runtime": {
+            "artifacts": artifacts,
+            "history": runtime.get("history") if isinstance(runtime.get("history"), Mapping) else {},
+        },
+    }
+    accepted_streams = [
+        name
+        for name in sorted(artifact_schema["jsonl_records"])
+        if isinstance(artifacts.get(name), Mapping)
+        and artifacts[name].get("present") is True
+    ]
+    quarantine_validation = validate_quarantine_artifact_policy_manifest(
+        {"artifact_schema": artifact_schema},
+        run_dir=run_dir,
+    )
+    non_jsonl_validation = validate_non_jsonl_artifact_policy_manifest(manifest_view)
+    paper_validation = None
+    if _runtime_has_paper_artifact_lifecycle_surface(runtime):
+        paper_validation = validate_paper_artifact_lifecycle_manifest(manifest_view)
+    issue_codes = []
+    for validation in (quarantine_validation, non_jsonl_validation, paper_validation):
+        if not isinstance(validation, Mapping):
+            continue
+        for issue in validation.get("issues", []):
+            if isinstance(issue, Mapping) and isinstance(issue.get("code"), str):
+                issue_codes.append(issue["code"])
+    report = {
+        "schema": "libreevolve.run_artifact_bundle_report.v1",
+        "source": "runtime_artifact_schema_pointers_and_quarantine_diagnostics",
+        "accepted_stream_count": len(accepted_streams),
+        "accepted_streams": accepted_streams,
+        "quarantine_stream_count": quarantine_validation["checked_stream_count"],
+        "quarantine_record_count": quarantine_validation["record_count"],
+        "quarantine_streams": quarantine_validation["present_streams"],
+        "quarantine_validation_ok": quarantine_validation["ok"],
+        "non_jsonl_checked_artifact_count": non_jsonl_validation[
+            "checked_artifact_count"
+        ],
+        "non_jsonl_validation_ok": non_jsonl_validation["ok"],
+        "paper_artifact_lifecycle_checked": paper_validation is not None,
+        "paper_artifact_emitted_path_count": (
+            paper_validation["emitted_path_count"]
+            if isinstance(paper_validation, Mapping)
+            else 0
+        ),
+        "paper_artifact_validation_ok": (
+            paper_validation["ok"] if isinstance(paper_validation, Mapping) else None
+        ),
+        "issue_codes": sorted(set(issue_codes)),
+        "accepted_state_boundary": {
+            "quarantine_rows_are_diagnostics": True,
+            "quarantine_rows_replayed_as_state": False,
+            "non_jsonl_artifacts_are_policy_checked": non_jsonl_validation["ok"],
+            "provider_output_replay": False,
+            "pending_controller_work_replay": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "accepted_streams_counted": True,
+            "quarantine_diagnostics_validated": quarantine_validation["ok"],
+            "non_jsonl_policy_validated": non_jsonl_validation["ok"],
+            "paper_artifact_lifecycle_validated": (
+                paper_validation["ok"] if isinstance(paper_validation, Mapping) else False
+            ),
+            "persisted_manifest_report": True,
+            "full_restore_replay_certification": False,
+            "remaining_gap": [
+                "promotion_time_bundle_certificate",
+                "provider_output_replay_or_exclusion_in_resumed_trace",
+                "pending_controller_work_replay",
+            ],
+        },
+    }
+    report["validation"] = validate_run_artifact_bundle_report(report)
+    return report
+
+
+def _runtime_has_paper_artifact_lifecycle_surface(runtime: Mapping[str, object]) -> bool:
+    history = runtime.get("history")
+    if not isinstance(history, Mapping):
+        return False
+    return any(
+        key in history
+        for key in (
+            "marker_spelling_provenance_report",
+            "alphaevolve_process_exhibit_report",
+            "alphaevolve_table1_capability_exhibit_report",
+        )
+    )
+
+
+def validate_run_artifact_bundle_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": "libreevolve.run_artifact_bundle_report_validation.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_report", "message": "report must be an object"}
+            ],
+        }
+    if report.get("schema") != "libreevolve.run_artifact_bundle_report.v1":
+        issues.append({"code": "invalid_schema", "message": "invalid report schema"})
+    if not isinstance(report.get("accepted_stream_count"), int) or isinstance(
+        report.get("accepted_stream_count"), bool
+    ):
+        issues.append(
+            {
+                "code": "invalid_accepted_stream_count",
+                "message": "accepted stream count must be an integer",
+            }
+        )
+    streams = report.get("accepted_streams")
+    if not isinstance(streams, list) or not all(
+        isinstance(item, str) and item for item in streams
+    ):
+        issues.append(
+            {
+                "code": "invalid_accepted_streams",
+                "message": "accepted streams must be a list of names",
+            }
+        )
+        streams = []
+    if isinstance(report.get("accepted_stream_count"), int) and not isinstance(
+        report.get("accepted_stream_count"), bool
+    ) and report["accepted_stream_count"] != len(streams):
+        issues.append(
+            {
+                "code": "accepted_stream_count_mismatch",
+                "message": "accepted stream count must match accepted streams",
+            }
+        )
+    for field in (
+        "quarantine_stream_count",
+        "quarantine_record_count",
+        "non_jsonl_checked_artifact_count",
+        "paper_artifact_emitted_path_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {"code": f"invalid_{field}", "message": f"{field} must be non-negative integer"}
+            )
+    for field in (
+        "quarantine_validation_ok",
+        "non_jsonl_validation_ok",
+        "paper_artifact_lifecycle_checked",
+    ):
+        if not isinstance(report.get(field), bool):
+            issues.append(
+                {"code": f"invalid_{field}", "message": f"{field} must be boolean"}
+            )
+    paper_ok = report.get("paper_artifact_validation_ok")
+    if paper_ok not in {None, True, False}:
+        issues.append(
+            {
+                "code": "invalid_paper_artifact_validation_ok",
+                "message": "paper artifact validation status must be boolean or null",
+            }
+        )
+    boundary = report.get("accepted_state_boundary")
+    if not isinstance(boundary, Mapping):
+        issues.append(
+            {
+                "code": "invalid_accepted_state_boundary",
+                "message": "accepted state boundary must be an object",
+            }
+        )
+    else:
+        if boundary.get("quarantine_rows_are_diagnostics") is not True:
+            issues.append(
+                {
+                    "code": "quarantine_diagnostic_boundary_missing",
+                    "message": "quarantine rows must remain diagnostics",
+                }
+            )
+        for field in (
+            "quarantine_rows_replayed_as_state",
+            "provider_output_replay",
+            "pending_controller_work_replay",
+        ):
+            if boundary.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false",
+                    }
+                )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "bundle report is not full replay certification",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim readiness must be an object",
+            }
+        )
+    elif readiness.get("full_restore_replay_certification") is not False:
+        issues.append(
+            {
+                "code": "full_replay_certification_overclaim",
+                "message": "full restore replay certification must remain false",
+            }
+        )
+    return {
+        "schema": "libreevolve.run_artifact_bundle_report_validation.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
 
 
 def _manifest_artifact_pointer(path: Path, name: str) -> dict:

@@ -940,6 +940,11 @@ JSONL streams, validated quarantine diagnostics, non-JSONL policy checks, and
 paper-artifact lifecycle checks into one inspection-time report. This summary
 is an audit/readiness check, not a claim that restored runs replay provider
 outputs, pending controller work, or every emitted artifact payload.
+Completed and aborted manifests also persist
+`runtime.run_artifact_bundle_report` with the same accepted-stream,
+quarantine-diagnostic, non-JSONL, and paper-artifact lifecycle boundary. The
+report records `claim_ready: false` and keeps provider-output replay, pending
+controller replay, and full restore certification explicitly false.
 CLI and direct restore loaders also validate manifest-advertised quarantine
 streams before consuming runtime, scheduler, budget, lineage, or archive
 restore state, preserving the boundary that `_invalid.jsonl` rows are

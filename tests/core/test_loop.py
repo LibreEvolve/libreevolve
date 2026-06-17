@@ -27,6 +27,7 @@ from libreevolve.core.artifact_schema import (
     run_artifact_schema,
     validate_non_jsonl_artifact_policy_manifest,
     validate_paper_artifact_lifecycle_manifest,
+    validate_quarantine_artifact_policy_manifest,
 )
 from libreevolve.core.database import validate_task_specification_bundle
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
@@ -130,6 +131,7 @@ from libreevolve.core.loop import (
     validate_runtime_rng_state_snapshot,
     validate_runtime_lineage_replay_policy,
     validate_runtime_llm_scheduler_state_snapshot,
+    validate_run_artifact_bundle_report,
     validate_meta_prompt_context_policy_capabilities,
     validate_meta_prompt_context_policy_capability_summary,
     _select_critique_mutation,
@@ -16972,6 +16974,37 @@ def test_manifest_summarizes_plugin_artifacts_after_first_completed_generation(t
     assert policy_validation["checked_artifact_count"] == len(
         run_artifact_schema()["non_jsonl_artifacts"]
     )
+    quarantine_validation = validate_quarantine_artifact_policy_manifest(
+        manifest,
+        run_dir=tmp_path / "run",
+    )
+    assert quarantine_validation["ok"] is True
+    bundle_report = manifest["runtime"]["run_artifact_bundle_report"]
+    assert bundle_report["schema"] == "libreevolve.run_artifact_bundle_report.v1"
+    assert bundle_report["validation"]["ok"] is True
+    assert validate_run_artifact_bundle_report(bundle_report)["ok"] is True
+    assert "history.jsonl" in bundle_report["accepted_streams"]
+    assert bundle_report["accepted_stream_count"] == len(
+        bundle_report["accepted_streams"]
+    )
+    assert bundle_report["quarantine_stream_count"] == 0
+    assert bundle_report["quarantine_record_count"] == 0
+    assert bundle_report["non_jsonl_validation_ok"] is True
+    assert bundle_report["non_jsonl_checked_artifact_count"] == len(
+        run_artifact_schema()["non_jsonl_artifacts"]
+    )
+    assert bundle_report["accepted_state_boundary"] == {
+        "quarantine_rows_are_diagnostics": True,
+        "quarantine_rows_replayed_as_state": False,
+        "non_jsonl_artifacts_are_policy_checked": True,
+        "provider_output_replay": False,
+        "pending_controller_work_replay": False,
+    }
+    assert bundle_report["claim_ready"] is False
+    assert (
+        bundle_report["claim_readiness"]["full_restore_replay_certification"]
+        is False
+    )
     assert manifest["runtime"]["history"]["programs_logged"] == 2
     assert runtime_artifacts["history.jsonl"]["exists"] is True
     assert runtime_artifacts["history.jsonl"]["sha256"]
@@ -16992,6 +17025,18 @@ def test_manifest_summarizes_plugin_artifacts_after_first_completed_generation(t
     assert "invalid_non_jsonl_tree_hash_status" in {
         issue["code"] for issue in policy_validation["issues"]
     }
+
+    overclaimed = copy.deepcopy(bundle_report)
+    overclaimed["accepted_state_boundary"]["provider_output_replay"] = True
+    overclaimed["claim_ready"] = True
+    overclaimed["claim_readiness"]["full_restore_replay_certification"] = True
+    validation = validate_run_artifact_bundle_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        "provider_output_replay_overclaim",
+        "claim_ready_overclaim",
+        "full_replay_certification_overclaim",
+    }.issubset({issue["code"] for issue in validation["issues"]})
 
 
 def test_non_jsonl_policy_accepts_absent_optional_artifacts(tmp_path):

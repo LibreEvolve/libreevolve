@@ -8488,7 +8488,10 @@ sidecars, tests, and active TODOs.
     `tree_hash_status: ok`, `tree_hash`, and a known tree-hash scope, and
     `manifest.json` to retain the deferred self-reference hash policy. Focused
     tests cover a real run with `best.py`, `best_workspace`, and
-    `plugin_artifacts`, plus a forged directory tree-hash-policy drift.
+    `plugin_artifacts`, accepted absent optional artifact pointers, present
+    optional directories for `best_workspace`, `evaluator_artifacts`,
+    `plugin_artifacts`, and `paper_artifacts`, plus a forged directory
+    tree-hash-policy drift.
     `libreevolve show` now runs the same policy validator for manifest-backed
     runs that advertise `artifact_schema.non_jsonl_artifacts`, with focused
     tests proving a present file artifact without `sha256` fails inspection
@@ -8502,9 +8505,9 @@ sidecars, tests, and active TODOs.
     loading runtime RNG, LLM scheduler, runtime budget, lineage replay policy,
     full runtime resume bundles, archive cursor snapshots, and full archive
     restore bundles.
-  - Current gap: the top-level schema inventory now exists, but there is not
-    yet behavioral coverage for every optional non-JSONL artifact emission
-    mode. `paper_artifacts/...` now have a central subpath schema and
+  - Current gap: the top-level schema inventory now exists, optional
+    non-JSONL artifact presence/absence policies are covered, and
+    `paper_artifacts/...` have a central subpath schema plus
     show/restore-source-manifest rejection guards, but full restored-run replay
     or carry-forward semantics remain open.
   - Required result: add behavioral tests or validators that exercise

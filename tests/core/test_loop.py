@@ -16949,6 +16949,68 @@ def test_manifest_summarizes_plugin_artifacts_after_first_completed_generation(t
     }
 
 
+def test_non_jsonl_policy_accepts_absent_optional_artifacts(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "manifest.json").write_text("{}", encoding="utf-8")
+    (run_dir / "task_specification.json").write_text("{}", encoding="utf-8")
+    (run_dir / "best.py").write_text("x=1\n", encoding="utf-8")
+
+    manifest = {
+        "artifact_schema": run_artifact_schema(),
+        "runtime": {"artifacts": _runtime_artifact_pointers(run_dir)},
+    }
+
+    policy_validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+
+    assert policy_validation["ok"] is True
+    runtime_artifacts = manifest["runtime"]["artifacts"]
+    assert runtime_artifacts["best_workspace"]["present"] is False
+    assert runtime_artifacts["evaluator_artifacts"]["present"] is False
+    assert runtime_artifacts["plugin_artifacts"]["present"] is False
+    assert runtime_artifacts["paper_artifacts"]["present"] is False
+
+
+@pytest.mark.parametrize(
+    "artifact_name",
+    [
+        "best_workspace",
+        "evaluator_artifacts",
+        "plugin_artifacts",
+        "paper_artifacts",
+    ],
+)
+def test_non_jsonl_policy_accepts_present_optional_directory_artifacts(
+    tmp_path,
+    artifact_name,
+):
+    run_dir = tmp_path / "run"
+    artifact_dir = run_dir / artifact_name
+    artifact_dir.mkdir(parents=True)
+    (artifact_dir / "evidence.txt").write_text(
+        f"{artifact_name} evidence\n",
+        encoding="utf-8",
+    )
+    (run_dir / "manifest.json").write_text("{}", encoding="utf-8")
+    (run_dir / "task_specification.json").write_text("{}", encoding="utf-8")
+    (run_dir / "best.py").write_text("x=1\n", encoding="utf-8")
+
+    manifest = {
+        "artifact_schema": run_artifact_schema(),
+        "runtime": {"artifacts": _runtime_artifact_pointers(run_dir)},
+    }
+
+    policy_validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+
+    assert policy_validation["ok"] is True
+    pointer = manifest["runtime"]["artifacts"][artifact_name]
+    assert pointer["present"] is True
+    assert pointer["kind"] == "directory"
+    assert pointer["tree_hash_status"] == "ok"
+    assert pointer["tree_hash"]
+    assert pointer["file_count"] == 1
+
+
 def test_ttt_rl_loop_export_cadence_and_final_manifest_flush(tmp_path):
     short_plugin = TTTRLPlugin(
         train_every=2,

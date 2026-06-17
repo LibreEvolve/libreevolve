@@ -903,6 +903,10 @@ non-JSONL schema against `runtime.artifacts`: present file artifacts must carry
 `sha256`, present directory artifacts must carry an `ok` tree hash with a
 known tree-hash scope, and `manifest.json` must remain marked as a deferred
 self-reference hash.
+Absent optional non-JSONL artifacts are accepted when their pointer records
+remain schema-shaped and `present: false`; present optional directories such as
+`best_workspace`, `evaluator_artifacts`, `plugin_artifacts`, and
+`paper_artifacts` must satisfy the directory tree-hash policy.
 `libreevolve show` runs this check for manifest-backed runs that advertise
 `artifact_schema.non_jsonl_artifacts`, failing inspection before printing the
 selected best program/workspace if those pointer policies drift.

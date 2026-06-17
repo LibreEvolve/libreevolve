@@ -1,0 +1,135 @@
+{
+  "schema": "libreevolve.alphaevolve_keyword_customer_boundary.v1",
+  "source_id": "google-keyword-alphaevolve-one-year-update",
+  "source_family": "official_google_keyword_alphaevolve_customer_update",
+  "source_relation": "newer official customer-impact reporting, not local LibreEvolve customer availability, managed service support, or reproduced benchmark evidence",
+  "boundary_status": "official_keyword_update_without_customer_availability_or_local_product_evidence",
+  "claim_ready": false,
+  "article": {
+    "title": "AlphaEvolve, 1 year later: Impact on science, technology",
+    "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/alphaevolve-updates/",
+    "authors": [
+      "Pushmeet Kohli",
+      "Amin Vahdat"
+    ],
+    "retrieved_on": "2026-06-17",
+    "html_bytes": 394899,
+    "html_sha256": "435c8244ef63c997a1a5bcdb657ca915703ac588d9533a3a90e1f7784a79e428"
+  },
+  "source_linkage": {
+    "deepmind_impact_article": "https://deepmind.google/blog/alphaevolve-impact/",
+    "cloud_private_preview_post": "https://cloud.google.com/blog/products/ai-machine-learning/alphaevolve-on-google-cloud/",
+    "relationship": "Keyword update reports one-year impact and customer-facing domains; Cloud post separately describes private preview and Early Access path."
+  },
+  "domain_claims": [
+    {
+      "claim_id": "dna_sequencing_error_correction",
+      "claim_group": "science",
+      "source_status": "reported_without_local_fixture"
+    },
+    {
+      "claim_id": "disaster_prediction_accuracy",
+      "claim_group": "science",
+      "source_status": "reported_without_local_fixture"
+    },
+    {
+      "claim_id": "power_grid_stabilization_simulations",
+      "claim_group": "science",
+      "source_status": "reported_without_local_fixture"
+    },
+    {
+      "claim_id": "molecular_simulations",
+      "claim_group": "science",
+      "source_status": "reported_without_local_fixture"
+    },
+    {
+      "claim_id": "neuroscience_insights",
+      "claim_group": "science",
+      "source_status": "reported_without_local_fixture"
+    },
+    {
+      "claim_id": "google_infrastructure_efficiency",
+      "claim_group": "google_internal_infrastructure",
+      "source_status": "separated_from_customer_availability"
+    },
+    {
+      "claim_id": "cloud_customer_ml_models",
+      "claim_group": "google_cloud_customer_impact",
+      "source_status": "requires_customer_source_crosswalk"
+    },
+    {
+      "claim_id": "cloud_customer_drug_discovery",
+      "claim_group": "google_cloud_customer_impact",
+      "source_status": "requires_customer_source_crosswalk"
+    },
+    {
+      "claim_id": "cloud_customer_supply_chains",
+      "claim_group": "google_cloud_customer_impact",
+      "source_status": "requires_customer_source_crosswalk"
+    },
+    {
+      "claim_id": "cloud_customer_warehouse_design",
+      "claim_group": "google_cloud_customer_impact",
+      "source_status": "requires_customer_source_crosswalk"
+    }
+  ],
+  "customer_availability_rows": [
+    {
+      "row_id": "ml_model_improvement",
+      "keyword_phrase": "improve their machine learning models",
+      "availability_status": "source_reported_without_customer_matrix"
+    },
+    {
+      "row_id": "drug_discovery_acceleration",
+      "keyword_phrase": "accelerate drug discovery",
+      "availability_status": "source_reported_without_customer_matrix"
+    },
+    {
+      "row_id": "supply_chain_improvement",
+      "keyword_phrase": "improve supply chains",
+      "availability_status": "source_reported_without_customer_matrix"
+    },
+    {
+      "row_id": "warehouse_design_optimization",
+      "keyword_phrase": "optimize warehouse design",
+      "availability_status": "source_reported_without_customer_matrix"
+    }
+  ],
+  "required_evidence_fields": [
+    "keyword_article_url",
+    "keyword_article_authors",
+    "keyword_article_retrieval_html_sha256",
+    "deepmind_impact_article_linkage",
+    "google_cloud_private_preview_linkage",
+    "research_to_real_world_claim",
+    "domain_claim_table",
+    "google_infrastructure_claim_separation",
+    "customer_availability_rows",
+    "customer_source_crosswalk",
+    "named_customer_source_links",
+    "cloud_account_access_evidence",
+    "console_or_billing_artifact_inventory",
+    "ui_or_api_artifact_inventory",
+    "availability_geography_or_access_tier",
+    "rollout_owner_metadata",
+    "claim_value_normalization_policy",
+    "independent_availability_assessment",
+    "local_customer_case_fixture",
+    "local_managed_service_support",
+    "readme_roadmap_paper_index_boundary"
+  ],
+  "missing_evidence": {
+    "customer_source_crosswalk": "not_recorded_locally",
+    "named_customer_source_links": "not_recorded_locally",
+    "cloud_account_access_evidence": "not_recorded_locally",
+    "console_or_billing_artifact_inventory": "not_recorded_locally",
+    "ui_or_api_artifact_inventory": "not_recorded_locally",
+    "availability_geography_or_access_tier": "not_recorded_locally",
+    "rollout_owner_metadata": "not_recorded_locally",
+    "claim_value_normalization_policy": "not_recorded_locally",
+    "independent_availability_assessment": "not_recorded_locally",
+    "local_customer_case_fixture": "not_implemented_locally",
+    "local_managed_service_support": "not_implemented_locally"
+  },
+  "claim_boundary": "This boundary records the official Google Keyword one-year AlphaEvolve article as source-reported science, Google infrastructure, and Google Cloud customer-impact context. It does not claim named-customer availability, customer source crosswalks, Cloud account access, UI/API/console/billing artifacts, rollout owner evidence, geographic or access-tier availability, independent availability assessment, local customer-case fixtures, or local managed AlphaEvolve service support in LibreEvolve."
+}

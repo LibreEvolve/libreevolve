@@ -1680,6 +1680,12 @@ by `papers/lineage_replay_boundary.json`.
   open for Service API endpoint/schema and auth documentation, console/API/
   billing artifacts, customer availability, external account availability,
   security/data-use terms, and managed-agent workflow semantics.
+  `papers/alphaevolve_keyword_customer_boundary.json` separately records the
+  Google Keyword one-year update's science, Google infrastructure, and Google
+  Cloud customer-impact domains while keeping customer source crosswalks,
+  availability matrices, account access, console/billing artifacts, rollout
+  owners, independent availability checks, local fixtures, and managed-service
+  support open.
 - Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
   `papers/download_manifest.*` and `papers/README.md` now include arXiv
   `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic

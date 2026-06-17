@@ -44,6 +44,9 @@ Important limits:
   Enterprise managed agent, and not evidence of access to AlphaEvolve private
   preview or Pre-GA product surfaces; `papers/alphaevolve_cloud_access_boundary.json`
   records official source snapshots for those access claims only.
+- Google Keyword one-year AlphaEvolve customer-impact claims are source
+  reporting only; `papers/alphaevolve_keyword_customer_boundary.json` does not
+  prove customer availability or local managed-service support.
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.

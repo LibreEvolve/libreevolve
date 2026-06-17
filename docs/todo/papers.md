@@ -5217,16 +5217,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     design. The article is attributed to Pushmeet Kohli, Chief Scientist,
     Google Cloud and Vice President, Google DeepMind, and Amin Vahdat, SVP and
     Chief Technologist, Google Cloud.
-  - Current gap: the existing AlphaEvolve 2026 impact boundary records the
-    Google Keyword one-year update only as a product/source surface requiring
-    a snapshot, while `customer_availability_source_snapshot`,
-    `api_cloud_customer_artifact_inventory`, `ui_surface_artifact_inventory`,
-    and `cloud_product_api_console_billing_artifacts` remain missing. No
-    dedicated TODO, article snapshot/hash, publication date/author metadata,
-    customer-availability matrix, customer/source crosswalk, product launch
-    linkage, Cloud account access evidence, UI/API artifact inventory,
-    infrastructure-versus-customer claim separation, or independent
-    availability check exists for the Keyword update.
+  - Current gap: `papers/alphaevolve_keyword_customer_boundary.json` now
+    records the Keyword article URL/authors, retrieval byte count and SHA-256
+    hash, relation to the DeepMind impact article and Cloud private-preview
+    post, ten source-reported science/infrastructure/customer domain claims,
+    Google infrastructure versus customer-impact separation, and four
+    source-reported Google Cloud customer-impact rows for ML models, drug
+    discovery, supply chains, and warehouse design. Customer-availability
+    matrix, customer/source crosswalk, named customer links, Cloud account
+    access evidence, UI/API/console/billing artifact inventory, availability
+    geography/access-tier notes, rollout/owner metadata, claim-value
+    normalization, independent availability assessment, local customer-case
+    fixtures, and local managed-service support remain missing for the Keyword
+    update.
   - Required result: add source-specific evidence for the Keyword update:
     article URL/date/authors, retrieval hash, relation to the DeepMind impact
     article and Cloud private-preview post, customer and domain claim table,

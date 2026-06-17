@@ -2526,6 +2526,18 @@ Implemented:
   documentation, console/API/billing artifacts, customer availability, external
   account availability, security/data-use terms, managed-agent execution
   evidence, and a local Cloud AlphaEvolve provider adapter exist.
+- `papers/alphaevolve_keyword_customer_boundary.json`: official Google
+  Keyword one-year AlphaEvolve customer-impact sidecar, not Google Cloud
+  customer availability or local managed-service support. It records the
+  Keyword article URL/authors, retrieval byte count and SHA-256 hash, relation
+  to the DeepMind impact article and Cloud private-preview post, science and
+  Google-infrastructure claim separation, and four source-reported Google
+  Cloud customer-impact rows for ML models, drug discovery, supply chains, and
+  warehouse design. It keeps those claims source-scoped until named-customer
+  source crosswalks, account-access evidence, UI/API/console/billing
+  artifacts, geography/access-tier notes, rollout owners, independent
+  availability checks, local customer-case fixtures, and local managed-service
+  support exist.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

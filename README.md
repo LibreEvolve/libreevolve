@@ -183,8 +183,10 @@ The bundled examples are intentionally small:
   evaluator budget, expected artifacts, manifest checks, and skip/failure
   modes for an authenticated experimental run. The paired
   `sorting_network_9/benchmark_goal_prompt.json` records the under-4000
-  character external-agent handoff prompt for that run. These are still
-  protocol inputs, not a successful rediscovery transcript. The checked
+  character external-agent handoff prompt for that run, and the
+  `benchmark_goal_prompt` validator checks the prompt count, model/auth
+  linkage, and overclaim boundary. These are still protocol inputs, not a
+  successful rediscovery transcript. The checked
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   scope.
 

@@ -1248,9 +1248,10 @@ by `papers/lineage_replay_boundary.json`.
   validator budget, expected artifacts, manifest assertions, and skip/failure
   modes for an authenticated experimental run. The paired
   `sorting_network_9/benchmark_goal_prompt.json` records the bounded
-  external-agent handoff prompt for that protocol. Add repeated-run,
-  source-citation, and paper-certification evidence before treating them as
-  comparable results. The
+  external-agent handoff prompt for that protocol, with validator coverage for
+  prompt size, model/auth linkage, and result-evidence overclaim boundaries.
+  Add repeated-run, source-citation, and paper-certification evidence before
+  treating them as comparable results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   executable-candidate-only boundary.
   This remains the current lowest-risk realistic benchmark path because it has

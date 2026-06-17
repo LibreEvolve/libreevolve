@@ -3212,12 +3212,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     validator budget, expected artifacts, manifest assertions, skip/failure
     modes, and post-run evidence bundle names. The paired
     `benchmark_goal_prompt.json` records the bounded external-agent handoff
-    prompt for that protocol and is linked from the run contract. The paper
-    ledger still has no source-citation sidecar for the zero-one verifier or
-    known comparator targets, repeated-run evidence, committed run-tied hardening
-    certification, best-candidate artifact hashes, failure/invalid-candidate
-    summaries, target-hit-rate summaries, or certification row proving
-    rediscovery under fixed evaluator/model/seed conditions. The committed
+    prompt for that protocol, is linked from the run contract, and has reusable
+    validator coverage for prompt size, model/auth linkage, secret-like text,
+    and overclaim boundaries. The paper ledger still has no source-citation
+    sidecar for the zero-one verifier or known comparator targets, repeated-run
+    evidence, committed run-tied hardening certification, best-candidate
+    artifact hashes, failure/invalid-candidate summaries, target-hit-rate
+    summaries, or certification row proving rediscovery under fixed
+    evaluator/model/seed conditions. The committed
     `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
     absence boundary for paper-manifest validation.
   - Required result: add a paper-visible benchmark record for

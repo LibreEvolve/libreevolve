@@ -189,6 +189,7 @@ TITLE_PAGE_METADATA_SCHEMA = "libreevolve.title_page_metadata.v1"
 SYSTEM_CONTRIBUTION_METADATA_SCHEMA = (
     "libreevolve.system_contribution_metadata.v1"
 )
+BENCHMARK_GOAL_PROMPT_SCHEMA = "libreevolve.benchmark_goal_prompt.v1"
 _FORMULATION_ALLOWED_KEYS = {
     "problem_origin",
     "contributors",
@@ -389,6 +390,19 @@ _SYSTEM_CONTRIBUTION_ALLOWED_KEYS = {
     "privacy_policy",
     "review",
 }
+_BENCHMARK_GOAL_PROMPT_ALLOWED_KEYS = {
+    "schema",
+    "status",
+    "prompt_id",
+    "problem_id",
+    "path",
+    "sha256",
+    "bytes",
+    "prompt_character_count",
+    "character_limit",
+    "run_contract_path",
+    "claim_boundary",
+}
 _SYSTEM_CONTRIBUTION_PHASES = {
     "initial_design",
     "project_vision_scoping",
@@ -444,6 +458,7 @@ class ProgramDatabase:
         title_page_metadata: Mapping[str, object] | None = None,
         system_contribution_metadata: Mapping[str, object] | None = None,
         codebase_integration_metadata: Mapping[str, object] | None = None,
+        benchmark_goal_prompt: Mapping[str, object] | None = None,
     ):
         config.validate()
         objective_schema = validate_objective_schema(objective_schema)
@@ -511,6 +526,9 @@ class ProgramDatabase:
         system_contribution_metadata = validate_system_contribution_metadata(
             system_contribution_metadata or {}
         )
+        benchmark_goal_prompt = validate_benchmark_goal_prompt_manifest(
+            benchmark_goal_prompt or {}
+        )
         startup_manifest = _startup_manifest_payload(
             config,
             context_sources,
@@ -529,6 +547,7 @@ class ProgramDatabase:
             paper_author_metadata,
             title_page_metadata,
             system_contribution_metadata,
+            benchmark_goal_prompt,
             archive_cursor_restore,
         )
         strict_json_text_for_path(startup_manifest, manifest_path, indent=2)
@@ -7599,6 +7618,131 @@ def validate_system_contribution_metadata(value: object) -> dict:
     return normalized
 
 
+def validate_benchmark_goal_prompt_manifest(value: object) -> dict:
+    if not isinstance(value, Mapping):
+        raise StrictJsonlError("benchmark_goal_prompt must be a mapping")
+    if not all(isinstance(key, str) for key in value):
+        raise StrictJsonlError("benchmark_goal_prompt keys must be strings")
+    unsupported = sorted(
+        redact_sensitive_text(key)
+        for key in set(value) - _BENCHMARK_GOAL_PROMPT_ALLOWED_KEYS
+    )
+    if unsupported:
+        raise StrictJsonlError(f"benchmark_goal_prompt has unsupported fields {unsupported}")
+    if not value:
+        return {
+            "schema": BENCHMARK_GOAL_PROMPT_SCHEMA,
+            "status": "not_provided",
+        }
+    if value.get("schema") != BENCHMARK_GOAL_PROMPT_SCHEMA:
+        raise StrictJsonlError(
+            f"benchmark_goal_prompt.schema must be {BENCHMARK_GOAL_PROMPT_SCHEMA!r}"
+        )
+    if "status" in value and value.get("status") != "provided":
+        raise StrictJsonlError("benchmark_goal_prompt.status must be 'provided'")
+    normalized = {
+        "schema": BENCHMARK_GOAL_PROMPT_SCHEMA,
+        "status": "provided",
+        "prompt_id": _normalize_benchmark_goal_prompt_token(
+            "benchmark_goal_prompt.prompt_id",
+            value.get("prompt_id"),
+        ),
+        "problem_id": _normalize_benchmark_goal_prompt_token(
+            "benchmark_goal_prompt.problem_id",
+            value.get("problem_id"),
+        ),
+        "path": _normalize_benchmark_goal_prompt_path(
+            "benchmark_goal_prompt.path",
+            value.get("path"),
+        ),
+        "sha256": _normalize_benchmark_goal_prompt_sha256(
+            "benchmark_goal_prompt.sha256",
+            value.get("sha256"),
+        ),
+        "bytes": _normalize_benchmark_goal_prompt_positive_int(
+            "benchmark_goal_prompt.bytes",
+            value.get("bytes"),
+        ),
+        "prompt_character_count": _normalize_benchmark_goal_prompt_positive_int(
+            "benchmark_goal_prompt.prompt_character_count",
+            value.get("prompt_character_count"),
+        ),
+        "character_limit": _normalize_benchmark_goal_prompt_positive_int(
+            "benchmark_goal_prompt.character_limit",
+            value.get("character_limit"),
+        ),
+        "run_contract_path": _normalize_benchmark_goal_prompt_path(
+            "benchmark_goal_prompt.run_contract_path",
+            value.get("run_contract_path"),
+        ),
+        "claim_boundary": _normalize_benchmark_goal_prompt_text(
+            "benchmark_goal_prompt.claim_boundary",
+            value.get("claim_boundary"),
+            max_chars=500,
+        ),
+    }
+    if normalized["prompt_character_count"] > normalized["character_limit"]:
+        raise StrictJsonlError(
+            "benchmark_goal_prompt.prompt_character_count must be <= character_limit"
+        )
+    _validate_context_provenance_json_size("benchmark_goal_prompt", normalized)
+    return normalized
+
+
+def _normalize_benchmark_goal_prompt_token(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    if len(value) > 160:
+        raise StrictJsonlError(f"{label} must be <= 160 characters")
+    if redact_sensitive_text(value) != value:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]*", value) is None:
+        raise StrictJsonlError(f"{label} must be a safe token")
+    return value
+
+
+def _normalize_benchmark_goal_prompt_path(label: str, value: object) -> str:
+    if not isinstance(value, str) or not value:
+        raise StrictJsonlError(f"{label} must be a non-empty path")
+    if len(value) > 512:
+        raise StrictJsonlError(f"{label} must be <= 512 characters")
+    if "\\" in value or value.startswith("/") or ".." in value.split("/"):
+        raise StrictJsonlError(f"{label} must be a safe repository-relative path")
+    if redact_sensitive_text(value) != value:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    return value
+
+
+def _normalize_benchmark_goal_prompt_sha256(label: str, value: object) -> str:
+    if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+        raise StrictJsonlError(f"{label} must be a lowercase SHA-256 hex digest")
+    return value
+
+
+def _normalize_benchmark_goal_prompt_positive_int(label: str, value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise StrictJsonlError(f"{label} must be a positive integer")
+    return value
+
+
+def _normalize_benchmark_goal_prompt_text(
+    label: str,
+    value: object,
+    *,
+    max_chars: int,
+) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise StrictJsonlError(f"{label} must be non-empty text")
+    text = value.strip()
+    if len(text) > max_chars:
+        raise StrictJsonlError(f"{label} must be <= {max_chars} characters")
+    if redact_sensitive_text(text) != text:
+        raise StrictJsonlError(f"{label} must not contain secret-like text")
+    if any(ord(char) < 32 or ord(char) == 127 for char in text):
+        raise StrictJsonlError(f"{label} must not contain control characters")
+    return text
+
+
 def _normalize_system_contribution_record(index: int, value: object) -> dict:
     label = f"system_contribution_metadata.records[{index}]"
     if not isinstance(value, Mapping):
@@ -8192,6 +8336,7 @@ def _startup_manifest_payload(
     paper_author_metadata: dict,
     title_page_metadata: dict,
     system_contribution_metadata: dict,
+    benchmark_goal_prompt: dict,
     archive_cursor_restore: dict,
 ) -> dict:
     manifest_log_dir = _manifest_log_dir(config.log_dir)
@@ -8349,6 +8494,7 @@ def _startup_manifest_payload(
             "paper_author_metadata": paper_author_metadata,
             "title_page_metadata": title_page_metadata,
             "system_contribution_metadata": system_contribution_metadata,
+            "benchmark_goal_prompt": benchmark_goal_prompt,
         },
         "policies": {
             "redaction": redaction_policy_record(),

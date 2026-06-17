@@ -822,6 +822,7 @@ def evolve(
         paper_author_metadata=_problem_paper_author_metadata(problem),
         title_page_metadata=_problem_title_page_metadata(problem),
         system_contribution_metadata=_problem_system_contribution_metadata(problem),
+        benchmark_goal_prompt=_problem_benchmark_goal_prompt(problem),
         retrieval_query_context=_problem_retrieval_query_context(problem),
         archive_state_snapshot=runtime_archive_state_snapshot,
         archive_programs_by_id=runtime_archive_programs_by_id,
@@ -1664,6 +1665,7 @@ def _write_completed_runtime(
     )
     best_export = export_best_artifacts(best, run_dir) if best is not None else None
     runtime["history"] = _runtime_history_summary(db, run_dir, budget)
+    _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
     attach_best_artifact_export(runtime, best_export)
     _attach_runtime_summaries(
@@ -1716,6 +1718,7 @@ def _write_aborted_runtime(
         runtime["abort"]["plugin_failure"] = plugin_failure
         runtime["plugin_failures"] = [plugin_failure]
     runtime["history"] = _runtime_history_summary(db, run_dir, budget)
+    _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
     _attach_runtime_summaries(
         runtime,
@@ -1752,6 +1755,31 @@ def _mark_runtime_wall_clock_status(runtime: dict, status: str) -> None:
         wall_clock["completed_at"] = finished_at
     elif status == "aborted":
         wall_clock["aborted_at"] = finished_at
+
+
+def _attach_runtime_benchmark_goal_prompt(runtime: dict, db: ProgramDatabase) -> None:
+    manifest = db.startup_manifest_snapshot()
+    problem = manifest.get("problem") if isinstance(manifest.get("problem"), Mapping) else {}
+    prompt = (
+        problem.get("benchmark_goal_prompt")
+        if isinstance(problem.get("benchmark_goal_prompt"), Mapping)
+        else {}
+    )
+    if prompt.get("status") != "provided":
+        return
+    runtime["benchmark_goal_prompt"] = {
+        "schema": prompt.get("schema"),
+        "status": "provided",
+        "prompt_id": prompt.get("prompt_id"),
+        "problem_id": prompt.get("problem_id"),
+        "path": prompt.get("path"),
+        "sha256": prompt.get("sha256"),
+        "bytes": prompt.get("bytes"),
+        "prompt_character_count": prompt.get("prompt_character_count"),
+        "character_limit": prompt.get("character_limit"),
+        "run_contract_path": prompt.get("run_contract_path"),
+        "source_manifest_path": "problem.benchmark_goal_prompt",
+    }
 
 
 def _aborted_exception_manifest(exc: BaseException) -> dict:
@@ -36826,6 +36854,10 @@ def _problem_title_page_metadata(problem: Problem) -> dict:
 
 def _problem_system_contribution_metadata(problem: Problem) -> dict:
     return dict(getattr(problem, "system_contribution_metadata", {}) or {})
+
+
+def _problem_benchmark_goal_prompt(problem: Problem) -> dict:
+    return dict(getattr(problem, "benchmark_goal_prompt", {}) or {})
 
 
 def _problem_retrieval_query_context(problem: Problem) -> dict:

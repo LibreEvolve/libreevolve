@@ -8304,20 +8304,21 @@ sidecars, tests, and active TODOs.
     text, overclaim boundary, and linkage to `run_contract.json` plus its
     model/backend/auth/run-name fields. The run contract now carries
     `goal_prompt_provenance` with the prompt id, path, character count, and
-    future `runtime.benchmark_goal_prompt.prompt_id` manifest pointer. Tests
-    cover accepted and drifted prompt artifacts plus prompt-provenance
-    mismatch cases.
+    emitted `runtime.benchmark_goal_prompt.prompt_id` manifest pointer. Runtime
+    manifests now copy validated problem-owned prompt provenance into
+    `runtime.benchmark_goal_prompt` when a problem includes
+    `benchmark_goal_prompt.json`. Tests cover accepted and drifted prompt
+    artifacts, prompt-provenance mismatch cases, loader ingestion, and runtime
+    manifest emission.
   - Current gap: the prompt artifact is committed and bounded, but no actual
     Codex-authenticated run manifest, transcript hash bundle, or paper-facing
-    certification row links back to this prompt id yet. The run contract
-    defines the future manifest pointer, but runtime manifests do not emit that
-    field today, and future examples still need to opt into the reusable
-    prompt validator.
+    certification row links back to this prompt id yet. Future examples still
+    need to opt into the reusable prompt validator and benchmark-specific run
+    contracts.
   - Required result: link authenticated benchmark runs back to the exact
-    committed `prompt_id`, preserve redacted transcript/hash evidence, add a
-    run-manifest prompt provenance field plus cross-example adoption checks,
-    and keep the prompt alone scoped as protocol input rather than rediscovery
-    evidence.
+    committed `prompt_id`, preserve redacted transcript/hash evidence, add
+    cross-example adoption checks, and keep the prompt alone scoped as
+    protocol input rather than rediscovery evidence.
 
 - [ ] Align generated prompt-table artifacts with run-directory collision and
       overwrite cleanup policy.

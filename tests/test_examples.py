@@ -358,6 +358,17 @@ def test_sorting_network_9_loads_as_problem():
     assert problem.name == "sorting_network_9"
     assert problem.primary_metric == "network_score"
     assert len(problem.initial_programs) == 1
+    assert problem.benchmark_goal_prompt["status"] == "provided"
+    assert (
+        problem.benchmark_goal_prompt["prompt_id"]
+        == "sorting_network_9_codex_spark_clean_checkout_goal_v1"
+    )
+    assert problem.benchmark_goal_prompt["path"] == (
+        "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json"
+    )
+    assert problem.benchmark_goal_prompt["run_contract_path"] == (
+        "libreevolve/problems/examples/sorting_network_9/run_contract.json"
+    )
 
 
 def test_sorting_network_9_codex_config_is_secret_free_and_valid():
@@ -405,7 +416,7 @@ def test_sorting_network_9_clean_checkout_run_contract_matches_fixture():
         "/sorting_network_9/benchmark_goal_prompt.json"
     )
     assert contract["goal_prompt_provenance"] == {
-        "status": "required_for_cited_run_evidence_not_emitted_by_runtime_yet",
+        "status": "required_for_cited_run_evidence_emitted_by_runtime",
         "schema": "libreevolve.benchmark_goal_prompt.v1",
         "prompt_id": "sorting_network_9_codex_spark_clean_checkout_goal_v1",
         "path": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
@@ -461,7 +472,7 @@ def test_sorting_network_9_clean_checkout_run_contract_matches_fixture():
     assert (
         "runtime.benchmark_goal_prompt.prompt_id is "
         "sorting_network_9_codex_spark_clean_checkout_goal_v1"
-    ) in contract["future_manifest_assertions"]
+    ) in contract["manifest_assertions"]
     assert "does not certify AlphaEvolve-comparable rediscovery" in contract[
         "claim_boundary"
     ]

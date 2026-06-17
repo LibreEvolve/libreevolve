@@ -1288,6 +1288,46 @@ def test_completed_runtime_records_no_llm_scheduler_for_zero_generation_run():
     }
 
 
+def test_completed_runtime_records_benchmark_goal_prompt_provenance():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem()
+    problem.benchmark_goal_prompt = {
+        "schema": "libreevolve.benchmark_goal_prompt.v1",
+        "prompt_id": "t_goal_v1",
+        "problem_id": "t",
+        "path": "libreevolve/problems/examples/t/benchmark_goal_prompt.json",
+        "sha256": "a" * 64,
+        "bytes": 123,
+        "prompt_character_count": 42,
+        "character_limit": 4000,
+        "run_contract_path": "libreevolve/problems/examples/t/run_contract.json",
+        "claim_boundary": "Runtime provenance only; not benchmark certification.",
+    }
+
+    evolve(problem, Config(max_generations=0, log_dir=tmpdir, problem_name="t"))
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    prompt = manifest["problem"]["benchmark_goal_prompt"]
+    runtime_prompt = manifest["runtime"]["benchmark_goal_prompt"]
+
+    assert prompt["status"] == "provided"
+    assert prompt["prompt_id"] == "t_goal_v1"
+    assert prompt["path"] == "libreevolve/problems/examples/t/benchmark_goal_prompt.json"
+    assert runtime_prompt == {
+        "schema": "libreevolve.benchmark_goal_prompt.v1",
+        "status": "provided",
+        "prompt_id": "t_goal_v1",
+        "problem_id": "t",
+        "path": "libreevolve/problems/examples/t/benchmark_goal_prompt.json",
+        "sha256": "a" * 64,
+        "bytes": 123,
+        "prompt_character_count": 42,
+        "character_limit": 4000,
+        "run_contract_path": "libreevolve/problems/examples/t/run_contract.json",
+        "source_manifest_path": "problem.benchmark_goal_prompt",
+    }
+
+
 def test_runtime_history_records_gemini_provider_parity_boundary():
     tmpdir = tempfile.mkdtemp()
     backends = [

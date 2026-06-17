@@ -1250,7 +1250,7 @@ by `papers/lineage_replay_boundary.json`.
   `sorting_network_9/benchmark_goal_prompt.json` records the bounded
   external-agent handoff prompt for that protocol, with validator coverage for
   prompt size, model/auth linkage, result-evidence overclaim boundaries, and a
-  future runtime prompt-id provenance requirement in the run contract. Add
+  runtime-emitted prompt-id provenance requirement in the run contract. Add
   repeated-run, source-citation, and paper-certification evidence before
   treating them as comparable results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that

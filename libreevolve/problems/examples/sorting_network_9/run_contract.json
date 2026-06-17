@@ -8,7 +8,7 @@
   "validator_path": "libreevolve/problems/examples/sorting_network_9/validate.py",
   "goal_prompt_path": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
   "goal_prompt_provenance": {
-    "status": "required_for_cited_run_evidence_not_emitted_by_runtime_yet",
+    "status": "required_for_cited_run_evidence_emitted_by_runtime",
     "schema": "libreevolve.benchmark_goal_prompt.v1",
     "prompt_id": "sorting_network_9_codex_spark_clean_checkout_goal_v1",
     "path": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
@@ -76,9 +76,7 @@
     "artifact_schema.jsonl_records includes history.jsonl and evaluator_results.jsonl",
     "artifact_schema.non_jsonl_artifacts includes best.py and best_workspace",
     "runtime.artifacts includes best.py and best_workspace after finalization",
-    "runtime.history.task_spec_artifact_resolution_report resolves task_specification.json"
-  ],
-  "future_manifest_assertions": [
+    "runtime.history.task_spec_artifact_resolution_report resolves task_specification.json",
     "runtime.benchmark_goal_prompt.prompt_id is sorting_network_9_codex_spark_clean_checkout_goal_v1",
     "runtime.benchmark_goal_prompt.path is libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
     "runtime.benchmark_goal_prompt.prompt_character_count is 1501"

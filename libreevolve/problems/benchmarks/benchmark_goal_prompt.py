@@ -189,18 +189,18 @@ def _validate_against_run_contract(
                     f"goal_prompt_provenance.{field_name} must match the prompt artifact",
                 )
             )
-    if provenance.get("status") != "required_for_cited_run_evidence_not_emitted_by_runtime_yet":
+    if provenance.get("status") != "required_for_cited_run_evidence_emitted_by_runtime":
         issues.append(
             _issue(
                 "invalid_goal_prompt_provenance_status",
-                "goal_prompt_provenance.status must preserve the not-emitted runtime boundary",
+                "goal_prompt_provenance.status must preserve the runtime-emitted boundary",
             )
         )
     if provenance.get("manifest_pointer") != "runtime.benchmark_goal_prompt.prompt_id":
         issues.append(
             _issue(
                 "invalid_goal_prompt_manifest_pointer",
-                "goal_prompt_provenance.manifest_pointer must name the future runtime prompt-id field",
+                "goal_prompt_provenance.manifest_pointer must name the runtime prompt-id field",
             )
         )
 

@@ -3214,7 +3214,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     `benchmark_goal_prompt.json` records the bounded external-agent handoff
     prompt for that protocol, is linked from the run contract, and has reusable
     validator coverage for prompt size, model/auth linkage, secret-like text,
-    overclaim boundaries, and a future runtime prompt-id provenance pointer.
+    overclaim boundaries, and an emitted runtime prompt-id provenance pointer.
     The paper ledger still has no source-citation sidecar for the zero-one
     verifier or known comparator targets, repeated-run evidence, committed
     run-tied hardening certification, best-candidate artifact hashes,

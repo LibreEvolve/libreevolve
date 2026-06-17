@@ -28,14 +28,14 @@ def test_benchmark_goal_prompt_accepts_sorting_network_artifact():
     prompt_record = json.loads(PROMPT_PATH.read_text(encoding="utf-8"))
     assert prompt_record["schema"] == BENCHMARK_GOAL_PROMPT_SCHEMA
     assert contract["goal_prompt_provenance"] == {
-        "status": "required_for_cited_run_evidence_not_emitted_by_runtime_yet",
+        "status": "required_for_cited_run_evidence_emitted_by_runtime",
         "schema": BENCHMARK_GOAL_PROMPT_SCHEMA,
         "prompt_id": prompt_record["prompt_id"],
         "path": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
         "prompt_character_count": prompt_record["prompt_character_count"],
         "manifest_pointer": "runtime.benchmark_goal_prompt.prompt_id",
     }
-    assert contract["future_manifest_assertions"] == [
+    assert contract["manifest_assertions"][-3:] == [
         "runtime.benchmark_goal_prompt.prompt_id is sorting_network_9_codex_spark_clean_checkout_goal_v1",
         "runtime.benchmark_goal_prompt.path is libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
         "runtime.benchmark_goal_prompt.prompt_character_count is 1501",

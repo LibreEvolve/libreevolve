@@ -884,22 +884,25 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     tells readers to replace placeholders with currently available
     provider/account model ids. The active README provider-smoke TODO covers
     the root README examples, while the AGENTS.md drift TODO covers
-    agent-facing instructions, but neither is a development-guide-specific
-    check for these commands.
-  - Current gap: there is no committed development-guide provider smoke
-    matrix, redacted model-availability record, expected skip/failure policy,
-    or docs drift check proving that the exact `docs/development.md` example
-    commands are current, internally consistent, and safely separated from
-    AlphaEvolve Gemini/model-mix parity. There is also no check that
-    development docs update when supported provider families, placeholder
-    syntax, example run names, or provider-backed smoke policy changes.
-    A current inspection-linkage drift is that the guide shows a
-    `circle_packing` Anthropic run immediately before
-    `py -3.12 -m libreevolve show runs/hello_world`, so only the OpenAI
-    `hello_world` example has an obvious paired inspection path. There is no
-    explicit `--run-name`, `--overwrite`, or `show runs/circle_packing`
-    guidance proving that each provider example has a distinct expected run
-    directory and post-run inspection contract.
+    agent-facing instructions.
+    `papers/development_provider_example_boundary.json` now records a
+    development-guide-specific static inventory for those two commands,
+    placeholder model-id guidance, README provider model/failure wording,
+    docs-index/backend/status/paper anchors, provider-matrix/auth/Gemini
+    sidecar references, active TODO ownership, and the current unpaired-show
+    gap for the Anthropic `circle_packing` example.
+  - Current gap: the committed sidecar is a static documentation inventory, not
+    a live provider smoke matrix, redacted model-availability record, expected
+    skip/failure policy, or CI drift check proving that the exact
+    `docs/development.md` example commands are current, internally consistent,
+    and safely separated from AlphaEvolve Gemini/model-mix parity. There is
+    also no check that development docs update when supported provider
+    families, placeholder syntax, example run names, or provider-backed smoke
+    policy changes. The known inspection-linkage drift remains: only the
+    OpenAI `hello_world` example has an obvious paired inspection path, and
+    there is still no explicit `--run-name`, `--overwrite`, or
+    `show runs/circle_packing` guidance proving that each provider example has
+    a distinct expected run directory and post-run inspection contract.
   - Required result: add a development-guide provider example inventory and
     validator or smoke artifact that maps each documented command to a
     provider family, placeholder/model-availability evidence, expected run

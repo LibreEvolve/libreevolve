@@ -1326,6 +1326,7 @@ Important limits:
   `papers/docs_index_reader_path_boundary.json`,
   `papers/docs_status_ledger_boundary.json`,
   `papers/docs_architecture_runtime_flow_boundary.json`,
+  `papers/development_provider_example_boundary.json`,
   `papers/backend_cli_provider_guardrail_boundary.json`,
   `papers/backend_guide_contract_drift_boundary.json`,
   `papers/plugin_guide_contract_drift_boundary.json`,
@@ -1372,6 +1373,17 @@ Important limits:
   parity boundary. This is not semantic flow-order verification, source-
   function semantic verification, runtime manifest field verification,
   architecture limitation freshness, or owner review signoff.
+- Development-guide provider example evidence now records the two provider-
+  backed `docs/development.md` commands (`hello_world` with OpenAI and
+  `circle_packing` with Anthropic), placeholder model-id guidance, README
+  provider model/failure wording, docs-index/backend/status/paper anchors,
+  README provider-matrix, provider-auth, and Gemini-parity sidecar references,
+  and active TODO ownership. It also records the current inspection gap: only
+  the OpenAI `hello_world` example has a paired `libreevolve show` command,
+  while the Anthropic `circle_packing` example does not. This is not live
+  OpenAI or Anthropic model availability, credential-safe development provider
+  smoke, account-specific model-id provenance, a CI development provider
+  matrix, or owner review signoff.
 - Backend CLI-provider guardrail evidence now records the `docs/backends.md`
   provider-lane taxonomy, built-in SDK adapter wording, custom import-path
   backend wording, subprocess/CLI-authenticated provider guardrail wording,

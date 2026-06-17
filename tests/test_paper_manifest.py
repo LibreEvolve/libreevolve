@@ -2832,6 +2832,98 @@ def test_validate_paper_manifest_requires_docs_status_ledger_boundary_at_repo_ro
     assert "docs_status_ledger_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_development_provider_example_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    marker_files = {
+        "docs/development.md": (
+            'py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world '
+            '--max-generations 10 --backends "openai:<openai-model-id>"\n'
+            'py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing '
+            '--max-generations 10 --backends "anthropic:<anthropic-model-id>"\n'
+            "py -3.12 -m libreevolve show runs/hello_world\n"
+            "Replace placeholder backend model ids with currently available provider/account\n"
+            "model ids before running.\n"
+        ),
+        "README.md": (
+            "available in\nyour account or local Ollama install\n"
+            "credentials, model IDs, local Ollama state, or account access\n"
+        ),
+        "docs/README.md": (
+            "[Development](./development.md)\n"
+            "[Backends](./backends.md)\n"
+        ),
+        "docs/backends.md": (
+            "Built-in SDK adapters\n"
+            "Google/Gemini is not a built-in registry provider yet\n"
+        ),
+        "docs/status.md": "Built-in provider adapters are OpenAI, Anthropic, and Ollama\n",
+        "papers/README.md": (
+            "papers/readme_provider_example_matrix_boundary.json\n"
+            "papers/readme_provider_auth_boundary.json\n"
+            "papers/gemini_provider_parity_boundary.json\n"
+            "credential-safe provider smoke matrix\n"
+        ),
+        "docs/todo/readme.md": "Add development-guide provider example smoke evidence.\n",
+    }
+    for relative_path, content in marker_files.items():
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+    sidecar = tmp_path / paper_manifest.DEVELOPMENT_PROVIDER_EXAMPLE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.development_provider_example_boundary_record(tmp_path),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_development_provider_example_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.development_provider_example_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "development_provider_examples_live_smoke_ready"
+    record["missing_evidence"]["ci_development_provider_matrix"] = "recorded"
+    sidecar = tmp_path / paper_manifest.DEVELOPMENT_PROVIDER_EXAMPLE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "development_provider_example_boundary_claim_ready_overclaim" in codes
+    assert "development_provider_example_boundary_invalid_boundary_status" in codes
+    assert (
+        "development_provider_example_boundary_invalid_missing_evidence_ci_development_provider_matrix"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_development_provider_example_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "development_provider_example_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_documentation_claim_inventory(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

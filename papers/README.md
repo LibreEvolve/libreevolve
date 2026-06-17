@@ -2854,7 +2854,8 @@ Implemented:
   inventory, README Run Artifacts inventory, README Testing inventory,
   README contributor-gate inventory, README license inventory,
   README ignore-policy inventory, README provider-example matrix
-  inventory, README CLI-provider guardrail inventory, and focused
+  inventory, README CLI-provider guardrail inventory, development-guide
+  provider-example inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
@@ -2882,6 +2883,15 @@ Implemented:
   flow-order verification, source-function semantic verification, runtime
   manifest field verification, architecture limitation freshness, or owner
   review signoff.
+- `papers/development_provider_example_boundary.json`: development-guide
+  provider-example sidecar. It records the two provider-backed
+  `docs/development.md` commands, placeholder model-id guidance, README
+  provider model/failure wording, docs-index/backend/status/paper anchors,
+  provider-matrix/auth/Gemini sidecar references, active TODO ownership, and
+  the current missing paired `show` command for the Anthropic `circle_packing`
+  example. It is not live OpenAI/Anthropic model availability proof,
+  credential-safe development provider smoke, account-specific model-id
+  provenance, a CI development provider matrix, or owner review signoff.
 - `papers/backend_cli_provider_guardrail_boundary.json`: backend
   CLI-provider guardrail sidecar. It records the `docs/backends.md`
   provider-lane taxonomy, built-in SDK adapter wording, custom import-path

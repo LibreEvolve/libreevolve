@@ -1421,7 +1421,8 @@ The committed `papers/documentation_truthfulness_boundary.json` sidecar
 preserves the current cross-document documentation guard boundary: README,
 ROADMAP, papers-index, TODO-ledger, path-filter, paper-manifest consistency,
 TODO-coverage, stale source-specific wording, sidecar-registry, and focused
-boundary-test evidence exist. The committed
+boundary-test evidence exist, including README AGENTS operational drift
+inventory for example-directory and run-artifact-list mismatch evidence. The committed
 `papers/documentation_claim_inventory.json` sidecar adds top-level README,
 ROADMAP, and papers-index claim ids with file-offset evidence anchors, local
 evidence-ref existence records, and Markdown fragment-anchor resolution records,
@@ -2916,6 +2917,14 @@ Implemented:
   coverage, GitHub Actions `AGENTS.md` path-filter coverage, and bounded
   command, test, backend, artifact, and AlphaEvolve instruction links. It is not a
   complete AGENTS instruction-drift map or owner review signoff.
+- `papers/readme_agents_operational_boundary.json`: README AGENTS operational
+  sidecar. It records current AGENTS.md drift for example problem directories
+  and run-artifact names, plus README routing, run-artifacts guide anchors,
+  backend/configuration/paper doc anchors, `tests/test_agents_docs.py`
+  anchors, GitHub Actions AGENTS.md path-filter coverage, and active TODO
+  ownership. It is not a complete instruction-to-source map, dependency-list
+  semantic check, provider-guidance semantic check, full AlphaEvolve-scope
+  semantic check, or owner review signoff.
 - `papers/readme_documentation_map_boundary.json`: README Documentation Map
   sidecar. It records 11 README route records, target-existence checks, route
   summary marker checks, target heading marker checks, docs-index delegation,

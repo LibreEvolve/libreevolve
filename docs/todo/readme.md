@@ -841,23 +841,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     mentions several configuration-doc sampling fields. AGENTS.md currently
     summarizes the tech stack, architecture tree, key conventions, test
     commands, provider-backed run example, and common pitfalls.
-  - Current gap: there is no structured AGENTS.md inventory or drift check
+    `papers/readme_agents_operational_boundary.json` now records the current
+    AGENTS.md example-directory and run-artifact-list drift, plus README,
+    run-artifacts guide, backend/configuration/paper-doc, focused-test,
+    GitHub Actions path-filter, and active TODO anchors.
+  - Current gap: the structured AGENTS.md inventory is a bounded static drift
+    record, not a complete instruction-to-source map or semantic drift check
     comparing its architecture tree, example problem list, dependency list,
     run-artifact list, provider/backend guidance, AlphaEvolve limitation
     wording, and TODO/paper-routing guidance against README, ROADMAP,
     `docs/status.md`, `docs/configuration.md`, `docs/backends.md`,
-    `papers/README.md`, the package tree, and active TODO ledgers. For
-    example, AGENTS.md has a manually maintained examples list while newer
-    benchmark-candidate examples and related scope boundaries live elsewhere.
-    Current drift evidence: the actual `libreevolve/problems/examples/`
-    directory includes `embedded_evaluate_math`, `sorting_network_8`, and
-    `sorting_network_9`, while AGENTS.md's architecture block still lists only
-    `hello_world`, `circle_packing`, `sorting`, `matrix_multiplication`, and
+    `papers/README.md`, the package tree, and active TODO ledgers. The
+    recorded drift currently shows that the actual
+    `libreevolve/problems/examples/` directory includes
+    `embedded_evaluate_math`, `sorting_network_8`, and `sorting_network_9`,
+    while AGENTS.md's architecture block still lists only `hello_world`,
+    `circle_packing`, `sorting`, `matrix_multiplication`, and
     `workspace_math`. Its `runs/` summary also omits current run artifacts
-    such as `controller_budget_events.jsonl`,
+    such as `controller_budget_events.jsonl`, `evaluator_results.jsonl`,
     `prompt_current_binding_table.jsonl`, `prompt_prior_score_table.jsonl`,
     and `task_specification.json`, even though README and
-    `docs/run-artifacts.md` now document those surfaces.
+    `docs/run-artifacts.md` now document those surfaces. Dependency-list
+    semantic checking, provider-guidance semantic checking, full AlphaEvolve-
+    scope semantic checking, and owner review signoff remain missing.
   - Required result: add an AGENTS.md evidence map or validator that links each
     operational instruction to authoritative code/docs/tests/sidecar sources,
     detects stale architecture/example/dependency/provider/test-command

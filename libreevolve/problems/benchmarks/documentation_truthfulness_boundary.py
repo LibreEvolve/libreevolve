@@ -32,6 +32,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "boundary_sidecar_registry",
     "tracked_legacy_surface_inventory",
     "readme_agent_routing_inventory",
+    "readme_agents_operational_inventory",
     "readme_documentation_map_inventory",
     "readme_repository_layout_inventory",
     "readme_problem_layout_inventory",
@@ -104,7 +105,7 @@ def documentation_truthfulness_boundary_record() -> dict[str, Any]:
             "checks, paper-manifest TODO coverage rows, stale source-specific "
             "absence wording checks, a boundary sidecar registry, a top-level "
             "tracked legacy-surface inventory, README AGENTS.md routing "
-            "inventory, README Documentation Map inventory, README Repository Layout inventory, README Problem Layout inventory, problem-format loader-contract inventory, README Example Scope inventory, README example-runs inventory, README Run Artifacts inventory, README Testing inventory, README quick-start smoke inventory, README install-smoke "
+            "inventory, README AGENTS operational inventory, README Documentation Map inventory, README Repository Layout inventory, README Problem Layout inventory, problem-format loader-contract inventory, README Example Scope inventory, README example-runs inventory, README Run Artifacts inventory, README Testing inventory, README quick-start smoke inventory, README install-smoke "
             "inventory, README provider-auth setup inventory, README provider-example "
             "matrix inventory, README CLI-provider guardrail inventory, README contributor-gate inventory, README license inventory, README ignore-policy inventory, README paper-cache "
             "topic inventory, README paper-cache rehydrate inventory, "

@@ -1321,6 +1321,7 @@ Important limits:
   `papers/plugin_guide_contract_drift_boundary.json`,
   `papers/tracked_legacy_surface_boundary.json`,
   `papers/readme_agent_routing_boundary.json`,
+  `papers/readme_agents_operational_boundary.json`,
   `papers/readme_documentation_map_boundary.json`,
   `papers/readme_repository_layout_boundary.json`,
   `papers/readme_problem_layout_boundary.json`,
@@ -1398,6 +1399,19 @@ Important limits:
   `AGENTS.md` path-filter coverage, and bounded command/test/backend/artifact/
   AlphaEvolve instruction links. This is not a complete AGENTS instruction-
   drift map or owner review signoff.
+- README AGENTS operational evidence now records current AGENTS.md drift for
+  example problem directories and run-artifact names: the source tree has
+  `embedded_evaluate_math`, `sorting_network_8`, and `sorting_network_9`
+  beyond the five examples listed in AGENTS.md, and the AGENTS run-artifact
+  summary omits `controller_budget_events.jsonl`,
+  `evaluator_results.jsonl`, `prompt_current_binding_table.jsonl`,
+  `prompt_prior_score_table.jsonl`, and `task_specification.json`. It also
+  records README routing, run-artifacts guide anchors,
+  backend/configuration/paper doc anchors, `tests/test_agents_docs.py`
+  anchors, GitHub Actions AGENTS.md path-filter coverage, and active TODO
+  ownership. This is not a complete instruction-to-source map,
+  dependency-list semantic check, provider-guidance semantic check, full
+  AlphaEvolve-scope semantic check, or owner review signoff.
 - README Documentation Map evidence now records 11 README route records,
   target-existence checks, route summary marker checks, target heading marker
   checks, docs-index delegation, archival `old/` routing, and AGENTS.md

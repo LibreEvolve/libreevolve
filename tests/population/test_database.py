@@ -2972,6 +2972,11 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
         "emitted_row_behavior",
     }
     assert inventory["manifest_invalid.jsonl"]["source_stream"] == "manifest.json"
+    assert set(inventory["history_invalid.jsonl"]["behavior_test_anchors"]) == {
+        "inventory_contract",
+        "overwrite_cleanup",
+        "show_diagnostic_behavior",
+    }
     assert inventory["paper_artifacts"]["restore_show_handling"] == (
         "paper-source report validators and docs"
     )

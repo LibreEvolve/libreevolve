@@ -1768,9 +1768,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     cleanup, schema pointers, runtime pointers, restore/show handling
     boundaries, source-level writer/runtime-pointer/show-restore anchors,
     docs anchors into `docs/run-artifacts.md`, and behavior-test anchors for
-    the shared cleanup contract, prompt-table emitted rows, non-JSONL
-    show/restore policy, and `paper_artifacts/...` emitted-path/show/restore
-    lifecycle tests.
+    the shared cleanup contract, quarantine stream show-time diagnostics,
+    prompt-table emitted rows, non-JSONL show/restore policy, and
+    `paper_artifacts/...` emitted-path/show/restore lifecycle tests.
     Paper-facing generated-artifact lifecycle evidence is still incomplete:
     those anchors prove source/docs text presence plus current behavior-test
     coverage, not end-to-end replay of prompt-table and `paper_artifacts/...`

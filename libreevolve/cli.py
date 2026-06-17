@@ -15,6 +15,7 @@ from libreevolve.core.best_artifacts import (
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.jsonl import (
     StrictJsonlError,
+    iter_quarantine_records,
     load_strict_json_object,
     strict_json_dump,
 )
@@ -412,6 +413,7 @@ def show(run_dir, source_display_chars, full_source, redact_source):
     feedback_summary = _feedback_summary(best, best_line_number)
     failure_summary = _failure_statistics_summary(run_path)
     validator_boundary_summary = _validator_boundary_artifact_summary(run_path)
+    quarantine_summary = _quarantine_stream_summary(run_path)
     non_jsonl_artifact_summary = _non_jsonl_artifact_policy_summary(run_path)
     paper_artifact_summary = _paper_artifact_lifecycle_summary(run_path)
     metrics = best.get("metrics")
@@ -434,6 +436,8 @@ def show(run_dir, source_display_chars, full_source, redact_source):
         click.echo(failure_summary)
     if validator_boundary_summary:
         click.echo(validator_boundary_summary)
+    if quarantine_summary:
+        click.echo(quarantine_summary)
     if non_jsonl_artifact_summary:
         click.echo(non_jsonl_artifact_summary)
     if paper_artifact_summary:
@@ -516,6 +520,60 @@ def _validator_boundary_artifact_summary(run_dir: Path) -> str | None:
     return (
         "Validator boundary: "
         f"checked_attempts={validation.checked_attempts}; streams={streams}"
+    )
+
+
+def _quarantine_stream_summary(run_dir: Path) -> str | None:
+    manifest_path = run_dir / "manifest.json"
+    if not manifest_path.exists():
+        return None
+    manifest = _read_show_manifest(manifest_path)
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, dict)
+        or "quarantine_jsonl_records" not in artifact_schema
+    ):
+        return None
+    quarantine_schema = artifact_schema.get("quarantine_jsonl_records")
+    if not isinstance(quarantine_schema, dict):
+        raise click.ClickException(
+            "Malformed manifest.json: artifact_schema.quarantine_jsonl_records "
+            "must be an object"
+        )
+    present_streams: list[str] = []
+    record_count = 0
+    for stream_name in sorted(quarantine_schema):
+        if not isinstance(stream_name, str) or not stream_name:
+            raise click.ClickException(
+                "Malformed manifest.json: quarantine stream names must be "
+                "non-empty strings"
+            )
+        path = run_dir / stream_name
+        if not path.exists():
+            continue
+        try:
+            stream_count = sum(
+                1
+                for _ in iter_quarantine_records(
+                    path,
+                    stream_name=stream_name,
+                )
+            )
+        except StrictJsonlError as exc:
+            message = _bounded_redacted_cli_text(str(exc))
+            raise click.ClickException(
+                "Quarantine stream validation failed: "
+                f"{stream_name}: {message}"
+            ) from exc
+        present_streams.append(stream_name)
+        record_count += stream_count
+    if not present_streams:
+        return None
+    streams = ",".join(present_streams)
+    return (
+        "Quarantine streams: "
+        f"checked={len(present_streams)}; records={record_count}; "
+        f"streams={streams}"
     )
 
 

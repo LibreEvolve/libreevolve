@@ -475,6 +475,19 @@ _NON_JSONL_BEHAVIOR_TEST_ANCHORS = {
     ],
 }
 
+_QUARANTINE_BEHAVIOR_TEST_ANCHORS = {
+    "show_diagnostic_behavior": [
+        {
+            "path": "tests/test_cli.py",
+            "required_text": "def test_show_reports_quarantine_stream_summary",
+        },
+        {
+            "path": "tests/test_cli.py",
+            "required_text": "def test_show_rejects_malformed_quarantine_stream",
+        },
+    ],
+}
+
 _RUN_ARTIFACT_BEHAVIOR_TEST_ANCHORS = {
     "prompt_current_binding_table.jsonl": {
         "emitted_row_behavior": [
@@ -1405,6 +1418,8 @@ def _documentation_anchors(name: str) -> list[dict]:
 
 def _behavior_test_anchors(name: str) -> dict:
     anchors = deepcopy(_COMMON_BEHAVIOR_TEST_ANCHORS)
+    if name in _QUARANTINE_PATH_ANCHORS:
+        anchors.update(deepcopy(_QUARANTINE_BEHAVIOR_TEST_ANCHORS))
     if name in _NON_JSONL_RESTORE_SHOW_HANDLING:
         anchors.update(deepcopy(_NON_JSONL_BEHAVIOR_TEST_ANCHORS))
     anchors.update(deepcopy(_RUN_ARTIFACT_BEHAVIOR_TEST_ANCHORS.get(name, {})))

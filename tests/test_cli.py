@@ -1898,6 +1898,72 @@ def test_show_reports_completed_manifest_runtime_status(tmp_path):
     assert "Validator boundary: checked_attempts=1; streams=history.jsonl" in r.output
 
 
+def test_show_reports_quarantine_stream_summary(tmp_path):
+    _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
+    _write_show_manifest(tmp_path)
+    manifest_path = tmp_path / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifact_schema"] = {
+        "quarantine_jsonl_records": run_artifact_schema()[
+            "quarantine_jsonl_records"
+        ],
+    }
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    (tmp_path / "history_invalid.jsonl").write_text(
+        json.dumps(
+            {
+                "error": "ValueError",
+                "message": "generation must be an integer",
+                "record_type": "dict",
+                "record_repr_retention": {
+                    "retention_mode": "hash_only",
+                    "retention_policy": "hash_only_with_raw_sha256",
+                    "sha256": "0" * 64,
+                    "chars": 42,
+                    "stored_chars": 0,
+                    "redacted": None,
+                    "truncated": False,
+                    "max_chars": 4000,
+                },
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code == 0
+    assert (
+        "Quarantine streams: checked=1; records=1; "
+        "streams=history_invalid.jsonl"
+    ) in r.output
+
+
+def test_show_rejects_malformed_quarantine_stream(tmp_path):
+    _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
+    _write_show_manifest(tmp_path)
+    manifest_path = tmp_path / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifact_schema"] = {
+        "quarantine_jsonl_records": run_artifact_schema()[
+            "quarantine_jsonl_records"
+        ],
+    }
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    (tmp_path / "history_invalid.jsonl").write_text(
+        json.dumps({"error": "ValueError"}) + "\n",
+        encoding="utf-8",
+    )
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code != 0
+    assert "Quarantine stream validation failed" in r.output
+    assert "history_invalid.jsonl" in r.output
+    assert "message must be a non-empty string" in r.output
+
+
 def test_show_reports_paper_artifact_lifecycle_summary(tmp_path):
     _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
     _write_show_paper_artifact_manifest(tmp_path)

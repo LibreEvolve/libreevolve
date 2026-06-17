@@ -8391,13 +8391,20 @@ sidecars, tests, and active TODOs.
     paths emitted by `marker_spelling_provenance_report`,
     `alphaevolve_process_exhibit_report`, and
     `alphaevolve_table1_capability_exhibit_report`.
-  - Current gap: stale `paper_artifacts/` cleanup is fixed, but generated
-    paper/source evidence still lacks a behavioral lifecycle validator that
-    walks all paper-artifact writers, manifest pointers, docs entries,
-    restore/show readers, and cleanup rules as one executed bundle check.
+    `validate_paper_artifact_lifecycle_manifest()` now checks a completed
+    manifest's paper-artifact subpath schema, generated-inventory pointer,
+    `runtime.artifacts.paper_artifacts` directory pointer, and the emitted
+    marker-spelling/process-exhibit/Table 1 `paper_artifacts/...` report paths
+    as one bundle; focused tests cover the valid manifest case plus an
+    unregistered emitted subpath.
+  - Current gap: stale `paper_artifacts/` cleanup and manifest/report/schema
+    subpath consistency are fixed, but generated paper/source evidence still
+    lacks behavioral show/restore reader coverage and a docs-anchor verifier
+    that proves every documented `paper_artifacts/...` entry is exercised
+    end to end.
   - Required result: validate that manifest/documented
     `paper_artifacts/...` paths cannot exist outside collision, cleanup,
-    run-artifact summary, restore/show, and schema expectations; and keep
+    run-artifact summary, restore/show, docs, and schema expectations; and keep
     stale-paper-artifact reuse tests in the lifecycle gate.
 
 - [ ] Add schema-level coverage for invalid/quarantine run streams.

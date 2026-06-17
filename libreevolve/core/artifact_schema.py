@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from copy import deepcopy
 
 ARTIFACT_SCHEMA_VERSION = 1
@@ -397,6 +398,184 @@ _PAPER_ARTIFACT_SUBPATH_SCHEMA = {
 
 def paper_artifact_subpath_schema() -> dict:
     return deepcopy(_PAPER_ARTIFACT_SUBPATH_SCHEMA)
+
+
+def paper_artifact_subpath_paths() -> set[str]:
+    return {
+        record["path"]
+        for family in _PAPER_ARTIFACT_SUBPATH_SCHEMA["families"].values()
+        for record in family["path_records"]
+    }
+
+
+def validate_paper_artifact_lifecycle_manifest(manifest: object) -> dict:
+    """Validate a manifest's paper_artifacts runtime paths against schema.
+
+    This is deliberately a bundle-level check: it joins the manifest artifact
+    schema, generated root artifact pointer, and runtime history reports that
+    emit paper_artifacts/... subpaths.
+    """
+    issues: list[dict[str, str]] = []
+    schema = "libreevolve.paper_artifact_lifecycle_manifest_validation.v1"
+    if not isinstance(manifest, Mapping):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_manifest",
+                    "message": "manifest must be an object",
+                }
+            ],
+        }
+    artifact_schema = manifest.get("artifact_schema")
+    if not isinstance(artifact_schema, Mapping):
+        issues.append(
+            {
+                "code": "missing_artifact_schema",
+                "message": "manifest.artifact_schema must be an object",
+            }
+        )
+        artifact_schema = {}
+    if artifact_schema.get("paper_artifact_subpaths") != paper_artifact_subpath_schema():
+        issues.append(
+            {
+                "code": "paper_artifact_subpath_schema_drift",
+                "message": "manifest artifact schema must include current paper artifact subpaths",
+            }
+        )
+    inventory = artifact_schema.get("generated_artifact_inventory")
+    paper_inventory = (
+        inventory.get("paper_artifacts") if isinstance(inventory, Mapping) else None
+    )
+    if not isinstance(paper_inventory, Mapping):
+        issues.append(
+            {
+                "code": "missing_paper_artifacts_inventory",
+                "message": "generated artifact inventory must include paper_artifacts",
+            }
+        )
+    else:
+        if paper_inventory.get("subpath_schema_pointer") != (
+            "artifact_schema.paper_artifact_subpaths"
+        ):
+            issues.append(
+                {
+                    "code": "missing_paper_subpath_schema_pointer",
+                    "message": "paper_artifacts inventory must point to subpath schema",
+                }
+            )
+        if paper_inventory.get("cleanup_managed") is not True:
+            issues.append(
+                {
+                    "code": "paper_artifacts_cleanup_not_managed",
+                    "message": "paper_artifacts inventory must be cleanup-managed",
+                }
+            )
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, Mapping):
+        issues.append(
+            {
+                "code": "missing_runtime",
+                "message": "manifest.runtime must be an object",
+            }
+        )
+        runtime = {}
+    artifacts = runtime.get("artifacts")
+    paper_pointer = (
+        artifacts.get("paper_artifacts") if isinstance(artifacts, Mapping) else None
+    )
+    if not isinstance(paper_pointer, Mapping):
+        issues.append(
+            {
+                "code": "missing_runtime_paper_artifacts_pointer",
+                "message": "runtime.artifacts must include paper_artifacts",
+            }
+        )
+    else:
+        if paper_pointer.get("path") != "paper_artifacts":
+            issues.append(
+                {
+                    "code": "invalid_runtime_paper_artifacts_path",
+                    "message": "runtime paper_artifacts pointer must use paper_artifacts path",
+                }
+            )
+        if paper_pointer.get("present") is True:
+            if paper_pointer.get("kind") != "directory":
+                issues.append(
+                    {
+                        "code": "invalid_runtime_paper_artifacts_kind",
+                        "message": "present paper_artifacts pointer must be a directory",
+                    }
+                )
+            if not isinstance(paper_pointer.get("tree_hash"), str):
+                issues.append(
+                    {
+                        "code": "missing_runtime_paper_artifacts_tree_hash",
+                        "message": "present paper_artifacts pointer must include tree_hash",
+                    }
+                )
+    history = runtime.get("history")
+    if not isinstance(history, Mapping):
+        issues.append(
+            {
+                "code": "missing_runtime_history",
+                "message": "runtime.history must be an object",
+            }
+        )
+        history = {}
+    expected_paths = paper_artifact_subpath_paths()
+    emitted_paths = _paper_artifact_paths_from_runtime_history(history)
+    unknown_paths = sorted(emitted_paths - expected_paths)
+    missing_paths = sorted(expected_paths - emitted_paths)
+    if unknown_paths:
+        issues.append(
+            {
+                "code": "unknown_paper_artifact_paths",
+                "message": "runtime reports emitted paper_artifacts paths outside schema",
+            }
+        )
+    if missing_paths:
+        issues.append(
+            {
+                "code": "missing_paper_artifact_schema_paths",
+                "message": "runtime reports did not emit every schema-declared paper artifact path",
+            }
+        )
+    return {
+        "schema": schema,
+        "ok": not issues,
+        "issues": issues,
+        "expected_path_count": len(expected_paths),
+        "emitted_path_count": len(emitted_paths),
+        "expected_paths": sorted(expected_paths),
+        "emitted_paths": sorted(emitted_paths),
+        "unknown_paths": unknown_paths,
+        "missing_paths": missing_paths,
+    }
+
+
+def _paper_artifact_paths_from_runtime_history(history: Mapping) -> set[str]:
+    paths: set[str] = set()
+    _collect_paper_artifact_paths(history.get("marker_spelling_provenance_report"), paths)
+    _collect_paper_artifact_paths(history.get("alphaevolve_process_exhibit_report"), paths)
+    _collect_paper_artifact_paths(
+        history.get("alphaevolve_table1_capability_exhibit_report"),
+        paths,
+    )
+    return paths
+
+
+def _collect_paper_artifact_paths(value: object, paths: set[str]) -> None:
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            if key in {"path", "artifact_path"} and isinstance(item, str):
+                if item.startswith("paper_artifacts/"):
+                    paths.add(item)
+            _collect_paper_artifact_paths(item, paths)
+    elif isinstance(value, list):
+        for item in value:
+            _collect_paper_artifact_paths(item, paths)
 
 
 def _quarantine_record(

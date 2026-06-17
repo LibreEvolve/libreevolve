@@ -920,7 +920,13 @@ they are absent for a particular run.
 spelling source text, process-exhibit diagram/accessibility/source-text files,
 and Table 1 capability-comparison markdown/accessibility files. The
 `paper_artifacts` generated-inventory entry links to that subpath schema, and
-tests compare runtime report paths back to it.
+tests compare runtime report paths back to it. The
+`validate_paper_artifact_lifecycle_manifest()` bundle check validates a
+completed manifest's `artifact_schema.paper_artifact_subpaths`, the
+`generated_artifact_inventory.paper_artifacts` schema pointer, the
+`runtime.artifacts.paper_artifacts` directory pointer, and the
+`paper_artifacts/...` paths emitted by the marker-spelling, process-exhibit,
+and Table 1 runtime reports.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.

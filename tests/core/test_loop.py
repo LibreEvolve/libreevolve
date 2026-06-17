@@ -25,6 +25,7 @@ from libreevolve.core.artifact_schema import (
     RUN_ARTIFACT_NAMES,
     paper_artifact_subpath_schema,
     run_artifact_schema,
+    validate_paper_artifact_lifecycle_manifest,
 )
 from libreevolve.core.database import validate_task_specification_bundle
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
@@ -7240,6 +7241,10 @@ def test_runtime_history_reports_marker_spelling_provenance():
     )
 
     manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    lifecycle_validation = validate_paper_artifact_lifecycle_manifest(manifest)
+    assert lifecycle_validation["ok"] is True
+    assert lifecycle_validation["unknown_paths"] == []
+    assert lifecycle_validation["missing_paths"] == []
     report = manifest["runtime"]["history"]["marker_spelling_provenance_report"]
 
     assert report["schema"] == "libreevolve.marker_spelling_provenance_report.v1"
@@ -7318,6 +7323,25 @@ def test_runtime_history_reports_marker_spelling_provenance():
         "space_variant_support_overclaim",
         "variant_compatibility_overclaim",
     }
+
+    forged_manifest = copy.deepcopy(manifest)
+    forged_manifest["runtime"]["history"][
+        "alphaevolve_table1_capability_exhibit_report"
+    ]["rendered_artifacts"][0]["path"] = (
+        "paper_artifacts/table1_capability_comparison/unregistered.md"
+    )
+    lifecycle_validation = validate_paper_artifact_lifecycle_manifest(forged_manifest)
+    assert lifecycle_validation["ok"] is False
+    assert "paper_artifacts/table1_capability_comparison/unregistered.md" in (
+        lifecycle_validation["unknown_paths"]
+    )
+    assert "paper_artifacts/table1_capability_comparison/table_1.md" in (
+        lifecycle_validation["missing_paths"]
+    )
+    assert {
+        "unknown_paper_artifact_paths",
+        "missing_paper_artifact_schema_paths",
+    }.issubset({issue["code"] for issue in lifecycle_validation["issues"]})
 
 
 def test_runtime_history_reports_candidate_abstraction_choice():

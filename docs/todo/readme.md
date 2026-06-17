@@ -1091,11 +1091,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `license = "MIT"`. Paper/source rights are tracked separately by records
     such as `papers/source_rights.json`, which distinguish cached
     AlphaEvolve source-PDF rights from LibreEvolve repository licensing.
-  - Current gap: no README-owned validator or sidecar proves that the README
-    license sentence, `LICENSE` file, package metadata, and third-party
-    paper/source-rights boundaries remain consistent. There is also no drift
-    check proving README license wording changes when project metadata,
-    packaged license files, or paper-derived rights policies change.
+    `papers/readme_license_boundary.json` now records the README License
+    heading and MIT sentence, `LICENSE` file MIT text markers, pyproject
+    license metadata, `papers/source_rights.json` policy markers, paper-source-
+    rights module validators, paper-source-rights tests, and this active TODO
+    owner while keeping third-party paper/source rights separate from
+    LibreEvolve's MIT repository license.
+  - Current gap: the README-owned sidecar is a static consistency map, not a
+    full rights or packaging verifier. It does not prove packaged license-file
+    inclusion in wheel/sdist metadata, map every third-party paper/source
+    rights policy semantically to every claim surface, enforce a drift gate
+    when project license metadata changes, enforce a drift gate when paper-
+    rights policy changes, or record owner review signoff.
   - Required result: add a README license consistency check or evidence map
     that validates the README link, license identifier, package metadata,
     included license file, and explicit separation from third-party paper and

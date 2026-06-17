@@ -2843,7 +2843,8 @@ Implemented:
   drift inventory, README Problem Layout inventory, problem-format loader-
   contract inventory, README Example Scope inventory, README example-runs
   inventory, README Run Artifacts inventory, README Testing inventory,
-  README contributor-gate inventory, README provider-example matrix
+  README contributor-gate inventory, README license inventory,
+  README provider-example matrix
   inventory, README CLI-provider guardrail inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
@@ -2990,6 +2991,14 @@ Implemented:
   sidecar anchors, and active TODO ownership. It is not a complete sentence-
   to-artifact map, pre-commit drift gate, source-boundary file-change detector,
   semantic secret-policy verifier, or owner review signoff.
+- `papers/readme_license_boundary.json`: README license sidecar. It records
+  the README License heading and MIT sentence, `LICENSE` file MIT text markers,
+  pyproject license metadata, `papers/source_rights.json` policy markers,
+  paper-source-rights module validators, paper-source-rights tests, and active
+  TODO ownership while keeping third-party paper/source rights separate from
+  LibreEvolve's MIT repository license. It is not packaged license-file
+  verification, a complete third-party rights semantic map, license metadata
+  drift gating, paper-rights policy drift gating, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

@@ -50,6 +50,9 @@ Important limits:
 - AlphaEvolve UI/API collaborator rosters are source attribution only;
   `papers/alphaevolve_ui_api_attribution_boundary.json` does not prove local
   UI, managed API, customer-engagement, or role-to-artifact evidence.
+- The DeepMind AlphaEvolve product/science page reference is source context
+  only; `papers/alphaevolve_product_page_boundary.json` records the current
+  HTTP 404 result and does not prove product-page availability.
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.

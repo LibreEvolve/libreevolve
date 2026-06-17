@@ -5296,14 +5296,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     applications by combining large language model creativity with automated
     evaluators. The same DeepMind site navigation surfaces AlphaEvolve under
     Science alongside AlphaFold, AlphaGenome, WeatherNext, and AlphaEarth.
-  - Current gap: the boundary records the product page only as an outbound
-    reference. No dedicated TODO, product-page HTML snapshot, page hash,
-    title/subtitle/source-card inventory, navigation placement record,
-    source-update timestamp, product-versus-white-paper claim separation,
-    relation to the 2025 announcement and 2026 impact article, access/status
-    statement, public artifact links, image/video asset inventory, or
-    independent availability check exists for the DeepMind product-page
-    evidence.
+  - Current gap: `papers/alphaevolve_product_page_boundary.json` now records
+    the outbound product-page URL, its relation to the 2026 impact boundary,
+    the June 17, 2026 retrieval attempt, and the current HTTP 404/Not Found
+    result. A reachable product-page HTML snapshot, page hash, title/subtitle/
+    source-card inventory, navigation placement record, source-update
+    timestamp, outbound-link inventory, image/video asset inventory,
+    access/status statement, independent availability check, product-page
+    snapshot verifier, and managed AlphaEvolve compatibility evidence remain
+    missing for the DeepMind product-page source.
   - Required result: add source-specific evidence for the product page:
     canonical URL, retrieval date, page title/subtitle, HTML byte count and
     hash, DeepMind science-navigation placement, all outbound links and media

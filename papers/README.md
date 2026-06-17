@@ -2549,6 +2549,15 @@ Implemented:
   role-to-artifact links, public/private access status, privacy/contact
   redaction policy, independent artifact verification, and local UI/managed-
   API/customer-engagement adapters exist.
+- `papers/alphaevolve_product_page_boundary.json`: DeepMind AlphaEvolve
+  product/science page sidecar, not product availability or implementation
+  evidence. It records the outbound `https://deepmind.google/science/alphaevolve/`
+  reference from the impact boundary, the June 17, 2026 retrieval attempt, and
+  the current HTTP 404/Not Found result. It keeps title/subtitle snapshots,
+  navigation placement, outbound links, media assets, access or availability
+  statements, product-page snapshot verification, independent availability
+  checks, local LibreEvolve support, and managed AlphaEvolve compatibility
+  claims open until a reachable source snapshot exists.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

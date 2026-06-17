@@ -1692,6 +1692,11 @@ by `papers/lineage_replay_boundary.json`.
   endpoint schemas, customer-engagement artifacts, role-to-artifact links,
   privacy/contact redaction, independent artifact verification, and local UI/
   managed-API/customer-engagement adapters open.
+  `papers/alphaevolve_product_page_boundary.json` separately records that the
+  DeepMind `https://deepmind.google/science/alphaevolve/` product/science page
+  reference currently resolves as HTTP 404, so title/subtitle snapshots,
+  navigation placement, outbound links, media assets, access statements,
+  independent availability checks, and compatibility claims remain open.
 - Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
   `papers/download_manifest.*` and `papers/README.md` now include arXiv
   `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic

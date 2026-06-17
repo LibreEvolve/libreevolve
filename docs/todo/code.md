@@ -6062,7 +6062,10 @@ sidecars, tests, and active TODOs.
     availability unproven. README, ROADMAP, and `papers/README.md` keep these
     as newer official impact claims and product availability surfaces rather
     than implemented LibreEvolve behavior or original AlphaEvolve specification
-    evidence.
+    evidence. `papers/alphaevolve_product_page_boundary.json` separately
+    records that the DeepMind AlphaEvolve product/science page URL currently
+    resolves as HTTP 404, so product-page title/subtitle, navigation, outbound
+    link, media, access-statement, and compatibility evidence remains missing.
   - Required result: implement or explicitly benchmark the named domains before
     promoting impact claims: local DeepConsensus, AC OPF, Earth AI, Willow,
     public-gallery/math, TPU-design, cache-policy, Spanner, compiler-storage,

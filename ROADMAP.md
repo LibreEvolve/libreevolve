@@ -1246,7 +1246,10 @@ by `papers/lineage_replay_boundary.json`.
   scope validation for both candidates. `sorting_network_9/run_contract.json`
   now records the clean-checkout Codex CLI command, auth expectations,
   validator budget, expected artifacts, manifest assertions, and skip/failure
-  modes for an authenticated experimental run. The paired
+  modes for an authenticated experimental run. The reusable
+  `benchmark_run_contract` validator checks that contract against local
+  fixture paths, config/auth settings, validator constants, linked prompt
+  provenance, artifact expectations, and overclaim boundaries. The paired
   `sorting_network_9/benchmark_goal_prompt.json` records the bounded
   external-agent handoff prompt for that protocol, with validator coverage for
   prompt size, model/auth linkage, result-evidence overclaim boundaries, and a

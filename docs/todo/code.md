@@ -8533,17 +8533,18 @@ sidecars, tests, and active TODOs.
     `run_contract.json` now names the exact clean-checkout command, auth setup
     expectations, validator budget, expected artifacts, manifest assertions,
     skip/failure modes, and post-run evidence bundle, and tests compare it to
-    the fixture config and validator constants. README and ROADMAP point to
-    the contract while preserving the non-certified boundary.
+    the fixture config and validator constants. The reusable
+    `benchmark_run_contract` validator now checks contract shape, local fixture
+    paths, command/run-name, config/auth agreement, validator-budget constants,
+    linked goal-prompt provenance, expected evidence lists, secret-like text,
+    and anti-overclaim boundaries. README, ROADMAP, and the papers index point
+    to the contract while preserving the non-certified boundary.
   - Current gap: the clean-checkout contract is now explicit and tested, but
     no authenticated run transcript, manifest bundle, target-hit evidence,
     repeated-seed matrix, source-citation sidecar, or paper certification row
-    has been committed for the intended `gpt-5.3-codex-spark` path. The
-    contract also does not yet have a standalone validator module that can
-    classify arbitrary future benchmark run contracts across examples.
+    has been committed for the intended `gpt-5.3-codex-spark` path.
   - Required result: run the contract under the intended authenticated backend
     and commit or separately preserve a redacted evidence bundle with manifest
     assertions, transcript hashes, best-candidate hashes, failure summaries,
-    target-hit status, and repeated-run/certification metadata; generalize the
-    contract validator before claiming repository-wide benchmark-run profile
-    coverage.
+    target-hit status, and repeated-run/certification metadata before claiming
+    repository-wide benchmark-run profile coverage.

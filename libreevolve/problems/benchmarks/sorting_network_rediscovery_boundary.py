@@ -19,6 +19,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "benchmark_scope_registry_records",
     "hardening_bundle_artifacts",
     "clean_checkout_run_contract",
+    "benchmark_run_contract_validator",
     "benchmark_goal_prompt_artifact",
     "benchmark_goal_prompt_validator",
     "run_contract_prompt_provenance_requirement",
@@ -100,6 +101,9 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
                     "libreevolve/problems/examples/sorting_network_9/"
                     "run_contract.json"
                 ),
+                "benchmark_run_contract_validator": (
+                    "libreevolve/problems/benchmarks/benchmark_run_contract.py"
+                ),
                 "benchmark_goal_prompt_artifact": (
                     "libreevolve/problems/examples/sorting_network_9/"
                     "benchmark_goal_prompt.json"
@@ -117,9 +121,10 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
             "9-input sorting-network benchmark candidates with exhaustive "
             "zero-one validation, valid baseline seeds, checked known target "
             "networks, helper-generated generic hardening artifacts, a clean-"
-            "checkout run contract for sorting_network_9, a bounded benchmark "
-            "goal-prompt artifact, a reusable prompt validator, and a runtime "
-            "prompt-id provenance requirement, but does not claim "
+            "checkout run contract for sorting_network_9, a reusable run-"
+            "contract validator, a bounded benchmark goal-prompt artifact, a "
+            "reusable prompt validator, and a runtime prompt-id provenance "
+            "requirement, but does not claim "
             "source-cited benchmark calibration, fixed-budget repeated-run "
             "rediscovery, run-tied hardening certification, best candidate "
             "artifact hashes, failure/invalid-candidate summaries, paper-"
@@ -296,6 +301,14 @@ def _validate_candidate_evidence(
                     _issue(
                         "invalid_candidate_sorting_network_9_clean_checkout_run_contract",
                         f"sorting_network_9.clean_checkout_run_contract must be {expected_contract!r}",
+                    )
+                )
+            expected_contract_validator = "libreevolve/problems/benchmarks/benchmark_run_contract.py"
+            if record.get("benchmark_run_contract_validator") != expected_contract_validator:
+                issues.append(
+                    _issue(
+                        "invalid_candidate_sorting_network_9_benchmark_run_contract_validator",
+                        f"sorting_network_9.benchmark_run_contract_validator must be {expected_contract_validator!r}",
                     )
                 )
             expected_prompt = (

@@ -1771,10 +1771,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     the shared cleanup contract, quarantine stream show-time diagnostics,
     prompt-table emitted rows, non-JSONL show/restore policy, and
     `paper_artifacts/...` emitted-path/show/restore lifecycle tests.
+    `libreevolve show` also emits a bounded run-artifact bundle summary that
+    reconciles present accepted JSONL streams, validated quarantine
+    diagnostics, non-JSONL policy checks, and paper-artifact lifecycle checks
+    for manifest-backed runs.
     Paper-facing generated-artifact lifecycle evidence is still incomplete:
     those anchors prove source/docs text presence plus current behavior-test
-    coverage, not end-to-end replay of prompt-table and `paper_artifacts/...`
-    evidence across restored runs.
+    coverage and show-time bundle reconciliation, not end-to-end replay of
+    prompt-table and `paper_artifacts/...` evidence across restored runs.
     Run names now share the runtime identity secret-safety policy: assignment-
     style secret strings and provider-token-shaped values are rejected before
     filesystem or manifest writes, while ordinary portable run names remain
@@ -1813,7 +1817,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     boundaries, plus restored-run replay/certification evidence for paper-cited
     prompt-table and `paper_artifacts/...` artifacts beyond the current unified
     inventory, source-anchor checks, docs-anchor checks, and behavior-test
-    anchors.
+    anchors plus show-time bundle reconciliation.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation

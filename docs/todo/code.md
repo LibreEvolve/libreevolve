@@ -8471,21 +8471,27 @@ sidecars, tests, and active TODOs.
     and fails inspection on malformed quarantine rows. The generated artifact
     inventory now links every quarantine stream to show-diagnostic behavior
     tests through `behavior_test_anchors`, and focused tests prove those
-    anchors resolve to current test code.
+    anchors resolve to current test code. `libreevolve show` now also emits a
+    bounded `Run artifact bundle` summary that joins present accepted JSONL
+    streams, validated quarantine diagnostics, non-JSONL artifact policy, and
+    paper-artifact lifecycle checks into one inspection-time report; focused
+    tests cover both a quarantine-only schema surface and a full paper-artifact
+    manifest surface.
   - Current gap: quarantine stream schema coverage, row validation, inventory
-    ownership, overwrite cleanup, and show-time diagnostics are present, but
-    quarantine diagnostics are still not part of a broad run-bundle validation
-    gate or restored-run certification model. Restore loaders continue to
-    treat quarantine rows as diagnostics rather than accepted state, and there
-    is no bundle-level report that reconciles accepted streams, quarantine
-    streams, and non-JSONL artifact policy as one auditable unit.
+    ownership, overwrite cleanup, show-time diagnostics, and show-time
+    run-bundle reconciliation are present, but quarantine diagnostics are still
+    not part of a promotion-time run-bundle validation gate or restored-run
+    certification model. Restore loaders continue to treat quarantine rows as
+    diagnostics rather than accepted state, and there is no persisted bundle
+    certificate that reconciles accepted streams, quarantine streams, and
+    non-JSONL artifact policy across restore/replay surfaces.
   - Required result: connect quarantine schemas and row validators to the
     broader generated-artifact inventory, restore/show behavior, and non-JSONL
     artifact schema work so rejected diagnostics remain auditable without being
-    confused with accepted candidate or controller state; then add a
-    bundle-level validation/certification report that proves accepted-state
-    streams and quarantine diagnostics stay separated across restore and replay
-    surfaces.
+    confused with accepted candidate or controller state; then extend the
+    show-time bundle report into a persisted promotion/restore certification
+    report proving accepted-state streams and quarantine diagnostics stay
+    separated across restore and replay surfaces.
 
 - [ ] Add schema-level coverage for non-JSONL run artifacts.
   - Spec evidence: AlphaEvolve-style experiment directories should be

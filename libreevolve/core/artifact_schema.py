@@ -453,6 +453,16 @@ _COMMON_BEHAVIOR_TEST_ANCHORS = {
             ),
         }
     ],
+    "show_bundle_behavior": [
+        {
+            "path": "tests/test_cli.py",
+            "required_text": "def test_show_reports_quarantine_stream_summary",
+        },
+        {
+            "path": "tests/test_cli.py",
+            "required_text": "def test_show_reports_paper_artifact_lifecycle_summary",
+        },
+    ],
 }
 
 _NON_JSONL_BEHAVIOR_TEST_ANCHORS = {

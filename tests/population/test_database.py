@@ -2969,12 +2969,14 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
     assert set(prompt_binding["behavior_test_anchors"]) == {
         "inventory_contract",
         "overwrite_cleanup",
+        "show_bundle_behavior",
         "emitted_row_behavior",
     }
     assert inventory["manifest_invalid.jsonl"]["source_stream"] == "manifest.json"
     assert set(inventory["history_invalid.jsonl"]["behavior_test_anchors"]) == {
         "inventory_contract",
         "overwrite_cleanup",
+        "show_bundle_behavior",
         "show_diagnostic_behavior",
     }
     assert inventory["paper_artifacts"]["restore_show_handling"] == (
@@ -2983,6 +2985,7 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
     assert set(inventory["paper_artifacts"]["behavior_test_anchors"]) == {
         "inventory_contract",
         "overwrite_cleanup",
+        "show_bundle_behavior",
         "show_policy",
         "restore_policy",
         "emitted_path_behavior",

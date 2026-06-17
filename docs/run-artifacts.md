@@ -934,6 +934,12 @@ diagnostic validation, prompt-table emitted-row tests for
 `prompt_current_binding_table.jsonl` and
 `prompt_prior_score_table.jsonl`, non-JSONL show/restore policy tests, and
 `paper_artifacts/` emitted-path, show, and restore lifecycle tests.
+`libreevolve show` also emits a bounded `Run artifact bundle` summary for
+manifest-backed runs that advertise artifact schemas, joining present accepted
+JSONL streams, validated quarantine diagnostics, non-JSONL policy checks, and
+paper-artifact lifecycle checks into one inspection-time report. This summary
+is an audit/readiness check, not a claim that restored runs replay provider
+outputs, pending controller work, or every emitted artifact payload.
 The `runtime.artifacts` pointer map and
 `runtime.history.whole_run_source_workspace_integrity_report.runtime_artifacts`
 iterate the same schema-owned artifact name set, with `manifest.json` recorded

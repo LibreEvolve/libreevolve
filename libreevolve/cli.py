@@ -413,6 +413,7 @@ def show(run_dir, source_display_chars, full_source, redact_source):
     feedback_summary = _feedback_summary(best, best_line_number)
     failure_summary = _failure_statistics_summary(run_path)
     validator_boundary_summary = _validator_boundary_artifact_summary(run_path)
+    run_artifact_bundle_summary = _run_artifact_bundle_summary(run_path)
     quarantine_summary = _quarantine_stream_summary(run_path)
     non_jsonl_artifact_summary = _non_jsonl_artifact_policy_summary(run_path)
     paper_artifact_summary = _paper_artifact_lifecycle_summary(run_path)
@@ -436,6 +437,8 @@ def show(run_dir, source_display_chars, full_source, redact_source):
         click.echo(failure_summary)
     if validator_boundary_summary:
         click.echo(validator_boundary_summary)
+    if run_artifact_bundle_summary:
+        click.echo(run_artifact_bundle_summary)
     if quarantine_summary:
         click.echo(quarantine_summary)
     if non_jsonl_artifact_summary:
@@ -523,6 +526,74 @@ def _validator_boundary_artifact_summary(run_dir: Path) -> str | None:
     )
 
 
+def _run_artifact_bundle_summary(run_dir: Path) -> str | None:
+    manifest_path = run_dir / "manifest.json"
+    if not manifest_path.exists():
+        return None
+    manifest = _read_show_manifest(manifest_path)
+    artifact_schema = manifest.get("artifact_schema")
+    if not isinstance(artifact_schema, dict):
+        return None
+    accepted_streams = _present_schema_jsonl_streams(run_dir, artifact_schema)
+    quarantine = _validate_quarantine_streams(run_dir, artifact_schema)
+    non_jsonl_checked = 0
+    if "non_jsonl_artifacts" in artifact_schema:
+        validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+        if not validation["ok"]:
+            issue = validation["issues"][0]
+            raise click.ClickException(
+                "Run artifact bundle validation failed: "
+                "Non-JSONL artifact policy validation failed: "
+                f"{issue['code']}: {issue['message']}"
+            )
+        non_jsonl_checked = validation["checked_artifact_count"]
+    paper_paths = 0
+    if _manifest_has_paper_artifact_lifecycle_surface(manifest):
+        validation = validate_paper_artifact_lifecycle_manifest(
+            manifest,
+            run_artifacts_doc_text=_show_run_artifacts_doc_text(),
+        )
+        if not validation["ok"]:
+            issue = validation["issues"][0]
+            raise click.ClickException(
+                "Run artifact bundle validation failed: "
+                "Paper artifact lifecycle validation failed: "
+                f"{issue['code']}: {issue['message']}"
+            )
+        paper_paths = validation["emitted_path_count"]
+    if (
+        not accepted_streams
+        and quarantine["stream_count"] == 0
+        and non_jsonl_checked == 0
+        and paper_paths == 0
+    ):
+        return None
+    return (
+        "Run artifact bundle: "
+        f"accepted_streams={len(accepted_streams)}; "
+        f"quarantine_streams={quarantine['stream_count']}; "
+        f"quarantine_records={quarantine['record_count']}; "
+        f"non_jsonl_checked={non_jsonl_checked}; "
+        f"paper_paths={paper_paths}"
+    )
+
+
+def _present_schema_jsonl_streams(run_dir: Path, artifact_schema: dict) -> list[str]:
+    jsonl_schema = artifact_schema.get("jsonl_records")
+    if not isinstance(jsonl_schema, dict):
+        return []
+    streams = []
+    for stream_name in sorted(jsonl_schema):
+        if not isinstance(stream_name, str) or not stream_name:
+            raise click.ClickException(
+                "Malformed manifest.json: JSONL stream names must be "
+                "non-empty strings"
+            )
+        if (run_dir / stream_name).exists():
+            streams.append(stream_name)
+    return streams
+
+
 def _quarantine_stream_summary(run_dir: Path) -> str | None:
     manifest_path = run_dir / "manifest.json"
     if not manifest_path.exists():
@@ -534,6 +605,19 @@ def _quarantine_stream_summary(run_dir: Path) -> str | None:
         or "quarantine_jsonl_records" not in artifact_schema
     ):
         return None
+    quarantine = _validate_quarantine_streams(run_dir, artifact_schema)
+    if quarantine["stream_count"] == 0:
+        return None
+    streams = ",".join(quarantine["streams"])
+    return (
+        "Quarantine streams: "
+        f"checked={quarantine['stream_count']}; "
+        f"records={quarantine['record_count']}; "
+        f"streams={streams}"
+    )
+
+
+def _validate_quarantine_streams(run_dir: Path, artifact_schema: dict) -> dict:
     quarantine_schema = artifact_schema.get("quarantine_jsonl_records")
     if not isinstance(quarantine_schema, dict):
         raise click.ClickException(
@@ -567,14 +651,11 @@ def _quarantine_stream_summary(run_dir: Path) -> str | None:
             ) from exc
         present_streams.append(stream_name)
         record_count += stream_count
-    if not present_streams:
-        return None
-    streams = ",".join(present_streams)
-    return (
-        "Quarantine streams: "
-        f"checked={len(present_streams)}; records={record_count}; "
-        f"streams={streams}"
-    )
+    return {
+        "stream_count": len(present_streams),
+        "record_count": record_count,
+        "streams": present_streams,
+    }
 
 
 def _paper_artifact_lifecycle_summary(run_dir: Path) -> str | None:

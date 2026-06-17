@@ -1938,6 +1938,10 @@ def test_show_reports_quarantine_stream_summary(tmp_path):
         "Quarantine streams: checked=1; records=1; "
         "streams=history_invalid.jsonl"
     ) in r.output
+    assert (
+        "Run artifact bundle: accepted_streams=0; quarantine_streams=1; "
+        "quarantine_records=1; non_jsonl_checked=0; paper_paths=0"
+    ) in r.output
 
 
 def test_show_rejects_malformed_quarantine_stream(tmp_path):
@@ -1971,6 +1975,10 @@ def test_show_reports_paper_artifact_lifecycle_summary(tmp_path):
     r = CliRunner().invoke(cli, ["show", str(tmp_path)])
 
     assert r.exit_code == 0
+    assert (
+        "Run artifact bundle: accepted_streams=1; quarantine_streams=0; "
+        "quarantine_records=0; non_jsonl_checked=7; paper_paths=11"
+    ) in r.output
     assert "Non-JSONL artifacts: checked=7" in r.output
     assert "Paper artifacts: checked_paths=11" in r.output
     assert "docs_refs=" in r.output

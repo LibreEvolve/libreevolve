@@ -23,7 +23,7 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
         == "papers/todo_canonical_gap_boundary.json"
     )
     assert boundary["source_criterion_count"] == 9
-    assert boundary["source_active_todo_ref_count"] == 13
+    assert boundary["source_active_todo_ref_count"] == 14
     assert boundary["source_sidecar_ref_count"] == 14
     assert boundary["source_missing_evidence_count"] == 12
     assert boundary["source_canonical_gap_completion_status"] == (
@@ -128,6 +128,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "canonical_gap_rollup_ready"
     boundary["rollup_criterion_count"] = 7
     boundary["source_criterion_count"] = 8
+    boundary["source_active_todo_ref_count"] = 13
     boundary["source_exact_duplicate_inflation_count"] = 0
     boundary["source_exact_duplicate_cross_owner_group_count"] = 0
     boundary["source_exact_same_owner_completed_duplicate_group_count"] = 0
@@ -147,6 +148,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_source_criterion_count" in codes
+    assert "invalid_source_active_todo_ref_count" in codes
     assert "invalid_source_exact_duplicate_inflation_count" in codes
     assert "invalid_source_exact_duplicate_cross_owner_group_count" in codes
     assert (

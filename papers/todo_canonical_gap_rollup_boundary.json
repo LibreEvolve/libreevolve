@@ -412,7 +412,7 @@
   "rollup_criterion_count": 8,
   "schema": "libreevolve.todo_canonical_gap_rollup_boundary.v1",
   "sidecar_ref_count": 16,
-  "source_active_todo_ref_count": 13,
+  "source_active_todo_ref_count": 14,
   "source_canonical_gap_boundary_input": "papers/todo_canonical_gap_boundary.json",
   "source_canonical_gap_completion_status": "not_available_without_gap_ids",
   "source_criterion_count": 9,

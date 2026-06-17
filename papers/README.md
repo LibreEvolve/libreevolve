@@ -3182,7 +3182,8 @@ Implemented:
   derivative relationships, source/paper anchor mapping, implementation
   evidence links, cross-document rollup rules, semantic duplicate detection,
   stale duplicate/orphan detection, and raw-count inflation reporting. It is
-  not evidence of canonical gap ids, canonical owner assignments, derivative
+  now records active TODO coverage for all 12 missing evidence keys. It is not
+  evidence of canonical gap ids, canonical owner assignments, derivative
   documentation relationships, source or paper anchor mappings,
   implementation evidence links, cross-document rollup rules, semantic
   duplicate detection, stale completed duplicate detection beyond exact title

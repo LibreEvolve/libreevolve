@@ -1642,6 +1642,10 @@ Important limits:
   claiming that those missing canonical-readiness fields are implemented. This
   is not evidence that raw checklist completion is canonical underlying-gap
   completion.
+- TODO canonical-gap matrix evidence also now records active TODO coverage for
+  all 12 missing evidence keys, including the owner-review signoff field that
+  was previously only covered in the rollup gate. This is structural TODO
+  coverage only, not implementation of those missing readiness fields.
 - ROADMAP source-span disposition evidence currently maps the six core
   AlphaEvolve anchors from `papers/implementation_evidence_map_boundary.json`
   to ROADMAP section ids, phase buckets, sidecars, and TODO links, and records

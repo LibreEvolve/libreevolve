@@ -118,8 +118,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/todo_canonical_gap_boundary.json` now records a nine-criterion
     canonical-gap readiness matrix over the current raw owner-ledger counts
     and exact duplicate-title groups, with sidecar refs, active TODO refs,
-    validation-gate labels, readiness labels, and explicit missing rollup
-    fields.
+    validation-gate labels, readiness labels, explicit missing rollup fields,
+    and active TODO coverage for all 12 missing evidence keys.
     `papers/todo_canonical_gap_rollup_boundary.json` now records a bounded
     eight-criterion rollup/publication gate for canonical gap registry,
     canonical owner policy, derivative relationships, source and

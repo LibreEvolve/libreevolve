@@ -47,8 +47,36 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     )
     assert boundary["canonical_gap_completion_status"] == "not_available_without_gap_ids"
     assert boundary["criterion_count"] == 9
-    assert boundary["active_todo_ref_count"] == 13
+    assert boundary["active_todo_ref_count"] == 14
     assert boundary["sidecar_ref_count"] == 14
+    assert (
+        boundary["missing_evidence_todo_coverage_status"]
+        == "all_missing_evidence_keys_have_active_todo_coverage"
+    )
+    assert boundary["missing_evidence_todo_coverage_count"] == 12
+    assert {
+        record["evidence_key"]
+        for record in boundary["missing_evidence_todo_coverage_records"]
+    } == {
+        "canonical_gap_ids",
+        "canonical_owner_assignments",
+        "derivative_documentation_relationships",
+        "source_or_paper_anchor_mapping",
+        "implementation_evidence_links",
+        "cross_document_rollup_rules",
+        "semantic_duplicate_detector",
+        "stale_completed_duplicate_detector",
+        "orphaned_derivative_detector",
+        "canonical_gap_completion_percent",
+        "canonical_raw_count_inflation_report",
+        "owner_review_signoff",
+    }
+    assert all(
+        record["todo_exists"] is True
+        and record["required_phrase_present"] is True
+        and record["coverage_claim"] == "active_todo_ref_only"
+        for record in boundary["missing_evidence_todo_coverage_records"]
+    )
     assert [record["criterion_id"] for record in boundary["criterion_records"]] == [
         "canonical_gap_ids",
         "canonical_owner_ledgers",
@@ -96,6 +124,7 @@ def test_todo_canonical_gap_boundary_rejects_overclaim_and_drift():
     boundary["exact_duplicate_cross_owner_group_count"] = 0
     boundary["exact_same_owner_completed_duplicate_group_count"] = 0
     boundary["exact_stale_completed_duplicate_group_count"] = 1
+    boundary["missing_evidence_todo_coverage_count"] = 11
     boundary["criterion_records"][0]["readiness_status"] = "ready"
     boundary["missing_evidence"]["canonical_gap_ids"] = "recorded"
     boundary["required_evidence_fields"] = ["canonical_gap_criteria"]
@@ -111,6 +140,7 @@ def test_todo_canonical_gap_boundary_rejects_overclaim_and_drift():
     assert "invalid_exact_duplicate_cross_owner_group_count" in codes
     assert "invalid_exact_same_owner_completed_duplicate_group_count" in codes
     assert "invalid_exact_stale_completed_duplicate_group_count" in codes
+    assert "invalid_missing_evidence_todo_coverage_count" in codes
     assert "invalid_criterion_records" in codes
     assert "invalid_missing_evidence_canonical_gap_ids" in codes
     assert "missing_required_evidence_field" in codes
@@ -128,5 +158,5 @@ def test_render_todo_canonical_gap_boundary_summary_reports_shape():
         in summary
     )
     assert "| criterion_count | 9 |" in summary
-    assert "| active_todo_ref_count | 13 |" in summary
+    assert "| active_todo_ref_count | 14 |" in summary
     assert "| missing_evidence_count | 12 |" in summary

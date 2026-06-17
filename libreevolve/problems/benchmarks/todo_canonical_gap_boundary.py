@@ -45,6 +45,68 @@ EXPECTED_MISSING_EVIDENCE = {
     "canonical_raw_count_inflation_report": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
+MISSING_EVIDENCE_TODO_COVERAGE_SPECS = (
+    {
+        "evidence_key": "canonical_gap_ids",
+        "criterion_id": "canonical_gap_ids",
+        "required_phrase": "canonical underlying-gap id",
+    },
+    {
+        "evidence_key": "canonical_owner_assignments",
+        "criterion_id": "canonical_owner_ledgers",
+        "required_phrase": "canonical owner assignments",
+    },
+    {
+        "evidence_key": "derivative_documentation_relationships",
+        "criterion_id": "derivative_relationships",
+        "required_phrase": "derivative documentation relationships",
+    },
+    {
+        "evidence_key": "source_or_paper_anchor_mapping",
+        "criterion_id": "source_paper_anchor_mapping",
+        "required_phrase": "source/paper anchor mapping",
+    },
+    {
+        "evidence_key": "implementation_evidence_links",
+        "criterion_id": "implementation_evidence_links",
+        "required_phrase": "implementation evidence links",
+    },
+    {
+        "evidence_key": "cross_document_rollup_rules",
+        "criterion_id": "cross_document_rollup_rules",
+        "required_phrase": "cross-document rollup rules",
+    },
+    {
+        "evidence_key": "semantic_duplicate_detector",
+        "criterion_id": "semantic_duplicate_detection",
+        "required_phrase": "semantic duplicate detector",
+    },
+    {
+        "evidence_key": "stale_completed_duplicate_detector",
+        "criterion_id": "stale_duplicate_and_orphan_detection",
+        "required_phrase": "stale completed duplicate detection",
+    },
+    {
+        "evidence_key": "orphaned_derivative_detector",
+        "criterion_id": "stale_duplicate_and_orphan_detection",
+        "required_phrase": "orphaned derivative detection",
+    },
+    {
+        "evidence_key": "canonical_gap_completion_percent",
+        "criterion_id": "raw_count_inflation_reporting",
+        "required_phrase": "canonical underlying-gap completion",
+    },
+    {
+        "evidence_key": "canonical_raw_count_inflation_report",
+        "criterion_id": "raw_count_inflation_reporting",
+        "required_phrase": "inflate the denominator",
+    },
+    {
+        "evidence_key": "owner_review_signoff",
+        "criterion_id": "canonical_owner_ledgers",
+        "required_phrase": "owner review signoff",
+    },
+)
 
 
 CRITERION_SPECS = (
@@ -73,6 +135,10 @@ CRITERION_SPECS = (
             {
                 "path": "docs/todo/roadmap.md",
                 "required_phrase": "canonical owner assignments",
+            },
+            {
+                "path": "docs/todo/roadmap.md",
+                "required_phrase": "owner review signoff",
             },
         ),
         "validation_gate": "canonical owner assignment and derivative-owner policy",
@@ -241,6 +307,10 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
+    missing_evidence_todo_coverage = _missing_evidence_todo_coverage_report(
+        records,
+        EXPECTED_MISSING_EVIDENCE,
+    )
     return {
         "schema": TODO_CANONICAL_GAP_BOUNDARY_SCHEMA,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
@@ -292,6 +362,15 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
         "active_todo_ref_count": active_todo_ref_count,
         "sidecar_ref_count": sidecar_ref_count,
         "criterion_records": records,
+        "missing_evidence_todo_coverage_status": (
+            missing_evidence_todo_coverage["coverage_status"]
+        ),
+        "missing_evidence_todo_coverage_count": (
+            missing_evidence_todo_coverage["coverage_count"]
+        ),
+        "missing_evidence_todo_coverage_records": (
+            missing_evidence_todo_coverage["records"]
+        ),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -308,7 +387,9 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
             "completed duplicate detection beyond exact title matches, "
             "orphaned derivative detection, canonical raw-count inflation "
             "reporting beyond exact title matches, canonical gap completion "
-            "percentages, or owner review signoff."
+            "percentages, or owner review signoff. It records active TODO "
+            "coverage for each missing evidence key without claiming those "
+            "missing fields are implemented."
         ),
     }
 
@@ -356,6 +437,9 @@ def validate_todo_canonical_gap_boundary(
         "active_todo_ref_count",
         "sidecar_ref_count",
         "criterion_records",
+        "missing_evidence_todo_coverage_status",
+        "missing_evidence_todo_coverage_count",
+        "missing_evidence_todo_coverage_records",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current TODO-ledger inputs"))
@@ -371,6 +455,7 @@ def validate_todo_canonical_gap_boundary(
         or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "semantic duplicate detection" not in boundary_text
         or "canonical gap completion percentages" not in boundary_text
+        or "active TODO coverage for each missing evidence key" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate raw TODO counts from canonical gap readiness"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
@@ -418,6 +503,50 @@ def _criterion_record(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
         "active_todo_refs": [_local_ref_record(root, todo_ref) for todo_ref in spec["active_todos"]],
         "validation_gate": spec["validation_gate"],
         "readiness_status": spec["readiness_status"],
+    }
+
+
+def _missing_evidence_todo_coverage_report(
+    records: list[dict[str, Any]],
+    missing_evidence: dict[str, str],
+) -> dict[str, Any]:
+    todo_refs: dict[tuple[str, str], dict[str, Any]] = {}
+    for record in records:
+        criterion_id = record["criterion_id"]
+        for todo_ref in record["active_todo_refs"]:
+            todo_refs[(criterion_id, todo_ref["required_phrase"])] = todo_ref
+    coverage_records: list[dict[str, Any]] = []
+    for spec in MISSING_EVIDENCE_TODO_COVERAGE_SPECS:
+        key = spec["evidence_key"]
+        todo_ref = todo_refs.get((spec["criterion_id"], spec["required_phrase"]))
+        coverage_records.append(
+            {
+                "evidence_key": key,
+                "missing_evidence_status": missing_evidence.get(key),
+                "criterion_id": spec["criterion_id"],
+                "todo_path": todo_ref.get("path") if todo_ref else None,
+                "required_phrase": spec["required_phrase"],
+                "todo_exists": bool(todo_ref and todo_ref["exists"]),
+                "required_phrase_present": bool(
+                    todo_ref and todo_ref["required_phrase_present"]
+                ),
+                "coverage_claim": "active_todo_ref_only",
+            }
+        )
+    all_covered = all(
+        record["todo_exists"] and record["required_phrase_present"]
+        for record in coverage_records
+    ) and {
+        record["evidence_key"] for record in coverage_records
+    } == set(missing_evidence)
+    return {
+        "coverage_status": (
+            "all_missing_evidence_keys_have_active_todo_coverage"
+            if all_covered
+            else "missing_evidence_key_todo_coverage_incomplete"
+        ),
+        "coverage_count": len(coverage_records),
+        "records": coverage_records,
     }
 
 

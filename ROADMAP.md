@@ -1701,6 +1701,10 @@ by `papers/lineage_replay_boundary.json`.
   official 2026 impact values and holds every row at release-note-ineligible
   until source snapshots, local fixtures, reproduction artifacts, customer
   confirmation where relevant, and independent verification exist.
+  `papers/alphaevolve_impact_verification_matrix_boundary.json` adds 22 claim
+  rows and 12 outbound-source rows, all marked without local benchmark reports,
+  report hashes, independent verification, customer confirmation where needed,
+  or release-note eligibility.
 - Keep FHE-on-TPU AlphaEvolve application claims source-scoped:
   `papers/download_manifest.*` and `papers/README.md` now include arXiv
   `2605.14718`, `Adapting AlphaEvolve to Optimize Fully Homomorphic

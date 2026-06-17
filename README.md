@@ -56,6 +56,9 @@ Important limits:
 - `papers/alphaevolve_impact_claim_policy_boundary.json` normalizes official
   2026 impact values for review, but no row is release-note eligible without
   local fixtures, reproduction artifacts, and independent verification.
+- `papers/alphaevolve_impact_verification_matrix_boundary.json` records claim
+  and outbound-source absence rows; no impact row has a local benchmark report
+  or independent verification.
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.

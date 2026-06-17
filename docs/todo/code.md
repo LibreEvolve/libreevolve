@@ -6070,6 +6070,9 @@ sidecars, tests, and active TODOs.
     22 official impact claim values and keeps every claim release-note
     ineligible until source snapshots, local fixtures, reproduction artifacts,
     customer confirmation where relevant, and independent verification exist.
+    `papers/alphaevolve_impact_verification_matrix_boundary.json` now adds
+    claim/source matrix rows, but all rows still lack local benchmark reports,
+    report hashes, independent verification, and release-note eligibility.
   - Required result: implement or explicitly benchmark the named domains before
     promoting impact claims: local DeepConsensus, AC OPF, Earth AI, Willow,
     public-gallery/math, TPU-design, cache-policy, Spanner, compiler-storage,

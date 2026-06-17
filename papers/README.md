@@ -2567,6 +2567,13 @@ Implemented:
   `release_note_eligible=false`. It keeps every claim source-scoped until
   linked source snapshots, local fixtures, reproduction artifacts, customer
   confirmation where relevant, and independent verification exist.
+- `papers/alphaevolve_impact_verification_matrix_boundary.json`: aggregate
+  2026 AlphaEvolve impact verification/report matrix sidecar, not local
+  benchmark or independent-verification evidence. It emits 22 impact-claim rows
+  and 12 outbound-source rows with source URL, source artifact status, missing
+  fixture/report paths, missing benchmark-report hashes, missing verifier/date/
+  outcome evidence, customer-confirmation status, unsupported-local-benchmark
+  flags, downgrade wording, and `release_note_eligible=false`.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

@@ -5360,15 +5360,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     Earth AI, Willow, public gallery/math, TPU design, cache policies, Spanner,
     compiler storage, customer cases, product surfaces, UI/API surfaces, and
     linked scientific sources.
-  - Current gap: individual TODO blocks mention independent reproduction or
-    benchmark gaps for many sources, but no aggregate matrix proves each
-    impact claim has a source snapshot, artifact/source availability status,
-    fixture status, local benchmark-report status, external verification
-    attempt, failure reason, unsupported-local-benchmark flag, and docs
-    downgrade wording. Without that matrix, green paper-manifest tests can
-    prove the boundary file exists but cannot prove every linked impact source
-    has a current independent-verification row or a machine-checkable local
-    benchmark absence row.
+  - Current gap: `papers/alphaevolve_impact_verification_matrix_boundary.json`
+    now emits 22 impact-claim rows and 12 outbound-source rows with source URL,
+    source artifact status, local benchmark status, benchmark-report path/hash
+    placeholders, independent verifier/date/outcome placeholders, customer
+    confirmation status, unsupported-local-benchmark flags, release-note
+    eligibility, and downgrade wording. Per-source retrieval hashes beyond the
+    impact article, local fixture/report paths, benchmark report hashes,
+    independent verification attempts, customer confirmations, and release-note
+    eligibility remain missing.
   - Required result: add a versioned impact-verification matrix and validator:
     one row per 2026 impact claim and outbound source, canonical claim id,
     source URL, retrieval hash, source artifact status, fixture/report path,

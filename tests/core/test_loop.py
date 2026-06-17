@@ -25,6 +25,7 @@ from libreevolve.core.artifact_schema import (
     RUN_ARTIFACT_NAMES,
     paper_artifact_subpath_schema,
     run_artifact_schema,
+    validate_non_jsonl_artifact_policy_manifest,
     validate_paper_artifact_lifecycle_manifest,
 )
 from libreevolve.core.database import validate_task_specification_bundle
@@ -16869,6 +16870,11 @@ def test_manifest_summarizes_plugin_artifacts_after_first_completed_generation(t
     assert metadata["sha256"]
     assert metadata["bytes"] > 0
     runtime_artifacts = manifest["runtime"]["artifacts"]
+    policy_validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+    assert policy_validation["ok"] is True
+    assert policy_validation["checked_artifact_count"] == len(
+        run_artifact_schema()["non_jsonl_artifacts"]
+    )
     assert manifest["runtime"]["history"]["programs_logged"] == 2
     assert runtime_artifacts["history.jsonl"]["exists"] is True
     assert runtime_artifacts["history.jsonl"]["sha256"]
@@ -16879,6 +16885,16 @@ def test_manifest_summarizes_plugin_artifacts_after_first_completed_generation(t
     assert runtime_artifacts["plugin_artifacts"]["kind"] == "directory"
     assert runtime_artifacts["plugin_artifacts"]["tree_hash_status"] == "ok"
     assert runtime_artifacts["plugin_artifacts"]["tree_hash"]
+
+    forged_manifest = copy.deepcopy(manifest)
+    forged_manifest["runtime"]["artifacts"]["plugin_artifacts"]["tree_hash_status"] = (
+        "listing_error"
+    )
+    policy_validation = validate_non_jsonl_artifact_policy_manifest(forged_manifest)
+    assert policy_validation["ok"] is False
+    assert "invalid_non_jsonl_tree_hash_status" in {
+        issue["code"] for issue in policy_validation["issues"]
+    }
 
 
 def test_ttt_rl_loop_export_cadence_and_final_manifest_flush(tmp_path):

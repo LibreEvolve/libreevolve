@@ -8481,12 +8481,19 @@ sidecars, tests, and active TODOs.
     non-JSONL artifacts now include source-level `implementation_anchors` for
     writer, runtime-pointer, and show/restore-reader phases; focused tests
     verify every anchor resolves to current source text.
+    `validate_non_jsonl_artifact_policy_manifest()` now compares a completed
+    manifest's schema-declared non-JSONL hash policies against
+    `runtime.artifacts`, requiring present files to carry `sha256` plus
+    any emitted file hash scope to be compatible, present directories to carry
+    `tree_hash_status: ok`, `tree_hash`, and a known tree-hash scope, and
+    `manifest.json` to retain the deferred self-reference hash policy. Focused
+    tests cover a real run with `best.py`, `best_workspace`, and
+    `plugin_artifacts`, plus a forged directory tree-hash-policy drift.
   - Current gap: the top-level schema inventory now exists, but there is not
-    yet a behavioral verifier that executes every `show`/restore path and
-    checks each artifact's declared hash/tree-hash policy end to end.
-    `paper_artifacts/...` now have a central subpath schema for the currently
-    emitted marker-spelling, process-exhibit, and Table 1 families, but the
-    schema is not yet exercised through end-to-end `show`/restore behavior.
+    yet behavioral coverage for every `show`/restore reader path and every
+    optional non-JSONL artifact emission mode. `paper_artifacts/...` now have a
+    central subpath schema and show/restore-source-manifest rejection guards,
+    but full restored-run replay or carry-forward semantics remain open.
   - Required result: add behavioral tests or validators that exercise
     `non_jsonl_artifacts` through startup/finalization writers and
     `show`/restore readers so documented artifacts cannot drift from

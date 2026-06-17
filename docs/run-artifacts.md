@@ -898,6 +898,11 @@ artifact it records the relative path, file/directory kind, generated/required
 presence condition, writer owner, reader owner, file-hash or tree-hash policy,
 overwrite lifecycle status, and the manifest `runtime.artifacts` or
 runtime-history report location that points to the artifact when available.
+`validate_non_jsonl_artifact_policy_manifest()` checks a completed manifest's
+non-JSONL schema against `runtime.artifacts`: present file artifacts must carry
+`sha256`, present directory artifacts must carry an `ok` tree hash with a
+known tree-hash scope, and `manifest.json` must remain marked as a deferred
+self-reference hash.
 `manifest.json.artifact_schema.generated_artifact_inventory` is the checked
 rollup across JSONL streams, quarantine streams, and non-JSONL artifacts. It
 maps every known cleanup-managed artifact to its schema pointer, writer owner,

@@ -592,6 +592,197 @@ def validate_paper_artifact_lifecycle_manifest(
     }
 
 
+def validate_non_jsonl_artifact_policy_manifest(manifest: object) -> dict:
+    """Validate runtime non-JSONL artifact pointers against schema policies."""
+    schema = "libreevolve.non_jsonl_artifact_policy_manifest_validation.v1"
+    issues: list[dict[str, str]] = []
+    if not isinstance(manifest, Mapping):
+        return {
+            "schema": schema,
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_manifest",
+                    "message": "manifest must be an object",
+                }
+            ],
+        }
+    artifact_schema = manifest.get("artifact_schema")
+    if not isinstance(artifact_schema, Mapping):
+        issues.append(
+            {
+                "code": "missing_artifact_schema",
+                "message": "manifest.artifact_schema must be an object",
+            }
+        )
+        artifact_schema = {}
+    non_jsonl_schema = artifact_schema.get("non_jsonl_artifacts")
+    expected_schema = run_artifact_schema()["non_jsonl_artifacts"]
+    if non_jsonl_schema != expected_schema:
+        issues.append(
+            {
+                "code": "non_jsonl_artifact_schema_drift",
+                "message": "manifest non-JSONL artifact schema drifted",
+            }
+        )
+        non_jsonl_schema = expected_schema
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, Mapping):
+        issues.append(
+            {
+                "code": "missing_runtime",
+                "message": "manifest.runtime must be an object",
+            }
+        )
+        runtime = {}
+    runtime_artifacts = runtime.get("artifacts")
+    if not isinstance(runtime_artifacts, Mapping):
+        issues.append(
+            {
+                "code": "missing_runtime_artifacts",
+                "message": "manifest.runtime.artifacts must be an object",
+            }
+        )
+        runtime_artifacts = {}
+    checked_records: list[dict[str, object]] = []
+    for name, expected in non_jsonl_schema.items():
+        pointer = runtime_artifacts.get(name)
+        if not isinstance(pointer, Mapping):
+            issues.append(
+                {
+                    "code": "missing_non_jsonl_runtime_pointer",
+                    "message": f"runtime.artifacts missing {name}",
+                }
+            )
+            continue
+        checked_records.append(
+            {
+                "name": name,
+                "hash_policy": expected.get("hash_policy"),
+                "present": pointer.get("present"),
+                "kind": pointer.get("kind"),
+            }
+        )
+        _validate_non_jsonl_pointer_policy(name, expected, pointer, issues)
+    return {
+        "schema": schema,
+        "ok": not issues,
+        "issues": issues,
+        "checked_artifact_count": len(checked_records),
+        "checked_artifacts": checked_records,
+    }
+
+
+def _validate_non_jsonl_pointer_policy(
+    name: str,
+    expected: Mapping,
+    pointer: Mapping,
+    issues: list[dict[str, str]],
+) -> None:
+    if pointer.get("path") != expected.get("path"):
+        issues.append(
+            {
+                "code": "non_jsonl_runtime_path_mismatch",
+                "message": f"runtime pointer path for {name} does not match schema",
+            }
+        )
+    if pointer.get("present") is not True:
+        if expected.get("presence") == "required_startup_manifest_updated_at_runtime":
+            issues.append(
+                {
+                    "code": "required_non_jsonl_artifact_missing",
+                    "message": f"required artifact {name} is missing",
+                }
+            )
+        return
+    if pointer.get("kind") == "link":
+        issues.append(
+            {
+                "code": "non_jsonl_runtime_pointer_is_link",
+                "message": f"runtime pointer for {name} must not be a link",
+            }
+        )
+        return
+    policy = expected.get("hash_policy")
+    if policy == "self_describing_manifest_not_independently_self_hashed":
+        if pointer.get("hash_scope") != "final_manifest_self_reference_deferred":
+            issues.append(
+                {
+                    "code": "invalid_manifest_hash_scope",
+                    "message": "manifest pointer must defer final self-reference hash",
+                }
+            )
+        return
+    if policy == "file_sha256_when_present":
+        if pointer.get("kind") != "file":
+            issues.append(
+                {
+                    "code": "non_jsonl_file_kind_mismatch",
+                    "message": f"runtime pointer for {name} must be a file",
+                }
+            )
+        if not _is_sha256_text(pointer.get("sha256")):
+            issues.append(
+                {
+                    "code": "missing_non_jsonl_file_sha256",
+                    "message": f"runtime pointer for {name} must include file sha256",
+                }
+            )
+        if pointer.get("hash_scope") not in {None, "file_bytes"}:
+            issues.append(
+                {
+                    "code": "invalid_non_jsonl_file_hash_scope",
+                    "message": f"runtime pointer for {name} has invalid file hash scope",
+                }
+            )
+        return
+    if policy == "tree_hash_when_present":
+        if pointer.get("kind") != "directory":
+            issues.append(
+                {
+                    "code": "non_jsonl_directory_kind_mismatch",
+                    "message": f"runtime pointer for {name} must be a directory",
+                }
+            )
+        if pointer.get("tree_hash_status") != "ok":
+            issues.append(
+                {
+                    "code": "invalid_non_jsonl_tree_hash_status",
+                    "message": f"runtime pointer for {name} must have ok tree hash",
+                }
+            )
+        if not _is_sha256_text(pointer.get("tree_hash")):
+            issues.append(
+                {
+                    "code": "missing_non_jsonl_tree_hash",
+                    "message": f"runtime pointer for {name} must include tree hash",
+                }
+            )
+        if pointer.get("tree_hash_scope") not in {
+            "relative_file_paths_and_sha256",
+            "best_workspace_file_paths_and_sha256",
+        }:
+            issues.append(
+                {
+                    "code": "invalid_non_jsonl_tree_hash_scope",
+                    "message": f"runtime pointer for {name} has invalid tree-hash scope",
+                }
+            )
+        return
+    issues.append(
+        {
+            "code": "unknown_non_jsonl_hash_policy",
+            "message": f"unknown non-JSONL hash policy for {name}",
+        }
+    )
+
+
+def _is_sha256_text(value: object) -> bool:
+    return isinstance(value, str) and len(value) == 64 and all(
+        char in "0123456789abcdef" for char in value
+    )
+
+
 def _paper_artifact_paths_from_runtime_history(history: Mapping) -> set[str]:
     paths: set[str] = set()
     _collect_paper_artifact_paths(history.get("marker_spelling_provenance_report"), paths)

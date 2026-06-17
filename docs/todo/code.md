@@ -8492,12 +8492,16 @@ sidecars, tests, and active TODOs.
     `libreevolve show` now runs the same policy validator for manifest-backed
     runs that advertise `artifact_schema.non_jsonl_artifacts`, with focused
     tests proving a present file artifact without `sha256` fails inspection
-    before the best source is printed.
+    before the best source is printed. CLI `--restore-*-from-manifest`
+    readers run the same validator before loading restored runtime state when
+    the source manifest advertises `artifact_schema.non_jsonl_artifacts`, with
+    focused tests proving a present file artifact without `sha256` stops
+    restore before `evolve()` runs.
   - Current gap: the top-level schema inventory now exists, but there is not
-    yet behavioral coverage for every restore reader path and every optional
-    non-JSONL artifact emission mode. `paper_artifacts/...` now have a central
-    subpath schema and show/restore-source-manifest rejection guards, but full
-    restored-run replay or carry-forward semantics remain open.
+    yet behavioral coverage for every individual restore surface and every
+    optional non-JSONL artifact emission mode. `paper_artifacts/...` now have a
+    central subpath schema and show/restore-source-manifest rejection guards,
+    but full restored-run replay or carry-forward semantics remain open.
   - Required result: add behavioral tests or validators that exercise
     `non_jsonl_artifacts` through startup/finalization writers and
     `show`/restore readers so documented artifacts cannot drift from

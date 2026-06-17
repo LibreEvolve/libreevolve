@@ -947,6 +947,10 @@ def _mutation_llm_can_run(problem, config) -> bool:
 def _load_cli_runtime_rng_snapshot(path: str | None, *, seed: int) -> dict | None:
     if path is None:
         return None
+    _validate_cli_non_jsonl_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime RNG manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime RNG manifest restore failed",
@@ -969,6 +973,10 @@ def _load_cli_runtime_rng_snapshot(path: str | None, *, seed: int) -> dict | Non
 def _load_cli_runtime_llm_scheduler_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
+    _validate_cli_non_jsonl_artifact_restore_manifest(
+        path,
+        error_prefix="LLM scheduler manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="LLM scheduler manifest restore failed",
@@ -985,6 +993,10 @@ def _load_cli_runtime_llm_scheduler_snapshot(path: str | None) -> dict | None:
 def _load_cli_runtime_budget_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
+    _validate_cli_non_jsonl_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime budget manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime budget manifest restore failed",
@@ -1033,6 +1045,10 @@ def _validate_cli_runtime_restore_flags(
 
 
 def _load_cli_full_resume_bundle(path: str) -> dict:
+    _validate_cli_non_jsonl_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime manifest restore failed",
@@ -1049,6 +1065,10 @@ def _load_cli_full_resume_bundle(path: str) -> dict:
 def _load_cli_runtime_archive_state_snapshot(path: str | None) -> dict | None:
     if path is None:
         return None
+    _validate_cli_non_jsonl_artifact_restore_manifest(
+        path,
+        error_prefix="Archive cursor manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Archive cursor manifest restore failed",
@@ -1066,6 +1086,10 @@ def _load_cli_archive_restore_bundle(path: str | None) -> dict | None:
     if path is None:
         return None
     manifest_path = Path(path)
+    _validate_cli_non_jsonl_artifact_restore_manifest(
+        manifest_path,
+        error_prefix="Archive manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         manifest_path,
         error_prefix="Archive manifest restore failed",
@@ -1078,6 +1102,31 @@ def _load_cli_archive_restore_bundle(path: str | None) -> dict | None:
         raise click.ClickException(
             f"Archive manifest restore failed: {message}"
         ) from exc
+
+
+def _validate_cli_non_jsonl_artifact_restore_manifest(
+    path: str | Path,
+    *,
+    error_prefix: str,
+) -> None:
+    try:
+        manifest = _read_show_manifest(Path(path))
+    except click.ClickException:
+        return
+    artifact_schema = manifest.get("artifact_schema")
+    if (
+        not isinstance(artifact_schema, dict)
+        or "non_jsonl_artifacts" not in artifact_schema
+    ):
+        return
+    validation = validate_non_jsonl_artifact_policy_manifest(manifest)
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise click.ClickException(
+        f"{error_prefix}: non-JSONL artifact policy validation failed: "
+        f"{issue['code']}: {issue['message']}"
+    )
 
 
 def _validate_cli_paper_artifact_restore_manifest(

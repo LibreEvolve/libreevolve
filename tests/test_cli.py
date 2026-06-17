@@ -683,6 +683,51 @@ def test_run_rejects_paper_artifact_lifecycle_drift_before_restore(tmp_path):
     assert not mock.called
 
 
+def test_run_rejects_non_jsonl_artifact_policy_drift_before_restore(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "log_dir": (tmp_path / "runs").as_posix(),
+                "seed": 123,
+            }
+        ),
+        encoding="utf-8",
+    )
+    previous_dir = tmp_path / "previous"
+    previous_dir.mkdir()
+    manifest = _write_show_paper_artifact_manifest(previous_dir)
+    manifest["runtime"]["rng"] = _runtime_rng_state(random.Random(123), 123)
+    manifest["runtime"]["artifacts"]["task_specification.json"] = {
+        "path": "task_specification.json",
+        "exists": True,
+        "present": True,
+        "kind": "file",
+        "hash_scope": "file_bytes",
+    }
+    previous_manifest = previous_dir / "manifest.json"
+    previous_manifest.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with patch("libreevolve.cli.evolve") as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--max-generations",
+                "0",
+                "--restore-rng-from-manifest",
+                str(previous_manifest),
+            ],
+        )
+
+    assert r.exit_code != 0
+    assert "Runtime RNG manifest restore failed" in r.output
+    assert "non-JSONL artifact policy validation failed" in r.output
+    assert "missing_non_jsonl_file_sha256" in r.output
+    assert not mock.called
+
+
 def test_run_can_restore_llm_scheduler_snapshot_from_manifest(tmp_path):
     _make_problem(tmp_path)
     (tmp_path / "config.yaml").write_text(

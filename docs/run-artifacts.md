@@ -906,6 +906,10 @@ self-reference hash.
 `libreevolve show` runs this check for manifest-backed runs that advertise
 `artifact_schema.non_jsonl_artifacts`, failing inspection before printing the
 selected best program/workspace if those pointer policies drift.
+CLI `--restore-*-from-manifest` readers run the same non-JSONL policy check
+when the restore source manifest advertises
+`artifact_schema.non_jsonl_artifacts`, rejecting drifted file or directory
+pointers before restored runtime state is passed into a new run.
 `manifest.json.artifact_schema.generated_artifact_inventory` is the checked
 rollup across JSONL streams, quarantine streams, and non-JSONL artifacts. It
 maps every known cleanup-managed artifact to its schema pointer, writer owner,

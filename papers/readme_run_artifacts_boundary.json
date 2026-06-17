@@ -1,0 +1,493 @@
+{
+  "schema": "libreevolve.readme_run_artifacts_boundary.v1",
+  "boundary_status": "readme_run_artifacts_structural_list_without_lifecycle_parity",
+  "claim_ready": false,
+  "readme_path": "README.md",
+  "run_artifacts_doc_path": "docs/run-artifacts.md",
+  "cleanup_source_path": "libreevolve/core/database.py",
+  "test_paths": [
+    "tests/test_cli.py",
+    "tests/test_readme_quick_start_smoke_boundary.py"
+  ],
+  "sidecar_paths": [
+    "papers/documentation_claim_inventory.json",
+    "papers/task_specification_boundary.json"
+  ],
+  "todo_paths": [
+    "docs/todo/readme.md"
+  ],
+  "readme_marker_count": 7,
+  "missing_readme_marker_count": 0,
+  "missing_readme_marker_records": [],
+  "readme_marker_records": [
+    {
+      "record_id": "heading",
+      "path": "README.md",
+      "required_marker": "## Run Artifacts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_path",
+      "path": "README.md",
+      "required_marker": "Runs write to `runs/<run-name>/`, which is gitignored.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "common_outputs_intro",
+      "path": "README.md",
+      "required_marker": "Common outputs include:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_route",
+      "path": "README.md",
+      "required_marker": "[docs/run-artifacts.md](docs/run-artifacts.md)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "quarantine_streams_route",
+      "path": "README.md",
+      "required_marker": "quarantine\nstreams",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "restore_behavior_route",
+      "path": "README.md",
+      "required_marker": "restore behavior",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "inspection_details_route",
+      "path": "README.md",
+      "required_marker": "inspection details",
+      "marker_status": "marker_present"
+    }
+  ],
+  "common_artifact_count": 14,
+  "missing_common_artifact_count": 0,
+  "missing_common_artifact_records": [],
+  "common_artifact_records": [
+    {
+      "name": "manifest.json",
+      "readme_marker": "`manifest.json`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "archive_events.jsonl",
+      "readme_marker": "`archive_events.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "controller_budget_events.jsonl",
+      "readme_marker": "`controller_budget_events.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "evaluator_results.jsonl",
+      "readme_marker": "`evaluator_results.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "failure_history.jsonl",
+      "readme_marker": "`failure_history.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "history.jsonl",
+      "readme_marker": "`history.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "llm_calls.jsonl",
+      "readme_marker": "`llm_calls.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_current_binding_table.jsonl",
+      "readme_marker": "`prompt_current_binding_table.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_history.jsonl",
+      "readme_marker": "`prompt_history.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_prior_score_table.jsonl",
+      "readme_marker": "`prompt_prior_score_table.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "best.py",
+      "readme_marker": "`best.py`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "best_workspace",
+      "readme_marker": "`best_workspace/`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "directory"
+    },
+    {
+      "name": "evaluator_artifacts",
+      "readme_marker": "`evaluator_artifacts/`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "directory"
+    },
+    {
+      "name": "plugin_artifacts",
+      "readme_marker": "`plugin_artifacts/`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "directory"
+    }
+  ],
+  "cleanup_artifact_count": 20,
+  "cleanup_artifact_names": [
+    "archive_events.jsonl",
+    "archive_events_invalid.jsonl",
+    "best.py",
+    "best_workspace",
+    "controller_budget_events.jsonl",
+    "controller_budget_events_invalid.jsonl",
+    "evaluator_artifacts",
+    "evaluator_results.jsonl",
+    "failure_history.jsonl",
+    "failure_history_invalid.jsonl",
+    "history.jsonl",
+    "history_invalid.jsonl",
+    "llm_calls.jsonl",
+    "llm_calls_invalid.jsonl",
+    "manifest.json",
+    "manifest_invalid.jsonl",
+    "plugin_artifacts",
+    "prompt_history.jsonl",
+    "prompt_history_invalid.jsonl",
+    "task_specification.json"
+  ],
+  "cleanup_artifact_records": [
+    {
+      "name": "archive_events.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "archive_events_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "best.py",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "best_workspace",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "controller_budget_events.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "controller_budget_events_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "evaluator_artifacts",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "evaluator_results.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "failure_history.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "failure_history_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "history.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "history_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "llm_calls.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "llm_calls_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "manifest.json",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "manifest_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "plugin_artifacts",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "prompt_history.jsonl",
+      "present_in_readme_common_list": true,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "prompt_history_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    },
+    {
+      "name": "task_specification.json",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true
+    }
+  ],
+  "readme_common_without_cleanup_names": [
+    "prompt_current_binding_table.jsonl",
+    "prompt_prior_score_table.jsonl"
+  ],
+  "cleanup_without_readme_common_names": [
+    "archive_events_invalid.jsonl",
+    "controller_budget_events_invalid.jsonl",
+    "failure_history_invalid.jsonl",
+    "history_invalid.jsonl",
+    "llm_calls_invalid.jsonl",
+    "manifest_invalid.jsonl",
+    "prompt_history_invalid.jsonl",
+    "task_specification.json"
+  ],
+  "scoped_omission_count": 9,
+  "scope_omission_drift_count": 0,
+  "scope_omission_drift_records": [],
+  "scope_omission_records": [
+    {
+      "name": "task_specification.json",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "history_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "failure_history_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "archive_events_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "controller_budget_events_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "llm_calls_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "manifest_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "prompt_history_invalid.jsonl",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": true,
+      "scope_status": "documented_outside_readme_common_list"
+    },
+    {
+      "name": "paper_artifacts",
+      "present_in_readme_common_list": false,
+      "present_in_run_artifacts_doc": true,
+      "present_in_cleanup_set": false,
+      "scope_status": "documented_outside_readme_common_list"
+    }
+  ],
+  "evidence_anchor_count": 14,
+  "missing_evidence_anchor_count": 0,
+  "missing_evidence_anchor_records": [],
+  "evidence_anchor_records": [
+    {
+      "record_id": "run_artifacts_doc_title",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "# Run Artifacts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_task_spec",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "task_specification.json",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_invalid_streams",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "history_invalid.jsonl",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_paper_artifacts",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "paper_artifacts/",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_collision_policy",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "Reusing an existing run directory",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "run_artifacts_overwrite_known",
+      "path": "docs/run-artifacts.md",
+      "required_marker": "delete only those known artifacts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "database_run_artifact_names",
+      "path": "libreevolve/core/database.py",
+      "required_marker": "RUN_ARTIFACT_NAMES = {",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "database_prepare_run_directory",
+      "path": "libreevolve/core/database.py",
+      "required_marker": "def prepare_run_directory",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "database_task_spec_path",
+      "path": "libreevolve/core/database.py",
+      "required_marker": "task_specification.json",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "cli_overwrite_test",
+      "path": "tests/test_cli.py",
+      "required_marker": "test_run_overwrite_clears_target_artifacts",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "quick_start_smoke_test",
+      "path": "tests/test_readme_quick_start_smoke_boundary.py",
+      "required_marker": "test_readme_quick_start_smoke_executes_documented_no_provider_path",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "documentation_claim_inventory",
+      "path": "papers/documentation_claim_inventory.json",
+      "required_marker": "run_artifact_documented_count",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "task_spec_boundary",
+      "path": "papers/task_specification_boundary.json",
+      "required_marker": "task_specification_json_artifact_recorded",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "readme_todo_owner",
+      "path": "docs/todo/readme.md",
+      "required_marker": "Add README run-artifact list drift and scope evidence.",
+      "marker_status": "marker_present"
+    }
+  ],
+  "readme_run_artifacts_map_status": "readme_run_artifacts_structural_list_map_present",
+  "required_evidence_fields": [
+    "readme_run_artifact_markers",
+    "readme_common_output_records",
+    "run_artifacts_guide_anchor_records",
+    "run_artifact_cleanup_set_records",
+    "readme_vs_cleanup_alignment",
+    "documented_scope_omission_records",
+    "task_specification_scope_anchor",
+    "invalid_quarantine_stream_scope_anchor",
+    "paper_artifacts_scope_anchor",
+    "overwrite_cleanup_test_anchor",
+    "quick_start_smoke_artifact_anchor",
+    "active_todo_owner_anchor",
+    "fresh_smoke_run_artifact_presence_matrix",
+    "artifact_writer_reader_schema_map",
+    "restore_and_show_lifecycle_proof",
+    "optional_artifact_classification_gate",
+    "owner_review_signoff"
+  ],
+  "missing_evidence": {
+    "fresh_smoke_run_artifact_presence_matrix": "not_recorded_locally",
+    "artifact_writer_reader_schema_map": "not_recorded_locally",
+    "restore_and_show_lifecycle_proof": "not_recorded_locally",
+    "optional_artifact_classification_gate": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the README Run Artifacts markers, the 14 README common output records, run-artifacts guide anchors, the RUN_ARTIFACT_NAMES cleanup set, README-vs-cleanup mismatch lists, documented scope omissions for task_specification.json, invalid/quarantine streams, and paper_artifacts, overwrite cleanup test anchors, quick-start smoke artifact anchors, sidecar anchors, and active TODO ownership. It does not claim a fresh smoke-run artifact presence matrix, complete artifact writer/reader/schema mapping, restore/show lifecycle proof, optional artifact classification gating, or owner review signoff."
+}

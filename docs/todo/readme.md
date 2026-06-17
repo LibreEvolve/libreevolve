@@ -721,38 +721,29 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     files and directories should stay synchronized with actual run writers,
     `docs/run-artifacts.md`, artifact schemas, restore behavior, and
     AlphaEvolve-facing boundaries for what those artifacts do and do not prove.
-  - Current evidence: README lists common outputs such as `manifest.json`,
-    JSONL histories, prompt/LLM call tables, `best.py`, `best_workspace/`,
-    `evaluator_artifacts/`, and `plugin_artifacts/`, and links to
-    `docs/run-artifacts.md` for schemas and restore details. Active code and
-    paper TODOs already track many artifact internals, including manifest
-    schema metadata, history rows, prompt history, archive events, evaluator
-    artifacts, plugin artifacts, resume/replay boundaries, budget reports, and
-    validator-boundary consistency. The detailed run-artifacts guide and
-    runtime code also expose `task_specification.json` as a standalone
-    task-specification artifact and `paper_artifacts/...` as generated
-    AlphaEvolve source/exhibit evidence, while the README's common-output list
-    does not mention either surface.
-    A second current drift example is optional invalid/quarantine streams:
-    `docs/run-artifacts.md` documents `history_invalid.jsonl`,
-    `failure_history_invalid.jsonl`, `archive_events_invalid.jsonl`,
-    `controller_budget_events_invalid.jsonl`, `llm_calls_invalid.jsonl`,
-    `manifest_invalid.jsonl`, `prompt_history_invalid.jsonl`, and plugin
-    export invalid streams, but the README common-output list does not classify
-    them as optional diagnostics or explain when readers should expect them.
-  - Current gap: no README-owned validator, sidecar, or smoke transcript
-    parses the README artifact list, compares it with a current no-provider
-    smoke run and `docs/run-artifacts.md`, detects newly added or removed run
-    outputs, or distinguishes common onboarding outputs from optional,
-    provider-specific, plugin-specific, benchmark-specific, paper/source
-    exhibit, task-specification, or absence-boundary artifacts. That makes it
-    unclear whether omissions such as `task_specification.json` and
-    `paper_artifacts/` are intentional scope choices or stale documentation.
-  - Required result: add README run-artifact evidence that maps each listed
-    output to writer code, schema/docs coverage, required or optional status,
-    smoke-run presence, restore/inspection relevance, and overclaim scope; add
-    a drift check that updates README/TODO evidence whenever run writers,
-    artifact schemas, restore behavior, or common-output wording changes.
+  - Current evidence: `papers/readme_run_artifacts_boundary.json` now records
+    README section markers, the 14 common-output entries, run-artifacts guide
+    anchors, the `RUN_ARTIFACT_NAMES` cleanup set from
+    `libreevolve/core/database.py`, README-vs-cleanup mismatch lists,
+    documented scope omissions for `task_specification.json`, invalid/
+    quarantine streams, and `paper_artifacts/`, overwrite-cleanup test anchors,
+    quick-start smoke artifact anchors, sidecar anchors, and active TODO
+    ownership. It explicitly records that
+    `prompt_current_binding_table.jsonl` and
+    `prompt_prior_score_table.jsonl` are README-listed but not cleanup-owned,
+    while task-specification and invalid/quarantine streams are detailed-guide
+    or cleanup-owned surfaces outside the README common-output list.
+  - Current gap: the new boundary is still structural. It does not run a fresh
+    smoke-run artifact presence matrix, map every artifact to writer/reader
+    code and schema validators, prove restore/show lifecycle behavior,
+    classify every optional artifact family, or include owner review signoff.
+    The README can therefore stay synchronized at the short-list level while
+    deeper writer/schema/restore semantics still need page-specific proof.
+  - Required result: add fresh smoke-run artifact presence evidence, complete
+    artifact writer/reader/schema mapping, restore/show lifecycle proof,
+    optional artifact classification gates, and owner review signoff; require
+    README/docs/TODO updates whenever run writers, artifact schemas, restore
+    behavior, or common-output wording changes.
 
 - [ ] Add run-artifacts guide schema and restore drift evidence.
   - Spec evidence: `docs/run-artifacts.md` is the detailed operator contract

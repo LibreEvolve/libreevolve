@@ -21,6 +21,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "clean_checkout_run_contract",
     "benchmark_goal_prompt_artifact",
     "benchmark_goal_prompt_validator",
+    "run_contract_prompt_provenance_requirement",
     "zero_one_principle_source_citation",
     "known_target_source_citations",
     "fixed_evaluator_model_budget_protocol",
@@ -106,6 +107,9 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
                 "benchmark_goal_prompt_validator": (
                     "libreevolve/problems/benchmarks/benchmark_goal_prompt.py"
                 ),
+                "run_contract_prompt_provenance_requirement": (
+                    "runtime.benchmark_goal_prompt.prompt_id"
+                ),
             },
         },
         "claim_boundary": (
@@ -114,11 +118,12 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
             "zero-one validation, valid baseline seeds, checked known target "
             "networks, helper-generated generic hardening artifacts, a clean-"
             "checkout run contract for sorting_network_9, a bounded benchmark "
-            "goal-prompt artifact, and a reusable prompt validator, but does "
-            "not claim source-cited benchmark calibration, fixed-budget "
-            "repeated-run rediscovery, run-tied hardening certification, best "
-            "candidate artifact hashes, failure/invalid-candidate summaries, "
-            "paper-facing certification rows, or novel SOTA results."
+            "goal-prompt artifact, a reusable prompt validator, and a future "
+            "runtime prompt-id provenance requirement, but does not claim "
+            "source-cited benchmark calibration, fixed-budget repeated-run "
+            "rediscovery, run-tied hardening certification, best candidate "
+            "artifact hashes, failure/invalid-candidate summaries, paper-"
+            "facing certification rows, or novel SOTA results."
         ),
     }
 
@@ -310,6 +315,14 @@ def _validate_candidate_evidence(
                     _issue(
                         "invalid_candidate_sorting_network_9_benchmark_goal_prompt_validator",
                         f"sorting_network_9.benchmark_goal_prompt_validator must be {expected_validator!r}",
+                    )
+                )
+            expected_pointer = "runtime.benchmark_goal_prompt.prompt_id"
+            if record.get("run_contract_prompt_provenance_requirement") != expected_pointer:
+                issues.append(
+                    _issue(
+                        "invalid_candidate_sorting_network_9_run_contract_prompt_provenance_requirement",
+                        f"sorting_network_9.run_contract_prompt_provenance_requirement must be {expected_pointer!r}",
                     )
                 )
 

@@ -404,6 +404,14 @@ def test_sorting_network_9_clean_checkout_run_contract_matches_fixture():
     assert contract["goal_prompt_path"].endswith(
         "/sorting_network_9/benchmark_goal_prompt.json"
     )
+    assert contract["goal_prompt_provenance"] == {
+        "status": "required_for_cited_run_evidence_not_emitted_by_runtime_yet",
+        "schema": "libreevolve.benchmark_goal_prompt.v1",
+        "prompt_id": "sorting_network_9_codex_spark_clean_checkout_goal_v1",
+        "path": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
+        "prompt_character_count": 1501,
+        "manifest_pointer": "runtime.benchmark_goal_prompt.prompt_id",
+    }
     assert contract["command"] == [
         "py",
         "-3.12",
@@ -450,6 +458,10 @@ def test_sorting_network_9_clean_checkout_run_contract_matches_fixture():
     )
     assert "codex CLI missing from PATH" in contract["skip_or_failure_modes"]
     assert "codex_cli_transcript_json_files" in contract["post_run_evidence_bundle"]
+    assert (
+        "runtime.benchmark_goal_prompt.prompt_id is "
+        "sorting_network_9_codex_spark_clean_checkout_goal_v1"
+    ) in contract["future_manifest_assertions"]
     assert "does not certify AlphaEvolve-comparable rediscovery" in contract[
         "claim_boundary"
     ]

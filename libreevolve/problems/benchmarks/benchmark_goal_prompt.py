@@ -167,11 +167,42 @@ def _validate_against_run_contract(
     elif data.get("run_name") != contract.get("expected_run_dir"):
         issues.append(_issue("missing_run_contract_run_name", "run contract must expose a run name"))
     goal_prompt_path = contract.get("goal_prompt_path")
-    if isinstance(goal_prompt_path, str) and goal_prompt_path != data.get("run_contract_path"):
-        # The contract links to this prompt; the prompt links back to the contract.
-        expected_prompt_suffix = "/benchmark_goal_prompt.json"
-        if not goal_prompt_path.endswith(expected_prompt_suffix):
-            issues.append(_issue("invalid_run_contract_goal_prompt_path", "goal_prompt_path must reference the prompt artifact"))
+    if not isinstance(goal_prompt_path, str) or not goal_prompt_path.endswith(
+        "/benchmark_goal_prompt.json"
+    ):
+        issues.append(_issue("invalid_run_contract_goal_prompt_path", "goal_prompt_path must reference the prompt artifact"))
+    provenance = contract.get("goal_prompt_provenance")
+    if not isinstance(provenance, dict):
+        issues.append(_issue("missing_run_contract_goal_prompt_provenance", "run contract must record goal_prompt_provenance"))
+        return
+    provenance_checks = {
+        "schema": data.get("schema"),
+        "prompt_id": data.get("prompt_id"),
+        "path": goal_prompt_path,
+        "prompt_character_count": data.get("prompt_character_count"),
+    }
+    for field_name, expected in provenance_checks.items():
+        if provenance.get(field_name) != expected:
+            issues.append(
+                _issue(
+                    f"mismatched_goal_prompt_provenance_{field_name}",
+                    f"goal_prompt_provenance.{field_name} must match the prompt artifact",
+                )
+            )
+    if provenance.get("status") != "required_for_cited_run_evidence_not_emitted_by_runtime_yet":
+        issues.append(
+            _issue(
+                "invalid_goal_prompt_provenance_status",
+                "goal_prompt_provenance.status must preserve the not-emitted runtime boundary",
+            )
+        )
+    if provenance.get("manifest_pointer") != "runtime.benchmark_goal_prompt.prompt_id":
+        issues.append(
+            _issue(
+                "invalid_goal_prompt_manifest_pointer",
+                "goal_prompt_provenance.manifest_pointer must name the future runtime prompt-id field",
+            )
+        )
 
 
 def _load_mapping(

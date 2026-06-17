@@ -185,8 +185,9 @@ The bundled examples are intentionally small:
   `sorting_network_9/benchmark_goal_prompt.json` records the under-4000
   character external-agent handoff prompt for that run, and the
   `benchmark_goal_prompt` validator checks the prompt count, model/auth
-  linkage, and overclaim boundary. These are still protocol inputs, not a
-  successful rediscovery transcript. The checked
+  linkage, overclaim boundary, and the run contract's future
+  `runtime.benchmark_goal_prompt.prompt_id` provenance requirement. These are
+  still protocol inputs, not a successful rediscovery transcript. The checked
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   scope.
 

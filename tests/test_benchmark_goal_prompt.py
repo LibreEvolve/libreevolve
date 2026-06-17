@@ -14,6 +14,7 @@ CONTRACT_PATH = Path("libreevolve/problems/examples/sorting_network_9/run_contra
 
 def test_benchmark_goal_prompt_accepts_sorting_network_artifact():
     validation = validate_benchmark_goal_prompt(PROMPT_PATH)
+    contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
 
     assert validation.ok is True
     assert validation.prompt_id == "sorting_network_9_codex_spark_clean_checkout_goal_v1"
@@ -26,6 +27,19 @@ def test_benchmark_goal_prompt_accepts_sorting_network_artifact():
 
     prompt_record = json.loads(PROMPT_PATH.read_text(encoding="utf-8"))
     assert prompt_record["schema"] == BENCHMARK_GOAL_PROMPT_SCHEMA
+    assert contract["goal_prompt_provenance"] == {
+        "status": "required_for_cited_run_evidence_not_emitted_by_runtime_yet",
+        "schema": BENCHMARK_GOAL_PROMPT_SCHEMA,
+        "prompt_id": prompt_record["prompt_id"],
+        "path": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
+        "prompt_character_count": prompt_record["prompt_character_count"],
+        "manifest_pointer": "runtime.benchmark_goal_prompt.prompt_id",
+    }
+    assert contract["future_manifest_assertions"] == [
+        "runtime.benchmark_goal_prompt.prompt_id is sorting_network_9_codex_spark_clean_checkout_goal_v1",
+        "runtime.benchmark_goal_prompt.path is libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
+        "runtime.benchmark_goal_prompt.prompt_character_count is 1501",
+    ]
 
 
 def test_benchmark_goal_prompt_rejects_drift_and_overclaim():
@@ -60,6 +74,24 @@ def test_benchmark_goal_prompt_rejects_run_contract_mismatch():
     assert "mismatched_backend_type" in codes
     assert "mismatched_auth_name" in codes
     assert "mismatched_run_name" in codes
+
+
+def test_benchmark_goal_prompt_rejects_run_contract_provenance_mismatch():
+    prompt_record = json.loads(PROMPT_PATH.read_text(encoding="utf-8"))
+    contract = json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
+    contract["goal_prompt_provenance"]["prompt_id"] = "wrong"
+    contract["goal_prompt_provenance"]["prompt_character_count"] = 2
+    contract["goal_prompt_provenance"]["status"] = "claim_ready"
+    contract["goal_prompt_provenance"]["manifest_pointer"] = "runtime.ready"
+
+    validation = validate_benchmark_goal_prompt(prompt_record, run_contract=contract)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "mismatched_goal_prompt_provenance_prompt_id" in codes
+    assert "mismatched_goal_prompt_provenance_prompt_character_count" in codes
+    assert "invalid_goal_prompt_provenance_status" in codes
+    assert "invalid_goal_prompt_manifest_pointer" in codes
 
 
 def test_render_benchmark_goal_prompt_summary_reports_shape():

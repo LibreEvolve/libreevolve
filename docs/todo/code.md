@@ -8302,14 +8302,17 @@ sidecars, tests, and active TODOs.
     prompt. `libreevolve.problems.benchmarks.benchmark_goal_prompt` now
     validates the prompt schema, character count/limit, secret-like prompt
     text, overclaim boundary, and linkage to `run_contract.json` plus its
-    model/backend/auth/run-name fields. Tests cover accepted and drifted
-    prompt artifacts.
+    model/backend/auth/run-name fields. The run contract now carries
+    `goal_prompt_provenance` with the prompt id, path, character count, and
+    future `runtime.benchmark_goal_prompt.prompt_id` manifest pointer. Tests
+    cover accepted and drifted prompt artifacts plus prompt-provenance
+    mismatch cases.
   - Current gap: the prompt artifact is committed and bounded, but no actual
     Codex-authenticated run manifest, transcript hash bundle, or paper-facing
-    certification row links back to this prompt id yet. There is also no
-    run-manifest field that records which committed prompt produced a cited
-    external-agent attempt, and future examples still need to opt into the
-    reusable prompt validator.
+    certification row links back to this prompt id yet. The run contract
+    defines the future manifest pointer, but runtime manifests do not emit that
+    field today, and future examples still need to opt into the reusable
+    prompt validator.
   - Required result: link authenticated benchmark runs back to the exact
     committed `prompt_id`, preserve redacted transcript/hash evidence, add a
     run-manifest prompt provenance field plus cross-example adoption checks,

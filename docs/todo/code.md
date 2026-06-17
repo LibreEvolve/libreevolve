@@ -8264,24 +8264,31 @@ sidecars, tests, and active TODOs.
     benchmark evidence until its provider lane, run profile, and artifacts are
     committed, scoped, and validated.
   - Current evidence: the repository now includes experimental Codex CLI
-    backend plumbing under `libreevolve/llm/` and a secret-free
+    backend plumbing under `libreevolve/llm/`, a secret-free
     `libreevolve/problems/examples/sorting_network_9/config.yaml` profile for
-    the intended `gpt-5.3-codex-spark` lane. Existing benchmark and
-    paper-boundary sidecars track sorting-network fixture scope and repeated-
-    run evidence gaps, and the config can be validated from a clean checkout.
-  - Current gap: there is no benchmark-run profile schema, local-experiment
-    hygiene check, or CI/report gate that maps each runnable benchmark profile
-    to an explicit provider lane and support status, records safe model/auth
-    provenance, budget limits, transcript retention policy, expected artifact
-    outputs, and result linkage, or blocks README/ROADMAP/paper claims from
-    citing profiles that have not produced validated run artifacts.
-  - Required result: add committed benchmark provider-profile records plus a
-    validation gate that distinguishes supported, experimental, and
-    local-only provider profiles; checks tracked source/config status,
-    provider-lane readiness, model/budget/provenance fields, transcript and
-    redaction policies, and run-artifact expectations; and requires TODO/docs
-    updates whenever benchmark profiles, local CLI adapters, or cited run
-    evidence change.
+    the intended `gpt-5.3-codex-spark` lane, and a committed
+    `benchmark_provider_profile.json` artifact for that profile.
+    `libreevolve.problems.benchmarks.benchmark_provider_profile` validates the
+    profile schema, support status, provider-lane readiness, model/auth
+    provenance, budget, transcript/redaction policy, expected artifacts,
+    result-linkage overclaim boundary, and drift against `config.yaml`,
+    `run_contract.json`, and `benchmark_goal_prompt.json`. Tests cover accepted
+    and drifted provider-profile artifacts. Existing benchmark and
+    paper-boundary sidecars still track sorting-network fixture scope and
+    repeated-run evidence gaps.
+  - Current gap: the provider profile is now a checked protocol artifact, but
+    there is still no CI/report gate that inventories every runnable benchmark
+    profile, no runtime evidence bundle proving the profile produced validated
+    run artifacts, and no README/ROADMAP/paper claim gate that blocks profile
+    references from being cited as benchmark evidence before committed
+    certification rows exist.
+  - Required result: extend committed provider-profile records into a
+    repository-wide validation/report gate that distinguishes supported,
+    experimental, and local-only provider profiles across examples; checks
+    tracked source/config status, provider-lane readiness,
+    model/budget/provenance fields, transcript and redaction policies, and
+    run-artifact expectations; and requires TODO/docs updates whenever
+    benchmark profiles, local CLI adapters, or cited run evidence change.
 
 - [ ] Add benchmark goal-prompt provenance for external Codex-authenticated
       runs.

@@ -20,6 +20,8 @@
     "benchmark_goal_prompt_artifact",
     "benchmark_goal_prompt_validator",
     "run_contract_prompt_provenance_requirement",
+    "benchmark_provider_profile_artifact",
+    "benchmark_provider_profile_validator",
     "zero_one_principle_source_citation",
     "known_target_source_citations",
     "fixed_evaluator_model_budget_protocol",
@@ -60,8 +62,10 @@
       "benchmark_run_contract_validator": "libreevolve/problems/benchmarks/benchmark_run_contract.py",
       "benchmark_goal_prompt_artifact": "libreevolve/problems/examples/sorting_network_9/benchmark_goal_prompt.json",
       "benchmark_goal_prompt_validator": "libreevolve/problems/benchmarks/benchmark_goal_prompt.py",
-      "run_contract_prompt_provenance_requirement": "runtime.benchmark_goal_prompt.prompt_id"
+      "run_contract_prompt_provenance_requirement": "runtime.benchmark_goal_prompt.prompt_id",
+      "benchmark_provider_profile_artifact": "libreevolve/problems/examples/sorting_network_9/benchmark_provider_profile.json",
+      "benchmark_provider_profile_validator": "libreevolve/problems/benchmarks/benchmark_provider_profile.py"
     }
   },
-  "claim_boundary": "This boundary records that LibreEvolve has executable 8- and 9-input sorting-network benchmark candidates with exhaustive zero-one validation, valid baseline seeds, checked known target networks, helper-generated generic hardening artifacts, a clean-checkout run contract for sorting_network_9, a reusable run-contract validator, a bounded benchmark goal-prompt artifact, a reusable prompt validator, and a runtime prompt-id provenance requirement, but does not claim source-cited benchmark calibration, fixed-budget repeated-run rediscovery, run-tied hardening certification, best candidate artifact hashes, failure/invalid-candidate summaries, paper-facing certification rows, or novel SOTA results."
+  "claim_boundary": "This boundary records that LibreEvolve has executable 8- and 9-input sorting-network benchmark candidates with exhaustive zero-one validation, valid baseline seeds, checked known target networks, helper-generated generic hardening artifacts, a clean-checkout run contract for sorting_network_9, a reusable run-contract validator, a bounded benchmark goal-prompt artifact, a reusable prompt validator, and a runtime prompt-id provenance requirement, plus a provider-profile artifact and validator for the experimental Codex lane, but does not claim source-cited benchmark calibration, fixed-budget repeated-run rediscovery, run-tied hardening certification, best candidate artifact hashes, failure/invalid-candidate summaries, paper-facing certification rows, or novel SOTA results."
 }

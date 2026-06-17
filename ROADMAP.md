@@ -1253,9 +1253,13 @@ by `papers/lineage_replay_boundary.json`.
   `sorting_network_9/benchmark_goal_prompt.json` records the bounded
   external-agent handoff prompt for that protocol, with validator coverage for
   prompt size, model/auth linkage, result-evidence overclaim boundaries, and a
-  runtime-emitted prompt-id provenance requirement in the run contract. Add
-  repeated-run, source-citation, and paper-certification evidence before
-  treating them as comparable results. The
+  runtime-emitted prompt-id provenance requirement in the run contract. The
+  paired `sorting_network_9/benchmark_provider_profile.json` now records the
+  experimental Codex provider lane, local-auth support status, budget,
+  transcript/redaction policy, expected artifacts, and result-linkage boundary,
+  with validator coverage against the config, run contract, and prompt
+  artifact. Add repeated-run, source-citation, and paper-certification evidence
+  before treating them as comparable results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   executable-candidate-only boundary.
   This remains the current lowest-risk realistic benchmark path because it has

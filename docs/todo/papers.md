@@ -3215,6 +3215,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     prompt for that protocol, is linked from the run contract, and has reusable
     validator coverage for prompt size, model/auth linkage, secret-like text,
     overclaim boundaries, and an emitted runtime prompt-id provenance pointer.
+    A paired `benchmark_provider_profile.json` now records the experimental
+    Codex provider lane, local-auth support status, budget,
+    transcript/redaction policy, expected artifacts, and non-evidence
+    result-linkage boundary, with validator coverage against the config, run
+    contract, and prompt artifact.
     The paper ledger still has no source-citation sidecar for the zero-one
     verifier or known comparator targets, repeated-run evidence, committed
     run-tied hardening certification, best-candidate artifact hashes,

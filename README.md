@@ -189,8 +189,13 @@ The bundled examples are intentionally small:
   character external-agent handoff prompt for that run, and the
   `benchmark_goal_prompt` validator checks the prompt count, model/auth
   linkage, overclaim boundary, and the run contract's emitted
-  `runtime.benchmark_goal_prompt.prompt_id` provenance requirement. These are
-  still protocol inputs, not a successful rediscovery transcript. The checked
+  `runtime.benchmark_goal_prompt.prompt_id` provenance requirement. The paired
+  `sorting_network_9/benchmark_provider_profile.json` records the experimental
+  Codex provider lane, local-auth support status, budget, transcript/redaction
+  policy, expected artifacts, and result-linkage boundary; the
+  `benchmark_provider_profile` validator checks it against the config, run
+  contract, and prompt artifact. These are still protocol inputs, not a
+  successful rediscovery transcript. The checked
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   scope.
 

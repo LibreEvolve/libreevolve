@@ -23,6 +23,8 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "benchmark_goal_prompt_artifact",
     "benchmark_goal_prompt_validator",
     "run_contract_prompt_provenance_requirement",
+    "benchmark_provider_profile_artifact",
+    "benchmark_provider_profile_validator",
     "zero_one_principle_source_citation",
     "known_target_source_citations",
     "fixed_evaluator_model_budget_protocol",
@@ -114,6 +116,13 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
                 "run_contract_prompt_provenance_requirement": (
                     "runtime.benchmark_goal_prompt.prompt_id"
                 ),
+                "benchmark_provider_profile_artifact": (
+                    "libreevolve/problems/examples/sorting_network_9/"
+                    "benchmark_provider_profile.json"
+                ),
+                "benchmark_provider_profile_validator": (
+                    "libreevolve/problems/benchmarks/benchmark_provider_profile.py"
+                ),
             },
         },
         "claim_boundary": (
@@ -124,7 +133,8 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
             "checkout run contract for sorting_network_9, a reusable run-"
             "contract validator, a bounded benchmark goal-prompt artifact, a "
             "reusable prompt validator, and a runtime prompt-id provenance "
-            "requirement, but does not claim "
+            "requirement, plus a provider-profile artifact and validator for "
+            "the experimental Codex lane, but does not claim "
             "source-cited benchmark calibration, fixed-budget repeated-run "
             "rediscovery, run-tied hardening certification, best candidate "
             "artifact hashes, failure/invalid-candidate summaries, paper-"
@@ -336,6 +346,27 @@ def _validate_candidate_evidence(
                     _issue(
                         "invalid_candidate_sorting_network_9_run_contract_prompt_provenance_requirement",
                         f"sorting_network_9.run_contract_prompt_provenance_requirement must be {expected_pointer!r}",
+                    )
+                )
+            expected_profile = (
+                "libreevolve/problems/examples/sorting_network_9/"
+                "benchmark_provider_profile.json"
+            )
+            if record.get("benchmark_provider_profile_artifact") != expected_profile:
+                issues.append(
+                    _issue(
+                        "invalid_candidate_sorting_network_9_benchmark_provider_profile_artifact",
+                        f"sorting_network_9.benchmark_provider_profile_artifact must be {expected_profile!r}",
+                    )
+                )
+            expected_profile_validator = (
+                "libreevolve/problems/benchmarks/benchmark_provider_profile.py"
+            )
+            if record.get("benchmark_provider_profile_validator") != expected_profile_validator:
+                issues.append(
+                    _issue(
+                        "invalid_candidate_sorting_network_9_benchmark_provider_profile_validator",
+                        f"sorting_network_9.benchmark_provider_profile_validator must be {expected_profile_validator!r}",
                     )
                 )
 

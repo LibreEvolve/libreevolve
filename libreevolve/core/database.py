@@ -19,6 +19,7 @@ from libreevolve.core.artifact_schema import (
     run_artifact_schema,
     validate_non_jsonl_artifact_policy_manifest,
     validate_quarantine_artifact_policy_manifest,
+    validate_run_artifact_bundle_report,
     versioned_record,
 )
 from libreevolve.core.budget import (
@@ -1842,6 +1843,7 @@ def load_runtime_archive_state_snapshot(manifest_path: str | Path) -> dict:
         raise ArchiveStateRestoreError(str(exc)) from exc
     _validate_archive_non_jsonl_artifact_policy(manifest)
     _validate_archive_quarantine_artifact_policy(manifest, manifest_path)
+    _validate_archive_run_artifact_bundle_report(manifest)
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise ArchiveStateRestoreError("manifest runtime must be an object")
@@ -1893,6 +1895,25 @@ def _validate_archive_quarantine_artifact_policy(
     issue = validation["issues"][0]
     raise ArchiveStateRestoreError(
         "quarantine artifact validation failed: "
+        f"{issue['code']}: {issue['message']}"
+    )
+
+
+def _validate_archive_run_artifact_bundle_report(manifest: object) -> None:
+    if not isinstance(manifest, Mapping):
+        return
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, Mapping):
+        return
+    report = runtime.get("run_artifact_bundle_report")
+    if report is None:
+        return
+    validation = validate_run_artifact_bundle_report(report)
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise ArchiveStateRestoreError(
+        "run artifact bundle report validation failed: "
         f"{issue['code']}: {issue['message']}"
     )
 

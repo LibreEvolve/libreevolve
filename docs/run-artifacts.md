@@ -945,10 +945,13 @@ Completed and aborted manifests also persist
 quarantine-diagnostic, non-JSONL, and paper-artifact lifecycle boundary. The
 report records `claim_ready: false` and keeps provider-output replay, pending
 controller replay, and full restore certification explicitly false.
-CLI and direct restore loaders also validate manifest-advertised quarantine
-streams before consuming runtime, scheduler, budget, lineage, or archive
-restore state, preserving the boundary that `_invalid.jsonl` rows are
-diagnostic evidence rather than accepted replay state.
+`libreevolve show`, CLI restore flags, and direct runtime/archive restore
+loaders validate that persisted report and reject overclaims before accepting
+the manifest. CLI and direct restore loaders also validate
+manifest-advertised quarantine streams before consuming runtime, scheduler,
+budget, lineage, or archive restore state, preserving the boundary that
+`_invalid.jsonl` rows are diagnostic evidence rather than accepted replay
+state.
 The `runtime.artifacts` pointer map and
 `runtime.history.whole_run_source_workspace_integrity_report.runtime_artifacts`
 iterate the same schema-owned artifact name set, with `manifest.json` recorded

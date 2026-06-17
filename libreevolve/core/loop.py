@@ -30,6 +30,7 @@ from libreevolve.core.artifact_schema import (
     validate_non_jsonl_artifact_policy_manifest,
     validate_quarantine_artifact_policy_manifest,
     validate_paper_artifact_lifecycle_manifest,
+    validate_run_artifact_bundle_report,
     versioned_record,
 )
 from libreevolve.core.best_artifacts import (
@@ -3411,6 +3412,10 @@ def load_runtime_llm_scheduler_state_snapshot(manifest_path: str | Path) -> dict
         manifest_path=manifest_path,
         error_type=RuntimeLLMSchedulerStateError,
     )
+    _validate_runtime_run_artifact_bundle_report(
+        manifest,
+        error_type=RuntimeLLMSchedulerStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLLMSchedulerStateError("manifest runtime must be an object")
@@ -3433,6 +3438,10 @@ def load_runtime_budget_state_snapshot(manifest_path: str | Path) -> dict:
     _validate_runtime_quarantine_artifact_policy(
         manifest,
         manifest_path=manifest_path,
+        error_type=RuntimeBudgetStateError,
+    )
+    _validate_runtime_run_artifact_bundle_report(
+        manifest,
         error_type=RuntimeBudgetStateError,
     )
     runtime = manifest.get("runtime")
@@ -3494,6 +3503,10 @@ def load_full_resume_bundle(
         _validate_runtime_quarantine_artifact_policy(
             manifest_obj,
             manifest_path=manifest,
+            error_type=RuntimeFullResumeBundleError,
+        )
+        _validate_runtime_run_artifact_bundle_report(
+            manifest_obj,
             error_type=RuntimeFullResumeBundleError,
         )
         rng_snapshot = load_runtime_rng_state_snapshot(manifest)
@@ -4838,6 +4851,10 @@ def load_runtime_lineage_replay_policy_snapshot(manifest_path: str | Path) -> di
         manifest_path=manifest_path,
         error_type=RuntimeLineageReplayPolicyError,
     )
+    _validate_runtime_run_artifact_bundle_report(
+        manifest,
+        error_type=RuntimeLineageReplayPolicyError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeLineageReplayPolicyError("manifest runtime must be an object")
@@ -4927,6 +4944,10 @@ def load_runtime_rng_state_snapshot(manifest_path: str | Path) -> dict:
         manifest_path=manifest_path,
         error_type=RuntimeRngStateError,
     )
+    _validate_runtime_run_artifact_bundle_report(
+        manifest,
+        error_type=RuntimeRngStateError,
+    )
     runtime = manifest.get("runtime")
     if not isinstance(runtime, dict):
         raise RuntimeRngStateError("manifest runtime must be an object")
@@ -4981,6 +5002,29 @@ def _validate_runtime_quarantine_artifact_policy(
     issue = validation["issues"][0]
     raise error_type(
         "quarantine artifact validation failed: "
+        f"{issue['code']}: {issue['message']}"
+    )
+
+
+def _validate_runtime_run_artifact_bundle_report(
+    manifest: object,
+    *,
+    error_type: type[ValueError],
+) -> None:
+    if not isinstance(manifest, Mapping):
+        return
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, Mapping):
+        return
+    report = runtime.get("run_artifact_bundle_report")
+    if report is None:
+        return
+    validation = validate_run_artifact_bundle_report(report)
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise error_type(
+        "run artifact bundle report validation failed: "
         f"{issue['code']}: {issue['message']}"
     )
 
@@ -5362,132 +5406,6 @@ def _runtime_has_paper_artifact_lifecycle_surface(runtime: Mapping[str, object])
             "alphaevolve_table1_capability_exhibit_report",
         )
     )
-
-
-def validate_run_artifact_bundle_report(report: object) -> dict:
-    issues: list[dict[str, str]] = []
-    if not isinstance(report, Mapping):
-        return {
-            "schema": "libreevolve.run_artifact_bundle_report_validation.v1",
-            "ok": False,
-            "issues": [
-                {"code": "invalid_report", "message": "report must be an object"}
-            ],
-        }
-    if report.get("schema") != "libreevolve.run_artifact_bundle_report.v1":
-        issues.append({"code": "invalid_schema", "message": "invalid report schema"})
-    if not isinstance(report.get("accepted_stream_count"), int) or isinstance(
-        report.get("accepted_stream_count"), bool
-    ):
-        issues.append(
-            {
-                "code": "invalid_accepted_stream_count",
-                "message": "accepted stream count must be an integer",
-            }
-        )
-    streams = report.get("accepted_streams")
-    if not isinstance(streams, list) or not all(
-        isinstance(item, str) and item for item in streams
-    ):
-        issues.append(
-            {
-                "code": "invalid_accepted_streams",
-                "message": "accepted streams must be a list of names",
-            }
-        )
-        streams = []
-    if isinstance(report.get("accepted_stream_count"), int) and not isinstance(
-        report.get("accepted_stream_count"), bool
-    ) and report["accepted_stream_count"] != len(streams):
-        issues.append(
-            {
-                "code": "accepted_stream_count_mismatch",
-                "message": "accepted stream count must match accepted streams",
-            }
-        )
-    for field in (
-        "quarantine_stream_count",
-        "quarantine_record_count",
-        "non_jsonl_checked_artifact_count",
-        "paper_artifact_emitted_path_count",
-    ):
-        value = report.get(field)
-        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
-            issues.append(
-                {"code": f"invalid_{field}", "message": f"{field} must be non-negative integer"}
-            )
-    for field in (
-        "quarantine_validation_ok",
-        "non_jsonl_validation_ok",
-        "paper_artifact_lifecycle_checked",
-    ):
-        if not isinstance(report.get(field), bool):
-            issues.append(
-                {"code": f"invalid_{field}", "message": f"{field} must be boolean"}
-            )
-    paper_ok = report.get("paper_artifact_validation_ok")
-    if paper_ok not in {None, True, False}:
-        issues.append(
-            {
-                "code": "invalid_paper_artifact_validation_ok",
-                "message": "paper artifact validation status must be boolean or null",
-            }
-        )
-    boundary = report.get("accepted_state_boundary")
-    if not isinstance(boundary, Mapping):
-        issues.append(
-            {
-                "code": "invalid_accepted_state_boundary",
-                "message": "accepted state boundary must be an object",
-            }
-        )
-    else:
-        if boundary.get("quarantine_rows_are_diagnostics") is not True:
-            issues.append(
-                {
-                    "code": "quarantine_diagnostic_boundary_missing",
-                    "message": "quarantine rows must remain diagnostics",
-                }
-            )
-        for field in (
-            "quarantine_rows_replayed_as_state",
-            "provider_output_replay",
-            "pending_controller_work_replay",
-        ):
-            if boundary.get(field) is not False:
-                issues.append(
-                    {
-                        "code": f"{field}_overclaim",
-                        "message": f"{field} must remain false",
-                    }
-                )
-    if report.get("claim_ready") is not False:
-        issues.append(
-            {
-                "code": "claim_ready_overclaim",
-                "message": "bundle report is not full replay certification",
-            }
-        )
-    readiness = report.get("claim_readiness")
-    if not isinstance(readiness, Mapping):
-        issues.append(
-            {
-                "code": "invalid_claim_readiness",
-                "message": "claim readiness must be an object",
-            }
-        )
-    elif readiness.get("full_restore_replay_certification") is not False:
-        issues.append(
-            {
-                "code": "full_replay_certification_overclaim",
-                "message": "full restore replay certification must remain false",
-            }
-        )
-    return {
-        "schema": "libreevolve.run_artifact_bundle_report_validation.v1",
-        "ok": not issues,
-        "issues": issues,
-    }
 
 
 def _manifest_artifact_pointer(path: Path, name: str) -> dict:

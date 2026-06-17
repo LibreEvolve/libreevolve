@@ -22,6 +22,7 @@ from libreevolve.core.artifact_schema import (
     validate_non_jsonl_artifact_policy_manifest,
     validate_paper_artifact_lifecycle_manifest,
     validate_quarantine_artifact_policy_manifest,
+    validate_run_artifact_bundle_report,
 )
 from libreevolve.core.loop import (
     RuntimeBudgetStateError,
@@ -531,6 +532,10 @@ def _run_artifact_bundle_summary(run_dir: Path) -> str | None:
     if not manifest_path.exists():
         return None
     manifest = _read_show_manifest(manifest_path)
+    _validate_manifest_run_artifact_bundle_report(
+        manifest,
+        error_prefix="Run artifact bundle validation failed",
+    )
     artifact_schema = manifest.get("artifact_schema")
     if not isinstance(artifact_schema, dict):
         return None
@@ -1071,6 +1076,10 @@ def _load_cli_runtime_rng_snapshot(path: str | None, *, seed: int) -> dict | Non
         path,
         error_prefix="Runtime RNG manifest restore failed",
     )
+    _validate_cli_run_artifact_bundle_report_restore_manifest(
+        path,
+        error_prefix="Runtime RNG manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime RNG manifest restore failed",
@@ -1101,6 +1110,10 @@ def _load_cli_runtime_llm_scheduler_snapshot(path: str | None) -> dict | None:
         path,
         error_prefix="LLM scheduler manifest restore failed",
     )
+    _validate_cli_run_artifact_bundle_report_restore_manifest(
+        path,
+        error_prefix="LLM scheduler manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="LLM scheduler manifest restore failed",
@@ -1122,6 +1135,10 @@ def _load_cli_runtime_budget_snapshot(path: str | None) -> dict | None:
         error_prefix="Runtime budget manifest restore failed",
     )
     _validate_cli_quarantine_artifact_restore_manifest(
+        path,
+        error_prefix="Runtime budget manifest restore failed",
+    )
+    _validate_cli_run_artifact_bundle_report_restore_manifest(
         path,
         error_prefix="Runtime budget manifest restore failed",
     )
@@ -1181,6 +1198,10 @@ def _load_cli_full_resume_bundle(path: str) -> dict:
         path,
         error_prefix="Runtime manifest restore failed",
     )
+    _validate_cli_run_artifact_bundle_report_restore_manifest(
+        path,
+        error_prefix="Runtime manifest restore failed",
+    )
     _validate_cli_paper_artifact_restore_manifest(
         path,
         error_prefix="Runtime manifest restore failed",
@@ -1202,6 +1223,10 @@ def _load_cli_runtime_archive_state_snapshot(path: str | None) -> dict | None:
         error_prefix="Archive cursor manifest restore failed",
     )
     _validate_cli_quarantine_artifact_restore_manifest(
+        path,
+        error_prefix="Archive cursor manifest restore failed",
+    )
+    _validate_cli_run_artifact_bundle_report_restore_manifest(
         path,
         error_prefix="Archive cursor manifest restore failed",
     )
@@ -1227,6 +1252,10 @@ def _load_cli_archive_restore_bundle(path: str | None) -> dict | None:
         error_prefix="Archive manifest restore failed",
     )
     _validate_cli_quarantine_artifact_restore_manifest(
+        manifest_path,
+        error_prefix="Archive manifest restore failed",
+    )
+    _validate_cli_run_artifact_bundle_report_restore_manifest(
         manifest_path,
         error_prefix="Archive manifest restore failed",
     )
@@ -1289,6 +1318,42 @@ def _validate_cli_quarantine_artifact_restore_manifest(
     raise click.ClickException(
         f"{error_prefix}: quarantine artifact validation failed: "
         f"{issue['code']}: {_bounded_redacted_cli_text(issue['message'])}"
+    )
+
+
+def _validate_cli_run_artifact_bundle_report_restore_manifest(
+    path: str | Path,
+    *,
+    error_prefix: str,
+) -> None:
+    try:
+        manifest = _read_show_manifest(Path(path))
+    except click.ClickException:
+        return
+    _validate_manifest_run_artifact_bundle_report(
+        manifest,
+        error_prefix=error_prefix,
+    )
+
+
+def _validate_manifest_run_artifact_bundle_report(
+    manifest: dict,
+    *,
+    error_prefix: str,
+) -> None:
+    runtime = manifest.get("runtime")
+    if not isinstance(runtime, dict):
+        return
+    report = runtime.get("run_artifact_bundle_report")
+    if report is None:
+        return
+    validation = validate_run_artifact_bundle_report(report)
+    if validation["ok"]:
+        return
+    issue = validation["issues"][0]
+    raise click.ClickException(
+        f"{error_prefix}: run artifact bundle report validation failed: "
+        f"{issue['code']}: {issue['message']}"
     )
 
 

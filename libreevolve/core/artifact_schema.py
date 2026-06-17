@@ -1258,6 +1258,137 @@ def validate_quarantine_artifact_policy_manifest(
     }
 
 
+def validate_run_artifact_bundle_report(report: object) -> dict:
+    issues: list[dict[str, str]] = []
+    if not isinstance(report, Mapping):
+        return {
+            "schema": "libreevolve.run_artifact_bundle_report_validation.v1",
+            "ok": False,
+            "issues": [
+                {"code": "invalid_report", "message": "report must be an object"}
+            ],
+        }
+    if report.get("schema") != "libreevolve.run_artifact_bundle_report.v1":
+        issues.append({"code": "invalid_schema", "message": "invalid report schema"})
+    if not isinstance(report.get("accepted_stream_count"), int) or isinstance(
+        report.get("accepted_stream_count"), bool
+    ):
+        issues.append(
+            {
+                "code": "invalid_accepted_stream_count",
+                "message": "accepted stream count must be an integer",
+            }
+        )
+    streams = report.get("accepted_streams")
+    if not isinstance(streams, list) or not all(
+        isinstance(item, str) and item for item in streams
+    ):
+        issues.append(
+            {
+                "code": "invalid_accepted_streams",
+                "message": "accepted streams must be a list of names",
+            }
+        )
+        streams = []
+    if (
+        isinstance(report.get("accepted_stream_count"), int)
+        and not isinstance(report.get("accepted_stream_count"), bool)
+        and report["accepted_stream_count"] != len(streams)
+    ):
+        issues.append(
+            {
+                "code": "accepted_stream_count_mismatch",
+                "message": "accepted stream count must match accepted streams",
+            }
+        )
+    for field in (
+        "quarantine_stream_count",
+        "quarantine_record_count",
+        "non_jsonl_checked_artifact_count",
+        "paper_artifact_emitted_path_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be non-negative integer",
+                }
+            )
+    for field in (
+        "quarantine_validation_ok",
+        "non_jsonl_validation_ok",
+        "paper_artifact_lifecycle_checked",
+    ):
+        if not isinstance(report.get(field), bool):
+            issues.append(
+                {"code": f"invalid_{field}", "message": f"{field} must be boolean"}
+            )
+    paper_ok = report.get("paper_artifact_validation_ok")
+    if paper_ok not in {None, True, False}:
+        issues.append(
+            {
+                "code": "invalid_paper_artifact_validation_ok",
+                "message": "paper artifact validation status must be boolean or null",
+            }
+        )
+    boundary = report.get("accepted_state_boundary")
+    if not isinstance(boundary, Mapping):
+        issues.append(
+            {
+                "code": "invalid_accepted_state_boundary",
+                "message": "accepted state boundary must be an object",
+            }
+        )
+    else:
+        if boundary.get("quarantine_rows_are_diagnostics") is not True:
+            issues.append(
+                {
+                    "code": "quarantine_diagnostic_boundary_missing",
+                    "message": "quarantine rows must remain diagnostics",
+                }
+            )
+        for field in (
+            "quarantine_rows_replayed_as_state",
+            "provider_output_replay",
+            "pending_controller_work_replay",
+        ):
+            if boundary.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"{field}_overclaim",
+                        "message": f"{field} must remain false",
+                    }
+                )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "bundle report is not full replay certification",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim readiness must be an object",
+            }
+        )
+    elif readiness.get("full_restore_replay_certification") is not False:
+        issues.append(
+            {
+                "code": "full_replay_certification_overclaim",
+                "message": "full restore replay certification must remain false",
+            }
+        )
+    return {
+        "schema": "libreevolve.run_artifact_bundle_report_validation.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
 def _validate_non_jsonl_pointer_policy(
     name: str,
     expected: Mapping,

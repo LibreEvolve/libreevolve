@@ -3063,6 +3063,42 @@ def _write_quarantine_policy_drift_manifest(path: Path) -> Path:
     return path
 
 
+def _run_artifact_bundle_report_overclaim() -> dict:
+    return {
+        "schema": "libreevolve.run_artifact_bundle_report.v1",
+        "source": "runtime_artifact_schema_pointers_and_quarantine_diagnostics",
+        "accepted_stream_count": 0,
+        "accepted_streams": [],
+        "quarantine_stream_count": 0,
+        "quarantine_record_count": 0,
+        "quarantine_streams": [],
+        "quarantine_validation_ok": True,
+        "non_jsonl_checked_artifact_count": 0,
+        "non_jsonl_validation_ok": True,
+        "paper_artifact_lifecycle_checked": False,
+        "paper_artifact_emitted_path_count": 0,
+        "paper_artifact_validation_ok": None,
+        "issue_codes": [],
+        "accepted_state_boundary": {
+            "quarantine_rows_are_diagnostics": True,
+            "quarantine_rows_replayed_as_state": False,
+            "non_jsonl_artifacts_are_policy_checked": True,
+            "provider_output_replay": True,
+            "pending_controller_work_replay": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "accepted_streams_counted": True,
+            "quarantine_diagnostics_validated": True,
+            "non_jsonl_policy_validated": True,
+            "paper_artifact_lifecycle_validated": False,
+            "persisted_manifest_report": True,
+            "full_restore_replay_certification": False,
+            "remaining_gap": [],
+        },
+    }
+
+
 @pytest.mark.parametrize(
     ("loader", "error_type"),
     [
@@ -3108,6 +3144,45 @@ def test_direct_runtime_restore_loaders_reject_quarantine_policy_drift(
     manifest = _write_quarantine_policy_drift_manifest(tmp_path / "manifest.json")
 
     with pytest.raises(error_type, match="quarantine artifact validation failed"):
+        loader(manifest)
+
+
+@pytest.mark.parametrize(
+    ("loader", "error_type"),
+    [
+        (load_runtime_rng_state_snapshot, RuntimeRngStateError),
+        (load_runtime_llm_scheduler_state_snapshot, RuntimeLLMSchedulerStateError),
+        (load_runtime_budget_state_snapshot, RuntimeBudgetStateError),
+        (
+            load_runtime_lineage_replay_policy_snapshot,
+            RuntimeLineageReplayPolicyError,
+        ),
+        (load_full_resume_bundle, RuntimeFullResumeBundleError),
+    ],
+)
+def test_direct_runtime_restore_loaders_reject_run_artifact_bundle_report_overclaim(
+    tmp_path,
+    loader,
+    error_type,
+):
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(
+        json.dumps(
+            {
+                "runtime": {
+                    "run_artifact_bundle_report": (
+                        _run_artifact_bundle_report_overclaim()
+                    )
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(
+        error_type,
+        match="run artifact bundle report validation failed",
+    ):
         loader(manifest)
 
 

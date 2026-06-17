@@ -235,6 +235,43 @@ def _write_show_paper_artifact_manifest(run_dir: Path) -> dict:
     (run_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     return manifest
 
+
+def _run_artifact_bundle_report_overclaim() -> dict:
+    return {
+        "schema": "libreevolve.run_artifact_bundle_report.v1",
+        "source": "runtime_artifact_schema_pointers_and_quarantine_diagnostics",
+        "accepted_stream_count": 0,
+        "accepted_streams": [],
+        "quarantine_stream_count": 0,
+        "quarantine_record_count": 0,
+        "quarantine_streams": [],
+        "quarantine_validation_ok": True,
+        "non_jsonl_checked_artifact_count": 0,
+        "non_jsonl_validation_ok": True,
+        "paper_artifact_lifecycle_checked": False,
+        "paper_artifact_emitted_path_count": 0,
+        "paper_artifact_validation_ok": None,
+        "issue_codes": [],
+        "accepted_state_boundary": {
+            "quarantine_rows_are_diagnostics": True,
+            "quarantine_rows_replayed_as_state": False,
+            "non_jsonl_artifacts_are_policy_checked": True,
+            "provider_output_replay": True,
+            "pending_controller_work_replay": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "accepted_streams_counted": True,
+            "quarantine_diagnostics_validated": True,
+            "non_jsonl_policy_validated": True,
+            "paper_artifact_lifecycle_validated": False,
+            "persisted_manifest_report": True,
+            "full_restore_replay_certification": False,
+            "remaining_gap": [],
+        },
+    }
+
+
 def test_help(): assert "run" in CliRunner().invoke(cli, ["--help"]).output
 def test_run_help(): assert "PROBLEM_DIR" in CliRunner().invoke(cli, ["run", "--help"]).output
 def test_show_help(): assert CliRunner().invoke(cli, ["show", "--help"]).exit_code == 0
@@ -286,6 +323,25 @@ def test_show_does_not_load_dotenv_from_cwd(tmp_path, monkeypatch):
 
     assert r.exit_code == 0
     assert os.environ["LIBREEVOLVE_DOTENV_PROBE"] == "from_parent"
+
+
+def test_show_rejects_run_artifact_bundle_report_overclaim(tmp_path):
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    _write_show_history(run_dir, [_show_current_row("p1", 1.0, 0, "x=1")])
+    _write_show_manifest(run_dir)
+    manifest_path = run_dir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["runtime"]["run_artifact_bundle_report"] = (
+        _run_artifact_bundle_report_overclaim()
+    )
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    r = CliRunner().invoke(cli, ["show", str(run_dir)])
+
+    assert r.exit_code != 0
+    assert "run artifact bundle report validation failed" in r.output
+    assert "provider_output_replay_overclaim" in r.output
 
 
 def test_module_help_uses_documented_windows_launcher():
@@ -820,6 +876,72 @@ def test_run_rejects_quarantine_artifact_drift_before_restore(
     assert "quarantine artifact validation failed" in r.output
     assert "invalid_quarantine_stream_rows" in r.output
     assert "history_invalid.jsonl" in r.output
+    assert not mock.called
+
+
+@pytest.mark.parametrize(
+    ("restore_flag", "error_prefix"),
+    [
+        ("--restore-rng-from-manifest", "Runtime RNG manifest restore failed"),
+        (
+            "--restore-llm-scheduler-from-manifest",
+            "LLM scheduler manifest restore failed",
+        ),
+        ("--restore-budget-from-manifest", "Runtime budget manifest restore failed"),
+        (
+            "--restore-archive-cursor-from-manifest",
+            "Archive cursor manifest restore failed",
+        ),
+        ("--restore-archive-from-manifest", "Archive manifest restore failed"),
+        ("--restore-runtime-from-manifest", "Runtime manifest restore failed"),
+    ],
+)
+def test_run_rejects_run_artifact_bundle_report_overclaim_before_restore(
+    tmp_path,
+    restore_flag,
+    error_prefix,
+):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump(
+            {
+                "log_dir": (tmp_path / "runs").as_posix(),
+                "seed": 123,
+            }
+        ),
+        encoding="utf-8",
+    )
+    previous_manifest = tmp_path / "previous-manifest.json"
+    previous_manifest.write_text(
+        json.dumps(
+            {
+                "runtime": {
+                    "run_artifact_bundle_report": (
+                        _run_artifact_bundle_report_overclaim()
+                    )
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with patch("libreevolve.cli.evolve") as mock:
+        r = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--max-generations",
+                "0",
+                restore_flag,
+                str(previous_manifest),
+            ],
+        )
+
+    assert r.exit_code != 0
+    assert error_prefix in r.output
+    assert "run artifact bundle report validation failed" in r.output
+    assert "provider_output_replay_overclaim" in r.output
     assert not mock.called
 
 

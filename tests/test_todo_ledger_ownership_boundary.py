@@ -30,6 +30,23 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     )
     assert boundary["duplicate_detection_policy"] == "exact_normalized_title_only"
     assert boundary["likely_duplicate_title_group_count"] == 123
+    assert boundary["exact_duplicate_raw_count_inflation_report"] == {
+        "policy": "exact_normalized_title_duplicate_groups_only",
+        "scope": (
+            "bounded_raw_checklist_inflation_estimate_without_semantic_"
+            "canonical_gap_ids"
+        ),
+        "duplicate_group_count": 123,
+        "duplicate_record_count": 246,
+        "inflation_count": 123,
+        "raw_total_count": 5183,
+        "collapsed_total_estimate": 5060,
+        "inflation_percent_of_raw_total": 2.373,
+        "canonical_gap_denominator_ready": False,
+    }
+    assert boundary["exact_duplicate_record_count"] == 246
+    assert boundary["exact_duplicate_inflation_count"] == 123
+    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5060
     assert (
         boundary["exact_stale_completed_duplicate_detection_policy"]
         == "completed_record_with_active_same_normalized_title"
@@ -63,6 +80,8 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     boundary["missing_evidence"]["canonical_gap_ids"] = "recorded"
     boundary["owner_records"][0]["active_count"] = 0
     boundary["likely_duplicate_title_groups"] = []
+    boundary["exact_duplicate_raw_count_inflation_report"]["inflation_count"] = 0
+    boundary["exact_duplicate_inflation_count"] = 0
     boundary["exact_stale_completed_duplicate_group_count"] = 1
     boundary["exact_stale_completed_duplicate_status"] = (
         "exact_stale_completed_duplicates_detected"
@@ -79,6 +98,8 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     assert "invalid_missing_evidence_canonical_gap_ids" in codes
     assert "invalid_owner_records" in codes
     assert "invalid_likely_duplicate_title_groups" in codes
+    assert "invalid_exact_duplicate_raw_count_inflation_report" in codes
+    assert "invalid_exact_duplicate_inflation_count" in codes
     assert "invalid_exact_stale_completed_duplicate_group_count" in codes
     assert "invalid_exact_stale_completed_duplicate_status" in codes
     assert "missing_required_evidence_field" in codes

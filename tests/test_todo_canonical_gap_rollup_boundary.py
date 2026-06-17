@@ -14,7 +14,7 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector"
+        == "bounded_canonical_gap_rollup_gate_with_exact_duplicate_inflation_report"
     )
     assert boundary["schema"] == TODO_CANONICAL_GAP_ROLLUP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -34,6 +34,12 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
         boundary["source_exact_stale_completed_duplicate_status"]
         == "no_exact_stale_completed_duplicates_detected"
     )
+    assert boundary["source_exact_duplicate_record_count"] == 246
+    assert boundary["source_exact_duplicate_inflation_count"] == 123
+    assert boundary["source_exact_duplicate_collapsed_total_estimate"] == 5060
+    assert boundary["source_exact_duplicate_raw_count_inflation_report"][
+        "inflation_percent_of_raw_total"
+    ] == 2.373
     assert boundary["rollup_criterion_count"] == 8
     assert boundary["sidecar_ref_count"] == 16
     assert boundary["active_todo_ref_count"] == 16
@@ -68,7 +74,7 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
         "stale_completed_duplicate_detector": "not_recorded_locally",
         "orphaned_derivative_detector": "not_recorded_locally",
         "canonical_gap_completion_percent": "not_recorded_locally",
-        "raw_count_inflation_report": "not_recorded_locally",
+        "canonical_raw_count_inflation_report": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "does not claim canonical gap ids" in boundary["claim_boundary"]
@@ -82,6 +88,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "canonical_gap_rollup_ready"
     boundary["rollup_criterion_count"] = 7
     boundary["source_criterion_count"] = 8
+    boundary["source_exact_duplicate_inflation_count"] = 0
     boundary["source_exact_stale_completed_duplicate_group_count"] = 1
     boundary["rollup_criteria"][0]["sidecar_refs"][0]["exists"] = False
     boundary["rollup_criteria"][0]["active_todo_refs"][0][
@@ -97,6 +104,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_source_criterion_count" in codes
+    assert "invalid_source_exact_duplicate_inflation_count" in codes
     assert "invalid_source_exact_stale_completed_duplicate_group_count" in codes
     assert "invalid_rollup_criterion_count" in codes
     assert "invalid_rollup_criteria" in codes
@@ -113,7 +121,7 @@ def test_render_todo_canonical_gap_rollup_summary_reports_shape():
     assert "TODO canonical gap rollup boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector |"
+        "| boundary_status | bounded_canonical_gap_rollup_gate_with_exact_duplicate_inflation_report |"
         in summary
     )
     assert "| rollup_criterion_count | 8 |" in summary

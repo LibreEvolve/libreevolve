@@ -14,7 +14,7 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_todo_canonical_gap_matrix_with_exact_stale_duplicate_detector"
+        == "bounded_todo_canonical_gap_matrix_with_exact_duplicate_inflation_report"
     )
     assert boundary["schema"] == TODO_CANONICAL_GAP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -22,6 +22,12 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     assert boundary["raw_todo_ledger_completed_count"] == 4677
     assert boundary["raw_todo_ledger_total_count"] == 5183
     assert boundary["exact_duplicate_group_count"] == 123
+    assert boundary["exact_duplicate_record_count"] == 246
+    assert boundary["exact_duplicate_inflation_count"] == 123
+    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5060
+    assert boundary["exact_duplicate_raw_count_inflation_report"][
+        "inflation_percent_of_raw_total"
+    ] == 2.373
     assert boundary["duplicate_detection_policy"] == "exact_normalized_title_only"
     assert boundary["exact_stale_completed_duplicate_group_count"] == 0
     assert (
@@ -64,7 +70,7 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
         "stale_completed_duplicate_detector": "not_recorded_locally",
         "orphaned_derivative_detector": "not_recorded_locally",
         "canonical_gap_completion_percent": "not_recorded_locally",
-        "raw_count_inflation_report": "not_recorded_locally",
+        "canonical_raw_count_inflation_report": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "does not claim canonical gap ids" in boundary["claim_boundary"]
@@ -75,6 +81,7 @@ def test_todo_canonical_gap_boundary_rejects_overclaim_and_drift():
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "canonical_gap_rollup_ready"
     boundary["criterion_count"] = 8
+    boundary["exact_duplicate_inflation_count"] = 0
     boundary["exact_stale_completed_duplicate_group_count"] = 1
     boundary["criterion_records"][0]["readiness_status"] = "ready"
     boundary["missing_evidence"]["canonical_gap_ids"] = "recorded"
@@ -87,6 +94,7 @@ def test_todo_canonical_gap_boundary_rejects_overclaim_and_drift():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_criterion_count" in codes
+    assert "invalid_exact_duplicate_inflation_count" in codes
     assert "invalid_exact_stale_completed_duplicate_group_count" in codes
     assert "invalid_criterion_records" in codes
     assert "invalid_missing_evidence_canonical_gap_ids" in codes
@@ -101,7 +109,7 @@ def test_render_todo_canonical_gap_boundary_summary_reports_shape():
     assert "TODO canonical gap boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_todo_canonical_gap_matrix_with_exact_stale_duplicate_detector |"
+        "| boundary_status | bounded_todo_canonical_gap_matrix_with_exact_duplicate_inflation_report |"
         in summary
     )
     assert "| criterion_count | 9 |" in summary

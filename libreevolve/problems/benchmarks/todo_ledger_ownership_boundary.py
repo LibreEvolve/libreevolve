@@ -42,6 +42,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ledger_owner_inventory",
     "active_completed_marker_policy",
     "exact_normalized_title_duplicate_scan",
+    "exact_duplicate_raw_count_inflation_report",
     "exact_stale_completed_duplicate_scan",
     "canonical_gap_ids",
     "derivative_relationships",
@@ -114,6 +115,10 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
     active_count = sum(record["active_count"] for record in owner_records)
     completed_count = sum(record["completed_count"] for record in owner_records)
     total_count = active_count + completed_count
+    exact_duplicate_inflation_report = _exact_duplicate_raw_count_inflation_report(
+        duplicate_groups=duplicate_groups,
+        raw_total_count=total_count,
+    )
     return {
         "schema": TODO_LEDGER_OWNERSHIP_BOUNDARY_SCHEMA,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
@@ -134,6 +139,16 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
         "duplicate_detection_policy": "exact_normalized_title_only",
         "likely_duplicate_title_group_count": len(duplicate_groups),
         "likely_duplicate_title_groups": duplicate_groups,
+        "exact_duplicate_raw_count_inflation_report": exact_duplicate_inflation_report,
+        "exact_duplicate_record_count": exact_duplicate_inflation_report[
+            "duplicate_record_count"
+        ],
+        "exact_duplicate_inflation_count": exact_duplicate_inflation_report[
+            "inflation_count"
+        ],
+        "exact_duplicate_collapsed_total_estimate": (
+            exact_duplicate_inflation_report["collapsed_total_estimate"]
+        ),
         "exact_stale_completed_duplicate_detection_policy": (
             "completed_record_with_active_same_normalized_title"
         ),
@@ -152,9 +167,10 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
         "claim_boundary": (
             "This boundary records TODO-ledger owner files, active/completed "
             "marker policy, raw checklist counts, and an exact normalized-title "
-            "duplicate scan, including a bounded exact stale-completed duplicate "
-            "detector that only compares completed records against active records "
-            "with the same normalized title. It does not claim canonical "
+            "duplicate scan with an exact-title raw-count inflation estimate, "
+            "including a bounded exact stale-completed duplicate detector that "
+            "only compares completed records against active records with the "
+            "same normalized title. It does not claim canonical "
             "underlying-gap ids, "
             "derivative cross-document relationships, rollup rules, source or "
             "paper anchor mappings, implementation evidence links, semantic "
@@ -194,6 +210,10 @@ def validate_todo_ledger_ownership_boundary(
         "completed_ledger_active_marker_count",
         "likely_duplicate_title_group_count",
         "likely_duplicate_title_groups",
+        "exact_duplicate_raw_count_inflation_report",
+        "exact_duplicate_record_count",
+        "exact_duplicate_inflation_count",
+        "exact_duplicate_collapsed_total_estimate",
         "exact_stale_completed_duplicate_detection_policy",
         "exact_stale_completed_duplicate_group_count",
         "exact_stale_completed_duplicate_groups",
@@ -213,6 +233,7 @@ def validate_todo_ledger_ownership_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim canonical underlying-gap ids" not in boundary_text
+        or "exact-title raw-count inflation estimate" not in boundary_text
         or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "canonical-gap completion percentages" not in boundary_text
     ):
@@ -340,6 +361,35 @@ def _stale_completed_duplicate_groups(
             }
         )
     return stale_groups
+
+
+def _exact_duplicate_raw_count_inflation_report(
+    *,
+    duplicate_groups: list[dict[str, Any]],
+    raw_total_count: int,
+) -> dict[str, Any]:
+    duplicate_record_count = sum(group["record_count"] for group in duplicate_groups)
+    inflation_count = sum(
+        max(0, group["record_count"] - 1) for group in duplicate_groups
+    )
+    collapsed_total_estimate = max(0, raw_total_count - inflation_count)
+    return {
+        "policy": "exact_normalized_title_duplicate_groups_only",
+        "scope": (
+            "bounded_raw_checklist_inflation_estimate_without_semantic_"
+            "canonical_gap_ids"
+        ),
+        "duplicate_group_count": len(duplicate_groups),
+        "duplicate_record_count": duplicate_record_count,
+        "inflation_count": inflation_count,
+        "raw_total_count": raw_total_count,
+        "collapsed_total_estimate": collapsed_total_estimate,
+        "inflation_percent_of_raw_total": _percent(
+            inflation_count,
+            raw_total_count,
+        ),
+        "canonical_gap_denominator_ready": False,
+    }
 
 
 def _marker_policy_status(owner_records: list[dict[str, Any]]) -> str:

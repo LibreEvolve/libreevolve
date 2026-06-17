@@ -99,8 +99,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/todo_ledger_ownership_boundary.json` now records the four owner
     ledgers, active/completed counts, active-versus-completed marker drift,
     raw checklist completion, an exact normalized-title duplicate scan, and a
-    bounded exact stale-completed duplicate detector with zero active/completed
-    title twins.
+    bounded exact-title raw-count inflation report. That report records 123
+    exact-title duplicate groups, 246 duplicate records, 123 inflated raw
+    checklist rows, and a 5060 collapsed exact-title total estimate. It also
+    records a bounded exact stale-completed duplicate detector with zero
+    active/completed title twins.
     `papers/roadmap_readiness_boundary.json` separately records the weighted
     TODO-ledger readiness model. The current raw and weighted percentages are
     still derived from checklist counts only, while active TODOs can
@@ -133,9 +136,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     documentation relationships, source/paper anchor mapping, implementation
     evidence links, cross-document rollup rules, semantic duplicate detection,
     stale completed duplicate detection beyond exact title matches, orphaned
-    derivative detection, canonical gap completion percent, raw-count
-    inflation report, and owner review signoff; then publish raw checklist
-    completion separately from canonical underlying-gap completion.
+    derivative detection, canonical gap completion percent, canonical
+    raw-count inflation report beyond exact-title duplicates, and owner review
+    signoff; then publish raw checklist completion separately from canonical
+    underlying-gap completion.
 
 ## Missing Roadmap Items
 

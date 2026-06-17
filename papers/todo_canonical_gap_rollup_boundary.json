@@ -1,18 +1,18 @@
 {
   "active_todo_ref_count": 16,
-  "boundary_status": "bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector",
-  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact normalized-title matches, orphaned derivative detection, canonical gap completion percent, raw-count inflation report, or owner review signoff.",
+  "boundary_status": "bounded_canonical_gap_rollup_gate_with_exact_duplicate_inflation_report",
+  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact normalized-title matches, orphaned derivative detection, canonical gap completion percent, canonical raw-count inflation report beyond exact title matches, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "canonical_gap_completion_percent": "not_recorded_locally",
     "canonical_gap_ids": "not_recorded_locally",
     "canonical_owner_assignments": "not_recorded_locally",
+    "canonical_raw_count_inflation_report": "not_recorded_locally",
     "cross_document_rollup_rules": "not_recorded_locally",
     "derivative_documentation_relationships": "not_recorded_locally",
     "implementation_evidence_links": "not_recorded_locally",
     "orphaned_derivative_detector": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
-    "raw_count_inflation_report": "not_recorded_locally",
     "semantic_duplicate_detector": "not_recorded_locally",
     "source_or_paper_anchor_mapping": "not_recorded_locally",
     "stale_completed_duplicate_detector": "not_recorded_locally"
@@ -236,10 +236,10 @@
         }
       ],
       "criterion_id": "canonical_completion_reporting",
-      "current_scope": "raw checklist completion without canonical completion percent",
+      "current_scope": "raw checklist completion plus exact-title inflation estimate without canonical completion percent",
       "ledger_surface": "published completion percentages and raw-count inflation reports",
-      "missing_rollup": "canonical gap completion percent and raw-count inflation report",
-      "readiness_status": "no_canonical_completion_percent",
+      "missing_rollup": "canonical gap completion percent and canonical raw-count inflation report beyond exact-title duplicates",
+      "readiness_status": "exact_title_inflation_without_canonical_completion_percent",
       "sidecar_refs": [
         {
           "exists": true,
@@ -292,6 +292,20 @@
   "source_canonical_gap_boundary_input": "papers/todo_canonical_gap_boundary.json",
   "source_canonical_gap_completion_status": "not_available_without_gap_ids",
   "source_criterion_count": 9,
+  "source_exact_duplicate_collapsed_total_estimate": 5060,
+  "source_exact_duplicate_inflation_count": 123,
+  "source_exact_duplicate_raw_count_inflation_report": {
+    "canonical_gap_denominator_ready": false,
+    "collapsed_total_estimate": 5060,
+    "duplicate_group_count": 123,
+    "duplicate_record_count": 246,
+    "inflation_count": 123,
+    "inflation_percent_of_raw_total": 2.373,
+    "policy": "exact_normalized_title_duplicate_groups_only",
+    "raw_total_count": 5183,
+    "scope": "bounded_raw_checklist_inflation_estimate_without_semantic_canonical_gap_ids"
+  },
+  "source_exact_duplicate_record_count": 246,
   "source_exact_stale_completed_duplicate_group_count": 0,
   "source_exact_stale_completed_duplicate_status": "no_exact_stale_completed_duplicates_detected",
   "source_missing_evidence_count": 12,

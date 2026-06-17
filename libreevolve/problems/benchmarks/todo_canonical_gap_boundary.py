@@ -12,12 +12,13 @@ from libreevolve.problems.benchmarks.todo_ledger_ownership_boundary import (
 
 TODO_CANONICAL_GAP_BOUNDARY_SCHEMA = "libreevolve.todo_canonical_gap_boundary.v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_todo_canonical_gap_matrix_with_exact_stale_duplicate_detector"
+    "bounded_todo_canonical_gap_matrix_with_exact_duplicate_inflation_report"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "canonical_gap_criteria",
     "raw_ledger_counts",
     "exact_duplicate_group_count",
+    "exact_duplicate_raw_count_inflation_report",
     "canonical_gap_ids",
     "canonical_owner_ledgers",
     "derivative_relationships",
@@ -39,7 +40,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "stale_completed_duplicate_detector": "not_recorded_locally",
     "orphaned_derivative_detector": "not_recorded_locally",
     "canonical_gap_completion_percent": "not_recorded_locally",
-    "raw_count_inflation_report": "not_recorded_locally",
+    "canonical_raw_count_inflation_report": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 
@@ -192,8 +193,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "raw_count_inflation_reporting",
         "ledger_surface": "project completion percentage reporting",
-        "current_scope": "raw and weighted checklist percentages without canonical underlying-gap denominator",
-        "missing_readiness": "raw-count inflation report and canonical underlying-gap completion percentage",
+        "current_scope": "raw and weighted checklist percentages plus an exact-title raw-count inflation estimate without canonical underlying-gap denominator",
+        "missing_readiness": "canonical raw-count inflation report and canonical underlying-gap completion percentage beyond exact-title duplicates",
         "sidecars": (
             "papers/todo_ledger_ownership_boundary.json",
             "papers/roadmap_readiness_boundary.json",
@@ -209,7 +210,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "published raw checklist versus canonical gap completion report",
-        "readiness_status": "raw_count_completion_only",
+        "readiness_status": "exact_title_inflation_without_canonical_denominator",
     },
 )
 
@@ -249,6 +250,16 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
             "raw_todo_ledger_completion_percent"
         ],
         "exact_duplicate_group_count": ownership["likely_duplicate_title_group_count"],
+        "exact_duplicate_raw_count_inflation_report": ownership[
+            "exact_duplicate_raw_count_inflation_report"
+        ],
+        "exact_duplicate_record_count": ownership["exact_duplicate_record_count"],
+        "exact_duplicate_inflation_count": ownership[
+            "exact_duplicate_inflation_count"
+        ],
+        "exact_duplicate_collapsed_total_estimate": ownership[
+            "exact_duplicate_collapsed_total_estimate"
+        ],
         "duplicate_detection_policy": ownership["duplicate_detection_policy"],
         "exact_stale_completed_duplicate_group_count": ownership[
             "exact_stale_completed_duplicate_group_count"
@@ -266,15 +277,16 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
         "claim_boundary": (
             "This boundary records a TODO-ledger canonical-gap readiness matrix "
             "over the current raw owner-ledger counts and exact duplicate-title "
-            "groups, plus a bounded exact stale-completed duplicate detector "
+            "groups, an exact-title raw-count inflation estimate, plus a "
+            "bounded exact stale-completed duplicate detector "
             "from the ownership sidecar. It does not claim canonical gap ids, canonical owner "
             "assignments, derivative documentation relationships, source or "
             "paper anchor mappings, implementation evidence links, cross-"
             "document rollup rules, semantic duplicate detection, stale "
             "completed duplicate detection beyond exact title matches, "
-            "orphaned derivative detection, raw-"
-            "count inflation reporting, canonical gap completion percentages, "
-            "or owner review signoff."
+            "orphaned derivative detection, canonical raw-count inflation "
+            "reporting beyond exact title matches, canonical gap completion "
+            "percentages, or owner review signoff."
         ),
     }
 
@@ -304,6 +316,10 @@ def validate_todo_canonical_gap_boundary(
         "raw_todo_ledger_total_count",
         "raw_todo_ledger_completion_percent",
         "exact_duplicate_group_count",
+        "exact_duplicate_raw_count_inflation_report",
+        "exact_duplicate_record_count",
+        "exact_duplicate_inflation_count",
+        "exact_duplicate_collapsed_total_estimate",
         "duplicate_detection_policy",
         "exact_stale_completed_duplicate_group_count",
         "exact_stale_completed_duplicate_status",
@@ -321,6 +337,7 @@ def validate_todo_canonical_gap_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim canonical gap ids" not in boundary_text
+        or "exact-title raw-count inflation estimate" not in boundary_text
         or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "semantic duplicate detection" not in boundary_text
         or "canonical gap completion percentages" not in boundary_text

@@ -14,7 +14,7 @@ TODO_CANONICAL_GAP_ROLLUP_BOUNDARY_SCHEMA = (
     "libreevolve.todo_canonical_gap_rollup_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector"
+    "bounded_canonical_gap_rollup_gate_with_exact_duplicate_inflation_report"
 )
 SOURCE_CANONICAL_GAP_BOUNDARY_INPUT = "papers/todo_canonical_gap_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -38,7 +38,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "stale_completed_duplicate_detector": "not_recorded_locally",
     "orphaned_derivative_detector": "not_recorded_locally",
     "canonical_gap_completion_percent": "not_recorded_locally",
-    "raw_count_inflation_report": "not_recorded_locally",
+    "canonical_raw_count_inflation_report": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 
@@ -173,8 +173,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "canonical_completion_reporting",
         "ledger_surface": "published completion percentages and raw-count inflation reports",
-        "current_scope": "raw checklist completion without canonical completion percent",
-        "missing_rollup": "canonical gap completion percent and raw-count inflation report",
+        "current_scope": "raw checklist completion plus exact-title inflation estimate without canonical completion percent",
+        "missing_rollup": "canonical gap completion percent and canonical raw-count inflation report beyond exact-title duplicates",
         "sidecars": (
             "papers/todo_canonical_gap_boundary.json",
             "papers/roadmap_readiness_publication_boundary.json",
@@ -190,7 +190,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "canonical completion percent and raw inflation report",
-        "readiness_status": "no_canonical_completion_percent",
+        "readiness_status": "exact_title_inflation_without_canonical_completion_percent",
     },
     {
         "criterion_id": "publication_and_owner_signoff",
@@ -260,6 +260,18 @@ def todo_canonical_gap_rollup_boundary_record(root: str | Path = ".") -> dict[st
         "source_exact_stale_completed_duplicate_status": source_boundary[
             "exact_stale_completed_duplicate_status"
         ],
+        "source_exact_duplicate_raw_count_inflation_report": source_boundary[
+            "exact_duplicate_raw_count_inflation_report"
+        ],
+        "source_exact_duplicate_record_count": source_boundary[
+            "exact_duplicate_record_count"
+        ],
+        "source_exact_duplicate_inflation_count": source_boundary[
+            "exact_duplicate_inflation_count"
+        ],
+        "source_exact_duplicate_collapsed_total_estimate": source_boundary[
+            "exact_duplicate_collapsed_total_estimate"
+        ],
         "rollup_criterion_count": len(records),
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
@@ -274,7 +286,8 @@ def todo_canonical_gap_rollup_boundary_record(root: str | Path = ".") -> dict[st
             "rules, semantic duplicate detection, stale completed duplicate "
             "detection beyond exact normalized-title matches, orphaned "
             "derivative detection, canonical gap completion "
-            "percent, raw-count inflation report, or owner review signoff."
+            "percent, canonical raw-count inflation report beyond exact title "
+            "matches, or owner review signoff."
         ),
     }
 
@@ -309,6 +322,10 @@ def validate_todo_canonical_gap_rollup_boundary(
         "source_canonical_gap_completion_status",
         "source_exact_stale_completed_duplicate_group_count",
         "source_exact_stale_completed_duplicate_status",
+        "source_exact_duplicate_raw_count_inflation_report",
+        "source_exact_duplicate_record_count",
+        "source_exact_duplicate_inflation_count",
+        "source_exact_duplicate_collapsed_total_estimate",
         "rollup_criterion_count",
         "sidecar_ref_count",
         "active_todo_ref_count",

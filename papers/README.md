@@ -1408,6 +1408,14 @@ artifact/source hash provenance and uploaded release-smoke artifacts, while
 the local release-smoke checklist is documented. Signed release provenance,
 published-index verification, and maintainer-approved release readiness remain
 absent.
+The committed `papers/release_checklist_documentation_boundary.json` sidecar
+preserves the release-checklist documentation boundary: required local smoke
+bullets, out-of-scope signed/published/approved release bullets, workflow
+markers, provenance-tool markers, cross-document anchors, focused tests, and
+active TODO ownership are recorded, while per-bullet workflow-step mapping,
+provenance schema field mapping, signed release provenance, published-index
+verification, maintainer release events, and owner review signoff remain
+absent.
 The committed `papers/ci_workflow_coverage_boundary.json` sidecar preserves
 the current path-scoped GitHub Actions boundary: manual dispatch,
 push/pull_request path filters, secret scan, Python 3.11/3.12 unit jobs on
@@ -3075,6 +3083,15 @@ Implemented:
   test, and redacted network-failure test. It is not a clean-checkout
   absent-cache transcript, live network outcome matrix, full
   hash-verification transcript, or owner review signoff.
+- `papers/release_checklist_documentation_boundary.json`: release-checklist
+  documentation sidecar. It records `docs/release-checklist.md` required
+  local smoke bullets, out-of-scope signed/published/approved release bullets,
+  GitHub Actions release-artifact workflow markers,
+  `libreevolve/tools/release_artifact_provenance.py` markers, release
+  reproducibility and CI sidecar anchors, cross-document anchors, focused
+  tests, and active TODO ownership. It is not a per-checklist-bullet workflow-
+  step map, provenance schema field map, signed release provenance, published-
+  index verification, maintainer release event, or owner review signoff.
 - `papers/documentation_claim_inventory.json`: top-level README/ROADMAP/
   papers-index claim inventory sidecar with stable claim ids, document
   sections, file-offset source anchors, local evidence-ref existence records,

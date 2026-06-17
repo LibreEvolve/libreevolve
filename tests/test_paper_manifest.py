@@ -4222,6 +4222,82 @@ def test_validate_paper_manifest_requires_release_artifact_reproducibility_bound
     assert "release_artifact_reproducibility_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_release_checklist_documentation_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    source_root = Path(__file__).resolve().parents[1]
+    for relative_path in (
+        "docs/release-checklist.md",
+        ".github/workflows/tests.yml",
+        "libreevolve/tools/release_artifact_provenance.py",
+        "papers/release_artifact_reproducibility_boundary.json",
+        "papers/ci_workflow_coverage_boundary.json",
+        "tests/test_agents_docs.py",
+        "libreevolve/problems/benchmarks/release_artifact_reproducibility_boundary.py",
+    ):
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((source_root / relative_path).read_bytes())
+    marker_files = {
+        "docs/development.md": "[docs/release-checklist.md](release-checklist.md)\n",
+        "docs/run-artifacts.md": "papers/release_artifact_reproducibility_boundary.json\n",
+        "ROADMAP.md": "release-smoke checklist is documented\n",
+        "papers/README.md": "the local release-smoke checklist is documented\n",
+        "docs/todo/readme.md": "Add release-checklist documentation drift evidence.\n",
+    }
+    for relative_path, content in marker_files.items():
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+    record = paper_manifest.release_checklist_documentation_boundary_record(tmp_path)
+    sidecar = tmp_path / paper_manifest.RELEASE_CHECKLIST_DOCUMENTATION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_release_checklist_documentation_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.release_checklist_documentation_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "release_checklist_signed_release_ready"
+    record["missing_evidence"]["signed_release_provenance"] = "recorded"
+    sidecar = tmp_path / paper_manifest.RELEASE_CHECKLIST_DOCUMENTATION_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "release_checklist_documentation_boundary_claim_ready_overclaim" in codes
+    assert "release_checklist_documentation_boundary_invalid_boundary_status" in codes
+    assert (
+        "release_checklist_documentation_boundary_invalid_missing_evidence_signed_release_provenance"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_release_checklist_documentation_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "release_checklist_documentation_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_task_specification_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

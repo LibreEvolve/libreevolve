@@ -627,6 +627,16 @@ Important limits:
   non-project build provenance, private package-source identity/authentication,
   remote package artifact hashes, live provider service/default capture,
   accelerator budget accounting, or environment restore/check readiness.
+- Release-checklist documentation evidence now records
+  `docs/release-checklist.md` required local release-smoke bullets, the
+  signed/published/maintainer-approved release evidence that remains outside
+  the checklist, GitHub Actions `release_artifact` workflow markers,
+  `libreevolve/tools/release_artifact_provenance.py` markers, release
+  reproducibility and CI sidecar anchors, development/run-artifact/ROADMAP/
+  papers-index anchors, focused agent-doc tests, and active TODO ownership.
+  This is not a per-checklist-bullet workflow-step map, provenance schema
+  field map, signed release provenance, published-index verification,
+  maintainer release event, or owner review signoff.
 - Runtime budgets are local cooperative generation/evaluation/evaluator-second/
   wall-clock/LLM/provider counters, not per-candidate compute-hour accounting,
   accelerator/worker leases, async queue budgets, or equal-budget execution
@@ -1339,7 +1349,8 @@ Important limits:
   `papers/readme_provider_example_matrix_boundary.json`,
   `papers/readme_cli_provider_guardrail_boundary.json`,
   `papers/readme_paper_cache_topic_boundary.json`,
-  `papers/readme_paper_cache_rehydrate_boundary.json`, and
+  `papers/readme_paper_cache_rehydrate_boundary.json`,
+  `papers/release_checklist_documentation_boundary.json`, and
   `papers/documentation_claim_inventory.json`.
 - Docs-index reader-path evidence now records `docs/README.md` reader paths,
   operational-guide routes, documentation-boundary markers, route target

@@ -1003,13 +1003,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `dist/release_artifact_provenance.json`, uploads
     `libreevolve-release-smoke-artifacts`, and that the checklist names the
     local smoke requirements.
-  - Current gap: there is no page-specific inventory or drift validator that
-    maps each `docs/release-checklist.md` bullet to the workflow step,
-    release-provenance tool, package-content check, CLI smoke, uploaded
-    artifact name, paper boundary sidecar, and active code/paper TODO owner.
-    A future release workflow, artifact name, provenance schema, local command,
-    or signed/published-release boundary could drift while the checklist still
-    reads as authoritative.
+    `papers/release_checklist_documentation_boundary.json` now records the
+    checklist's required local evidence bullets, out-of-scope release-proof
+    bullets, release-artifact workflow markers, release-provenance tool
+    markers, release reproducibility and CI sidecar anchors, development/run-
+    artifact/ROADMAP/papers-index anchors, focused tests, and this active TODO
+    owner.
+  - Current gap: the page-specific inventory is a static marker drift record,
+    not a semantic per-bullet map. It does not map each
+    `docs/release-checklist.md` bullet to a specific workflow step,
+    release-provenance schema field, package-content check, CLI smoke,
+    uploaded artifact name, signed-release proof, published-index proof,
+    maintainer release event, or owner review signoff. A future release
+    workflow, artifact name, provenance schema, local command, or signed/
+    published-release boundary could still drift unless this validator and the
+    broader release boundaries are updated together.
   - Required result: add a release-checklist evidence map and validation gate
     that parses the checklist bullets, verifies workflow/tool/test/sidecar
     anchors, distinguishes local smoke evidence from signed or index-published

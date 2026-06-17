@@ -51,6 +51,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "readme_ignore_policy_inventory",
     "readme_paper_cache_topic_inventory",
     "readme_paper_cache_rehydrate_inventory",
+    "release_checklist_documentation_inventory",
     "documentation_claim_inventory",
     "focused_boundary_tests",
     "semantic_claim_verifier",
@@ -109,6 +110,7 @@ def documentation_truthfulness_boundary_record() -> dict[str, Any]:
             "inventory, README provider-auth setup inventory, README provider-example "
             "matrix inventory, README CLI-provider guardrail inventory, README contributor-gate inventory, README license inventory, README ignore-policy inventory, README paper-cache "
             "topic inventory, README paper-cache rehydrate inventory, "
+            "release-checklist documentation inventory, "
             "README/ROADMAP claim inventory, and "
             "focused boundary tests. It does not claim semantic "
             "documentation-claim verification, complete implementation-evidence "

@@ -16,7 +16,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
         validation.boundary_status
         == "cross_document_guards_without_semantic_claim_proof"
     )
-    assert validation.required_evidence_field_count == 46
+    assert validation.required_evidence_field_count == 47
     assert validation.missing_evidence_count == 5
     assert boundary["schema"] == DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -48,6 +48,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
     assert "readme_ignore_policy_inventory" in boundary["required_evidence_fields"]
     assert "readme_paper_cache_topic_inventory" in boundary["required_evidence_fields"]
     assert "readme_paper_cache_rehydrate_inventory" in boundary["required_evidence_fields"]
+    assert "release_checklist_documentation_inventory" in boundary["required_evidence_fields"]
     assert (
         "does not claim semantic documentation-claim verification"
         in boundary["claim_boundary"]
@@ -79,6 +80,7 @@ def test_documentation_truthfulness_boundary_accepts_cross_document_guards():
     assert "README ignore-policy inventory" in boundary["claim_boundary"]
     assert "README paper-cache topic inventory" in boundary["claim_boundary"]
     assert "README paper-cache rehydrate inventory" in boundary["claim_boundary"]
+    assert "release-checklist documentation inventory" in boundary["claim_boundary"]
 
 
 def test_documentation_truthfulness_boundary_rejects_semantic_proof_overclaim():
@@ -109,5 +111,5 @@ def test_render_documentation_truthfulness_boundary_summary_reports_shape():
         "| boundary_status | cross_document_guards_without_semantic_claim_proof |"
         in summary
     )
-    assert "| required_evidence_field_count | 46 |" in summary
+    assert "| required_evidence_field_count | 47 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

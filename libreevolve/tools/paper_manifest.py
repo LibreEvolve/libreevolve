@@ -491,6 +491,10 @@ from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary i
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
 )
+from libreevolve.problems.benchmarks.release_checklist_documentation_boundary import (
+    release_checklist_documentation_boundary_record,
+    validate_release_checklist_documentation_boundary,
+)
 from libreevolve.problems.benchmarks.related_work_taxonomy_boundary import (
     related_work_taxonomy_boundary_record,
     validate_related_work_taxonomy_boundary,
@@ -1105,6 +1109,7 @@ IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_
 BENCHMARK_COVERAGE_INVENTORY_FILE = "papers/benchmark_coverage_inventory.json"
 STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
+RELEASE_CHECKLIST_DOCUMENTATION_BOUNDARY_FILE = "papers/release_checklist_documentation_boundary.json"
 RELATED_WORK_TAXONOMY_BOUNDARY_FILE = "papers/related_work_taxonomy_boundary.json"
 TASK_SPECIFICATION_BOUNDARY_FILE = "papers/task_specification_boundary.json"
 NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_FILE = "papers/natural_language_preamble_boundary.json"
@@ -1833,6 +1838,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_multi_objective_readiness_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
+    issues.extend(_validate_release_checklist_documentation_boundary(root_path))
     issues.extend(_validate_related_work_taxonomy_boundary(root_path))
     issues.extend(_validate_task_specification_boundary(root_path))
     issues.extend(_validate_natural_language_preamble_boundary(root_path))
@@ -7392,6 +7398,38 @@ def _validate_release_artifact_reproducibility_boundary(root_path: Path) -> list
             f"release_artifact_reproducibility_boundary_{issue.code}",
             issue.message,
             "release_artifact_reproducibility",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_release_checklist_documentation_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / RELEASE_CHECKLIST_DOCUMENTATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "release_checklist_documentation_boundary_manifest_missing",
+                    (
+                        f"{RELEASE_CHECKLIST_DOCUMENTATION_BOUNDARY_FILE} must emit "
+                        "release-checklist documentation drift metadata"
+                    ),
+                    "release_checklist_documentation",
+                )
+            ]
+        return []
+    report = validate_release_checklist_documentation_boundary(recordset, root=root_path)
+    return [
+        PaperManifestIssue(
+            f"release_checklist_documentation_boundary_{issue.code}",
+            issue.message,
+            "release_checklist_documentation",
         )
         for issue in report.issues
     ]

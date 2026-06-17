@@ -8384,19 +8384,21 @@ sidecars, tests, and active TODOs.
     verifies stale `paper_artifacts/` directories are removed on overwrite,
     and `papers/readme_run_artifacts_boundary.json` records
     `paper_artifacts` as present in the cleanup set while remaining outside the
-    README common-output list.
+    README common-output list. `run_artifact_schema()` now exposes
+    `artifact_schema.paper_artifact_subpaths`, with central family/path records
+    for marker spelling, process-exhibit, and Table 1 capability-comparison
+    outputs. Focused tests compare those schema paths to the runtime report
+    paths emitted by `marker_spelling_provenance_report`,
+    `alphaevolve_process_exhibit_report`, and
+    `alphaevolve_table1_capability_exhibit_report`.
   - Current gap: stale `paper_artifacts/` cleanup is fixed, but generated
-    paper/source evidence is still not governed by a single writer/schema/
-    manifest lifecycle registry. Runtime reports can cite individual
-    `paper_artifacts/...` paths, but there is no central validation that every
-    paper-artifact writer, manifest pointer, docs entry, restore/show reader,
-    and cleanup rule stays synchronized.
-  - Required result: centralize generated artifact registration so every
-    paper/source artifact writer is lifecycle-managed; validate that
-    manifest/documented `paper_artifacts/...` paths cannot exist outside
-    collision, cleanup, run-artifact summary, restore/show, and schema
-    expectations; and keep stale-paper-artifact reuse tests in the lifecycle
-    gate.
+    paper/source evidence still lacks a behavioral lifecycle validator that
+    walks all paper-artifact writers, manifest pointers, docs entries,
+    restore/show readers, and cleanup rules as one executed bundle check.
+  - Required result: validate that manifest/documented
+    `paper_artifacts/...` paths cannot exist outside collision, cleanup,
+    run-artifact summary, restore/show, and schema expectations; and keep
+    stale-paper-artifact reuse tests in the lifecycle gate.
 
 - [ ] Add schema-level coverage for invalid/quarantine run streams.
   - Spec evidence: AlphaEvolve-style long-running experiment artifacts must be
@@ -8463,14 +8465,13 @@ sidecars, tests, and active TODOs.
   - Current gap: the top-level schema inventory now exists, but there is not
     yet a behavioral verifier that executes every `show`/restore path and
     checks each artifact's declared hash/tree-hash policy end to end.
-    `paper_artifacts/...` are also represented at the directory level;
-    per-subdirectory/source-exhibit schemas still live in paper-facing runtime
-    reports instead of a central artifact-subpath schema.
+    `paper_artifacts/...` now have a central subpath schema for the currently
+    emitted marker-spelling, process-exhibit, and Table 1 families, but the
+    schema is not yet exercised through end-to-end `show`/restore behavior.
   - Required result: add behavioral tests or validators that exercise
     `non_jsonl_artifacts` through startup/finalization writers and
-    `show`/restore readers, and centralize `paper_artifacts/...` subpath
-    schemas, so documented artifacts cannot drift from machine-readable bundle
-    metadata.
+    `show`/restore readers so documented artifacts cannot drift from
+    machine-readable bundle metadata.
 
 - [ ] Add a clean-checkout run contract for `sorting_network_9`.
   - Spec evidence: AlphaEvolve benchmark claims require reproducible problem

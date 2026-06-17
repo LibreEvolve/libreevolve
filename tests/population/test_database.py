@@ -17,6 +17,7 @@ from libreevolve.core.artifact_schema import (
     RUN_ARTIFACT_NAMES as SCHEMA_RUN_ARTIFACT_NAMES,
     RUN_MANIFEST_SCHEMA,
     generated_run_artifact_inventory,
+    paper_artifact_subpath_schema,
     run_artifact_schema,
 )
 from libreevolve.core.config import Config, ConfigError
@@ -2975,6 +2976,38 @@ def test_non_jsonl_artifact_inventory_anchors_resolve_to_source():
                     phase,
                     record,
                 )
+
+
+def test_paper_artifact_subpath_schema_covers_known_families():
+    schema = paper_artifact_subpath_schema()
+    manifest_schema = run_artifact_schema()
+    inventory = generated_run_artifact_inventory()
+
+    assert manifest_schema["paper_artifact_subpaths"] == schema
+    assert schema["schema"] == "libreevolve.paper_artifact_subpaths.v1"
+    assert schema["root_artifact"] == "paper_artifacts"
+    assert (
+        inventory["paper_artifacts"]["subpath_schema_pointer"]
+        == "artifact_schema.paper_artifact_subpaths"
+    )
+    assert set(schema["families"]) == {
+        "marker_spelling",
+        "process_exhibit",
+        "table1_capability_comparison",
+    }
+    paths = [
+        record["path"]
+        for family in schema["families"].values()
+        for record in family["path_records"]
+    ]
+    assert len(paths) == len(set(paths))
+    assert all(path.startswith("paper_artifacts/") for path in paths)
+    assert "paper_artifacts/process_exhibit/figure_1.mmd" in paths
+    assert "paper_artifacts/table1_capability_comparison/table_1.md" in paths
+    assert (
+        "paper_artifacts/marker_spelling/alphaevolve_page_4_text.txt"
+        in paths
+    )
 
 
 def test_log_writes_metrics_and_evaluation():

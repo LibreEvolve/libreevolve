@@ -915,6 +915,12 @@ manifest bytes. This keeps non-JSONL artifacts such as
 `task_specification.json`, `evaluator_artifacts/`, `plugin_artifacts/`, and
 `paper_artifacts/` visible in whole-run artifact integrity reports even when
 they are absent for a particular run.
+`manifest.json.artifact_schema.paper_artifact_subpaths` centralizes the known
+`paper_artifacts/...` families currently emitted by runtime reports: marker
+spelling source text, process-exhibit diagram/accessibility/source-text files,
+and Table 1 capability-comparison markdown/accessibility files. The
+`paper_artifacts` generated-inventory entry links to that subpath schema, and
+tests compare runtime report paths back to it.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.

@@ -21,7 +21,11 @@ from libreevolve.core.budget import (
     validate_controller_budget_event,
 )
 from libreevolve.core.config import Config
-from libreevolve.core.artifact_schema import RUN_ARTIFACT_NAMES, run_artifact_schema
+from libreevolve.core.artifact_schema import (
+    RUN_ARTIFACT_NAMES,
+    paper_artifact_subpath_schema,
+    run_artifact_schema,
+)
 from libreevolve.core.database import validate_task_specification_bundle
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
 from libreevolve.core.loop import (
@@ -6722,6 +6726,13 @@ def test_runtime_history_reports_alphaevolve_process_exhibit_mapping():
     artifact_by_path = {
         artifact["path"]: artifact for artifact in report["artifact_evidence"]
     }
+    process_schema_paths = {
+        record["path"]
+        for record in paper_artifact_subpath_schema()["families"]["process_exhibit"][
+            "path_records"
+        ]
+    }
+    assert process_schema_paths.issubset(artifact_by_path)
     assert artifact_by_path["history.jsonl"]["present"] is True
     assert artifact_by_path["prompt_history.jsonl"]["present"] is True
     assert "llm_generation_calls" in artifact_by_path["llm_calls.jsonl"]["roles"]
@@ -6858,6 +6869,15 @@ def test_runtime_history_reports_alphaevolve_table1_capability_exhibit():
     artifact_by_kind = {
         artifact["artifact_kind"]: artifact for artifact in report["rendered_artifacts"]
     }
+    table_schema_paths = {
+        record["path"]
+        for record in paper_artifact_subpath_schema()["families"][
+            "table1_capability_comparison"
+        ]["path_records"]
+    }
+    assert {
+        artifact["path"] for artifact in report["rendered_artifacts"]
+    } == table_schema_paths
     markdown = artifact_by_kind["markdown_table"]
     assert markdown["path"] == "paper_artifacts/table1_capability_comparison/table_1.md"
     assert len(markdown["sha256"]) == 64
@@ -7258,8 +7278,20 @@ def test_runtime_history_reports_marker_spelling_provenance():
     assert source_artifacts["schema"] == (
         "libreevolve.marker_spelling_source_artifacts.v1"
     )
+    marker_schema_paths = {
+        record["path"]
+        for record in paper_artifact_subpath_schema()["families"]["marker_spelling"][
+            "path_records"
+        ]
+    }
     assert len(source_artifacts["paper_sha256"]) == 64
     assert source_artifacts["page_artifacts"]["4"]["status"] == "attached"
+    attached_marker_paths = {
+        source_artifacts["page_artifacts"]["4"]["artifact_path"],
+        source_artifacts["page_artifacts"]["6"]["artifact_path"],
+        source_artifacts["figure_3_marker_text_artifact"]["artifact_path"],
+    }
+    assert attached_marker_paths == marker_schema_paths
     figure_3_artifact = source_artifacts["figure_3_marker_text_artifact"]
     assert figure_3_artifact["status"] == "attached"
     assert figure_3_artifact["artifact_path"].endswith(

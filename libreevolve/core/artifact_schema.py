@@ -19,6 +19,7 @@ PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA = (
 )
 CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA = "libreevolve.controller_budget_event.v1"
 QUARANTINE_RECORD_SCHEMA = "libreevolve.strict_jsonl_quarantine_diagnostic.v1"
+PAPER_ARTIFACT_SUBPATH_SCHEMA = "libreevolve.paper_artifact_subpaths.v1"
 LEGACY_RECORD_POLICY = "missing_schema_version_accepted_as_legacy_v0"
 RUN_ARTIFACT_NAMES = frozenset(
     {
@@ -289,6 +290,114 @@ _NON_JSONL_IMPLEMENTATION_ANCHORS = {
     },
 }
 
+_PAPER_ARTIFACT_SUBPATH_SCHEMA = {
+    "schema": PAPER_ARTIFACT_SUBPATH_SCHEMA,
+    "root_artifact": "paper_artifacts",
+    "root_schema_pointer": 'artifact_schema.non_jsonl_artifacts["paper_artifacts"]',
+    "families": {
+        "marker_spelling": {
+            "directory": "paper_artifacts/marker_spelling",
+            "runtime_report": "runtime.history.marker_spelling_provenance_report",
+            "runtime_report_schema": "libreevolve.marker_spelling_provenance_report.v1",
+            "source_artifact_schema": "libreevolve.marker_spelling_source_artifacts.v1",
+            "writer_anchor": "libreevolve.core.loop._marker_spelling_source_artifacts",
+            "path_records": [
+                {
+                    "path": "paper_artifacts/marker_spelling/alphaevolve_page_4_text.txt",
+                    "artifact_kind": "pypdf_page_text_extract",
+                    "hash_policy": "sha256_utf8_text_payload",
+                },
+                {
+                    "path": "paper_artifacts/marker_spelling/alphaevolve_page_6_text.txt",
+                    "artifact_kind": "pypdf_page_text_extract",
+                    "hash_policy": "sha256_utf8_text_payload",
+                },
+                {
+                    "path": (
+                        "paper_artifacts/marker_spelling/"
+                        "alphaevolve_figure_3a_marker_text.txt"
+                    ),
+                    "artifact_kind": "pypdf_figure_3a_marker_line_extract",
+                    "hash_policy": "sha256_utf8_text_payload",
+                },
+            ],
+        },
+        "process_exhibit": {
+            "directory": "paper_artifacts/process_exhibit",
+            "runtime_report": "runtime.history.alphaevolve_process_exhibit_report",
+            "runtime_report_schema": "libreevolve.alphaevolve_process_exhibit_report.v1",
+            "writer_anchor": "libreevolve.core.loop._write_process_exhibit_artifact",
+            "hash_scope": "generated_process_exhibit_text_artifact",
+            "path_records": [
+                {
+                    "path": "paper_artifacts/process_exhibit/figure_1.mmd",
+                    "artifact_kind": "mermaid_source",
+                },
+                {
+                    "path": "paper_artifacts/process_exhibit/figure_1_accessibility.txt",
+                    "artifact_kind": "accessibility_text",
+                },
+                {
+                    "path": "paper_artifacts/process_exhibit/figure_2.mmd",
+                    "artifact_kind": "mermaid_source",
+                },
+                {
+                    "path": "paper_artifacts/process_exhibit/figure_2_accessibility.txt",
+                    "artifact_kind": "accessibility_text",
+                },
+                {
+                    "path": (
+                        "paper_artifacts/process_exhibit/"
+                        "source_alphaevolve_figure_1_page_3_text.txt"
+                    ),
+                    "artifact_kind": "source_pdf_page_text_extract",
+                    "hash_scope": "source_pdf_page_text_extract",
+                },
+                {
+                    "path": (
+                        "paper_artifacts/process_exhibit/"
+                        "source_alphaevolve_figure_2_page_4_text.txt"
+                    ),
+                    "artifact_kind": "source_pdf_page_text_extract",
+                    "hash_scope": "source_pdf_page_text_extract",
+                },
+            ],
+        },
+        "table1_capability_comparison": {
+            "directory": "paper_artifacts/table1_capability_comparison",
+            "runtime_report": (
+                "runtime.history.alphaevolve_table1_capability_exhibit_report"
+            ),
+            "runtime_report_schema": (
+                "libreevolve.alphaevolve_table1_capability_exhibit_report.v1"
+            ),
+            "writer_anchor": (
+                "libreevolve.core.loop._write_alphaevolve_table1_artifact"
+            ),
+            "hash_scope": "generated_table1_capability_exhibit_text_artifact",
+            "path_records": [
+                {
+                    "path": (
+                        "paper_artifacts/table1_capability_comparison/table_1.md"
+                    ),
+                    "artifact_kind": "markdown_table",
+                },
+                {
+                    "path": (
+                        "paper_artifacts/table1_capability_comparison/"
+                        "table_1_accessibility.txt"
+                    ),
+                    "artifact_kind": "accessibility_text",
+                },
+            ],
+        },
+    },
+}
+
+
+def paper_artifact_subpath_schema() -> dict:
+    return deepcopy(_PAPER_ARTIFACT_SUBPATH_SCHEMA)
+
 
 def _quarantine_record(
     source_stream: str,
@@ -341,6 +450,7 @@ def run_artifact_schema() -> dict:
         "version": ARTIFACT_SCHEMA_VERSION,
         "legacy_record_policy": LEGACY_RECORD_POLICY,
         **schema,
+        "paper_artifact_subpaths": paper_artifact_subpath_schema(),
         "generated_artifact_inventory": generated_run_artifact_inventory(),
     }
 
@@ -392,6 +502,10 @@ def generated_run_artifact_inventory() -> dict:
                 _NON_JSONL_IMPLEMENTATION_ANCHORS[name]
             ),
         }
+        if name == "paper_artifacts":
+            inventory[name]["subpath_schema_pointer"] = (
+                "artifact_schema.paper_artifact_subpaths"
+            )
     missing = RUN_ARTIFACT_NAMES - set(inventory)
     extra = set(inventory) - RUN_ARTIFACT_NAMES
     if missing or extra:

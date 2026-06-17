@@ -1327,6 +1327,7 @@ Important limits:
   `papers/docs_status_ledger_boundary.json`,
   `papers/docs_architecture_runtime_flow_boundary.json`,
   `papers/development_provider_example_boundary.json`,
+  `papers/development_workflow_boundary.json`,
   `papers/backend_cli_provider_guardrail_boundary.json`,
   `papers/backend_guide_contract_drift_boundary.json`,
   `papers/plugin_guide_contract_drift_boundary.json`,
@@ -1384,6 +1385,16 @@ Important limits:
   OpenAI or Anthropic model availability, credential-safe development provider
   smoke, account-specific model-id provenance, a CI development provider
   matrix, or owner review signoff.
+- Development-guide workflow evidence now records `docs/development.md`
+  workflow markers for Python launcher guidance, editable install,
+  pre-commit setup, `.env` behavior, test/pre-commit/diff/paper-manifest
+  commands, CI scope, release-checklist routing, dependency lists,
+  repository conventions, suggested contributor docs, `pyproject.toml`,
+  `.pre-commit-config.yaml`, GitHub Actions, focused agent-doc tests, and
+  active TODO ownership. This is not per-command executable transcripts,
+  dependency-version semantic parity, CI path-filter semantic proof,
+  fresh-checkout paper-manifest transcripts, release-smoke transcripts,
+  repository-convention source mapping, or owner review signoff.
 - Backend CLI-provider guardrail evidence now records the `docs/backends.md`
   provider-lane taxonomy, built-in SDK adapter wording, custom import-path
   backend wording, subprocess/CLI-authenticated provider guardrail wording,

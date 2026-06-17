@@ -2924,6 +2924,123 @@ def test_validate_paper_manifest_requires_development_provider_example_boundary_
     assert "development_provider_example_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_development_workflow_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    marker_files = {
+        "docs/development.md": (
+            "py -3.12\n"
+            'py -3.12 -m pip install -e ".[dev]"\n'
+            "py -3.12 -m pre_commit install\n"
+            "loads `.env` during run setup with `override=True`\n"
+            'py -3.12 -m pytest tests/ -m "not integration" --tb=short\n'
+            "py -3.12 -m pytest tests/integration/ -m integration\n"
+            "py -3.12 -m pre_commit run --all-files\n"
+            "git diff --check\n"
+            "py -3.12 -m libreevolve.tools.paper_manifest --rehydrate\n"
+            "py -3.12 -m libreevolve.tools.paper_manifest\n"
+            "py -3.12 -m libreevolve.tools.paper_manifest --require-local-pdfs\n"
+            "use `--json` when auditing\n"
+            "[docs/release-checklist.md](release-checklist.md)\n"
+            "path-scoped\n`push` / `pull_request` events\n"
+            "The secret scan uses `.secrets.baseline`.\n"
+            "## Repository conventions\n"
+            "[Architecture](./architecture.md)\n"
+            "[Problem Format](./problem-format.md)\n"
+            "[Configuration](./configuration.md)\n"
+            "[Plugins](./plugins.md)\n"
+            "numpy scikit-learn anthropic openai ollama pyyaml click python-dotenv packaging pypdf\n"
+            "pytest pytest-mock pre-commit detect-secrets\n"
+        ),
+        "pyproject.toml": (
+            'requires-python = ">=3.11"\n'
+            "[project.optional-dependencies]\n"
+            'libreevolve = "libreevolve.cli:cli"\n'
+        ),
+        ".pre-commit-config.yaml": "detect-secrets\n.secrets.baseline\n",
+        ".github/workflows/tests.yml": (
+            '"docs/**"\n"papers/**"\n"tests/**"\n'
+            "Run detect-secrets\n"
+            'python -m pytest tests/ -m "not integration" --tb=short\n'
+            "python -m libreevolve.tools.paper_manifest --root .\n"
+            'Path("tests").glob("test_*boundary.py")\n'
+            "Release Artifact Smoke\n"
+            "ANTHROPIC_API_KEY is not configured; skipping integration tests.\n"
+        ),
+        "README.md": "operational details belong in `docs/`\n",
+        "docs/README.md": "[Development](./development.md)\n",
+        "docs/release-checklist.md": "## Required Local Evidence\n",
+        "docs/run-artifacts.md": "release-smoke checklist exist\n",
+        "papers/README.md": (
+            "papers/release_checklist_documentation_boundary.json\n"
+            "papers/ci_workflow_coverage_boundary.json\n"
+        ),
+        "tests/test_agents_docs.py": (
+            "test_development_docs_track_detect_secrets_baseline_workflow\n"
+            "test_tests_workflow_covers_docs_papers_and_todo_changes\n"
+        ),
+        "docs/todo/readme.md": (
+            "Add development-guide workflow and convention drift evidence.\n"
+        ),
+    }
+    for relative_path, content in marker_files.items():
+        target = tmp_path / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+    sidecar = tmp_path / paper_manifest.DEVELOPMENT_WORKFLOW_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.development_workflow_boundary_record(tmp_path),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_development_workflow_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.development_workflow_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "development_workflow_semantic_drift_gate_ready"
+    record["missing_evidence"]["owner_review_signoff"] = "recorded"
+    sidecar = tmp_path / paper_manifest.DEVELOPMENT_WORKFLOW_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "development_workflow_boundary_claim_ready_overclaim" in codes
+    assert "development_workflow_boundary_invalid_boundary_status" in codes
+    assert (
+        "development_workflow_boundary_invalid_missing_evidence_owner_review_signoff"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_development_workflow_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "development_workflow_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_documentation_claim_inventory(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

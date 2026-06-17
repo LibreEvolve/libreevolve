@@ -2855,7 +2855,7 @@ Implemented:
   README contributor-gate inventory, README license inventory,
   README ignore-policy inventory, README provider-example matrix
   inventory, README CLI-provider guardrail inventory, development-guide
-  provider-example inventory, and focused
+  provider-example inventory, development-guide workflow inventory, and focused
   boundary-test evidence. It is not evidence of
   semantic documentation-claim verification, complete implementation-evidence
   mapping, stale completed-entry detection, generated alignment reports, or
@@ -2892,6 +2892,17 @@ Implemented:
   example. It is not live OpenAI/Anthropic model availability proof,
   credential-safe development provider smoke, account-specific model-id
   provenance, a CI development provider matrix, or owner review signoff.
+- `papers/development_workflow_boundary.json`: development-guide workflow
+  sidecar. It records static `docs/development.md` workflow markers for
+  Python launcher guidance, editable install, pre-commit setup, `.env`
+  behavior, test/pre-commit/diff/paper-manifest commands, CI scope,
+  release-checklist routing, dependency lists, repository conventions,
+  suggested contributor docs, `pyproject.toml`, `.pre-commit-config.yaml`,
+  GitHub Actions, focused agent-doc tests, and active TODO ownership. It is
+  not per-command executable transcripts, dependency-version semantic parity,
+  CI path-filter semantic proof, fresh-checkout paper-manifest transcripts,
+  release-smoke transcripts, repository-convention source mapping, or owner
+  review signoff.
 - `papers/backend_cli_provider_guardrail_boundary.json`: backend
   CLI-provider guardrail sidecar. It records the `docs/backends.md`
   provider-lane taxonomy, built-in SDK adapter wording, custom import-path

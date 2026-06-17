@@ -927,16 +927,24 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Existing tests check selected secret-scan wording, CI workflow shape,
     release-smoke details, and a small configuration-doc subset. The active
     development-guide provider TODO covers only the provider-backed example
-    run commands.
-  - Current gap: there is no page-specific inventory or drift validator that
-    maps each `docs/development.md` setup command, dependency list, CI claim,
+    run commands. `papers/development_workflow_boundary.json` now records a
+    page-specific static inventory for Python launcher guidance, editable
+    install, pre-commit setup, `.env` behavior, test/pre-commit/diff/paper-
+    manifest commands, CI scope, release-checklist routing, dependency lists,
+    repository conventions, suggested contributor docs, `pyproject.toml`,
+    `.pre-commit-config.yaml`, GitHub Actions, focused agent-doc tests, and
+    this active TODO owner.
+  - Current gap: the page-specific inventory is a static marker drift record,
+    not a semantic validator or executable transcript suite. It does not map
+    each `docs/development.md` setup command, dependency list, CI claim,
     paper-manifest instruction, release-smoke statement, secret-scan policy,
-    repository convention, and suggested-reading link to `pyproject.toml`,
-    pre-commit config, GitHub Actions, tests, paper-manifest code, README,
-    operational docs, sidecars, and active TODO owners. Changes to tooling,
+    repository convention, and suggested-reading link to a command transcript,
+    dependency-version semantic map, CI path-filter semantic proof, fresh-
+    checkout paper-manifest transcript, release-smoke transcript, repository-
+    convention source map, or owner review signoff. Changes to tooling,
     dependencies, workflow path filters, paper-cache semantics, or repository
-    conventions can leave the development guide stale without a focused
-    failure.
+    conventions can still leave the development guide semantically stale
+    without a complete focused failure.
   - Required result: add a development-guide evidence map and validation gate
     that parses the guide's commands and convention bullets, verifies
     tool/config/workflow/doc anchors, separates local contributor workflow

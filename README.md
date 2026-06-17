@@ -178,7 +178,11 @@ The bundled examples are intentionally small:
   are not paper-comparable evidence until repeated runs, source citations, and
   certification are added. Their hardening bundle helper emits generic
   negative-fixture, inventory, summary, and scope-validation evidence; it is
-  not a certified rediscovery result. The checked
+  not a certified rediscovery result. `sorting_network_9/run_contract.json`
+  records the clean-checkout Codex CLI invocation, auth expectations,
+  evaluator budget, expected artifacts, manifest checks, and skip/failure
+  modes for an authenticated experimental run, but it is still only a run
+  contract, not a successful rediscovery transcript. The checked
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   scope.
 

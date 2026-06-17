@@ -8460,16 +8460,21 @@ sidecars, tests, and active TODOs.
     contains `task_description.txt`, `metrics.yaml`, `validate.py`, the seed
     program, and a tracked secret-free `config.yaml` that encodes the intended
     `gpt-5.3-codex-spark` Codex CLI backend run. Focused config tests validate
-    that profile without requiring live Codex credentials.
-  - Current gap: a clean checkout can load the validator and config, but the
-    repository still lacks an executable clean-checkout run contract that names
-    the exact command, auth setup expectations, expected run artifacts, sample
-    manifest assertions, skip/failure modes, and post-run evidence bundle for
-    `sorting_network_9`. That means README/ROADMAP can truthfully claim a
-    bounded evaluator plus experimental run profile exists, but cannot yet
-    claim certified rediscovery evidence under the intended model/backend path.
-  - Required result: add tests/docs that prove the tracked `sorting_network_9`
-    profile can be invoked from a clean checkout with explicit backend/auth
-    placeholders, expected run artifacts, validator budget settings, sample
-    manifest checks, and overclaim wording that separates a runnable fixture
-    from certified rediscovery evidence.
+    that profile without requiring live Codex credentials. The tracked
+    `run_contract.json` now names the exact clean-checkout command, auth setup
+    expectations, validator budget, expected artifacts, manifest assertions,
+    skip/failure modes, and post-run evidence bundle, and tests compare it to
+    the fixture config and validator constants. README and ROADMAP point to
+    the contract while preserving the non-certified boundary.
+  - Current gap: the clean-checkout contract is now explicit and tested, but
+    no authenticated run transcript, manifest bundle, target-hit evidence,
+    repeated-seed matrix, source-citation sidecar, or paper certification row
+    has been committed for the intended `gpt-5.3-codex-spark` path. The
+    contract also does not yet have a standalone validator module that can
+    classify arbitrary future benchmark run contracts across examples.
+  - Required result: run the contract under the intended authenticated backend
+    and commit or separately preserve a redacted evidence bundle with manifest
+    assertions, transcript hashes, best-candidate hashes, failure summaries,
+    target-hit status, and repeated-run/certification metadata; generalize the
+    contract validator before claiming repository-wide benchmark-run profile
+    coverage.

@@ -1243,8 +1243,12 @@ by `papers/lineage_replay_boundary.json`.
   verify `2^8` and `2^9` Boolean inputs and target 19 and 25 comparators from
   valid 28- and 36-comparator seeds. Their hardening bundle helper now emits
   negative-fixture descriptors, detector logs, inventories, summaries, and
-  scope validation for both candidates. Add repeated-run, source-citation, and
-  paper-certification evidence before treating them as comparable results. The
+  scope validation for both candidates. `sorting_network_9/run_contract.json`
+  now records the clean-checkout Codex CLI command, auth expectations,
+  validator budget, expected artifacts, manifest assertions, and skip/failure
+  modes for an authenticated experimental run. Add repeated-run,
+  source-citation, and paper-certification evidence before treating them as
+  comparable results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   executable-candidate-only boundary.
   This remains the current lowest-risk realistic benchmark path because it has

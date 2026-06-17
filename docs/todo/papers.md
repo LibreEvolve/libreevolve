@@ -3206,9 +3206,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     fixture with exhaustive 9-input zero-one validation, a 36-comparator valid
     seed, and a checked known 25-comparator target. A helper now emits
     generic hardening reports, negative-fixture descriptors, inventories, and
-    scope validation for both sorting-network candidates. The paper ledger
-    still has no source-citation sidecar for the zero-one verifier or known
-    comparator targets, repeated-run evidence, committed run-tied hardening
+    scope validation for both sorting-network candidates. `sorting_network_9`
+    also has a tracked clean-checkout run contract for the intended
+    `gpt-5.3-codex-spark` Codex CLI lane, including auth expectations,
+    validator budget, expected artifacts, manifest assertions, skip/failure
+    modes, and post-run evidence bundle names. The paper ledger still has no
+    source-citation sidecar for the zero-one verifier or known comparator
+    targets, repeated-run evidence, committed run-tied hardening
     certification, best-candidate artifact hashes, failure/invalid-candidate
     summaries, target-hit-rate summaries, or certification row proving
     rediscovery under fixed evaluator/model/seed conditions. The committed

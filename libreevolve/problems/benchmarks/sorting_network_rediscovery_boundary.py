@@ -18,6 +18,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "valid_seed_network_provenance",
     "benchmark_scope_registry_records",
     "hardening_bundle_artifacts",
+    "clean_checkout_run_contract",
     "zero_one_principle_source_citation",
     "known_target_source_citations",
     "fixed_evaluator_model_budget_protocol",
@@ -32,7 +33,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "zero_one_principle_source_citation": "not_recorded_locally",
     "known_target_source_citations": "not_recorded_locally",
-    "fixed_evaluator_model_budget_protocol": "not_recorded_locally",
+    "fixed_evaluator_model_budget_protocol": (
+        "contract_recorded_no_authenticated_run_evidence"
+    ),
     "repeated_seed_run_tables": "not_recorded_locally",
     "target_hit_rate_summary": "not_recorded_locally",
     "run_tied_hardening_certification": "not_recorded_locally",
@@ -90,17 +93,22 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
                 "valid_seed_comparators": 36,
                 "known_target_comparators": 25,
                 "scope": "non_comparable_benchmark_candidate",
+                "clean_checkout_run_contract": (
+                    "libreevolve/problems/examples/sorting_network_9/"
+                    "run_contract.json"
+                ),
             },
         },
         "claim_boundary": (
             "This boundary records that LibreEvolve has executable 8- and "
             "9-input sorting-network benchmark candidates with exhaustive "
             "zero-one validation, valid baseline seeds, checked known target "
-            "networks, and helper-generated generic hardening artifacts, but "
-            "does not claim source-cited benchmark calibration, fixed-budget "
-            "repeated-run rediscovery, run-tied hardening certification, best "
-            "candidate artifact hashes, failure/invalid-candidate summaries, "
-            "paper-facing certification rows, or novel SOTA results."
+            "networks, helper-generated generic hardening artifacts, and a "
+            "clean-checkout run contract for sorting_network_9, but does not "
+            "claim source-cited benchmark calibration, fixed-budget repeated-"
+            "run rediscovery, run-tied hardening certification, best candidate "
+            "artifact hashes, failure/invalid-candidate summaries, paper-"
+            "facing certification rows, or novel SOTA results."
         ),
     }
 
@@ -263,6 +271,18 @@ def _validate_candidate_evidence(
         for key, expected_value in checks.items():
             if record.get(key) != expected_value:
                 issues.append(_issue(f"invalid_candidate_{problem_id}_{key}", f"{problem_id}.{key} must be {expected_value!r}"))
+        if problem_id == "sorting_network_9":
+            expected_contract = (
+                "libreevolve/problems/examples/sorting_network_9/"
+                "run_contract.json"
+            )
+            if record.get("clean_checkout_run_contract") != expected_contract:
+                issues.append(
+                    _issue(
+                        "invalid_candidate_sorting_network_9_clean_checkout_run_contract",
+                        f"sorting_network_9.clean_checkout_run_contract must be {expected_contract!r}",
+                    )
+                )
 
 
 def _issue(code: str, message: str) -> SortingNetworkRediscoveryBoundaryIssue:

@@ -1,3 +1,4 @@
+import json
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
@@ -375,6 +376,80 @@ def test_sorting_network_9_codex_config_is_secret_free_and_valid():
     assert backend["ignore_user_config"] is True
     assert backend["ignore_rules"] is True
     assert backend["ephemeral"] is True
+
+
+def test_sorting_network_9_clean_checkout_run_contract_matches_fixture():
+    contract_path = SORTING_NETWORK_9_EXAMPLE_DIR / "run_contract.json"
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    config = Config(
+        **yaml.safe_load(
+            (SORTING_NETWORK_9_EXAMPLE_DIR / "config.yaml").read_text(
+                encoding="utf-8"
+            )
+        )
+    )
+    validate = _load_sorting_network_9_validator()
+    backend = config.backends[0]
+
+    assert (
+        contract["schema"]
+        == "libreevolve.sorting_network_9_clean_checkout_run_contract.v1"
+    )
+    assert contract["status"] == "runnable_clean_checkout_contract_not_certified_rediscovery"
+    assert contract["problem_id"] == "sorting_network_9"
+    assert contract["problem_path"] == "libreevolve/problems/examples/sorting_network_9"
+    assert contract["config_path"].endswith("/sorting_network_9/config.yaml")
+    assert contract["seed_path"].endswith("/sorting_network_9/initial_programs/seed.py")
+    assert contract["validator_path"].endswith("/sorting_network_9/validate.py")
+    assert contract["command"] == [
+        "py",
+        "-3.12",
+        "-m",
+        "libreevolve",
+        "run",
+        contract["problem_path"],
+        "--run-name",
+        "sorting_network_9_codex_spark_clean_checkout",
+        "--max-generations",
+        "20",
+        "--proposals-per-generation",
+        "1",
+        "--overwrite",
+    ]
+    assert contract["auth_setup"]["backend_type"] == backend["type"]
+    assert contract["auth_setup"]["model"] == backend["model"]
+    assert contract["auth_setup"]["auth_name"] == backend["auth_name"]
+    assert contract["auth_setup"]["requires_local_codex_cli"] is True
+    assert contract["auth_setup"]["requires_authenticated_codex_session"] is True
+    assert "api_keys" in contract["auth_setup"]["secret_policy"]
+    assert contract["validator_budget"] == {
+        "wire_count": validate.WIRE_COUNT,
+        "binary_inputs_checked": validate.TOTAL_BINARY_INPUTS,
+        "seed_comparators": 36,
+        "target_comparators": validate.TARGET_COMPARATORS,
+        "max_comparators": validate.MAX_COMPARATORS,
+        "target_metric": "target_achieved",
+    }
+    assert {
+        "manifest.json",
+        "task_specification.json",
+        "history.jsonl",
+        "evaluator_results.jsonl",
+        "llm_calls.jsonl",
+        "prompt_history.jsonl",
+        "best.py",
+        "best_workspace",
+        "runs/codex_sn9_codexcli_transcripts",
+    } <= set(contract["expected_artifacts"])
+    assert any(
+        "config.backends[0].model is gpt-5.3-codex-spark" == assertion
+        for assertion in contract["manifest_assertions"]
+    )
+    assert "codex CLI missing from PATH" in contract["skip_or_failure_modes"]
+    assert "codex_cli_transcript_json_files" in contract["post_run_evidence_bundle"]
+    assert "does not certify AlphaEvolve-comparable rediscovery" in contract[
+        "claim_boundary"
+    ]
 
 
 def test_circle_packing_seed_is_valid_and_nontrivial():

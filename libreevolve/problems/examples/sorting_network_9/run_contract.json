@@ -1,0 +1,90 @@
+{
+  "schema": "libreevolve.sorting_network_9_clean_checkout_run_contract.v1",
+  "problem_id": "sorting_network_9",
+  "status": "runnable_clean_checkout_contract_not_certified_rediscovery",
+  "problem_path": "libreevolve/problems/examples/sorting_network_9",
+  "config_path": "libreevolve/problems/examples/sorting_network_9/config.yaml",
+  "seed_path": "libreevolve/problems/examples/sorting_network_9/initial_programs/seed.py",
+  "validator_path": "libreevolve/problems/examples/sorting_network_9/validate.py",
+  "command": [
+    "py",
+    "-3.12",
+    "-m",
+    "libreevolve",
+    "run",
+    "libreevolve/problems/examples/sorting_network_9",
+    "--run-name",
+    "sorting_network_9_codex_spark_clean_checkout",
+    "--max-generations",
+    "20",
+    "--proposals-per-generation",
+    "1",
+    "--overwrite"
+  ],
+  "auth_setup": {
+    "backend_type": "codex",
+    "model": "gpt-5.3-codex-spark",
+    "auth_name": "current",
+    "expected_auth_source": "default_codex_home_or_codex_auth_registry_current",
+    "requires_local_codex_cli": true,
+    "requires_authenticated_codex_session": true,
+    "secret_policy": "do_not_commit_codex_home_openai_api_keys_transcripts_or_runs"
+  },
+  "validator_budget": {
+    "wire_count": 9,
+    "binary_inputs_checked": 512,
+    "seed_comparators": 36,
+    "target_comparators": 25,
+    "max_comparators": 81,
+    "target_metric": "target_achieved"
+  },
+  "expected_run_dir": "runs/sorting_network_9_codex_spark_clean_checkout",
+  "expected_artifacts": [
+    "manifest.json",
+    "task_specification.json",
+    "history.jsonl",
+    "failure_history.jsonl",
+    "archive_events.jsonl",
+    "controller_budget_events.jsonl",
+    "evaluator_results.jsonl",
+    "llm_calls.jsonl",
+    "prompt_history.jsonl",
+    "prompt_current_binding_table.jsonl",
+    "prompt_prior_score_table.jsonl",
+    "best.py",
+    "best_workspace",
+    "runs/codex_sn9_codexcli_transcripts"
+  ],
+  "manifest_assertions": [
+    "schema_version is 1",
+    "config.problem_name is sorting_network_9_codex_spark_clean_checkout",
+    "config.backends[0].type is codex",
+    "config.backends[0].model is gpt-5.3-codex-spark",
+    "config.backends[0].auth_name is current",
+    "config.backends[0].sandbox is read-only",
+    "problem.name is sorting_network_9",
+    "problem.primary_metric is network_score",
+    "artifact_schema.jsonl_records includes history.jsonl and evaluator_results.jsonl",
+    "artifact_schema.non_jsonl_artifacts includes best.py and best_workspace",
+    "runtime.artifacts includes best.py and best_workspace after finalization",
+    "runtime.history.task_spec_artifact_resolution_report resolves task_specification.json"
+  ],
+  "skip_or_failure_modes": [
+    "codex CLI missing from PATH",
+    "Codex auth_name current cannot resolve to an authenticated local session",
+    "provider quota, policy, or network failure",
+    "no valid candidate improves the 36-comparator seed within the configured budget",
+    "no target_achieved candidate is found within the configured budget"
+  ],
+  "post_run_evidence_bundle": [
+    "manifest.json",
+    "history.jsonl",
+    "evaluator_results.jsonl",
+    "llm_calls.jsonl",
+    "prompt_history.jsonl",
+    "best.py",
+    "best_workspace",
+    "codex_cli_transcript_json_files"
+  ],
+  "claim_boundary": "This contract proves the tracked fixture has an explicit clean-checkout invocation, auth expectation, validator budget, expected artifacts, and post-run checks. It does not certify AlphaEvolve-comparable rediscovery, target hit rate, repeated-seed results, source-cited benchmark calibration, or paper-facing result readiness."
+}

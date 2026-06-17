@@ -215,3 +215,23 @@ def test_run_artifact_docs_list_current_schema_jsonl_streams():
     for stream in streams:
         assert f"`{stream}`" in readme
         assert f"`{stream}`" in run_artifacts
+
+
+def test_run_artifact_docs_list_schema_quarantine_streams():
+    run_artifacts = Path("docs/run-artifacts.md").read_text(encoding="utf-8")
+    schema = run_artifact_schema()
+    streams = sorted(schema["quarantine_jsonl_records"])
+
+    for stream in streams:
+        record = schema["quarantine_jsonl_records"][stream]
+        assert f"`{stream}`" in run_artifacts
+        assert record["source_stream"] in schema["jsonl_records"] or record[
+            "source_stream"
+        ] == "manifest.json"
+        assert record["diagnostic_record_schema"].startswith(
+            "libreevolve.strict_jsonl_quarantine"
+        )
+        assert (
+            record["retention_mode_field"]
+            == "config.quarantine_snapshot_retention_mode"
+        )

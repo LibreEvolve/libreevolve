@@ -630,6 +630,18 @@ fields, and current `history.jsonl`, `evaluator_results.jsonl`,
 those readers have legacy compatibility paths. True migration and full resume
 branching by schema remain open work.
 
+`manifest.json.artifact_schema.quarantine_jsonl_records` separately describes
+optional invalid/quarantine streams: `history_invalid.jsonl`,
+`failure_history_invalid.jsonl`, `archive_events_invalid.jsonl`,
+`controller_budget_events_invalid.jsonl`, `llm_calls_invalid.jsonl`,
+`prompt_history_invalid.jsonl`, and `manifest_invalid.jsonl`. Each entry maps
+the quarantine path back to its accepted source stream, source record schema,
+diagnostic record schema
+`libreevolve.strict_jsonl_quarantine_diagnostic.v1`, retention-mode field
+`config.quarantine_snapshot_retention_mode`, diagnostic fields, and lifecycle
+status. These streams are rejected-record diagnostics, not accepted candidate,
+prompt, controller, provider-call, or manifest state.
+
 Prompt-bearing configuration is retained as redacted, bounded effective config
 plus provenance metadata. `manifest.json.config.prompt_variants`,
 `manifest.json.config.prompt_format_options`,
@@ -870,9 +882,13 @@ Reusing an existing run directory is intentionally not treated as resume.
 Before a run starts, LibreEvolve checks the target run directory for known run
 artifacts: `history.jsonl`, `history_invalid.jsonl`, `failure_history.jsonl`,
 `failure_history_invalid.jsonl`, `archive_events.jsonl`,
-`archive_events_invalid.jsonl`, `prompt_history.jsonl`,
-`prompt_history_invalid.jsonl`, `manifest.json`, `manifest_invalid.jsonl`,
-`best.py`, `best_workspace/`, `evaluator_artifacts/`, and `plugin_artifacts/`.
+`archive_events_invalid.jsonl`, `controller_budget_events.jsonl`,
+`controller_budget_events_invalid.jsonl`, `evaluator_results.jsonl`,
+`llm_calls.jsonl`, `llm_calls_invalid.jsonl`, `prompt_history.jsonl`,
+`prompt_history_invalid.jsonl`, `prompt_current_binding_table.jsonl`,
+`prompt_prior_score_table.jsonl`, `task_specification.json`, `manifest.json`,
+`manifest_invalid.jsonl`, `best.py`, `best_workspace/`,
+`evaluator_artifacts/`, `plugin_artifacts/`, and `paper_artifacts/`.
 
 The default collision policy is `fail`: if any of those artifacts already
 exist, startup fails before appending new history or rewriting the manifest.
@@ -884,8 +900,9 @@ directory outside `log_dir`. The startup manifest payload is also serialized in
 memory before cleanup, so non-serializable or non-finite config/problem/
 provenance payloads fail without deleting old known artifacts. If any known
 artifact path is itself a symlink or Windows junction, including
-`best_workspace/`, `evaluator_artifacts/`, or `plugin_artifacts/`, overwrite
-startup rejects the run before deleting any artifact. Arbitrary files in the
+`best_workspace/`, `evaluator_artifacts/`, `plugin_artifacts/`, or
+`paper_artifacts/`, overwrite startup rejects the run before deleting any
+artifact. Arbitrary files in the
 run directory are left alone and are not enumerated as run-owned artifacts.
 Containment failures, existing-artifact failures, and linked-artifact cleanup
 failures display scoped path labels and stable path hashes instead of raw

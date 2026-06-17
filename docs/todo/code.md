@@ -8396,21 +8396,24 @@ sidecars, tests, and active TODOs.
     `manifest_invalid.jsonl` for collision detection and overwrite cleanup.
     `ProgramDatabase` and `PromptDatabase` write those streams through
     `append_quarantine_record()`, and `docs/run-artifacts.md` documents them
-    as optional quarantine outputs. Separately, `run_artifact_schema()` only
-    exposes accepted JSONL streams under `artifact_schema.jsonl_records`.
-  - Current gap: completed manifests do not publish a machine-readable schema
-    or source-stream mapping for the invalid/quarantine JSONL files that the
-    runtime can write and lifecycle-manage. Audit tools can therefore discover
-    accepted row schemas from `manifest.json.artifact_schema`, while needing
-    ad hoc documentation knowledge to interpret quarantine rows, source stream
-    ownership, retention modes, and cleanup expectations.
-  - Required result: extend the run artifact schema contract with
-    invalid/quarantine stream records that map each quarantine path to its
-    source stream, diagnostic record shape, retention policy fields, and
-    lifecycle status; add tests that manifest schemas, `RUN_ARTIFACT_NAMES`,
-    docs, and actual writer paths remain in sync; and keep README/ROADMAP
-    wording clear that quarantine streams are diagnostic evidence, not
-    accepted candidate or controller state.
+    as optional quarantine outputs. `run_artifact_schema()` now publishes
+    `artifact_schema.quarantine_jsonl_records`, mapping each invalid stream to
+    its source stream, source record schema, diagnostic schema
+    `libreevolve.strict_jsonl_quarantine_diagnostic.v1`, diagnostic fields,
+    retention-mode field, and lifecycle status. Focused tests verify the map is
+    present in real manifests and that the guide lists every schema-declared
+    quarantine stream.
+  - Current gap: quarantine stream schema coverage is present, but the broader
+    artifact schema is still incomplete for non-JSONL artifacts and for
+    per-writer/per-reader lifecycle linkage. The diagnostic record schema is
+    documented structurally; there is still no dedicated parser/validator for
+    every quarantine row shape across torn-append repair, serialization
+    failures, and manifest-write failures.
+  - Required result: add quarantine-row validators and connect quarantine
+    schemas to the broader generated-artifact inventory, restore/show
+    behavior, and non-JSONL artifact schema work so rejected diagnostics remain
+    auditable without being confused with accepted candidate or controller
+    state.
 
 - [ ] Add schema-level coverage for non-JSONL run artifacts.
   - Spec evidence: AlphaEvolve-style experiment directories should be

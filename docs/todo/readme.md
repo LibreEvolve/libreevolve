@@ -778,27 +778,26 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     Its artifact tree includes `task_specification.json`,
     `prompt_current_binding_table.jsonl`, and
     `prompt_prior_score_table.jsonl`, and later sections document
-    `paper_artifacts/...` source/exhibit outputs. The guide's
-    run-directory reuse section separately lists the known artifacts checked
-    for collision/overwrite cleanup but omits at least the standalone task
-    specification and prompt-table exports. The active README run-artifact
-    TODO covers only the short README output list and smoke presence, not the
-    full run-artifacts guide.
-    The current code/docs drift is two-sided: `RUN_ARTIFACT_NAMES` already
-    includes `task_specification.json`, `evaluator_results.jsonl`,
-    `controller_budget_events.jsonl`, `controller_budget_events_invalid.jsonl`,
-    `llm_calls.jsonl`, `llm_calls_invalid.jsonl`, the prompt-table exports,
-    and `paper_artifacts`, but the guide's prose list of collision-checked
-    artifacts omits some of those names.
+    `paper_artifacts/...` source/exhibit outputs. The guide's run-directory
+    reuse section now lists the known artifacts checked for collision/
+    overwrite cleanup, including task specification, prompt-table exports,
+    invalid/quarantine streams, controller/LLM streams, and `paper_artifacts`.
+    It also documents `manifest.json.artifact_schema.quarantine_jsonl_records`
+    for invalid/quarantine stream schema mapping. The active README
+    run-artifact TODO covers only the short README output list and smoke
+    presence, not the full run-artifacts guide.
+    The previous prompt-table cleanup mismatch and collision-list omission are
+    resolved, but the guide still needs a page-specific semantic evidence map
+    for all writers, readers, schemas, restore behavior, and inspection
+    behavior.
   - Current gap: the committed structural inventory does not yet map each
     documented artifact, schema field, invalid stream, restore command,
     overwrite rule, show behavior, and AlphaEvolve-facing limitation to
     writer/reader code, tests, manifest sidecars, and active TODO owners. New
     runtime reports, artifact streams,
     restore semantics, quarantine policies, collision/overwrite cleanup lists,
-    or inspection behavior can drift without a page-specific validation
-    failure. Current guide prose can therefore present one artifact set in the
-    tree and another in lifecycle policy without a focused docs failure.
+    or inspection behavior can drift without a page-specific semantic
+    validation failure.
   - Required result: add a run-artifacts evidence map and validation gate that
     inventories documented artifact files and runtime report claims, verifies
     code/test/schema anchors and optional-versus-required status, separates

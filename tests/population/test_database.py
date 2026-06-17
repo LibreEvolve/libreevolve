@@ -12,6 +12,8 @@ from libreevolve.core.artifact_schema import (
     HISTORY_RECORD_SCHEMA,
     LLM_CALL_RECORD_SCHEMA,
     LLM_REWARD_RECORD_SCHEMA,
+    PROMPT_HISTORY_RECORD_SCHEMA,
+    QUARANTINE_RECORD_SCHEMA,
     RUN_MANIFEST_SCHEMA,
 )
 from libreevolve.core.config import Config, ConfigError
@@ -2828,6 +2830,44 @@ def test_run_artifacts_include_current_schema_markers():
         manifest["artifact_schema"]["jsonl_records"]["archive_events.jsonl"]
         == ARCHIVE_EVENT_RECORD_SCHEMA
     )
+    quarantine_schema = manifest["artifact_schema"]["quarantine_jsonl_records"]
+    assert sorted(quarantine_schema) == [
+        "archive_events_invalid.jsonl",
+        "controller_budget_events_invalid.jsonl",
+        "failure_history_invalid.jsonl",
+        "history_invalid.jsonl",
+        "llm_calls_invalid.jsonl",
+        "manifest_invalid.jsonl",
+        "prompt_history_invalid.jsonl",
+    ]
+    assert quarantine_schema["history_invalid.jsonl"] == {
+        "source_stream": "history.jsonl",
+        "source_record_schema": HISTORY_RECORD_SCHEMA,
+        "diagnostic_record_schema": QUARANTINE_RECORD_SCHEMA,
+        "diagnostic_fields": {
+            "error": "exception class name",
+            "message": "bounded redacted serialization or repair diagnostic",
+            "record_type": "original record Python type label",
+            "record_repr_retention": "redacted|hash_only|off",
+            "record_repr": "optional retained rejected-record snapshot",
+            "record_repr_truncated": "optional retained snapshot truncation flag",
+            "record_repr_error": "optional safe snapshot-construction diagnostic",
+        },
+        "retention_mode_field": "config.quarantine_snapshot_retention_mode",
+        "lifecycle_status": "optional_diagnostic_lifecycle_managed",
+    }
+    assert (
+        quarantine_schema["prompt_history_invalid.jsonl"]["source_record_schema"]
+        == PROMPT_HISTORY_RECORD_SCHEMA
+    )
+    assert (
+        quarantine_schema["manifest_invalid.jsonl"]["source_record_schema"]
+        == RUN_MANIFEST_SCHEMA
+    )
+    assert quarantine_schema["llm_calls_invalid.jsonl"]["source_record_schema"] == {
+        "call": LLM_CALL_RECORD_SCHEMA,
+        "reward": LLM_REWARD_RECORD_SCHEMA,
+    }
     assert history["schema_version"] == ARTIFACT_SCHEMA_VERSION
     assert history["record_schema"] == HISTORY_RECORD_SCHEMA
     assert failure["record_schema"] == FAILURE_RECORD_SCHEMA

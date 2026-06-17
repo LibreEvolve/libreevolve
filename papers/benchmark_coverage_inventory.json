@@ -388,7 +388,7 @@
     "tests/test_agents_docs.py"
   ],
   "unique_local_artifact_count": 207,
-  "local_artifact_mention_record_count": 240,
+  "local_artifact_mention_record_count": 241,
   "missing_local_artifact_paths": [],
   "artifact_existence_status": "all_referenced_local_artifacts_present",
   "limitation_bullet_count": 163,
@@ -9637,14 +9637,14 @@
       "coverage_id": "implemented_benchmark_083",
       "bullet_ordinal": 83,
       "summary_sha256": "958ef81eb2a66f57e4189b132a7b5616f715ae80d2a2bd961c0d24ba13837be4",
-      "body_sha256": "76f41f6585ded86d580ecd0dc35c4c1060a41eee85e04674f1dac164d7dd0130",
+      "body_sha256": "a26d27e19ce517d37660b6c1c5e1016de33f7d068351bcecfa2f9b520b6ecd40",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
         "line_start": 3046,
-        "line_end": 3053,
+        "line_end": 3054,
         "file_text_char_start": 255148,
-        "file_text_char_end": 255757
+        "file_text_char_end": 255807
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -9684,6 +9684,21 @@
             "file_text_char_start": 255334,
             "file_text_char_end": 255361
           }
+        },
+        {
+          "path": "papers/source_rights.json",
+          "bullet_text_char_start": 491,
+          "bullet_text_char_end": 518,
+          "source_span": {
+            "path": "papers/README.md",
+            "section": "Benchmark coverage decisions",
+            "line_start": 3052,
+            "line_end": 3052,
+            "bullet_text_char_start": 491,
+            "bullet_text_char_end": 518,
+            "file_text_char_start": 255639,
+            "file_text_char_end": 255666
+          }
         }
       ],
       "local_artifact_records": [
@@ -9704,17 +9719,17 @@
       "limitation_signal_records": [
         {
           "term": "not",
-          "bullet_text_char_start": 432,
-          "bullet_text_char_end": 435,
+          "bullet_text_char_start": 526,
+          "bullet_text_char_end": 529,
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3051,
-            "line_end": 3051,
-            "bullet_text_char_start": 432,
-            "bullet_text_char_end": 435,
-            "file_text_char_start": 255580,
-            "file_text_char_end": 255583
+            "line_start": 3052,
+            "line_end": 3052,
+            "bullet_text_char_start": 526,
+            "bullet_text_char_end": 529,
+            "file_text_char_start": 255674,
+            "file_text_char_end": 255677
           }
         }
       ],
@@ -9736,10 +9751,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3054,
-        "line_end": 3063,
-        "file_text_char_start": 255758,
-        "file_text_char_end": 256479
+        "line_start": 3055,
+        "line_end": 3064,
+        "file_text_char_start": 255808,
+        "file_text_char_end": 256529
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -9756,12 +9771,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3054,
-            "line_end": 3054,
+            "line_start": 3055,
+            "line_end": 3055,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 45,
-            "file_text_char_start": 255760,
-            "file_text_char_end": 255803
+            "file_text_char_start": 255810,
+            "file_text_char_end": 255853
           }
         }
       ],
@@ -9783,12 +9798,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3060,
-            "line_end": 3060,
+            "line_start": 3061,
+            "line_end": 3061,
             "bullet_text_char_start": 528,
             "bullet_text_char_end": 531,
-            "file_text_char_start": 256286,
-            "file_text_char_end": 256289
+            "file_text_char_start": 256336,
+            "file_text_char_end": 256339
           }
         },
         {
@@ -9798,12 +9813,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3061,
-            "line_end": 3061,
+            "line_start": 3062,
+            "line_end": 3062,
             "bullet_text_char_start": 576,
             "bullet_text_char_end": 579,
-            "file_text_char_start": 256334,
-            "file_text_char_end": 256337
+            "file_text_char_start": 256384,
+            "file_text_char_end": 256387
           }
         }
       ],
@@ -9825,10 +9840,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3064,
-        "line_end": 3070,
-        "file_text_char_start": 256480,
-        "file_text_char_end": 257009
+        "line_start": 3065,
+        "line_end": 3071,
+        "file_text_char_start": 256530,
+        "file_text_char_end": 257059
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -9845,12 +9860,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3064,
-            "line_end": 3064,
+            "line_start": 3065,
+            "line_end": 3065,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 49,
-            "file_text_char_start": 256482,
-            "file_text_char_end": 256529
+            "file_text_char_start": 256532,
+            "file_text_char_end": 256579
           }
         }
       ],
@@ -9872,12 +9887,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3065,
-            "line_end": 3065,
+            "line_start": 3066,
+            "line_end": 3066,
             "bullet_text_char_start": 102,
             "bullet_text_char_end": 104,
-            "file_text_char_start": 256582,
-            "file_text_char_end": 256584
+            "file_text_char_start": 256632,
+            "file_text_char_end": 256634
           }
         },
         {
@@ -9887,12 +9902,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3068,
-            "line_end": 3068,
+            "line_start": 3069,
+            "line_end": 3069,
             "bullet_text_char_start": 367,
             "bullet_text_char_end": 369,
-            "file_text_char_start": 256847,
-            "file_text_char_end": 256849
+            "file_text_char_start": 256897,
+            "file_text_char_end": 256899
           }
         },
         {
@@ -9902,12 +9917,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3069,
-            "line_end": 3069,
+            "line_start": 3070,
+            "line_end": 3070,
             "bullet_text_char_start": 387,
             "bullet_text_char_end": 390,
-            "file_text_char_start": 256867,
-            "file_text_char_end": 256870
+            "file_text_char_start": 256917,
+            "file_text_char_end": 256920
           }
         },
         {
@@ -9917,12 +9932,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3069,
-            "line_end": 3069,
+            "line_start": 3070,
+            "line_end": 3070,
             "bullet_text_char_start": 399,
             "bullet_text_char_end": 402,
-            "file_text_char_start": 256879,
-            "file_text_char_end": 256882
+            "file_text_char_start": 256929,
+            "file_text_char_end": 256932
           }
         }
       ],
@@ -9946,10 +9961,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3071,
-        "line_end": 3077,
-        "file_text_char_start": 257010,
-        "file_text_char_end": 257487
+        "line_start": 3072,
+        "line_end": 3078,
+        "file_text_char_start": 257060,
+        "file_text_char_end": 257537
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -9966,12 +9981,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3071,
-            "line_end": 3071,
+            "line_start": 3072,
+            "line_end": 3072,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 45,
-            "file_text_char_start": 257012,
-            "file_text_char_end": 257055
+            "file_text_char_start": 257062,
+            "file_text_char_end": 257105
           }
         }
       ],
@@ -9993,12 +10008,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3075,
-            "line_end": 3075,
+            "line_start": 3076,
+            "line_end": 3076,
             "bullet_text_char_start": 317,
             "bullet_text_char_end": 320,
-            "file_text_char_start": 257327,
-            "file_text_char_end": 257330
+            "file_text_char_start": 257377,
+            "file_text_char_end": 257380
           }
         }
       ],
@@ -10020,10 +10035,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3078,
-        "line_end": 3085,
-        "file_text_char_start": 257488,
-        "file_text_char_end": 258048
+        "line_start": 3079,
+        "line_end": 3086,
+        "file_text_char_start": 257538,
+        "file_text_char_end": 258098
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10040,12 +10055,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3078,
-            "line_end": 3078,
+            "line_start": 3079,
+            "line_end": 3079,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 45,
-            "file_text_char_start": 257490,
-            "file_text_char_end": 257533
+            "file_text_char_start": 257540,
+            "file_text_char_end": 257583
           }
         }
       ],
@@ -10067,12 +10082,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3083,
-            "line_end": 3083,
+            "line_start": 3084,
+            "line_end": 3084,
             "bullet_text_char_start": 424,
             "bullet_text_char_end": 427,
-            "file_text_char_start": 257912,
-            "file_text_char_end": 257915
+            "file_text_char_start": 257962,
+            "file_text_char_end": 257965
           }
         }
       ],
@@ -10094,10 +10109,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3086,
-        "line_end": 3095,
-        "file_text_char_start": 258049,
-        "file_text_char_end": 258788
+        "line_start": 3087,
+        "line_end": 3096,
+        "file_text_char_start": 258099,
+        "file_text_char_end": 258838
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10114,12 +10129,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3086,
-            "line_end": 3086,
+            "line_start": 3087,
+            "line_end": 3087,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 55,
-            "file_text_char_start": 258051,
-            "file_text_char_end": 258104
+            "file_text_char_start": 258101,
+            "file_text_char_end": 258154
           }
         }
       ],
@@ -10141,12 +10156,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3092,
-            "line_end": 3092,
+            "line_start": 3093,
+            "line_end": 3093,
             "bullet_text_char_start": 523,
             "bullet_text_char_end": 526,
-            "file_text_char_start": 258572,
-            "file_text_char_end": 258575
+            "file_text_char_start": 258622,
+            "file_text_char_end": 258625
           }
         }
       ],
@@ -10168,10 +10183,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3096,
-        "line_end": 3105,
-        "file_text_char_start": 258789,
-        "file_text_char_end": 259539
+        "line_start": 3097,
+        "line_end": 3106,
+        "file_text_char_start": 258839,
+        "file_text_char_end": 259589
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10188,12 +10203,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3096,
-            "line_end": 3096,
+            "line_start": 3097,
+            "line_end": 3097,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 54,
-            "file_text_char_start": 258791,
-            "file_text_char_end": 258843
+            "file_text_char_start": 258841,
+            "file_text_char_end": 258893
           }
         }
       ],
@@ -10215,12 +10230,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3103,
-            "line_end": 3103,
+            "line_start": 3104,
+            "line_end": 3104,
             "bullet_text_char_start": 556,
             "bullet_text_char_end": 559,
-            "file_text_char_start": 259345,
-            "file_text_char_end": 259348
+            "file_text_char_start": 259395,
+            "file_text_char_end": 259398
           }
         }
       ],
@@ -10242,10 +10257,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3106,
-        "line_end": 3113,
-        "file_text_char_start": 259540,
-        "file_text_char_end": 260120
+        "line_start": 3107,
+        "line_end": 3114,
+        "file_text_char_start": 259590,
+        "file_text_char_end": 260170
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10262,12 +10277,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3106,
-            "line_end": 3106,
+            "line_start": 3107,
+            "line_end": 3107,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 49,
-            "file_text_char_start": 259542,
-            "file_text_char_end": 259589
+            "file_text_char_start": 259592,
+            "file_text_char_end": 259639
           }
         }
       ],
@@ -10289,12 +10304,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3111,
-            "line_end": 3111,
+            "line_start": 3112,
+            "line_end": 3112,
             "bullet_text_char_start": 399,
             "bullet_text_char_end": 402,
-            "file_text_char_start": 259939,
-            "file_text_char_end": 259942
+            "file_text_char_start": 259989,
+            "file_text_char_end": 259992
           }
         }
       ],
@@ -10316,10 +10331,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3114,
-        "line_end": 3120,
-        "file_text_char_start": 260121,
-        "file_text_char_end": 260605
+        "line_start": 3115,
+        "line_end": 3121,
+        "file_text_char_start": 260171,
+        "file_text_char_end": 260655
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10336,12 +10351,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3114,
-            "line_end": 3114,
+            "line_start": 3115,
+            "line_end": 3115,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 260123,
-            "file_text_char_end": 260174
+            "file_text_char_start": 260173,
+            "file_text_char_end": 260224
           }
         }
       ],
@@ -10363,12 +10378,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3117,
-            "line_end": 3117,
+            "line_start": 3118,
+            "line_end": 3118,
             "bullet_text_char_start": 229,
             "bullet_text_char_end": 236,
-            "file_text_char_start": 260350,
-            "file_text_char_end": 260357
+            "file_text_char_start": 260400,
+            "file_text_char_end": 260407
           }
         },
         {
@@ -10378,12 +10393,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3118,
-            "line_end": 3118,
+            "line_start": 3119,
+            "line_end": 3119,
             "bullet_text_char_start": 346,
             "bullet_text_char_end": 349,
-            "file_text_char_start": 260467,
-            "file_text_char_end": 260470
+            "file_text_char_start": 260517,
+            "file_text_char_end": 260520
           }
         }
       ],
@@ -10406,10 +10421,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3121,
-        "line_end": 3130,
-        "file_text_char_start": 260606,
-        "file_text_char_end": 261262
+        "line_start": 3122,
+        "line_end": 3131,
+        "file_text_char_start": 260656,
+        "file_text_char_end": 261312
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10428,12 +10443,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3121,
-            "line_end": 3121,
+            "line_start": 3122,
+            "line_end": 3122,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 56,
-            "file_text_char_start": 260608,
-            "file_text_char_end": 260662
+            "file_text_char_start": 260658,
+            "file_text_char_end": 260712
           }
         },
         {
@@ -10443,12 +10458,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3122,
-            "line_end": 3122,
+            "line_start": 3123,
+            "line_end": 3123,
             "bullet_text_char_start": 112,
             "bullet_text_char_end": 139,
-            "file_text_char_start": 260718,
-            "file_text_char_end": 260745
+            "file_text_char_start": 260768,
+            "file_text_char_end": 260795
           }
         },
         {
@@ -10458,12 +10473,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3125,
-            "line_end": 3125,
+            "line_start": 3126,
+            "line_end": 3126,
             "bullet_text_char_start": 282,
             "bullet_text_char_end": 332,
-            "file_text_char_start": 260888,
-            "file_text_char_end": 260938
+            "file_text_char_start": 260938,
+            "file_text_char_end": 260988
           }
         }
       ],
@@ -10495,12 +10510,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3128,
-            "line_end": 3128,
+            "line_start": 3129,
+            "line_end": 3129,
             "bullet_text_char_start": 541,
             "bullet_text_char_end": 544,
-            "file_text_char_start": 261147,
-            "file_text_char_end": 261150
+            "file_text_char_start": 261197,
+            "file_text_char_end": 261200
           }
         }
       ],
@@ -10522,10 +10537,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3131,
-        "line_end": 3136,
-        "file_text_char_start": 261263,
-        "file_text_char_end": 261712
+        "line_start": 3132,
+        "line_end": 3137,
+        "file_text_char_start": 261313,
+        "file_text_char_end": 261762
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10542,12 +10557,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3131,
-            "line_end": 3131,
+            "line_start": 3132,
+            "line_end": 3132,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 45,
-            "file_text_char_start": 261265,
-            "file_text_char_end": 261308
+            "file_text_char_start": 261315,
+            "file_text_char_end": 261358
           }
         }
       ],
@@ -10569,12 +10584,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3136,
-            "line_end": 3136,
+            "line_start": 3137,
+            "line_end": 3137,
             "bullet_text_char_start": 384,
             "bullet_text_char_end": 391,
-            "file_text_char_start": 261647,
-            "file_text_char_end": 261654
+            "file_text_char_start": 261697,
+            "file_text_char_end": 261704
           }
         }
       ],
@@ -10596,10 +10611,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3137,
-        "line_end": 3143,
-        "file_text_char_start": 261713,
-        "file_text_char_end": 262199
+        "line_start": 3138,
+        "line_end": 3144,
+        "file_text_char_start": 261763,
+        "file_text_char_end": 262249
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10616,12 +10631,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3137,
-            "line_end": 3137,
+            "line_start": 3138,
+            "line_end": 3138,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 42,
-            "file_text_char_start": 261715,
-            "file_text_char_end": 261755
+            "file_text_char_start": 261765,
+            "file_text_char_end": 261805
           }
         }
       ],
@@ -10643,12 +10658,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3140,
-            "line_end": 3140,
+            "line_start": 3141,
+            "line_end": 3141,
             "bullet_text_char_start": 247,
             "bullet_text_char_end": 250,
-            "file_text_char_start": 261960,
-            "file_text_char_end": 261963
+            "file_text_char_start": 262010,
+            "file_text_char_end": 262013
           }
         }
       ],
@@ -10670,10 +10685,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3144,
-        "line_end": 3150,
-        "file_text_char_start": 262200,
-        "file_text_char_end": 262692
+        "line_start": 3145,
+        "line_end": 3151,
+        "file_text_char_start": 262250,
+        "file_text_char_end": 262742
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10690,12 +10705,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3144,
-            "line_end": 3144,
+            "line_start": 3145,
+            "line_end": 3145,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 54,
-            "file_text_char_start": 262202,
-            "file_text_char_end": 262254
+            "file_text_char_start": 262252,
+            "file_text_char_end": 262304
           }
         }
       ],
@@ -10717,12 +10732,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3149,
-            "line_end": 3149,
+            "line_start": 3150,
+            "line_end": 3150,
             "bullet_text_char_start": 387,
             "bullet_text_char_end": 390,
-            "file_text_char_start": 262587,
-            "file_text_char_end": 262590
+            "file_text_char_start": 262637,
+            "file_text_char_end": 262640
           }
         }
       ],
@@ -10744,10 +10759,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3151,
-        "line_end": 3159,
-        "file_text_char_start": 262693,
-        "file_text_char_end": 263294
+        "line_start": 3152,
+        "line_end": 3160,
+        "file_text_char_start": 262743,
+        "file_text_char_end": 263344
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10764,12 +10779,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3151,
-            "line_end": 3151,
+            "line_start": 3152,
+            "line_end": 3152,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 47,
-            "file_text_char_start": 262695,
-            "file_text_char_end": 262740
+            "file_text_char_start": 262745,
+            "file_text_char_end": 262790
           }
         }
       ],
@@ -10791,12 +10806,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3154,
-            "line_end": 3154,
+            "line_start": 3155,
+            "line_end": 3155,
             "bullet_text_char_start": 287,
             "bullet_text_char_end": 290,
-            "file_text_char_start": 262980,
-            "file_text_char_end": 262983
+            "file_text_char_start": 263030,
+            "file_text_char_end": 263033
           }
         }
       ],
@@ -10818,10 +10833,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3160,
-        "line_end": 3166,
-        "file_text_char_start": 263295,
-        "file_text_char_end": 263778
+        "line_start": 3161,
+        "line_end": 3167,
+        "file_text_char_start": 263345,
+        "file_text_char_end": 263828
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10838,12 +10853,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3160,
-            "line_end": 3160,
+            "line_start": 3161,
+            "line_end": 3161,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 46,
-            "file_text_char_start": 263297,
-            "file_text_char_end": 263341
+            "file_text_char_start": 263347,
+            "file_text_char_end": 263391
           }
         }
       ],
@@ -10865,12 +10880,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3163,
-            "line_end": 3163,
+            "line_start": 3164,
+            "line_end": 3164,
             "bullet_text_char_start": 249,
             "bullet_text_char_end": 252,
-            "file_text_char_start": 263544,
-            "file_text_char_end": 263547
+            "file_text_char_start": 263594,
+            "file_text_char_end": 263597
           }
         }
       ],
@@ -10892,10 +10907,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3167,
-        "line_end": 3177,
-        "file_text_char_start": 263779,
-        "file_text_char_end": 264556
+        "line_start": 3168,
+        "line_end": 3178,
+        "file_text_char_start": 263829,
+        "file_text_char_end": 264606
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10912,12 +10927,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3167,
-            "line_end": 3167,
+            "line_start": 3168,
+            "line_end": 3168,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 43,
-            "file_text_char_start": 263781,
-            "file_text_char_end": 263822
+            "file_text_char_start": 263831,
+            "file_text_char_end": 263872
           }
         }
       ],
@@ -10939,12 +10954,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3172,
-            "line_end": 3172,
+            "line_start": 3173,
+            "line_end": 3173,
             "bullet_text_char_start": 379,
             "bullet_text_char_end": 382,
-            "file_text_char_start": 264158,
-            "file_text_char_end": 264161
+            "file_text_char_start": 264208,
+            "file_text_char_end": 264211
           }
         }
       ],
@@ -10966,10 +10981,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3178,
-        "line_end": 3184,
-        "file_text_char_start": 264557,
-        "file_text_char_end": 265013
+        "line_start": 3179,
+        "line_end": 3185,
+        "file_text_char_start": 264607,
+        "file_text_char_end": 265063
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -10986,12 +11001,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3178,
-            "line_end": 3178,
+            "line_start": 3179,
+            "line_end": 3179,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 50,
-            "file_text_char_start": 264559,
-            "file_text_char_end": 264607
+            "file_text_char_start": 264609,
+            "file_text_char_end": 264657
           }
         }
       ],
@@ -11013,12 +11028,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3182,
-            "line_end": 3182,
+            "line_start": 3183,
+            "line_end": 3183,
             "bullet_text_char_start": 370,
             "bullet_text_char_end": 373,
-            "file_text_char_start": 264927,
-            "file_text_char_end": 264930
+            "file_text_char_start": 264977,
+            "file_text_char_end": 264980
           }
         }
       ],
@@ -11040,10 +11055,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3185,
-        "line_end": 3193,
-        "file_text_char_start": 265014,
-        "file_text_char_end": 265650
+        "line_start": 3186,
+        "line_end": 3194,
+        "file_text_char_start": 265064,
+        "file_text_char_end": 265700
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11061,12 +11076,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3185,
-            "line_end": 3185,
+            "line_start": 3186,
+            "line_end": 3186,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 56,
-            "file_text_char_start": 265016,
-            "file_text_char_end": 265070
+            "file_text_char_start": 265066,
+            "file_text_char_end": 265120
           }
         },
         {
@@ -11076,12 +11091,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3187,
-            "line_end": 3187,
+            "line_start": 3188,
+            "line_end": 3188,
             "bullet_text_char_start": 158,
             "bullet_text_char_end": 208,
-            "file_text_char_start": 265172,
-            "file_text_char_end": 265222
+            "file_text_char_start": 265222,
+            "file_text_char_end": 265272
           }
         }
       ],
@@ -11108,12 +11123,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3190,
-            "line_end": 3190,
+            "line_start": 3191,
+            "line_end": 3191,
             "bullet_text_char_start": 405,
             "bullet_text_char_end": 408,
-            "file_text_char_start": 265419,
-            "file_text_char_end": 265422
+            "file_text_char_start": 265469,
+            "file_text_char_end": 265472
           }
         },
         {
@@ -11123,12 +11138,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3192,
-            "line_end": 3192,
+            "line_start": 3193,
+            "line_end": 3193,
             "bullet_text_char_start": 568,
             "bullet_text_char_end": 575,
-            "file_text_char_start": 265582,
-            "file_text_char_end": 265589
+            "file_text_char_start": 265632,
+            "file_text_char_end": 265639
           }
         }
       ],
@@ -11151,10 +11166,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3194,
-        "line_end": 3203,
-        "file_text_char_start": 265651,
-        "file_text_char_end": 266397
+        "line_start": 3195,
+        "line_end": 3204,
+        "file_text_char_start": 265701,
+        "file_text_char_end": 266447
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11171,12 +11186,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3194,
-            "line_end": 3194,
+            "line_start": 3195,
+            "line_end": 3195,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 265653,
-            "file_text_char_end": 265704
+            "file_text_char_start": 265703,
+            "file_text_char_end": 265754
           }
         }
       ],
@@ -11198,12 +11213,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3199,
-            "line_end": 3199,
+            "line_start": 3200,
+            "line_end": 3200,
             "bullet_text_char_start": 439,
             "bullet_text_char_end": 442,
-            "file_text_char_start": 266090,
-            "file_text_char_end": 266093
+            "file_text_char_start": 266140,
+            "file_text_char_end": 266143
           }
         },
         {
@@ -11213,12 +11228,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3202,
-            "line_end": 3202,
+            "line_start": 3203,
+            "line_end": 3203,
             "bullet_text_char_start": 613,
             "bullet_text_char_end": 620,
-            "file_text_char_start": 266264,
-            "file_text_char_end": 266271
+            "file_text_char_start": 266314,
+            "file_text_char_end": 266321
           }
         }
       ],
@@ -11241,10 +11256,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3204,
-        "line_end": 3209,
-        "file_text_char_start": 266398,
-        "file_text_char_end": 266817
+        "line_start": 3205,
+        "line_end": 3210,
+        "file_text_char_start": 266448,
+        "file_text_char_end": 266867
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11261,12 +11276,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3204,
-            "line_end": 3204,
+            "line_start": 3205,
+            "line_end": 3205,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 59,
-            "file_text_char_start": 266400,
-            "file_text_char_end": 266457
+            "file_text_char_start": 266450,
+            "file_text_char_end": 266507
           }
         }
       ],
@@ -11288,12 +11303,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3207,
-            "line_end": 3207,
+            "line_start": 3208,
+            "line_end": 3208,
             "bullet_text_char_start": 271,
             "bullet_text_char_end": 278,
-            "file_text_char_start": 266669,
-            "file_text_char_end": 266676
+            "file_text_char_start": 266719,
+            "file_text_char_end": 266726
           }
         },
         {
@@ -11303,12 +11318,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3208,
-            "line_end": 3208,
+            "line_start": 3209,
+            "line_end": 3209,
             "bullet_text_char_start": 349,
             "bullet_text_char_end": 352,
-            "file_text_char_start": 266747,
-            "file_text_char_end": 266750
+            "file_text_char_start": 266797,
+            "file_text_char_end": 266800
           }
         }
       ],
@@ -11331,10 +11346,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3210,
-        "line_end": 3216,
-        "file_text_char_start": 266818,
-        "file_text_char_end": 267311
+        "line_start": 3211,
+        "line_end": 3217,
+        "file_text_char_start": 266868,
+        "file_text_char_end": 267361
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11351,12 +11366,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3210,
-            "line_end": 3210,
+            "line_start": 3211,
+            "line_end": 3211,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 55,
-            "file_text_char_start": 266820,
-            "file_text_char_end": 266873
+            "file_text_char_start": 266870,
+            "file_text_char_end": 266923
           }
         }
       ],
@@ -11378,12 +11393,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3214,
-            "line_end": 3214,
+            "line_start": 3215,
+            "line_end": 3215,
             "bullet_text_char_start": 353,
             "bullet_text_char_end": 356,
-            "file_text_char_start": 267171,
-            "file_text_char_end": 267174
+            "file_text_char_start": 267221,
+            "file_text_char_end": 267224
           }
         },
         {
@@ -11393,12 +11408,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3214,
-            "line_end": 3214,
+            "line_start": 3215,
+            "line_end": 3215,
             "bullet_text_char_start": 363,
             "bullet_text_char_end": 366,
-            "file_text_char_start": 267181,
-            "file_text_char_end": 267184
+            "file_text_char_start": 267231,
+            "file_text_char_end": 267234
           }
         }
       ],
@@ -11421,10 +11436,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3217,
-        "line_end": 3224,
-        "file_text_char_start": 267312,
-        "file_text_char_end": 267903
+        "line_start": 3218,
+        "line_end": 3225,
+        "file_text_char_start": 267362,
+        "file_text_char_end": 267953
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11441,12 +11456,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3217,
-            "line_end": 3217,
+            "line_start": 3218,
+            "line_end": 3218,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 47,
-            "file_text_char_start": 267314,
-            "file_text_char_end": 267359
+            "file_text_char_start": 267364,
+            "file_text_char_end": 267409
           }
         }
       ],
@@ -11468,12 +11483,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3223,
-            "line_end": 3223,
+            "line_start": 3224,
+            "line_end": 3224,
             "bullet_text_char_start": 509,
             "bullet_text_char_end": 512,
-            "file_text_char_start": 267821,
-            "file_text_char_end": 267824
+            "file_text_char_start": 267871,
+            "file_text_char_end": 267874
           }
         },
         {
@@ -11483,12 +11498,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3223,
-            "line_end": 3223,
+            "line_start": 3224,
+            "line_end": 3224,
             "bullet_text_char_start": 519,
             "bullet_text_char_end": 522,
-            "file_text_char_start": 267831,
-            "file_text_char_end": 267834
+            "file_text_char_start": 267881,
+            "file_text_char_end": 267884
           }
         }
       ],
@@ -11511,10 +11526,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3225,
-        "line_end": 3231,
-        "file_text_char_start": 267904,
-        "file_text_char_end": 268369
+        "line_start": 3226,
+        "line_end": 3232,
+        "file_text_char_start": 267954,
+        "file_text_char_end": 268419
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11531,12 +11546,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3225,
-            "line_end": 3225,
+            "line_start": 3226,
+            "line_end": 3226,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 59,
-            "file_text_char_start": 267906,
-            "file_text_char_end": 267963
+            "file_text_char_start": 267956,
+            "file_text_char_end": 268013
           }
         }
       ],
@@ -11558,12 +11573,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3229,
-            "line_end": 3229,
+            "line_start": 3230,
+            "line_end": 3230,
             "bullet_text_char_start": 304,
             "bullet_text_char_end": 307,
-            "file_text_char_start": 268208,
-            "file_text_char_end": 268211
+            "file_text_char_start": 268258,
+            "file_text_char_end": 268261
           }
         }
       ],
@@ -11585,10 +11600,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3232,
-        "line_end": 3236,
-        "file_text_char_start": 268370,
-        "file_text_char_end": 268742
+        "line_start": 3233,
+        "line_end": 3237,
+        "file_text_char_start": 268420,
+        "file_text_char_end": 268792
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11605,12 +11620,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3232,
-            "line_end": 3232,
+            "line_start": 3233,
+            "line_end": 3233,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 60,
-            "file_text_char_start": 268372,
-            "file_text_char_end": 268430
+            "file_text_char_start": 268422,
+            "file_text_char_end": 268480
           }
         }
       ],
@@ -11632,12 +11647,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3235,
-            "line_end": 3235,
+            "line_start": 3236,
+            "line_end": 3236,
             "bullet_text_char_start": 246,
             "bullet_text_char_end": 249,
-            "file_text_char_start": 268616,
-            "file_text_char_end": 268619
+            "file_text_char_start": 268666,
+            "file_text_char_end": 268669
           }
         }
       ],
@@ -11659,10 +11674,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3237,
-        "line_end": 3242,
-        "file_text_char_start": 268743,
-        "file_text_char_end": 269143
+        "line_start": 3238,
+        "line_end": 3243,
+        "file_text_char_start": 268793,
+        "file_text_char_end": 269193
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11679,12 +11694,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3237,
-            "line_end": 3237,
+            "line_start": 3238,
+            "line_end": 3238,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 268745,
-            "file_text_char_end": 268796
+            "file_text_char_start": 268795,
+            "file_text_char_end": 268846
           }
         }
       ],
@@ -11706,12 +11721,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3241,
-            "line_end": 3241,
+            "line_start": 3242,
+            "line_end": 3242,
             "bullet_text_char_start": 359,
             "bullet_text_char_end": 362,
-            "file_text_char_start": 269102,
-            "file_text_char_end": 269105
+            "file_text_char_start": 269152,
+            "file_text_char_end": 269155
           }
         }
       ],
@@ -11733,10 +11748,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3243,
-        "line_end": 3250,
-        "file_text_char_start": 269144,
-        "file_text_char_end": 269675
+        "line_start": 3244,
+        "line_end": 3251,
+        "file_text_char_start": 269194,
+        "file_text_char_end": 269725
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11754,12 +11769,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3243,
-            "line_end": 3243,
+            "line_start": 3244,
+            "line_end": 3244,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 52,
-            "file_text_char_start": 269146,
-            "file_text_char_end": 269196
+            "file_text_char_start": 269196,
+            "file_text_char_end": 269246
           }
         },
         {
@@ -11769,12 +11784,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3247,
-            "line_end": 3247,
+            "line_start": 3248,
+            "line_end": 3248,
             "bullet_text_char_start": 335,
             "bullet_text_char_end": 351,
-            "file_text_char_start": 269479,
-            "file_text_char_end": 269495
+            "file_text_char_start": 269529,
+            "file_text_char_end": 269545
           }
         }
       ],
@@ -11801,12 +11816,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3248,
-            "line_end": 3248,
+            "line_start": 3249,
+            "line_end": 3249,
             "bullet_text_char_start": 437,
             "bullet_text_char_end": 440,
-            "file_text_char_start": 269581,
-            "file_text_char_end": 269584
+            "file_text_char_start": 269631,
+            "file_text_char_end": 269634
           }
         }
       ],
@@ -11828,10 +11843,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3251,
-        "line_end": 3257,
-        "file_text_char_start": 269676,
-        "file_text_char_end": 270181
+        "line_start": 3252,
+        "line_end": 3258,
+        "file_text_char_start": 269726,
+        "file_text_char_end": 270231
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11848,12 +11863,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3251,
-            "line_end": 3251,
+            "line_start": 3252,
+            "line_end": 3252,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 55,
-            "file_text_char_start": 269678,
-            "file_text_char_end": 269731
+            "file_text_char_start": 269728,
+            "file_text_char_end": 269781
           }
         }
       ],
@@ -11875,12 +11890,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3254,
-            "line_end": 3254,
+            "line_start": 3255,
+            "line_end": 3255,
             "bullet_text_char_start": 285,
             "bullet_text_char_end": 288,
-            "file_text_char_start": 269961,
-            "file_text_char_end": 269964
+            "file_text_char_start": 270011,
+            "file_text_char_end": 270014
           }
         }
       ],
@@ -11902,10 +11917,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3258,
-        "line_end": 3265,
-        "file_text_char_start": 270182,
-        "file_text_char_end": 270746
+        "line_start": 3259,
+        "line_end": 3266,
+        "file_text_char_start": 270232,
+        "file_text_char_end": 270796
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -11922,12 +11937,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3258,
-            "line_end": 3258,
+            "line_start": 3259,
+            "line_end": 3259,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 58,
-            "file_text_char_start": 270184,
-            "file_text_char_end": 270240
+            "file_text_char_start": 270234,
+            "file_text_char_end": 270290
           }
         }
       ],
@@ -11949,12 +11964,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3261,
-            "line_end": 3261,
+            "line_start": 3262,
+            "line_end": 3262,
             "bullet_text_char_start": 297,
             "bullet_text_char_end": 299,
-            "file_text_char_start": 270479,
-            "file_text_char_end": 270481
+            "file_text_char_start": 270529,
+            "file_text_char_end": 270531
           }
         },
         {
@@ -11964,12 +11979,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3261,
-            "line_end": 3261,
+            "line_start": 3262,
+            "line_end": 3262,
             "bullet_text_char_start": 300,
             "bullet_text_char_end": 307,
-            "file_text_char_start": 270482,
-            "file_text_char_end": 270489
+            "file_text_char_start": 270532,
+            "file_text_char_end": 270539
           }
         },
         {
@@ -11979,12 +11994,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3262,
-            "line_end": 3262,
+            "line_start": 3263,
+            "line_end": 3263,
             "bullet_text_char_start": 371,
             "bullet_text_char_end": 374,
-            "file_text_char_start": 270553,
-            "file_text_char_end": 270556
+            "file_text_char_start": 270603,
+            "file_text_char_end": 270606
           }
         }
       ],
@@ -12008,10 +12023,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3266,
-        "line_end": 3274,
-        "file_text_char_start": 270747,
-        "file_text_char_end": 271371
+        "line_start": 3267,
+        "line_end": 3275,
+        "file_text_char_start": 270797,
+        "file_text_char_end": 271421
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12028,12 +12043,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3266,
-            "line_end": 3266,
+            "line_start": 3267,
+            "line_end": 3267,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 58,
-            "file_text_char_start": 270749,
-            "file_text_char_end": 270805
+            "file_text_char_start": 270799,
+            "file_text_char_end": 270855
           }
         }
       ],
@@ -12055,12 +12070,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3271,
-            "line_end": 3271,
+            "line_start": 3272,
+            "line_end": 3272,
             "bullet_text_char_start": 396,
             "bullet_text_char_end": 403,
-            "file_text_char_start": 271143,
-            "file_text_char_end": 271150
+            "file_text_char_start": 271193,
+            "file_text_char_end": 271200
           }
         },
         {
@@ -12070,12 +12085,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3272,
-            "line_end": 3272,
+            "line_start": 3273,
+            "line_end": 3273,
             "bullet_text_char_start": 486,
             "bullet_text_char_end": 489,
-            "file_text_char_start": 271233,
-            "file_text_char_end": 271236
+            "file_text_char_start": 271283,
+            "file_text_char_end": 271286
           }
         }
       ],
@@ -12098,10 +12113,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3275,
-        "line_end": 3280,
-        "file_text_char_start": 271372,
-        "file_text_char_end": 271782
+        "line_start": 3276,
+        "line_end": 3281,
+        "file_text_char_start": 271422,
+        "file_text_char_end": 271832
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12118,12 +12133,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3275,
-            "line_end": 3275,
+            "line_start": 3276,
+            "line_end": 3276,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 271374,
-            "file_text_char_end": 271425
+            "file_text_char_start": 271424,
+            "file_text_char_end": 271475
           }
         }
       ],
@@ -12145,12 +12160,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3279,
-            "line_end": 3279,
+            "line_start": 3280,
+            "line_end": 3280,
             "bullet_text_char_start": 371,
             "bullet_text_char_end": 374,
-            "file_text_char_start": 271743,
-            "file_text_char_end": 271746
+            "file_text_char_start": 271793,
+            "file_text_char_end": 271796
           }
         }
       ],
@@ -12172,10 +12187,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3281,
-        "line_end": 3287,
-        "file_text_char_start": 271783,
-        "file_text_char_end": 272312
+        "line_start": 3282,
+        "line_end": 3288,
+        "file_text_char_start": 271833,
+        "file_text_char_end": 272362
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12192,12 +12207,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3281,
-            "line_end": 3281,
+            "line_start": 3282,
+            "line_end": 3282,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 62,
-            "file_text_char_start": 271785,
-            "file_text_char_end": 271845
+            "file_text_char_start": 271835,
+            "file_text_char_end": 271895
           }
         }
       ],
@@ -12219,12 +12234,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3287,
-            "line_end": 3287,
+            "line_start": 3288,
+            "line_end": 3288,
             "bullet_text_char_start": 492,
             "bullet_text_char_end": 495,
-            "file_text_char_start": 272275,
-            "file_text_char_end": 272278
+            "file_text_char_start": 272325,
+            "file_text_char_end": 272328
           }
         }
       ],
@@ -12246,10 +12261,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3288,
-        "line_end": 3294,
-        "file_text_char_start": 272313,
-        "file_text_char_end": 272768
+        "line_start": 3289,
+        "line_end": 3295,
+        "file_text_char_start": 272363,
+        "file_text_char_end": 272818
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12266,12 +12281,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3288,
-            "line_end": 3288,
+            "line_start": 3289,
+            "line_end": 3289,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 58,
-            "file_text_char_start": 272315,
-            "file_text_char_end": 272371
+            "file_text_char_start": 272365,
+            "file_text_char_end": 272421
           }
         }
       ],
@@ -12293,12 +12308,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3293,
-            "line_end": 3293,
+            "line_start": 3294,
+            "line_end": 3294,
             "bullet_text_char_start": 416,
             "bullet_text_char_end": 419,
-            "file_text_char_start": 272729,
-            "file_text_char_end": 272732
+            "file_text_char_start": 272779,
+            "file_text_char_end": 272782
           }
         }
       ],
@@ -12320,10 +12335,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3295,
-        "line_end": 3300,
-        "file_text_char_start": 272769,
-        "file_text_char_end": 273209
+        "line_start": 3296,
+        "line_end": 3301,
+        "file_text_char_start": 272819,
+        "file_text_char_end": 273259
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12340,12 +12355,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3295,
-            "line_end": 3295,
+            "line_start": 3296,
+            "line_end": 3296,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 58,
-            "file_text_char_start": 272771,
-            "file_text_char_end": 272827
+            "file_text_char_start": 272821,
+            "file_text_char_end": 272877
           }
         }
       ],
@@ -12367,12 +12382,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3300,
-            "line_end": 3300,
+            "line_start": 3301,
+            "line_end": 3301,
             "bullet_text_char_start": 403,
             "bullet_text_char_end": 406,
-            "file_text_char_start": 273172,
-            "file_text_char_end": 273175
+            "file_text_char_start": 273222,
+            "file_text_char_end": 273225
           }
         }
       ],
@@ -12394,10 +12409,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3301,
-        "line_end": 3305,
-        "file_text_char_start": 273210,
-        "file_text_char_end": 273542
+        "line_start": 3302,
+        "line_end": 3306,
+        "file_text_char_start": 273260,
+        "file_text_char_end": 273592
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12414,12 +12429,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3301,
-            "line_end": 3301,
+            "line_start": 3302,
+            "line_end": 3302,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 60,
-            "file_text_char_start": 273212,
-            "file_text_char_end": 273270
+            "file_text_char_start": 273262,
+            "file_text_char_end": 273320
           }
         }
       ],
@@ -12441,12 +12456,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3304,
-            "line_end": 3304,
+            "line_start": 3305,
+            "line_end": 3305,
             "bullet_text_char_start": 265,
             "bullet_text_char_end": 272,
-            "file_text_char_start": 273475,
-            "file_text_char_end": 273482
+            "file_text_char_start": 273525,
+            "file_text_char_end": 273532
           }
         },
         {
@@ -12456,12 +12471,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3304,
-            "line_end": 3304,
+            "line_start": 3305,
+            "line_end": 3305,
             "bullet_text_char_start": 293,
             "bullet_text_char_end": 296,
-            "file_text_char_start": 273503,
-            "file_text_char_end": 273506
+            "file_text_char_start": 273553,
+            "file_text_char_end": 273556
           }
         }
       ],
@@ -12484,10 +12499,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3306,
-        "line_end": 3311,
-        "file_text_char_start": 273543,
-        "file_text_char_end": 273953
+        "line_start": 3307,
+        "line_end": 3312,
+        "file_text_char_start": 273593,
+        "file_text_char_end": 274003
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12504,12 +12519,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3306,
-            "line_end": 3306,
+            "line_start": 3307,
+            "line_end": 3307,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 63,
-            "file_text_char_start": 273545,
-            "file_text_char_end": 273606
+            "file_text_char_start": 273595,
+            "file_text_char_end": 273656
           }
         }
       ],
@@ -12531,12 +12546,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3310,
-            "line_end": 3310,
+            "line_start": 3311,
+            "line_end": 3311,
             "bullet_text_char_start": 331,
             "bullet_text_char_end": 334,
-            "file_text_char_start": 273874,
-            "file_text_char_end": 273877
+            "file_text_char_start": 273924,
+            "file_text_char_end": 273927
           }
         }
       ],
@@ -12558,10 +12573,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3312,
-        "line_end": 3316,
-        "file_text_char_start": 273954,
-        "file_text_char_end": 274301
+        "line_start": 3313,
+        "line_end": 3317,
+        "file_text_char_start": 274004,
+        "file_text_char_end": 274351
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12578,12 +12593,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3312,
-            "line_end": 3312,
+            "line_start": 3313,
+            "line_end": 3313,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 273956,
-            "file_text_char_end": 274007
+            "file_text_char_start": 274006,
+            "file_text_char_end": 274057
           }
         }
       ],
@@ -12605,12 +12620,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3316,
-            "line_end": 3316,
+            "line_start": 3317,
+            "line_end": 3317,
             "bullet_text_char_start": 306,
             "bullet_text_char_end": 309,
-            "file_text_char_start": 274260,
-            "file_text_char_end": 274263
+            "file_text_char_start": 274310,
+            "file_text_char_end": 274313
           }
         }
       ],
@@ -12632,10 +12647,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3317,
-        "line_end": 3323,
-        "file_text_char_start": 274302,
-        "file_text_char_end": 274782
+        "line_start": 3318,
+        "line_end": 3324,
+        "file_text_char_start": 274352,
+        "file_text_char_end": 274832
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12652,12 +12667,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3317,
-            "line_end": 3317,
+            "line_start": 3318,
+            "line_end": 3318,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 47,
-            "file_text_char_start": 274304,
-            "file_text_char_end": 274349
+            "file_text_char_start": 274354,
+            "file_text_char_end": 274399
           }
         }
       ],
@@ -12679,12 +12694,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3322,
-            "line_end": 3322,
+            "line_start": 3323,
+            "line_end": 3323,
             "bullet_text_char_start": 404,
             "bullet_text_char_end": 407,
-            "file_text_char_start": 274706,
-            "file_text_char_end": 274709
+            "file_text_char_start": 274756,
+            "file_text_char_end": 274759
           }
         }
       ],
@@ -12706,10 +12721,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3324,
-        "line_end": 3329,
-        "file_text_char_start": 274783,
-        "file_text_char_end": 275195
+        "line_start": 3325,
+        "line_end": 3330,
+        "file_text_char_start": 274833,
+        "file_text_char_end": 275245
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12726,12 +12741,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3324,
-            "line_end": 3324,
+            "line_start": 3325,
+            "line_end": 3325,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 55,
-            "file_text_char_start": 274785,
-            "file_text_char_end": 274838
+            "file_text_char_start": 274835,
+            "file_text_char_end": 274888
           }
         }
       ],
@@ -12753,12 +12768,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3328,
-            "line_end": 3328,
+            "line_start": 3329,
+            "line_end": 3329,
             "bullet_text_char_start": 336,
             "bullet_text_char_end": 339,
-            "file_text_char_start": 275119,
-            "file_text_char_end": 275122
+            "file_text_char_start": 275169,
+            "file_text_char_end": 275172
           }
         }
       ],
@@ -12780,10 +12795,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3330,
-        "line_end": 3334,
-        "file_text_char_start": 275196,
-        "file_text_char_end": 275556
+        "line_start": 3331,
+        "line_end": 3335,
+        "file_text_char_start": 275246,
+        "file_text_char_end": 275606
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12800,12 +12815,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3330,
-            "line_end": 3330,
+            "line_start": 3331,
+            "line_end": 3331,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 48,
-            "file_text_char_start": 275198,
-            "file_text_char_end": 275244
+            "file_text_char_start": 275248,
+            "file_text_char_end": 275294
           }
         }
       ],
@@ -12827,12 +12842,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3333,
-            "line_end": 3333,
+            "line_start": 3334,
+            "line_end": 3334,
             "bullet_text_char_start": 284,
             "bullet_text_char_end": 287,
-            "file_text_char_start": 275480,
-            "file_text_char_end": 275483
+            "file_text_char_start": 275530,
+            "file_text_char_end": 275533
           }
         }
       ],
@@ -12854,10 +12869,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3335,
-        "line_end": 3339,
-        "file_text_char_start": 275557,
-        "file_text_char_end": 275933
+        "line_start": 3336,
+        "line_end": 3340,
+        "file_text_char_start": 275607,
+        "file_text_char_end": 275983
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12874,12 +12889,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3335,
-            "line_end": 3335,
+            "line_start": 3336,
+            "line_end": 3336,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 57,
-            "file_text_char_start": 275559,
-            "file_text_char_end": 275614
+            "file_text_char_start": 275609,
+            "file_text_char_end": 275664
           }
         }
       ],
@@ -12901,12 +12916,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3339,
-            "line_end": 3339,
+            "line_start": 3340,
+            "line_end": 3340,
             "bullet_text_char_start": 302,
             "bullet_text_char_end": 305,
-            "file_text_char_start": 275859,
-            "file_text_char_end": 275862
+            "file_text_char_start": 275909,
+            "file_text_char_end": 275912
           }
         }
       ],
@@ -12928,10 +12943,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3340,
-        "line_end": 3345,
-        "file_text_char_start": 275934,
-        "file_text_char_end": 276320
+        "line_start": 3341,
+        "line_end": 3346,
+        "file_text_char_start": 275984,
+        "file_text_char_end": 276370
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -12948,12 +12963,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3340,
-            "line_end": 3340,
+            "line_start": 3341,
+            "line_end": 3341,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 56,
-            "file_text_char_start": 275936,
-            "file_text_char_end": 275990
+            "file_text_char_start": 275986,
+            "file_text_char_end": 276040
           }
         }
       ],
@@ -12975,12 +12990,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3343,
-            "line_end": 3343,
+            "line_start": 3344,
+            "line_end": 3344,
             "bullet_text_char_start": 280,
             "bullet_text_char_end": 287,
-            "file_text_char_start": 276214,
-            "file_text_char_end": 276221
+            "file_text_char_start": 276264,
+            "file_text_char_end": 276271
           }
         },
         {
@@ -12990,12 +13005,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3344,
-            "line_end": 3344,
+            "line_start": 3345,
+            "line_end": 3345,
             "bullet_text_char_start": 310,
             "bullet_text_char_end": 313,
-            "file_text_char_start": 276244,
-            "file_text_char_end": 276247
+            "file_text_char_start": 276294,
+            "file_text_char_end": 276297
           }
         }
       ],
@@ -13018,10 +13033,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3346,
-        "line_end": 3350,
-        "file_text_char_start": 276321,
-        "file_text_char_end": 276675
+        "line_start": 3347,
+        "line_end": 3351,
+        "file_text_char_start": 276371,
+        "file_text_char_end": 276725
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13038,12 +13053,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3346,
-            "line_end": 3346,
+            "line_start": 3347,
+            "line_end": 3347,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 48,
-            "file_text_char_start": 276323,
-            "file_text_char_end": 276369
+            "file_text_char_start": 276373,
+            "file_text_char_end": 276419
           }
         }
       ],
@@ -13065,12 +13080,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3349,
-            "line_end": 3349,
+            "line_start": 3350,
+            "line_end": 3350,
             "bullet_text_char_start": 275,
             "bullet_text_char_end": 278,
-            "file_text_char_start": 276596,
-            "file_text_char_end": 276599
+            "file_text_char_start": 276646,
+            "file_text_char_end": 276649
           }
         }
       ],
@@ -13092,10 +13107,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3351,
-        "line_end": 3356,
-        "file_text_char_start": 276676,
-        "file_text_char_end": 277093
+        "line_start": 3352,
+        "line_end": 3357,
+        "file_text_char_start": 276726,
+        "file_text_char_end": 277143
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13112,12 +13127,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3351,
-            "line_end": 3351,
+            "line_start": 3352,
+            "line_end": 3352,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 276678,
-            "file_text_char_end": 276729
+            "file_text_char_start": 276728,
+            "file_text_char_end": 276779
           }
         }
       ],
@@ -13139,12 +13154,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3353,
-            "line_end": 3353,
+            "line_start": 3354,
+            "line_end": 3354,
             "bullet_text_char_start": 217,
             "bullet_text_char_end": 220,
-            "file_text_char_start": 276893,
-            "file_text_char_end": 276896
+            "file_text_char_start": 276943,
+            "file_text_char_end": 276946
           }
         }
       ],
@@ -13166,10 +13181,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3357,
-        "line_end": 3362,
-        "file_text_char_start": 277094,
-        "file_text_char_end": 277533
+        "line_start": 3358,
+        "line_end": 3363,
+        "file_text_char_start": 277144,
+        "file_text_char_end": 277583
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13186,12 +13201,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3357,
-            "line_end": 3357,
+            "line_start": 3358,
+            "line_end": 3358,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 54,
-            "file_text_char_start": 277096,
-            "file_text_char_end": 277148
+            "file_text_char_start": 277146,
+            "file_text_char_end": 277198
           }
         }
       ],
@@ -13213,12 +13228,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3361,
-            "line_end": 3361,
+            "line_start": 3362,
+            "line_end": 3362,
             "bullet_text_char_start": 318,
             "bullet_text_char_end": 321,
-            "file_text_char_start": 277412,
-            "file_text_char_end": 277415
+            "file_text_char_start": 277462,
+            "file_text_char_end": 277465
           }
         }
       ],
@@ -13240,10 +13255,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3363,
-        "line_end": 3370,
-        "file_text_char_start": 277534,
-        "file_text_char_end": 278104
+        "line_start": 3364,
+        "line_end": 3371,
+        "file_text_char_start": 277584,
+        "file_text_char_end": 278154
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13260,12 +13275,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3363,
-            "line_end": 3363,
+            "line_start": 3364,
+            "line_end": 3364,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 67,
-            "file_text_char_start": 277536,
-            "file_text_char_end": 277601
+            "file_text_char_start": 277586,
+            "file_text_char_end": 277651
           }
         }
       ],
@@ -13287,12 +13302,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3367,
-            "line_end": 3367,
+            "line_start": 3368,
+            "line_end": 3368,
             "bullet_text_char_start": 328,
             "bullet_text_char_end": 331,
-            "file_text_char_start": 277862,
-            "file_text_char_end": 277865
+            "file_text_char_start": 277912,
+            "file_text_char_end": 277915
           }
         }
       ],
@@ -13314,10 +13329,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3371,
-        "line_end": 3376,
-        "file_text_char_start": 278105,
-        "file_text_char_end": 278547
+        "line_start": 3372,
+        "line_end": 3377,
+        "file_text_char_start": 278155,
+        "file_text_char_end": 278597
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13334,12 +13349,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3371,
-            "line_end": 3371,
+            "line_start": 3372,
+            "line_end": 3372,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 62,
-            "file_text_char_start": 278107,
-            "file_text_char_end": 278167
+            "file_text_char_start": 278157,
+            "file_text_char_end": 278217
           }
         }
       ],
@@ -13361,12 +13376,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3375,
-            "line_end": 3375,
+            "line_start": 3376,
+            "line_end": 3376,
             "bullet_text_char_start": 316,
             "bullet_text_char_end": 319,
-            "file_text_char_start": 278421,
-            "file_text_char_end": 278424
+            "file_text_char_start": 278471,
+            "file_text_char_end": 278474
           }
         }
       ],
@@ -13388,10 +13403,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3377,
-        "line_end": 3385,
-        "file_text_char_start": 278548,
-        "file_text_char_end": 279184
+        "line_start": 3378,
+        "line_end": 3386,
+        "file_text_char_start": 278598,
+        "file_text_char_end": 279234
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13408,12 +13423,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3377,
-            "line_end": 3377,
+            "line_start": 3378,
+            "line_end": 3378,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 278550,
-            "file_text_char_end": 278601
+            "file_text_char_start": 278600,
+            "file_text_char_end": 278651
           }
         }
       ],
@@ -13435,12 +13450,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3381,
-            "line_end": 3381,
+            "line_start": 3382,
+            "line_end": 3382,
             "bullet_text_char_start": 336,
             "bullet_text_char_end": 339,
-            "file_text_char_start": 278884,
-            "file_text_char_end": 278887
+            "file_text_char_start": 278934,
+            "file_text_char_end": 278937
           }
         }
       ],
@@ -13462,10 +13477,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3386,
-        "line_end": 3391,
-        "file_text_char_start": 279185,
-        "file_text_char_end": 279564
+        "line_start": 3387,
+        "line_end": 3392,
+        "file_text_char_start": 279235,
+        "file_text_char_end": 279614
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13482,12 +13497,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3386,
-            "line_end": 3386,
+            "line_start": 3387,
+            "line_end": 3387,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 49,
-            "file_text_char_start": 279187,
-            "file_text_char_end": 279234
+            "file_text_char_start": 279237,
+            "file_text_char_end": 279284
           }
         }
       ],
@@ -13509,12 +13524,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3390,
-            "line_end": 3390,
+            "line_start": 3391,
+            "line_end": 3391,
             "bullet_text_char_start": 300,
             "bullet_text_char_end": 303,
-            "file_text_char_start": 279485,
-            "file_text_char_end": 279488
+            "file_text_char_start": 279535,
+            "file_text_char_end": 279538
           }
         }
       ],
@@ -13536,10 +13551,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3392,
-        "line_end": 3402,
-        "file_text_char_start": 279565,
-        "file_text_char_end": 280310
+        "line_start": 3393,
+        "line_end": 3403,
+        "file_text_char_start": 279615,
+        "file_text_char_end": 280360
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13556,12 +13571,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3392,
-            "line_end": 3392,
+            "line_start": 3393,
+            "line_end": 3393,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 60,
-            "file_text_char_start": 279567,
-            "file_text_char_end": 279625
+            "file_text_char_start": 279617,
+            "file_text_char_end": 279675
           }
         }
       ],
@@ -13583,12 +13598,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3397,
-            "line_end": 3397,
+            "line_start": 3398,
+            "line_end": 3398,
             "bullet_text_char_start": 379,
             "bullet_text_char_end": 382,
-            "file_text_char_start": 279944,
-            "file_text_char_end": 279947
+            "file_text_char_start": 279994,
+            "file_text_char_end": 279997
           }
         }
       ],
@@ -13610,10 +13625,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3403,
-        "line_end": 3409,
-        "file_text_char_start": 280311,
-        "file_text_char_end": 280814
+        "line_start": 3404,
+        "line_end": 3410,
+        "file_text_char_start": 280361,
+        "file_text_char_end": 280864
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13630,12 +13645,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3403,
-            "line_end": 3403,
+            "line_start": 3404,
+            "line_end": 3404,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 64,
-            "file_text_char_start": 280313,
-            "file_text_char_end": 280375
+            "file_text_char_start": 280363,
+            "file_text_char_end": 280425
           }
         }
       ],
@@ -13657,12 +13672,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3408,
-            "line_end": 3408,
+            "line_start": 3409,
+            "line_end": 3409,
             "bullet_text_char_start": 399,
             "bullet_text_char_end": 402,
-            "file_text_char_start": 280710,
-            "file_text_char_end": 280713
+            "file_text_char_start": 280760,
+            "file_text_char_end": 280763
           }
         }
       ],
@@ -13684,10 +13699,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3410,
-        "line_end": 3421,
-        "file_text_char_start": 280815,
-        "file_text_char_end": 281675
+        "line_start": 3411,
+        "line_end": 3422,
+        "file_text_char_start": 280865,
+        "file_text_char_end": 281725
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13704,12 +13719,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3410,
-            "line_end": 3410,
+            "line_start": 3411,
+            "line_end": 3411,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 56,
-            "file_text_char_start": 280817,
-            "file_text_char_end": 280871
+            "file_text_char_start": 280867,
+            "file_text_char_end": 280921
           }
         }
       ],
@@ -13731,12 +13746,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3414,
-            "line_end": 3414,
+            "line_start": 3415,
+            "line_end": 3415,
             "bullet_text_char_start": 339,
             "bullet_text_char_end": 346,
-            "file_text_char_start": 281154,
-            "file_text_char_end": 281161
+            "file_text_char_start": 281204,
+            "file_text_char_end": 281211
           }
         },
         {
@@ -13746,12 +13761,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3415,
-            "line_end": 3415,
+            "line_start": 3416,
+            "line_end": 3416,
             "bullet_text_char_start": 431,
             "bullet_text_char_end": 434,
-            "file_text_char_start": 281246,
-            "file_text_char_end": 281249
+            "file_text_char_start": 281296,
+            "file_text_char_end": 281299
           }
         }
       ],
@@ -13774,10 +13789,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3422,
-        "line_end": 3428,
-        "file_text_char_start": 281676,
-        "file_text_char_end": 282170
+        "line_start": 3423,
+        "line_end": 3429,
+        "file_text_char_start": 281726,
+        "file_text_char_end": 282220
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13794,12 +13809,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3422,
-            "line_end": 3422,
+            "line_start": 3423,
+            "line_end": 3423,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 56,
-            "file_text_char_start": 281678,
-            "file_text_char_end": 281732
+            "file_text_char_start": 281728,
+            "file_text_char_end": 281782
           }
         }
       ],
@@ -13821,12 +13836,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3427,
-            "line_end": 3427,
+            "line_start": 3428,
+            "line_end": 3428,
             "bullet_text_char_start": 383,
             "bullet_text_char_end": 386,
-            "file_text_char_start": 282059,
-            "file_text_char_end": 282062
+            "file_text_char_start": 282109,
+            "file_text_char_end": 282112
           }
         }
       ],
@@ -13848,10 +13863,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3429,
-        "line_end": 3441,
-        "file_text_char_start": 282171,
-        "file_text_char_end": 283094
+        "line_start": 3430,
+        "line_end": 3442,
+        "file_text_char_start": 282221,
+        "file_text_char_end": 283144
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13868,12 +13883,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3429,
-            "line_end": 3429,
+            "line_start": 3430,
+            "line_end": 3430,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 54,
-            "file_text_char_start": 282173,
-            "file_text_char_end": 282225
+            "file_text_char_start": 282223,
+            "file_text_char_end": 282275
           }
         }
       ],
@@ -13895,12 +13910,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3434,
-            "line_end": 3434,
+            "line_start": 3435,
+            "line_end": 3435,
             "bullet_text_char_start": 395,
             "bullet_text_char_end": 402,
-            "file_text_char_start": 282566,
-            "file_text_char_end": 282573
+            "file_text_char_start": 282616,
+            "file_text_char_end": 282623
           }
         },
         {
@@ -13910,12 +13925,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3435,
-            "line_end": 3435,
+            "line_start": 3436,
+            "line_end": 3436,
             "bullet_text_char_start": 487,
             "bullet_text_char_end": 490,
-            "file_text_char_start": 282658,
-            "file_text_char_end": 282661
+            "file_text_char_start": 282708,
+            "file_text_char_end": 282711
           }
         }
       ],
@@ -13938,10 +13953,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3442,
-        "line_end": 3448,
-        "file_text_char_start": 283095,
-        "file_text_char_end": 283587
+        "line_start": 3443,
+        "line_end": 3449,
+        "file_text_char_start": 283145,
+        "file_text_char_end": 283637
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -13958,12 +13973,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3442,
-            "line_end": 3442,
+            "line_start": 3443,
+            "line_end": 3443,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 57,
-            "file_text_char_start": 283097,
-            "file_text_char_end": 283152
+            "file_text_char_start": 283147,
+            "file_text_char_end": 283202
           }
         }
       ],
@@ -13985,12 +14000,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3447,
-            "line_end": 3447,
+            "line_start": 3448,
+            "line_end": 3448,
             "bullet_text_char_start": 415,
             "bullet_text_char_end": 418,
-            "file_text_char_start": 283510,
-            "file_text_char_end": 283513
+            "file_text_char_start": 283560,
+            "file_text_char_end": 283563
           }
         }
       ],
@@ -14012,10 +14027,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3449,
-        "line_end": 3462,
-        "file_text_char_start": 283588,
-        "file_text_char_end": 284614
+        "line_start": 3450,
+        "line_end": 3463,
+        "file_text_char_start": 283638,
+        "file_text_char_end": 284664
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14032,12 +14047,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3449,
-            "line_end": 3449,
+            "line_start": 3450,
+            "line_end": 3450,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 51,
-            "file_text_char_start": 283590,
-            "file_text_char_end": 283639
+            "file_text_char_start": 283640,
+            "file_text_char_end": 283689
           }
         }
       ],
@@ -14059,12 +14074,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3455,
-            "line_end": 3455,
+            "line_start": 3456,
+            "line_end": 3456,
             "bullet_text_char_start": 451,
             "bullet_text_char_end": 458,
-            "file_text_char_start": 284039,
-            "file_text_char_end": 284046
+            "file_text_char_start": 284089,
+            "file_text_char_end": 284096
           }
         },
         {
@@ -14074,12 +14089,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3456,
-            "line_end": 3456,
+            "line_start": 3457,
+            "line_end": 3457,
             "bullet_text_char_start": 543,
             "bullet_text_char_end": 546,
-            "file_text_char_start": 284131,
-            "file_text_char_end": 284134
+            "file_text_char_start": 284181,
+            "file_text_char_end": 284184
           }
         }
       ],
@@ -14102,10 +14117,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3463,
-        "line_end": 3469,
-        "file_text_char_start": 284615,
-        "file_text_char_end": 285076
+        "line_start": 3464,
+        "line_end": 3470,
+        "file_text_char_start": 284665,
+        "file_text_char_end": 285126
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14122,12 +14137,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3463,
-            "line_end": 3463,
+            "line_start": 3464,
+            "line_end": 3464,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 61,
-            "file_text_char_start": 284617,
-            "file_text_char_end": 284676
+            "file_text_char_start": 284667,
+            "file_text_char_end": 284726
           }
         }
       ],
@@ -14149,12 +14164,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3468,
-            "line_end": 3468,
+            "line_start": 3469,
+            "line_end": 3469,
             "bullet_text_char_start": 390,
             "bullet_text_char_end": 393,
-            "file_text_char_start": 285005,
-            "file_text_char_end": 285008
+            "file_text_char_start": 285055,
+            "file_text_char_end": 285058
           }
         }
       ],
@@ -14176,10 +14191,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3470,
-        "line_end": 3482,
-        "file_text_char_start": 285077,
-        "file_text_char_end": 285991
+        "line_start": 3471,
+        "line_end": 3483,
+        "file_text_char_start": 285127,
+        "file_text_char_end": 286041
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14196,12 +14211,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3470,
-            "line_end": 3470,
+            "line_start": 3471,
+            "line_end": 3471,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 55,
-            "file_text_char_start": 285079,
-            "file_text_char_end": 285132
+            "file_text_char_start": 285129,
+            "file_text_char_end": 285182
           }
         }
       ],
@@ -14223,12 +14238,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3475,
-            "line_end": 3475,
+            "line_start": 3476,
+            "line_end": 3476,
             "bullet_text_char_start": 365,
             "bullet_text_char_end": 372,
-            "file_text_char_start": 285442,
-            "file_text_char_end": 285449
+            "file_text_char_start": 285492,
+            "file_text_char_end": 285499
           }
         },
         {
@@ -14238,12 +14253,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3476,
-            "line_end": 3476,
+            "line_start": 3477,
+            "line_end": 3477,
             "bullet_text_char_start": 457,
             "bullet_text_char_end": 460,
-            "file_text_char_start": 285534,
-            "file_text_char_end": 285537
+            "file_text_char_start": 285584,
+            "file_text_char_end": 285587
           }
         }
       ],
@@ -14266,10 +14281,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3483,
-        "line_end": 3489,
-        "file_text_char_start": 285992,
-        "file_text_char_end": 286458
+        "line_start": 3484,
+        "line_end": 3490,
+        "file_text_char_start": 286042,
+        "file_text_char_end": 286508
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14286,12 +14301,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3483,
-            "line_end": 3483,
+            "line_start": 3484,
+            "line_end": 3484,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 58,
-            "file_text_char_start": 285994,
-            "file_text_char_end": 286050
+            "file_text_char_start": 286044,
+            "file_text_char_end": 286100
           }
         }
       ],
@@ -14313,12 +14328,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3488,
-            "line_end": 3488,
+            "line_start": 3489,
+            "line_end": 3489,
             "bullet_text_char_start": 387,
             "bullet_text_char_end": 390,
-            "file_text_char_start": 286379,
-            "file_text_char_end": 286382
+            "file_text_char_start": 286429,
+            "file_text_char_end": 286432
           }
         }
       ],
@@ -14340,10 +14355,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3490,
-        "line_end": 3504,
-        "file_text_char_start": 286459,
-        "file_text_char_end": 287500
+        "line_start": 3491,
+        "line_end": 3505,
+        "file_text_char_start": 286509,
+        "file_text_char_end": 287550
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14360,12 +14375,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3490,
-            "line_end": 3490,
+            "line_start": 3491,
+            "line_end": 3491,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 61,
-            "file_text_char_start": 286461,
-            "file_text_char_end": 286520
+            "file_text_char_start": 286511,
+            "file_text_char_end": 286570
           }
         }
       ],
@@ -14387,12 +14402,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3496,
-            "line_end": 3496,
+            "line_start": 3497,
+            "line_end": 3497,
             "bullet_text_char_start": 471,
             "bullet_text_char_end": 478,
-            "file_text_char_start": 286930,
-            "file_text_char_end": 286937
+            "file_text_char_start": 286980,
+            "file_text_char_end": 286987
           }
         },
         {
@@ -14402,12 +14417,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3497,
-            "line_end": 3497,
+            "line_start": 3498,
+            "line_end": 3498,
             "bullet_text_char_start": 563,
             "bullet_text_char_end": 566,
-            "file_text_char_start": 287022,
-            "file_text_char_end": 287025
+            "file_text_char_start": 287072,
+            "file_text_char_end": 287075
           }
         }
       ],
@@ -14430,10 +14445,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3505,
-        "line_end": 3512,
-        "file_text_char_start": 287501,
-        "file_text_char_end": 288071
+        "line_start": 3506,
+        "line_end": 3513,
+        "file_text_char_start": 287551,
+        "file_text_char_end": 288121
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14450,12 +14465,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3505,
-            "line_end": 3505,
+            "line_start": 3506,
+            "line_end": 3506,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 62,
-            "file_text_char_start": 287503,
-            "file_text_char_end": 287563
+            "file_text_char_start": 287553,
+            "file_text_char_end": 287613
           }
         }
       ],
@@ -14477,12 +14492,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3511,
-            "line_end": 3511,
+            "line_start": 3512,
+            "line_end": 3512,
             "bullet_text_char_start": 487,
             "bullet_text_char_end": 490,
-            "file_text_char_start": 287988,
-            "file_text_char_end": 287991
+            "file_text_char_start": 288038,
+            "file_text_char_end": 288041
           }
         }
       ],
@@ -14504,10 +14519,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3513,
-        "line_end": 3518,
-        "file_text_char_start": 288072,
-        "file_text_char_end": 288478
+        "line_start": 3514,
+        "line_end": 3519,
+        "file_text_char_start": 288122,
+        "file_text_char_end": 288528
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14524,12 +14539,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3513,
-            "line_end": 3513,
+            "line_start": 3514,
+            "line_end": 3514,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 52,
-            "file_text_char_start": 288074,
-            "file_text_char_end": 288124
+            "file_text_char_start": 288124,
+            "file_text_char_end": 288174
           }
         }
       ],
@@ -14551,12 +14566,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3515,
-            "line_end": 3515,
+            "line_start": 3516,
+            "line_end": 3516,
             "bullet_text_char_start": 182,
             "bullet_text_char_end": 189,
-            "file_text_char_start": 288254,
-            "file_text_char_end": 288261
+            "file_text_char_start": 288304,
+            "file_text_char_end": 288311
           }
         }
       ],
@@ -14578,10 +14593,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3519,
-        "line_end": 3528,
-        "file_text_char_start": 288479,
-        "file_text_char_end": 289156
+        "line_start": 3520,
+        "line_end": 3529,
+        "file_text_char_start": 288529,
+        "file_text_char_end": 289206
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14599,12 +14614,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3519,
-            "line_end": 3519,
+            "line_start": 3520,
+            "line_end": 3520,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 44,
-            "file_text_char_start": 288481,
-            "file_text_char_end": 288523
+            "file_text_char_start": 288531,
+            "file_text_char_end": 288573
           }
         },
         {
@@ -14614,12 +14629,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3520,
-            "line_end": 3520,
+            "line_start": 3521,
+            "line_end": 3521,
             "bullet_text_char_start": 73,
             "bullet_text_char_end": 91,
-            "file_text_char_start": 288552,
-            "file_text_char_end": 288570
+            "file_text_char_start": 288602,
+            "file_text_char_end": 288620
           }
         }
       ],
@@ -14646,12 +14661,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3525,
-            "line_end": 3525,
+            "line_start": 3526,
+            "line_end": 3526,
             "bullet_text_char_start": 543,
             "bullet_text_char_end": 550,
-            "file_text_char_start": 289022,
-            "file_text_char_end": 289029
+            "file_text_char_start": 289072,
+            "file_text_char_end": 289079
           }
         },
         {
@@ -14661,12 +14676,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3526,
-            "line_end": 3526,
+            "line_start": 3527,
+            "line_end": 3527,
             "bullet_text_char_start": 587,
             "bullet_text_char_end": 590,
-            "file_text_char_start": 289066,
-            "file_text_char_end": 289069
+            "file_text_char_start": 289116,
+            "file_text_char_end": 289119
           }
         }
       ],
@@ -14689,10 +14704,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3529,
-        "line_end": 3547,
-        "file_text_char_start": 289157,
-        "file_text_char_end": 290549
+        "line_start": 3530,
+        "line_end": 3548,
+        "file_text_char_start": 289207,
+        "file_text_char_end": 290599
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14709,12 +14724,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3529,
-            "line_end": 3529,
+            "line_start": 3530,
+            "line_end": 3530,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 38,
-            "file_text_char_start": 289159,
-            "file_text_char_end": 289195
+            "file_text_char_start": 289209,
+            "file_text_char_end": 289245
           }
         }
       ],
@@ -14736,12 +14751,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3536,
-            "line_end": 3536,
+            "line_start": 3537,
+            "line_end": 3537,
             "bullet_text_char_start": 594,
             "bullet_text_char_end": 601,
-            "file_text_char_start": 289751,
-            "file_text_char_end": 289758
+            "file_text_char_start": 289801,
+            "file_text_char_end": 289808
           }
         },
         {
@@ -14751,12 +14766,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3538,
-            "line_end": 3538,
+            "line_start": 3539,
+            "line_end": 3539,
             "bullet_text_char_start": 729,
             "bullet_text_char_end": 736,
-            "file_text_char_start": 289886,
-            "file_text_char_end": 289893
+            "file_text_char_start": 289936,
+            "file_text_char_end": 289943
           }
         },
         {
@@ -14766,12 +14781,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3541,
-            "line_end": 3541,
+            "line_start": 3542,
+            "line_end": 3542,
             "bullet_text_char_start": 964,
             "bullet_text_char_end": 971,
-            "file_text_char_start": 290121,
-            "file_text_char_end": 290128
+            "file_text_char_start": 290171,
+            "file_text_char_end": 290178
           }
         },
         {
@@ -14781,12 +14796,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3543,
-            "line_end": 3543,
+            "line_start": 3544,
+            "line_end": 3544,
             "bullet_text_char_start": 1072,
             "bullet_text_char_end": 1079,
-            "file_text_char_start": 290229,
-            "file_text_char_end": 290236
+            "file_text_char_start": 290279,
+            "file_text_char_end": 290286
           }
         },
         {
@@ -14796,12 +14811,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3545,
-            "line_end": 3545,
+            "line_start": 3546,
+            "line_end": 3546,
             "bullet_text_char_start": 1264,
             "bullet_text_char_end": 1267,
-            "file_text_char_start": 290421,
-            "file_text_char_end": 290424
+            "file_text_char_start": 290471,
+            "file_text_char_end": 290474
           }
         }
       ],
@@ -14824,10 +14839,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3548,
-        "line_end": 3552,
-        "file_text_char_start": 290550,
-        "file_text_char_end": 290883
+        "line_start": 3549,
+        "line_end": 3553,
+        "file_text_char_start": 290600,
+        "file_text_char_end": 290933
       },
       "source_ids_mentioned": [
         "2506.13131"
@@ -14841,12 +14856,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3549,
-            "line_end": 3549,
+            "line_start": 3550,
+            "line_end": 3550,
             "bullet_text_char_start": 109,
             "bullet_text_char_end": 119,
-            "file_text_char_start": 290659,
-            "file_text_char_end": 290669
+            "file_text_char_start": 290709,
+            "file_text_char_end": 290719
           }
         }
       ],
@@ -14863,12 +14878,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3548,
-            "line_end": 3548,
+            "line_start": 3549,
+            "line_end": 3549,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 39,
-            "file_text_char_start": 290552,
-            "file_text_char_end": 290589
+            "file_text_char_start": 290602,
+            "file_text_char_end": 290639
           }
         }
       ],
@@ -14890,12 +14905,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3551,
-            "line_end": 3551,
+            "line_start": 3552,
+            "line_end": 3552,
             "bullet_text_char_start": 265,
             "bullet_text_char_end": 268,
-            "file_text_char_start": 290815,
-            "file_text_char_end": 290818
+            "file_text_char_start": 290865,
+            "file_text_char_end": 290868
           }
         }
       ],
@@ -14917,10 +14932,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3553,
-        "line_end": 3557,
-        "file_text_char_start": 290884,
-        "file_text_char_end": 291240
+        "line_start": 3554,
+        "line_end": 3558,
+        "file_text_char_start": 290934,
+        "file_text_char_end": 291290
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -14937,12 +14952,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3553,
-            "line_end": 3553,
+            "line_start": 3554,
+            "line_end": 3554,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 49,
-            "file_text_char_start": 290886,
-            "file_text_char_end": 290933
+            "file_text_char_start": 290936,
+            "file_text_char_end": 290983
           }
         }
       ],
@@ -14964,12 +14979,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3557,
-            "line_end": 3557,
+            "line_start": 3558,
+            "line_end": 3558,
             "bullet_text_char_start": 328,
             "bullet_text_char_end": 331,
-            "file_text_char_start": 291212,
-            "file_text_char_end": 291215
+            "file_text_char_start": 291262,
+            "file_text_char_end": 291265
           }
         }
       ],
@@ -14991,10 +15006,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3558,
-        "line_end": 3562,
-        "file_text_char_start": 291241,
-        "file_text_char_end": 291618
+        "line_start": 3559,
+        "line_end": 3563,
+        "file_text_char_start": 291291,
+        "file_text_char_end": 291668
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15011,12 +15026,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3558,
-            "line_end": 3558,
+            "line_start": 3559,
+            "line_end": 3559,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 59,
-            "file_text_char_start": 291243,
-            "file_text_char_end": 291300
+            "file_text_char_start": 291293,
+            "file_text_char_end": 291350
           }
         }
       ],
@@ -15038,12 +15053,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3562,
-            "line_end": 3562,
+            "line_start": 3563,
+            "line_end": 3563,
             "bullet_text_char_start": 338,
             "bullet_text_char_end": 341,
-            "file_text_char_start": 291579,
-            "file_text_char_end": 291582
+            "file_text_char_start": 291629,
+            "file_text_char_end": 291632
           }
         }
       ],
@@ -15065,10 +15080,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3563,
-        "line_end": 3568,
-        "file_text_char_start": 291619,
-        "file_text_char_end": 292041
+        "line_start": 3564,
+        "line_end": 3569,
+        "file_text_char_start": 291669,
+        "file_text_char_end": 292091
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15085,12 +15100,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3563,
-            "line_end": 3563,
+            "line_start": 3564,
+            "line_end": 3564,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 59,
-            "file_text_char_start": 291621,
-            "file_text_char_end": 291678
+            "file_text_char_start": 291671,
+            "file_text_char_end": 291728
           }
         }
       ],
@@ -15112,12 +15127,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3567,
-            "line_end": 3567,
+            "line_start": 3568,
+            "line_end": 3568,
             "bullet_text_char_start": 341,
             "bullet_text_char_end": 344,
-            "file_text_char_start": 291960,
-            "file_text_char_end": 291963
+            "file_text_char_start": 292010,
+            "file_text_char_end": 292013
           }
         }
       ],
@@ -15139,10 +15154,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3569,
-        "line_end": 3573,
-        "file_text_char_start": 292042,
-        "file_text_char_end": 292393
+        "line_start": 3570,
+        "line_end": 3574,
+        "file_text_char_start": 292092,
+        "file_text_char_end": 292443
       },
       "source_ids_mentioned": [
         "2506.13131"
@@ -15156,12 +15171,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3572,
-            "line_end": 3572,
+            "line_start": 3573,
+            "line_end": 3573,
             "bullet_text_char_start": 232,
             "bullet_text_char_end": 242,
-            "file_text_char_start": 292274,
-            "file_text_char_end": 292284
+            "file_text_char_start": 292324,
+            "file_text_char_end": 292334
           }
         }
       ],
@@ -15178,12 +15193,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3569,
-            "line_end": 3569,
+            "line_start": 3570,
+            "line_end": 3570,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 47,
-            "file_text_char_start": 292044,
-            "file_text_char_end": 292089
+            "file_text_char_start": 292094,
+            "file_text_char_end": 292139
           }
         }
       ],
@@ -15205,12 +15220,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3572,
-            "line_end": 3572,
+            "line_start": 3573,
+            "line_end": 3573,
             "bullet_text_char_start": 261,
             "bullet_text_char_end": 264,
-            "file_text_char_start": 292303,
-            "file_text_char_end": 292306
+            "file_text_char_start": 292353,
+            "file_text_char_end": 292356
           }
         }
       ],
@@ -15232,10 +15247,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3574,
-        "line_end": 3579,
-        "file_text_char_start": 292394,
-        "file_text_char_end": 292805
+        "line_start": 3575,
+        "line_end": 3580,
+        "file_text_char_start": 292444,
+        "file_text_char_end": 292855
       },
       "source_ids_mentioned": [
         "2506.13131"
@@ -15249,12 +15264,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3577,
-            "line_end": 3577,
+            "line_start": 3578,
+            "line_end": 3578,
             "bullet_text_char_start": 212,
             "bullet_text_char_end": 222,
-            "file_text_char_start": 292606,
-            "file_text_char_end": 292616
+            "file_text_char_start": 292656,
+            "file_text_char_end": 292666
           }
         }
       ],
@@ -15272,12 +15287,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3574,
-            "line_end": 3574,
+            "line_start": 3575,
+            "line_end": 3575,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 58,
-            "file_text_char_start": 292396,
-            "file_text_char_end": 292452
+            "file_text_char_start": 292446,
+            "file_text_char_end": 292502
           }
         },
         {
@@ -15287,12 +15302,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3576,
-            "line_end": 3576,
+            "line_start": 3577,
+            "line_end": 3577,
             "bullet_text_char_start": 132,
             "bullet_text_char_end": 178,
-            "file_text_char_start": 292526,
-            "file_text_char_end": 292572
+            "file_text_char_start": 292576,
+            "file_text_char_end": 292622
           }
         }
       ],
@@ -15319,12 +15334,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3578,
-            "line_end": 3578,
+            "line_start": 3579,
+            "line_end": 3579,
             "bullet_text_char_start": 310,
             "bullet_text_char_end": 313,
-            "file_text_char_start": 292704,
-            "file_text_char_end": 292707
+            "file_text_char_start": 292754,
+            "file_text_char_end": 292757
           }
         }
       ],
@@ -15346,10 +15361,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3580,
-        "line_end": 3586,
-        "file_text_char_start": 292806,
-        "file_text_char_end": 293281
+        "line_start": 3581,
+        "line_end": 3587,
+        "file_text_char_start": 292856,
+        "file_text_char_end": 293331
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15366,12 +15381,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3580,
-            "line_end": 3580,
+            "line_start": 3581,
+            "line_end": 3581,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 52,
-            "file_text_char_start": 292808,
-            "file_text_char_end": 292858
+            "file_text_char_start": 292858,
+            "file_text_char_end": 292908
           }
         }
       ],
@@ -15393,12 +15408,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3585,
-            "line_end": 3585,
+            "line_start": 3586,
+            "line_end": 3586,
             "bullet_text_char_start": 388,
             "bullet_text_char_end": 391,
-            "file_text_char_start": 293194,
-            "file_text_char_end": 293197
+            "file_text_char_start": 293244,
+            "file_text_char_end": 293247
           }
         }
       ],
@@ -15420,10 +15435,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3587,
-        "line_end": 3591,
-        "file_text_char_start": 293282,
-        "file_text_char_end": 293625
+        "line_start": 3588,
+        "line_end": 3592,
+        "file_text_char_start": 293332,
+        "file_text_char_end": 293675
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15440,12 +15455,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3587,
-            "line_end": 3587,
+            "line_start": 3588,
+            "line_end": 3588,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 66,
-            "file_text_char_start": 293284,
-            "file_text_char_end": 293348
+            "file_text_char_start": 293334,
+            "file_text_char_end": 293398
           }
         }
       ],
@@ -15467,12 +15482,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3590,
-            "line_end": 3590,
+            "line_start": 3591,
+            "line_end": 3591,
             "bullet_text_char_start": 293,
             "bullet_text_char_end": 296,
-            "file_text_char_start": 293575,
-            "file_text_char_end": 293578
+            "file_text_char_start": 293625,
+            "file_text_char_end": 293628
           }
         }
       ],
@@ -15494,10 +15509,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3592,
-        "line_end": 3596,
-        "file_text_char_start": 293626,
-        "file_text_char_end": 294011
+        "line_start": 3593,
+        "line_end": 3597,
+        "file_text_char_start": 293676,
+        "file_text_char_end": 294061
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15514,12 +15529,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3592,
-            "line_end": 3592,
+            "line_start": 3593,
+            "line_end": 3593,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 63,
-            "file_text_char_start": 293628,
-            "file_text_char_end": 293689
+            "file_text_char_start": 293678,
+            "file_text_char_end": 293739
           }
         }
       ],
@@ -15541,12 +15556,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3596,
-            "line_end": 3596,
+            "line_start": 3597,
+            "line_end": 3597,
             "bullet_text_char_start": 347,
             "bullet_text_char_end": 350,
-            "file_text_char_start": 293973,
-            "file_text_char_end": 293976
+            "file_text_char_start": 294023,
+            "file_text_char_end": 294026
           }
         }
       ],
@@ -15568,10 +15583,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3597,
-        "line_end": 3603,
-        "file_text_char_start": 294012,
-        "file_text_char_end": 294479
+        "line_start": 3598,
+        "line_end": 3604,
+        "file_text_char_start": 294062,
+        "file_text_char_end": 294529
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15588,12 +15603,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3597,
-            "line_end": 3597,
+            "line_start": 3598,
+            "line_end": 3598,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 56,
-            "file_text_char_start": 294014,
-            "file_text_char_end": 294068
+            "file_text_char_start": 294064,
+            "file_text_char_end": 294118
           }
         }
       ],
@@ -15615,12 +15630,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3602,
-            "line_end": 3602,
+            "line_start": 3603,
+            "line_end": 3603,
             "bullet_text_char_start": 399,
             "bullet_text_char_end": 402,
-            "file_text_char_start": 294411,
-            "file_text_char_end": 294414
+            "file_text_char_start": 294461,
+            "file_text_char_end": 294464
           }
         }
       ],
@@ -15642,10 +15657,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3604,
-        "line_end": 3607,
-        "file_text_char_start": 294480,
-        "file_text_char_end": 294793
+        "line_start": 3605,
+        "line_end": 3608,
+        "file_text_char_start": 294530,
+        "file_text_char_end": 294843
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15662,12 +15677,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3604,
-            "line_end": 3604,
+            "line_start": 3605,
+            "line_end": 3605,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 57,
-            "file_text_char_start": 294482,
-            "file_text_char_end": 294537
+            "file_text_char_start": 294532,
+            "file_text_char_end": 294587
           }
         }
       ],
@@ -15689,12 +15704,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3606,
-            "line_end": 3606,
+            "line_start": 3607,
+            "line_end": 3607,
             "bullet_text_char_start": 217,
             "bullet_text_char_end": 224,
-            "file_text_char_start": 294697,
-            "file_text_char_end": 294704
+            "file_text_char_start": 294747,
+            "file_text_char_end": 294754
           }
         },
         {
@@ -15704,12 +15719,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3607,
-            "line_end": 3607,
+            "line_start": 3608,
+            "line_end": 3608,
             "bullet_text_char_start": 280,
             "bullet_text_char_end": 283,
-            "file_text_char_start": 294760,
-            "file_text_char_end": 294763
+            "file_text_char_start": 294810,
+            "file_text_char_end": 294813
           }
         }
       ],
@@ -15732,10 +15747,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3608,
-        "line_end": 3612,
-        "file_text_char_start": 294794,
-        "file_text_char_end": 295137
+        "line_start": 3609,
+        "line_end": 3613,
+        "file_text_char_start": 294844,
+        "file_text_char_end": 295187
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15752,12 +15767,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3608,
-            "line_end": 3608,
+            "line_start": 3609,
+            "line_end": 3609,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 61,
-            "file_text_char_start": 294796,
-            "file_text_char_end": 294855
+            "file_text_char_start": 294846,
+            "file_text_char_end": 294905
           }
         }
       ],
@@ -15779,12 +15794,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3610,
-            "line_end": 3610,
+            "line_start": 3611,
+            "line_end": 3611,
             "bullet_text_char_start": 208,
             "bullet_text_char_end": 211,
-            "file_text_char_start": 295002,
-            "file_text_char_end": 295005
+            "file_text_char_start": 295052,
+            "file_text_char_end": 295055
           }
         },
         {
@@ -15794,12 +15809,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3611,
-            "line_end": 3611,
+            "line_start": 3612,
+            "line_end": 3612,
             "bullet_text_char_start": 304,
             "bullet_text_char_end": 307,
-            "file_text_char_start": 295098,
-            "file_text_char_end": 295101
+            "file_text_char_start": 295148,
+            "file_text_char_end": 295151
           }
         }
       ],
@@ -15821,10 +15836,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3613,
-        "line_end": 3618,
-        "file_text_char_start": 295138,
-        "file_text_char_end": 295545
+        "line_start": 3614,
+        "line_end": 3619,
+        "file_text_char_start": 295188,
+        "file_text_char_end": 295595
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15841,12 +15856,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3613,
-            "line_end": 3613,
+            "line_start": 3614,
+            "line_end": 3614,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 53,
-            "file_text_char_start": 295140,
-            "file_text_char_end": 295191
+            "file_text_char_start": 295190,
+            "file_text_char_end": 295241
           }
         }
       ],
@@ -15868,12 +15883,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3617,
-            "line_end": 3617,
+            "line_start": 3618,
+            "line_end": 3618,
             "bullet_text_char_start": 334,
             "bullet_text_char_end": 337,
-            "file_text_char_start": 295472,
-            "file_text_char_end": 295475
+            "file_text_char_start": 295522,
+            "file_text_char_end": 295525
           }
         }
       ],
@@ -15895,10 +15910,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3619,
-        "line_end": 3624,
-        "file_text_char_start": 295546,
-        "file_text_char_end": 295949
+        "line_start": 3620,
+        "line_end": 3625,
+        "file_text_char_start": 295596,
+        "file_text_char_end": 295999
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -15915,12 +15930,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3619,
-            "line_end": 3619,
+            "line_start": 3620,
+            "line_end": 3620,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 49,
-            "file_text_char_start": 295548,
-            "file_text_char_end": 295595
+            "file_text_char_start": 295598,
+            "file_text_char_end": 295645
           }
         }
       ],
@@ -15942,12 +15957,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3623,
-            "line_end": 3623,
+            "line_start": 3624,
+            "line_end": 3624,
             "bullet_text_char_start": 351,
             "bullet_text_char_end": 354,
-            "file_text_char_start": 295897,
-            "file_text_char_end": 295900
+            "file_text_char_start": 295947,
+            "file_text_char_end": 295950
           }
         },
         {
@@ -15957,12 +15972,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3623,
-            "line_end": 3623,
+            "line_start": 3624,
+            "line_end": 3624,
             "bullet_text_char_start": 358,
             "bullet_text_char_end": 361,
-            "file_text_char_start": 295904,
-            "file_text_char_end": 295907
+            "file_text_char_start": 295954,
+            "file_text_char_end": 295957
           }
         }
       ],
@@ -15985,10 +16000,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3625,
-        "line_end": 3628,
-        "file_text_char_start": 295950,
-        "file_text_char_end": 296215
+        "line_start": 3626,
+        "line_end": 3629,
+        "file_text_char_start": 296000,
+        "file_text_char_end": 296265
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -16005,12 +16020,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3625,
-            "line_end": 3625,
+            "line_start": 3626,
+            "line_end": 3626,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 64,
-            "file_text_char_start": 295952,
-            "file_text_char_end": 296014
+            "file_text_char_start": 296002,
+            "file_text_char_end": 296064
           }
         }
       ],
@@ -16032,12 +16047,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3627,
-            "line_end": 3627,
+            "line_start": 3628,
+            "line_end": 3628,
             "bullet_text_char_start": 220,
             "bullet_text_char_end": 223,
-            "file_text_char_start": 296170,
-            "file_text_char_end": 296173
+            "file_text_char_start": 296220,
+            "file_text_char_end": 296223
           }
         }
       ],
@@ -16059,10 +16074,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3629,
-        "line_end": 3632,
-        "file_text_char_start": 296216,
-        "file_text_char_end": 296503
+        "line_start": 3630,
+        "line_end": 3633,
+        "file_text_char_start": 296266,
+        "file_text_char_end": 296553
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -16079,12 +16094,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3629,
-            "line_end": 3629,
+            "line_start": 3630,
+            "line_end": 3630,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 49,
-            "file_text_char_start": 296218,
-            "file_text_char_end": 296265
+            "file_text_char_start": 296268,
+            "file_text_char_end": 296315
           }
         }
       ],
@@ -16106,12 +16121,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3631,
-            "line_end": 3631,
+            "line_start": 3632,
+            "line_end": 3632,
             "bullet_text_char_start": 204,
             "bullet_text_char_end": 207,
-            "file_text_char_start": 296420,
-            "file_text_char_end": 296423
+            "file_text_char_start": 296470,
+            "file_text_char_end": 296473
           }
         }
       ],
@@ -16133,10 +16148,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3633,
-        "line_end": 3636,
-        "file_text_char_start": 296504,
-        "file_text_char_end": 296793
+        "line_start": 3634,
+        "line_end": 3637,
+        "file_text_char_start": 296554,
+        "file_text_char_end": 296843
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -16153,12 +16168,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3633,
-            "line_end": 3633,
+            "line_start": 3634,
+            "line_end": 3634,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 41,
-            "file_text_char_start": 296506,
-            "file_text_char_end": 296545
+            "file_text_char_start": 296556,
+            "file_text_char_end": 296595
           }
         }
       ],
@@ -16180,12 +16195,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3636,
-            "line_end": 3636,
+            "line_start": 3637,
+            "line_end": 3637,
             "bullet_text_char_start": 234,
             "bullet_text_char_end": 237,
-            "file_text_char_start": 296738,
-            "file_text_char_end": 296741
+            "file_text_char_start": 296788,
+            "file_text_char_end": 296791
           }
         },
         {
@@ -16195,12 +16210,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3636,
-            "line_end": 3636,
+            "line_start": 3637,
+            "line_end": 3637,
             "bullet_text_char_start": 241,
             "bullet_text_char_end": 244,
-            "file_text_char_start": 296745,
-            "file_text_char_end": 296748
+            "file_text_char_start": 296795,
+            "file_text_char_end": 296798
           }
         }
       ],
@@ -16223,10 +16238,10 @@
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
-        "line_start": 3637,
-        "line_end": 3646,
-        "file_text_char_start": 296794,
-        "file_text_char_end": 297476
+        "line_start": 3638,
+        "line_end": 3647,
+        "file_text_char_start": 296844,
+        "file_text_char_end": 297526
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -16245,12 +16260,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3637,
-            "line_end": 3637,
+            "line_start": 3638,
+            "line_end": 3638,
             "bullet_text_char_start": 2,
             "bullet_text_char_end": 51,
-            "file_text_char_start": 296796,
-            "file_text_char_end": 296845
+            "file_text_char_start": 296846,
+            "file_text_char_end": 296895
           }
         },
         {
@@ -16260,12 +16275,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3638,
-            "line_end": 3638,
+            "line_start": 3639,
+            "line_end": 3639,
             "bullet_text_char_start": 58,
             "bullet_text_char_end": 107,
-            "file_text_char_start": 296852,
-            "file_text_char_end": 296901
+            "file_text_char_start": 296902,
+            "file_text_char_end": 296951
           }
         },
         {
@@ -16275,12 +16290,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3645,
-            "line_end": 3645,
+            "line_start": 3646,
+            "line_end": 3646,
             "bullet_text_char_start": 571,
             "bullet_text_char_end": 621,
-            "file_text_char_start": 297365,
-            "file_text_char_end": 297415
+            "file_text_char_start": 297415,
+            "file_text_char_end": 297465
           }
         }
       ],
@@ -16312,12 +16327,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3640,
-            "line_end": 3640,
+            "line_start": 3641,
+            "line_end": 3641,
             "bullet_text_char_start": 266,
             "bullet_text_char_end": 269,
-            "file_text_char_start": 297060,
-            "file_text_char_end": 297063
+            "file_text_char_start": 297110,
+            "file_text_char_end": 297113
           }
         },
         {
@@ -16327,12 +16342,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3644,
-            "line_end": 3644,
+            "line_start": 3645,
+            "line_end": 3645,
             "bullet_text_char_start": 503,
             "bullet_text_char_end": 506,
-            "file_text_char_start": 297297,
-            "file_text_char_end": 297300
+            "file_text_char_start": 297347,
+            "file_text_char_end": 297350
           }
         },
         {
@@ -16342,12 +16357,12 @@
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3644,
-            "line_end": 3644,
+            "line_start": 3645,
+            "line_end": 3645,
             "bullet_text_char_start": 515,
             "bullet_text_char_end": 518,
-            "file_text_char_start": 297309,
-            "file_text_char_end": 297312
+            "file_text_char_start": 297359,
+            "file_text_char_end": 297362
           }
         }
       ],

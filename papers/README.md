@@ -3048,9 +3048,10 @@ Implemented:
   pyproject license metadata, `papers/source_rights.json` policy markers,
   paper-source-rights module validators, paper-source-rights tests, and active
   TODO ownership while keeping third-party paper/source rights separate from
-  LibreEvolve's MIT repository license. It is not packaged license-file
-  verification, a complete third-party rights semantic map, license metadata
-  drift gating, paper-rights policy drift gating, or owner review signoff.
+  LibreEvolve's MIT repository license. It also records a bounded
+  source-rights claim-surface map from `papers/source_rights.json`. It is not
+  packaged license-file verification, license metadata drift gating,
+  paper-rights policy drift gating, or owner review signoff.
 - `papers/readme_ignore_policy_boundary.json`: README ignore-policy sidecar.
   It records `.gitignore` ignore rules, paper-manifest allowlist rules, run-
   artifact local-only policy, paper-PDF local-only policy, README Repository

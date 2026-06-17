@@ -1141,13 +1141,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     license metadata, `papers/source_rights.json` policy markers, paper-source-
     rights module validators, paper-source-rights tests, and this active TODO
     owner while keeping third-party paper/source rights separate from
-    LibreEvolve's MIT repository license.
+    LibreEvolve's MIT repository license. It also maps source-rights
+    reproduction policy, artifact classes, and claim surfaces from
+    `papers/source_rights.json`.
   - Current gap: the README-owned sidecar is a static consistency map, not a
     full rights or packaging verifier. It does not prove packaged license-file
-    inclusion in wheel/sdist metadata, map every third-party paper/source
-    rights policy semantically to every claim surface, enforce a drift gate
-    when project license metadata changes, enforce a drift gate when paper-
-    rights policy changes, or record owner review signoff.
+    inclusion in wheel/sdist metadata, enforce a drift gate when project
+    license metadata changes, enforce a drift gate when paper-rights policy
+    changes, or record owner review signoff.
   - Required result: add a README license consistency check or evidence map
     that validates the README link, license identifier, package metadata,
     included license file, and explicit separation from third-party paper and

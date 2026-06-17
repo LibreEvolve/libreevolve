@@ -9,7 +9,7 @@ from typing import Any
 
 README_LICENSE_BOUNDARY_SCHEMA = "libreevolve.readme_license_boundary.v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "readme_license_static_consistency_without_rights_drift_gate"
+    "readme_license_static_consistency_with_rights_surface_map_without_rights_drift_gate"
 )
 README_PATH = "README.md"
 LICENSE_PATH = "LICENSE"
@@ -55,7 +55,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "packaged_license_file_verification": "not_recorded_locally",
-    "third_party_rights_semantic_map": "not_recorded_locally",
     "license_metadata_drift_gate": "not_recorded_locally",
     "paper_rights_policy_drift_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
@@ -76,6 +75,7 @@ class ReadmeLicenseBoundaryValidation:
     missing_readme_marker_count: int
     evidence_anchor_count: int
     missing_evidence_anchor_count: int
+    rights_surface_map_count: int
     missing_evidence_count: int
     issues: list[ReadmeLicenseBoundaryIssue]
 
@@ -112,6 +112,7 @@ def readme_license_boundary_record(root: str | Path = ".") -> dict[str, Any]:
     ]
     pyproject_license = _pyproject_license(root_path / PYPROJECT_PATH)
     source_rights = _source_rights_summary(root_path / SOURCE_RIGHTS_PATH)
+    rights_surface_records = _rights_surface_records(source_rights)
     map_present = (
         not missing_readme_markers
         and not missing_evidence_anchors
@@ -120,6 +121,8 @@ def readme_license_boundary_record(root: str | Path = ".") -> dict[str, Any]:
         == "paper_derived_artifacts_must_carry_source_rights_and_reproduction_policy"
         and source_rights["must_separate_from_libreevolve_mit_license"] is True
         and source_rights["publication_ready_without_rights_review"] is False
+        and rights_surface_records
+        and all(record["map_status"] == "mapped" for record in rights_surface_records)
     )
     return {
         "schema": README_LICENSE_BOUNDARY_SCHEMA,
@@ -139,6 +142,14 @@ def readme_license_boundary_record(root: str | Path = ".") -> dict[str, Any]:
         "project_license_id": PROJECT_LICENSE_ID,
         "pyproject_license_id": pyproject_license,
         "source_rights_summary": source_rights,
+        "rights_surface_map_count": len(rights_surface_records),
+        "rights_surface_map_records": rights_surface_records,
+        "rights_surface_map_status": (
+            "all_source_rights_claim_surfaces_mapped"
+            if rights_surface_records
+            and all(record["map_status"] == "mapped" for record in rights_surface_records)
+            else "source_rights_claim_surface_map_incomplete"
+        ),
         "evidence_anchor_count": len(evidence_anchor_records),
         "missing_evidence_anchor_count": len(missing_evidence_anchors),
         "missing_evidence_anchor_records": missing_evidence_anchors,
@@ -155,11 +166,12 @@ def readme_license_boundary_record(root: str | Path = ".") -> dict[str, Any]:
             "the LICENSE file MIT text markers, pyproject license metadata, "
             "papers/source_rights.json policy markers, paper-source-rights "
             "module validators, paper-source-rights tests, and active TODO "
-            "ownership. It keeps third-party paper/source rights separate from "
-            "LibreEvolve's MIT repository license. It does not claim packaged "
-            "license-file verification, a complete third-party rights semantic "
-            "map, license metadata drift gating, paper-rights policy drift "
-            "gating, or owner review signoff."
+            "ownership. It also records a bounded third-party source-rights "
+            "claim-surface map from papers/source_rights.json. It keeps "
+            "third-party paper/source rights separate from LibreEvolve's MIT "
+            "repository license. It does not claim packaged license-file "
+            "verification, license metadata drift gating, paper-rights policy "
+            "drift gating, or owner review signoff."
         ),
     }
 
@@ -174,7 +186,7 @@ def validate_readme_license_boundary(
     )
     if read_issues:
         return ReadmeLicenseBoundaryValidation(
-            False, None, 0, 0, 0, 0, 0, read_issues
+            False, None, 0, 0, 0, 0, 0, 0, read_issues
         )
     assert isinstance(data, dict)
     expected = readme_license_boundary_record(root)
@@ -200,6 +212,9 @@ def validate_readme_license_boundary(
         "project_license_id",
         "pyproject_license_id",
         "source_rights_summary",
+        "rights_surface_map_count",
+        "rights_surface_map_records",
+        "rights_surface_map_status",
         "evidence_anchor_count",
         "missing_evidence_anchor_count",
         "missing_evidence_anchor_records",
@@ -214,6 +229,11 @@ def validate_readme_license_boundary(
         issues.append(_issue("missing_readme_license_evidence_anchor", "README license evidence anchors are incomplete"))
     if data.get("pyproject_license_id") != PROJECT_LICENSE_ID:
         issues.append(_issue("invalid_pyproject_license_id", "pyproject license must stay MIT"))
+    expected_surface_count = len(expected["source_rights_summary"].get("claim_surfaces", []))
+    if data.get("rights_surface_map_count") != expected_surface_count:
+        issues.append(_issue("invalid_rights_surface_map_count", "source-rights claim-surface map count changed"))
+    if data.get("rights_surface_map_status") != "all_source_rights_claim_surfaces_mapped":
+        issues.append(_issue("invalid_rights_surface_map_status", "source-rights claim-surface map is incomplete"))
     if data.get("readme_license_map_status") != "readme_license_static_map_present":
         issues.append(_issue("invalid_readme_license_map_status", "README license static map must be present"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -225,6 +245,7 @@ def validate_readme_license_boundary(
         not isinstance(boundary_text, str)
         or "README License heading and MIT sentence" not in boundary_text
         or "third-party paper/source rights separate" not in boundary_text
+        or "bounded third-party source-rights claim-surface map" not in boundary_text
         or "does not claim packaged license-file verification" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate README license consistency from rights drift proof"))
@@ -235,6 +256,7 @@ def validate_readme_license_boundary(
         missing_readme_marker_count=data.get("missing_readme_marker_count") if isinstance(data.get("missing_readme_marker_count"), int) else 0,
         evidence_anchor_count=data.get("evidence_anchor_count") if isinstance(data.get("evidence_anchor_count"), int) else 0,
         missing_evidence_anchor_count=data.get("missing_evidence_anchor_count") if isinstance(data.get("missing_evidence_anchor_count"), int) else 0,
+        rights_surface_map_count=data.get("rights_surface_map_count") if isinstance(data.get("rights_surface_map_count"), int) else 0,
         missing_evidence_count=missing_count,
         issues=issues,
     )
@@ -253,6 +275,7 @@ def render_readme_license_boundary_summary(boundary: dict[str, Any]) -> str:
         f"| missing_readme_marker_count | {validation.missing_readme_marker_count} |",
         f"| evidence_anchor_count | {validation.evidence_anchor_count} |",
         f"| missing_evidence_anchor_count | {validation.missing_evidence_anchor_count} |",
+        f"| rights_surface_map_count | {validation.rights_surface_map_count} |",
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
     ]
     if validation.issues:
@@ -278,6 +301,9 @@ def _source_rights_summary(path: Path) -> dict[str, Any]:
             "summary_status": "source_rights_unreadable_or_missing",
             "source_rights_policy": None,
             "source_rights_count": None,
+            "artifact_classes": [],
+            "claim_surfaces": [],
+            "reproduction_policy": None,
             "must_separate_from_libreevolve_mit_license": None,
             "publication_ready_without_rights_review": None,
         }
@@ -291,6 +317,9 @@ def _source_rights_summary(path: Path) -> dict[str, Any]:
         "summary_status": "source_rights_summary_recorded",
         "source_rights_policy": data.get("source_rights_policy"),
         "source_rights_count": data.get("source_rights_count"),
+        "artifact_classes": first_policy.get("artifact_classes", []),
+        "claim_surfaces": first_policy.get("claim_surfaces", []),
+        "reproduction_policy": first_policy.get("reproduction_policy"),
         "must_separate_from_libreevolve_mit_license": first_policy.get(
             "must_separate_from_libreevolve_mit_license"
         ),
@@ -298,6 +327,43 @@ def _source_rights_summary(path: Path) -> dict[str, Any]:
             "publication_ready_without_rights_review"
         ),
     }
+
+
+def _rights_surface_records(source_rights: dict[str, Any]) -> list[dict[str, Any]]:
+    claim_surfaces = source_rights.get("claim_surfaces")
+    artifact_classes = source_rights.get("artifact_classes")
+    if not isinstance(claim_surfaces, list) or not all(
+        isinstance(surface, str) for surface in claim_surfaces
+    ):
+        return []
+    if not isinstance(artifact_classes, list) or not all(
+        isinstance(artifact_class, str) for artifact_class in artifact_classes
+    ):
+        artifact_classes = []
+    reproduction_policy = source_rights.get("reproduction_policy")
+    must_separate = source_rights.get("must_separate_from_libreevolve_mit_license")
+    publication_ready = source_rights.get("publication_ready_without_rights_review")
+    records: list[dict[str, Any]] = []
+    for surface in claim_surfaces:
+        mapped = (
+            bool(artifact_classes)
+            and reproduction_policy
+            == "third_party_paper_source_rights_require_separate_review_before_reproduction"
+            and must_separate is True
+            and publication_ready is False
+        )
+        records.append(
+            {
+                "claim_surface": surface,
+                "source_rights_policy": source_rights.get("source_rights_policy"),
+                "artifact_classes": list(artifact_classes),
+                "reproduction_policy": reproduction_policy,
+                "must_separate_from_libreevolve_mit_license": must_separate,
+                "publication_ready_without_rights_review": publication_ready,
+                "map_status": "mapped" if mapped else "missing_policy_field",
+            }
+        )
+    return records
 
 
 def _marker_record(record_id: str, path: str, text: str, marker: str) -> dict[str, Any]:

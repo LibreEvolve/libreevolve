@@ -42,6 +42,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ledger_owner_inventory",
     "active_completed_marker_policy",
     "exact_normalized_title_duplicate_scan",
+    "exact_stale_completed_duplicate_scan",
     "canonical_gap_ids",
     "derivative_relationships",
     "cross_document_rollup_rules",
@@ -107,6 +108,9 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
             _task_records(root_path, group["completed_path"], group["owner_id"], "completed")
         )
     duplicate_groups = _duplicate_title_groups(task_records)
+    stale_completed_duplicate_groups = _stale_completed_duplicate_groups(
+        duplicate_groups
+    )
     active_count = sum(record["active_count"] for record in owner_records)
     completed_count = sum(record["completed_count"] for record in owner_records)
     total_count = active_count + completed_count
@@ -130,16 +134,32 @@ def todo_ledger_ownership_boundary_record(root: str | Path = ".") -> dict[str, A
         "duplicate_detection_policy": "exact_normalized_title_only",
         "likely_duplicate_title_group_count": len(duplicate_groups),
         "likely_duplicate_title_groups": duplicate_groups,
+        "exact_stale_completed_duplicate_detection_policy": (
+            "completed_record_with_active_same_normalized_title"
+        ),
+        "exact_stale_completed_duplicate_group_count": len(
+            stale_completed_duplicate_groups
+        ),
+        "exact_stale_completed_duplicate_groups": stale_completed_duplicate_groups,
+        "exact_stale_completed_duplicate_status": (
+            "no_exact_stale_completed_duplicates_detected"
+            if not stale_completed_duplicate_groups
+            else "exact_stale_completed_duplicates_detected"
+        ),
         "canonical_gap_completion_status": "not_available_without_gap_ids",
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records TODO-ledger owner files, active/completed "
             "marker policy, raw checklist counts, and an exact normalized-title "
-            "duplicate scan. It does not claim canonical underlying-gap ids, "
+            "duplicate scan, including a bounded exact stale-completed duplicate "
+            "detector that only compares completed records against active records "
+            "with the same normalized title. It does not claim canonical "
+            "underlying-gap ids, "
             "derivative cross-document relationships, rollup rules, source or "
-            "paper anchor mappings, implementation evidence links, stale "
-            "duplicate detection, or canonical-gap completion percentages."
+            "paper anchor mappings, implementation evidence links, semantic "
+            "stale duplicate detection, orphan derivative detection, or "
+            "canonical-gap completion percentages."
         ),
     }
 
@@ -174,6 +194,10 @@ def validate_todo_ledger_ownership_boundary(
         "completed_ledger_active_marker_count",
         "likely_duplicate_title_group_count",
         "likely_duplicate_title_groups",
+        "exact_stale_completed_duplicate_detection_policy",
+        "exact_stale_completed_duplicate_group_count",
+        "exact_stale_completed_duplicate_groups",
+        "exact_stale_completed_duplicate_status",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current TODO ledgers"))
@@ -189,6 +213,7 @@ def validate_todo_ledger_ownership_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim canonical underlying-gap ids" not in boundary_text
+        or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "canonical-gap completion percentages" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate raw ledgers from canonical gap completion"))
@@ -294,6 +319,27 @@ def _duplicate_title_groups(task_records: list[dict[str, Any]]) -> list[dict[str
             }
         )
     return duplicate_groups
+
+
+def _stale_completed_duplicate_groups(
+    duplicate_groups: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    stale_groups: list[dict[str, Any]] = []
+    for group in duplicate_groups:
+        records = group["records"]
+        has_active = any(record["status"] == "active" for record in records)
+        has_completed = any(record["status"] == "completed" for record in records)
+        if not has_active or not has_completed:
+            continue
+        stale_groups.append(
+            {
+                "normalized_title": group["normalized_title"],
+                "record_count": group["record_count"],
+                "owner_ids": group["owner_ids"],
+                "records": records,
+            }
+        )
+    return stale_groups
 
 
 def _marker_policy_status(owner_records: list[dict[str, Any]]) -> str:

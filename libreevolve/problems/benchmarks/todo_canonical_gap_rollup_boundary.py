@@ -14,7 +14,7 @@ TODO_CANONICAL_GAP_ROLLUP_BOUNDARY_SCHEMA = (
     "libreevolve.todo_canonical_gap_rollup_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_canonical_gap_rollup_gate_without_underlying_gap_registry"
+    "bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector"
 )
 SOURCE_CANONICAL_GAP_BOUNDARY_INPUT = "papers/todo_canonical_gap_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -254,6 +254,12 @@ def todo_canonical_gap_rollup_boundary_record(root: str | Path = ".") -> dict[st
         "source_canonical_gap_completion_status": source_boundary[
             "canonical_gap_completion_status"
         ],
+        "source_exact_stale_completed_duplicate_group_count": source_boundary[
+            "exact_stale_completed_duplicate_group_count"
+        ],
+        "source_exact_stale_completed_duplicate_status": source_boundary[
+            "exact_stale_completed_duplicate_status"
+        ],
         "rollup_criterion_count": len(records),
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
@@ -266,7 +272,8 @@ def todo_canonical_gap_rollup_boundary_record(root: str | Path = ".") -> dict[st
             "derivative documentation relationships, source/paper anchor "
             "mapping, implementation evidence links, cross-document rollup "
             "rules, semantic duplicate detection, stale completed duplicate "
-            "detection, orphaned derivative detection, canonical gap completion "
+            "detection beyond exact normalized-title matches, orphaned "
+            "derivative detection, canonical gap completion "
             "percent, raw-count inflation report, or owner review signoff."
         ),
     }
@@ -300,6 +307,8 @@ def validate_todo_canonical_gap_rollup_boundary(
         "source_sidecar_ref_count",
         "source_missing_evidence_count",
         "source_canonical_gap_completion_status",
+        "source_exact_stale_completed_duplicate_group_count",
+        "source_exact_stale_completed_duplicate_status",
         "rollup_criterion_count",
         "sidecar_ref_count",
         "active_todo_ref_count",
@@ -313,6 +322,7 @@ def validate_todo_canonical_gap_rollup_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim canonical gap ids" not in boundary_text
+        or "exact normalized-title matches" not in boundary_text
         or "canonical gap completion percent" not in boundary_text
         or "owner review signoff" not in boundary_text
     ):

@@ -14,7 +14,7 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_canonical_gap_rollup_gate_without_underlying_gap_registry"
+        == "bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector"
     )
     assert boundary["schema"] == TODO_CANONICAL_GAP_ROLLUP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -28,6 +28,11 @@ def test_todo_canonical_gap_rollup_accepts_bounded_gate():
     assert boundary["source_missing_evidence_count"] == 12
     assert boundary["source_canonical_gap_completion_status"] == (
         "not_available_without_gap_ids"
+    )
+    assert boundary["source_exact_stale_completed_duplicate_group_count"] == 0
+    assert (
+        boundary["source_exact_stale_completed_duplicate_status"]
+        == "no_exact_stale_completed_duplicates_detected"
     )
     assert boundary["rollup_criterion_count"] == 8
     assert boundary["sidecar_ref_count"] == 16
@@ -77,6 +82,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "canonical_gap_rollup_ready"
     boundary["rollup_criterion_count"] = 7
     boundary["source_criterion_count"] = 8
+    boundary["source_exact_stale_completed_duplicate_group_count"] = 1
     boundary["rollup_criteria"][0]["sidecar_refs"][0]["exists"] = False
     boundary["rollup_criteria"][0]["active_todo_refs"][0][
         "required_phrase_present"
@@ -91,6 +97,7 @@ def test_todo_canonical_gap_rollup_rejects_overclaim_and_drift():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_source_criterion_count" in codes
+    assert "invalid_source_exact_stale_completed_duplicate_group_count" in codes
     assert "invalid_rollup_criterion_count" in codes
     assert "invalid_rollup_criteria" in codes
     assert "invalid_missing_evidence_canonical_gap_ids" in codes
@@ -106,7 +113,7 @@ def test_render_todo_canonical_gap_rollup_summary_reports_shape():
     assert "TODO canonical gap rollup boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_canonical_gap_rollup_gate_without_underlying_gap_registry |"
+        "| boundary_status | bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector |"
         in summary
     )
     assert "| rollup_criterion_count | 8 |" in summary

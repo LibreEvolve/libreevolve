@@ -1275,8 +1275,10 @@ Important limits:
   certification that readiness percentages can be published as semantic
   AlphaEvolve implementation parity. `papers/todo_ledger_ownership_boundary.json`
   records TODO owner files, active/completed counts, active-ledger checked
-  marker drift, and exact normalized-title duplicate groups while keeping
-  canonical underlying-gap ids and canonical completion percentages absent;
+  marker drift, exact normalized-title duplicate groups, and a bounded exact
+  stale-completed duplicate detector with zero active/completed title twins
+  while keeping semantic duplicate/orphan detection, canonical underlying-gap
+  ids, and canonical completion percentages absent;
   those boundaries are tracked by
   `papers/todo_ledger_ownership_boundary.json`,
   `papers/todo_canonical_gap_boundary.json`,

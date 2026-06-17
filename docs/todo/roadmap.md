@@ -98,7 +98,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     completed TODO evidence paths for paper-index rows.
     `papers/todo_ledger_ownership_boundary.json` now records the four owner
     ledgers, active/completed counts, active-versus-completed marker drift,
-    raw checklist completion, and an exact normalized-title duplicate scan.
+    raw checklist completion, an exact normalized-title duplicate scan, and a
+    bounded exact stale-completed duplicate detector with zero active/completed
+    title twins.
     `papers/roadmap_readiness_boundary.json` separately records the weighted
     TODO-ledger readiness model. The current raw and weighted percentages are
     still derived from checklist counts only, while active TODOs can
@@ -119,8 +121,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     canonical underlying-gap registry, and the rollup sidecar is a bounded
     publication gate rather than a canonical completion model. There is still
     no canonical underlying-gap id, duplicate/derivative relationship registry,
-    consolidation report, semantic duplicate detector, or stale-duplicate
-    detector across active and completed TODO ledgers. A newly identified
+    consolidation report, semantic duplicate detector, semantic stale-duplicate
+    detector beyond exact title matches, or orphaned-derivative detector across
+    active and completed TODO ledgers. A newly identified
     problem can be counted multiple times, a completed document-specific TODO
     can leave its implementation owner ambiguous, and repeated audit slices
     can inflate the denominator without proving that a distinct AlphaEvolve
@@ -129,10 +132,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rollup sidecar: canonical gap ids, canonical owner assignments, derivative
     documentation relationships, source/paper anchor mapping, implementation
     evidence links, cross-document rollup rules, semantic duplicate detection,
-    stale completed duplicate detection, orphaned derivative detection,
-    canonical gap completion percent, raw-count inflation report, and owner
-    review signoff; then publish raw checklist completion separately from
-    canonical underlying-gap completion.
+    stale completed duplicate detection beyond exact title matches, orphaned
+    derivative detection, canonical gap completion percent, raw-count
+    inflation report, and owner review signoff; then publish raw checklist
+    completion separately from canonical underlying-gap completion.
 
 ## Missing Roadmap Items
 

@@ -14,7 +14,7 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_todo_canonical_gap_matrix_without_underlying_gap_rollup"
+        == "bounded_todo_canonical_gap_matrix_with_exact_stale_duplicate_detector"
     )
     assert boundary["schema"] == TODO_CANONICAL_GAP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -23,6 +23,11 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     assert boundary["raw_todo_ledger_total_count"] == 5183
     assert boundary["exact_duplicate_group_count"] == 123
     assert boundary["duplicate_detection_policy"] == "exact_normalized_title_only"
+    assert boundary["exact_stale_completed_duplicate_group_count"] == 0
+    assert (
+        boundary["exact_stale_completed_duplicate_status"]
+        == "no_exact_stale_completed_duplicates_detected"
+    )
     assert boundary["canonical_gap_completion_status"] == "not_available_without_gap_ids"
     assert boundary["criterion_count"] == 9
     assert boundary["active_todo_ref_count"] == 13
@@ -70,6 +75,7 @@ def test_todo_canonical_gap_boundary_rejects_overclaim_and_drift():
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "canonical_gap_rollup_ready"
     boundary["criterion_count"] = 8
+    boundary["exact_stale_completed_duplicate_group_count"] = 1
     boundary["criterion_records"][0]["readiness_status"] = "ready"
     boundary["missing_evidence"]["canonical_gap_ids"] = "recorded"
     boundary["required_evidence_fields"] = ["canonical_gap_criteria"]
@@ -81,6 +87,7 @@ def test_todo_canonical_gap_boundary_rejects_overclaim_and_drift():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_criterion_count" in codes
+    assert "invalid_exact_stale_completed_duplicate_group_count" in codes
     assert "invalid_criterion_records" in codes
     assert "invalid_missing_evidence_canonical_gap_ids" in codes
     assert "missing_required_evidence_field" in codes
@@ -94,7 +101,7 @@ def test_render_todo_canonical_gap_boundary_summary_reports_shape():
     assert "TODO canonical gap boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_todo_canonical_gap_matrix_without_underlying_gap_rollup |"
+        "| boundary_status | bounded_todo_canonical_gap_matrix_with_exact_stale_duplicate_detector |"
         in summary
     )
     assert "| criterion_count | 9 |" in summary

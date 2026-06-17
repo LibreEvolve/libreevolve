@@ -12,7 +12,7 @@ from libreevolve.problems.benchmarks.todo_ledger_ownership_boundary import (
 
 TODO_CANONICAL_GAP_BOUNDARY_SCHEMA = "libreevolve.todo_canonical_gap_boundary.v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_todo_canonical_gap_matrix_without_underlying_gap_rollup"
+    "bounded_todo_canonical_gap_matrix_with_exact_stale_duplicate_detector"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "canonical_gap_criteria",
@@ -250,6 +250,12 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
         ],
         "exact_duplicate_group_count": ownership["likely_duplicate_title_group_count"],
         "duplicate_detection_policy": ownership["duplicate_detection_policy"],
+        "exact_stale_completed_duplicate_group_count": ownership[
+            "exact_stale_completed_duplicate_group_count"
+        ],
+        "exact_stale_completed_duplicate_status": ownership[
+            "exact_stale_completed_duplicate_status"
+        ],
         "canonical_gap_completion_status": "not_available_without_gap_ids",
         "criterion_count": len(records),
         "active_todo_ref_count": active_todo_ref_count,
@@ -260,11 +266,13 @@ def todo_canonical_gap_boundary_record(root: str | Path = ".") -> dict[str, Any]
         "claim_boundary": (
             "This boundary records a TODO-ledger canonical-gap readiness matrix "
             "over the current raw owner-ledger counts and exact duplicate-title "
-            "groups. It does not claim canonical gap ids, canonical owner "
+            "groups, plus a bounded exact stale-completed duplicate detector "
+            "from the ownership sidecar. It does not claim canonical gap ids, canonical owner "
             "assignments, derivative documentation relationships, source or "
             "paper anchor mappings, implementation evidence links, cross-"
             "document rollup rules, semantic duplicate detection, stale "
-            "completed duplicate detection, orphaned derivative detection, raw-"
+            "completed duplicate detection beyond exact title matches, "
+            "orphaned derivative detection, raw-"
             "count inflation reporting, canonical gap completion percentages, "
             "or owner review signoff."
         ),
@@ -297,6 +305,8 @@ def validate_todo_canonical_gap_boundary(
         "raw_todo_ledger_completion_percent",
         "exact_duplicate_group_count",
         "duplicate_detection_policy",
+        "exact_stale_completed_duplicate_group_count",
+        "exact_stale_completed_duplicate_status",
         "canonical_gap_completion_status",
         "criterion_count",
         "active_todo_ref_count",
@@ -311,6 +321,7 @@ def validate_todo_canonical_gap_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim canonical gap ids" not in boundary_text
+        or "bounded exact stale-completed duplicate detector" not in boundary_text
         or "semantic duplicate detection" not in boundary_text
         or "canonical gap completion percentages" not in boundary_text
     ):

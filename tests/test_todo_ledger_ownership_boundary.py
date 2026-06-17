@@ -30,6 +30,16 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     )
     assert boundary["duplicate_detection_policy"] == "exact_normalized_title_only"
     assert boundary["likely_duplicate_title_group_count"] == 123
+    assert (
+        boundary["exact_stale_completed_duplicate_detection_policy"]
+        == "completed_record_with_active_same_normalized_title"
+    )
+    assert boundary["exact_stale_completed_duplicate_group_count"] == 0
+    assert boundary["exact_stale_completed_duplicate_groups"] == []
+    assert (
+        boundary["exact_stale_completed_duplicate_status"]
+        == "no_exact_stale_completed_duplicates_detected"
+    )
     assert boundary["canonical_gap_completion_status"] == "not_available_without_gap_ids"
     owner_ids = {record["owner_id"] for record in boundary["owner_records"]}
     assert owner_ids == {"code", "papers", "readme", "roadmap"}
@@ -53,6 +63,10 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     boundary["missing_evidence"]["canonical_gap_ids"] = "recorded"
     boundary["owner_records"][0]["active_count"] = 0
     boundary["likely_duplicate_title_groups"] = []
+    boundary["exact_stale_completed_duplicate_group_count"] = 1
+    boundary["exact_stale_completed_duplicate_status"] = (
+        "exact_stale_completed_duplicates_detected"
+    )
     boundary["required_evidence_fields"] = ["ledger_owner_inventory"]
 
     validation = validate_todo_ledger_ownership_boundary(boundary)
@@ -65,6 +79,8 @@ def test_todo_ledger_ownership_boundary_rejects_canonical_gap_overclaim():
     assert "invalid_missing_evidence_canonical_gap_ids" in codes
     assert "invalid_owner_records" in codes
     assert "invalid_likely_duplicate_title_groups" in codes
+    assert "invalid_exact_stale_completed_duplicate_group_count" in codes
+    assert "invalid_exact_stale_completed_duplicate_status" in codes
     assert "missing_required_evidence_field" in codes
 
 

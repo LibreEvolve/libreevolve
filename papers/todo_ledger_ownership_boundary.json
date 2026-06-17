@@ -2,10 +2,14 @@
   "active_ledger_completed_marker_count": 0,
   "boundary_status": "ledger_owner_inventory_without_canonical_gap_deduplication",
   "canonical_gap_completion_status": "not_available_without_gap_ids",
-  "claim_boundary": "This boundary records TODO-ledger owner files, active/completed marker policy, raw checklist counts, and an exact normalized-title duplicate scan. It does not claim canonical underlying-gap ids, derivative cross-document relationships, rollup rules, source or paper anchor mappings, implementation evidence links, stale duplicate detection, or canonical-gap completion percentages.",
+  "claim_boundary": "This boundary records TODO-ledger owner files, active/completed marker policy, raw checklist counts, and an exact normalized-title duplicate scan, including a bounded exact stale-completed duplicate detector that only compares completed records against active records with the same normalized title. It does not claim canonical underlying-gap ids, derivative cross-document relationships, rollup rules, source or paper anchor mappings, implementation evidence links, semantic stale duplicate detection, orphan derivative detection, or canonical-gap completion percentages.",
   "claim_ready": false,
   "completed_ledger_active_marker_count": 0,
   "duplicate_detection_policy": "exact_normalized_title_only",
+  "exact_stale_completed_duplicate_detection_policy": "completed_record_with_active_same_normalized_title",
+  "exact_stale_completed_duplicate_group_count": 0,
+  "exact_stale_completed_duplicate_groups": [],
+  "exact_stale_completed_duplicate_status": "no_exact_stale_completed_duplicates_detected",
   "likely_duplicate_title_group_count": 123,
   "likely_duplicate_title_groups": [
     {
@@ -3648,6 +3652,7 @@
     "ledger_owner_inventory",
     "active_completed_marker_policy",
     "exact_normalized_title_duplicate_scan",
+    "exact_stale_completed_duplicate_scan",
     "canonical_gap_ids",
     "derivative_relationships",
     "cross_document_rollup_rules",

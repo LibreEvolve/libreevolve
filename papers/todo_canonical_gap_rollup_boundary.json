@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 16,
-  "boundary_status": "bounded_canonical_gap_rollup_gate_without_underlying_gap_registry",
-  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection, orphaned derivative detection, canonical gap completion percent, raw-count inflation report, or owner review signoff.",
+  "boundary_status": "bounded_canonical_gap_rollup_gate_with_exact_stale_duplicate_detector",
+  "claim_boundary": "This boundary records a canonical-gap rollup publication gate. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source/paper anchor mapping, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact normalized-title matches, orphaned derivative detection, canonical gap completion percent, raw-count inflation report, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "canonical_gap_completion_percent": "not_recorded_locally",
@@ -292,6 +292,8 @@
   "source_canonical_gap_boundary_input": "papers/todo_canonical_gap_boundary.json",
   "source_canonical_gap_completion_status": "not_available_without_gap_ids",
   "source_criterion_count": 9,
+  "source_exact_stale_completed_duplicate_group_count": 0,
+  "source_exact_stale_completed_duplicate_status": "no_exact_stale_completed_duplicates_detected",
   "source_missing_evidence_count": 12,
   "source_sidecar_ref_count": 14
 }

@@ -3161,10 +3161,12 @@ Implemented:
 - `papers/todo_ledger_ownership_boundary.json`: TODO-ledger ownership sidecar
   with the four owner files, active/completed counts, active-ledger checked
   marker drift, raw checklist completion, and exact normalized-title duplicate
-  groups. It is not evidence of canonical underlying-gap ids,
+  groups. It now also records a bounded exact stale-completed duplicate
+  detector with zero active/completed title twins. It is not evidence of
+  canonical underlying-gap ids,
   derivative/documentation relationships, rollup rules, source/paper anchor
-  mappings, implementation evidence links, stale duplicate detection, or
-  canonical-gap completion percentages.
+  mappings, implementation evidence links, semantic stale duplicate detection,
+  orphan derivative detection, or canonical-gap completion percentages.
 - `papers/todo_canonical_gap_boundary.json`: TODO canonical-gap readiness
   sidecar with nine criteria for canonical gap ids, canonical owner ledgers,
   derivative relationships, source/paper anchor mapping, implementation
@@ -3173,9 +3175,9 @@ Implemented:
   not evidence of canonical gap ids, canonical owner assignments, derivative
   documentation relationships, source or paper anchor mappings,
   implementation evidence links, cross-document rollup rules, semantic
-  duplicate detection, stale completed duplicate detection, orphaned
-  derivative detection, raw-count inflation reporting, canonical gap
-  completion percentages, or owner review signoff.
+  duplicate detection, stale completed duplicate detection beyond exact title
+  matches, orphaned derivative detection, raw-count inflation reporting,
+  canonical gap completion percentages, or owner review signoff.
 - `papers/todo_canonical_gap_rollup_boundary.json`: TODO canonical-gap rollup
   sidecar with eight criteria for canonical gap registry, canonical owner
   policy, derivative relationships, source and implementation evidence links,

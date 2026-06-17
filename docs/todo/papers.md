@@ -5176,17 +5176,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     marks the Co-Scientist and AlphaEvolve agent feature as preview/Pre-GA,
     says access is restricted, and states that account teams provide detailed
     product documentation after access is granted.
-  - Current gap: `papers/alphaevolve_2026_impact_boundary.json` records the
-    Google Cloud private-preview post, AlphaEvolve Service API Early Access
+  - Current gap: `papers/alphaevolve_cloud_access_boundary.json` now records
+    the Google Cloud private-preview post, AlphaEvolve Service API Early Access
     surface, Gemini Enterprise Pre-GA docs, restricted account-team access,
-    and missing `cloud_product_api_console_billing_artifacts` only as generic
-    product/source boundaries. No dedicated TODO, HTML/PDF/source snapshot set,
-    Cloud launch post hash, Service API endpoint/schema inventory, Early
-    Access eligibility evidence, private-preview terms record, Gemini
-    Enterprise Pre-GA terms snapshot, account-team access handoff artifact,
-    console/API/billing screenshot inventory, customer availability matrix,
-    managed-agent workflow semantics, or independent availability check exists
-    for the product/access claims.
+    account-team documentation boundary, and Google Keyword customer-impact
+    context with source byte counts and SHA-256 hashes. Service API endpoint/
+    schema inventory, auth model, Early Access eligibility evidence, private-
+    preview terms record, account-team access handoff artifact, console/API/
+    billing screenshot inventory, customer availability matrix, managed-agent
+    execution transcript/workflow semantics, security/data-use terms, external
+    account availability check, and a local Cloud AlphaEvolve provider adapter
+    remain missing for the product/access claims.
   - Required result: add product-surface evidence before any README, ROADMAP,
     paper index, or release-note wording treats Cloud AlphaEvolve as locally
     usable or implemented: Cloud blog URL/date/authors, DeepMind impact

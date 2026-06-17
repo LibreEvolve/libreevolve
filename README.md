@@ -42,7 +42,8 @@ Important limits:
   application evidence.
 - LibreEvolve is not the Google Cloud AlphaEvolve Service API, not a Gemini
   Enterprise managed agent, and not evidence of access to AlphaEvolve private
-  preview or Pre-GA product surfaces.
+  preview or Pre-GA product surfaces; `papers/alphaevolve_cloud_access_boundary.json`
+  records official source snapshots for those access claims only.
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.

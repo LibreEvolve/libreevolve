@@ -6051,10 +6051,13 @@ sidecars, tests, and active TODOs.
     AlphaEvolve private preview, the AlphaEvolve Service API Early Access
     Program, the Gemini Enterprise Co-Scientist/AlphaEvolve Pre-GA restricted-
     access docs, and the Google Keyword one-year update as product/source
-    surfaces rather than local runtime support. README, ROADMAP, and
-    `papers/README.md` keep these as newer official impact claims and product
-    availability surfaces rather than implemented LibreEvolve behavior or
-    original AlphaEvolve specification evidence.
+    surfaces rather than local runtime support. `papers/alphaevolve_cloud_access_boundary.json`
+    now records the official Google Cloud, Gemini Enterprise, and Google
+    Keyword product/access source snapshots with retrieval byte counts and
+    SHA-256 hashes. README, ROADMAP, and `papers/README.md` keep these as newer
+    official impact claims and product availability surfaces rather than
+    implemented LibreEvolve behavior or original AlphaEvolve specification
+    evidence.
   - Required result: implement or explicitly benchmark the named domains before
     promoting impact claims: local DeepConsensus, AC OPF, Earth AI, Willow,
     public-gallery/math, TPU-design, cache-policy, Spanner, compiler-storage,
@@ -6065,10 +6068,11 @@ sidecars, tests, and active TODOs.
     availability scope, UI/API artifact inventory, rollout/owner evidence, and
     release-note gates that distinguish source-reported AlphaEvolve deployment
     from LibreEvolve feature support. Product-surface parity additionally
-    requires Cloud Service API documentation snapshots, private-preview/Early
-    Access eligibility evidence, Pre-GA terms status, account-team access
-    boundaries, console/API/billing artifacts, customer-availability snapshots,
-    and managed-agent operational semantics before any Cloud AlphaEvolve or
+    requires Cloud Service API endpoint/schema and auth documentation,
+    private-preview/Early Access eligibility evidence, Pre-GA terms status,
+    account-team handoff artifacts, console/API/billing artifacts, customer-
+    availability snapshots, security/data-use terms, managed-agent operational
+    semantics, and a local provider adapter before any Cloud AlphaEvolve or
     Gemini Enterprise claims can be treated as implemented.
 
 - [ ] Implement AlphaEvolve FHE-on-TPU benchmark boundary beyond paper cache

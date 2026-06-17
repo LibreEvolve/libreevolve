@@ -35,6 +35,10 @@ from libreevolve.problems.benchmarks.alphaevolve_2026_impact_boundary import (
     alphaevolve_2026_impact_boundary_record,
     validate_alphaevolve_2026_impact_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_cloud_access_boundary import (
+    alphaevolve_cloud_access_boundary_record,
+    validate_alphaevolve_cloud_access_boundary,
+)
 from libreevolve.problems.benchmarks.arxiv_abstract_snapshot import (
     alphaevolve_arxiv_abstract_snapshot_record,
     validate_alphaevolve_arxiv_abstract_snapshot,
@@ -1229,6 +1233,7 @@ SUMS_DIFFERENCES_BOUNDARY_FILE = "papers/sums_differences_boundary.json"
 SUMS_DIFFERENCES_SEQUENCE_BOUNDARY_FILE = "papers/sums_differences_sequence_boundary.json"
 UCB1_BOUNDARY_FILE = "papers/ucb1_boundary.json"
 ALPHAEVOLVE_2026_IMPACT_BOUNDARY_FILE = EXPECTED_IMPACT_BOUNDARY_FILE
+ALPHAEVOLVE_CLOUD_ACCESS_BOUNDARY_FILE = "papers/alphaevolve_cloud_access_boundary.json"
 BILATERAL_TRADE_BOUNDARY_FILE = "papers/bilateral_trade_boundary.json"
 EXAMPLE_BENCHMARK_SCOPE_FILE = "papers/example_benchmark_scope.json"
 MATH_OUTCOME_BOUNDARY_FILE = "papers/math_outcome_boundary.json"
@@ -1957,6 +1962,7 @@ def validate_paper_manifest(
     issues.extend(_validate_sums_differences_sequence_boundary(root_path))
     issues.extend(_validate_ucb1_boundary(root_path))
     issues.extend(_validate_alphaevolve_2026_impact_boundary(root_path))
+    issues.extend(_validate_alphaevolve_cloud_access_boundary(root_path))
     issues.extend(_validate_bilateral_trade_boundary(root_path))
 
     if set(csv_by_id) - seen_ids:
@@ -10380,6 +10386,38 @@ def _validate_alphaevolve_2026_impact_boundary(root_path: Path) -> list[PaperMan
             f"alphaevolve_2026_impact_boundary_{issue.code}",
             issue.message,
             "alphaevolve_2026_impact",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_cloud_access_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_CLOUD_ACCESS_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_cloud_access_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_cloud_access_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_CLOUD_ACCESS_BOUNDARY_FILE} must emit "
+                        "Google Cloud AlphaEvolve product/access claim boundaries"
+                    ),
+                    "alphaevolve_cloud_access",
+                )
+            ]
+    report = validate_alphaevolve_cloud_access_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_cloud_access_boundary_{issue.code}",
+            issue.message,
+            "alphaevolve_cloud_access",
         )
         for issue in report.issues
     ]

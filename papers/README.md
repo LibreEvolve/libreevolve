@@ -2514,11 +2514,18 @@ Implemented:
   local fixtures, benchmark reports, independent verification, and operational
   lifecycle evidence for pilot-to-core adoption, regular-tool use, Google
   Cloud/commercial scope, UI/API artifacts, rollout owners, and release-note
-  claim gates exist. It also keeps the Google Cloud AlphaEvolve private-preview
-  launch, AlphaEvolve Service API Early Access access model, Gemini Enterprise
-  Pre-GA restricted-access docs, account-team documentation boundary,
-  console/API/billing artifacts, customer availability, and managed-agent
-  workflow semantics source-scoped until product-surface evidence exists.
+  claim gates exist.
+- `papers/alphaevolve_cloud_access_boundary.json`: official Google Cloud,
+  Gemini Enterprise, and Google Keyword product/access sidecar, not local
+  LibreEvolve provider support or original white-paper parity. It records the
+  Google Cloud AlphaEvolve private-preview launch post, the AlphaEvolve Service
+  API Early Access access model, Gemini Enterprise Preview/Pre-GA restricted
+  access docs, account-team documentation boundary, and Keyword customer-impact
+  context with retrieval byte counts and SHA-256 hashes. It keeps Cloud/API/
+  Gemini claims source-scoped until Service API endpoint/schema and auth
+  documentation, console/API/billing artifacts, customer availability, external
+  account availability, security/data-use terms, managed-agent execution
+  evidence, and a local Cloud AlphaEvolve provider adapter exist.
 - `libreevolve/problems/benchmarks/follow_on_coverage.py`: follow-on
   AlphaEvolve problem-repository coverage-state contract. It validates the
   pinned root-level status artifacts (`status.json`, `status_grid.png`, and

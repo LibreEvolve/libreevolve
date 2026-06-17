@@ -2966,10 +2966,24 @@ def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
             "required_text": "`prompt_current_binding_table.jsonl`",
         }
     ]
+    assert set(prompt_binding["behavior_test_anchors"]) == {
+        "inventory_contract",
+        "overwrite_cleanup",
+        "emitted_row_behavior",
+    }
     assert inventory["manifest_invalid.jsonl"]["source_stream"] == "manifest.json"
     assert inventory["paper_artifacts"]["restore_show_handling"] == (
         "paper-source report validators and docs"
     )
+    assert set(inventory["paper_artifacts"]["behavior_test_anchors"]) == {
+        "inventory_contract",
+        "overwrite_cleanup",
+        "show_policy",
+        "restore_policy",
+        "emitted_path_behavior",
+        "show_behavior",
+        "restore_behavior",
+    }
 
 
 def test_generated_artifact_inventory_anchors_resolve_to_source():
@@ -3005,6 +3019,29 @@ def test_generated_artifact_inventory_documentation_anchors_resolve_to_docs():
             assert path.is_file(), (artifact_name, path)
             source = path.read_text(encoding="utf-8")
             assert record["required_text"] in source, (artifact_name, record)
+
+
+def test_generated_artifact_inventory_behavior_test_anchors_resolve():
+    inventory = generated_run_artifact_inventory()
+
+    for artifact_name in sorted(inventory):
+        anchors = inventory[artifact_name].get("behavior_test_anchors")
+        assert isinstance(anchors, dict), artifact_name
+        assert {"inventory_contract", "overwrite_cleanup"} <= set(anchors), (
+            artifact_name,
+            anchors,
+        )
+        for behavior, records in anchors.items():
+            assert isinstance(records, list) and records, (artifact_name, behavior)
+            for record in records:
+                path = Path(record["path"])
+                assert path.is_file(), (artifact_name, behavior, path)
+                source = path.read_text(encoding="utf-8")
+                assert record["required_text"] in source, (
+                    artifact_name,
+                    behavior,
+                    record,
+                )
 
 
 def test_paper_artifact_subpath_schema_covers_known_families():

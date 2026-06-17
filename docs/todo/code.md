@@ -8362,15 +8362,23 @@ sidecars, tests, and active TODOs.
     stream, and non-JSONL artifact, covering writer, runtime-pointer, and
     show/restore-reader phases, plus `documentation_anchors` into
     `docs/run-artifacts.md`; focused tests verify every source and docs anchor
-    resolves to current text.
+    resolves to current text. Inventory rows now also include
+    `behavior_test_anchors`: all rows link to the inventory/overwrite cleanup
+    contract tests, prompt-table rows link to emitted-row tests, non-JSONL
+    rows link to show/restore policy tests, and `paper_artifacts` links to
+    emitted-path, show, and restore lifecycle tests. Focused tests prove every
+    behavior-test anchor resolves to current test code.
   - Current gap: generated-artifact inventory rows now have executable
-    source-anchor and docs-anchor checks, but runtime reports can still drift
-    semantically because the anchors prove source/docs text presence rather
-    than emitted-row behavior or restore/show execution for every artifact
-    family.
-  - Required result: add behavior tests proving documented/schema-listed run
-    artifacts cannot be emitted, restored, shown, or deleted outside their
-    inventory contract.
+    source, docs, and behavior-test anchors, but this still is not a full
+    replay guarantee. The behavior anchors prove the current cleanup,
+    prompt-table emission, non-JSONL show/restore policy, and paper-artifact
+    lifecycle checks exist; they do not prove complete restored-run replay of
+    every generated row across provider output, archive/controller state,
+    migration ordering, plugin state, and validator subprocess boundaries.
+  - Required result: add full-run replay/certification tests proving
+    documented/schema-listed run artifacts are reconstructed or intentionally
+    excluded across restored runs, not only emitted, shown, restored, and
+    deleted within the current lifecycle validators.
 
 - [ ] Bring generated `paper_artifacts/` directories under the run-artifact
       lifecycle policy.
@@ -8420,14 +8428,19 @@ sidecars, tests, and active TODOs.
     CLI `--restore-*-from-manifest` readers also run that validator before
     loading restored runtime state when the source manifest contains the
     paper-artifact report surface, with focused tests proving drifted
-    `paper_artifacts/...` paths stop restore before `evolve()` runs. Generated
-    paper/source evidence still lacks full replay semantics that can
-    reconstruct or carry the documented `paper_artifacts/...` entries end to
-    end across a restored run, beyond rejecting drifted source manifests.
-  - Required result: validate that manifest/documented
-    `paper_artifacts/...` paths cannot exist outside collision, cleanup,
-    run-artifact summary, restore/show, docs, and schema expectations; and keep
-    stale-paper-artifact reuse tests in the lifecycle gate.
+    `paper_artifacts/...` paths stop restore before `evolve()` runs. The
+    generated artifact inventory now records behavior-test anchors for
+    `paper_artifacts` emitted paths, show lifecycle checks, restore lifecycle
+    checks, and overwrite cleanup, with focused tests proving those anchors
+    resolve. Generated paper/source evidence still lacks full replay semantics
+    that can reconstruct or carry the documented `paper_artifacts/...` entries
+    end to end across a restored run, beyond rejecting drifted source
+    manifests.
+  - Required result: add restored-run replay semantics or an explicit
+    non-replay exclusion for `paper_artifacts/...`, and keep validating that
+    manifest/documented paths cannot exist outside collision, cleanup,
+    run-artifact summary, restore/show, docs, schema, and behavior-test
+    expectations.
 
 - [ ] Add schema-level coverage for invalid/quarantine run streams.
   - Spec evidence: AlphaEvolve-style long-running experiment artifacts must be

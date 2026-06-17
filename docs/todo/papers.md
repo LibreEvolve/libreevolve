@@ -1766,12 +1766,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     tables, quarantine streams, non-JSONL artifacts, and `paper_artifacts/...`
     source/exhibit directories. The inventory is tied to collision/overwrite
     cleanup, schema pointers, runtime pointers, restore/show handling
-    boundaries, source-level writer/runtime-pointer/show-restore anchors, and
-    docs anchors into `docs/run-artifacts.md`.
+    boundaries, source-level writer/runtime-pointer/show-restore anchors,
+    docs anchors into `docs/run-artifacts.md`, and behavior-test anchors for
+    the shared cleanup contract, prompt-table emitted rows, non-JSONL
+    show/restore policy, and `paper_artifacts/...` emitted-path/show/restore
+    lifecycle tests.
     Paper-facing generated-artifact lifecycle evidence is still incomplete:
-    those anchors prove source/docs text presence, not full emitted-row behavior
-    or end-to-end replay of prompt-table and
-    `paper_artifacts/...` evidence across restored runs.
+    those anchors prove source/docs text presence plus current behavior-test
+    coverage, not end-to-end replay of prompt-table and `paper_artifacts/...`
+    evidence across restored runs.
     Run names now share the runtime identity secret-safety policy: assignment-
     style secret strings and provider-token-shaped values are rejected before
     filesystem or manifest writes, while ordinary portable run names remain
@@ -1807,9 +1810,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     exclusion, the runtime lineage policy validator, or the lineage sidecar; it
     is full resumed lineage proof across provider output, archive/controller
     resume, migration ordering, plugin state, and validator subprocess
-    boundaries, plus behavior-level replay/certification evidence for
-    paper-cited prompt-table and `paper_artifacts/...` artifacts beyond the
-    current unified inventory, source-anchor checks, and docs-anchor checks.
+    boundaries, plus restored-run replay/certification evidence for paper-cited
+    prompt-table and `paper_artifacts/...` artifacts beyond the current unified
+    inventory, source-anchor checks, docs-anchor checks, and behavior-test
+    anchors.
     Startup ordering for positive-generation all-invalid seeds is now
     documented and tested as a conservative provider-readiness contract: if a
     mutation LLM could execute, provider preflight runs before seed evaluation

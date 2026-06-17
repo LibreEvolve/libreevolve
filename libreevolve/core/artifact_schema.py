@@ -435,6 +435,105 @@ _NON_JSONL_RESTORE_SHOW_HANDLING = {
     "paper_artifacts": "paper-source report validators and docs",
 }
 
+_COMMON_BEHAVIOR_TEST_ANCHORS = {
+    "inventory_contract": [
+        {
+            "path": "tests/population/test_database.py",
+            "required_text": (
+                "def test_generated_run_artifact_inventory_covers_cleanup_"
+                "and_schema_surfaces"
+            ),
+        }
+    ],
+    "overwrite_cleanup": [
+        {
+            "path": "tests/population/test_database.py",
+            "required_text": (
+                "def test_database_overwrite_clears_known_run_artifacts_only"
+            ),
+        }
+    ],
+}
+
+_NON_JSONL_BEHAVIOR_TEST_ANCHORS = {
+    "show_policy": [
+        {
+            "path": "tests/test_cli.py",
+            "required_text": (
+                "def test_show_rejects_non_jsonl_artifact_policy_drift"
+            ),
+        }
+    ],
+    "restore_policy": [
+        {
+            "path": "tests/test_cli.py",
+            "required_text": (
+                "def test_run_rejects_non_jsonl_artifact_policy_drift_"
+                "before_restore"
+            ),
+        }
+    ],
+}
+
+_RUN_ARTIFACT_BEHAVIOR_TEST_ANCHORS = {
+    "prompt_current_binding_table.jsonl": {
+        "emitted_row_behavior": [
+            {
+                "path": "tests/core/test_loop.py",
+                "required_text": (
+                    "def test_runtime_history_reports_prompt_current_binding_"
+                    "for_diff_mutation"
+                ),
+            }
+        ],
+    },
+    "prompt_prior_score_table.jsonl": {
+        "emitted_row_behavior": [
+            {
+                "path": "tests/core/test_loop.py",
+                "required_text": (
+                    "def test_runtime_history_reports_prompt_current_binding_"
+                    "for_diff_mutation"
+                ),
+            }
+        ],
+    },
+    "paper_artifacts": {
+        "emitted_path_behavior": [
+            {
+                "path": "tests/core/test_loop.py",
+                "required_text": (
+                    "def test_runtime_history_reports_marker_spelling_"
+                    "provenance"
+                ),
+            }
+        ],
+        "show_behavior": [
+            {
+                "path": "tests/test_cli.py",
+                "required_text": (
+                    "def test_show_reports_paper_artifact_lifecycle_summary"
+                ),
+            },
+            {
+                "path": "tests/test_cli.py",
+                "required_text": (
+                    "def test_show_rejects_paper_artifact_lifecycle_drift"
+                ),
+            },
+        ],
+        "restore_behavior": [
+            {
+                "path": "tests/test_cli.py",
+                "required_text": (
+                    "def test_run_rejects_paper_artifact_lifecycle_drift_"
+                    "before_restore"
+                ),
+            }
+        ],
+    },
+}
+
 _NON_JSONL_IMPLEMENTATION_ANCHORS = {
     "manifest.json": {
         "writer": [
@@ -1242,6 +1341,7 @@ def generated_run_artifact_inventory() -> dict:
                 _JSONL_IMPLEMENTATION_ANCHORS[name]
             ),
             "documentation_anchors": _documentation_anchors(name),
+            "behavior_test_anchors": _behavior_test_anchors(name),
         }
     for name, record in schema["quarantine_jsonl_records"].items():
         implementation_anchors = deepcopy(_QUARANTINE_COMMON_IMPLEMENTATION_ANCHORS)
@@ -1261,6 +1361,7 @@ def generated_run_artifact_inventory() -> dict:
             "restore_show_handling": "diagnostic stream, never accepted state input",
             "implementation_anchors": implementation_anchors,
             "documentation_anchors": _documentation_anchors(name),
+            "behavior_test_anchors": _behavior_test_anchors(name),
         }
     for name, record in schema["non_jsonl_artifacts"].items():
         inventory[name] = {
@@ -1277,6 +1378,7 @@ def generated_run_artifact_inventory() -> dict:
                 _NON_JSONL_IMPLEMENTATION_ANCHORS[name]
             ),
             "documentation_anchors": _documentation_anchors(name),
+            "behavior_test_anchors": _behavior_test_anchors(name),
         }
         if name == "paper_artifacts":
             inventory[name]["subpath_schema_pointer"] = (
@@ -1299,6 +1401,14 @@ def _documentation_anchors(name: str) -> list[dict]:
             "required_text": _RUN_ARTIFACT_DOCUMENTATION_ANCHORS[name],
         }
     ]
+
+
+def _behavior_test_anchors(name: str) -> dict:
+    anchors = deepcopy(_COMMON_BEHAVIOR_TEST_ANCHORS)
+    if name in _NON_JSONL_RESTORE_SHOW_HANDLING:
+        anchors.update(deepcopy(_NON_JSONL_BEHAVIOR_TEST_ANCHORS))
+    anchors.update(deepcopy(_RUN_ARTIFACT_BEHAVIOR_TEST_ANCHORS.get(name, {})))
+    return anchors
 
 
 def _run_artifact_schema_without_inventory() -> dict:

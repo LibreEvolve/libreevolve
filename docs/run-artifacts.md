@@ -923,10 +923,16 @@ rollup across JSONL streams, quarantine streams, and non-JSONL artifacts. It
 maps every known cleanup-managed artifact to its schema pointer, writer owner,
 reader owner, lifecycle status, runtime pointer or report location, and
 restore/show handling boundary so the documented artifact list, manifest
-schema, and overwrite policy cannot drift independently. Non-JSONL inventory
-records also include source-level `implementation_anchors` for writer,
-runtime-pointer, and show/restore-reader phases; tests resolve those anchors
-against the current source tree so owner strings are tied to concrete code.
+schema, and overwrite policy cannot drift independently. Inventory records
+also include source-level `implementation_anchors` for writer,
+runtime-pointer, and show/restore-reader phases plus
+`documentation_anchors` into this guide; tests resolve those anchors against
+the current source tree and docs so owner strings are tied to concrete code
+and text. `behavior_test_anchors` link the inventory to focused behavior tests:
+the shared inventory/overwrite cleanup contract, prompt-table emitted-row
+tests for `prompt_current_binding_table.jsonl` and
+`prompt_prior_score_table.jsonl`, non-JSONL show/restore policy tests, and
+`paper_artifacts/` emitted-path, show, and restore lifecycle tests.
 The `runtime.artifacts` pointer map and
 `runtime.history.whole_run_source_workspace_integrity_report.runtime_artifacts`
 iterate the same schema-owned artifact name set, with `manifest.json` recorded

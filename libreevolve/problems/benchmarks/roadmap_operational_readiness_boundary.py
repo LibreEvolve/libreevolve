@@ -196,6 +196,7 @@ def roadmap_operational_readiness_boundary_record(
     root_path = Path(root)
     source_boundary = roadmap_operational_maturity_boundary_record(root_path)
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
+    claim_guard = [_claim_guard_record(record) for record in records]
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     return {
@@ -209,14 +210,17 @@ def roadmap_operational_readiness_boundary_record(
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
         "readiness_criteria": records,
+        "operational_claim_guard": claim_guard,
+        "operational_claim_guard_count": len(claim_guard),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records operational-readiness criteria tied to the "
-            "bounded operational-maturity criteria map. It does not claim a "
-            "global acceptance threshold, unified generated-artifact lifecycle "
-            "inventory, semantic documentation verification, signed release "
-            "provenance, cross-platform CI policy, or owner review signoff."
+            "bounded operational-maturity criteria map, plus a claim guard for "
+            "each maturity surface. It does not claim a global acceptance "
+            "threshold, unified generated-artifact lifecycle inventory, "
+            "semantic documentation verification, signed release provenance, "
+            "cross-platform CI policy, or owner review signoff."
         ),
     }
 
@@ -252,6 +256,8 @@ def validate_roadmap_operational_readiness_boundary(
         "sidecar_ref_count",
         "active_todo_ref_count",
         "readiness_criteria",
+        "operational_claim_guard",
+        "operational_claim_guard_count",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP operational-readiness inputs"))
@@ -261,9 +267,12 @@ def validate_roadmap_operational_readiness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim a global acceptance threshold" not in boundary_text
+        or "claim guard for each maturity surface" not in boundary_text
         or "cross-platform CI policy" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from implemented operational-maturity gate"))
+    if data.get("operational_claim_guard_count") != len(CRITERION_SPECS):
+        issues.append(_issue("invalid_operational_claim_guard_count", "operational claim guard count changed"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return RoadmapOperationalReadinessBoundaryValidation(
@@ -312,6 +321,17 @@ def _criterion_record(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
         ],
         "validation_gate": spec["validation_gate"],
         "readiness_status": spec["readiness_status"],
+    }
+
+
+def _claim_guard_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "criterion_id": record["criterion_id"],
+        "maturity_surface": record["maturity_surface"],
+        "allowed_current_claim": record["current_scope"],
+        "missing_before_maturity_claim": record["missing_readiness"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
     }
 
 

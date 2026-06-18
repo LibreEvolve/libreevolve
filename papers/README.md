@@ -3485,8 +3485,9 @@ Implemented:
   readiness sidecar with six criteria for the global acceptance threshold,
   unified generated-artifact lifecycle inventory, semantic docs verification,
   signed release provenance, cross-platform CI policy, and owner review
-  signoff. It is not evidence that those threshold, lifecycle, semantic-docs,
-  release, CI-policy, or signoff mechanisms are implemented.
+  signoff, plus a per-surface operational maturity claim guard. It is not
+  evidence that those threshold, lifecycle, semantic-docs, release, CI-policy,
+  or signoff mechanisms are implemented.
 - `papers/roadmap_representative_benchmark_portfolio_boundary.json`: ROADMAP
   representative-benchmark portfolio sidecar with five portfolio families,
   domains, validator-strength labels, current sidecar refs, active TODO refs,

@@ -391,13 +391,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/roadmap_operational_readiness_boundary.json` now records a six-
     criterion readiness matrix for the global acceptance threshold, unified
     generated-artifact lifecycle inventory, semantic docs verification, signed
-    release provenance, cross-platform CI policy, and owner review signoff.
-  - Current gap: the sidecars are bounded criteria and readiness maps, not an
-    operational readiness gate. There is still no implemented global
-    acceptance threshold, unified generated-artifact lifecycle inventory,
-    semantic docs verification, signed release provenance, cross-platform CI
-    policy, or owner signoff preventing one green release/CI boundary from
-    being mistaken for overall operational readiness.
+    release provenance, cross-platform CI policy, and owner review signoff,
+    plus a per-surface operational maturity claim guard.
+  - Current gap: the per-surface operational maturity claim guard is a bounded
+    allowed-scope map, not an operational readiness gate. There is still no
+    implemented global acceptance threshold, unified generated-artifact
+    lifecycle inventory, semantic docs verification, signed release
+    provenance, cross-platform CI policy, or owner signoff preventing one
+    green release/CI boundary from being mistaken for overall operational
+    readiness.
   - Required result: implement the missing readiness fields recorded by the
     sidecar: global acceptance threshold, unified generated-artifact lifecycle
     inventory, semantic docs verification, signed release provenance,

@@ -35,6 +35,19 @@ def test_roadmap_operational_readiness_accepts_bounded_matrix():
         "cross_platform_ci_policy",
         "owner_review_signoff",
     ]
+    assert boundary["operational_claim_guard_count"] == 6
+    assert [record["criterion_id"] for record in boundary["operational_claim_guard"]] == [
+        "global_acceptance_threshold",
+        "unified_generated_artifact_lifecycle_inventory",
+        "semantic_docs_verification",
+        "signed_release_provenance",
+        "cross_platform_ci_policy",
+        "owner_review_signoff",
+    ]
+    assert all(
+        "missing_before_maturity_claim" in record
+        for record in boundary["operational_claim_guard"]
+    )
     assert all(
         sidecar["exists"]
         for record in boundary["readiness_criteria"]
@@ -54,6 +67,7 @@ def test_roadmap_operational_readiness_accepts_bounded_matrix():
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "does not claim a global acceptance threshold" in boundary["claim_boundary"]
+    assert "claim guard for each maturity surface" in boundary["claim_boundary"]
 
 
 def test_roadmap_operational_readiness_rejects_overclaim_and_drift():
@@ -62,6 +76,7 @@ def test_roadmap_operational_readiness_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "operational_maturity_gate_ready"
     boundary["readiness_criterion_count"] = 0
     boundary["readiness_criteria"][0]["sidecar_refs"][0]["exists"] = False
+    boundary["operational_claim_guard_count"] = 0
     boundary["missing_evidence"]["global_acceptance_threshold"] = "recorded"
     boundary["required_evidence_fields"] = ["global_acceptance_threshold"]
 
@@ -73,6 +88,7 @@ def test_roadmap_operational_readiness_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_readiness_criterion_count" in codes
     assert "invalid_readiness_criteria" in codes
+    assert "invalid_operational_claim_guard_count" in codes
     assert "invalid_missing_evidence_global_acceptance_threshold" in codes
     assert "missing_required_evidence_field" in codes
 

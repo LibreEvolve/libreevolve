@@ -1917,9 +1917,9 @@ Important limits:
 - ROADMAP operational-readiness evidence now records six readiness criteria
   for the global acceptance threshold, unified generated-artifact lifecycle
   inventory, semantic docs verification, signed release provenance,
-  cross-platform CI policy, and owner review signoff. This is not an
-  implemented operational maturity gate or proof that those readiness
-  mechanisms exist.
+  cross-platform CI policy, and owner review signoff, plus a per-surface
+  operational maturity claim guard. This is not an implemented operational
+  maturity gate or proof that those readiness mechanisms exist.
 - Implementation evidence mapping now has core AlphaEvolve requirement anchors
   for markers, evaluator cascades, LLM prompting/sampling, evolutionary
   database behavior, async/distributed topology, and published benchmark

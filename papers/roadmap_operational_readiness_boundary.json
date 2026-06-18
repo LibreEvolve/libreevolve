@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 12,
   "boundary_status": "bounded_operational_readiness_matrix_without_global_maturity_gate",
-  "claim_boundary": "This boundary records operational-readiness criteria tied to the bounded operational-maturity criteria map. It does not claim a global acceptance threshold, unified generated-artifact lifecycle inventory, semantic documentation verification, signed release provenance, cross-platform CI policy, or owner review signoff.",
+  "claim_boundary": "This boundary records operational-readiness criteria tied to the bounded operational-maturity criteria map, plus a claim guard for each maturity surface. It does not claim a global acceptance threshold, unified generated-artifact lifecycle inventory, semantic documentation verification, signed release provenance, cross-platform CI policy, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "cross_platform_ci_policy": "not_recorded_locally",
@@ -11,6 +11,57 @@
     "signed_release_provenance": "not_recorded_locally",
     "unified_generated_artifact_lifecycle_inventory": "not_recorded_locally"
   },
+  "operational_claim_guard": [
+    {
+      "allowed_current_claim": "six section-level criteria with risk classes and acceptance-gate labels",
+      "criterion_id": "global_acceptance_threshold",
+      "maturity_surface": "section-level operational criteria and global maturity decision",
+      "missing_before_maturity_claim": "global threshold that defines when operational maturity can be claimed",
+      "readiness_status": "criteria_map_without_threshold",
+      "validation_gate": "global operational-maturity acceptance threshold"
+    },
+    {
+      "allowed_current_claim": "run-artifact lifecycle gaps are documented in separate code and papers TODOs",
+      "criterion_id": "unified_generated_artifact_lifecycle_inventory",
+      "maturity_surface": "runtime artifacts, generated paper artifacts, overwrite policy, and schema ownership",
+      "missing_before_maturity_claim": "single lifecycle inventory for manifest, history, best workspace, evaluator artifacts, plugin artifacts, prompt tables, and paper_artifacts",
+      "readiness_status": "distributed_lifecycle_todos_only",
+      "validation_gate": "unified generated-artifact lifecycle inventory"
+    },
+    {
+      "allowed_current_claim": "structural documentation inventories and bounded claim sidecars",
+      "criterion_id": "semantic_docs_verification",
+      "maturity_surface": "README, ROADMAP, docs, papers index, status, and completed TODO claims",
+      "missing_before_maturity_claim": "semantic verifier that proves operational-maturity claims match implementation evidence",
+      "readiness_status": "structural_docs_inventory_without_semantic_verifier",
+      "validation_gate": "semantic documentation verification gate"
+    },
+    {
+      "allowed_current_claim": "release reproducibility boundary and code TODOs without signed provenance",
+      "criterion_id": "signed_release_provenance",
+      "maturity_surface": "release artifacts, package metadata, source hygiene, and install verification",
+      "missing_before_maturity_claim": "signed release provenance and install-from-wheel/index verification",
+      "readiness_status": "unsigned_release_reproducibility_boundary_only",
+      "validation_gate": "signed release provenance gate"
+    },
+    {
+      "allowed_current_claim": "path-scoped CI workflow coverage boundary plus local validation commands",
+      "criterion_id": "cross_platform_ci_policy",
+      "maturity_surface": "GitHub Actions, local validation, integration tests, paper/docs checks, and branch policy",
+      "missing_before_maturity_claim": "cross-platform CI policy covering code, docs, papers, release, integration, and local-PDF gates",
+      "readiness_status": "path_scoped_ci_without_cross_platform_policy",
+      "validation_gate": "cross-platform CI policy gate"
+    },
+    {
+      "allowed_current_claim": "no owner-reviewed maturity signoff record",
+      "criterion_id": "owner_review_signoff",
+      "maturity_surface": "owner-reviewed operational readiness decision and release/policy exceptions",
+      "missing_before_maturity_claim": "owner signoff preventing one green release or CI boundary from being mistaken for maturity",
+      "readiness_status": "no_owner_review_signoff",
+      "validation_gate": "owner-reviewed operational-readiness signoff"
+    }
+  ],
+  "operational_claim_guard_count": 6,
   "readiness_criteria": [
     {
       "active_todo_refs": [

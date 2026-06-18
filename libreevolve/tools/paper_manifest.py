@@ -902,6 +902,10 @@ from libreevolve.problems.benchmarks.jsonl_durability_boundary import (
     jsonl_durability_boundary_record,
     validate_jsonl_durability_boundary,
 )
+from libreevolve.problems.benchmarks.non_jsonl_artifact_boundary import (
+    non_jsonl_artifact_boundary_record,
+    validate_non_jsonl_artifact_boundary,
+)
 from libreevolve.problems.benchmarks.controller_pending_work_resume_boundary import (
     controller_pending_work_resume_boundary_record,
     validate_controller_pending_work_resume_boundary,
@@ -1215,6 +1219,7 @@ MAP_ELITES_DESCRIPTOR_BOUNDARY_FILE = "papers/map_elites_descriptor_boundary.jso
 OBJECTIVE_ARCHIVE_BOUNDARY_FILE = "papers/objective_archive_boundary.json"
 ARCHIVE_EVENT_REPLAY_BOUNDARY_FILE = "papers/archive_event_replay_boundary.json"
 JSONL_DURABILITY_BOUNDARY_FILE = "papers/jsonl_durability_boundary.json"
+NON_JSONL_ARTIFACT_BOUNDARY_FILE = "papers/non_jsonl_artifact_boundary.json"
 CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_FILE = "papers/controller_pending_work_resume_boundary.json"
 LINEAGE_REPLAY_BOUNDARY_FILE = "papers/lineage_replay_boundary.json"
 RESTORE_CERTIFICATION_BOUNDARY_FILE = "papers/restore_certification_boundary.json"
@@ -1950,6 +1955,7 @@ def validate_paper_manifest(
     issues.extend(_validate_objective_archive_boundary(root_path))
     issues.extend(_validate_archive_event_replay_boundary(root_path))
     issues.extend(_validate_jsonl_durability_boundary(root_path))
+    issues.extend(_validate_non_jsonl_artifact_boundary(root_path))
     issues.extend(_validate_controller_pending_work_resume_boundary(root_path))
     issues.extend(_validate_lineage_replay_boundary(root_path))
     issues.extend(_validate_restore_certification_boundary(root_path))
@@ -9070,6 +9076,38 @@ def _validate_jsonl_durability_boundary(root_path: Path) -> list[PaperManifestIs
             f"jsonl_durability_boundary_{issue.code}",
             issue.message,
             "jsonl_durability",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_non_jsonl_artifact_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / NON_JSONL_ARTIFACT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = non_jsonl_artifact_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "non_jsonl_artifact_boundary_manifest_missing",
+                    (
+                        f"{NON_JSONL_ARTIFACT_BOUNDARY_FILE} must emit "
+                        "non-JSONL artifact schema versus payload replay scope"
+                    ),
+                    "non_jsonl_artifact",
+                )
+            ]
+    report = validate_non_jsonl_artifact_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"non_jsonl_artifact_boundary_{issue.code}",
+            issue.message,
+            "non_jsonl_artifact",
         )
         for issue in report.issues
     ]

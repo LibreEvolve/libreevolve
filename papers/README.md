@@ -3227,6 +3227,16 @@ Implemented:
   coverage, multi-writer serialization, append ordering ownership,
   repair/quarantine atomicity, cross-platform locking, concurrent-writer tests,
   or AlphaEvolve-grade durable async run-state parity.
+- `papers/non_jsonl_artifact_boundary.json`: non-JSONL run-artifact schema
+  sidecar for standalone JSON files, exported files, workspace directories,
+  plugin/evaluator artifact directories, and `paper_artifacts/`. It records
+  the current `artifact_schema.non_jsonl_artifacts` map, generated inventory
+  linkage, implementation anchors, documentation anchors, behavior-test
+  anchors, hash policies, lifecycle status, show/restore policy validation,
+  and the paper-artifact subpath schema. It is not evidence of full restored-
+  run payload replay, artifact payload carry-forward, cross-run payload
+  reconstruction, independent bundle audit, or paper-artifact replay
+  certification.
 - `papers/restore_certification_boundary.json`: restore-certification sidecar
   for compatible local manifest restore surfaces versus full replay proof. It
   records the current `runtime.restore_certification` and

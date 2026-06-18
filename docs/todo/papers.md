@@ -1804,7 +1804,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/restore_certification_boundary.json` sidecar records the
     compatible-surface restore-certification boundary and rejects treating that
     accepted/quarantine separation as full provider/controller/artifact replay
-    proof.
+    proof. The committed `papers/non_jsonl_artifact_boundary.json` sidecar now
+    records the runtime-derived non-JSONL artifact schema, generated inventory
+    linkage, implementation/docs/behavior-test anchors, hash policies, and
+    show/restore validation boundary for `manifest.json`,
+    `task_specification.json`, `best.py`, `best_workspace/`,
+    `evaluator_artifacts/`, `plugin_artifacts/`, and `paper_artifacts/`.
     Paper-facing generated-artifact lifecycle evidence is still incomplete:
     those anchors prove source/docs text presence plus current behavior-test
     coverage, show-time bundle reconciliation, persisted and reader-validated

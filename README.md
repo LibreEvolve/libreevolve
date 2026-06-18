@@ -75,6 +75,10 @@ Important limits:
   separation and overclaim rejection, but not provider raw-payload replay,
   controller pending-work replay, artifact payload reconstruction, or
   independent restore/replay audit.
+- Non-JSONL run artifact schemas are tracked, but not replay-certified;
+  `papers/non_jsonl_artifact_boundary.json` records current manifest schema,
+  hash policies, docs anchors, and show/restore checks for artifacts such as
+  `best.py`, `best_workspace/`, `plugin_artifacts/`, and `paper_artifacts/`.
 - Candidate execution is Python-primary. Non-Python files can be workspace
   members, metadata-only runner/build declarations can be recorded, and the
   current Python runner links to bounded environment provenance, but

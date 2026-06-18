@@ -8613,12 +8613,18 @@ sidecars, tests, and active TODOs.
   - Current gap: the top-level schema inventory now exists, optional
     non-JSONL artifact presence/absence policies are covered, and
     `paper_artifacts/...` have a central subpath schema plus
-    show/restore-source-manifest rejection guards, but full restored-run replay
-    or carry-forward semantics remain open.
-  - Required result: add behavioral tests or validators that exercise
-    `non_jsonl_artifacts` through startup/finalization writers and
-    `show`/restore readers so documented artifacts cannot drift from
-    machine-readable bundle metadata.
+    show/restore-source-manifest rejection guards. The committed
+    `papers/non_jsonl_artifact_boundary.json` sidecar now preserves the
+    runtime-derived `artifact_schema.non_jsonl_artifacts` map, generated
+    inventory linkage, implementation anchors, docs anchors, behavior-test
+    anchors, hash policies, lifecycle status, and show/restore validation
+    boundary. Full restored-run replay or payload carry-forward semantics
+    remain open.
+  - Required result: extend schema/hash-policy checks into replay/carry-forward
+    certification for non-JSONL payloads, including cross-run payload
+    reconstruction, independent bundle audit, and paper-artifact replay
+    certification, so documented artifacts cannot drift from machine-readable
+    bundle metadata or restored-run payload evidence.
 
 - [ ] Add a clean-checkout run contract for `sorting_network_9`.
   - Spec evidence: AlphaEvolve benchmark claims require reproducible problem

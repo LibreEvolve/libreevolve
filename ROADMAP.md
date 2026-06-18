@@ -1069,7 +1069,12 @@ is not yet an AlphaEvolve reproduction.
   accepted/quarantine diagnostic separation while keeping full replay,
   provider raw-payload replay, controller pending-work checkpoint replay,
   artifact payload reconstruction, cross-run replay evidence, and independent
-  restore/replay audit open.
+  restore/replay audit open. The committed
+  `papers/non_jsonl_artifact_boundary.json` sidecar records the current
+  non-JSONL artifact schema, generated inventory anchors, docs anchors, hash
+  policies, and show/restore policy checks while keeping restored-run payload
+  carry-forward, cross-run payload reconstruction, independent bundle audit,
+  and paper-artifact replay certification open.
 - Extend the current restorable MAP-Elites cell/island snapshots, elite
   snapshots, and island cursor/counter state with descriptor-value replay
   semantics, ordered migration-event replay, controller queues, and pending-work

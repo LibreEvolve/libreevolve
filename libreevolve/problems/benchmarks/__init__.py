@@ -738,6 +738,12 @@ from libreevolve.problems.benchmarks.metric_diverse_prompt_boundary import (
     render_metric_diverse_prompt_boundary_summary,
     validate_metric_diverse_prompt_boundary,
 )
+from libreevolve.problems.benchmarks.meta_prompt_scoring_boundary import (
+    META_PROMPT_SCORING_BOUNDARY_SCHEMA,
+    meta_prompt_scoring_boundary_record,
+    render_meta_prompt_scoring_boundary_summary,
+    validate_meta_prompt_scoring_boundary,
+)
 from libreevolve.problems.benchmarks.proposal_score_boundary import (
     PROPOSAL_SCORE_BOUNDARY_SCHEMA,
     proposal_score_boundary_record,
@@ -1172,6 +1178,7 @@ __all__ = [
     "LLM_STOCHASTIC_REPRODUCIBILITY_BOUNDARY_SCHEMA",
     "MADEVOLVE_BOUNDARY_SCHEMA",
     "MAGELLAN_BOUNDARY_SCHEMA",
+    "META_PROMPT_SCORING_BOUNDARY_SCHEMA",
     "METRIC_DIVERSE_PROMPT_BOUNDARY_SCHEMA",
     "MULTIAGENT_LEARNING_BOUNDARY_SCHEMA",
     "MUTATION_CONSISTENCY_BOUNDARY_SCHEMA",
@@ -1366,6 +1373,7 @@ __all__ = [
     "map_elites_descriptor_boundary_record",
     "map_elites_illumination_boundary_record",
     "metric_diverse_prompt_boundary_record",
+    "meta_prompt_scoring_boundary_record",
     "multiagent_learning_boundary_record",
     "mutation_consistency_boundary_record",
     "mutation_operator_boundary_record",
@@ -1538,6 +1546,7 @@ __all__ = [
     "render_madevolve_boundary_summary",
     "render_magellan_boundary_summary",
     "render_metric_diverse_prompt_boundary_summary",
+    "render_meta_prompt_scoring_boundary_summary",
     "render_multiagent_learning_boundary_summary",
     "render_mutation_consistency_boundary_summary",
     "render_mutation_operator_boundary_summary",
@@ -1734,6 +1743,7 @@ __all__ = [
     "validate_madevolve_boundary",
     "validate_magellan_boundary",
     "validate_metric_diverse_prompt_boundary",
+    "validate_meta_prompt_scoring_boundary",
     "validate_multiagent_learning_boundary",
     "validate_mutation_consistency_boundary",
     "validate_mutation_operator_boundary",

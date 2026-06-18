@@ -766,7 +766,8 @@ Important limits:
   Prompt history records reward policy metadata and meta-prompt mutation
   requests include bounded prompt-performance evidence; calibrated
   prompt-specific reward models, prompt-lineage ablation reports, and stronger
-  prompt-policy attribution remain open.
+  prompt-policy attribution remain open. That boundary is tracked by
+  `papers/meta_prompt_scoring_boundary.json`.
 - `PromptDatabase` is a deterministic local prompt-arm history/scoring store
   with append-only prompt-history replay, lineage ids, duplicate-arm audit
   identity, and optional interval-based template/context-policy mutation. It is

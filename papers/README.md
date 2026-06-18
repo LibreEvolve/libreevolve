@@ -1117,7 +1117,8 @@ UCB-style prompt-arm selection over mean normalized rewards. Prompt history
 records reward-policy metadata, and meta-prompt mutation requests can include
 bounded prompt-performance evidence, but calibrated prompt-specific reward
 models, prompt-lineage ablation reports, and stronger prompt-policy
-attribution remain open.
+attribution remain open; `papers/meta_prompt_scoring_boundary.json` preserves
+that child-score prompt reward boundary for manifest validation.
 Broader prompt-context evolution remains open for live/external context-source
 selection, retrieval/summarization, inspiration selection, and finer-grained
 evaluator/LLM-feedback field policy. Prompt-database parity with AlphaEvolve's

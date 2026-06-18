@@ -1391,6 +1391,8 @@ sidecars, tests, and active TODOs.
     and UCB-style prompt-arm selection over mean normalized rewards. The loop
     records prompt rewards from child score or score-parent delta and includes a
     bounded prompt-performance evidence block in meta-prompt mutation requests.
+    `papers/meta_prompt_scoring_boundary.json` preserves this child-score
+    reward boundary.
   - Required result: add calibrated prompt reward signals, prompt-lineage
     ablation/report artifacts, and tests that distinguish prompt-policy effects
     from parent/program/evaluator noise before claiming AlphaEvolve-grade

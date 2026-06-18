@@ -814,7 +814,9 @@ is not yet an AlphaEvolve reproduction.
   resurfacing.
 - Improve meta-prompt scoring beyond the current absolute/improvement child
   score reward modes and UCB-style prompt-arm selection; add calibrated reward
-  signals plus ablation reporting for prompt-program lineages.
+  signals plus ablation reporting for prompt-program lineages. The committed
+  `papers/meta_prompt_scoring_boundary.json` sidecar preserves the current
+  child-score prompt reward boundary.
 - Promote the current local `PromptDatabase` beyond prompt-arm history and
   scoring before claiming AlphaEvolve-style prompt-database parity: define
   prompt-side archive/retention policy, prompt descriptors/objectives,

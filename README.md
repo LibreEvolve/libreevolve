@@ -98,6 +98,9 @@ Important limits:
   provider-specific message transcripts, and full AlphaEvolve primary-prompt
   role-placement parity remain open in
   `papers/primary_prompt_role_telemetry_boundary.json`.
+- Meta-prompt scoring is child-score reward accounting, not calibrated prompt-
+  policy attribution; prompt-lineage ablations and equal-budget prompt-policy
+  comparisons remain open in `papers/meta_prompt_scoring_boundary.json`.
 - Built-in SDK provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
 - The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI

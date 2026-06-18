@@ -348,6 +348,10 @@ scalar/single-metric comparison reports exist. The same report now carries
 `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`, keeping
 benchmark prompt-policy enforcement, cross-run fixtures, scalar-only
 baselines, single-metric baselines, and equal-budget comparison reports false.
+It also carries `libreevolve.metric_diverse_benchmark_fixture_readiness.v1`,
+recording prompt-visible metric-niche evidence while keeping benchmark-required
+prompt policies, cross-run fixtures, scalar/single-metric baselines,
+equal-budget comparison reports, and Section 2.4 claim readiness false.
 The committed `papers/metric_diverse_prompt_boundary.json` sidecar keeps this
 prompt-visible-evidence-only scope machine-validated.
 It can also cap already validated/redacted plugin `extra_context` with

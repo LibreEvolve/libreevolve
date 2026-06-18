@@ -13,7 +13,7 @@ def test_metric_diverse_prompt_boundary_accepts_prompt_visible_boundary():
 
     assert validation.ok is True
     assert validation.boundary_status == "prompt_visible_evidence_not_benchmark_policy"
-    assert validation.required_evidence_field_count == 16
+    assert validation.required_evidence_field_count == 17
     assert validation.missing_evidence_count == 6
     assert boundary["schema"] == METRIC_DIVERSE_PROMPT_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.4"]
@@ -51,5 +51,5 @@ def test_render_metric_diverse_prompt_boundary_summary_reports_shape():
     assert "Metric-diverse prompt boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | prompt_visible_evidence_not_benchmark_policy |" in summary
-    assert "| required_evidence_field_count | 16 |" in summary
+    assert "| required_evidence_field_count | 17 |" in summary
     assert "| missing_evidence_count | 6 |" in summary

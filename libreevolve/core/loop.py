@@ -19813,6 +19813,12 @@ def _metric_diverse_inspiration_report(programs: list[Program]) -> dict:
         "benchmark_comparison_readiness": (
             _metric_diverse_benchmark_comparison_readiness(metric_diverse_count > 0)
         ),
+        "benchmark_fixture_readiness": (
+            _metric_diverse_benchmark_fixture_readiness(
+                records,
+                metric_diverse_count,
+            )
+        ),
         "claim_ready": False,
         "claim_readiness": {
             "prompt_visible_metric_diversity_evidence": metric_diverse_count > 0,
@@ -19857,6 +19863,59 @@ def _metric_diverse_benchmark_comparison_readiness(
     }
 
 
+def _metric_diverse_benchmark_fixture_readiness(
+    records: list[dict],
+    metric_diverse_prompt_count: int,
+) -> dict:
+    prompt_visible_count = sum(
+        1
+        for record in records
+        if isinstance(record.get("visible_count"), int)
+        and record.get("visible_count", 0) > 0
+    )
+    distinct_metrics: list[str] = []
+    for record in records:
+        niches = record.get("distinct_metric_niches")
+        if not isinstance(niches, list):
+            continue
+        for niche in niches:
+            if isinstance(niche, str) and niche and niche not in distinct_metrics:
+                distinct_metrics.append(niche)
+    prompt_visible_evidence = metric_diverse_prompt_count > 0
+    remaining_gap = [
+        "benchmark_required_metric_diverse_prompt_policy",
+        "cross_run_metric_diverse_prompt_fixture",
+        "scalar_only_baseline_comparison",
+        "single_metric_target_baseline_comparison",
+        "equal_budget_comparison_report",
+    ]
+    if not prompt_visible_evidence:
+        remaining_gap.insert(0, "prompt_visible_metric_diversity_evidence")
+    return {
+        "schema": "libreevolve.metric_diverse_benchmark_fixture_readiness.v1",
+        "status": "prompt_visible_evidence_without_benchmark_fixture",
+        "prompt_visible_metric_diversity_evidence": prompt_visible_evidence,
+        "candidate_count": len(records),
+        "prompt_visible_candidate_count": prompt_visible_count,
+        "metric_diverse_prompt_count": metric_diverse_prompt_count,
+        "distinct_metric_niches": distinct_metrics,
+        "distinct_metric_niche_count": len(distinct_metrics),
+        "benchmark_required_metric_diverse_prompt_policy": False,
+        "cross_run_metric_diverse_prompt_fixture": False,
+        "scalar_only_baseline_comparison": False,
+        "single_metric_target_baseline_comparison": False,
+        "equal_budget_comparison_report": False,
+        "alphaevolve_section_2_4_claim_ready": False,
+        "remaining_gap": remaining_gap,
+        "limitations": [
+            "runtime_summary_observes_prompt_visible_metric_niches_only",
+            "does_not_enforce_cross_run_metric_diverse_prompt_policy",
+            "does_not_emit_scalar_or_single_metric_baseline_comparisons",
+            "does_not_emit_equal_budget_section_2_4_benchmark_report",
+        ],
+    }
+
+
 def validate_metric_diverse_inspiration_report(report: object) -> dict:
     issues: list[dict] = []
     if not isinstance(report, dict):
@@ -19883,6 +19942,8 @@ def validate_metric_diverse_inspiration_report(report: object) -> dict:
         "benchmark_policy",
         "claim_ready",
         "claim_readiness",
+        "benchmark_comparison_readiness",
+        "benchmark_fixture_readiness",
     }
     missing = required - set(report)
     if missing:
@@ -20108,6 +20169,21 @@ def validate_metric_diverse_inspiration_report(report: object) -> dict:
                 ),
             }
         )
+    if not _is_metric_diverse_benchmark_fixture_readiness(
+        report.get("benchmark_fixture_readiness"),
+        candidate_count=report.get("candidate_count"),
+        prompt_visible_candidate_count=report.get("prompt_visible_candidate_count"),
+        metric_diverse_prompt_count=report.get("metric_diverse_prompt_count"),
+    ):
+        issues.append(
+            {
+                "code": "invalid_benchmark_fixture_readiness",
+                "message": (
+                    "benchmark_fixture_readiness must keep prompt-policy, "
+                    "cross-run fixture, baseline, and equal-budget claims false"
+                ),
+            }
+        )
     readiness = report.get("claim_readiness")
     if not isinstance(readiness, Mapping):
         issues.append(
@@ -20204,6 +20280,83 @@ def _is_metric_diverse_benchmark_comparison_readiness(value: object) -> bool:
     }
     if not isinstance(remaining, list) or not required.issubset(
         {item for item in remaining if isinstance(item, str)}
+    ):
+        return False
+    return True
+
+
+def _is_metric_diverse_benchmark_fixture_readiness(
+    value: object,
+    *,
+    candidate_count: object,
+    prompt_visible_candidate_count: object,
+    metric_diverse_prompt_count: object,
+) -> bool:
+    if not isinstance(value, Mapping):
+        return False
+    if (
+        value.get("schema")
+        != "libreevolve.metric_diverse_benchmark_fixture_readiness.v1"
+    ):
+        return False
+    if value.get("status") != "prompt_visible_evidence_without_benchmark_fixture":
+        return False
+    for field, expected in (
+        ("candidate_count", candidate_count),
+        ("prompt_visible_candidate_count", prompt_visible_candidate_count),
+        ("metric_diverse_prompt_count", metric_diverse_prompt_count),
+    ):
+        if (
+            isinstance(expected, bool)
+            or not isinstance(expected, int)
+            or expected < 0
+            or value.get(field) != expected
+        ):
+            return False
+    prompt_visible_evidence = value.get("prompt_visible_metric_diversity_evidence")
+    if prompt_visible_evidence != (metric_diverse_prompt_count > 0):
+        return False
+    niches = value.get("distinct_metric_niches")
+    if not isinstance(niches, list) or any(
+        not isinstance(niche, str) or not niche for niche in niches
+    ):
+        return False
+    niche_count = value.get("distinct_metric_niche_count")
+    if isinstance(niche_count, bool) or not isinstance(niche_count, int):
+        return False
+    if niche_count != len(niches):
+        return False
+    for field in (
+        "benchmark_required_metric_diverse_prompt_policy",
+        "cross_run_metric_diverse_prompt_fixture",
+        "scalar_only_baseline_comparison",
+        "single_metric_target_baseline_comparison",
+        "equal_budget_comparison_report",
+        "alphaevolve_section_2_4_claim_ready",
+    ):
+        if value.get(field) is not False:
+            return False
+    remaining = value.get("remaining_gap")
+    required = {
+        "benchmark_required_metric_diverse_prompt_policy",
+        "cross_run_metric_diverse_prompt_fixture",
+        "scalar_only_baseline_comparison",
+        "single_metric_target_baseline_comparison",
+        "equal_budget_comparison_report",
+    }
+    if not isinstance(remaining, list) or not required.issubset(
+        {item for item in remaining if isinstance(item, str)}
+    ):
+        return False
+    limitations = value.get("limitations")
+    required_limitations = {
+        "runtime_summary_observes_prompt_visible_metric_niches_only",
+        "does_not_enforce_cross_run_metric_diverse_prompt_policy",
+        "does_not_emit_scalar_or_single_metric_baseline_comparisons",
+        "does_not_emit_equal_budget_section_2_4_benchmark_report",
+    }
+    if not isinstance(limitations, list) or not required_limitations.issubset(
+        {item for item in limitations if isinstance(item, str)}
     ):
         return False
     return True

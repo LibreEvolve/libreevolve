@@ -3551,7 +3551,12 @@ fields `benchmark_required_metric_diverse_prompt_policy`,
 `cross_run_metric_diverse_prompt_fixture`,
 `scalar_and_single_metric_comparison`, and
 `alphaevolve_section_2_4_claim_ready` remain false until future benchmark
-fixtures and comparison reports populate them.
+fixtures and comparison reports populate them. The aggregate report also
+contains `benchmark_fixture_readiness` with schema
+`libreevolve.metric_diverse_benchmark_fixture_readiness.v1`, which records
+prompt-visible metric-niche evidence while keeping benchmark-required prompt
+policies, cross-run fixtures, scalar/single-metric baselines, equal-budget
+comparison reports, and Section 2.4 claim readiness false.
 
 This is current-run prompt-conditioning evidence, not a benchmark policy by
 itself. The report's remaining gaps are benchmark fixtures or policies that

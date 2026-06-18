@@ -579,7 +579,12 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.metric_diverse_benchmark_comparison_readiness.v1` false
   readiness for benchmark prompt-policy enforcement, cross-run fixtures,
   scalar-only baselines, single-metric baselines, and equal-budget comparison
-  reports. `papers/metric_diverse_prompt_boundary.json` preserves this
+  reports. The same report now carries
+  `libreevolve.metric_diverse_benchmark_fixture_readiness.v1`, recording
+  prompt-visible metric-niche evidence while keeping benchmark-required
+  prompt policies, cross-run fixtures, scalar/single-metric baselines,
+  equal-budget comparison reports, and Section 2.4 claim readiness false.
+  `papers/metric_diverse_prompt_boundary.json` preserves this
   prompt-visible-evidence-only boundary for paper-manifest validation.
   `runtime.history.sampling_balance_report` now aggregates
   current-run parent/inspiration strategy decisions, with

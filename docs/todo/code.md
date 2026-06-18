@@ -2584,7 +2584,11 @@ sidecars, tests, and active TODOs.
     carries `libreevolve.metric_diverse_benchmark_comparison_readiness.v1`,
     keeping benchmark prompt-policy enforcement, cross-run fixtures,
     scalar-only baselines, single-metric baselines, and equal-budget comparison
-    reports false with overclaim validation.
+    reports false with overclaim validation. It also carries
+    `libreevolve.metric_diverse_benchmark_fixture_readiness.v1`, recording
+    prompt-visible metric-niche evidence while keeping benchmark-required
+    prompt policies, cross-run fixtures, scalar/single-metric baselines,
+    equal-budget comparison reports, and Section 2.4 claim readiness false.
     `papers/metric_diverse_prompt_boundary.json` now validates that this is
     prompt-visible evidence, not benchmark-required prompt policy or
     scalar/single-metric equal-budget comparison evidence.

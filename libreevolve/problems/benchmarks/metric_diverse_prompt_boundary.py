@@ -19,6 +19,9 @@ EXPECTED_BENCHMARK_POLICY_SCHEMA = (
 EXPECTED_COMPARISON_READINESS_SCHEMA = (
     "libreevolve.metric_diverse_benchmark_comparison_readiness.v1"
 )
+EXPECTED_FIXTURE_READINESS_SCHEMA = (
+    "libreevolve.metric_diverse_benchmark_fixture_readiness.v1"
+)
 EXPECTED_BOUNDARY_STATUS = "prompt_visible_evidence_not_benchmark_policy"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "declared_metric_vectors",
@@ -31,6 +34,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "metric_diverse_inspiration_report",
     "benchmark_policy_false_readiness",
     "benchmark_comparison_false_readiness",
+    "benchmark_fixture_false_readiness",
     "benchmark_required_metric_diverse_prompt_policy",
     "cross_run_metric_diverse_prompt_fixture",
     "scalar_only_baseline_comparison",
@@ -82,6 +86,7 @@ def metric_diverse_prompt_boundary_record() -> dict[str, Any]:
         "benchmark_comparison_readiness_schema": (
             EXPECTED_COMPARISON_READINESS_SCHEMA
         ),
+        "benchmark_fixture_readiness_schema": EXPECTED_FIXTURE_READINESS_SCHEMA,
         "runtime_report_status": "metric_diverse_prompt_visible_evidence_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -93,7 +98,8 @@ def metric_diverse_prompt_boundary_record() -> dict[str, Any]:
             "metric filtering, prompt-visible inspiration ids, metric-niche "
             "labels, raw and normalized metric values, prompt hash linkage, "
             "and metric-diverse inspiration reports with false readiness "
-            "fields. It does not claim benchmark-required metric-diverse "
+            "fields, including benchmark comparison and fixture readiness "
+            "audits. It does not claim benchmark-required metric-diverse "
             "prompt policy, cross-run metric-diverse prompt fixtures, scalar "
             "only baseline comparison, single-metric target baseline "
             "comparison, equal-budget comparison reports, or AlphaEvolve "
@@ -173,6 +179,16 @@ def validate_metric_diverse_prompt_boundary(
             _issue(
                 "invalid_benchmark_comparison_readiness_schema",
                 "benchmark_comparison_readiness_schema must match runtime readiness schema",
+            )
+        )
+    if (
+        data.get("benchmark_fixture_readiness_schema")
+        != EXPECTED_FIXTURE_READINESS_SCHEMA
+    ):
+        issues.append(
+            _issue(
+                "invalid_benchmark_fixture_readiness_schema",
+                "benchmark_fixture_readiness_schema must match runtime readiness schema",
             )
         )
     if (

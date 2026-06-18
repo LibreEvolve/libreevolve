@@ -120,8 +120,8 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     }
     assert {
         "path": "ROADMAP.md",
-        "line_start": 838,
-        "line_end": 838,
+        "line_start": 843,
+        "line_end": 843,
         "level": 3,
         "heading_text": "5. Documentation truthfulness",
         "heading_slug": "5-documentation-truthfulness",

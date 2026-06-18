@@ -14745,6 +14745,21 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
     assert report["benchmark_comparison_readiness"][
         "equal_budget_comparison_report"
     ] is False
+    readiness = report["benchmark_fixture_readiness"]
+    assert readiness["schema"] == (
+        "libreevolve.metric_diverse_benchmark_fixture_readiness.v1"
+    )
+    assert readiness["prompt_visible_metric_diversity_evidence"] is True
+    assert readiness["candidate_count"] == 1
+    assert readiness["prompt_visible_candidate_count"] == 1
+    assert readiness["metric_diverse_prompt_count"] == 1
+    assert readiness["distinct_metric_niches"] == ["score", "latency"]
+    assert readiness["benchmark_required_metric_diverse_prompt_policy"] is False
+    assert readiness["cross_run_metric_diverse_prompt_fixture"] is False
+    assert readiness["scalar_only_baseline_comparison"] is False
+    assert readiness["single_metric_target_baseline_comparison"] is False
+    assert readiness["equal_budget_comparison_report"] is False
+    assert readiness["alphaevolve_section_2_4_claim_ready"] is False
     assert "scalar_and_single_metric_comparison" in (
         report["benchmark_policy"]["remaining_required_evidence"]
     )
@@ -14755,6 +14770,7 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
     edited["claim_ready"] = True
     edited["benchmark_policy"]["alphaevolve_section_2_4_claim_ready"] = True
     edited["benchmark_comparison_readiness"]["equal_budget_comparison_report"] = True
+    edited["benchmark_fixture_readiness"]["cross_run_metric_diverse_prompt_fixture"] = True
     edited["claim_readiness"]["benchmark_required_metric_diverse_prompt_policy"] = True
     validation = validate_metric_diverse_inspiration_report(edited)
     assert validation["ok"] is False
@@ -14762,6 +14778,7 @@ def test_loop_records_prompt_visible_metric_diverse_inspiration_evidence():
         "invalid_claim_ready",
         "invalid_benchmark_policy",
         "invalid_benchmark_comparison_readiness",
+        "invalid_benchmark_fixture_readiness",
         "benchmark_claim_overclaim",
     }.issubset({issue["code"] for issue in validation["issues"]})
 

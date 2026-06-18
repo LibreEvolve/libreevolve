@@ -254,6 +254,7 @@ def roadmap_backend_control_plane_readiness_boundary_record(
     root_path = Path(root)
     source_boundary = roadmap_backend_scheduling_critique_boundary_record(root_path)
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
+    claim_guard = [_claim_guard_record(record) for record in records]
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     return {
@@ -268,6 +269,8 @@ def roadmap_backend_control_plane_readiness_boundary_record(
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
         "readiness_criteria": records,
+        "backend_control_plane_claim_guard": claim_guard,
+        "backend_control_plane_claim_guard_count": len(claim_guard),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "resolved_evidence": dict(EXPECTED_RESOLVED_EVIDENCE),
@@ -275,9 +278,10 @@ def roadmap_backend_control_plane_readiness_boundary_record(
             "This boundary records backend control-plane readiness criteria tied "
             "to the bounded backend scheduling and critique matrix, including "
             "the recorded backend-role capability matrix from that source "
-            "boundary and the recorded critique-control checklist. It does not "
-            "claim calibrated reward policy, role quota ownership, live "
-            "provider pricing/default evidence, raw provider replay, live hard "
+            "boundary, the recorded critique-control checklist, and a claim "
+            "guard for each control-plane surface. It does not claim "
+            "calibrated reward policy, role quota ownership, live provider "
+            "pricing/default evidence, raw provider replay, live hard "
             "cancellation, equal-budget scheduler comparator, first-class "
             "Gemini lane evidence, async reviewer isolation, stale-readiness "
             "detector, owner review signoff, or full backend scheduler parity."
@@ -319,6 +323,8 @@ def validate_roadmap_backend_control_plane_readiness_boundary(
         "sidecar_ref_count",
         "active_todo_ref_count",
         "readiness_criteria",
+        "backend_control_plane_claim_guard",
+        "backend_control_plane_claim_guard_count",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP backend control-plane inputs"))
@@ -330,9 +336,12 @@ def validate_roadmap_backend_control_plane_readiness_boundary(
         not isinstance(boundary_text, str)
         or "recorded backend-role capability matrix" not in boundary_text
         or "recorded critique-control checklist" not in boundary_text
+        or "claim guard for each control-plane surface" not in boundary_text
         or "full backend scheduler parity" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from backend scheduler parity"))
+    if data.get("backend_control_plane_claim_guard_count") != len(CRITERION_SPECS):
+        issues.append(_issue("invalid_backend_control_plane_claim_guard_count", "backend control-plane claim guard count changed"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return RoadmapBackendControlPlaneReadinessBoundaryValidation(
@@ -381,6 +390,17 @@ def _criterion_record(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
         ],
         "validation_gate": spec["validation_gate"],
         "readiness_status": spec["readiness_status"],
+    }
+
+
+def _claim_guard_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "criterion_id": record["criterion_id"],
+        "control_plane_surface": record["control_plane_surface"],
+        "allowed_current_claim": record["current_scope"],
+        "missing_before_scheduler_parity_claim": record["missing_readiness"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
     }
 
 

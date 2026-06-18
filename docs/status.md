@@ -1809,8 +1809,9 @@ Important limits:
   scheduler comparison, Gemini lane/substitution, critique reviewer isolation,
   and stale readiness/owner signoff. It records the backend-role capability
   matrix and critique-control checklist as resolved structural evidence from
-  the scheduling sidecar, but this is not an implemented backend control-plane
-  gate or proof of scheduler/provider/Gemini/critique parity.
+  the scheduling sidecar, plus a per-surface backend control-plane claim guard,
+  but this is not an implemented backend control-plane gate or proof of
+  scheduler/provider/Gemini/critique parity.
 - ROADMAP async/resumable-runtime evidence now records nine criteria for
   topology, parallel evaluation, controller pending work, archive-event replay,
   RNG/lineage replay, provider/plugin nondeterminism, budget resume,

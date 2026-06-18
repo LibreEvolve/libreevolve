@@ -38,6 +38,24 @@ def test_roadmap_backend_control_plane_readiness_accepts_bounded_matrix():
         "critique_reviewer_isolation",
         "stale_readiness_and_owner_signoff",
     ]
+    assert boundary["backend_control_plane_claim_guard_count"] == 8
+    assert [
+        record["criterion_id"]
+        for record in boundary["backend_control_plane_claim_guard"]
+    ] == [
+        "backend_role_capability_matrix",
+        "calibrated_reward_quota_policy",
+        "live_pricing_default_and_raw_replay",
+        "hard_cancellation_and_resume",
+        "equal_budget_scheduler_comparator",
+        "gemini_lane_and_substitution",
+        "critique_reviewer_isolation",
+        "stale_readiness_and_owner_signoff",
+    ]
+    assert all(
+        "missing_before_scheduler_parity_claim" in record
+        for record in boundary["backend_control_plane_claim_guard"]
+    )
     assert all(
         sidecar["exists"]
         for record in boundary["readiness_criteria"]
@@ -70,6 +88,7 @@ def test_roadmap_backend_control_plane_readiness_accepts_bounded_matrix():
     }
     assert "recorded backend-role capability matrix" in boundary["claim_boundary"]
     assert "recorded critique-control checklist" in boundary["claim_boundary"]
+    assert "claim guard for each control-plane surface" in boundary["claim_boundary"]
     assert "full backend scheduler parity" in boundary["claim_boundary"]
 
 
@@ -79,6 +98,7 @@ def test_roadmap_backend_control_plane_readiness_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "backend_scheduler_parity_ready"
     boundary["readiness_criterion_count"] = 0
     boundary["readiness_criteria"][0]["sidecar_refs"][0]["exists"] = False
+    boundary["backend_control_plane_claim_guard_count"] = 0
     boundary["missing_evidence"]["calibrated_reward_policy"] = "recorded"
     boundary["required_evidence_fields"] = ["backend_role_capability_matrix"]
 
@@ -90,6 +110,7 @@ def test_roadmap_backend_control_plane_readiness_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_readiness_criterion_count" in codes
     assert "invalid_readiness_criteria" in codes
+    assert "invalid_backend_control_plane_claim_guard_count" in codes
     assert "invalid_missing_evidence_calibrated_reward_policy" in codes
     assert "missing_required_evidence_field" in codes
 

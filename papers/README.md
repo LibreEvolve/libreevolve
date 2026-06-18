@@ -3541,9 +3541,10 @@ Implemented:
   lane/substitution, critique reviewer isolation, and stale readiness/owner
   signoff. It records the backend-role capability matrix as resolved structural
   evidence from the scheduling sidecar, and records the critique-control
-  checklist as resolved structural evidence from that same source, but is not
-  evidence that the scheduler, provider, Gemini, or reviewer-readiness
-  mechanisms are implemented.
+  checklist as resolved structural evidence from that same source, plus a
+  per-surface backend control-plane claim guard, but is not evidence that the
+  scheduler, provider, Gemini, or reviewer-readiness mechanisms are
+  implemented.
 - `papers/roadmap_async_resumable_runtime_boundary.json`: ROADMAP
   async/resumable-runtime sidecar with nine criteria for topology, parallel
   evaluation, controller pending work, archive-event replay, RNG/lineage

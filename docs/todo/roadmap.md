@@ -547,7 +547,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     signoff, and records the backend-role capability matrix as resolved
     evidence from the scheduling/critique boundary. It also records the
     critique-control checklist as resolved structural evidence from the same
-    source boundary.
+    source boundary, plus a per-surface backend control-plane claim guard.
   - Current gap: the backend-role capability matrix is structural inventory,
     not a control-plane readiness gate, the reward-assumption policy is a
     descriptive policy map rather than calibrated reward evidence, the role
@@ -569,7 +569,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     these scheduler/provider/critique pieces are coherent enough to support
     AlphaEvolve-style claims, nor a guard that prevents one completed
     subfeature from implying full backend scheduling maturity. The sidecars are
-    bounded track/readiness maps, not a backend control-plane gate.
+    bounded track/readiness/claim-guard maps, not a backend control-plane gate.
   - Required result: add ROADMAP backend-scheduling criteria that classify each
     role and provider lane by selection policy, reward assumptions, budget and
     quota ownership, pricing/default-rate evidence, diagnostics/replay support,

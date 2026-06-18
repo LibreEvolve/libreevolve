@@ -1,7 +1,74 @@
 {
   "active_todo_ref_count": 16,
+  "backend_control_plane_claim_guard": [
+    {
+      "allowed_current_claim": "explicit backend-role capability matrix derived from nine ROADMAP backend/critique tracks with local sidecar and TODO links",
+      "control_plane_surface": "backend roles, provider lanes, and scheduler eligibility",
+      "criterion_id": "backend_role_capability_matrix",
+      "missing_before_scheduler_parity_claim": "control-plane capability gate proving those role/lane capabilities are scheduler-ready, owner-reviewed, and parity-safe",
+      "readiness_status": "track_matrix_without_control_plane_capability_gate",
+      "validation_gate": "backend-role capability matrix to scheduler-readiness gate"
+    },
+    {
+      "allowed_current_claim": "heuristic reward accounting and role-scoped budget maps",
+      "control_plane_surface": "role-scoped scheduler rewards, budgets, quotas, and backend choice",
+      "criterion_id": "calibrated_reward_quota_policy",
+      "missing_before_scheduler_parity_claim": "calibrated reward policy and explicit role quota ownership for each backend lane",
+      "readiness_status": "heuristic_rewards_without_owned_role_quotas",
+      "validation_gate": "calibrated reward and quota ownership policy"
+    },
+    {
+      "allowed_current_claim": "configured token-cost estimates and bounded scalar diagnostics",
+      "control_plane_surface": "provider telemetry, pricing defaults, and replayable request/response evidence",
+      "criterion_id": "live_pricing_default_and_raw_replay",
+      "missing_before_scheduler_parity_claim": "live provider pricing/default evidence plus raw provider replay policy",
+      "readiness_status": "configured_pricing_without_live_default_or_raw_replay",
+      "validation_gate": "live pricing/default and raw replay evidence"
+    },
+    {
+      "allowed_current_claim": "policy-only cancellation evidence and bounded pending-work resume surfaces",
+      "control_plane_surface": "provider timeout, hard cancellation, scheduler state, and resumed runs",
+      "criterion_id": "hard_cancellation_and_resume",
+      "missing_before_scheduler_parity_claim": "live hard cancellation artifacts and resume semantics that preserve scheduler/provider state",
+      "readiness_status": "policy_cancellation_without_live_hard_cancel_or_resume_gate",
+      "validation_gate": "live cancellation and resumed scheduler trace evidence"
+    },
+    {
+      "allowed_current_claim": "throughput/depth metadata, sample-efficiency boundaries, and no equal-budget comparator",
+      "control_plane_surface": "fast/strong model mix, proposal budgets, and scheduler comparisons",
+      "criterion_id": "equal_budget_scheduler_comparator",
+      "missing_before_scheduler_parity_claim": "equal-budget scheduler comparator proving backend policy effects separately from call caps",
+      "readiness_status": "metadata_and_curves_without_equal_budget_comparator",
+      "validation_gate": "equal-budget scheduler comparison report"
+    },
+    {
+      "allowed_current_claim": "Gemini absence/parity boundaries and no first-class Gemini lane evidence",
+      "control_plane_surface": "Gemini provider lane, substitution rules, and self-training loop claims",
+      "criterion_id": "gemini_lane_and_substitution",
+      "missing_before_scheduler_parity_claim": "first-class Gemini lane evidence and explicit Gemini substitution status",
+      "readiness_status": "absence_boundary_without_first_class_gemini_lane",
+      "validation_gate": "Gemini lane and substitution policy evidence"
+    },
+    {
+      "allowed_current_claim": "structural critique-control checklist for synchronous first/last-valid reviewer aggregation without async isolation",
+      "control_plane_surface": "critique reviewer pools, reviewer overlap, and critique-to-revision attribution",
+      "criterion_id": "critique_reviewer_isolation",
+      "missing_before_scheduler_parity_claim": "async reviewer isolation evidence and reviewer readiness gate",
+      "readiness_status": "synchronous_aggregation_without_reviewer_isolation",
+      "validation_gate": "critique-control checklist to reviewer isolation report"
+    },
+    {
+      "allowed_current_claim": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "control_plane_surface": "README, papers, ROADMAP, generated inventories, and owner readiness claims",
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "missing_before_scheduler_parity_claim": "stale-readiness detector and owner signoff before backend-scheduler parity claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "backend_control_plane_claim_guard_count": 8,
   "boundary_status": "bounded_backend_control_plane_readiness_matrix_without_scheduler_parity_gate",
-  "claim_boundary": "This boundary records backend control-plane readiness criteria tied to the bounded backend scheduling and critique matrix, including the recorded backend-role capability matrix from that source boundary and the recorded critique-control checklist. It does not claim calibrated reward policy, role quota ownership, live provider pricing/default evidence, raw provider replay, live hard cancellation, equal-budget scheduler comparator, first-class Gemini lane evidence, async reviewer isolation, stale-readiness detector, owner review signoff, or full backend scheduler parity.",
+  "claim_boundary": "This boundary records backend control-plane readiness criteria tied to the bounded backend scheduling and critique matrix, including the recorded backend-role capability matrix from that source boundary, the recorded critique-control checklist, and a claim guard for each control-plane surface. It does not claim calibrated reward policy, role quota ownership, live provider pricing/default evidence, raw provider replay, live hard cancellation, equal-budget scheduler comparator, first-class Gemini lane evidence, async reviewer isolation, stale-readiness detector, owner review signoff, or full backend scheduler parity.",
   "claim_ready": false,
   "missing_evidence": {
     "async_reviewer_isolation": "not_recorded_locally",

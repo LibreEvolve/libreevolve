@@ -803,7 +803,8 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.proposal_score_report` outcome/exact-novelty score records
   with deterministic current-run lexical proposal-family diagnostics,
   `runtime.history.controller_backtracking_report` observed branch-state
-  transition/redirect evidence, and
+  transition/redirect evidence plus audit-only unpromising-branch decision
+  records, and
   `runtime.history.natural_language_preamble_report` bounded leading
   explanatory-preamble capture, with
   `papers/proposal_score_boundary.json` preserving the bounded current-run
@@ -821,10 +822,11 @@ is not yet an AlphaEvolve reproduction.
   explicit controller-driven backtracking policies, cross-run proposal tables,
   hypothesis-refinement loops, with
   `papers/controller_backtracking_boundary.json` now carrying the
-  paper-manifest-validated absence boundary for unpromising-decision
-  rules/thresholds, controller branch-state machines, suppression/retry
-  policy, prompt-sampling suppression effects, fallback-target decision
-  events, causal replay, and cross-run hypothesis branch tables,
+  paper-manifest-validated absence boundary for controller-owned
+  unpromising-decision rules/thresholds, controller branch-state machines,
+  suppression/retry policy, prompt-sampling suppression effects,
+  controller fallback-target decision events, causal replay, and cross-run
+  hypothesis branch tables,
   configurable preamble policy, full-replacement
   preamble disambiguation, rationale-quality scoring, and stricter policy for
   which proposal fields may influence retrieval, prompting, and archive

@@ -246,18 +246,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     Completed manifests also include
     `runtime.history.controller_backtracking_report` with schema
     `libreevolve.controller_backtracking_report.v1`, which records current-run
-    branch state transitions and observed redirects from abandoned-looking
-    branches to a later fallback parent or alternative branch. The committed
+    branch state transitions, audit-only unpromising-branch decision records,
+    and observed redirects from abandoned-looking branches to a later fallback
+    parent or alternative branch. The committed
     `papers/controller_backtracking_boundary.json` sidecar now preserves the
     paper-manifest-validated controller-policy absence boundary, including
-    missing unpromising-decision rules/thresholds, controller branch-state
-    machine, and prompt-sampling suppression effects.
+    missing controller-owned unpromising-decision rules/thresholds, controller
+    branch-state machine, and prompt-sampling suppression effects.
   - Current gap: these reports are evidence of abandoned-looking branches and
-    observed redirects, not proof that the controller deliberately backtracked
-    under a configured policy. They still lack suppression/retry events,
-    unpromising-branch decision thresholds, explicit fallback-target
-    selection, prompt-visible sampling suppression, causal resumed-search
-    proof, and cross-run branch tables.
+    observed redirects plus audit-only unpromising-branch decision records, not
+    proof that the controller deliberately backtracked under a configured
+    policy. They still lack suppression/retry events, controller-owned
+    unpromising-branch decision thresholds, explicit fallback-target selection,
+    prompt-visible sampling suppression, causal resumed-search proof, and
+    cross-run branch tables.
   - Required result: add controller-owned backtracking policy reports with
     configured suppression/retry behavior, unpromising decision rules and
     thresholds, explicit fallback target selection, prompt-sampling suppression

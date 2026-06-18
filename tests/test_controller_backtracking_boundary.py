@@ -12,14 +12,20 @@ def test_controller_backtracking_boundary_accepts_absence_record():
     validation = validate_controller_backtracking_boundary(boundary)
 
     assert validation.ok is True
-    assert validation.boundary_status == "observed_redirects_without_controller_policy"
-    assert validation.required_evidence_field_count == 14
+    assert (
+        validation.boundary_status
+        == "observed_redirects_and_audit_decisions_without_controller_policy"
+    )
+    assert validation.required_evidence_field_count == 16
     assert validation.missing_evidence_count == 10
     assert boundary["schema"] == CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA
     assert "does not claim AlphaEvolve-style controller-owned backtracking" in (
         boundary["claim_boundary"]
     )
-    assert "unpromising_decision_rule" in boundary["required_evidence_fields"]
+    assert "audit_unpromising_decision_record" in boundary["required_evidence_fields"]
+    assert "controller_owned_unpromising_decision_rule" in (
+        boundary["required_evidence_fields"]
+    )
     assert "prompt_sampling_suppression_effect" in (
         boundary["required_evidence_fields"]
     )
@@ -27,7 +33,11 @@ def test_controller_backtracking_boundary_accepts_absence_record():
         boundary["missing_evidence"]["controller_branch_state_machine"]
         == "not_recorded_locally"
     )
-    assert "unpromising-decision rules and thresholds" in boundary["claim_boundary"]
+    assert "audit-only unpromising-decision records" in boundary["claim_boundary"]
+    assert (
+        "controller-owned unpromising-decision rules and thresholds"
+        in boundary["claim_boundary"]
+    )
 
 
 def test_controller_backtracking_boundary_rejects_premature_policy_claim():
@@ -54,6 +64,9 @@ def test_render_controller_backtracking_boundary_summary_reports_shape():
 
     assert "AlphaEvolve controller backtracking boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| boundary_status | observed_redirects_without_controller_policy |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
+    assert (
+        "| boundary_status | observed_redirects_and_audit_decisions_without_controller_policy |"
+        in summary
+    )
+    assert "| required_evidence_field_count | 16 |" in summary
     assert "| missing_evidence_count | 10 |" in summary

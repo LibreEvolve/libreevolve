@@ -2851,19 +2851,21 @@ sidecars, tests, and active TODOs.
     `runtime.history.controller_backtracking_report` with schema
     `libreevolve.controller_backtracking_report.v1`, plus
     `validate_controller_backtracking_report()`. It records current-run branch
-    state transitions and observed later fallback-parent or alternative-branch
-    selections after abandoned-looking branches while keeping causal controller
-    proof false. The committed
+    state transitions, audit-only unpromising-branch decision records, and
+    observed later fallback-parent or alternative-branch selections after
+    abandoned-looking branches while keeping controller sampling effects and
+    causal controller proof false. The committed
     `papers/controller_backtracking_boundary.json` sidecar now records the
     paper-manifest-validated controller-policy absence boundary, including
-    missing unpromising-decision rules/thresholds, controller branch-state
-    machine, and prompt-sampling suppression effects.
-  - Remaining gap: this is observed redirect evidence, not a controller-owned
-    backtracking policy. LibreEvolve still does not persist a configured branch
-    state machine, unpromising-branch decision rule/threshold, suppression or
-    retry policy event, explicit fallback-target selection event, prompt-
-    visible sampling suppression effect, causal redirected-sampling proof, or
-    cross-run hypothesis branch table.
+    missing controller-owned unpromising-decision rules/thresholds, controller
+    branch-state machine, and prompt-sampling suppression effects.
+  - Remaining gap: this is observed redirect evidence plus audit-only
+    unpromising-branch decision evidence, not a controller-owned backtracking
+    policy. LibreEvolve still does not persist a configured branch state
+    machine, controller-owned unpromising-branch decision rule/threshold,
+    suppression or retry policy event, explicit controller fallback-target
+    selection event, prompt-visible sampling suppression effect, causal
+    redirected-sampling proof, or cross-run hypothesis branch table.
   - Required result: add explicit controller-owned backtracking policy events
     with configured suppression/retry behavior, unpromising decision rules and
     thresholds, selected fallback ancestor or alternative branch, prompt-

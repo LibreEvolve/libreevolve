@@ -1327,15 +1327,17 @@ semantic artifact search.
 captured proposal text hashes and marks rejected/no-accepted branches as
 `abandoned_evidence` with fallback-parent inference and failure-memory linkage.
 `runtime.history.controller_backtracking_report` now records current-run branch
-state transitions and observed redirects from abandoned-looking branches to a
-later fallback parent or alternative branch, while explicitly marking causal
-controller backtracking proof as absent. The committed
+state transitions, audit-only unpromising-branch decision records, and observed
+redirects from abandoned-looking branches to a later fallback parent or
+alternative branch, while explicitly marking controller sampling effects and
+causal controller backtracking proof as absent. The committed
 `papers/controller_backtracking_boundary.json` sidecar now emits that
-`observed_redirects_without_controller_policy` boundary for missing
-unpromising-decision rules/thresholds, controller branch-state machines,
-suppression/retry behavior, prompt-sampling suppression effects, explicit
-fallback-target selection, causal replay, and cross-run branch tables, and
-`validate_paper_manifest()` requires and validates it at the real repo root.
+`observed_redirects_and_audit_decisions_without_controller_policy` boundary for
+missing controller-owned unpromising-decision rules/thresholds, controller
+branch-state machines, suppression/retry behavior, prompt-sampling suppression
+effects, controller fallback-target selection, causal replay, and cross-run
+branch tables, and `validate_paper_manifest()` requires and validates it at the
+real repo root.
 `runtime.history.proposal_diversity_report` also records exact proposal and
 idea hash uniqueness/duplicate counts by generation and proposal batch, with
 bounded sample records and an exact-text-only analysis policy. The committed

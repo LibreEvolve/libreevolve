@@ -9075,19 +9075,34 @@ def test_runtime_history_reports_observed_controller_redirect_boundary():
     assert report["visible_branch_count"] == 2
     assert report["visible_abandoned_branch_count"] == 1
     assert report["redirect_event_count"] == 1
+    assert report["backtracking_decision_record_count"] == 1
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["branch_state_transitions"] is True
     assert report["claim_readiness"]["observed_redirect_events"] is True
+    assert report["claim_readiness"]["audit_unpromising_decision_records"] is True
     assert (
         report["claim_readiness"]["explicit_controller_backtracking_decision"]
         is False
     )
     assert report["policies"]["controller_suppression"] == "not_configured"
+    assert report["policies"]["decision_enforcement"] == (
+        "audit_only_no_controller_sampling_effect"
+    )
 
     event = report["redirect_events"][0]
     assert event["redirect_kind"] == "fallback_parent_sampled_for_alternative_branch"
     assert event["causal_proof"] is False
     assert event["source_branch_id"] != event["selected_branch_id"]
+    decision = report["backtracking_decision_records"][0]
+    assert decision["decision_type"] == "audit_unpromising_branch"
+    assert decision["decision_source"] == "runtime_history_audit_not_controller_action"
+    assert decision["rule"] == "all_observed_candidates_rejected_and_no_acceptance"
+    assert decision["observed_counts"]["accepted_count"] == 0
+    assert decision["observed_counts"]["rejected_count"] == 1
+    assert decision["selected_target_evidence"]["redirect_event_id"] == event["event_id"]
+    assert decision["suppression_applied"] is False
+    assert decision["prompt_sampling_suppression_applied"] is False
+    assert decision["causal_resumed_search_proof"] is False
     transitions = report["branch_state_transitions"]
     assert any(
         transition["event_type"] == "abandoned_evidence"

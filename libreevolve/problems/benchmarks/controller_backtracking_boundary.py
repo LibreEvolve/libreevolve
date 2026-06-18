@@ -12,13 +12,15 @@ CONTROLLER_BACKTRACKING_BOUNDARY_SCHEMA = (
 HYPOTHESIS_BRANCH_RUNTIME_REPORT_SCHEMA = "libreevolve.hypothesis_branch_report.v1"
 CONTROLLER_BACKTRACKING_RUNTIME_REPORT_SCHEMA = "libreevolve.controller_backtracking_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "observed_redirects_without_controller_policy"
+EXPECTED_BOUNDARY_STATUS = "observed_redirects_and_audit_decisions_without_controller_policy"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "branch_id",
     "proposal_hash",
     "abandonment_reason",
-    "unpromising_decision_rule",
-    "unpromising_decision_threshold",
+    "audit_unpromising_decision_record",
+    "audit_unpromising_decision_rule",
+    "audit_unpromising_decision_threshold",
+    "controller_owned_unpromising_decision_rule",
     "controller_branch_state_machine_ref",
     "configured_suppression_policy",
     "configured_retry_policy",
@@ -32,8 +34,8 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "controller_owned_suppression_policy": "not_configured",
     "controller_owned_retry_policy": "not_configured",
-    "unpromising_decision_rule": "not_recorded_locally",
-    "unpromising_decision_thresholds": "not_recorded_locally",
+    "controller_owned_unpromising_decision_rule": "not_configured",
+    "controller_owned_unpromising_decision_thresholds": "not_configured",
     "controller_branch_state_machine": "not_recorded_locally",
     "prompt_sampling_suppression_effect": "not_recorded_locally",
     "fallback_target_decision_events": "not_recorded_locally",
@@ -74,19 +76,21 @@ def controller_backtracking_boundary_record() -> dict[str, Any]:
             "future sampling"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
-        "runtime_report_status": "hypothesis_branch_and_observed_redirect_reports_available",
+        "runtime_report_status": "hypothesis_branch_observed_redirect_and_audit_decision_reports_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has runtime evidence for "
-            "abandoned-looking branches and observed redirects, but does not claim "
+            "abandoned-looking branches, audit-only unpromising-decision "
+            "records, and observed redirects, but does not claim "
             "AlphaEvolve-style controller-owned backtracking policy evidence with "
-            "unpromising-decision rules and thresholds, controller branch-state "
-            "machines, configured suppression/retry behavior, prompt-sampling "
-            "suppression effects, explicit fallback-target or alternative-branch "
-            "selection events, causal resumed-search replay, or cross-run "
-            "hypothesis branch tables."
+            "controller-owned unpromising-decision rules and thresholds, "
+            "controller branch-state machines, configured suppression/retry "
+            "behavior, prompt-sampling suppression effects, explicit "
+            "controller fallback-target or alternative-branch selection events, "
+            "causal resumed-search replay, or cross-run hypothesis branch "
+            "tables."
         ),
     }
 
@@ -118,8 +122,8 @@ def validate_controller_backtracking_boundary(
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
-    if data.get("runtime_report_status") != "hypothesis_branch_and_observed_redirect_reports_available":
-        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to observed redirect reports"))
+    if data.get("runtime_report_status") != "hypothesis_branch_observed_redirect_and_audit_decision_reports_available":
+        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to observed redirect and audit decision reports"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "controller backtracking boundary must not claim paper readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
@@ -128,7 +132,8 @@ def validate_controller_backtracking_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim" not in boundary_text
-        or "unpromising-decision rules and thresholds" not in boundary_text
+        or "audit-only unpromising-decision records" not in boundary_text
+        or "controller-owned unpromising-decision rules and thresholds" not in boundary_text
         or "controller branch-state machines" not in boundary_text
         or "prompt-sampling suppression effects" not in boundary_text
     ):

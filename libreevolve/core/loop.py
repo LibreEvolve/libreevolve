@@ -35884,6 +35884,10 @@ def _controller_backtracking_report(
         generated_records,
         branch_lookup,
     )
+    decision_records = _controller_backtracking_decision_records(
+        branch_lookup,
+        redirects,
+    )
     report = {
         "schema": "libreevolve.controller_backtracking_report.v1",
         "source": "runtime_history_parent_selection_and_hypothesis_branch_report",
@@ -35896,26 +35900,40 @@ def _controller_backtracking_report(
         ),
         "branch_state_transition_count": len(transitions),
         "redirect_event_count": len(redirects),
+        "backtracking_decision_record_count": len(decision_records),
         "branch_state_transitions": transitions[:100],
         "branch_state_transitions_limit": 100,
         "branch_state_transitions_truncated": len(transitions) > 100,
         "redirect_events": redirects[:50],
         "redirect_events_limit": 50,
         "redirect_events_truncated": len(redirects) > 50,
+        "backtracking_decision_records": decision_records[:50],
+        "backtracking_decision_records_limit": 50,
+        "backtracking_decision_records_truncated": len(decision_records) > 50,
         "policies": {
             "branch_identity": "captured_proposal_text_hash",
             "state_source": "archive_admission_and_failure_history_summary",
+            "unpromising_decision_rule": (
+                "audit_all_observed_candidates_rejected_and_no_acceptance"
+            ),
+            "unpromising_decision_thresholds": {
+                "min_rejected_candidates": 1,
+                "max_accepted_candidates": 0,
+                "execution_filtered_candidates_count_as_rejected": True,
+            },
             "fallback_target_selection": (
                 "observed_later_parent_sampling_after_abandoned_branch"
             ),
             "controller_suppression": "not_configured",
             "retry_policy": "normal_parent_sampling_can_revisit_branch",
+            "decision_enforcement": "audit_only_no_controller_sampling_effect",
             "replay_scope": "current_manifest_history_only",
         },
         "claim_ready": False,
         "claim_readiness": {
             "branch_state_transitions": bool(transitions),
             "observed_redirect_events": bool(redirects),
+            "audit_unpromising_decision_records": bool(decision_records),
             "explicit_controller_backtracking_decision": False,
             "suppression_or_retry_policy": False,
             "causal_resumed_search_proof": False,
@@ -35923,7 +35941,8 @@ def _controller_backtracking_report(
             "remaining_gap": [
                 "controller_owned_branch_state_machine",
                 "configured_suppression_or_retry_policy",
-                "explicit_fallback_target_selection_event",
+                "controller_owned_fallback_target_selection_event",
+                "prompt_visible_sampling_suppression_effect",
                 "causal_resumed_search_replay",
                 "cross_run_hypothesis_branch_table",
             ],
@@ -36128,6 +36147,101 @@ def _controller_backtracking_redirect_events(
     return events
 
 
+def _controller_backtracking_decision_records(
+    branch_lookup: Mapping[str, Mapping[str, object]],
+    redirects: list[dict],
+) -> list[dict]:
+    redirect_by_branch = {
+        event["source_branch_id"]: event
+        for event in redirects
+        if isinstance(event.get("source_branch_id"), str)
+    }
+    records: list[dict] = []
+    for branch_id, branch in branch_lookup.items():
+        if branch.get("branch_status") != "abandoned_evidence":
+            continue
+        accepted_count = _controller_backtracking_int(branch.get("accepted_count"))
+        rejected_count = _controller_backtracking_int(branch.get("rejected_count"))
+        filtered_count = _controller_backtracking_int(
+            branch.get("execution_filtered_count")
+        )
+        decision_id_payload = json.dumps(
+            [
+                branch_id,
+                accepted_count,
+                rejected_count,
+                branch.get("abandonment_reason"),
+            ],
+            separators=(",", ":"),
+        )
+        redirect = redirect_by_branch.get(branch_id)
+        fallback_target = (
+            branch.get("fallback_target")
+            if isinstance(branch.get("fallback_target"), Mapping)
+            else {}
+        )
+        selected_target = {
+            "selection_source": "none_observed_after_decision",
+            "selected_candidate_id": None,
+            "selected_branch_id": None,
+            "selected_parent_id": None,
+            "redirect_event_id": None,
+            "redirect_kind": None,
+        }
+        if isinstance(redirect, Mapping):
+            selected_target = {
+                "selection_source": "observed_redirect_event",
+                "selected_candidate_id": redirect.get("selected_candidate_id"),
+                "selected_branch_id": redirect.get("selected_branch_id"),
+                "selected_parent_id": redirect.get("selected_parent_id"),
+                "redirect_event_id": redirect.get("event_id"),
+                "redirect_kind": redirect.get("redirect_kind"),
+            }
+        records.append(
+            {
+                "decision_id": "backtrack-decision-"
+                + hashlib.sha256(decision_id_payload.encode("utf-8")).hexdigest()[:16],
+                "branch_id": branch_id,
+                "decision_type": "audit_unpromising_branch",
+                "decision_source": "runtime_history_audit_not_controller_action",
+                "rule": "all_observed_candidates_rejected_and_no_acceptance",
+                "thresholds": {
+                    "min_rejected_candidates": 1,
+                    "max_accepted_candidates": 0,
+                    "execution_filtered_candidates_count_as_rejected": True,
+                },
+                "observed_counts": {
+                    "candidate_count": _controller_backtracking_int(
+                        branch.get("candidate_count")
+                    ),
+                    "accepted_count": accepted_count,
+                    "rejected_count": rejected_count,
+                    "execution_filtered_count": filtered_count,
+                },
+                "decision_result": "unpromising_branch_evidence",
+                "abandonment_reason": branch.get("abandonment_reason"),
+                "fallback_target_evidence": {
+                    "type": fallback_target.get("type"),
+                    "candidate_ids": fallback_target.get("candidate_ids", []),
+                    "policy": fallback_target.get("policy"),
+                },
+                "selected_target_evidence": selected_target,
+                "suppression_applied": False,
+                "retry_policy_event_recorded": False,
+                "prompt_sampling_suppression_applied": False,
+                "causal_resumed_search_proof": False,
+            }
+        )
+    records.sort(key=lambda record: str(record["decision_id"]))
+    return records
+
+
+def _controller_backtracking_int(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        return 0
+    return max(0, value)
+
+
 def validate_controller_backtracking_report(report: object) -> dict:
     issues: list[dict] = []
     if not isinstance(report, dict):
@@ -36146,12 +36260,16 @@ def validate_controller_backtracking_report(report: object) -> dict:
         "visible_abandoned_branch_count",
         "branch_state_transition_count",
         "redirect_event_count",
+        "backtracking_decision_record_count",
         "branch_state_transitions",
         "branch_state_transitions_limit",
         "branch_state_transitions_truncated",
         "redirect_events",
         "redirect_events_limit",
         "redirect_events_truncated",
+        "backtracking_decision_records",
+        "backtracking_decision_records_limit",
+        "backtracking_decision_records_truncated",
         "policies",
         "claim_ready",
         "claim_readiness",
@@ -36169,6 +36287,7 @@ def validate_controller_backtracking_report(report: object) -> dict:
         "visible_abandoned_branch_count",
         "branch_state_transition_count",
         "redirect_event_count",
+        "backtracking_decision_record_count",
     ):
         value = report.get(field)
         if isinstance(value, bool) or not isinstance(value, int) or value < 0:
@@ -36181,6 +36300,10 @@ def validate_controller_backtracking_report(report: object) -> dict:
     if not isinstance(redirects, list):
         issues.append({"code": "invalid_redirect_events", "message": "redirect_events must be a list"})
         redirects = []
+    decisions = report.get("backtracking_decision_records")
+    if not isinstance(decisions, list):
+        issues.append({"code": "invalid_backtracking_decision_records", "message": "backtracking_decision_records must be a list"})
+        decisions = []
     for index, transition in enumerate(transitions):
         if not isinstance(transition, dict):
             issues.append({"code": "invalid_transition", "message": f"transition {index} must be an object"})
@@ -36203,17 +36326,53 @@ def validate_controller_backtracking_report(report: object) -> dict:
             issues.append({"code": "invalid_redirect_id", "message": f"redirect {index} id is invalid"})
         if event.get("causal_proof") is not False:
             issues.append({"code": "redirect_causal_overclaim", "message": f"redirect {index} must not claim causal proof"})
+    for index, decision in enumerate(decisions):
+        if not isinstance(decision, dict):
+            issues.append({"code": "invalid_backtracking_decision_record", "message": f"decision {index} must be an object"})
+            continue
+        decision_id = decision.get("decision_id")
+        if not isinstance(decision_id, str) or not re.fullmatch(r"backtrack-decision-[0-9a-f]{16}", decision_id):
+            issues.append({"code": "invalid_backtracking_decision_id", "message": f"decision {index} id is invalid"})
+        if decision.get("decision_source") != "runtime_history_audit_not_controller_action":
+            issues.append({"code": "invalid_backtracking_decision_source", "message": f"decision {index} must remain audit-only"})
+        if decision.get("rule") != "all_observed_candidates_rejected_and_no_acceptance":
+            issues.append({"code": "invalid_backtracking_decision_rule", "message": f"decision {index} rule is unsupported"})
+        observed_counts = decision.get("observed_counts")
+        if not isinstance(observed_counts, dict):
+            issues.append({"code": "invalid_backtracking_decision_counts", "message": f"decision {index} observed_counts must be an object"})
+        else:
+            accepted_count = observed_counts.get("accepted_count")
+            rejected_count = observed_counts.get("rejected_count")
+            if accepted_count != 0 or not isinstance(rejected_count, int) or rejected_count < 1:
+                issues.append({"code": "invalid_backtracking_decision_evidence", "message": f"decision {index} must be backed by rejected-only branch evidence"})
+        for field in (
+            "suppression_applied",
+            "retry_policy_event_recorded",
+            "prompt_sampling_suppression_applied",
+            "causal_resumed_search_proof",
+        ):
+            if decision.get(field) is not False:
+                issues.append({"code": f"backtracking_decision_{field}_overclaim", "message": f"decision {index} {field} must remain false"})
     if report.get("branch_state_transitions_truncated") is not True:
         if report.get("branch_state_transition_count") != len(transitions):
             issues.append({"code": "invalid_transition_count", "message": "transition count must match records when not truncated"})
     if report.get("redirect_events_truncated") is not True:
         if report.get("redirect_event_count") != len(redirects):
             issues.append({"code": "invalid_redirect_count", "message": "redirect count must match records when not truncated"})
+    if report.get("backtracking_decision_records_truncated") is not True:
+        if report.get("backtracking_decision_record_count") != len(decisions):
+            issues.append({"code": "invalid_backtracking_decision_count", "message": "backtracking decision count must match records when not truncated"})
     policies = report.get("policies")
     if not isinstance(policies, dict):
         issues.append({"code": "invalid_policies", "message": "policies must be an object"})
     elif policies.get("controller_suppression") != "not_configured":
         issues.append({"code": "controller_suppression_overclaim", "message": "controller suppression must remain not_configured"})
+    else:
+        thresholds = policies.get("unpromising_decision_thresholds")
+        if policies.get("decision_enforcement") != "audit_only_no_controller_sampling_effect":
+            issues.append({"code": "decision_enforcement_overclaim", "message": "decision enforcement must remain audit-only"})
+        if not isinstance(thresholds, dict) or thresholds.get("min_rejected_candidates") != 1 or thresholds.get("max_accepted_candidates") != 0:
+            issues.append({"code": "invalid_unpromising_decision_thresholds", "message": "unpromising decision thresholds are unsupported"})
     if report.get("claim_ready") is not False:
         issues.append({"code": "claim_ready_overclaim", "message": "controller backtracking report must not claim AlphaEvolve parity"})
     readiness = report.get("claim_readiness")
@@ -36224,6 +36383,8 @@ def validate_controller_backtracking_report(report: object) -> dict:
             issues.append({"code": "controller_decision_overclaim", "message": "explicit controller decision must remain false"})
         if readiness.get("causal_resumed_search_proof") is not False:
             issues.append({"code": "causal_replay_overclaim", "message": "causal resumed-search proof must remain false"})
+        if "audit_unpromising_decision_records" not in readiness:
+            issues.append({"code": "missing_audit_unpromising_decision_records", "message": "claim_readiness must record audit decision availability"})
     return {
         "schema": "libreevolve.controller_backtracking_report.v1",
         "ok": not issues,

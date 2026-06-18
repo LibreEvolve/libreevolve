@@ -14238,3 +14238,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused proposal-score boundary tests require the
     lexical-family evidence field while preserving semantic-memory overclaim
     rejection.
+- [x] Add paper-facing audit-only backtracking decision boundary.
+  - Paper evidence: AlphaEvolve Introduction and Section 2.4 frame discovery as
+    including backtracking on unpromising hypotheses.
+  - Status: paper-facing docs and `papers/controller_backtracking_boundary.json`
+    now distinguish audit-only unpromising-branch decision records from
+    controller-owned backtracking policy evidence.
+  - Remaining paper gap: controller-owned unpromising decision thresholds,
+    suppression/retry behavior, prompt-sampling suppression effects,
+    fallback-target decision events, causal replay, and cross-run branch tables
+    remain unimplemented.
+  - Verification: focused controller-backtracking boundary tests require the
+    audit decision evidence while preserving controller-policy overclaim
+    rejection.

@@ -15937,3 +15937,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     retrieval, calibrated quality models, and cross-run proposal tables open.
   - Remaining roadmap gap: semantic proposal memory and owner review signoff
     remain active TODOs.
+- [x] Keep ROADMAP backtracking boundary current with audit decisions.
+  - Spec evidence: ROADMAP AlphaEvolve gaps should distinguish observed
+    branch/redirect evidence from controller-owned backtracking policy.
+  - Status: ROADMAP now describes `controller_backtracking_report` as including
+    audit-only unpromising-branch decision records while keeping
+    controller-owned unpromising-decision rules, suppression/retry policy,
+    fallback-target decisions, causal replay, and cross-run branch tables open.
+  - Remaining roadmap gap: controller-owned backtracking policy and owner
+    review signoff remain active TODOs.

@@ -19173,3 +19173,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     cross-run proposal persistence, or prompt/archive policy use.
   - Verification: focused loop tests cover family counts, duplicate accepted
     family evidence, validator success, and false semantic-retrieval readiness.
+- [x] Add audit-only unpromising-branch backtracking decisions.
+  - Spec evidence: AlphaEvolve describes backtracking on unpromising
+    hypotheses, so runtime reports need to identify which branch evidence would
+    trigger a backtracking decision before any controller-owned sampling policy
+    can be claimed.
+  - Status: `runtime.history.controller_backtracking_report` now includes
+    `backtracking_decision_records` that record an audit-only
+    `all_observed_candidates_rejected_and_no_acceptance` rule, thresholds,
+    observed branch counts, fallback-target evidence, and selected redirect
+    evidence when present.
+  - Remaining code gap: these records are audit evidence only. They do not
+    suppress prompt sampling, configure retries, select fallback targets as a
+    controller action, prove causal resumed search, or persist cross-run branch
+    tables.
+  - Verification: focused controller-backtracking tests cover emitted decision
+    records, redirect linkage, and false suppression/causal-proof flags.

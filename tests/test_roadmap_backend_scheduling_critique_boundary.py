@@ -83,6 +83,25 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "budget_quota_ownership" in record
         for record in boundary["role_budget_quota_policy"]
     )
+    assert boundary["provider_pricing_default_rate_evidence_count"] == 9
+    assert [
+        record["track_id"]
+        for record in boundary["provider_pricing_default_rate_evidence"]
+    ] == [
+        "heuristic_ucb_rewards",
+        "role_scoped_routing",
+        "provider_diagnostics_pricing",
+        "provider_cancellation_quarantine",
+        "fast_strong_model_mix",
+        "sample_efficiency",
+        "repeated_sampling_baseline",
+        "gemini_provider_parity",
+        "critique_reviewer_pool",
+    ]
+    assert all(
+        "pricing_default_rate_evidence" in record
+        for record in boundary["provider_pricing_default_rate_evidence"]
+    )
     assert boundary["critique_control_checklist_count"] == 8
     assert [
         check["check_id"] for check in boundary["critique_control_checklist"]
@@ -129,6 +148,9 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "role_budget_quota_policy": (
             "recorded_from_roadmap_backend_scheduling_track_records"
         ),
+        "provider_pricing_default_rate_evidence": (
+            "recorded_from_roadmap_backend_scheduling_track_records"
+        ),
         "critique_control_checklist": (
             "recorded_from_critique_reviewer_pool_track_boundary"
         ),
@@ -136,6 +158,7 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
     assert "backend-role capability inventory" in boundary["claim_boundary"]
     assert "reward-assumption policy" in boundary["claim_boundary"]
     assert "role budget/quota policy" in boundary["claim_boundary"]
+    assert "provider pricing/default-rate evidence map" in boundary["claim_boundary"]
     assert "critique-control checklist" in boundary["claim_boundary"]
 
 

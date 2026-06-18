@@ -1793,12 +1793,13 @@ Important limits:
   equal-budget, reviewer-isolation, Gemini-substitution, sidecar-ref,
   active-TODO, validation-gate, readiness labels, and an explicit
   backend-role capability inventory, reward-assumption policy, role
-  budget/quota policy, and critique-control checklist derived from those track
-  records. This is not calibrated reward policy, role quota ownership, live
-  provider pricing/default evidence, raw provider replay, live hard
-  cancellation, equal-budget scheduler comparator, first-class Gemini lane
-  evidence, async reviewer isolation, stale-readiness detector, owner review
-  signoff, or full backend scheduler parity.
+  budget/quota policy, provider pricing/default-rate evidence map, and
+  critique-control checklist derived from those track records. This is not
+  calibrated reward policy, role quota ownership, live provider
+  pricing/default evidence, raw provider replay, live hard cancellation,
+  equal-budget scheduler comparator, first-class Gemini lane evidence, async
+  reviewer isolation, stale-readiness detector, owner review signoff, or full
+  backend scheduler parity.
 - ROADMAP backend control-plane readiness evidence now records eight criteria
   for backend-role capability, calibrated reward/quota policy, live
   pricing/default and raw replay, hard cancellation/resume, equal-budget

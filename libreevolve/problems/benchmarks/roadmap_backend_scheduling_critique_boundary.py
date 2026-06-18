@@ -46,6 +46,9 @@ EXPECTED_RESOLVED_EVIDENCE = {
     "reward_assumption_policy": (
         "recorded_from_roadmap_backend_scheduling_track_records"
     ),
+    "role_budget_quota_policy": (
+        "recorded_from_roadmap_backend_scheduling_track_records"
+    ),
     "critique_control_checklist": (
         "recorded_from_critique_reviewer_pool_track_boundary"
     ),
@@ -344,6 +347,9 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
         _backend_role_capability_record(record) for record in records
     ]
     reward_assumption_policy = [_reward_assumption_record(record) for record in records]
+    role_budget_quota_policy = [
+        _role_budget_quota_record(record) for record in records
+    ]
     critique_control_checklist = _critique_control_checklist(records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     sidecar_ref_count = sum(len(record["current_sidecar_refs"]) for record in records)
@@ -361,6 +367,8 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
         "backend_role_capability_matrix_count": len(backend_role_capability_matrix),
         "reward_assumption_policy": reward_assumption_policy,
         "reward_assumption_policy_count": len(reward_assumption_policy),
+        "role_budget_quota_policy": role_budget_quota_policy,
+        "role_budget_quota_policy_count": len(role_budget_quota_policy),
         "critique_control_checklist": critique_control_checklist,
         "critique_control_checklist_count": len(critique_control_checklist),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -372,10 +380,10 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
             "provider diagnostics/pricing, cancellation/quarantine, fast/strong "
             "model mix, sample efficiency, repeated sampling, Gemini parity, "
             "and critique reviewer pools, with an explicit backend-role "
-            "capability inventory, reward-assumption policy, and "
-            "critique-control checklist derived from those tracks. It does not "
-            "claim calibrated reward policy, role quota ownership, live "
-            "provider pricing/defaults, raw provider replay, live hard "
+            "capability inventory, reward-assumption policy, role budget/quota "
+            "policy, and critique-control checklist derived from those tracks. "
+            "It does not claim calibrated reward policy, role quota ownership, "
+            "live provider pricing/defaults, raw provider replay, live hard "
             "cancellation, equal-budget scheduler comparators, first-class "
             "Gemini lanes, async reviewer isolation, stale-readiness detector, "
             "or owner review signoff."
@@ -415,6 +423,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         "backend_role_capability_matrix_count",
         "reward_assumption_policy",
         "reward_assumption_policy_count",
+        "role_budget_quota_policy",
+        "role_budget_quota_policy_count",
         "critique_control_checklist",
         "critique_control_checklist_count",
     ):
@@ -431,6 +441,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         issues.append(_issue("invalid_backend_role_capability_matrix_count", "backend role capability matrix count changed"))
     if data.get("reward_assumption_policy_count") != len(TRACK_SPECS):
         issues.append(_issue("invalid_reward_assumption_policy_count", "reward assumption policy count changed"))
+    if data.get("role_budget_quota_policy_count") != len(TRACK_SPECS):
+        issues.append(_issue("invalid_role_budget_quota_policy_count", "role budget/quota policy count changed"))
     if data.get("critique_control_checklist_count") != 8:
         issues.append(_issue("invalid_critique_control_checklist_count", "critique control checklist count changed"))
     boundary_text = data.get("claim_boundary")
@@ -438,6 +450,7 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         not isinstance(boundary_text, str)
         or "backend-role capability inventory" not in boundary_text
         or "reward-assumption policy" not in boundary_text
+        or "role budget/quota policy" not in boundary_text
         or "critique-control checklist" not in boundary_text
         or "first-class Gemini lanes" not in boundary_text
     ):
@@ -526,6 +539,17 @@ def _reward_assumption_record(record: dict[str, Any]) -> dict[str, str]:
         "track_id": record["track_id"],
         "role_or_lane": record["role_or_lane"],
         "reward_assumptions": record["reward_assumptions"],
+        "selection_policy": record["selection_policy"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
+    }
+
+
+def _role_budget_quota_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "track_id": record["track_id"],
+        "role_or_lane": record["role_or_lane"],
+        "budget_quota_ownership": record["budget_quota_ownership"],
         "selection_policy": record["selection_policy"],
         "validation_gate": record["validation_gate"],
         "readiness_status": record["readiness_status"],

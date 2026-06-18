@@ -55,6 +55,9 @@ EXPECTED_RESOLVED_EVIDENCE = {
     "diagnostics_replay_policy": (
         "recorded_from_roadmap_backend_scheduling_track_records"
     ),
+    "cancellation_resume_policy": (
+        "recorded_from_roadmap_backend_scheduling_track_records"
+    ),
     "critique_control_checklist": (
         "recorded_from_critique_reviewer_pool_track_boundary"
     ),
@@ -362,6 +365,9 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
     diagnostics_replay_policy = [
         _diagnostics_replay_record(record) for record in records
     ]
+    cancellation_resume_policy = [
+        _cancellation_resume_record(record) for record in records
+    ]
     critique_control_checklist = _critique_control_checklist(records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     sidecar_ref_count = sum(len(record["current_sidecar_refs"]) for record in records)
@@ -389,6 +395,8 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
         ),
         "diagnostics_replay_policy": diagnostics_replay_policy,
         "diagnostics_replay_policy_count": len(diagnostics_replay_policy),
+        "cancellation_resume_policy": cancellation_resume_policy,
+        "cancellation_resume_policy_count": len(cancellation_resume_policy),
         "critique_control_checklist": critique_control_checklist,
         "critique_control_checklist_count": len(critique_control_checklist),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -402,12 +410,13 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
             "and critique reviewer pools, with an explicit backend-role "
             "capability inventory, reward-assumption policy, role budget/quota "
             "policy, provider pricing/default-rate evidence map, "
-            "diagnostics/replay policy, and critique-control checklist derived "
-            "from those tracks. It does not claim calibrated reward policy, "
-            "role quota ownership, live provider pricing/defaults, raw "
-            "provider replay, live hard cancellation, equal-budget scheduler "
-            "comparators, first-class Gemini lanes, async reviewer isolation, "
-            "stale-readiness detector, or owner review signoff."
+            "diagnostics/replay policy, cancellation/resume policy, and "
+            "critique-control checklist derived from those tracks. It does not "
+            "claim calibrated reward policy, role quota ownership, live "
+            "provider pricing/defaults, raw provider replay, live hard "
+            "cancellation, equal-budget scheduler comparators, first-class "
+            "Gemini lanes, async reviewer isolation, stale-readiness detector, "
+            "or owner review signoff."
         ),
     }
 
@@ -450,6 +459,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         "provider_pricing_default_rate_evidence_count",
         "diagnostics_replay_policy",
         "diagnostics_replay_policy_count",
+        "cancellation_resume_policy",
+        "cancellation_resume_policy_count",
         "critique_control_checklist",
         "critique_control_checklist_count",
     ):
@@ -472,6 +483,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         issues.append(_issue("invalid_provider_pricing_default_rate_evidence_count", "provider pricing/default-rate evidence count changed"))
     if data.get("diagnostics_replay_policy_count") != len(TRACK_SPECS):
         issues.append(_issue("invalid_diagnostics_replay_policy_count", "diagnostics/replay policy count changed"))
+    if data.get("cancellation_resume_policy_count") != len(TRACK_SPECS):
+        issues.append(_issue("invalid_cancellation_resume_policy_count", "cancellation/resume policy count changed"))
     if data.get("critique_control_checklist_count") != 8:
         issues.append(_issue("invalid_critique_control_checklist_count", "critique control checklist count changed"))
     boundary_text = data.get("claim_boundary")
@@ -482,6 +495,7 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         or "role budget/quota policy" not in boundary_text
         or "provider pricing/default-rate evidence map" not in boundary_text
         or "diagnostics/replay policy" not in boundary_text
+        or "cancellation/resume policy" not in boundary_text
         or "critique-control checklist" not in boundary_text
         or "first-class Gemini lanes" not in boundary_text
     ):
@@ -603,6 +617,18 @@ def _diagnostics_replay_record(record: dict[str, Any]) -> dict[str, str]:
         "track_id": record["track_id"],
         "role_or_lane": record["role_or_lane"],
         "diagnostics_replay_support": record["diagnostics_replay_support"],
+        "selection_policy": record["selection_policy"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
+    }
+
+
+def _cancellation_resume_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "track_id": record["track_id"],
+        "role_or_lane": record["role_or_lane"],
+        "cancellation_behavior": record["cancellation_behavior"],
+        "resume_semantics": record["resume_semantics"],
         "selection_policy": record["selection_policy"],
         "validation_gate": record["validation_gate"],
         "readiness_status": record["readiness_status"],

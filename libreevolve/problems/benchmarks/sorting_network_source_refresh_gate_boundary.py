@@ -35,7 +35,6 @@ EXPECTED_NORMALIZED_MARKER_SNAPSHOT_SIDECAR = (
     "papers/sorting_network_normalized_marker_snapshot_boundary.json"
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
@@ -110,10 +109,10 @@ def sorting_network_source_refresh_gate_boundary_record() -> dict[str, Any]:
             "Codish publication source drift and a triage sidecar classifying "
             "that drift as full-page-hash instability with citation markers "
             "present, plus the normalized marker snapshot sidecar. It does "
-            "not claim updated source snapshot metadata, scheduled CI "
-            "refresh-run history, full raw source-body retention, independent "
-            "proof extraction, repeated LibreEvolve runs, run-tied hardening, "
-            "paper certification, or novel SOTA results."
+            "not claim scheduled CI refresh-run history, full raw source-body "
+            "retention, independent proof extraction, repeated LibreEvolve "
+            "runs, run-tied hardening, paper certification, or novel SOTA "
+            "results."
         ),
     }
 

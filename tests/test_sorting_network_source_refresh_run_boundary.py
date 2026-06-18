@@ -16,7 +16,7 @@ def test_sorting_network_source_refresh_run_boundary_accepts_drift_record():
     assert validation.run_report_checked is True
     assert validation.source_count == 5
     assert validation.drift_count == 1
-    assert validation.missing_evidence_count == 6
+    assert validation.missing_evidence_count == 5
     assert boundary["schema"] == SORTING_NETWORK_SOURCE_REFRESH_RUN_BOUNDARY_SCHEMA
     assert boundary["run_report"]["ok"] is False
     assert boundary["drift_summary"]["drift_source_ids"] == ["codish_publication"]
@@ -45,7 +45,7 @@ def test_sorting_network_source_refresh_run_boundary_rejects_overclaim_and_drift
     boundary["source_drift_triage_status"] = "untriaged"
     boundary["normalized_marker_snapshot_sidecar"] = "missing.json"
     boundary["normalized_marker_snapshot_status"] = "missing"
-    boundary["missing_evidence"]["updated_source_snapshot_metadata"] = "recorded"
+    boundary["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
 
     validation = validate_sorting_network_source_refresh_run_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -60,7 +60,7 @@ def test_sorting_network_source_refresh_run_boundary_rejects_overclaim_and_drift
     assert "invalid_source_drift_triage_status" in codes
     assert "invalid_normalized_marker_snapshot_sidecar" in codes
     assert "invalid_normalized_marker_snapshot_status" in codes
-    assert "invalid_missing_evidence_updated_source_snapshot_metadata" in codes
+    assert "invalid_missing_evidence_scheduled_ci_refresh_run_history" in codes
 
 
 def test_render_sorting_network_source_refresh_run_boundary_summary_reports_shape():
@@ -73,4 +73,4 @@ def test_render_sorting_network_source_refresh_run_boundary_summary_reports_shap
     assert "| boundary_status | live_source_refresh_run_archived_with_source_drift |" in summary
     assert "| source_count | 5 |" in summary
     assert "| drift_count | 1 |" in summary
-    assert "| missing_evidence_count | 6 |" in summary
+    assert "| missing_evidence_count | 5 |" in summary

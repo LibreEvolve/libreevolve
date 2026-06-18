@@ -14,7 +14,7 @@ def test_sorting_network_normalized_marker_snapshot_boundary_accepts_record():
     assert validation.ok is True
     assert validation.boundary_status == "codish_publication_normalized_marker_snapshot_recorded"
     assert validation.marker_count == 5
-    assert validation.missing_evidence_count == 6
+    assert validation.missing_evidence_count == 5
     assert boundary["schema"] == SORTING_NETWORK_NORMALIZED_MARKER_SNAPSHOT_BOUNDARY_SCHEMA
     assert boundary["normalized_payload_bytes"] == 350
     assert boundary["normalized_payload_sha256"] == (
@@ -28,7 +28,7 @@ def test_sorting_network_normalized_marker_snapshot_boundary_rejects_overclaim_a
     boundary["claim_ready"] = True
     boundary["boundary_status"] = "source_fresh"
     boundary["normalized_payload"]["markers"]["target_comparators"] = "24"
-    boundary["missing_evidence"]["updated_source_snapshot_metadata"] = "recorded"
+    boundary["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
 
     validation = validate_sorting_network_normalized_marker_snapshot_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -38,7 +38,7 @@ def test_sorting_network_normalized_marker_snapshot_boundary_rejects_overclaim_a
     assert "invalid_boundary_status" in codes
     assert "invalid_normalized_payload" in codes
     assert "normalized_payload_digest_mismatch" in codes
-    assert "invalid_missing_evidence_updated_source_snapshot_metadata" in codes
+    assert "invalid_missing_evidence_scheduled_ci_refresh_run_history" in codes
 
 
 def test_render_sorting_network_normalized_marker_snapshot_boundary_summary_reports_shape():
@@ -50,4 +50,4 @@ def test_render_sorting_network_normalized_marker_snapshot_boundary_summary_repo
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | codish_publication_normalized_marker_snapshot_recorded |" in summary
     assert "| marker_count | 5 |" in summary
-    assert "| missing_evidence_count | 6 |" in summary
+    assert "| missing_evidence_count | 5 |" in summary

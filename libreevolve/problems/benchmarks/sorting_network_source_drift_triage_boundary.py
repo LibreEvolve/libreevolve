@@ -36,7 +36,6 @@ EXPECTED_NORMALIZED_MARKER_SNAPSHOT_SIDECAR = (
     "papers/sorting_network_normalized_marker_snapshot_boundary.json"
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
@@ -100,10 +99,9 @@ def sorting_network_source_drift_triage_boundary_record() -> dict[str, Any]:
             "This boundary triages the Codish publication source drift as a "
             "dynamic full-page hash instability with citation markers still "
             "present and links the normalized marker snapshot sidecar. It "
-            "does not claim updated source snapshot metadata, scheduled CI "
-            "refresh-run history, full raw source-body retention, independent "
-            "proof extraction, repeated LibreEvolve runs, paper certification, "
-            "or novel SOTA results."
+            "does not claim scheduled CI refresh-run history, full raw "
+            "source-body retention, independent proof extraction, repeated "
+            "LibreEvolve runs, paper certification, or novel SOTA results."
         ),
     }
 
@@ -157,7 +155,7 @@ def validate_sorting_network_source_drift_triage_boundary(
         or "dynamic full-page hash instability" not in boundary_text
         or "citation markers still present" not in boundary_text
         or "normalized marker snapshot sidecar" not in boundary_text
-        or "does not claim updated source snapshot metadata" not in boundary_text
+        or "does not claim scheduled CI refresh-run history" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must preserve non-freshness after triage"))
     return SortingNetworkSourceDriftTriageBoundaryValidation(

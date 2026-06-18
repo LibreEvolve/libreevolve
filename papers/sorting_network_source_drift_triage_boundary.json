@@ -37,12 +37,11 @@
   "normalized_marker_snapshot_status": "recorded",
   "triage_resolution": "The source page still contains the title, DOI, journal, numeric 25-comparison marker, and Codish author marker used for citation calibration, but full-page SHA-256 is unstable across repeated fetches. Do not treat the old full-page hash as fresh; use the normalized marker snapshot sidecar or a more stable source before promoting source freshness.",
   "missing_evidence": {
-    "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary triages the Codish publication source drift as a dynamic full-page hash instability with citation markers still present and links the normalized marker snapshot sidecar. It does not claim updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, paper certification, or novel SOTA results."
+  "claim_boundary": "This boundary triages the Codish publication source drift as a dynamic full-page hash instability with citation markers still present and links the normalized marker snapshot sidecar. It does not claim scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, paper certification, or novel SOTA results."
 }

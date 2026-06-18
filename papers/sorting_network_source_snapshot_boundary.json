@@ -13,6 +13,15 @@
   "source_drift_triage_status": "full_page_hash_unstable_markers_present",
   "normalized_marker_snapshot_sidecar": "papers/sorting_network_normalized_marker_snapshot_boundary.json",
   "normalized_marker_snapshot_status": "recorded",
+  "source_snapshot_metadata_updates": {
+    "codish_publication": {
+      "previous_full_page_hash_status": "dynamic_source_hash_unstable",
+      "freshness_basis": "normalized_marker_snapshot",
+      "normalized_marker_snapshot_sidecar": "papers/sorting_network_normalized_marker_snapshot_boundary.json",
+      "normalized_payload_sha256": "5e58af11168018d97f35d0b5c7d6a31d11fbde8f646d2b371e722badafe6d27c",
+      "full_page_snapshot_status": "historical_drift_evidence_not_freshness_basis"
+    }
+  },
   "source_snapshots": {
     "zero_one_clrs": {
       "url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
@@ -61,12 +70,11 @@
     }
   },
   "missing_evidence": {
-    "updated_source_snapshot_metadata": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This sidecar records sorting-network citation source snapshot metadata and links the deterministic source refresh-gate sidecar plus the latest archived live refresh-run drift outcome. It also links the source-drift triage sidecar that classifies the Codish publication page as full-page-hash unstable with citation markers present, plus the normalized marker snapshot sidecar. It does not claim updated source snapshot metadata, full raw source-body retention, independent proof extraction from those sources, scheduled CI refresh-run history, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
+  "claim_boundary": "This sidecar records sorting-network citation source snapshot metadata and links the deterministic source refresh-gate sidecar plus the latest archived live refresh-run drift outcome. It also links the source-drift triage sidecar that classifies the Codish publication page as full-page-hash unstable with citation markers present, plus the normalized marker snapshot sidecar and uses that normalized marker snapshot as the Codish publication freshness basis. It does not claim full raw source-body retention, independent proof extraction from those sources, scheduled CI refresh-run history, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
 }

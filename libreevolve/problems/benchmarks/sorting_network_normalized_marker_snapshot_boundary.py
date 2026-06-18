@@ -30,7 +30,6 @@ EXPECTED_NORMALIZED_PAYLOAD_SHA256 = (
     "5e58af11168018d97f35d0b5c7d6a31d11fbde8f646d2b371e722badafe6d27c"
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
@@ -76,8 +75,8 @@ def sorting_network_normalized_marker_snapshot_boundary_record() -> dict[str, An
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records a stable normalized marker snapshot for the "
-            "dynamic Codish publication page. It does not claim updated source "
-            "snapshot metadata, scheduled CI refresh-run history, full raw "
+            "dynamic Codish publication page. It does not by itself claim "
+            "source freshness, scheduled CI refresh-run history, full raw "
             "source-body retention, independent proof extraction, repeated "
             "LibreEvolve runs, paper certification, or novel SOTA results."
         ),
@@ -131,7 +130,7 @@ def validate_sorting_network_normalized_marker_snapshot_boundary(
     if (
         not isinstance(boundary_text, str)
         or "stable normalized marker snapshot" not in boundary_text
-        or "does not claim updated source snapshot metadata" not in boundary_text
+        or "does not by itself claim source freshness" not in boundary_text
         or "paper certification" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate normalized marker evidence from source freshness and certification"))

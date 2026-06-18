@@ -21,12 +21,11 @@
   "normalized_payload_bytes": 350,
   "normalized_payload_sha256": "5e58af11168018d97f35d0b5c7d6a31d11fbde8f646d2b371e722badafe6d27c",
   "missing_evidence": {
-    "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a stable normalized marker snapshot for the dynamic Codish publication page. It does not claim updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, paper certification, or novel SOTA results."
+  "claim_boundary": "This boundary records a stable normalized marker snapshot for the dynamic Codish publication page. It does not by itself claim source freshness, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, paper certification, or novel SOTA results."
 }

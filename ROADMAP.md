@@ -316,8 +316,13 @@ LibreEvolve has:
   channel presence, mutation-mode constraints, telemetry call joins when
   present, and the current primary-prompt provider-placement report boundary.
   Configured backend `llm_prompt_roles` can now send structured provider
-  instructions and retain hash-only `prompt_role_policy` telemetry, but that
-  telemetry is not yet joined into this primary-prompt evidence report
+  instructions and retain hash-only `prompt_role_policy` telemetry; the
+  primary-prompt evidence report now joins hash-only prompt-role policy
+  summaries when mutation-call telemetry is present, while
+  `papers/primary_prompt_role_telemetry_boundary.json` keeps provider-family
+  payload-shape audit, provider-specific message transcript evidence, all-call
+  outer-join proof, role-separated provider-message parity, and full
+  AlphaEvolve primary-prompt parity open
 - runtime stochastic-formatting distribution provenance under
   `runtime.history.stochastic_prompt_format_distribution_report`, linking
   generated prompt ids to `[[prompt:name]]` option sets, normalized

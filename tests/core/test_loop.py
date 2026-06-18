@@ -382,8 +382,19 @@ def _llm(diff="<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"):
 
 
 class _TelemetryLLM:
-    def __init__(self, diff="<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE"):
+    def __init__(
+        self,
+        diff="<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE",
+        prompt_role_policy=None,
+    ):
         self.diff = diff
+        self.prompt_role_policy = prompt_role_policy or {
+            "policy": "single_user_message",
+            "matched_role": None,
+            "message_roles": ["user"],
+            "instruction_fields": [],
+            "instruction_metadata": {},
+        }
         self.last_call = None
         self.calls = []
 
@@ -397,6 +408,7 @@ class _TelemetryLLM:
             "prompt_chars": len(prompt),
             "output_chars": len(self.diff),
             "status": "ok",
+            "prompt_role_policy": self.prompt_role_policy,
         }
         self.calls.append(self.last_call)
         return self.diff, 0
@@ -4883,7 +4895,27 @@ def test_runtime_history_reports_primary_prompt_instruction_provenance():
     tmpdir = tempfile.mkdtemp()
     problem = _problem()
     problem.initial_programs = ["x=1", "x=0"]
-    llm = _TelemetryLLM("x=2")
+    llm = _TelemetryLLM(
+        "x=2",
+        prompt_role_policy={
+            "policy": "configured_structured_messages",
+            "matched_role": "mutation",
+            "message_roles": ["system", "developer", "user"],
+            "instruction_fields": ["system", "developer"],
+            "instruction_metadata": {
+                "system": {
+                    "chars": 13,
+                    "sha256": hashlib.sha256(b"system-policy").hexdigest(),
+                    "redacted": False,
+                },
+                "developer": {
+                    "chars": 16,
+                    "sha256": hashlib.sha256(b"developer-policy").hexdigest(),
+                    "redacted": False,
+                },
+            },
+        },
+    )
 
     with patch("libreevolve.core.loop.build_llm", return_value=llm):
         evolve(
@@ -4910,11 +4942,13 @@ def test_runtime_history_reports_primary_prompt_instruction_provenance():
     assert report["instruction_hash_count"] == 1
     assert report["inspiration_context_record_count"] == 1
     assert report["telemetry_join_count"] == 1
+    assert report["prompt_role_policy_join_count"] == 1
     assert report["claim_ready"] is True
     assert report["claim_readiness"]["target_solution_hashes_recorded"] is True
     assert report["claim_readiness"]["instruction_hashes_recorded"] is True
     assert report["claim_readiness"]["supporting_inspiration_roles_observed"] is True
     assert report["claim_readiness"]["provider_message_role_placement_recorded"] is True
+    assert report["claim_readiness"]["provider_prompt_role_policy_joined"] is True
     assert report["claim_readiness"]["role_separated_provider_messages_supported"] is False
     assert report["claim_readiness"]["full_alphaevolve_primary_prompt_parity"] is False
     assert report["claim_readiness"]["remaining_gap"] == []
@@ -4944,6 +4978,26 @@ def test_runtime_history_reports_primary_prompt_instruction_provenance():
     assert placement["scheduler_role"] == "mutation"
     assert placement["provider_payload_shape"] == "serialized_single_prompt_string"
     assert placement["role_separated_messages_supported"] is False
+    assert placement["prompt_role_policy_joined"] is True
+    assert placement["prompt_role_policy"] == {
+        "policy": "configured_structured_messages",
+        "matched_role": "mutation",
+        "message_roles": ["system", "developer", "user"],
+        "instruction_fields": ["system", "developer"],
+        "instruction_metadata": {
+            "system": {
+                "chars": 13,
+                "sha256": hashlib.sha256(b"system-policy").hexdigest(),
+                "redacted": False,
+            },
+            "developer": {
+                "chars": 16,
+                "sha256": hashlib.sha256(b"developer-policy").hexdigest(),
+                "redacted": False,
+            },
+        },
+        "instruction_text_retention": "hash_only",
+    }
     channels = {item["name"]: item for item in record["required_channel_records"]}
     assert channels["task"]["present"] is True
     assert channels["parent_code"]["present"] is True
@@ -4954,11 +5008,15 @@ def test_runtime_history_reports_primary_prompt_instruction_provenance():
     edited["records"][0]["provider_message_role_placement"][
         "role_separated_messages_supported"
     ] = True
+    edited["records"][0]["provider_message_role_placement"]["prompt_role_policy"][
+        "instruction_text_retention"
+    ] = "raw_text"
     edited["claim_readiness"]["full_alphaevolve_primary_prompt_parity"] = True
     validation = validate_primary_prompt_instruction_report(edited)
     assert validation["ok"] is False
     assert {issue["code"] for issue in validation["issues"]} >= {
         "role_separated_messages_overclaim",
+        "invalid_prompt_role_policy_retention",
         "full_primary_prompt_parity_overclaim",
     }
 

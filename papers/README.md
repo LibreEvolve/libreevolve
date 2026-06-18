@@ -981,8 +981,11 @@ presence, mutation-mode constraints, prompt/call ids when telemetry joins are
 available, and the current primary-prompt provider-placement report boundary.
 This is paper-facing primary-prompt ingredient evidence. Configured backend
 `llm_prompt_roles` can now send structured provider instructions and retain
-hash-only `prompt_role_policy` telemetry, but that telemetry is not yet joined
-into this report as AlphaEvolve primary-prompt parity evidence.
+hash-only `prompt_role_policy` telemetry, and this report now joins hash-only
+prompt-role policy summaries when mutation-call telemetry is present. This is
+not yet provider-family payload-shape audit or AlphaEvolve primary-prompt
+parity evidence; `papers/primary_prompt_role_telemetry_boundary.json`
+preserves that boundary.
 Completed manifests also include
 `runtime.history.stochastic_prompt_format_distribution_report` with schema
 `libreevolve.stochastic_prompt_format_distribution_report.v1`. It links

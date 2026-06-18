@@ -1,0 +1,57 @@
+{
+  "boundary_status": "hash_only_prompt_role_policy_join_without_provider_payload_parity",
+  "claim_boundary": "This boundary records that primary-prompt instruction reports can join mutation call ids to hash-only prompt_role_policy telemetry, count prompt_role_policy joins, distinguish single-user-message and configured-structured-message policy shapes, validate joined instruction metadata hashes, and keep provider message policy readiness explicit. It does not claim provider-family payload shape audit, provider-specific message transcripts, an all-generated-prompt call-ledger outer join, role-separated provider message parity, or full AlphaEvolve primary-prompt parity.",
+  "claim_ready": false,
+  "joined_policy_shapes": {
+    "configured_structured_messages": {
+      "instruction_fields": [
+        "system",
+        "developer"
+      ],
+      "instruction_metadata_retention": "hash_only",
+      "message_roles": [
+        "system",
+        "developer",
+        "user"
+      ]
+    },
+    "single_user_message": {
+      "instruction_fields": [],
+      "instruction_metadata": {},
+      "message_roles": [
+        "user"
+      ]
+    }
+  },
+  "missing_evidence": {
+    "all_generated_prompt_call_ledger_outer_join": "not_recorded_locally",
+    "full_alphaevolve_primary_prompt_parity": "not_recorded_locally",
+    "provider_family_payload_shape_audit": "not_recorded_locally",
+    "provider_specific_message_transcript": "not_recorded_locally",
+    "role_separated_provider_message_parity": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "primary_prompt_instruction_report_schema",
+    "mutation_call_id_join",
+    "prompt_role_policy_join_count",
+    "single_user_message_policy_shape",
+    "configured_structured_messages_policy_shape",
+    "hash_only_instruction_metadata",
+    "prompt_role_policy_validation_gate",
+    "provider_message_policy_boundary",
+    "claim_readiness_provider_prompt_role_policy_joined",
+    "provider_family_payload_shape_audit",
+    "provider_specific_message_transcript",
+    "all_generated_prompt_call_ledger_outer_join",
+    "role_separated_provider_message_parity",
+    "full_alphaevolve_primary_prompt_parity"
+  ],
+  "runtime_join_status": "prompt_role_policy_joined_when_call_telemetry_present",
+  "runtime_report_schema": "libreevolve.primary_prompt_instruction_report.v1",
+  "schema": "libreevolve.primary_prompt_role_telemetry_boundary.v1",
+  "source_claim": "AlphaEvolve primary prompts include task instructions, prior solutions, and system-level prompt instructions; provider message role placement must be attributable alongside prompt ingredients",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.2"
+  ]
+}

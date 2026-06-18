@@ -754,9 +754,12 @@ Important limits:
 - Configured `llm_prompt_roles` can send bounded system/developer instruction
   text through built-in backend provider payloads and records hash-only
   `prompt_role_policy` call telemetry. The primary-prompt instruction report
-  still does not join that telemetry back to generated prompt records, so
-  AlphaEvolve primary-prompt role-placement parity remains an evidence gap
-  rather than a globally absent backend feature.
+  now joins hash-only prompt-role policy summaries back to generated prompt
+  records when mutation-call telemetry is present, but provider-family payload
+  shape audits, provider-specific message transcript evidence, all-call outer
+  joins, and full AlphaEvolve primary-prompt role-placement parity remain open;
+  that boundary is tracked by
+  `papers/primary_prompt_role_telemetry_boundary.json`.
 - Meta-prompt scoring currently means local `PromptDatabase` accounting over
   configured `absolute` or `improvement` child-score rewards, normalized to
   configured finite bounds and selected with a UCB-style prompt-arm heuristic.

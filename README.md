@@ -93,6 +93,11 @@ Important limits:
   identity; `papers/prompt_template_compatibility_boundary.json` records that
   role-specific compatibility for critique, feedback grading, meta-prompt, and
   context-policy surfaces remains open.
+- Primary-prompt reports join hash-only prompt-role policy telemetry when
+  mutation-call telemetry is present, but provider-family payload-shape audits,
+  provider-specific message transcripts, and full AlphaEvolve primary-prompt
+  role-placement parity remain open in
+  `papers/primary_prompt_role_telemetry_boundary.json`.
 - Built-in SDK provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
 - The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI

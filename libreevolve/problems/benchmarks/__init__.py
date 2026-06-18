@@ -288,6 +288,12 @@ from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
     render_prompt_section_packing_boundary_summary,
     validate_prompt_section_packing_boundary,
 )
+from libreevolve.problems.benchmarks.primary_prompt_role_telemetry_boundary import (
+    PRIMARY_PROMPT_ROLE_TELEMETRY_BOUNDARY_SCHEMA,
+    primary_prompt_role_telemetry_boundary_record,
+    render_primary_prompt_role_telemetry_boundary_summary,
+    validate_primary_prompt_role_telemetry_boundary,
+)
 from libreevolve.problems.benchmarks.prompt_template_compatibility_boundary import (
     PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_SCHEMA,
     prompt_template_compatibility_boundary_record,
@@ -1172,6 +1178,7 @@ __all__ = [
     "MUTATION_OPERATOR_BOUNDARY_SCHEMA",
     "NATURAL_LANGUAGE_PREAMBLE_BOUNDARY_SCHEMA",
     "OBJECTIVE_ARCHIVE_BOUNDARY_SCHEMA",
+    "PRIMARY_PROMPT_ROLE_TELEMETRY_BOUNDARY_SCHEMA",
     "PROMPT_EXAMPLE_COPY_BOUNDARY_SCHEMA",
     "PROMPT_SECTION_PACKING_BOUNDARY_SCHEMA",
     "PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_SCHEMA",
@@ -1365,6 +1372,7 @@ __all__ = [
     "natural_language_preamble_boundary_record",
     "objective_archive_boundary_record",
     "pallas_workflow_baseline_boundary_record",
+    "primary_prompt_role_telemetry_boundary_record",
     "prompt_example_copy_boundary_record",
     "prompt_section_packing_boundary_record",
     "prompt_template_compatibility_boundary_record",
@@ -1536,6 +1544,7 @@ __all__ = [
     "render_natural_language_preamble_boundary_summary",
     "render_objective_archive_boundary_summary",
     "render_pallas_workflow_baseline_boundary_summary",
+    "render_primary_prompt_role_telemetry_boundary_summary",
     "render_prompt_example_copy_boundary_summary",
     "render_prompt_section_packing_boundary_summary",
     "render_prompt_template_compatibility_boundary_summary",
@@ -1731,6 +1740,7 @@ __all__ = [
     "validate_natural_language_preamble_boundary",
     "validate_objective_archive_boundary",
     "validate_pallas_workflow_baseline_boundary",
+    "validate_primary_prompt_role_telemetry_boundary",
     "validate_prompt_example_copy_boundary",
     "validate_prompt_section_packing_boundary",
     "validate_prompt_template_compatibility_boundary",

@@ -25586,6 +25586,15 @@ def _primary_prompt_instruction_report(programs: list[Program]) -> dict:
         and record["provider_message_role_placement"].get("mutation_call_joined")
         is True
     )
+    prompt_role_policy_join_count = sum(
+        1
+        for record in records
+        if isinstance(record.get("provider_message_role_placement"), Mapping)
+        and record["provider_message_role_placement"].get(
+            "prompt_role_policy_joined"
+        )
+        is True
+    )
     remaining_gap = []
     if records and target_link_count != len(records):
         remaining_gap.append("target_solution_workspace_hashes")
@@ -25593,6 +25602,8 @@ def _primary_prompt_instruction_report(programs: list[Program]) -> dict:
         remaining_gap.append("mutation_instruction_hashes")
     if records and inspiration_context_record_count == 0:
         remaining_gap.append("sampled_prior_inspiration_solution_roles")
+    if records and prompt_role_policy_join_count != len(records):
+        remaining_gap.append("provider_prompt_role_policy_join")
     report = {
         "schema": "libreevolve.primary_prompt_instruction_report.v1",
         "source": (
@@ -25605,6 +25616,7 @@ def _primary_prompt_instruction_report(programs: list[Program]) -> dict:
         "instruction_hash_count": instruction_hash_count,
         "inspiration_context_record_count": inspiration_context_record_count,
         "telemetry_join_count": telemetry_join_count,
+        "prompt_role_policy_join_count": prompt_role_policy_join_count,
         "records": records[:50],
         "records_limit": 50,
         "records_truncated": len(records) > 50,
@@ -25652,6 +25664,8 @@ def _primary_prompt_instruction_report(programs: list[Program]) -> dict:
                 inspiration_context_record_count > 0
             ),
             "provider_message_role_placement_recorded": bool(records),
+            "provider_prompt_role_policy_joined": bool(records)
+            and prompt_role_policy_join_count == len(records),
             "role_separated_provider_messages_supported": False,
             "full_alphaevolve_primary_prompt_parity": False,
             "remaining_gap": remaining_gap,
@@ -25744,6 +25758,7 @@ def _primary_prompt_instruction_record(
         for call in llm_calls
         if isinstance(call.get("id"), str) and call.get("id")
     ]
+    prompt_role_policy = _primary_prompt_joined_prompt_role_policy(llm_calls)
     required_channels = [
         _primary_prompt_channel_record(name, section_hashes, required=True)
         for name in ("task", "parent_code", "mutation_instructions")
@@ -25802,6 +25817,8 @@ def _primary_prompt_instruction_record(
             "system_message": "not_role_separated",
             "developer_message": "not_role_separated",
             "user_message": "serialized_prompt_payload",
+            "prompt_role_policy_joined": prompt_role_policy is not None,
+            "prompt_role_policy": prompt_role_policy,
             "role_separated_messages_supported": False,
         },
         "edit_scope_constraints": {
@@ -25817,6 +25834,66 @@ def _primary_prompt_instruction_record(
             for channel in required_channels
             if channel["required"]
         ),
+    }
+
+
+def _primary_prompt_joined_prompt_role_policy(llm_calls: list[Mapping]) -> dict | None:
+    for call in llm_calls:
+        policy = call.get("prompt_role_policy")
+        if not isinstance(policy, Mapping):
+            continue
+        joined = _primary_prompt_role_policy_summary(policy)
+        if joined is not None:
+            return joined
+    return None
+
+
+def _primary_prompt_role_policy_summary(policy: Mapping[str, object]) -> dict | None:
+    raw_policy = policy.get("policy")
+    if raw_policy not in {"single_user_message", "configured_structured_messages"}:
+        return None
+    raw_message_roles = policy.get("message_roles")
+    message_roles = [
+        role
+        for role in raw_message_roles
+        if isinstance(role, str) and role in {"system", "developer", "user"}
+    ] if isinstance(raw_message_roles, list) else []
+    raw_instruction_fields = policy.get("instruction_fields")
+    instruction_fields = [
+        field
+        for field in raw_instruction_fields
+        if isinstance(field, str) and field in {"system", "developer"}
+    ] if isinstance(raw_instruction_fields, list) else []
+    metadata = policy.get("instruction_metadata")
+    instruction_metadata: dict[str, dict[str, object]] = {}
+    if isinstance(metadata, Mapping):
+        for field in instruction_fields:
+            item = metadata.get(field)
+            if not isinstance(item, Mapping):
+                continue
+            chars = item.get("chars")
+            sha = item.get("sha256")
+            redacted = item.get("redacted")
+            if (
+                isinstance(chars, int)
+                and not isinstance(chars, bool)
+                and chars >= 0
+                and _is_sha256_hex(sha)
+                and isinstance(redacted, bool)
+            ):
+                instruction_metadata[field] = {
+                    "chars": chars,
+                    "sha256": sha,
+                    "redacted": redacted,
+                }
+    matched_role = policy.get("matched_role")
+    return {
+        "policy": raw_policy,
+        "matched_role": matched_role if isinstance(matched_role, str) else None,
+        "message_roles": message_roles,
+        "instruction_fields": instruction_fields,
+        "instruction_metadata": instruction_metadata,
+        "instruction_text_retention": "hash_only",
     }
 
 
@@ -25917,6 +25994,7 @@ def validate_primary_prompt_instruction_report(report: object) -> dict:
         "instruction_hash_count",
         "inspiration_context_record_count",
         "telemetry_join_count",
+        "prompt_role_policy_join_count",
         "records",
         "records_limit",
         "records_truncated",
@@ -25952,6 +26030,7 @@ def validate_primary_prompt_instruction_report(report: object) -> dict:
         "instruction_hash_count",
         "inspiration_context_record_count",
         "telemetry_join_count",
+        "prompt_role_policy_join_count",
     ):
         value = report.get(field)
         if isinstance(value, bool) or not isinstance(value, int) or value < 0:
@@ -26045,6 +26124,19 @@ def validate_primary_prompt_instruction_report(report: object) -> dict:
                 issues.append(
                     {"code": "invalid_provider_payload_shape", "message": f"record {index} provider payload shape is invalid"}
                 )
+            if placement.get("prompt_role_policy_joined") is True:
+                _validate_primary_prompt_role_policy_summary(
+                    placement.get("prompt_role_policy"),
+                    f"record {index} prompt role policy",
+                    issues,
+                )
+            elif placement.get("prompt_role_policy") is not None:
+                issues.append(
+                    {
+                        "code": "invalid_prompt_role_policy_join",
+                        "message": f"record {index} prompt role policy must be null when not joined",
+                    }
+                )
             if placement.get("role_separated_messages_supported") is not False:
                 issues.append(
                     {"code": "role_separated_messages_overclaim", "message": f"record {index} must not overclaim role-separated provider messages"}
@@ -26085,6 +26177,13 @@ def validate_primary_prompt_instruction_report(report: object) -> dict:
             issues.append(
                 {"code": "role_separated_readiness_overclaim", "message": "role-separated provider messages must remain unsupported"}
             )
+        if "provider_prompt_role_policy_joined" not in readiness:
+            issues.append(
+                {
+                    "code": "missing_provider_prompt_role_policy_joined",
+                    "message": "claim_readiness must record provider prompt-role policy join status",
+                }
+            )
         if readiness.get("full_alphaevolve_primary_prompt_parity") is not False:
             issues.append(
                 {"code": "full_primary_prompt_parity_overclaim", "message": "full AlphaEvolve primary prompt parity must remain false"}
@@ -26100,6 +26199,99 @@ def validate_primary_prompt_instruction_report(report: object) -> dict:
                 {"code": "claim_ready_mismatch", "message": "claim_ready must match records and remaining_gap"}
             )
     return {"schema": schema, "ok": not issues, "issues": issues}
+
+
+def _validate_primary_prompt_role_policy_summary(
+    value: object,
+    label: str,
+    issues: list[dict],
+) -> None:
+    if not isinstance(value, Mapping):
+        issues.append(
+            {
+                "code": "invalid_prompt_role_policy",
+                "message": f"{label} must be an object",
+            }
+        )
+        return
+    if value.get("policy") not in {"single_user_message", "configured_structured_messages"}:
+        issues.append(
+            {
+                "code": "invalid_prompt_role_policy",
+                "message": f"{label} has unsupported policy",
+            }
+        )
+    message_roles = value.get("message_roles")
+    if (
+        not isinstance(message_roles, list)
+        or not message_roles
+        or any(role not in {"system", "developer", "user"} for role in message_roles)
+    ):
+        issues.append(
+            {
+                "code": "invalid_prompt_role_policy_message_roles",
+                "message": f"{label} message roles are invalid",
+            }
+        )
+    instruction_fields = value.get("instruction_fields")
+    if not isinstance(instruction_fields, list) or any(
+        field not in {"system", "developer"} for field in instruction_fields
+    ):
+        issues.append(
+            {
+                "code": "invalid_prompt_role_policy_instruction_fields",
+                "message": f"{label} instruction fields are invalid",
+            }
+        )
+        instruction_fields = []
+    metadata = value.get("instruction_metadata")
+    if not isinstance(metadata, Mapping):
+        issues.append(
+            {
+                "code": "invalid_prompt_role_policy_instruction_metadata",
+                "message": f"{label} instruction metadata is invalid",
+            }
+        )
+        return
+    if value.get("instruction_text_retention") != "hash_only":
+        issues.append(
+            {
+                "code": "invalid_prompt_role_policy_retention",
+                "message": f"{label} must use hash-only instruction retention",
+            }
+        )
+    for field in instruction_fields:
+        item = metadata.get(field)
+        if not isinstance(item, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_prompt_role_policy_instruction_metadata",
+                    "message": f"{label}.{field} metadata is missing",
+                }
+            )
+            continue
+        if not _is_sha256_hex(item.get("sha256")):
+            issues.append(
+                {
+                    "code": "invalid_prompt_role_policy_instruction_hash",
+                    "message": f"{label}.{field} hash is invalid",
+                }
+            )
+        chars = item.get("chars")
+        if isinstance(chars, bool) or not isinstance(chars, int) or chars < 0:
+            issues.append(
+                {
+                    "code": "invalid_prompt_role_policy_instruction_chars",
+                    "message": f"{label}.{field} chars is invalid",
+                }
+            )
+        if not isinstance(item.get("redacted"), bool):
+            issues.append(
+                {
+                    "code": "invalid_prompt_role_policy_instruction_redacted",
+                    "message": f"{label}.{field} redacted flag is invalid",
+                }
+            )
 
 
 def _stochastic_prompt_format_distribution_report(

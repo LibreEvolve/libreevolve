@@ -1352,7 +1352,8 @@ sidecars, tests, and active TODOs.
     preserving the explicit tested no-dedup/independent-arm policy unless a
     future prompt-program text deduplication design intentionally replaces it.
 
-- [ ] Join provider prompt-role telemetry into primary-prompt evidence.
+- [ ] Extend primary-prompt prompt-role telemetry beyond hash-only joined
+      policy summaries.
   - Spec evidence: AlphaEvolve Section 2.2 describes system instructions and
     previously discovered solutions as primary-prompt ingredients, so
     provider-message role placement must be attributable alongside the prompt
@@ -1361,20 +1362,23 @@ sidecars, tests, and active TODOs.
     system/developer instruction text. OpenAI, Anthropic, and Ollama built-in
     backends can receive configured role instructions through provider
     payloads, while `LLMEnsemble` call telemetry records hash-only
-    `prompt_role_policy` metadata. Separately,
-    `runtime.history.primary_prompt_instruction_report` links generated prompt
-    records to target solution hashes, inspiration roles, instruction hashes,
-    required channels, and telemetry call ids.
-  - Remaining gap: the primary-prompt instruction report still hard-codes a
-    serialized prompt-placement boundary and does not read joined
-    `prompt_role_policy` telemetry for each generated mutation prompt. This is
-    a report/evidence gap, not proof that backend prompt-role payload support
-    is globally absent.
-  - Required result: extend primary-prompt instruction records and validation
-    to include joined provider role-policy metadata per generated prompt/call,
-    distinguish single-user-message and configured structured-message cases,
-    preserve hash-only instruction retention, and update paper/readme/roadmap
-    wording only after tests prove the join.
+    `prompt_role_policy` metadata. `runtime.history.primary_prompt_instruction_report`
+    now links generated prompt records to target solution hashes, inspiration
+    roles, instruction hashes, required channels, telemetry call ids, and
+    joined hash-only `prompt_role_policy` summaries when call telemetry is
+    present. The report distinguishes `single_user_message` from
+    `configured_structured_messages`, validates hash-only instruction metadata,
+    and carries `provider_prompt_role_policy_joined` readiness. The committed
+    `papers/primary_prompt_role_telemetry_boundary.json` sidecar preserves this
+    hash-only join boundary.
+  - Remaining gap: this is still not a provider-family payload-shape audit or
+    exact provider-specific message transcript. The report does not prove an
+    all-generated-prompt call-ledger outer join, role-separated provider
+    message parity, or full AlphaEvolve primary-prompt parity.
+  - Required result: add provider-family payload-shape audits, provider-
+    specific message transcript or hash evidence, all-generated-prompt
+    call-ledger outer-join proof, and role-separated provider-message parity
+    checks before treating primary-prompt role placement as AlphaEvolve-ready.
 
 - [ ] Calibrate meta-prompt scoring beyond absolute/improvement child rewards.
   - Spec evidence: AlphaEvolve-style prompt evolution should justify prompt

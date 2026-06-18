@@ -9,6 +9,8 @@
   "source_refresh_gate_sidecar": "papers/sorting_network_source_refresh_gate_boundary.json",
   "latest_source_refresh_run_sidecar": "papers/sorting_network_source_refresh_run_2026-06-18.json",
   "latest_source_refresh_status": "source_metadata_drift_detected",
+  "source_drift_triage_sidecar": "papers/sorting_network_source_drift_triage_boundary.json",
+  "source_drift_triage_status": "full_page_hash_unstable_markers_present",
   "source_snapshots": {
     "zero_one_clrs": {
       "url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
@@ -57,7 +59,7 @@
     }
   },
   "missing_evidence": {
-    "source_drift_triage_resolution": "not_recorded_locally",
+    "stable_normalized_source_snapshot": "not_recorded_locally",
     "updated_source_snapshot_metadata": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
@@ -65,5 +67,5 @@
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This sidecar records sorting-network citation source snapshot metadata and links the deterministic source refresh-gate sidecar plus the latest archived live refresh-run drift outcome. It does not claim source-drift triage resolution, updated source snapshot metadata, full raw source-body retention, independent proof extraction from those sources, scheduled CI refresh-run history, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
+  "claim_boundary": "This sidecar records sorting-network citation source snapshot metadata and links the deterministic source refresh-gate sidecar plus the latest archived live refresh-run drift outcome. It also links the source-drift triage sidecar that classifies the Codish publication page as full-page-hash unstable with citation markers present. It does not claim a stable normalized source snapshot, updated source snapshot metadata, full raw source-body retention, independent proof extraction from those sources, scheduled CI refresh-run history, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
 }

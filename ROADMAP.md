@@ -1275,10 +1275,13 @@ by `papers/lineage_replay_boundary.json`.
   raw source bodies. `papers/sorting_network_source_refresh_gate_boundary.json`
   records the deterministic source-refresh gate for those citation snapshots,
   and `papers/sorting_network_source_refresh_run_2026-06-18.json` archives a
-  live refresh run that detected Codish publication source drift. Triage that
-  drift and update source snapshot metadata before treating the citation
-  snapshots as fresh; add repeated-run and paper-certification evidence before
-  treating these fixtures as comparable results. The
+  live refresh run that detected Codish publication source drift.
+  `papers/sorting_network_source_drift_triage_boundary.json` triages that as
+  dynamic full-page hash instability with citation markers still present. Add
+  a stable normalized marker snapshot or another stable source and update
+  source snapshot metadata before treating the citation snapshots as fresh;
+  add repeated-run and paper-certification evidence before treating these
+  fixtures as comparable results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   executable-candidate-only run-evidence boundary.
   This remains the current lowest-risk realistic benchmark path because it has

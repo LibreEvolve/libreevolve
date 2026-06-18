@@ -23,8 +23,9 @@ EXPECTED_RUN_DATE = "2026-06-18"
 EXPECTED_RUN_CONTEXT = "manual_local_network_run"
 EXPECTED_RUN_MODE = "live_network"
 EXPECTED_DRIFT_SOURCE_ID = "codish_publication"
+EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR = "papers/sorting_network_source_drift_triage_boundary.json"
 EXPECTED_MISSING_EVIDENCE = {
-    "source_drift_triage_resolution": "not_recorded_locally",
+    "stable_normalized_source_snapshot": "not_recorded_locally",
     "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
@@ -83,15 +84,19 @@ def sorting_network_source_refresh_run_boundary_record() -> dict[str, Any]:
             "drift_status": "source_metadata_drift_detected",
             "triage_required": True,
         },
+        "source_drift_triage_sidecar": EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR,
+        "source_drift_triage_status": "full_page_hash_unstable_markers_present",
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary archives one manual live-network sorting-network "
             "source refresh run where the Codish publication page drifted from "
-            "the committed source snapshot metadata. It does not claim source "
-            "freshness, drift triage resolution, updated source snapshot "
-            "metadata, scheduled CI refresh-run history, full raw source-body "
-            "retention, repeated LibreEvolve runs, paper certification, or "
-            "novel SOTA results."
+            "the committed source snapshot metadata, plus a triage sidecar "
+            "classifying the drift as full-page-hash instability with citation "
+            "markers present. It does not claim source freshness, a stable "
+            "normalized source snapshot, updated source snapshot metadata, "
+            "scheduled CI refresh-run history, full raw source-body retention, "
+            "repeated LibreEvolve runs, paper certification, or novel SOTA "
+            "results."
         ),
     }
 
@@ -191,6 +196,10 @@ def validate_sorting_network_source_refresh_run_boundary(
         issues,
     )
     _validate_drift_summary(data.get("drift_summary"), drift_count, issues)
+    if data.get("source_drift_triage_sidecar") != EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR:
+        issues.append(_issue("invalid_source_drift_triage_sidecar", f"source_drift_triage_sidecar must be {EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR}"))
+    if data.get("source_drift_triage_status") != "full_page_hash_unstable_markers_present":
+        issues.append(_issue("invalid_source_drift_triage_status", "source_drift_triage_status must record full_page_hash_unstable_markers_present"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (

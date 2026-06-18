@@ -3270,14 +3270,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     verifier and known comparator targets plus a source-snapshot metadata
     sidecar with live response hashes for those citation URLs and a
     deterministic source-refresh gate for those snapshots. A 2026-06-18 live
-    refresh run is archived and detected Codish publication source drift, so
-    the paper ledger still has no source-drift triage resolution, updated
-    source snapshot metadata, scheduled CI refresh-run history, full raw
-    source-response retention, independent proof extraction, repeated-run
-    evidence, committed run-tied hardening certification, best-candidate
-    artifact hashes, failure/invalid-candidate summaries, target-hit-rate
-    summaries, or certification row proving rediscovery under fixed
-    evaluator/model/seed conditions. The committed
+    refresh run is archived and detected Codish publication source drift, and
+    a triage sidecar classifies that as dynamic full-page hash instability
+    with citation markers still present. The paper ledger still has no stable
+    normalized source snapshot, updated source snapshot metadata, scheduled CI
+    refresh-run history, full raw source-response retention, independent proof
+    extraction, repeated-run evidence, committed run-tied hardening
+    certification, best-candidate artifact hashes, failure/invalid-candidate
+    summaries, target-hit-rate summaries, or certification row proving
+    rediscovery under fixed evaluator/model/seed conditions. The committed
     `papers/sorting_network_source_citation_boundary.json` sidecar preserves
     the citation-only calibration boundary, the committed
     `papers/sorting_network_source_snapshot_boundary.json` sidecar preserves
@@ -3285,7 +3286,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/sorting_network_source_refresh_gate_boundary.json` sidecar
     preserves the deterministic refresh-gate boundary, the committed
     `papers/sorting_network_source_refresh_run_2026-06-18.json` sidecar
-    preserves the drifted live refresh-run outcome, and the committed
+    preserves the drifted live refresh-run outcome, the committed
+    `papers/sorting_network_source_drift_triage_boundary.json` sidecar
+    preserves the dynamic-source triage boundary, and the committed
     `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
     remaining run-evidence absence boundary for paper-manifest validation.
   - Required result: add a paper-visible benchmark record for

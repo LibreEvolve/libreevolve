@@ -20,6 +20,12 @@ def test_sorting_network_source_refresh_run_boundary_accepts_drift_record():
     assert boundary["schema"] == SORTING_NETWORK_SOURCE_REFRESH_RUN_BOUNDARY_SCHEMA
     assert boundary["run_report"]["ok"] is False
     assert boundary["drift_summary"]["drift_source_ids"] == ["codish_publication"]
+    assert boundary["source_drift_triage_sidecar"] == (
+        "papers/sorting_network_source_drift_triage_boundary.json"
+    )
+    assert boundary["source_drift_triage_status"] == (
+        "full_page_hash_unstable_markers_present"
+    )
     drifted = boundary["run_report"]["checks"][-1]
     assert drifted["source_id"] == "codish_publication"
     assert drifted["issues"] == ["bytes_drift", "sha256_drift"]
@@ -31,7 +37,9 @@ def test_sorting_network_source_refresh_run_boundary_rejects_overclaim_and_drift
     boundary["boundary_status"] = "source_fresh"
     boundary["run_report"]["ok"] = True
     boundary["drift_summary"]["triage_required"] = False
-    boundary["missing_evidence"]["source_drift_triage_resolution"] = "recorded"
+    boundary["source_drift_triage_sidecar"] = "missing.json"
+    boundary["source_drift_triage_status"] = "untriaged"
+    boundary["missing_evidence"]["stable_normalized_source_snapshot"] = "recorded"
 
     validation = validate_sorting_network_source_refresh_run_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -42,7 +50,9 @@ def test_sorting_network_source_refresh_run_boundary_rejects_overclaim_and_drift
     assert "invalid_run_report" in codes
     assert "invalid_run_report_ok" in codes
     assert "invalid_drift_summary" in codes
-    assert "invalid_missing_evidence_source_drift_triage_resolution" in codes
+    assert "invalid_source_drift_triage_sidecar" in codes
+    assert "invalid_source_drift_triage_status" in codes
+    assert "invalid_missing_evidence_stable_normalized_source_snapshot" in codes
 
 
 def test_render_sorting_network_source_refresh_run_boundary_summary_reports_shape():

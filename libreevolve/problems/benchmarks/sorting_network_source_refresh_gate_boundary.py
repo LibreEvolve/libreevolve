@@ -30,8 +30,9 @@ EXPECTED_SCRIPT_SHA256 = (
 EXPECTED_SOURCE_SNAPSHOT_SIDECAR = "papers/sorting_network_source_snapshot_boundary.json"
 EXPECTED_ARCHIVED_OUTCOME_PATH = "papers/sorting_network_source_refresh_run_2026-06-18.json"
 EXPECTED_ARCHIVED_OUTCOME_SCHEMA = "libreevolve.sorting_network_source_refresh_run_boundary.v1"
+EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR = "papers/sorting_network_source_drift_triage_boundary.json"
 EXPECTED_MISSING_EVIDENCE = {
-    "source_drift_triage_resolution": "not_recorded_locally",
+    "stable_normalized_source_snapshot": "not_recorded_locally",
     "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
@@ -93,6 +94,8 @@ def sorting_network_source_refresh_gate_boundary_record() -> dict[str, Any]:
             "run_mode": "live_network",
             "result": "source_metadata_drift_detected",
         },
+        "source_drift_triage_sidecar": EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR,
+        "source_drift_triage_status": "full_page_hash_unstable_markers_present",
         "expected_report_schema": REPORT_SCHEMA,
         "expected_source_ids": list(EXPECTED_SOURCE_SNAPSHOTS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -100,11 +103,13 @@ def sorting_network_source_refresh_gate_boundary_record() -> dict[str, Any]:
             "This boundary records a deterministic sorting-network citation "
             "source refresh gate script tied to committed source snapshot "
             "metadata, plus an archived live refresh-run outcome that detected "
-            "Codish publication source drift. It does not claim source-drift "
-            "triage resolution, updated source snapshot metadata, scheduled CI "
-            "refresh-run history, full raw source-body retention, independent "
-            "proof extraction, repeated LibreEvolve runs, run-tied hardening, "
-            "paper certification, or novel SOTA results."
+            "Codish publication source drift and a triage sidecar classifying "
+            "that drift as full-page-hash instability with citation markers "
+            "present. It does not claim a stable normalized source snapshot, "
+            "updated source snapshot metadata, scheduled CI refresh-run "
+            "history, full raw source-body retention, independent proof "
+            "extraction, repeated LibreEvolve runs, run-tied hardening, paper "
+            "certification, or novel SOTA results."
         ),
     }
 
@@ -139,6 +144,10 @@ def validate_sorting_network_source_refresh_gate_boundary(
     if data.get("source_snapshot_metadata_sidecar") != EXPECTED_SOURCE_SNAPSHOT_SIDECAR:
         issues.append(_issue("invalid_source_snapshot_metadata_sidecar", f"source_snapshot_metadata_sidecar must be {EXPECTED_SOURCE_SNAPSHOT_SIDECAR}"))
     _validate_archived_outcome_artifact(data.get("archived_outcome_artifact"), issues)
+    if data.get("source_drift_triage_sidecar") != EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR:
+        issues.append(_issue("invalid_source_drift_triage_sidecar", f"source_drift_triage_sidecar must be {EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR}"))
+    if data.get("source_drift_triage_status") != "full_page_hash_unstable_markers_present":
+        issues.append(_issue("invalid_source_drift_triage_status", "source_drift_triage_status must record full_page_hash_unstable_markers_present"))
     if data.get("expected_report_schema") != REPORT_SCHEMA:
         issues.append(_issue("invalid_expected_report_schema", f"expected_report_schema must be {REPORT_SCHEMA}"))
     source_count = _validate_expected_source_ids(data.get("expected_source_ids"), issues)
@@ -149,7 +158,8 @@ def validate_sorting_network_source_refresh_gate_boundary(
         or "deterministic sorting-network citation source refresh gate" not in boundary_text
         or "archived live refresh-run outcome" not in boundary_text
         or "Codish publication source drift" not in boundary_text
-        or "does not claim source-drift triage resolution" not in boundary_text
+        or "full-page-hash instability" not in boundary_text
+        or "stable normalized source snapshot" not in boundary_text
         or "scheduled CI refresh-run history" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate deterministic/live drift evidence from triaged freshness"))

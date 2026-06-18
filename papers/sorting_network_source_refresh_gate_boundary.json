@@ -20,6 +20,8 @@
     "run_mode": "live_network",
     "result": "source_metadata_drift_detected"
   },
+  "source_drift_triage_sidecar": "papers/sorting_network_source_drift_triage_boundary.json",
+  "source_drift_triage_status": "full_page_hash_unstable_markers_present",
   "expected_report_schema": "libreevolve.sorting_network_source_refresh_gate_report.v1",
   "expected_source_ids": [
     "zero_one_clrs",
@@ -29,7 +31,7 @@
     "codish_publication"
   ],
   "missing_evidence": {
-    "source_drift_triage_resolution": "not_recorded_locally",
+    "stable_normalized_source_snapshot": "not_recorded_locally",
     "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
@@ -37,5 +39,5 @@
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a deterministic sorting-network citation source refresh gate script tied to committed source snapshot metadata, plus an archived live refresh-run outcome that detected Codish publication source drift. It does not claim source-drift triage resolution, updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
+  "claim_boundary": "This boundary records a deterministic sorting-network citation source refresh gate script tied to committed source snapshot metadata, plus an archived live refresh-run outcome that detected Codish publication source drift and a triage sidecar classifying that drift as full-page-hash instability with citation markers present. It does not claim a stable normalized source snapshot, updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
 }

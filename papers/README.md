@@ -3783,7 +3783,10 @@ Implemented:
   the deterministic source-refresh gate for those citation snapshots, the
   committed `papers/sorting_network_source_refresh_run_2026-06-18.json`
   sidecar archives a live refresh run that detected Codish publication source
-  drift requiring triage before source freshness can be claimed, and
+  drift, the committed `papers/sorting_network_source_drift_triage_boundary.json`
+  sidecar classifies that drift as dynamic full-page hash instability with
+  citation markers still present and requires a stable normalized marker
+  snapshot before source freshness can be claimed, and
   `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
   executable-candidate-only run-evidence boundary.
 

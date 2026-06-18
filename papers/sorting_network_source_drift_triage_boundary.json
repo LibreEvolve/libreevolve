@@ -1,0 +1,47 @@
+{
+  "schema": "libreevolve.sorting_network_source_drift_triage_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "triage_date": "2026-06-18",
+  "boundary_status": "codish_publication_hash_drift_triaged_as_dynamic_source",
+  "claim_ready": false,
+  "drift_source_id": "codish_publication",
+  "source_url": "https://pure.itu.dk/en/publications/sorting-nine-inputs-requires-twenty-five-comparisons/",
+  "triage_observation": {
+    "http_status": 200,
+    "content_type": "text/html;charset=UTF-8",
+    "response_bytes": 43688,
+    "response_sha256": "d8ed91cebb616a0d1449ea10c377305ee2a86598bb88dc54ef037289de24f0c5",
+    "stable_markers_present": [
+      "Sorting nine inputs requires twenty-five comparisons",
+      "10.1016/j.jcss.2015.11.014",
+      "Journal of Computer and System Sciences",
+      "25",
+      "Codish"
+    ]
+  },
+  "repeated_fetch_probe": {
+    "sample_count": 3,
+    "response_bytes": [
+      43688,
+      43688,
+      43688
+    ],
+    "response_sha256": [
+      "abbb9c4ba3c3c5c72fa658bb30c5453e06e1948ffd0d0b59f1a00a4233c44494",
+      "0c963d49de7e2a68732261d45cedf0db4a3e2019d53da57aa98f217812946b57",
+      "8607f8c048bdaac6b26f58f1c0180973d40f586afd05c8a97b97a1fb6a65f4f8"
+    ],
+    "conclusion": "full_page_sha256_unstable_for_same_length_response"
+  },
+  "triage_resolution": "The source page still contains the title, DOI, journal, numeric 25-comparison marker, and Codish author marker used for citation calibration, but full-page SHA-256 is unstable across repeated fetches. Do not treat the old full-page hash as fresh; replace it with a normalized marker snapshot or a more stable source before promoting source freshness.",
+  "missing_evidence": {
+    "stable_normalized_source_snapshot": "not_recorded_locally",
+    "updated_source_snapshot_metadata": "not_recorded_locally",
+    "scheduled_ci_refresh_run_history": "not_recorded_locally",
+    "full_raw_source_response_artifacts": "not_recorded_locally",
+    "independent_target_proof_extraction": "not_recorded_locally",
+    "repeated_seed_run_tables": "not_recorded_locally",
+    "run_tied_paper_certification": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary triages the Codish publication source drift as a dynamic full-page hash instability with citation markers still present. It does not claim a stable normalized source snapshot, updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, paper certification, or novel SOTA results."
+}

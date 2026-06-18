@@ -122,8 +122,10 @@
     "drift_status": "source_metadata_drift_detected",
     "triage_required": true
   },
+  "source_drift_triage_sidecar": "papers/sorting_network_source_drift_triage_boundary.json",
+  "source_drift_triage_status": "full_page_hash_unstable_markers_present",
   "missing_evidence": {
-    "source_drift_triage_resolution": "not_recorded_locally",
+    "stable_normalized_source_snapshot": "not_recorded_locally",
     "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
@@ -131,5 +133,5 @@
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary archives one manual live-network sorting-network source refresh run where the Codish publication page drifted from the committed source snapshot metadata. It does not claim source freshness, drift triage resolution, updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, repeated LibreEvolve runs, paper certification, or novel SOTA results."
+  "claim_boundary": "This boundary archives one manual live-network sorting-network source refresh run where the Codish publication page drifted from the committed source snapshot metadata, plus a triage sidecar classifying the drift as full-page-hash instability with citation markers present. It does not claim source freshness, a stable normalized source snapshot, updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, repeated LibreEvolve runs, paper certification, or novel SOTA results."
 }

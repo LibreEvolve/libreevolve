@@ -28,6 +28,12 @@ def test_sorting_network_source_snapshot_boundary_accepts_record():
         "papers/sorting_network_source_refresh_run_2026-06-18.json"
     )
     assert boundary["latest_source_refresh_status"] == "source_metadata_drift_detected"
+    assert boundary["source_drift_triage_sidecar"] == (
+        "papers/sorting_network_source_drift_triage_boundary.json"
+    )
+    assert boundary["source_drift_triage_status"] == (
+        "full_page_hash_unstable_markers_present"
+    )
     assert "full raw source-body retention" in boundary["claim_boundary"]
 
 
@@ -39,6 +45,8 @@ def test_sorting_network_source_snapshot_boundary_rejects_drift_and_overclaim():
     boundary["source_refresh_gate_sidecar"] = "missing.json"
     boundary["latest_source_refresh_run_sidecar"] = "missing.json"
     boundary["latest_source_refresh_status"] = "fresh"
+    boundary["source_drift_triage_sidecar"] = "missing.json"
+    boundary["source_drift_triage_status"] = "untriaged"
     boundary["source_snapshots"]["codish_arxiv"]["response_sha256"] = "0" * 64
     boundary["source_snapshots"].pop("zero_one_clrs")
     boundary["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
@@ -53,6 +61,8 @@ def test_sorting_network_source_snapshot_boundary_rejects_drift_and_overclaim():
     assert "invalid_source_refresh_gate_sidecar" in codes
     assert "invalid_latest_source_refresh_run_sidecar" in codes
     assert "invalid_latest_source_refresh_status" in codes
+    assert "invalid_source_drift_triage_sidecar" in codes
+    assert "invalid_source_drift_triage_status" in codes
     assert "invalid_source_snapshot_ids" in codes
     assert "missing_source_snapshot_zero_one_clrs" in codes
     assert "invalid_source_snapshot_codish_arxiv_response_sha256" in codes

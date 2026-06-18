@@ -26,10 +26,13 @@ def test_sorting_network_source_refresh_gate_boundary_accepts_record():
     assert boundary["archived_outcome_artifact"]["path"] == (
         "papers/sorting_network_source_refresh_run_2026-06-18.json"
     )
+    assert boundary["source_drift_triage_sidecar"] == (
+        "papers/sorting_network_source_drift_triage_boundary.json"
+    )
     assert boundary["expected_report_schema"] == (
         "libreevolve.sorting_network_source_refresh_gate_report.v1"
     )
-    assert "source-drift triage resolution" in boundary["claim_boundary"]
+    assert "stable normalized source snapshot" in boundary["claim_boundary"]
     assert "scheduled CI refresh-run history" in boundary["claim_boundary"]
 
 
@@ -39,6 +42,8 @@ def test_sorting_network_source_refresh_gate_boundary_rejects_drift_and_overclai
     boundary["boundary_status"] = "live_refresh_certified"
     boundary["script_artifact"]["sha256"] = "0" * 64
     boundary["archived_outcome_artifact"]["result"] = "fresh"
+    boundary["source_drift_triage_sidecar"] = "missing.json"
+    boundary["source_drift_triage_status"] = "untriaged"
     boundary["expected_source_ids"] = ["codish_arxiv"]
     boundary["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
 
@@ -50,6 +55,8 @@ def test_sorting_network_source_refresh_gate_boundary_rejects_drift_and_overclai
     assert "invalid_boundary_status" in codes
     assert "invalid_script_artifact_sha256" in codes
     assert "invalid_archived_outcome_artifact_result" in codes
+    assert "invalid_source_drift_triage_sidecar" in codes
+    assert "invalid_source_drift_triage_status" in codes
     assert "invalid_expected_source_ids" in codes
     assert "invalid_missing_evidence_scheduled_ci_refresh_run_history" in codes
 

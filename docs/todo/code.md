@@ -1344,6 +1344,9 @@ sidecars, tests, and active TODOs.
     children cannot drop placeholders used by their selected parent, and
     duplicate configured or evolved templates are retained as separate prompt
     arms with deterministic ids plus `template_sha256` audit identity.
+    `papers/prompt_template_compatibility_boundary.json` preserves this as a
+    generic-template-validation boundary, not a role-specific compatibility
+    policy.
   - Required result: add explicit role-specific compatibility policy for
     mutation, critique, feedback grading, and meta-prompt surfaces, while
     preserving the explicit tested no-dedup/independent-arm policy unless a

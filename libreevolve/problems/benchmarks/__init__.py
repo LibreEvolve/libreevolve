@@ -288,6 +288,12 @@ from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
     render_prompt_section_packing_boundary_summary,
     validate_prompt_section_packing_boundary,
 )
+from libreevolve.problems.benchmarks.prompt_template_compatibility_boundary import (
+    PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_SCHEMA,
+    prompt_template_compatibility_boundary_record,
+    render_prompt_template_compatibility_boundary_summary,
+    validate_prompt_template_compatibility_boundary,
+)
 from libreevolve.problems.benchmarks.stochastic_prompt_format_boundary import (
     STOCHASTIC_PROMPT_FORMAT_BOUNDARY_SCHEMA,
     render_stochastic_prompt_format_boundary_summary,
@@ -1168,6 +1174,7 @@ __all__ = [
     "OBJECTIVE_ARCHIVE_BOUNDARY_SCHEMA",
     "PROMPT_EXAMPLE_COPY_BOUNDARY_SCHEMA",
     "PROMPT_SECTION_PACKING_BOUNDARY_SCHEMA",
+    "PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_SCHEMA",
     "STOCHASTIC_PROMPT_FORMAT_BOUNDARY_SCHEMA",
     "PALLAS_WORKFLOW_BASELINE_BOUNDARY_SCHEMA",
     "QUALITATIVE_FEEDBACK_BOUNDARY_SCHEMA",
@@ -1360,6 +1367,7 @@ __all__ = [
     "pallas_workflow_baseline_boundary_record",
     "prompt_example_copy_boundary_record",
     "prompt_section_packing_boundary_record",
+    "prompt_template_compatibility_boundary_record",
     "stochastic_prompt_format_boundary_record",
     "parallel_evaluation_readiness_boundary_record",
     "paper_author_metadata_boundary_record",
@@ -1530,6 +1538,7 @@ __all__ = [
     "render_pallas_workflow_baseline_boundary_summary",
     "render_prompt_example_copy_boundary_summary",
     "render_prompt_section_packing_boundary_summary",
+    "render_prompt_template_compatibility_boundary_summary",
     "render_stochastic_prompt_format_boundary_summary",
     "render_matrix_baseline_component_runtime_boundary_summary",
     "render_matrix_cascade_run_runtime_boundary_summary",
@@ -1724,6 +1733,7 @@ __all__ = [
     "validate_pallas_workflow_baseline_boundary",
     "validate_prompt_example_copy_boundary",
     "validate_prompt_section_packing_boundary",
+    "validate_prompt_template_compatibility_boundary",
     "validate_stochastic_prompt_format_boundary",
     "validate_matrix_baseline_component_runtime_boundary",
     "validate_matrix_cascade_run_runtime_boundary",

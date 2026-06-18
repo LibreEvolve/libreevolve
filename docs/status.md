@@ -741,7 +741,8 @@ Important limits:
   evolved prompt text is intentionally retained as independent prompt arms with
   deterministic ids and shared `template_sha256`, not deduplicated into one
   prompt policy; role-specific compatibility for critique, feedback, and
-  meta-prompt call surfaces remains open.
+  meta-prompt call surfaces remains open. That boundary is tracked by
+  `papers/prompt_template_compatibility_boundary.json`.
 - Stochastic prompt-format reports record weighted `prompt_format_options`
   probabilities, selected alternative hashes/indexes, prompt/call linkage, and
   run-local RNG replay boundaries, not distinct separate config-file source

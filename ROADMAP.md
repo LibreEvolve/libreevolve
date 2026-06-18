@@ -724,6 +724,9 @@ is not yet an AlphaEvolve reproduction.
   checks, configured mutation-channel checks, explicit duplicate-arm/no-dedup
   audit, and parent-placeholder retention into role-specific compatibility
   policies for mutation, critique, feedback, and meta-prompt call surfaces.
+  The committed `papers/prompt_template_compatibility_boundary.json` sidecar
+  preserves the current generic-template-validation boundary while keeping
+  role-specific compatibility and semantic duplicate-arm audit evidence open.
 - Replace first-N-character context truncation with deterministic
   summarization/ranking for local PDFs and extracted text.
 - Extend current prompt caps, mutation-path provider-token section packing,

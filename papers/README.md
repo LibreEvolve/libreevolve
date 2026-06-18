@@ -1106,7 +1106,8 @@ children, and explicit duplicate-arm audit identity: duplicate configured or
 evolved template text remains separate prompt programs with independent ids and
 shared `template_sha256` rather than being deduplicated. Role-specific
 compatibility for critique, feedback grading, and meta-prompt call surfaces
-remains open.
+remains open; `papers/prompt_template_compatibility_boundary.json` preserves
+that generic-template-validation boundary for manifest validation.
 Prompt reward accounting is limited to configured `absolute` and `improvement`
 child-score reward modes normalized against finite prompt reward bounds, with
 UCB-style prompt-arm selection over mean normalized rewards. Prompt history

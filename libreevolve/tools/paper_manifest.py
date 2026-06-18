@@ -195,6 +195,10 @@ from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
     prompt_section_packing_boundary_record,
     validate_prompt_section_packing_boundary,
 )
+from libreevolve.problems.benchmarks.prompt_template_compatibility_boundary import (
+    prompt_template_compatibility_boundary_record,
+    validate_prompt_template_compatibility_boundary,
+)
 from libreevolve.problems.benchmarks.stochastic_prompt_format_boundary import (
     stochastic_prompt_format_boundary_record,
     validate_stochastic_prompt_format_boundary,
@@ -1102,6 +1106,7 @@ PROVIDER_PRICING_BOUNDARY_FILE = "papers/provider_pricing_boundary.json"
 PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_FILE = "papers/provider_diagnostics_replay_boundary.json"
 CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.json"
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
+PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_FILE = "papers/prompt_template_compatibility_boundary.json"
 STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_boundary.json"
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
 DOCS_INDEX_READER_PATH_BOUNDARY_FILE = "papers/docs_index_reader_path_boundary.json"
@@ -1852,6 +1857,7 @@ def validate_paper_manifest(
     issues.extend(_validate_provider_diagnostics_replay_boundary(root_path))
     issues.extend(_validate_critique_reviewer_pool_boundary(root_path))
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
+    issues.extend(_validate_prompt_template_compatibility_boundary(root_path))
     issues.extend(_validate_stochastic_prompt_format_boundary(root_path))
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
     issues.extend(_validate_docs_index_reader_path_boundary(root_path))
@@ -4385,6 +4391,40 @@ def _validate_prompt_section_packing_boundary(root_path: Path) -> list[PaperMani
             f"prompt_section_packing_boundary_{issue.code}",
             issue.message,
             "prompt_section_packing",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_prompt_template_compatibility_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = prompt_template_compatibility_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "prompt_template_compatibility_boundary_manifest_missing",
+                    (
+                        f"{PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_FILE} must emit "
+                        "generic template validation versus role-specific compatibility scope"
+                    ),
+                    "prompt_template_compatibility",
+                )
+            ]
+    report = validate_prompt_template_compatibility_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"prompt_template_compatibility_boundary_{issue.code}",
+            issue.message,
+            "prompt_template_compatibility",
         )
         for issue in report.issues
     ]

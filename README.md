@@ -88,6 +88,11 @@ Important limits:
   candidates, paired solution/search representations, abstraction-specific
   prompts/validators/archive descriptors, migration policies, and equal-budget
   cross-abstraction reports are tracked as missing AlphaEvolve-style work.
+- Prompt templates are validated for known placeholders, formatting, mutation
+  channels, parent-placeholder retention, and independent duplicate-arm
+  identity; `papers/prompt_template_compatibility_boundary.json` records that
+  role-specific compatibility for critique, feedback grading, meta-prompt, and
+  context-policy surfaces remains open.
 - Built-in SDK provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
 - The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI

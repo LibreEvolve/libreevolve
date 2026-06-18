@@ -36,6 +36,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "equal_budget_scheduler_comparators": "not_recorded_locally",
     "first_class_gemini_lanes": "not_recorded_locally",
     "async_reviewer_isolation": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
 EXPECTED_RESOLVED_EVIDENCE = {

@@ -80,6 +80,7 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "equal_budget_scheduler_comparators": "not_recorded_locally",
         "first_class_gemini_lanes": "not_recorded_locally",
         "async_reviewer_isolation": "not_recorded_locally",
+        "stale_readiness_detector": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
     assert boundary["resolved_evidence"] == {
@@ -128,4 +129,4 @@ def test_render_roadmap_backend_scheduling_critique_summary_reports_shape():
     )
     assert "| track_count | 9 |" in summary
     assert "| active_todo_ref_count | 18 |" in summary
-    assert "| missing_evidence_count | 9 |" in summary
+    assert "| missing_evidence_count | 10 |" in summary

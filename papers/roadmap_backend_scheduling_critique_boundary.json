@@ -202,7 +202,8 @@
     "live_provider_pricing_defaults": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
     "raw_provider_replay": "not_recorded_locally",
-    "role_quota_ownership": "not_recorded_locally"
+    "role_quota_ownership": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally"
   },
   "required_evidence_fields": [
     "track_records",

@@ -1767,8 +1767,9 @@ Important limits:
 - ROADMAP benchmark-portfolio readiness evidence now records six criteria for
   domain coverage, benchmark admission, repeated-seed run evidence,
   anti-gaming certification, SOTA/baseline citation sufficiency, and
-  portfolio-balance/CI freshness. This is not an implemented representative
-  benchmark gate or proof that those readiness mechanisms exist.
+  portfolio-balance/CI freshness, plus a per-surface benchmark-portfolio claim
+  guard. This is not an implemented representative benchmark gate or proof
+  that those readiness mechanisms exist.
 - ROADMAP plugin-extensibility evidence now records six plugin surfaces:
   built-in catalog, entry-point plugins, direct instances, future custom
   registries, hook isolation, and plugin artifact lifecycle, with

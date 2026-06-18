@@ -1,7 +1,58 @@
 {
   "active_todo_ref_count": 12,
+  "benchmark_portfolio_claim_guard": [
+    {
+      "allowed_current_claim": "five static portfolio families with domain labels",
+      "criterion_id": "domain_coverage_matrix",
+      "missing_before_representative_claim": "domain-coverage matrix proving the portfolio is balanced across algorithm, math, systems, and smoke-guardrail surfaces",
+      "portfolio_surface": "benchmark families, domains, validators, and AlphaEvolve claim scope",
+      "readiness_status": "family_domain_labels_without_coverage_matrix",
+      "validation_gate": "representative benchmark domain-coverage matrix"
+    },
+    {
+      "allowed_current_claim": "static family readiness labels plus smoke-fixture guardrail",
+      "criterion_id": "benchmark_admission_checklist",
+      "missing_before_representative_claim": "admission checklist that prevents smoke fixtures from counting as representative benchmark coverage",
+      "portfolio_surface": "candidate fixtures, smoke examples, benchmark candidates, and paper-comparable evidence",
+      "readiness_status": "smoke_guardrail_without_admission_checklist",
+      "validation_gate": "benchmark admission checklist with smoke exclusion"
+    },
+    {
+      "allowed_current_claim": "sidecars for repeated sampling and sample efficiency without per-family run matrix",
+      "criterion_id": "repeated_seed_run_matrix",
+      "missing_before_representative_claim": "per-family repeated-seed matrix with target-hit, confidence, and run-budget evidence",
+      "portfolio_surface": "repeated-seed runs, sample-efficiency claims, and benchmark certification",
+      "readiness_status": "repeated_sampling_sidecars_without_portfolio_matrix",
+      "validation_gate": "repeated-seed benchmark run matrix"
+    },
+    {
+      "allowed_current_claim": "validator and audit sidecars without benchmark-level anti-gaming certification",
+      "criterion_id": "anti_gaming_certification",
+      "missing_before_representative_claim": "anti-gaming certification proving fixtures resist benchmark-specific hacks and evaluator leakage",
+      "portfolio_surface": "validators, evaluator oracles, incorrect suggestions, and hardening reports",
+      "readiness_status": "validator_sidecars_without_certification_bundle",
+      "validation_gate": "anti-gaming benchmark certification"
+    },
+    {
+      "allowed_current_claim": "baseline/SOTA target labels on each portfolio family",
+      "criterion_id": "sota_baseline_citation_sufficiency",
+      "missing_before_representative_claim": "citation sufficiency proof for every target baseline and benchmark threshold",
+      "portfolio_surface": "baseline/SOTA targets, paper citations, and benchmark target thresholds",
+      "readiness_status": "target_labels_without_citation_sufficiency",
+      "validation_gate": "baseline/SOTA citation sufficiency proof"
+    },
+    {
+      "allowed_current_claim": "static portfolio family map without balance scoring or freshness enforcement",
+      "criterion_id": "portfolio_balance_ci_freshness",
+      "missing_before_representative_claim": "portfolio-balance score and CI freshness gate with owner-reviewed readiness signoff",
+      "portfolio_surface": "portfolio balance score, stale coverage detection, CI freshness, and owner signoff",
+      "readiness_status": "static_portfolio_without_balance_or_freshness",
+      "validation_gate": "portfolio balance and CI freshness gate"
+    }
+  ],
+  "benchmark_portfolio_claim_guard_count": 6,
   "boundary_status": "bounded_benchmark_portfolio_readiness_matrix_without_representative_gate",
-  "claim_boundary": "This boundary records representative-benchmark portfolio readiness criteria tied to the bounded static portfolio map. It does not claim a domain-coverage matrix, benchmark admission checklist, repeated-seed run matrix, anti-gaming certification, SOTA/baseline citation sufficiency, portfolio-balance CI freshness, or owner review signoff.",
+  "claim_boundary": "This boundary records representative-benchmark portfolio readiness criteria tied to the bounded static portfolio map, plus a claim guard for each portfolio surface. It does not claim a domain-coverage matrix, benchmark admission checklist, repeated-seed run matrix, anti-gaming certification, SOTA/baseline citation sufficiency, portfolio-balance CI freshness, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "anti_gaming_certification": "not_recorded_locally",

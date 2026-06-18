@@ -202,6 +202,7 @@ def roadmap_benchmark_portfolio_readiness_boundary_record(
         root_path
     )
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
+    claim_guard = [_claim_guard_record(record) for record in records]
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     return {
@@ -216,13 +217,16 @@ def roadmap_benchmark_portfolio_readiness_boundary_record(
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
         "readiness_criteria": records,
+        "benchmark_portfolio_claim_guard": claim_guard,
+        "benchmark_portfolio_claim_guard_count": len(claim_guard),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records representative-benchmark portfolio "
-            "readiness criteria tied to the bounded static portfolio map. It "
-            "does not claim a domain-coverage matrix, benchmark admission "
-            "checklist, repeated-seed run matrix, anti-gaming certification, "
+            "readiness criteria tied to the bounded static portfolio map, plus "
+            "a claim guard for each portfolio surface. It does not claim a "
+            "domain-coverage matrix, benchmark admission checklist, "
+            "repeated-seed run matrix, anti-gaming certification, "
             "SOTA/baseline citation sufficiency, portfolio-balance CI "
             "freshness, or owner review signoff."
         ),
@@ -261,6 +265,8 @@ def validate_roadmap_benchmark_portfolio_readiness_boundary(
         "sidecar_ref_count",
         "active_todo_ref_count",
         "readiness_criteria",
+        "benchmark_portfolio_claim_guard",
+        "benchmark_portfolio_claim_guard_count",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP benchmark-portfolio readiness inputs"))
@@ -270,9 +276,12 @@ def validate_roadmap_benchmark_portfolio_readiness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim a domain-coverage matrix" not in boundary_text
+        or "claim guard for each portfolio surface" not in boundary_text
         or "benchmark admission checklist" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from representative benchmark gate"))
+    if data.get("benchmark_portfolio_claim_guard_count") != len(CRITERION_SPECS):
+        issues.append(_issue("invalid_benchmark_portfolio_claim_guard_count", "benchmark portfolio claim guard count changed"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return RoadmapBenchmarkPortfolioReadinessBoundaryValidation(
@@ -321,6 +330,17 @@ def _criterion_record(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
         ],
         "validation_gate": spec["validation_gate"],
         "readiness_status": spec["readiness_status"],
+    }
+
+
+def _claim_guard_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "criterion_id": record["criterion_id"],
+        "portfolio_surface": record["portfolio_surface"],
+        "allowed_current_claim": record["current_scope"],
+        "missing_before_representative_claim": record["missing_readiness"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
     }
 
 

@@ -3500,8 +3500,9 @@ Implemented:
   representative-benchmark readiness sidecar with six criteria for domain
   coverage, benchmark admission, repeated-seed run evidence, anti-gaming
   certification, SOTA/baseline citation sufficiency, and portfolio-balance/CI
-  freshness. It is not evidence that those matrix, checklist, run, certification,
-  citation, balance, CI, or signoff mechanisms are implemented.
+  freshness, plus a per-surface benchmark-portfolio claim guard. It is not
+  evidence that those matrix, checklist, run, certification, citation,
+  balance, CI, or signoff mechanisms are implemented.
 - `papers/roadmap_plugin_extensibility_boundary.json`: ROADMAP
   plugin-extensibility sidecar with six plugin surfaces, configuration shape,
   package/source identity, constructor provenance, artifact hashing,

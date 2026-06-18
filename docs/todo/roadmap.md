@@ -434,14 +434,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     a six-criterion readiness matrix for the domain-coverage matrix,
     benchmark admission checklist, repeated-seed run matrix, anti-gaming
     certification, SOTA/baseline citation sufficiency proof, and portfolio-
-    balance/CI freshness gate.
-  - Current gap: the sidecars are bounded portfolio and readiness maps, not a
-    representative-readiness gate. There is still no implemented
-    domain-coverage matrix, benchmark admission checklist, repeated-seed run
-    matrix, anti-gaming certification, SOTA/baseline citation sufficiency
-    proof, portfolio-balance score, stale-coverage detector, CI freshness
-    gate, or owner signoff proving the representative-benchmark list is
-    balanced, feasible, non-duplicative, and strong enough to support
+    balance/CI freshness gate, plus a per-surface benchmark-portfolio claim
+    guard.
+  - Current gap: the per-surface benchmark-portfolio claim guard is a bounded
+    allowed-scope map, not a representative-readiness gate. There is still no
+    implemented domain-coverage matrix, benchmark admission checklist,
+    repeated-seed run matrix, anti-gaming certification, SOTA/baseline citation
+    sufficiency proof, portfolio-balance score, stale-coverage detector, CI
+    freshness gate, or owner signoff proving the representative-benchmark list
+    is balanced, feasible, non-duplicative, and strong enough to support
     AlphaEvolve-style claims once individual fixtures improve.
   - Required result: implement the missing readiness fields recorded by the
     sidecar: domain-coverage matrix, benchmark admission checklist,

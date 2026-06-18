@@ -36,6 +36,21 @@ def test_roadmap_benchmark_portfolio_readiness_accepts_bounded_matrix():
         "sota_baseline_citation_sufficiency",
         "portfolio_balance_ci_freshness",
     ]
+    assert boundary["benchmark_portfolio_claim_guard_count"] == 6
+    assert [
+        record["criterion_id"] for record in boundary["benchmark_portfolio_claim_guard"]
+    ] == [
+        "domain_coverage_matrix",
+        "benchmark_admission_checklist",
+        "repeated_seed_run_matrix",
+        "anti_gaming_certification",
+        "sota_baseline_citation_sufficiency",
+        "portfolio_balance_ci_freshness",
+    ]
+    assert all(
+        "missing_before_representative_claim" in record
+        for record in boundary["benchmark_portfolio_claim_guard"]
+    )
     assert all(
         sidecar["exists"]
         for record in boundary["readiness_criteria"]
@@ -56,6 +71,7 @@ def test_roadmap_benchmark_portfolio_readiness_accepts_bounded_matrix():
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "does not claim a domain-coverage matrix" in boundary["claim_boundary"]
+    assert "claim guard for each portfolio surface" in boundary["claim_boundary"]
 
 
 def test_roadmap_benchmark_portfolio_readiness_rejects_overclaim_and_drift():
@@ -64,6 +80,7 @@ def test_roadmap_benchmark_portfolio_readiness_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "representative_benchmark_portfolio_gate_ready"
     boundary["readiness_criterion_count"] = 0
     boundary["readiness_criteria"][0]["sidecar_refs"][0]["exists"] = False
+    boundary["benchmark_portfolio_claim_guard_count"] = 0
     boundary["missing_evidence"]["domain_coverage_matrix"] = "recorded"
     boundary["required_evidence_fields"] = ["domain_coverage_matrix"]
 
@@ -75,6 +92,7 @@ def test_roadmap_benchmark_portfolio_readiness_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_readiness_criterion_count" in codes
     assert "invalid_readiness_criteria" in codes
+    assert "invalid_benchmark_portfolio_claim_guard_count" in codes
     assert "invalid_missing_evidence_domain_coverage_matrix" in codes
     assert "missing_required_evidence_field" in codes
 

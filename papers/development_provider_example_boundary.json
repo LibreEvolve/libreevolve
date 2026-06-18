@@ -1,35 +1,23 @@
 {
   "schema": "libreevolve.development_provider_example_boundary.v1",
-  "boundary_status": "development_provider_examples_static_inventory_with_unpaired_show",
+  "boundary_status": "development_provider_examples_static_inventory_with_paired_show_commands",
   "claim_ready": false,
   "development_doc_path": "docs/development.md",
   "provider_example_count": 2,
   "missing_command_count": 0,
   "missing_command_records": [],
-  "unpaired_show_count": 1,
-  "unpaired_show_records": [
-    {
-      "example_id": "development_anthropic_circle_packing",
-      "provider": "anthropic",
-      "problem": "circle_packing",
-      "placeholder": "<anthropic-model-id>",
-      "expected_run_dir": "runs/circle_packing",
-      "command_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing --max-generations 10 --backends \"anthropic:<anthropic-model-id>\"",
-      "command_marker_status": "command_marker_present",
-      "show_marker": "py -3.12 -m libreevolve show runs/circle_packing",
-      "show_marker_status": "show_marker_missing"
-    }
-  ],
+  "unpaired_show_count": 0,
+  "unpaired_show_records": [],
   "provider_example_records": [
     {
       "example_id": "development_openai_hello_world",
       "provider": "openai",
       "problem": "hello_world",
       "placeholder": "<openai-model-id>",
-      "expected_run_dir": "runs/hello_world",
-      "command_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends \"openai:<openai-model-id>\"",
+      "expected_run_dir": "runs/development_hello_world",
+      "command_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends \"openai:<openai-model-id>\" --run-name development_hello_world --overwrite",
       "command_marker_status": "command_marker_present",
-      "show_marker": "py -3.12 -m libreevolve show runs/hello_world",
+      "show_marker": "py -3.12 -m libreevolve show runs/development_hello_world",
       "show_marker_status": "show_marker_present"
     },
     {
@@ -37,11 +25,11 @@
       "provider": "anthropic",
       "problem": "circle_packing",
       "placeholder": "<anthropic-model-id>",
-      "expected_run_dir": "runs/circle_packing",
-      "command_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing --max-generations 10 --backends \"anthropic:<anthropic-model-id>\"",
+      "expected_run_dir": "runs/development_circle_packing",
+      "command_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing --max-generations 10 --backends \"anthropic:<anthropic-model-id>\" --run-name development_circle_packing --overwrite",
       "command_marker_status": "command_marker_present",
-      "show_marker": "py -3.12 -m libreevolve show runs/circle_packing",
-      "show_marker_status": "show_marker_missing"
+      "show_marker": "py -3.12 -m libreevolve show runs/development_circle_packing",
+      "show_marker_status": "show_marker_present"
     }
   ],
   "guidance_marker_count": 13,
@@ -127,7 +115,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "development_provider_example_status": "development_provider_examples_static_inventory_with_known_show_gap",
+  "development_provider_example_status": "development_provider_examples_static_inventory_with_paired_show_commands",
   "required_evidence_fields": [
     "development_provider_command_markers",
     "development_provider_placeholder_guidance",
@@ -156,5 +144,5 @@
     "ci_development_provider_matrix": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the docs/development.md OpenAI hello_world and Anthropic circle_packing provider command markers, placeholder model-id guidance, the current paired show command for hello_world, the missing paired show command for circle_packing, README provider model/failure guidance, docs-index routes, backend provider-lane and Gemini absence markers, status/paper sidecar anchors, and active TODO ownership. It does not claim live OpenAI or Anthropic model availability, credential-safe development provider smoke, account-specific model-id provenance, a CI development provider matrix, or owner review signoff."
+  "claim_boundary": "This boundary records the docs/development.md OpenAI hello_world and Anthropic circle_packing provider command markers, placeholder model-id guidance, paired show commands for both provider examples, explicit development run-name/overwrite markers, README provider model/failure guidance, docs-index routes, backend provider-lane and Gemini absence markers, status/paper sidecar anchors, and active TODO ownership. It does not claim live OpenAI or Anthropic model availability, credential-safe development provider smoke, account-specific model-id provenance, a CI development provider matrix, or owner review signoff."
 }

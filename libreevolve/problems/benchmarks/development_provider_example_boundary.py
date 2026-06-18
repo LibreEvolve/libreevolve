@@ -10,7 +10,7 @@ DEVELOPMENT_PROVIDER_EXAMPLE_BOUNDARY_SCHEMA = (
     "libreevolve.development_provider_example_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "development_provider_examples_static_inventory_with_unpaired_show"
+    "development_provider_examples_static_inventory_with_paired_show_commands"
 )
 DEVELOPMENT_DOC_PATH = "docs/development.md"
 README_PATH = "README.md"
@@ -30,11 +30,12 @@ EXPECTED_PROVIDER_EXAMPLES = (
         "problem": "hello_world",
         "command_marker": (
             'py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world '
-            '--max-generations 10 --backends "openai:<openai-model-id>"'
+            '--max-generations 10 --backends "openai:<openai-model-id>" '
+            '--run-name development_hello_world --overwrite'
         ),
         "placeholder": "<openai-model-id>",
-        "expected_run_dir": "runs/hello_world",
-        "show_marker": "py -3.12 -m libreevolve show runs/hello_world",
+        "expected_run_dir": "runs/development_hello_world",
+        "show_marker": "py -3.12 -m libreevolve show runs/development_hello_world",
     },
     {
         "example_id": "development_anthropic_circle_packing",
@@ -42,11 +43,12 @@ EXPECTED_PROVIDER_EXAMPLES = (
         "problem": "circle_packing",
         "command_marker": (
             'py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing '
-            '--max-generations 10 --backends "anthropic:<anthropic-model-id>"'
+            '--max-generations 10 --backends "anthropic:<anthropic-model-id>" '
+            '--run-name development_circle_packing --overwrite'
         ),
         "placeholder": "<anthropic-model-id>",
-        "expected_run_dir": "runs/circle_packing",
-        "show_marker": "py -3.12 -m libreevolve show runs/circle_packing",
+        "expected_run_dir": "runs/development_circle_packing",
+        "show_marker": "py -3.12 -m libreevolve show runs/development_circle_packing",
     },
 )
 EXPECTED_GUIDANCE_MARKERS = (
@@ -167,8 +169,8 @@ def development_provider_example_boundary_record(root: str | Path = ".") -> dict
         "missing_guidance_marker_records": missing_guidance_records,
         "guidance_marker_records": guidance_records,
         "development_provider_example_status": (
-            "development_provider_examples_static_inventory_with_known_show_gap"
-            if not missing_command_records and unpaired_show_records and not missing_guidance_records
+            "development_provider_examples_static_inventory_with_paired_show_commands"
+            if not missing_command_records and not unpaired_show_records and not missing_guidance_records
             else "development_provider_examples_static_inventory_incomplete"
         ),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -176,8 +178,8 @@ def development_provider_example_boundary_record(root: str | Path = ".") -> dict
         "claim_boundary": (
             "This boundary records the docs/development.md OpenAI hello_world "
             "and Anthropic circle_packing provider command markers, placeholder "
-            "model-id guidance, the current paired show command for hello_world, "
-            "the missing paired show command for circle_packing, README provider "
+            "model-id guidance, paired show commands for both provider examples, "
+            "explicit development run-name/overwrite markers, README provider "
             "model/failure guidance, docs-index routes, backend provider-lane "
             "and Gemini absence markers, status/paper sidecar anchors, and active "
             "TODO ownership. It does not claim live OpenAI or Anthropic model "
@@ -227,8 +229,8 @@ def validate_development_provider_example_boundary(
         issues.append(_issue("invalid_provider_example_count", "development guide should record two provider-backed examples"))
     if data.get("missing_command_count") != 0:
         issues.append(_issue("missing_development_provider_command", "development provider command markers are incomplete"))
-    if data.get("unpaired_show_count") != 1:
-        issues.append(_issue("invalid_unpaired_show_count", "current development guide should record one unpaired provider show command"))
+    if data.get("unpaired_show_count") != 0:
+        issues.append(_issue("invalid_unpaired_show_count", "development provider examples should have paired show commands"))
     if data.get("missing_guidance_marker_count") != 0:
         issues.append(_issue("missing_development_provider_guidance_marker", "development provider evidence anchors are incomplete"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -239,7 +241,7 @@ def validate_development_provider_example_boundary(
     if (
         not isinstance(boundary_text, str)
         or "docs/development.md OpenAI hello_world" not in boundary_text
-        or "missing paired show command for circle_packing" not in boundary_text
+        or "paired show commands for both provider examples" not in boundary_text
         or "does not claim live OpenAI or Anthropic model availability" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate static development commands from live provider smoke"))

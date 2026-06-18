@@ -14,13 +14,13 @@ def test_development_provider_example_boundary_accepts_current_static_inventory(
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "development_provider_examples_static_inventory_with_unpaired_show"
+        == "development_provider_examples_static_inventory_with_paired_show_commands"
     )
     assert boundary["schema"] == DEVELOPMENT_PROVIDER_EXAMPLE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert validation.provider_example_count == 2
     assert validation.missing_command_count == 0
-    assert validation.unpaired_show_count == 1
+    assert validation.unpaired_show_count == 0
     assert validation.guidance_marker_count == 13
     assert validation.missing_guidance_marker_count == 0
     assert validation.missing_evidence_count == 6
@@ -30,14 +30,13 @@ def test_development_provider_example_boundary_accepts_current_static_inventory(
         "openai",
         "anthropic",
     ]
-    assert [record["example_id"] for record in boundary["unpaired_show_records"]] == [
-        "development_anthropic_circle_packing"
+    assert boundary["unpaired_show_records"] == []
+    assert [record["expected_run_dir"] for record in boundary["provider_example_records"]] == [
+        "runs/development_hello_world",
+        "runs/development_circle_packing",
     ]
-    assert boundary["unpaired_show_records"][0]["show_marker"] == (
-        "py -3.12 -m libreevolve show runs/circle_packing"
-    )
     assert boundary["development_provider_example_status"] == (
-        "development_provider_examples_static_inventory_with_known_show_gap"
+        "development_provider_examples_static_inventory_with_paired_show_commands"
     )
     assert boundary["missing_evidence"] == {
         "live_openai_model_availability_probe": "not_recorded_locally",
@@ -47,7 +46,7 @@ def test_development_provider_example_boundary_accepts_current_static_inventory(
         "ci_development_provider_matrix": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "missing paired show command for circle_packing" in boundary["claim_boundary"]
+    assert "paired show commands for both provider examples" in boundary["claim_boundary"]
 
 
 def test_development_provider_example_boundary_rejects_overclaim_and_drift():
@@ -60,8 +59,8 @@ def test_development_provider_example_boundary_rejects_overclaim_and_drift():
     boundary["provider_example_records"][0]["command_marker_status"] = (
         "command_marker_missing"
     )
-    boundary["unpaired_show_count"] = 0
-    boundary["unpaired_show_records"] = []
+    boundary["unpaired_show_count"] = 1
+    boundary["unpaired_show_records"] = [boundary["provider_example_records"][1]]
     boundary["guidance_marker_count"] = 0
     boundary["missing_guidance_marker_count"] = 1
     boundary["missing_guidance_marker_records"] = [boundary["guidance_marker_records"][0]]
@@ -102,12 +101,12 @@ def test_render_development_provider_example_boundary_summary_reports_shape():
     assert "Development provider example boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | development_provider_examples_static_inventory_with_unpaired_show |"
+        "| boundary_status | development_provider_examples_static_inventory_with_paired_show_commands |"
         in summary
     )
     assert "| provider_example_count | 2 |" in summary
     assert "| missing_command_count | 0 |" in summary
-    assert "| unpaired_show_count | 1 |" in summary
+    assert "| unpaired_show_count | 0 |" in summary
     assert "| guidance_marker_count | 13 |" in summary
     assert "| missing_guidance_marker_count | 0 |" in summary
     assert "| missing_evidence_count | 6 |" in summary

@@ -2838,10 +2838,13 @@ def test_validate_paper_manifest_accepts_development_provider_example_boundary(t
     marker_files = {
         "docs/development.md": (
             'py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world '
-            '--max-generations 10 --backends "openai:<openai-model-id>"\n'
+            '--max-generations 10 --backends "openai:<openai-model-id>" '
+            '--run-name development_hello_world --overwrite\n'
+            "py -3.12 -m libreevolve show runs/development_hello_world\n"
             'py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing '
-            '--max-generations 10 --backends "anthropic:<anthropic-model-id>"\n'
-            "py -3.12 -m libreevolve show runs/hello_world\n"
+            '--max-generations 10 --backends "anthropic:<anthropic-model-id>" '
+            '--run-name development_circle_packing --overwrite\n'
+            "py -3.12 -m libreevolve show runs/development_circle_packing\n"
             "Replace placeholder backend model ids with currently available provider/account\n"
             "model ids before running.\n"
         ),

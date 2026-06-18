@@ -2958,11 +2958,11 @@ Implemented:
   review signoff.
 - `papers/development_provider_example_boundary.json`: development-guide
   provider-example sidecar. It records the two provider-backed
-  `docs/development.md` commands, placeholder model-id guidance, README
-  provider model/failure wording, docs-index/backend/status/paper anchors,
-  provider-matrix/auth/Gemini sidecar references, active TODO ownership, and
-  the current missing paired `show` command for the Anthropic `circle_packing`
-  example. It is not live OpenAI/Anthropic model availability proof,
+  `docs/development.md` commands, placeholder model-id guidance, explicit
+  development run-name/overwrite markers, paired `show` commands for both
+  examples, README provider model/failure wording, docs-index/backend/status/
+  paper anchors, provider-matrix/auth/Gemini sidecar references, and active
+  TODO ownership. It is not live OpenAI/Anthropic model availability proof,
   credential-safe development provider smoke, account-specific model-id
   provenance, a CI development provider matrix, or owner review signoff.
 - `papers/development_workflow_boundary.json`: development-guide workflow

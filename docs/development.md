@@ -95,9 +95,10 @@ py -3.12 -m pytest tests/integration/ -m integration
 Run the example problems:
 
 ```bash
-py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "openai:<openai-model-id>"
-py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing --max-generations 10 --backends "anthropic:<anthropic-model-id>"
-py -3.12 -m libreevolve show runs/hello_world
+py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "openai:<openai-model-id>" --run-name development_hello_world --overwrite
+py -3.12 -m libreevolve show runs/development_hello_world
+py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing --max-generations 10 --backends "anthropic:<anthropic-model-id>" --run-name development_circle_packing --overwrite
+py -3.12 -m libreevolve show runs/development_circle_packing
 ```
 
 Replace placeholder backend model ids with currently available provider/account

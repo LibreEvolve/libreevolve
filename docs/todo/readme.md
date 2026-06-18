@@ -887,9 +887,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README examples, because they can otherwise imply supported provider/model
     readiness or benchmark parity from placeholder commands.
   - Current evidence: `docs/development.md` tells contributors to run
-    `hello_world` with `openai:<openai-model-id>`, run `circle_packing` with
-    `anthropic:<anthropic-model-id>`, and then show `runs/hello_world`. It also
-    tells readers to replace placeholders with currently available
+    `hello_world` with `openai:<openai-model-id>` and `circle_packing` with
+    `anthropic:<anthropic-model-id>` using explicit development run names,
+    overwrite cleanup, and paired `show` commands for both run directories. It
+    also tells readers to replace placeholders with currently available
     provider/account model ids. The active README provider-smoke TODO covers
     the root README examples, while the AGENTS.md drift TODO covers
     agent-facing instructions.
@@ -897,20 +898,16 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     development-guide-specific static inventory for those two commands,
     placeholder model-id guidance, README provider model/failure wording,
     docs-index/backend/status/paper anchors, provider-matrix/auth/Gemini
-    sidecar references, active TODO ownership, and the current unpaired-show
-    gap for the Anthropic `circle_packing` example.
+    sidecar references, active TODO ownership, explicit run-name/overwrite
+    markers, and paired show-command coverage for both provider examples.
   - Current gap: the committed sidecar is a static documentation inventory, not
     a live provider smoke matrix, redacted model-availability record, expected
     skip/failure policy, or CI drift check proving that the exact
     `docs/development.md` example commands are current, internally consistent,
     and safely separated from AlphaEvolve Gemini/model-mix parity. There is
-    also no check that development docs update when supported provider
+    also no live check that development docs update when supported provider
     families, placeholder syntax, example run names, or provider-backed smoke
-    policy changes. The known inspection-linkage drift remains: only the
-    OpenAI `hello_world` example has an obvious paired inspection path, and
-    there is still no explicit `--run-name`, `--overwrite`, or
-    `show runs/circle_packing` guidance proving that each provider example has
-    a distinct expected run directory and post-run inspection contract.
+    policy changes.
   - Required result: add a development-guide provider example inventory and
     validator or smoke artifact that maps each documented command to a
     provider family, placeholder/model-availability evidence, expected run

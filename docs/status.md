@@ -1905,8 +1905,9 @@ Important limits:
   primary archive policy, durable metric storage, sampling/metric policy,
   descriptor authority and rebin semantics, duplicate-work memory semantics,
   metric drill-down/CLI policy, equal-budget benchmark evidence, and stale
-  readiness/owner signoff. This is not an implemented multi-objective search
-  gate or proof of full multi-objective readiness.
+  readiness/owner signoff, plus a per-surface multi-objective claim guard.
+  This is not an implemented multi-objective search gate or proof of full
+  multi-objective readiness.
 - ROADMAP operational-maturity evidence now records six section-level criteria
   with risk classes, current sidecar refs, active TODO refs, and
   acceptance-gate labels. This is not a global acceptance threshold, unified

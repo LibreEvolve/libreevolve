@@ -3621,8 +3621,9 @@ Implemented:
   policy, durable metric storage, sampling/metric policy, descriptor
   authority and rebin semantics, duplicate-work memory semantics, metric
   drill-down/CLI policy, equal-budget benchmark evidence, and stale
-  readiness/owner signoff. It is not evidence that those multi-objective
-  readiness mechanisms are implemented.
+  readiness/owner signoff, plus a per-surface multi-objective claim guard. It
+  is not evidence that those multi-objective readiness mechanisms are
+  implemented.
 - `papers/roadmap_candidate_workspace_fidelity_boundary.json`: ROADMAP
   candidate-workspace fidelity sidecar with ten criteria for language/build
   runner support, candidate abstraction API, marker/materialization policy,

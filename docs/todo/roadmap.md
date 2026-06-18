@@ -751,13 +751,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     bounded eight-criterion readiness matrix for primary archive policy,
     durable metric storage, sampling/metric policy, descriptor authority and
     rebin semantics, duplicate-work memory semantics, metric drill-down/CLI
-    policy, equal-budget benchmark evidence, and stale readiness/owner signoff.
-  - Current gap: there is no section-level multi-objective readiness rubric,
+    policy, equal-budget benchmark evidence, and stale readiness/owner
+    signoff, plus a per-surface multi-objective claim guard.
+  - Current gap: the per-surface multi-objective claim guard is a bounded
+    allowed-scope map, not a section-level multi-objective readiness rubric,
     archive-policy matrix, descriptor/memory capability checklist, or
-    stale-readiness detector tying those pieces together, so bounded overlays,
-    prompt-visible diversity reports, or run-local duplicate caches could be
-    mistaken for full multi-objective search parity. The sidecars are bounded
-    search/readiness maps, not a full multi-objective search gate.
+    stale-readiness detector tying those pieces together. The sidecars are
+    bounded search/readiness/claim-guard maps, not a full multi-objective
+    search gate, and not full multi-objective search parity.
   - Required result: implement the missing readiness fields recorded by the
     readiness sidecar: primary Pareto/frontier archive replacement, durable
     cross-run metric database, calibrated parent/inspiration balance, stable

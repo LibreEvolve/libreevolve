@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 16,
   "boundary_status": "bounded_multi_objective_readiness_matrix_without_primary_archive_gate",
-  "claim_boundary": "This boundary records multi-objective readiness criteria tied to the bounded multi-objective search matrix. It does not claim primary Pareto/frontier archive replacement, durable cross-run metric database, calibrated parent/inspiration balance, stable behavior descriptor contracts, learned or evaluator-provided descriptor models, tested archive rebin semantics, durable duplicate-work memory, semantic near-duplicate detection, metric-specific CLI drill-downs, equal-budget multi-objective benchmarks, stale-readiness detector, or owner review signoff.",
+  "claim_boundary": "This boundary records multi-objective readiness criteria tied to the bounded multi-objective search matrix, plus a claim guard for each search surface. It does not claim primary Pareto/frontier archive replacement, durable cross-run metric database, calibrated parent/inspiration balance, stable behavior descriptor contracts, learned or evaluator-provided descriptor models, tested archive rebin semantics, durable duplicate-work memory, semantic near-duplicate detection, metric-specific CLI drill-downs, equal-budget multi-objective benchmarks, stale-readiness detector, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "calibrated_parent_inspiration_balance": "not_recorded_locally",
@@ -17,6 +17,73 @@
     "stale_readiness_detector": "not_recorded_locally",
     "tested_archive_rebin_semantics": "not_recorded_locally"
   },
+  "multi_objective_claim_guard": [
+    {
+      "allowed_current_claim": "scalar-primary MAP-Elites grid with bounded Pareto/frontier and metric-cell overlays",
+      "criterion_id": "primary_archive_policy_matrix",
+      "missing_before_parity_claim": "archive-policy matrix proving primary Pareto/frontier archive replacement or an equivalent tested multi-objective policy",
+      "readiness_status": "diagnostic_overlays_without_primary_archive_gate",
+      "search_surface": "primary archive policy, Pareto/frontier replacement, and metric-cell retention",
+      "validation_gate": "primary archive policy matrix"
+    },
+    {
+      "allowed_current_claim": "cross-run paper metric reports and selected summary artifacts",
+      "criterion_id": "durable_metric_storage_policy",
+      "missing_before_parity_claim": "durable cross-run metric database and persisted metric-specific optimization records",
+      "readiness_status": "reports_without_durable_metric_database",
+      "search_surface": "cross-run metric database, metric bundles, and persisted benchmark artifacts",
+      "validation_gate": "durable cross-run metric storage policy"
+    },
+    {
+      "allowed_current_claim": "current-run strategy counts and prompt-visible metric-niche evidence",
+      "criterion_id": "sampling_balance_and_metric_policy",
+      "missing_before_parity_claim": "calibrated parent/inspiration balance and equal-budget prompt-policy evidence",
+      "readiness_status": "current_run_sampling_reports_without_calibration",
+      "search_surface": "metric-diverse inspiration, parent selection, and prompt-policy comparisons",
+      "validation_gate": "calibrated sampling balance and prompt-policy benchmark"
+    },
+    {
+      "allowed_current_claim": "insertion-time TF-IDF/default axes or configured numeric axes with false readiness flags",
+      "criterion_id": "descriptor_authority_and_rebin_semantics",
+      "missing_before_parity_claim": "stable behavior descriptor contracts, learned/evaluator descriptor models, and tested archive rebin semantics",
+      "readiness_status": "descriptor_snapshots_without_authority_gate",
+      "search_surface": "behavior descriptors, descriptor models, MAP-Elites axes, and archive rebinning",
+      "validation_gate": "stable descriptor authority and rebin semantics"
+    },
+    {
+      "allowed_current_claim": "run-local exact-workspace evaluator cache and no-op cache-hit events",
+      "criterion_id": "duplicate_work_memory_semantics",
+      "missing_before_parity_claim": "durable duplicate-work memory and semantic near-duplicate detection",
+      "readiness_status": "run_local_exact_cache_without_durable_memory",
+      "search_surface": "duplicate-work cache, resurfacing indexes, semantic near-duplicates, and resume replay",
+      "validation_gate": "durable duplicate-work memory with semantic near-duplicate policy"
+    },
+    {
+      "allowed_current_claim": "selected-row show summaries and manifest-level metric archive summaries",
+      "criterion_id": "metric_drilldown_and_cli_policy",
+      "missing_before_parity_claim": "metric-specific CLI drill-downs and durable query/report surfaces",
+      "readiness_status": "selected_row_summary_without_drilldowns",
+      "search_surface": "metric-specific CLI drill-downs, selected-row summaries, and durable query surfaces",
+      "validation_gate": "metric-specific CLI drill-down and report policy"
+    },
+    {
+      "allowed_current_claim": "boundary records without equal-budget multi-objective benchmark curves",
+      "criterion_id": "equal_budget_benchmark_evidence",
+      "missing_before_parity_claim": "equal-budget multi-objective benchmarks with scalar-only and single-metric baselines",
+      "readiness_status": "no_equal_budget_multi_objective_benchmarks",
+      "search_surface": "scalar baselines, single-metric baselines, and equal-budget multi-objective benchmarks",
+      "validation_gate": "equal-budget multi-objective benchmark comparison"
+    },
+    {
+      "allowed_current_claim": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "missing_before_parity_claim": "stale-readiness detector and owner signoff before multi-objective parity claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "search_surface": "README, ROADMAP, papers, archive reports, runtime metadata, and owner readiness claims",
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "multi_objective_claim_guard_count": 8,
   "readiness_criteria": [
     {
       "active_todo_refs": [

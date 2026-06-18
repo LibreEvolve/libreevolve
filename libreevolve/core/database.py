@@ -75,6 +75,7 @@ _MAX_CONTEXT_PROVENANCE_JSON_CHARS = 200_000
 _MAX_SEED_SOURCE_STRING_CHARS = 1024
 _MAX_ARCHIVE_EVENT_REASON_CHARS = 128
 _MAX_ARCHIVE_REPLAY_MISMATCHES = 25
+_MAX_ARCHIVE_DESCRIPTOR_DRIFT_MISMATCHES = 25
 _MAX_OBJECTIVE_FRONTIER_PROGRAMS = 50
 _MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS = 10
 _MAX_SCORE_INDEX_PROGRAMS = 50
@@ -1614,6 +1615,211 @@ def audit_archive_event_records(
     }
 
 
+def archive_descriptor_drift_audit(
+    path: str | Path,
+    archive_state_snapshot: Mapping[str, object],
+) -> dict:
+    """Compare retained archive descriptor snapshots against accepted history."""
+    history_path = Path(path)
+    if not history_path.exists():
+        return _archive_descriptor_history_absent_audit(archive_state_snapshot)
+    records = list(load_accepted_history_index(history_path).values())
+    return audit_archive_descriptor_records(records, archive_state_snapshot)
+
+
+def audit_archive_descriptor_records(
+    records: list[dict],
+    archive_state_snapshot: Mapping[str, object],
+) -> dict:
+    snapshot = validate_archive_state_snapshot(archive_state_snapshot)
+    snapshot_records = _archive_snapshot_descriptor_records(snapshot)
+    if snapshot_records is None:
+        return {
+            "schema": "libreevolve.archive_descriptor_drift_audit.v1",
+            "status": "archive_contents_missing",
+            "audit_only": True,
+            "stable_descriptor_model_supported": False,
+            "rebin_engine_supported": False,
+            "history_program_count": len(records),
+            "history_descriptor_program_count": len(
+                _history_record_descriptor_map(records)
+            ),
+            "snapshot_descriptor_record_count": 0,
+            "matched_descriptor_record_count": 0,
+            "drift_or_missing_count": 0,
+            "mismatches": [],
+            "mismatch_retention_limit": _MAX_ARCHIVE_DESCRIPTOR_DRIFT_MISMATCHES,
+            "limitations": _archive_descriptor_drift_audit_limitations(),
+        }
+    history_descriptors = _history_record_descriptor_map(records)
+    matched = 0
+    mismatches: list[dict] = []
+    for record in snapshot_records:
+        program_id = record["program_id"]
+        expected = history_descriptors.get(program_id)
+        actual = record["descriptors"]
+        if expected == actual:
+            matched += 1
+            continue
+        if len(mismatches) < _MAX_ARCHIVE_DESCRIPTOR_DRIFT_MISMATCHES:
+            mismatches.append(
+                {
+                    "island_id": record["island_id"],
+                    "surface": record["surface"],
+                    "cell": record["cell"],
+                    "program_id": program_id,
+                    "history_descriptors": expected,
+                    "snapshot_descriptors": actual,
+                    "reason": _archive_descriptor_drift_reason(expected, actual),
+                }
+            )
+    status = "no_snapshot_descriptors"
+    if snapshot_records and not history_descriptors:
+        status = "history_descriptors_missing"
+    elif snapshot_records and not mismatches:
+        status = "verified_against_history_descriptors"
+    elif snapshot_records:
+        status = "descriptor_drift_or_missing_history"
+    return {
+        "schema": "libreevolve.archive_descriptor_drift_audit.v1",
+        "status": status,
+        "audit_only": True,
+        "stable_descriptor_model_supported": False,
+        "rebin_engine_supported": False,
+        "history_program_count": len(records),
+        "history_descriptor_program_count": len(history_descriptors),
+        "snapshot_descriptor_record_count": len(snapshot_records),
+        "matched_descriptor_record_count": matched,
+        "drift_or_missing_count": len(snapshot_records) - matched,
+        "mismatches": mismatches,
+        "mismatch_retention_limit": _MAX_ARCHIVE_DESCRIPTOR_DRIFT_MISMATCHES,
+        "limitations": _archive_descriptor_drift_audit_limitations(),
+    }
+
+
+def validate_archive_descriptor_drift_audit(audit: object) -> dict:
+    """Validate descriptor drift audit summaries before manifest use."""
+    if not isinstance(audit, dict):
+        raise ArchiveEventRestoreError("archive descriptor drift audit must be an object")
+    required = {
+        "schema",
+        "status",
+        "audit_only",
+        "stable_descriptor_model_supported",
+        "rebin_engine_supported",
+        "history_program_count",
+        "history_descriptor_program_count",
+        "snapshot_descriptor_record_count",
+        "matched_descriptor_record_count",
+        "drift_or_missing_count",
+        "mismatches",
+        "mismatch_retention_limit",
+        "limitations",
+    }
+    missing = required - set(audit)
+    if missing:
+        raise ArchiveEventRestoreError(
+            f"archive descriptor drift audit missing fields: {sorted(missing)}"
+        )
+    unsupported = set(audit) - required
+    if unsupported:
+        raise ArchiveEventRestoreError(
+            f"archive descriptor drift audit has unsupported fields: {sorted(unsupported)}"
+        )
+    if audit["schema"] != "libreevolve.archive_descriptor_drift_audit.v1":
+        raise ArchiveEventRestoreError("archive descriptor drift audit schema is unsupported")
+    allowed_statuses = {
+        "history_absent",
+        "archive_contents_missing",
+        "no_snapshot_descriptors",
+        "history_descriptors_missing",
+        "verified_against_history_descriptors",
+        "descriptor_drift_or_missing_history",
+    }
+    status = audit["status"]
+    if status not in allowed_statuses:
+        raise ArchiveEventRestoreError("archive descriptor drift audit status is unsupported")
+    if audit["audit_only"] is not True:
+        raise ArchiveEventRestoreError("archive descriptor drift audit must be audit-only")
+    if audit["stable_descriptor_model_supported"] is not False:
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit must not claim stable descriptor-model support"
+        )
+    if audit["rebin_engine_supported"] is not False:
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit must not claim rebin-engine support"
+        )
+    counts = {
+        field: _validate_archive_audit_non_negative_int(audit[field], field)
+        for field in (
+            "history_program_count",
+            "history_descriptor_program_count",
+            "snapshot_descriptor_record_count",
+            "matched_descriptor_record_count",
+            "drift_or_missing_count",
+            "mismatch_retention_limit",
+        )
+    }
+    if counts["history_descriptor_program_count"] > counts["history_program_count"]:
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit history counts are inconsistent"
+        )
+    if counts["snapshot_descriptor_record_count"] != (
+        counts["matched_descriptor_record_count"] + counts["drift_or_missing_count"]
+    ):
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit snapshot counts are inconsistent"
+        )
+    mismatches = _validate_archive_descriptor_audit_mismatches(
+        audit["mismatches"],
+        counts["mismatch_retention_limit"],
+    )
+    if len(mismatches) > counts["drift_or_missing_count"]:
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit retained mismatches exceed drift count"
+        )
+    if status == "verified_against_history_descriptors" and (
+        counts["drift_or_missing_count"] != 0 or mismatches
+    ):
+        raise ArchiveEventRestoreError(
+            "verified archive descriptor drift audits must not retain mismatches"
+        )
+    if status == "history_absent" and any(
+        counts[field] != 0
+        for field in (
+            "history_program_count",
+            "history_descriptor_program_count",
+            "snapshot_descriptor_record_count",
+            "matched_descriptor_record_count",
+            "drift_or_missing_count",
+        )
+    ):
+        raise ArchiveEventRestoreError(
+            "absent archive descriptor drift audits must have zero counts"
+        )
+    limitations = audit["limitations"]
+    required_limitations = set(_archive_descriptor_drift_audit_limitations())
+    if not isinstance(limitations, list) or not required_limitations <= set(limitations):
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit limitations must state audit boundaries"
+        )
+    return {
+        "schema": audit["schema"],
+        "status": status,
+        "audit_only": True,
+        "stable_descriptor_model_supported": False,
+        "rebin_engine_supported": False,
+        "history_program_count": counts["history_program_count"],
+        "history_descriptor_program_count": counts["history_descriptor_program_count"],
+        "snapshot_descriptor_record_count": counts["snapshot_descriptor_record_count"],
+        "matched_descriptor_record_count": counts["matched_descriptor_record_count"],
+        "drift_or_missing_count": counts["drift_or_missing_count"],
+        "mismatches": mismatches,
+        "mismatch_retention_limit": counts["mismatch_retention_limit"],
+        "limitations": list(limitations),
+    }
+
+
 def validate_archive_event_replay_audit(audit: object) -> dict:
     """Validate archive-event replay audit summaries before manifest use."""
     if not isinstance(audit, dict):
@@ -1806,6 +2012,118 @@ def _validate_archive_event_audit_mismatches(
             }
         )
     return restored
+
+
+def _validate_archive_descriptor_audit_mismatches(
+    value: object,
+    retention_limit: int,
+) -> list[dict]:
+    if not isinstance(value, list):
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit mismatches must be a list"
+        )
+    if len(value) > retention_limit:
+        raise ArchiveEventRestoreError(
+            "archive descriptor drift audit mismatches exceed retention limit"
+        )
+    restored = []
+    allowed_reasons = {
+        "history_descriptors_missing_for_program",
+        "descriptor_key_set_mismatch",
+        "descriptor_value_mismatch",
+    }
+    for index, item in enumerate(value):
+        if not isinstance(item, dict):
+            raise ArchiveEventRestoreError(
+                "archive descriptor drift audit mismatches entries must be objects"
+            )
+        required = {
+            "island_id",
+            "surface",
+            "cell",
+            "program_id",
+            "history_descriptors",
+            "snapshot_descriptors",
+            "reason",
+        }
+        missing = required - set(item)
+        if missing:
+            raise ArchiveEventRestoreError(
+                "archive descriptor drift audit mismatches"
+                f"[{index}] missing fields: {sorted(missing)}"
+            )
+        unsupported = set(item) - required
+        if unsupported:
+            raise ArchiveEventRestoreError(
+                "archive descriptor drift audit mismatches"
+                f"[{index}] has unsupported fields: {sorted(unsupported)}"
+            )
+        island_id = _validate_archive_audit_non_negative_int(
+            item["island_id"], f"mismatches[{index}].island_id"
+        )
+        surface = item["surface"]
+        if not isinstance(surface, str) or not surface:
+            raise ArchiveEventRestoreError(
+                f"archive descriptor drift audit mismatches[{index}].surface must be a string"
+            )
+        cell = None
+        if item["cell"] is not None:
+            cell = _validate_archive_audit_mismatch_cell(item["cell"], index)
+        try:
+            validate_program_identity(item["program_id"])
+        except ValueError as exc:
+            raise ArchiveEventRestoreError(
+                f"archive descriptor drift audit mismatches[{index}] has invalid program id: {exc}"
+            ) from exc
+        history_descriptors = None
+        if item["history_descriptors"] is not None:
+            history_descriptors = _validate_archive_descriptor_audit_descriptor_map(
+                item["history_descriptors"],
+                f"mismatches[{index}].history_descriptors",
+            )
+        snapshot_descriptors = _validate_archive_descriptor_audit_descriptor_map(
+            item["snapshot_descriptors"],
+            f"mismatches[{index}].snapshot_descriptors",
+        )
+        reason = item["reason"]
+        if reason not in allowed_reasons:
+            raise ArchiveEventRestoreError(
+                "archive descriptor drift audit mismatch reason is unsupported"
+            )
+        restored.append(
+            {
+                "island_id": island_id,
+                "surface": surface,
+                "cell": cell,
+                "program_id": item["program_id"],
+                "history_descriptors": history_descriptors,
+                "snapshot_descriptors": snapshot_descriptors,
+                "reason": reason,
+            }
+        )
+    return restored
+
+
+def _validate_archive_descriptor_audit_descriptor_map(
+    value: object,
+    field: str,
+) -> dict[str, float]:
+    if not isinstance(value, Mapping) or not value:
+        raise ArchiveEventRestoreError(
+            f"archive descriptor drift audit {field} must be a non-empty object"
+        )
+    descriptors: dict[str, float] = {}
+    for name, raw_value in value.items():
+        if not isinstance(name, str) or not name:
+            raise ArchiveEventRestoreError(
+                f"archive descriptor drift audit {field} has invalid descriptor name"
+            )
+        if not _is_finite_real(raw_value):
+            raise ArchiveEventRestoreError(
+                f"archive descriptor drift audit {field}[{name!r}] must be finite"
+            )
+        descriptors[name] = float(raw_value)
+    return descriptors
 
 
 def _validate_archive_audit_mismatch_cell(value: object, index: int) -> list[int]:
@@ -2389,6 +2707,27 @@ def _archive_event_replay_absent_audit(
     }
 
 
+def _archive_descriptor_history_absent_audit(
+    archive_state_snapshot: Mapping[str, object],
+) -> dict:
+    validate_archive_state_snapshot(archive_state_snapshot)
+    return {
+        "schema": "libreevolve.archive_descriptor_drift_audit.v1",
+        "status": "history_absent",
+        "audit_only": True,
+        "stable_descriptor_model_supported": False,
+        "rebin_engine_supported": False,
+        "history_program_count": 0,
+        "history_descriptor_program_count": 0,
+        "snapshot_descriptor_record_count": 0,
+        "matched_descriptor_record_count": 0,
+        "drift_or_missing_count": 0,
+        "mismatches": [],
+        "mismatch_retention_limit": _MAX_ARCHIVE_DESCRIPTOR_DRIFT_MISMATCHES,
+        "limitations": _archive_descriptor_drift_audit_limitations(),
+    }
+
+
 def _archive_snapshot_cell_map(
     snapshot: dict,
 ) -> dict[tuple[int, tuple[int, ...]], str] | None:
@@ -2404,12 +2743,138 @@ def _archive_snapshot_cell_map(
     return cells
 
 
+def _archive_snapshot_descriptor_records(snapshot: dict) -> list[dict] | None:
+    contents = snapshot.get("archive_contents")
+    if not isinstance(contents, dict):
+        return None
+    records: list[dict] = []
+    for island in contents["islands"]:
+        island_id = island["island_id"]
+        archive = island["archive"]
+        for cell_record in archive.get("cells", []):
+            _append_archive_snapshot_descriptor_record(
+                records,
+                island_id=island_id,
+                surface="cell",
+                cell=cell_record.get("cell"),
+                record=cell_record,
+            )
+        for surface, field_name in (
+            ("elite", "elite_descriptor_records"),
+            ("pareto_frontier", "pareto_frontier_descriptor_records"),
+        ):
+            for descriptor_record in archive.get(field_name, []):
+                _append_archive_snapshot_descriptor_record(
+                    records,
+                    island_id=island_id,
+                    surface=surface,
+                    cell=None,
+                    record=descriptor_record,
+                )
+        for metric_archive in archive.get("metric_cell_archives", []):
+            metric_name = metric_archive.get("metric")
+            surface = f"metric_cell:{metric_name}" if isinstance(metric_name, str) else "metric_cell"
+            for cell_record in metric_archive.get("cells", []):
+                _append_archive_snapshot_descriptor_record(
+                    records,
+                    island_id=island_id,
+                    surface=surface,
+                    cell=cell_record.get("cell"),
+                    record=cell_record,
+                )
+    return records
+
+
+def _append_archive_snapshot_descriptor_record(
+    records: list[dict],
+    *,
+    island_id: int,
+    surface: str,
+    cell: object,
+    record: Mapping[str, object],
+) -> None:
+    descriptors = _archive_descriptor_audit_descriptor_map(record.get("descriptors"))
+    if not descriptors:
+        return
+    program_id = record.get("program_id")
+    if not isinstance(program_id, str):
+        return
+    validate_program_identity(program_id)
+    records.append(
+        {
+            "island_id": island_id,
+            "surface": surface,
+            "cell": list(cell) if isinstance(cell, list) else None,
+            "program_id": program_id,
+            "descriptors": descriptors,
+        }
+    )
+
+
+def _history_record_descriptor_map(records: list[dict]) -> dict[str, dict[str, float]]:
+    descriptors_by_program: dict[str, dict[str, float]] = {}
+    for record in records:
+        program_id = record.get("id")
+        if not isinstance(program_id, str):
+            program_id = record.get("program_id")
+        if not isinstance(program_id, str):
+            continue
+        validate_program_identity(program_id)
+        descriptors = _history_record_archive_descriptors(record)
+        if descriptors:
+            descriptors_by_program[program_id] = descriptors
+    return descriptors_by_program
+
+
+def _history_record_archive_descriptors(record: Mapping[str, object]) -> dict[str, float]:
+    metadata = record.get("metadata")
+    if isinstance(metadata, Mapping):
+        admission = metadata.get("archive_admission")
+        if isinstance(admission, Mapping):
+            descriptors = _archive_descriptor_audit_descriptor_map(
+                admission.get("descriptors")
+            )
+            if descriptors:
+                return descriptors
+    return _archive_descriptor_audit_descriptor_map(record.get("descriptors"))
+
+
+def _archive_descriptor_audit_descriptor_map(value: object) -> dict[str, float]:
+    if not isinstance(value, Mapping):
+        return {}
+    descriptors: dict[str, float] = {}
+    for name, raw_value in sorted(value.items()):
+        if isinstance(name, str) and name and _is_finite_real(raw_value):
+            descriptors[name] = float(raw_value)
+    return descriptors
+
+
+def _archive_descriptor_drift_reason(
+    history_descriptors: dict[str, float] | None,
+    snapshot_descriptors: dict[str, float],
+) -> str:
+    if history_descriptors is None:
+        return "history_descriptors_missing_for_program"
+    if set(history_descriptors) != set(snapshot_descriptors):
+        return "descriptor_key_set_mismatch"
+    return "descriptor_value_mismatch"
+
+
 def _archive_event_replay_audit_limitations() -> list[str]:
     return [
         "audit_replays_migration_rows_only_admission_rows_are_not_restore_engine",
         "audit_does_not_restore_controller_pending_work",
         "superseded_non_migration_cell_replacements_report_as_mismatches",
         "archive_contents_snapshot_remains_restore_source",
+    ]
+
+
+def _archive_descriptor_drift_audit_limitations() -> list[str]:
+    return [
+        "diagnostic_only_not_descriptor_restore_or_rebin_engine",
+        "compares_retained_snapshot_descriptor_values_to_history_admission_descriptors",
+        "legacy_snapshots_without_descriptor_values_report_no_snapshot_descriptors",
+        "does_not_prove_stable_learned_or_evaluator_provided_descriptor_model",
     ]
 
 

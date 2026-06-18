@@ -2073,9 +2073,10 @@ Important limits:
   boundary is tracked by `papers/jsonl_durability_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata
   with occupied-cell, elite, Pareto-frontier, and metric-cell descriptor
-  vectors, not stable learned/evaluator-provided behavior descriptors,
-  descriptor-history drift diagnostics, or archive rebin semantics; that
-  boundary is tracked by
+  vectors plus `runtime.history.archive_descriptor_drift_audit` comparison
+  against accepted-history admission descriptors. They are not stable
+  learned/evaluator-provided behavior descriptors or archive rebin semantics;
+  that boundary is tracked by
   `papers/map_elites_descriptor_boundary.json`.
 - The included examples are smoke fixtures and small demos unless a fixture
   explicitly documents stronger benchmark evidence.

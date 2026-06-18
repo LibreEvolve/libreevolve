@@ -26,7 +26,9 @@ from libreevolve.core.database import (
     ArchiveStateRestoreError,
     HistoryRestoreError,
     RUN_ARTIFACT_NAMES,
+    archive_descriptor_drift_audit,
     archive_event_replay_audit,
+    audit_archive_descriptor_records,
     audit_archive_event_records,
     load_archive_restore_bundle,
     ProgramDatabase as _ProgramDatabase,
@@ -35,6 +37,7 @@ from libreevolve.core.database import (
     load_failure_history_records,
     load_runtime_archive_state_snapshot,
     _program_from_history_record,
+    validate_archive_descriptor_drift_audit,
     validate_archive_event_replay_audit,
     validate_archive_state_snapshot,
     validate_candidate_language_policy,
@@ -6730,6 +6733,154 @@ def test_archive_event_replay_audit_reports_absent_stream(tmp_path):
         "archive_contents_snapshot_remains_restore_source",
     ]
     assert validate_archive_event_replay_audit(audit) == audit
+
+
+def test_archive_descriptor_drift_audit_verifies_snapshot_descriptors(tmp_path):
+    history = tmp_path / "history.jsonl"
+    descriptors = {"complexity": 0.1, "diversity": 0.2, "performance": 0.5}
+    _write_accepted_history(
+        history,
+        [
+            _accepted_history_row(
+                "p1",
+                metadata={"archive_admission": {"descriptors": descriptors}},
+            )
+        ],
+    )
+    snapshot = _archive_state_snapshot_with_contents(
+        island0_cells=[
+            {
+                "cell": [0, 1, 2],
+                "program_id": "p1",
+                "selection_score": 0.5,
+                "descriptors": descriptors,
+            },
+        ],
+    )
+
+    audit = archive_descriptor_drift_audit(history, snapshot)
+
+    assert audit["schema"] == "libreevolve.archive_descriptor_drift_audit.v1"
+    assert audit["status"] == "verified_against_history_descriptors"
+    assert audit["audit_only"] is True
+    assert audit["stable_descriptor_model_supported"] is False
+    assert audit["rebin_engine_supported"] is False
+    assert audit["history_program_count"] == 1
+    assert audit["history_descriptor_program_count"] == 1
+    assert audit["snapshot_descriptor_record_count"] == 1
+    assert audit["matched_descriptor_record_count"] == 1
+    assert audit["drift_or_missing_count"] == 0
+    assert audit["mismatches"] == []
+    assert validate_archive_descriptor_drift_audit(audit) == audit
+
+
+def test_archive_descriptor_drift_audit_reports_descriptor_mismatch():
+    snapshot = _archive_state_snapshot_with_contents(
+        island0_cells=[
+            {
+                "cell": [0, 1, 2],
+                "program_id": "p1",
+                "selection_score": 0.5,
+                "descriptors": {
+                    "complexity": 0.1,
+                    "diversity": 0.2,
+                    "performance": 0.6,
+                },
+            },
+        ],
+    )
+    records = [
+        _accepted_history_row(
+            "p1",
+            metadata={
+                "archive_admission": {
+                    "descriptors": {
+                        "complexity": 0.1,
+                        "diversity": 0.2,
+                        "performance": 0.5,
+                    }
+                }
+            },
+        )
+    ]
+
+    audit = audit_archive_descriptor_records(records, snapshot)
+
+    assert audit["status"] == "descriptor_drift_or_missing_history"
+    assert audit["matched_descriptor_record_count"] == 0
+    assert audit["drift_or_missing_count"] == 1
+    assert audit["mismatches"] == [
+        {
+            "island_id": 0,
+            "surface": "cell",
+            "cell": [0, 1, 2],
+            "program_id": "p1",
+            "history_descriptors": {
+                "complexity": 0.1,
+                "diversity": 0.2,
+                "performance": 0.5,
+            },
+            "snapshot_descriptors": {
+                "complexity": 0.1,
+                "diversity": 0.2,
+                "performance": 0.6,
+            },
+            "reason": "descriptor_value_mismatch",
+        }
+    ]
+    assert validate_archive_descriptor_drift_audit(audit) == audit
+
+
+def test_archive_descriptor_drift_audit_reports_absent_history(tmp_path):
+    audit = archive_descriptor_drift_audit(
+        tmp_path / "history.jsonl",
+        _archive_state_snapshot_with_contents(),
+    )
+
+    assert audit["status"] == "history_absent"
+    assert audit["history_program_count"] == 0
+    assert audit["snapshot_descriptor_record_count"] == 0
+    assert audit["limitations"] == [
+        "diagnostic_only_not_descriptor_restore_or_rebin_engine",
+        "compares_retained_snapshot_descriptor_values_to_history_admission_descriptors",
+        "legacy_snapshots_without_descriptor_values_report_no_snapshot_descriptors",
+        "does_not_prove_stable_learned_or_evaluator_provided_descriptor_model",
+    ]
+    assert validate_archive_descriptor_drift_audit(audit) == audit
+
+
+def test_validate_archive_descriptor_drift_audit_rejects_descriptor_overclaim():
+    audit = audit_archive_descriptor_records(
+        [
+            _accepted_history_row(
+                "p1",
+                metadata={
+                    "archive_admission": {
+                        "descriptors": {"performance": 0.5},
+                    }
+                },
+            )
+        ],
+        _archive_state_snapshot_with_contents(
+            island0_cells=[
+                {
+                    "cell": [0, 1, 2],
+                    "program_id": "p1",
+                    "selection_score": 0.5,
+                    "descriptors": {"performance": 0.5},
+                },
+            ],
+        ),
+    )
+    audit["stable_descriptor_model_supported"] = True
+
+    with pytest.raises(ArchiveEventRestoreError, match="stable descriptor-model"):
+        validate_archive_descriptor_drift_audit(audit)
+
+    audit["stable_descriptor_model_supported"] = False
+    audit["rebin_engine_supported"] = True
+    with pytest.raises(ArchiveEventRestoreError, match="rebin-engine"):
+        validate_archive_descriptor_drift_audit(audit)
 
 
 def test_validate_archive_event_replay_audit_rejects_restore_overclaim():

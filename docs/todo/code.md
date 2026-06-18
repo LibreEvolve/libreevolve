@@ -2442,39 +2442,6 @@ sidecars, tests, and active TODOs.
     checks across restore, and reports that distinguish task behavior
     descriptors from local TF-IDF novelty heuristics.
 
-- [ ] Add MAP-Elites descriptor-history drift diagnostics.
-  - Spec evidence: AlphaEvolve/MAP-Elites-style archive inspection needs a
-    replayable link between each retained candidate, its behavior descriptor
-    values, and the cell coordinates used for archive placement. Without the
-    descriptor values, a later audit can see where a program was placed but
-    cannot verify the numeric behavior coordinates that justified that
-    placement under the recorded descriptor model.
-  - Current evidence: `MAPElites.add()` computes `cell, descriptors`, stores
-    insertion-time descriptor maps by occupied primary cell and retained
-    program id, emits the same values in per-candidate
-    `metadata.archive_admission`, and `MAPElites.state_snapshot()` now
-    persists descriptor maps for occupied cells, elite records,
-    Pareto-frontier records, and metric-cell overlay records. Restore
-    validation accepts legacy snapshots without descriptor records, rejects
-    non-finite or out-of-range values, rejects descriptor maps whose keys do
-    not match the configured descriptor axes, rejects elite/Pareto descriptor
-    record order drift, and re-emits restored descriptor maps in later
-    snapshots. `papers/map_elites_descriptor_boundary.json` now records both
-    `per_cell_descriptor_value_snapshots` and
-    `retained_overlay_descriptor_value_snapshots` as current evidence.
-  - Current gap: final run manifests can independently audit retained
-    descriptor vectors, but they still do not compute drift diagnostics when
-    accepted history admission descriptors disagree with snapshot descriptors,
-    and they do not prove descriptor-cell fidelity if history rows are pruned,
-    summarized, quarantined, or compared against snapshot state. This is also
-    still insertion-time local descriptor evidence, not stable descriptor
-    modeling or archive rebin semantics.
-  - Required result: add drift diagnostics when history admission descriptors
-    disagree with snapshot descriptors; include those diagnostics in manifest
-    or `show` inspection; and keep tests/docs clear that descriptor snapshots
-    are not stable learned/evaluator-provided descriptor models or rebin
-    engines.
-
 - [ ] Promote multi-objective overlays to primary archive optimization.
   - Spec evidence: AlphaEvolve can optimize multiple user-provided scores and
     use diverse high-performing programs under different definitions of "good"

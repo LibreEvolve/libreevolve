@@ -5,7 +5,7 @@
   "boundary_status": "insertion_time_local_descriptor_snapshots_only",
   "runtime_descriptor_model_schema": "libreevolve.map_elites_descriptor_model.v1",
   "runtime_readiness_schema": "libreevolve.map_elites_descriptor_readiness.v1",
-  "runtime_report_status": "map_elites_descriptor_model_available_in_archive_snapshots",
+  "runtime_report_status": "map_elites_descriptor_model_available_in_archive_snapshots_with_history_drift_audit",
   "claim_ready": false,
   "required_evidence_fields": [
     "descriptor_policy_axes",
@@ -14,6 +14,7 @@
     "no_rebin_insertion_time_coordinate_policy",
     "per_cell_descriptor_value_snapshots",
     "retained_overlay_descriptor_value_snapshots",
+    "descriptor_history_drift_audit",
     "restore_time_axes_and_model_validation",
     "readiness_overclaim_rejection",
     "metric_metadata_candidate_metadata_axis_options",
@@ -34,5 +35,5 @@
     "full_archive_rebin_engine": "not_recorded_locally",
     "partial_archive_rebin_engine": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve MAP-Elites snapshots include descriptor policy axes, descriptor-model revision metadata, dynamic diversity reference ids, an explicit no-rebin insertion-time coordinate policy, per-cell finite descriptor-value snapshots, retained elite/Pareto/metric-cell descriptor-value snapshots, restore-time axes/model validation, readiness overclaim rejection, and metric/evaluation-metadata/candidate-metadata axis options. It does not claim stable task behavior descriptor contracts, learned descriptor models, evaluator-provided descriptor models, descriptor training inputs, restore-compatible descriptor revisioning, full archive rebin engines, or partial archive rebin engines."
+  "claim_boundary": "This boundary records that LibreEvolve MAP-Elites snapshots include descriptor policy axes, descriptor-model revision metadata, dynamic diversity reference ids, an explicit no-rebin insertion-time coordinate policy, per-cell finite descriptor-value snapshots, retained elite/Pareto/metric-cell descriptor-value snapshots, diagnostic comparison of retained snapshot descriptor values against history admission descriptors, restore-time axes/model validation, readiness overclaim rejection, and metric/evaluation-metadata/candidate-metadata axis options. It does not claim stable task behavior descriptor contracts, learned descriptor models, evaluator-provided descriptor models, descriptor training inputs, restore-compatible descriptor revisioning, full archive rebin engines, or partial archive rebin engines."
 }

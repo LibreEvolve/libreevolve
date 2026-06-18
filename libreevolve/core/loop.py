@@ -57,8 +57,10 @@ from libreevolve.core.candidate import (
 )
 from libreevolve.core.database import (
     ProgramDatabase,
+    archive_descriptor_drift_audit,
     archive_event_replay_audit,
     load_archive_restore_bundle,
+    validate_archive_descriptor_drift_audit,
     validate_archive_event_replay_audit,
     validate_candidate_language_policy,
     validate_seed_source_record,
@@ -6229,6 +6231,12 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "archive_event_replay_audit": validate_archive_event_replay_audit(
             archive_event_replay_audit(
                 run_dir / "archive_events.jsonl",
+                archive_state,
+            )
+        ),
+        "archive_descriptor_drift_audit": validate_archive_descriptor_drift_audit(
+            archive_descriptor_drift_audit(
+                run_dir / "history.jsonl",
                 archive_state,
             )
         ),

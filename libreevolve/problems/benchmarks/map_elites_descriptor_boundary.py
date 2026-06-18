@@ -18,6 +18,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "no_rebin_insertion_time_coordinate_policy",
     "per_cell_descriptor_value_snapshots",
     "retained_overlay_descriptor_value_snapshots",
+    "descriptor_history_drift_audit",
     "restore_time_axes_and_model_validation",
     "readiness_overclaim_rejection",
     "metric_metadata_candidate_metadata_axis_options",
@@ -69,7 +70,10 @@ def map_elites_descriptor_boundary_record() -> dict[str, Any]:
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_descriptor_model_schema": EXPECTED_RUNTIME_DESCRIPTOR_MODEL_SCHEMA,
         "runtime_readiness_schema": EXPECTED_RUNTIME_READINESS_SCHEMA,
-        "runtime_report_status": "map_elites_descriptor_model_available_in_archive_snapshots",
+        "runtime_report_status": (
+            "map_elites_descriptor_model_available_in_archive_snapshots_with_"
+            "history_drift_audit"
+        ),
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -79,6 +83,8 @@ def map_elites_descriptor_boundary_record() -> dict[str, Any]:
             "diversity reference ids, an explicit no-rebin insertion-time "
             "coordinate policy, per-cell finite descriptor-value snapshots, "
             "retained elite/Pareto/metric-cell descriptor-value snapshots, "
+            "diagnostic comparison of retained snapshot descriptor values "
+            "against history admission descriptors, "
             "restore-time axes/model validation, readiness overclaim rejection, "
             "and metric/evaluation-metadata/candidate-metadata axis options. "
             "It does not claim stable task behavior "
@@ -118,8 +124,15 @@ def validate_map_elites_descriptor_boundary(
         issues.append(_issue("invalid_runtime_descriptor_model_schema", f"runtime_descriptor_model_schema must be {EXPECTED_RUNTIME_DESCRIPTOR_MODEL_SCHEMA}"))
     if data.get("runtime_readiness_schema") != EXPECTED_RUNTIME_READINESS_SCHEMA:
         issues.append(_issue("invalid_runtime_readiness_schema", f"runtime_readiness_schema must be {EXPECTED_RUNTIME_READINESS_SCHEMA}"))
-    if data.get("runtime_report_status") != "map_elites_descriptor_model_available_in_archive_snapshots":
-        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to archive snapshot descriptor models"))
+    expected_runtime_statuses = {
+        "map_elites_descriptor_model_available_in_archive_snapshots",
+        (
+            "map_elites_descriptor_model_available_in_archive_snapshots_with_"
+            "history_drift_audit"
+        ),
+    }
+    if data.get("runtime_report_status") not in expected_runtime_statuses:
+        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to archive snapshot descriptor models and diagnostic drift audits"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "MAP-Elites descriptor boundary must not claim stable descriptor/rebin readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)

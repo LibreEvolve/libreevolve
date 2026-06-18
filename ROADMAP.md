@@ -609,7 +609,10 @@ is not yet an AlphaEvolve reproduction.
   `libreevolve.map_elites_descriptor_readiness.v1` with those readiness
   surfaces false and overclaim validation; occupied-cell, elite,
   Pareto-frontier, and metric-cell snapshot records now persist finite
-  insertion-time descriptor values keyed by descriptor axis. The
+  insertion-time descriptor values keyed by descriptor axis, and
+  `runtime.history.archive_descriptor_drift_audit` compares retained snapshot
+  descriptor values against accepted-history admission descriptors as an
+  audit-only check. The
   committed
   `papers/map_elites_descriptor_boundary.json` sidecar keeps this
   insertion-time descriptor snapshot scope machine-validated, while

@@ -19133,3 +19133,27 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Remaining code gap: per-backend seed-determinism classification, repeated-
     call fixtures, provider/model revision requirements, and replay-readiness
     validation remain active TODOs.
+- [x] Add MAP-Elites descriptor-history drift diagnostics.
+  - Spec evidence: AlphaEvolve/MAP-Elites-style archive inspection needs a
+    replayable link between each retained candidate, its behavior descriptor
+    values, and the cell coordinates used for archive placement. Without the
+    descriptor values, a later audit can see where a program was placed but
+    cannot verify the numeric behavior coordinates that justified that
+    placement under the recorded descriptor model.
+  - Status: `archive_descriptor_drift_audit()` now compares retained archive
+    snapshot descriptor maps against accepted `history.jsonl`
+    `metadata.archive_admission.descriptors` for the same program ids.
+    `audit_archive_descriptor_records()` reports matched descriptor records,
+    missing history descriptors, value/key drift, and capped retained
+    mismatches. Completed runs now include
+    `runtime.history.archive_descriptor_drift_audit`, validated by
+    `validate_archive_descriptor_drift_audit()`. The report is explicitly
+    audit-only and rejects stable descriptor-model or rebin-engine overclaims.
+  - Remaining code gap: stable task behavior descriptors, learned or
+    evaluator-provided descriptor models, descriptor training inputs,
+    restore-compatible descriptor revisioning, and tested archive rebin
+    semantics remain active TODOs.
+  - Verification: focused database tests cover matching descriptor audits,
+    descriptor drift, absent history, and overclaim rejection; the MAP-Elites
+    descriptor boundary test now requires the descriptor-history drift audit
+    evidence field.

@@ -1791,18 +1791,21 @@ Important limits:
   pools, with selection-policy, reward-assumption, budget/quota,
   pricing/default-rate, diagnostics/replay, cancellation, resume,
   equal-budget, reviewer-isolation, Gemini-substitution, sidecar-ref,
-  active-TODO, validation-gate, and readiness labels. This is not a
-  backend-role capability matrix, critique-control checklist, calibrated
-  reward policy, role quota ownership, live provider pricing/default evidence,
-  raw provider replay, live hard cancellation, equal-budget scheduler
-  comparator, first-class Gemini lane evidence, async reviewer isolation,
-  stale-readiness detector, or owner review signoff.
+  active-TODO, validation-gate, readiness labels, and an explicit
+  backend-role capability inventory derived from those track records. This is
+  not a critique-control checklist, calibrated reward policy, role quota
+  ownership, live provider pricing/default evidence, raw provider replay, live
+  hard cancellation, equal-budget scheduler comparator, first-class Gemini lane
+  evidence, async reviewer isolation, stale-readiness detector, owner review
+  signoff, or full backend scheduler parity.
 - ROADMAP backend control-plane readiness evidence now records eight criteria
   for backend-role capability, calibrated reward/quota policy, live
   pricing/default and raw replay, hard cancellation/resume, equal-budget
   scheduler comparison, Gemini lane/substitution, critique reviewer isolation,
-  and stale readiness/owner signoff. This is not an implemented backend
-  control-plane gate or proof of scheduler/provider/Gemini/critique parity.
+  and stale readiness/owner signoff. It records the backend-role capability
+  matrix as resolved structural evidence from the scheduling sidecar, but this
+  is not an implemented backend control-plane gate or proof of
+  scheduler/provider/Gemini/critique parity.
 - ROADMAP async/resumable-runtime evidence now records nine criteria for
   topology, parallel evaluation, controller pending work, archive-event replay,
   RNG/lineage replay, provider/plugin nondeterminism, budget resume,

@@ -14,7 +14,7 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_backend_scheduling_critique_matrix_without_control_plane_readiness"
+        == "bounded_backend_scheduling_critique_matrix_with_role_capability_inventory"
     )
     assert boundary["schema"] == ROADMAP_BACKEND_SCHEDULING_CRITIQUE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -23,6 +23,20 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
     assert boundary["active_todo_ref_count"] == 18
     assert boundary["sidecar_ref_count"] == 13
     assert [record["track_id"] for record in boundary["track_records"]] == [
+        "heuristic_ucb_rewards",
+        "role_scoped_routing",
+        "provider_diagnostics_pricing",
+        "provider_cancellation_quarantine",
+        "fast_strong_model_mix",
+        "sample_efficiency",
+        "repeated_sampling_baseline",
+        "gemini_provider_parity",
+        "critique_reviewer_pool",
+    ]
+    assert boundary["backend_role_capability_matrix_count"] == 9
+    assert [
+        record["track_id"] for record in boundary["backend_role_capability_matrix"]
+    ] == [
         "heuristic_ucb_rewards",
         "role_scoped_routing",
         "provider_diagnostics_pricing",
@@ -45,7 +59,6 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "backend_role_capability_matrix": "not_recorded_locally",
         "critique_control_checklist": "not_recorded_locally",
         "calibrated_reward_policy": "not_recorded_locally",
         "role_quota_ownership": "not_recorded_locally",
@@ -57,7 +70,12 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "async_reviewer_isolation": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "does not claim a backend-role capability matrix" in boundary["claim_boundary"]
+    assert boundary["resolved_evidence"] == {
+        "backend_role_capability_matrix": (
+            "recorded_from_roadmap_backend_scheduling_track_records"
+        )
+    }
+    assert "backend-role capability inventory" in boundary["claim_boundary"]
 
 
 def test_roadmap_backend_scheduling_critique_rejects_overclaim_and_drift():
@@ -66,7 +84,7 @@ def test_roadmap_backend_scheduling_critique_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "backend_control_plane_ready"
     boundary["track_count"] = 8
     boundary["track_records"][0]["roadmap_phrase_present"] = False
-    boundary["missing_evidence"]["backend_role_capability_matrix"] = "recorded"
+    boundary["resolved_evidence"]["backend_role_capability_matrix"] = "missing"
     boundary["required_evidence_fields"] = ["track_records"]
 
     validation = validate_roadmap_backend_scheduling_critique_boundary(boundary)
@@ -77,7 +95,7 @@ def test_roadmap_backend_scheduling_critique_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_track_count" in codes
     assert "invalid_track_records" in codes
-    assert "invalid_missing_evidence_backend_role_capability_matrix" in codes
+    assert "invalid_resolved_evidence_backend_role_capability_matrix" in codes
     assert "missing_required_evidence_field" in codes
 
 
@@ -89,9 +107,9 @@ def test_render_roadmap_backend_scheduling_critique_summary_reports_shape():
     assert "ROADMAP backend scheduling and critique boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_backend_scheduling_critique_matrix_without_control_plane_readiness |"
+        "| boundary_status | bounded_backend_scheduling_critique_matrix_with_role_capability_inventory |"
         in summary
     )
     assert "| track_count | 9 |" in summary
     assert "| active_todo_ref_count | 18 |" in summary
-    assert "| missing_evidence_count | 11 |" in summary
+    assert "| missing_evidence_count | 10 |" in summary

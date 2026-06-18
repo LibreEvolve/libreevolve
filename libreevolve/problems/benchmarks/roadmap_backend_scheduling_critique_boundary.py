@@ -10,7 +10,7 @@ ROADMAP_BACKEND_SCHEDULING_CRITIQUE_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_backend_scheduling_critique_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_backend_scheduling_critique_matrix_without_control_plane_readiness"
+    "bounded_backend_scheduling_critique_matrix_with_role_capability_inventory"
 )
 EXPECTED_ROADMAP_HEADING = "### 7. Backend scheduling and critique"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -28,7 +28,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_readiness_detector",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "backend_role_capability_matrix": "not_recorded_locally",
     "critique_control_checklist": "not_recorded_locally",
     "calibrated_reward_policy": "not_recorded_locally",
     "role_quota_ownership": "not_recorded_locally",
@@ -39,6 +38,11 @@ EXPECTED_MISSING_EVIDENCE = {
     "first_class_gemini_lanes": "not_recorded_locally",
     "async_reviewer_isolation": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
+}
+EXPECTED_RESOLVED_EVIDENCE = {
+    "backend_role_capability_matrix": (
+        "recorded_from_roadmap_backend_scheduling_track_records"
+    ),
 }
 
 
@@ -330,6 +334,9 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
     root_path = Path(root)
     roadmap_text = _read_text(root_path / "ROADMAP.md")
     records = [_track_record(root_path, roadmap_text, spec) for spec in TRACK_SPECS]
+    backend_role_capability_matrix = [
+        _backend_role_capability_record(record) for record in records
+    ]
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     sidecar_ref_count = sum(len(record["current_sidecar_refs"]) for record in records)
     return {
@@ -342,19 +349,23 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
         "active_todo_ref_count": active_todo_ref_count,
         "sidecar_ref_count": sidecar_ref_count,
         "track_records": records,
+        "backend_role_capability_matrix": backend_role_capability_matrix,
+        "backend_role_capability_matrix_count": len(backend_role_capability_matrix),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
+        "resolved_evidence": dict(EXPECTED_RESOLVED_EVIDENCE),
         "claim_boundary": (
             "This boundary records a ROADMAP-level backend-scheduling and "
             "critique matrix across heuristic UCB rewards, role-scoped routing, "
             "provider diagnostics/pricing, cancellation/quarantine, fast/strong "
             "model mix, sample efficiency, repeated sampling, Gemini parity, "
-            "and critique reviewer pools. It does not claim a backend-role "
-            "capability matrix, critique-control checklist, calibrated reward "
-            "policy, role quota ownership, live provider pricing/defaults, raw "
-            "provider replay, live hard cancellation, equal-budget scheduler "
-            "comparators, first-class Gemini lanes, async reviewer isolation, "
-            "or owner review signoff."
+            "and critique reviewer pools, with an explicit backend-role "
+            "capability inventory derived from those tracks. It does not claim "
+            "a critique-control checklist, calibrated reward policy, role quota "
+            "ownership, live provider pricing/defaults, raw provider replay, "
+            "live hard cancellation, equal-budget scheduler comparators, "
+            "first-class Gemini lanes, async reviewer isolation, stale-readiness "
+            "detector, or owner review signoff."
         ),
     }
 
@@ -387,6 +398,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         "active_todo_ref_count",
         "sidecar_ref_count",
         "track_records",
+        "backend_role_capability_matrix",
+        "backend_role_capability_matrix_count",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP/TODO inputs"))
@@ -396,10 +409,13 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         issues.append(_issue("invalid_track_count", "backend scheduling/critique track count changed"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
+    _validate_resolved_evidence(data.get("resolved_evidence"), issues)
+    if data.get("backend_role_capability_matrix_count") != len(TRACK_SPECS):
+        issues.append(_issue("invalid_backend_role_capability_matrix_count", "backend role capability matrix count changed"))
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim a backend-role capability matrix" not in boundary_text
+        or "backend-role capability inventory" not in boundary_text
         or "critique-control checklist" not in boundary_text
         or "first-class Gemini lanes" not in boundary_text
     ):
@@ -461,6 +477,25 @@ def _track_record(root: Path, roadmap_text: str, spec: dict[str, Any]) -> dict[s
         "active_todo_ref_count": len(todo_refs),
         "validation_gate": spec["validation_gate"],
         "readiness_status": spec["readiness_status"],
+    }
+
+
+def _backend_role_capability_record(record: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "track_id": record["track_id"],
+        "role_or_lane": record["role_or_lane"],
+        "selection_policy": record["selection_policy"],
+        "reward_assumptions": record["reward_assumptions"],
+        "budget_quota_ownership": record["budget_quota_ownership"],
+        "pricing_default_rate_evidence": record["pricing_default_rate_evidence"],
+        "diagnostics_replay_support": record["diagnostics_replay_support"],
+        "cancellation_behavior": record["cancellation_behavior"],
+        "resume_semantics": record["resume_semantics"],
+        "equal_budget_evidence": record["equal_budget_evidence"],
+        "critique_reviewer_isolation": record["critique_reviewer_isolation"],
+        "gemini_substitution_status": record["gemini_substitution_status"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
     }
 
 
@@ -546,6 +581,27 @@ def _validate_missing_evidence(
     for key, expected_value in EXPECTED_MISSING_EVIDENCE.items():
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
+    return len(actual_keys)
+
+
+def _validate_resolved_evidence(
+    value: object,
+    issues: list[RoadmapBackendSchedulingCritiqueBoundaryIssue],
+) -> int:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_resolved_evidence", "resolved_evidence must be an object"))
+        return 0
+    expected_keys = set(EXPECTED_RESOLVED_EVIDENCE)
+    actual_keys = set(value)
+    missing = sorted(expected_keys - actual_keys)
+    extra = sorted(actual_keys - expected_keys)
+    if missing:
+        issues.append(_issue("missing_resolved_evidence_key", f"resolved_evidence lacks keys: {', '.join(missing)}"))
+    if extra:
+        issues.append(_issue("extra_resolved_evidence_key", f"resolved_evidence has unknown keys: {', '.join(extra)}"))
+    for key, expected_value in EXPECTED_RESOLVED_EVIDENCE.items():
+        if value.get(key) != expected_value:
+            issues.append(_issue(f"invalid_resolved_evidence_{key}", f"resolved_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
 
 

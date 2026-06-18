@@ -1,11 +1,10 @@
 {
   "active_todo_ref_count": 16,
   "boundary_status": "bounded_backend_control_plane_readiness_matrix_without_scheduler_parity_gate",
-  "claim_boundary": "This boundary records backend control-plane readiness criteria tied to the bounded backend scheduling and critique matrix. It does not claim a backend-role capability matrix, critique-control checklist, calibrated reward policy, role quota ownership, live provider pricing/default evidence, raw provider replay, live hard cancellation, equal-budget scheduler comparator, first-class Gemini lane evidence, async reviewer isolation, stale-readiness detector, or owner review signoff.",
+  "claim_boundary": "This boundary records backend control-plane readiness criteria tied to the bounded backend scheduling and critique matrix, including the recorded backend-role capability matrix from that source boundary. It does not claim a critique-control checklist, calibrated reward policy, role quota ownership, live provider pricing/default evidence, raw provider replay, live hard cancellation, equal-budget scheduler comparator, first-class Gemini lane evidence, async reviewer isolation, stale-readiness detector, owner review signoff, or full backend scheduler parity.",
   "claim_ready": false,
   "missing_evidence": {
     "async_reviewer_isolation": "not_recorded_locally",
-    "backend_role_capability_matrix": "not_recorded_locally",
     "calibrated_reward_policy": "not_recorded_locally",
     "critique_control_checklist": "not_recorded_locally",
     "equal_budget_scheduler_comparator": "not_recorded_locally",
@@ -35,8 +34,8 @@
       ],
       "control_plane_surface": "backend roles, provider lanes, and scheduler eligibility",
       "criterion_id": "backend_role_capability_matrix",
-      "current_scope": "nine ROADMAP backend/critique tracks with local sidecar and TODO links",
-      "missing_readiness": "backend-role capability matrix separating selection policy, provider support, quota ownership, replay, cancellation, and reviewer semantics",
+      "current_scope": "explicit backend-role capability matrix derived from nine ROADMAP backend/critique tracks with local sidecar and TODO links",
+      "missing_readiness": "control-plane capability gate proving those role/lane capabilities are scheduler-ready, owner-reviewed, and parity-safe",
       "readiness_status": "track_matrix_without_control_plane_capability_gate",
       "sidecar_refs": [
         {
@@ -48,7 +47,7 @@
           "path": "papers/provider_diagnostics_replay_boundary.json"
         }
       ],
-      "validation_gate": "backend-role capability matrix"
+      "validation_gate": "backend-role capability matrix to scheduler-readiness gate"
     },
     {
       "active_todo_refs": [
@@ -286,6 +285,9 @@
     "critique_reviewer_isolation",
     "stale_readiness_and_owner_signoff"
   ],
+  "resolved_evidence": {
+    "backend_role_capability_matrix": "recorded_in_source_backend_scheduling_critique_boundary"
+  },
   "schema": "libreevolve.roadmap_backend_control_plane_readiness_boundary.v1",
   "sidecar_ref_count": 16,
   "source_active_todo_ref_count": 18,

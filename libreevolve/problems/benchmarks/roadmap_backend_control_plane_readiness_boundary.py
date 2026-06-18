@@ -28,7 +28,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_readiness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "backend_role_capability_matrix": "not_recorded_locally",
     "critique_control_checklist": "not_recorded_locally",
     "calibrated_reward_policy": "not_recorded_locally",
     "role_quota_ownership": "not_recorded_locally",
@@ -41,14 +40,19 @@ EXPECTED_MISSING_EVIDENCE = {
     "stale_readiness_detector": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
+EXPECTED_RESOLVED_EVIDENCE = {
+    "backend_role_capability_matrix": (
+        "recorded_in_source_backend_scheduling_critique_boundary"
+    ),
+}
 
 
 CRITERION_SPECS = (
     {
         "criterion_id": "backend_role_capability_matrix",
         "control_plane_surface": "backend roles, provider lanes, and scheduler eligibility",
-        "current_scope": "nine ROADMAP backend/critique tracks with local sidecar and TODO links",
-        "missing_readiness": "backend-role capability matrix separating selection policy, provider support, quota ownership, replay, cancellation, and reviewer semantics",
+        "current_scope": "explicit backend-role capability matrix derived from nine ROADMAP backend/critique tracks with local sidecar and TODO links",
+        "missing_readiness": "control-plane capability gate proving those role/lane capabilities are scheduler-ready, owner-reviewed, and parity-safe",
         "sidecars": (
             "papers/roadmap_backend_scheduling_critique_boundary.json",
             "papers/provider_diagnostics_replay_boundary.json",
@@ -63,7 +67,7 @@ CRITERION_SPECS = (
                 "required_phrase": "role and provider lane",
             },
         ),
-        "validation_gate": "backend-role capability matrix",
+        "validation_gate": "backend-role capability matrix to scheduler-readiness gate",
         "readiness_status": "track_matrix_without_control_plane_capability_gate",
     },
     {
@@ -264,15 +268,17 @@ def roadmap_backend_control_plane_readiness_boundary_record(
         "readiness_criteria": records,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
+        "resolved_evidence": dict(EXPECTED_RESOLVED_EVIDENCE),
         "claim_boundary": (
             "This boundary records backend control-plane readiness criteria tied "
-            "to the bounded backend scheduling and critique matrix. It does not "
-            "claim a backend-role capability matrix, critique-control checklist, "
+            "to the bounded backend scheduling and critique matrix, including "
+            "the recorded backend-role capability matrix from that source "
+            "boundary. It does not claim a critique-control checklist, "
             "calibrated reward policy, role quota ownership, live provider "
             "pricing/default evidence, raw provider replay, live hard "
             "cancellation, equal-budget scheduler comparator, first-class Gemini "
             "lane evidence, async reviewer isolation, stale-readiness detector, "
-            "or owner review signoff."
+            "owner review signoff, or full backend scheduler parity."
         ),
     }
 
@@ -315,12 +321,14 @@ def validate_roadmap_backend_control_plane_readiness_boundary(
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP backend control-plane inputs"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
+    _validate_resolved_evidence(data.get("resolved_evidence"), issues)
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim a backend-role capability matrix" not in boundary_text
+        or "recorded backend-role capability matrix" not in boundary_text
         or "critique-control checklist" not in boundary_text
+        or "full backend scheduler parity" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from backend scheduler parity"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
@@ -461,6 +469,27 @@ def _validate_missing_evidence(
     for key, expected_value in EXPECTED_MISSING_EVIDENCE.items():
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
+    return len(actual_keys)
+
+
+def _validate_resolved_evidence(
+    value: object,
+    issues: list[RoadmapBackendControlPlaneReadinessBoundaryIssue],
+) -> int:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_resolved_evidence", "resolved_evidence must be an object"))
+        return 0
+    expected_keys = set(EXPECTED_RESOLVED_EVIDENCE)
+    actual_keys = set(value)
+    missing = sorted(expected_keys - actual_keys)
+    extra = sorted(actual_keys - expected_keys)
+    if missing:
+        issues.append(_issue("missing_resolved_evidence_key", f"resolved_evidence lacks keys: {', '.join(missing)}"))
+    if extra:
+        issues.append(_issue("extra_resolved_evidence_key", f"resolved_evidence has unknown keys: {', '.join(extra)}"))
+    for key, expected_value in EXPECTED_RESOLVED_EVIDENCE.items():
+        if value.get(key) != expected_value:
+            issues.append(_issue(f"invalid_resolved_evidence_{key}", f"resolved_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
 
 

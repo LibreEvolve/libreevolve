@@ -213,6 +213,9 @@ class TTTRLPlugin(PluginBase):
         invalid_rows = 0
         with out.open("rb") as handle:
             for line_number, raw_line in enumerate(handle, start=1):
+                if raw_line and not raw_line.endswith(b"\n"):
+                    invalid_rows += 1
+                    continue
                 try:
                     line = raw_line.decode("utf-8")
                 except UnicodeDecodeError:

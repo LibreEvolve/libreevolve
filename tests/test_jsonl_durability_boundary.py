@@ -14,15 +14,15 @@ def test_jsonl_durability_boundary_accepts_strict_single_writer_scope():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "strict_single_writer_append_without_read_repair_or_multi_writer_serialization"
+        == "strict_single_writer_append_with_read_fail_closed_without_multi_writer_serialization"
     )
     assert validation.required_evidence_field_count == 20
-    assert validation.missing_evidence_count == 12
+    assert validation.missing_evidence_count == 5
     assert boundary["schema"] == JSONL_DURABILITY_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
-    assert len(boundary["implemented_runtime_evidence"]) == 8
+    assert len(boundary["implemented_runtime_evidence"]) == 15
     assert (
-        "does not claim read-side torn-final-record repair"
+        "default fail-closed unterminated-final-record handling"
         in boundary["claim_boundary"]
     )
 
@@ -54,8 +54,8 @@ def test_render_jsonl_durability_boundary_summary_reports_shape():
     assert "JSONL durability boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | strict_single_writer_append_without_read_repair_or_multi_writer_serialization |"
+        "| boundary_status | strict_single_writer_append_with_read_fail_closed_without_multi_writer_serialization |"
         in summary
     )
     assert "| required_evidence_field_count | 20 |" in summary
-    assert "| missing_evidence_count | 12 |" in summary
+    assert "| missing_evidence_count | 5 |" in summary

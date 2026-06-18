@@ -311,11 +311,16 @@ terminating newline as a torn prior append, truncates it back to the previous
 complete line, and writes a bounded diagnostic with fragment byte count/hash to
 the paired `*_invalid.jsonl` stream or to the same quarantine stream when the
 stream repairs itself. Earlier complete lines remain the trustworthy recovery
-unit after an interrupted process or host crash. The streams still do not use
-temporary append spool files or line checksums on every record. Archive cell
-and elite snapshots are restored through manifest/history bundles rather than
-through a general checkpoint/replay engine; ordered migration replay,
-controller queues, and full-run resume remain broader checkpointing concerns.
+unit after an interrupted process or host crash. Strict JSONL readers now
+reject a non-empty final line that lacks its terminating newline instead of
+trusting it as durable state, and the shared reader has an opt-in repair mode
+that truncates the final fragment and emits the same bounded quarantine
+diagnostic before yielding rows. The streams still do not use temporary append
+spool files, line checksums on every record, or multi-writer serialization.
+Archive cell and elite snapshots are restored through manifest/history bundles
+rather than through a general checkpoint/replay engine; ordered migration
+replay, controller queues, and full-run resume remain broader checkpointing
+concerns.
 Rejected archive-admission metadata is kept JSON-safe, including non-finite
 selection scores, but it does not sanitize hook-mutated/restored top-level
 candidate `fitness` or metric values for accepted history. Passing such a

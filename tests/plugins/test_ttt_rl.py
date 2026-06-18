@@ -321,6 +321,24 @@ def test_restored_export_metadata_counts_duplicate_json_keys_as_invalid(tmp_path
     assert metadata["restore_invalid_lines"] == 1
 
 
+def test_restored_export_metadata_rejects_unterminated_final_row(tmp_path):
+    (tmp_path / "grpo_data.jsonl").write_text(
+        (
+            '{"prompt":"valid","response":"d","raw_score":0.25,'
+            '"reward":0.25,"reward_policy":"max(0.0, raw_score)"}\n'
+            '{"prompt":"torn","response":"d","raw_score":0.25,'
+            '"reward":0.25,"reward_policy":"max(0.0, raw_score)"}'
+        ),
+        encoding="utf-8",
+    )
+
+    metadata = TTTRLPlugin(log_dir=str(tmp_path)).run_artifacts_metadata()
+
+    assert metadata["exported_examples"] == 1
+    assert metadata["restored_exported_examples"] == 1
+    assert metadata["restore_invalid_lines"] == 1
+
+
 def test_auto_exports_and_prunes_when_retention_limit_is_exceeded(tmp_path):
     p = TTTRLPlugin(train_every=100, log_dir=str(tmp_path), max_retained_examples=3)
     for i in range(8):

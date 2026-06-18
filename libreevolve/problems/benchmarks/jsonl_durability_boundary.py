@@ -8,7 +8,7 @@ from typing import Any
 
 JSONL_DURABILITY_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_jsonl_durability_boundary.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "strict_single_writer_append_without_read_repair_or_multi_writer_serialization"
+EXPECTED_BOUNDARY_STATUS = "strict_single_writer_append_with_read_fail_closed_without_multi_writer_serialization"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "strict_json_serialization",
     "finite_json_validation",
@@ -32,13 +32,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "concurrent_writer_tests",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "read_side_torn_final_record_repair": "not_recorded_locally",
-    "read_side_fail_closed_unterminated_record_policy": "not_recorded_locally",
-    "show_resume_reader_coverage": "not_recorded_locally",
-    "archive_restore_reader_coverage": "not_recorded_locally",
-    "controller_budget_reader_coverage": "not_recorded_locally",
-    "manifest_summary_reader_coverage": "not_recorded_locally",
-    "plugin_context_reader_coverage": "not_recorded_locally",
     "multi_writer_serialization": "not_recorded_locally",
     "append_ordering_sequence_ownership": "not_recorded_locally",
     "repair_quarantine_atomicity": "not_recorded_locally",
@@ -84,6 +77,13 @@ def jsonl_durability_boundary_record() -> dict[str, Any]:
             "quarantine_diagnostics": "invalid_record_and_torn_fragment_diagnostics",
             "quarantine_retention_modes": "redacted_hash_and_off_snapshot_retention",
             "strict_reader_schema_validation": "iter_strict_jsonl_objects_validates_json_objects_per_line",
+            "read_side_torn_final_record_repair": "iter_strict_jsonl_objects_opt_in_repair_torn_final_record_quarantine",
+            "read_side_fail_closed_unterminated_record_policy": "iter_strict_jsonl_objects_rejects_newline_missing_final_record_by_default",
+            "show_resume_reader_coverage": "show_restore_and_history_join_readers_use_iter_strict_jsonl_objects",
+            "archive_restore_reader_coverage": "load_archive_event_records_uses_iter_strict_jsonl_objects",
+            "controller_budget_reader_coverage": "controller_budget_replay_and_audit_readers_use_iter_strict_jsonl_objects",
+            "manifest_summary_reader_coverage": "strict_jsonl_stream_summaries_use_iter_strict_jsonl_objects",
+            "plugin_context_reader_coverage": "ttt_rl_restore_counts_unterminated_final_grpo_row_as_invalid",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -91,13 +91,13 @@ def jsonl_durability_boundary_record() -> dict[str, Any]:
             "This boundary records strict local JSONL serialization, finite JSON "
             "validation, append-side torn-final-record repair, newline-terminated "
             "record writes, fsync after append, quarantine diagnostics, retention "
-            "modes, and per-line strict reader validation. It does not claim "
-            "read-side torn-final-record repair, fail-closed unterminated-record "
-            "policy for inspection/resume readers, full show/archive/controller/"
-            "manifest/plugin reader coverage, multi-writer serialization, append "
-            "ordering ownership, repair/quarantine atomicity, cross-platform "
-            "locking, concurrent-writer tests, or AlphaEvolve-grade durable async "
-            "run-state parity."
+            "modes, per-line strict reader validation, default fail-closed "
+            "unterminated-final-record handling, opt-in read-side torn-record "
+            "repair, and show/archive/controller/manifest/plugin reader "
+            "coverage through the strict reader boundary. It does not claim "
+            "multi-writer serialization, append ordering ownership, "
+            "repair/quarantine atomicity, cross-platform locking, concurrent-"
+            "writer tests, or AlphaEvolve-grade durable async run-state parity."
         ),
     }
 
@@ -131,14 +131,14 @@ def validate_jsonl_durability_boundary(
     implemented_count = _validate_implemented_runtime_evidence(
         data.get("implemented_runtime_evidence"), issues
     )
-    if implemented_count != 8:
-        issues.append(_issue("invalid_implemented_runtime_evidence_count", "implemented runtime evidence count must be 8"))
+    if implemented_count != 15:
+        issues.append(_issue("invalid_implemented_runtime_evidence_count", "implemented runtime evidence count must be 15"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim read-side torn-final-record repair" not in boundary_text
+        or "default fail-closed unterminated-final-record handling" not in boundary_text
         or "multi-writer serialization" not in boundary_text
         or "AlphaEvolve-grade durable async run-state parity" not in boundary_text
     ):

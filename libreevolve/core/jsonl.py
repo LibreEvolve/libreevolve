@@ -110,9 +110,20 @@ def iter_strict_jsonl_objects(
     path: Path,
     *,
     stream_name: str | None = None,
+    repair_torn_final_record: bool = False,
+    quarantine_path: Path | None = None,
+    quarantine_snapshot_retention_mode: str = "redacted",
 ):
     path = Path(path)
     label = stream_name or path.name
+    if repair_torn_final_record:
+        repair_trailing_partial_jsonl(
+            path,
+            quarantine_path=quarantine_path,
+            quarantine_snapshot_retention_mode=(
+                quarantine_snapshot_retention_mode
+            ),
+        )
     try:
         handle = path.open("rb")
     except OSError as exc:
@@ -122,6 +133,11 @@ def iter_strict_jsonl_objects(
         ) from exc
     with handle:
         for line_number, raw_line in enumerate(handle, start=1):
+            if raw_line and not raw_line.endswith(b"\n"):
+                raise StrictJsonlError(
+                    f"Malformed {label} at line {line_number}: "
+                    "unterminated final JSONL record"
+                )
             try:
                 line = raw_line.decode("utf-8")
             except UnicodeDecodeError as exc:

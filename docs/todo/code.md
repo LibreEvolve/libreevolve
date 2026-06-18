@@ -2699,8 +2699,8 @@ sidecars, tests, and active TODOs.
     similarity search so AlphaEvolve-style program outputs attached to
     solutions are queryable beyond bounded current-run evidence.
 
-- [ ] Add read-side torn JSONL repair before trusting resume and inspection
-      streams.
+- [ ] Complete read-side torn JSONL repair/quarantine automation for resume and
+      inspection streams.
   - Spec evidence: AlphaEvolve-style long-running experiments depend on
     durable, replayable controller/database state. A run artifact contract that
     treats newline-terminated JSONL records as the unit of durable state should
@@ -2711,31 +2711,28 @@ sidecars, tests, and active TODOs.
     non-empty final fragment without a terminating newline is a torn append
     from a prior interrupted write. The repair helper truncates even a
     syntactically complete final JSON object without a newline and emits a
-    `jsonl_torn_final_record_repaired` diagnostic. In contrast,
-    `iter_strict_jsonl_objects()` reads byte lines and parses a final
-    newline-missing JSON object as a valid record. A local proof with
-    `history.jsonl` containing only
-    `{"id":"complete-but-unterminated"}` returned one record through
-    `iter_strict_jsonl_objects()`, while calling
-    `repair_trailing_partial_jsonl()` on the same bytes truncated the stream
-    and wrote a repair diagnostic.
-  - Current gap: `libreevolve show`, restore loaders, archive/history
-    replay helpers, and paper-facing strict JSONL summaries can accept a
-    final unterminated JSON object that the managed append policy would treat
-    as torn state. That makes read-side inspection and resume semantics weaker
-    than the write-side durability contract and can let interrupted final
-    rows influence selected best programs, archive restore bundles, or
-    runtime summaries before the next append repairs the stream.
-    `papers/jsonl_durability_boundary.json` now keeps this read-side
-    torn-record gap machine-validated alongside the related multi-writer
-    append-serialization absence boundary.
-  - Required result: add read-side strict JSONL repair or fail-closed
-    validation for all run artifact readers, including `show`, archive
-    restore, controller-budget replay, manifest/runtime summary generation,
-    paper-facing row summaries, and plugin/context readers; route repair
-    diagnostics to the paired quarantine stream where available, preserve
-    retention-mode redaction, and add tests proving newline-missing final
-    records cannot be trusted during inspection or resume.
+    `jsonl_torn_final_record_repaired` diagnostic. `iter_strict_jsonl_objects()`
+    now rejects a non-empty final line without a terminating newline by
+    default, and its opt-in `repair_torn_final_record` mode runs the same
+    truncation/quarantine path before yielding rows. Focused tests prove that
+    a syntactically complete `{"id":"complete-but-unterminated"}` row is not
+    trusted without the newline and that opt-in repair preserves only complete
+    prior rows. The `ttt_rl` plugin restore counter now also counts an
+    unterminated final `grpo_data.jsonl` row as invalid instead of restored.
+    `papers/jsonl_durability_boundary.json` now records this fail-closed
+    reader coverage for show, archive restore, controller-budget replay,
+    manifest/runtime summary generation, paper-facing row summaries, and
+    plugin/context readers.
+  - Current gap: read-side repair is available but not automatically enabled
+    for every paired accepted/quarantine stream, so inspection/resume readers
+    primarily fail closed rather than repairing and continuing. There is still
+    no stronger repair/quarantine atomicity guarantee, line checksum, append
+    spool, or multi-writer serialization for future async/distributed writers.
+  - Required result: decide where read-side repair should be automatic instead
+    of fail-closed, route those repair diagnostics to the paired quarantine
+    stream with retention-mode redaction, and pair the policy with stronger
+    repair/quarantine atomicity and shared-writer serialization before treating
+    JSONL streams as AlphaEvolve-grade durable async state.
 
 - [ ] Add multi-writer append serialization for run artifact JSONL streams.
   - Spec evidence: AlphaEvolve-style async/distributed execution has controller,

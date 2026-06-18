@@ -132,7 +132,7 @@ def _show_current_row(program_id: str, fitness: float, generation: int, code: st
 
 def _write_show_history(run_dir: Path, rows: list[dict]) -> None:
     (run_dir / "history.jsonl").write_text(
-        "\n".join(json.dumps(row) for row in rows),
+        "".join(json.dumps(row) + "\n" for row in rows),
         encoding="utf-8",
     )
 
@@ -2512,8 +2512,13 @@ def test_show_uses_workspace_primary_code_from_logged_program(tmp_path):
             files={"main.py": 'x = "workspace"\n'},
             primary_file="main.py",
             fitness=0.9,
+            evaluation={
+                "is_valid": True,
+                "metadata": {"validator_boundary": _validator_boundary_metadata("host")},
+            },
         )
     )
+    _write_show_manifest(tmp_path / "demo")
 
     r = CliRunner().invoke(cli, ["show", str(tmp_path / "demo")])
 
@@ -2535,9 +2540,13 @@ def test_show_prints_full_workspace_files_from_logged_program(tmp_path):
             },
             primary_file="main.py",
             fitness=0.9,
-            evaluation={"is_valid": True},
+            evaluation={
+                "is_valid": True,
+                "metadata": {"validator_boundary": _validator_boundary_metadata("host")},
+            },
         )
     )
+    _write_show_manifest(tmp_path / "demo")
 
     r = CliRunner().invoke(cli, ["show", str(tmp_path / "demo")])
 
@@ -2556,7 +2565,16 @@ def test_show_handles_canonical_empty_program_records(tmp_path):
         Config(log_dir=tmp_path, problem_name="demo"),
         objective_schema=_objective_schema(),
     )
-    db.log(Program(fitness=0.1))
+    db.log(
+        Program(
+            fitness=0.1,
+            evaluation={
+                "is_valid": True,
+                "metadata": {"validator_boundary": _validator_boundary_metadata("host")},
+            },
+        )
+    )
+    _write_show_manifest(tmp_path / "demo")
 
     r = CliRunner().invoke(cli, ["show", str(tmp_path / "demo")])
 
@@ -3639,6 +3657,7 @@ def test_show_prints_selected_diagnostics_and_failure_statistics(tmp_path):
                     "is_valid": True,
                     "stages": [
                         {"name": "syntax", "passed": True, "score": None},
+                        {"name": "validate", "passed": True, "score": 1.0},
                         {
                             "name": "hard",
                             "passed": False,
@@ -3681,7 +3700,7 @@ def test_show_prints_selected_diagnostics_and_failure_statistics(tmp_path):
     assert "Prompt:        prompt_program_id=prompt-1; parent_strategy=metric" in r.output
     assert "selected_parent=parent" in r.output
     assert "target_metric=score" in r.output
-    assert "Evaluation:    is_valid=True; stages=2; failed=1" in r.output
+    assert "Evaluation:    is_valid=True; stages=3; failed=1" in r.output
     assert "failed_stages=hard:stage_threshold_not_met" in r.output
     assert "subprocess_attempts=3" in r.output
     assert "retry_attempts=1" in r.output

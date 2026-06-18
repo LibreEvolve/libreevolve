@@ -2068,10 +2068,12 @@ Important limits:
   `papers/whole_run_source_workspace_integrity_boundary.json`.
 - Strict JSONL appends validate finite records, repair torn final fragments
   before managed writes, write newline-terminated records, fsync, and emit
-  quarantine diagnostics. JSONL readers still do not enforce read-side torn
-  final-record repair/fail-closed policy across all inspection and resume
-  paths, and shared streams do not have multi-writer serialization; that
-  boundary is tracked by `papers/jsonl_durability_boundary.json`.
+  quarantine diagnostics. Shared JSONL readers now fail closed on non-empty
+  final lines without a terminating newline, expose an opt-in read-repair path,
+  and cover show/restore/controller/manifest summary readers plus the
+  `ttt_rl` plugin restore counter. Shared streams still do not have
+  multi-writer serialization; that boundary is tracked by
+  `papers/jsonl_durability_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata
   with occupied-cell, elite, Pareto-frontier, and metric-cell descriptor
   vectors plus `runtime.history.archive_descriptor_drift_audit` comparison

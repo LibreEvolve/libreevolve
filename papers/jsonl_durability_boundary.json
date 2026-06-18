@@ -2,7 +2,7 @@
   "schema": "libreevolve.alphaevolve_jsonl_durability_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve-style long-running search needs durable run streams that can be trusted during inspection, resume, and future async/distributed writer execution",
-  "boundary_status": "strict_single_writer_append_without_read_repair_or_multi_writer_serialization",
+  "boundary_status": "strict_single_writer_append_with_read_fail_closed_without_multi_writer_serialization",
   "claim_ready": false,
   "implemented_runtime_evidence": {
     "strict_json_serialization": "strict_json_dumps_rejects_non_finite_and_duplicate_keys",
@@ -12,7 +12,14 @@
     "fsync_after_append": "append_helper_flushes_and_fsyncs",
     "quarantine_diagnostics": "invalid_record_and_torn_fragment_diagnostics",
     "quarantine_retention_modes": "redacted_hash_and_off_snapshot_retention",
-    "strict_reader_schema_validation": "iter_strict_jsonl_objects_validates_json_objects_per_line"
+    "strict_reader_schema_validation": "iter_strict_jsonl_objects_validates_json_objects_per_line",
+    "read_side_torn_final_record_repair": "iter_strict_jsonl_objects_opt_in_repair_torn_final_record_quarantine",
+    "read_side_fail_closed_unterminated_record_policy": "iter_strict_jsonl_objects_rejects_newline_missing_final_record_by_default",
+    "show_resume_reader_coverage": "show_restore_and_history_join_readers_use_iter_strict_jsonl_objects",
+    "archive_restore_reader_coverage": "load_archive_event_records_uses_iter_strict_jsonl_objects",
+    "controller_budget_reader_coverage": "controller_budget_replay_and_audit_readers_use_iter_strict_jsonl_objects",
+    "manifest_summary_reader_coverage": "strict_jsonl_stream_summaries_use_iter_strict_jsonl_objects",
+    "plugin_context_reader_coverage": "ttt_rl_restore_counts_unterminated_final_grpo_row_as_invalid"
   },
   "required_evidence_fields": [
     "strict_json_serialization",
@@ -37,18 +44,11 @@
     "concurrent_writer_tests"
   ],
   "missing_evidence": {
-    "read_side_torn_final_record_repair": "not_recorded_locally",
-    "read_side_fail_closed_unterminated_record_policy": "not_recorded_locally",
-    "show_resume_reader_coverage": "not_recorded_locally",
-    "archive_restore_reader_coverage": "not_recorded_locally",
-    "controller_budget_reader_coverage": "not_recorded_locally",
-    "manifest_summary_reader_coverage": "not_recorded_locally",
-    "plugin_context_reader_coverage": "not_recorded_locally",
     "multi_writer_serialization": "not_recorded_locally",
     "append_ordering_sequence_ownership": "not_recorded_locally",
     "repair_quarantine_atomicity": "not_recorded_locally",
     "cross_platform_locking_policy": "not_recorded_locally",
     "concurrent_writer_tests": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records strict local JSONL serialization, finite JSON validation, append-side torn-final-record repair, newline-terminated record writes, fsync after append, quarantine diagnostics, retention modes, and per-line strict reader validation. It does not claim read-side torn-final-record repair, fail-closed unterminated-record policy for inspection/resume readers, full show/archive/controller/manifest/plugin reader coverage, multi-writer serialization, append ordering ownership, repair/quarantine atomicity, cross-platform locking, concurrent-writer tests, or AlphaEvolve-grade durable async run-state parity."
+  "claim_boundary": "This boundary records strict local JSONL serialization, finite JSON validation, append-side torn-final-record repair, newline-terminated record writes, fsync after append, quarantine diagnostics, retention modes, per-line strict reader validation, default fail-closed unterminated-final-record handling, opt-in read-side torn-record repair, and show/archive/controller/manifest/plugin reader coverage through the strict reader boundary. It does not claim multi-writer serialization, append ordering ownership, repair/quarantine atomicity, cross-platform locking, concurrent-writer tests, or AlphaEvolve-grade durable async run-state parity."
 }

@@ -1517,12 +1517,12 @@ be safely rebuilt into durable query/resume views.
 The committed `papers/jsonl_durability_boundary.json` sidecar separately
 records strict JSONL append durability scope: finite strict JSON serialization,
 append-side torn-final-record repair, newline-terminated writes, fsync,
-quarantine diagnostics, retention modes, and per-line reader validation. It is
-not evidence of read-side torn-final-record repair, fail-closed
-unterminated-record policy for inspection/resume readers, full reader coverage,
-multi-writer serialization, append-order ownership, repair/quarantine
-atomicity, cross-platform locking, concurrent-writer tests, or AlphaEvolve-grade
-durable async run-state parity.
+quarantine diagnostics, retention modes, per-line reader validation, default
+fail-closed handling for newline-missing final records, opt-in read-side
+repair, and strict-reader coverage for show/archive/controller/manifest/plugin
+paths. It is not evidence of multi-writer serialization, append-order
+ownership, repair/quarantine atomicity, cross-platform locking,
+concurrent-writer tests, or AlphaEvolve-grade durable async run-state parity.
 
 AlphaEvolve best-export note: CLI runs now append a post-`evolve()` manifest
 record under `runtime.best_artifact_export` after best-artifact export
@@ -3255,12 +3255,12 @@ Implemented:
   append-side stream safety versus read-side repair and async writer parity. It
   records strict JSON serialization, finite record validation, append-side torn
   final-record repair, newline-terminated writes, fsync, quarantine
-  diagnostics, retention modes, and strict per-line reader validation. It is
-  not evidence of read-side torn-final-record repair, fail-closed
-  unterminated-record policy for inspection/resume readers, full reader
-  coverage, multi-writer serialization, append ordering ownership,
-  repair/quarantine atomicity, cross-platform locking, concurrent-writer tests,
-  or AlphaEvolve-grade durable async run-state parity.
+  diagnostics, retention modes, strict per-line reader validation, default
+  fail-closed handling for newline-missing final records, opt-in read-side
+  repair, and strict-reader coverage for show/archive/controller/manifest/
+  plugin paths. It is not evidence of multi-writer serialization, append
+  ordering ownership, repair/quarantine atomicity, cross-platform locking,
+  concurrent-writer tests, or AlphaEvolve-grade durable async run-state parity.
 - `papers/non_jsonl_artifact_boundary.json`: non-JSONL run-artifact schema
   sidecar for standalone JSON files, exported files, workspace directories,
   plugin/evaluator artifact directories, and `paper_artifacts/`. It records

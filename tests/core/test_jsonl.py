@@ -56,6 +56,44 @@ def test_iter_strict_jsonl_objects_rejects_nested_duplicate_names_with_line(tmp_
         next(rows)
 
 
+def test_iter_strict_jsonl_objects_rejects_unterminated_final_record(tmp_path):
+    path = tmp_path / "history.jsonl"
+    path.write_text('{"id": "complete-but-unterminated"}', encoding="utf-8")
+
+    with pytest.raises(
+        StrictJsonlError,
+        match=r"Malformed history\.jsonl at line 1: unterminated final JSONL record",
+    ):
+        list(iter_strict_jsonl_objects(path, stream_name="history.jsonl"))
+
+
+def test_iter_strict_jsonl_objects_can_repair_unterminated_final_record(tmp_path):
+    path = tmp_path / "history.jsonl"
+    quarantine = tmp_path / "history_invalid.jsonl"
+    path.write_bytes(b'{"id": "safe"}\n{"id": "complete-but-torn"}')
+
+    records = list(
+        iter_strict_jsonl_objects(
+            path,
+            stream_name="history.jsonl",
+            repair_torn_final_record=True,
+            quarantine_path=quarantine,
+        )
+    )
+
+    assert records == [{"id": "safe"}]
+    assert path.read_bytes() == b'{"id": "safe"}\n'
+    [diagnostic] = [
+        json.loads(line)
+        for line in quarantine.read_text(encoding="utf-8").splitlines()
+    ]
+    assert diagnostic["event"] == "jsonl_torn_final_record_repaired"
+    assert diagnostic["stream"] == "history.jsonl"
+    assert diagnostic["repair_policy"] == "truncate_unterminated_final_line"
+    assert diagnostic["fragment_preview"] == '{"id": "complete-but-torn"}'
+    assert validate_quarantine_record(diagnostic) == diagnostic
+
+
 def test_strict_json_dump_best_effort_fsyncs_parent_directory(monkeypatch, tmp_path):
     path = tmp_path / "manifest.json"
     calls = []

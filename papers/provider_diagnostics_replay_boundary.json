@@ -20,7 +20,7 @@
     ]
   },
   "boundary_status": "bounded_scalar_diagnostics_without_raw_provider_replay",
-  "claim_boundary": "This boundary records that LibreEvolve has provider usage metadata, request/response ids, finish reasons, adapter retry metadata, provider failure categories, provider status codes, bounded provider diagnostics, backend defaults metadata, retained call-history windows, provider-diagnostics summary schema, records hashes, raw-payload replay overclaim checks, remote provider-default overclaim checks, and backend-default count checks, plus an OpenAI Responses extraction boundary for the first-output-text policy. It does not claim raw provider-payload sidecars, provider output replay, complete provider-call replay, account/model default capture, OpenAI Responses multi-part text aggregation, non-completed status admission gates, incomplete details classification, SDK output_text helper parity, Anthropic Messages multi-block text aggregation, stop-reason admission gates, or mixed content-block classification.",
+  "claim_boundary": "This boundary records that LibreEvolve has provider usage metadata, request/response ids, finish reasons, adapter retry metadata, provider failure categories, provider status codes, bounded provider diagnostics, backend defaults metadata, retained call-history windows, provider-diagnostics summary schema, records hashes, raw-payload replay overclaim checks, remote provider-default overclaim checks, and backend-default count checks, plus an OpenAI Responses extraction boundary for the first-output-text policy. It does not claim raw provider-payload sidecars, provider output replay, complete provider-call replay, account/model default capture, OpenAI Responses multi-part text aggregation, non-completed status admission gates, incomplete details classification, SDK output_text helper parity, Anthropic Messages multi-block text aggregation, stop-reason admission gates, mixed content-block classification, Ollama Chat done/done_reason admission gates, or Ollama response-shape validation.",
   "claim_ready": false,
   "diagnostics_schema": "libreevolve.llm_provider_diagnostics.v1",
   "missing_evidence": {
@@ -30,12 +30,37 @@
     "anthropic_messages_multiblock_text_aggregation": "first_text_block_only",
     "anthropic_messages_stop_reason_admission_gate": "stop_reason_recorded_as_finish_reason_only",
     "complete_provider_call_replay": "not_recorded_locally",
+    "ollama_chat_completion_metadata_telemetry": "not_recorded_locally",
+    "ollama_chat_done_admission_gate": "done_recorded_as_diagnostic_only",
+    "ollama_chat_done_reason_admission_gate": "done_reason_recorded_as_finish_reason_only",
+    "ollama_chat_response_shape_validation": "message_content_only",
     "openai_responses_content_shape_telemetry": "not_recorded_locally",
     "openai_responses_multipart_text_aggregation": "first_output_text_only",
     "openai_responses_output_text_helper_parity": "not_recorded_locally",
     "openai_responses_status_admission_gate": "status_recorded_as_finish_reason_only",
     "provider_output_replay": "not_recorded_locally",
     "raw_provider_payload_sidecars": "not_recorded_locally"
+  },
+  "ollama_chat_extraction_boundary": {
+    "claim_ready": false,
+    "current_metadata_scope": "done_reason is persisted as finish_reason metadata and done is persisted as bounded provider_diagnostics",
+    "current_scope": "OllamaBackend.generate accepts a dict response when message.content is present and non-empty",
+    "missing_before_mutation_admission_claim": [
+      "done true admission gate",
+      "done_reason outcome taxonomy",
+      "unexpected response-shape classification",
+      "completion metadata count telemetry",
+      "response-shape drift tests"
+    ],
+    "provider_api_shape_terms": [
+      "message.content",
+      "done",
+      "done_reason",
+      "model",
+      "prompt_eval_count",
+      "eval_count",
+      "duration counters"
+    ]
   },
   "openai_responses_extraction_boundary": {
     "claim_ready": false,
@@ -84,6 +109,11 @@
     "anthropic_messages_mixed_content_policy",
     "anthropic_messages_multiblock_text_policy",
     "anthropic_messages_incomplete_stop_reason_policy",
+    "ollama_chat_message_content_inventory",
+    "ollama_chat_done_policy",
+    "ollama_chat_done_reason_policy",
+    "ollama_chat_response_shape_policy",
+    "ollama_chat_completion_metadata_policy",
     "raw_provider_payload_sidecars",
     "provider_output_replay",
     "complete_provider_call_replay",

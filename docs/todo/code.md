@@ -1310,7 +1310,12 @@ sidecars, tests, and active TODOs.
     unexpected message shapes. Existing tests cover one happy path, retry,
     configured request parameters, configured host, empty content, and missing
     content, but not `done: false`, incomplete `done_reason`, extra message
-    fields, or response-shape drift.
+    fields, or response-shape drift. The committed
+    `papers/provider_diagnostics_replay_boundary.json` sidecar now records an
+    Ollama Chat extraction sub-boundary for the current non-empty
+    `message.content` policy, `done_reason`/`done` metadata scope, and missing
+    `done` admission gate, `done_reason` outcome taxonomy, response-shape
+    classification, completion metadata telemetry, and drift tests.
   - Current gap: an Ollama response can be accepted as successful mutation text
     solely because `message.content` is non-empty, even if completion metadata
     says the answer was not final or cannot be interpreted. That weakens local

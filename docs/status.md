@@ -694,7 +694,10 @@ Important limits:
   a first-`output_text` policy with response status stored as finish-reason
   metadata, and that Anthropic Messages extraction is currently a first-text-
   block policy with `stop_reason` stored as finish-reason metadata, not a
-  complete multi-part output/status admission contract.
+  complete multi-part output/status admission contract. It also records that
+  Ollama Chat extraction currently accepts non-empty `message.content` with
+  `done` and `done_reason` retained as metadata, not a final-state admission
+  contract.
 - Provider request parameters are normalized and logged for supported backends,
   including temperature, top-p, stop sequences, and supported seed fields, but
   this is best-effort sampling-control telemetry rather than a cross-provider

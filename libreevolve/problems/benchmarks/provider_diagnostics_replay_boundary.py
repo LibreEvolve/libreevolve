@@ -38,6 +38,11 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "anthropic_messages_mixed_content_policy",
     "anthropic_messages_multiblock_text_policy",
     "anthropic_messages_incomplete_stop_reason_policy",
+    "ollama_chat_message_content_inventory",
+    "ollama_chat_done_policy",
+    "ollama_chat_done_reason_policy",
+    "ollama_chat_response_shape_policy",
+    "ollama_chat_completion_metadata_policy",
     "raw_provider_payload_sidecars",
     "provider_output_replay",
     "complete_provider_call_replay",
@@ -56,6 +61,10 @@ EXPECTED_MISSING_EVIDENCE = {
     "anthropic_messages_stop_reason_admission_gate": "stop_reason_recorded_as_finish_reason_only",
     "anthropic_messages_content_block_telemetry": "not_recorded_locally",
     "anthropic_messages_mixed_content_classification": "not_recorded_locally",
+    "ollama_chat_done_admission_gate": "done_recorded_as_diagnostic_only",
+    "ollama_chat_done_reason_admission_gate": "done_reason_recorded_as_finish_reason_only",
+    "ollama_chat_response_shape_validation": "message_content_only",
+    "ollama_chat_completion_metadata_telemetry": "not_recorded_locally",
 }
 
 
@@ -148,6 +157,33 @@ def provider_diagnostics_replay_boundary_record() -> dict[str, Any]:
             ],
             "claim_ready": False,
         },
+        "ollama_chat_extraction_boundary": {
+            "provider_api_shape_terms": [
+                "message.content",
+                "done",
+                "done_reason",
+                "model",
+                "prompt_eval_count",
+                "eval_count",
+                "duration counters",
+            ],
+            "current_scope": (
+                "OllamaBackend.generate accepts a dict response when "
+                "message.content is present and non-empty"
+            ),
+            "current_metadata_scope": (
+                "done_reason is persisted as finish_reason metadata and done "
+                "is persisted as bounded provider_diagnostics"
+            ),
+            "missing_before_mutation_admission_claim": [
+                "done true admission gate",
+                "done_reason outcome taxonomy",
+                "unexpected response-shape classification",
+                "completion metadata count telemetry",
+                "response-shape drift tests",
+            ],
+            "claim_ready": False,
+        },
         "claim_boundary": (
             "This boundary records that LibreEvolve has provider usage "
             "metadata, request/response ids, finish reasons, adapter retry "
@@ -163,7 +199,8 @@ def provider_diagnostics_replay_boundary_record() -> dict[str, Any]:
             "aggregation, non-completed status admission gates, incomplete "
             "details classification, SDK output_text helper parity, Anthropic "
             "Messages multi-block text aggregation, stop-reason admission "
-            "gates, or mixed content-block classification."
+            "gates, mixed content-block classification, Ollama Chat done/done_"
+            "reason admission gates, or Ollama response-shape validation."
         ),
     }
 
@@ -217,6 +254,10 @@ def validate_provider_diagnostics_replay_boundary(
     )
     _validate_anthropic_messages_extraction_boundary(
         data.get("anthropic_messages_extraction_boundary"),
+        issues,
+    )
+    _validate_ollama_chat_extraction_boundary(
+        data.get("ollama_chat_extraction_boundary"),
         issues,
     )
     return ProviderDiagnosticsReplayBoundaryValidation(
@@ -386,6 +427,45 @@ def _validate_anthropic_messages_extraction_boundary(
         issues.append(_issue("invalid_anthropic_messages_missing_fields", "Anthropic Messages missing fields must match the output extraction absence set"))
     if value.get("claim_ready") is not False:
         issues.append(_issue("anthropic_messages_extraction_overclaim", "Anthropic Messages extraction boundary must not be claim-ready"))
+
+
+def _validate_ollama_chat_extraction_boundary(
+    value: object,
+    issues: list[ProviderDiagnosticsReplayBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_ollama_chat_extraction_boundary", "ollama_chat_extraction_boundary must be an object"))
+        return
+    terms = value.get("provider_api_shape_terms")
+    expected_terms = {
+        "message.content",
+        "done",
+        "done_reason",
+        "model",
+        "prompt_eval_count",
+        "eval_count",
+        "duration counters",
+    }
+    if not isinstance(terms, list) or set(terms) != expected_terms:
+        issues.append(_issue("invalid_ollama_chat_shape_terms", "Ollama Chat shape terms must match the tracked content/status surface"))
+    current_scope = value.get("current_scope")
+    if not isinstance(current_scope, str) or "message.content" not in current_scope or "non-empty" not in current_scope:
+        issues.append(_issue("invalid_ollama_chat_current_scope", "current scope must describe message.content extraction"))
+    metadata_scope = value.get("current_metadata_scope")
+    if not isinstance(metadata_scope, str) or "done_reason" not in metadata_scope or "finish_reason" not in metadata_scope or "done" not in metadata_scope:
+        issues.append(_issue("invalid_ollama_chat_metadata_scope", "metadata scope must describe done_reason and done metadata"))
+    missing = value.get("missing_before_mutation_admission_claim")
+    expected_missing = {
+        "done true admission gate",
+        "done_reason outcome taxonomy",
+        "unexpected response-shape classification",
+        "completion metadata count telemetry",
+        "response-shape drift tests",
+    }
+    if not isinstance(missing, list) or set(missing) != expected_missing:
+        issues.append(_issue("invalid_ollama_chat_missing_fields", "Ollama Chat missing fields must match the output extraction absence set"))
+    if value.get("claim_ready") is not False:
+        issues.append(_issue("ollama_chat_extraction_overclaim", "Ollama Chat extraction boundary must not be claim-ready"))
 
 
 def _issue(code: str, message: str) -> ProviderDiagnosticsReplayBoundaryIssue:

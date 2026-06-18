@@ -138,6 +138,24 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "cancellation_behavior" in record and "resume_semantics" in record
         for record in boundary["cancellation_resume_policy"]
     )
+    assert boundary["equal_budget_comparator_evidence_count"] == 9
+    assert [
+        record["track_id"] for record in boundary["equal_budget_comparator_evidence"]
+    ] == [
+        "heuristic_ucb_rewards",
+        "role_scoped_routing",
+        "provider_diagnostics_pricing",
+        "provider_cancellation_quarantine",
+        "fast_strong_model_mix",
+        "sample_efficiency",
+        "repeated_sampling_baseline",
+        "gemini_provider_parity",
+        "critique_reviewer_pool",
+    ]
+    assert all(
+        "equal_budget_evidence" in record
+        for record in boundary["equal_budget_comparator_evidence"]
+    )
     assert boundary["critique_control_checklist_count"] == 8
     assert [
         check["check_id"] for check in boundary["critique_control_checklist"]
@@ -193,6 +211,9 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "cancellation_resume_policy": (
             "recorded_from_roadmap_backend_scheduling_track_records"
         ),
+        "equal_budget_comparator_evidence": (
+            "recorded_from_roadmap_backend_scheduling_track_records"
+        ),
         "critique_control_checklist": (
             "recorded_from_critique_reviewer_pool_track_boundary"
         ),
@@ -203,6 +224,7 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
     assert "provider pricing/default-rate evidence map" in boundary["claim_boundary"]
     assert "diagnostics/replay policy" in boundary["claim_boundary"]
     assert "cancellation/resume policy" in boundary["claim_boundary"]
+    assert "equal-budget comparator evidence map" in boundary["claim_boundary"]
     assert "critique-control checklist" in boundary["claim_boundary"]
 
 

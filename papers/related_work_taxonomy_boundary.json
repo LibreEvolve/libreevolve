@@ -5,13 +5,14 @@
     "5"
   ],
   "source_claim": "AlphaEvolve Section 5 Related Work positions the system as execution-feedback code superoptimization and algorithm discovery against pre-LLM search, AlphaTensor, GPU-kernel and LLM-agent optimizers, AI-for-science systems, and proof discovery",
-  "boundary_status": "paper_index_rows_without_related_work_taxonomy",
-  "paper_index_status": "flat_source_inventory_and_individual_gap_rows",
+  "boundary_status": "related_work_taxonomy_records_without_positioning_readiness",
+  "paper_index_status": "taxonomy_records_with_individual_gap_rows",
   "claim_ready": false,
   "required_evidence_fields": [
     "source_paper_inventory",
     "paper_index_status_rows",
     "individual_source_gap_todos",
+    "related_work_taxonomy_records",
     "related_work_source_id_map",
     "method_family_taxonomy",
     "candidate_representation_taxonomy",
@@ -22,20 +23,165 @@
     "alphaevolve_positioning_claim_table",
     "readme_related_work_summary_gate",
     "roadmap_related_work_summary_gate",
-    "paper_index_related_work_summary_gate"
+    "paper_index_related_work_summary_gate",
+    "local_implementation_status_taxonomy"
   ],
-  "missing_evidence": {
-    "related_work_source_id_map": "not_recorded_locally",
-    "method_family_taxonomy": "not_recorded_locally",
-    "candidate_representation_taxonomy": "not_recorded_locally",
-    "feedback_signal_taxonomy": "not_recorded_locally",
-    "task_stage_taxonomy": "not_recorded_locally",
-    "comparison_axis_taxonomy": "not_recorded_locally",
-    "source_category_citations": "not_recorded_locally",
-    "alphaevolve_positioning_claim_table": "not_recorded_locally",
-    "readme_related_work_summary_gate": "not_recorded_locally",
-    "roadmap_related_work_summary_gate": "not_recorded_locally",
-    "paper_index_related_work_summary_gate": "not_recorded_locally"
+  "taxonomy_record_count": 11,
+  "taxonomy_records": [
+    {
+      "source_id": "alphaevolve",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF pages 19-20",
+      "method_family": "execution_feedback_code_superoptimization",
+      "candidate_representation": "executable_code_programs",
+      "feedback_or_evidence_mode": "code_execution_and_programmatic_evaluation",
+      "task_stage": "algorithm_discovery_and_scientific_optimization",
+      "comparison_axis": "central_method_positioning",
+      "comparison_claim": "AlphaEvolve iteratively improves programs using execution feedback",
+      "complementary_mechanism_status": "primary_system",
+      "proof_or_witness_status": "not_a_proof_search_system",
+      "local_implementation_status": "partial_local_surface"
+    },
+    {
+      "source_id": "pre_llm_superoptimization",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "enumeration_genetic_monte_carlo_deep_rl",
+      "candidate_representation": "programs_or_search_states",
+      "feedback_or_evidence_mode": "programmatic_objective_feedback",
+      "task_stage": "pre_llm_code_superoptimization",
+      "comparison_axis": "historical_baseline_methods",
+      "comparison_claim": "pre-LLM superoptimization included enumeration, genetic search, Monte Carlo sampling, and deep reinforcement learning",
+      "complementary_mechanism_status": "background_baseline",
+      "proof_or_witness_status": "not_classified_as_proof_search",
+      "local_implementation_status": "background_only"
+    },
+    {
+      "source_id": "alphatensor",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "limited_domain_algorithm_discovery",
+      "candidate_representation": "tensor_decomposition_algorithms",
+      "feedback_or_evidence_mode": "domain_programmatic_correctness",
+      "task_stage": "matrix_multiplication_algorithm_discovery",
+      "comparison_axis": "single_problem_algorithm_discovery_baseline",
+      "comparison_claim": "AlphaTensor is cited as a limited-setting system that discovered provably correct algorithms",
+      "complementary_mechanism_status": "background_baseline",
+      "proof_or_witness_status": "provably_correct_algorithm_context",
+      "local_implementation_status": "background_only"
+    },
+    {
+      "source_id": "funsearch",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF pages 19-20",
+      "method_family": "llm_guided_program_evolution",
+      "candidate_representation": "single_python_function",
+      "feedback_or_evidence_mode": "programmatic_evaluator_feedback",
+      "task_stage": "mathematical_witness_discovery",
+      "comparison_axis": "direct_predecessor_and_complement",
+      "comparison_claim": "AlphaEvolve extends FunSearch beyond single-function, single-objective, code-trained-LLM constraints",
+      "complementary_mechanism_status": "predecessor_and_complement",
+      "proof_or_witness_status": "witness_or_counterexample_discovery",
+      "local_implementation_status": "partial_local_surface"
+    },
+    {
+      "source_id": "gpu_kernel_llm_agents",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "llm_code_optimization_agents",
+      "candidate_representation": "gpu_kernel_or_operation_code",
+      "feedback_or_evidence_mode": "execution_performance_feedback",
+      "task_stage": "systems_code_optimization",
+      "comparison_axis": "adjacent_llm_superoptimization",
+      "comparison_claim": "LLM agents have optimized attention kernels and user-specified operations in narrower systems settings",
+      "complementary_mechanism_status": "adjacent_background",
+      "proof_or_witness_status": "not_classified_as_proof_search",
+      "local_implementation_status": "background_only"
+    },
+    {
+      "source_id": "multi_agent_llm_problem_solving",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "llm_multi_agent_problem_solving",
+      "candidate_representation": "agent_conversation_outputs",
+      "feedback_or_evidence_mode": "conversation_and_task_feedback",
+      "task_stage": "problem_solving_coordination",
+      "comparison_axis": "adjacent_llm_agent_method",
+      "comparison_claim": "multi-agent LLM systems are related but are not the same as AlphaEvolve's execution-grounded program evolution loop",
+      "complementary_mechanism_status": "adjacent_background",
+      "proof_or_witness_status": "not_classified_as_proof_search",
+      "local_implementation_status": "background_only"
+    },
+    {
+      "source_id": "ai_coscientist",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "ai_for_science_hypothesis_generation",
+      "candidate_representation": "natural_language_hypotheses",
+      "feedback_or_evidence_mode": "natural_language_or_literature_evidence",
+      "task_stage": "scientific_hypothesis_generation",
+      "comparison_axis": "representation_and_evaluation_contrast",
+      "comparison_claim": "AlphaEvolve differs from most scientific-discovery systems by using programmatic representations and evaluation metrics",
+      "complementary_mechanism_status": "possible_future_combination",
+      "proof_or_witness_status": "not_classified_as_proof_search",
+      "local_implementation_status": "not_implemented"
+    },
+    {
+      "source_id": "broader_ai_for_science",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "ai_for_science",
+      "candidate_representation": "domain_specific_hypotheses_or_artifacts",
+      "feedback_or_evidence_mode": "domain_experiment_or_model_evidence",
+      "task_stage": "scientific_discovery_support",
+      "comparison_axis": "broader_research_context",
+      "comparison_claim": "AlphaEvolve is positioned within AI-for-science while emphasizing programmatic hypothesis representations and metrics",
+      "complementary_mechanism_status": "background_context",
+      "proof_or_witness_status": "varies_by_source",
+      "local_implementation_status": "background_only"
+    },
+    {
+      "source_id": "formal_and_informal_proof_search",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "proof_search",
+      "candidate_representation": "formal_or_informal_proofs",
+      "feedback_or_evidence_mode": "proof_validation_or_human_reasoning",
+      "task_stage": "mathematical_proof_discovery",
+      "comparison_axis": "proof_versus_witness_distinction",
+      "comparison_claim": "witness and counterexample discovery is complementary to formal and informal proof search",
+      "complementary_mechanism_status": "complementary",
+      "proof_or_witness_status": "proof_search_context",
+      "local_implementation_status": "not_implemented"
+    },
+    {
+      "source_id": "continuous_llm_finetuning",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "llm_finetuning",
+      "candidate_representation": "model_policy_updates",
+      "feedback_or_evidence_mode": "reinforcement_learning_signal",
+      "task_stage": "search_policy_improvement",
+      "comparison_axis": "complementary_mechanism",
+      "comparison_claim": "continuous LLM fine-tuning through reinforcement learning is an adjacent idea needing more investigation at AlphaEvolve scale",
+      "complementary_mechanism_status": "needs_scale_investigation",
+      "proof_or_witness_status": "not_classified_as_proof_search",
+      "local_implementation_status": "not_implemented"
+    },
+    {
+      "source_id": "llm_directed_concept_learning",
+      "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+      "method_family": "concept_learning",
+      "candidate_representation": "concepts_over_high_performing_programs",
+      "feedback_or_evidence_mode": "program_population_analysis",
+      "task_stage": "search_guidance_from_elites",
+      "comparison_axis": "complementary_mechanism",
+      "comparison_claim": "LLM-directed concept learning over high-performing programs is an adjacent idea needing more investigation at AlphaEvolve scale",
+      "complementary_mechanism_status": "needs_scale_investigation",
+      "proof_or_witness_status": "not_classified_as_proof_search",
+      "local_implementation_status": "not_implemented"
+    }
+  ],
+  "claim_gates": {
+    "readme_related_work_summary_gate": "scoped_to_taxonomy_boundary",
+    "roadmap_related_work_summary_gate": "scoped_to_taxonomy_boundary",
+    "paper_index_related_work_summary_gate": "scoped_to_taxonomy_boundary"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a source-paper inventory, paper-index status rows, and individual source-gap TODOs. It does not claim a Related Work taxonomy with source-id category mapping, method-family labels, candidate-representation labels, feedback-signal labels, task-stage labels, comparison axes, category citations, an AlphaEvolve positioning-claim table, or README/ROADMAP/paper-index gates for Related Work summary claims."
+  "missing_evidence": {
+    "exhaustive_reference_level_coverage": "not_recorded_locally",
+    "independent_positioning_review": "not_recorded_locally",
+    "local_implementation_parity_evidence": "not_recorded_locally",
+    "benchmark_reproduction_evidence": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a source-paper inventory, paper-index status rows, individual source-gap TODOs, and bounded Section 5 Related Work taxonomy records covering method family, representation, evidence mode, task stage, comparison axis, complementary-mechanism status, proof/witness status, and local implementation status. It does not claim exhaustive reference-level coverage, independent positioning review, local implementation parity, benchmark reproduction, or release-ready AlphaEvolve positioning claims."
 }

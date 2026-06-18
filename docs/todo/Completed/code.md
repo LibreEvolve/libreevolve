@@ -19266,3 +19266,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     model.
   - Verification: focused programmatic-representation tests validate matrix
     counts and false measured-claim readiness.
+- [x] Add bounded AlphaEvolve Related Work taxonomy records.
+  - Spec evidence: AlphaEvolve Section 5 positions the system against
+    pre-LLM superoptimization, AlphaTensor, LLM code-optimization agents,
+    AI-for-science systems, proof search, FunSearch, and adjacent fine-tuning
+    or concept-learning mechanisms.
+  - Status: `libreevolve/problems/benchmarks/related_work_taxonomy_boundary.py`
+    now emits and validates eleven Section 5 taxonomy records with source ids,
+    method family, candidate representation, feedback/evidence mode, task
+    stage, comparison axis, proof/witness status, complementary-mechanism
+    status, local implementation status, source location, and scoped docs
+    claim gates.
+  - Remaining code gap: this is not exhaustive reference-level coverage,
+    independent positioning review, local implementation parity, or benchmark
+    reproduction evidence.
+  - Verification: focused Related Work taxonomy tests validate record counts,
+    required ids, scoped claim gates, and overclaim rejection.

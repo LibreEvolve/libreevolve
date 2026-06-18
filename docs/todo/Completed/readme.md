@@ -14181,6 +14181,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     focused Related Work taxonomy tests reject positioning-readiness
     overclaims.
 
+- [x] Keep README Related Work wording current with bounded taxonomy records.
+  - Status: README now states that
+    `papers/related_work_taxonomy_boundary.json` contains bounded Section 5
+    taxonomy rows while preserving non-readiness for exhaustive reference-level
+    coverage, independent positioning review, benchmark reproduction, or
+    implemented-method claims.
+  - Verification: focused Related Work taxonomy tests and README/paper-manifest
+    checks pass.
+
 - [x] Keep README natural-language preamble boundary tied to sidecar.
   - Status: README now states that natural-language preambles are bounded
     leading metadata before structured mutation markers, not complete freeform

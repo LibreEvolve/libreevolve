@@ -14325,3 +14325,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     evidence remain open.
   - Verification: focused programmatic-representation boundary tests require
     the matrix evidence while preserving overclaim rejection.
+- [x] Add paper-facing AlphaEvolve Related Work taxonomy records.
+  - Paper evidence: AlphaEvolve Section 5 organizes related work by historical
+    superoptimization methods, domain algorithm discovery systems, LLM
+    optimization agents, AI-for-science systems, proof search, FunSearch, and
+    adjacent fine-tuning/concept-learning ideas.
+  - Status: `papers/related_work_taxonomy_boundary.json` now records bounded
+    Section 5 taxonomy rows instead of a flat-inventory-only absence boundary.
+  - Remaining paper gap: exhaustive reference-level coverage, independent
+    positioning review, local implementation-parity evidence, benchmark
+    reproduction evidence, and release-ready positioning claims remain open.
+  - Verification: focused Related Work taxonomy tests and paper-manifest
+    validation require the taxonomy rows and scoped claim gates.

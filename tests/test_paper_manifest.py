@@ -3493,7 +3493,9 @@ def test_validate_paper_manifest_rejects_related_work_taxonomy_boundary_drift(
     record["claim_ready"] = True
     record["boundary_status"] = "related_work_taxonomy_ready"
     record["source_section_ids"] = ["4"]
-    record["missing_evidence"]["method_family_taxonomy"] = "recorded"
+    record["missing_evidence"]["local_implementation_parity_evidence"] = "recorded"
+    record["taxonomy_records"][0]["local_implementation_status"] = "implemented_full"
+    record["claim_gates"]["roadmap_related_work_summary_gate"] = "ready"
     sidecar = tmp_path / paper_manifest.RELATED_WORK_TAXONOMY_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -3505,7 +3507,15 @@ def test_validate_paper_manifest_rejects_related_work_taxonomy_boundary_drift(
     assert "related_work_taxonomy_boundary_invalid_boundary_status" in codes
     assert "related_work_taxonomy_boundary_invalid_source_section_ids" in codes
     assert (
-        "related_work_taxonomy_boundary_invalid_missing_evidence_method_family_taxonomy"
+        "related_work_taxonomy_boundary_invalid_missing_evidence_local_implementation_parity_evidence"
+        in codes
+    )
+    assert (
+        "related_work_taxonomy_boundary_invalid_taxonomy_record_local_status"
+        in codes
+    )
+    assert (
+        "related_work_taxonomy_boundary_invalid_claim_gate_roadmap_related_work_summary_gate"
         in codes
     )
 

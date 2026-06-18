@@ -1829,9 +1829,12 @@ are intentionally not accepted until a grouped-label taxonomy exists. Completed
 files preserve implemented decisions and prior paper-index cleanups, and each
 completed path is checked for source-specific completed checklist evidence.
 The committed `papers/related_work_taxonomy_boundary.json` sidecar records the
-separate Section 5 Related Work boundary: flat source rows and individual TODOs are not
-yet a method-family, representation, feedback/evidence, task-stage,
-proof/witness, or AlphaEvolve positioning taxonomy.
+separate Section 5 Related Work boundary: bounded taxonomy rows now cover
+method family, representation, feedback/evidence mode, task stage, comparison
+axis, proof/witness status, complementary-mechanism status, and local
+implementation status. This remains non-ready for exhaustive reference-level
+coverage, independent positioning review, local implementation parity,
+benchmark reproduction, or release-ready AlphaEvolve positioning claims.
 Source-specific active gaps now appear across
 `docs/todo/code.md`, `docs/todo/papers.md`, `docs/todo/roadmap.md`, and
 `docs/todo/readme.md`; completed evidence remains split by the completed-ledger

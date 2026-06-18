@@ -2334,20 +2334,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     and informal proof discovery.
   - Current gap: the local paper index lists PDFs and selected inspiration
     relationships, while TODOs cover individual gaps such as FunSearch,
-    AI-Co-Scientist, CodeEvolve, DeepEvolve, and domain benchmarks. It does
-    not preserve the paper's Related Work taxonomy as evidence. The committed
-    `papers/related_work_taxonomy_boundary.json` sidecar records this absence
-    for source reference ids, method family, task stage, candidate
-    representation, evaluator/evidence mode, proof-versus-witness status,
-    comparison claim, complementary-mechanism status, and whether LibreEvolve
-    implements, partially implements, or only cites the related approach as
-    background.
-  - Required result: add paper-facing related-work taxonomy records and
-    validation for each relevant source/category, including method family,
-    representation mode, evaluation/evidence mode, discovery stage, comparison
-    text, complementary-mechanism status, local status, source page/section,
-    and README/ROADMAP claim checks so the papers index distinguishes
-    AlphaEvolve positioning evidence from flat bundled-paper availability.
+    AI-Co-Scientist, CodeEvolve, DeepEvolve, and domain benchmarks. The
+    committed `papers/related_work_taxonomy_boundary.json` sidecar now
+    preserves bounded Section 5 taxonomy records for source reference id,
+    method family, task stage, candidate representation, evaluator/evidence
+    mode, proof-versus-witness status, comparison claim,
+    complementary-mechanism status, local status, source page/section, and
+    README/ROADMAP/paper-index claim gates.
+  - Required result: extend this into exhaustive reference-level coverage,
+    independent positioning review, local implementation-parity evidence,
+    benchmark reproduction evidence, and stronger README/ROADMAP claim
+    semantics before treating the papers index as release-ready AlphaEvolve
+    positioning evidence.
 
 - [ ] Track statistical hypothesis-testing semantics for evaluation cascades.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 3.1.

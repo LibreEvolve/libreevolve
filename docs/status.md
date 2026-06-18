@@ -595,10 +595,12 @@ Important limits:
   avoidance, replayable failed-mutation payloads, failure-aware sampling
   policy, or cross-run failure-index migrations; that boundary is tracked by
   `papers/failure_memory_boundary.json`.
-- Section 5 Related Work positioning is not inferred from the bundled paper list; the
-  missing method-family, representation, feedback/evidence, task-stage,
-  proof/witness, complementary-mechanism, and AlphaEvolve positioning taxonomy
-  gates are tracked by `papers/related_work_taxonomy_boundary.json`.
+- Section 5 Related Work positioning is not inferred from the bundled paper
+  list. Bounded method-family, representation, feedback/evidence, task-stage,
+  proof/witness, complementary-mechanism, and local-status taxonomy rows are
+  tracked by `papers/related_work_taxonomy_boundary.json`, while exhaustive
+  coverage, independent review, local parity, and benchmark reproduction
+  remain unproven.
 - Candidate execution is Python-primary code-file-set execution. The
   abstraction-choice report does not claim AlphaEvolve-style problem-defined
   serializers/materializers/runners, paired solution/search representations,

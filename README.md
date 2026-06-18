@@ -64,6 +64,12 @@ Important limits:
   that the underlying feature or benchmark has been reproduced.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
+- `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve
+  Section 5 Related Work taxonomy for method family, representation,
+  evaluator/evidence mode, comparison axis, proof/witness status, and local
+  implementation status. It is not exhaustive reference-level coverage,
+  independent positioning review, benchmark reproduction, or proof that the
+  related methods are implemented.
 - Paper-inspired plugins are approximations and optional hooks, not faithful
   implementations of the cited methods unless a specific plugin document says
   otherwise.

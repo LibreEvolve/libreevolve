@@ -903,11 +903,13 @@ is not yet an AlphaEvolve reproduction.
   an `Implemented` bullet is phrased as not implemented. It does not yet prove
   arbitrary natural-language semantics for every long status phrase, benchmark
   qualifier, implemented-benchmark limitation, or paper claim.
-- Keep Section 5 Related Work positioning scoped to flat source inventory until a
-  validated taxonomy lands. The committed
-  `papers/related_work_taxonomy_boundary.json` sidecar records that source
-  rows and individual TODOs do not yet prove source-category mapping,
-  method-family labels, comparison axes, or AlphaEvolve positioning claims.
+- Keep Section 5 Related Work positioning scoped to bounded taxonomy evidence.
+  The committed `papers/related_work_taxonomy_boundary.json` sidecar now
+  records Section 5 method-family, representation, evidence-mode, task-stage,
+  comparison-axis, proof/witness, complementary-mechanism, and local-status
+  taxonomy rows. It still does not prove exhaustive reference-level coverage,
+  independent positioning review, local implementation parity, benchmark
+  reproduction, or release-ready AlphaEvolve positioning claims.
 - Persisted validator-boundary consistency now has a CLI artifact gate:
   `validate_run_artifact_validator_boundary_consistency()` loads manifest-backed
   run directories, validates `policies.validator_execution`, scans

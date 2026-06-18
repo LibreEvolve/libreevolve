@@ -3027,21 +3027,17 @@ sidecars, tests, and active TODOs.
   - Current evidence: LibreEvolve has a PDF manifest and paper index with
     selected local inspiration papers plus feature-specific TODOs for
     FunSearch, AI-Co-Scientist, CodeEvolve, DeepEvolve, and benchmark domains.
-    The committed `papers/related_work_taxonomy_boundary.json` sidecar records
-    that this is still flat source inventory plus individual gap rows, not
-    AlphaEvolve's broader Related Work taxonomy, method-family comparisons,
-    candidate-representation modes, evidence/evaluator modes, proof-versus-
-    witness distinctions, or which related-work claims are local capability,
-    background context, or explicitly unsupported.
-  - Required result: add paper/reference taxonomy metadata and validators for
-    related-work source ids, method families (`superoptimization`,
-    `llm_algorithm_discovery`, `ai_for_science`, `proof_search`,
-    `witness_discovery`, `llm_finetuning`, `concept_learning`, etc.),
-    candidate representation, evaluator/evidence mode, task stage, comparison
-    claim, complementary-mechanism status, local implementation status, source
-    location, and README/ROADMAP wording checks so LibreEvolve does not
-    overclaim AlphaEvolve's Related Work positioning from a flat paper list or
-    isolated feature TODOs.
+    The committed `papers/related_work_taxonomy_boundary.json` sidecar now
+    includes bounded Section 5 taxonomy records with related-work source ids,
+    method families, candidate-representation modes, feedback/evidence modes,
+    task stages, comparison axes, source locations, complementary-mechanism
+    status, proof/witness status, local implementation status, and
+    README/ROADMAP/paper-index claim gates.
+  - Required result: extend this into exhaustive reference-level coverage,
+    independent positioning review, benchmark reproduction evidence, and
+    stronger README/ROADMAP/paper-index semantics before using the taxonomy as
+    release-ready AlphaEvolve Related Work positioning or implementation-parity
+    evidence.
 
 - [ ] Extend explanatory-preamble support beyond bounded leading capture.
   - Spec evidence: AlphaEvolve Figure 3(c) shows an LLM response that starts

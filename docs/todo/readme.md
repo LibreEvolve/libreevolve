@@ -145,10 +145,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     documented count, local PDF existence, source rows, and the local paper
     cache badge/count. `papers/README.md` provides paper-facing titles,
     implementation status, and benchmark coverage decisions, while
-    `papers/related_work_taxonomy_boundary.json` records that AlphaEvolve
-    Related Work positioning taxonomy and README/ROADMAP claim gates are not
-    yet ready. `papers/readme_paper_cache_topic_boundary.json` now records the
-    README paper-cache topic sentence, download-manifest row count, papers-
+    `papers/related_work_taxonomy_boundary.json` now records bounded
+    AlphaEvolve Section 5 Related Work taxonomy rows and scoped README/ROADMAP
+    claim gates. `papers/readme_paper_cache_topic_boundary.json` now records
+    the README paper-cache topic sentence, download-manifest row count, papers-
     index implementation-status row count, papers-index role inventory, and
     bounded heuristic topic-family signals for LLM-guided evolution, program
     synthesis, quality-diversity optimization, and related benchmarks.

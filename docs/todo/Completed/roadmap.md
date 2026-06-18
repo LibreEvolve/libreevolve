@@ -16002,3 +16002,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     step-count evidence, natural-language-to-programmatic bridge contracts,
     proposal truth/quality models, combined AI-Co-Scientist workflow evidence,
     and owner review signoff remain active TODOs.
+- [x] Keep ROADMAP Related Work positioning current with bounded taxonomy.
+  - Spec evidence: ROADMAP AlphaEvolve positioning gaps should distinguish
+    flat paper inventory from reviewed Section 5 taxonomy rows and from full
+    positioning readiness.
+  - Status: ROADMAP now records that
+    `papers/related_work_taxonomy_boundary.json` includes bounded method-
+    family, representation, evidence-mode, task-stage, comparison-axis,
+    proof/witness, complementary-mechanism, and local-status taxonomy rows.
+  - Remaining roadmap gap: exhaustive reference-level coverage, independent
+    positioning review, local implementation parity, benchmark reproduction,
+    release-ready positioning claims, and owner review signoff remain active
+    TODOs.

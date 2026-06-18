@@ -7787,7 +7787,7 @@ def _validate_related_work_taxonomy_boundary(root_path: Path) -> list[PaperManif
                     "related_work_taxonomy_boundary_manifest_missing",
                     (
                         f"{RELATED_WORK_TAXONOMY_BOUNDARY_FILE} must emit "
-                        "flat paper-index versus Related Work taxonomy scope"
+                        "bounded Related Work taxonomy scope"
                     ),
                     "related_work_taxonomy",
                 )

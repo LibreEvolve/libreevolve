@@ -43,6 +43,7 @@ from libreevolve.core.database import (
 )
 from libreevolve.core.jsonl import StrictJsonlError
 from libreevolve.core.evaluator import _validator_boundary_metadata
+from libreevolve.core.loop import _runtime_artifact_pointers
 from libreevolve.core.prompt import PromptSampler
 from libreevolve.population.program import Program
 from libreevolve.problems.loader import Problem
@@ -65,6 +66,14 @@ def _objective_schema():
 def ProgramDatabase(config, **kwargs):
     kwargs.setdefault("objective_schema", _objective_schema())
     return _ProgramDatabase(config, **kwargs)
+
+
+def _archive_restore_runtime(run_dir: Path, archive_state: dict) -> dict:
+    return {
+        "history": {"archive_state": archive_state},
+        "artifacts": _runtime_artifact_pointers(run_dir),
+    }
+
 
 def _db():
     return ProgramDatabase(
@@ -2428,7 +2437,7 @@ def test_database_constructor_restores_replayable_archive_contents(tmp_path):
     source.admit(second)
     source.log(second)
     archive_state = source.archive_state_snapshot()
-    source.update_manifest_runtime({"history": {"archive_state": archive_state}})
+    source.update_manifest_runtime(_archive_restore_runtime(source_dir / "t", archive_state))
 
     bundle = load_archive_restore_bundle(
         source_dir / "t" / "manifest.json",
@@ -2498,7 +2507,7 @@ def test_database_full_archive_restore_uses_restored_cursor_for_next_admission(t
     )
     weak_event = source.admit(weak)
     archive_state = source.archive_state_snapshot()
-    source.update_manifest_runtime({"history": {"archive_state": archive_state}})
+    source.update_manifest_runtime(_archive_restore_runtime(source_dir / "t", archive_state))
 
     bundle = load_archive_restore_bundle(
         source_dir / "t" / "manifest.json",

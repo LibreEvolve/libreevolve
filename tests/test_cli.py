@@ -1254,7 +1254,12 @@ def test_run_can_restore_full_archive_snapshot_from_manifest_history_bundle(tmp_
     source.admit(second)
     source.log(second)
     archive_state = source.archive_state_snapshot()
-    source.update_manifest_runtime({"history": {"archive_state": archive_state}})
+    source.update_manifest_runtime(
+        {
+            "history": {"archive_state": archive_state},
+            "artifacts": loop_module._runtime_artifact_pointers(source_root / "previous"),
+        }
+    )
     previous_manifest = source_root / "previous" / "manifest.json"
 
     _make_problem(tmp_path)

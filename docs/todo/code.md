@@ -2783,17 +2783,22 @@ sidecars, tests, and active TODOs.
     manifests now include `runtime.history.sampling_balance_report`, which
     aggregates actual parent and inspiration decisions by strategy, mixed
     explore/exploit branch, inspiration source, generation, selected-count
-    totals, metric target, frontier, and lineage indicators. The committed
-    `papers/sampling_balance_boundary.json` sidecar keeps this scoped to local
-    sampling-count telemetry.
+    totals, metric target, frontier, and lineage indicators. It now also emits
+    current-run `selected_program_repetition` diagnostics and
+    `fallback_source_pool_provenance` fields covering inspiration strategy
+    source, sample kind, unknown-strategy counts, and excluded inspiration
+    totals. The committed `papers/sampling_balance_boundary.json` sidecar
+    keeps this scoped to local sampling-count, repetition, and source
+    provenance telemetry.
   - Required result: extend sampling-balance reports with selected-program
-    repetition, fallback source-pool provenance, island/cell/metric/lineage/
-    descriptor contribution, score improvement versus diversity effects,
-    budget impact, validation hooks, equal-budget comparisons, and an explicit
-    calibrated database-balance policy so reports can distinguish pure
-    exploitation, pure exploration, default mixed sampling, and
-    metric/frontier/lineage variants before docs treat `explore_ratio` or
-    strategy metadata as calibrated database-balance evidence.
+    repetition impact analysis, island/cell/metric/lineage/descriptor
+    contribution, score improvement
+    versus diversity effects, budget impact, validation hooks, equal-budget
+    comparisons, and an explicit calibrated database-balance policy so reports
+    can distinguish pure exploitation, pure exploration, default mixed
+    sampling, and metric/frontier/lineage variants before docs treat
+    `explore_ratio` or strategy metadata as calibrated database-balance
+    evidence.
 
 - [ ] Extend proposal scoring into semantic proposal-index retrieval.
   - Spec evidence: AlphaEvolve-style idea resurfacing should be able to judge

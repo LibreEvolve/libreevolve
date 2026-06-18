@@ -9,7 +9,7 @@ from typing import Any
 SAMPLING_BALANCE_BOUNDARY_SCHEMA = "libreevolve.sampling_balance_boundary.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_RUNTIME_REPORT_SCHEMA = "libreevolve.sampling_balance_report.v1"
-EXPECTED_BOUNDARY_STATUS = "local_sampling_counts_only"
+EXPECTED_BOUNDARY_STATUS = "local_sampling_counts_with_repetition_and_source_provenance"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "configured_explore_ratio",
     "parent_strategy_counts",
@@ -27,8 +27,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "calibrated_exploration_exploitation_policy",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "fallback_source_pool_provenance": "not_recorded_locally",
-    "selected_program_repetition_table": "not_recorded_locally",
     "island_cell_metric_lineage_descriptor_coverage": "not_recorded_locally",
     "score_improvement_vs_diversity_effects": "not_recorded_locally",
     "equal_budget_strategy_comparisons": "not_recorded_locally",
@@ -72,12 +70,14 @@ def sampling_balance_boundary_record() -> dict[str, Any]:
             "sampling counts from runtime.history.sampling_balance_report: "
             "configured explore ratio, parent and inspiration strategy counts, "
             "per-generation decision counts, sampled candidate metadata, "
-            "strategy-source counts, and metric/frontier/lineage indicators. "
+            "strategy-source counts, selected-program repetition diagnostics, "
+            "fallback/source-pool provenance fields, and metric/frontier/"
+            "lineage indicators. "
             "It does not claim calibrated exploration/exploitation balance, "
-            "fallback source-pool provenance, selected-program repetition "
-            "tables, island/cell/metric/lineage/descriptor coverage, "
-            "score-improvement versus diversity effects, equal-budget strategy "
-            "comparisons, or an AlphaEvolve-grade database-balance policy."
+            "full island/cell/metric/lineage/descriptor coverage, "
+            "score-improvement versus diversity effects, equal-budget "
+            "strategy comparisons, or an AlphaEvolve-grade database-balance "
+            "policy."
         ),
     }
 

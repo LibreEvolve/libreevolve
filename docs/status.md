@@ -1998,12 +1998,13 @@ Important limits:
   artifacts. It is not semantic proof that every implemented benchmark bullet
   is fresh, sufficient, or benchmark-comparable; that remains part of the
   paper-index semantic evidence-mapping TODO.
-- Database sampling reports are local strategy/count telemetry, not calibrated
-  AlphaEvolve-style exploration/exploitation balance, fallback source-pool
-  provenance, selected-program repetition tables, island/cell/metric/lineage/
-  descriptor coverage, score-improvement versus diversity effects,
-  equal-budget strategy comparisons, or an AlphaEvolve-grade database-balance
-  policy; that boundary is tracked by `papers/sampling_balance_boundary.json`.
+- Database sampling reports are local strategy/count telemetry plus current-run
+  selected-program repetition and fallback/source-pool provenance diagnostics,
+  not calibrated AlphaEvolve-style exploration/exploitation balance,
+  repetition impact analysis, island/cell/metric/lineage/descriptor coverage,
+  score-improvement versus diversity effects, equal-budget strategy
+  comparisons, or an AlphaEvolve-grade database-balance policy; that boundary
+  is tracked by `papers/sampling_balance_boundary.json`.
 - Multi-objective archive data is retained overlay, diagnostic frontier, and
   `runtime.history.objective_primary_archive_readiness` audit evidence, not
   primary Pareto/frontier archive replacement or durable cross-run metric

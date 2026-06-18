@@ -1384,10 +1384,12 @@ AlphaEvolve sampling-balance note: completed manifests now include
 `runtime.history.sampling_balance_report`, which aggregates generated-candidate
 parent/inspiration selection metadata into current-run explore/exploit,
 strategy, metric-target, frontier, lineage, and per-generation decision counts.
-The committed `papers/sampling_balance_boundary.json` sidecar preserves that
-local-counts-only boundary. This narrows the remaining Section 2.5
-database-balance gap to fallback source-pool provenance, selected-program
-repetition tables, island/cell/metric/lineage/descriptor coverage,
+It also records current-run selected-program repetition diagnostics and
+fallback/source-pool provenance fields for inspiration strategy source, sample
+kind, unknown-strategy counts, and excluded inspiration totals. The committed
+`papers/sampling_balance_boundary.json` sidecar preserves that local telemetry
+boundary. This narrows the remaining Section 2.5 database-balance gap to
+island/cell/metric/lineage/descriptor coverage, repetition impact analysis,
 score-improvement attribution versus diversity-effect analysis, equal-budget
 strategy comparisons, and calibrated AlphaEvolve-grade database-balance policy
 rather than absence of run-local sampling telemetry.

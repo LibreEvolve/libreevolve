@@ -12,9 +12,12 @@ def test_sampling_balance_boundary_accepts_local_sampling_counts_boundary():
     validation = validate_sampling_balance_boundary(boundary)
 
     assert validation.ok is True
-    assert validation.boundary_status == "local_sampling_counts_only"
+    assert (
+        validation.boundary_status
+        == "local_sampling_counts_with_repetition_and_source_provenance"
+    )
     assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 6
+    assert validation.missing_evidence_count == 4
     assert boundary["schema"] == SAMPLING_BALANCE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert (
@@ -47,6 +50,9 @@ def test_render_sampling_balance_boundary_summary_reports_shape():
 
     assert "Sampling balance boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| boundary_status | local_sampling_counts_only |" in summary
+    assert (
+        "| boundary_status | local_sampling_counts_with_repetition_and_source_provenance |"
+        in summary
+    )
     assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 6 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

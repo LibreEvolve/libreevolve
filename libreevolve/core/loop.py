@@ -20907,6 +20907,12 @@ def _sampling_balance_report(
         "metric_target_counts": dict(sorted(metric_target_counts.items())),
         "frontier_selection_decision_count": frontier_decision_count,
         "lineage_selection_decision_count": lineage_decision_count,
+        "selected_program_repetition": (
+            _sampling_balance_selected_program_repetition(generated_records)
+        ),
+        "fallback_source_pool_provenance": (
+            _sampling_balance_fallback_source_pool_provenance(generated_records)
+        ),
         "generation_records": [
             generation_records[index]
             for index in sorted(generation_records)
@@ -20934,6 +20940,7 @@ def _sampling_balance_report(
                 "per_strategy_score_improvement_analysis",
                 "diversity_retention_effect_analysis",
                 "cross_run_sampling_balance_calibration",
+                "island_cell_metric_lineage_descriptor_coverage",
             ],
         },
     }
@@ -20965,10 +20972,19 @@ def _sampling_balance_candidate_record(program: Program) -> dict:
         "loop_generation_index": loop_generation_index,
         "parent_id": program.parent_id,
         "parent_strategy": _sampling_balance_label(parent.get("strategy")),
+        "parent_selected_program_id": (
+            parent.get("selected_program_id")
+            if isinstance(parent.get("selected_program_id"), str)
+            and parent.get("selected_program_id")
+            else None
+        ),
         "parent_target_metrics": _sampling_balance_target_metrics(parent),
         "parent_frontier": isinstance(parent.get("frontier_size"), int),
         "parent_lineage": isinstance(parent.get("lineage_root_id"), str),
         "inspiration_strategy": _sampling_balance_label(inspiration.get("strategy")),
+        "inspiration_sample_kind": _sampling_balance_label(
+            inspiration.get("sample_kind")
+        ),
         "inspiration_strategy_source": _sampling_balance_label(
             inspiration.get("strategy_source")
         ),
@@ -20977,6 +20993,12 @@ def _sampling_balance_candidate_record(program: Program) -> dict:
         ),
         "inspiration_selected_count": _sampling_balance_int(
             inspiration.get("selected_count")
+        ),
+        "inspiration_selected_program_ids": _sampling_balance_string_list(
+            inspiration.get("selected_program_ids")
+        ),
+        "inspiration_excluded_count": _sampling_balance_int(
+            inspiration.get("excluded_count")
         ),
         "inspiration_target_metrics": _sampling_balance_target_metrics(inspiration),
         "inspiration_frontier": isinstance(inspiration.get("frontier_size"), int),
@@ -21023,6 +21045,93 @@ def _sampling_balance_target_metrics(selection: Mapping[str, object]) -> list[st
     return _unique_in_order(metrics)
 
 
+def _sampling_balance_string_list(value: object) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return _unique_in_order(
+        [item for item in value if isinstance(item, str) and item]
+    )
+
+
+def _sampling_balance_selected_program_repetition(records: list[dict]) -> dict:
+    parent_counts: dict[str, int] = {}
+    inspiration_counts: dict[str, int] = {}
+    combined_counts: dict[str, int] = {}
+    for record in records:
+        parent_id = record.get("parent_selected_program_id")
+        if isinstance(parent_id, str) and parent_id:
+            _increment_count(parent_counts, parent_id)
+            _increment_count(combined_counts, parent_id)
+        inspiration_ids = record.get("inspiration_selected_program_ids")
+        if isinstance(inspiration_ids, list):
+            for program_id in inspiration_ids:
+                if not isinstance(program_id, str) or not program_id:
+                    continue
+                _increment_count(inspiration_counts, program_id)
+                _increment_count(combined_counts, program_id)
+    return {
+        "schema": "libreevolve.sampling_balance_selected_program_repetition.v1",
+        "source": "sample_records_parent_and_inspiration_selected_ids",
+        "parent_selected_program_count": sum(parent_counts.values()),
+        "parent_distinct_program_count": len(parent_counts),
+        "inspiration_selected_program_count": sum(inspiration_counts.values()),
+        "inspiration_distinct_program_count": len(inspiration_counts),
+        "combined_selected_program_count": sum(combined_counts.values()),
+        "combined_distinct_program_count": len(combined_counts),
+        "repeated_program_count": sum(
+            1 for count in combined_counts.values() if count > 1
+        ),
+        "max_selection_count": max(combined_counts.values(), default=0),
+        "top_selected_programs": _sampling_balance_top_counts(combined_counts, 25),
+        "top_selected_programs_limit": 25,
+        "current_run_only": True,
+        "claim_ready": False,
+    }
+
+
+def _sampling_balance_fallback_source_pool_provenance(records: list[dict]) -> dict:
+    sample_kind_counts: dict[str, int] = {}
+    strategy_source_counts: dict[str, int] = {}
+    parent_unknown_count = 0
+    inspiration_unknown_count = 0
+    excluded_total = 0
+    for record in records:
+        _increment_count(
+            sample_kind_counts,
+            _sampling_balance_label(record.get("inspiration_sample_kind")),
+        )
+        strategy_source = _sampling_balance_label(
+            record.get("inspiration_strategy_source")
+        )
+        _increment_count(strategy_source_counts, strategy_source)
+        if record.get("parent_strategy") == "unknown":
+            parent_unknown_count += 1
+        if record.get("inspiration_strategy") == "unknown":
+            inspiration_unknown_count += 1
+        excluded_total += _sampling_balance_int(record.get("inspiration_excluded_count"))
+    return {
+        "schema": "libreevolve.sampling_balance_fallback_source_pool_provenance.v1",
+        "source": "sample_records_strategy_source_sample_kind_and_excluded_counts",
+        "strategy_source_counts": dict(sorted(strategy_source_counts.items())),
+        "sample_kind_counts": dict(sorted(sample_kind_counts.items())),
+        "parent_unknown_strategy_count": parent_unknown_count,
+        "inspiration_unknown_strategy_count": inspiration_unknown_count,
+        "inspiration_excluded_total": excluded_total,
+        "current_run_only": True,
+        "does_not_reconstruct_full_source_pool": True,
+        "claim_ready": False,
+    }
+
+
+def _sampling_balance_top_counts(counts: dict[str, int], limit: int) -> list[dict]:
+    records = [
+        {"program_id": program_id, "selection_count": count}
+        for program_id, count in counts.items()
+    ]
+    records.sort(key=lambda record: (-record["selection_count"], record["program_id"]))
+    return records[:limit]
+
+
 def _increment_count(counts: dict[str, int], key: str) -> None:
     counts[key] = counts.get(key, 0) + 1
 
@@ -21058,6 +21167,8 @@ def validate_sampling_balance_report(report: object) -> dict:
         "metric_target_counts",
         "frontier_selection_decision_count",
         "lineage_selection_decision_count",
+        "selected_program_repetition",
+        "fallback_source_pool_provenance",
         "generation_records",
         "generation_records_limit",
         "generation_records_truncated",
@@ -21119,8 +21230,13 @@ def validate_sampling_balance_report(report: object) -> dict:
         inspiration_counts = {}
     requested_total = 0
     selected_total = 0
+    excluded_total = 0
     observed_parent_counts: dict[str, int] = {}
     observed_inspiration_counts: dict[str, int] = {}
+    observed_strategy_source_counts: dict[str, int] = {}
+    observed_sample_kind_counts: dict[str, int] = {}
+    observed_parent_selected_ids: list[str] = []
+    observed_inspiration_selected_ids: list[str] = []
     for index, record in enumerate(sample_records):
         if not isinstance(record, dict):
             issues.append(
@@ -21157,8 +21273,29 @@ def validate_sampling_balance_report(report: object) -> dict:
             inspiration_strategy = "unknown"
         _increment_count(observed_parent_counts, parent_strategy)
         _increment_count(observed_inspiration_counts, inspiration_strategy)
+        _increment_count(
+            observed_strategy_source_counts,
+            _sampling_balance_label(record.get("inspiration_strategy_source")),
+        )
+        _increment_count(
+            observed_sample_kind_counts,
+            _sampling_balance_label(record.get("inspiration_sample_kind")),
+        )
+        parent_selected_id = record.get("parent_selected_program_id")
+        if parent_selected_id is not None and (
+            not isinstance(parent_selected_id, str) or not parent_selected_id
+        ):
+            issues.append(
+                {
+                    "code": "invalid_parent_selected_program_id",
+                    "message": f"sample record {index} parent selected id is invalid",
+                }
+            )
+        elif isinstance(parent_selected_id, str):
+            observed_parent_selected_ids.append(parent_selected_id)
         requested = record.get("inspiration_requested_count")
         selected = record.get("inspiration_selected_count")
+        excluded = record.get("inspiration_excluded_count")
         if isinstance(requested, bool) or not isinstance(requested, int) or requested < 0:
             issues.append(
                 {
@@ -21175,8 +21312,30 @@ def validate_sampling_balance_report(report: object) -> dict:
                 }
             )
             selected = 0
+        if isinstance(excluded, bool) or not isinstance(excluded, int) or excluded < 0:
+            issues.append(
+                {
+                    "code": "invalid_excluded_count",
+                    "message": f"sample record {index} excluded count is invalid",
+                }
+            )
+            excluded = 0
+        selected_ids = record.get("inspiration_selected_program_ids")
+        if not isinstance(selected_ids, list) or any(
+            not isinstance(program_id, str) or not program_id
+            for program_id in selected_ids
+        ):
+            issues.append(
+                {
+                    "code": "invalid_inspiration_selected_program_ids",
+                    "message": f"sample record {index} inspiration selected ids are invalid",
+                }
+            )
+            selected_ids = []
+        observed_inspiration_selected_ids.extend(selected_ids)
         requested_total += requested
         selected_total += selected
+        excluded_total += excluded
     if report.get("sample_records_truncated") is not True:
         if report.get("generated_candidate_count") != len(sample_records):
             issues.append(
@@ -21213,6 +21372,19 @@ def validate_sampling_balance_report(report: object) -> dict:
                     "message": "inspiration_selected_total must match sample records",
                 }
             )
+        _validate_sampling_balance_selected_program_repetition(
+            report.get("selected_program_repetition"),
+            observed_parent_selected_ids,
+            observed_inspiration_selected_ids,
+            issues,
+        )
+        _validate_sampling_balance_fallback_source_pool_provenance(
+            report.get("fallback_source_pool_provenance"),
+            observed_strategy_source_counts,
+            observed_sample_kind_counts,
+            excluded_total,
+            issues,
+        )
     for field in (
         "mixed_parent_decision_count",
         "mixed_parent_explore_count",
@@ -21260,6 +21432,127 @@ def validate_sampling_balance_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_sampling_balance_selected_program_repetition(
+    value: object,
+    parent_ids: list[str],
+    inspiration_ids: list[str],
+    issues: list[dict],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            {
+                "code": "invalid_selected_program_repetition",
+                "message": "selected_program_repetition must be an object",
+            }
+        )
+        return
+    combined_counts: dict[str, int] = {}
+    for program_id in parent_ids + inspiration_ids:
+        _increment_count(combined_counts, program_id)
+    expected = {
+        "parent_selected_program_count": len(parent_ids),
+        "parent_distinct_program_count": len(set(parent_ids)),
+        "inspiration_selected_program_count": len(inspiration_ids),
+        "inspiration_distinct_program_count": len(set(inspiration_ids)),
+        "combined_selected_program_count": len(parent_ids) + len(inspiration_ids),
+        "combined_distinct_program_count": len(combined_counts),
+        "repeated_program_count": sum(
+            1 for count in combined_counts.values() if count > 1
+        ),
+        "max_selection_count": max(combined_counts.values(), default=0),
+    }
+    if (
+        value.get("schema")
+        != "libreevolve.sampling_balance_selected_program_repetition.v1"
+    ):
+        issues.append(
+            {
+                "code": "invalid_selected_program_repetition_schema",
+                "message": "selected_program_repetition schema is unsupported",
+            }
+        )
+    if value.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "selected_program_repetition_overclaim",
+                "message": "selected_program_repetition must not claim calibrated balance",
+            }
+        )
+    for field, expected_value in expected.items():
+        if value.get(field) != expected_value:
+            issues.append(
+                {
+                    "code": f"invalid_selected_program_repetition_{field}",
+                    "message": f"selected_program_repetition.{field} must match sample records",
+                }
+            )
+    top_records = value.get("top_selected_programs")
+    if not isinstance(top_records, list):
+        issues.append(
+            {
+                "code": "invalid_top_selected_programs",
+                "message": "top_selected_programs must be a list",
+            }
+        )
+
+
+def _validate_sampling_balance_fallback_source_pool_provenance(
+    value: object,
+    strategy_source_counts: dict[str, int],
+    sample_kind_counts: dict[str, int],
+    excluded_total: int,
+    issues: list[dict],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(
+            {
+                "code": "invalid_fallback_source_pool_provenance",
+                "message": "fallback_source_pool_provenance must be an object",
+            }
+        )
+        return
+    if (
+        value.get("schema")
+        != "libreevolve.sampling_balance_fallback_source_pool_provenance.v1"
+    ):
+        issues.append(
+            {
+                "code": "invalid_fallback_source_pool_provenance_schema",
+                "message": "fallback_source_pool_provenance schema is unsupported",
+            }
+        )
+    if value.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "fallback_source_pool_provenance_overclaim",
+                "message": "fallback_source_pool_provenance must not claim calibrated balance",
+            }
+        )
+    if value.get("strategy_source_counts") != dict(
+        sorted(strategy_source_counts.items())
+    ):
+        issues.append(
+            {
+                "code": "invalid_fallback_strategy_source_counts",
+                "message": "fallback strategy source counts must match sample records",
+            }
+        )
+    if value.get("sample_kind_counts") != dict(sorted(sample_kind_counts.items())):
+        issues.append(
+            {
+                "code": "invalid_fallback_sample_kind_counts",
+                "message": "fallback sample kind counts must match sample records",
+            }
+        )
+    if value.get("inspiration_excluded_total") != excluded_total:
+        issues.append(
+            {
+                "code": "invalid_fallback_excluded_total",
+                "message": "fallback excluded total must match sample records",
+            }
+        )
 
 
 def _automated_evaluator_scope_report(

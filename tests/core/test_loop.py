@@ -8903,8 +8903,30 @@ def test_runtime_history_reports_sampling_balance_counts():
     assert report["generation_records"][0]["candidate_count"] == 1
     sample = report["sample_records"][0]
     assert sample["parent_strategy"] == "explore"
+    assert isinstance(sample["parent_selected_program_id"], str)
     assert sample["inspiration_strategy"] == "metric"
+    assert sample["inspiration_sample_kind"] == "diverse"
+    assert sample["inspiration_strategy_source"] == "config"
     assert sample["inspiration_selected_count"] == 1
+    assert len(sample["inspiration_selected_program_ids"]) == 1
+    repetition = report["selected_program_repetition"]
+    assert repetition["schema"] == (
+        "libreevolve.sampling_balance_selected_program_repetition.v1"
+    )
+    assert repetition["parent_selected_program_count"] == 1
+    assert repetition["inspiration_selected_program_count"] == 1
+    assert repetition["combined_selected_program_count"] == 2
+    assert repetition["current_run_only"] is True
+    assert repetition["claim_ready"] is False
+    provenance = report["fallback_source_pool_provenance"]
+    assert provenance["schema"] == (
+        "libreevolve.sampling_balance_fallback_source_pool_provenance.v1"
+    )
+    assert provenance["strategy_source_counts"] == {"config": 1}
+    assert provenance["sample_kind_counts"] == {"diverse": 1}
+    assert provenance["inspiration_excluded_total"] == 1
+    assert provenance["does_not_reconstruct_full_source_pool"] is True
+    assert provenance["claim_ready"] is False
     assert report["claim_ready"] is False
 
 

@@ -14282,3 +14282,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     duplicate indexes, and a fixed-budget memory claim gate remain open.
   - Verification: focused duplicate-work boundary tests require the durable
     exact-index evidence while preserving overclaim rejection.
+- [x] Add paper-facing duplicate/cache output-signature index boundary.
+  - Paper evidence: AlphaEvolve Section 2.5 describes generated programs with
+    scores and program outputs attached to the evolutionary database.
+  - Status: paper-facing docs and
+    `papers/duplicate_work_policy_boundary.json` now record that
+    `duplicate_work_cache_index.jsonl` rows include bounded evaluator-output
+    signature hashes alongside exact workspace identity and metric names.
+  - Remaining paper gap: raw output replay, durable evaluator-result storage,
+    source-aware duplicate indexes, cross-run lookup/replay, stochastic
+    re-evaluation policy, and semantic near-duplicate memory remain open.
+  - Verification: focused duplicate-work boundary tests require the bounded
+    output-signature evidence while preserving durable-memory overclaim
+    rejection.

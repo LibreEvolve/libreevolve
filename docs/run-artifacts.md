@@ -3592,13 +3592,15 @@ emit `candidate_evaluation_cache_hit` controller events, and cache hits do not
 consume evaluator-call budget. The report now also points to
 `duplicate_work_cache_index.jsonl`, a strict JSONL artifact with schema
 `libreevolve.duplicate_work_cache_index.v1` that exports one exact-workspace
-row per runtime program for audit and cross-run concatenation.
+row per runtime program for audit and cross-run concatenation. Rows include
+bounded evaluator-output signature hashes and metric names, not raw evaluator
+payloads.
 
 This is exact-workspace cache/index evidence, not AlphaEvolve-grade durable
 memory. The live cache remains run-local memory; the exported index is not a
 cross-run lookup/replay engine, durable evaluator-result store, invalidation or
 migration policy, stochastic re-evaluation policy, semantic near-duplicate
-detector, or source/output-aware duplicate-memory table.
+detector, source-aware duplicate-memory table, or raw-output replay store.
 
 ## `duplicate_work_cache_index.jsonl`
 
@@ -3606,14 +3608,17 @@ detector, or source/output-aware duplicate-memory table.
 report finalizer and contains versioned
 `libreevolve.duplicate_work_cache_index.v1` rows. Each row records the runtime
 program id, generation, candidate type/status, canonical workspace SHA-256,
-finite fitness when available, evaluator validity, evaluation-cache status,
-cache-hit flag, cache key when present, and the source program id for reused
-results when available.
+finite fitness when available, metric names, bounded evaluator-output signature
+hash metadata, evaluator validity, evaluation-cache status, cache-hit flag,
+cache key when present, and the source program id for reused results when
+available.
 
 The artifact is intended for exact-workspace duplicate audits and safe
 cross-run concatenation by workspace hash/cache key. It is not read during
 evolution, does not replay evaluator results across resumes, and does not
-replace the run-local in-memory evaluator cache.
+replace the run-local in-memory evaluator cache. The evaluator-output signature
+is hash/count/top-level-field metadata for audit comparison, not recoverable
+program output.
 
 ## `runtime.history.sampling_balance_report`
 

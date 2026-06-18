@@ -19222,3 +19222,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused duplicate-work runtime tests read the JSONL artifact
     and validate cache-hit rows while preserving false cross-run lookup and
     resume-replay readiness.
+- [x] Add bounded evaluator-output signatures to duplicate/cache index rows.
+  - Spec evidence: AlphaEvolve-style database memory attaches scores and
+    program outputs to generated programs, so exact workspace duplicate audits
+    need at least bounded output-identity evidence before source/output-aware
+    duplicate-memory claims can be narrowed.
+  - Status: `duplicate_work_cache_index.jsonl` rows now include metric names
+    and `evaluator_output_signature` hash/count/top-level-field metadata
+    derived from the bounded evaluator-output signature helper. The duplicate-
+    work report validator rejects duplicate group records that lack valid
+    output-signature hashes.
+  - Remaining code gap: this is hash-only output-signature evidence, not raw
+    output replay, durable evaluator-result storage, cross-run lookup, source-
+    aware indexing, stochastic re-evaluation, or semantic near-duplicate
+    detection.
+  - Verification: focused duplicate-work runtime tests assert metric names and
+    bounded output-signature hashes in the persisted JSONL rows.

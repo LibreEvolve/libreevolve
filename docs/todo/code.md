@@ -2920,7 +2920,10 @@ sidecars, tests, and active TODOs.
     consume evaluator-call budget, and are visible in generated-candidate
     metadata and the duplicate-work report. Completed manifests also include
     `duplicate_work_cache_index.jsonl`, a strict JSONL exact-workspace
-    duplicate/cache audit artifact with one row per runtime program. The
+    duplicate/cache audit artifact with one row per runtime program. Each row
+    now includes metric names and a bounded evaluator-output signature hash, so
+    duplicate/cache audits can compare exact workspace identity with
+    output-signature identity without storing raw evaluator payloads. The
     duplicate-work policy report records the artifact path, schema, row count,
     and hash so rows can be inspected or concatenated across runs without
     claiming replay lookup. Completed manifests also include
@@ -2932,13 +2935,14 @@ sidecars, tests, and active TODOs.
     the same bounded retained-program integrity absence boundary for
     paper-manifest validation. `papers/duplicate_work_policy_boundary.json`
     now validates the duplicate-work cache as run-local exact-workspace reuse,
-    plus a durable exact-workspace index export, not durable AlphaEvolve-grade
-    memory.
+    plus a durable exact-workspace and bounded-output-signature index export,
+    not durable AlphaEvolve-grade memory.
   - Required result: add durable cross-run cache lookup/storage,
     resume-spanning cache replay, cache invalidation/migration policy,
     stochastic re-evaluation policy, semantic near-duplicate detection, and
-    source/output-aware cache indexes before presenting the program database as
-    AlphaEvolve-grade fixed-budget memory over previously explored programs.
+    source-aware cache indexes/raw-output replay before presenting the program
+    database as AlphaEvolve-grade fixed-budget memory over previously explored
+    programs.
 
 - [ ] Extend automated-evaluator scope policy into robust environment fixtures.
   - Spec evidence: AlphaEvolve says automated evaluation is both an advantage

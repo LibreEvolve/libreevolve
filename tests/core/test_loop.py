@@ -8876,6 +8876,16 @@ def test_runtime_history_reports_duplicate_work_policy_with_run_local_cache():
         "libreevolve.duplicate_work_cache_index.v1"
     }
     assert any(row["cache_hit"] is True for row in index_rows)
+    assert {tuple(row["metric_names"]) for row in index_rows} == {("score",)}
+    assert all(
+        row["evaluator_output_signature"]["schema"]
+        == "libreevolve.initial_pool_evaluator_output_signature.v1"
+        for row in index_rows
+    )
+    assert all(
+        len(row["evaluator_output_signature"]["json_sha256"]) == 64
+        for row in index_rows
+    )
     assert {
         row["workspace_sha256"]
         for row in index_rows

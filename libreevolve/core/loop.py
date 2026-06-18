@@ -20569,7 +20569,8 @@ def _duplicate_work_policy_report(programs: list[Program], run_dir: Path) -> dic
             ),
             "durable_index_storage": "duplicate_work_cache_index.jsonl",
             "durable_index_policy": (
-                "exact_workspace_rows_exported_for_audit_and_cross_run_concatenation"
+                "exact_workspace_rows_with_bounded_output_signatures_exported_"
+                "for_audit_and_cross_run_concatenation"
             ),
             "budget_policy": (
                 "cache_hits_emit_candidate_evaluation_cache_hit_events_and_do_not_"
@@ -20584,6 +20585,7 @@ def _duplicate_work_policy_report(programs: list[Program], run_dir: Path) -> dic
             "run_local_cache_hit_reported": bool(cache_hit_ids),
             "run_local_evaluation_result_reuse": True,
             "durable_exact_workspace_index_export": cache_index_export["exists"],
+            "durable_output_signature_index_export": cache_index_export["exists"],
             "cross_run_workspace_lookup": False,
             "resume_spanning_cache_replay": False,
             "remaining_gap": [
@@ -20591,6 +20593,7 @@ def _duplicate_work_policy_report(programs: list[Program], run_dir: Path) -> dic
                 "durable_evaluation_cache_storage",
                 "cache_replay_across_resume_boundaries",
                 "semantic_near_duplicate_detection",
+                "source_aware_cache_index",
             ],
         },
     }
@@ -20625,6 +20628,7 @@ def _write_duplicate_work_cache_index(run_dir: Path, records: list[dict]) -> dic
             "exists": False,
             "sha256": None,
             "row_policy": "one_row_per_runtime_program_record",
+            "output_signature_policy": "bounded_hash_only_no_raw_output_replay",
             "cross_run_policy": (
                 "no_replay_lookup; rows_are_safe_to_concatenate_by_workspace_hash"
             ),
@@ -20645,6 +20649,7 @@ def _write_duplicate_work_cache_index(run_dir: Path, records: list[dict]) -> dic
         "exists": True,
         "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
         "row_policy": "one_row_per_runtime_program_record",
+        "output_signature_policy": "bounded_hash_only_no_raw_output_replay",
         "cross_run_policy": (
             "no_replay_lookup; rows_are_safe_to_concatenate_by_workspace_hash"
         ),
@@ -20676,6 +20681,10 @@ def _duplicate_work_cache_index_record(record: dict, row_index: int) -> dict:
         "candidate_status": record.get("candidate_status"),
         "workspace_sha256": workspace_hash,
         "fitness": _finite_json_number(record.get("fitness")),
+        "metric_names": list(record.get("metric_names", []))
+        if isinstance(record.get("metric_names"), list)
+        else [],
+        "evaluator_output_signature": record.get("evaluator_output_signature"),
         "is_valid": record.get("is_valid"),
         "evaluation_cache_status": cache.get("status"),
         "cache_hit": cache.get("cache_hit") is True,
@@ -20692,6 +20701,14 @@ def _duplicate_work_cache_index_record(record: dict, row_index: int) -> dict:
 def _duplicate_work_program_record(program: Program) -> dict:
     metadata = program.metadata if isinstance(program.metadata, dict) else {}
     evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
+    metrics = {
+        str(name): _finite_json_number(value)
+        for name, value in sorted(program.metrics.items())
+        if isinstance(name, str)
+        and isinstance(value, (int, float))
+        and not isinstance(value, bool)
+        and math.isfinite(value)
+    }
     return {
         "program_id": program.id,
         "generation": program.generation,
@@ -20700,6 +20717,10 @@ def _duplicate_work_program_record(program: Program) -> dict:
         "candidate_status": metadata.get("candidate_status"),
         "workspace_sha256": _workspace_sha256(program.workspace()),
         "fitness": program.fitness,
+        "metric_names": sorted(metrics),
+        "evaluator_output_signature": _initial_pool_evaluator_output_signature(
+            program
+        ),
         "is_valid": evaluation.get("is_valid"),
         "evaluation_cache": (
             dict(metadata["evaluation_cache"])
@@ -20942,6 +20963,43 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
                                     ),
                                 }
                             )
+                metric_names = record.get("metric_names")
+                if not isinstance(metric_names, list) or any(
+                    not isinstance(name, str) for name in metric_names
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_duplicate_record_metric_names",
+                            "message": (
+                                f"duplicate workspace group {index} record "
+                                f"{record_index} metric_names must be strings"
+                            ),
+                        }
+                    )
+                signature = record.get("evaluator_output_signature")
+                if not isinstance(signature, dict) or signature.get(
+                    "schema"
+                ) != "libreevolve.initial_pool_evaluator_output_signature.v1":
+                    issues.append(
+                        {
+                            "code": "invalid_duplicate_record_output_signature",
+                            "message": (
+                                f"duplicate workspace group {index} record "
+                                f"{record_index} needs evaluator output signature"
+                            ),
+                        }
+                    )
+                else:
+                    if not _is_sha256_hex(signature.get("json_sha256")):
+                        issues.append(
+                            {
+                                "code": "invalid_duplicate_record_output_signature_hash",
+                                "message": (
+                                    f"duplicate workspace group {index} record "
+                                    f"{record_index} signature hash is invalid"
+                                ),
+                            }
+                        )
         group_cache_hit_ids = group.get("cache_hit_program_ids")
         if not isinstance(group_cache_hit_ids, list) or any(
             not isinstance(program_id, str) or not program_id
@@ -21017,6 +21075,7 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
             "path": "duplicate_work_cache_index.jsonl",
             "record_schema": DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA,
             "row_policy": "one_row_per_runtime_program_record",
+            "output_signature_policy": "bounded_hash_only_no_raw_output_replay",
         }
         for key, expected_value in expected_index.items():
             if cache_index.get(key) != expected_value:

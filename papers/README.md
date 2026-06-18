@@ -1379,15 +1379,17 @@ hash plus evaluator-contract hash; cache hits emit replayable
 `candidate_evaluation_cache_hit` controller events and do not consume
 evaluator-call budget. Completed runs also write
 `duplicate_work_cache_index.jsonl`, a strict JSONL exact-workspace index with
-one row per runtime program for audit and cross-run concatenation; it is not a
-replay lookup engine. The remaining gap is durable cross-run cache lookup,
-durable evaluator-result storage, resume-spanning cache replay, cache
-invalidation/migration policy, stochastic re-evaluation policy, semantic
-near-duplicate detection, source/output-aware cache indexes, and broader
-AlphaEvolve-grade fixed-budget memory over previously explored programs. The
-committed
+one row per runtime program for audit and cross-run concatenation. Rows include
+metric names and bounded evaluator-output signature hashes without retaining
+raw evaluator payloads; the artifact is not a replay lookup engine. The
+remaining gap is durable cross-run cache lookup, durable evaluator-result
+storage, resume-spanning cache replay, cache invalidation/migration policy,
+stochastic re-evaluation policy, semantic near-duplicate detection,
+source-aware cache indexes, raw-output replay, and broader AlphaEvolve-grade
+fixed-budget memory over previously explored programs. The committed
 `papers/duplicate_work_policy_boundary.json` sidecar keeps this run-local
-exact-cache plus durable exact-index-export scope machine-validated.
+exact-cache plus durable bounded-output-signature index-export scope
+machine-validated.
 
 AlphaEvolve sampling-balance note: completed manifests now include
 `runtime.history.sampling_balance_report`, which aggregates generated-candidate

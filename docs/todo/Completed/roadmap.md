@@ -15969,3 +15969,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     resume-spanning replay, invalidation/migration policy, semantic
     near-duplicate handling, source/output-aware indexes, and owner review
     signoff remain active TODOs.
+- [x] Keep ROADMAP duplicate-work boundary current with output signatures.
+  - Spec evidence: ROADMAP AlphaEvolve database-memory gaps should distinguish
+    exact workspace identity from bounded output-identity evidence.
+  - Status: ROADMAP now records that `duplicate_work_cache_index.jsonl`
+    includes metric names and bounded evaluator-output signature hashes for
+    each runtime program row.
+  - Remaining roadmap gap: durable cross-run cache lookup/storage,
+    resume-spanning replay, invalidation/migration policy, semantic
+    near-duplicate handling, source-aware indexes, raw-output replay, and owner
+    review signoff remain active TODOs.

@@ -605,15 +605,16 @@ is not yet an AlphaEvolve reproduction.
   cache hits, no-op cache-hit controller budget events, and
   `duplicate_work_cache_index.jsonl` export metadata. The JSONL artifact
   persists one exact-workspace duplicate/cache audit row per runtime program
-  for inspection and cross-run concatenation, but it is not a replay lookup.
+  with metric names and bounded evaluator-output signature hashes for
+  inspection and cross-run concatenation, but it is not a replay lookup.
   Durable cross-run cache lookup/storage, durable evaluation-cache storage,
   resume-spanning cache replay, cache invalidation/migration policy, stochastic
-  re-evaluation policy, semantic near-duplicate detection, source/output-aware
-  cache indexes, and an AlphaEvolve-grade fixed-budget memory claim gate remain
-  open. The committed
+  re-evaluation policy, semantic near-duplicate detection, source-aware cache
+  indexes, raw-output replay, and an AlphaEvolve-grade fixed-budget memory
+  claim gate remain open. The committed
   `papers/duplicate_work_policy_boundary.json` sidecar keeps the current
-  run-local exact-cache plus durable exact-index-export scope
-  machine-validated.
+  run-local exact-cache plus durable bounded-output-signature index-export
+  scope machine-validated.
 - Replace the remaining insertion-time adaptive TF-IDF diversity coordinates
   with evaluator-provided behavior descriptors, a fixed/learned descriptor
   model, or explicit tested rebin/snapshot semantics. Current

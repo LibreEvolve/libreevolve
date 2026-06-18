@@ -11,7 +11,7 @@ DUPLICATE_WORK_POLICY_BOUNDARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_RUNTIME_REPORT_SCHEMA = "libreevolve.duplicate_work_policy_report.v1"
-EXPECTED_BOUNDARY_STATUS = "run_local_cache_with_durable_exact_workspace_index"
+EXPECTED_BOUNDARY_STATUS = "run_local_cache_with_durable_output_signature_index"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "deterministic_workspace_hash_grouping",
     "duplicate_workspace_group_counts",
@@ -21,6 +21,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "evaluator_budget_non_consumption_for_cache_hits",
     "candidate_metadata_cache_status",
     "durable_exact_workspace_index_export",
+    "bounded_output_signature_index_export",
     "duplicate_work_cache_index_jsonl",
     "cross_run_workspace_hash_lookup",
     "durable_evaluation_cache_storage",
@@ -28,7 +29,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "cache_invalidation_or_migration_policy",
     "stochastic_re_evaluation_policy",
     "semantic_near_duplicate_detection",
-    "source_or_output_aware_cache_indexes",
+    "source_aware_cache_index",
     "alphaevolve_grade_fixed_budget_memory_claim_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
@@ -38,7 +39,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "cache_invalidation_or_migration_policy": "not_recorded_locally",
     "stochastic_re_evaluation_policy": "not_recorded_locally",
     "semantic_near_duplicate_detection": "not_recorded_locally",
-    "source_or_output_aware_cache_indexes": "not_recorded_locally",
+    "source_aware_cache_index": "not_recorded_locally",
     "alphaevolve_grade_fixed_budget_memory_claim_gate": "not_recorded_locally",
 }
 
@@ -82,13 +83,14 @@ def duplicate_work_policy_boundary_record() -> dict[str, Any]:
             "run-local evaluation cache stores and hits, cache-hit controller "
             "events, evaluator-budget non-consumption for cache hits, and "
             "candidate metadata cache status, plus durable exact-workspace "
-            "rows in duplicate_work_cache_index.jsonl for audit and cross-run "
+            "rows with bounded evaluator-output signature hashes in "
+            "duplicate_work_cache_index.jsonl for audit and cross-run "
             "concatenation. It does not claim cross-run workspace hash lookup, "
             "durable evaluation cache storage, resume-spanning cache replay, "
             "cache invalidation or migration policy, stochastic re-evaluation "
-            "policy, semantic near-duplicate detection, source or output aware "
-            "cache indexes, or an AlphaEvolve-grade fixed-budget memory claim "
-            "gate."
+            "policy, semantic near-duplicate detection, source-aware cache "
+            "indexes, raw output replay, or an AlphaEvolve-grade fixed-budget "
+            "memory claim gate."
         ),
     }
 
@@ -129,6 +131,7 @@ def validate_duplicate_work_policy_boundary(
     if (
         not isinstance(boundary_text, str)
         or "duplicate_work_cache_index.jsonl" not in boundary_text
+        or "bounded evaluator-output signature hashes" not in boundary_text
         or "does not claim cross-run workspace hash lookup" not in boundary_text
         or "semantic near-duplicate detection" not in boundary_text
         or "AlphaEvolve-grade fixed-budget memory claim gate" not in boundary_text

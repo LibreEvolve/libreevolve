@@ -2734,7 +2734,7 @@ sidecars, tests, and active TODOs.
     repair/quarantine atomicity and shared-writer serialization before treating
     JSONL streams as AlphaEvolve-grade durable async state.
 
-- [ ] Add multi-writer append serialization for run artifact JSONL streams.
+- [ ] Complete semantic ordering and crash-atomicity for JSONL writer streams.
   - Spec evidence: AlphaEvolve-style async/distributed execution has controller,
     sampler, evaluator, and feedback roles that may emit state concurrently.
     Durable run artifacts must define a single-writer coordinator or
@@ -2742,30 +2742,32 @@ sidecars, tests, and active TODOs.
     shared state streams.
   - Current evidence: `append_strict_jsonl()` validates strict finite JSON,
     repairs a torn final line before appending, writes a newline-terminated line,
-    flushes, and `os.fsync()`s the file. `ProgramDatabase` and prompt/plugin
-    helpers append shared streams including `history.jsonl`,
+    flushes, and `os.fsync()`s the file. Managed appends now hold advisory
+    lock files around repair and append work, using `msvcrt.locking` on Windows
+    and `fcntl.flock` on POSIX. When an accepted stream and paired quarantine
+    stream are involved, locks are acquired in stable path order before
+    truncating torn fragments or appending diagnostics. `ProgramDatabase` and
+    prompt/plugin helpers append shared streams including `history.jsonl`,
     `failure_history.jsonl`, `archive_events.jsonl`,
     `controller_budget_events.jsonl`, `llm_calls.jsonl`,
     `prompt_history.jsonl`, and GRPO/plugin JSONL files through that helper. A
-    targeted source scan found no `msvcrt`, `fcntl`, `portalocker`, `filelock`,
-    mutex, semaphore, or `LockFileEx` usage; `_append_serialized_jsonl_line()` is
-    just `open(path, "a")`, `write(line + "\n")`, `flush()`, and `os.fsync()`.
-  - Current gap: the append contract is suitable for the current single-process
-    synchronous controller, but it does not specify or enforce
-    multi-process/multi-worker writer serialization, append ordering, sequence
-    allocation, or queue ownership. Future async evaluator nodes, LLM sampler
-    workers, plugin trainers, or external feedback workers could interleave
-    repairs/appends/quarantine writes, duplicate sequence counters, or create
-    ambiguous event order without a first-class run-artifact writer.
+    subprocess test proves four concurrent helper-managed writers can append
+    80 valid rows to one stream without torn or malformed records.
+  - Current gap: advisory helper locks serialize local cooperative writers, but
+    they do not define semantic append ordering, sequence allocation, queue
+    ownership, distributed filesystem behavior, or crash-atomic transactions
+    spanning accepted-stream truncation and paired-quarantine diagnostics.
+    Future async evaluator nodes, LLM sampler workers, plugin trainers, or
+    external feedback workers could still duplicate sequence counters or
+    create ambiguous event order without a first-class run-artifact writer.
     `papers/jsonl_durability_boundary.json` now records the current
-    strict-single-writer append scope and keeps multi-writer serialization,
-    append ordering ownership, repair/quarantine atomicity, cross-platform
-    locking, and concurrent-writer tests explicitly missing.
-  - Required result: add a run-artifact write coordinator, interprocess lock, or
-    append queue contract for every shared JSONL stream; define
-    ordering/sequence ownership, repair/quarantine atomicity, cross-platform
-    Windows/POSIX behavior, crash recovery, and tests with concurrent writers
-    before using shared JSONL files as AlphaEvolve-grade async/distributed state.
+    strict append/read/lock scope and keeps append ordering ownership and
+    repair/quarantine crash atomicity explicitly missing.
+  - Required result: add a run-artifact write coordinator or append queue
+    contract that owns event ordering and sequence allocation for every shared
+    JSONL stream; define crash recovery and accepted/quarantine transaction
+    semantics before using shared JSONL files as AlphaEvolve-grade
+    async/distributed state.
 
 - [ ] Extend exploration/exploitation sampling-balance reports into calibrated
   database-resurfacing analysis.

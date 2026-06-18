@@ -278,16 +278,16 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1803,
-      "line_end": 1803,
+      "line_start": 1805,
+      "line_end": 1805,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1881,
-      "line_end": 1881,
+      "line_start": 1883,
+      "line_end": 1883,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions"
@@ -603,7 +603,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1803,
+      "line_start": 1805,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
@@ -612,7 +612,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1881,
+      "line_start": 1883,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
@@ -805,14 +805,14 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1803,
+      "line_start": 1805,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1881,
+      "line_start": 1883,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
       "reason": "no_claim_record_for_heading"
@@ -7352,10 +7352,10 @@
       "bullet_ordinal": 248,
       "section": "important_limits",
       "line_start": 2069,
-      "line_end": 2076,
+      "line_end": 2079,
       "file_text_char_start": 144218,
-      "file_text_char_end": 144763,
-      "text_sha256": "df272d53c3cd7415b434bbc60ded3aa2f43c20b3a202f48e63220575bc8f4733",
+      "file_text_char_end": 144965,
+      "text_sha256": "458cce26b7350e9990cfb1f3ef5f739ea6056c2b62085157d0d0088a5bc7c944",
       "signal_terms": [
         "boundary",
         "not",
@@ -7370,8 +7370,8 @@
       "local_path_ref_records": [
         {
           "path": "papers/jsonl_durability_boundary.json",
-          "text_char_start": 506,
-          "text_char_end": 543,
+          "text_char_start": 708,
+          "text_char_end": 745,
           "exists": true
         }
       ]
@@ -7379,10 +7379,10 @@
     {
       "bullet_ordinal": 249,
       "section": "important_limits",
-      "line_start": 2077,
-      "line_end": 2083,
-      "file_text_char_start": 144764,
-      "file_text_char_end": 145216,
+      "line_start": 2080,
+      "line_end": 2086,
+      "file_text_char_start": 144966,
+      "file_text_char_end": 145418,
       "text_sha256": "d991add0894d4a806bbc309b6ff8ce51420dc8bcf7e3a1f22ee8373079779871",
       "signal_terms": [
         "boundary",
@@ -7405,10 +7405,10 @@
     {
       "bullet_ordinal": 250,
       "section": "important_limits",
-      "line_start": 2084,
-      "line_end": 2085,
-      "file_text_char_start": 145217,
-      "file_text_char_end": 145344,
+      "line_start": 2087,
+      "line_end": 2088,
+      "file_text_char_start": 145419,
+      "file_text_char_end": 145546,
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
       "signal_terms": [],
       "signal_term_count": 0,
@@ -7418,10 +7418,10 @@
     {
       "bullet_ordinal": 251,
       "section": "important_limits",
-      "line_start": 2086,
-      "line_end": 2088,
-      "file_text_char_start": 145345,
-      "file_text_char_end": 145564,
+      "line_start": 2089,
+      "line_end": 2091,
+      "file_text_char_start": 145547,
+      "file_text_char_end": 145766,
       "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
       "signal_terms": [
         "not",
@@ -7511,134 +7511,134 @@
   "run_artifact_documented_records": [
     {
       "name": "manifest.json",
-      "line_start": 397,
-      "line_end": 397,
-      "entry_kind": "file"
-    },
-    {
-      "name": "task_specification.json",
-      "line_start": 398,
-      "line_end": 398,
-      "entry_kind": "file"
-    },
-    {
-      "name": "history.jsonl",
-      "line_start": 399,
-      "line_end": 399,
-      "entry_kind": "file"
-    },
-    {
-      "name": "evaluator_results.jsonl",
-      "line_start": 400,
-      "line_end": 400,
-      "entry_kind": "file"
-    },
-    {
-      "name": "failure_history.jsonl",
-      "line_start": 401,
-      "line_end": 401,
-      "entry_kind": "file"
-    },
-    {
-      "name": "archive_events.jsonl",
       "line_start": 402,
       "line_end": 402,
       "entry_kind": "file"
     },
     {
-      "name": "controller_budget_events.jsonl",
+      "name": "task_specification.json",
       "line_start": 403,
       "line_end": 403,
       "entry_kind": "file"
     },
     {
-      "name": "history_invalid.jsonl",
+      "name": "history.jsonl",
       "line_start": 404,
       "line_end": 404,
       "entry_kind": "file"
     },
     {
-      "name": "failure_history_invalid.jsonl",
+      "name": "evaluator_results.jsonl",
       "line_start": 405,
       "line_end": 405,
       "entry_kind": "file"
     },
     {
-      "name": "archive_events_invalid.jsonl",
+      "name": "failure_history.jsonl",
       "line_start": 406,
       "line_end": 406,
       "entry_kind": "file"
     },
     {
-      "name": "controller_budget_events_invalid.jsonl",
+      "name": "archive_events.jsonl",
       "line_start": 407,
       "line_end": 407,
       "entry_kind": "file"
     },
     {
-      "name": "llm_calls.jsonl",
+      "name": "controller_budget_events.jsonl",
       "line_start": 408,
       "line_end": 408,
       "entry_kind": "file"
     },
     {
-      "name": "llm_calls_invalid.jsonl",
+      "name": "history_invalid.jsonl",
       "line_start": 409,
       "line_end": 409,
       "entry_kind": "file"
     },
     {
-      "name": "manifest_invalid.jsonl",
+      "name": "failure_history_invalid.jsonl",
       "line_start": 410,
       "line_end": 410,
       "entry_kind": "file"
     },
     {
-      "name": "prompt_history.jsonl",
+      "name": "archive_events_invalid.jsonl",
       "line_start": 411,
       "line_end": 411,
       "entry_kind": "file"
     },
     {
-      "name": "prompt_history_invalid.jsonl",
+      "name": "controller_budget_events_invalid.jsonl",
       "line_start": 412,
       "line_end": 412,
       "entry_kind": "file"
     },
     {
-      "name": "prompt_current_binding_table.jsonl",
+      "name": "llm_calls.jsonl",
       "line_start": 413,
       "line_end": 413,
       "entry_kind": "file"
     },
     {
-      "name": "prompt_prior_score_table.jsonl",
+      "name": "llm_calls_invalid.jsonl",
       "line_start": 414,
       "line_end": 414,
       "entry_kind": "file"
     },
     {
-      "name": "best.py",
+      "name": "manifest_invalid.jsonl",
       "line_start": 415,
       "line_end": 415,
       "entry_kind": "file"
     },
     {
-      "name": "evaluator_artifacts",
+      "name": "prompt_history.jsonl",
       "line_start": 416,
       "line_end": 416,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_history_invalid.jsonl",
+      "line_start": 417,
+      "line_end": 417,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_current_binding_table.jsonl",
+      "line_start": 418,
+      "line_end": 418,
+      "entry_kind": "file"
+    },
+    {
+      "name": "prompt_prior_score_table.jsonl",
+      "line_start": 419,
+      "line_end": 419,
+      "entry_kind": "file"
+    },
+    {
+      "name": "best.py",
+      "line_start": 420,
+      "line_end": 420,
+      "entry_kind": "file"
+    },
+    {
+      "name": "evaluator_artifacts",
+      "line_start": 421,
+      "line_end": 421,
       "entry_kind": "directory"
     },
     {
       "name": "plugin_artifacts",
-      "line_start": 418,
-      "line_end": 418,
+      "line_start": 423,
+      "line_end": 423,
       "entry_kind": "directory"
     },
     {
       "name": "best_workspace",
-      "line_start": 422,
-      "line_end": 422,
+      "line_start": 427,
+      "line_end": 427,
       "entry_kind": "directory"
     }
   ],

@@ -316,11 +316,16 @@ reject a non-empty final line that lacks its terminating newline instead of
 trusting it as durable state, and the shared reader has an opt-in repair mode
 that truncates the final fragment and emits the same bounded quarantine
 diagnostic before yielding rows. The streams still do not use temporary append
-spool files, line checksums on every record, or multi-writer serialization.
-Archive cell and elite snapshots are restored through manifest/history bundles
-rather than through a general checkpoint/replay engine; ordered migration
-replay, controller queues, and full-run resume remain broader checkpointing
-concerns.
+spool files or line checksums on every record. Managed JSONL appends now hold
+advisory per-stream lock files, using `msvcrt.locking` on Windows and
+`fcntl.flock` on POSIX, and acquire accepted-stream plus paired-quarantine
+locks in stable path order before repair/append work. This serializes
+helper-managed local writers, but does not define semantic event sequence
+ownership, crash-atomic repair/quarantine transactions, distributed filesystem
+locking guarantees, controller queues, or full-run resume. Archive cell and
+elite snapshots are restored through manifest/history bundles rather than
+through a general checkpoint/replay engine; ordered migration replay,
+controller queues, and full-run resume remain broader checkpointing concerns.
 Rejected archive-admission metadata is kept JSON-safe, including non-finite
 selection scores, but it does not sanitize hook-mutated/restored top-level
 candidate `fitness` or metric values for accepted history. Passing such a

@@ -2,7 +2,7 @@
   "schema": "libreevolve.alphaevolve_jsonl_durability_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve-style long-running search needs durable run streams that can be trusted during inspection, resume, and future async/distributed writer execution",
-  "boundary_status": "strict_single_writer_append_with_read_fail_closed_without_multi_writer_serialization",
+  "boundary_status": "strict_jsonl_append_with_read_fail_closed_and_advisory_writer_locks",
   "claim_ready": false,
   "implemented_runtime_evidence": {
     "strict_json_serialization": "strict_json_dumps_rejects_non_finite_and_duplicate_keys",
@@ -19,7 +19,10 @@
     "archive_restore_reader_coverage": "load_archive_event_records_uses_iter_strict_jsonl_objects",
     "controller_budget_reader_coverage": "controller_budget_replay_and_audit_readers_use_iter_strict_jsonl_objects",
     "manifest_summary_reader_coverage": "strict_jsonl_stream_summaries_use_iter_strict_jsonl_objects",
-    "plugin_context_reader_coverage": "ttt_rl_restore_counts_unterminated_final_grpo_row_as_invalid"
+    "plugin_context_reader_coverage": "ttt_rl_restore_counts_unterminated_final_grpo_row_as_invalid",
+    "multi_writer_serialization": "append_strict_jsonl_locks_stream_and_quarantine_paths_in_stable_order",
+    "cross_platform_locking_policy": "msvcrt_locking_on_windows_and_fcntl_flock_on_posix",
+    "concurrent_writer_tests": "subprocess_writers_append_80_valid_rows_to_one_stream"
   },
   "required_evidence_fields": [
     "strict_json_serialization",
@@ -44,11 +47,8 @@
     "concurrent_writer_tests"
   ],
   "missing_evidence": {
-    "multi_writer_serialization": "not_recorded_locally",
     "append_ordering_sequence_ownership": "not_recorded_locally",
-    "repair_quarantine_atomicity": "not_recorded_locally",
-    "cross_platform_locking_policy": "not_recorded_locally",
-    "concurrent_writer_tests": "not_recorded_locally"
+    "repair_quarantine_atomicity": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records strict local JSONL serialization, finite JSON validation, append-side torn-final-record repair, newline-terminated record writes, fsync after append, quarantine diagnostics, retention modes, per-line strict reader validation, default fail-closed unterminated-final-record handling, opt-in read-side torn-record repair, and show/archive/controller/manifest/plugin reader coverage through the strict reader boundary. It does not claim multi-writer serialization, append ordering ownership, repair/quarantine atomicity, cross-platform locking, concurrent-writer tests, or AlphaEvolve-grade durable async run-state parity."
+  "claim_boundary": "This boundary records strict local JSONL serialization, finite JSON validation, append-side torn-final-record repair, newline-terminated record writes, fsync after append, quarantine diagnostics, retention modes, per-line strict reader validation, default fail-closed unterminated-final-record handling, opt-in read-side torn-record repair, and show/archive/controller/manifest/plugin reader coverage through the strict reader boundary. It also records helper-managed advisory interprocess append serialization, Windows/POSIX lock selection, stable stream/quarantine lock ordering, and a subprocess concurrent-writer test. It does not claim semantic append ordering ownership, crash-atomic repair/quarantine transactions, or AlphaEvolve-grade durable async run-state parity."
 }

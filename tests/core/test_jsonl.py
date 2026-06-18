@@ -1,7 +1,10 @@
+import collections
 import hashlib
 import json
 import math
 import os
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -257,8 +260,50 @@ def test_append_strict_jsonl_fsyncs_written_line(monkeypatch, tmp_path):
 
     append_strict_jsonl(path, {"ok": True})
 
-    assert fsync_calls == 1
+    assert fsync_calls >= 1
     assert path.read_text(encoding="utf-8") == '{"ok": true}\n'
+
+
+def test_append_strict_jsonl_serializes_concurrent_process_writers(tmp_path):
+    path = tmp_path / "history.jsonl"
+    repo_root = Path(__file__).resolve().parents[2]
+    script = (
+        "from pathlib import Path\n"
+        "import sys\n"
+        "from libreevolve.core.jsonl import append_strict_jsonl\n"
+        "path = Path(sys.argv[1])\n"
+        "writer = sys.argv[2]\n"
+        "for index in range(20):\n"
+        "    append_strict_jsonl(path, {'writer': writer, 'index': index})\n"
+    )
+    processes = [
+        subprocess.Popen(
+            [sys.executable, "-c", script, str(path), f"writer-{index}"],
+            cwd=repo_root,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        for index in range(4)
+    ]
+
+    failures = []
+    for process in processes:
+        stdout, stderr = process.communicate(timeout=30)
+        if process.returncode != 0:
+            failures.append((process.returncode, stdout, stderr))
+    assert failures == []
+    rows = list(iter_strict_jsonl_objects(path, stream_name="history.jsonl"))
+    assert len(rows) == 80
+    counts = collections.Counter(row["writer"] for row in rows)
+    assert counts == {
+        "writer-0": 20,
+        "writer-1": 20,
+        "writer-2": 20,
+        "writer-3": 20,
+    }
+    assert path.read_bytes().endswith(b"\n")
+    assert (tmp_path / ".history.jsonl.lock").exists()
 
 
 def test_append_strict_jsonl_repairs_torn_final_line_before_append(tmp_path):

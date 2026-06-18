@@ -1520,9 +1520,11 @@ append-side torn-final-record repair, newline-terminated writes, fsync,
 quarantine diagnostics, retention modes, per-line reader validation, default
 fail-closed handling for newline-missing final records, opt-in read-side
 repair, and strict-reader coverage for show/archive/controller/manifest/plugin
-paths. It is not evidence of multi-writer serialization, append-order
-ownership, repair/quarantine atomicity, cross-platform locking,
-concurrent-writer tests, or AlphaEvolve-grade durable async run-state parity.
+paths. It also records helper-managed advisory interprocess append
+serialization, Windows/POSIX lock selection, stable stream/quarantine lock
+ordering, and a subprocess concurrent-writer test. It is not evidence of
+semantic append-order ownership, crash-atomic repair/quarantine transactions,
+or AlphaEvolve-grade durable async run-state parity.
 
 AlphaEvolve best-export note: CLI runs now append a post-`evolve()` manifest
 record under `runtime.best_artifact_export` after best-artifact export
@@ -3258,9 +3260,11 @@ Implemented:
   diagnostics, retention modes, strict per-line reader validation, default
   fail-closed handling for newline-missing final records, opt-in read-side
   repair, and strict-reader coverage for show/archive/controller/manifest/
-  plugin paths. It is not evidence of multi-writer serialization, append
-  ordering ownership, repair/quarantine atomicity, cross-platform locking,
-  concurrent-writer tests, or AlphaEvolve-grade durable async run-state parity.
+  plugin paths. It also records helper-managed advisory interprocess append
+  serialization, Windows/POSIX lock selection, stable stream/quarantine lock
+  ordering, and a subprocess concurrent-writer test. It is not evidence of
+  semantic append ordering ownership, crash-atomic repair/quarantine
+  transactions, or AlphaEvolve-grade durable async run-state parity.
 - `papers/non_jsonl_artifact_boundary.json`: non-JSONL run-artifact schema
   sidecar for standalone JSON files, exported files, workspace directories,
   plugin/evaluator artifact directories, and `paper_artifacts/`. It records

@@ -2071,8 +2071,11 @@ Important limits:
   quarantine diagnostics. Shared JSONL readers now fail closed on non-empty
   final lines without a terminating newline, expose an opt-in read-repair path,
   and cover show/restore/controller/manifest summary readers plus the
-  `ttt_rl` plugin restore counter. Shared streams still do not have
-  multi-writer serialization; that boundary is tracked by
+  `ttt_rl` plugin restore counter. Managed JSONL appends now use advisory
+  stream/quarantine locks with Windows/POSIX implementations and a subprocess
+  concurrent-writer test. Shared streams still do not define semantic append
+  ordering ownership or crash-atomic repair/quarantine transactions; that
+  boundary is tracked by
   `papers/jsonl_durability_boundary.json`.
 - MAP-Elites descriptor snapshots are insertion-time local descriptor metadata
   with occupied-cell, elite, Pareto-frontier, and metric-cell descriptor

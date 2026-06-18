@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import json
 import math
@@ -220,12 +221,14 @@ def append_strict_jsonl(
             f"{_json_error_message(record, exc)}"
         ) from exc
     _ensure_parent_directory(path, "strict JSONL file")
-    repair_trailing_partial_jsonl(
-        path,
-        quarantine_path=quarantine_path,
-        quarantine_snapshot_retention_mode=retention_mode,
-    )
-    _append_serialized_jsonl_line(path, line)
+    with _locked_jsonl_paths(path, quarantine_path):
+        repair_trailing_partial_jsonl(
+            path,
+            quarantine_path=quarantine_path,
+            quarantine_snapshot_retention_mode=retention_mode,
+            _lock_held=True,
+        )
+        _append_serialized_jsonl_line(path, line)
 
 
 def append_quarantine_record(
@@ -250,11 +253,13 @@ def append_quarantine_record(
     if snapshot["error"] is not None:
         diagnostic["record_repr_error"] = snapshot["error"]
     _ensure_parent_directory(path, "strict JSONL quarantine file")
-    repair_trailing_partial_jsonl(
-        path,
-        quarantine_snapshot_retention_mode=retention_mode,
-    )
-    _append_serialized_jsonl_line(path, strict_json_dumps(diagnostic))
+    with _locked_jsonl_paths(path):
+        repair_trailing_partial_jsonl(
+            path,
+            quarantine_snapshot_retention_mode=retention_mode,
+            _lock_held=True,
+        )
+        _append_serialized_jsonl_line(path, strict_json_dumps(diagnostic))
 
 
 def repair_trailing_partial_jsonl(
@@ -262,6 +267,7 @@ def repair_trailing_partial_jsonl(
     *,
     quarantine_path: Path | None = None,
     quarantine_snapshot_retention_mode: str = "redacted",
+    _lock_held: bool = False,
 ) -> dict[str, Any]:
     """Truncate an unterminated final JSONL fragment and log a diagnostic.
 
@@ -270,6 +276,16 @@ def repair_trailing_partial_jsonl(
     a prior interrupted write, not as a valid complete record.
     """
     path = Path(path)
+    if not _lock_held:
+        with _locked_jsonl_paths(path, quarantine_path):
+            return repair_trailing_partial_jsonl(
+                path,
+                quarantine_path=quarantine_path,
+                quarantine_snapshot_retention_mode=(
+                    quarantine_snapshot_retention_mode
+                ),
+                _lock_held=True,
+            )
     if not path.exists():
         return {"status": "missing"}
     try:
@@ -549,6 +565,88 @@ def _require_integer_value(
 def _require_none_field(record: dict[str, Any], field: str, source: str) -> None:
     if record.get(field) is not None:
         raise StrictJsonlError(f"Malformed {source}: {field} must be null")
+
+
+@contextlib.contextmanager
+def _locked_jsonl_paths(*paths: Path | None):
+    lock_paths: dict[str, Path] = {}
+    for path in paths:
+        if path is None:
+            continue
+        lock_path = _jsonl_lock_path(Path(path))
+        key = os.path.normcase(str(lock_path.resolve(strict=False)))
+        lock_paths[key] = lock_path
+    handles = []
+    try:
+        for lock_path in [lock_paths[key] for key in sorted(lock_paths)]:
+            _ensure_parent_directory(lock_path, "strict JSONL lock file")
+            handle = lock_path.open("a+b")
+            try:
+                _acquire_jsonl_file_lock(handle, lock_path)
+            except Exception:
+                handle.close()
+                raise
+            handles.append((handle, lock_path))
+        yield
+    finally:
+        release_error: StrictJsonlError | None = None
+        for handle, lock_path in reversed(handles):
+            try:
+                _release_jsonl_file_lock(handle, lock_path)
+            except StrictJsonlError as exc:
+                if release_error is None:
+                    release_error = exc
+            finally:
+                handle.close()
+        if release_error is not None:
+            raise release_error
+
+
+def _jsonl_lock_path(path: Path) -> Path:
+    return path.with_name(f".{path.name}.lock")
+
+
+def _acquire_jsonl_file_lock(handle, lock_path: Path) -> None:
+    try:
+        handle.seek(0, os.SEEK_END)
+        if handle.tell() == 0:
+            handle.write(b"\0")
+            handle.flush()
+            os.fsync(handle.fileno())
+        handle.seek(0)
+        if os.name == "nt":
+            import msvcrt
+
+            msvcrt.locking(handle.fileno(), msvcrt.LK_LOCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+    except OSError as exc:
+        raise StrictJsonlError(
+            f"Could not acquire strict JSONL lock at {_safe_path_text(lock_path)}: "
+            f"{exc.__class__.__name__}: "
+            f"{_bounded_redacted_text(str(exc), _MAX_JSON_ERROR_MESSAGE_CHARS)}"
+        ) from exc
+
+
+def _release_jsonl_file_lock(handle, lock_path: Path) -> None:
+    try:
+        handle.seek(0)
+        if os.name == "nt":
+            import msvcrt
+
+            msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+    except OSError as exc:
+        raise StrictJsonlError(
+            f"Could not release strict JSONL lock at {_safe_path_text(lock_path)}: "
+            f"{exc.__class__.__name__}: "
+            f"{_bounded_redacted_text(str(exc), _MAX_JSON_ERROR_MESSAGE_CHARS)}"
+        ) from exc
 
 
 def _append_serialized_jsonl_line(path: Path, line: str) -> None:

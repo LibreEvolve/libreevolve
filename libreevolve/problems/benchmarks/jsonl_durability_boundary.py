@@ -8,7 +8,7 @@ from typing import Any
 
 JSONL_DURABILITY_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_jsonl_durability_boundary.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "strict_single_writer_append_with_read_fail_closed_without_multi_writer_serialization"
+EXPECTED_BOUNDARY_STATUS = "strict_jsonl_append_with_read_fail_closed_and_advisory_writer_locks"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "strict_json_serialization",
     "finite_json_validation",
@@ -32,11 +32,8 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "concurrent_writer_tests",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "multi_writer_serialization": "not_recorded_locally",
     "append_ordering_sequence_ownership": "not_recorded_locally",
     "repair_quarantine_atomicity": "not_recorded_locally",
-    "cross_platform_locking_policy": "not_recorded_locally",
-    "concurrent_writer_tests": "not_recorded_locally",
 }
 
 
@@ -84,6 +81,9 @@ def jsonl_durability_boundary_record() -> dict[str, Any]:
             "controller_budget_reader_coverage": "controller_budget_replay_and_audit_readers_use_iter_strict_jsonl_objects",
             "manifest_summary_reader_coverage": "strict_jsonl_stream_summaries_use_iter_strict_jsonl_objects",
             "plugin_context_reader_coverage": "ttt_rl_restore_counts_unterminated_final_grpo_row_as_invalid",
+            "multi_writer_serialization": "append_strict_jsonl_locks_stream_and_quarantine_paths_in_stable_order",
+            "cross_platform_locking_policy": "msvcrt_locking_on_windows_and_fcntl_flock_on_posix",
+            "concurrent_writer_tests": "subprocess_writers_append_80_valid_rows_to_one_stream",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -94,10 +94,13 @@ def jsonl_durability_boundary_record() -> dict[str, Any]:
             "modes, per-line strict reader validation, default fail-closed "
             "unterminated-final-record handling, opt-in read-side torn-record "
             "repair, and show/archive/controller/manifest/plugin reader "
-            "coverage through the strict reader boundary. It does not claim "
-            "multi-writer serialization, append ordering ownership, "
-            "repair/quarantine atomicity, cross-platform locking, concurrent-"
-            "writer tests, or AlphaEvolve-grade durable async run-state parity."
+            "coverage through the strict reader boundary. It also records "
+            "helper-managed advisory interprocess append serialization, "
+            "Windows/POSIX lock selection, stable stream/quarantine lock "
+            "ordering, and a subprocess concurrent-writer test. It does not "
+            "claim semantic append ordering ownership, crash-atomic "
+            "repair/quarantine transactions, or AlphaEvolve-grade durable "
+            "async run-state parity."
         ),
     }
 
@@ -131,15 +134,16 @@ def validate_jsonl_durability_boundary(
     implemented_count = _validate_implemented_runtime_evidence(
         data.get("implemented_runtime_evidence"), issues
     )
-    if implemented_count != 15:
-        issues.append(_issue("invalid_implemented_runtime_evidence_count", "implemented runtime evidence count must be 15"))
+    if implemented_count != 18:
+        issues.append(_issue("invalid_implemented_runtime_evidence_count", "implemented runtime evidence count must be 18"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
         or "default fail-closed unterminated-final-record handling" not in boundary_text
-        or "multi-writer serialization" not in boundary_text
+        or "advisory interprocess append serialization" not in boundary_text
+        or "semantic append ordering ownership" not in boundary_text
         or "AlphaEvolve-grade durable async run-state parity" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate strict append behavior from durable async run-state parity"))

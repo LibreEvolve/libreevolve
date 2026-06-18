@@ -17,6 +17,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "dynamic_diversity_reference_ids",
     "no_rebin_insertion_time_coordinate_policy",
     "per_cell_descriptor_value_snapshots",
+    "retained_overlay_descriptor_value_snapshots",
     "restore_time_axes_and_model_validation",
     "readiness_overclaim_rejection",
     "metric_metadata_candidate_metadata_axis_options",
@@ -77,6 +78,7 @@ def map_elites_descriptor_boundary_record() -> dict[str, Any]:
             "descriptor policy axes, descriptor-model revision metadata, dynamic "
             "diversity reference ids, an explicit no-rebin insertion-time "
             "coordinate policy, per-cell finite descriptor-value snapshots, "
+            "retained elite/Pareto/metric-cell descriptor-value snapshots, "
             "restore-time axes/model validation, readiness overclaim rejection, "
             "and metric/evaluation-metadata/candidate-metadata axis options. "
             "It does not claim stable task behavior "

@@ -363,6 +363,7 @@ class MAPElites:
         self._perf_min, self._perf_max = perf_bounds
         self._grid: dict[tuple[int, int, int], Program] = {}
         self._cell_descriptors: dict[tuple[int, int, int], dict[str, float]] = {}
+        self._program_descriptors: dict[str, dict[str, float]] = {}
         self._complexity_max_chars: int = complexity_max_chars
         self._descriptor_axes: tuple[str, str, str] = descriptor_axes
         self._metric_order: tuple[str, ...] = metric_order
@@ -467,6 +468,7 @@ class MAPElites:
         cell, descriptors = self._cell_with_descriptors(program)
         event["cell"] = list(cell)
         event["descriptors"] = descriptors
+        self._program_descriptors[program.id] = dict(descriptors)
         occ = self._grid.get(cell)
         event["previous_occupant_id"] = occ.id if occ else None
         if occ is None or _selection_key(program) > _selection_key(occ):
@@ -679,8 +681,26 @@ class MAPElites:
                 )
             ],
             "elite_program_ids": [program.id for program in self._elite],
+            "elite_descriptor_records": [
+                {
+                    "program_id": program.id,
+                    "descriptors": _json_finite_descriptors(
+                        self._program_descriptors.get(program.id, {})
+                    ),
+                }
+                for program in self._elite
+            ],
             "pareto_frontier_program_ids": [
                 program.id for program in self._pareto_elite
+            ],
+            "pareto_frontier_descriptor_records": [
+                {
+                    "program_id": program.id,
+                    "descriptors": _json_finite_descriptors(
+                        self._program_descriptors.get(program.id, {})
+                    ),
+                }
+                for program in self._pareto_elite
             ],
             "metric_cell_archives": [
                 {
@@ -693,6 +713,9 @@ class MAPElites:
                                 program,
                                 metric,
                                 self._metric_order,
+                            ),
+                            "descriptors": _json_finite_descriptors(
+                                self._program_descriptors.get(program.id, {})
                             ),
                             "selection_score": _json_finite_selection_score(program),
                         }
@@ -765,6 +788,7 @@ class MAPElites:
         restored = _validate_map_elites_snapshot(snapshot, self)
         grid: dict[tuple[int, int, int], Program] = {}
         cell_descriptors: dict[tuple[int, int, int], dict[str, float]] = {}
+        program_descriptors: dict[str, dict[str, float]] = {}
         for cell_record in restored["cells"]:
             program_id = cell_record["program_id"]
             if program_id not in programs_by_id:
@@ -775,6 +799,8 @@ class MAPElites:
             cell = tuple(cell_record["cell"])
             grid[cell] = programs_by_id[program_id]
             cell_descriptors[cell] = dict(cell_record["descriptors"])
+            if cell_record["descriptors"]:
+                program_descriptors[program_id] = dict(cell_record["descriptors"])
         elite: list[Program] = []
         for program_id in restored["elite_program_ids"]:
             if program_id not in programs_by_id:
@@ -783,6 +809,8 @@ class MAPElites:
                     f"{program_id!r}"
                 )
             elite.append(programs_by_id[program_id])
+            if descriptors := restored["elite_descriptor_records"].get(program_id):
+                program_descriptors[program_id] = dict(descriptors)
         pareto_elite: list[Program] = []
         for program_id in restored["pareto_frontier_program_ids"]:
             if program_id not in programs_by_id:
@@ -791,6 +819,10 @@ class MAPElites:
                     f"{program_id!r}"
                 )
             pareto_elite.append(programs_by_id[program_id])
+            if descriptors := restored["pareto_frontier_descriptor_records"].get(
+                program_id
+            ):
+                program_descriptors[program_id] = dict(descriptors)
         metric_cell_elites: dict[str, dict[tuple[int, int, int], Program]] = {
             metric: {} for metric in self._metric_order
         }
@@ -802,11 +834,14 @@ class MAPElites:
                     raise ValueError(
                         "MAP-Elites snapshot metric cell references missing program id "
                         f"{program_id!r}"
-                    )
+                )
                 cell = tuple(cell_record["cell"])
                 metric_cell_elites[metric][cell] = programs_by_id[program_id]
+                if cell_record["descriptors"]:
+                    program_descriptors[program_id] = dict(cell_record["descriptors"])
         self._grid = grid
         self._cell_descriptors = cell_descriptors
+        self._program_descriptors = program_descriptors
         self._elite = elite
         self._pareto_elite = pareto_elite
         self._metric_cell_elites = metric_cell_elites
@@ -1154,7 +1189,9 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
         "descriptor_model",
     }
     optional = {
+        "elite_descriptor_records",
         "pareto_frontier_program_ids",
+        "pareto_frontier_descriptor_records",
         "metric_cell_archives",
         "objective_archive_policy",
     }
@@ -1202,6 +1239,12 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
     )
     if len(elite_program_ids) > archive._elite_size:
         raise ValueError("MAP-Elites snapshot elite_program_ids exceeds configured size")
+    elite_descriptor_records = _validate_descriptor_record_list(
+        snapshot.get("elite_descriptor_records"),
+        "elite_descriptor_records",
+        elite_program_ids,
+        archive._descriptor_axes,
+    )
     pareto_frontier_program_ids = _validate_snapshot_program_id_list(
         snapshot.get("pareto_frontier_program_ids", []),
         "pareto_frontier_program_ids",
@@ -1210,6 +1253,12 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
         raise ValueError(
             "MAP-Elites snapshot pareto_frontier_program_ids exceeds configured size"
         )
+    pareto_frontier_descriptor_records = _validate_descriptor_record_list(
+        snapshot.get("pareto_frontier_descriptor_records"),
+        "pareto_frontier_descriptor_records",
+        pareto_frontier_program_ids,
+        archive._descriptor_axes,
+    )
     _validate_objective_archive_policy(
         snapshot.get("objective_archive_policy"),
         archive,
@@ -1242,7 +1291,9 @@ def _validate_map_elites_snapshot(snapshot: object, archive: MAPElites) -> dict:
     return {
         "cells": cells,
         "elite_program_ids": elite_program_ids,
+        "elite_descriptor_records": elite_descriptor_records,
         "pareto_frontier_program_ids": pareto_frontier_program_ids,
+        "pareto_frontier_descriptor_records": pareto_frontier_descriptor_records,
         "metric_cell_archives": metric_cell_archives,
         "descriptor_model": descriptor_model,
     }
@@ -1285,6 +1336,7 @@ def _validate_metric_cell_archives(value: object, archive: MAPElites) -> list[di
             record["cells"],
             archive.bins,
             f"metric_cell_archives[{index}].cells",
+            archive._descriptor_axes,
         )
         if len(cells) > archive.bins ** 3:
             raise ValueError(
@@ -1304,6 +1356,7 @@ def _validate_metric_cell_archive_cells(
     value: object,
     bins: int,
     label: str,
+    descriptor_axes: tuple[str, str, str],
 ) -> list[dict]:
     if not isinstance(value, list):
         raise ValueError(f"MAP-Elites snapshot {label} must be a list")
@@ -1318,7 +1371,7 @@ def _validate_metric_cell_archive_cells(
             raise ValueError(
                 f"MAP-Elites snapshot {label}[{index}] missing fields: {sorted(missing)}"
             )
-        unsupported = set(record) - required
+        unsupported = set(record) - required - {"descriptors"}
         if unsupported:
             raise ValueError(
                 "MAP-Elites snapshot "
@@ -1340,11 +1393,17 @@ def _validate_metric_cell_archive_cells(
             raise ValueError(
                 f"MAP-Elites snapshot {label}[{index}].selection_score must be finite or null"
             )
+        descriptors = _validate_map_elites_snapshot_descriptors(
+            record.get("descriptors", {}),
+            descriptor_axes,
+            f"{label}[{index}].descriptors",
+        )
         cells.append(
             {
                 "cell": cell,
                 "program_id": program_id,
                 "metric_value": float(metric_value),
+                "descriptors": descriptors,
                 "selection_score": (
                     float(selection_score) if selection_score is not None else None
                 ),
@@ -1628,10 +1687,10 @@ def _validate_map_elites_snapshot_cells(
             raise ValueError(
                 f"MAP-Elites snapshot cells[{index}].selection_score must be finite or null"
             )
-        descriptors = _validate_map_elites_snapshot_cell_descriptors(
+        descriptors = _validate_map_elites_snapshot_descriptors(
             record.get("descriptors", {}),
             descriptor_axes,
-            index,
+            f"cells[{index}].descriptors",
         )
         restored.append(
             {
@@ -1646,29 +1705,69 @@ def _validate_map_elites_snapshot_cells(
     return restored
 
 
-def _validate_map_elites_snapshot_cell_descriptors(
+def _validate_descriptor_record_list(
+    value: object,
+    field: str,
+    expected_program_ids: list[str],
+    descriptor_axes: tuple[str, str, str],
+) -> dict[str, dict[str, float]]:
+    if value is None:
+        return {}
+    if not isinstance(value, list):
+        raise ValueError(f"MAP-Elites snapshot {field} must be a list")
+    if len(value) != len(expected_program_ids):
+        raise ValueError(
+            f"MAP-Elites snapshot {field} must match its program id list length"
+        )
+    expected = list(expected_program_ids)
+    restored: dict[str, dict[str, float]] = {}
+    for index, record in enumerate(value):
+        if not isinstance(record, dict):
+            raise ValueError(f"MAP-Elites snapshot {field}[{index}] must be an object")
+        required = {"program_id", "descriptors"}
+        missing = required - set(record)
+        if missing:
+            raise ValueError(
+                f"MAP-Elites snapshot {field}[{index}] missing fields: {sorted(missing)}"
+            )
+        unsupported = set(record) - required
+        if unsupported:
+            raise ValueError(
+                f"MAP-Elites snapshot {field}[{index}] has unsupported fields: {sorted(unsupported)}"
+            )
+        program_id = record["program_id"]
+        validate_program_identity(program_id)
+        if program_id != expected[index]:
+            raise ValueError(
+                f"MAP-Elites snapshot {field}[{index}].program_id must match its program id list"
+            )
+        restored[program_id] = _validate_map_elites_snapshot_descriptors(
+            record["descriptors"],
+            descriptor_axes,
+            f"{field}[{index}].descriptors",
+        )
+    return restored
+
+
+def _validate_map_elites_snapshot_descriptors(
     value: object,
     descriptor_axes: tuple[str, str, str],
-    index: int,
+    label: str,
 ) -> dict[str, float]:
     if not isinstance(value, dict):
-        raise ValueError(
-            f"MAP-Elites snapshot cells[{index}].descriptors must be an object"
-        )
+        raise ValueError(f"MAP-Elites snapshot {label} must be an object")
     if not value:
         return {}
     actual_axes = set(value)
     expected_axes = set(descriptor_axes)
     if actual_axes != expected_axes:
-        raise ValueError(
-            f"MAP-Elites snapshot cells[{index}].descriptors must match descriptor_axes"
-        )
+        raise ValueError(f"MAP-Elites snapshot {label} must match descriptor_axes")
     descriptors: dict[str, float] = {}
     for axis in descriptor_axes:
         raw = value[axis]
         if not _is_finite_real(raw) or not 0.0 <= float(raw) <= 1.0:
             raise ValueError(
-                f"MAP-Elites snapshot cells[{index}].descriptors[{axis!r}] must be in [0, 1]"
+                f"MAP-Elites snapshot {label}[{axis!r}] must be in [0, 1]"
             )
         descriptors[axis] = float(raw)
     return descriptors

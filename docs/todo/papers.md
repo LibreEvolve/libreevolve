@@ -1089,9 +1089,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     metadata as descriptor axes. Archive snapshots persist descriptor policy
     and descriptor-model records with axes, bounds, diversity reference ids,
     revision, dynamic-reference status, explicit no-rebin policy, and
-    occupied-cell insertion-time descriptor values keyed by descriptor axis.
-    Restore validation rejects non-finite, out-of-range, or axis-mismatched
-    cell descriptor maps while accepting legacy cells without descriptor maps.
+    insertion-time descriptor values keyed by descriptor axis for occupied
+    cells, elite records, Pareto-frontier records, and metric-cell overlay
+    records. Restore validation rejects non-finite, out-of-range,
+    order-drifting, or axis-mismatched descriptor maps while accepting legacy
+    snapshots without descriptor maps.
     The descriptor model now carries
     `libreevolve.map_elites_descriptor_readiness.v1` with false readiness for
     stable task behavior descriptor contracts, learned/evaluator-provided

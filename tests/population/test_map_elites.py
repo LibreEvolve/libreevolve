@@ -331,8 +331,29 @@ def test_state_snapshot_restores_cells_and_elite_archive():
     assert snapshot["cells"][0]["descriptors"]["performance"] == 0.9
     assert snapshot["cells"][0]["descriptors"]["diversity"] == 0.5
     assert 0.0 <= snapshot["cells"][0]["descriptors"]["complexity"] <= 1.0
+    occupied_descriptors = snapshot["cells"][0]["descriptors"]
     assert snapshot["elite_program_ids"] == [occupied.id, elite_only.id]
+    assert [record["program_id"] for record in snapshot["elite_descriptor_records"]] == [
+        occupied.id,
+        elite_only.id,
+    ]
+    assert snapshot["elite_descriptor_records"][0]["descriptors"] == (
+        occupied_descriptors
+    )
+    assert snapshot["elite_descriptor_records"][1]["descriptors"]["performance"] == 0.1
+    assert (
+        0.0
+        <= snapshot["elite_descriptor_records"][1]["descriptors"]["diversity"]
+        <= 1.0
+    )
     assert snapshot["pareto_frontier_program_ids"] == [occupied.id, elite_only.id]
+    assert [
+        record["program_id"]
+        for record in snapshot["pareto_frontier_descriptor_records"]
+    ] == [occupied.id, elite_only.id]
+    assert snapshot["pareto_frontier_descriptor_records"][0]["descriptors"] == (
+        occupied_descriptors
+    )
     assert snapshot["metric_cell_archives"] == [
         {
             "metric": "accuracy",
@@ -341,6 +362,7 @@ def test_state_snapshot_restores_cells_and_elite_archive():
                     "cell": [0, 0, 0],
                     "program_id": occupied.id,
                     "metric_value": 0.8,
+                    "descriptors": occupied_descriptors,
                     "selection_score": 0.9,
                 }
             ],
@@ -352,6 +374,9 @@ def test_state_snapshot_restores_cells_and_elite_archive():
                     "cell": [0, 0, 0],
                     "program_id": elite_only.id,
                     "metric_value": 0.9,
+                    "descriptors": snapshot["elite_descriptor_records"][1][
+                        "descriptors"
+                    ],
                     "selection_score": 0.1,
                 }
             ],
@@ -433,6 +458,15 @@ def test_state_snapshot_restores_cells_and_elite_archive():
     assert restored.occupied_cells() == [occupied]
     assert restored.state_snapshot()["cells"][0]["descriptors"] == (
         snapshot["cells"][0]["descriptors"]
+    )
+    assert restored.state_snapshot()["elite_descriptor_records"] == (
+        snapshot["elite_descriptor_records"]
+    )
+    assert restored.state_snapshot()["pareto_frontier_descriptor_records"] == (
+        snapshot["pareto_frontier_descriptor_records"]
+    )
+    assert restored.state_snapshot()["metric_cell_archives"] == (
+        snapshot["metric_cell_archives"]
     )
     assert restored.elite_archive() == [occupied, elite_only]
     assert restored.pareto_frontier_archive() == [occupied, elite_only]
@@ -573,6 +607,31 @@ def test_restore_state_snapshot_rejects_invalid_cell_descriptor_values():
 
     with pytest.raises(ValueError, match="descriptors\\['diversity'\\]"):
         MAPElites().restore_state_snapshot(snapshot, {program.id: program})
+
+
+def test_restore_state_snapshot_rejects_elite_descriptor_record_drift():
+    source = MAPElites()
+    program = _pm(code="x=1", fitness=0.5, selection_score=0.5)
+    source.add(program)
+    snapshot = source.state_snapshot()
+    snapshot["elite_descriptor_records"][0]["program_id"] = "other"
+
+    with pytest.raises(ValueError, match="elite_descriptor_records\\[0\\]"):
+        MAPElites().restore_state_snapshot(snapshot, {program.id: program})
+
+
+def test_restore_state_snapshot_rejects_metric_cell_descriptor_drift():
+    source = MAPElites(metric_order=["accuracy"])
+    program = _po("x=1", 0.5, {"accuracy": 0.7})
+    source.add(program)
+    snapshot = source.state_snapshot()
+    snapshot["metric_cell_archives"][0]["cells"][0]["descriptors"].pop("diversity")
+
+    with pytest.raises(ValueError, match="metric_cell_archives\\[0\\]"):
+        MAPElites(metric_order=["accuracy"]).restore_state_snapshot(
+            snapshot,
+            {program.id: program},
+        )
 
 
 def test_restore_state_snapshot_rejects_objective_policy_readiness_overclaim():

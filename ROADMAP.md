@@ -607,8 +607,9 @@ is not yet an AlphaEvolve reproduction.
   model, or explicit tested rebin/snapshot semantics. Current
   `descriptor_model` snapshots carry
   `libreevolve.map_elites_descriptor_readiness.v1` with those readiness
-  surfaces false and overclaim validation; occupied-cell snapshot records now
-  persist finite insertion-time descriptor values keyed by descriptor axis. The
+  surfaces false and overclaim validation; occupied-cell, elite,
+  Pareto-frontier, and metric-cell snapshot records now persist finite
+  insertion-time descriptor values keyed by descriptor axis. The
   committed
   `papers/map_elites_descriptor_boundary.json` sidecar keeps this
   insertion-time descriptor snapshot scope machine-validated, while

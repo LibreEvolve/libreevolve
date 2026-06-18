@@ -1,0 +1,135 @@
+{
+  "schema": "libreevolve.sorting_network_source_refresh_run_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "source_claim": "Sorting-network citation source metadata should retain live refresh-run outcomes, including source drift, before citations are treated as fresh paper evidence.",
+  "boundary_status": "live_source_refresh_run_archived_with_source_drift",
+  "claim_ready": false,
+  "run_date": "2026-06-18",
+  "run_context": "manual_local_network_run",
+  "refresh_gate_artifact": {
+    "path": "libreevolve/tools/sorting_network_source_refresh_gate.py",
+    "bytes": 6436,
+    "sha256": "e94e09a5a2c2a443c92915a8029a53086ec032db09980cfd272ef16d3bd1d965",
+    "command": "py -3.12 -m libreevolve.tools.sorting_network_source_refresh_gate --live --pretty"
+  },
+  "run_report_sha256": "97a5dfb1db1eacf4b35244a635fd0858e6ddba767d9d5a6c9c04e8f01c46087a",
+  "run_report": {
+    "schema": "libreevolve.sorting_network_source_refresh_gate_report.v1",
+    "mode": "live_network",
+    "source_count": 5,
+    "ok": false,
+    "claim_boundary": "Compares live response status, content type, byte count, and SHA-256 digest against committed sorting-network citation source snapshot metadata.",
+    "checks": [
+      {
+        "source_id": "zero_one_clrs",
+        "url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
+        "ok": true,
+        "issues": [],
+        "expected": {
+          "status": 200,
+          "content_type": "text/html",
+          "bytes": 57006,
+          "sha256": "beab1350d286578063fb53f1e532547ee232acc5938046d43ea1cd7c0911531e"
+        },
+        "observed": {
+          "status": 200,
+          "content_type": "text/html",
+          "bytes": 57006,
+          "sha256": "beab1350d286578063fb53f1e532547ee232acc5938046d43ea1cd7c0911531e"
+        }
+      },
+      {
+        "source_id": "schneider_kamp_bounds",
+        "url": "https://imada.sdu.dk/u/petersk/sn/",
+        "ok": true,
+        "issues": [],
+        "expected": {
+          "status": 200,
+          "content_type": "text/html",
+          "bytes": 3416,
+          "sha256": "de9a6395ff4a0e0097f20a76afeb5cc549e6e18073e379eb381b79fd6135bbff"
+        },
+        "observed": {
+          "status": 200,
+          "content_type": "text/html",
+          "bytes": 3416,
+          "sha256": "de9a6395ff4a0e0097f20a76afeb5cc549e6e18073e379eb381b79fd6135bbff"
+        }
+      },
+      {
+        "source_id": "dobbelaere_list",
+        "url": "https://bertdobbelaere.github.io/sorting_networks.html",
+        "ok": true,
+        "issues": [],
+        "expected": {
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 70392,
+          "sha256": "71cf2352039b569c0686767de8a6d5b022a779453783a2719a5273af0835a3fe"
+        },
+        "observed": {
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 70392,
+          "sha256": "71cf2352039b569c0686767de8a6d5b022a779453783a2719a5273af0835a3fe"
+        }
+      },
+      {
+        "source_id": "codish_arxiv",
+        "url": "https://arxiv.org/abs/1405.5754",
+        "ok": true,
+        "issues": [],
+        "expected": {
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 48157,
+          "sha256": "94111c5590ddc589688a588e76d695a5bb1fd7540c207bbdf5fafe3f18f5a037"
+        },
+        "observed": {
+          "status": 200,
+          "content_type": "text/html; charset=utf-8",
+          "bytes": 48157,
+          "sha256": "94111c5590ddc589688a588e76d695a5bb1fd7540c207bbdf5fafe3f18f5a037"
+        }
+      },
+      {
+        "source_id": "codish_publication",
+        "url": "https://pure.itu.dk/en/publications/sorting-nine-inputs-requires-twenty-five-comparisons/",
+        "ok": false,
+        "issues": [
+          "bytes_drift",
+          "sha256_drift"
+        ],
+        "expected": {
+          "status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "bytes": 42968,
+          "sha256": "585198c1225b08f1f2f58cd6cc8f764dd22445b1b88c361619af3313c321b52a"
+        },
+        "observed": {
+          "status": 200,
+          "content_type": "text/html;charset=UTF-8",
+          "bytes": 43688,
+          "sha256": "6a7f83772c77aa97592ef706ecd55bef33be69bf51cecb820822c0b8fbb6dbca"
+        }
+      }
+    ]
+  },
+  "drift_summary": {
+    "drift_source_ids": [
+      "codish_publication"
+    ],
+    "drift_status": "source_metadata_drift_detected",
+    "triage_required": true
+  },
+  "missing_evidence": {
+    "source_drift_triage_resolution": "not_recorded_locally",
+    "updated_source_snapshot_metadata": "not_recorded_locally",
+    "scheduled_ci_refresh_run_history": "not_recorded_locally",
+    "full_raw_source_response_artifacts": "not_recorded_locally",
+    "independent_target_proof_extraction": "not_recorded_locally",
+    "repeated_seed_run_tables": "not_recorded_locally",
+    "run_tied_paper_certification": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary archives one manual live-network sorting-network source refresh run where the Codish publication page drifted from the committed source snapshot metadata. It does not claim source freshness, drift triage resolution, updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, repeated LibreEvolve runs, paper certification, or novel SOTA results."
+}

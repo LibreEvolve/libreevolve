@@ -227,7 +227,9 @@ The bundled examples are intentionally small:
   records live response metadata and hashes for those citation URLs without
   retaining full raw source bodies. `papers/sorting_network_source_refresh_gate_boundary.json`
   records the deterministic source-refresh gate for those citation snapshots,
-  without scheduled CI or archived live-refresh history.
+  and `papers/sorting_network_source_refresh_run_2026-06-18.json` archives a
+  live refresh run that detected Codish publication source drift; that drift
+  still needs triage before the source snapshot can be treated as fresh.
   `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
   non-certified run-evidence scope.
 

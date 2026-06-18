@@ -3269,9 +3269,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     The paper ledger now has a source-citation sidecar for the zero-one
     verifier and known comparator targets plus a source-snapshot metadata
     sidecar with live response hashes for those citation URLs and a
-    deterministic source-refresh gate for those snapshots, but still has no
-    scheduled CI refresh-run history, archived live refresh-run history, full
-    raw source-response retention, independent proof extraction, repeated-run
+    deterministic source-refresh gate for those snapshots. A 2026-06-18 live
+    refresh run is archived and detected Codish publication source drift, so
+    the paper ledger still has no source-drift triage resolution, updated
+    source snapshot metadata, scheduled CI refresh-run history, full raw
+    source-response retention, independent proof extraction, repeated-run
     evidence, committed run-tied hardening certification, best-candidate
     artifact hashes, failure/invalid-candidate summaries, target-hit-rate
     summaries, or certification row proving rediscovery under fixed
@@ -3281,7 +3283,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/sorting_network_source_snapshot_boundary.json` sidecar preserves
     the metadata-only source-snapshot boundary, the committed
     `papers/sorting_network_source_refresh_gate_boundary.json` sidecar
-    preserves the deterministic refresh-gate-only boundary, and the committed
+    preserves the deterministic refresh-gate boundary, the committed
+    `papers/sorting_network_source_refresh_run_2026-06-18.json` sidecar
+    preserves the drifted live refresh-run outcome, and the committed
     `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
     remaining run-evidence absence boundary for paper-manifest validation.
   - Required result: add a paper-visible benchmark record for

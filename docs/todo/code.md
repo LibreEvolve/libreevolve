@@ -828,8 +828,10 @@ sidecars, tests, and active TODOs.
     records live response metadata and hashes for those citation URLs without
     retaining full raw source bodies.
     `papers/sorting_network_source_refresh_gate_boundary.json` records the
-    deterministic source-refresh gate for those citation snapshots while
-    keeping scheduled CI and archived live-refresh history absent.
+    deterministic source-refresh gate for those citation snapshots, and
+    `papers/sorting_network_source_refresh_run_2026-06-18.json` archives a
+    live refresh run that detected Codish publication source drift. Source
+    drift triage and updated source snapshot metadata are still absent.
     `papers/sorting_network_rediscovery_boundary.json` keeps the remaining
     executable-candidate-only run-evidence scope machine-validated.
   - Required result: add repeated-seed run reports, fixed evaluator/model/
@@ -8667,9 +8669,12 @@ sidecars, tests, and active TODOs.
     and `papers/sorting_network_source_snapshot_boundary.json` records live
     response metadata and hashes for those source URLs, and
     `papers/sorting_network_source_refresh_gate_boundary.json` records a
-    deterministic drift-check gate for those snapshots. Those are calibration
-    metadata rather than run evidence, and no scheduled CI refresh-run history
-    or archived live-refresh history has been committed.
+    deterministic drift-check gate for those snapshots. The archived
+    `papers/sorting_network_source_refresh_run_2026-06-18.json` outcome
+    detected Codish publication source drift, but those artifacts are
+    calibration metadata rather than run evidence; source drift triage,
+    updated source snapshot metadata, and scheduled CI refresh-run history
+    remain absent.
   - Required result: run the contract under the intended authenticated backend
     and commit or separately preserve a redacted evidence bundle with manifest
     assertions, transcript hashes, best-candidate hashes, failure summaries,

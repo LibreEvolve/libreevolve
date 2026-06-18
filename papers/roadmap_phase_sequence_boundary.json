@@ -138,7 +138,7 @@
       "ordinal": 10,
       "roadmap_heading": "### 10. Operational maturity",
       "roadmap_heading_present": true,
-      "roadmap_heading_line": 2561,
+      "roadmap_heading_line": 2563,
       "blocking_todo_phrase": "Add ROADMAP operational-maturity acceptance criteria.",
       "blocking_todo_present": true,
       "validation_gate": "operational maturity acceptance criteria",

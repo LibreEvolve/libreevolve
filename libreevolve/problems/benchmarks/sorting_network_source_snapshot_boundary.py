@@ -20,14 +20,16 @@ EXPECTED_SNAPSHOT_IDS = (
     "codish_publication",
 )
 EXPECTED_MISSING_EVIDENCE = {
+    "source_drift_triage_resolution": "not_recorded_locally",
+    "updated_source_snapshot_metadata": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
-    "archived_live_refresh_run_history": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally",
 }
 EXPECTED_SOURCE_REFRESH_GATE_SIDECAR = "papers/sorting_network_source_refresh_gate_boundary.json"
+EXPECTED_SOURCE_REFRESH_RUN_SIDECAR = "papers/sorting_network_source_refresh_run_2026-06-18.json"
 EXPECTED_SOURCE_SNAPSHOTS: dict[str, dict[str, Any]] = {
     "zero_one_clrs": {
         "url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
@@ -107,6 +109,8 @@ def sorting_network_source_snapshot_boundary_record() -> dict[str, Any]:
             "citation URLs without retaining full raw response bodies."
         ),
         "source_refresh_gate_sidecar": EXPECTED_SOURCE_REFRESH_GATE_SIDECAR,
+        "latest_source_refresh_run_sidecar": EXPECTED_SOURCE_REFRESH_RUN_SIDECAR,
+        "latest_source_refresh_status": "source_metadata_drift_detected",
         "source_snapshots": {
             source_id: dict(snapshot)
             for source_id, snapshot in EXPECTED_SOURCE_SNAPSHOTS.items()
@@ -115,11 +119,12 @@ def sorting_network_source_snapshot_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This sidecar records sorting-network citation source snapshot "
             "metadata and links the deterministic source refresh-gate "
-            "sidecar. It does not claim full raw source-body retention, "
-            "independent proof extraction from those sources, scheduled CI "
-            "refresh-run history, archived live refresh-run history, repeated "
-            "LibreEvolve runs, run-tied hardening, paper certification, or "
-            "novel SOTA results."
+            "sidecar plus the latest archived live refresh-run drift outcome. "
+            "It does not claim source-drift triage resolution, updated source "
+            "snapshot metadata, full raw source-body retention, independent "
+            "proof extraction from those sources, scheduled CI refresh-run "
+            "history, repeated LibreEvolve runs, run-tied hardening, paper "
+            "certification, or novel SOTA results."
         ),
     }
 
@@ -147,12 +152,18 @@ def validate_sorting_network_source_snapshot_boundary(
         issues.append(_issue("claim_ready_overclaim", "source metadata must not claim certified benchmark evidence"))
     if data.get("source_refresh_gate_sidecar") != EXPECTED_SOURCE_REFRESH_GATE_SIDECAR:
         issues.append(_issue("invalid_source_refresh_gate_sidecar", f"source_refresh_gate_sidecar must be {EXPECTED_SOURCE_REFRESH_GATE_SIDECAR}"))
+    if data.get("latest_source_refresh_run_sidecar") != EXPECTED_SOURCE_REFRESH_RUN_SIDECAR:
+        issues.append(_issue("invalid_latest_source_refresh_run_sidecar", f"latest_source_refresh_run_sidecar must be {EXPECTED_SOURCE_REFRESH_RUN_SIDECAR}"))
+    if data.get("latest_source_refresh_status") != "source_metadata_drift_detected":
+        issues.append(_issue("invalid_latest_source_refresh_status", "latest_source_refresh_status must record source_metadata_drift_detected"))
     snapshot_count = _validate_source_snapshots(data.get("source_snapshots"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim full raw source-body retention" not in boundary_text
+        or "source-drift triage resolution" not in boundary_text
+        or "updated source snapshot metadata" not in boundary_text
+        or "full raw source-body retention" not in boundary_text
         or "repeated LibreEvolve runs" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate metadata from full retention and run evidence"))

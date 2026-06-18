@@ -2,7 +2,7 @@
   "schema": "libreevolve.sorting_network_source_refresh_gate_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "Sorting-network citation source metadata should have a reusable refresh gate that compares current network responses with committed snapshot metadata.",
-  "boundary_status": "deterministic_source_refresh_gate_recorded_without_ci_history",
+  "boundary_status": "deterministic_source_refresh_gate_recorded_with_archived_drift_outcome",
   "claim_ready": false,
   "script_artifact": {
     "path": "libreevolve/tools/sorting_network_source_refresh_gate.py",
@@ -13,6 +13,13 @@
     "deterministic_cli": "py -3.12 -m libreevolve.tools.sorting_network_source_refresh_gate --pretty"
   },
   "source_snapshot_metadata_sidecar": "papers/sorting_network_source_snapshot_boundary.json",
+  "archived_outcome_artifact": {
+    "path": "papers/sorting_network_source_refresh_run_2026-06-18.json",
+    "schema": "libreevolve.sorting_network_source_refresh_run_boundary.v1",
+    "run_date": "2026-06-18",
+    "run_mode": "live_network",
+    "result": "source_metadata_drift_detected"
+  },
   "expected_report_schema": "libreevolve.sorting_network_source_refresh_gate_report.v1",
   "expected_source_ids": [
     "zero_one_clrs",
@@ -22,12 +29,13 @@
     "codish_publication"
   ],
   "missing_evidence": {
+    "source_drift_triage_resolution": "not_recorded_locally",
+    "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
-    "archived_live_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a deterministic sorting-network citation source refresh gate script tied to committed source snapshot metadata. It does not claim scheduled CI refresh-run history, archived live refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
+  "claim_boundary": "This boundary records a deterministic sorting-network citation source refresh gate script tied to committed source snapshot metadata, plus an archived live refresh-run outcome that detected Codish publication source drift. It does not claim source-drift triage resolution, updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
 }

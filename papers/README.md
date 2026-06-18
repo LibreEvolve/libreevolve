@@ -3522,13 +3522,13 @@ Implemented:
   cancellation, resume, equal-budget, reviewer-isolation,
   Gemini-substitution, sidecar-ref, active-TODO, validation-gate, and
   readiness labels, plus an explicit backend-role capability inventory derived
-  from those tracks and a structural critique-control checklist for the
-  synchronous reviewer surface. It is not evidence of calibrated reward policy,
-  role quota ownership, live provider pricing/default evidence, raw provider
-  replay, live hard cancellation, equal-budget scheduler comparator,
-  first-class Gemini lane evidence, async reviewer isolation,
-  stale-readiness detector, owner review signoff, or full backend scheduler
-  parity.
+  from those tracks, a reward-assumption policy map, and a structural
+  critique-control checklist for the synchronous reviewer surface. It is not
+  evidence of calibrated reward policy, role quota ownership, live provider
+  pricing/default evidence, raw provider replay, live hard cancellation,
+  equal-budget scheduler comparator, first-class Gemini lane evidence, async
+  reviewer isolation, stale-readiness detector, owner review signoff, or full
+  backend scheduler parity.
 - `papers/roadmap_backend_control_plane_readiness_boundary.json`: ROADMAP
   backend control-plane readiness sidecar with eight criteria for backend-role
   capability, calibrated reward/quota policy, live pricing/default and raw

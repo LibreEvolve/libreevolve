@@ -23,6 +23,7 @@ from pathlib import Path
 
 from libreevolve.core.artifact_schema import (
     EVALUATOR_RESULT_RECORD_SCHEMA,
+    DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA,
     PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA,
     PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA,
     RUN_ARTIFACT_NAMES,
@@ -6206,7 +6207,10 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "metric_diverse_inspiration_report": (
             _metric_diverse_inspiration_report(programs)
         ),
-        "duplicate_work_policy_report": _duplicate_work_policy_report(programs),
+        "duplicate_work_policy_report": _duplicate_work_policy_report(
+            programs,
+            run_dir,
+        ),
         "sampling_balance_report": _sampling_balance_report(
             db.startup_manifest_snapshot(),
             programs,
@@ -20500,8 +20504,9 @@ def _is_metric_diverse_benchmark_fixture_readiness(
     return True
 
 
-def _duplicate_work_policy_report(programs: list[Program]) -> dict:
+def _duplicate_work_policy_report(programs: list[Program], run_dir: Path) -> dict:
     records = [_duplicate_work_program_record(program) for program in programs]
+    cache_index_export = _write_duplicate_work_cache_index(run_dir, records)
     cache_hit_ids = [
         record["program_id"]
         for record in records
@@ -20543,6 +20548,7 @@ def _duplicate_work_policy_report(programs: list[Program]) -> dict:
         "evaluation_cache_hit_count": len(cache_hit_ids),
         "evaluation_cache_hit_program_ids": cache_hit_ids[:100],
         "evaluation_cache_hit_program_ids_truncated": len(cache_hit_ids) > 100,
+        "duplicate_work_cache_index": cache_index_export,
         "records_limit": 100,
         "records_truncated": len(duplicate_groups) > 100,
         "duplicate_workspace_groups": duplicate_groups[:100],
@@ -20561,6 +20567,10 @@ def _duplicate_work_policy_report(programs: list[Program]) -> dict:
             "cache_eligibility": (
                 "diff_error_must_be_absent; llm_feedback_and_plugin_scores_run_after_reuse"
             ),
+            "durable_index_storage": "duplicate_work_cache_index.jsonl",
+            "durable_index_policy": (
+                "exact_workspace_rows_exported_for_audit_and_cross_run_concatenation"
+            ),
             "budget_policy": (
                 "cache_hits_emit_candidate_evaluation_cache_hit_events_and_do_not_"
                 "consume_evaluator_call_budget"
@@ -20573,8 +20583,11 @@ def _duplicate_work_policy_report(programs: list[Program]) -> dict:
             "duplicate_detection_reported": bool(duplicate_groups),
             "run_local_cache_hit_reported": bool(cache_hit_ids),
             "run_local_evaluation_result_reuse": True,
+            "durable_exact_workspace_index_export": cache_index_export["exists"],
+            "cross_run_workspace_lookup": False,
+            "resume_spanning_cache_replay": False,
             "remaining_gap": [
-                "cross_run_workspace_hash_index",
+                "cross_run_workspace_hash_lookup",
                 "durable_evaluation_cache_storage",
                 "cache_replay_across_resume_boundaries",
                 "semantic_near_duplicate_detection",
@@ -20583,6 +20596,97 @@ def _duplicate_work_policy_report(programs: list[Program]) -> dict:
     }
     report["validation"] = validate_duplicate_work_policy_report(report)
     return report
+
+
+def _write_duplicate_work_cache_index(run_dir: Path, records: list[dict]) -> dict:
+    path = run_dir / "duplicate_work_cache_index.jsonl"
+    index_records = [
+        _duplicate_work_cache_index_record(record, row_index)
+        for row_index, record in enumerate(
+            sorted(
+                records,
+                key=lambda item: (
+                    str(item.get("workspace_sha256", "")),
+                    int(item.get("generation", 0))
+                    if isinstance(item.get("generation"), int)
+                    and not isinstance(item.get("generation"), bool)
+                    else 10**9,
+                    str(item.get("program_id", "")),
+                ),
+            )
+        )
+    ]
+    if not index_records:
+        return {
+            "schema": "libreevolve.duplicate_work_cache_index_export.v1",
+            "path": "duplicate_work_cache_index.jsonl",
+            "record_schema": DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA,
+            "record_count": 0,
+            "exists": False,
+            "sha256": None,
+            "row_policy": "one_row_per_runtime_program_record",
+            "cross_run_policy": (
+                "no_replay_lookup; rows_are_safe_to_concatenate_by_workspace_hash"
+            ),
+        }
+    lines = [
+        strict_json_dumps(
+            versioned_record(DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA, record)
+        )
+        for record in index_records
+    ]
+    text = "\n".join(lines) + "\n"
+    path.write_text(text, encoding="utf-8")
+    return {
+        "schema": "libreevolve.duplicate_work_cache_index_export.v1",
+        "path": "duplicate_work_cache_index.jsonl",
+        "record_schema": DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA,
+        "record_count": len(index_records),
+        "exists": True,
+        "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "row_policy": "one_row_per_runtime_program_record",
+        "cross_run_policy": (
+            "no_replay_lookup; rows_are_safe_to_concatenate_by_workspace_hash"
+        ),
+    }
+
+
+def _duplicate_work_cache_index_record(record: dict, row_index: int) -> dict:
+    cache = (
+        record.get("evaluation_cache")
+        if isinstance(record.get("evaluation_cache"), Mapping)
+        else {}
+    )
+    cache_key = cache.get("cache_key_sha256") if isinstance(cache, Mapping) else None
+    workspace_hash = record.get("workspace_sha256")
+    key_material = (
+        str(cache_key)
+        if _is_sha256_hex(cache_key)
+        else f"workspace:{workspace_hash}:program:{record.get('program_id')}"
+    )
+    row = {
+        "row_id": hashlib.sha256(
+            f"{row_index}:{key_material}".encode("utf-8")
+        ).hexdigest()[:24],
+        "row_index": row_index,
+        "program_id": record.get("program_id"),
+        "generation": record.get("generation"),
+        "parent_id": record.get("parent_id"),
+        "candidate_type": record.get("candidate_type"),
+        "candidate_status": record.get("candidate_status"),
+        "workspace_sha256": workspace_hash,
+        "fitness": _finite_json_number(record.get("fitness")),
+        "is_valid": record.get("is_valid"),
+        "evaluation_cache_status": cache.get("status"),
+        "cache_hit": cache.get("cache_hit") is True,
+        "cache_key_sha256": cache_key if _is_sha256_hex(cache_key) else None,
+        "source_program_id": cache.get("source_program_id"),
+        "index_key_policy": (
+            "cache_key_sha256_when_available_else_workspace_program_fallback"
+        ),
+        "row_policy": "exact_workspace_runtime_program_record",
+    }
+    return row
 
 
 def _duplicate_work_program_record(program: Program) -> dict:
@@ -20678,6 +20782,7 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
         "evaluation_cache_hit_count",
         "evaluation_cache_hit_program_ids",
         "evaluation_cache_hit_program_ids_truncated",
+        "duplicate_work_cache_index",
         "records_limit",
         "records_truncated",
         "duplicate_workspace_groups",
@@ -20898,6 +21003,88 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
                 "message": "evaluation_cache_hit_count must match group records",
             }
         )
+    cache_index = report.get("duplicate_work_cache_index")
+    if not isinstance(cache_index, dict):
+        issues.append(
+            {
+                "code": "invalid_duplicate_work_cache_index",
+                "message": "duplicate_work_cache_index must be an object",
+            }
+        )
+    else:
+        expected_index = {
+            "schema": "libreevolve.duplicate_work_cache_index_export.v1",
+            "path": "duplicate_work_cache_index.jsonl",
+            "record_schema": DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA,
+            "row_policy": "one_row_per_runtime_program_record",
+        }
+        for key, expected_value in expected_index.items():
+            if cache_index.get(key) != expected_value:
+                issues.append(
+                    {
+                        "code": f"invalid_duplicate_work_cache_index_{key}",
+                        "message": (
+                            f"duplicate_work_cache_index.{key} must be "
+                            f"{expected_value}"
+                        ),
+                    }
+                )
+        record_count = cache_index.get("record_count")
+        if (
+            isinstance(record_count, bool)
+            or not isinstance(record_count, int)
+            or record_count < 0
+        ):
+            issues.append(
+                {
+                    "code": "invalid_duplicate_work_cache_index_record_count",
+                    "message": (
+                        "duplicate_work_cache_index.record_count must be a "
+                        "non-negative integer"
+                    ),
+                }
+            )
+        elif record_count != report.get("program_count"):
+            issues.append(
+                {
+                    "code": "duplicate_work_cache_index_count_mismatch",
+                    "message": (
+                        "duplicate_work_cache_index.record_count must match "
+                        "program_count"
+                    ),
+                }
+            )
+        exists = cache_index.get("exists")
+        sha = cache_index.get("sha256")
+        if exists is True:
+            if not _is_sha256_hex(sha):
+                issues.append(
+                    {
+                        "code": "invalid_duplicate_work_cache_index_hash",
+                        "message": (
+                            "duplicate_work_cache_index.sha256 must be a SHA-256 "
+                            "hash when the artifact exists"
+                        ),
+                    }
+                )
+        elif exists is False:
+            if sha is not None:
+                issues.append(
+                    {
+                        "code": "invalid_absent_duplicate_work_cache_index_hash",
+                        "message": (
+                            "duplicate_work_cache_index.sha256 must be null when "
+                            "the artifact is absent"
+                        ),
+                    }
+                )
+        else:
+            issues.append(
+                {
+                    "code": "invalid_duplicate_work_cache_index_exists",
+                    "message": "duplicate_work_cache_index.exists must be boolean",
+                }
+            )
     store_count = report.get("evaluation_cache_store_count")
     if isinstance(store_count, bool) or not isinstance(store_count, int) or store_count < 0:
         issues.append(
@@ -20934,6 +21121,15 @@ def validate_duplicate_work_policy_report(report: object) -> dict:
                 {
                     "code": "invalid_cache_storage",
                     "message": "cache storage must be run_local_memory",
+                }
+            )
+        if policy.get("durable_index_storage") != "duplicate_work_cache_index.jsonl":
+            issues.append(
+                {
+                    "code": "invalid_durable_index_storage",
+                    "message": (
+                        "durable index storage must be duplicate_work_cache_index.jsonl"
+                    ),
                 }
             )
     if report.get("claim_ready") is not False:

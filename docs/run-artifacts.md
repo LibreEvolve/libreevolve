@@ -46,8 +46,8 @@ startup task-spec bundle, validates that each field's manifest paths resolve,
 and links task-spec fields to concrete runtime artifact paths such as
 `manifest.json`, `history.jsonl`, `failure_history.jsonl`, `prompt_history.jsonl`,
 `prompt_prior_score_table.jsonl`, `evaluator_results.jsonl`, `llm_calls.jsonl`,
-`controller_budget_events.jsonl`, `evaluator_artifacts`, `best.py`,
-`best_workspace`, and the standalone
+`controller_budget_events.jsonl`, `duplicate_work_cache_index.jsonl`,
+`evaluator_artifacts`, `best.py`, `best_workspace`, and the standalone
 `task_specification.json`.
 It records per-field reference summaries, program counts, manifest-path
 resolution counts, artifact-link/presence counts, and bounded
@@ -403,6 +403,7 @@ runs/
     ├── task_specification.json
     ├── history.jsonl
     ├── evaluator_results.jsonl
+    ├── duplicate_work_cache_index.jsonl # Exact-workspace duplicate/cache audit rows
     ├── failure_history.jsonl
     ├── archive_events.jsonl          # Migration placement events when migration runs
     ├── controller_budget_events.jsonl # Replayable synchronous controller budget events
@@ -894,6 +895,7 @@ artifacts: `history.jsonl`, `history_invalid.jsonl`, `failure_history.jsonl`,
 `failure_history_invalid.jsonl`, `archive_events.jsonl`,
 `archive_events_invalid.jsonl`, `controller_budget_events.jsonl`,
 `controller_budget_events_invalid.jsonl`, `evaluator_results.jsonl`,
+`duplicate_work_cache_index.jsonl`,
 `llm_calls.jsonl`, `llm_calls_invalid.jsonl`, `prompt_history.jsonl`,
 `prompt_history_invalid.jsonl`, `prompt_current_binding_table.jsonl`,
 `prompt_prior_score_table.jsonl`, `task_specification.json`, `manifest.json`,
@@ -3584,10 +3586,34 @@ workspace group.
 
 The report also embeds `libreevolve.evaluation_cache_policy.v1`, which records
 the current policy explicitly: deterministic candidate ids include workspace
-hashes, but pre-evaluation duplicate skipping and evaluation-result reuse are
-not implemented. Repeated work is evaluated again, consumes normal budget, and
-is reported after the fact. This is duplicate-work evidence, not AlphaEvolve-
-grade fixed-budget cache/reuse memory.
+hashes, diff-error-free exact workspace matches use a run-local evaluator-result
+cache keyed by canonical workspace hash plus evaluator-contract hash, cache hits
+emit `candidate_evaluation_cache_hit` controller events, and cache hits do not
+consume evaluator-call budget. The report now also points to
+`duplicate_work_cache_index.jsonl`, a strict JSONL artifact with schema
+`libreevolve.duplicate_work_cache_index.v1` that exports one exact-workspace
+row per runtime program for audit and cross-run concatenation.
+
+This is exact-workspace cache/index evidence, not AlphaEvolve-grade durable
+memory. The live cache remains run-local memory; the exported index is not a
+cross-run lookup/replay engine, durable evaluator-result store, invalidation or
+migration policy, stochastic re-evaluation policy, semantic near-duplicate
+detector, or source/output-aware duplicate-memory table.
+
+## `duplicate_work_cache_index.jsonl`
+
+`duplicate_work_cache_index.jsonl` is written by the duplicate-work policy
+report finalizer and contains versioned
+`libreevolve.duplicate_work_cache_index.v1` rows. Each row records the runtime
+program id, generation, candidate type/status, canonical workspace SHA-256,
+finite fitness when available, evaluator validity, evaluation-cache status,
+cache-hit flag, cache key when present, and the source program id for reused
+results when available.
+
+The artifact is intended for exact-workspace duplicate audits and safe
+cross-run concatenation by workspace hash/cache key. It is not read during
+evolution, does not replay evaluator results across resumes, and does not
+replace the run-local in-memory evaluator cache.
 
 ## `runtime.history.sampling_balance_report`
 

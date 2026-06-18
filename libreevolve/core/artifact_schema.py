@@ -21,6 +21,9 @@ PROMPT_CURRENT_BINDING_TABLE_RECORD_SCHEMA = (
 PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA = (
     "libreevolve.prompt_prior_score_table.v1"
 )
+DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA = (
+    "libreevolve.duplicate_work_cache_index.v1"
+)
 CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA = "libreevolve.controller_budget_event.v1"
 QUARANTINE_RECORD_SCHEMA = "libreevolve.strict_jsonl_quarantine_diagnostic.v1"
 PAPER_ARTIFACT_SUBPATH_SCHEMA = "libreevolve.paper_artifact_subpaths.v1"
@@ -43,6 +46,7 @@ RUN_ARTIFACT_NAMES = frozenset(
         "prompt_history_invalid.jsonl",
         "prompt_current_binding_table.jsonl",
         "prompt_prior_score_table.jsonl",
+        "duplicate_work_cache_index.jsonl",
         "manifest.json",
         "manifest_invalid.jsonl",
         "best.py",
@@ -89,6 +93,10 @@ _JSONL_ARTIFACT_OWNERS = {
     "prompt_prior_score_table.jsonl": (
         "prompt prior-score table finalizer",
         "prompt prior-score reports and cross-run analysis",
+    ),
+    "duplicate_work_cache_index.jsonl": (
+        "duplicate-work policy report finalizer",
+        "exact-workspace duplicate memory audits and cross-run concatenation",
     ),
 }
 
@@ -336,6 +344,30 @@ _JSONL_IMPLEMENTATION_ANCHORS = {
             }
         ],
     },
+    "duplicate_work_cache_index.jsonl": {
+        "writer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "def _write_duplicate_work_cache_index",
+            },
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": 'path = run_dir / "duplicate_work_cache_index.jsonl"',
+            },
+        ],
+        "runtime_pointer": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "for name in sorted(RUN_ARTIFACT_NAMES)",
+            }
+        ],
+        "show_restore_reader": [
+            {
+                "path": "libreevolve/core/loop.py",
+                "required_text": "duplicate_work_cache_index",
+            }
+        ],
+    },
 }
 
 _QUARANTINE_PATH_ANCHORS = {
@@ -417,6 +449,7 @@ _RUN_ARTIFACT_DOCUMENTATION_ANCHORS = {
     "prompt_history_invalid.jsonl": "`prompt_history_invalid.jsonl`",
     "prompt_current_binding_table.jsonl": "`prompt_current_binding_table.jsonl`",
     "prompt_prior_score_table.jsonl": "`prompt_prior_score_table.jsonl`",
+    "duplicate_work_cache_index.jsonl": "`duplicate_work_cache_index.jsonl`",
     "task_specification.json": "`task_specification.json`",
     "evaluator_results.jsonl": "`evaluator_results.jsonl`",
     "manifest.json": "`manifest.json`",
@@ -2027,6 +2060,9 @@ def _run_artifact_schema_without_inventory() -> dict:
             ),
             "prompt_prior_score_table.jsonl": (
                 PROMPT_PRIOR_SCORE_TABLE_RECORD_SCHEMA
+            ),
+            "duplicate_work_cache_index.jsonl": (
+                DUPLICATE_WORK_CACHE_INDEX_RECORD_SCHEMA
             ),
             "controller_budget_events.jsonl": CONTROLLER_BUDGET_EVENT_RECORD_SCHEMA,
         },

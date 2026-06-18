@@ -12,15 +12,18 @@ def test_duplicate_work_policy_boundary_accepts_run_local_cache_boundary():
     validation = validate_duplicate_work_policy_boundary(boundary)
 
     assert validation.ok is True
-    assert validation.boundary_status == "run_local_exact_workspace_cache_only"
-    assert validation.required_evidence_field_count == 15
+    assert validation.boundary_status == (
+        "run_local_cache_with_durable_exact_workspace_index"
+    )
+    assert validation.required_evidence_field_count == 17
     assert validation.missing_evidence_count == 8
     assert boundary["schema"] == DUPLICATE_WORK_POLICY_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert (
-        "does not claim a cross-run workspace hash index"
+        "does not claim cross-run workspace hash lookup"
         in boundary["claim_boundary"]
     )
+    assert "duplicate_work_cache_index.jsonl" in boundary["claim_boundary"]
 
 
 def test_duplicate_work_policy_boundary_rejects_durable_memory_overclaim():
@@ -50,6 +53,9 @@ def test_render_duplicate_work_policy_boundary_summary_reports_shape():
 
     assert "Duplicate-work policy boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| boundary_status | run_local_exact_workspace_cache_only |" in summary
-    assert "| required_evidence_field_count | 15 |" in summary
+    assert (
+        "| boundary_status | run_local_cache_with_durable_exact_workspace_index |"
+        in summary
+    )
+    assert "| required_evidence_field_count | 17 |" in summary
     assert "| missing_evidence_count | 8 |" in summary

@@ -19207,3 +19207,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     tables.
   - Verification: focused controller-backtracking tests cover emitted decision
     records, redirect linkage, and false suppression/causal-proof flags.
+- [x] Add durable exact-workspace duplicate/cache index export.
+  - Spec evidence: AlphaEvolve-style fixed-budget memory needs explicit
+    evidence for how repeated work is recognized and reused before broader
+    durable duplicate-memory claims can be made.
+  - Status: completed runs now write `duplicate_work_cache_index.jsonl` from
+    `runtime.history.duplicate_work_policy_report`. The artifact contains
+    versioned `libreevolve.duplicate_work_cache_index.v1` rows with one
+    exact-workspace duplicate/cache audit row per runtime program, and the
+    runtime report records its path, schema, row count, and SHA-256.
+  - Remaining code gap: this is a durable exact-workspace index export, not
+    cross-run evaluator-result lookup/storage, resume-spanning cache replay,
+    semantic near-duplicate memory, or source/output-aware deduplication.
+  - Verification: focused duplicate-work runtime tests read the JSONL artifact
+    and validate cache-hit rows while preserving false cross-run lookup and
+    resume-replay readiness.

@@ -2919,20 +2919,26 @@ sidecars, tests, and active TODOs.
     Cache hits emit `candidate_evaluation_cache_hit` controller events, do not
     consume evaluator-call budget, and are visible in generated-candidate
     metadata and the duplicate-work report. Completed manifests also include
+    `duplicate_work_cache_index.jsonl`, a strict JSONL exact-workspace
+    duplicate/cache audit artifact with one row per runtime program. The
+    duplicate-work policy report records the artifact path, schema, row count,
+    and hash so rows can be inspected or concatenated across runs without
+    claiming replay lookup. Completed manifests also include
     `runtime.history.whole_run_source_workspace_integrity_report`, which
     records retained-program canonical workspace hashes and selected runtime
     artifact hashes as inspection evidence without creating a durable
-    source/workspace dedup index.
+    source/workspace dedup lookup.
     `papers/whole_run_source_workspace_integrity_boundary.json` now preserves
     the same bounded retained-program integrity absence boundary for
     paper-manifest validation. `papers/duplicate_work_policy_boundary.json`
     now validates the duplicate-work cache as run-local exact-workspace reuse,
-    not durable AlphaEvolve-grade memory.
-  - Required result: add durable cross-run cache storage, resume-spanning cache
-    replay, cache invalidation/migration policy, stochastic re-evaluation
-    policy, semantic near-duplicate detection, and source/output-aware cache
-    indexes before presenting the program database as AlphaEvolve-grade
-    fixed-budget memory over previously explored programs.
+    plus a durable exact-workspace index export, not durable AlphaEvolve-grade
+    memory.
+  - Required result: add durable cross-run cache lookup/storage,
+    resume-spanning cache replay, cache invalidation/migration policy,
+    stochastic re-evaluation policy, semantic near-duplicate detection, and
+    source/output-aware cache indexes before presenting the program database as
+    AlphaEvolve-grade fixed-budget memory over previously explored programs.
 
 - [ ] Extend automated-evaluator scope policy into robust environment fixtures.
   - Spec evidence: AlphaEvolve says automated evaluation is both an advantage

@@ -14267,3 +14267,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused controller-backtracking boundary tests require the
     audit decision evidence while preserving controller-policy overclaim
     rejection.
+- [x] Add paper-facing durable exact-workspace duplicate/cache index boundary.
+  - Paper evidence: AlphaEvolve Section 2.5 frames the evolutionary database
+    as retaining previously explored programs, scores, and outputs under fixed
+    search budgets.
+  - Status: paper-facing docs and
+    `papers/duplicate_work_policy_boundary.json` now distinguish run-local
+    exact evaluator-result cache reuse plus `duplicate_work_cache_index.jsonl`
+    exact-workspace index export from durable AlphaEvolve-grade duplicate
+    memory.
+  - Remaining paper gap: durable cross-run cache lookup/storage,
+    resume-spanning cache replay, invalidation/migration policy, stochastic
+    re-evaluation policy, semantic near-duplicate handling, source/output-aware
+    duplicate indexes, and a fixed-budget memory claim gate remain open.
+  - Verification: focused duplicate-work boundary tests require the durable
+    exact-index evidence while preserving overclaim rejection.

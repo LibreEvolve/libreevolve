@@ -28,8 +28,8 @@ libreevolve/
 - `.env` file at project root for API keys (loaded via python-dotenv with override=True)
 - `runs/` directory is gitignored — contains manifest.json, history.jsonl,
   failure/quarantine JSONL streams, archive_events.jsonl, llm_calls.jsonl,
-  prompt_history.jsonl, best.py, best_workspace/, evaluator_artifacts/, and
-  plugin_artifacts/ per problem
+  prompt_history.jsonl, duplicate_work_cache_index.jsonl, best.py,
+  best_workspace/, evaluator_artifacts/, and plugin_artifacts/ per problem
 - Validator execution and CLI/direct contract preflight run in temporary local
   subprocesses, not security sandboxes; validator modules are not imported in
   the parent CLI/runtime process during preflight
@@ -45,7 +45,9 @@ libreevolve/
   sampling_eligible.
 - Default `mixed` parent sampling uses 30% explore / 70% exploit; explicit
   parent-selection strategies bypass that ratio
-- Failed/rejected candidates are persisted to `failure_history.jsonl`, and
+- Failed/rejected candidates are persisted to `failure_history.jsonl`, exact
+  workspace duplicate/cache audit rows are persisted to
+  `duplicate_work_cache_index.jsonl`, and
   prompts render bounded recent failure memory with configurable filters and
   limits; durable cross-run failure tables, semantic failed-proposal
   retrieval, learned repetition avoidance, replayable failed-mutation

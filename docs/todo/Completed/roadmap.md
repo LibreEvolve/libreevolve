@@ -15957,3 +15957,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     fallback-target decisions, causal replay, and cross-run branch tables open.
   - Remaining roadmap gap: controller-owned backtracking policy and owner
     review signoff remain active TODOs.
+- [x] Keep ROADMAP duplicate-work boundary current with exact-index export.
+  - Spec evidence: ROADMAP AlphaEvolve gaps should separate implemented
+    exact-workspace cache/index evidence from remaining durable duplicate
+    memory and replay work.
+  - Status: ROADMAP now describes
+    `runtime.history.duplicate_work_policy_report` as recording cache-key
+    scope, cache stores/hits, cache-hit budget events, and
+    `duplicate_work_cache_index.jsonl` export metadata.
+  - Remaining roadmap gap: durable cross-run cache lookup/storage,
+    resume-spanning replay, invalidation/migration policy, semantic
+    near-duplicate handling, source/output-aware indexes, and owner review
+    signoff remain active TODOs.

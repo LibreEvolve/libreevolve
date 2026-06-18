@@ -8846,12 +8846,42 @@ def test_runtime_history_reports_duplicate_work_policy_with_run_local_cache():
     assert report["duplicate_generated_candidate_count"] == 1
     assert report["evaluation_cache_store_count"] == 2
     assert report["evaluation_cache_hit_count"] == 1
+    assert report["duplicate_work_cache_index"]["exists"] is True
+    assert report["duplicate_work_cache_index"]["path"] == "duplicate_work_cache_index.jsonl"
+    assert report["duplicate_work_cache_index"]["record_count"] == 3
+    assert report["duplicate_work_cache_index"]["record_schema"] == (
+        "libreevolve.duplicate_work_cache_index.v1"
+    )
     assert report["evaluation_cache_policy"]["pre_evaluation_duplicate_skip"] is True
     assert report["evaluation_cache_policy"]["evaluation_result_reuse"] is True
     assert report["evaluation_cache_policy"]["cache_storage"] == "run_local_memory"
+    assert report["evaluation_cache_policy"]["durable_index_storage"] == (
+        "duplicate_work_cache_index.jsonl"
+    )
     assert report["claim_ready"] is False
+    assert report["claim_readiness"]["durable_exact_workspace_index_export"] is True
+    assert report["claim_readiness"]["cross_run_workspace_lookup"] is False
+    assert report["claim_readiness"]["resume_spanning_cache_replay"] is False
 
     group = report["duplicate_workspace_groups"][0]
+
+    index_rows = [
+        json.loads(line)
+        for line in (run_dir / "duplicate_work_cache_index.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    assert len(index_rows) == 3
+    assert {row["record_schema"] for row in index_rows} == {
+        "libreevolve.duplicate_work_cache_index.v1"
+    }
+    assert any(row["cache_hit"] is True for row in index_rows)
+    assert {
+        row["workspace_sha256"]
+        for row in index_rows
+        if row["candidate_type"] == "generated"
+    } == {record["workspace_sha256"] for record in group["records"]}
+
     assert group["program_count"] == 2
     assert group["generated_program_count"] == 2
     assert group["generated_duplicate_program_ids"] == (

@@ -2208,14 +2208,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     that diff-error-free exact workspace matches reuse a run-local evaluator
     result keyed by canonical workspace hash plus evaluator-contract hash.
     Cache hits emit replayable `candidate_evaluation_cache_hit` controller
-    events and do not consume evaluator-call budget.
+    events and do not consume evaluator-call budget. Completed runs now also
+    write `duplicate_work_cache_index.jsonl`, a strict JSONL exact-workspace
+    index with one row per runtime program for audit and cross-run
+    concatenation, and the runtime report records the artifact path, schema,
+    row count, and hash.
     `papers/duplicate_work_policy_boundary.json` now validates this as
-    run-local exact-cache evidence only.
-  - Current gap: the cache is still run-local and exact-match only. The paper
-    index has no evidence for durable cross-run lookup, resume-spanning cache
-    replay, cache invalidation/migration policy, stochastic re-evaluation
-    policy, semantic near-duplicate handling, source/output-aware duplicate
-    indexes, or an AlphaEvolve-grade fixed-budget memory claim gate.
+    run-local exact-cache evidence plus durable exact-workspace index export.
+  - Current gap: the live cache is still run-local and exact-match only, and
+    the index is not a replay lookup engine. The paper index has no evidence
+    for durable cross-run lookup, resume-spanning cache replay, cache
+    invalidation/migration policy, stochastic re-evaluation policy, semantic
+    near-duplicate handling, source/output-aware duplicate indexes, or an
+    AlphaEvolve-grade fixed-budget memory claim gate.
   - Required result: add paper-visible durable cache/reuse policy proving how
     repeated source/workspace proposals are skipped, reused, replayed across
     runs/resumes, or intentionally re-evaluated as stochastic samples with

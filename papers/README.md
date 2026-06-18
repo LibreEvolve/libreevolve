@@ -1377,13 +1377,17 @@ candidate workspaces and records a run-local evaluator cache for
 diff-error-free exact workspace matches. Cache keys include canonical workspace
 hash plus evaluator-contract hash; cache hits emit replayable
 `candidate_evaluation_cache_hit` controller events and do not consume
-evaluator-call budget. The remaining gap is durable cross-run cache lookup,
-resume-spanning cache replay, cache invalidation/migration policy, stochastic
-re-evaluation policy, semantic near-duplicate detection, source/output-aware
-cache indexes, and broader AlphaEvolve-grade fixed-budget memory over
-previously explored programs. The committed
+evaluator-call budget. Completed runs also write
+`duplicate_work_cache_index.jsonl`, a strict JSONL exact-workspace index with
+one row per runtime program for audit and cross-run concatenation; it is not a
+replay lookup engine. The remaining gap is durable cross-run cache lookup,
+durable evaluator-result storage, resume-spanning cache replay, cache
+invalidation/migration policy, stochastic re-evaluation policy, semantic
+near-duplicate detection, source/output-aware cache indexes, and broader
+AlphaEvolve-grade fixed-budget memory over previously explored programs. The
+committed
 `papers/duplicate_work_policy_boundary.json` sidecar keeps this run-local
-exact-cache scope machine-validated.
+exact-cache plus durable exact-index-export scope machine-validated.
 
 AlphaEvolve sampling-balance note: completed manifests now include
 `runtime.history.sampling_balance_report`, which aggregates generated-candidate

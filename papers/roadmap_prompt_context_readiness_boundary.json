@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 16,
   "boundary_status": "bounded_prompt_context_readiness_matrix_without_full_prompt_system_gate",
-  "claim_boundary": "This boundary records prompt/context readiness criteria tied to the bounded prompt/context-system matrix. It does not claim a prompt-role capability matrix, deterministic context summarization, all-role provider-token section packing, separate prompt-format source provenance, full prompt replay-retention policy, audit-grade retrieval source integrity, semantic proposal memory, calibrated meta-prompt rewards, prompt-database archive lifecycle, prompt/context benchmark evidence, stale-readiness detector, or owner review signoff.",
+  "claim_boundary": "This boundary records prompt/context readiness criteria tied to the bounded prompt/context-system matrix, plus a claim guard for each prompt surface. It does not claim a prompt-role capability matrix, deterministic context summarization, all-role provider-token section packing, separate prompt-format source provenance, full prompt replay-retention policy, audit-grade retrieval source integrity, semantic proposal memory, calibrated meta-prompt rewards, prompt-database archive lifecycle, prompt/context benchmark evidence, stale-readiness detector, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "all_role_provider_token_section_packing": "not_recorded_locally",
@@ -17,6 +17,73 @@
     "separate_prompt_format_source_provenance": "not_recorded_locally",
     "stale_readiness_detector": "not_recorded_locally"
   },
+  "prompt_context_claim_guard": [
+    {
+      "allowed_current_claim": "mutation-template schema/dry-run checks and bounded role evidence",
+      "criterion_id": "prompt_role_capability_matrix",
+      "missing_before_parity_claim": "prompt-role capability matrix proving role-specific template compatibility and ownership",
+      "prompt_surface": "mutation, critique, feedback, meta-prompt, and custom role templates",
+      "readiness_status": "mutation_template_evidence_without_role_matrix",
+      "validation_gate": "prompt-role capability matrix"
+    },
+    {
+      "allowed_current_claim": "deterministic include/source provenance and first-N truncation",
+      "criterion_id": "context_selection_and_summarization",
+      "missing_before_parity_claim": "deterministic context summarization and source-selection policy",
+      "prompt_surface": "context source selection, ranking, truncation, and summarization",
+      "readiness_status": "source_provenance_without_summarization_policy",
+      "validation_gate": "context-source selection and summarization policy"
+    },
+    {
+      "allowed_current_claim": "mutation-path section packing and role token diagnostics",
+      "criterion_id": "all_role_token_section_packing",
+      "missing_before_parity_claim": "all-role provider-token section packing",
+      "prompt_surface": "selected-backend token caps and all prompt-role section packing",
+      "readiness_status": "mutation_packing_without_all_role_provider_tokens",
+      "validation_gate": "all-role provider-token section packing"
+    },
+    {
+      "allowed_current_claim": "effective prompt-format distribution plus bounded retention surfaces",
+      "criterion_id": "prompt_format_and_replay_retention",
+      "missing_before_parity_claim": "separate prompt-format source provenance and full prompt replay-retention policy",
+      "prompt_surface": "prompt-format alternatives, source provenance, retained prompts, and replay policy",
+      "readiness_status": "effective_format_and_bounded_retention_only",
+      "validation_gate": "prompt-format source provenance and replay-retention policy"
+    },
+    {
+      "allowed_current_claim": "bounded retrieval provenance and current-run proposal reports",
+      "criterion_id": "retrieval_and_proposal_memory_integrity",
+      "missing_before_parity_claim": "audit-grade retrieval source integrity and semantic proposal memory",
+      "prompt_surface": "retrieval sources, proposal memory, hypotheses, and failed-proposal reuse",
+      "readiness_status": "bounded_retrieval_and_exact_proposal_reports",
+      "validation_gate": "retrieval integrity and semantic proposal-memory policy"
+    },
+    {
+      "allowed_current_claim": "child-score prompt rewards and local prompt-arm database",
+      "criterion_id": "meta_prompt_and_prompt_database_lifecycle",
+      "missing_before_parity_claim": "calibrated meta-prompt rewards and prompt-database archive lifecycle",
+      "prompt_surface": "meta-prompt rewards, PromptDatabase, prompt archives, and prompt-side replay",
+      "readiness_status": "child_score_rewards_and_local_prompt_arm_history",
+      "validation_gate": "meta-prompt reward calibration and prompt database lifecycle"
+    },
+    {
+      "allowed_current_claim": "bounded sidecars without prompt/context benchmark acceptance evidence",
+      "criterion_id": "prompt_context_benchmark_evidence",
+      "missing_before_parity_claim": "prompt/context benchmark evidence before full prompt-system readiness claims",
+      "prompt_surface": "prompt/context benchmarks, ablations, and cross-document readiness claims",
+      "readiness_status": "sidecar_matrix_without_benchmark_acceptance",
+      "validation_gate": "prompt/context benchmark evidence"
+    },
+    {
+      "allowed_current_claim": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "missing_before_parity_claim": "stale-readiness detector and owner signoff before prompt/context parity claims",
+      "prompt_surface": "README, ROADMAP, papers, generated inventories, prompt docs, and owner readiness claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "prompt_context_claim_guard_count": 8,
   "readiness_criteria": [
     {
       "active_todo_refs": [

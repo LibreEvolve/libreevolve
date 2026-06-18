@@ -38,6 +38,23 @@ def test_roadmap_prompt_context_readiness_accepts_bounded_matrix():
         "prompt_context_benchmark_evidence",
         "stale_readiness_and_owner_signoff",
     ]
+    assert boundary["prompt_context_claim_guard_count"] == 8
+    assert [
+        record["criterion_id"] for record in boundary["prompt_context_claim_guard"]
+    ] == [
+        "prompt_role_capability_matrix",
+        "context_selection_and_summarization",
+        "all_role_token_section_packing",
+        "prompt_format_and_replay_retention",
+        "retrieval_and_proposal_memory_integrity",
+        "meta_prompt_and_prompt_database_lifecycle",
+        "prompt_context_benchmark_evidence",
+        "stale_readiness_and_owner_signoff",
+    ]
+    assert all(
+        "missing_before_parity_claim" in record
+        for record in boundary["prompt_context_claim_guard"]
+    )
     assert all(
         sidecar["exists"]
         for record in boundary["readiness_criteria"]
@@ -63,6 +80,7 @@ def test_roadmap_prompt_context_readiness_accepts_bounded_matrix():
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "does not claim a prompt-role capability matrix" in boundary["claim_boundary"]
+    assert "claim guard for each prompt surface" in boundary["claim_boundary"]
 
 
 def test_roadmap_prompt_context_readiness_rejects_overclaim_and_drift():
@@ -71,6 +89,7 @@ def test_roadmap_prompt_context_readiness_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "full_prompt_context_ready"
     boundary["readiness_criterion_count"] = 0
     boundary["readiness_criteria"][0]["sidecar_refs"][0]["exists"] = False
+    boundary["prompt_context_claim_guard_count"] = 0
     boundary["missing_evidence"]["semantic_proposal_memory"] = "recorded"
     boundary["required_evidence_fields"] = ["prompt_role_capability_matrix"]
 
@@ -82,6 +101,7 @@ def test_roadmap_prompt_context_readiness_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_readiness_criterion_count" in codes
     assert "invalid_readiness_criteria" in codes
+    assert "invalid_prompt_context_claim_guard_count" in codes
     assert "invalid_missing_evidence_semantic_proposal_memory" in codes
     assert "missing_required_evidence_field" in codes
 

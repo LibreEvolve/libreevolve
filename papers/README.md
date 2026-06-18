@@ -3579,8 +3579,9 @@ Implemented:
   capability, context selection/summarization, all-role token section packing,
   prompt-format and replay retention, retrieval/proposal-memory integrity,
   meta-prompt and prompt-database lifecycle, prompt/context benchmark
-  evidence, and stale readiness/owner signoff. It is not evidence that those
-  prompt-system readiness mechanisms are implemented.
+  evidence, and stale readiness/owner signoff, plus a per-surface
+  prompt/context claim guard. It is not evidence that those prompt-system
+  readiness mechanisms are implemented.
 - `papers/roadmap_evaluation_cascade_boundary.json`: ROADMAP
   evaluation-cascade sidecar with ten criteria for cascade transition
   artifacts, artifact schema/hash coverage, budget ownership, feedback

@@ -248,6 +248,7 @@ def roadmap_prompt_context_readiness_boundary_record(
     root_path = Path(root)
     source_boundary = roadmap_prompt_context_system_boundary_record(root_path)
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
+    claim_guard = [_claim_guard_record(record) for record in records]
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     return {
@@ -262,18 +263,21 @@ def roadmap_prompt_context_readiness_boundary_record(
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
         "readiness_criteria": records,
+        "prompt_context_claim_guard": claim_guard,
+        "prompt_context_claim_guard_count": len(claim_guard),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records prompt/context readiness criteria tied to "
-            "the bounded prompt/context-system matrix. It does not claim a "
-            "prompt-role capability matrix, deterministic context "
-            "summarization, all-role provider-token section packing, separate "
-            "prompt-format source provenance, full prompt replay-retention "
-            "policy, audit-grade retrieval source integrity, semantic proposal "
-            "memory, calibrated meta-prompt rewards, prompt-database archive "
-            "lifecycle, prompt/context benchmark evidence, stale-readiness "
-            "detector, or owner review signoff."
+            "the bounded prompt/context-system matrix, plus a claim guard for "
+            "each prompt surface. It does not claim a prompt-role capability "
+            "matrix, deterministic context summarization, all-role "
+            "provider-token section packing, separate prompt-format source "
+            "provenance, full prompt replay-retention policy, audit-grade "
+            "retrieval source integrity, semantic proposal memory, calibrated "
+            "meta-prompt rewards, prompt-database archive lifecycle, "
+            "prompt/context benchmark evidence, stale-readiness detector, or "
+            "owner review signoff."
         ),
     }
 
@@ -310,6 +314,8 @@ def validate_roadmap_prompt_context_readiness_boundary(
         "sidecar_ref_count",
         "active_todo_ref_count",
         "readiness_criteria",
+        "prompt_context_claim_guard",
+        "prompt_context_claim_guard_count",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP prompt/context inputs"))
@@ -319,10 +325,13 @@ def validate_roadmap_prompt_context_readiness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim a prompt-role capability matrix" not in boundary_text
+        or "claim guard for each prompt surface" not in boundary_text
         or "deterministic context summarization" not in boundary_text
         or "prompt/context benchmark evidence" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from prompt/context parity"))
+    if data.get("prompt_context_claim_guard_count") != len(CRITERION_SPECS):
+        issues.append(_issue("invalid_prompt_context_claim_guard_count", "prompt/context claim guard count changed"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return RoadmapPromptContextReadinessBoundaryValidation(
@@ -371,6 +380,17 @@ def _criterion_record(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
         ],
         "validation_gate": spec["validation_gate"],
         "readiness_status": spec["readiness_status"],
+    }
+
+
+def _claim_guard_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "criterion_id": record["criterion_id"],
+        "prompt_surface": record["prompt_surface"],
+        "allowed_current_claim": record["current_scope"],
+        "missing_before_parity_claim": record["missing_readiness"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
     }
 
 

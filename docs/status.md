@@ -1843,9 +1843,9 @@ Important limits:
   prompt-role capability, context selection/summarization, all-role token
   section packing, prompt-format and replay retention, retrieval/proposal-
   memory integrity, meta-prompt and prompt-database lifecycle, prompt/context
-  benchmark evidence, and stale readiness/owner signoff. This is not an
-  implemented prompt-system gate or proof of complete AlphaEvolve
-  prompt/context readiness.
+  benchmark evidence, and stale readiness/owner signoff, plus a per-surface
+  prompt/context claim guard. This is not an implemented prompt-system gate or
+  proof of complete AlphaEvolve prompt/context readiness.
 - ROADMAP evaluation-cascade evidence now records ten criteria for cascade
   transition artifacts, artifact schema/hash coverage, budget ownership,
   feedback calibration, statistical promotion policy, oracle independence,

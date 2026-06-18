@@ -822,7 +822,9 @@ is not yet an AlphaEvolve reproduction.
   prompt-side archive/retention policy, prompt descriptors/objectives,
   archive-event streams, replay/migration semantics, async/controller-resumable
   prompt work, and benchmark evidence that it behaves as more than a local
-  UCB-style prompt selector.
+  UCB-style prompt selector. The committed
+  `papers/prompt_database_parity_boundary.json` sidecar preserves the current
+  local prompt-arm history boundary.
 
 ### 5. Documentation truthfulness
 

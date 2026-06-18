@@ -1125,7 +1125,9 @@ evaluator/LLM-feedback field policy. Prompt-database parity with AlphaEvolve's
 separate co-evolved prompt database is also still open: the current
 `PromptDatabase` is a local prompt-arm history/scoring store, not a prompt-side
 MAP-Elites/island archive with descriptor/objective indexes, archive events,
-migration/rebin semantics, or async/controller-resumable prompt work.
+migration/rebin semantics, or async/controller-resumable prompt work;
+`papers/prompt_database_parity_boundary.json` preserves that local prompt-arm
+history boundary for manifest validation.
 
 AlphaEvolve validator-network note: `validator_network_policy` now records host
 network inheritance by default and can install a Python socket-level deny hook

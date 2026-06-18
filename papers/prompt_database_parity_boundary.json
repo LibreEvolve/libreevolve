@@ -1,0 +1,47 @@
+{
+  "boundary_status": "local_prompt_arm_history_without_solution_database_equivalent_archive",
+  "claim_boundary": "This boundary records that LibreEvolve's PromptDatabase has prompt_history.jsonl, prompt_history_invalid.jsonl, deterministic seed and mutated prompt ids, template_sha256 identity, context-policy sha256 identity, append-only add/score/penalty events, prompt-history replay, parent lineage ids, duplicate-arm identity policy, UCB-style prompt-arm selection, prompt reward metadata, and optional meta-prompt template/context-policy mutation. It does not claim prompt-side archive retention policy, prompt descriptor/objective indexes, prompt archive-event streams, prompt migration/rebin semantics, prompt async/controller resume state, or prompt-database benchmark evidence.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "prompt_archive_event_stream": "not_recorded_locally",
+    "prompt_async_controller_resume_state": "not_recorded_locally",
+    "prompt_database_benchmark_evidence": "not_recorded_locally",
+    "prompt_descriptor_objective_indexes": "not_recorded_locally",
+    "prompt_migration_rebin_semantics": "not_recorded_locally",
+    "prompt_side_archive_retention_policy": "not_recorded_locally"
+  },
+  "required_evidence_fields": [
+    "prompt_history_jsonl",
+    "prompt_history_invalid_jsonl",
+    "deterministic_seed_prompt_ids",
+    "deterministic_mutated_prompt_ids",
+    "prompt_template_sha256_identity",
+    "prompt_context_policy_sha256_identity",
+    "append_only_add_score_penalty_events",
+    "prompt_history_replay",
+    "parent_lineage_ids",
+    "duplicate_prompt_arm_identity_policy",
+    "ucb_style_prompt_arm_selection",
+    "prompt_reward_metadata",
+    "meta_prompt_template_context_policy_mutation",
+    "prompt_side_archive_retention_policy",
+    "prompt_descriptor_objective_indexes",
+    "prompt_archive_event_stream",
+    "prompt_migration_rebin_semantics",
+    "prompt_async_controller_resume_state",
+    "prompt_database_benchmark_evidence"
+  ],
+  "runtime_surfaces": {
+    "history_stream": "prompt_history.jsonl",
+    "prompt_database_class": "PromptDatabase",
+    "prompt_program_class": "PromptProgram",
+    "quarantine_stream": "prompt_history_invalid.jsonl",
+    "selection_policy": "untried_then_ucb_style_mean_reward_plus_exploration"
+  },
+  "schema": "libreevolve.prompt_database_parity_boundary.v1",
+  "source_claim": "AlphaEvolve co-evolves prompt instructions in a separate database analogous to the solution-program database; local prompt storage must not be described as equivalent without archive lifecycle and benchmark evidence",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.2"
+  ]
+}

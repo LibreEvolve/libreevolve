@@ -195,6 +195,10 @@ from libreevolve.problems.benchmarks.prompt_section_packing_boundary import (
     prompt_section_packing_boundary_record,
     validate_prompt_section_packing_boundary,
 )
+from libreevolve.problems.benchmarks.prompt_database_parity_boundary import (
+    prompt_database_parity_boundary_record,
+    validate_prompt_database_parity_boundary,
+)
 from libreevolve.problems.benchmarks.primary_prompt_role_telemetry_boundary import (
     primary_prompt_role_telemetry_boundary_record,
     validate_primary_prompt_role_telemetry_boundary,
@@ -1115,6 +1119,7 @@ PROVIDER_DIAGNOSTICS_REPLAY_BOUNDARY_FILE = "papers/provider_diagnostics_replay_
 CRITIQUE_REVIEWER_POOL_BOUNDARY_FILE = "papers/critique_reviewer_pool_boundary.json"
 PROMPT_SECTION_PACKING_BOUNDARY_FILE = "papers/prompt_section_packing_boundary.json"
 PRIMARY_PROMPT_ROLE_TELEMETRY_BOUNDARY_FILE = "papers/primary_prompt_role_telemetry_boundary.json"
+PROMPT_DATABASE_PARITY_BOUNDARY_FILE = "papers/prompt_database_parity_boundary.json"
 PROMPT_TEMPLATE_COMPATIBILITY_BOUNDARY_FILE = "papers/prompt_template_compatibility_boundary.json"
 STOCHASTIC_PROMPT_FORMAT_BOUNDARY_FILE = "papers/stochastic_prompt_format_boundary.json"
 DOCUMENTATION_TRUTHFULNESS_BOUNDARY_FILE = "papers/documentation_truthfulness_boundary.json"
@@ -1868,6 +1873,7 @@ def validate_paper_manifest(
     issues.extend(_validate_critique_reviewer_pool_boundary(root_path))
     issues.extend(_validate_prompt_section_packing_boundary(root_path))
     issues.extend(_validate_primary_prompt_role_telemetry_boundary(root_path))
+    issues.extend(_validate_prompt_database_parity_boundary(root_path))
     issues.extend(_validate_prompt_template_compatibility_boundary(root_path))
     issues.extend(_validate_stochastic_prompt_format_boundary(root_path))
     issues.extend(_validate_documentation_truthfulness_boundary(root_path))
@@ -4437,6 +4443,40 @@ def _validate_primary_prompt_role_telemetry_boundary(
             f"primary_prompt_role_telemetry_boundary_{issue.code}",
             issue.message,
             "primary_prompt_role_telemetry",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_prompt_database_parity_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / PROMPT_DATABASE_PARITY_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = prompt_database_parity_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "prompt_database_parity_boundary_manifest_missing",
+                    (
+                        f"{PROMPT_DATABASE_PARITY_BOUNDARY_FILE} must emit "
+                        "local prompt-arm history versus solution-database archive scope"
+                    ),
+                    "prompt_database_parity",
+                )
+            ]
+    report = validate_prompt_database_parity_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"prompt_database_parity_boundary_{issue.code}",
+            issue.message,
+            "prompt_database_parity",
         )
         for issue in report.issues
     ]

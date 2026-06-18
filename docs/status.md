@@ -773,7 +773,8 @@ Important limits:
   identity, and optional interval-based template/context-policy mutation. It is
   not yet a prompt-side analogue of the solution database with MAP-Elites or
   island retention, descriptor/objective indexes, archive-event streams,
-  migration/rebin semantics, or async/controller-resumable prompt work.
+  migration/rebin semantics, or async/controller-resumable prompt work. That
+  boundary is tracked by `papers/prompt_database_parity_boundary.json`.
 - Meta-prompt context-policy mutation is validated only for the current
   `libreevolve.prompt_context_policy.v1` fields exposed in
   `runtime.prompt_context_policy_coverage` and meta-prompt capability-summary

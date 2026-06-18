@@ -1410,6 +1410,8 @@ sidecars, tests, and active TODOs.
     prompt-side analogue of `ProgramDatabase` with MAP-Elites/island retention,
     durable prompt descriptor/objective indexes, migration/rebin semantics,
     prompt-specific archive events, or async/controller resume state.
+    `papers/prompt_database_parity_boundary.json` preserves this
+    local-prompt-arm-history boundary.
   - Required result: before claiming AlphaEvolve-grade co-evolved prompt
     databases, define the prompt database's archive/retention policy, prompt
     descriptors/objectives, replay and migration semantics, prompt artifact

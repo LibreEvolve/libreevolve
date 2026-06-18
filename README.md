@@ -101,6 +101,10 @@ Important limits:
 - Meta-prompt scoring is child-score reward accounting, not calibrated prompt-
   policy attribution; prompt-lineage ablations and equal-budget prompt-policy
   comparisons remain open in `papers/meta_prompt_scoring_boundary.json`.
+- `PromptDatabase` is local prompt-arm history/scoring, not a prompt-side
+  solution-database analogue with archive retention, descriptor/objective
+  indexes, migration/rebin semantics, or async resume; that gap is tracked in
+  `papers/prompt_database_parity_boundary.json`.
 - Built-in SDK provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
   parity is tracked as missing work.
 - The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI

@@ -1282,7 +1282,11 @@ MAP-Elites `objective_archive_policy` snapshots now also carry
 `libreevolve.map_elites_objective_archive_readiness.v1`, which keeps primary
 Pareto/frontier archive replacement, durable cross-run metric databases,
 metric-target persistence tables, and runtime feedback-calibration runners
-false with validation that rejects overclaims. The committed
+false with validation that rejects overclaims. Runtime manifests also include
+`runtime.history.objective_primary_archive_readiness`, an audit that counts
+complete objective vectors, scalar primary archive cells, retained
+Pareto/frontier programs, and metric-cell overlays while keeping those primary
+archive readiness fields false. The committed
 `papers/objective_archive_boundary.json` sidecar keeps this retained-overlay
 and diagnostic-frontier scope machine-validated.
 

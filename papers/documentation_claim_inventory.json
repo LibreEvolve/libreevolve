@@ -166,96 +166,96 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 633,
-      "line_end": 633,
+      "line_start": 636,
+      "line_end": 636,
       "level": 3,
       "heading_text": "3. Expand evaluation cascades",
       "heading_slug": "3-expand-evaluation-cascades"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 732,
-      "line_end": 732,
+      "line_start": 735,
+      "line_end": 735,
       "level": 3,
       "heading_text": "4. Prompt and context work",
       "heading_slug": "4-prompt-and-context-work"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 835,
-      "line_end": 835,
+      "line_start": 838,
+      "line_end": 838,
       "level": 3,
       "heading_text": "5. Documentation truthfulness",
       "heading_slug": "5-documentation-truthfulness"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1053,
-      "line_end": 1053,
+      "line_start": 1056,
+      "line_end": 1056,
       "level": 2,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1055,
-      "line_end": 1055,
+      "line_start": 1058,
+      "line_end": 1058,
       "level": 3,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1138,
-      "line_end": 1138,
+      "line_start": 1141,
+      "line_end": 1141,
       "level": 3,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1243,
-      "line_end": 1243,
+      "line_start": 1246,
+      "line_end": 1246,
       "level": 3,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1261,
-      "line_end": 1261,
+      "line_start": 1264,
+      "line_end": 1264,
       "level": 2,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1263,
-      "line_end": 1263,
+      "line_start": 1266,
+      "line_end": 1266,
       "level": 3,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2585,
-      "line_end": 2585,
+      "line_start": 2588,
+      "line_end": 2588,
       "level": 3,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2615,
-      "line_end": 2615,
+      "line_start": 2618,
+      "line_end": 2618,
       "level": 2,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2622,
-      "line_end": 2622,
+      "line_start": 2625,
+      "line_end": 2625,
       "level": 2,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups"
@@ -278,16 +278,16 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1795,
-      "line_end": 1795,
+      "line_start": 1799,
+      "line_end": 1799,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1873,
-      "line_end": 1873,
+      "line_start": 1877,
+      "line_end": 1877,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions"
@@ -471,7 +471,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 633,
+      "line_start": 636,
       "level": 3,
       "heading_text": "3. Expand evaluation cascades",
       "heading_slug": "3-expand-evaluation-cascades",
@@ -480,7 +480,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 732,
+      "line_start": 735,
       "level": 3,
       "heading_text": "4. Prompt and context work",
       "heading_slug": "4-prompt-and-context-work",
@@ -489,7 +489,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 835,
+      "line_start": 838,
       "level": 3,
       "heading_text": "5. Documentation truthfulness",
       "heading_slug": "5-documentation-truthfulness",
@@ -500,7 +500,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1053,
+      "line_start": 1056,
       "level": 2,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term",
@@ -509,7 +509,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1055,
+      "line_start": 1058,
       "level": 3,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime",
@@ -518,7 +518,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1138,
+      "line_start": 1141,
       "level": 3,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique",
@@ -527,7 +527,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1243,
+      "line_start": 1246,
       "level": 3,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility",
@@ -536,7 +536,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1261,
+      "line_start": 1264,
       "level": 2,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term",
@@ -545,7 +545,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1263,
+      "line_start": 1266,
       "level": 3,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks",
@@ -554,7 +554,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2585,
+      "line_start": 2588,
       "level": 3,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity",
@@ -563,7 +563,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2615,
+      "line_start": 2618,
       "level": 2,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now",
@@ -572,7 +572,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2622,
+      "line_start": 2625,
       "level": 2,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups",
@@ -603,7 +603,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1795,
+      "line_start": 1799,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
@@ -612,7 +612,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1873,
+      "line_start": 1877,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
@@ -728,91 +728,91 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 633,
+      "line_start": 636,
       "heading_text": "3. Expand evaluation cascades",
       "heading_slug": "3-expand-evaluation-cascades",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 732,
+      "line_start": 735,
       "heading_text": "4. Prompt and context work",
       "heading_slug": "4-prompt-and-context-work",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1053,
+      "line_start": 1056,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1055,
+      "line_start": 1058,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1138,
+      "line_start": 1141,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1243,
+      "line_start": 1246,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1261,
+      "line_start": 1264,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1263,
+      "line_start": 1266,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2585,
+      "line_start": 2588,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2615,
+      "line_start": 2618,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2622,
+      "line_start": 2625,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1795,
+      "line_start": 1799,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1873,
+      "line_start": 1877,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
       "reason": "no_claim_record_for_heading"
@@ -7084,10 +7084,10 @@
       "bullet_ordinal": 237,
       "section": "important_limits",
       "line_start": 2007,
-      "line_end": 2010,
+      "line_end": 2011,
       "file_text_char_start": 139851,
-      "file_text_char_end": 140101,
-      "text_sha256": "96b9ffa308c727d371222636d8f2c7af9f116c14d50285654a15353cd95ab565",
+      "file_text_char_end": 140165,
+      "text_sha256": "77eebf7ebd3fb7f5e86d591ee87fa9458e3ff3526f750ffa157b45e89d0bd565",
       "signal_terms": [
         "boundary",
         "not",
@@ -7100,8 +7100,8 @@
       "local_path_ref_records": [
         {
           "path": "papers/objective_archive_boundary.json",
-          "text_char_start": 210,
-          "text_char_end": 248,
+          "text_char_start": 274,
+          "text_char_end": 312,
           "exists": true
         }
       ]
@@ -7109,10 +7109,10 @@
     {
       "bullet_ordinal": 238,
       "section": "important_limits",
-      "line_start": 2011,
-      "line_end": 2014,
-      "file_text_char_start": 140102,
-      "file_text_char_end": 140378,
+      "line_start": 2012,
+      "line_end": 2015,
+      "file_text_char_start": 140166,
+      "file_text_char_end": 140442,
       "text_sha256": "08e65f53d27397f06f6006f30b9526e6824d97b88e34aad422055a4e294adcf3",
       "signal_terms": [
         "boundary",
@@ -7135,10 +7135,10 @@
     {
       "bullet_ordinal": 239,
       "section": "important_limits",
-      "line_start": 2015,
-      "line_end": 2021,
-      "file_text_char_start": 140379,
-      "file_text_char_end": 140834,
+      "line_start": 2016,
+      "line_end": 2022,
+      "file_text_char_start": 140443,
+      "file_text_char_end": 140898,
       "text_sha256": "cef2d51655b8a9231d73ad2b491888ee8aeb06146fc7ebebb50c2e4ca88a6b02",
       "signal_terms": [
         "implemented",
@@ -7152,10 +7152,10 @@
     {
       "bullet_ordinal": 240,
       "section": "important_limits",
-      "line_start": 2022,
-      "line_end": 2027,
-      "file_text_char_start": 140835,
-      "file_text_char_end": 141288,
+      "line_start": 2023,
+      "line_end": 2028,
+      "file_text_char_start": 140899,
+      "file_text_char_end": 141352,
       "text_sha256": "74ab9a684c541fd5753ec199eff88ad4a6438682eda77fe0eec3d6234fd55444",
       "signal_terms": [
         "record"
@@ -7167,10 +7167,10 @@
     {
       "bullet_ordinal": 241,
       "section": "important_limits",
-      "line_start": 2028,
-      "line_end": 2031,
-      "file_text_char_start": 141289,
-      "file_text_char_end": 141573,
+      "line_start": 2029,
+      "line_end": 2032,
+      "file_text_char_start": 141353,
+      "file_text_char_end": 141637,
       "text_sha256": "19b485e815354e8e95b534752944a2a21eaad4a6dd39abd570d914e90b78ab70",
       "signal_terms": [
         "boundary",
@@ -7194,10 +7194,10 @@
     {
       "bullet_ordinal": 242,
       "section": "important_limits",
-      "line_start": 2032,
-      "line_end": 2037,
-      "file_text_char_start": 141574,
-      "file_text_char_end": 142002,
+      "line_start": 2033,
+      "line_end": 2038,
+      "file_text_char_start": 141638,
+      "file_text_char_end": 142066,
       "text_sha256": "dbdc50623d7ca15669d136a4831a035f8205bbc0edb9528cb10d054b7d706deb",
       "signal_terms": [
         "boundary",
@@ -7220,10 +7220,10 @@
     {
       "bullet_ordinal": 243,
       "section": "important_limits",
-      "line_start": 2038,
-      "line_end": 2041,
-      "file_text_char_start": 142003,
-      "file_text_char_end": 142303,
+      "line_start": 2039,
+      "line_end": 2042,
+      "file_text_char_start": 142067,
+      "file_text_char_end": 142367,
       "text_sha256": "8b01566d962b7001a047941df18433f2d609d12bb6b803a51f4f15c0a4d29508",
       "signal_terms": [
         "boundary",
@@ -7246,10 +7246,10 @@
     {
       "bullet_ordinal": 244,
       "section": "important_limits",
-      "line_start": 2042,
-      "line_end": 2048,
-      "file_text_char_start": 142304,
-      "file_text_char_end": 142786,
+      "line_start": 2043,
+      "line_end": 2049,
+      "file_text_char_start": 142368,
+      "file_text_char_end": 142850,
       "text_sha256": "9bfc515665d847474602b0b3cf44357496788e4550ef897c5c74bf9dd8b02b15",
       "signal_terms": [
         "boundary",
@@ -7272,10 +7272,10 @@
     {
       "bullet_ordinal": 245,
       "section": "important_limits",
-      "line_start": 2049,
-      "line_end": 2055,
-      "file_text_char_start": 142787,
-      "file_text_char_end": 143246,
+      "line_start": 2050,
+      "line_end": 2056,
+      "file_text_char_start": 142851,
+      "file_text_char_end": 143310,
       "text_sha256": "d781ff70e0d9740d64b2e1d5ddc424b41133a79206981c739d9fc819575c82e9",
       "signal_terms": [
         "boundary",
@@ -7299,10 +7299,10 @@
     {
       "bullet_ordinal": 246,
       "section": "important_limits",
-      "line_start": 2056,
-      "line_end": 2060,
-      "file_text_char_start": 143247,
-      "file_text_char_end": 143623,
+      "line_start": 2057,
+      "line_end": 2061,
+      "file_text_char_start": 143311,
+      "file_text_char_end": 143687,
       "text_sha256": "732a8cc88b44f6d2c42634a3ba77b0755f29ba9b822e4f2fdae05b216a3b849f",
       "signal_terms": [
         "boundary",
@@ -7325,10 +7325,10 @@
     {
       "bullet_ordinal": 247,
       "section": "important_limits",
-      "line_start": 2061,
-      "line_end": 2067,
-      "file_text_char_start": 143624,
-      "file_text_char_end": 144153,
+      "line_start": 2062,
+      "line_end": 2068,
+      "file_text_char_start": 143688,
+      "file_text_char_end": 144217,
       "text_sha256": "35b89459b10fe09980a96f749a7c6c9d6978b31fc2017286a112c582b5013b6f",
       "signal_terms": [
         "boundary",
@@ -7351,10 +7351,10 @@
     {
       "bullet_ordinal": 248,
       "section": "important_limits",
-      "line_start": 2068,
-      "line_end": 2073,
-      "file_text_char_start": 144154,
-      "file_text_char_end": 144593,
+      "line_start": 2069,
+      "line_end": 2074,
+      "file_text_char_start": 144218,
+      "file_text_char_end": 144657,
       "text_sha256": "c60fca87da7b5a40153e393531ae8c14a4529d8175c1c2f2e3ddf3bef2ed88c4",
       "signal_terms": [
         "boundary",
@@ -7379,10 +7379,10 @@
     {
       "bullet_ordinal": 249,
       "section": "important_limits",
-      "line_start": 2074,
-      "line_end": 2080,
-      "file_text_char_start": 144594,
-      "file_text_char_end": 145046,
+      "line_start": 2075,
+      "line_end": 2081,
+      "file_text_char_start": 144658,
+      "file_text_char_end": 145110,
       "text_sha256": "d991add0894d4a806bbc309b6ff8ce51420dc8bcf7e3a1f22ee8373079779871",
       "signal_terms": [
         "boundary",
@@ -7405,10 +7405,10 @@
     {
       "bullet_ordinal": 250,
       "section": "important_limits",
-      "line_start": 2081,
-      "line_end": 2082,
-      "file_text_char_start": 145047,
-      "file_text_char_end": 145174,
+      "line_start": 2082,
+      "line_end": 2083,
+      "file_text_char_start": 145111,
+      "file_text_char_end": 145238,
       "text_sha256": "6c6df0c7298db4264ed1ed09ce3728673c58b7ad7176c846b6dc40342880c40d",
       "signal_terms": [],
       "signal_term_count": 0,
@@ -7418,10 +7418,10 @@
     {
       "bullet_ordinal": 251,
       "section": "important_limits",
-      "line_start": 2083,
-      "line_end": 2085,
-      "file_text_char_start": 145175,
-      "file_text_char_end": 145394,
+      "line_start": 2084,
+      "line_end": 2086,
+      "file_text_char_start": 145239,
+      "file_text_char_end": 145458,
       "text_sha256": "71b7d9a10a17cee7c798268e21acb724702072e0b99b5bf9299ba9ad4670786b",
       "signal_terms": [
         "not",
@@ -8163,10 +8163,10 @@
         "path": "ROADMAP.md",
         "anchor_text": "### 5. Documentation truthfulness",
         "found": true,
-        "file_text_char_start": 54632,
-        "file_text_char_end": 54665,
-        "line_start": 835,
-        "line_end": 835
+        "file_text_char_start": 54838,
+        "file_text_char_end": 54871,
+        "line_start": 838,
+        "line_end": 838
       },
       "source_anchor_status": "source_anchor_recorded",
       "evidence_ref_records": [
@@ -8180,7 +8180,7 @@
           "fragment_found": true,
           "matched_heading_text": "5. Documentation truthfulness",
           "matched_heading_slug": "5-documentation-truthfulness",
-          "matched_heading_line_start": 835
+          "matched_heading_line_start": 838
         },
         {
           "ref": "papers/documentation_truthfulness_boundary.json",

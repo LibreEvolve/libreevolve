@@ -2531,11 +2531,17 @@ sidecars, tests, and active TODOs.
     for primary Pareto/frontier replacement, durable cross-run metric
     databases, metric-target persistence tables, and runtime
     feedback-calibration runners. Validation rejects primary Pareto/frontier
-    cell-replacement and readiness overclaims.
+    cell-replacement and readiness overclaims. Runtime manifests now include
+    `runtime.history.objective_primary_archive_readiness`, which counts
+    complete declared objective vectors, scalar primary archive cells, retained
+    Pareto/frontier programs, and metric-cell retained overlays while keeping
+    primary Pareto/frontier archive replacement, durable cross-run metric
+    databases, metric-target persistence tables, and runtime
+    feedback-calibration runners false.
     `papers/objective_archive_boundary.json` now validates these retained
-    Pareto/frontier and metric-cell overlays as diagnostic/retained evidence,
-    not primary Pareto archive replacement. Backend reward, admission
-    thresholds, and some parent/inspiration paths still use
+    Pareto/frontier and metric-cell overlays plus the primary-readiness audit
+    as diagnostic/retained evidence, not primary Pareto archive replacement.
+    Backend reward, admission thresholds, and some parent/inspiration paths still use
     scalar final fitness, and the primary MAP-Elites cell grid still uses
     scalar selection score rather than Pareto/frontier dominance.
     `ProgramDatabase.resurface_candidates(target_metric=...)` now exposes

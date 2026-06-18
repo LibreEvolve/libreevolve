@@ -2004,9 +2004,10 @@ Important limits:
   descriptor coverage, score-improvement versus diversity effects,
   equal-budget strategy comparisons, or an AlphaEvolve-grade database-balance
   policy; that boundary is tracked by `papers/sampling_balance_boundary.json`.
-- Multi-objective archive data is retained overlay and diagnostic frontier
-  evidence, not primary Pareto/frontier archive replacement or durable
-  cross-run metric optimization; that boundary is tracked by
+- Multi-objective archive data is retained overlay, diagnostic frontier, and
+  `runtime.history.objective_primary_archive_readiness` audit evidence, not
+  primary Pareto/frontier archive replacement or durable cross-run metric
+  optimization; that boundary is tracked by
   `papers/objective_archive_boundary.json`.
 - Metric-diverse prompt evidence is current-run prompt-visible telemetry, not
   benchmark-required metric-diverse prompt policy, cross-run fixtures, or

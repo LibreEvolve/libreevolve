@@ -627,6 +627,9 @@ is not yet an AlphaEvolve reproduction.
 - Keep multi-objective archive policy scoped to retained overlays until
   Pareto/frontier replacement becomes the primary archive policy or durable
   cross-run metric-specific optimization lands. The committed
+  `runtime.history.objective_primary_archive_readiness` audit records current
+  scalar primary cells and retained multi-objective overlays while keeping
+  primary archive readiness false, and the committed
   `papers/objective_archive_boundary.json` sidecar keeps the current
   bounded-overlay and diagnostic-frontier scope machine-validated.
 

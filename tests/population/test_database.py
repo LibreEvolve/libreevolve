@@ -41,6 +41,7 @@ from libreevolve.core.database import (
     validate_archive_event_replay_audit,
     validate_archive_state_snapshot,
     validate_candidate_language_policy,
+    validate_objective_primary_archive_readiness_summary,
     validate_resurfacing_index_summary,
     validate_run_directory_path,
 )
@@ -387,6 +388,108 @@ def test_objective_metric_archives_snapshot_reports_top_declared_metric_programs
     assert snapshot["archives"][0]["retained_count"] == 3
     assert snapshot["archives"][1]["program_count_considered"] == 4
     assert snapshot["archives"][1]["retained_count"] == 4
+
+
+def test_objective_primary_archive_readiness_snapshot_reports_scalar_boundary(
+    tmp_path,
+):
+    schema = {
+        "metrics": [
+            {
+                "name": "accuracy",
+                "direction": "maximize",
+                "primary": True,
+                "bounds": [0.0, 1.0],
+            },
+            {
+                "name": "latency",
+                "direction": "minimize",
+                "primary": False,
+                "bounds": [0.0, 100.0],
+            },
+        ],
+        "primary_metric": "accuracy",
+        "primary_bounds": [0.0, 1.0],
+        "metric_count": 2,
+    }
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t", map_elites_bins=1),
+        objective_schema=schema,
+    )
+
+    def program(program_id: str, accuracy: float, latency: float) -> Program:
+        selection_score = (accuracy + latency) / 2.0
+        return Program(
+            id=program_id,
+            code="x = 1\n",
+            fitness=selection_score,
+            metrics={"accuracy": accuracy, "latency": latency},
+            evaluation={"is_valid": True},
+            metadata={
+                "normalized_metrics": {"accuracy": accuracy, "latency": latency},
+                "selection_score": selection_score,
+            },
+        )
+
+    for candidate in [
+        program("accuracy_leader", 0.95, 0.20),
+        program("balanced", 0.80, 0.80),
+        program("latency_leader", 0.20, 0.95),
+    ]:
+        db.add(candidate)
+        db.log(candidate)
+
+    snapshot = db.objective_primary_archive_readiness_snapshot()
+    validation = validate_objective_primary_archive_readiness_summary(snapshot)
+
+    assert snapshot["schema"] == "libreevolve.objective_primary_archive_readiness.v1"
+    assert snapshot["status"] == (
+        "scalar_primary_archive_with_retained_multi_objective_overlays"
+    )
+    assert snapshot["claim_ready"] is False
+    assert snapshot["metric_order"] == ["accuracy", "latency"]
+    assert snapshot["declared_metric_count"] == 2
+    assert snapshot["valid_program_count"] == 3
+    assert snapshot["complete_vector_program_count"] == 3
+    assert snapshot["primary_cell_count"] == 3
+    assert snapshot["pareto_frontier_retained_count"] >= 1
+    assert snapshot["metric_cell_retained_count"] >= 1
+    assert snapshot["primary_pareto_archive_replacement"] is False
+    assert snapshot["frontier_dominance_cell_replacement"] is False
+    assert snapshot["durable_cross_run_metric_database"] is False
+    assert snapshot["metric_target_persistence_tables"] is False
+    assert snapshot["llm_feedback_calibration_runner"] is False
+    assert "frontier_primary_archive_replay" in snapshot["remaining_gap"]
+    assert validation["ok"] is True
+    assert validation["primary_archive_ready"] is False
+    assert validation["program_count"] == 3
+    assert validation["complete_vector_program_count"] == 3
+
+
+def test_objective_primary_archive_readiness_summary_rejects_overclaims(
+    tmp_path,
+):
+    db = ProgramDatabase(
+        Config(log_dir=str(tmp_path), problem_name="t"),
+    )
+    snapshot = db.objective_primary_archive_readiness_snapshot()
+    snapshot["claim_ready"] = True
+    snapshot["primary_pareto_archive_replacement"] = True
+    snapshot["declared_metric_count"] = 99
+    snapshot["complete_vector_program_count"] = 2
+    snapshot["valid_program_count"] = 1
+    snapshot["limitations"] = []
+
+    validation = validate_objective_primary_archive_readiness_summary(snapshot)
+    codes = {issue["code"] for issue in validation["issues"]}
+
+    assert validation["ok"] is False
+    assert validation["primary_archive_ready"] is False
+    assert "claim_ready_overclaim" in codes
+    assert "primary_pareto_archive_replacement_overclaim" in codes
+    assert "declared_metric_count_mismatch" in codes
+    assert "complete_vector_count_exceeds_valid_program_count" in codes
+    assert "missing_limitations" in codes
 
 
 def test_score_index_snapshot_reports_top_valid_programs_by_selection_score(tmp_path):

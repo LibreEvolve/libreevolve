@@ -19,6 +19,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "metric_cell_archive_overlays",
     "metric_and_frontier_sampling_pools",
     "objective_archive_policy_snapshot",
+    "objective_primary_archive_readiness_report",
     "readiness_overclaim_rejection",
     "primary_pareto_archive_replacement",
     "frontier_dominance_cell_replacement",
@@ -69,7 +70,10 @@ def objective_archive_boundary_record() -> dict[str, Any]:
         "runtime_frontier_schema": EXPECTED_RUNTIME_FRONTIER_SCHEMA,
         "objective_archive_policy_schema": EXPECTED_POLICY_SCHEMA,
         "objective_archive_readiness_schema": EXPECTED_READINESS_SCHEMA,
-        "runtime_report_status": "objective_frontier_and_map_elites_policy_available",
+        "runtime_report_status": (
+            "objective_frontier_map_elites_policy_and_primary_readiness_"
+            "audit_available"
+        ),
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -78,8 +82,9 @@ def objective_archive_boundary_record() -> dict[str, Any]:
             "snapshots include diagnostic objective frontiers, declared "
             "normalized metric vectors, bounded Pareto frontier retention, "
             "metric-cell archive overlays, metric/frontier sampling pools, "
-            "objective archive policy snapshots, and readiness overclaim "
-            "rejection. It does not claim primary Pareto archive replacement, "
+            "objective archive policy snapshots, an objective primary archive "
+            "readiness audit, and readiness overclaim rejection. It does not "
+            "claim primary Pareto archive replacement, "
             "frontier-dominance cell replacement, durable cross-run metric "
             "databases, metric-target persistence tables, LLM feedback "
             "calibration runners, cross-run metric-specific optimization, or "
@@ -118,8 +123,15 @@ def validate_objective_archive_boundary(
         issues.append(_issue("invalid_objective_archive_policy_schema", f"objective_archive_policy_schema must be {EXPECTED_POLICY_SCHEMA}"))
     if data.get("objective_archive_readiness_schema") != EXPECTED_READINESS_SCHEMA:
         issues.append(_issue("invalid_objective_archive_readiness_schema", f"objective_archive_readiness_schema must be {EXPECTED_READINESS_SCHEMA}"))
-    if data.get("runtime_report_status") != "objective_frontier_and_map_elites_policy_available":
-        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to diagnostic frontier and retained overlay evidence"))
+    allowed_report_statuses = {
+        "objective_frontier_and_map_elites_policy_available",
+        (
+            "objective_frontier_map_elites_policy_and_primary_readiness_"
+            "audit_available"
+        ),
+    }
+    if data.get("runtime_report_status") not in allowed_report_statuses:
+        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to diagnostic frontier, retained overlay, and readiness-audit evidence"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "objective archive boundary must not claim primary Pareto archive readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)

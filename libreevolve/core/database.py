@@ -48,7 +48,12 @@ from libreevolve.core.jsonl import (
 )
 from libreevolve.llm.openai_compat import resolve_openai_api_mode
 from libreevolve.core.redaction import redact_sensitive_text, redaction_policy_record
-from libreevolve.population.map_elites import _selection_score
+from libreevolve.population.map_elites import (
+    MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
+    MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA,
+    _selection_score,
+    map_elites_objective_archive_readiness,
+)
 from libreevolve.population.islands import (
     ISLAND_ARCHIVE_CONTENTS_RESTORE_STATUS,
     ISLAND_MIGRATION_REPLAY_POLICY,
@@ -98,6 +103,9 @@ _MAX_PROGRAM_OUTPUT_INDEX_TEXT_CHARS = 300
 CANDIDATE_LANGUAGE_POLICY_SCHEMA = "libreevolve.candidate_language_policy.v1"
 TASK_SPECIFICATION_BUNDLE_SCHEMA = "libreevolve.alphaevolve_task_specification_bundle.v1"
 RESURFACING_INDEX_SCHEMA = "libreevolve.resurfacing_index.v1"
+OBJECTIVE_PRIMARY_ARCHIVE_READINESS_SCHEMA = (
+    "libreevolve.objective_primary_archive_readiness.v1"
+)
 RESURFACING_INDEX_POLICY = (
     "deduplicated_ranked_programs_from_score_metric_frontier_lineage_"
     "descriptor_feedback_hypothesis_artifact_program_output_indexes"
@@ -119,6 +127,21 @@ _RESURFACING_INDEX_SOURCES = {
     "artifact",
     "program_output",
 }
+_OBJECTIVE_PRIMARY_ARCHIVE_REMAINING_GAPS = (
+    "primary_pareto_archive_replacement",
+    "frontier_dominance_cell_replacement",
+    "durable_cross_run_metric_database",
+    "metric_target_persistence_tables",
+    "llm_feedback_calibration_runner",
+    "cross_run_metric_specific_optimization",
+    "frontier_primary_archive_replay",
+)
+_OBJECTIVE_PRIMARY_ARCHIVE_LIMITATIONS = (
+    "primary_map_elites_cells_still_replace_by_scalar_selection_key",
+    "pareto_frontier_and_metric_cell_records_are_retained_overlays",
+    "metric_target_queries_are_run_local_not_durable_cross_run_tables",
+    "feedback_calibration_runner_not_emitted_by_runtime",
+)
 _SEED_SOURCE_ALLOWED_KEYS = {
     "seed_index",
     "seed_source_path",
@@ -1005,6 +1028,13 @@ class ProgramDatabase:
             self._all,
             self._objective_metric_order,
             limit=_MAX_OBJECTIVE_METRIC_ARCHIVE_PROGRAMS,
+        )
+
+    def objective_primary_archive_readiness_snapshot(self) -> dict:
+        return _objective_primary_archive_readiness_snapshot(
+            self._all,
+            self._objective_metric_order,
+            self.archive_state_snapshot(),
         )
 
     def score_index_snapshot(self) -> dict:
@@ -3854,6 +3884,77 @@ def _objective_metric_archives_snapshot(
     }
 
 
+def _objective_primary_archive_readiness_snapshot(
+    programs: list[Program],
+    metric_order: list[str],
+    archive_state_snapshot: Mapping[str, object],
+) -> dict:
+    metric_order = [name for name in metric_order if isinstance(name, str) and name]
+    valid_program_count = sum(
+        1 for program in programs if program.evaluation.get("is_valid") is True
+    )
+    complete_vector_program_count = sum(
+        1
+        for program in programs
+        if _objective_frontier_candidate(program, metric_order) is not None
+    )
+    island_records = archive_state_snapshot.get("islands")
+    archive_island_count = 0
+    primary_cell_count = 0
+    pareto_retained_count = 0
+    metric_cell_retained_count = 0
+    if isinstance(island_records, list):
+        archive_island_count = len(island_records)
+        for island in island_records:
+            if not isinstance(island, Mapping):
+                continue
+            primary_cell_count += _non_negative_int_or_zero(
+                island.get("occupied_cell_count")
+            )
+            pareto_retained_count += _non_negative_int_or_zero(
+                island.get("pareto_frontier_count")
+            )
+            metric_cell_retained_count += _non_negative_int_or_zero(
+                island.get("metric_cell_archive_count")
+            )
+    readiness = map_elites_objective_archive_readiness()
+    return {
+        "schema": OBJECTIVE_PRIMARY_ARCHIVE_READINESS_SCHEMA,
+        "status": "scalar_primary_archive_with_retained_multi_objective_overlays",
+        "claim_ready": False,
+        "objective_archive_policy_schema": MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
+        "objective_archive_readiness_schema": (
+            MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA
+        ),
+        "metric_order": list(metric_order),
+        "declared_metric_count": len(metric_order),
+        "valid_program_count": valid_program_count,
+        "complete_vector_program_count": complete_vector_program_count,
+        "archive_island_count": archive_island_count,
+        "primary_cell_count": primary_cell_count,
+        "pareto_frontier_retained_count": pareto_retained_count,
+        "metric_cell_retained_count": metric_cell_retained_count,
+        "primary_cell_replacement_policy": (
+            "scalar_selection_score_not_pareto_frontier"
+        ),
+        "retained_overlay_policy": "bounded_pareto_frontier_and_metric_cell_overlays",
+        "primary_pareto_archive_replacement": False,
+        "frontier_dominance_cell_replacement": False,
+        "durable_cross_run_metric_database": False,
+        "metric_target_persistence_tables": False,
+        "llm_feedback_calibration_runner": False,
+        "remaining_gap": list(_OBJECTIVE_PRIMARY_ARCHIVE_REMAINING_GAPS),
+        "map_elites_readiness_remaining_gap": list(readiness["remaining_gap"]),
+        "limitations": list(_OBJECTIVE_PRIMARY_ARCHIVE_LIMITATIONS),
+    }
+
+
+def _non_negative_int_or_zero(value: object) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        return 0
+    return value
+
+
 def _objective_metric_leader_candidate(
     program: Program,
     metric: str,
@@ -4633,6 +4734,223 @@ def validate_resurfacing_index_summary(index: object) -> dict:
         "metric_order": metric_order,
         "issues": issues,
     }
+
+
+def validate_objective_primary_archive_readiness_summary(summary: object) -> dict:
+    """Validate runtime.history.objective_primary_archive_readiness."""
+    issues: list[dict] = []
+    if not isinstance(summary, dict):
+        return {
+            "schema": OBJECTIVE_PRIMARY_ARCHIVE_READINESS_SCHEMA,
+            "ok": False,
+            "primary_archive_ready": False,
+            "program_count": 0,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "objective primary archive readiness must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "status",
+        "claim_ready",
+        "objective_archive_policy_schema",
+        "objective_archive_readiness_schema",
+        "metric_order",
+        "declared_metric_count",
+        "valid_program_count",
+        "complete_vector_program_count",
+        "archive_island_count",
+        "primary_cell_count",
+        "pareto_frontier_retained_count",
+        "metric_cell_retained_count",
+        "primary_cell_replacement_policy",
+        "retained_overlay_policy",
+        "primary_pareto_archive_replacement",
+        "frontier_dominance_cell_replacement",
+        "durable_cross_run_metric_database",
+        "metric_target_persistence_tables",
+        "llm_feedback_calibration_runner",
+        "remaining_gap",
+        "map_elites_readiness_remaining_gap",
+        "limitations",
+    }
+    missing = required - set(summary)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"objective primary archive readiness missing fields: {sorted(missing)}",
+            }
+        )
+    unsupported = set(summary) - required
+    if unsupported:
+        issues.append(
+            {
+                "code": "unsupported_fields",
+                "message": f"objective primary archive readiness has unsupported fields: {sorted(unsupported)}",
+            }
+        )
+    _objective_primary_issue_if(
+        issues,
+        summary.get("schema") != OBJECTIVE_PRIMARY_ARCHIVE_READINESS_SCHEMA,
+        "invalid_schema",
+        "objective primary archive readiness schema is unsupported",
+    )
+    _objective_primary_issue_if(
+        issues,
+        summary.get("status")
+        != "scalar_primary_archive_with_retained_multi_objective_overlays",
+        "invalid_status",
+        "objective primary archive readiness status is unsupported",
+    )
+    _objective_primary_issue_if(
+        issues,
+        summary.get("claim_ready") is not False,
+        "claim_ready_overclaim",
+        "objective primary archive readiness must not claim readiness",
+    )
+    _objective_primary_issue_if(
+        issues,
+        summary.get("objective_archive_policy_schema")
+        != MAP_ELITES_OBJECTIVE_ARCHIVE_POLICY_SCHEMA,
+        "invalid_objective_archive_policy_schema",
+        "objective archive policy schema is unsupported",
+    )
+    _objective_primary_issue_if(
+        issues,
+        summary.get("objective_archive_readiness_schema")
+        != MAP_ELITES_OBJECTIVE_ARCHIVE_READINESS_SCHEMA,
+        "invalid_objective_archive_readiness_schema",
+        "objective archive readiness schema is unsupported",
+    )
+    metric_order = _validate_resurfacing_metric_order(
+        summary.get("metric_order", []),
+        issues,
+    )
+    counts = {
+        field: _objective_primary_non_negative_int(summary.get(field), field, issues)
+        for field in (
+            "declared_metric_count",
+            "valid_program_count",
+            "complete_vector_program_count",
+            "archive_island_count",
+            "primary_cell_count",
+            "pareto_frontier_retained_count",
+            "metric_cell_retained_count",
+        )
+    }
+    if (
+        counts["declared_metric_count"] is not None
+        and counts["declared_metric_count"] != len(metric_order)
+    ):
+        issues.append(
+            {
+                "code": "declared_metric_count_mismatch",
+                "message": "declared_metric_count must match metric_order length",
+            }
+        )
+    if (
+        counts["complete_vector_program_count"] is not None
+        and counts["valid_program_count"] is not None
+        and counts["complete_vector_program_count"] > counts["valid_program_count"]
+    ):
+        issues.append(
+            {
+                "code": "complete_vector_count_exceeds_valid_program_count",
+                "message": "complete vector count cannot exceed valid program count",
+            }
+        )
+    _objective_primary_issue_if(
+        issues,
+        summary.get("primary_cell_replacement_policy")
+        != "scalar_selection_score_not_pareto_frontier",
+        "invalid_primary_cell_replacement_policy",
+        "primary cell replacement policy must stay scalar-scoped",
+    )
+    _objective_primary_issue_if(
+        issues,
+        summary.get("retained_overlay_policy")
+        != "bounded_pareto_frontier_and_metric_cell_overlays",
+        "invalid_retained_overlay_policy",
+        "retained overlay policy is unsupported",
+    )
+    for field in (
+        "primary_pareto_archive_replacement",
+        "frontier_dominance_cell_replacement",
+        "durable_cross_run_metric_database",
+        "metric_target_persistence_tables",
+        "llm_feedback_calibration_runner",
+    ):
+        _objective_primary_issue_if(
+            issues,
+            summary.get(field) is not False,
+            f"{field}_overclaim",
+            f"objective primary archive readiness must not claim {field}",
+        )
+    if summary.get("remaining_gap") != list(_OBJECTIVE_PRIMARY_ARCHIVE_REMAINING_GAPS):
+        issues.append(
+            {
+                "code": "invalid_remaining_gap",
+                "message": "remaining_gap must enumerate primary archive readiness gaps",
+            }
+        )
+    expected_map_elites_gap = map_elites_objective_archive_readiness()["remaining_gap"]
+    if summary.get("map_elites_readiness_remaining_gap") != expected_map_elites_gap:
+        issues.append(
+            {
+                "code": "invalid_map_elites_readiness_remaining_gap",
+                "message": "map_elites_readiness_remaining_gap must mirror MAP-Elites readiness",
+            }
+        )
+    limitations = summary.get("limitations")
+    if (
+        not isinstance(limitations, list)
+        or set(_OBJECTIVE_PRIMARY_ARCHIVE_LIMITATIONS) - set(limitations)
+    ):
+        issues.append(
+            {
+                "code": "missing_limitations",
+                "message": "limitations must state primary archive readiness boundaries",
+            }
+        )
+    return {
+        "schema": OBJECTIVE_PRIMARY_ARCHIVE_READINESS_SCHEMA,
+        "ok": not issues,
+        "primary_archive_ready": False,
+        "program_count": counts["valid_program_count"] or 0,
+        "complete_vector_program_count": counts["complete_vector_program_count"] or 0,
+        "metric_order": metric_order,
+        "issues": issues,
+    }
+
+
+def _objective_primary_issue_if(
+    issues: list[dict],
+    condition: bool,
+    code: str,
+    message: str,
+) -> None:
+    if condition:
+        issues.append({"code": code, "message": message})
+
+
+def _objective_primary_non_negative_int(
+    value: object,
+    field: str,
+    issues: list[dict],
+) -> int | None:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+        issues.append(
+            {
+                "code": f"invalid_{field}",
+                "message": f"{field} must be a non-negative integer",
+            }
+        )
+        return None
+    return value
 
 
 def _validate_resurfacing_target_metric(

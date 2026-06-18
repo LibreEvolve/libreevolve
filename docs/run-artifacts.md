@@ -1761,6 +1761,12 @@ Important behavior:
   generations, metric values, selection scores, and available declared
   normalized metric vectors. This is an inspection artifact, not a MAP-Elites
   replacement policy.
+- `runtime.history.objective_primary_archive_readiness` stores an audit of the
+  remaining primary-archive promotion boundary. It counts complete declared
+  objective vectors, scalar primary archive cells, retained Pareto/frontier
+  programs, and metric-cell overlays while keeping primary Pareto/frontier
+  replacement, durable cross-run metric tables, metric-target persistence
+  tables, and runtime feedback-calibration runners false.
   MAP-Elites `state_snapshot()` also records
   `libreevolve.map_elites_objective_archive_policy.v1`;
   `validate_map_elites_objective_archive_policy()` validates that the snapshot

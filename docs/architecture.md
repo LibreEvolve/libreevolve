@@ -797,7 +797,9 @@ bounded diagnostic Pareto frontier over complete declared normalized metric
 vectors, and `runtime.history.objective_metric_leaders`, a diagnostic
 best-program view for each declared normalized metric. They also include
 `runtime.history.objective_metric_archives`, a bounded top-program archive view
-for each declared normalized metric, and `runtime.history.lineage_index`, a
+for each declared normalized metric,
+`runtime.history.objective_primary_archive_readiness`, a scalar-primary versus
+retained-overlay readiness audit, and `runtime.history.lineage_index`, a
 bounded best-valid-programs view grouped by root lineage. It also includes
 `runtime.history.score_index`, a bounded top-valid-programs view ranked by
 selection score and final fitness,

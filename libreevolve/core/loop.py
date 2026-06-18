@@ -6000,6 +6000,9 @@ def _runtime_history_summary(db: ProgramDatabase, run_dir: Path, budget: RunBudg
         "objective_frontier": db.objective_frontier_snapshot(),
         "objective_metric_leaders": db.objective_metric_leaders_snapshot(),
         "objective_metric_archives": db.objective_metric_archives_snapshot(),
+        "objective_primary_archive_readiness": (
+            db.objective_primary_archive_readiness_snapshot()
+        ),
         "score_index": db.score_index_snapshot(),
         "lineage_index": db.lineage_index_snapshot(),
         "descriptor_index": db.descriptor_index_snapshot(),

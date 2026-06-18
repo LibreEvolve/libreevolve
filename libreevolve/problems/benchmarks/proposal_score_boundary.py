@@ -11,7 +11,7 @@ EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_PROPOSAL_SCORE_REPORT_SCHEMA = "libreevolve.proposal_score_report.v1"
 EXPECTED_HYPOTHESIS_INDEX_SCHEMA = "libreevolve.hypothesis_index.v1"
 EXPECTED_SCORING_POLICY_SCHEMA = "libreevolve.proposal_scoring_policy.v1"
-EXPECTED_BOUNDARY_STATUS = "bounded_current_run_scores_not_semantic_idea_memory"
+EXPECTED_BOUNDARY_STATUS = "bounded_current_run_scores_and_lexical_families_not_semantic_idea_memory"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "versioned_proposal_score_records",
     "captured_idea_rationale_hypothesis_metadata",
@@ -21,6 +21,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "exact_signature_novelty_signal",
     "duplicate_signature_counts",
     "top_record_score_ordering",
+    "current_run_lexical_family_diagnostics",
     "current_run_resurfacing_hypothesis_source",
     "recent_deepresearch_query_terms",
     "semantic_embedding_proposal_index",
@@ -70,7 +71,7 @@ def proposal_score_boundary_record() -> dict[str, Any]:
         "proposal_score_report_schema": EXPECTED_PROPOSAL_SCORE_REPORT_SCHEMA,
         "hypothesis_index_schema": EXPECTED_HYPOTHESIS_INDEX_SCHEMA,
         "scoring_policy_schema": EXPECTED_SCORING_POLICY_SCHEMA,
-        "runtime_report_status": "bounded_current_run_proposal_scores_available",
+        "runtime_report_status": "bounded_current_run_proposal_scores_and_lexical_families_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -81,7 +82,8 @@ def proposal_score_boundary_record() -> dict[str, Any]:
             "metadata, bounded hypothesis-index summaries, redacted text "
             "previews and hashes, outcome-linked quality signals, exact "
             "signature novelty signals, duplicate signature counts, top-record "
-            "score ordering, current-run resurfacing hypothesis sources, and "
+            "score ordering, deterministic current-run lexical proposal-family "
+            "diagnostics, current-run resurfacing hypothesis sources, and "
             "recent DeepResearch query terms. It does not claim semantic or "
             "embedding-backed proposal retrieval, calibrated proposal-quality "
             "models, cross-run persisted proposal tables, prompt/archive "
@@ -121,8 +123,8 @@ def validate_proposal_score_boundary(
         issues.append(_issue("invalid_hypothesis_index_schema", f"hypothesis_index_schema must be {EXPECTED_HYPOTHESIS_INDEX_SCHEMA}"))
     if data.get("scoring_policy_schema") != EXPECTED_SCORING_POLICY_SCHEMA:
         issues.append(_issue("invalid_scoring_policy_schema", f"scoring_policy_schema must be {EXPECTED_SCORING_POLICY_SCHEMA}"))
-    if data.get("runtime_report_status") != "bounded_current_run_proposal_scores_available":
-        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to bounded current-run proposal scores"))
+    if data.get("runtime_report_status") != "bounded_current_run_proposal_scores_and_lexical_families_available":
+        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to bounded current-run proposal scores and lexical families"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "proposal score boundary must not claim semantic idea-memory readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
@@ -131,6 +133,7 @@ def validate_proposal_score_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim semantic or embedding-backed proposal retrieval" not in boundary_text
+        or "current-run lexical proposal-family diagnostics" not in boundary_text
         or "cross-run persisted proposal tables" not in boundary_text
         or "prompt/archive selection policy using proposal scores" not in boundary_text
     ):

@@ -19157,3 +19157,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     descriptor drift, absent history, and overclaim rejection; the MAP-Elites
     descriptor boundary test now requires the descriptor-history drift audit
     evidence field.
+- [x] Add current-run lexical proposal-family diagnostics.
+  - Spec evidence: AlphaEvolve-style idea memory should make proposal ideas,
+    rationales, and hypotheses reusable as search evidence rather than only
+    attaching text to generated programs.
+  - Status: `runtime.history.proposal_score_report` now includes
+    `proposal_family_diagnostics` with schema
+    `libreevolve.proposal_family_diagnostics.v1`. It groups current-run
+    proposal records by deterministic token-overlap families, records bounded
+    family ids, overlap terms, member counts, accepted/rejected counts, and
+    score summaries, and annotates top proposal-score records with lexical
+    family ids and match counts.
+  - Remaining code gap: this is lexical current-run diagnostics, not semantic
+    or embedding-backed retrieval, calibrated proposal-quality modeling,
+    cross-run proposal persistence, or prompt/archive policy use.
+  - Verification: focused loop tests cover family counts, duplicate accepted
+    family evidence, validator success, and false semantic-retrieval readiness.

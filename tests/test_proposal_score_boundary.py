@@ -14,9 +14,9 @@ def test_proposal_score_boundary_accepts_current_run_score_boundary():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_current_run_scores_not_semantic_idea_memory"
+        == "bounded_current_run_scores_and_lexical_families_not_semantic_idea_memory"
     )
-    assert validation.required_evidence_field_count == 16
+    assert validation.required_evidence_field_count == 17
     assert validation.missing_evidence_count == 6
     assert boundary["schema"] == PROPOSAL_SCORE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -48,6 +48,9 @@ def test_render_proposal_score_boundary_summary_reports_shape():
 
     assert "Proposal score boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| boundary_status | bounded_current_run_scores_not_semantic_idea_memory |" in summary
-    assert "| required_evidence_field_count | 16 |" in summary
+    assert (
+        "| boundary_status | bounded_current_run_scores_and_lexical_families_not_semantic_idea_memory |"
+        in summary
+    )
+    assert "| required_evidence_field_count | 17 |" in summary
     assert "| missing_evidence_count | 6 |" in summary

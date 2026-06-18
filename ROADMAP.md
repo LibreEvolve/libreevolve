@@ -800,20 +800,22 @@ is not yet an AlphaEvolve reproduction.
   preamble, bounded `runtime.history.hypothesis_index` summaries, and
   `runtime.history.hypothesis_branch_report` abandonment evidence, plus
   `runtime.history.proposal_diversity_report` exact duplicate counts and
-  `runtime.history.proposal_score_report` outcome/exact-novelty score records,
+  `runtime.history.proposal_score_report` outcome/exact-novelty score records
+  with deterministic current-run lexical proposal-family diagnostics,
   `runtime.history.controller_backtracking_report` observed branch-state
   transition/redirect evidence, and
   `runtime.history.natural_language_preamble_report` bounded leading
   explanatory-preamble capture, with
   `papers/proposal_score_boundary.json` preserving the bounded current-run
-  proposal-score versus semantic idea-memory scope,
+  proposal-score and lexical-family diagnostic versus semantic idea-memory
+  scope,
   `papers/proposal_diversity_boundary.json` preserving the exact-text
   duplicate-counts versus semantic proposal-novelty scope, and
   `papers/natural_language_preamble_boundary.json` preserving the
   bounded-leading-capture-only scope,
   into semantically searchable proposal memory only if needed; remaining work
   is semantic proposal-index retrieval, calibrated proposal-quality models,
-  near-duplicate/idea-family novelty, code/semantic/task-output distance
+  near-duplicate/semantic idea-family novelty, code/semantic/task-output distance
   diagnostics, parent/inspiration relation linkage, prompt/backend model
   attribution, accepted/rejected outcome linkage, model-quality attribution,
   explicit controller-driven backtracking policies, cross-run proposal tables,

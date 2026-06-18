@@ -2816,16 +2816,17 @@ sidecars, tests, and active TODOs.
     `libreevolve.proposal_score_report.v1`, plus
     `validate_proposal_score_report()`. The report records current-run
     proposal scores from candidate outcome quality and exact proposal-signature
-    first-occurrence novelty, while explicitly leaving semantic similarity,
+    first-occurrence novelty plus deterministic current-run lexical
+    proposal-family diagnostics, while explicitly leaving semantic similarity,
     embeddings, calibrated quality models, cross-run persistence, and
     prompt/archive selection integration false.
     `papers/proposal_score_boundary.json` now validates this bounded
-    current-run proposal-score boundary.
+    current-run proposal-score and lexical-family boundary.
   - Required result: add calibrated proposal-quality and novelty signals,
-    semantic or embedding-backed proposal/hypothesis retrieval, cross-run
-    persisted proposal indexes, and prompt/retrieval/archive policies that
-    state exactly which proposal fields and scores may influence resurfacing
-    and future candidate generation.
+    semantic or embedding-backed proposal/hypothesis retrieval beyond lexical
+    token-overlap diagnostics, cross-run persisted proposal indexes, and
+    prompt/retrieval/archive policies that state exactly which proposal fields
+    and scores may influence resurfacing and future candidate generation.
 
 - [ ] Extend observed controller redirect evidence into explicit backtracking
       policy.

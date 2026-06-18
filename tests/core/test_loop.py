@@ -1144,10 +1144,28 @@ def test_runtime_history_reports_proposal_scores_without_semantic_index_claim():
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["versioned_proposal_score_records"] is True
     assert report["claim_readiness"]["semantic_proposal_index"] is False
+    assert (
+        report["claim_readiness"]["current_run_lexical_family_diagnostics"]
+        is True
+    )
     assert report["claim_readiness"]["prompt_or_archive_selection_uses_scores"] is False
+    families = report["proposal_family_diagnostics"]
+    assert families["schema"] == "libreevolve.proposal_family_diagnostics.v1"
+    assert families["proposal_record_count"] == 3
+    assert families["family_count"] == 2
+    assert families["multi_record_family_count"] == 1
+    assert families["overlap_policy"]["semantic_embeddings"] is False
+    assert families["claim_readiness"]["semantic_proposal_retrieval"] is False
+    duplicate_family = [
+        record for record in families["family_records"] if record["member_count"] == 2
+    ][0]
+    assert duplicate_family["accepted_count"] == 2
+    assert duplicate_family["rejected_count"] == 0
+    assert duplicate_family["overlap_terms"]
 
     top = report["top_records"][0]
     assert top["idea_preview"] == "Set x to the accepted value."
+    assert top["lexical_family_match_count"] == 1
     assert top["outcome_quality_score"] == 1.0
     assert top["exact_text_novelty_score"] == 1.0
     assert top["proposal_score"] == 1.0

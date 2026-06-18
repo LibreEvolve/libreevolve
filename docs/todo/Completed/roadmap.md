@@ -15927,3 +15927,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     root.
   - Remaining roadmap gap: owner review signoff remains active in
     `docs/todo/roadmap.md`.
+- [x] Keep ROADMAP proposal-memory boundary current with lexical diagnostics.
+  - Spec evidence: ROADMAP AlphaEvolve gaps should separate implemented
+    bounded proposal-memory evidence from remaining semantic/cross-run
+    proposal retrieval work.
+  - Status: ROADMAP now describes `runtime.history.proposal_score_report` as
+    outcome/exact-novelty score records with deterministic current-run lexical
+    proposal-family diagnostics, while keeping semantic proposal-index
+    retrieval, calibrated quality models, and cross-run proposal tables open.
+  - Remaining roadmap gap: semantic proposal memory and owner review signoff
+    remain active TODOs.

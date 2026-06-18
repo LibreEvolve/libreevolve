@@ -1345,8 +1345,9 @@ near-duplicate detection, operator-family labels, distance metrics, novelty
 contribution scoring, parent/inspiration relation evidence, prompt/backend
 attribution, accepted/rejected status linkage, and model-ablation linkage.
 `runtime.history.proposal_score_report` now records bounded outcome-linked
-proposal quality plus exact proposal-signature novelty scores. This narrows the
-remaining database gap to durable cross-run query/index tables, full
+proposal quality plus exact proposal-signature novelty scores and deterministic
+current-run lexical proposal-family diagnostics. This narrows the remaining
+database gap to durable cross-run query/index tables, full
 metric-vector and feedback/artifact-content/program-output ranking,
 semantic output-similarity or schema-aware output retrieval, calibrated proposal
 quality models, near-duplicate or semantic/cross-run novelty or hypothesis
@@ -1354,9 +1355,10 @@ retrieval, model-quality attribution, explicit controller-owned backtracking
 policy, prompt/archive score-influence policy, suppression/retry policies,
 schema migrations, and replayable sampling policies, not the absence of any
 resurfacing API, proposal metadata capture, exact duplicate counts, or
-branch-level abandonment, observed redirect, or proposal-score evidence. The
-committed `papers/proposal_score_boundary.json` sidecar keeps this bounded
-current-run proposal-score scope machine-validated.
+branch-level abandonment, observed redirect, or proposal-score/family
+diagnostic evidence. The committed `papers/proposal_score_boundary.json`
+sidecar keeps this bounded current-run proposal-score and lexical-family scope
+machine-validated.
 `runtime.history.failure_index` groups failure records by exact fingerprint,
 repetition, and recency with bounded records; the committed
 `papers/failure_memory_boundary.json` sidecar keeps this run-local failure

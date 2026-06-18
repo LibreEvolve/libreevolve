@@ -14225,3 +14225,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     model revisions, or repeated identical calls.
   - Remaining paper gap: stochastic-generation reproducibility reports and
     provider-output replay boundaries remain active in `docs/todo/papers.md`.
+- [x] Add paper-facing lexical proposal-family boundary.
+  - Paper evidence: AlphaEvolve Sections 2.2 and 2.4 frame useful ideas and
+    hypotheses as reusable evolutionary evidence for future search.
+  - Status: paper-facing docs and `papers/proposal_score_boundary.json` now
+    cite `runtime.history.proposal_score_report.proposal_family_diagnostics`
+    as bounded current-run lexical proposal-family evidence, alongside
+    outcome/exact-novelty proposal scores.
+  - Remaining paper gap: lexical token-overlap families are not semantic
+    proposal retrieval, calibrated quality models, cross-run proposal tables,
+    or prompt/archive policy boundaries for score-driven resurfacing.
+  - Verification: focused proposal-score boundary tests require the
+    lexical-family evidence field while preserving semantic-memory overclaim
+    rejection.

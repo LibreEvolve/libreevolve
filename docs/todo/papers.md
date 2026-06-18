@@ -2153,17 +2153,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     proposal-hypothesis terms can also feed DeepResearch retrieval queries.
     Completed manifests now include `runtime.history.proposal_score_report`,
     which records current-run proposal scores from candidate outcome quality
-    and exact proposal-signature first-occurrence novelty.
+    and exact proposal-signature first-occurrence novelty plus deterministic
+    current-run lexical proposal-family diagnostics.
   - Current gap: proposal scores are bounded heuristic records, not calibrated
     hypothesis-quality models, embedding/semantic proposal indexes, cross-run
     persisted proposal tables, or a policy that lets proposal scores influence
     retrieval, prompting, and archive resurfacing.
     `papers/proposal_score_boundary.json` now validates this bounded
-    current-run proposal-score boundary.
+    current-run proposal-score and lexical-family boundary.
   - Required result: add semantic/cross-run proposal-hypothesis retrieval,
     calibrated proposal-quality and novelty models, persisted proposal-index
-    tables, and prompt/retrieval/archive policy boundaries before treating
-    proposal metadata as AlphaEvolve-grade idea memory.
+    tables, and prompt/retrieval/archive policy boundaries beyond lexical
+    token-overlap diagnostics before treating proposal metadata as
+    AlphaEvolve-grade idea memory.
 
 - [ ] Extend initial-pool divergence evidence beyond bounded syntactic and
       metric reports.

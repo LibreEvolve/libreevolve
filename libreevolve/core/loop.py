@@ -34345,6 +34345,7 @@ def _proposal_score_report(programs: list[Program]) -> dict:
             6,
         )
         scored_records.append(scored)
+    family_diagnostics = _proposal_score_family_diagnostics(scored_records)
     scored_records.sort(
         key=lambda record: (
             -record["proposal_score"],
@@ -34370,6 +34371,7 @@ def _proposal_score_report(programs: list[Program]) -> dict:
         "rejected_scored_count": sum(
             1 for record in scored_records if record["evaluator_is_valid"] is not True
         ),
+        "proposal_family_diagnostics": family_diagnostics,
         "top_records": scored_records[:25],
         "records_truncated": len(scored_records) > 25,
         "scoring_policy": {
@@ -34391,6 +34393,7 @@ def _proposal_score_report(programs: list[Program]) -> dict:
             "versioned_proposal_score_records": True,
             "outcome_linked_quality_signal": bool(scored_records),
             "exact_text_novelty_signal": bool(scored_records),
+            "current_run_lexical_family_diagnostics": bool(scored_records),
             "semantic_proposal_index": False,
             "calibrated_quality_model": False,
             "cross_run_proposal_table": False,
@@ -34422,6 +34425,11 @@ def _proposal_score_record(program: Program) -> dict:
         for field in ("idea", "rationale", "hypothesis")
         if isinstance(proposal.get(field), str) and proposal.get(field)
     )
+    proposal_text = "\n".join(
+        str(proposal.get(field))
+        for field in ("idea", "rationale", "hypothesis")
+        if isinstance(proposal.get(field), str) and proposal.get(field)
+    )
     evaluation = program.evaluation if isinstance(program.evaluation, dict) else {}
     record = {
         "program_id": program.id,
@@ -34432,6 +34440,8 @@ def _proposal_score_record(program: Program) -> dict:
         "proposal_fields_present": fields,
         "idea_hash": _proposal_diversity_hash(idea),
         "proposal_signature_hash": _proposal_diversity_hash(signature_text),
+        "proposal_text_hash": _proposal_diversity_hash(proposal_text),
+        "proposal_family_terms": _proposal_score_family_terms(proposal_text),
         "idea_preview": _proposal_lifecycle_text(idea, 160),
         "backend_idx": metadata.get("backend_idx")
         if isinstance(metadata.get("backend_idx"), int)
@@ -34452,6 +34462,183 @@ def _proposal_score_record(program: Program) -> dict:
         ),
     }
     return {key: value for key, value in record.items() if value is not None}
+
+
+_PROPOSAL_SCORE_FAMILY_STOPWORDS = frozenset(
+    {
+        "and",
+        "are",
+        "but",
+        "can",
+        "for",
+        "from",
+        "into",
+        "not",
+        "should",
+        "that",
+        "the",
+        "this",
+        "through",
+        "with",
+    }
+)
+
+
+def _proposal_score_family_terms(text: object) -> list[str]:
+    if not isinstance(text, str) or not text.strip():
+        return []
+    terms = {
+        term
+        for term in re.findall(r"[a-z0-9]+", text.lower())
+        if len(term) >= 3 and term not in _PROPOSAL_SCORE_FAMILY_STOPWORDS
+    }
+    return sorted(terms)[:40]
+
+
+def _proposal_score_family_diagnostics(scored_records: list[dict]) -> dict:
+    record_terms: list[tuple[int, set[str]]] = []
+    for index, record in enumerate(scored_records):
+        terms = record.get("proposal_family_terms")
+        if isinstance(terms, list):
+            record_terms.append((index, {term for term in terms if isinstance(term, str)}))
+    parent = list(range(len(scored_records)))
+
+    def find(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    def union(left: int, right: int) -> None:
+        left_root = find(left)
+        right_root = find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    for left_pos, (left_index, left_terms) in enumerate(record_terms):
+        if not left_terms:
+            continue
+        for right_index, right_terms in record_terms[left_pos + 1 :]:
+            if not right_terms:
+                continue
+            shared = left_terms & right_terms
+            union_terms = left_terms | right_terms
+            jaccard = len(shared) / len(union_terms) if union_terms else 0.0
+            if len(shared) >= 2 and jaccard >= 0.35:
+                union(left_index, right_index)
+
+    groups: dict[int, list[int]] = {}
+    for index in range(len(scored_records)):
+        groups.setdefault(find(index), []).append(index)
+
+    family_records = []
+    for indexes in groups.values():
+        members = [scored_records[index] for index in indexes]
+        member_signatures = sorted(
+            {
+                signature
+                for signature in (member.get("proposal_signature_hash") for member in members)
+                if isinstance(signature, str)
+            }
+        )
+        family_key_text = "|".join(member_signatures) or "|".join(
+            sorted(str(member.get("program_id", "")) for member in members)
+        )
+        family_id = _proposal_diversity_hash(family_key_text)
+        for member in members:
+            member["lexical_family_id"] = family_id
+            member["lexical_family_match_count"] = len(members) - 1
+        term_counts: dict[str, int] = {}
+        for member in members:
+            terms = member.get("proposal_family_terms")
+            if not isinstance(terms, list):
+                continue
+            for term in terms:
+                if isinstance(term, str):
+                    term_counts[term] = term_counts.get(term, 0) + 1
+        overlap_terms = [
+            term
+            for term, count in sorted(
+                term_counts.items(), key=lambda item: (-item[1], item[0])
+            )
+            if count > 1
+        ][:10]
+        scores = [
+            float(member["proposal_score"])
+            for member in members
+            if isinstance(member.get("proposal_score"), (int, float))
+            and not isinstance(member.get("proposal_score"), bool)
+            and math.isfinite(float(member["proposal_score"]))
+        ]
+        family_records.append(
+            {
+                "family_id": family_id,
+                "member_count": len(members),
+                "program_ids": [
+                    member["program_id"]
+                    for member in members[:10]
+                    if isinstance(member.get("program_id"), str)
+                ],
+                "proposal_signature_hashes": member_signatures[:10],
+                "overlap_terms": overlap_terms,
+                "max_proposal_score": round(max(scores), 6) if scores else 0.0,
+                "mean_proposal_score": (
+                    round(sum(scores) / len(scores), 6) if scores else 0.0
+                ),
+                "accepted_count": sum(
+                    1 for member in members if member.get("evaluator_is_valid") is True
+                ),
+                "rejected_count": sum(
+                    1 for member in members if member.get("evaluator_is_valid") is not True
+                ),
+                "representative_idea_preview": next(
+                    (
+                        member.get("idea_preview")
+                        for member in members
+                        if isinstance(member.get("idea_preview"), str)
+                    ),
+                    None,
+                ),
+            }
+        )
+    family_records.sort(
+        key=lambda record: (
+            -int(record["member_count"]),
+            -float(record["max_proposal_score"]),
+            str(record["family_id"]),
+        )
+    )
+    return {
+        "schema": "libreevolve.proposal_family_diagnostics.v1",
+        "source": "current_run_lexical_token_overlap",
+        "proposal_record_count": len(scored_records),
+        "family_count": len(family_records),
+        "multi_record_family_count": sum(
+            1 for record in family_records if record["member_count"] > 1
+        ),
+        "family_records": family_records[:25],
+        "records_truncated": len(family_records) > 25,
+        "overlap_policy": {
+            "schema": "libreevolve.proposal_family_overlap_policy.v1",
+            "tokenization": "lowercase_alphanumeric_terms_min_len_3_stopwords_removed",
+            "max_terms_per_proposal": 40,
+            "min_shared_terms": 2,
+            "min_jaccard": 0.35,
+            "semantic_embeddings": False,
+            "calibrated_model": False,
+            "cross_run_index": False,
+            "prompt_selection_integration": False,
+        },
+        "claim_ready": False,
+        "claim_readiness": {
+            "current_run_lexical_family_diagnostics": bool(scored_records),
+            "semantic_proposal_retrieval": False,
+            "embedding_backed_index": False,
+            "calibrated_quality_model": False,
+            "cross_run_persistence": False,
+            "prompt_or_archive_selection_uses_families": False,
+        },
+    }
 
 
 def _proposal_score_quality_score(record: Mapping[str, object]) -> float:
@@ -34497,6 +34684,7 @@ def validate_proposal_score_report(report: object) -> dict:
         "duplicate_exact_signature_count",
         "accepted_scored_count",
         "rejected_scored_count",
+        "proposal_family_diagnostics",
         "top_records",
         "records_truncated",
         "scoring_policy",
@@ -34590,6 +34778,25 @@ def validate_proposal_score_report(report: object) -> dict:
                     "message": f"top record {index} signature hash is invalid",
                 }
             )
+        family_id = record.get("lexical_family_id")
+        if family_id is not None and not _is_sha256_hex(family_id):
+            issues.append(
+                {
+                    "code": "invalid_lexical_family_id",
+                    "message": f"top record {index} lexical family id is invalid",
+                }
+            )
+        match_count = record.get("lexical_family_match_count")
+        if (
+            match_count is not None
+            and (isinstance(match_count, bool) or not isinstance(match_count, int) or match_count < 0)
+        ):
+            issues.append(
+                {
+                    "code": "invalid_lexical_family_match_count",
+                    "message": f"top record {index} lexical family match count must be non-negative",
+                }
+            )
     if report.get("records_truncated") is not True:
         if report.get("scored_proposal_count") != len(records):
             issues.append(
@@ -34598,6 +34805,12 @@ def validate_proposal_score_report(report: object) -> dict:
                     "message": "scored_proposal_count must match top_records",
                 }
             )
+    issues.extend(
+        _validate_proposal_score_family_diagnostics(
+            report.get("proposal_family_diagnostics"),
+            report.get("scored_proposal_count"),
+        )
+    )
     policy = report.get("scoring_policy")
     if not isinstance(policy, dict):
         issues.append(
@@ -34650,6 +34863,13 @@ def validate_proposal_score_report(report: object) -> dict:
                     "message": f"claim_readiness.{field} must be false",
                 }
             )
+    if "current_run_lexical_family_diagnostics" not in readiness:
+        issues.append(
+            {
+                "code": "missing_current_run_lexical_family_diagnostics",
+                "message": "claim_readiness must record lexical family diagnostics status",
+            }
+        )
     if report.get("claim_ready") is not False:
         issues.append(
             {
@@ -34662,6 +34882,191 @@ def validate_proposal_score_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_proposal_score_family_diagnostics(
+    diagnostics: object,
+    expected_count: object,
+) -> list[dict]:
+    issues: list[dict] = []
+    if not isinstance(diagnostics, dict):
+        return [
+            {
+                "code": "invalid_proposal_family_diagnostics",
+                "message": "proposal_family_diagnostics must be an object",
+            }
+        ]
+    required = {
+        "schema",
+        "source",
+        "proposal_record_count",
+        "family_count",
+        "multi_record_family_count",
+        "family_records",
+        "records_truncated",
+        "overlap_policy",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(diagnostics)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_proposal_family_diagnostics_fields",
+                "message": f"proposal_family_diagnostics missing fields: {sorted(missing)}",
+            }
+        )
+    if diagnostics.get("schema") != "libreevolve.proposal_family_diagnostics.v1":
+        issues.append(
+            {
+                "code": "invalid_proposal_family_diagnostics_schema",
+                "message": "proposal family diagnostics schema is unsupported",
+            }
+        )
+    if diagnostics.get("source") != "current_run_lexical_token_overlap":
+        issues.append(
+            {
+                "code": "invalid_proposal_family_source",
+                "message": "proposal family diagnostics source is unsupported",
+            }
+        )
+    for field in ("proposal_record_count", "family_count", "multi_record_family_count"):
+        value = diagnostics.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_proposal_family_{field}",
+                    "message": f"proposal_family_diagnostics.{field} must be non-negative",
+                }
+            )
+    if (
+        isinstance(expected_count, int)
+        and not isinstance(expected_count, bool)
+        and diagnostics.get("proposal_record_count") != expected_count
+    ):
+        issues.append(
+            {
+                "code": "invalid_proposal_family_record_count",
+                "message": "proposal family record count must match scored proposal count",
+            }
+        )
+    family_records = diagnostics.get("family_records")
+    if not isinstance(family_records, list):
+        issues.append(
+            {
+                "code": "invalid_proposal_family_records",
+                "message": "proposal family records must be a list",
+            }
+        )
+        family_records = []
+    if diagnostics.get("records_truncated") is not True and isinstance(
+        diagnostics.get("family_count"), int
+    ):
+        if diagnostics["family_count"] != len(family_records):
+            issues.append(
+                {
+                    "code": "invalid_proposal_family_count",
+                    "message": "family_count must match family_records when not truncated",
+                }
+            )
+    for index, record in enumerate(family_records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_proposal_family_record",
+                    "message": f"proposal family record {index} must be an object",
+                }
+            )
+            continue
+        if not _is_sha256_hex(record.get("family_id")):
+            issues.append(
+                {
+                    "code": "invalid_proposal_family_id",
+                    "message": f"proposal family record {index} family_id is invalid",
+                }
+            )
+        member_count = record.get("member_count")
+        if isinstance(member_count, bool) or not isinstance(member_count, int) or member_count < 1:
+            issues.append(
+                {
+                    "code": "invalid_proposal_family_member_count",
+                    "message": f"proposal family record {index} member_count must be positive",
+                }
+            )
+        for field in ("max_proposal_score", "mean_proposal_score"):
+            value = record.get(field)
+            if (
+                isinstance(value, bool)
+                or not isinstance(value, (int, float))
+                or not math.isfinite(float(value))
+                or not 0.0 <= float(value) <= 1.0
+            ):
+                issues.append(
+                    {
+                        "code": f"invalid_proposal_family_{field}",
+                        "message": f"proposal family record {index} {field} must be in [0, 1]",
+                    }
+                )
+    policy = diagnostics.get("overlap_policy")
+    if not isinstance(policy, dict):
+        issues.append(
+            {
+                "code": "invalid_proposal_family_overlap_policy",
+                "message": "proposal family overlap policy must be an object",
+            }
+        )
+        policy = {}
+    if policy.get("min_shared_terms") != 2 or policy.get("min_jaccard") != 0.35:
+        issues.append(
+            {
+                "code": "invalid_proposal_family_overlap_thresholds",
+                "message": "proposal family overlap thresholds are unsupported",
+            }
+        )
+    for field in (
+        "semantic_embeddings",
+        "calibrated_model",
+        "cross_run_index",
+        "prompt_selection_integration",
+    ):
+        if policy.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_proposal_family_{field}",
+                    "message": f"proposal family overlap_policy.{field} must be false",
+                }
+            )
+    readiness = diagnostics.get("claim_readiness")
+    if not isinstance(readiness, dict):
+        issues.append(
+            {
+                "code": "invalid_proposal_family_claim_readiness",
+                "message": "proposal family claim_readiness must be an object",
+            }
+        )
+        readiness = {}
+    for field in (
+        "semantic_proposal_retrieval",
+        "embedding_backed_index",
+        "calibrated_quality_model",
+        "cross_run_persistence",
+        "prompt_or_archive_selection_uses_families",
+    ):
+        if readiness.get(field) is not False:
+            issues.append(
+                {
+                    "code": f"invalid_proposal_family_{field}",
+                    "message": f"proposal family claim_readiness.{field} must be false",
+                }
+            )
+    if diagnostics.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "invalid_proposal_family_claim_ready",
+                "message": "proposal family diagnostics must not claim semantic readiness",
+            }
+        )
+    return issues
 
 
 def _proposal_lifecycle_history_record(

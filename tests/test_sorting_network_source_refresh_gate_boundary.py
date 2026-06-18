@@ -18,7 +18,7 @@ def test_sorting_network_source_refresh_gate_boundary_accepts_record():
     assert validation.script_artifact_checked is False
     assert validation.deterministic_gate_checked is False
     assert validation.source_count == 5
-    assert validation.missing_evidence_count == 7
+    assert validation.missing_evidence_count == 6
     assert boundary["schema"] == SORTING_NETWORK_SOURCE_REFRESH_GATE_BOUNDARY_SCHEMA
     assert boundary["source_snapshot_metadata_sidecar"] == (
         "papers/sorting_network_source_snapshot_boundary.json"
@@ -29,10 +29,14 @@ def test_sorting_network_source_refresh_gate_boundary_accepts_record():
     assert boundary["source_drift_triage_sidecar"] == (
         "papers/sorting_network_source_drift_triage_boundary.json"
     )
+    assert boundary["normalized_marker_snapshot_sidecar"] == (
+        "papers/sorting_network_normalized_marker_snapshot_boundary.json"
+    )
+    assert boundary["normalized_marker_snapshot_status"] == "recorded"
     assert boundary["expected_report_schema"] == (
         "libreevolve.sorting_network_source_refresh_gate_report.v1"
     )
-    assert "stable normalized source snapshot" in boundary["claim_boundary"]
+    assert "normalized marker snapshot sidecar" in boundary["claim_boundary"]
     assert "scheduled CI refresh-run history" in boundary["claim_boundary"]
 
 
@@ -44,6 +48,8 @@ def test_sorting_network_source_refresh_gate_boundary_rejects_drift_and_overclai
     boundary["archived_outcome_artifact"]["result"] = "fresh"
     boundary["source_drift_triage_sidecar"] = "missing.json"
     boundary["source_drift_triage_status"] = "untriaged"
+    boundary["normalized_marker_snapshot_sidecar"] = "missing.json"
+    boundary["normalized_marker_snapshot_status"] = "missing"
     boundary["expected_source_ids"] = ["codish_arxiv"]
     boundary["missing_evidence"]["scheduled_ci_refresh_run_history"] = "recorded"
 
@@ -57,6 +63,8 @@ def test_sorting_network_source_refresh_gate_boundary_rejects_drift_and_overclai
     assert "invalid_archived_outcome_artifact_result" in codes
     assert "invalid_source_drift_triage_sidecar" in codes
     assert "invalid_source_drift_triage_status" in codes
+    assert "invalid_normalized_marker_snapshot_sidecar" in codes
+    assert "invalid_normalized_marker_snapshot_status" in codes
     assert "invalid_expected_source_ids" in codes
     assert "invalid_missing_evidence_scheduled_ci_refresh_run_history" in codes
 
@@ -70,4 +78,4 @@ def test_render_sorting_network_source_refresh_gate_boundary_summary_reports_sha
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | deterministic_source_refresh_gate_recorded_with_archived_drift_outcome |" in summary
     assert "| source_count | 5 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| missing_evidence_count | 6 |" in summary

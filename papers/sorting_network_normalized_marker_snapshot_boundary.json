@@ -1,0 +1,32 @@
+{
+  "schema": "libreevolve.sorting_network_normalized_marker_snapshot_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "snapshot_date": "2026-06-18",
+  "boundary_status": "codish_publication_normalized_marker_snapshot_recorded",
+  "claim_ready": false,
+  "source_id": "codish_publication",
+  "source_url": "https://pure.itu.dk/en/publications/sorting-nine-inputs-requires-twenty-five-comparisons/",
+  "normalization_scope": "Records only stable citation markers needed for comparator-target calibration, not the dynamic full HTML page.",
+  "normalized_payload": {
+    "source_id": "codish_publication",
+    "source_url": "https://pure.itu.dk/en/publications/sorting-nine-inputs-requires-twenty-five-comparisons/",
+    "markers": {
+      "title": "Sorting nine inputs requires twenty-five comparisons",
+      "doi": "10.1016/j.jcss.2015.11.014",
+      "venue": "Journal of Computer and System Sciences",
+      "target_comparators": "25",
+      "author_marker": "Codish"
+    }
+  },
+  "normalized_payload_bytes": 350,
+  "normalized_payload_sha256": "5e58af11168018d97f35d0b5c7d6a31d11fbde8f646d2b371e722badafe6d27c",
+  "missing_evidence": {
+    "updated_source_snapshot_metadata": "not_recorded_locally",
+    "scheduled_ci_refresh_run_history": "not_recorded_locally",
+    "full_raw_source_response_artifacts": "not_recorded_locally",
+    "independent_target_proof_extraction": "not_recorded_locally",
+    "repeated_seed_run_tables": "not_recorded_locally",
+    "run_tied_paper_certification": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records a stable normalized marker snapshot for the dynamic Codish publication page. It does not claim updated source snapshot metadata, scheduled CI refresh-run history, full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, paper certification, or novel SOTA results."
+}

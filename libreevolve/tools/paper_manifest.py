@@ -645,6 +645,10 @@ from libreevolve.problems.benchmarks.sorting_network_source_drift_triage_boundar
     sorting_network_source_drift_triage_boundary_record,
     validate_sorting_network_source_drift_triage_boundary,
 )
+from libreevolve.problems.benchmarks.sorting_network_normalized_marker_snapshot_boundary import (
+    sorting_network_normalized_marker_snapshot_boundary_record,
+    validate_sorting_network_normalized_marker_snapshot_boundary,
+)
 from libreevolve.problems.benchmarks.table1_capability_exhibit_boundary import (
     table1_capability_exhibit_boundary_record,
     validate_table1_capability_exhibit_boundary,
@@ -1225,6 +1229,7 @@ SORTING_NETWORK_SOURCE_SNAPSHOT_BOUNDARY_FILE = "papers/sorting_network_source_s
 SORTING_NETWORK_SOURCE_REFRESH_GATE_BOUNDARY_FILE = "papers/sorting_network_source_refresh_gate_boundary.json"
 SORTING_NETWORK_SOURCE_REFRESH_RUN_BOUNDARY_FILE = "papers/sorting_network_source_refresh_run_2026-06-18.json"
 SORTING_NETWORK_SOURCE_DRIFT_TRIAGE_BOUNDARY_FILE = "papers/sorting_network_source_drift_triage_boundary.json"
+SORTING_NETWORK_NORMALIZED_MARKER_SNAPSHOT_BOUNDARY_FILE = "papers/sorting_network_normalized_marker_snapshot_boundary.json"
 TABLE1_CAPABILITY_EXHIBIT_BOUNDARY_FILE = "papers/table1_capability_exhibit_boundary.json"
 SELF_IMPROVEMENT_DISTILLATION_BOUNDARY_FILE = "papers/self_improvement_distillation_boundary.json"
 SELF_IMPROVEMENT_CADENCE_BOUNDARY_FILE = "papers/self_improvement_cadence_boundary.json"
@@ -1972,6 +1977,7 @@ def validate_paper_manifest(
     issues.extend(_validate_sorting_network_source_refresh_gate_boundary(root_path))
     issues.extend(_validate_sorting_network_source_refresh_run_boundary(root_path))
     issues.extend(_validate_sorting_network_source_drift_triage_boundary(root_path))
+    issues.extend(_validate_sorting_network_normalized_marker_snapshot_boundary(root_path))
     issues.extend(_validate_table1_capability_exhibit_boundary(root_path))
     issues.extend(_validate_self_improvement_distillation_boundary(root_path))
     issues.extend(_validate_self_improvement_cadence_boundary(root_path))
@@ -8626,6 +8632,38 @@ def _validate_sorting_network_source_drift_triage_boundary(root_path: Path) -> l
             f"sorting_network_source_drift_triage_boundary_{issue.code}",
             issue.message,
             "sorting_network_source_drift_triage",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_sorting_network_normalized_marker_snapshot_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SORTING_NETWORK_NORMALIZED_MARKER_SNAPSHOT_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = sorting_network_normalized_marker_snapshot_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "sorting_network_normalized_marker_snapshot_boundary_manifest_missing",
+                    (
+                        f"{SORTING_NETWORK_NORMALIZED_MARKER_SNAPSHOT_BOUNDARY_FILE} must emit "
+                        "sorting-network normalized marker snapshot evidence"
+                    ),
+                    "sorting_network_normalized_marker_snapshot",
+                )
+            ]
+    report = validate_sorting_network_normalized_marker_snapshot_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"sorting_network_normalized_marker_snapshot_boundary_{issue.code}",
+            issue.message,
+            "sorting_network_normalized_marker_snapshot",
         )
         for issue in report.issues
     ]

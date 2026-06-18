@@ -24,8 +24,10 @@ EXPECTED_RUN_CONTEXT = "manual_local_network_run"
 EXPECTED_RUN_MODE = "live_network"
 EXPECTED_DRIFT_SOURCE_ID = "codish_publication"
 EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR = "papers/sorting_network_source_drift_triage_boundary.json"
+EXPECTED_NORMALIZED_MARKER_SNAPSHOT_SIDECAR = (
+    "papers/sorting_network_normalized_marker_snapshot_boundary.json"
+)
 EXPECTED_MISSING_EVIDENCE = {
-    "stable_normalized_source_snapshot": "not_recorded_locally",
     "updated_source_snapshot_metadata": "not_recorded_locally",
     "scheduled_ci_refresh_run_history": "not_recorded_locally",
     "full_raw_source_response_artifacts": "not_recorded_locally",
@@ -86,17 +88,19 @@ def sorting_network_source_refresh_run_boundary_record() -> dict[str, Any]:
         },
         "source_drift_triage_sidecar": EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR,
         "source_drift_triage_status": "full_page_hash_unstable_markers_present",
+        "normalized_marker_snapshot_sidecar": EXPECTED_NORMALIZED_MARKER_SNAPSHOT_SIDECAR,
+        "normalized_marker_snapshot_status": "recorded",
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary archives one manual live-network sorting-network "
             "source refresh run where the Codish publication page drifted from "
             "the committed source snapshot metadata, plus a triage sidecar "
             "classifying the drift as full-page-hash instability with citation "
-            "markers present. It does not claim source freshness, a stable "
-            "normalized source snapshot, updated source snapshot metadata, "
-            "scheduled CI refresh-run history, full raw source-body retention, "
-            "repeated LibreEvolve runs, paper certification, or novel SOTA "
-            "results."
+            "markers present and the normalized marker snapshot sidecar. It "
+            "does not claim source freshness, updated source snapshot "
+            "metadata, scheduled CI refresh-run history, full raw source-body "
+            "retention, repeated LibreEvolve runs, paper certification, or "
+            "novel SOTA results."
         ),
     }
 
@@ -200,6 +204,10 @@ def validate_sorting_network_source_refresh_run_boundary(
         issues.append(_issue("invalid_source_drift_triage_sidecar", f"source_drift_triage_sidecar must be {EXPECTED_SOURCE_DRIFT_TRIAGE_SIDECAR}"))
     if data.get("source_drift_triage_status") != "full_page_hash_unstable_markers_present":
         issues.append(_issue("invalid_source_drift_triage_status", "source_drift_triage_status must record full_page_hash_unstable_markers_present"))
+    if data.get("normalized_marker_snapshot_sidecar") != EXPECTED_NORMALIZED_MARKER_SNAPSHOT_SIDECAR:
+        issues.append(_issue("invalid_normalized_marker_snapshot_sidecar", f"normalized_marker_snapshot_sidecar must be {EXPECTED_NORMALIZED_MARKER_SNAPSHOT_SIDECAR}"))
+    if data.get("normalized_marker_snapshot_status") != "recorded":
+        issues.append(_issue("invalid_normalized_marker_snapshot_status", "normalized_marker_snapshot_status must be recorded"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (

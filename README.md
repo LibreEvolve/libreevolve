@@ -230,9 +230,10 @@ The bundled examples are intentionally small:
   and `papers/sorting_network_source_refresh_run_2026-06-18.json` archives a
   live refresh run that detected Codish publication source drift; that drift
   is triaged in `papers/sorting_network_source_drift_triage_boundary.json` as
-  full-page hash instability with citation markers still present. A stable
-  normalized marker snapshot is still required before source freshness can be
-  claimed.
+  full-page hash instability with citation markers still present.
+  `papers/sorting_network_normalized_marker_snapshot_boundary.json` records a
+  stable normalized marker snapshot for those citation facts; source snapshot
+  metadata still needs to be updated before source freshness can be claimed.
   `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
   non-certified run-evidence scope.
 

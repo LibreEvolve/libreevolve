@@ -1278,10 +1278,11 @@ by `papers/lineage_replay_boundary.json`.
   live refresh run that detected Codish publication source drift.
   `papers/sorting_network_source_drift_triage_boundary.json` triages that as
   dynamic full-page hash instability with citation markers still present. Add
-  a stable normalized marker snapshot or another stable source and update
-  source snapshot metadata before treating the citation snapshots as fresh;
-  add repeated-run and paper-certification evidence before treating these
-  fixtures as comparable results. The
+  `papers/sorting_network_normalized_marker_snapshot_boundary.json` as the
+  stable marker-level citation artifact, but update source snapshot metadata
+  before treating the citation snapshots as fresh; add repeated-run and
+  paper-certification evidence before treating these fixtures as comparable
+  results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   executable-candidate-only run-evidence boundary.
   This remains the current lowest-risk realistic benchmark path because it has

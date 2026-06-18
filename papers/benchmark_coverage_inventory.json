@@ -394,6 +394,7 @@
     "papers/roadmap_source_span_exhaustiveness_boundary.json",
     "papers/row_identity.json",
     "papers/runtime_rng_replay_boundary.json",
+    "papers/sorting_network_normalized_marker_snapshot_boundary.json",
     "papers/sorting_network_rediscovery_boundary.json",
     "papers/sorting_network_source_citation_boundary.json",
     "papers/sorting_network_source_drift_triage_boundary.json",
@@ -414,8 +415,8 @@
     "papers/validator_execution_boundary.json",
     "tests/test_agents_docs.py"
   ],
-  "unique_local_artifact_count": 224,
-  "local_artifact_mention_record_count": 258,
+  "unique_local_artifact_count": 225,
+  "local_artifact_mention_record_count": 259,
   "missing_local_artifact_paths": [],
   "artifact_existence_status": "all_referenced_local_artifacts_present",
   "limitation_bullet_count": 173,
@@ -17161,14 +17162,14 @@
       "coverage_id": "implemented_benchmark_173",
       "bullet_ordinal": 173,
       "summary_sha256": "68f454cca79922e91e2c78aa04603f26069622a9cc7bf0d919ac9d7208235998",
-      "body_sha256": "40c83111744c380e59f4ba4ce970624371aeb8dedd4eaacc0ef30e9bb0c8152c",
+      "body_sha256": "c4a13363f2b80477e67dd94a15a5dcc1f0c8612e532f818fa099c12e33a85dc4",
       "source_span": {
         "path": "papers/README.md",
         "section": "Benchmark coverage decisions",
         "line_start": 3765,
-        "line_end": 3791,
+        "line_end": 3793,
         "file_text_char_start": 306014,
-        "file_text_char_end": 307909
+        "file_text_char_end": 308018
       },
       "source_ids_mentioned": [],
       "source_token_match_records": [],
@@ -17176,6 +17177,7 @@
       "local_artifact_paths": [
         "libreevolve/problems/examples/sorting_network_8",
         "libreevolve/problems/examples/sorting_network_9",
+        "papers/sorting_network_normalized_marker_snapshot_boundary.json",
         "papers/sorting_network_rediscovery_boundary.json",
         "papers/sorting_network_source_citation_boundary.json",
         "papers/sorting_network_source_drift_triage_boundary.json",
@@ -17291,18 +17293,33 @@
           }
         },
         {
-          "path": "papers/sorting_network_rediscovery_boundary.json",
-          "bullet_text_char_start": 1770,
-          "bullet_text_char_end": 1820,
+          "path": "papers/sorting_network_normalized_marker_snapshot_boundary.json",
+          "bullet_text_char_start": 1690,
+          "bullet_text_char_end": 1755,
           "source_span": {
             "path": "papers/README.md",
             "section": "Benchmark coverage decisions",
-            "line_start": 3790,
-            "line_end": 3790,
-            "bullet_text_char_start": 1770,
-            "bullet_text_char_end": 1820,
-            "file_text_char_start": 307784,
-            "file_text_char_end": 307834
+            "line_start": 3789,
+            "line_end": 3789,
+            "bullet_text_char_start": 1690,
+            "bullet_text_char_end": 1755,
+            "file_text_char_start": 307704,
+            "file_text_char_end": 307769
+          }
+        },
+        {
+          "path": "papers/sorting_network_rediscovery_boundary.json",
+          "bullet_text_char_start": 1879,
+          "bullet_text_char_end": 1929,
+          "source_span": {
+            "path": "papers/README.md",
+            "section": "Benchmark coverage decisions",
+            "line_start": 3792,
+            "line_end": 3792,
+            "bullet_text_char_start": 1879,
+            "bullet_text_char_end": 1929,
+            "file_text_char_start": 307893,
+            "file_text_char_end": 307943
           }
         }
       ],
@@ -17316,6 +17333,11 @@
           "path": "libreevolve/problems/examples/sorting_network_9",
           "exists": true,
           "kind": "directory"
+        },
+        {
+          "path": "papers/sorting_network_normalized_marker_snapshot_boundary.json",
+          "exists": true,
+          "kind": "file"
         },
         {
           "path": "papers/sorting_network_rediscovery_boundary.json",
@@ -17348,7 +17370,7 @@
           "kind": "file"
         }
       ],
-      "local_artifact_existing_count": 8,
+      "local_artifact_existing_count": 9,
       "local_artifact_missing_paths": [],
       "all_local_artifacts_exist": true,
       "limitation_signal_records": [

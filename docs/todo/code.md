@@ -833,8 +833,9 @@ sidecars, tests, and active TODOs.
     live refresh run that detected Codish publication source drift.
     `papers/sorting_network_source_drift_triage_boundary.json` classifies
     that drift as dynamic full-page hash instability with citation markers
-    present. A stable normalized marker snapshot and updated source snapshot
-    metadata are still absent.
+    present. `papers/sorting_network_normalized_marker_snapshot_boundary.json`
+    records the stable marker-level citation facts; updated source snapshot
+    metadata is still absent.
     `papers/sorting_network_rediscovery_boundary.json` keeps the remaining
     executable-candidate-only run-evidence scope machine-validated.
   - Required result: add repeated-seed run reports, fixed evaluator/model/
@@ -8677,9 +8678,9 @@ sidecars, tests, and active TODOs.
     detected Codish publication source drift, and
     `papers/sorting_network_source_drift_triage_boundary.json` classifies it
     as full-page hash instability with citation markers present. Those
-    artifacts are calibration metadata rather than run evidence; a stable
-    normalized marker snapshot, updated source snapshot metadata, and
-    scheduled CI refresh-run history remain absent.
+    artifacts are calibration metadata rather than run evidence; the
+    normalized marker snapshot exists, but updated source snapshot metadata
+    and scheduled CI refresh-run history remain absent.
   - Required result: run the contract under the intended authenticated backend
     and commit or separately preserve a redacted evidence bundle with manifest
     assertions, transcript hashes, best-candidate hashes, failure summaries,

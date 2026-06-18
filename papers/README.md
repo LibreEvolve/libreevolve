@@ -3785,8 +3785,10 @@ Implemented:
   sidecar archives a live refresh run that detected Codish publication source
   drift, the committed `papers/sorting_network_source_drift_triage_boundary.json`
   sidecar classifies that drift as dynamic full-page hash instability with
-  citation markers still present and requires a stable normalized marker
-  snapshot before source freshness can be claimed, and
+  citation markers still present, the committed
+  `papers/sorting_network_normalized_marker_snapshot_boundary.json` sidecar
+  records the stable marker-level citation facts while source snapshot
+  metadata promotion remains pending, and
   `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
   executable-candidate-only run-evidence boundary.
 

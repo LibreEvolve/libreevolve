@@ -16,7 +16,7 @@ def test_sorting_network_source_refresh_run_boundary_accepts_drift_record():
     assert validation.run_report_checked is True
     assert validation.source_count == 5
     assert validation.drift_count == 1
-    assert validation.missing_evidence_count == 7
+    assert validation.missing_evidence_count == 6
     assert boundary["schema"] == SORTING_NETWORK_SOURCE_REFRESH_RUN_BOUNDARY_SCHEMA
     assert boundary["run_report"]["ok"] is False
     assert boundary["drift_summary"]["drift_source_ids"] == ["codish_publication"]
@@ -26,6 +26,10 @@ def test_sorting_network_source_refresh_run_boundary_accepts_drift_record():
     assert boundary["source_drift_triage_status"] == (
         "full_page_hash_unstable_markers_present"
     )
+    assert boundary["normalized_marker_snapshot_sidecar"] == (
+        "papers/sorting_network_normalized_marker_snapshot_boundary.json"
+    )
+    assert boundary["normalized_marker_snapshot_status"] == "recorded"
     drifted = boundary["run_report"]["checks"][-1]
     assert drifted["source_id"] == "codish_publication"
     assert drifted["issues"] == ["bytes_drift", "sha256_drift"]
@@ -39,7 +43,9 @@ def test_sorting_network_source_refresh_run_boundary_rejects_overclaim_and_drift
     boundary["drift_summary"]["triage_required"] = False
     boundary["source_drift_triage_sidecar"] = "missing.json"
     boundary["source_drift_triage_status"] = "untriaged"
-    boundary["missing_evidence"]["stable_normalized_source_snapshot"] = "recorded"
+    boundary["normalized_marker_snapshot_sidecar"] = "missing.json"
+    boundary["normalized_marker_snapshot_status"] = "missing"
+    boundary["missing_evidence"]["updated_source_snapshot_metadata"] = "recorded"
 
     validation = validate_sorting_network_source_refresh_run_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -52,7 +58,9 @@ def test_sorting_network_source_refresh_run_boundary_rejects_overclaim_and_drift
     assert "invalid_drift_summary" in codes
     assert "invalid_source_drift_triage_sidecar" in codes
     assert "invalid_source_drift_triage_status" in codes
-    assert "invalid_missing_evidence_stable_normalized_source_snapshot" in codes
+    assert "invalid_normalized_marker_snapshot_sidecar" in codes
+    assert "invalid_normalized_marker_snapshot_status" in codes
+    assert "invalid_missing_evidence_updated_source_snapshot_metadata" in codes
 
 
 def test_render_sorting_network_source_refresh_run_boundary_summary_reports_shape():
@@ -65,4 +73,4 @@ def test_render_sorting_network_source_refresh_run_boundary_summary_reports_shap
     assert "| boundary_status | live_source_refresh_run_archived_with_source_drift |" in summary
     assert "| source_count | 5 |" in summary
     assert "| drift_count | 1 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| missing_evidence_count | 6 |" in summary

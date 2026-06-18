@@ -692,7 +692,9 @@ Important limits:
   boundary is tracked by `papers/provider_diagnostics_replay_boundary.json`.
   The same sidecar now records that OpenAI Responses extraction is currently
   a first-`output_text` policy with response status stored as finish-reason
-  metadata, not a complete multi-part output/status admission contract.
+  metadata, and that Anthropic Messages extraction is currently a first-text-
+  block policy with `stop_reason` stored as finish-reason metadata, not a
+  complete multi-part output/status admission contract.
 - Provider request parameters are normalized and logged for supported backends,
   including temperature, top-p, stop sequences, and supported seed fields, but
   this is best-effort sampling-control telemetry rather than a cross-provider

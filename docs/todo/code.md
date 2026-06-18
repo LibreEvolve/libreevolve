@@ -1271,7 +1271,12 @@ sidecars, tests, and active TODOs.
     tool-use-only output, but they do not cover multiple text blocks, mixed
     text plus tool-use/refusal blocks, thinking/redacted-thinking blocks,
     stop-reason-specific incomplete output, or telemetry that proves the
-    accepted text was the whole provider answer.
+    accepted text was the whole provider answer. The committed
+    `papers/provider_diagnostics_replay_boundary.json` sidecar now records an
+    Anthropic Messages extraction sub-boundary for the current first-text-block
+    policy, stop-reason-as-finish-reason metadata, and missing content-block
+    telemetry, mixed block classification, incomplete stop-reason taxonomy,
+    and stop-reason admission gate evidence.
   - Current gap: an Anthropic response with multiple text-bearing content
     blocks can be silently truncated before mutation parsing, and mixed
     auxiliary blocks are not surfaced as an explicit extraction policy. The

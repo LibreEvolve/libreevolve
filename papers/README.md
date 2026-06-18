@@ -2753,11 +2753,14 @@ Implemented:
   overclaim checks, remote provider-default overclaim checks, and
   backend-default count checks, plus an OpenAI Responses extraction
   sub-boundary for first-`output_text` extraction and status-as-finish-reason
-  metadata. It is not evidence of raw provider-payload sidecars,
-  provider-output replay, complete provider-call replay, account/model default
-  capture, OpenAI Responses multi-part text aggregation, non-completed status
-  admission gates, incomplete-details classification, or SDK output_text
-  helper parity.
+  metadata and an Anthropic Messages extraction sub-boundary for first-text-
+  block extraction and stop-reason-as-finish-reason metadata. It is not
+  evidence of raw provider-payload sidecars, provider-output replay, complete
+  provider-call replay, account/model default capture, OpenAI Responses multi-
+  part text aggregation, non-completed status admission gates, incomplete-
+  details classification, SDK output_text helper parity, Anthropic Messages
+  multi-block text aggregation, stop-reason admission gates, or mixed content-
+  block classification.
 - `papers/llm_stochastic_reproducibility_boundary.json`: stochastic
   LLM-generation reproducibility sidecar for AlphaEvolve Sections 2.2, 2.3,
   2.4, and 4. It records normalized request parameters, prompt/output hashes,

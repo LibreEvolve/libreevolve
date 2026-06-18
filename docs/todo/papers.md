@@ -1341,8 +1341,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/provider_diagnostics_replay_boundary.json` sidecar now preserves
     the bounded-diagnostics versus raw-provider-replay boundary for paper-
     manifest validation, including the OpenAI Responses first-output-text
-    extraction sub-boundary and the missing multi-part/status/incomplete-
-    details admission contract.
+    extraction sub-boundary, the Anthropic Messages first-text-block
+    extraction sub-boundary, and the missing multi-part/status/incomplete-
+    details/stop-reason admission contracts.
     `libreevolve.alphaevolve_ablation_report.v1` now defines and tests an
     equal-budget ablation-result report contract for reports produced by
     executed runs: the Figure 8 full-system baseline plus five component

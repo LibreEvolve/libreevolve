@@ -33,6 +33,11 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "openai_responses_incomplete_details_policy",
     "openai_responses_output_text_helper_parity",
     "openai_responses_multipart_text_policy",
+    "anthropic_messages_content_block_inventory",
+    "anthropic_messages_stop_reason_policy",
+    "anthropic_messages_mixed_content_policy",
+    "anthropic_messages_multiblock_text_policy",
+    "anthropic_messages_incomplete_stop_reason_policy",
     "raw_provider_payload_sidecars",
     "provider_output_replay",
     "complete_provider_call_replay",
@@ -47,6 +52,10 @@ EXPECTED_MISSING_EVIDENCE = {
     "openai_responses_status_admission_gate": "status_recorded_as_finish_reason_only",
     "openai_responses_output_text_helper_parity": "not_recorded_locally",
     "openai_responses_content_shape_telemetry": "not_recorded_locally",
+    "anthropic_messages_multiblock_text_aggregation": "first_text_block_only",
+    "anthropic_messages_stop_reason_admission_gate": "stop_reason_recorded_as_finish_reason_only",
+    "anthropic_messages_content_block_telemetry": "not_recorded_locally",
+    "anthropic_messages_mixed_content_classification": "not_recorded_locally",
 }
 
 
@@ -112,6 +121,33 @@ def provider_diagnostics_replay_boundary_record() -> dict[str, Any]:
             ],
             "claim_ready": False,
         },
+        "anthropic_messages_extraction_boundary": {
+            "provider_api_shape_terms": [
+                "message.content[]",
+                "content block type",
+                "text",
+                "tool_use",
+                "refusal",
+                "stop_reason",
+            ],
+            "current_scope": (
+                "AnthropicBackend.generate iterates message.content, skips "
+                "refusal and tool_use blocks, and returns the first block with "
+                "a text attribute"
+            ),
+            "current_metadata_scope": (
+                "message.stop_reason is persisted as finish_reason metadata "
+                "with request id, response id, usage, model, and type"
+            ),
+            "missing_before_mutation_admission_claim": [
+                "all text blocks aggregated or explicitly rejected",
+                "stop_reason admission gate for incomplete responses",
+                "content block count and accepted-index telemetry",
+                "mixed text/refusal/tool/thinking classification",
+                "incomplete stop-reason outcome taxonomy",
+            ],
+            "claim_ready": False,
+        },
         "claim_boundary": (
             "This boundary records that LibreEvolve has provider usage "
             "metadata, request/response ids, finish reasons, adapter retry "
@@ -125,7 +161,9 @@ def provider_diagnostics_replay_boundary_record() -> dict[str, Any]:
             "sidecars, provider output replay, complete provider-call replay, "
             "account/model default capture, OpenAI Responses multi-part text "
             "aggregation, non-completed status admission gates, incomplete "
-            "details classification, or SDK output_text helper parity."
+            "details classification, SDK output_text helper parity, Anthropic "
+            "Messages multi-block text aggregation, stop-reason admission "
+            "gates, or mixed content-block classification."
         ),
     }
 
@@ -175,6 +213,10 @@ def validate_provider_diagnostics_replay_boundary(
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate bounded diagnostics from raw provider replay"))
     _validate_openai_responses_extraction_boundary(
         data.get("openai_responses_extraction_boundary"),
+        issues,
+    )
+    _validate_anthropic_messages_extraction_boundary(
+        data.get("anthropic_messages_extraction_boundary"),
         issues,
     )
     return ProviderDiagnosticsReplayBoundaryValidation(
@@ -306,6 +348,44 @@ def _validate_openai_responses_extraction_boundary(
         issues.append(_issue("invalid_openai_responses_missing_fields", "OpenAI Responses missing fields must match the output extraction absence set"))
     if value.get("claim_ready") is not False:
         issues.append(_issue("openai_responses_extraction_overclaim", "OpenAI Responses extraction boundary must not be claim-ready"))
+
+
+def _validate_anthropic_messages_extraction_boundary(
+    value: object,
+    issues: list[ProviderDiagnosticsReplayBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_anthropic_messages_extraction_boundary", "anthropic_messages_extraction_boundary must be an object"))
+        return
+    terms = value.get("provider_api_shape_terms")
+    expected_terms = {
+        "message.content[]",
+        "content block type",
+        "text",
+        "tool_use",
+        "refusal",
+        "stop_reason",
+    }
+    if not isinstance(terms, list) or set(terms) != expected_terms:
+        issues.append(_issue("invalid_anthropic_messages_shape_terms", "Anthropic Messages shape terms must match the tracked content/status surface"))
+    current_scope = value.get("current_scope")
+    if not isinstance(current_scope, str) or "returns the first" not in current_scope or "text attribute" not in current_scope:
+        issues.append(_issue("invalid_anthropic_messages_current_scope", "current scope must describe the first text-block extraction policy"))
+    metadata_scope = value.get("current_metadata_scope")
+    if not isinstance(metadata_scope, str) or "message.stop_reason" not in metadata_scope or "finish_reason" not in metadata_scope:
+        issues.append(_issue("invalid_anthropic_messages_metadata_scope", "metadata scope must describe stop_reason as finish_reason metadata"))
+    missing = value.get("missing_before_mutation_admission_claim")
+    expected_missing = {
+        "all text blocks aggregated or explicitly rejected",
+        "stop_reason admission gate for incomplete responses",
+        "content block count and accepted-index telemetry",
+        "mixed text/refusal/tool/thinking classification",
+        "incomplete stop-reason outcome taxonomy",
+    }
+    if not isinstance(missing, list) or set(missing) != expected_missing:
+        issues.append(_issue("invalid_anthropic_messages_missing_fields", "Anthropic Messages missing fields must match the output extraction absence set"))
+    if value.get("claim_ready") is not False:
+        issues.append(_issue("anthropic_messages_extraction_overclaim", "Anthropic Messages extraction boundary must not be claim-ready"))
 
 
 def _issue(code: str, message: str) -> ProviderDiagnosticsReplayBoundaryIssue:

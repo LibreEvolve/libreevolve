@@ -16,6 +16,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "descriptor_model_revision",
     "dynamic_diversity_reference_ids",
     "no_rebin_insertion_time_coordinate_policy",
+    "per_cell_descriptor_value_snapshots",
     "restore_time_axes_and_model_validation",
     "readiness_overclaim_rejection",
     "metric_metadata_candidate_metadata_axis_options",
@@ -75,9 +76,10 @@ def map_elites_descriptor_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve MAP-Elites snapshots include "
             "descriptor policy axes, descriptor-model revision metadata, dynamic "
             "diversity reference ids, an explicit no-rebin insertion-time "
-            "coordinate policy, restore-time axes/model validation, readiness "
-            "overclaim rejection, and metric/evaluation-metadata/candidate-"
-            "metadata axis options. It does not claim stable task behavior "
+            "coordinate policy, per-cell finite descriptor-value snapshots, "
+            "restore-time axes/model validation, readiness overclaim rejection, "
+            "and metric/evaluation-metadata/candidate-metadata axis options. "
+            "It does not claim stable task behavior "
             "descriptor contracts, learned descriptor models, evaluator-provided "
             "descriptor models, descriptor training inputs, restore-compatible "
             "descriptor revisioning, full archive rebin engines, or partial "

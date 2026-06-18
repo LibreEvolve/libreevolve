@@ -13,7 +13,7 @@ def test_map_elites_descriptor_boundary_accepts_snapshot_descriptor_boundary():
 
     assert validation.ok is True
     assert validation.boundary_status == "insertion_time_local_descriptor_snapshots_only"
-    assert validation.required_evidence_field_count == 14
+    assert validation.required_evidence_field_count == 15
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == MAP_ELITES_DESCRIPTOR_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -48,5 +48,5 @@ def test_render_map_elites_descriptor_boundary_summary_reports_shape():
     assert "MAP-Elites descriptor boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | insertion_time_local_descriptor_snapshots_only |" in summary
-    assert "| required_evidence_field_count | 14 |" in summary
+    assert "| required_evidence_field_count | 15 |" in summary
     assert "| missing_evidence_count | 7 |" in summary

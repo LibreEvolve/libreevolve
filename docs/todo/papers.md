@@ -1088,8 +1088,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     evaluator metrics, numeric evaluator metadata, or numeric candidate
     metadata as descriptor axes. Archive snapshots persist descriptor policy
     and descriptor-model records with axes, bounds, diversity reference ids,
-    revision, dynamic-reference status, and explicit no-rebin policy. The
-    descriptor model now carries
+    revision, dynamic-reference status, explicit no-rebin policy, and
+    occupied-cell insertion-time descriptor values keyed by descriptor axis.
+    Restore validation rejects non-finite, out-of-range, or axis-mismatched
+    cell descriptor maps while accepting legacy cells without descriptor maps.
+    The descriptor model now carries
     `libreevolve.map_elites_descriptor_readiness.v1` with false readiness for
     stable task behavior descriptor contracts, learned/evaluator-provided
     descriptor models, descriptor training inputs, restore-compatible

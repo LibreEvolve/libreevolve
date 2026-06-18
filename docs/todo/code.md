@@ -2422,6 +2422,10 @@ sidecars, tests, and active TODOs.
     performance/complexity bounds, current diversity reference ids, a revision
     counter, `dynamic_diversity_reference: true`, and rebin policy
     `no_rebin_existing_cells_cell_coordinates_are_insertion_time_snapshots`.
+    Occupied-cell snapshot records now also persist bounded finite
+    insertion-time descriptor values keyed by the configured descriptor axes,
+    and restore validation rejects non-finite, out-of-range, or axis-mismatched
+    descriptor maps while accepting legacy snapshots without that field.
     The descriptor model now carries
     `libreevolve.map_elites_descriptor_readiness.v1` with false flags for
     stable task behavior descriptor contracts, learned/evaluator-provided
@@ -2437,37 +2441,36 @@ sidecars, tests, and active TODOs.
     checks across restore, and reports that distinguish task behavior
     descriptors from local TF-IDF novelty heuristics.
 
-- [ ] Persist MAP-Elites descriptor values inside archive snapshots.
+- [ ] Extend MAP-Elites descriptor-value snapshot audit beyond occupied cells.
   - Spec evidence: AlphaEvolve/MAP-Elites-style archive inspection needs a
     replayable link between each retained candidate, its behavior descriptor
     values, and the cell coordinates used for archive placement. Without the
     descriptor values, a later audit can see where a program was placed but
     cannot verify the numeric behavior coordinates that justified that
     placement under the recorded descriptor model.
-  - Current evidence: `MAPElites.add()` computes `cell, descriptors` and emits
-    the descriptor values in per-candidate `metadata.archive_admission`.
-    `MAPElites.state_snapshot()` persists `descriptor_policy`,
-    `descriptor_model`, occupied `cells` with `cell`, `program_id`, and
-    `selection_score`, plus metric-cell overlays with `metric_value`, but the
-    archive snapshot does not persist the per-cell descriptor-value mapping.
-    Tests currently assert that `snapshot["cells"]` contains only those three
-    fields.
-  - Current gap: final run manifests can restore the program-to-cell mapping,
-    but they cannot independently audit or replay the exact insertion-time
-    descriptor vector for each occupied cell, elite-only retained program,
-    Pareto-only program, or metric-cell overlay without joining back to
-    accepted history rows. If history is pruned, summarized, quarantined, or
-    compared against a snapshot, descriptor-cell fidelity becomes weaker than
-    the archive-state evidence implied by AlphaEvolve-style quality-diversity
-    reporting.
-  - Required result: extend archive snapshot schemas and restore validation to
-    include bounded finite/null descriptor-value records keyed by descriptor
-    axis for occupied cells and retained overlay entries; validate the values
-    against the recorded axes, binning, and insertion-time/no-rebin policy;
-    add drift diagnostics when history admission descriptors disagree with
-    snapshot descriptors; and update tests/docs so archive snapshots are
-    self-auditing for descriptor values instead of relying on separate
-    per-candidate history joins.
+  - Current evidence: `MAPElites.add()` computes `cell, descriptors`, stores
+    the insertion-time descriptor map for occupied primary cells, emits the
+    same values in per-candidate `metadata.archive_admission`, and
+    `MAPElites.state_snapshot()` now persists each occupied cell's
+    `descriptors` beside `cell`, `program_id`, and `selection_score`. Restore
+    validation accepts legacy cells without descriptor maps, rejects non-finite
+    or out-of-range values, rejects descriptor maps whose keys do not match the
+    configured descriptor axes, and re-emits restored descriptor maps in later
+    snapshots. `papers/map_elites_descriptor_boundary.json` now records
+    `per_cell_descriptor_value_snapshots` as current evidence.
+  - Current gap: final run manifests can independently audit occupied primary
+    cell descriptor vectors, but they still do not include descriptor vectors
+    for elite-only retained programs, Pareto-only programs, or metric-cell
+    overlay entries. They also do not compute drift diagnostics when accepted
+    history admission descriptors disagree with snapshot descriptors, and they
+    do not prove descriptor-cell fidelity if history rows are pruned,
+    summarized, quarantined, or compared against snapshot state.
+  - Required result: extend retained overlay entries with bounded finite/null
+    descriptor-value records keyed by descriptor axis; add drift diagnostics
+    when history admission descriptors disagree with snapshot descriptors; and
+    update tests/docs so all retained archive views are self-auditing for
+    descriptor values instead of relying on separate per-candidate history
+    joins.
 
 - [ ] Promote multi-objective overlays to primary archive optimization.
   - Spec evidence: AlphaEvolve can optimize multiple user-provided scores and

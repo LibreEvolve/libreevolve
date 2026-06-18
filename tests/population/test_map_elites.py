@@ -324,13 +324,13 @@ def test_state_snapshot_restores_cells_and_elite_archive():
 
     assert snapshot["schema"] == "libreevolve.map_elites_state.v1"
     assert snapshot["descriptor_axes"] == ["performance", "complexity", "diversity"]
-    assert snapshot["cells"] == [
-        {
-            "cell": [0, 0, 0],
-            "program_id": occupied.id,
-            "selection_score": 0.9,
-        }
-    ]
+    assert len(snapshot["cells"]) == 1
+    assert snapshot["cells"][0]["cell"] == [0, 0, 0]
+    assert snapshot["cells"][0]["program_id"] == occupied.id
+    assert snapshot["cells"][0]["selection_score"] == 0.9
+    assert snapshot["cells"][0]["descriptors"]["performance"] == 0.9
+    assert snapshot["cells"][0]["descriptors"]["diversity"] == 0.5
+    assert 0.0 <= snapshot["cells"][0]["descriptors"]["complexity"] <= 1.0
     assert snapshot["elite_program_ids"] == [occupied.id, elite_only.id]
     assert snapshot["pareto_frontier_program_ids"] == [occupied.id, elite_only.id]
     assert snapshot["metric_cell_archives"] == [
@@ -431,6 +431,9 @@ def test_state_snapshot_restores_cells_and_elite_archive():
     }
     assert restored.best() is occupied
     assert restored.occupied_cells() == [occupied]
+    assert restored.state_snapshot()["cells"][0]["descriptors"] == (
+        snapshot["cells"][0]["descriptors"]
+    )
     assert restored.elite_archive() == [occupied, elite_only]
     assert restored.pareto_frontier_archive() == [occupied, elite_only]
     assert restored.metric_cell_archive() == [occupied, elite_only]
@@ -545,6 +548,31 @@ def test_restore_state_snapshot_accepts_legacy_objective_policy_without_readines
     ).restore_state_snapshot(snapshot, {program.id: program})
 
     assert result["status"] == "map_elites_state_restored"
+
+
+def test_restore_state_snapshot_accepts_legacy_cells_without_descriptor_values():
+    source = MAPElites()
+    program = _pm(code="x=1", fitness=0.5, selection_score=0.5)
+    source.add(program)
+    snapshot = source.state_snapshot()
+    del snapshot["cells"][0]["descriptors"]
+
+    restored = MAPElites()
+    result = restored.restore_state_snapshot(snapshot, {program.id: program})
+
+    assert result["status"] == "map_elites_state_restored"
+    assert restored.state_snapshot()["cells"][0]["descriptors"] == {}
+
+
+def test_restore_state_snapshot_rejects_invalid_cell_descriptor_values():
+    source = MAPElites()
+    program = _pm(code="x=1", fitness=0.5, selection_score=0.5)
+    source.add(program)
+    snapshot = source.state_snapshot()
+    snapshot["cells"][0]["descriptors"]["diversity"] = float("inf")
+
+    with pytest.raises(ValueError, match="descriptors\\['diversity'\\]"):
+        MAPElites().restore_state_snapshot(snapshot, {program.id: program})
 
 
 def test_restore_state_snapshot_rejects_objective_policy_readiness_overclaim():

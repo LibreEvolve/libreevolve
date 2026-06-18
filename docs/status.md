@@ -2071,8 +2071,9 @@ Important limits:
   final-record repair/fail-closed policy across all inspection and resume
   paths, and shared streams do not have multi-writer serialization; that
   boundary is tracked by `papers/jsonl_durability_boundary.json`.
-- MAP-Elites descriptor snapshots are insertion-time local descriptor metadata,
-  not stable learned/evaluator-provided behavior descriptors or archive rebin
+- MAP-Elites descriptor snapshots are insertion-time local descriptor metadata
+  with occupied-cell descriptor vectors, not stable learned/evaluator-provided
+  behavior descriptors, overlay-wide descriptor audit records, or archive rebin
   semantics; that boundary is tracked by
   `papers/map_elites_descriptor_boundary.json`.
 - The included examples are smoke fixtures and small demos unless a fixture

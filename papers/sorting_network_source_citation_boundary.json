@@ -8,6 +8,7 @@
   "boundary_status": "source_citations_recorded_without_run_certification",
   "claim_ready": false,
   "citation_scope": "Source citations calibrate the zero-one verifier and the 8- and 9-input comparator targets only; they are not authenticated LibreEvolve run evidence.",
+  "source_snapshot_metadata_sidecar": "papers/sorting_network_source_snapshot_boundary.json",
   "source_citations": {
     "zero_one_principle": {
       "source": "CLRS sorting-network chapter mirror",
@@ -56,11 +57,11 @@
     }
   },
   "missing_evidence": {
-    "local_source_snapshots": "not_recorded_locally",
+    "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "target_hit_rate_summary": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally"
   },
-  "claim_boundary": "This sidecar records source citations for verifier and target calibration, but does not claim local source snapshots, independent proof extraction, repeated LibreEvolve runs, target hit-rate summaries, run-tied hardening, paper certification, or novel SOTA results."
+  "claim_boundary": "This sidecar records source citations for verifier and target calibration and links the source snapshot metadata sidecar, but does not claim full raw source-body retention, independent proof extraction, repeated LibreEvolve runs, target hit-rate summaries, run-tied hardening, paper certification, or novel SOTA results."
 }

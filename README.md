@@ -223,7 +223,9 @@ The bundled examples are intentionally small:
   successful rediscovery transcript. The checked
   `papers/sorting_network_source_citation_boundary.json` sidecar records the
   zero-one-principle and comparator-target citations used to calibrate these
-  fixtures, while `papers/sorting_network_rediscovery_boundary.json`
+  fixtures, and `papers/sorting_network_source_snapshot_boundary.json`
+  records live response metadata and hashes for those citation URLs without
+  retaining full raw source bodies. `papers/sorting_network_rediscovery_boundary.json`
   preserves the remaining non-certified run-evidence scope.
 
 Treat an example as benchmark evidence only when its own docs or paper sidecar

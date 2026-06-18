@@ -23,6 +23,9 @@ def test_sorting_network_source_citation_boundary_accepts_record():
     assert boundary["source_citations"]["sorting_network_9_target"][
         "target_comparators"
     ] == 25
+    assert boundary["source_snapshot_metadata_sidecar"] == (
+        "papers/sorting_network_source_snapshot_boundary.json"
+    )
     assert boundary["claim_ready"] is False
     assert "does not claim" in boundary["claim_boundary"]
 
@@ -37,6 +40,7 @@ def test_sorting_network_source_citation_boundary_rejects_overclaim_and_drift():
         "target_comparators"
     ] = 20
     boundary["source_citations"]["sorting_network_9_target"]["sources"] = []
+    boundary["source_snapshot_metadata_sidecar"] = "missing.json"
     boundary["missing_evidence"]["target_hit_rate_summary"] = "recorded"
 
     validation = validate_sorting_network_source_citation_boundary(boundary)
@@ -46,6 +50,7 @@ def test_sorting_network_source_citation_boundary_rejects_overclaim_and_drift():
     assert "claim_ready_overclaim" in codes
     assert "invalid_boundary_status" in codes
     assert "invalid_problem_ids" in codes
+    assert "invalid_source_snapshot_metadata_sidecar" in codes
     assert "invalid_zero_one_citation" in codes
     assert "invalid_sorting_network_8_target" in codes
     assert "missing_sorting_network_9_arxiv_citation" in codes

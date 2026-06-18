@@ -1270,8 +1270,10 @@ by `papers/lineage_replay_boundary.json`.
   with validator coverage against the config, run contract, and prompt
   artifact. The `papers/sorting_network_source_citation_boundary.json`
   sidecar records the zero-one-principle and known comparator-target citations,
-  but add repeated-run and paper-certification evidence before treating these
-  fixtures as comparable results. The
+  and `papers/sorting_network_source_snapshot_boundary.json` records live
+  response metadata and hashes for those citation URLs without retaining full
+  raw source bodies. Add repeated-run and paper-certification evidence before
+  treating these fixtures as comparable results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
   executable-candidate-only run-evidence boundary.
   This remains the current lowest-risk realistic benchmark path because it has

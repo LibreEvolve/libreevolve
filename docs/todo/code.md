@@ -824,8 +824,10 @@ sidecars, tests, and active TODOs.
     invalid-artifact shortcut categories without certifying a benchmark run.
     The committed `papers/sorting_network_source_citation_boundary.json`
     sidecar records the zero-one-principle and known comparator-target
-    citations, while `papers/sorting_network_rediscovery_boundary.json` keeps
-    the remaining executable-candidate-only run-evidence scope
+    citations, and `papers/sorting_network_source_snapshot_boundary.json`
+    records live response metadata and hashes for those citation URLs without
+    retaining full raw source bodies. `papers/sorting_network_rediscovery_boundary.json`
+    keeps the remaining executable-candidate-only run-evidence scope
     machine-validated.
   - Required result: add repeated-seed run reports, fixed evaluator/model/
     budget conditions, target-hit-rate summaries,
@@ -8659,7 +8661,9 @@ sidecars, tests, and active TODOs.
     the intended `gpt-5.3-codex-spark` path. The committed
     `papers/sorting_network_source_citation_boundary.json` sidecar records
     source citations for zero-one validation and known comparator targets,
-    but that is calibration metadata rather than run evidence.
+    and `papers/sorting_network_source_snapshot_boundary.json` records live
+    response metadata and hashes for those source URLs, but those are
+    calibration metadata rather than run evidence.
   - Required result: run the contract under the intended authenticated backend
     and commit or separately preserve a redacted evidence bundle with manifest
     assertions, transcript hashes, best-candidate hashes, failure summaries,

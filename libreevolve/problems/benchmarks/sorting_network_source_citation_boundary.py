@@ -13,7 +13,7 @@ EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_PROBLEM_IDS = ("sorting_network_8", "sorting_network_9")
 EXPECTED_BOUNDARY_STATUS = "source_citations_recorded_without_run_certification"
 EXPECTED_MISSING_EVIDENCE = {
-    "local_source_snapshots": "not_recorded_locally",
+    "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "target_hit_rate_summary": "not_recorded_locally",
@@ -23,6 +23,7 @@ EXPECTED_ZERO_ONE_URL = "https://bobson.ludost.net/books/algo/book6/chap28.htm"
 EXPECTED_DOBBELAERE_URL = "https://bertdobbelaere.github.io/sorting_networks.html"
 EXPECTED_CODISH_ARXIV_URL = "https://arxiv.org/abs/1405.5754"
 EXPECTED_CODISH_DOI = "10.1016/j.jcss.2015.11.014"
+EXPECTED_SOURCE_SNAPSHOT_SIDECAR = "papers/sorting_network_source_snapshot_boundary.json"
 
 
 @dataclass(frozen=True)
@@ -55,6 +56,7 @@ def sorting_network_source_citation_boundary_record() -> dict[str, Any]:
             "9-input comparator targets only; they are not authenticated "
             "LibreEvolve run evidence."
         ),
+        "source_snapshot_metadata_sidecar": EXPECTED_SOURCE_SNAPSHOT_SIDECAR,
         "source_citations": {
             "zero_one_principle": {
                 "source": "CLRS sorting-network chapter mirror",
@@ -125,10 +127,10 @@ def sorting_network_source_citation_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This sidecar records source citations for verifier and target "
-            "calibration, but does not claim local source snapshots, "
-            "independent proof extraction, repeated LibreEvolve runs, target "
-            "hit-rate summaries, run-tied hardening, paper certification, or "
-            "novel SOTA results."
+            "calibration and links the source snapshot metadata sidecar, but "
+            "does not claim full raw source-body retention, independent proof "
+            "extraction, repeated LibreEvolve runs, target hit-rate summaries, "
+            "run-tied hardening, paper certification, or novel SOTA results."
         ),
     }
 
@@ -153,6 +155,8 @@ def validate_sorting_network_source_citation_boundary(
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "source citations alone must not claim benchmark certification"))
+    if data.get("source_snapshot_metadata_sidecar") != EXPECTED_SOURCE_SNAPSHOT_SIDECAR:
+        issues.append(_issue("invalid_source_snapshot_metadata_sidecar", f"source_snapshot_metadata_sidecar must be {EXPECTED_SOURCE_SNAPSHOT_SIDECAR}"))
     citation_count = _validate_source_citations(data.get("source_citations"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")

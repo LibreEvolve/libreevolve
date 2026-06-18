@@ -1,0 +1,64 @@
+{
+  "schema": "libreevolve.sorting_network_source_snapshot_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "retrieved_on": "2026-06-18",
+  "retrieval_mode": "manual_live_network_metadata_capture",
+  "boundary_status": "source_snapshot_metadata_recorded_without_full_body_retention",
+  "claim_ready": false,
+  "snapshot_scope": "Records live response metadata and hashes for the sorting-network citation URLs without retaining full raw response bodies.",
+  "source_snapshots": {
+    "zero_one_clrs": {
+      "url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
+      "final_url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
+      "http_status": 200,
+      "content_type": "text/html",
+      "response_bytes": 57006,
+      "response_sha256": "beab1350d286578063fb53f1e532547ee232acc5938046d43ea1cd7c0911531e",
+      "used_for": "zero-one principle citation calibration"
+    },
+    "schneider_kamp_bounds": {
+      "url": "https://imada.sdu.dk/u/petersk/sn/",
+      "final_url": "https://imada.sdu.dk/u/petersk/sn/",
+      "http_status": 200,
+      "content_type": "text/html",
+      "response_bytes": 3416,
+      "response_sha256": "de9a6395ff4a0e0097f20a76afeb5cc549e6e18073e379eb381b79fd6135bbff",
+      "used_for": "8-input comparator lower and upper bound citation"
+    },
+    "dobbelaere_list": {
+      "url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "final_url": "https://bertdobbelaere.github.io/sorting_networks.html",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 70392,
+      "response_sha256": "71cf2352039b569c0686767de8a6d5b022a779453783a2719a5273af0835a3fe",
+      "used_for": "8- and 9-input known network comparator target citation"
+    },
+    "codish_arxiv": {
+      "url": "https://arxiv.org/abs/1405.5754",
+      "final_url": "https://arxiv.org/abs/1405.5754",
+      "http_status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "response_bytes": 48157,
+      "response_sha256": "94111c5590ddc589688a588e76d695a5bb1fd7540c207bbdf5fafe3f18f5a037",
+      "used_for": "9-input 25-comparator optimality preprint citation"
+    },
+    "codish_publication": {
+      "url": "https://pure.itu.dk/en/publications/sorting-nine-inputs-requires-twenty-five-comparisons/",
+      "final_url": "https://pure.itu.dk/en/publications/sorting-nine-inputs-requires-twenty-five-comparisons/",
+      "http_status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "response_bytes": 42968,
+      "response_sha256": "585198c1225b08f1f2f58cd6cc8f764dd22445b1b88c361619af3313c321b52a",
+      "used_for": "9-input 25-comparator peer-reviewed publication citation"
+    }
+  },
+  "missing_evidence": {
+    "full_raw_source_response_artifacts": "not_recorded_locally",
+    "independent_target_proof_extraction": "not_recorded_locally",
+    "source_refresh_gate": "not_recorded_locally",
+    "repeated_seed_run_tables": "not_recorded_locally",
+    "run_tied_paper_certification": "not_recorded_locally"
+  },
+  "claim_boundary": "This sidecar records sorting-network citation source snapshot metadata. It does not claim full raw source-body retention, independent proof extraction from those sources, automated refresh gating, repeated LibreEvolve runs, run-tied hardening, paper certification, or novel SOTA results."
+}

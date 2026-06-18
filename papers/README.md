@@ -3775,7 +3775,10 @@ Implemented:
   transcript/redaction policy, artifact expectations, and non-evidence result
   linkage, but that is not a run-certified rediscovery record. The committed
   `papers/sorting_network_source_citation_boundary.json` sidecar records the
-  zero-one-principle and known comparator-target citations, and
+  zero-one-principle and known comparator-target citations, the committed
+  `papers/sorting_network_source_snapshot_boundary.json` sidecar records live
+  response metadata and hashes for those citation URLs without retaining full
+  raw source bodies, and
   `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
   executable-candidate-only run-evidence boundary.
 

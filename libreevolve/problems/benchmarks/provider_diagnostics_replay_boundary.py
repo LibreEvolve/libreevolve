@@ -27,6 +27,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "raw_payload_replay_overclaim_checks",
     "remote_provider_defaults_overclaim_checks",
     "backend_default_count_checks",
+    "openai_responses_output_item_inventory",
+    "openai_responses_content_part_inventory",
+    "openai_responses_completion_status_policy",
+    "openai_responses_incomplete_details_policy",
+    "openai_responses_output_text_helper_parity",
+    "openai_responses_multipart_text_policy",
     "raw_provider_payload_sidecars",
     "provider_output_replay",
     "complete_provider_call_replay",
@@ -37,6 +43,10 @@ EXPECTED_MISSING_EVIDENCE = {
     "provider_output_replay": "not_recorded_locally",
     "complete_provider_call_replay": "not_recorded_locally",
     "account_model_default_capture": "not_recorded_locally",
+    "openai_responses_multipart_text_aggregation": "first_output_text_only",
+    "openai_responses_status_admission_gate": "status_recorded_as_finish_reason_only",
+    "openai_responses_output_text_helper_parity": "not_recorded_locally",
+    "openai_responses_content_shape_telemetry": "not_recorded_locally",
 }
 
 
@@ -74,6 +84,34 @@ def provider_diagnostics_replay_boundary_record() -> dict[str, Any]:
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
+        "openai_responses_extraction_boundary": {
+            "official_api_shape_ref": "https://api.openai.com/v1/responses",
+            "official_shape_terms": [
+                "Response.status",
+                "Response.incomplete_details",
+                "Response.output[]",
+                "message.content[]",
+                "output_text",
+                "function_call",
+            ],
+            "current_scope": (
+                "OpenAIBackend._generate_responses iterates response.output "
+                "and returns the first message content part with type "
+                "output_text"
+            ),
+            "current_metadata_scope": (
+                "response.status is persisted as finish_reason metadata with "
+                "request id, response id, usage, and bounded diagnostics"
+            ),
+            "missing_before_mutation_admission_claim": [
+                "all output_text parts aggregated or explicitly rejected",
+                "response.status admission gate for non-completed responses",
+                "response.incomplete_details classification",
+                "output item and content-part count telemetry",
+                "SDK output_text helper parity evidence",
+            ],
+            "claim_ready": False,
+        },
         "claim_boundary": (
             "This boundary records that LibreEvolve has provider usage "
             "metadata, request/response ids, finish reasons, adapter retry "
@@ -82,9 +120,12 @@ def provider_diagnostics_replay_boundary_record() -> dict[str, Any]:
             "call-history windows, provider-diagnostics summary schema, "
             "records hashes, raw-payload replay overclaim checks, remote "
             "provider-default overclaim checks, and backend-default count "
-            "checks. It does not claim raw provider-payload sidecars, provider "
-            "output replay, complete provider-call replay, or account/model "
-            "default capture."
+            "checks, plus an OpenAI Responses extraction boundary for the "
+            "first-output-text policy. It does not claim raw provider-payload "
+            "sidecars, provider output replay, complete provider-call replay, "
+            "account/model default capture, OpenAI Responses multi-part text "
+            "aggregation, non-completed status admission gates, incomplete "
+            "details classification, or SDK output_text helper parity."
         ),
     }
 
@@ -129,8 +170,13 @@ def validate_provider_diagnostics_replay_boundary(
         or "does not claim raw provider-payload sidecars" not in boundary_text
         or "provider output replay" not in boundary_text
         or "complete provider-call replay" not in boundary_text
+        or "OpenAI Responses multi-part text aggregation" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate bounded diagnostics from raw provider replay"))
+    _validate_openai_responses_extraction_boundary(
+        data.get("openai_responses_extraction_boundary"),
+        issues,
+    )
     return ProviderDiagnosticsReplayBoundaryValidation(
         ok=not issues,
         boundary_status=status if isinstance(status, str) else None,
@@ -220,6 +266,46 @@ def _validate_missing_evidence(
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
+
+
+def _validate_openai_responses_extraction_boundary(
+    value: object,
+    issues: list[ProviderDiagnosticsReplayBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_openai_responses_extraction_boundary", "openai_responses_extraction_boundary must be an object"))
+        return
+    if value.get("official_api_shape_ref") != "https://api.openai.com/v1/responses":
+        issues.append(_issue("invalid_openai_responses_api_shape_ref", "OpenAI Responses boundary must cite the Responses endpoint"))
+    terms = value.get("official_shape_terms")
+    expected_terms = {
+        "Response.status",
+        "Response.incomplete_details",
+        "Response.output[]",
+        "message.content[]",
+        "output_text",
+        "function_call",
+    }
+    if not isinstance(terms, list) or set(terms) != expected_terms:
+        issues.append(_issue("invalid_openai_responses_shape_terms", "OpenAI Responses shape terms must match the tracked output/status surface"))
+    current_scope = value.get("current_scope")
+    if not isinstance(current_scope, str) or "returns the first" not in current_scope or "output_text" not in current_scope:
+        issues.append(_issue("invalid_openai_responses_current_scope", "current scope must describe the first output_text extraction policy"))
+    metadata_scope = value.get("current_metadata_scope")
+    if not isinstance(metadata_scope, str) or "response.status" not in metadata_scope or "finish_reason" not in metadata_scope:
+        issues.append(_issue("invalid_openai_responses_metadata_scope", "metadata scope must describe status as finish_reason metadata"))
+    missing = value.get("missing_before_mutation_admission_claim")
+    expected_missing = {
+        "all output_text parts aggregated or explicitly rejected",
+        "response.status admission gate for non-completed responses",
+        "response.incomplete_details classification",
+        "output item and content-part count telemetry",
+        "SDK output_text helper parity evidence",
+    }
+    if not isinstance(missing, list) or set(missing) != expected_missing:
+        issues.append(_issue("invalid_openai_responses_missing_fields", "OpenAI Responses missing fields must match the output extraction absence set"))
+    if value.get("claim_ready") is not False:
+        issues.append(_issue("openai_responses_extraction_overclaim", "OpenAI Responses extraction boundary must not be claim-ready"))
 
 
 def _issue(code: str, message: str) -> ProviderDiagnosticsReplayBoundaryIssue:

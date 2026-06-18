@@ -1,16 +1,39 @@
 {
-  "schema": "libreevolve.provider_diagnostics_replay_boundary.v1",
-  "source_paper_id": "2506.13131",
-  "source_section_ids": [
-    "2.2",
-    "2.3",
-    "2.4",
-    "4"
-  ],
-  "source_claim": "AlphaEvolve-scale provider-call evidence should identify model calls that produced proposals, LLM feedback, and meta-prompt evolution without confusing retained diagnostics with replayable raw provider outputs; local critique-role diagnostics are extra runtime telemetry rather than a detailed paper-method surface",
   "boundary_status": "bounded_scalar_diagnostics_without_raw_provider_replay",
-  "diagnostics_schema": "libreevolve.llm_provider_diagnostics.v1",
+  "claim_boundary": "This boundary records that LibreEvolve has provider usage metadata, request/response ids, finish reasons, adapter retry metadata, provider failure categories, provider status codes, bounded provider diagnostics, backend defaults metadata, retained call-history windows, provider-diagnostics summary schema, records hashes, raw-payload replay overclaim checks, remote provider-default overclaim checks, and backend-default count checks, plus an OpenAI Responses extraction boundary for the first-output-text policy. It does not claim raw provider-payload sidecars, provider output replay, complete provider-call replay, account/model default capture, OpenAI Responses multi-part text aggregation, non-completed status admission gates, incomplete details classification, or SDK output_text helper parity.",
   "claim_ready": false,
+  "diagnostics_schema": "libreevolve.llm_provider_diagnostics.v1",
+  "missing_evidence": {
+    "account_model_default_capture": "not_recorded_locally",
+    "complete_provider_call_replay": "not_recorded_locally",
+    "openai_responses_content_shape_telemetry": "not_recorded_locally",
+    "openai_responses_multipart_text_aggregation": "first_output_text_only",
+    "openai_responses_output_text_helper_parity": "not_recorded_locally",
+    "openai_responses_status_admission_gate": "status_recorded_as_finish_reason_only",
+    "provider_output_replay": "not_recorded_locally",
+    "raw_provider_payload_sidecars": "not_recorded_locally"
+  },
+  "openai_responses_extraction_boundary": {
+    "claim_ready": false,
+    "current_metadata_scope": "response.status is persisted as finish_reason metadata with request id, response id, usage, and bounded diagnostics",
+    "current_scope": "OpenAIBackend._generate_responses iterates response.output and returns the first message content part with type output_text",
+    "missing_before_mutation_admission_claim": [
+      "all output_text parts aggregated or explicitly rejected",
+      "response.status admission gate for non-completed responses",
+      "response.incomplete_details classification",
+      "output item and content-part count telemetry",
+      "SDK output_text helper parity evidence"
+    ],
+    "official_api_shape_ref": "https://api.openai.com/v1/responses",
+    "official_shape_terms": [
+      "Response.status",
+      "Response.incomplete_details",
+      "Response.output[]",
+      "message.content[]",
+      "output_text",
+      "function_call"
+    ]
+  },
   "required_evidence_fields": [
     "provider_usage_metadata",
     "provider_request_response_ids",
@@ -26,16 +49,24 @@
     "raw_payload_replay_overclaim_checks",
     "remote_provider_defaults_overclaim_checks",
     "backend_default_count_checks",
+    "openai_responses_output_item_inventory",
+    "openai_responses_content_part_inventory",
+    "openai_responses_completion_status_policy",
+    "openai_responses_incomplete_details_policy",
+    "openai_responses_output_text_helper_parity",
+    "openai_responses_multipart_text_policy",
     "raw_provider_payload_sidecars",
     "provider_output_replay",
     "complete_provider_call_replay",
     "account_model_default_capture"
   ],
-  "missing_evidence": {
-    "raw_provider_payload_sidecars": "not_recorded_locally",
-    "provider_output_replay": "not_recorded_locally",
-    "complete_provider_call_replay": "not_recorded_locally",
-    "account_model_default_capture": "not_recorded_locally"
-  },
-  "claim_boundary": "This boundary records that LibreEvolve has provider usage metadata, request/response ids, finish reasons, adapter retry metadata, provider failure categories, provider status codes, bounded provider diagnostics, backend defaults metadata, retained call-history windows, provider-diagnostics summary schema, records hashes, raw-payload replay overclaim checks, remote provider-default overclaim checks, and backend-default count checks. It does not claim raw provider-payload sidecars, provider output replay, complete provider-call replay, or account/model default capture."
+  "schema": "libreevolve.provider_diagnostics_replay_boundary.v1",
+  "source_claim": "AlphaEvolve-scale provider-call evidence should identify model calls that produced proposals, LLM feedback, and meta-prompt evolution without confusing retained diagnostics with replayable raw provider outputs; local critique-role diagnostics are extra runtime telemetry rather than a detailed paper-method surface",
+  "source_paper_id": "2506.13131",
+  "source_section_ids": [
+    "2.2",
+    "2.3",
+    "2.4",
+    "4"
+  ]
 }

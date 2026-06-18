@@ -1234,7 +1234,12 @@ sidecars, tests, and active TODOs.
     text, refusal-only output, and tool-call-only output, but they do not cover
     multiple message items, multiple `output_text` parts, mixed text plus
     refusal/tool items, SDK `response.output_text` helper parity, or non-
-    completed Responses statuses.
+    completed Responses statuses. The committed
+    `papers/provider_diagnostics_replay_boundary.json` sidecar now records an
+    OpenAI Responses extraction sub-boundary for the current first-output-text
+    policy, status-as-finish-reason metadata, and missing output item/content
+    telemetry, incomplete-details classification, status admission gate, and
+    SDK helper parity evidence.
   - Current gap: a multi-part Responses payload can be silently truncated
     before mutation parsing, and provider telemetry records `status` as a
     finish reason without an extraction policy proving whether accepted text was

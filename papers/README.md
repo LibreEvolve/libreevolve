@@ -2751,9 +2751,13 @@ Implemented:
   diagnostics, backend defaults metadata, retained call-history windows,
   provider-diagnostics summary schema, records hashes, raw-payload replay
   overclaim checks, remote provider-default overclaim checks, and
-  backend-default count checks. It is not evidence of raw provider-payload
-  sidecars, provider-output replay, complete provider-call replay, or
-  account/model default capture.
+  backend-default count checks, plus an OpenAI Responses extraction
+  sub-boundary for first-`output_text` extraction and status-as-finish-reason
+  metadata. It is not evidence of raw provider-payload sidecars,
+  provider-output replay, complete provider-call replay, account/model default
+  capture, OpenAI Responses multi-part text aggregation, non-completed status
+  admission gates, incomplete-details classification, or SDK output_text
+  helper parity.
 - `papers/llm_stochastic_reproducibility_boundary.json`: stochastic
   LLM-generation reproducibility sidecar for AlphaEvolve Sections 2.2, 2.3,
   2.4, and 4. It records normalized request parameters, prompt/output hashes,

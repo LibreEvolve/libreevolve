@@ -5922,6 +5922,61 @@ def test_validate_paper_manifest_requires_sorting_network_source_snapshot_bounda
     assert "sorting_network_source_snapshot_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_sorting_network_source_refresh_gate_boundary(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    script_source = Path("libreevolve/tools/sorting_network_source_refresh_gate.py")
+    script_target = tmp_path / script_source
+    script_target.parent.mkdir(parents=True, exist_ok=True)
+    script_target.write_bytes(script_source.read_bytes())
+    sidecar = tmp_path / paper_manifest.SORTING_NETWORK_SOURCE_REFRESH_GATE_BOUNDARY_FILE
+    sidecar.write_text(
+        json.dumps(paper_manifest.sorting_network_source_refresh_gate_boundary_record(), indent=2),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_sorting_network_source_refresh_gate_boundary_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.sorting_network_source_refresh_gate_boundary_record()
+    record["claim_ready"] = True
+    record["boundary_status"] = "live_refresh_certified"
+    record["script_artifact"]["bytes"] = 0
+    sidecar = tmp_path / paper_manifest.SORTING_NETWORK_SOURCE_REFRESH_GATE_BOUNDARY_FILE
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "sorting_network_source_refresh_gate_boundary_claim_ready_overclaim" in codes
+    assert "sorting_network_source_refresh_gate_boundary_invalid_boundary_status" in codes
+    assert "sorting_network_source_refresh_gate_boundary_invalid_script_artifact_bytes" in codes
+
+
+def test_validate_paper_manifest_requires_sorting_network_source_refresh_gate_boundary_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+
+    codes = {issue.code for issue in report.issues}
+    assert report.ok is False
+    assert "sorting_network_source_refresh_gate_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_table1_capability_exhibit_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

@@ -3268,16 +3268,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     contract, and prompt artifact.
     The paper ledger now has a source-citation sidecar for the zero-one
     verifier and known comparator targets plus a source-snapshot metadata
-    sidecar with live response hashes for those citation URLs, but still has
-    no full raw source-response retention, independent proof extraction,
-    repeated-run evidence, committed run-tied hardening certification,
-    best-candidate artifact hashes, failure/invalid-candidate summaries,
-    target-hit-rate summaries, or certification row proving rediscovery under
-    fixed evaluator/model/seed conditions. The committed
+    sidecar with live response hashes for those citation URLs and a
+    deterministic source-refresh gate for those snapshots, but still has no
+    scheduled CI refresh-run history, archived live refresh-run history, full
+    raw source-response retention, independent proof extraction, repeated-run
+    evidence, committed run-tied hardening certification, best-candidate
+    artifact hashes, failure/invalid-candidate summaries, target-hit-rate
+    summaries, or certification row proving rediscovery under fixed
+    evaluator/model/seed conditions. The committed
     `papers/sorting_network_source_citation_boundary.json` sidecar preserves
     the citation-only calibration boundary, the committed
     `papers/sorting_network_source_snapshot_boundary.json` sidecar preserves
-    the metadata-only source-snapshot boundary, and the committed
+    the metadata-only source-snapshot boundary, the committed
+    `papers/sorting_network_source_refresh_gate_boundary.json` sidecar
+    preserves the deterministic refresh-gate-only boundary, and the committed
     `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
     remaining run-evidence absence boundary for paper-manifest validation.
   - Required result: add a paper-visible benchmark record for

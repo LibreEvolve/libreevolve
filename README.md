@@ -225,8 +225,11 @@ The bundled examples are intentionally small:
   zero-one-principle and comparator-target citations used to calibrate these
   fixtures, and `papers/sorting_network_source_snapshot_boundary.json`
   records live response metadata and hashes for those citation URLs without
-  retaining full raw source bodies. `papers/sorting_network_rediscovery_boundary.json`
-  preserves the remaining non-certified run-evidence scope.
+  retaining full raw source bodies. `papers/sorting_network_source_refresh_gate_boundary.json`
+  records the deterministic source-refresh gate for those citation snapshots,
+  without scheduled CI or archived live-refresh history.
+  `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
+  non-certified run-evidence scope.
 
 Treat an example as benchmark evidence only when its own docs or paper sidecar
 says so.

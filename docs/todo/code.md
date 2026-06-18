@@ -826,9 +826,12 @@ sidecars, tests, and active TODOs.
     sidecar records the zero-one-principle and known comparator-target
     citations, and `papers/sorting_network_source_snapshot_boundary.json`
     records live response metadata and hashes for those citation URLs without
-    retaining full raw source bodies. `papers/sorting_network_rediscovery_boundary.json`
-    keeps the remaining executable-candidate-only run-evidence scope
-    machine-validated.
+    retaining full raw source bodies.
+    `papers/sorting_network_source_refresh_gate_boundary.json` records the
+    deterministic source-refresh gate for those citation snapshots while
+    keeping scheduled CI and archived live-refresh history absent.
+    `papers/sorting_network_rediscovery_boundary.json` keeps the remaining
+    executable-candidate-only run-evidence scope machine-validated.
   - Required result: add repeated-seed run reports, fixed evaluator/model/
     budget conditions, target-hit-rate summaries,
     best-candidate artifact hashes, failure/invalid-candidate summaries,
@@ -8662,8 +8665,11 @@ sidecars, tests, and active TODOs.
     `papers/sorting_network_source_citation_boundary.json` sidecar records
     source citations for zero-one validation and known comparator targets,
     and `papers/sorting_network_source_snapshot_boundary.json` records live
-    response metadata and hashes for those source URLs, but those are
-    calibration metadata rather than run evidence.
+    response metadata and hashes for those source URLs, and
+    `papers/sorting_network_source_refresh_gate_boundary.json` records a
+    deterministic drift-check gate for those snapshots. Those are calibration
+    metadata rather than run evidence, and no scheduled CI refresh-run history
+    or archived live-refresh history has been committed.
   - Required result: run the contract under the intended authenticated backend
     and commit or separately preserve a redacted evidence bundle with manifest
     assertions, transcript hashes, best-candidate hashes, failure summaries,

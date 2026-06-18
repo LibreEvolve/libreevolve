@@ -22,10 +22,12 @@ EXPECTED_SNAPSHOT_IDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "full_raw_source_response_artifacts": "not_recorded_locally",
     "independent_target_proof_extraction": "not_recorded_locally",
-    "source_refresh_gate": "not_recorded_locally",
+    "scheduled_ci_refresh_run_history": "not_recorded_locally",
+    "archived_live_refresh_run_history": "not_recorded_locally",
     "repeated_seed_run_tables": "not_recorded_locally",
     "run_tied_paper_certification": "not_recorded_locally",
 }
+EXPECTED_SOURCE_REFRESH_GATE_SIDECAR = "papers/sorting_network_source_refresh_gate_boundary.json"
 EXPECTED_SOURCE_SNAPSHOTS: dict[str, dict[str, Any]] = {
     "zero_one_clrs": {
         "url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
@@ -104,6 +106,7 @@ def sorting_network_source_snapshot_boundary_record() -> dict[str, Any]:
             "Records live response metadata and hashes for the sorting-network "
             "citation URLs without retaining full raw response bodies."
         ),
+        "source_refresh_gate_sidecar": EXPECTED_SOURCE_REFRESH_GATE_SIDECAR,
         "source_snapshots": {
             source_id: dict(snapshot)
             for source_id, snapshot in EXPECTED_SOURCE_SNAPSHOTS.items()
@@ -111,10 +114,12 @@ def sorting_network_source_snapshot_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This sidecar records sorting-network citation source snapshot "
-            "metadata. It does not claim full raw source-body retention, "
-            "independent proof extraction from those sources, automated "
-            "refresh gating, repeated LibreEvolve runs, run-tied hardening, "
-            "paper certification, or novel SOTA results."
+            "metadata and links the deterministic source refresh-gate "
+            "sidecar. It does not claim full raw source-body retention, "
+            "independent proof extraction from those sources, scheduled CI "
+            "refresh-run history, archived live refresh-run history, repeated "
+            "LibreEvolve runs, run-tied hardening, paper certification, or "
+            "novel SOTA results."
         ),
     }
 
@@ -140,6 +145,8 @@ def validate_sorting_network_source_snapshot_boundary(
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "source metadata must not claim certified benchmark evidence"))
+    if data.get("source_refresh_gate_sidecar") != EXPECTED_SOURCE_REFRESH_GATE_SIDECAR:
+        issues.append(_issue("invalid_source_refresh_gate_sidecar", f"source_refresh_gate_sidecar must be {EXPECTED_SOURCE_REFRESH_GATE_SIDECAR}"))
     snapshot_count = _validate_source_snapshots(data.get("source_snapshots"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")

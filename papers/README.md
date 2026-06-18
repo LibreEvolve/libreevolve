@@ -3778,7 +3778,10 @@ Implemented:
   zero-one-principle and known comparator-target citations, the committed
   `papers/sorting_network_source_snapshot_boundary.json` sidecar records live
   response metadata and hashes for those citation URLs without retaining full
-  raw source bodies, and
+  raw source bodies, the committed
+  `papers/sorting_network_source_refresh_gate_boundary.json` sidecar records
+  the deterministic source-refresh gate for those citation snapshots without
+  scheduled CI or archived live-refresh history, and
   `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
   executable-candidate-only run-evidence boundary.
 

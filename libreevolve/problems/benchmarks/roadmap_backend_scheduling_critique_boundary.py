@@ -61,6 +61,9 @@ EXPECTED_RESOLVED_EVIDENCE = {
     "equal_budget_comparator_evidence": (
         "recorded_from_roadmap_backend_scheduling_track_records"
     ),
+    "gemini_substitution_policy": (
+        "recorded_from_roadmap_backend_scheduling_track_records"
+    ),
     "critique_control_checklist": (
         "recorded_from_critique_reviewer_pool_track_boundary"
     ),
@@ -374,6 +377,9 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
     equal_budget_comparator_evidence = [
         _equal_budget_comparator_record(record) for record in records
     ]
+    gemini_substitution_policy = [
+        _gemini_substitution_record(record) for record in records
+    ]
     critique_control_checklist = _critique_control_checklist(records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     sidecar_ref_count = sum(len(record["current_sidecar_refs"]) for record in records)
@@ -407,6 +413,8 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
         "equal_budget_comparator_evidence_count": len(
             equal_budget_comparator_evidence
         ),
+        "gemini_substitution_policy": gemini_substitution_policy,
+        "gemini_substitution_policy_count": len(gemini_substitution_policy),
         "critique_control_checklist": critique_control_checklist,
         "critique_control_checklist_count": len(critique_control_checklist),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -421,13 +429,13 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
             "capability inventory, reward-assumption policy, role budget/quota "
             "policy, provider pricing/default-rate evidence map, "
             "diagnostics/replay policy, cancellation/resume policy, "
-            "equal-budget comparator evidence map, and critique-control "
-            "checklist derived from those tracks. It does not claim calibrated "
-            "reward policy, role quota ownership, live provider "
-            "pricing/defaults, raw provider replay, live hard cancellation, "
-            "equal-budget scheduler comparators, first-class Gemini lanes, "
-            "async reviewer isolation, stale-readiness detector, or owner "
-            "review signoff."
+            "equal-budget comparator evidence map, Gemini substitution policy, "
+            "and critique-control checklist derived from those tracks. It does "
+            "not claim calibrated reward policy, role quota ownership, live "
+            "provider pricing/defaults, raw provider replay, live hard "
+            "cancellation, equal-budget scheduler comparators, first-class "
+            "Gemini lanes, async reviewer isolation, stale-readiness detector, "
+            "or owner review signoff."
         ),
     }
 
@@ -474,6 +482,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         "cancellation_resume_policy_count",
         "equal_budget_comparator_evidence",
         "equal_budget_comparator_evidence_count",
+        "gemini_substitution_policy",
+        "gemini_substitution_policy_count",
         "critique_control_checklist",
         "critique_control_checklist_count",
     ):
@@ -500,6 +510,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         issues.append(_issue("invalid_cancellation_resume_policy_count", "cancellation/resume policy count changed"))
     if data.get("equal_budget_comparator_evidence_count") != len(TRACK_SPECS):
         issues.append(_issue("invalid_equal_budget_comparator_evidence_count", "equal-budget comparator evidence count changed"))
+    if data.get("gemini_substitution_policy_count") != len(TRACK_SPECS):
+        issues.append(_issue("invalid_gemini_substitution_policy_count", "Gemini substitution policy count changed"))
     if data.get("critique_control_checklist_count") != 8:
         issues.append(_issue("invalid_critique_control_checklist_count", "critique control checklist count changed"))
     boundary_text = data.get("claim_boundary")
@@ -512,6 +524,7 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         or "diagnostics/replay policy" not in boundary_text
         or "cancellation/resume policy" not in boundary_text
         or "equal-budget comparator evidence map" not in boundary_text
+        or "Gemini substitution policy" not in boundary_text
         or "critique-control checklist" not in boundary_text
         or "first-class Gemini lanes" not in boundary_text
     ):
@@ -656,6 +669,17 @@ def _equal_budget_comparator_record(record: dict[str, Any]) -> dict[str, str]:
         "track_id": record["track_id"],
         "role_or_lane": record["role_or_lane"],
         "equal_budget_evidence": record["equal_budget_evidence"],
+        "selection_policy": record["selection_policy"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
+    }
+
+
+def _gemini_substitution_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "track_id": record["track_id"],
+        "role_or_lane": record["role_or_lane"],
+        "gemini_substitution_status": record["gemini_substitution_status"],
         "selection_policy": record["selection_policy"],
         "validation_gate": record["validation_gate"],
         "readiness_status": record["readiness_status"],

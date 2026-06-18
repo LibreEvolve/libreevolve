@@ -1795,12 +1795,13 @@ Important limits:
   backend-role capability inventory, reward-assumption policy, role
   budget/quota policy, provider pricing/default-rate evidence map, and
   diagnostics/replay policy, cancellation/resume policy, bounded equal-budget
-  comparator evidence map, plus a critique-control checklist derived from
-  those track records. This is not calibrated reward policy, role quota
-  ownership, live provider pricing/default evidence, raw provider replay, live
-  hard cancellation, equal-budget scheduler comparator, first-class Gemini lane
-  evidence, async reviewer isolation, stale-readiness detector, owner review
-  signoff, or full backend scheduler parity.
+  comparator evidence map, Gemini substitution policy, plus a critique-control
+  checklist derived from those track records. This is not calibrated reward
+  policy, role quota ownership, live provider pricing/default evidence, raw
+  provider replay, live hard cancellation, equal-budget scheduler comparator,
+  first-class Gemini lane evidence, async reviewer isolation,
+  stale-readiness detector, owner review signoff, or full backend scheduler
+  parity.
 - ROADMAP backend control-plane readiness evidence now records eight criteria
   for backend-role capability, calibrated reward/quota policy, live
   pricing/default and raw replay, hard cancellation/resume, equal-budget

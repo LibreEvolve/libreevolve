@@ -531,7 +531,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     sidecar-ref, active-TODO, validation-gate, readiness labels, and an
     explicit backend-role capability matrix, reward-assumption policy, role
     budget/quota policy, provider pricing/default-rate evidence map, and
-    critique-control checklist derived from those track records.
+    diagnostics/replay policy, plus a critique-control checklist derived from
+    those track records.
     The bounded
     `papers/roadmap_backend_control_plane_readiness_boundary.json` sidecar now
     records eight readiness criteria for backend-role capability, calibrated
@@ -548,13 +549,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     budget/quota policy is a descriptive ownership map rather than
     experiment-owned quota enforcement, the provider pricing/default-rate map
     is configured/default-bound evidence rather than live provider pricing
-    capture, and the critique-control checklist is a synchronous-reviewer
-    structural checklist, not async reviewer-readiness evidence. There is still
-    no calibrated reward policy, role quota ownership, live provider
-    pricing/default evidence, raw provider replay, live hard cancellation,
-    equal-budget scheduler comparator, first-class Gemini lane evidence, async
-    reviewer isolation, stale-readiness detector, or owner signoff proving when
-    these scheduler/provider/critique pieces are coherent enough to support
+    capture, the diagnostics/replay policy is bounded scalar/metadata replay
+    evidence rather than raw provider replay, and the critique-control
+    checklist is a synchronous-reviewer structural checklist, not async
+    reviewer-readiness evidence. There is still no calibrated reward policy,
+    role quota ownership, live provider pricing/default evidence, raw provider
+    replay, live hard cancellation, equal-budget scheduler comparator,
+    first-class Gemini lane evidence, async reviewer isolation,
+    stale-readiness detector, or owner signoff proving when these
+    scheduler/provider/critique pieces are coherent enough to support
     AlphaEvolve-style claims, nor a guard that prevents one completed
     subfeature from implying full backend scheduling maturity. The sidecars are
     bounded track/readiness maps, not a backend control-plane gate.

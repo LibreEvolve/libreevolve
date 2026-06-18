@@ -7,7 +7,7 @@ from typing import Any
 
 
 CONFIGURATION_GUIDE_BOUNDARY_SCHEMA = "libreevolve.configuration_guide_boundary.v1"
-EXPECTED_BOUNDARY_STATUS = "configuration_guide_static_inventory_with_known_cli_and_llm_accounting_gaps"
+EXPECTED_BOUNDARY_STATUS = "configuration_guide_static_inventory_with_llm_budget_cli_markers_resolved"
 CONFIGURATION_DOC_PATH = "docs/configuration.md"
 CONFIG_SOURCE_PATH = "libreevolve/core/config.py"
 CLI_SOURCE_PATH = "libreevolve/cli.py"
@@ -30,7 +30,8 @@ EXPECTED_CONFIGURATION_DOC_MARKERS = (
     ("max_llm_provider_attempts", "`max_llm_provider_attempts` (`null`)"),
     ("llm_role_budget_maps", "`llm_role_provider_attempt_limits` (`{}`)"),
     ("prompt_max_estimated_tokens", "`prompt_max_estimated_tokens` (`None`)"),
-    ("runtime_llm_accounting_gap", "`runtime.llm_accounting` with policy\n`audit_summary_not_budget_enforced`"),
+    ("runtime_llm_accounting_boundary", "`runtime.llm_accounting` with policy\n`audit_summary_not_budget_enforced`"),
+    ("runtime_budget_stop_policy", "`runtime.budget` snapshot"),
     ("cli_overrides_heading", "## CLI overrides"),
     ("backend_spec_format", "## Backend spec format"),
     ("provider_capability_lookup", "`policies.provider_capability_lookup`"),
@@ -43,14 +44,35 @@ EXPECTED_CLI_OPTION_MARKERS = (
     "--max-evaluations",
     "--max-evaluator-seconds",
     "--max-runtime-seconds",
+    "--proposals-per-generation",
     "--max-llm-calls",
     "--max-llm-provider-attempts",
     "--max-llm-tokens",
     "--max-llm-cost-microusd",
     "--max-llm-seconds",
+    "--plugins",
     "--backends",
+    "--seed",
     "--mutation-mode",
     "--reasoning-effort",
+    "--llm-max-retries",
+    "--llm-max-call-attempts",
+    "--llm-fallback",
+    "--no-llm-fallback",
+    "--llm-max-response-chars",
+    "--llm-call-history-max",
+    "--llm-call-timeout-sec",
+    "--prompt-max-chars",
+    "--prompt-max-estimated-tokens",
+    "--explore-ratio",
+    "--parent-selection-strategy",
+    "--inspiration-strategy",
+    "--run-name",
+    "--restore-runtime-from-manifest",
+    "--restore-rng-from-manifest",
+    "--restore-llm-scheduler-from-manifest",
+    "--restore-archive-cursor-from-manifest",
+    "--restore-archive-from-manifest",
     "--restore-budget-from-manifest",
     "--overwrite",
 )
@@ -100,7 +122,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "yaml_key_validation_semantic_map",
     "manifest_provenance_field_map",
     "restore_capability_semantic_map",
-    "runtime_llm_accounting_wording_reconciliation",
     "configuration_docs_ci_drift_gate",
     "owner_review_signoff",
 )
@@ -110,9 +131,12 @@ EXPECTED_MISSING_EVIDENCE = {
     "yaml_key_validation_semantic_map": "not_recorded_locally",
     "manifest_provenance_field_map": "not_recorded_locally",
     "restore_capability_semantic_map": "not_recorded_locally",
-    "runtime_llm_accounting_wording_reconciliation": "not_recorded_locally",
     "configuration_docs_ci_drift_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
+}
+EXPECTED_RESOLVED_EVIDENCE = {
+    "llm_budget_cli_option_markers": "recorded_in_docs_configuration_cli_overrides",
+    "runtime_llm_accounting_stop_policy_routing": "recorded_with_runtime_budget_snapshot",
 }
 
 
@@ -208,6 +232,7 @@ def configuration_guide_boundary_record(root: str | Path = ".") -> dict[str, Any
         "test_and_doc_anchor_records": test_and_doc_anchor_records,
         "missing_marker_count": len(missing_records),
         "missing_marker_records": missing_records,
+        "resolved_evidence": dict(EXPECTED_RESOLVED_EVIDENCE),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
@@ -216,14 +241,15 @@ def configuration_guide_boundary_record(root: str | Path = ".") -> dict[str, Any
             "validator environment/network policy, representative Config "
             "fields, CLI override markers, backend/provider capability policy, "
             "OpenAI API-mode policy, focused agent-doc tests, status/paper "
-            "sidecar anchors, active TODO ownership, and the current missing "
-            "configuration-guide CLI-option records for provider-attempt, "
-            "token, cost, and seconds LLM budget flags. It does not claim a "
+            "sidecar anchors, active TODO ownership, resolved "
+            "configuration-guide CLI-option records for the current run "
+            "command surface, and resolved runtime.llm_accounting wording "
+            "that routes live stop enforcement to runtime.budget. It does "
+            "not claim a "
             "complete field/default map, complete CLI option-to-config map, "
             "YAML validation semantic map, manifest provenance field map, "
-            "restore capability semantic map, reconciliation of the known "
-            "runtime.llm_accounting wording gap, CI configuration-doc drift "
-            "gate, or owner review signoff."
+            "restore capability semantic map, CI configuration-doc drift gate, "
+            "or owner review signoff."
         ),
     }
 
@@ -265,11 +291,12 @@ def validate_configuration_guide_boundary(
         "test_and_doc_anchor_records",
         "missing_marker_count",
         "missing_marker_records",
+        "resolved_evidence",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current configuration guide inputs"))
-    if data.get("missing_cli_option_count") != 4:
-        issues.append(_issue("invalid_missing_cli_option_count", "configuration guide should record four missing LLM budget CLI option markers"))
+    if data.get("missing_cli_option_count") != 0:
+        issues.append(_issue("invalid_missing_cli_option_count", "configuration guide should not record missing expected CLI option markers"))
     if data.get("missing_marker_count") != 0:
         issues.append(_issue("missing_configuration_guide_marker", "configuration guide evidence anchors are incomplete"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -280,8 +307,8 @@ def validate_configuration_guide_boundary(
     if (
         not isinstance(boundary_text, str)
         or "static docs/configuration.md markers" not in boundary_text
-        or "missing configuration-guide CLI-option records" not in boundary_text
-        or "runtime.llm_accounting wording gap" not in boundary_text
+        or "resolved configuration-guide CLI-option records" not in boundary_text
+        or "routes live stop enforcement to runtime.budget" not in boundary_text
         or "does not claim a complete field/default map" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate static configuration-guide markers from semantic drift proof"))

@@ -2981,13 +2981,13 @@ Implemented:
   `config.yaml` provenance, `.env` behavior, validator environment/network
   policy, representative `Config` fields, CLI override markers,
   backend/provider capability policy, OpenAI API-mode policy, focused
-  agent-doc tests, status/paper sidecar anchors, active TODO ownership, and
-  the current missing CLI-option records for provider-attempt, token, cost,
-  and seconds LLM budget flags. It is not a complete field/default map,
-  complete CLI option-to-config map, YAML validation semantic map, manifest
-  provenance field map, restore capability semantic map, reconciliation of
-  the known `runtime.llm_accounting` wording gap, CI configuration-doc drift
-  gate, or owner review signoff.
+  agent-doc tests, status/paper sidecar anchors, active TODO ownership,
+  resolved CLI-option records for the current `run` command surface, and
+  resolved `runtime.llm_accounting` wording that routes live stop enforcement
+  to `runtime.budget`. It is not a complete field/default map, complete CLI
+  option-to-config map, YAML validation semantic map, manifest provenance
+  field map, restore capability semantic map, CI configuration-doc drift gate,
+  or owner review signoff.
 - `papers/backend_cli_provider_guardrail_boundary.json`: backend
   CLI-provider guardrail sidecar. It records the `docs/backends.md`
   provider-lane taxonomy, built-in SDK adapter wording, custom import-path

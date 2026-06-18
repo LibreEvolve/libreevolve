@@ -984,29 +984,18 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     `.env` behavior, validator environment/network policy, representative
     `Config` fields, CLI override markers, backend/provider capability policy,
     OpenAI API-mode policy, focused agent-doc tests, status/paper sidecar
-    anchors, and this active TODO owner.
-    A current drift example is LLM budget/accounting wording:
-    `docs/configuration.md` correctly documents live `max_llm_provider_attempts`,
-    `max_llm_tokens`, `max_llm_cost_microusd`, per-role provider/token/cost
-    caps, and `max_llm_seconds`, and `libreevolve/core/budget.py` enforces
-    those cooperative stop reasons through the runtime budget snapshot. Later
-    in the same guide, however, the `runtime.llm_accounting` paragraph still
-    says the summary is "not for live stop enforcement" without routing readers
-    to `runtime.budget` as the authoritative stop-policy record. That can make
-    implemented LLM budget stops look like audit-only metadata rather than
-    cooperative runtime limits with a separate accounting summary. The same
-    sidecar also records a more concrete CLI-section drift: the guide's CLI
-    list still omits `--max-llm-provider-attempts`, `--max-llm-tokens`,
-    `--max-llm-cost-microusd`, and `--max-llm-seconds`.
+    anchors, this active TODO owner, resolved CLI-option records for the
+    current `run` command surface, and resolved `runtime.llm_accounting`
+    wording that routes live cooperative stop enforcement to the top-level
+    `runtime.budget` snapshot.
   - Current gap: the page-specific inventory is a static marker record, not a
     semantic configuration verifier. It does not parse `docs/configuration.md`
     into a complete field/default map, complete CLI option-to-config map,
     YAML-key validation semantic map, manifest/provenance field map, restore-
-    capability semantic map, reconciliation of the known
-    `runtime.llm_accounting` wording gap, CI configuration-doc drift gate, or
-    owner review signoff. A new `Config` field, changed default, renamed CLI
-    flag, altered validation behavior, or restored-runtime capability can
-    still drift without a complete configuration-guide failure.
+    capability semantic map, CI configuration-doc drift gate, or owner review
+    signoff. A new `Config` field, changed default, renamed CLI flag, altered
+    validation behavior, or restored-runtime capability can still drift
+    without a complete configuration-guide failure.
   - Required result: add a configuration-guide evidence map and validation
     gate that checks documented fields/defaults/options against code and
     tests, links each runtime or AlphaEvolve-facing limitation to sidecars or

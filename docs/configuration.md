@@ -1038,7 +1038,12 @@ The `run` command exposes:
 - `--max-evaluations`
 - `--max-evaluator-seconds`
 - `--max-runtime-seconds`
+- `--proposals-per-generation`
 - `--max-llm-calls`
+- `--max-llm-provider-attempts`
+- `--max-llm-tokens`
+- `--max-llm-cost-microusd`
+- `--max-llm-seconds`
 - `--plugins`, `-p` (repeatable)
 - `--backends`, `-b` as `type:model` (repeatable)
 - `--mutation-mode` (`diff` or `full`)
@@ -1049,12 +1054,14 @@ The `run` command exposes:
 - `--llm-fallback` / `--no-llm-fallback`
 - `--llm-max-response-chars`
 - `--llm-call-history-max`
+- `--llm-call-timeout-sec`
 - `--prompt-max-chars`
 - `--prompt-max-estimated-tokens`
 - `--explore-ratio`, `-e`
 - `--parent-selection-strategy`
 - `--inspiration-strategy`
 - `--run-name`
+- `--restore-runtime-from-manifest`
 - `--restore-rng-from-manifest`
 - `--restore-llm-scheduler-from-manifest`
 - `--restore-archive-cursor-from-manifest`
@@ -1181,8 +1188,12 @@ DeepResearch surface is configured per plugin instance with
 hash/count-only telemetry.
 Final runtime manifests summarize these caps, explicit role backend lanes, and
 per-role call/accounting counters under `runtime.llm_accounting` with policy
-`audit_summary_not_budget_enforced`; the summary is for inspection and future
-resume/budget design, not for live stop enforcement.
+`audit_summary_not_budget_enforced`; that summary is an inspection/accounting
+view and is not the live stop-policy record. Live cooperative stop enforcement
+is driven by the effective config and recorded in the top-level
+`runtime.budget` snapshot, including configured limits, consumed counters,
+stop reasons, and resume-applied budget counters when restored from a prior
+manifest.
 `llm_call_history_max` caps the in-memory `LLMEnsemble.call_history` retained
 window. `LLMEnsemble.call_history_retention` records retained, total, and
 dropped counts for diagnostics and loop-side span reconstruction; config-created

@@ -529,7 +529,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     budget/quota, pricing/default-rate, diagnostics/replay, cancellation,
     resume, equal-budget, reviewer-isolation, Gemini-substitution,
     sidecar-ref, active-TODO, validation-gate, readiness labels, and an
-    explicit backend-role capability matrix derived from those track records.
+    explicit backend-role capability matrix plus critique-control checklist
+    derived from those track records.
     The bounded
     `papers/roadmap_backend_control_plane_readiness_boundary.json` sidecar now
     records eight readiness criteria for backend-role capability, calibrated
@@ -537,17 +538,20 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     cancellation/resume, equal-budget scheduler comparison, Gemini
     lane/substitution, critique reviewer isolation, and stale readiness/owner
     signoff, and records the backend-role capability matrix as resolved
-    evidence from the scheduling/critique boundary.
+    evidence from the scheduling/critique boundary. It also records the
+    critique-control checklist as resolved structural evidence from the same
+    source boundary.
   - Current gap: the backend-role capability matrix is structural inventory,
-    not a control-plane readiness gate. There is still no critique-control
-    checklist, calibrated reward policy, role quota ownership, live provider
-    pricing/default evidence, raw provider replay, live hard cancellation,
-    equal-budget scheduler comparator, first-class Gemini lane evidence, async
-    reviewer isolation, stale-readiness detector, or owner signoff proving when
-    these scheduler/provider/critique pieces are coherent enough to support
-    AlphaEvolve-style claims, nor a guard that prevents one completed
-    subfeature from implying full backend scheduling maturity. The sidecars are
-    bounded track/readiness maps, not a backend control-plane gate.
+    not a control-plane readiness gate, and the critique-control checklist is
+    a synchronous-reviewer structural checklist, not async reviewer-readiness
+    evidence. There is still no calibrated reward policy, role quota ownership,
+    live provider pricing/default evidence, raw provider replay, live hard
+    cancellation, equal-budget scheduler comparator, first-class Gemini lane
+    evidence, async reviewer isolation, stale-readiness detector, or owner
+    signoff proving when these scheduler/provider/critique pieces are coherent
+    enough to support AlphaEvolve-style claims, nor a guard that prevents one
+    completed subfeature from implying full backend scheduling maturity. The
+    sidecars are bounded track/readiness maps, not a backend control-plane gate.
   - Required result: add ROADMAP backend-scheduling criteria that classify each
     role and provider lane by selection policy, reward assumptions, budget and
     quota ownership, pricing/default-rate evidence, diagnostics/replay support,

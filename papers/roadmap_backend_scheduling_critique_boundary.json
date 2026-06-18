@@ -148,12 +148,54 @@
   ],
   "backend_role_capability_matrix_count": 9,
   "boundary_status": "bounded_backend_scheduling_critique_matrix_with_role_capability_inventory",
-  "claim_boundary": "This boundary records a ROADMAP-level backend-scheduling and critique matrix across heuristic UCB rewards, role-scoped routing, provider diagnostics/pricing, cancellation/quarantine, fast/strong model mix, sample efficiency, repeated sampling, Gemini parity, and critique reviewer pools, with an explicit backend-role capability inventory derived from those tracks. It does not claim a critique-control checklist, calibrated reward policy, role quota ownership, live provider pricing/defaults, raw provider replay, live hard cancellation, equal-budget scheduler comparators, first-class Gemini lanes, async reviewer isolation, stale-readiness detector, or owner review signoff.",
+  "claim_boundary": "This boundary records a ROADMAP-level backend-scheduling and critique matrix across heuristic UCB rewards, role-scoped routing, provider diagnostics/pricing, cancellation/quarantine, fast/strong model mix, sample efficiency, repeated sampling, Gemini parity, and critique reviewer pools, with an explicit backend-role capability inventory and critique-control checklist derived from those tracks. It does not claim calibrated reward policy, role quota ownership, live provider pricing/defaults, raw provider replay, live hard cancellation, equal-budget scheduler comparators, first-class Gemini lanes, async reviewer isolation, stale-readiness detector, or owner review signoff.",
   "claim_ready": false,
+  "critique_control_checklist": [
+    {
+      "check_id": "reviewer_pool_selection_policy",
+      "current_evidence": "synchronous first-valid or last-valid mutation replacement",
+      "readiness_gap": "async reviewer overlap and calibrated score-to-selection policy absent"
+    },
+    {
+      "check_id": "reviewer_reward_policy",
+      "current_evidence": "no calibrated reviewer score-to-selection policy",
+      "readiness_gap": "calibrated reviewer reliability and score calibration absent"
+    },
+    {
+      "check_id": "reviewer_budget_quota_policy",
+      "current_evidence": "role budget routing possible without reviewer quota policy",
+      "readiness_gap": "reviewer-owned quota policy absent"
+    },
+    {
+      "check_id": "reviewer_diagnostics_replay",
+      "current_evidence": "inline reviewer telemetry boundary",
+      "readiness_gap": "reviewer-specific raw replay and reliability report absent"
+    },
+    {
+      "check_id": "reviewer_cancellation_timeout",
+      "current_evidence": "inherits provider timeout policy",
+      "readiness_gap": "external reviewer timeout artifacts and hard cancellation absent"
+    },
+    {
+      "check_id": "reviewer_resume_semantics",
+      "current_evidence": "reviewer-specific replay absent",
+      "readiness_gap": "reviewer-specific replay and resumed trace proof absent"
+    },
+    {
+      "check_id": "no_reviewer_comparator",
+      "current_evidence": "no no-reviewer comparator",
+      "readiness_gap": "equal-budget no-reviewer comparison absent"
+    },
+    {
+      "check_id": "reviewer_isolation",
+      "current_evidence": "no async overlap or independent reviewer isolation",
+      "readiness_gap": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
+    }
+  ],
+  "critique_control_checklist_count": 8,
   "missing_evidence": {
     "async_reviewer_isolation": "not_recorded_locally",
     "calibrated_reward_policy": "not_recorded_locally",
-    "critique_control_checklist": "not_recorded_locally",
     "equal_budget_scheduler_comparators": "not_recorded_locally",
     "first_class_gemini_lanes": "not_recorded_locally",
     "live_hard_cancellation": "not_recorded_locally",
@@ -177,7 +219,8 @@
     "stale_readiness_detector"
   ],
   "resolved_evidence": {
-    "backend_role_capability_matrix": "recorded_from_roadmap_backend_scheduling_track_records"
+    "backend_role_capability_matrix": "recorded_from_roadmap_backend_scheduling_track_records",
+    "critique_control_checklist": "recorded_from_critique_reviewer_pool_track_boundary"
   },
   "roadmap_heading": "### 7. Backend scheduling and critique",
   "roadmap_heading_present": true,

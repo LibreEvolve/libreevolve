@@ -49,7 +49,6 @@ def test_roadmap_backend_control_plane_readiness_accepts_bounded_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "critique_control_checklist": "not_recorded_locally",
         "calibrated_reward_policy": "not_recorded_locally",
         "role_quota_ownership": "not_recorded_locally",
         "live_provider_pricing_default_evidence": "not_recorded_locally",
@@ -64,9 +63,13 @@ def test_roadmap_backend_control_plane_readiness_accepts_bounded_matrix():
     assert boundary["resolved_evidence"] == {
         "backend_role_capability_matrix": (
             "recorded_in_source_backend_scheduling_critique_boundary"
-        )
+        ),
+        "critique_control_checklist": (
+            "recorded_in_source_backend_scheduling_critique_boundary"
+        ),
     }
     assert "recorded backend-role capability matrix" in boundary["claim_boundary"]
+    assert "recorded critique-control checklist" in boundary["claim_boundary"]
     assert "full backend scheduler parity" in boundary["claim_boundary"]
 
 
@@ -105,4 +108,4 @@ def test_render_roadmap_backend_control_plane_readiness_summary_reports_shape():
     assert "| readiness_criterion_count | 8 |" in summary
     assert "| sidecar_ref_count | 16 |" in summary
     assert "| active_todo_ref_count | 16 |" in summary
-    assert "| missing_evidence_count | 11 |" in summary
+    assert "| missing_evidence_count | 10 |" in summary

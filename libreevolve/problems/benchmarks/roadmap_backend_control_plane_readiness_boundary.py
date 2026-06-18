@@ -28,7 +28,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_readiness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "critique_control_checklist": "not_recorded_locally",
     "calibrated_reward_policy": "not_recorded_locally",
     "role_quota_ownership": "not_recorded_locally",
     "live_provider_pricing_default_evidence": "not_recorded_locally",
@@ -42,6 +41,9 @@ EXPECTED_MISSING_EVIDENCE = {
 }
 EXPECTED_RESOLVED_EVIDENCE = {
     "backend_role_capability_matrix": (
+        "recorded_in_source_backend_scheduling_critique_boundary"
+    ),
+    "critique_control_checklist": (
         "recorded_in_source_backend_scheduling_critique_boundary"
     ),
 }
@@ -183,8 +185,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "critique_reviewer_isolation",
         "control_plane_surface": "critique reviewer pools, reviewer overlap, and critique-to-revision attribution",
-        "current_scope": "synchronous first/last-valid reviewer aggregation without async isolation",
-        "missing_readiness": "critique-control checklist and async reviewer isolation evidence",
+        "current_scope": "structural critique-control checklist for synchronous first/last-valid reviewer aggregation without async isolation",
+        "missing_readiness": "async reviewer isolation evidence and reviewer readiness gate",
         "sidecars": (
             "papers/critique_reviewer_pool_boundary.json",
             "papers/incorrect_suggestion_audit_boundary.json",
@@ -199,7 +201,7 @@ CRITERION_SPECS = (
                 "required_phrase": "critique/reviewer isolation",
             },
         ),
-        "validation_gate": "critique-control checklist and reviewer isolation report",
+        "validation_gate": "critique-control checklist to reviewer isolation report",
         "readiness_status": "synchronous_aggregation_without_reviewer_isolation",
     },
     {
@@ -273,12 +275,12 @@ def roadmap_backend_control_plane_readiness_boundary_record(
             "This boundary records backend control-plane readiness criteria tied "
             "to the bounded backend scheduling and critique matrix, including "
             "the recorded backend-role capability matrix from that source "
-            "boundary. It does not claim a critique-control checklist, "
-            "calibrated reward policy, role quota ownership, live provider "
-            "pricing/default evidence, raw provider replay, live hard "
-            "cancellation, equal-budget scheduler comparator, first-class Gemini "
-            "lane evidence, async reviewer isolation, stale-readiness detector, "
-            "owner review signoff, or full backend scheduler parity."
+            "boundary and the recorded critique-control checklist. It does not "
+            "claim calibrated reward policy, role quota ownership, live "
+            "provider pricing/default evidence, raw provider replay, live hard "
+            "cancellation, equal-budget scheduler comparator, first-class "
+            "Gemini lane evidence, async reviewer isolation, stale-readiness "
+            "detector, owner review signoff, or full backend scheduler parity."
         ),
     }
 
@@ -327,7 +329,7 @@ def validate_roadmap_backend_control_plane_readiness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "recorded backend-role capability matrix" not in boundary_text
-        or "critique-control checklist" not in boundary_text
+        or "recorded critique-control checklist" not in boundary_text
         or "full backend scheduler parity" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from backend scheduler parity"))

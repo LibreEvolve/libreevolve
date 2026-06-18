@@ -47,6 +47,19 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "gemini_provider_parity",
         "critique_reviewer_pool",
     ]
+    assert boundary["critique_control_checklist_count"] == 8
+    assert [
+        check["check_id"] for check in boundary["critique_control_checklist"]
+    ] == [
+        "reviewer_pool_selection_policy",
+        "reviewer_reward_policy",
+        "reviewer_budget_quota_policy",
+        "reviewer_diagnostics_replay",
+        "reviewer_cancellation_timeout",
+        "reviewer_resume_semantics",
+        "no_reviewer_comparator",
+        "reviewer_isolation",
+    ]
     assert all(record["roadmap_phrase_present"] for record in boundary["track_records"])
     assert all(
         sidecar["exists"]
@@ -59,7 +72,6 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "critique_control_checklist": "not_recorded_locally",
         "calibrated_reward_policy": "not_recorded_locally",
         "role_quota_ownership": "not_recorded_locally",
         "live_provider_pricing_defaults": "not_recorded_locally",
@@ -73,9 +85,13 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
     assert boundary["resolved_evidence"] == {
         "backend_role_capability_matrix": (
             "recorded_from_roadmap_backend_scheduling_track_records"
-        )
+        ),
+        "critique_control_checklist": (
+            "recorded_from_critique_reviewer_pool_track_boundary"
+        ),
     }
     assert "backend-role capability inventory" in boundary["claim_boundary"]
+    assert "critique-control checklist" in boundary["claim_boundary"]
 
 
 def test_roadmap_backend_scheduling_critique_rejects_overclaim_and_drift():
@@ -112,4 +128,4 @@ def test_render_roadmap_backend_scheduling_critique_summary_reports_shape():
     )
     assert "| track_count | 9 |" in summary
     assert "| active_todo_ref_count | 18 |" in summary
-    assert "| missing_evidence_count | 10 |" in summary
+    assert "| missing_evidence_count | 9 |" in summary

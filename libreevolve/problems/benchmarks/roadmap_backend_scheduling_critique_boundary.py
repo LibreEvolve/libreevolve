@@ -28,7 +28,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_readiness_detector",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "critique_control_checklist": "not_recorded_locally",
     "calibrated_reward_policy": "not_recorded_locally",
     "role_quota_ownership": "not_recorded_locally",
     "live_provider_pricing_defaults": "not_recorded_locally",
@@ -42,6 +41,9 @@ EXPECTED_MISSING_EVIDENCE = {
 EXPECTED_RESOLVED_EVIDENCE = {
     "backend_role_capability_matrix": (
         "recorded_from_roadmap_backend_scheduling_track_records"
+    ),
+    "critique_control_checklist": (
+        "recorded_from_critique_reviewer_pool_track_boundary"
     ),
 }
 
@@ -337,6 +339,7 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
     backend_role_capability_matrix = [
         _backend_role_capability_record(record) for record in records
     ]
+    critique_control_checklist = _critique_control_checklist(records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     sidecar_ref_count = sum(len(record["current_sidecar_refs"]) for record in records)
     return {
@@ -351,6 +354,8 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
         "track_records": records,
         "backend_role_capability_matrix": backend_role_capability_matrix,
         "backend_role_capability_matrix_count": len(backend_role_capability_matrix),
+        "critique_control_checklist": critique_control_checklist,
+        "critique_control_checklist_count": len(critique_control_checklist),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "resolved_evidence": dict(EXPECTED_RESOLVED_EVIDENCE),
@@ -360,12 +365,12 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
             "provider diagnostics/pricing, cancellation/quarantine, fast/strong "
             "model mix, sample efficiency, repeated sampling, Gemini parity, "
             "and critique reviewer pools, with an explicit backend-role "
-            "capability inventory derived from those tracks. It does not claim "
-            "a critique-control checklist, calibrated reward policy, role quota "
-            "ownership, live provider pricing/defaults, raw provider replay, "
-            "live hard cancellation, equal-budget scheduler comparators, "
-            "first-class Gemini lanes, async reviewer isolation, stale-readiness "
-            "detector, or owner review signoff."
+            "capability inventory and critique-control checklist derived from "
+            "those tracks. It does not claim calibrated reward policy, role "
+            "quota ownership, live provider pricing/defaults, raw provider "
+            "replay, live hard cancellation, equal-budget scheduler "
+            "comparators, first-class Gemini lanes, async reviewer isolation, "
+            "stale-readiness detector, or owner review signoff."
         ),
     }
 
@@ -400,6 +405,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         "track_records",
         "backend_role_capability_matrix",
         "backend_role_capability_matrix_count",
+        "critique_control_checklist",
+        "critique_control_checklist_count",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP/TODO inputs"))
@@ -412,6 +419,8 @@ def validate_roadmap_backend_scheduling_critique_boundary(
     _validate_resolved_evidence(data.get("resolved_evidence"), issues)
     if data.get("backend_role_capability_matrix_count") != len(TRACK_SPECS):
         issues.append(_issue("invalid_backend_role_capability_matrix_count", "backend role capability matrix count changed"))
+    if data.get("critique_control_checklist_count") != 8:
+        issues.append(_issue("invalid_critique_control_checklist_count", "critique control checklist count changed"))
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
@@ -497,6 +506,54 @@ def _backend_role_capability_record(record: dict[str, Any]) -> dict[str, Any]:
         "validation_gate": record["validation_gate"],
         "readiness_status": record["readiness_status"],
     }
+
+
+def _critique_control_checklist(records: list[dict[str, Any]]) -> list[dict[str, str]]:
+    critique_record = next(
+        record for record in records if record["track_id"] == "critique_reviewer_pool"
+    )
+    return [
+        {
+            "check_id": "reviewer_pool_selection_policy",
+            "current_evidence": critique_record["selection_policy"],
+            "readiness_gap": "async reviewer overlap and calibrated score-to-selection policy absent",
+        },
+        {
+            "check_id": "reviewer_reward_policy",
+            "current_evidence": critique_record["reward_assumptions"],
+            "readiness_gap": "calibrated reviewer reliability and score calibration absent",
+        },
+        {
+            "check_id": "reviewer_budget_quota_policy",
+            "current_evidence": critique_record["budget_quota_ownership"],
+            "readiness_gap": "reviewer-owned quota policy absent",
+        },
+        {
+            "check_id": "reviewer_diagnostics_replay",
+            "current_evidence": critique_record["diagnostics_replay_support"],
+            "readiness_gap": "reviewer-specific raw replay and reliability report absent",
+        },
+        {
+            "check_id": "reviewer_cancellation_timeout",
+            "current_evidence": critique_record["cancellation_behavior"],
+            "readiness_gap": "external reviewer timeout artifacts and hard cancellation absent",
+        },
+        {
+            "check_id": "reviewer_resume_semantics",
+            "current_evidence": critique_record["resume_semantics"],
+            "readiness_gap": "reviewer-specific replay and resumed trace proof absent",
+        },
+        {
+            "check_id": "no_reviewer_comparator",
+            "current_evidence": critique_record["equal_budget_evidence"],
+            "readiness_gap": "equal-budget no-reviewer comparison absent",
+        },
+        {
+            "check_id": "reviewer_isolation",
+            "current_evidence": critique_record["critique_reviewer_isolation"],
+            "readiness_gap": critique_record["validation_gate"],
+        },
+    ]
 
 
 def _local_ref_record(root: Path, spec: dict[str, str]) -> dict[str, Any]:

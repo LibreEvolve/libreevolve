@@ -698,18 +698,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     artifact/budget sufficiency, feedback/statistical promotion,
     oracle/workload contracts, automated environment/sandbox policy,
     release/environment reproducibility, benchmark sufficiency, and stale
-    readiness/owner signoff. Active code
-    and paper TODOs already track cascade promotion/attrition evidence,
-    statistical hypothesis-test semantics, qualitative feedback provenance,
-    async/accelerator budgets, evaluator environment replay, validator
-    sandbox/resource policy, release artifacts, matrix cascade runs, and
-    workload-specific provenance.
-  - Current gap: there is no section-level cascade-readiness rubric,
+    readiness/owner signoff, plus a per-surface evaluation-cascade claim
+    guard. Active code and paper TODOs already track cascade
+    promotion/attrition evidence, statistical hypothesis-test semantics,
+    qualitative feedback provenance, async/accelerator budgets, evaluator
+    environment replay, validator sandbox/resource policy, release artifacts,
+    matrix cascade runs, and workload-specific provenance.
+  - Current gap: the per-surface evaluation-cascade claim guard is a bounded
+    allowed-scope map, not a section-level cascade-readiness rubric,
     evaluator/oracle capability matrix, artifact-and-budget sufficiency
-    checklist, or stale-readiness detector tying those pieces together, so a
-    green local evaluator, one statistical gate, or one report contract could
-    be mistaken for a robust AlphaEvolve-style cascade. The sidecars are
-    bounded cascade/readiness maps, not a full AlphaEvolve cascade gate.
+    checklist, or stale-readiness detector tying those pieces together. The
+    sidecars are bounded cascade/readiness/claim-guard maps, not a full
+    AlphaEvolve cascade gate.
   - Required result: implement the missing readiness fields recorded by the
     readiness sidecar: validator-authority matrix, complete artifact schema/hash
     coverage, accelerator/async budget ownership, executed feedback

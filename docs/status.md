@@ -1864,8 +1864,9 @@ Important limits:
   validator authority, artifact/budget sufficiency, feedback/statistical
   promotion, oracle/workload contracts, automated environment/sandbox policy,
   release/environment reproducibility, benchmark sufficiency, and stale
-  readiness/owner signoff. This is not an implemented AlphaEvolve-style
-  cascade gate or proof of full cascade readiness.
+  readiness/owner signoff, plus a per-surface evaluation-cascade claim guard.
+  This is not an implemented AlphaEvolve-style cascade gate or proof of full
+  cascade readiness.
 - ROADMAP candidate-workspace fidelity evidence now records ten criteria for
   language/build runner support, candidate abstraction API,
   marker/materialization policy, embedded evaluator boundaries,

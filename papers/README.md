@@ -3601,8 +3601,8 @@ Implemented:
   authority, artifact/budget sufficiency, feedback/statistical promotion,
   oracle/workload contracts, automated environment/sandbox policy,
   release/environment reproducibility, benchmark sufficiency, and stale
-  readiness/owner signoff. It is not evidence that those cascade-readiness
-  mechanisms are implemented.
+  readiness/owner signoff, plus a per-surface evaluation-cascade claim guard.
+  It is not evidence that those cascade-readiness mechanisms are implemented.
 - `papers/roadmap_multi_objective_search_boundary.json`: ROADMAP
   multi-objective search sidecar with eight criteria for paper metric bundles,
   objective-archive policy, metric-diverse sampling balance, duplicate-work

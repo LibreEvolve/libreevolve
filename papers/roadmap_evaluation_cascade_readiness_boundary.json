@@ -1,8 +1,75 @@
 {
   "active_todo_ref_count": 16,
   "boundary_status": "bounded_evaluation_cascade_readiness_matrix_without_alphaevolve_cascade_gate",
-  "claim_boundary": "This boundary records evaluation-cascade readiness criteria tied to the bounded evaluation-cascade matrix. It does not claim a validator-authority matrix, complete artifact schema/hash coverage, accelerator/async budget ownership, executed feedback calibration, benchmark-calibrated statistical promotion, independent oracle disagreement records, workload-specific execution contracts, robust automated environment fixtures, OS/container resource sandbox, replayable environment/release bundle, benchmark-sufficiency signoff, stale-readiness detector, or owner review signoff.",
+  "claim_boundary": "This boundary records evaluation-cascade readiness criteria tied to the bounded evaluation-cascade matrix, plus a claim guard for each cascade surface. It does not claim a validator-authority matrix, complete artifact schema/hash coverage, accelerator/async budget ownership, executed feedback calibration, benchmark-calibrated statistical promotion, independent oracle disagreement records, workload-specific execution contracts, robust automated environment fixtures, OS/container resource sandbox, replayable environment/release bundle, benchmark-sufficiency signoff, stale-readiness detector, or owner review signoff.",
   "claim_ready": false,
+  "evaluation_cascade_claim_guard": [
+    {
+      "allowed_current_claim": "bounded cascade-transition and validator-artifact sidecars",
+      "cascade_surface": "validator authority, transition records, and promotion/prune decisions",
+      "criterion_id": "validator_authority_matrix",
+      "missing_before_parity_claim": "validator-authority matrix proving which evaluator can promote, reject, quarantine, or trigger further stages",
+      "readiness_status": "transition_sidecars_without_authority_matrix",
+      "validation_gate": "validator authority and transition matrix"
+    },
+    {
+      "allowed_current_claim": "candidate artifact copy-out, selected sidecar hashes, and cooperative local budgets",
+      "cascade_surface": "candidate artifacts, evaluator artifacts, hashes, schemas, and budgets",
+      "criterion_id": "artifact_and_budget_sufficiency",
+      "missing_before_parity_claim": "complete artifact schema/hash coverage and accelerator/async budget ownership",
+      "readiness_status": "bounded_artifacts_and_local_budgets_only",
+      "validation_gate": "artifact/hash schema and budget sufficiency checklist"
+    },
+    {
+      "allowed_current_claim": "feedback report contracts, qualitative metadata, and configured statistical gates",
+      "cascade_surface": "LLM feedback calibration, qualitative policy, and statistical promotion gates",
+      "criterion_id": "feedback_and_statistical_promotion",
+      "missing_before_parity_claim": "executed feedback calibration and benchmark-calibrated statistical promotion",
+      "readiness_status": "declared_feedback_and_policy_gates_without_calibration",
+      "validation_gate": "executed feedback calibration and benchmark-calibrated promotion"
+    },
+    {
+      "allowed_current_claim": "local arbitration matrix and declared workload metadata",
+      "cascade_surface": "independent oracles, disagreement records, and workload-specific evaluator contracts",
+      "criterion_id": "oracle_and_workload_contracts",
+      "missing_before_parity_claim": "independent oracle disagreement records and workload-specific execution contracts",
+      "readiness_status": "local_arbitration_and_declared_workload_metadata",
+      "validation_gate": "oracle disagreement and workload execution contracts"
+    },
+    {
+      "allowed_current_claim": "scope classification, code-vs-NL reports, local subprocess policy, and dependency provenance",
+      "cascade_surface": "automated evaluator fixtures, programmatic boundaries, validator subprocesses, and resource isolation",
+      "criterion_id": "automated_environment_and_sandbox",
+      "missing_before_parity_claim": "robust automated environment fixtures and OS/container resource sandbox",
+      "readiness_status": "classification_and_subprocess_policy_only",
+      "validation_gate": "automated environment fixtures and OS/container resource sandbox"
+    },
+    {
+      "allowed_current_claim": "CI-smoke release packaging and bounded config/environment sidecars",
+      "cascade_surface": "release artifacts, config validation, package/version snapshots, and evaluator environment replay",
+      "criterion_id": "release_environment_reproducibility",
+      "missing_before_parity_claim": "replayable environment/release bundle",
+      "readiness_status": "ci_smoke_without_replayable_environment_bundle",
+      "validation_gate": "replayable release and evaluator-environment bundle"
+    },
+    {
+      "allowed_current_claim": "bounded benchmark sidecars without cascade-readiness signoff",
+      "cascade_surface": "benchmark cascade runs, matrix/tensor fixtures, workload-specific provenance, and sufficiency claims",
+      "criterion_id": "benchmark_sufficiency_signoff",
+      "missing_before_parity_claim": "benchmark-sufficiency signoff proving cascade readiness across target workloads",
+      "readiness_status": "bounded_reports_without_benchmark_signoff",
+      "validation_gate": "benchmark-sufficiency signoff for cascade readiness"
+    },
+    {
+      "allowed_current_claim": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "cascade_surface": "README, ROADMAP, papers, evaluator docs, runtime metadata, and owner readiness claims",
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "missing_before_parity_claim": "stale-readiness detector and owner signoff before cascade parity claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "evaluation_cascade_claim_guard_count": 8,
   "missing_evidence": {
     "accelerator_async_budget_ownership": "not_recorded_locally",
     "benchmark_calibrated_statistical_promotion": "not_recorded_locally",

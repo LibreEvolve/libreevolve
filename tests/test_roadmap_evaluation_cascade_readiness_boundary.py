@@ -38,6 +38,23 @@ def test_roadmap_evaluation_cascade_readiness_accepts_bounded_matrix():
         "benchmark_sufficiency_signoff",
         "stale_readiness_and_owner_signoff",
     ]
+    assert boundary["evaluation_cascade_claim_guard_count"] == 8
+    assert [
+        record["criterion_id"] for record in boundary["evaluation_cascade_claim_guard"]
+    ] == [
+        "validator_authority_matrix",
+        "artifact_and_budget_sufficiency",
+        "feedback_and_statistical_promotion",
+        "oracle_and_workload_contracts",
+        "automated_environment_and_sandbox",
+        "release_environment_reproducibility",
+        "benchmark_sufficiency_signoff",
+        "stale_readiness_and_owner_signoff",
+    ]
+    assert all(
+        "missing_before_parity_claim" in record
+        for record in boundary["evaluation_cascade_claim_guard"]
+    )
     assert all(
         sidecar["exists"]
         for record in boundary["readiness_criteria"]
@@ -64,6 +81,7 @@ def test_roadmap_evaluation_cascade_readiness_accepts_bounded_matrix():
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "does not claim a validator-authority matrix" in boundary["claim_boundary"]
+    assert "claim guard for each cascade surface" in boundary["claim_boundary"]
 
 
 def test_roadmap_evaluation_cascade_readiness_rejects_overclaim_and_drift():
@@ -72,6 +90,7 @@ def test_roadmap_evaluation_cascade_readiness_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "alphaevolve_cascade_ready"
     boundary["readiness_criterion_count"] = 0
     boundary["readiness_criteria"][0]["sidecar_refs"][0]["exists"] = False
+    boundary["evaluation_cascade_claim_guard_count"] = 0
     boundary["missing_evidence"]["benchmark_calibrated_statistical_promotion"] = "recorded"
     boundary["required_evidence_fields"] = ["validator_authority_matrix"]
 
@@ -83,6 +102,7 @@ def test_roadmap_evaluation_cascade_readiness_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_readiness_criterion_count" in codes
     assert "invalid_readiness_criteria" in codes
+    assert "invalid_evaluation_cascade_claim_guard_count" in codes
     assert "invalid_missing_evidence_benchmark_calibrated_statistical_promotion" in codes
     assert "missing_required_evidence_field" in codes
 

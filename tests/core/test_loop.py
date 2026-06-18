@@ -5993,6 +5993,25 @@ def test_loop_includes_feedback_filled_objective_metric_in_selection_score():
         "post_evaluator_feedback_only"
     )
     assert scope["llm_only_idea_feedback_boundary"]["primary_validity_gate"] is False
+    readiness = scope["environment_readiness"]
+    assert readiness["fixture_matrix_status"] == (
+        "local_scope_with_robust_fixture_gaps"
+    )
+    assert readiness["fixture_observed_ready_count"] == 4
+    assert readiness["fixture_missing_ready_count"] == 4
+    matrix = scope["environment_fixture_matrix"]
+    assert matrix["schema"] == (
+        "libreevolve.automated_evaluator_environment_fixture_matrix.v1"
+    )
+    assert matrix["record_count"] == 8
+    assert matrix["observed_ready_count"] == 4
+    assert matrix["missing_ready_count"] == 4
+    matrix_by_id = {record["criterion_id"]: record for record in matrix["records"]}
+    assert matrix_by_id["local_machine_evaluator_present"]["claim_ready"] is True
+    assert matrix_by_id["runtime_candidate_evaluation_observed"]["claim_ready"] is True
+    assert matrix_by_id["robust_evaluator_environment_fixture"]["claim_ready"] is False
+    assert matrix_by_id["manual_to_code_transition_criteria"]["claim_ready"] is False
+    assert matrix["claim_ready"] is False
     assert scope["claim_ready"] is False
 
 

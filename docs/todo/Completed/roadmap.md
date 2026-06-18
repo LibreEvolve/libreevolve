@@ -15979,3 +15979,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     resume-spanning replay, invalidation/migration policy, semantic
     near-duplicate handling, source-aware indexes, raw-output replay, and owner
     review signoff remain active TODOs.
+- [x] Keep ROADMAP automated evaluator scope current with fixture-gap matrix.
+  - Spec evidence: ROADMAP AlphaEvolve evaluation-cascade gaps should
+    distinguish current local evaluator evidence from robust environment
+    fixture readiness.
+  - Status: ROADMAP now records that
+    `runtime.history.automated_evaluator_scope_report` includes
+    `libreevolve.automated_evaluator_environment_fixture_matrix.v1`.
+  - Remaining roadmap gap: robust evaluator fixtures, automatable-domain
+    boundaries, setup/cost and expected-value evidence, manual-to-code
+    transition policy, environment scaling proof, and owner review signoff
+    remain active TODOs.

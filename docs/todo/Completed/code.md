@@ -19238,3 +19238,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     detection.
   - Verification: focused duplicate-work runtime tests assert metric names and
     bounded output-signature hashes in the persisted JSONL rows.
+- [x] Add automated evaluator environment-fixture gap matrix.
+  - Spec evidence: AlphaEvolve Section 2.4 and Discussion require keeping
+    automated evaluator scope separate from robust environment setup and
+    manual-experiment workflows.
+  - Status: `runtime.history.automated_evaluator_scope_report` now emits
+    `libreevolve.automated_evaluator_environment_fixture_matrix.v1`, with
+    observed local machine-evaluator/runtime-evaluation criteria and explicit
+    missing rows for robust evaluator fixtures, manual-to-code transition
+    criteria, automatable-domain boundaries, and environment scaling evidence.
+  - Remaining code gap: this is a gap matrix, not a robust environment fixture,
+    setup/cost model, manual-to-code transition policy, or environment-scaling
+    proof.
+  - Verification: focused automated-evaluator scope tests validate matrix
+    counts and false robust-fixture readiness.

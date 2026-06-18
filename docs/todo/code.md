@@ -2965,10 +2965,14 @@ sidecars, tests, and active TODOs.
     rather than a primary gate, manual-experiment exclusion, and transition
     into executable code feedback before scoring. The committed
     `papers/automated_evaluator_scope_boundary.json` sidecar preserves this
-    machine-gradeable local-scope boundary. It still does not record evaluator-
-    environment setup provenance such as why the evaluator is robust enough
-    for sustained search, which parts of the domain are automatable versus
-    experimental, setup effort, or expected high-value discovery scope.
+    machine-gradeable local-scope boundary. The runtime report now also
+    records `libreevolve.automated_evaluator_environment_fixture_matrix.v1`,
+    a bounded environment-fixture gap matrix that separates observed local
+    machine-evaluator/runtime-evaluation evidence from missing robust
+    environment criteria. It still does not record evaluator-environment setup
+    provenance such as why the evaluator is robust enough for sustained
+    search, which parts of the domain are automatable versus experimental,
+    setup effort, or expected high-value discovery scope.
   - Required result: add versioned problem/run/report scope metadata or
     fixtures for robust-evaluator environment readiness, manual-to-code
     transition criteria, LLM-only idea-feedback stage contracts, and

@@ -14295,3 +14295,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: focused duplicate-work boundary tests require the bounded
     output-signature evidence while preserving durable-memory overclaim
     rejection.
+- [x] Add paper-facing automated evaluator environment-fixture gap matrix.
+  - Paper evidence: AlphaEvolve Section 2.4 and Discussion scope the optimized
+    setting to automated evaluators and treat robust environment setup as a
+    prerequisite for broader scientific-discovery claims.
+  - Status: paper-facing docs and
+    `papers/automated_evaluator_scope_boundary.json` now cite
+    `libreevolve.automated_evaluator_environment_fixture_matrix.v1` as bounded
+    local-scope evidence plus explicit missing robust-fixture criteria.
+  - Remaining paper gap: robust evaluator-environment fixtures,
+    automatable-domain boundaries, setup/cost and expected-value evidence,
+    manual-to-code transition policy, and AI-Co-Scientist-style idea-stage
+    contracts remain open.
+  - Verification: focused automated-evaluator boundary tests require the
+    matrix evidence while preserving robust-environment overclaim rejection.

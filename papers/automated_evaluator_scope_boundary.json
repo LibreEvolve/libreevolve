@@ -8,7 +8,7 @@
     "Discussion"
   ],
   "source_claim": "AlphaEvolve is optimized for problems where automated evaluators can provide machine feedback; tasks requiring manual experimentation are out of scope, and LLM-only idea feedback is a possible bridge rather than the primary setting",
-  "boundary_status": "machine_gradeable_scope_without_robust_environment_fixtures",
+  "boundary_status": "machine_gradeable_scope_with_environment_fixture_gap_matrix",
   "runtime_report_schema": "libreevolve.automated_evaluator_scope_report.v1",
   "runtime_report_status": "automated_evaluator_scope_report_available",
   "claim_ready": false,
@@ -22,6 +22,7 @@
     "runtime_evaluation_summary",
     "problem_local_evaluator_sources",
     "configured_evaluator_stages",
+    "environment_fixture_gap_matrix",
     "robust_evaluator_environment_fixture",
     "manual_to_code_transition_criteria",
     "llm_only_idea_feedback_stage_contract",
@@ -39,5 +40,5 @@
     "setup_effort_or_cost_model": "not_recorded_locally",
     "expected_high_value_discovery_scope": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve manifests include runtime.history.automated_evaluator_scope_report, which labels deterministic machine evaluators as the candidate-validity owner, declared evaluator metrics as the score owner, optional LLM feedback as post-evaluator feedback rather than a primary gate, manual experiments as excluded from candidate admission, and transition to executable code as required before scoring. It does not claim robust evaluator-environment fixtures, manual-to-code transition criteria, LLM-only idea-feedback stage contracts, environment-scaling evidence, automatable-domain boundaries, setup effort/cost models, or expected high-value discovery scope."
+  "claim_boundary": "This boundary records that LibreEvolve manifests include runtime.history.automated_evaluator_scope_report, which labels deterministic machine evaluators as the candidate-validity owner, declared evaluator metrics as the score owner, optional LLM feedback as post-evaluator feedback rather than a primary gate, manual experiments as excluded from candidate admission, and transition to executable code as required before scoring. It also records an environment fixture gap matrix for local evaluator evidence versus missing robust-environment criteria. It does not claim robust evaluator-environment fixtures, manual-to-code transition criteria, LLM-only idea-feedback stage contracts, environment-scaling evidence, automatable-domain boundaries, setup effort/cost models, or expected high-value discovery scope."
 }

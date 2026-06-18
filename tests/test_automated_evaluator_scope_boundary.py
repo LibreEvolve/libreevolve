@@ -14,9 +14,9 @@ def test_automated_evaluator_scope_boundary_accepts_machine_gradeable_scope():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "machine_gradeable_scope_without_robust_environment_fixtures"
+        == "machine_gradeable_scope_with_environment_fixture_gap_matrix"
     )
-    assert validation.required_evidence_field_count == 16
+    assert validation.required_evidence_field_count == 17
     assert validation.missing_evidence_count == 7
     assert boundary["schema"] == AUTOMATED_EVALUATOR_SCOPE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -30,6 +30,7 @@ def test_automated_evaluator_scope_boundary_accepts_machine_gradeable_scope():
         "does not claim robust evaluator-environment fixtures"
         in boundary["claim_boundary"]
     )
+    assert "environment fixture gap matrix" in boundary["claim_boundary"]
 
 
 def test_automated_evaluator_scope_boundary_rejects_environment_overclaim():
@@ -62,8 +63,8 @@ def test_render_automated_evaluator_scope_boundary_summary_reports_shape():
     assert "Automated evaluator scope boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | machine_gradeable_scope_without_robust_environment_fixtures |"
+        "| boundary_status | machine_gradeable_scope_with_environment_fixture_gap_matrix |"
         in summary
     )
-    assert "| required_evidence_field_count | 16 |" in summary
+    assert "| required_evidence_field_count | 17 |" in summary
     assert "| missing_evidence_count | 7 |" in summary

@@ -3645,10 +3645,17 @@ current machine-feedback policy. The policy states that deterministic evaluator
 execution owns candidate validity, optional LLM feedback graders are
 post-evaluator signals, manual-experiment outcomes are not accepted as primary
 candidate feedback, and transition into executable code evaluation is required.
+The report also includes
+`libreevolve.automated_evaluator_environment_fixture_matrix.v1`, a bounded
+readiness matrix that separates observed local-scope evidence such as machine
+evaluator presence, runtime candidate evaluation, and post-evaluator LLM
+feedback boundaries from missing robust-environment criteria.
 
 The report is a scope-boundary artifact. It does not claim robust
 evaluator-environment readiness, manual-experiment support, AI-Co-Scientist-
-style idea-stage evaluation, or environment-scaling evidence.
+style idea-stage evaluation, manual-to-code transition readiness,
+automatable-domain boundaries, setup/cost models, or environment-scaling
+evidence.
 
 ## `runtime.history.programmatic_representation_boundary_report`
 

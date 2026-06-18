@@ -13,7 +13,7 @@ EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("front_matter_overview", "2.1", "2.4", "Discussion")
 EXPECTED_RUNTIME_REPORT_SCHEMA = "libreevolve.automated_evaluator_scope_report.v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "machine_gradeable_scope_without_robust_environment_fixtures"
+    "machine_gradeable_scope_with_environment_fixture_gap_matrix"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "automated_evaluator_available",
@@ -25,6 +25,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "runtime_evaluation_summary",
     "problem_local_evaluator_sources",
     "configured_evaluator_stages",
+    "environment_fixture_gap_matrix",
     "robust_evaluator_environment_fixture",
     "manual_to_code_transition_criteria",
     "llm_only_idea_feedback_stage_contract",
@@ -85,8 +86,10 @@ def automated_evaluator_scope_boundary_record() -> dict[str, Any]:
             "declared evaluator metrics as the score owner, optional LLM "
             "feedback as post-evaluator feedback rather than a primary gate, "
             "manual experiments as excluded from candidate admission, and "
-            "transition to executable code as required before scoring. It does "
-            "not claim robust evaluator-environment fixtures, manual-to-code "
+            "transition to executable code as required before scoring. It also "
+            "records an environment fixture gap matrix for local evaluator "
+            "evidence versus missing robust-environment criteria. It does not "
+            "claim robust evaluator-environment fixtures, manual-to-code "
             "transition criteria, LLM-only idea-feedback stage contracts, "
             "environment-scaling evidence, automatable-domain boundaries, "
             "setup effort/cost models, or expected high-value discovery scope."
@@ -131,6 +134,7 @@ def validate_automated_evaluator_scope_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
+        or "environment fixture gap matrix" not in boundary_text
         or "does not claim robust evaluator-environment fixtures" not in boundary_text
         or "manual-to-code transition criteria" not in boundary_text
     ):

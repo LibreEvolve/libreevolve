@@ -21979,6 +21979,12 @@ def _automated_evaluator_scope_report(
     )
     runtime = _automated_evaluator_runtime_summary(programs)
     evaluator_records = _automated_evaluator_records(evaluator_sources, eval_stages)
+    environment_fixture_matrix = _automated_evaluator_environment_fixture_matrix(
+        evaluator_records,
+        eval_stages,
+        llm_feedback,
+        runtime,
+    )
     report = {
         "schema": "libreevolve.automated_evaluator_scope_report.v1",
         "source": "startup_manifest_and_runtime_history",
@@ -22020,15 +22026,24 @@ def _automated_evaluator_scope_report(
             "configured_evaluator_stages": len(eval_stages),
             "runtime_evaluated_candidate_count": runtime["evaluated_program_count"],
             "runtime_valid_candidate_count": runtime["valid_count"],
+            "fixture_matrix_status": environment_fixture_matrix["status"],
+            "fixture_observed_ready_count": environment_fixture_matrix[
+                "observed_ready_count"
+            ],
+            "fixture_missing_ready_count": environment_fixture_matrix[
+                "missing_ready_count"
+            ],
             "robust_environment_fixture": False,
             "manual_experiment_fixture": False,
             "environment_scaling_evidence": False,
         },
+        "environment_fixture_matrix": environment_fixture_matrix,
         "claim_ready": False,
         "claim_readiness": {
             "alphaevolve_automated_evaluator_scope": bool(evaluator_records),
             "manual_experiment_exclusion_recorded": True,
             "llm_only_feedback_boundary_recorded": True,
+            "environment_fixture_gap_matrix_recorded": True,
             "remaining_gap": [
                 "benchmark_environment_readiness_fixtures",
                 "manual_experiment_to_code_transition_policy",
@@ -22039,6 +22054,113 @@ def _automated_evaluator_scope_report(
     }
     report["validation"] = validate_automated_evaluator_scope_report(report)
     return report
+
+
+def _automated_evaluator_environment_fixture_matrix(
+    evaluator_records: list[dict],
+    eval_stages: list,
+    llm_feedback: list,
+    runtime: Mapping[str, object],
+) -> dict:
+    records = [
+        {
+            "criterion_id": "local_machine_evaluator_present",
+            "evidence_status": "observed" if evaluator_records else "missing",
+            "claim_ready": bool(evaluator_records),
+            "evidence": "runtime report has automated evaluator records",
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "runtime_candidate_evaluation_observed",
+            "evidence_status": (
+                "observed"
+                if _positive_int(runtime.get("evaluated_program_count"))
+                else "missing"
+            ),
+            "claim_ready": _positive_int(runtime.get("evaluated_program_count")),
+            "evidence": "runtime_summary.evaluated_program_count",
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "configured_cascade_or_single_stage_boundary",
+            "evidence_status": "observed",
+            "claim_ready": True,
+            "evidence": (
+                "configured eval_stages"
+                if eval_stages
+                else "single default external validator stage"
+            ),
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "llm_feedback_post_evaluator_boundary",
+            "evidence_status": "observed" if llm_feedback else "not_configured",
+            "claim_ready": True,
+            "evidence": (
+                "configured LLM feedback is post-evaluator only"
+                if llm_feedback
+                else "no configured LLM feedback graders"
+            ),
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "robust_evaluator_environment_fixture",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": None,
+            "missing_for_alphaevolve": (
+                "benchmark fixture proving evaluator robustness under sustained search"
+            ),
+        },
+        {
+            "criterion_id": "manual_to_code_transition_criteria",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": None,
+            "missing_for_alphaevolve": (
+                "policy for moving manual or idea-stage evidence into executable evaluation"
+            ),
+        },
+        {
+            "criterion_id": "automatable_domain_boundary",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": None,
+            "missing_for_alphaevolve": (
+                "domain-specific statement of automatable versus experimental surfaces"
+            ),
+        },
+        {
+            "criterion_id": "environment_scaling_evidence",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": None,
+            "missing_for_alphaevolve": (
+                "setup effort, cost, and expected discovery-value scaling evidence"
+            ),
+        },
+    ]
+    observed_ready_count = sum(1 for record in records if record["claim_ready"] is True)
+    missing_ready_count = sum(1 for record in records if record["claim_ready"] is False)
+    return {
+        "schema": "libreevolve.automated_evaluator_environment_fixture_matrix.v1",
+        "status": "local_scope_with_robust_fixture_gaps",
+        "record_count": len(records),
+        "observed_ready_count": observed_ready_count,
+        "missing_ready_count": missing_ready_count,
+        "records": records,
+        "claim_ready": False,
+        "remaining_gap": [
+            "robust_evaluator_environment_fixture",
+            "manual_to_code_transition_criteria",
+            "automatable_domain_boundary",
+            "environment_scaling_evidence",
+        ],
+    }
+
+
+def _positive_int(value: object) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool) and value > 0
 
 
 def _qualitative_feedback_policy_report(
@@ -22806,6 +22928,7 @@ def validate_automated_evaluator_scope_report(report: object) -> dict:
         "manual_experiment_boundary",
         "llm_only_idea_feedback_boundary",
         "environment_readiness",
+        "environment_fixture_matrix",
         "claim_ready",
         "claim_readiness",
     }
@@ -22975,6 +23098,33 @@ def validate_automated_evaluator_scope_report(report: object) -> dict:
                 "message": "environment_readiness must be an object",
             }
         )
+    else:
+        for field in ("fixture_observed_ready_count", "fixture_missing_ready_count"):
+            value = readiness.get(field)
+            if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+                issues.append(
+                    {
+                        "code": f"invalid_environment_readiness_{field}",
+                        "message": f"environment_readiness.{field} must be non-negative",
+                    }
+                )
+        if readiness.get("robust_environment_fixture") is not False:
+            issues.append(
+                {
+                    "code": "invalid_robust_environment_fixture_claim",
+                    "message": "robust_environment_fixture must remain false",
+                }
+            )
+    fixture_matrix = report.get("environment_fixture_matrix")
+    if not isinstance(fixture_matrix, dict):
+        issues.append(
+            {
+                "code": "invalid_environment_fixture_matrix",
+                "message": "environment_fixture_matrix must be an object",
+            }
+        )
+    else:
+        _validate_automated_environment_fixture_matrix(fixture_matrix, issues)
     if report.get("claim_ready") is not False:
         issues.append(
             {
@@ -22987,6 +23137,123 @@ def validate_automated_evaluator_scope_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_automated_environment_fixture_matrix(
+    matrix: Mapping[str, object],
+    issues: list[dict],
+) -> None:
+    if (
+        matrix.get("schema")
+        != "libreevolve.automated_evaluator_environment_fixture_matrix.v1"
+    ):
+        issues.append(
+            {
+                "code": "invalid_environment_fixture_matrix_schema",
+                "message": "environment fixture matrix schema is unsupported",
+            }
+        )
+    if matrix.get("status") != "local_scope_with_robust_fixture_gaps":
+        issues.append(
+            {
+                "code": "invalid_environment_fixture_matrix_status",
+                "message": "environment fixture matrix status is unsupported",
+            }
+        )
+    records = matrix.get("records")
+    if not isinstance(records, list):
+        issues.append(
+            {
+                "code": "invalid_environment_fixture_matrix_records",
+                "message": "environment fixture matrix records must be a list",
+            }
+        )
+        records = []
+    required_missing = {
+        "robust_evaluator_environment_fixture",
+        "manual_to_code_transition_criteria",
+        "automatable_domain_boundary",
+        "environment_scaling_evidence",
+    }
+    observed_missing: set[str] = set()
+    ready_count = 0
+    missing_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_environment_fixture_matrix_record",
+                    "message": f"environment fixture matrix record {index} must be an object",
+                }
+            )
+            continue
+        criterion_id = record.get("criterion_id")
+        if not isinstance(criterion_id, str) or not criterion_id:
+            issues.append(
+                {
+                    "code": "invalid_environment_fixture_matrix_criterion",
+                    "message": f"environment fixture matrix record {index} needs criterion_id",
+                }
+            )
+            continue
+        if record.get("claim_ready") is True:
+            ready_count += 1
+        elif record.get("claim_ready") is False:
+            missing_count += 1
+            if criterion_id in required_missing:
+                observed_missing.add(criterion_id)
+        else:
+            issues.append(
+                {
+                    "code": "invalid_environment_fixture_matrix_claim_ready",
+                    "message": f"environment fixture matrix record {index} claim_ready must be boolean",
+                }
+            )
+        if (
+            criterion_id in required_missing
+            and record.get("evidence_status") != "missing"
+        ):
+            issues.append(
+                {
+                    "code": "environment_fixture_matrix_overclaim",
+                    "message": f"{criterion_id} must remain missing",
+                }
+            )
+    if matrix.get("record_count") != len(records):
+        issues.append(
+            {
+                "code": "invalid_environment_fixture_matrix_record_count",
+                "message": "environment fixture matrix record_count must match records",
+            }
+        )
+    if matrix.get("observed_ready_count") != ready_count:
+        issues.append(
+            {
+                "code": "invalid_environment_fixture_matrix_ready_count",
+                "message": "observed_ready_count must match ready records",
+            }
+        )
+    if matrix.get("missing_ready_count") != missing_count:
+        issues.append(
+            {
+                "code": "invalid_environment_fixture_matrix_missing_count",
+                "message": "missing_ready_count must match missing records",
+            }
+        )
+    if not required_missing.issubset(observed_missing):
+        issues.append(
+            {
+                "code": "missing_environment_fixture_gap_records",
+                "message": "environment fixture matrix must include all robust fixture gaps",
+            }
+        )
+    if matrix.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "environment_fixture_matrix_claim_ready_overclaim",
+                "message": "environment fixture matrix must not claim readiness",
+            }
+        )
 
 
 def _programmatic_representation_boundary_report(

@@ -1886,9 +1886,10 @@ Important limits:
   and codebase-scale readiness, materialization/topology readiness,
   mutation-mode and operator provenance, prompt-copy and cross-file
   consistency, initial-pool/static-binary policy, resume replay and
-  manifest/workspace-doc policy, and stale readiness/owner signoff. This is
-  not an implemented candidate-workspace fidelity gate or proof of full
-  AlphaEvolve-style workspace readiness.
+  manifest/workspace-doc policy, and stale readiness/owner signoff, plus a
+  per-surface candidate-workspace claim guard. This is not an implemented
+  candidate-workspace fidelity gate or proof of full AlphaEvolve-style
+  workspace readiness.
 - ROADMAP multi-objective search evidence now records eight criteria for paper
   metric bundles, objective-archive policy, metric-diverse sampling balance,
   duplicate-work memory, descriptor authority, MAP-Elites illumination,

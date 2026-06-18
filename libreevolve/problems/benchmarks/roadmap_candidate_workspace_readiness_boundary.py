@@ -251,6 +251,7 @@ def roadmap_candidate_workspace_readiness_boundary_record(
     root_path = Path(root)
     source_boundary = roadmap_candidate_workspace_fidelity_boundary_record(root_path)
     records = [_criterion_record(root_path, spec) for spec in CRITERION_SPECS]
+    claim_guard = [_claim_guard_record(record) for record in records]
     sidecar_ref_count = sum(len(record["sidecar_refs"]) for record in records)
     active_todo_ref_count = sum(len(record["active_todo_refs"]) for record in records)
     return {
@@ -266,19 +267,22 @@ def roadmap_candidate_workspace_readiness_boundary_record(
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
         "readiness_criteria": records,
+        "candidate_workspace_claim_guard": claim_guard,
+        "candidate_workspace_claim_guard_count": len(claim_guard),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records candidate-workspace readiness criteria tied "
-            "to the bounded candidate-workspace fidelity matrix. It does not "
-            "claim configured language/build runners, flexible solution "
-            "abstraction API, candidate-embedded evaluator contracts, "
-            "realistic codebase fixtures, adaptive mutation-mode selection, "
-            "mutation-operator family provenance, semantic prompt-example-copy "
-            "detection, cross-file consistency benchmark evidence, "
-            "initial-pool divergence benchmark evidence, static/binary replay "
-            "policy, topology resume replay proof, stale-readiness detector, "
-            "or owner review signoff."
+            "to the bounded candidate-workspace fidelity matrix, plus a claim "
+            "guard for each workspace surface. It does not claim configured "
+            "language/build runners, flexible solution abstraction API, "
+            "candidate-embedded evaluator contracts, realistic codebase "
+            "fixtures, adaptive mutation-mode selection, mutation-operator "
+            "family provenance, semantic prompt-example-copy detection, "
+            "cross-file consistency benchmark evidence, initial-pool "
+            "divergence benchmark evidence, static/binary replay policy, "
+            "topology resume replay proof, stale-readiness detector, or owner "
+            "review signoff."
         ),
     }
 
@@ -316,6 +320,8 @@ def validate_roadmap_candidate_workspace_readiness_boundary(
         "sidecar_ref_count",
         "active_todo_ref_count",
         "readiness_criteria",
+        "candidate_workspace_claim_guard",
+        "candidate_workspace_claim_guard_count",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ROADMAP candidate-workspace inputs"))
@@ -325,10 +331,13 @@ def validate_roadmap_candidate_workspace_readiness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim configured language/build runners" not in boundary_text
+        or "claim guard for each workspace surface" not in boundary_text
         or "topology resume replay proof" not in boundary_text
         or "stale-readiness detector" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate readiness matrix from candidate-workspace fidelity"))
+    if data.get("candidate_workspace_claim_guard_count") != len(CRITERION_SPECS):
+        issues.append(_issue("invalid_candidate_workspace_claim_guard_count", "candidate-workspace claim guard count changed"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
         issues.append(_issue("invalid_required_evidence_field_count", "required evidence field count changed"))
     return RoadmapCandidateWorkspaceReadinessBoundaryValidation(
@@ -377,6 +386,17 @@ def _criterion_record(root: Path, spec: dict[str, Any]) -> dict[str, Any]:
         ],
         "validation_gate": spec["validation_gate"],
         "readiness_status": spec["readiness_status"],
+    }
+
+
+def _claim_guard_record(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "criterion_id": record["criterion_id"],
+        "search_surface": record["search_surface"],
+        "allowed_current_claim": record["current_scope"],
+        "missing_before_parity_claim": record["missing_readiness"],
+        "validation_gate": record["validation_gate"],
+        "readiness_status": record["readiness_status"],
     }
 
 

@@ -1,7 +1,74 @@
 {
   "active_todo_ref_count": 16,
   "boundary_status": "bounded_candidate_workspace_readiness_matrix_without_alphaevolve_workspace_gate",
-  "claim_boundary": "This boundary records candidate-workspace readiness criteria tied to the bounded candidate-workspace fidelity matrix. It does not claim configured language/build runners, flexible solution abstraction API, candidate-embedded evaluator contracts, realistic codebase fixtures, adaptive mutation-mode selection, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, stale-readiness detector, or owner review signoff.",
+  "candidate_workspace_claim_guard": [
+    {
+      "allowed_current_claim": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
+      "criterion_id": "language_build_and_candidate_api",
+      "missing_before_parity_claim": "configured language/build runners plus flexible solution abstraction API evidence",
+      "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate",
+      "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
+      "validation_gate": "language/build runner and candidate abstraction readiness gate"
+    },
+    {
+      "allowed_current_claim": "external validator contract, embedded-evaluator absence boundary, and smoke fixtures",
+      "criterion_id": "embedded_evaluator_and_codebase_scale",
+      "missing_before_parity_claim": "candidate-embedded evaluator contracts with realistic codebase fixtures",
+      "readiness_status": "external_validator_and_smoke_fixture_only",
+      "search_surface": "candidate-owned evaluator contracts and realistic codebase-scale fixtures",
+      "validation_gate": "embedded evaluator and codebase-scale fixture readiness gate"
+    },
+    {
+      "allowed_current_claim": "Python evolve-block handling, bounded topology diagnostics, and payload-shape integrity reports",
+      "criterion_id": "materialization_marker_and_topology",
+      "missing_before_parity_claim": "topology diagnostics that prove candidate workspace materialization and resume fidelity",
+      "readiness_status": "bounded_topology_diagnostics_without_replay_proof",
+      "search_surface": "marker materialization, workspace topology diagnostics, and source/workspace integrity",
+      "validation_gate": "workspace materialization and topology replay readiness gate"
+    },
+    {
+      "allowed_current_claim": "fixed parser surfaces and run-wide mutation reports",
+      "criterion_id": "mutation_mode_operator_provenance",
+      "missing_before_parity_claim": "adaptive mutation-mode selection with proposal-level operator-family provenance",
+      "readiness_status": "fixed_parser_surfaces_without_proposal_level_operator_policy",
+      "search_surface": "adaptive mutation mode selection and operator-family provenance",
+      "validation_gate": "adaptive mutation and operator provenance readiness gate"
+    },
+    {
+      "allowed_current_claim": "built-in copy diagnostics and best-effort Python AST symbol reports",
+      "criterion_id": "prompt_copy_and_cross_file_consistency",
+      "missing_before_parity_claim": "semantic prompt-example-copy detection and benchmarked cross-file consistency evidence",
+      "readiness_status": "diagnostic_reports_without_semantic_or_benchmark_gate",
+      "search_surface": "prompt-example copy detection and cross-file mutation consistency",
+      "validation_gate": "semantic copy and cross-file consistency readiness gate"
+    },
+    {
+      "allowed_current_claim": "bounded syntactic/metric initial-pool telemetry and copy-only static asset handling",
+      "criterion_id": "initial_pool_static_binary_policy",
+      "missing_before_parity_claim": "initial-pool divergence benchmark evidence plus static/binary replay policy",
+      "readiness_status": "syntactic_pool_distance_and_copy_only_assets",
+      "search_surface": "initial-pool divergence, program output discovery distance, and static/binary candidates",
+      "validation_gate": "initial-pool and static/binary replay readiness gate"
+    },
+    {
+      "allowed_current_claim": "snapshot restore and audit-only archive-event reconciliation without full resume proof",
+      "criterion_id": "resume_replay_and_manifest_policy",
+      "missing_before_parity_claim": "run-manifest and workspace-doc checks that prove replayable candidate-workspace resume semantics",
+      "readiness_status": "snapshot_restore_without_full_resume_replay_gate",
+      "search_surface": "archive-event replay, pending-work resume, run manifests, and workspace docs",
+      "validation_gate": "resume replay, run-manifest, and workspace-doc readiness gate"
+    },
+    {
+      "allowed_current_claim": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "missing_before_parity_claim": "stale-readiness detector and owner signoff before candidate-workspace fidelity claims",
+      "readiness_status": "inventory_without_readiness_signoff",
+      "search_surface": "README, ROADMAP, papers, run manifests, workspace docs, and owner readiness claims",
+      "validation_gate": "stale-readiness detector and owner signoff"
+    }
+  ],
+  "candidate_workspace_claim_guard_count": 8,
+  "claim_boundary": "This boundary records candidate-workspace readiness criteria tied to the bounded candidate-workspace fidelity matrix, plus a claim guard for each workspace surface. It does not claim configured language/build runners, flexible solution abstraction API, candidate-embedded evaluator contracts, realistic codebase fixtures, adaptive mutation-mode selection, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, stale-readiness detector, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "adaptive_mutation_mode_selection": "not_recorded_locally",

@@ -802,9 +802,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     materialization/topology readiness, mutation-mode and operator provenance,
     prompt-copy and cross-file consistency, initial-pool/static-binary policy,
     resume replay and manifest/workspace-doc policy, and stale
-    readiness/owner signoff.
-  - Current gap: the section-level matrix and readiness sidecar are bounded
-    readiness maps, not evidence that the missing candidate-workspace
+    readiness/owner signoff, plus a per-surface candidate-workspace claim
+    guard.
+  - Current gap: the per-surface candidate-workspace claim guard is a bounded
+    allowed-scope map, not evidence that the missing candidate-workspace
     capabilities are implemented. A passing Python workspace fixture, fixed
     diff parser, snapshot restore, or materialization diagnostic still must
     not be mistaken for complete AlphaEvolve-style workspace support.

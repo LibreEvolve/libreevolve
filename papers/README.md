@@ -3645,8 +3645,9 @@ Implemented:
   readiness, materialization/topology readiness, mutation-mode and operator
   provenance, prompt-copy and cross-file consistency, initial-pool/static-
   binary policy, resume replay and manifest/workspace-doc policy, and stale
-  readiness/owner signoff. It is not evidence that those candidate-workspace
-  readiness mechanisms are implemented.
+  readiness/owner signoff, plus a per-surface candidate-workspace claim guard.
+  It is not evidence that those candidate-workspace readiness mechanisms are
+  implemented.
 - `papers/implementation_evidence_map_boundary.json`: core AlphaEvolve
   implementation-evidence map boundary with requirement ids, module/test/
   sidecar/TODO anchors, and explicit missing-evidence fields for exhaustive

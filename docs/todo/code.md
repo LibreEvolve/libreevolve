@@ -251,8 +251,9 @@ sidecars, tests, and active TODOs.
     sidecar now records the paper-manifest-validated full-Figure-3 evaluator
     absence boundary, including missing default candidate-owned evaluator
     loading, Figure 3 codebase fixture identity, typed eval-input contracts
-    beyond JSON-safe config provenance, and the fact that external
-    `validate.py` remains the default outside all-embedded configs.
+    beyond JSON-safe config provenance, a machine-readable task-input replay
+    boundary for embedded and external-validator stages, and the fact that
+    external `validate.py` remains the default outside all-embedded configs.
     The evaluator input boundary is also narrower than AlphaEvolve-style
     task-input parity: embedded stages pass only JSON-safe configured
     `eval_inputs` whose raw value is hashed/not retained, while external

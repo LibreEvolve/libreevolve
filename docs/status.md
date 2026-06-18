@@ -219,7 +219,8 @@ Important limits:
   build/runtime isolation, generated/interactive task-input replay policy
   shared across embedded and external-validator stages, or
   non-static/external-validator causal score linkage; that boundary is tracked by
-  `papers/embedded_evaluator_boundary.json`.
+  `papers/embedded_evaluator_boundary.json`, including its task-input replay
+  sub-boundary.
 - Validator execution policy records are local-subprocess audit evidence:
   `policies.validator_execution`, `evaluation.metadata.validator_boundary`,
   `filesystem_capabilities`, and `resource_limit_policy` declare the current

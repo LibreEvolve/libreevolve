@@ -860,14 +860,16 @@ non-causal score-linkage policy.
 `embedded_evaluate` stage list and the `embedded_evaluate_math` fixture covers
 that embedded-only path. Default candidate-owned evaluator loading as the
 primary problem contract, Figure 3 codebase fixture identity, typed eval-input
-contracts beyond JSON-safe config provenance, build isolation beyond the local
+contracts beyond JSON-safe config provenance, generated/interactive task-input
+replay across embedded and external stages, build isolation beyond the local
 subprocess/workspace guard, and broader non-static/external-validator causal
 score-link resolution remain necessary before
 claiming Figure 3 evaluator parity. Supported embedded
 `evaluate(eval_inputs)` paths now record static AST score-field attribution
 when a returned metric expression depends on an EVOLVE block.
 The committed `papers/embedded_evaluator_boundary.json` sidecar now emits the
-`embedded_entrypoint_without_full_figure3_parity` boundary, and
+`embedded_entrypoint_without_full_figure3_parity` boundary with an explicit
+task-input replay sub-boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
 The committed `papers/figure3_supervised_exhibit_boundary.json` sidecar keeps
 the separate Figure 3 supervised-learning paper-example boundary explicit:

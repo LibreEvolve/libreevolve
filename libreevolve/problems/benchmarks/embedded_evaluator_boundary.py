@@ -22,6 +22,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "evaluate_signature",
     "eval_inputs_schema",
     "eval_inputs_type_contract",
+    "generated_task_input_stream",
+    "replayable_generated_input_artifact",
+    "interactive_task_input_capture_policy",
+    "unified_task_input_schema",
     "embedded_only_problem_definition",
     "default_candidate_owned_evaluator_policy",
     "figure3_codebase_fixture_identity",
@@ -41,6 +45,10 @@ EXPECTED_MISSING_EVIDENCE = {
     "default_candidate_owned_evaluator_loading": "not_recorded_locally",
     "figure3_codebase_fixture_identity": "not_recorded_locally",
     "eval_inputs_type_contract": "json_safe_config_only",
+    "generated_task_input_stream": "not_recorded_locally",
+    "replayable_generated_input_artifact": "not_recorded_locally",
+    "interactive_task_input_capture_policy": "not_recorded_locally",
+    "unified_embedded_and_external_task_input_schema": "not_recorded_locally",
     "external_validator_bypass_policy": "external_validate_py_remains_default",
     "build_isolation_policy": "not_recorded_locally",
     "non_static_score_field_causality": "not_recorded_locally",
@@ -88,6 +96,25 @@ def embedded_evaluator_boundary_record() -> dict[str, Any]:
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
+        "task_input_replay_boundary": {
+            "embedded_current_scope": (
+                "embedded_evaluate stages invoke evaluate(eval_inputs) with "
+                "JSON-safe configured values and redacted/hash-only raw input "
+                "provenance"
+            ),
+            "external_validator_current_scope": (
+                "external validator stdin metadata records unsupported "
+                "generated input and unsupported or fixture-text interactive "
+                "input provenance"
+            ),
+            "missing_before_task_input_parity": [
+                "generated task-input stream",
+                "replayable generated-input artifact",
+                "interactive task-input capture policy",
+                "unified task-input schema spanning embedded and external stages",
+            ],
+            "claim_ready": False,
+        },
         "claim_boundary": (
             "This boundary records that LibreEvolve has opt-in candidate-owned "
             "evaluate(eval_inputs) runtime evidence and static score-field "
@@ -97,9 +124,10 @@ def embedded_evaluator_boundary_record() -> dict[str, Any]:
             "causal score linkage, but does not claim full AlphaEvolve Figure 3 "
             "evaluator parity with default candidate-owned evaluator loading, "
             "Figure 3 codebase fixture identity, eval-input type contracts "
-            "beyond JSON-safe config, build isolation, non-static or external-"
-            "validator causal score linkage, or prompt/response exhibit "
-            "artifacts."
+            "beyond JSON-safe config, generated/interactive task-input replay "
+            "across embedded and external stages, build isolation, non-static "
+            "or external-validator causal score linkage, or prompt/response "
+            "exhibit artifacts."
         ),
     }
 
@@ -148,8 +176,10 @@ def validate_embedded_evaluator_boundary(
         or "default candidate-owned evaluator loading" not in boundary_text
         or "Figure 3 codebase fixture identity" not in boundary_text
         or "eval-input type contracts" not in boundary_text
+        or "generated/interactive task-input replay" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim full Figure 3 evaluator parity"))
+    _validate_task_input_replay_boundary(data.get("task_input_replay_boundary"), issues)
     return EmbeddedEvaluatorBoundaryValidation(
         ok=not issues,
         boundary_status=status if isinstance(status, str) else None,
@@ -237,6 +267,34 @@ def _validate_missing_evidence(
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
+
+
+def _validate_task_input_replay_boundary(
+    value: object,
+    issues: list[EmbeddedEvaluatorBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue("invalid_task_input_replay_boundary", "task_input_replay_boundary must be an object"))
+        return
+    required_text = {
+        "embedded_current_scope": "JSON-safe configured values",
+        "external_validator_current_scope": "unsupported generated input",
+    }
+    for key, marker in required_text.items():
+        text = value.get(key)
+        if not isinstance(text, str) or marker not in text:
+            issues.append(_issue(f"invalid_task_input_replay_boundary_{key}", f"{key} must mention {marker}"))
+    missing = value.get("missing_before_task_input_parity")
+    expected_missing = {
+        "generated task-input stream",
+        "replayable generated-input artifact",
+        "interactive task-input capture policy",
+        "unified task-input schema spanning embedded and external stages",
+    }
+    if not isinstance(missing, list) or set(missing) != expected_missing:
+        issues.append(_issue("invalid_task_input_replay_missing_fields", "task-input replay missing fields must match the current absence set"))
+    if value.get("claim_ready") is not False:
+        issues.append(_issue("task_input_replay_overclaim", "task-input replay boundary must not be claim-ready"))
 
 
 def _issue(code: str, message: str) -> EmbeddedEvaluatorBoundaryIssue:

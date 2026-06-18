@@ -1,24 +1,30 @@
 {
-  "schema": "libreevolve.alphaevolve_embedded_evaluator_entrypoint_boundary.v1",
-  "runtime_report_schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
-  "source_paper_id": "2506.13131",
-  "source_section_id": "2.1",
-  "source_section_ids": [
-    "2.1",
-    "2.3"
-  ],
-  "source_figure_ids": [
-    "Figure 3"
-  ],
-  "source_claim": "AlphaEvolve Figure 3 shows a candidate codebase skeleton exposing evaluate(eval_inputs) -> dict[str, float], with evaluators invoking that function to score the modified program; paper-ready parity requires candidate-owned evaluation to be the primary problem contract rather than only an opt-in local stage mode",
   "boundary_status": "embedded_entrypoint_without_full_figure3_parity",
-  "runtime_report_status": "embedded_evaluator_entrypoint_report_available",
+  "claim_boundary": "This boundary records that LibreEvolve has opt-in candidate-owned evaluate(eval_inputs) runtime evidence and static score-field attribution for supported embedded returns, plus a runtime-enforced materialized-candidate workspace dependency policy for local reads and imports, and external-validator stage metric visibility without causal score linkage, but does not claim full AlphaEvolve Figure 3 evaluator parity with default candidate-owned evaluator loading, Figure 3 codebase fixture identity, eval-input type contracts beyond JSON-safe config, generated/interactive task-input replay across embedded and external stages, build isolation, non-static or external-validator causal score linkage, or prompt/response exhibit artifacts.",
   "claim_ready": false,
+  "missing_evidence": {
+    "build_isolation_policy": "not_recorded_locally",
+    "default_candidate_owned_evaluator_loading": "not_recorded_locally",
+    "eval_inputs_type_contract": "json_safe_config_only",
+    "external_validator_bypass_policy": "external_validate_py_remains_default",
+    "external_validator_score_linkage": "stage_metric_visibility_recorded_causal_linkage_not_recorded",
+    "figure3_codebase_fixture_identity": "not_recorded_locally",
+    "figure3_prompt_and_response_exhibits": "not_recorded_locally",
+    "generated_task_input_stream": "not_recorded_locally",
+    "interactive_task_input_capture_policy": "not_recorded_locally",
+    "non_static_score_field_causality": "not_recorded_locally",
+    "replayable_generated_input_artifact": "not_recorded_locally",
+    "unified_embedded_and_external_task_input_schema": "not_recorded_locally"
+  },
   "required_evidence_fields": [
     "candidate_primary_file",
     "evaluate_signature",
     "eval_inputs_schema",
     "eval_inputs_type_contract",
+    "generated_task_input_stream",
+    "replayable_generated_input_artifact",
+    "interactive_task_input_capture_policy",
+    "unified_task_input_schema",
     "embedded_only_problem_definition",
     "default_candidate_owned_evaluator_policy",
     "figure3_codebase_fixture_identity",
@@ -34,15 +40,28 @@
     "figure3_prompt_exhibit_ref",
     "figure3_response_exhibit_ref"
   ],
-  "missing_evidence": {
-    "default_candidate_owned_evaluator_loading": "not_recorded_locally",
-    "figure3_codebase_fixture_identity": "not_recorded_locally",
-    "eval_inputs_type_contract": "json_safe_config_only",
-    "external_validator_bypass_policy": "external_validate_py_remains_default",
-    "build_isolation_policy": "not_recorded_locally",
-    "non_static_score_field_causality": "not_recorded_locally",
-    "external_validator_score_linkage": "stage_metric_visibility_recorded_causal_linkage_not_recorded",
-    "figure3_prompt_and_response_exhibits": "not_recorded_locally"
-  },
-  "claim_boundary": "This boundary records that LibreEvolve has opt-in candidate-owned evaluate(eval_inputs) runtime evidence and static score-field attribution for supported embedded returns, plus a runtime-enforced materialized-candidate workspace dependency policy for local reads and imports, and external-validator stage metric visibility without causal score linkage, but does not claim full AlphaEvolve Figure 3 evaluator parity with default candidate-owned evaluator loading, Figure 3 codebase fixture identity, eval-input type contracts beyond JSON-safe config, build isolation, non-static or external-validator causal score linkage, or prompt/response exhibit artifacts."
+  "runtime_report_schema": "libreevolve.embedded_evaluator_entrypoint_report.v1",
+  "runtime_report_status": "embedded_evaluator_entrypoint_report_available",
+  "schema": "libreevolve.alphaevolve_embedded_evaluator_entrypoint_boundary.v1",
+  "source_claim": "AlphaEvolve Figure 3 shows a candidate codebase skeleton exposing evaluate(eval_inputs) -> dict[str, float], with evaluators invoking that function to score the modified program; paper-ready parity requires candidate-owned evaluation to be the primary problem contract rather than only an opt-in local stage mode",
+  "source_figure_ids": [
+    "Figure 3"
+  ],
+  "source_paper_id": "2506.13131",
+  "source_section_id": "2.1",
+  "source_section_ids": [
+    "2.1",
+    "2.3"
+  ],
+  "task_input_replay_boundary": {
+    "claim_ready": false,
+    "embedded_current_scope": "embedded_evaluate stages invoke evaluate(eval_inputs) with JSON-safe configured values and redacted/hash-only raw input provenance",
+    "external_validator_current_scope": "external validator stdin metadata records unsupported generated input and unsupported or fixture-text interactive input provenance",
+    "missing_before_task_input_parity": [
+      "generated task-input stream",
+      "replayable generated-input artifact",
+      "interactive task-input capture policy",
+      "unified task-input schema spanning embedded and external stages"
+    ]
+  }
 }

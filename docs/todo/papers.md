@@ -304,8 +304,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     configs. The committed `papers/embedded_evaluator_boundary.json` sidecar
     now preserves missing default candidate-owned evaluator loading, Figure 3
     codebase fixture identity, eval-input type contracts, build isolation,
-    non-static score causality, external-validator causal score linkage, and
-    prompt/response exhibit artifacts.
+    generated/interactive task-input replay across embedded and external
+    stages, non-static score causality, external-validator causal score
+    linkage, and prompt/response exhibit artifacts.
     The task-input surface is narrower than this Figure 3 wording can imply:
     embedded stages only receive JSON-safe configured `eval_inputs` whose raw
     value is hashed/not retained, while external validator stdin provenance

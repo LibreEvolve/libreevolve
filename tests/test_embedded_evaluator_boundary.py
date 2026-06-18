@@ -13,8 +13,8 @@ def test_embedded_evaluator_boundary_accepts_absence_record():
 
     assert validation.ok is True
     assert validation.boundary_status == "embedded_entrypoint_without_full_figure3_parity"
-    assert validation.required_evidence_field_count == 18
-    assert validation.missing_evidence_count == 8
+    assert validation.required_evidence_field_count == 22
+    assert validation.missing_evidence_count == 12
     assert boundary["schema"] == EMBEDDED_EVALUATOR_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.1", "2.3"]
     assert boundary["source_figure_ids"] == ["Figure 3"]
@@ -30,6 +30,15 @@ def test_embedded_evaluator_boundary_accepts_absence_record():
         == "not_recorded_locally"
     )
     assert "Figure 3 codebase fixture identity" in boundary["claim_boundary"]
+    assert "generated_task_input_stream" in boundary["required_evidence_fields"]
+    assert (
+        boundary["missing_evidence"]["replayable_generated_input_artifact"]
+        == "not_recorded_locally"
+    )
+    assert boundary["task_input_replay_boundary"]["claim_ready"] is False
+    assert "generated task-input stream" in (
+        boundary["task_input_replay_boundary"]["missing_before_task_input_parity"]
+    )
 
 
 def test_embedded_evaluator_boundary_rejects_premature_figure3_claim():
@@ -40,6 +49,7 @@ def test_embedded_evaluator_boundary_rejects_premature_figure3_claim():
     boundary["source_figure_ids"] = ["Figure 2"]
     boundary["missing_evidence"]["build_isolation_policy"] = "recorded"
     boundary["required_evidence_fields"] = ["candidate_primary_file"]
+    boundary["task_input_replay_boundary"]["claim_ready"] = True
 
     validation = validate_embedded_evaluator_boundary(boundary)
     codes = {issue.code for issue in validation.issues}
@@ -51,6 +61,7 @@ def test_embedded_evaluator_boundary_rejects_premature_figure3_claim():
     assert "invalid_source_figure_ids" in codes
     assert "invalid_missing_evidence_build_isolation_policy" in codes
     assert "missing_required_evidence_field" in codes
+    assert "task_input_replay_overclaim" in codes
 
 
 def test_render_embedded_evaluator_boundary_summary_reports_shape():
@@ -61,5 +72,5 @@ def test_render_embedded_evaluator_boundary_summary_reports_shape():
     assert "AlphaEvolve embedded evaluator boundary" in summary
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | embedded_entrypoint_without_full_figure3_parity |" in summary
-    assert "| required_evidence_field_count | 18 |" in summary
-    assert "| missing_evidence_count | 8 |" in summary
+    assert "| required_evidence_field_count | 22 |" in summary
+    assert "| missing_evidence_count | 12 |" in summary

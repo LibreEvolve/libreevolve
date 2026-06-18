@@ -1783,8 +1783,8 @@ Important limits:
 - ROADMAP plugin-readiness evidence now records seven readiness criteria for
   trust boundaries, admission, direct constructor value/schema registry,
   versioned custom registry, artifact lifecycle hashes, runtime isolation, and
-  paper-scope/staleness guards. This is not an implemented external-plugin
-  readiness gate.
+  paper-scope/staleness guards, plus a per-surface plugin claim guard. This is
+  not an implemented external-plugin readiness gate.
 - ROADMAP backend-scheduling and critique evidence now records nine tracks:
   heuristic UCB rewards, role-scoped routing, provider diagnostics/pricing,
   cancellation/quarantine, fast/strong model mix, sample efficiency,

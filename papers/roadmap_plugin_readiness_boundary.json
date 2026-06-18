@@ -1,7 +1,7 @@
 {
   "active_todo_ref_count": 14,
   "boundary_status": "bounded_plugin_readiness_matrix_without_external_plugin_gate",
-  "claim_boundary": "This boundary records plugin-readiness criteria tied to the bounded plugin extensibility matrix. It does not claim a plugin trust-boundary matrix, plugin admission checklist, direct constructor value/schema registry, versioned custom plugin registry, artifact lifecycle hash policy, runtime isolation policy, paper-scope attribution and staleness guard, or owner review signoff.",
+  "claim_boundary": "This boundary records plugin-readiness criteria tied to the bounded plugin extensibility matrix, plus a claim guard for each plugin surface. It does not claim a plugin trust-boundary matrix, plugin admission checklist, direct constructor value/schema registry, versioned custom plugin registry, artifact lifecycle hash policy, runtime isolation policy, paper-scope attribution and staleness guard, or owner review signoff.",
   "claim_ready": false,
   "missing_evidence": {
     "artifact_lifecycle_hash_policy": "not_recorded_locally",
@@ -13,6 +13,65 @@
     "runtime_isolation_policy": "not_recorded_locally",
     "versioned_custom_plugin_registry": "not_recorded_locally"
   },
+  "plugin_claim_guard": [
+    {
+      "allowed_current_claim": "six static plugin surfaces with trust-boundary labels",
+      "criterion_id": "plugin_trust_boundary_matrix",
+      "missing_before_external_plugin_claim": "matrix separating trusted in-repo code, configured entry points, live direct instances, and future custom registries",
+      "plugin_surface": "built-in, entry-point, direct-instance, and future custom-registry plugins",
+      "readiness_status": "surface_labels_without_trust_matrix",
+      "validation_gate": "plugin trust-boundary matrix"
+    },
+    {
+      "allowed_current_claim": "entry-point metadata and direct-instance policy without external admission rules",
+      "criterion_id": "plugin_admission_checklist",
+      "missing_before_external_plugin_claim": "checklist for admitting external plugins before support claims are allowed",
+      "plugin_surface": "external plugin loading and support claims",
+      "readiness_status": "no_external_plugin_admission_checklist",
+      "validation_gate": "external plugin admission checklist"
+    },
+    {
+      "allowed_current_claim": "signature-only direct-instance policy that explicitly excludes values and arbitrary schemas",
+      "criterion_id": "direct_constructor_value_schema_registry",
+      "missing_before_external_plugin_claim": "registry for direct constructor value/schema evidence and allowed provenance capture",
+      "plugin_surface": "direct-instance constructor values, declared schemas, and provenance",
+      "readiness_status": "signature_only_without_value_schema_registry",
+      "validation_gate": "direct constructor value/schema registry"
+    },
+    {
+      "allowed_current_claim": "entry-point distribution metadata and direct module hashes only",
+      "criterion_id": "versioned_custom_plugin_registry",
+      "missing_before_external_plugin_claim": "versioned custom plugin registry with source/package identity and declared constructor policy",
+      "plugin_surface": "future direct custom plugin registries and package/source identity",
+      "readiness_status": "not_implemented",
+      "validation_gate": "versioned custom plugin registry"
+    },
+    {
+      "allowed_current_claim": "artifact summaries and aggregate emitted-artifact hashes without plugin-owned lifecycle policy",
+      "criterion_id": "artifact_lifecycle_hash_policy",
+      "missing_before_external_plugin_claim": "hash ownership policy for plugin artifacts across run artifacts and paper-facing artifacts",
+      "plugin_surface": "plugin artifacts, generated paper artifacts, and run bundle lifecycle",
+      "readiness_status": "artifact_summaries_without_lifecycle_policy",
+      "validation_gate": "plugin artifact lifecycle hash policy"
+    },
+    {
+      "allowed_current_claim": "fatal hook policy and recorded artifact failures without configurable isolation",
+      "criterion_id": "runtime_isolation_policy",
+      "missing_before_external_plugin_claim": "runtime isolation policy for optional plugin hooks and external plugin failures",
+      "plugin_surface": "plugin hook execution, quarantine, failure policy, and runtime trust",
+      "readiness_status": "fatal_policy_without_external_isolation",
+      "validation_gate": "plugin runtime isolation policy"
+    },
+    {
+      "allowed_current_claim": "paper-inspiration labels and approximation wording without full attribution policy",
+      "criterion_id": "paper_scope_attribution_and_staleness",
+      "missing_before_external_plugin_claim": "paper-scope attribution policy plus stale-readiness detector across README, papers, runtime metadata, and plugin docs",
+      "plugin_surface": "paper-inspired plugin scope, stale readiness, and cross-document overclaim prevention",
+      "readiness_status": "approximation_labels_without_policy_gate",
+      "validation_gate": "paper-scope attribution and stale-readiness guard"
+    }
+  ],
+  "plugin_claim_guard_count": 7,
   "readiness_criteria": [
     {
       "active_todo_refs": [

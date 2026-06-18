@@ -3515,9 +3515,9 @@ Implemented:
 - `papers/roadmap_plugin_readiness_boundary.json`: ROADMAP plugin readiness
   sidecar with seven criteria for trust boundaries, admission, direct
   constructor value/schema registry, versioned custom registry, artifact
-  lifecycle hashes, runtime isolation, and paper-scope/staleness guards. It is
-  not evidence that those external-plugin readiness mechanisms are
-  implemented.
+  lifecycle hashes, runtime isolation, and paper-scope/staleness guards, plus
+  a per-surface plugin claim guard. It is not evidence that those
+  external-plugin readiness mechanisms are implemented.
 - `papers/roadmap_backend_scheduling_critique_boundary.json`: ROADMAP
   backend-scheduling and critique sidecar with nine tracks, selection-policy,
   reward-assumption, budget/quota, pricing/default-rate, diagnostics/replay,

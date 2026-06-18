@@ -482,9 +482,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     criterion readiness matrix for the plugin trust-boundary matrix, plugin
     admission checklist, direct constructor value/schema registry, versioned
     custom plugin registry, artifact lifecycle hash policy, runtime isolation
-    policy, and paper-scope attribution/stale-readiness guard.
-  - Current gap: the sidecars are bounded plugin-surface and readiness maps,
-    not an external plugin readiness gate. There is still no implemented
+    policy, and paper-scope attribution/stale-readiness guard, plus a
+    per-surface plugin claim guard.
+  - Current gap: the per-surface plugin claim guard is a bounded allowed-scope
+    map, not an external plugin readiness gate. There is still no implemented
     plugin trust-boundary matrix, plugin admission checklist, direct
     constructor value/schema registry, versioned custom plugin registry,
     artifact lifecycle hash policy, runtime isolation policy, paper-scope

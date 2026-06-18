@@ -38,6 +38,20 @@ def test_roadmap_plugin_readiness_accepts_bounded_matrix():
         "runtime_isolation_policy",
         "paper_scope_attribution_and_staleness",
     ]
+    assert boundary["plugin_claim_guard_count"] == 7
+    assert [record["criterion_id"] for record in boundary["plugin_claim_guard"]] == [
+        "plugin_trust_boundary_matrix",
+        "plugin_admission_checklist",
+        "direct_constructor_value_schema_registry",
+        "versioned_custom_plugin_registry",
+        "artifact_lifecycle_hash_policy",
+        "runtime_isolation_policy",
+        "paper_scope_attribution_and_staleness",
+    ]
+    assert all(
+        "missing_before_external_plugin_claim" in record
+        for record in boundary["plugin_claim_guard"]
+    )
     assert all(
         sidecar["exists"]
         for record in boundary["readiness_criteria"]
@@ -59,6 +73,7 @@ def test_roadmap_plugin_readiness_accepts_bounded_matrix():
         "owner_review_signoff": "not_recorded_locally",
     }
     assert "does not claim a plugin trust-boundary matrix" in boundary["claim_boundary"]
+    assert "claim guard for each plugin surface" in boundary["claim_boundary"]
 
 
 def test_roadmap_plugin_readiness_rejects_overclaim_and_drift():
@@ -67,6 +82,7 @@ def test_roadmap_plugin_readiness_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "external_plugin_gate_ready"
     boundary["readiness_criterion_count"] = 0
     boundary["readiness_criteria"][0]["sidecar_refs"][0]["exists"] = False
+    boundary["plugin_claim_guard_count"] = 0
     boundary["missing_evidence"]["plugin_admission_checklist"] = "recorded"
     boundary["required_evidence_fields"] = ["plugin_trust_boundary_matrix"]
 
@@ -78,6 +94,7 @@ def test_roadmap_plugin_readiness_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_readiness_criterion_count" in codes
     assert "invalid_readiness_criteria" in codes
+    assert "invalid_plugin_claim_guard_count" in codes
     assert "invalid_missing_evidence_plugin_admission_checklist" in codes
     assert "missing_required_evidence_field" in codes
 

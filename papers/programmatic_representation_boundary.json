@@ -2,7 +2,7 @@
   "schema": "libreevolve.programmatic_representation_boundary.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve contrasts code candidates with programmatic evaluation functions against AI Co-Scientist-style natural-language hypotheses and natural-language evaluation criteria",
-  "boundary_status": "executable_code_representation_without_hallucination_or_bridge_evidence",
+  "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
   "runtime_report_schema": "libreevolve.programmatic_representation_boundary_report.v1",
   "runtime_report_status": "programmatic_representation_boundary_report_available",
   "claim_ready": false,
@@ -15,6 +15,7 @@
     "hypothesis_to_code_transition_required",
     "sample_candidate_representation_records",
     "runtime_generation_count_scope",
+    "representation_claim_gap_matrix",
     "hallucination_risk_measurement",
     "long_horizon_step_count_evidence",
     "natural_language_hypothesis_stage_contract",
@@ -30,5 +31,5 @@
     "proposal_quality_or_truth_model": "not_recorded_locally",
     "combined_ai_coscientist_workflow_evidence": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve manifests include runtime.history.programmatic_representation_boundary_report, which labels generated candidates as executable code workspaces, proposal idea/rationale/hypothesis text as natural-language context metadata rather than candidate representation, declared evaluator metrics and deterministic evaluator validity as programmatic criteria, optional LLM feedback as post-evaluator, and hypothesis-to-code transition as required. It does not claim hallucination-risk measurement, long-horizon step-count evidence, a natural-language hypothesis-stage contract, a natural-language-to-programmatic bridge, proposal-quality truth models, or combined AI-Co-Scientist workflow evidence."
+  "claim_boundary": "This boundary records that LibreEvolve manifests include runtime.history.programmatic_representation_boundary_report, which labels generated candidates as executable code workspaces, proposal idea/rationale/hypothesis text as natural-language context metadata rather than candidate representation, declared evaluator metrics and deterministic evaluator validity as programmatic criteria, optional LLM feedback as post-evaluator, hypothesis-to-code transition as required, and a representation claim gap matrix for structural evidence versus measured claims. It does not claim hallucination-risk measurement, long-horizon step-count evidence, a natural-language hypothesis-stage contract, a natural-language-to-programmatic bridge, proposal-quality truth models, or combined AI-Co-Scientist workflow evidence."
 }

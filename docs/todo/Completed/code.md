@@ -19252,3 +19252,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     proof.
   - Verification: focused automated-evaluator scope tests validate matrix
     counts and false robust-fixture readiness.
+- [x] Add programmatic representation measured-claim gap matrix.
+  - Spec evidence: AlphaEvolve Related Work says code/programmatic evaluation
+    substantially sidesteps hallucinations and supports many time steps, so
+    structural separation alone must not be treated as measured evidence.
+  - Status: `runtime.history.programmatic_representation_boundary_report` now
+    emits `libreevolve.programmatic_representation_claim_matrix.v1` with
+    observed structural criteria and explicit missing rows for
+    hallucination-risk measurement, long-horizon step-count evidence,
+    natural-language-to-programmatic bridge, and proposal truth/quality model.
+  - Remaining code gap: this is not measured hallucination resistance,
+    long-horizon evolution evidence, a bridge contract, or a proposal truth
+    model.
+  - Verification: focused programmatic-representation tests validate matrix
+    counts and false measured-claim readiness.

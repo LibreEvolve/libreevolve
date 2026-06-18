@@ -2305,7 +2305,12 @@ directory and using the AlphaEvolve paper as the primary specification.
     metadata rather than candidates, and declared evaluator metrics plus
     deterministic evaluator validity as programmatic criteria. The report keeps
     `claim_ready: false` for hallucination resistance, long-horizon evolution,
-    and full natural-language hypothesis-stage bridge claims. The committed
+    and full natural-language hypothesis-stage bridge claims. The report now
+    also includes `libreevolve.programmatic_representation_claim_matrix.v1`,
+    separating observed structural code/programmatic-evaluation evidence from
+    missing measured hallucination-risk, long-horizon,
+    natural-language-to-programmatic bridge, and proposal-truth evidence. The
+    committed
     `papers/programmatic_representation_boundary.json` sidecar preserves this
     structural code/programmatic-evaluation boundary.
   - Required result: add measured hallucination-risk controls, long-horizon

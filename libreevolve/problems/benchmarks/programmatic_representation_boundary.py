@@ -14,7 +14,7 @@ EXPECTED_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.programmatic_representation_boundary_report.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "executable_code_representation_without_hallucination_or_bridge_evidence"
+    "executable_code_representation_with_measured_claim_gap_matrix"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "executable_code_workspace_candidate_representation",
@@ -25,6 +25,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "hypothesis_to_code_transition_required",
     "sample_candidate_representation_records",
     "runtime_generation_count_scope",
+    "representation_claim_gap_matrix",
     "hallucination_risk_measurement",
     "long_horizon_step_count_evidence",
     "natural_language_hypothesis_stage_contract",
@@ -83,9 +84,10 @@ def programmatic_representation_boundary_record() -> dict[str, Any]:
             "context metadata rather than candidate representation, declared "
             "evaluator metrics and deterministic evaluator validity as "
             "programmatic criteria, optional LLM feedback as post-evaluator, "
-            "and hypothesis-to-code transition as required. It does not claim "
-            "hallucination-risk measurement, long-horizon step-count evidence, "
-            "a natural-language hypothesis-stage contract, a "
+            "hypothesis-to-code transition as required, and a representation "
+            "claim gap matrix for structural evidence versus measured claims. "
+            "It does not claim hallucination-risk measurement, long-horizon "
+            "step-count evidence, a natural-language hypothesis-stage contract, a "
             "natural-language-to-programmatic bridge, proposal-quality truth "
             "models, or combined AI-Co-Scientist workflow evidence."
         ),
@@ -129,6 +131,7 @@ def validate_programmatic_representation_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
+        or "representation claim gap matrix" not in boundary_text
         or "does not claim hallucination-risk measurement" not in boundary_text
         or "natural-language-to-programmatic bridge" not in boundary_text
     ):

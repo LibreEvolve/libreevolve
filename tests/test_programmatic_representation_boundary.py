@@ -14,13 +14,14 @@ def test_programmatic_representation_boundary_accepts_structural_boundary():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "executable_code_representation_without_hallucination_or_bridge_evidence"
+        == "executable_code_representation_with_measured_claim_gap_matrix"
     )
-    assert validation.required_evidence_field_count == 14
+    assert validation.required_evidence_field_count == 15
     assert validation.missing_evidence_count == 6
     assert boundary["schema"] == PROGRAMMATIC_REPRESENTATION_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert "does not claim hallucination-risk measurement" in boundary["claim_boundary"]
+    assert "representation claim gap matrix" in boundary["claim_boundary"]
 
 
 def test_programmatic_representation_boundary_rejects_bridge_overclaim():
@@ -55,8 +56,8 @@ def test_render_programmatic_representation_boundary_summary_reports_shape():
     assert "Programmatic representation boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | executable_code_representation_without_hallucination_or_bridge_evidence |"
+        "| boundary_status | executable_code_representation_with_measured_claim_gap_matrix |"
         in summary
     )
-    assert "| required_evidence_field_count | 14 |" in summary
+    assert "| required_evidence_field_count | 15 |" in summary
     assert "| missing_evidence_count | 6 |" in summary

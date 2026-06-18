@@ -15990,3 +15990,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     boundaries, setup/cost and expected-value evidence, manual-to-code
     transition policy, environment scaling proof, and owner review signoff
     remain active TODOs.
+- [x] Keep ROADMAP programmatic representation boundary current with measured
+      claim gaps.
+  - Spec evidence: ROADMAP AlphaEvolve representation gaps should distinguish
+    executable-code/programmatic-evaluation structure from measured
+    hallucination, long-horizon, bridge, and proposal-truth claims.
+  - Status: ROADMAP now records that
+    `runtime.history.programmatic_representation_boundary_report` includes
+    `libreevolve.programmatic_representation_claim_matrix.v1`.
+  - Remaining roadmap gap: hallucination-risk measurement, long-horizon
+    step-count evidence, natural-language-to-programmatic bridge contracts,
+    proposal truth/quality models, combined AI-Co-Scientist workflow evidence,
+    and owner review signoff remain active TODOs.

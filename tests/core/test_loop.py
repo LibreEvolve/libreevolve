@@ -3886,6 +3886,20 @@ x=2
         "context_metadata_only"
     )
     assert report["boundary_policy"]["transition_from_hypothesis_to_code_required"] is True
+    matrix = report["representation_claim_matrix"]
+    assert matrix["schema"] == (
+        "libreevolve.programmatic_representation_claim_matrix.v1"
+    )
+    assert matrix["status"] == "structural_boundary_with_measured_claim_gaps"
+    assert matrix["record_count"] == 8
+    assert matrix["observed_ready_count"] == 4
+    assert matrix["missing_ready_count"] == 4
+    matrix_by_id = {record["criterion_id"]: record for record in matrix["records"]}
+    assert matrix_by_id["executable_code_candidate_representation"]["claim_ready"] is True
+    assert matrix_by_id["programmatic_evaluation_criteria"]["claim_ready"] is True
+    assert matrix_by_id["hallucination_risk_measurement"]["claim_ready"] is False
+    assert matrix_by_id["natural_language_to_programmatic_bridge"]["claim_ready"] is False
+    assert matrix["claim_ready"] is False
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["hallucination_resistance_measured"] is False
     assert report["claim_readiness"]["long_horizon_evolution_measured"] is False

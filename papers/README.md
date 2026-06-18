@@ -1796,10 +1796,13 @@ generated candidates as executable code workspaces, labels captured proposal
 and keeps declared evaluator metrics plus deterministic evaluator validity as
 the programmatic criteria owner. The committed
 `papers/programmatic_representation_boundary.json` sidecar preserves this
-structural boundary. The report remains `claim_ready: false` for
-hallucination-resistance claims, long-horizon evolution claims, and any full
-natural-language hypothesis stage bridged into programmatic candidate
-evaluation.
+structural boundary. The report now also includes
+`libreevolve.programmatic_representation_claim_matrix.v1`, separating observed
+structural evidence from missing measured hallucination-risk, long-horizon,
+natural-language-to-programmatic bridge, and proposal-truth evidence. The
+report remains `claim_ready: false` for hallucination-resistance claims,
+long-horizon evolution claims, and any full natural-language hypothesis stage
+bridged into programmatic candidate evaluation.
 
 AlphaEvolve run-inspection note: `libreevolve show` streams history rows and
 validates ids, metrics, current-history evaluation shape, and archive

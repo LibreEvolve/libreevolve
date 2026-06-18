@@ -3669,11 +3669,15 @@ criteria.
 
 The report also records bounded generated-candidate samples, proposal-field
 counts, evaluated/valid generated counts, LLM-feedback boundary metadata, and
-the maximum observed generation in the current run. Its `claim_ready: false`
-boundary is intentional: it proves structural separation for the current run,
-not measured hallucination resistance, long-horizon evolution, or a full
-AI-Co-Scientist-style natural-language hypothesis stage bridged into
-programmatic candidate evaluation.
+the maximum observed generation in the current run. It also includes
+`libreevolve.programmatic_representation_claim_matrix.v1`, which separates
+observed structural evidence from missing measured claims for hallucination
+risk, long-horizon step counts, natural-language-to-programmatic bridges, and
+proposal truth/quality models. Its `claim_ready: false` boundary is
+intentional: it proves structural separation for the current run, not measured
+hallucination resistance, long-horizon evolution, or a full AI-Co-Scientist-
+style natural-language hypothesis stage bridged into programmatic candidate
+evaluation.
 
 ## `runtime.history.mutation_operator_boundary_report`
 

@@ -14309,3 +14309,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     contracts remain open.
   - Verification: focused automated-evaluator boundary tests require the
     matrix evidence while preserving robust-environment overclaim rejection.
+- [x] Add paper-facing programmatic representation measured-claim matrix.
+  - Paper evidence: AlphaEvolve Related Work contrasts AI-Co-Scientist
+    natural-language hypotheses and evaluation criteria with AlphaEvolve code
+    evolution and programmatic evaluation, while tying that representation
+    choice to hallucination and long-horizon claims.
+  - Status: paper-facing docs and
+    `papers/programmatic_representation_boundary.json` now cite
+    `libreevolve.programmatic_representation_claim_matrix.v1` as a bounded
+    separation between observed structural evidence and missing measured
+    claims.
+  - Remaining paper gap: hallucination-risk measurement, long-horizon
+    step-count evidence, natural-language-to-programmatic bridge contracts,
+    proposal truth/quality models, and combined AI-Co-Scientist workflow
+    evidence remain open.
+  - Verification: focused programmatic-representation boundary tests require
+    the matrix evidence while preserving overclaim rejection.

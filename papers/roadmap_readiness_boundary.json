@@ -26,15 +26,15 @@
           "path": "docs/todo/Completed/code.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1243,
-          "total_count": 1243
+          "completed_count": 1244,
+          "total_count": 1244
         }
       ],
       "active_count": 214,
-      "completed_count": 1243,
-      "total_count": 1457,
-      "raw_todo_completion_percent": 85.312,
-      "weighted_todo_completion_points": 42.656
+      "completed_count": 1244,
+      "total_count": 1458,
+      "raw_todo_completion_percent": 85.322,
+      "weighted_todo_completion_points": 42.661
     },
     {
       "category_id": "paper_source_and_benchmark_evidence",
@@ -56,15 +56,15 @@
           "path": "docs/todo/Completed/papers.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1060,
-          "total_count": 1060
+          "completed_count": 1061,
+          "total_count": 1061
         }
       ],
       "active_count": 243,
-      "completed_count": 1060,
-      "total_count": 1303,
-      "raw_todo_completion_percent": 81.351,
-      "weighted_todo_completion_points": 20.338
+      "completed_count": 1061,
+      "total_count": 1304,
+      "raw_todo_completion_percent": 81.365,
+      "weighted_todo_completion_points": 20.341
     },
     {
       "category_id": "documentation_truthfulness_and_user_scope",
@@ -116,22 +116,22 @@
           "path": "docs/todo/Completed/roadmap.md",
           "exists": true,
           "active_count": 0,
-          "completed_count": 1209,
-          "total_count": 1209
+          "completed_count": 1210,
+          "total_count": 1210
         }
       ],
       "active_count": 16,
-      "completed_count": 1209,
-      "total_count": 1225,
-      "raw_todo_completion_percent": 98.694,
+      "completed_count": 1210,
+      "total_count": 1226,
+      "raw_todo_completion_percent": 98.695,
       "weighted_todo_completion_points": 9.869
     }
   ],
   "raw_todo_ledger_active_count": 505,
-  "raw_todo_ledger_completed_count": 4696,
-  "raw_todo_ledger_total_count": 5201,
-  "raw_todo_ledger_completion_percent": 90.29,
-  "weighted_todo_ledger_completion_percent": 87.468,
+  "raw_todo_ledger_completed_count": 4699,
+  "raw_todo_ledger_total_count": 5204,
+  "raw_todo_ledger_completion_percent": 90.296,
+  "weighted_todo_ledger_completion_percent": 87.476,
   "readiness_percent_status": "todo_ledger_only_not_semantic_alphaevolve_readiness",
   "required_evidence_fields": [
     "stable_readiness_categories",

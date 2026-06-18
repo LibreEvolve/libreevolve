@@ -23364,6 +23364,15 @@ def _programmatic_representation_boundary_report(
             "natural_language_criteria_primary_gate": False,
             "transition_from_hypothesis_to_code_required": True,
         },
+        "representation_claim_matrix": _programmatic_representation_claim_matrix(
+            generated_candidate_count=generated_candidate_count,
+            executable_generated_count=executable_generated_count,
+            evaluated_generated_count=evaluated_generated_count,
+            valid_generated_count=valid_generated_count,
+            natural_language_proposal_count=natural_language_proposal_count,
+            metric_names=metric_names,
+            max_generation=max_generation,
+        ),
         "sample_records": records[:50],
         "records_truncated": len(records) > 50,
         "claim_ready": False,
@@ -23384,6 +23393,109 @@ def _programmatic_representation_boundary_report(
     }
     report["validation"] = validate_programmatic_representation_boundary_report(report)
     return report
+
+
+def _programmatic_representation_claim_matrix(
+    *,
+    generated_candidate_count: int,
+    executable_generated_count: int,
+    evaluated_generated_count: int,
+    valid_generated_count: int,
+    natural_language_proposal_count: int,
+    metric_names: list[str],
+    max_generation: int,
+) -> dict:
+    records = [
+        {
+            "criterion_id": "executable_code_candidate_representation",
+            "evidence_status": "observed"
+            if executable_generated_count > 0
+            else "missing",
+            "claim_ready": executable_generated_count > 0,
+            "evidence": "generated candidates are materialized as code workspaces",
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "programmatic_evaluation_criteria",
+            "evidence_status": "observed" if metric_names else "missing",
+            "claim_ready": bool(metric_names),
+            "evidence": "declared objective metrics and evaluator validity gate",
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "natural_language_metadata_separated",
+            "evidence_status": "observed"
+            if natural_language_proposal_count > 0
+            else "not_configured",
+            "claim_ready": True,
+            "evidence": "proposal idea/rationale/hypothesis retained as metadata",
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "runtime_code_evaluation_observed",
+            "evidence_status": "observed"
+            if evaluated_generated_count > 0
+            else "missing",
+            "claim_ready": evaluated_generated_count > 0,
+            "evidence": "generated candidates received programmatic evaluation",
+            "missing_for_alphaevolve": None,
+        },
+        {
+            "criterion_id": "hallucination_risk_measurement",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": None,
+            "missing_for_alphaevolve": (
+                "measured hallucination/fabrication rate or benchmark control"
+            ),
+        },
+        {
+            "criterion_id": "long_horizon_step_count_evidence",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": f"max_generation_observed={max_generation}",
+            "missing_for_alphaevolve": (
+                "thresholded long-horizon run evidence across many time steps"
+            ),
+        },
+        {
+            "criterion_id": "natural_language_to_programmatic_bridge",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": None,
+            "missing_for_alphaevolve": (
+                "contract for translating natural-language hypotheses into code candidates"
+            ),
+        },
+        {
+            "criterion_id": "proposal_quality_truth_model",
+            "evidence_status": "missing",
+            "claim_ready": False,
+            "evidence": None,
+            "missing_for_alphaevolve": (
+                "calibrated model or oracle for proposal truth/quality"
+            ),
+        },
+    ]
+    observed_ready_count = sum(1 for record in records if record["claim_ready"] is True)
+    missing_ready_count = sum(1 for record in records if record["claim_ready"] is False)
+    return {
+        "schema": "libreevolve.programmatic_representation_claim_matrix.v1",
+        "status": "structural_boundary_with_measured_claim_gaps",
+        "generated_candidate_count": generated_candidate_count,
+        "valid_generated_count": valid_generated_count,
+        "record_count": len(records),
+        "observed_ready_count": observed_ready_count,
+        "missing_ready_count": missing_ready_count,
+        "records": records,
+        "claim_ready": False,
+        "remaining_gap": [
+            "hallucination_risk_measurement",
+            "long_horizon_step_count_evidence",
+            "natural_language_to_programmatic_bridge",
+            "proposal_quality_truth_model",
+        ],
+    }
 
 
 def _programmatic_boundary_metric_names(objective_schema: Mapping[str, object]) -> list[str]:
@@ -23459,6 +23571,7 @@ def validate_programmatic_representation_boundary_report(report: object) -> dict
         "feedback_boundary",
         "runtime_step_scope",
         "boundary_policy",
+        "representation_claim_matrix",
         "sample_records",
         "records_truncated",
         "claim_ready",
@@ -23607,6 +23720,16 @@ def validate_programmatic_representation_boundary_report(report: object) -> dict
                     "message": "hypothesis-to-code transition must be required",
                 }
             )
+    claim_matrix = report.get("representation_claim_matrix")
+    if not isinstance(claim_matrix, dict):
+        issues.append(
+            {
+                "code": "invalid_representation_claim_matrix",
+                "message": "representation_claim_matrix must be an object",
+            }
+        )
+    else:
+        _validate_programmatic_representation_claim_matrix(claim_matrix, issues)
     records = report.get("sample_records")
     if not isinstance(records, list):
         issues.append(
@@ -23671,6 +23794,120 @@ def validate_programmatic_representation_boundary_report(report: object) -> dict
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_programmatic_representation_claim_matrix(
+    matrix: Mapping[str, object],
+    issues: list[dict],
+) -> None:
+    if matrix.get("schema") != "libreevolve.programmatic_representation_claim_matrix.v1":
+        issues.append(
+            {
+                "code": "invalid_representation_claim_matrix_schema",
+                "message": "representation claim matrix schema is unsupported",
+            }
+        )
+    if matrix.get("status") != "structural_boundary_with_measured_claim_gaps":
+        issues.append(
+            {
+                "code": "invalid_representation_claim_matrix_status",
+                "message": "representation claim matrix status is unsupported",
+            }
+        )
+    records = matrix.get("records")
+    if not isinstance(records, list):
+        issues.append(
+            {
+                "code": "invalid_representation_claim_matrix_records",
+                "message": "representation claim matrix records must be a list",
+            }
+        )
+        records = []
+    required_missing = {
+        "hallucination_risk_measurement",
+        "long_horizon_step_count_evidence",
+        "natural_language_to_programmatic_bridge",
+        "proposal_quality_truth_model",
+    }
+    observed_missing: set[str] = set()
+    ready_count = 0
+    missing_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append(
+                {
+                    "code": "invalid_representation_claim_matrix_record",
+                    "message": f"representation claim matrix record {index} must be an object",
+                }
+            )
+            continue
+        criterion_id = record.get("criterion_id")
+        if not isinstance(criterion_id, str) or not criterion_id:
+            issues.append(
+                {
+                    "code": "invalid_representation_claim_matrix_criterion",
+                    "message": f"representation claim matrix record {index} needs criterion_id",
+                }
+            )
+            continue
+        if record.get("claim_ready") is True:
+            ready_count += 1
+        elif record.get("claim_ready") is False:
+            missing_count += 1
+            if criterion_id in required_missing:
+                observed_missing.add(criterion_id)
+        else:
+            issues.append(
+                {
+                    "code": "invalid_representation_claim_matrix_claim_ready",
+                    "message": f"representation claim matrix record {index} claim_ready must be boolean",
+                }
+            )
+        if (
+            criterion_id in required_missing
+            and record.get("evidence_status") != "missing"
+        ):
+            issues.append(
+                {
+                    "code": "representation_claim_matrix_overclaim",
+                    "message": f"{criterion_id} must remain missing",
+                }
+            )
+    if matrix.get("record_count") != len(records):
+        issues.append(
+            {
+                "code": "invalid_representation_claim_matrix_record_count",
+                "message": "representation claim matrix record_count must match records",
+            }
+        )
+    if matrix.get("observed_ready_count") != ready_count:
+        issues.append(
+            {
+                "code": "invalid_representation_claim_matrix_ready_count",
+                "message": "observed_ready_count must match ready records",
+            }
+        )
+    if matrix.get("missing_ready_count") != missing_count:
+        issues.append(
+            {
+                "code": "invalid_representation_claim_matrix_missing_count",
+                "message": "missing_ready_count must match missing records",
+            }
+        )
+    if not required_missing.issubset(observed_missing):
+        issues.append(
+            {
+                "code": "missing_representation_claim_gap_records",
+                "message": "representation claim matrix must include measured-claim gaps",
+            }
+        )
+    if matrix.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "representation_claim_matrix_claim_ready_overclaim",
+                "message": "representation claim matrix must not claim readiness",
+            }
+        )
 
 
 def _mutation_operator_boundary_report(

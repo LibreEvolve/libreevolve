@@ -714,7 +714,11 @@ is not yet an AlphaEvolve reproduction.
   the current executable-code versus natural-language-proposal separation into
   measured hallucination-risk controls, long-horizon step-count evidence, and
   a real AI-Co-Scientist-style natural-language hypothesis stage that can
-  bridge into programmatic candidate evaluation. The committed
+  bridge into programmatic candidate evaluation. The report now includes
+  `libreevolve.programmatic_representation_claim_matrix.v1`, which records
+  structural code/programmatic-evaluation evidence separately from missing
+  measured hallucination, long-horizon, bridge, and proposal-truth evidence.
+  The committed
   `papers/programmatic_representation_boundary.json` sidecar preserves the
   current structural boundary without turning it into those measurement or
   bridge claims.

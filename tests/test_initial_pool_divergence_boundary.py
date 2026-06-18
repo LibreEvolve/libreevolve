@@ -12,14 +12,20 @@ def test_initial_pool_divergence_boundary_accepts_telemetry_boundary():
     validation = validate_initial_pool_divergence_boundary(boundary)
 
     assert validation.ok is True
-    assert validation.boundary_status == "syntactic_and_metric_divergence_telemetry_only"
+    assert (
+        validation.boundary_status
+        == "syntactic_metric_and_evaluator_output_telemetry_only"
+    )
     assert validation.required_evidence_field_count == 14
-    assert validation.missing_evidence_count == 7
+    assert validation.missing_evidence_count == 6
     assert boundary["schema"] == INITIAL_POOL_DIVERGENCE_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert (
         "does not claim task-specific functional-distance artifacts"
         in boundary["claim_boundary"]
+    )
+    assert "generic_evaluator_output_signature_distance" in (
+        boundary["required_evidence_fields"]
     )
 
 
@@ -50,6 +56,9 @@ def test_render_initial_pool_divergence_boundary_summary_reports_shape():
 
     assert "Initial-pool divergence boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| boundary_status | syntactic_and_metric_divergence_telemetry_only |" in summary
+    assert (
+        "| boundary_status | syntactic_metric_and_evaluator_output_telemetry_only |"
+        in summary
+    )
     assert "| required_evidence_field_count | 14 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| missing_evidence_count | 6 |" in summary

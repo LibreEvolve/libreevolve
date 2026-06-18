@@ -1234,15 +1234,24 @@ def test_runtime_history_reports_initial_pool_divergence_boundary():
     assert report["non_seed_workspace_count"] == 1
     assert report["max_primary_text_distance"] > 0.0
     assert report["max_numeric_metric_l1_distance"] > 0.0
+    assert report["max_evaluator_output_signature_distance"] > 0.0
     assert report["distance_policy"]["workspace_identity"] == (
         "canonical_workspace_sha256"
+    )
+    assert report["distance_policy"]["evaluator_output_distance"] == (
+        "bounded_json_evaluation_signature_sequence_distance"
     )
     assert report["distance_policy"]["functional_distance_artifacts"] is False
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["syntactic_distance_reported"] is True
     assert report["claim_readiness"]["metric_distance_reported"] is True
+    assert (
+        report["claim_readiness"]["generic_evaluator_output_distance_reported"]
+        is True
+    )
     assert report["claim_readiness"]["functional_distance_reported"] is False
     assert report["claim_readiness"]["substantially_different_claim_ready"] is False
+    assert report["seed_records"][0]["evaluator_output_signature"]["json_sha256"]
 
     candidate = report["candidate_records"][0]
     assert candidate["generation"] == 1
@@ -1252,6 +1261,8 @@ def test_runtime_history_reports_initial_pool_divergence_boundary():
     assert closest["exact_workspace_match"] is False
     assert closest["primary_text_distance"] > 0.0
     assert closest["numeric_metric_l1_distance"] > 0.0
+    assert closest["evaluator_output_signature_distance"] > 0.0
+    assert closest["exact_evaluator_output_match"] is False
     assert closest["shared_metric_names"] == ["score"]
     assert closest["changed_components"]["modified_file_count"] == 1
     assert closest["changed_components"]["modified_files"] == ["main.py"]

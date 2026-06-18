@@ -16825,13 +16825,30 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     `validate_initial_pool_divergence_report()`. The report compares generated
     candidates against generation-0 seed programs with canonical workspace
     hashes, bounded primary-file text distance, changed-component summaries,
-    and numeric metric L1 distance over shared metric names.
+    numeric metric L1 distance over shared metric names, and generic bounded
+    evaluator-output signature distance.
   - Remaining gap: task-specific functional-distance artifacts,
-    behavior/output-distance metrics, thresholds for substantially different
-    claims, and benchmark-level discovery-distance telemetry remain open.
+    task-specific behavior/output-distance metrics, thresholds for
+    substantially different claims, and benchmark-level discovery-distance
+    telemetry remain open.
   - Verification: focused loop tests cover manifest emission, validator
     success, seed/candidate counts, distance records, and unready claim
     boundaries.
+- [x] Add generic evaluator-output initial-pool distance telemetry.
+  - Spec evidence: AlphaEvolve frames discovery as moving beyond the initial
+    candidate pool in both syntax and function, so runtime evidence should not
+    stop at source text and scalar metric deltas.
+  - Status: `runtime.history.initial_pool_divergence_report` now records
+    bounded evaluator-output signatures for seeds and
+    `evaluator_output_signature_distance` / `exact_evaluator_output_match`
+    fields in candidate-to-seed comparisons.
+  - Remaining code gap: this is generic evaluator-payload signature distance,
+    not task-specific behavior/output distance, functional artifacts,
+    substantially-different thresholds, benchmark-level telemetry, or a
+    syntax/function joint claim gate.
+  - Verification: focused initial-pool divergence tests cover evaluator-output
+    signature hashes, distance fields, validator success, and false functional
+    readiness.
 
 - [x] Add run-local exact-workspace evaluator cache evidence.
   - Spec evidence: AlphaEvolve's generated-program database stores evaluated
@@ -18675,15 +18692,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 - [x] Add initial-pool divergence sidecar validation.
   - Status: `libreevolve/problems/benchmarks/initial_pool_divergence_boundary.py`
-    now emits and validates the syntactic-and-metric-divergence-telemetry-only
-    boundary for `runtime.history.initial_pool_divergence_report`, separating
-    seed baselines, generated workspace hashes, exact seed-match counts,
-    bounded primary-file text distance, changed-component summaries, numeric
-    metric L1 distance, and candidate-to-seed comparison records from
-    task-specific functional-distance artifacts, evaluator-output or behavior
-    distance metrics, substantially-different thresholds, benchmark-level
-    discovery-distance telemetry, cross-run tables, and syntax/function joint
-    claim gates.
+    now emits and validates the
+    syntactic-metric-and-evaluator-output-telemetry-only boundary for
+    `runtime.history.initial_pool_divergence_report`, separating seed
+    baselines, generated workspace hashes, exact seed-match counts, bounded
+    primary-file text distance, changed-component summaries, numeric metric L1
+    distance, generic evaluator-output signature distance, and
+    candidate-to-seed comparison records from task-specific functional-distance
+    artifacts, behavior distance metrics, substantially-different thresholds,
+    benchmark-level discovery-distance telemetry, cross-run tables, and
+    syntax/function joint claim gates.
   - Verification: focused boundary tests and paper-manifest tests reject
     functional discovery-distance overclaims, invalid boundary status, missing
     evidence drift, and incomplete required evidence fields.

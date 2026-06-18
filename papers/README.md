@@ -541,12 +541,13 @@ AlphaEvolve initial-pool divergence note: completed manifests now include
 `runtime.history.initial_pool_divergence_report`, which compares generated
 candidates against generation-0 seed programs with canonical workspace hashes,
 bounded primary-file text distance, changed-component summaries, and numeric
-metric L1 distance over shared metric names. This is paper-visible syntactic
-and metric-distance evidence, not task-specific functional-distance proof;
-evaluator-output distance, behavior/output-distance artifacts, thresholds for
-"substantially different" claims, benchmark-level discovery-distance
-telemetry, cross-run discovery-distance tables, and syntax/function joint
-claim gates remain open. The committed
+metric L1 distance over shared metric names, plus generic bounded
+evaluator-output signature distance. This is paper-visible syntactic, metric,
+and evaluator-output telemetry, not task-specific functional-distance proof;
+task-specific behavior/output-distance artifacts, thresholds for
+"substantially different" claims, benchmark-level discovery-distance telemetry,
+cross-run discovery-distance tables, and syntax/function joint claim gates
+remain open. The committed
 `papers/initial_pool_divergence_boundary.json` sidecar keeps this telemetry-
 only scope machine-validated.
 

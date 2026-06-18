@@ -13054,7 +13054,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Status: `ROADMAP.md` and the roadmap TODO ledger now cite
     `runtime.history.initial_pool_divergence_report` for canonical workspace
     hash comparisons, bounded primary-file text distance, changed-file
-    summaries, and numeric metric L1 evidence.
+    summaries, numeric metric L1 evidence, and generic evaluator-output
+    signature distance.
   - Remaining roadmap gap: task-specific functional artifacts,
     behavior/output-distance metrics, substantially-different thresholds, and
     benchmark-level discovery-distance telemetry remain open.
@@ -14783,23 +14784,33 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Status: ROADMAP now links
     `runtime.history.initial_pool_divergence_report` to
     `papers/initial_pool_divergence_boundary.json`, preserving the current
-    syntactic/shared-metric telemetry scope while keeping task-specific
-    functional artifacts, behavior/output distance metrics, substantially-
-    different thresholds, benchmark-level discovery-distance telemetry, and
-    syntax/function joint claim gates open.
+    syntactic/shared-metric/generic-evaluator-output telemetry scope while
+    keeping task-specific functional artifacts, behavior/output distance
+    metrics, substantially-different thresholds, benchmark-level
+    discovery-distance telemetry, and syntax/function joint claim gates open.
   - Verification: paper-manifest validation requires the committed sidecar and
     focused initial-pool divergence tests reject functional discovery-distance
     overclaims.
 
 - [x] Keep discovery-distance roadmap wording scoped until functional
       initial-pool divergence reports exist.
-  - Status: ROADMAP now separates current syntactic/shared-metric telemetry
-    from task-specific functional artifacts, evaluator-output distance,
+  - Status: ROADMAP now separates current syntactic/shared-metric/generic
+    evaluator-output telemetry from task-specific functional artifacts,
     behavior/output-distance metrics, substantially-different thresholds,
     benchmark-level discovery-distance telemetry, cross-run discovery-distance
     tables, and syntax/function joint claim gates.
   - Remaining roadmap gap: functional discovery-distance evidence remains
     tracked in active code and paper TODOs.
+
+- [x] Keep ROADMAP initial-pool divergence current with evaluator-output
+      telemetry.
+  - Status: ROADMAP now includes generic evaluator-output signature distance as
+    current `initial_pool_divergence_report` telemetry while preserving the
+    missing task-specific functional artifacts, behavior/output-distance
+    metrics, thresholds, benchmark telemetry, cross-run tables, and joint claim
+    gate.
+  - Remaining roadmap gap: functional discovery-distance evidence and owner
+    review signoff remain active TODOs.
 
 - [x] Keep roadmap duplicate-work policy boundary tied to sidecar.
   - Status: ROADMAP now links

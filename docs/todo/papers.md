@@ -2179,20 +2179,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runtime.history.initial_pool_divergence_report`, which compares generated
     candidates against generation-0 seed programs with canonical workspace
     hashes, bounded primary-file text distance, changed-component summaries,
-    and numeric metric L1 distance over shared metric names.
+    numeric metric L1 distance over shared metric names, and generic bounded
+    evaluator-output signature distance.
     `papers/initial_pool_divergence_boundary.json` now validates this as
     telemetry-only evidence, not functional discovery-distance proof.
-  - Current gap: paper-facing evidence still does not include evaluator-output
-    distance, task-specific functional-difference artifacts, behavior/output
-    distance, or thresholds proving that accepted candidates moved
-    substantially away from the starting pool in function. It also lacks
-    cross-run discovery-distance tables and a syntax/function joint claim gate.
-  - Required result: add functional-difference artifacts, behavior/output-
-    distance metrics, evaluator-output distance metrics, thresholds for
-    "substantially different" claims, benchmark-level discovery-distance
-    telemetry, cross-run discovery-distance tables, and a syntax/function joint
-    claim gate before using AlphaEvolve-style functional discovery-distance
-    wording.
+  - Current gap: paper-facing evidence still does not include task-specific
+    functional-difference artifacts, task behavior/output distance, or
+    thresholds proving that accepted candidates moved substantially away from
+    the starting pool in function. It also lacks cross-run discovery-distance
+    tables and a syntax/function joint claim gate.
+  - Required result: add functional-difference artifacts, task-specific
+    behavior/output-distance metrics beyond generic evaluator signatures,
+    thresholds for "substantially different" claims, benchmark-level
+    discovery-distance telemetry, cross-run discovery-distance tables, and a
+    syntax/function joint claim gate before using AlphaEvolve-style functional
+    discovery-distance wording.
 
 - [ ] Extend run-local duplicate-work cache into durable paper-visible memory.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.5.

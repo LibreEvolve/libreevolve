@@ -6978,6 +6978,15 @@ def _initial_pool_divergence_report(programs: list[Program]) -> dict:
         if record.get("closest_seed")
         and isinstance(record["closest_seed"].get("numeric_metric_l1_distance"), float)
     ]
+    evaluator_output_distances = [
+        record["closest_seed"]["evaluator_output_signature_distance"]
+        for record in candidate_records
+        if record.get("closest_seed")
+        and isinstance(
+            record["closest_seed"].get("evaluator_output_signature_distance"),
+            float,
+        )
+    ]
     report = {
         "schema": "libreevolve.initial_pool_divergence_report.v1",
         "source": "runtime_history_seed_and_generated_workspaces",
@@ -6991,6 +7000,10 @@ def _initial_pool_divergence_report(programs: list[Program]) -> dict:
         "non_seed_workspace_count": len(candidate_records) - exact_seed_match_count,
         "max_primary_text_distance": max(syntactic_distances, default=0.0),
         "max_numeric_metric_l1_distance": max(metric_distances, default=0.0),
+        "max_evaluator_output_signature_distance": max(
+            evaluator_output_distances,
+            default=0.0,
+        ),
         "distance_policy": {
             "schema": "libreevolve.initial_pool_divergence_policy.v1",
             "workspace_identity": "canonical_workspace_sha256",
@@ -6998,6 +7011,10 @@ def _initial_pool_divergence_report(programs: list[Program]) -> dict:
             "syntactic_distance_max_chars": 50000,
             "changed_component_summary": "text_file_set_added_removed_modified",
             "metric_distance": "numeric_metric_l1_over_shared_metric_names",
+            "evaluator_output_distance": (
+                "bounded_json_evaluation_signature_sequence_distance"
+            ),
+            "evaluator_output_distance_max_chars": 50000,
             "functional_distance_artifacts": False,
             "task_specific_behavior_distance": False,
         },
@@ -7006,12 +7023,15 @@ def _initial_pool_divergence_report(programs: list[Program]) -> dict:
             "seed_pool_baseline_recorded": bool(seed_records),
             "syntactic_distance_reported": bool(candidate_records),
             "metric_distance_reported": bool(metric_distances),
+            "generic_evaluator_output_distance_reported": bool(
+                evaluator_output_distances
+            ),
             "functional_distance_reported": False,
             "task_specific_behavior_artifacts": False,
             "substantially_different_claim_ready": False,
             "remaining_gap": [
                 "task_specific_functional_distance_artifacts",
-                "behavior_or_output_distance_metrics",
+                "task_specific_behavior_or_output_distance_metrics",
                 "thresholds_for_substantially_different_claims",
                 "benchmark_level_discovery_distance_telemetry",
             ],
@@ -7033,6 +7053,9 @@ def _initial_pool_seed_record(program: Program) -> dict:
         "primary_file": workspace.primary_file,
         "primary_file_chars": len(workspace.code),
         "numeric_metrics": _initial_pool_numeric_metrics(program),
+        "evaluator_output_signature": _initial_pool_evaluator_output_signature(
+            program
+        ),
     }
 
 
@@ -7074,6 +7097,10 @@ def _initial_pool_seed_comparison(program: Program, seed: Program) -> dict:
     seed_hash = _workspace_sha256(seed_workspace)
     changed = _initial_pool_changed_components(program_workspace, seed_workspace)
     metric_distance, metric_names = _initial_pool_metric_distance(program, seed)
+    evaluator_distance, evaluator_match = _initial_pool_evaluator_output_distance(
+        program,
+        seed,
+    )
     return {
         "seed_program_id": seed.id,
         "seed_index": seed.metadata.get("seed_index")
@@ -7088,6 +7115,8 @@ def _initial_pool_seed_comparison(program: Program, seed: Program) -> dict:
         "changed_components": changed,
         "numeric_metric_l1_distance": metric_distance,
         "shared_metric_names": metric_names,
+        "evaluator_output_signature_distance": evaluator_distance,
+        "exact_evaluator_output_match": evaluator_match,
     }
 
 
@@ -7148,6 +7177,62 @@ def _initial_pool_metric_distance(program: Program, seed: Program) -> tuple[floa
     return round(distance, 6), names
 
 
+def _initial_pool_evaluator_output_signature(program: Program) -> dict:
+    text = _initial_pool_evaluator_output_text(program)
+    return {
+        "schema": "libreevolve.initial_pool_evaluator_output_signature.v1",
+        "source": "evaluation_payload_without_runtime_cache_metadata",
+        "json_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "json_chars": len(text),
+        "json_distance_chars_used": min(len(text), 50000),
+        "truncated_for_distance": len(text) > 50000,
+        "top_level_fields": sorted(
+            _initial_pool_evaluator_output_payload(program).keys()
+        ),
+    }
+
+
+def _initial_pool_evaluator_output_distance(
+    program: Program,
+    seed: Program,
+) -> tuple[float, bool]:
+    left = _initial_pool_evaluator_output_text(program)
+    right = _initial_pool_evaluator_output_text(seed)
+    ratio = difflib.SequenceMatcher(
+        None,
+        left[:50000],
+        right[:50000],
+        autojunk=False,
+    ).ratio()
+    return (
+        round(1.0 - ratio, 6),
+        hashlib.sha256(left.encode("utf-8")).hexdigest()
+        == hashlib.sha256(right.encode("utf-8")).hexdigest(),
+    )
+
+
+def _initial_pool_evaluator_output_text(program: Program) -> str:
+    payload = _initial_pool_evaluator_output_payload(program)
+    raw = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    )
+    return redact_sensitive_text(raw)
+
+
+def _initial_pool_evaluator_output_payload(program: Program) -> dict:
+    evaluation = program.evaluation if isinstance(program.evaluation, Mapping) else {}
+    payload: dict[str, object] = {
+        "metrics": _evaluation_cache_json_value(dict(sorted(program.metrics.items()))),
+    }
+    for field in ("is_valid", "score", "error", "stdout", "stderr", "stages"):
+        if field in evaluation:
+            payload[field] = _evaluation_cache_json_value(evaluation.get(field))
+    return payload
+
+
 def validate_initial_pool_divergence_report(report: object) -> dict:
     issues: list[dict] = []
     if not isinstance(report, dict):
@@ -7174,6 +7259,7 @@ def validate_initial_pool_divergence_report(report: object) -> dict:
         "non_seed_workspace_count",
         "max_primary_text_distance",
         "max_numeric_metric_l1_distance",
+        "max_evaluator_output_signature_distance",
         "distance_policy",
         "claim_ready",
         "claim_readiness",
@@ -7217,7 +7303,11 @@ def validate_initial_pool_divergence_report(report: object) -> dict:
                     "message": f"{field} must be a non-negative integer",
                 }
             )
-    for field in ("max_primary_text_distance", "max_numeric_metric_l1_distance"):
+    for field in (
+        "max_primary_text_distance",
+        "max_numeric_metric_l1_distance",
+        "max_evaluator_output_signature_distance",
+    ):
         value = report.get(field)
         if (
             isinstance(value, bool)
@@ -7251,6 +7341,16 @@ def validate_initial_pool_divergence_report(report: object) -> dict:
                 {
                     "code": "invalid_seed_workspace_hash",
                     "message": f"seed record {index} workspace hash is invalid",
+                }
+            )
+        signature = record.get("evaluator_output_signature")
+        if not isinstance(signature, dict) or not _is_sha256_hex(
+            signature.get("json_sha256") if isinstance(signature, dict) else None
+        ):
+            issues.append(
+                {
+                    "code": "invalid_seed_evaluator_output_signature",
+                    "message": f"seed record {index} evaluator output signature is invalid",
                 }
             )
     candidate_records = report.get("candidate_records")
@@ -7310,6 +7410,27 @@ def validate_initial_pool_divergence_report(report: object) -> dict:
                             "message": f"candidate record {index} primary distance is invalid",
                         }
                     )
+                evaluator_distance = closest.get(
+                    "evaluator_output_signature_distance"
+                )
+                if (
+                    isinstance(evaluator_distance, bool)
+                    or not isinstance(evaluator_distance, (int, float))
+                    or not 0.0 <= float(evaluator_distance) <= 1.0
+                ):
+                    issues.append(
+                        {
+                            "code": "invalid_evaluator_output_signature_distance",
+                            "message": f"candidate record {index} evaluator output distance is invalid",
+                        }
+                    )
+                if not isinstance(closest.get("exact_evaluator_output_match"), bool):
+                    issues.append(
+                        {
+                            "code": "invalid_exact_evaluator_output_match",
+                            "message": f"candidate record {index} evaluator output match flag is invalid",
+                        }
+                    )
     if report.get("candidate_records_truncated") is not True:
         _validate_report_count(
             report,
@@ -7335,6 +7456,16 @@ def validate_initial_pool_divergence_report(report: object) -> dict:
                 "message": "functional distance artifacts must remain false",
             }
         )
+    if (
+        policy.get("evaluator_output_distance")
+        != "bounded_json_evaluation_signature_sequence_distance"
+    ):
+        issues.append(
+            {
+                "code": "invalid_evaluator_output_distance_policy",
+                "message": "evaluator output distance policy is unsupported",
+            }
+        )
     if policy.get("task_specific_behavior_distance") is not False:
         issues.append(
             {
@@ -7351,6 +7482,13 @@ def validate_initial_pool_divergence_report(report: object) -> dict:
             }
         )
         readiness = {}
+    if "generic_evaluator_output_distance_reported" not in readiness:
+        issues.append(
+            {
+                "code": "missing_generic_evaluator_output_distance_reported",
+                "message": "claim_readiness must record generic evaluator output distance status",
+            }
+        )
     for field in (
         "functional_distance_reported",
         "task_specific_behavior_artifacts",

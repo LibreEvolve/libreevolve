@@ -11581,13 +11581,29 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     `runtime.history.initial_pool_divergence_report`, which compares generated
     candidates against generation-0 seed programs with canonical workspace
     hashes, bounded primary-file text distance, changed-component summaries,
-    and numeric metric L1 distance over shared metric names.
+    numeric metric L1 distance over shared metric names, and generic bounded
+    evaluator-output signature distance.
   - Remaining paper gap: task-specific functional-distance artifacts,
-    behavior/output-distance metrics, thresholds for substantially different
-    claims, and benchmark-level discovery-distance telemetry remain
-    unimplemented.
+    task-specific behavior/output-distance metrics, thresholds for
+    substantially different claims, and benchmark-level discovery-distance
+    telemetry remain unimplemented.
   - Verification: focused loop tests cover the report, validator,
     seed/candidate counts, distance records, and unready claim boundaries.
+
+- [x] Add paper-facing generic evaluator-output divergence telemetry.
+  - Paper evidence: AlphaEvolve's introduction describes candidates that can
+    become substantially different from the initial pool in syntax and
+    function.
+  - Status: paper-facing docs and `papers/initial_pool_divergence_boundary.json`
+    now cite generic bounded evaluator-output signature distance in
+    `runtime.history.initial_pool_divergence_report`.
+  - Remaining paper gap: this is not task-specific functional-distance proof,
+    behavior/output artifacts, substantially-different thresholds,
+    benchmark-level discovery telemetry, cross-run tables, or a
+    syntax/function joint gate.
+  - Verification: focused initial-pool boundary tests require evaluator-output
+    signature evidence while preserving functional-discovery overclaim
+    rejection.
 
 - [x] Add paper-visible run-local duplicate-work cache evidence.
   - Paper evidence: AlphaEvolve Section 2.5 frames the generated-program
@@ -13803,11 +13819,11 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     distance claim: runtime manifests can show seed baselines, generated
     workspace hashes, exact seed-match counts, bounded primary-file text
     distance, changed-component summaries, numeric metric L1 distance, and
-    candidate-to-seed comparison records, while task-specific functional
-    artifacts, evaluator-output or behavior distance metrics, thresholds for
-    substantially different claims, benchmark-level telemetry, cross-run
-    discovery-distance tables, and joint syntax/function claim gates remain
-    absent.
+    generic evaluator-output signature distance in candidate-to-seed
+    comparison records, while task-specific functional artifacts,
+    behavior/output distance metrics, thresholds for substantially different
+    claims, benchmark-level telemetry, cross-run discovery-distance tables,
+    and joint syntax/function claim gates remain absent.
   - Verification: paper-manifest validation requires the sidecar at the repo
     root and focused initial-pool divergence tests reject functional
     discovery-distance overclaims.

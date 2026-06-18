@@ -11,7 +11,7 @@ INITIAL_POOL_DIVERGENCE_BOUNDARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_RUNTIME_REPORT_SCHEMA = "libreevolve.initial_pool_divergence_report.v1"
-EXPECTED_BOUNDARY_STATUS = "syntactic_and_metric_divergence_telemetry_only"
+EXPECTED_BOUNDARY_STATUS = "syntactic_metric_and_evaluator_output_telemetry_only"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "seed_pool_baseline_records",
     "generated_candidate_workspace_hashes",
@@ -19,9 +19,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "bounded_primary_file_text_distance",
     "changed_component_summary",
     "numeric_metric_l1_distance",
+    "generic_evaluator_output_signature_distance",
     "candidate_seed_comparison_records",
     "task_specific_functional_distance_artifacts",
-    "evaluator_output_distance_metrics",
     "behavior_or_output_distance_metrics",
     "substantially_different_threshold_policy",
     "benchmark_level_discovery_distance_telemetry",
@@ -30,7 +30,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "task_specific_functional_distance_artifacts": "not_recorded_locally",
-    "evaluator_output_distance_metrics": "not_recorded_locally",
     "behavior_or_output_distance_metrics": "not_recorded_locally",
     "substantially_different_threshold_policy": "not_recorded_locally",
     "benchmark_level_discovery_distance_telemetry": "not_recorded_locally",
@@ -77,12 +76,13 @@ def initial_pool_divergence_boundary_record() -> dict[str, Any]:
             "baseline records, generated candidate workspace hashes, exact "
             "seed workspace match counts, bounded primary-file text distance, "
             "changed component summaries, numeric metric L1 distance, and "
+            "generic bounded evaluator-output signature distance in "
             "candidate-to-seed comparison records. It does not claim "
-            "task-specific functional-distance artifacts, evaluator-output "
-            "distance metrics, behavior or output distance metrics, "
-            "substantially-different threshold policy, benchmark-level "
-            "discovery-distance telemetry, cross-run discovery-distance "
-            "tables, or a syntax-and-function joint claim gate."
+            "task-specific functional-distance artifacts, task-specific "
+            "behavior or output distance metrics, substantially-different "
+            "threshold policy, benchmark-level discovery-distance telemetry, "
+            "cross-run discovery-distance tables, or a syntax-and-function "
+            "joint claim gate."
         ),
     }
 
@@ -123,6 +123,7 @@ def validate_initial_pool_divergence_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim task-specific functional-distance artifacts" not in boundary_text
+        or "generic bounded evaluator-output signature distance" not in boundary_text
         or "substantially-different threshold policy" not in boundary_text
         or "syntax-and-function joint claim gate" not in boundary_text
     ):

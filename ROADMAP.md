@@ -537,13 +537,15 @@ is not yet an AlphaEvolve reproduction.
   diagnostic-scan-only scope machine-validated.
 - Extend `runtime.history.initial_pool_divergence_report` beyond current
   seed-vs-generated workspace hash, bounded primary-file text distance,
-  changed-file summary, and numeric metric L1 evidence into task-specific
-  functional artifacts, evaluator-output distance metrics, behavior/output-
-  distance metrics, thresholds for substantially different claims,
-  benchmark-level discovery-distance telemetry, cross-run discovery-distance
-  tables, and syntax/function joint claim gates. The committed
+  changed-file summary, numeric metric L1 evidence, and generic
+  evaluator-output signature distance into task-specific functional artifacts,
+  behavior/output-distance metrics, thresholds for substantially different
+  claims, benchmark-level discovery-distance telemetry, cross-run
+  discovery-distance tables, and syntax/function joint claim gates. The
+  committed
   `papers/initial_pool_divergence_boundary.json` sidecar keeps the current
-  syntactic-and-metric-telemetry-only scope machine-validated.
+  syntactic, metric, and evaluator-output-telemetry-only scope
+  machine-validated.
 - Extend binary/static candidate handling beyond the current bounded encoded
   static members, verified copy-only static assets, and raw direct-workspace
   byte normalization into richer binary mutation/replay policy.

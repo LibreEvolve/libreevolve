@@ -2885,16 +2885,18 @@ sidecars, tests, and active TODOs.
     `validate_initial_pool_divergence_report()`. The report compares generated
     candidates against generation-0 seed programs with canonical workspace
     hashes, bounded primary-file text distance, changed-component summaries,
-    and numeric metric L1 distance over shared metric names. It explicitly
-    keeps `claim_ready`, task-specific behavior distance, and functional
-    distance artifacts false. `papers/initial_pool_divergence_boundary.json`
-    now validates this as syntactic-and-metric telemetry only.
+    numeric metric L1 distance over shared metric names, and generic bounded
+    evaluator-output signature distance. It explicitly keeps `claim_ready`,
+    task-specific behavior distance, and functional distance artifacts false.
+    `papers/initial_pool_divergence_boundary.json` now validates this as
+    syntactic, metric, and evaluator-output telemetry only.
   - Required result: add evaluator-output or task-specific functional-
-    difference artifacts, behavior/output-distance metrics, thresholds for
-    substantially different claims, benchmark-level discovery-distance
-    telemetry, cross-run discovery-distance tables, and a syntax/function
-    joint claim gate before claiming AlphaEvolve-style functional discovery
-    distance from the starting pool.
+    difference artifacts beyond generic evaluator signatures, task-specific
+    behavior/output-distance metrics, thresholds for substantially different
+    claims, benchmark-level discovery-distance telemetry, cross-run
+    discovery-distance tables, and a syntax/function joint claim gate before
+    claiming AlphaEvolve-style functional discovery distance from the starting
+    pool.
 
 - [ ] Extend run-local duplicate-work cache into durable source/workspace
       deduplication policy.

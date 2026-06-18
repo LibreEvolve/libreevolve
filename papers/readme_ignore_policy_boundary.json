@@ -1,6 +1,6 @@
 {
   "schema": "libreevolve.readme_ignore_policy_boundary.v1",
-  "boundary_status": "readme_ignore_policy_static_inventory_with_rule_rationale_map_without_retention_drift_gate",
+  "boundary_status": "readme_ignore_policy_static_inventory_with_gitignore_filter_coverage",
   "claim_ready": false,
   "gitignore_path": ".gitignore",
   "readme_path": "README.md",
@@ -763,8 +763,8 @@
   "rule_rationale_map_status": "all_expected_gitignore_rules_have_rationale_map",
   "papers_ignore_rule_status": "papers_wildcard_ignored",
   "paper_manifest_allowlist_status": "core_paper_manifests_allowlisted",
-  "gitignore_workflow_filter_status": "gitignore_not_in_workflow_path_filters",
-  "evidence_anchor_count": 14,
+  "gitignore_workflow_filter_status": "gitignore_in_workflow_path_filters",
+  "evidence_anchor_count": 15,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -817,6 +817,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "workflow_gitignore_path_filter",
+      "path": ".github/workflows/tests.yml",
+      "required_marker": "\".gitignore\"",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "workflow_docs_path_filter",
       "path": ".github/workflows/tests.yml",
       "required_marker": "\"docs/**\"",
@@ -853,7 +859,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "ignore_policy_map_status": "readme_ignore_policy_static_map_present_with_gitignore_filter_gap",
+  "ignore_policy_map_status": "readme_ignore_policy_static_map_present_with_gitignore_filter_coverage",
   "required_evidence_fields": [
     "gitignore_ignore_rule_inventory",
     "gitignore_allowlist_rule_inventory",
@@ -870,11 +876,13 @@
     "retention_policy_drift_gate",
     "owner_review_signoff"
   ],
+  "resolved_evidence": {
+    "gitignore_workflow_path_filter": "recorded_in_push_and_pull_request_filters"
+  },
   "missing_evidence": {
     "tracked_vs_ignored_sidecar_inventory": "not_recorded_locally",
-    "gitignore_workflow_path_filter": "not_recorded_locally",
     "retention_policy_drift_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the .gitignore ignore-rule inventory, paper-manifest allowlist rules, run-artifact local-only policy, paper-PDF local-only policy, README Repository Layout ignore markers, papers-index ignore-policy markers, a rationale map for every expected ignore and allowlist rule, GitHub Actions README/docs/papers/tests/pyproject path filters, existing agent-doc workflow assertions, and active TODO ownership. It also records that .gitignore is not currently included in workflow path filters. It does not claim tracked-vs-ignored sidecar inventory, .gitignore workflow path-filter coverage, retention-policy drift gating, or owner review signoff."
+  "claim_boundary": "This boundary records the .gitignore ignore-rule inventory, paper-manifest allowlist rules, run-artifact local-only policy, paper-PDF local-only policy, README Repository Layout ignore markers, papers-index ignore-policy markers, a rationale map for every expected ignore and allowlist rule, GitHub Actions README/docs/papers/tests/pyproject/.gitignore path filters, existing agent-doc workflow assertions, and active TODO ownership. It also records resolved .gitignore workflow path-filter coverage. It does not claim tracked-vs-ignored sidecar inventory, retention-policy drift gating, or owner review signoff."
 }

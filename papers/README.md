@@ -3128,12 +3128,11 @@ Implemented:
   It records `.gitignore` ignore rules, paper-manifest allowlist rules, run-
   artifact local-only policy, paper-PDF local-only policy, README Repository
   Layout ignore markers, papers-index ignore-policy markers, GitHub Actions
-  README/docs/papers/tests/pyproject path filters, existing agent-doc workflow
+  README/docs/papers/tests/pyproject/`.gitignore` path filters, existing agent-doc workflow
   assertions, active TODO ownership, and a rationale map for every expected
-  ignore and allowlist rule. It also records that `.gitignore` is not currently
-  in workflow path filters. It is not tracked-vs-ignored sidecar inventory,
-  `.gitignore` workflow path-filter coverage, retention-policy drift gating,
-  or owner review signoff.
+  ignore and allowlist rule. It also records resolved `.gitignore` workflow
+  path-filter coverage. It is not tracked-vs-ignored sidecar inventory,
+  retention-policy drift gating, or owner review signoff.
 - `papers/readme_quick_start_smoke_boundary.json`: README quick-start smoke
   sidecar. It records the no-provider README command markers, focused smoke-
   test markers, expected `readme_smoke_sorting` run name, sorting example

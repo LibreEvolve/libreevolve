@@ -1095,21 +1095,21 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     outputs and cached paper PDFs are intentionally gitignored, and completed
     TODOs already cover the local-PDF allowlist boundary. GitHub Actions
     `push`/`pull_request` path filters cover docs, papers, tests, package
-    metadata, and the workflow file itself, but not `.gitignore`.
+    metadata, `.gitignore`, and the workflow file itself.
     `papers/readme_ignore_policy_boundary.json` now records `.gitignore`
     ignore rules, paper-manifest allowlist rules, run-artifact local-only
     policy, paper-PDF local-only policy, README Repository Layout ignore
     markers, papers-index ignore-policy markers, GitHub Actions
-    README/docs/papers/tests/pyproject path filters, existing agent-doc
+    README/docs/papers/tests/pyproject/`.gitignore` path filters, existing agent-doc
     workflow assertions, this active TODO owner, a rationale map for every
-    expected ignore and allowlist rule, and the current gap that `.gitignore`
-    is not in workflow path filters.
+    expected ignore and allowlist rule, and resolved `.gitignore` workflow
+    path-filter coverage.
   - Current gap: the README-owned sidecar is a static inventory, not a full
     retention-policy verifier. It maps expected ignore and negation rules to
     artifact classes, retention rationales, and existing documentation anchors,
     but it does not inventory tracked sidecars versus ignored sidecars; it does
-    not add `.gitignore` to workflow path filters; and it does not enforce a
-    drift gate or owner review signoff when ignore policy changes.
+    not enforce a retention-policy drift gate or owner review signoff when
+    ignore policy changes.
   - Required result: add an ignore-policy evidence map and validation gate
     that parses `.gitignore`, verifies ignored and allowlisted surfaces
     against README/docs/papers/TODO boundaries, checks workflow path filters

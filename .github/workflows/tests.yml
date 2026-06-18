@@ -10,6 +10,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/tests.yml"
+      - ".gitignore"
       - ".pre-commit-config.yaml"
       - ".secrets.baseline"
       - "AGENTS.md"
@@ -24,6 +25,7 @@ on:
   push:
     paths:
       - ".github/workflows/tests.yml"
+      - ".gitignore"
       - ".pre-commit-config.yaml"
       - ".secrets.baseline"
       - "AGENTS.md"

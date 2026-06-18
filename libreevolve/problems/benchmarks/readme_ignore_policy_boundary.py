@@ -8,7 +8,7 @@ from typing import Any
 
 README_IGNORE_POLICY_BOUNDARY_SCHEMA = "libreevolve.readme_ignore_policy_boundary.v1"
 EXPECTED_BOUNDARY_STATUS = (
-    "readme_ignore_policy_static_inventory_with_rule_rationale_map_without_retention_drift_gate"
+    "readme_ignore_policy_static_inventory_with_gitignore_filter_coverage"
 )
 GITIGNORE_PATH = ".gitignore"
 README_PATH = "README.md"
@@ -62,6 +62,7 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("papers_readme_pdf_policy", PAPERS_README_PATH, "PDFs are intentionally gitignored"),
     ("papers_readme_committed_policy", PAPERS_README_PATH, "The committed repository tracks this README, the CSV/JSON\nmanifests, sidecars, and that retained source artifact."),
     ("workflow_readme_path_filter", WORKFLOW_PATH, '"README.md"'),
+    ("workflow_gitignore_path_filter", WORKFLOW_PATH, '".gitignore"'),
     ("workflow_docs_path_filter", WORKFLOW_PATH, '"docs/**"'),
     ("workflow_papers_path_filter", WORKFLOW_PATH, '"papers/**"'),
     ("workflow_pyproject_path_filter", WORKFLOW_PATH, '"pyproject.toml"'),
@@ -144,9 +145,11 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "tracked_vs_ignored_sidecar_inventory": "not_recorded_locally",
-    "gitignore_workflow_path_filter": "not_recorded_locally",
     "retention_policy_drift_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
+}
+EXPECTED_RESOLVED_EVIDENCE = {
+    "gitignore_workflow_path_filter": "recorded_in_push_and_pull_request_filters",
 }
 
 
@@ -211,7 +214,7 @@ def readme_ignore_policy_boundary_record(root: str | Path = ".") -> dict[str, An
     static_map_present = (
         not missing_rule_records
         and not missing_evidence_anchors
-        and not gitignore_in_workflow
+        and gitignore_in_workflow
     )
     return {
         "schema": README_IGNORE_POLICY_BOUNDARY_SCHEMA,
@@ -247,20 +250,21 @@ def readme_ignore_policy_boundary_record(root: str | Path = ".") -> dict[str, An
             else "core_paper_manifests_not_allowlisted"
         ),
         "gitignore_workflow_filter_status": (
-            "gitignore_not_in_workflow_path_filters"
-            if not gitignore_in_workflow
-            else "gitignore_in_workflow_path_filters"
+            "gitignore_in_workflow_path_filters"
+            if gitignore_in_workflow
+            else "gitignore_not_in_workflow_path_filters"
         ),
         "evidence_anchor_count": len(evidence_anchor_records),
         "missing_evidence_anchor_count": len(missing_evidence_anchors),
         "missing_evidence_anchor_records": missing_evidence_anchors,
         "evidence_anchor_records": evidence_anchor_records,
         "ignore_policy_map_status": (
-            "readme_ignore_policy_static_map_present_with_gitignore_filter_gap"
+            "readme_ignore_policy_static_map_present_with_gitignore_filter_coverage"
             if static_map_present
             else "readme_ignore_policy_static_map_incomplete"
         ),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
+        "resolved_evidence": dict(EXPECTED_RESOLVED_EVIDENCE),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records the .gitignore ignore-rule inventory, "
@@ -268,12 +272,11 @@ def readme_ignore_policy_boundary_record(root: str | Path = ".") -> dict[str, An
             "paper-PDF local-only policy, README Repository Layout ignore "
             "markers, papers-index ignore-policy markers, a rationale map for "
             "every expected ignore and allowlist rule, GitHub Actions README/"
-            "docs/papers/tests/pyproject path filters, existing agent-doc "
+            "docs/papers/tests/pyproject/.gitignore path filters, existing agent-doc "
             "workflow assertions, and active TODO ownership. It also records "
-            "that .gitignore is not currently included in workflow path filters. "
-            "It does not claim tracked-vs-ignored sidecar inventory, .gitignore "
-            "workflow path-filter coverage, retention-policy drift gating, or "
-            "owner review signoff."
+            "resolved .gitignore workflow path-filter coverage. It does not "
+            "claim tracked-vs-ignored sidecar inventory, retention-policy "
+            "drift gating, or owner review signoff."
         ),
     }
 
@@ -323,6 +326,7 @@ def validate_readme_ignore_policy_boundary(
         "missing_evidence_anchor_records",
         "evidence_anchor_records",
         "ignore_policy_map_status",
+        "resolved_evidence",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current ignore-policy inputs"))
@@ -334,10 +338,10 @@ def validate_readme_ignore_policy_boundary(
         issues.append(_issue("invalid_rule_rationale_map_status", "expected .gitignore rationale map is incomplete"))
     if data.get("missing_evidence_anchor_count") != 0:
         issues.append(_issue("missing_ignore_policy_evidence_anchor", "ignore-policy evidence anchors are incomplete"))
-    if data.get("gitignore_workflow_filter_status") != "gitignore_not_in_workflow_path_filters":
-        issues.append(_issue("unexpected_gitignore_workflow_filter_status", "current boundary expects the .gitignore path-filter gap to remain explicit"))
-    if data.get("ignore_policy_map_status") != "readme_ignore_policy_static_map_present_with_gitignore_filter_gap":
-        issues.append(_issue("invalid_ignore_policy_map_status", "README ignore-policy static map must be present with the current .gitignore filter gap"))
+    if data.get("gitignore_workflow_filter_status") != "gitignore_in_workflow_path_filters":
+        issues.append(_issue("invalid_gitignore_workflow_filter_status", ".gitignore must be included in workflow path filters"))
+    if data.get("ignore_policy_map_status") != "readme_ignore_policy_static_map_present_with_gitignore_filter_coverage":
+        issues.append(_issue("invalid_ignore_policy_map_status", "README ignore-policy static map must include .gitignore filter coverage"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):
@@ -346,7 +350,7 @@ def validate_readme_ignore_policy_boundary(
     if (
         not isinstance(boundary_text, str)
         or ".gitignore ignore-rule inventory" not in boundary_text
-        or ".gitignore is not currently included in workflow path filters" not in boundary_text
+        or "resolved .gitignore workflow path-filter coverage" not in boundary_text
         or "rationale map for every expected ignore and allowlist rule" not in boundary_text
         or "does not claim tracked-vs-ignored sidecar inventory" not in boundary_text
     ):

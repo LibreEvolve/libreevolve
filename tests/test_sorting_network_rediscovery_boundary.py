@@ -14,8 +14,8 @@ def test_sorting_network_rediscovery_boundary_accepts_absence_record():
     assert validation.ok is True
     assert validation.boundary_status == "executable_candidate_only"
     assert validation.problem_count == 2
-    assert validation.required_evidence_field_count == 22
-    assert validation.missing_evidence_count == 9
+    assert validation.required_evidence_field_count == 23
+    assert validation.missing_evidence_count == 7
     assert boundary["schema"] == SORTING_NETWORK_REDISCOVERY_BOUNDARY_SCHEMA
     assert boundary["problem_ids"] == ["sorting_network_8", "sorting_network_9"]
     assert boundary["implemented_candidate_evidence"]["sorting_network_8"][
@@ -45,7 +45,11 @@ def test_sorting_network_rediscovery_boundary_accepts_absence_record():
     assert boundary["implemented_candidate_evidence"]["sorting_network_9"][
         "benchmark_provider_profile_validator"
     ] == "libreevolve/problems/benchmarks/benchmark_provider_profile.py"
-    assert "does not claim source-cited benchmark calibration" in boundary["claim_boundary"]
+    assert boundary["implemented_candidate_evidence"]["sorting_network_9"][
+        "sorting_network_source_citation_sidecar"
+    ] == "papers/sorting_network_source_citation_boundary.json"
+    assert "source-citation calibration" in boundary["claim_boundary"]
+    assert "does not claim fixed-budget repeated-run rediscovery" in boundary["claim_boundary"]
 
 
 def test_sorting_network_rediscovery_boundary_rejects_premature_claim():
@@ -106,5 +110,5 @@ def test_render_sorting_network_rediscovery_boundary_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert "| boundary_status | executable_candidate_only |" in summary
     assert "| problem_count | 2 |" in summary
-    assert "| required_evidence_field_count | 22 |" in summary
-    assert "| missing_evidence_count | 9 |" in summary
+    assert "| required_evidence_field_count | 23 |" in summary
+    assert "| missing_evidence_count | 7 |" in summary

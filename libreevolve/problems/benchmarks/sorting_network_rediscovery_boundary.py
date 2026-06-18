@@ -25,6 +25,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "run_contract_prompt_provenance_requirement",
     "benchmark_provider_profile_artifact",
     "benchmark_provider_profile_validator",
+    "sorting_network_source_citation_sidecar",
     "zero_one_principle_source_citation",
     "known_target_source_citations",
     "fixed_evaluator_model_budget_protocol",
@@ -37,8 +38,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "rediscovery_not_sota_claim_boundary",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "zero_one_principle_source_citation": "not_recorded_locally",
-    "known_target_source_citations": "not_recorded_locally",
     "fixed_evaluator_model_budget_protocol": (
         "contract_recorded_no_authenticated_run_evidence"
     ),
@@ -92,6 +91,9 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
                 "valid_seed_comparators": 28,
                 "known_target_comparators": 19,
                 "scope": "non_comparable_benchmark_candidate",
+                "sorting_network_source_citation_sidecar": (
+                    "papers/sorting_network_source_citation_boundary.json"
+                ),
             },
             "sorting_network_9": {
                 "wire_count": 9,
@@ -123,6 +125,9 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
                 "benchmark_provider_profile_validator": (
                     "libreevolve/problems/benchmarks/benchmark_provider_profile.py"
                 ),
+                "sorting_network_source_citation_sidecar": (
+                    "papers/sorting_network_source_citation_boundary.json"
+                ),
             },
         },
         "claim_boundary": (
@@ -134,11 +139,12 @@ def sorting_network_rediscovery_boundary_record() -> dict[str, Any]:
             "contract validator, a bounded benchmark goal-prompt artifact, a "
             "reusable prompt validator, and a runtime prompt-id provenance "
             "requirement, plus a provider-profile artifact and validator for "
-            "the experimental Codex lane, but does not claim "
-            "source-cited benchmark calibration, fixed-budget repeated-run "
-            "rediscovery, run-tied hardening certification, best candidate "
-            "artifact hashes, failure/invalid-candidate summaries, paper-"
-            "facing certification rows, or novel SOTA results."
+            "the experimental Codex lane, plus source-citation calibration "
+            "for the zero-one verifier and known comparator targets, but does "
+            "not claim fixed-budget repeated-run rediscovery, run-tied "
+            "hardening certification, best candidate artifact hashes, "
+            "failure/invalid-candidate summaries, paper-facing certification "
+            "rows, or novel SOTA results."
         ),
     }
 
@@ -297,6 +303,9 @@ def _validate_candidate_evidence(
             "valid_seed_comparators": seed,
             "known_target_comparators": target,
             "scope": "non_comparable_benchmark_candidate",
+            "sorting_network_source_citation_sidecar": (
+                "papers/sorting_network_source_citation_boundary.json"
+            ),
         }
         for key, expected_value in checks.items():
             if record.get(key) != expected_value:

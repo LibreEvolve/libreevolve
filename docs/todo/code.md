@@ -812,8 +812,8 @@ sidecars, tests, and active TODOs.
     sorted-input coverage, comparator-count, depth, inverse-count, and
     target-achieved metrics, plus focused tests for the 28-comparator seed and
     a known 19-comparator target. The example-scope registry labels it as a
-    non-comparable benchmark candidate because repeated-run evidence,
-    source-citation sidecars, and paper certification are still absent.
+    non-comparable benchmark candidate because repeated-run evidence and paper
+    certification are still absent.
     `libreevolve/problems/examples/sorting_network_9` now mirrors that
     structure for 9 inputs with exhaustive `2^9` Boolean-input validation, a
     complete 36-comparator seed, a checked known 25-comparator target, and the
@@ -822,10 +822,13 @@ sidecars, tests, and active TODOs.
     descriptors, artifact inventories, summaries, and scope validation for
     both candidates, covering hardcoded-case, library-delegation, and
     invalid-artifact shortcut categories without certifying a benchmark run.
-    The committed `papers/sorting_network_rediscovery_boundary.json` sidecar
-    keeps that executable-candidate-only scope machine-validated.
+    The committed `papers/sorting_network_source_citation_boundary.json`
+    sidecar records the zero-one-principle and known comparator-target
+    citations, while `papers/sorting_network_rediscovery_boundary.json` keeps
+    the remaining executable-candidate-only run-evidence scope
+    machine-validated.
   - Required result: add repeated-seed run reports, fixed evaluator/model/
-    budget conditions, source-citation sidecars, target-hit-rate summaries,
+    budget conditions, target-hit-rate summaries,
     best-candidate artifact hashes, failure/invalid-candidate summaries,
     run-tied hardening certification, and paper-facing certification artifacts
     for both 8- and 9-input targets before treating sorting-network
@@ -8652,8 +8655,11 @@ sidecars, tests, and active TODOs.
     to the contract while preserving the non-certified boundary.
   - Current gap: the clean-checkout contract is now explicit and tested, but
     no authenticated run transcript, manifest bundle, target-hit evidence,
-    repeated-seed matrix, source-citation sidecar, or paper certification row
-    has been committed for the intended `gpt-5.3-codex-spark` path.
+    repeated-seed matrix, or paper certification row has been committed for
+    the intended `gpt-5.3-codex-spark` path. The committed
+    `papers/sorting_network_source_citation_boundary.json` sidecar records
+    source citations for zero-one validation and known comparator targets,
+    but that is calibration metadata rather than run evidence.
   - Required result: run the contract under the intended authenticated backend
     and commit or separately preserve a redacted evidence bundle with manifest
     assertions, transcript hashes, best-candidate hashes, failure summaries,

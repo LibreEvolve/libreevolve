@@ -1,0 +1,66 @@
+{
+  "schema": "libreevolve.sorting_network_source_citation_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "problem_ids": [
+    "sorting_network_8",
+    "sorting_network_9"
+  ],
+  "boundary_status": "source_citations_recorded_without_run_certification",
+  "claim_ready": false,
+  "citation_scope": "Source citations calibrate the zero-one verifier and the 8- and 9-input comparator targets only; they are not authenticated LibreEvolve run evidence.",
+  "source_citations": {
+    "zero_one_principle": {
+      "source": "CLRS sorting-network chapter mirror",
+      "url": "https://bobson.ludost.net/books/algo/book6/chap28.htm",
+      "evidence": "Chapter 28.2 states that a network sorting all binary inputs sorts arbitrary ordered inputs.",
+      "used_for": "exhaustive Boolean evaluator scope"
+    },
+    "sorting_network_8_target": {
+      "target_comparators": 19,
+      "sources": [
+        {
+          "source": "Peter Schneider-Kamp sorting network bounds",
+          "url": "https://imada.sdu.dk/u/petersk/sn/",
+          "evidence": "The table gives matching upper and lower bounds of 19 comparators for n=8."
+        },
+        {
+          "source": "Bert Dobbelaere sorting network list",
+          "url": "https://bertdobbelaere.github.io/sorting_networks.html",
+          "evidence": "The maintained list includes an 8-input network with 19 comparators."
+        }
+      ],
+      "used_for": "known target comparator check"
+    },
+    "sorting_network_9_target": {
+      "target_comparators": 25,
+      "sources": [
+        {
+          "source": "Codish et al. arXiv preprint",
+          "url": "https://arxiv.org/abs/1405.5754",
+          "doi": "10.48550/arXiv.1405.5754",
+          "evidence": "The abstract states that 24-comparator networks do not exist and 25 comparators are optimal for nine inputs."
+        },
+        {
+          "source": "Codish et al. JCSS publication",
+          "url": "https://pure.itu.dk/en/publications/sorting-nine-inputs-requires-twenty-five-comparisons/",
+          "doi": "10.1016/j.jcss.2015.11.014",
+          "evidence": "The publication record identifies the peer-reviewed JCSS article and DOI for the nine-input 25-comparator optimality result."
+        },
+        {
+          "source": "Bert Dobbelaere sorting network list",
+          "url": "https://bertdobbelaere.github.io/sorting_networks.html",
+          "evidence": "The maintained list includes a 9-input network with 25 comparators."
+        }
+      ],
+      "used_for": "known target comparator check"
+    }
+  },
+  "missing_evidence": {
+    "local_source_snapshots": "not_recorded_locally",
+    "independent_target_proof_extraction": "not_recorded_locally",
+    "repeated_seed_run_tables": "not_recorded_locally",
+    "target_hit_rate_summary": "not_recorded_locally",
+    "run_tied_paper_certification": "not_recorded_locally"
+  },
+  "claim_boundary": "This sidecar records source citations for verifier and target calibration, but does not claim local source snapshots, independent proof extraction, repeated LibreEvolve runs, target hit-rate summaries, run-tied hardening, paper certification, or novel SOTA results."
+}

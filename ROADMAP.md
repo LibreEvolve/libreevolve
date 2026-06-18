@@ -1268,10 +1268,12 @@ by `papers/lineage_replay_boundary.json`.
   experimental Codex provider lane, local-auth support status, budget,
   transcript/redaction policy, expected artifacts, and result-linkage boundary,
   with validator coverage against the config, run contract, and prompt
-  artifact. Add repeated-run, source-citation, and paper-certification evidence
-  before treating them as comparable results. The
+  artifact. The `papers/sorting_network_source_citation_boundary.json`
+  sidecar records the zero-one-principle and known comparator-target citations,
+  but add repeated-run and paper-certification evidence before treating these
+  fixtures as comparable results. The
   `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
-  executable-candidate-only boundary.
+  executable-candidate-only run-evidence boundary.
   This remains the current lowest-risk realistic benchmark path because it has
   cheap objective verification, known targets, and no external solver or
   accelerator dependency.

@@ -3766,16 +3766,18 @@ Implemented:
   `libreevolve/problems/examples/sorting_network_9`: bounded benchmark
   candidates with exhaustive zero-one validation, valid 28- and 36-comparator
   seeds, and checked 19- and 25-comparator targets. They are not
-  paper-comparable evidence until repeated runs, source-citation sidecars, and
-  certification artifacts are added. Their hardening bundle helper emits
+  paper-comparable evidence until repeated runs and certification artifacts are
+  added. Their hardening bundle helper emits
   generic negative-fixture, inventory, summary, and scope-validation evidence,
   and `sorting_network_9` now has reusable run-contract, goal-prompt, and
   provider-profile validators for the clean-checkout Codex protocol. The
   provider profile records the experimental Codex lane, budget,
   transcript/redaction policy, artifact expectations, and non-evidence result
   linkage, but that is not a run-certified rediscovery record. The committed
-  `papers/sorting_network_rediscovery_boundary.json` sidecar preserves this
-  executable-candidate-only boundary.
+  `papers/sorting_network_source_citation_boundary.json` sidecar records the
+  zero-one-principle and known comparator-target citations, and
+  `papers/sorting_network_rediscovery_boundary.json` preserves the remaining
+  executable-candidate-only run-evidence boundary.
 
 Planned or background-only:
 

@@ -200,8 +200,8 @@ The bundled examples are intentionally small:
   artifact writing, or archive behavior.
 - `sorting_network_8` and `sorting_network_9` are bounded benchmark candidates
   with exhaustive zero-one validation and known comparator targets, but they
-  are not paper-comparable evidence until repeated runs, source citations, and
-  certification are added. Their hardening bundle helper emits generic
+  are not paper-comparable evidence until repeated runs and certification are
+  added. Their hardening bundle helper emits generic
   negative-fixture, inventory, summary, and scope-validation evidence; it is
   not a certified rediscovery result. `sorting_network_9/run_contract.json`
   records the clean-checkout Codex CLI invocation, auth expectations,
@@ -221,8 +221,10 @@ The bundled examples are intentionally small:
   `benchmark_provider_profile` validator checks it against the config, run
   contract, and prompt artifact. These are still protocol inputs, not a
   successful rediscovery transcript. The checked
-  `papers/sorting_network_rediscovery_boundary.json` sidecar preserves that
-  scope.
+  `papers/sorting_network_source_citation_boundary.json` sidecar records the
+  zero-one-principle and comparator-target citations used to calibrate these
+  fixtures, while `papers/sorting_network_rediscovery_boundary.json`
+  preserves the remaining non-certified run-evidence scope.
 
 Treat an example as benchmark evidence only when its own docs or paper sidecar
 says so.

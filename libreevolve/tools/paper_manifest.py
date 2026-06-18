@@ -625,6 +625,10 @@ from libreevolve.problems.benchmarks.sorting_network_rediscovery_boundary import
     sorting_network_rediscovery_boundary_record,
     validate_sorting_network_rediscovery_boundary,
 )
+from libreevolve.problems.benchmarks.sorting_network_source_citation_boundary import (
+    sorting_network_source_citation_boundary_record,
+    validate_sorting_network_source_citation_boundary,
+)
 from libreevolve.problems.benchmarks.table1_capability_exhibit_boundary import (
     table1_capability_exhibit_boundary_record,
     validate_table1_capability_exhibit_boundary,
@@ -1200,6 +1204,7 @@ WORKSPACE_MATERIALIZATION_BOUNDARY_FILE = "papers/workspace_materialization_boun
 WHOLE_RUN_SOURCE_WORKSPACE_INTEGRITY_BOUNDARY_FILE = "papers/whole_run_source_workspace_integrity_boundary.json"
 CODEBASE_SCALE_BENCHMARK_BOUNDARY_FILE = "papers/codebase_scale_benchmark_boundary.json"
 SORTING_NETWORK_REDISCOVERY_BOUNDARY_FILE = "papers/sorting_network_rediscovery_boundary.json"
+SORTING_NETWORK_SOURCE_CITATION_BOUNDARY_FILE = "papers/sorting_network_source_citation_boundary.json"
 TABLE1_CAPABILITY_EXHIBIT_BOUNDARY_FILE = "papers/table1_capability_exhibit_boundary.json"
 SELF_IMPROVEMENT_DISTILLATION_BOUNDARY_FILE = "papers/self_improvement_distillation_boundary.json"
 SELF_IMPROVEMENT_CADENCE_BOUNDARY_FILE = "papers/self_improvement_cadence_boundary.json"
@@ -1942,6 +1947,7 @@ def validate_paper_manifest(
     issues.extend(_validate_whole_run_source_workspace_integrity_boundary(root_path))
     issues.extend(_validate_codebase_scale_benchmark_boundary(root_path))
     issues.extend(_validate_sorting_network_rediscovery_boundary(root_path))
+    issues.extend(_validate_sorting_network_source_citation_boundary(root_path))
     issues.extend(_validate_table1_capability_exhibit_boundary(root_path))
     issues.extend(_validate_self_improvement_distillation_boundary(root_path))
     issues.extend(_validate_self_improvement_cadence_boundary(root_path))
@@ -8436,6 +8442,38 @@ def _validate_sorting_network_rediscovery_boundary(root_path: Path) -> list[Pape
             f"sorting_network_rediscovery_boundary_{issue.code}",
             issue.message,
             "sorting_network_rediscovery",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_sorting_network_source_citation_boundary(root_path: Path) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / SORTING_NETWORK_SOURCE_CITATION_BOUNDARY_FILE
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = sorting_network_source_citation_boundary_record()
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "sorting_network_source_citation_boundary_manifest_missing",
+                    (
+                        f"{SORTING_NETWORK_SOURCE_CITATION_BOUNDARY_FILE} must emit "
+                        "sorting-network source citation availability"
+                    ),
+                    "sorting_network_source_citation",
+                )
+            ]
+    report = validate_sorting_network_source_citation_boundary(recordset)
+    return [
+        PaperManifestIssue(
+            f"sorting_network_source_citation_boundary_{issue.code}",
+            issue.message,
+            "sorting_network_source_citation",
         )
         for issue in report.issues
     ]

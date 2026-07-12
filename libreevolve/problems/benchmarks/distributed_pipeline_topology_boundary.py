@@ -14,7 +14,7 @@ DISTRIBUTED_PIPELINE_RUNTIME_REPORT_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.6",)
-EXPECTED_BOUNDARY_STATUS = "single_process_synchronous_topology"
+EXPECTED_BOUNDARY_STATUS = "local_candidate_async_evaluation_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "asyncio_runtime_identity",
     "controller_node_identity",
@@ -34,21 +34,25 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "pending_work_checkpoint",
     "async_topology_claim_readiness",
 )
+EXPECTED_IMPLEMENTED_EVIDENCE = {
+    "python_asyncio_runtime": "local_background_event_loop",
+    "bounded_candidate_evaluation_queue": "recorded_in_runtime_report",
+    "queue_capacity_backpressure_policy": "recorded_in_runtime_report",
+    "candidate_evaluator_task_worker_identity": "recorded_in_controller_report",
+    "candidate_evaluator_worker_lifecycle": "terminal_records_available",
+    "candidate_completion_order": "recorded_per_task",
+    "deterministic_candidate_admission_order": "submission_order_merge_recorded",
+    "candidate_dispatch_throughput_telemetry": "recorded_in_controller_report",
+}
 EXPECTED_MISSING_EVIDENCE = {
-    "python_asyncio_runtime": "not_recorded_locally",
-    "async_controller_queues": "not_recorded_locally",
-    "queue_capacity_records": "not_recorded_locally",
-    "queue_backpressure_policy": "not_recorded_locally",
-    "async_task_coroutine_identity": "not_recorded_locally",
-    "nonblocking_dependency_graph": "not_recorded_locally",
     "dependency_wait_event_telemetry": "not_recorded_locally",
-    "distributed_llm_sampler_worker_nodes": "not_recorded_locally",
+    "concurrent_llm_sampler_worker_nodes": "not_recorded_locally",
     "distributed_evaluator_worker_nodes": "not_recorded_locally",
-    "worker_lifecycle_liveness": "not_recorded_locally",
+    "full_nonblocking_dependency_graph": "not_recorded_locally",
     "async_scheduler_state_snapshot": "not_recorded_locally",
-    "deterministic_async_completion_admission_order": "not_recorded_locally",
-    "throughput_dispatch_telemetry": "not_recorded_locally",
     "pending_work_checkpoint_state": "not_recorded_locally",
+    "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
+    "cross_process_shared_state_coordination": "not_recorded_locally",
 }
 
 
@@ -84,20 +88,21 @@ def distributed_pipeline_topology_boundary_record() -> dict[str, Any]:
         "runtime_report_status": "distributed_pipeline_topology_report_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
+        "implemented_evidence": dict(EXPECTED_IMPLEMENTED_EVIDENCE),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has a runtime topology "
-            "report for the current local controller, program database, "
-            "configured LLM sampler nodes, evaluator nodes, zero queues, "
-            "blocking dependency edges, synchronous dispatch, runtime-budget "
-            "linkage, and unsupported pending-work checkpoints, but does not "
-            "claim AlphaEvolve-style Python asyncio runtime identity, async "
-            "controller queues, queue capacities and backpressure policy, "
-            "async task/coroutine identities, nonblocking dependency graphs, "
-            "dependency wait-event telemetry, distributed sampler/evaluator "
-            "worker nodes, worker lifecycle/liveness records, async scheduler "
-            "state snapshots, deterministic async completion/admission order, "
-            "throughput dispatch telemetry, or pending-work checkpoint state."
+            "report for the local controller, program database, configured "
+            "LLM sampler nodes, and evaluator nodes. Opt-in candidate "
+            "evaluation uses a bounded queue on a Python asyncio event loop, "
+            "named local evaluator tasks, queue backpressure, worker lifecycle "
+            "records, out-of-order completion telemetry, and deterministic "
+            "submission-order archive admission. It does not claim concurrent "
+            "LLM sampler workers, distributed evaluator workers, a full "
+            "nonblocking dependency graph, dependency wait-event telemetry, "
+            "async scheduler snapshots, cross-generation proposal/evaluation "
+            "overlap, cross-process shared-state coordination, or pending-work "
+            "checkpoint state."
         ),
     }
 
@@ -131,16 +136,22 @@ def validate_distributed_pipeline_topology_boundary(
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "distributed-pipeline topology boundary must not claim AlphaEvolve topology readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
+    _validate_evidence_map(
+        "implemented_evidence",
+        data.get("implemented_evidence"),
+        EXPECTED_IMPLEMENTED_EVIDENCE,
+        issues,
+    )
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
         or "does not claim" not in boundary_text
-        or "async task/coroutine identities" not in boundary_text
+        or "bounded queue on a Python asyncio event loop" not in boundary_text
+        or "deterministic submission-order archive admission" not in boundary_text
         or "dependency wait-event telemetry" not in boundary_text
-        or "worker lifecycle/liveness records" not in boundary_text
-        or "async scheduler state snapshots" not in boundary_text
-        or "deterministic async completion/admission order" not in boundary_text
+        or "cross-generation proposal/evaluation overlap" not in boundary_text
+        or "pending-work checkpoint state" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim AlphaEvolve topology parity"))
     return DistributedPipelineTopologyBoundaryValidation(
@@ -232,6 +243,24 @@ def _validate_missing_evidence(
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
+
+
+def _validate_evidence_map(
+    field: str,
+    value: object,
+    expected: dict[str, str],
+    issues: list[DistributedPipelineTopologyBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue(f"invalid_{field}", f"{field} must be an object"))
+        return
+    if value != expected:
+        issues.append(
+            _issue(
+                f"invalid_{field}",
+                f"{field} must match the validated local async evidence map",
+            )
+        )
 
 
 def _issue(code: str, message: str) -> DistributedPipelineTopologyBoundaryIssue:

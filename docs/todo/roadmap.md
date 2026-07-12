@@ -584,16 +584,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: the `6. Async and resumable runtime` section is the main
     roadmap boundary for AlphaEvolve Section 2.6-style concurrent proposal and
     evaluation work. It should define what proves LibreEvolve has a real async
-    and resumable runtime, not only synchronous batches, local sample-worker
-    fan-out, terminal snapshots, and absence-boundary metadata.
-  - Current evidence: ROADMAP records synchronous topology reporting,
-    parallel-evaluation readiness reports, terminal controller-state restore
-    evidence, MAP-Elites archive snapshots, cursor/full archive restore
-    surfaces, run manifest hardening, framework RNG restore, synchronous
-    budget counters, and validated sidecars for distributed-pipeline topology,
+    and resumable runtime, not only local candidate-evaluation overlap,
+    sample-worker fan-out, terminal snapshots, and partial-boundary metadata.
+  - Current evidence: ROADMAP now records the opt-in bounded local Python
+    `asyncio` candidate-evaluation queue, named workers, backpressure,
+    completion/admission ordering, serial shared-state commit, and exact in-
+    flight duplicate coalescing. It also records parallel-evaluation readiness
+    reports, terminal controller-state evidence, MAP-Elites archive snapshots,
+    cursor/full archive restore surfaces, run manifest hardening, framework RNG
+    restore, terminal budget counters, and validated sidecars for pipeline topology,
     parallel evaluation, controller pending-work resume, archive-event replay,
     lineage replay, and LLM budget policy. Active code and paper TODOs already
-    track async evaluator workers, concurrent proposal control, ordered archive
+    track concurrent sampler/proposal control, distributed evaluators, ordered archive
     replay, pending-work controller resume, budget resume, provider replay,
     RNG/resumed-trace proof, and external environment replay. The bounded
     `papers/roadmap_async_resumable_runtime_boundary.json` sidecar now records
@@ -608,15 +610,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     pending work and merge order, archive/migration restore, provider/plugin
     replay, async budget/environment replay, and stale readiness/owner
     signoff.
-  - Current gap: there is no async-state inventory, replay-resume acceptance
-    checklist, controller queue checkpoint, LLM sampler task state, evaluator
-    pending-work state, deterministic async merge/admission order, ordered
-    migration restore engine, provider-output replay, plugin RNG replay, async
-    budget accounting, external environment replay, end-to-end resumed trace
-    proof, stale-readiness detector, or owner signoff tying those runtime
-    pieces together, so partial synchronous restore or sample-worker fan-out
-    could be mistaken for full async/resumable runtime parity. The sidecars are
-    bounded criteria/readiness maps, not an async runtime control-plane gate.
+  - Current gap: there is no complete async-state inventory, replay-resume
+    acceptance checklist, controller queue checkpoint, concurrent LLM sampler
+    task state, evaluator pending-work restore, cross-generation overlap,
+    distributed worker ownership, ordered migration restore engine, provider-output
+    replay, plugin RNG replay, async worker/compute-hour budget
+    accounting, external environment replay, end-to-end resumed trace proof,
+    stale-readiness detector, or owner signoff. Local deterministic merge and
+    terminal drain evidence must not be mistaken for full async/resumable
+    runtime parity. The sidecars remain bounded criteria/readiness maps rather
+    than an async runtime control-plane gate.
   - Required result: add ROADMAP async/resumable-runtime criteria that classify
     controller queues, LLM sampler tasks, evaluator workers, pending-work
     checkpoints, deterministic merge/admission order, archive/event replay,

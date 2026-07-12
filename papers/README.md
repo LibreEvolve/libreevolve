@@ -517,6 +517,13 @@ qualifier, or source-specific absence sentence against code and paper evidence.
 | 2505.16105 | Sums and Differences | Constructive math benchmark candidate | Not implemented; potential future benchmark; missing explicit U-set construction schema, W(m,L,B) inclusion-exclusion checker, base-(2B+1) injective encoding checks, sumset/difference-set cardinality verifiers, max-element/q-value verifier, theta recomputation, GMP exact-arithmetic records, floating-point search records, small and large parameter exact rows, exact-value artifact snapshot, AlphaEvolve 54265-integer baseline, huge-set compression policy, lineage comparison rows, tolerance policy, and independent checker outputs. `papers/sums_differences_boundary.json` records this source-specific absence boundary. |
 | 2506.01896 | Sums and Differences II | Constructive math benchmark candidate | Not implemented; potential future benchmark; missing sequence-of-U construction schema, large-deviation I(c,B) checker, asymptotic W(m,floor(rm),B) checker, Lemma 1/Lemma 2 verification, q/s/d bound derivation records, theta0 variational-formula recomputation, MATLAB 2024b code provenance, B=3..10 tolerance-sweep reproduction, finite-prefix artifact policy, AlphaEvolve and Gerbicz baseline rows, lineage comparison rows, convergence/tail-bound checks, and independent checker outputs. `papers/sums_differences_sequence_boundary.json` records this source-specific absence boundary. |
 
+In the AlphaEvolve row, the remaining `async workers` shorthand means concurrent
+LLM sampler workers, distributed evaluator workers, cross-generation overlap,
+and resumable pending work. Local candidate evaluator workers are implemented
+behind `async_candidate_evaluation` with the narrower boundary described below.
+The FlashEvolve row's asynchronous-worker absence refers to its stage-
+dependency orchestration runtime, which this candidate queue does not provide.
+
 AlphaEvolve initial-program provenance note: current manifests and history
 preserve safe seed source identity for generation-0 baselines, and optional
 seed-source metadata can now record seed variant ids, idea-origin classes,
@@ -735,7 +742,7 @@ records, strict JSONL row summaries, generated candidate semantic traces with
 durable LLM and archive-admission stream rows, and component-to-TODO links for
 the remaining process gaps. It now also records hashed source-PDF page text
 extracts for AlphaEvolve Figure 1/Figure 2 and links the process exhibit to the
-validated current synchronous topology boundary in
+validated current local topology boundary in
 `runtime.history.distributed_pipeline_topology_report` and records a
 validated current inline evaluator-pool parallelism boundary. It remains
 `claim_ready: false` because exact source-diagram layout reproduction,
@@ -754,30 +761,33 @@ AlphaEvolve distributed-pipeline topology note: completed manifests now include
 `runtime.history.distributed_pipeline_topology_report` with schema
 `libreevolve.distributed_pipeline_topology_report.v1`. The report names the
 current LibreEvolve controller, program database, configured LLM sampler
-backends, local evaluator nodes, zero queues, and blocking dependency edges,
-and links the topology to consumed runtime/controller-budget counters. When
+backends, local evaluator nodes, dependency edges, and links to consumed
+runtime/controller-budget counters. With `async_candidate_evaluation: true`, it
+also names a bounded candidate queue, local `asyncio` evaluator workers,
+producer backpressure, nonblocking evaluator dispatch, worker lifecycle and
+completion telemetry, deterministic submission-order merge/admission, and
+serial shared-state commit. Exact duplicate work already in flight is
+coalesced into one evaluator task. When
 configured stages set `eval_stages[].sample_workers`, it also records local
 configured-stage sample-worker fan-out and deterministic sample-order merge
 scope. Candidate evaluations retain summed sample elapsed time, observed
 wall-clock time, and compression ratio; process-exhibit evaluator-pool records
 summarize that as local sample-worker wall-clock compression when observed. It
-is `claim_ready: false` because it records a single-process synchronous
-topology; async controller queues, distributed sampler/evaluator worker
-fan-out, queue capacities, Python `asyncio` runtime identity, nonblocking
-dependency tracking, async task/coroutine identities, dependency wait-event
-telemetry, worker lifecycle/liveness records, async scheduler-state snapshots,
-deterministic async completion/admission order, throughput dispatch telemetry,
-queue backpressure, and pending-work checkpoints remain open before Section
-2.6 topology parity. The committed
+is `claim_ready: false` because this is local candidate-evaluation overlap, not
+the full AlphaEvolve pipeline. Concurrent LLM sampler workers, distributed
+evaluator fan-out, full dependency wait-event telemetry, cross-generation
+proposal/evaluation overlap, cross-process coordination, async scheduler-state
+snapshots, and pending-work checkpoints remain open before Section 2.6 topology
+parity. The committed
 `papers/distributed_pipeline_topology_boundary.json` sidecar preserves this
-topology absence boundary for paper-manifest validation. The committed
+local candidate-async partial boundary for paper-manifest validation. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
-parallel-evaluation readiness absence boundary for paper-manifest validation,
+parallel-evaluation local candidate-async partial boundary for validation,
 including the still-missing order-of-100-compute-hours candidate budget and
 generation-cadence evidence under slow evaluator feedback, concurrent LLM
-sampler queues, candidate-level async evaluator queues, queue capacity/
-backpressure policy, deterministic async result merge/admission order,
-concurrency-safe shared-state mutation, and pending-work resume.
+sampler queues, distributed evaluator workers, randomized-initialization shard
+identity, cross-generation overlap, mutation-depth evidence, and pending-work
+resume.
 
 AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`
 as a local admission gate outside declared `metrics.yaml` objectives and stores
@@ -1233,11 +1243,11 @@ part of the broader resume gap. The committed
 archive-state snapshot restore plus audit-only event reconciliation scope
 machine-validated apart from ordered archive-event restore-engine support.
 `papers/controller_pending_work_resume_boundary.json` separately preserves the
-terminal synchronous controller-state boundary: current runs can validate zero
-queued/running/pending work at finalization and checked full-resume unsupported
-surfaces, but they do not checkpoint controller queues, running evaluations,
-in-flight LLM calls, pending archive admissions, provider handoff replay, or an
-end-to-end resumed trace.
+terminal controller-state boundary for default synchronous and opt-in local
+candidate-async runs: finalization can validate zero queued/running/pending work
+and checked full-resume unsupported surfaces, but runs do not checkpoint
+controller queues, running evaluations, in-flight LLM calls, pending archive
+admissions, provider handoff replay, or an end-to-end resumed trace.
 
 AlphaEvolve rejected-diagnostics note: rejected archive-admission metadata is
 kept JSON-safe, but hook-mutated/restored programs with non-finite top-level
@@ -2688,7 +2698,8 @@ Implemented:
   policy.
 - `papers/controller_pending_work_resume_boundary.json`: controller
   pending-work resume sidecar for AlphaEvolve Sections 2.5 and 2.6. It records
-  the current `runtime.history.controller_state` terminal drained snapshot,
+  the current `runtime.history.controller_state` terminal drained snapshot for
+  default synchronous or opt-in local candidate-async execution,
   zero pending-work validation, `controller_budget_events.jsonl` stream checks,
   controller-state artifact inventory, full-resume bundle validation,
   CLI/direct restore entrypoints, and unsupported-surface listing. It is not
@@ -3030,8 +3041,8 @@ Implemented:
 - `papers/docs_architecture_runtime_flow_boundary.json`: docs-architecture
   runtime-flow sidecar. It records ten `docs/architecture.md` sections,
   runtime-flow markers, source path checks, README/docs-index route markers,
-  the active TODO owner anchor, known-gap markers, the synchronous runtime
-  boundary, and the AlphaEvolve provider-parity boundary. It is not semantic
+  the active TODO owner anchor, known-gap markers, the local candidate-async
+  runtime boundary, and the AlphaEvolve provider-parity boundary. It is not semantic
   flow-order verification, source-function semantic verification, runtime
   manifest field verification, architecture limitation freshness, or owner
   review signoff.
@@ -3634,7 +3645,7 @@ Implemented:
   sidecar-ref, active-TODO, validation-gate, and readiness labels. It is not
   evidence of an async-state inventory, replay-resume acceptance checklist,
   controller queue checkpoint, LLM sampler task state, evaluator pending-work
-  state, deterministic async merge/admission order, ordered migration restore
+  state, deterministic async merge/admission replay, ordered migration restore
   engine, provider-output replay, plugin RNG replay, async budget accounting,
   external environment replay, end-to-end resumed trace proof,
   stale-readiness detector, or owner review signoff.

@@ -2187,53 +2187,39 @@ sidecars, tests, and active TODOs.
     evaluation to keeping new generations fast enough for the evolutionary
     loop to apply several consecutive mutations when evaluator feedback would
     otherwise be slow.
-  - Current evidence: `evolve()` is still a single synchronous proposal loop:
-    it iterates `proposals_per_generation` sequentially, samples parents,
-    builds one prompt, performs one mutation LLM call, applies one candidate
-    mutation, and calls `CascadeEvaluator.evaluate()` directly before logging
-    and archive admission. Generated candidates record
-    `metadata.proposal_batch.policy == "sequential"`. Those batches are
-    evaluated sibling candidates, not an adaptive chain of unevaluated or
-    partially evaluated consecutive mutations from a slow-feedback parent.
-    `CascadeEvaluator` remains a local staged subprocess evaluator, not
-    distributed workers. It now supports opt-in
-    `eval_stages[].sample_workers` local thread-pool fan-out for planned
-    configured-stage samples, with deterministic sample-index merge order and
-    runtime topology fields scoped to configured-stage sample workers. It also
-    records `evaluation.metadata.sample_execution` with summed sample elapsed
-    seconds, observed wall-clock seconds, and compression ratio, and the
-    process-exhibit evaluator-pool record summarizes observed local
-    sample-worker wall-clock compression. Runtime histories now include
-    `libreevolve.parallel_evaluation_readiness_report.v1`, which aggregates
-    configured local sample-worker fan-out, observed wall-clock compression,
-    and topology linkage while preserving `claim_ready: false` for missing
-    100-compute-hour candidate budgets, generation-cadence preservation under
-    slow feedback, per-candidate compute-hour budgets, candidate-level async
-    queues, distributed evaluator nodes, mutation-depth impact, and
-    pending-work resume.
-    `papers/parallel_evaluation_readiness_boundary.json` now preserves the
-    same absence boundary for paper-manifest validation, including the paper's
-    explicit order-of-100-compute-hours evaluator budget and consecutive-
-    mutation cadence requirement.
-    This still does not provide concurrent LLM sampler queues, async candidate
-    queues, queue-capacity/backpressure policy, distributed evaluator nodes,
-    deterministic async result merge and archive-admission order, concurrency-
-    safe database/archive/prompt/plugin/budget mutation, or mutation-depth
-    throughput under slow evaluator feedback.
-    `RunBudget` explicitly tracks synchronous local consumption; controller
-    budget-state validators exist only for future async/resume events.
-    Completed manifests now embed
-    `libreevolve.controller_state_validation.v1` under
-    `runtime.history.controller_state.validation` to verify that the current
-    controller boundary is terminal, synchronous, and drained, and to reject
-    pending work or async/full-replay overclaims.
-  - Required result: introduce an async controller with concurrent LLM
-    samplers, evaluator workers, bounded queues, deterministic worker ids,
-    deterministic result merge/admission order, concurrency-safe database,
-    archive, prompt, plugin, and budget mutation, an explicit policy for
-    order-of-100-compute-hours candidate budgets, generation cadence and
-    mutation-chain depth under slow or expensive evaluator feedback, and
-    replayable controller state for queued/running/completed work.
+  - Current evidence: `evolve()` now has an opt-in local candidate-evaluation
+    controller. `async_candidate_evaluation: true` dispatches uncached sibling
+    candidates through a bounded Python `asyncio` queue to named evaluator
+    tasks that call `CascadeEvaluator.evaluate()` through
+    `asyncio.to_thread()`. The controller records queue capacity/backpressure,
+    task and worker ids, worker lifecycle, completion order, maximum concurrent
+    work, elapsed/compression telemetry, and terminal pending-work counts.
+    Results can finish out of order but feedback, plugins, budget logging,
+    prompt rewards, history, and archive admission are committed serially in
+    proposal submission order. Exact duplicate work already in flight is
+    coalesced and later candidates reuse the cached result without another
+    candidate-evaluation budget unit. End-to-end tests prove overlapping
+    candidate work, out-of-order completion, ordered admission, queue drain,
+    and duplicate coalescing. `eval_stages[].sample_workers` remains a separate
+    local stage-sample thread-pool path.
+    Completed manifests now retain
+    `libreevolve.async_candidate_evaluation_controller.v1`, async execution and
+    admission metadata on candidate rows, a local candidate-async topology,
+    parallel-evaluation readiness evidence, and a terminal drained controller
+    state. The two paper boundaries now classify this as local candidate-async
+    partial support rather than a fully synchronous absence.
+  - Current gap: proposal and critique LLM calls remain sequential; a batch
+    drains before generation completion; there is no cross-generation overlap,
+    distributed evaluator process/host pool, dependency wait-event graph,
+    async scheduler/pending-work checkpoint, running-work resume, cross-process
+    database coordination, randomized-initialization shard scheduler, explicit
+    order-of-100-compute-hours budget, or mutation-depth/cadence report under
+    slow feedback. Terminal reports are not resumable queue state.
+  - Required result: extend the controller with concurrent LLM sampler queues,
+    distributed/local evaluator leases, cross-generation dependency-aware work,
+    concurrency-safe shared-state ownership, compute-hour and worker budgets,
+    randomized shard identity, mutation-depth/cadence evidence, and replayable
+    queued/running/completed work without weakening deterministic admission.
 
 - [ ] Add distributed-pipeline topology evidence for controller, LLM samplers,
       and evaluation nodes.
@@ -2242,43 +2228,31 @@ sidecars, tests, and active TODOs.
     block on unfinished dependencies; the pipeline specifically comprises a
     controller, LLM samplers, and evaluation nodes, and is optimized for
     throughput rather than any single computation's speed.
-  - Current evidence: LibreEvolve now emits
-    `runtime.history.controller_state` with schema
-    `libreevolve.controller_state.v1`, status
-    `terminal_synchronous_controller_drained`, controller model
-    `single_process_serial_loop`, zero queued/running proposals, evaluations,
-    and in-flight LLM calls, plus limitations such as
-    `synchronous_terminal_snapshot_not_async_queue_checkpoint` and
-    `no_mid_generation_resume_boundary`. Final manifests also include
+  - Current evidence: LibreEvolve emits `runtime.history.controller_state` with
+    schema `libreevolve.controller_state.v1`. Default runs retain
+    `terminal_synchronous_controller_drained`; async-enabled runs retain
+    `terminal_async_evaluation_controller_drained` plus the validated local
+    candidate-evaluation controller report. Final manifests also include
     `runtime.history.distributed_pipeline_topology_report` with schema
-    `libreevolve.distributed_pipeline_topology_report.v1`. It names
-    `controller:local`, `database:local`, configured LLM sampler backend
-    nodes, configured/default evaluation nodes, zero queues, blocking
-    dependency edges, synchronous dispatch/admission policy, runtime-budget
-    linkage, and unsupported pending-work checkpoints.
-    `validate_distributed_pipeline_topology_report()` verifies the counts and
-    rejects async-pipeline, async-worker, pending-checkpoint, claim-ready, and
-    AlphaEvolve async-topology overclaims.
+    `libreevolve.distributed_pipeline_topology_report.v1`. Async-enabled reports
+    name the bounded candidate queue, local evaluator workers, nonblocking
+    controller dispatch with backpressure, serial admission edge, worker
+    fan-out accounting, and submission-order merge. The validator accepts only
+    the complete local candidate-async contract and rejects forged partial
+    topology, pending-checkpoint, claim-ready, and full AlphaEvolve topology
+    overclaims.
     `papers/distributed_pipeline_topology_boundary.json` now preserves the
-    same single-process synchronous-topology absence boundary for
-    paper-manifest validation.
+    same local candidate-async partial boundary for paper-manifest validation.
   - Remaining gap: the topology report is still current-boundary evidence, not
-    Section 2.6 parity. It does not implement async controller queues, queue
-    capacities/backpressure, a Python `asyncio` runtime identity, async task/
-    coroutine identities, nonblocking dependency graphs, dependency wait-event
-    telemetry, real sampler/evaluator worker fan-out, worker lifecycle/liveness
-    records, async scheduler-state snapshots, deterministic async completion/
-    admission order, cluster/local worker ownership beyond the local
-    process/subprocess boundary, throughput dispatch telemetry, or resumable
-    pending-work checkpoints.
-  - Required result: implement the async distributed-pipeline runtime and
-    extend the topology artifact with real queue names/capacities,
-    backpressure policy, Python `asyncio` runtime identity, task/coroutine
-    identities, dependency wait/blocking edges, worker identities and
-    lifecycle/liveness, scheduler-state snapshots, throughput dispatch and
-    deterministic completion/admission ordering telemetry, and pending-work
-    checkpoints while keeping README/ROADMAP claims scoped to the validated
-    report.
+    Section 2.6 parity. It does not implement concurrent LLM sampler workers,
+    a full dependency wait-event graph, distributed evaluator nodes, cross-
+    generation overlap, cross-process shared-state coordination, async
+    scheduler-state snapshots, or resumable pending-work checkpoints.
+  - Required result: extend the validated local candidate topology into the
+    full controller/sampler/evaluator runtime with dependency events,
+    distributed worker ownership and liveness, cross-generation scheduling,
+    scheduler/pending-work checkpoints, and replayable deterministic merge
+    state while keeping README/ROADMAP claims scoped to validated evidence.
 
 - [ ] Add statistical hypothesis-test gates to evaluation cascades.
   - Spec evidence: AlphaEvolve Section 2.4 describes the evaluation cascade as
@@ -3307,22 +3281,24 @@ sidecars, tests, and active TODOs.
     `policies.archive_identity.resume_status` so restored surfaces and
     unsupported migration replay are visible. Completed runtime manifests now
     include `runtime.history.controller_state`, a terminal drained-state
-    snapshot for the synchronous controller with zero queued/running proposals,
-    evaluations, in-flight LLM calls, and pending archive admissions at
-    finalization plus a compact `controller_budget_events.jsonl` stream
-    summary. `libreevolve.controller_state_artifact_inventory.v1` now verifies
+    snapshot for the default synchronous or opt-in local candidate-async
+    controller with zero queued/running proposals, evaluations, in-flight LLM
+    calls, and pending archive admissions at finalization plus a compact
+    `controller_budget_events.jsonl` stream summary. Async-enabled snapshots
+    embed the validated terminal queue/worker/completion/admission report.
+    `libreevolve.controller_state_artifact_inventory.v1` verifies
     that terminal controller event stream against the manifest artifact record
     and disk file, including safe relative path checks, file existence,
     SHA-256, byte count, strict JSONL event count, last sequence/kind,
     per-record status, and a stable records hash.
     `libreevolve.controller_state_validation.v1` is embedded in the
-    controller-state snapshot to verify the terminal drained synchronous
-    boundary and flag pending-work or async/full-replay overclaims.
+    controller-state snapshot to verify the supported terminal drained model
+    and flag pending-work or full-replay overclaims.
   - Remaining gap: migration event-order replay is tracked separately by the
-    archive-event replay TODO. The terminal synchronous controller boundary is
-    visible, but async/mid-run controller state and pending/in-flight work are
-    still absent from the restore surface: no queued/running proposal records
-    for async workers, evaluator-worker state, in-flight provider outputs,
+    archive-event replay TODO. Terminal local async evidence is visible, but
+    mid-run controller state and pending/in-flight work remain absent from the
+    restore surface: no queued/running proposal records, evaluator-worker task
+    checkpoints, in-flight provider outputs,
     pending archive admissions, partially completed generation state, or
     deterministic mid-generation controller resume ledger is persisted or
     restored. The remaining gap is not terminal controller event-stream
@@ -6437,16 +6413,15 @@ sidecars, tests, and active TODOs.
     TODO coverage now include `2605.08520`, cached locally as
     `papers/2605.08520__FlashEvolve.pdf` with byte count `627860` and SHA-256
     `668cb80b2c72e1e2c9a296df9c35f4965f79f03b095310e738c012b6106b0e08`.
-    LibreEvolve runs a mostly synchronous generation, validation, admission,
-    archive-update, and migration loop with sequential reviewer calls and
-    manifest/audit artifacts. It has no asynchronous worker/queue
-    orchestration, per-stage queue-state artifacts, artifact-version lineage,
+    LibreEvolve keeps proposal/reviewer/admission/migration work serialized and
+    has opt-in local candidate-evaluation overlap, but no asynchronous stage-
+    dependency orchestration, per-stage queue-state artifacts, artifact-version lineage,
     stale-item classification, reflective stale-patch workflow, speculative
     stage-completion policy, adaptive workflow controller, or
     throughput/token-efficiency report.
   - Required result: add evidence beyond paper-cache coverage for
     `2605.08520`: authors/source-license details, linked-code status, relation
-    to AlphaEvolve and LibreEvolve's synchronous loop, worker and queue
+    to AlphaEvolve and LibreEvolve's local candidate-async boundary, worker and queue
     schemas, stage-overlap traces, artifact-version provenance, staleness
     classification and policy outcomes, reflective patch artifacts,
     speculative-completion records, adaptive workflow-control metrics,

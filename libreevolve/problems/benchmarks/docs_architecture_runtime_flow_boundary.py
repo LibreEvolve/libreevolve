@@ -92,7 +92,7 @@ EXPECTED_SECTIONS = (
             "runs plugin start hooks",
             "calls the LLM ensemble",
             "archives valid programs",
-            "does not add asynchronous LLM samplers or evaluator workers",
+            "This is local candidate-evaluation overlap, not full asynchronous evolution",
         ),
         "source_paths": (
             "libreevolve/core/loop.py",
@@ -192,7 +192,7 @@ EXPECTED_SECTIONS = (
         "heading": "## Known gaps",
         "markers": (
             "Candidate workspaces are local text file sets",
-            "The loop is synchronous",
+            "Proposal generation and LLM work remain sequential",
             "Archive cell/island state is persisted",
             "Plugin names are paper-inspired approximations",
         ),
@@ -284,9 +284,9 @@ def docs_architecture_runtime_flow_boundary_record(root: str | Path = ".") -> di
         "route_records": route_records,
         "known_gap_section_status": _section_status(section_records, "known_gaps"),
         "sync_runtime_boundary_status": (
-            "sync_runtime_boundary_present"
-            if "synchronous, Python-only, and filesystem-backed" in architecture_text
-            else "sync_runtime_boundary_missing"
+            "local_candidate_async_runtime_boundary_present"
+            if "opt-in candidate-level asyncio" in architecture_text
+            else "local_candidate_async_runtime_boundary_missing"
         ),
         "alphaevolve_parity_boundary_status": (
             "alphaevolve_parity_boundary_present"
@@ -300,7 +300,7 @@ def docs_architecture_runtime_flow_boundary_record(root: str | Path = ".") -> di
             "This boundary records docs/architecture.md section headings, "
             "runtime-flow markers, source-link/path existence checks, route "
             "markers from README and docs/README.md, the active TODO owner "
-            "anchor, known-gap markers, the synchronous runtime boundary, and "
+            "anchor, known-gap markers, the local candidate-async runtime boundary, and "
             "the AlphaEvolve provider-parity boundary. It does not claim "
             "semantic flow-order verification, source-function semantic "
             "verification, runtime manifest field verification, architecture "
@@ -357,8 +357,15 @@ def validate_docs_architecture_runtime_flow_boundary(
         issues.append(_issue("missing_architecture_source_path", "architecture source paths must exist"))
     if data.get("missing_route_record_count") != 0:
         issues.append(_issue("missing_architecture_route_marker", "architecture guide routes or TODO owner marker are incomplete"))
-    if data.get("sync_runtime_boundary_status") != "sync_runtime_boundary_present":
-        issues.append(_issue("missing_sync_runtime_boundary", "architecture guide must preserve local synchronous runtime boundary"))
+    if data.get("sync_runtime_boundary_status") != (
+        "local_candidate_async_runtime_boundary_present"
+    ):
+        issues.append(
+            _issue(
+                "missing_sync_runtime_boundary",
+                "architecture guide must preserve the scoped local candidate-async runtime boundary",
+            )
+        )
     if data.get("alphaevolve_parity_boundary_status") != "alphaevolve_parity_boundary_present":
         issues.append(_issue("missing_alphaevolve_parity_boundary", "architecture guide must preserve AlphaEvolve provider parity boundary"))
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
@@ -367,7 +374,7 @@ def validate_docs_architecture_runtime_flow_boundary(
     if (
         not isinstance(boundary_text, str)
         or "docs/architecture.md section headings" not in boundary_text
-        or "synchronous runtime boundary" not in boundary_text
+        or "local candidate-async runtime boundary" not in boundary_text
         or "does not claim semantic flow-order verification" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate architecture inventory from semantic flow proof"))

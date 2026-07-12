@@ -35,7 +35,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "controller_queue_checkpoints": "not_recorded_locally",
     "llm_sampler_task_state": "not_recorded_locally",
     "evaluator_worker_pending_state": "not_recorded_locally",
-    "deterministic_async_merge_admission_order": "not_recorded_locally",
+    "deterministic_async_merge_admission_replay": "not_recorded_locally",
     "ordered_migration_restore_engine": "not_recorded_locally",
     "provider_output_replay": "not_recorded_locally",
     "plugin_rng_replay": "not_recorded_locally",
@@ -50,8 +50,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "distributed_pipeline_topology",
         "runtime_surface": "controller, LLM sampler, evaluation-node topology",
-        "current_scope": "single-process synchronous topology report with zero queues",
-        "missing_readiness": "async queues, task identities, wait telemetry, worker liveness, and deterministic async completion order",
+        "current_scope": "local candidate-evaluation asyncio queue with named workers and deterministic admission",
+        "missing_readiness": "concurrent sampler tasks, distributed evaluators, full wait telemetry, cross-generation overlap, and pending-work checkpoints",
         "roadmap_required_phrase": "runtime.history.distributed_pipeline_topology_report",
         "current_sidecars": ("papers/distributed_pipeline_topology_boundary.json",),
         "active_todos": (
@@ -65,13 +65,13 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "real async topology artifacts and queue/backpressure validation",
-        "readiness_status": "synchronous_topology_absence_boundary",
+        "readiness_status": "local_candidate_async_topology_partial",
     },
     {
         "criterion_id": "parallel_evaluation_throughput",
-        "runtime_surface": "local sample workers and future evaluator queues",
-        "current_scope": "configured-stage sample-worker fan-out with deterministic sample-index order",
-        "missing_readiness": "candidate-level async evaluator queues, compute-hour budgets, distributed nodes, and pending-work resume",
+        "runtime_surface": "local stage-sample workers and candidate-evaluation workers",
+        "current_scope": "configured-stage sample fan-out plus bounded local candidate-level async evaluation",
+        "missing_readiness": "compute-hour budgets, concurrent samplers, distributed nodes, cross-generation overlap, and pending-work resume",
         "roadmap_required_phrase": "runtime.history.parallel_evaluation_readiness_report",
         "current_sidecars": ("papers/parallel_evaluation_readiness_boundary.json",),
         "active_todos": (
@@ -85,12 +85,12 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "paper-visible worker fan-out, queue state, and cadence reports",
-        "readiness_status": "local_sample_worker_fanout_only",
+        "readiness_status": "local_candidate_async_evaluation_partial",
     },
     {
         "criterion_id": "controller_pending_work_resume",
         "runtime_surface": "controller queues and pending work",
-        "current_scope": "terminal drained synchronous controller-state snapshot",
+        "current_scope": "terminal drained synchronous or local candidate-async controller snapshot",
         "missing_readiness": "queued/running proposals, in-flight LLM calls, evaluator state, and mid-generation resume",
         "roadmap_required_phrase": "controller and pending-evaluation checkpoint state",
         "current_sidecars": ("papers/controller_pending_work_resume_boundary.json",),
@@ -177,7 +177,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "budget_resume_accounting",
         "runtime_surface": "runtime, evaluator, LLM, controller, and worker budgets",
-        "current_scope": "synchronous cooperative counters and controller LLM budget-event replay",
+        "current_scope": "terminal cooperative counters and serialized async-candidate evaluation accounting",
         "missing_readiness": "async queue budgets, worker/accelerator leases, pending-work budget restore, and equal-budget runs",
         "roadmap_required_phrase": "synchronous controller-budget event replay",
         "current_sidecars": (
@@ -195,7 +195,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "async worker budget accounting and pending-work budget resume",
-        "readiness_status": "synchronous_budget_replay_only",
+        "readiness_status": "terminal_budget_replay_without_worker_lease_state",
     },
     {
         "criterion_id": "environment_replay",
@@ -291,7 +291,7 @@ def roadmap_async_resumable_runtime_boundary_record(root: str | Path = ".") -> d
             "resumed-trace proof. It does not claim an async-state inventory, "
             "replay/resume acceptance checklist, controller queue checkpoints, "
             "LLM sampler task state, evaluator pending state, deterministic "
-            "async merge/admission order, ordered migration restore engine, "
+            "async merge/admission replay, ordered migration restore engine, "
             "provider-output replay, plugin RNG replay, async budget "
             "accounting, external environment replay, end-to-end resumed trace "
             "proof, or owner review signoff."

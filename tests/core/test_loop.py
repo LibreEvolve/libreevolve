@@ -417,6 +417,17 @@ class _TelemetryLLM:
         pass
 
 
+class _SequenceTelemetryLLM(_TelemetryLLM):
+    def __init__(self, diffs):
+        super().__init__()
+        self._diffs = iter(diffs)
+
+    def generate(self, prompt, role="mutation"):
+        if role == "mutation":
+            self.diff = next(self._diffs)
+        return super().generate(prompt, role=role)
+
+
 class _RewardLLM:
     def __init__(
         self,
@@ -993,6 +1004,260 @@ def test_loop_evaluates_configured_proposal_batch_in_one_generation():
     duplicate_report = manifest["runtime"]["history"]["duplicate_work_policy_report"]
     assert duplicate_report["evaluation_cache_hit_count"] == 1
     assert manifest["config"]["proposals_per_generation"] == 3
+
+
+def test_loop_async_candidate_evaluations_overlap_and_admit_in_submission_order(
+    tmp_path,
+):
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    import time\n"
+        "    delays = {'x=2': 0.60, 'x=3': 0.20, 'x=4': 0.01}\n"
+        "    scores = {'x=1': 0.1, 'x=2': 0.2, 'x=3': 0.3, 'x=4': 0.4}\n"
+        "    key = code.strip()\n"
+        "    time.sleep(delays.get(key, 0.0))\n"
+        "    return {'score': scores[key], 'is_valid': True}\n"
+    )
+    llm = _SequenceTelemetryLLM(["x=2", "x=3", "x=4"])
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                async_candidate_evaluation=True,
+                async_evaluator_workers=3,
+                async_evaluation_queue_capacity=3,
+                eval_timeout_sec=3.0,
+                log_dir=str(tmp_path),
+                problem_name="async_batch",
+            ),
+        )
+
+    run_dir = tmp_path / "async_batch"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    generated = history[1:]
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    runtime_history = manifest["runtime"]["history"]
+    controller = runtime_history["async_candidate_evaluation_controller"]
+
+    assert [
+        row["metadata"]["proposal_batch"]["proposal_index"] for row in generated
+    ] == [0, 1, 2]
+    assert {
+        row["metadata"]["proposal_batch"]["policy"] for row in generated
+    } == {"async_evaluation_submission_order"}
+    assert [
+        row["metadata"]["async_candidate_evaluation"]["submission_order"]
+        for row in generated
+    ] == [0, 1, 2]
+    assert [
+        row["metadata"]["async_candidate_evaluation"]["admission_order"]
+        for row in generated
+    ] == [0, 1, 2]
+    assert controller["validation"]["ok"] is True
+    assert controller["submitted_count"] == 3
+    assert controller["finished_count"] == 3
+    assert controller["max_running_count"] >= 2
+    assert controller["completion_out_of_order_count"] > 0
+    assert [
+        row["submission_order"] for row in controller["admission_records"]
+    ] == [0, 1, 2]
+    assert [row["admission_order"] for row in controller["admission_records"]] == [
+        0,
+        1,
+        2,
+    ]
+    assert [row["submission_order"] for row in controller["task_records"]] == [
+        0,
+        1,
+        2,
+    ]
+    assert [row["completion_order"] for row in controller["task_records"]] != [
+        0,
+        1,
+        2,
+    ]
+    assert manifest["runtime"]["consumed"]["candidate_evaluations"] == 3
+
+    topology = runtime_history["distributed_pipeline_topology_report"]
+    assert topology["validation"]["ok"] is True
+    assert topology["dispatch_policy"]["asyncio_pipeline"] is True
+    assert topology["dispatch_policy"]["asyncio_scope"] == (
+        "candidate_evaluation_only"
+    )
+    assert topology["queue_count"] == 1
+    assert topology["queues"][0]["capacity"] == 3
+    assert topology["claim_ready"] is False
+
+    controller_state = runtime_history["controller_state"]
+    assert controller_state["validation"]["ok"] is True
+    assert controller_state["status"] == (
+        "terminal_async_evaluation_controller_drained"
+    )
+    assert controller_state["pending_work"]["queued_evaluations"] == 0
+    assert controller_state["pending_work"]["running_evaluations"] == 0
+
+
+def test_loop_async_candidate_evaluations_coalesce_inflight_duplicates(tmp_path):
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    import time\n"
+        "    time.sleep(0.05)\n"
+        "    return {'score': 1.0 if code.strip() == 'x=2' else 0.1, "
+        "'is_valid': True}\n"
+    )
+    llm = _TelemetryLLM("x=2")
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                async_candidate_evaluation=True,
+                async_evaluator_workers=2,
+                async_evaluation_queue_capacity=2,
+                log_dir=str(tmp_path),
+                problem_name="async_duplicates",
+            ),
+        )
+
+    run_dir = tmp_path / "async_duplicates"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    generated = history[1:]
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    controller = manifest["runtime"]["history"][
+        "async_candidate_evaluation_controller"
+    ]
+    budget_events = [
+        json.loads(line)
+        for line in (run_dir / "controller_budget_events.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+
+    assert controller["validation"]["ok"] is True
+    assert controller["submitted_count"] == 1
+    assert controller["admission_count"] == 3
+    assert [row["source"] for row in controller["admission_records"]] == [
+        "worker_result",
+        "inflight_cache_hit",
+        "inflight_cache_hit",
+    ]
+    assert [
+        row["metadata"]["async_candidate_evaluation"]["status"]
+        for row in generated
+    ] == ["succeeded", "inflight_cache_hit", "inflight_cache_hit"]
+    assert manifest["runtime"]["consumed"]["candidate_evaluations"] == 1
+    assert [row["kind"] for row in budget_events].count("candidate_evaluation") == 1
+    assert [row["kind"] for row in budget_events].count(
+        "candidate_evaluation_cache_hit"
+    ) == 2
+
+
+def test_loop_async_drain_accounts_later_success_before_worker_failure_abort(
+    tmp_path,
+):
+    from libreevolve.core.evaluator import CascadeEvaluator
+
+    original_evaluate = CascadeEvaluator.evaluate
+
+    def evaluate_with_one_failure(self, code, diff_error):
+        workspace = (
+            code
+            if isinstance(code, CandidateWorkspace)
+            else CandidateWorkspace.from_code(code)
+        )
+        if workspace.code.strip() == "x=2":
+            time.sleep(0.05)
+            raise RuntimeError("async evaluator failed")
+        return original_evaluate(self, workspace, diff_error)
+
+    llm = _SequenceTelemetryLLM(["x=2", "x=3"])
+    with (
+        patch("libreevolve.core.loop.build_llm", return_value=llm),
+        patch(
+            "libreevolve.core.loop.CascadeEvaluator.evaluate",
+            new=evaluate_with_one_failure,
+        ),
+        pytest.raises(RuntimeError, match="async evaluator failed"),
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                proposals_per_generation=2,
+                mutation_mode="full",
+                async_candidate_evaluation=True,
+                async_evaluator_workers=2,
+                async_evaluation_queue_capacity=2,
+                log_dir=str(tmp_path),
+                problem_name="async_failure",
+            ),
+        )
+
+    run_dir = tmp_path / "async_failure"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    controller = manifest["runtime"]["history"][
+        "async_candidate_evaluation_controller"
+    ]
+    history = (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+
+    assert controller["validation"]["ok"] is True
+    assert controller["submitted_count"] == 2
+    assert controller["succeeded_count"] == 1
+    assert controller["failed_count"] == 1
+    assert controller["admission_count"] == 0
+    assert manifest["runtime"]["consumed"]["candidate_evaluations"] == 1
+    assert len(history) == 1
+
+
+def test_loop_async_dispatch_reserves_max_evaluation_budget(tmp_path):
+    llm = _SequenceTelemetryLLM(["x=2", "x=3", "x=4"])
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                max_evaluations=3,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                async_candidate_evaluation=True,
+                async_evaluator_workers=2,
+                async_evaluation_queue_capacity=2,
+                log_dir=str(tmp_path),
+                problem_name="async_budget",
+            ),
+        )
+
+    run_dir = tmp_path / "async_budget"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    consumed = manifest["runtime"]["consumed"]
+    controller = manifest["runtime"]["history"][
+        "async_candidate_evaluation_controller"
+    ]
+    history = (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+
+    assert manifest["runtime"]["stop_reason"] == "max_evaluations"
+    assert consumed["evaluations"] == 3
+    assert consumed["seed_evaluations"] == 1
+    assert consumed["candidate_evaluations"] == 2
+    assert consumed["generations_started"] == 1
+    assert consumed["generations_completed"] == 0
+    assert controller["submitted_count"] == 2
+    assert controller["finished_count"] == 2
+    assert controller["admission_count"] == 2
+    assert len(history) == 3
 
 
 def test_runtime_history_reports_exact_proposal_diversity_counts():

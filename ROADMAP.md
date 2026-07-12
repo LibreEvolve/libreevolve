@@ -1097,35 +1097,36 @@ is not yet an AlphaEvolve reproduction.
 
 ### 6. Async and resumable runtime
 
-- Add a controller with bounded queues for LLM proposals and evaluator workers;
-  the current loop reports its synchronous topology under
-  `runtime.history.distributed_pipeline_topology_report`, with
-  `papers/distributed_pipeline_topology_boundary.json` preserving the
-  paper-facing single-process synchronous-topology absence boundary, including
-  the missing Python `asyncio` runtime identity, async task/coroutine
-  identities, dependency wait telemetry, worker lifecycle/liveness records,
-  scheduler-state snapshots, and deterministic async completion/admission order
-  required by AlphaEvolve Section 2.6. It
-  supports sequential `proposals_per_generation` batches plus opt-in local
-  `eval_stages[].sample_workers` fan-out for configured-stage samples, but not
-  concurrent proposal/evaluation queues. Completed manifests also expose
-  `runtime.history.parallel_evaluation_readiness_report`, which records local
-  sample-worker fan-out and wall-clock compression, and
-  `papers/parallel_evaluation_readiness_boundary.json` preserves the
-  paper-facing absence boundary while keeping order-of-100-compute-hours
-  candidate budgets, generation-cadence preservation under slow feedback,
-  concurrent LLM sampler queues, candidate-level async evaluator queues,
-  queue capacity/backpressure policy, distributed evaluator nodes,
-  deterministic async result merge/admission order, concurrency-safe shared
-  state mutation, mutation-depth impact, pending-work resume, and equal-budget
-  parallelism evidence open.
+- Extend the first local async controller slice into the complete AlphaEvolve
+  pipeline. `async_candidate_evaluation: true` now sends uncached sibling
+  candidate evaluations through a bounded Python `asyncio` queue with named
+  local workers, producer backpressure, worker lifecycle records, out-of-order
+  completion telemetry, deterministic submission-order merge/admission, exact
+  in-flight duplicate coalescing, and serial shared-state commit. Proposal and
+  critique LLM calls remain inline, batches drain before generation completion,
+  and no queued/running state is resumable. Completed manifests expose this
+  evidence under `runtime.history.async_candidate_evaluation_controller`,
+  `runtime.history.controller_state`,
+  `runtime.history.distributed_pipeline_topology_report`, and
+  `runtime.history.parallel_evaluation_readiness_report`.
+  `papers/distributed_pipeline_topology_boundary.json` and
+  `papers/parallel_evaluation_readiness_boundary.json` now preserve the local
+  candidate-async partial boundary. Remaining Section 2.6 work includes
+  concurrent LLM sampler queues, cross-generation proposal/evaluation overlap,
+  full dependency wait telemetry, distributed evaluator nodes, scheduler and
+  pending-work checkpoints, cross-process coordination, order-of-100-compute-
+  hours budgets, mutation-depth/cadence evidence under slow feedback, and
+  equal-budget parallelism reports. Opt-in
+  `eval_stages[].sample_workers` remains a separate local configured-stage
+  sample fan-out path.
 - Compose the current restored LLM scheduler, prompt-history, RNG, archive, and
   budget snapshots with controller and pending-evaluation checkpoint state so
   long runs can resume from more than a terminal drained boundary. The committed
   `papers/controller_pending_work_resume_boundary.json` sidecar preserves the
-  current terminal controller-state evidence while keeping queue checkpoint,
-  running-work resume, provider handoff replay, and end-to-end resumed-trace
-  proof open. The committed `papers/restore_certification_boundary.json`
+  current terminal controller-state evidence for both default synchronous and
+  opt-in local candidate-async runs while keeping queue checkpoint, running-work
+  resume, provider handoff replay, and end-to-end resumed-trace proof open. The
+  committed `papers/restore_certification_boundary.json`
   sidecar records the current compatible restore-certification surface and
   accepted/quarantine diagnostic separation while keeping full replay,
   provider raw-payload replay, controller pending-work checkpoint replay,

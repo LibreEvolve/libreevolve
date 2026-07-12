@@ -13,7 +13,7 @@ PARALLEL_EVALUATION_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.parallel_evaluation_readiness_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "local_sample_worker_fanout_only"
+EXPECTED_BOUNDARY_STATUS = "local_candidate_async_evaluation_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "local_stage_sample_worker_fanout",
     "observed_wall_clock_compression",
@@ -32,20 +32,26 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "pending_evaluation_resume_state",
     "equal_budget_parallelism_report_ref",
 )
+EXPECTED_IMPLEMENTED_EVIDENCE = {
+    "local_stage_sample_worker_fanout": "recorded_when_configured",
+    "candidate_level_async_evaluation_queue": "bounded_local_asyncio_queue",
+    "queue_capacity_backpressure_policy": "recorded_in_controller_report",
+    "local_candidate_evaluator_worker_nodes": "named_asyncio_workers",
+    "out_of_order_completion_telemetry": "recorded_per_candidate_task",
+    "deterministic_async_result_merge_order": "submission_order",
+    "shared_state_mutation_policy": "serial_controller_commit_after_merge",
+}
 EXPECTED_MISSING_EVIDENCE = {
     "hundred_compute_hour_candidate_budget_records": "not_recorded_locally",
     "generation_cadence_under_slow_feedback_report": "not_recorded_locally",
     "per_candidate_compute_hour_budget_records": "not_recorded_locally",
     "concurrent_llm_sampler_queue": "not_recorded_locally",
-    "candidate_level_async_evaluation_queue": "not_recorded_locally",
-    "queue_capacity_backpressure_policy": "not_recorded_locally",
     "distributed_evaluator_worker_nodes": "not_recorded_locally",
-    "deterministic_async_result_merge_order": "not_recorded_locally",
-    "concurrency_safe_shared_state_mutation": "not_recorded_locally",
     "randomized_initialization_shard_identity": "not_recorded_locally",
     "mutation_chain_depth_impact_under_slow_feedback": "not_recorded_locally",
     "pending_evaluation_resume_state": "not_recorded_locally",
     "equal_budget_parallelism_report_links": "not_recorded_locally",
+    "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
 }
 
 
@@ -65,7 +71,7 @@ class ParallelEvaluationReadinessBoundaryValidation:
 
 
 def parallel_evaluation_readiness_boundary_record() -> dict[str, Any]:
-    """Return the current AlphaEvolve parallel-evaluation absence boundary."""
+    """Return the current AlphaEvolve parallel-evaluation boundary."""
 
     return {
         "schema": PARALLEL_EVALUATION_READINESS_BOUNDARY_SCHEMA,
@@ -83,20 +89,23 @@ def parallel_evaluation_readiness_boundary_record() -> dict[str, Any]:
         "runtime_report_status": "parallel_evaluation_readiness_report_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
+        "implemented_evidence": dict(EXPECTED_IMPLEMENTED_EVIDENCE),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has runtime reporting for "
             "configured local stage sample-worker fan-out, observed wall-clock "
-            "compression, and distributed-pipeline topology linkage, but does "
-            "not claim AlphaEvolve-style 100-compute-hour candidate budgets, "
-            "generation-cadence preservation under slow feedback, per-candidate "
-            "compute-hour budgets, concurrent LLM sampler queues, candidate-"
-            "level async evaluator queues, queue capacity/backpressure policy, "
-            "distributed evaluator nodes, deterministic async result merge and "
-            "archive-admission order, concurrency-safe database/archive/prompt/"
-            "plugin/budget mutation, randomized initialization shards, mutation-"
-            "chain depth impact under slow feedback, pending-work resume, or "
-            "equal-budget parallelism reports."
+            "compression, and distributed-pipeline topology linkage. Opt-in "
+            "candidate evaluation now uses a bounded local asyncio queue, named "
+            "workers, queue backpressure telemetry, out-of-order completion "
+            "records, deterministic submission-order result merge and archive "
+            "admission, exact in-flight duplicate coalescing, and serial shared-"
+            "state commit. It does not claim AlphaEvolve-style 100-compute-hour "
+            "candidate budgets, generation-cadence preservation under slow "
+            "feedback, per-candidate compute-hour budgets, concurrent LLM "
+            "sampler queues, distributed evaluator nodes, randomized "
+            "initialization shards, cross-generation proposal/evaluation "
+            "overlap, mutation-chain depth impact under slow feedback, pending-"
+            "work resume, or equal-budget parallelism reports."
         ),
     }
 
@@ -132,16 +141,22 @@ def validate_parallel_evaluation_readiness_boundary(
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "parallel-evaluation boundary must not claim AlphaEvolve throughput readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
+    _validate_evidence_map(
+        "implemented_evidence",
+        data.get("implemented_evidence"),
+        EXPECTED_IMPLEMENTED_EVIDENCE,
+        issues,
+    )
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
         or "does not claim" not in boundary_text
+        or "bounded local asyncio queue" not in boundary_text
+        or "deterministic submission-order result merge" not in boundary_text
         or "concurrent LLM sampler queues" not in boundary_text
-        or "queue capacity/backpressure policy" not in boundary_text
-        or "deterministic async result merge" not in boundary_text
-        or "concurrency-safe database/archive/prompt/plugin/budget mutation"
-        not in boundary_text
+        or "cross-generation proposal/evaluation overlap" not in boundary_text
+        or "pending-work resume" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim AlphaEvolve parallel-evaluation parity"))
     return ParallelEvaluationReadinessBoundaryValidation(
@@ -233,6 +248,24 @@ def _validate_missing_evidence(
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
+
+
+def _validate_evidence_map(
+    field: str,
+    value: object,
+    expected: dict[str, str],
+    issues: list[ParallelEvaluationReadinessBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue(f"invalid_{field}", f"{field} must be an object"))
+        return
+    if value != expected:
+        issues.append(
+            _issue(
+                f"invalid_{field}",
+                f"{field} must match the validated local async evidence map",
+            )
+        )
 
 
 def _issue(code: str, message: str) -> ParallelEvaluationReadinessBoundaryIssue:

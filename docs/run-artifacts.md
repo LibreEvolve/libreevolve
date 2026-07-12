@@ -1340,24 +1340,43 @@ retrieval/summarization, learned ranking, and semantic context-selection
 surfaces.
 Completed runtime history also records
 `runtime.history.controller_state`, a terminal drained-state snapshot for the
-synchronous controller with zero queued/running proposals, evaluations,
-in-flight LLM calls, and pending archive admissions plus a compact
-`controller_budget_events.jsonl` summary. Its embedded
+synchronous controller or the opt-in local asyncio candidate-evaluation
+controller, with zero queued/running proposals, evaluations, in-flight LLM
+calls, and pending archive admissions plus a compact
+`controller_budget_events.jsonl` summary. Async-enabled snapshots embed the
+validated drained candidate-evaluation controller report. Its embedded
 `libreevolve.controller_state_validation.v1` record verifies the terminal
-drained boundary and reports pending work, malformed fields, or async/full
-replay overclaims as validation failures. Queued/running async worker state,
+drained boundary and reports pending work, malformed fields, or full-replay
+overclaims as validation failures. Queued/running worker checkpoint state,
 provider-output replay, and end-to-end lineage replay proof remain separate
 resume work; `papers/controller_pending_work_resume_boundary.json` keeps that
 terminal-snapshot scope machine-validated.
+
+When `config.async_candidate_evaluation` is true, completed runtime history also
+records `runtime.history.async_candidate_evaluation_controller` with schema
+`libreevolve.async_candidate_evaluation_controller.v1`. It contains the bounded
+queue capacity and backpressure policy, named worker/task identities and
+lifecycle counts, submitted/finished/succeeded/failed totals, maximum concurrent
+work, completion order, deterministic admission records, queue and evaluation
+wall-clock telemetry, retained per-task execution records, and terminal zero
+pending work. Generated history rows retain their execution/admission linkage
+under `metadata.async_candidate_evaluation`. Cache hits and exact duplicate work
+already in flight retain synthetic execution records and are admitted in the
+same proposal order without consuming a second candidate-evaluation budget
+unit.
 Completed runtime history also records
 `runtime.history.distributed_pipeline_topology_report` with schema
-`libreevolve.distributed_pipeline_topology_report.v1`. The report names the
-current local synchronous topology: `controller:local`, `database:local`,
+`libreevolve.distributed_pipeline_topology_report.v1`. The report always names
+the current local topology: `controller:local`, `database:local`,
 configured `llm_sampler:backend_*` nodes, configured or default
-`evaluation_node:*` nodes, zero queues, and blocking dependency edges for
-sampling, mutation generation, evaluation, and archive admission. Its
+`evaluation_node:*` nodes, and dependency edges for sampling, mutation
+generation, evaluation, and archive admission. Its
 `throughput_budget_linkage` points at consumed runtime and controller-budget
-events while marking queued-work accounting unsupported. When a configured
+events. In the default mode, the report has zero queues and blocking candidate
+evaluation dispatch. With async candidate evaluation enabled, it adds the
+bounded `candidate_evaluation_queue:local`, named local evaluator worker nodes,
+a nonblocking controller-to-evaluator edge with producer backpressure, queued-
+work accounting, and submission-order merge/admission policy. When a configured
 stage sets `eval_stages[].sample_workers` above `1`, the topology records
 `dispatch_policy.evaluator_sample_workers`, changes evaluation dispatch to
 `blocking_stage_sample_thread_pool_local_subprocess`, exposes the local
@@ -1370,15 +1389,17 @@ process-exhibit evaluator-pool record summarizes that metadata under
 for observed local sample-worker compression. Runs without configured sample
 workers keep `evaluation_dispatch: inline_blocking_local_subprocess` and
 `worker_fanout_accounted: false`.
-`validate_distributed_pipeline_topology_report()` keeps `claim_ready: false`
-and fails async-pipeline, async-worker, pending-checkpoint, or AlphaEvolve
-async-topology overclaims. The committed
+`validate_distributed_pipeline_topology_report()` validates either the default
+synchronous topology or the complete local candidate-async contract, while
+keeping `claim_ready: false` and rejecting pending-checkpoint or full
+AlphaEvolve async-topology overclaims. The committed
 `papers/distributed_pipeline_topology_boundary.json` sidecar preserves the
-same single-process synchronous-topology absence boundary for paper-manifest
-validation, including missing async task/coroutine identities, dependency
-wait-event telemetry, worker lifecycle/liveness records, async scheduler-state
-snapshots, deterministic async completion/admission order, queue backpressure,
-and pending-work checkpoints.
+local candidate-async partial boundary for paper-manifest validation. It records
+the implemented event loop, queue, worker, completion/admission, lifecycle, and
+dispatch telemetry while retaining missing concurrent LLM sampler workers,
+distributed evaluator workers, full dependency-wait telemetry, scheduler-state
+snapshots, cross-generation overlap, cross-process coordination, and pending-
+work checkpoints.
 Completed runtime history also records
 `runtime.history.parallel_evaluation_readiness_report` with schema
 `libreevolve.parallel_evaluation_readiness_report.v1`. It aggregates the
@@ -1387,17 +1408,16 @@ configured `eval_stages[].sample_workers` settings, observed
 observed wall-clock seconds, wall-clock compression records, and a link back to
 `runtime.history.distributed_pipeline_topology_report`.
 
-This report is a scoped readiness boundary for AlphaEvolve Section 2.4
-parallel evaluation. Local configured-stage sample workers can show fan-out and
-wall-clock compression, but `claim_ready` remains false until the runtime
-records per-candidate compute-hour budgets, candidate-level async evaluation
-queues, concurrent LLM sampler queues, queue capacity/backpressure policy,
-distributed evaluator worker nodes, deterministic async result merge/admission
-order, concurrency-safe shared-state mutation, randomized-initialization shard
-identity, mutation-chain-depth impact under slow feedback, pending-work resume
-state, and equal-budget parallelism reports. The committed
+This report is a scoped readiness boundary for AlphaEvolve Sections 2.4 and 2.6
+parallel evaluation. It records local configured-stage sample fan-out and, when
+enabled, candidate-level async queue/execution/admission evidence. `claim_ready`
+remains false until the runtime records per-candidate compute-hour budgets,
+concurrent LLM sampler queues, distributed evaluator worker nodes, randomized-
+initialization shard identity, cross-generation proposal/evaluation overlap,
+mutation-chain-depth impact under slow feedback, pending-work resume state, and
+equal-budget parallelism reports. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
-same absence boundary for paper-manifest validation.
+same local candidate-async partial boundary for paper-manifest validation.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
 is rejected before local evaluation counters mutate. The current
 `max_evaluations` limit is still a seed/candidate evaluation cap rather than a
@@ -1447,11 +1467,12 @@ async queue budgets are not first-class counters yet. Evaluator
 subprocess-attempt, configured-stage sample, retry, timeout, sample/stage
 budget-exhaustion, logical LLM-call, provider-attempt, token, and configured
 cost counters are reported and can be capped by independent run-stop policies.
-The current synchronous runtime can write multiple generated child candidates
-per generation when `proposals_per_generation` is greater than `1`. Those
-proposal batches are sequential and produce sibling-candidate accounting in
-history rows; parallel LLM/evaluator worker artifacts remain future runtime
-work.
+The runtime can write multiple generated child candidates per generation when
+`proposals_per_generation` is greater than `1`. Proposal generation and LLM
+work remain sequential. Async mode overlaps only sibling candidate evaluations,
+then drains and commits them in submission order before the generation ends;
+concurrent LLM samplers, cross-generation overlap, distributed workers, and
+pending-work resume remain future runtime work.
 When `max_generations` is `0` or local budgets stop before the first mutation,
 LibreEvolve evaluates seeds and writes normal history/manifest/best artifacts
 without constructing configured LLM provider clients.
@@ -2047,9 +2068,10 @@ archive bundle from a prior manifest plus sibling `history.jsonl` with
 `load_runtime_archive_state_snapshot()` validates this compact manifest field
 for future resume use, including schema/status, cursor bounds, manifest-safe
 program ids in `archive_sequence_by_program_id`, and per-island count records.
-`runtime.history.controller_state` records the terminal synchronous controller
-boundary beside this archive state, but does not reconstruct async worker
-queues or partially completed generation work. Its embedded
+`runtime.history.controller_state` records the terminal default-synchronous or
+opt-in local candidate-async controller boundary beside this archive state, but
+does not reconstruct queued/running worker state or partially completed
+generation work. Its embedded
 `libreevolve.controller_state_validation.v1` record keeps that claim bounded to
 a drained terminal snapshot.
 `controller_state_artifact_inventory()` emits
@@ -2074,14 +2096,15 @@ report validates each Figure 2 pseudocode step against the artifact inventory
 paths it cites, records strict JSONL row summaries for cited streams, and
 adds bounded generated-candidate semantic traces with durable LLM and
 archive-admission stream rows. It also records hashed source-PDF page text
-extracts for AlphaEvolve Figure 1/Figure 2, a validated current synchronous
-topology boundary linked to
+extracts for AlphaEvolve Figure 1/Figure 2, a validated current local topology
+boundary linked to
 `runtime.history.distributed_pipeline_topology_report` and a validated
 current inline evaluator-pool parallelism boundary before linking open process
 components back to the active TODO ledgers. It is a manifest-level
-process-exhibit map for the current synchronous loop, not an exact
-AlphaEvolve diagram reproduction, async pipeline implementation, or
-independent evaluator-pool implementation: exact source-diagram layout,
+process-exhibit map for the current local loop, including candidate-async
+topology when configured, not an exact AlphaEvolve diagram reproduction, full
+controller/sampler/evaluator pipeline, or independent evaluator-pool
+implementation: exact source-diagram layout,
 exact source caption/text identity, source diagram text identity, diagram
 node-label source alignment, source figure image/crop hashes, visual node
 coordinates, source edge geometry/routing, Figure 2 pseudocode line-number

@@ -42,6 +42,8 @@ MAX_LLM_CALL_ATTEMPTS = 32
 MAX_EVAL_STAGE_RETRIES = 10
 MAX_EVALUATOR_STDIN_CHARS = 100_000
 MAX_LLM_FEEDBACK_FAILURE_RETRIES = 3
+MAX_ASYNC_EVALUATOR_WORKERS = 64
+MAX_ASYNC_EVALUATION_QUEUE_CAPACITY = 4096
 _CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
     r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
 )
@@ -65,6 +67,9 @@ class Config:
     max_evaluator_stage_budget_exhaustions: int | None = None
     max_runtime_seconds:    float | None = None
     proposals_per_generation: int = 1
+    async_candidate_evaluation: bool = False
+    async_evaluator_workers: int = 2
+    async_evaluation_queue_capacity: int = 4
     num_inspirations:       int   = 3
     eval_timeout_sec:       float = 60.0
     validator_env_allowlist: list[str] = field(default_factory=list)
@@ -205,6 +210,27 @@ class Config:
         )
         _require_optional_positive_number("max_runtime_seconds", self.max_runtime_seconds)
         _require_int("proposals_per_generation", self.proposals_per_generation, minimum=1)
+        _require_bool("async_candidate_evaluation", self.async_candidate_evaluation)
+        _require_int(
+            "async_evaluator_workers",
+            self.async_evaluator_workers,
+            minimum=1,
+        )
+        if self.async_evaluator_workers > MAX_ASYNC_EVALUATOR_WORKERS:
+            raise ConfigError(
+                "async_evaluator_workers must be an integer between 1 and "
+                f"{MAX_ASYNC_EVALUATOR_WORKERS}"
+            )
+        _require_int(
+            "async_evaluation_queue_capacity",
+            self.async_evaluation_queue_capacity,
+            minimum=1,
+        )
+        if self.async_evaluation_queue_capacity > MAX_ASYNC_EVALUATION_QUEUE_CAPACITY:
+            raise ConfigError(
+                "async_evaluation_queue_capacity must be an integer between 1 and "
+                f"{MAX_ASYNC_EVALUATION_QUEUE_CAPACITY}"
+            )
         _require_int("num_inspirations", self.num_inspirations, minimum=0)
         _require_positive_number("eval_timeout_sec", self.eval_timeout_sec)
         self.validator_network_policy = _validate_validator_network_policy(

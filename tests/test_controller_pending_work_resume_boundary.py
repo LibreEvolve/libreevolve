@@ -14,7 +14,7 @@ def test_controller_pending_work_resume_boundary_accepts_terminal_snapshot_recor
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "terminal_controller_snapshot_without_pending_work_resume"
+        == "terminal_controller_snapshot_with_local_async_drain_without_pending_work_resume"
     )
     assert validation.required_evidence_field_count == 18
     assert validation.missing_evidence_count == 9
@@ -53,7 +53,8 @@ def test_render_controller_pending_work_resume_boundary_summary_reports_shape():
     assert "Controller pending-work resume boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | terminal_controller_snapshot_without_pending_work_resume |"
+        "| boundary_status | "
+        "terminal_controller_snapshot_with_local_async_drain_without_pending_work_resume |"
         in summary
     )
     assert "| required_evidence_field_count | 18 |" in summary

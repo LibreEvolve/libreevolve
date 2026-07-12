@@ -682,12 +682,14 @@ Important limits:
   `papers/controller_pending_work_resume_boundary.json`.
 - Parallel-evaluation readiness is limited to configured local
   `eval_stages[].sample_workers` fan-out, observed sample wall-clock
-  compression, and topology linkage. It is not AlphaEvolve-style
-  per-candidate compute-hour budgeting, concurrent LLM sampler queues,
-  candidate-level async evaluator queues, queue capacity/backpressure policy,
-  distributed evaluator nodes, deterministic async result merge/admission
-  order, concurrency-safe shared-state mutation, mutation-depth impact
-  evidence, or pending-work resume; that boundary is tracked by
+  compression, topology linkage, and opt-in local candidate-level asyncio
+  evaluation with a bounded queue, named workers, backpressure telemetry,
+  deterministic submission-order merge/admission, in-flight duplicate
+  coalescing, and serial shared-state commit. It is not AlphaEvolve-style per-
+  candidate compute-hour budgeting, concurrent LLM sampler queues, distributed
+  evaluator nodes, cross-generation proposal/evaluation overlap, randomized-
+  initialization sharding, mutation-depth impact evidence, or pending-work
+  resume; that boundary is tracked by
   `runtime.history.parallel_evaluation_readiness_report` and
   `papers/parallel_evaluation_readiness_boundary.json`.
 - AlphaEvolve Figure 8 ablation support is a validated registry, equal-budget
@@ -902,7 +904,7 @@ Important limits:
   output.
 - ArXiv `2605.08520` is asynchronous-stage orchestration context only; the root README now defers source-specific paper lists to
   `papers/README.md`, which remains the complete implementation-status index.
-  LibreEvolve has no asynchronous worker queue, stage dependency scheduler,
+  LibreEvolve has no asynchronous stage-orchestration worker queue or stage dependency scheduler,
   artifact-version lineage DAG, stale-artifact detector, staleness repair
   policy, speculative stage-completion records, adaptive workflow controller,
   EvolBench/ChatDev/MetaGPT benchmark report, 3.5x/4.9x throughput
@@ -1403,7 +1405,7 @@ Important limits:
 - Docs-architecture runtime-flow evidence now records ten
   `docs/architecture.md` sections, runtime-flow markers, source path checks,
   README/docs-index route markers, the active TODO owner anchor, known-gap
-  markers, the synchronous runtime boundary, and the AlphaEvolve provider-
+  markers, the local candidate-async runtime boundary, and the AlphaEvolve provider-
   parity boundary. This is not semantic flow-order verification, source-
   function semantic verification, runtime manifest field verification,
   architecture limitation freshness, or owner review signoff.

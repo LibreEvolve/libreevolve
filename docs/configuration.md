@@ -74,10 +74,27 @@ from `validate.py` unless explicitly allowlisted.
   micro-USD cost. Role-specific caps override the matching run-wide cap for
   their role in budget-report rows and are checked before calls for that role.
 - `proposals_per_generation` (`1`): number of sequential mutation proposals to
-  generate, evaluate, reward, and log inside each generation. Generation start
+  generate inside each generation. By default each proposal is evaluated,
+  rewarded, and logged before the next proposal. With
+  `async_candidate_evaluation: true`, sibling proposals are still generated
+  sequentially but their uncached evaluations can overlap; results are merged,
+  rewarded, logged, and admitted in proposal submission order. Generation start
   hooks, generation completion accounting, and migration remain once per
   generation; each generated history row records its batch position under
   `metadata.proposal_batch`.
+- `async_candidate_evaluation` (`false`): opt into a local candidate-evaluation
+  controller backed by a bounded Python `asyncio` queue. This overlaps only
+  candidate validator work inside the current proposal batch. LLM proposal,
+  critique, feedback, plugin, prompt-database, archive, reward, and migration
+  mutations remain serialized, and batches drain before the generation ends.
+- `async_evaluator_workers` (`2`): number of named local evaluator tasks used
+  when `async_candidate_evaluation` is enabled. Valid range: `1` through `64`.
+  Each task runs `CascadeEvaluator.evaluate()` through `asyncio.to_thread()`;
+  validator stages still execute in local subprocesses.
+- `async_evaluation_queue_capacity` (`4`): maximum queued candidate evaluator
+  jobs before proposal production waits for capacity. Valid range: `1` through
+  `4096`. Queue waits, observed depth, task completion order, worker lifecycle,
+  and deterministic admission order are retained in the completed manifest.
 - `num_inspirations` (`3`): archive members rendered into prompts.
 - `eval_timeout_sec` (`60.0`): default validator subprocess timeout.
 - `validator_env_allowlist` (`[]`): parent environment variable names to pass
@@ -1343,14 +1360,17 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   counters before new work while appending a new wall-clock resume segment.
   Migration-event replay, async controller pending-work state, provider/model
   output replay, and plugin-owned RNG capture are still not a replay contract.
-  Completed manifests do record a terminal drained synchronous controller state
-  under `runtime.history.controller_state` with embedded validation for the
-  drained terminal boundary.
+  Completed manifests record a terminal drained controller state under
+  `runtime.history.controller_state`. Async-enabled runs additionally embed the
+  drained local candidate-evaluation controller report, but only terminal zero-
+  pending-work state is restorable evidence.
   `runtime.rng.replay_boundary` records the current framework-owned RNG
   boundary and explicit external exclusions; the paper-facing boundary is
   tracked by `papers/runtime_rng_replay_boundary.json`.
-- `eval_stages` is still local subprocess execution. It is not yet a
-  distributed evaluator-worker scheduler.
+- `eval_stages` is still local subprocess execution. Candidate evaluations can
+  be queued across local asyncio workers, and configured stage samples can use
+  local thread-pool fan-out, but neither mode is a distributed evaluator-worker
+  scheduler.
 - Validator entrypoints are loaded from a temporary runner as either direct
   Python files or package `__init__.py` files. The validator directory is added
   to `sys.path`; package validators also add the problem root so package

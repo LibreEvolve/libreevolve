@@ -6,7 +6,7 @@
     "2.6"
   ],
   "source_claim": "AlphaEvolve Section 2.6 describes a Python asyncio asynchronous controller, LLM-sampler, and evaluator-node pipeline optimized for throughput with computations that can block on unfinished dependencies",
-  "boundary_status": "single_process_synchronous_topology",
+  "boundary_status": "local_candidate_async_evaluation_partial",
   "runtime_report_status": "distributed_pipeline_topology_report_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -28,21 +28,25 @@
     "pending_work_checkpoint",
     "async_topology_claim_readiness"
   ],
-  "missing_evidence": {
-    "python_asyncio_runtime": "not_recorded_locally",
-    "async_controller_queues": "not_recorded_locally",
-    "queue_capacity_records": "not_recorded_locally",
-    "queue_backpressure_policy": "not_recorded_locally",
-    "async_task_coroutine_identity": "not_recorded_locally",
-    "nonblocking_dependency_graph": "not_recorded_locally",
-    "dependency_wait_event_telemetry": "not_recorded_locally",
-    "distributed_llm_sampler_worker_nodes": "not_recorded_locally",
-    "distributed_evaluator_worker_nodes": "not_recorded_locally",
-    "worker_lifecycle_liveness": "not_recorded_locally",
-    "async_scheduler_state_snapshot": "not_recorded_locally",
-    "deterministic_async_completion_admission_order": "not_recorded_locally",
-    "throughput_dispatch_telemetry": "not_recorded_locally",
-    "pending_work_checkpoint_state": "not_recorded_locally"
+  "implemented_evidence": {
+    "python_asyncio_runtime": "local_background_event_loop",
+    "bounded_candidate_evaluation_queue": "recorded_in_runtime_report",
+    "queue_capacity_backpressure_policy": "recorded_in_runtime_report",
+    "candidate_evaluator_task_worker_identity": "recorded_in_controller_report",
+    "candidate_evaluator_worker_lifecycle": "terminal_records_available",
+    "candidate_completion_order": "recorded_per_task",
+    "deterministic_candidate_admission_order": "submission_order_merge_recorded",
+    "candidate_dispatch_throughput_telemetry": "recorded_in_controller_report"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a runtime topology report for the current local controller, program database, configured LLM sampler nodes, evaluator nodes, zero queues, blocking dependency edges, synchronous dispatch, runtime-budget linkage, and unsupported pending-work checkpoints, but does not claim AlphaEvolve-style Python asyncio runtime identity, async controller queues, queue capacities and backpressure policy, async task/coroutine identities, nonblocking dependency graphs, dependency wait-event telemetry, distributed sampler/evaluator worker nodes, worker lifecycle/liveness records, async scheduler state snapshots, deterministic async completion/admission order, throughput dispatch telemetry, or pending-work checkpoint state."
+  "missing_evidence": {
+    "dependency_wait_event_telemetry": "not_recorded_locally",
+    "concurrent_llm_sampler_worker_nodes": "not_recorded_locally",
+    "distributed_evaluator_worker_nodes": "not_recorded_locally",
+    "full_nonblocking_dependency_graph": "not_recorded_locally",
+    "async_scheduler_state_snapshot": "not_recorded_locally",
+    "pending_work_checkpoint_state": "not_recorded_locally",
+    "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
+    "cross_process_shared_state_coordination": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records that LibreEvolve has a runtime topology report for the local controller, program database, configured LLM sampler nodes, and evaluator nodes. Opt-in candidate evaluation uses a bounded queue on a Python asyncio event loop, named local evaluator tasks, queue backpressure, worker lifecycle records, out-of-order completion telemetry, and deterministic submission-order archive admission. It does not claim concurrent LLM sampler workers, distributed evaluator workers, a full nonblocking dependency graph, dependency wait-event telemetry, async scheduler snapshots, cross-generation proposal/evaluation overlap, cross-process shared-state coordination, or pending-work checkpoint state."
 }

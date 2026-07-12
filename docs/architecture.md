@@ -2,7 +2,8 @@
 
 LibreEvolve is a Python research framework for LLM-guided program mutation. It
 is AlphaEvolve-inspired, but intentionally smaller: the current runtime is
-synchronous, Python-only, and filesystem-backed.
+local, Python-only, and filesystem-backed, with opt-in candidate-level asyncio
+evaluation inside a proposal batch.
 
 ## Top-level flow
 
@@ -232,7 +233,8 @@ it:
    and falls back to the original mutation if selected revisions are malformed
    but the original applies cleanly
 8. applies the configured mutation mode
-9. evaluates the child
+9. evaluates the child synchronously, or dispatches it to the bounded local
+   candidate-evaluation queue when async evaluation is enabled
 10. optionally applies LLM feedback graders with provenance and score
    composition
 11. constructs a `Program` with metrics and structured evaluation data
@@ -241,10 +243,23 @@ it:
 14. rewards the selected backend with non-negative fitness improvement
 15. records prompt reward for the selected prompt program
 
-After the final proposal in the generation, the loop migrates elites at the
-configured interval, runs generation-end hooks, and records one completed
-generation. This is local batch sampling and sibling-candidate accounting; it
-does not add asynchronous LLM samplers or evaluator workers.
+After the final proposal in the generation, the default loop migrates elites at
+the configured interval, runs generation-end hooks, and records one completed
+generation. With `async_candidate_evaluation: true`, uncached sibling
+evaluations can finish out of order on named `asyncio` workers; the controller
+drains the batch and commits feedback, plugin scoring, prompt rewards, history,
+and archive admission in proposal submission order before migration and the
+generation-end hook. Exact duplicate work already in flight is coalesced into
+one evaluation and later proposals reuse its result without consuming another
+candidate-evaluation budget unit.
+
+This is local candidate-evaluation overlap, not full asynchronous evolution.
+LLM mutation and critique calls remain inline, proposals do not cross generation
+boundaries, and pending queue/running-task state is not checkpointed or resumed.
+The queue controller and its report validator live in
+[`libreevolve/core/async_evaluator.py`](../libreevolve/core/async_evaluator.py);
+`loop.py` owns dispatch, exact-cache coalescing, budget accounting, deterministic
+commit, and runtime-history integration.
 
 `on_generation_start()` is therefore a pre-prompt hook, not a pre-parent hook:
 it can update state before inspiration sampling and prompt construction, but it
@@ -1087,20 +1102,18 @@ the active generated run root is skipped as `excluded_output_root` when it
 resolves inside the problem tree. Plugin constructor parameters/spec schemas
 and aggregate hashes for artifacts emitted after startup remain open.
 
-The synchronous loop uses a local `RunBudget` tracker for `max_generations`,
-optional total evaluation count, optional cumulative evaluator seconds,
-optional detailed evaluator counter limits, and optional wall-clock seconds.
-Budget consumption is written into each candidate record under
-`metadata.budget`, and the completed run writes a `runtime` summary with stop
-reason back into `manifest.json`. Detailed evaluator counter limits are checked
-after each seed/candidate evaluation is recorded, so they stop the synchronous
-loop before the next evaluation or mutation call rather than interrupting an
-in-flight validator subprocess. These are local accounting counters, not async
-queue checkpoints or provider token/cost budget enforcement. The current `RunBudget`
-validation covers live increments, snapshots, limit checks, and finalization in
-the active process. Restored-budget loading is not implemented yet, so future
-resume/controller budget state must be schema-validated before it becomes
-authoritative run accounting.
+The local controller uses `RunBudget` for generation/evaluation/evaluator-
+second/wall-clock limits, detailed evaluator counters, logical LLM calls,
+provider attempts, provider-reported tokens, configured cost, and retained LLM
+latency. Budget consumption is written into candidate records and the completed
+manifest. Detailed evaluator limits are cooperative: they stop new work after
+the consuming evaluation rather than interrupting a running validator. Async
+candidate jobs reserve the total-evaluation cap before dispatch; actual worker
+results are accounted and logged serially during deterministic merge, while
+cache reuse does not consume another evaluation. Validated budget snapshots can
+be restored through direct or CLI entrypoints. This remains local accounting,
+not queue-wait or worker/accelerator lease budgeting, hard cancellation, or
+queued/running pending-work restore.
 
 ## Known gaps
 
@@ -1120,20 +1133,25 @@ authoritative run accounting.
   assignment and provider-token shapes. This is not a network sandbox.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
-- The loop is synchronous; configurable proposal batches are evaluated
-  sequentially and async LLM/evaluator workers are not implemented.
+- Proposal generation and LLM work remain sequential. Candidate evaluations
+  can overlap on opt-in local asyncio workers inside one batch, but there are no
+  concurrent LLM samplers, distributed evaluators, cross-generation overlap, or
+  resumable queued/running tasks.
 - Runtime budget accounting covers local generation count, total evaluator
   calls, cumulative evaluator seconds, evaluator subprocess attempts,
   configured-stage samples, retry attempts, evaluator timeouts, sample/stage
   budget exhaustion counts, wall-clock seconds, and structured stop reasons.
-  Token, provider-cost, LLM retry, accelerator, async queue, and independent
-  stop policies for the detailed evaluator counters are not implemented.
+  Logical LLM calls, provider attempts, provider-reported tokens, configured
+  cost, retained LLM latency, and detailed evaluator counters have cooperative
+  stop policies. Per-candidate compute-hours, worker/accelerator leases, queue-
+  wait budgets, and hard interruption of already running work are not
+  implemented.
 - Archive cell/island state is persisted in manifests with full cell/elite
-  restore support from accepted history; migration-event replay, async
-  controller queues, pending evaluations, and broader resumed experiment traces
-  remain open. Terminal synchronous controller state is manifest-visible under
-  `runtime.history.controller_state` with an embedded validation record for
-  the drained synchronous boundary.
+  restore support from accepted history; migration-event replay, pending async
+  evaluations, and broader resumed experiment traces remain open. Terminal
+  synchronous or local candidate-async controller state is manifest-visible
+  under `runtime.history.controller_state` with an embedded validation record
+  for the drained boundary.
 - LLM critique and feedback are synchronous optional passes; there are no
   parallel reviewer/evaluator workers yet.
 - Proposal ideas/rationales can be parsed, stored, and rendered for selected

@@ -11,7 +11,9 @@ CONTROLLER_PENDING_WORK_RESUME_BOUNDARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.5", "2.6")
-EXPECTED_BOUNDARY_STATUS = "terminal_controller_snapshot_without_pending_work_resume"
+EXPECTED_BOUNDARY_STATUS = (
+    "terminal_controller_snapshot_with_local_async_drain_without_pending_work_resume"
+)
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "controller_state_schema",
     "terminal_drained_controller_state",
@@ -83,17 +85,20 @@ def controller_pending_work_resume_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve writes a terminal "
-            "runtime.history.controller_state snapshot for the single-process "
-            "synchronous loop, validates zero queued/running/pending work at "
-            "finalization, checks the controller_budget_events.jsonl stream, "
-            "exposes controller-state artifact inventory, and includes the "
-            "same unsupported pending-work surfaces in full-runtime restore "
-            "bundle validation. It does not claim controller queue checkpoint "
-            "schema support, queued proposal resume state, running evaluation "
-            "resume state, in-flight LLM call resume state, pending archive "
-            "admission resume state, partial-generation replay trace, async "
-            "controller graph checkpoint, provider-output handoff replay, or "
-            "end-to-end resumed trace proof."
+            "runtime.history.controller_state snapshot for either the default "
+            "single-process synchronous loop or the opt-in local asyncio "
+            "candidate-evaluation controller. Async-enabled terminal snapshots "
+            "embed the drained controller report, queue and worker lifecycle "
+            "records, and deterministic admission telemetry. Finalization "
+            "validates zero queued/running/pending work, checks the "
+            "controller_budget_events.jsonl stream, exposes controller-state "
+            "artifact inventory, and includes the same unsupported pending-"
+            "work surfaces in full-runtime restore validation. It does not "
+            "claim controller queue checkpoint schema support, queued proposal "
+            "resume state, running evaluation resume state, in-flight LLM call "
+            "resume state, pending archive admission resume state, partial-"
+            "generation replay trace, async controller graph checkpoint, "
+            "provider-output handoff replay, or end-to-end resumed trace proof."
         ),
     }
 

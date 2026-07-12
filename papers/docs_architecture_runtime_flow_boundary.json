@@ -167,7 +167,7 @@
     }
   ],
   "known_gap_section_status": "section_markers_and_sources_present",
-  "sync_runtime_boundary_status": "sync_runtime_boundary_present",
+  "sync_runtime_boundary_status": "local_candidate_async_runtime_boundary_present",
   "alphaevolve_parity_boundary_status": "alphaevolve_parity_boundary_present",
   "required_evidence_fields": [
     "architecture_section_inventory",
@@ -190,5 +190,5 @@
     "architecture_limitation_freshness_matrix": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records docs/architecture.md section headings, runtime-flow markers, source-link/path existence checks, route markers from README and docs/README.md, the active TODO owner anchor, known-gap markers, the synchronous runtime boundary, and the AlphaEvolve provider-parity boundary. It does not claim semantic flow-order verification, source-function semantic verification, runtime manifest field verification, architecture limitation freshness, or owner review signoff."
+  "claim_boundary": "This boundary records docs/architecture.md section headings, runtime-flow markers, source-link/path existence checks, route markers from README and docs/README.md, the active TODO owner anchor, known-gap markers, the local candidate-async runtime boundary, and the AlphaEvolve provider-parity boundary. It does not claim semantic flow-order verification, source-function semantic verification, runtime manifest field verification, architecture limitation freshness, or owner review signoff."
 }

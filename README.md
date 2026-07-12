@@ -86,8 +86,14 @@ Important limits:
   scripted Strassen mutation control. This is deterministic local pipeline
   evidence, not stochastic LLM discovery, empirical error-rate,
   cost-efficiency, target-suite, or AlphaEvolve-scale proof.
-- The controller, archive, migration, and evaluator flow are local and
-  synchronous, not a distributed Python `asyncio` AlphaEvolve service.
+- The controller, archive, migration, and evaluator flow remain local. Opt-in
+  `async_candidate_evaluation` dispatches sibling candidate evaluations through
+  a bounded Python `asyncio` queue with named local workers, queue backpressure,
+  out-of-order completion telemetry, exact in-flight duplicate coalescing, and
+  deterministic submission-order archive admission. LLM proposal generation,
+  feedback, archive mutation, and generation boundaries remain serialized; this
+  is not a distributed AlphaEvolve controller/sampler/evaluator service and it
+  does not support pending-work resume or cross-generation evaluation overlap.
 - Runtime restore certification is compatible-surface evidence only;
   `papers/restore_certification_boundary.json` records accepted/quarantine
   separation and overclaim rejection, but not provider raw-payload replay,

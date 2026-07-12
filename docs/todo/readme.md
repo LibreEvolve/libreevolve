@@ -370,22 +370,22 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     mutation application, evolution-loop ordering, prompt sampling,
     evaluation, plugins, MAP-Elites, persistence, restore, and known
     limitations. For AlphaEvolve-alignment work, that architecture guide must
-    stay synchronized with the actual implementation and keep local
-    synchronous behavior separate from AlphaEvolve async/distributed parity.
+    stay synchronized with the actual implementation and keep local candidate-
+    async behavior separate from AlphaEvolve async/distributed parity.
   - Current evidence: the root README and `docs/README.md` route readers to
     `docs/architecture.md` for runtime architecture. The guide contains many
     code-specific claims, including `.env` loading boundaries, configured
     plugin resolution, candidate path safety, proposal-loop ordering,
     critique/feedback sequencing, prompt-context behavior, evaluator
-    preflight, archive restore, controller-state snapshots, and synchronous
-    limitation bullets. Active TODOs already cover README repository-layout
+    preflight, archive restore, controller-state snapshots, and scoped local
+    candidate-async limitation bullets. Active TODOs already cover README repository-layout
     drift, `docs/status.md` ledger freshness, ROADMAP readiness criteria, and
     paper-facing async/topology boundaries, but not the architecture guide as
     a standalone operational contract.
     `papers/docs_architecture_runtime_flow_boundary.json` now records ten
     architecture sections, runtime-flow markers, source path checks,
     README/docs-index route markers, the active TODO owner anchor, known-gap
-    markers, the synchronous runtime boundary, and the AlphaEvolve provider-
+    markers, the local candidate-async runtime boundary, and the AlphaEvolve provider-
     parity boundary.
   - Current gap: the committed architecture inventory still does not map each
     `docs/architecture.md` flow step, limitation, and component-role statement

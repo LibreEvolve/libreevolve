@@ -54,7 +54,7 @@ def test_roadmap_async_runtime_readiness_accepts_bounded_matrix():
         "controller_queue_checkpoint": "not_recorded_locally",
         "llm_sampler_task_state": "not_recorded_locally",
         "evaluator_pending_work_state": "not_recorded_locally",
-        "deterministic_async_merge_admission_order": "not_recorded_locally",
+        "deterministic_async_merge_admission_replay": "not_recorded_locally",
         "ordered_migration_restore_engine": "not_recorded_locally",
         "provider_output_replay": "not_recorded_locally",
         "plugin_rng_replay": "not_recorded_locally",

@@ -45,6 +45,12 @@ libreevolve/
   sampling_eligible.
 - Default `mixed` parent sampling uses 30% explore / 70% exploit; explicit
   parent-selection strategies bypass that ratio
+- `async_candidate_evaluation` is opt-in local candidate-level concurrency:
+  sibling evaluations use a bounded Python `asyncio` queue, then feedback,
+  plugins, budgets, prompt rewards, history, and archive admission commit in
+  submission order before the generation ends. It is not concurrent LLM
+  sampling, cross-generation overlap, distributed evaluation, or pending-work
+  resume.
 - The checked matrix cascade fixture executes four pinned seeds over known
   rank-7/rank-8 2x2 controls and emits per-seed traces; it is deterministic
   calibration, not Strassen rediscovery or AlphaEvolve-scale search evidence

@@ -84,6 +84,9 @@ def test_override_fields():
         llm_role_seconds_limits={"critique": 3.5},
         llm_role_failure_quarantine_after={"mutation": 2},
         proposals_per_generation=3,
+        async_candidate_evaluation=True,
+        async_evaluator_workers=3,
+        async_evaluation_queue_capacity=6,
         seed=99,
     )
     assert c.max_generations == 50 and c.seed == 99
@@ -108,6 +111,17 @@ def test_override_fields():
     assert c.llm_role_seconds_limits == {"critique": 3.5}
     assert c.llm_role_failure_quarantine_after == {"mutation": 2}
     assert c.proposals_per_generation == 3
+    assert c.async_candidate_evaluation is True
+    assert c.async_evaluator_workers == 3
+    assert c.async_evaluation_queue_capacity == 6
+
+
+def test_default_async_candidate_evaluation_is_disabled():
+    config = Config()
+
+    assert config.async_candidate_evaluation is False
+    assert config.async_evaluator_workers == 2
+    assert config.async_evaluation_queue_capacity == 4
 
 def test_default_backend_is_anthropic():
     assert Config().backends[0]["type"] == "anthropic"
@@ -239,6 +253,11 @@ def test_candidate_runner_declarations_reject_invalid_values(kwargs, message):
         ({"max_runtime_seconds": 0}, "max_runtime_seconds"),
         ({"proposals_per_generation": 0}, "proposals_per_generation"),
         ({"proposals_per_generation": True}, "proposals_per_generation"),
+        ({"async_candidate_evaluation": 1}, "async_candidate_evaluation"),
+        ({"async_evaluator_workers": 0}, "async_evaluator_workers"),
+        ({"async_evaluator_workers": 65}, "async_evaluator_workers"),
+        ({"async_evaluation_queue_capacity": 0}, "async_evaluation_queue_capacity"),
+        ({"async_evaluation_queue_capacity": 4097}, "async_evaluation_queue_capacity"),
         ({"num_inspirations": -1}, "num_inspirations"),
         ({"eval_timeout_sec": 0}, "eval_timeout_sec"),
         ({"explore_ratio": 1.5}, "explore_ratio"),

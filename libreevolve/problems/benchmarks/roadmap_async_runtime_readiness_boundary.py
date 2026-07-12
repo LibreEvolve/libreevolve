@@ -33,7 +33,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "controller_queue_checkpoint": "not_recorded_locally",
     "llm_sampler_task_state": "not_recorded_locally",
     "evaluator_pending_work_state": "not_recorded_locally",
-    "deterministic_async_merge_admission_order": "not_recorded_locally",
+    "deterministic_async_merge_admission_replay": "not_recorded_locally",
     "ordered_migration_restore_engine": "not_recorded_locally",
     "provider_output_replay": "not_recorded_locally",
     "plugin_rng_replay": "not_recorded_locally",
@@ -93,7 +93,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "controller_sampler_task_checkpoints",
         "runtime_surface": "controller queues and LLM sampler task state",
-        "current_scope": "terminal drained controller snapshot and synchronous sampler calls",
+        "current_scope": "terminal drained synchronous or local candidate-async controller snapshot with inline sampler calls",
         "missing_readiness": "controller queue checkpoints and in-flight LLM sampler task state",
         "sidecars": (
             "papers/controller_pending_work_resume_boundary.json",
@@ -115,8 +115,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "evaluator_pending_work_and_merge_order",
         "runtime_surface": "evaluator workers, pending work, and admission order",
-        "current_scope": "local sample-worker fan-out with deterministic sample-index collection",
-        "missing_readiness": "evaluator pending-work state and deterministic async merge/admission order",
+        "current_scope": "bounded local candidate-evaluation queue with deterministic submission-order merge/admission",
+        "missing_readiness": "evaluator pending-work checkpoint/restore and deterministic merge/admission replay",
         "sidecars": (
             "papers/parallel_evaluation_readiness_boundary.json",
             "papers/controller_pending_work_resume_boundary.json",
@@ -124,15 +124,15 @@ CRITERION_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "evaluator pending-work state",
+                "required_phrase": "evaluator pending-work restore",
             },
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "deterministic async merge/admission order",
+                "required_phrase": "deterministic merge/admission order",
             },
         ),
         "validation_gate": "evaluator pending-work and deterministic admission replay",
-        "readiness_status": "sample_worker_fanout_without_async_admission_gate",
+        "readiness_status": "local_async_admission_without_pending_work_replay",
     },
     {
         "criterion_id": "archive_migration_restore_engine",
@@ -181,7 +181,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "async_budget_environment_replay",
         "runtime_surface": "async budgets, worker leases, validators, and external environments",
-        "current_scope": "synchronous budget counters, controller budget-event replay, and local subprocess provenance",
+        "current_scope": "serialized candidate-async budget counters, controller budget-event replay, and local subprocess provenance",
         "missing_readiness": "async budget accounting and external environment replay",
         "sidecars": (
             "papers/llm_budget_policy_boundary.json",
@@ -190,7 +190,7 @@ CRITERION_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "async budget accounting",
+                "required_phrase": "worker/compute-hour budget",
             },
             {
                 "path": "docs/todo/roadmap.md",
@@ -198,7 +198,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "async budget accounting and environment replay",
-        "readiness_status": "synchronous_budget_and_local_environment_only",
+        "readiness_status": "serialized_async_budget_and_local_environment_only",
     },
     {
         "criterion_id": "stale_readiness_and_owner_signoff",
@@ -271,7 +271,8 @@ def roadmap_async_runtime_readiness_boundary_record(
             "the bounded async/resumable-runtime matrix. It does not claim an "
             "async-state inventory, replay-resume acceptance checklist, "
             "controller queue checkpoint, LLM sampler task state, evaluator "
-            "pending-work state, deterministic async merge/admission order, "
+            "pending-work checkpoint/restore, deterministic async merge/"
+            "admission replay, "
             "ordered migration restore engine, provider-output replay, plugin "
             "RNG replay, async budget accounting, external environment replay, "
             "end-to-end resumed trace proof, stale-readiness detector, or "

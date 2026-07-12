@@ -34,7 +34,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "raw_provider_replay": "not_recorded_locally",
     "live_hard_cancellation": "not_recorded_locally",
     "equal_budget_scheduler_comparator": "not_recorded_locally",
-    "first_class_gemini_lane_evidence": "not_recorded_locally",
+    "live_gemini_flash_pro_pair_evidence": "not_recorded_locally",
     "async_reviewer_isolation": "not_recorded_locally",
     "stale_readiness_detector": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
@@ -163,8 +163,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "gemini_lane_and_substitution",
         "control_plane_surface": "Gemini provider lane, substitution rules, and self-training loop claims",
-        "current_scope": "Gemini absence/parity boundaries and no first-class Gemini lane evidence",
-        "missing_readiness": "first-class Gemini lane evidence and explicit Gemini substitution status",
+        "current_scope": "first-class Gemini adapter, Flash/Pro classification, generic scheduler integration, and partial-readiness boundaries",
+        "missing_readiness": "live Gemini Flash/Pro pair evidence, calibrated lane scheduling, and explicit substitution equivalence",
         "sidecars": (
             "papers/gemini_provider_parity_boundary.json",
             "papers/gemini_self_training_loop_boundary.json",
@@ -172,15 +172,15 @@ CRITERION_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "first-class Gemini lane evidence",
+                "required_phrase": "live Gemini Flash/Pro pair evidence",
             },
             {
                 "path": "docs/todo/roadmap.md",
                 "required_phrase": "Gemini substitution status",
             },
         ),
-        "validation_gate": "Gemini lane and substitution policy evidence",
-        "readiness_status": "absence_boundary_without_first_class_gemini_lane",
+        "validation_gate": "live Gemini lane, model availability, and substitution policy evidence",
+        "readiness_status": "first_class_adapter_without_live_lane_or_substitution_gate",
     },
     {
         "criterion_id": "critique_reviewer_isolation",

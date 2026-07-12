@@ -530,7 +530,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     provider failure telemetry, prompt and response caps, role routing,
     OpenAI API-mode policy, Anthropic/Ollama adapter behavior, custom backend
     construction, credential preflight, client-context provenance, and
-    Google/Gemini absence boundaries. AlphaEvolve-alignment work depends on
+    Google/Gemini partial-readiness boundaries. AlphaEvolve-alignment work depends on
     this page staying synchronized with actual backend/runtime behavior before
     any model-mix, provider, or scheduling claim is treated as evidence.
   - Current evidence: the guide documents `LLMEnsemble` accounting, bounded
@@ -539,7 +539,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     backend routing, failure quarantine, retries, timeouts, prompt-token
     limits, OpenAI Chat/Responses routing, request-parameter surfaces,
     `llm_prompt_roles`, custom backend `class_path` specs, `.env` credential
-    behavior, Gemini provider-parity absence records, and the backend
+    behavior, Gemini provider partial-readiness records, and the backend
     CLI-provider guardrail. `papers/backend_guide_contract_drift_boundary.json`
     now records backend-guide section and claim markers for those surfaces and
     maps them to source-module, focused-test, sidecar, and active TODO anchors.

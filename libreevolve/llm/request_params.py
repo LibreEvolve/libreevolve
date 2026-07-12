@@ -50,7 +50,7 @@ def validate_temperature(
     backend_type: object = None,
 ) -> float:
     numeric = _finite_number(value, field)
-    upper = 2.0 if backend_type in {"openai", "ollama"} else 1.0
+    upper = 2.0 if backend_type in {"gemini", "openai", "ollama"} else 1.0
     if numeric < 0.0 or numeric > upper:
         raise ValueError(f"{field} must be between 0 and {upper:g}")
     return numeric
@@ -130,6 +130,14 @@ def request_parameters_for_provider(
                 payload[key] = parameters[key]
         if "stop" in parameters:
             payload["stop"] = list(parameters["stop"])
+        return payload
+    if backend_type == "gemini":
+        payload = {}
+        for key in ("temperature", "top_p", "seed"):
+            if key in parameters:
+                payload[key] = parameters[key]
+        if "stop" in parameters:
+            payload["stop_sequences"] = list(parameters["stop"])
         return payload
     return dict(parameters)
 

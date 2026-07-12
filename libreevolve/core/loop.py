@@ -34588,9 +34588,37 @@ def _gemini_provider_parity_report(startup_manifest: Mapping[str, object]) -> di
     ]
     flash_count = sum(1 for record in gemini_records if record.get("lane") == "flash")
     pro_count = sum(1 for record in gemini_records if record.get("lane") == "pro")
+    first_class_flash_count = sum(
+        1
+        for record in gemini_records
+        if record.get("lane") == "flash" and record.get("first_class_provider") is True
+    )
+    first_class_pro_count = sum(
+        1
+        for record in gemini_records
+        if record.get("lane") == "pro" and record.get("first_class_provider") is True
+    )
     has_first_class_gemini = any(
         provider in builtin_types for provider in ("gemini", "google")
     )
+    has_flash_pro_pair = (
+        has_first_class_gemini
+        and first_class_flash_count > 0
+        and first_class_pro_count > 0
+    )
+    remaining_gap = [
+        "provider_capability_lookup",
+        "gemini_model_registry_snapshot",
+        "account_model_availability_check",
+        "paper_level_substitution_contract",
+        "substitution_equivalence_justification",
+    ]
+    if first_class_flash_count == 0:
+        remaining_gap.append("configured_first_class_gemini_flash_lane")
+    if first_class_pro_count == 0:
+        remaining_gap.append("configured_first_class_gemini_pro_lane")
+    if not has_flash_pro_pair:
+        remaining_gap.append("executed_scheduler_flash_pro_lane_integration")
     report = {
         "schema": "libreevolve.gemini_provider_parity_report.v1",
         "source": "startup_config_and_builtin_backend_registry",
@@ -34604,55 +34632,43 @@ def _gemini_provider_parity_report(startup_manifest: Mapping[str, object]) -> di
         "configured_gemini_like_backend_count": len(gemini_records),
         "configured_flash_lane_count": flash_count,
         "configured_pro_lane_count": pro_count,
+        "configured_first_class_flash_lane_count": first_class_flash_count,
+        "configured_first_class_pro_lane_count": first_class_pro_count,
         "configured_backends": records,
         "custom_backend_substitution_policy": (
             "opaque_custom_backend_not_provider_parity"
         ),
         "provider_parity_status": (
-            "first_class_gemini_backend_available"
+            "first_class_gemini_backend_without_live_model_parity"
             if has_first_class_gemini
             else "missing_first_class_gemini_backend"
         ),
         "substitution_status": (
             "custom_gemini_like_backend_configured_without_first_class_parity"
             if gemini_records and not has_first_class_gemini
+            else "custom_gemini_like_backend_configured_beside_first_class_adapter"
+            if any(record.get("type") == "custom" for record in gemini_records)
             else "not_declared"
         ),
         "claim_ready": False,
         "claim_readiness": {
             "first_class_gemini_backend": has_first_class_gemini,
-            "credential_preflight": False,
-            "gemini_client_context_config": False,
-            "gemini_request_parameter_mapping": False,
-            "provider_native_usage_telemetry": False,
-            "provider_native_default_telemetry": False,
-            "provider_native_error_diagnostics": False,
+            "credential_preflight": has_first_class_gemini,
+            "gemini_client_context_config": has_first_class_gemini,
+            "gemini_request_parameter_mapping": has_first_class_gemini,
+            "provider_native_usage_telemetry": has_first_class_gemini,
+            "provider_native_default_telemetry": has_first_class_gemini,
+            "provider_native_error_diagnostics": has_first_class_gemini,
             "provider_capability_lookup": False,
             "gemini_model_registry_snapshot": False,
-            "flash_pro_lane_contract": has_first_class_gemini
-            and flash_count > 0
-            and pro_count > 0,
-            "scheduler_flash_pro_lane_integration": False,
+            "gemini_flash_lane_identity": first_class_flash_count > 0,
+            "gemini_pro_lane_identity": first_class_pro_count > 0,
+            "flash_pro_lane_contract": has_flash_pro_pair,
+            "scheduler_flash_pro_lane_integration": has_flash_pro_pair,
             "account_model_availability_check": False,
             "substitution_contract": False,
             "substitution_equivalence_justification": False,
-            "remaining_gap": [
-                "built_in_google_gemini_adapter",
-                "gemini_credential_preflight",
-                "gemini_client_context_config",
-                "gemini_request_parameter_mapping",
-                "provider_native_usage_telemetry",
-                "provider_native_default_telemetry",
-                "provider_native_error_diagnostics",
-                "provider_capability_lookup",
-                "gemini_model_registry_snapshot",
-                "gemini_flash_lane_identity",
-                "gemini_pro_lane_identity",
-                "scheduler_flash_pro_lane_integration",
-                "account_model_availability_check",
-                "paper_level_substitution_contract",
-                "substitution_equivalence_justification",
-            ],
+            "remaining_gap": remaining_gap,
         },
     }
     report["validation"] = validate_gemini_provider_parity_report(report)
@@ -34754,7 +34770,7 @@ def validate_gemini_provider_parity_report(report: object) -> dict:
             }
         )
     if has_gemini_builtin and report.get("provider_parity_status") != (
-        "first_class_gemini_backend_available"
+        "first_class_gemini_backend_without_live_model_parity"
     ):
         issues.append(
             {
@@ -34865,6 +34881,34 @@ def validate_gemini_provider_parity_report(report: object) -> dict:
         ),
         issues,
     )
+    first_class_flash_count = sum(
+        1
+        for record in records
+        if isinstance(record, Mapping)
+        and record.get("provider_family") == "gemini"
+        and record.get("lane") == "flash"
+        and record.get("first_class_provider") is True
+    )
+    first_class_pro_count = sum(
+        1
+        for record in records
+        if isinstance(record, Mapping)
+        and record.get("provider_family") == "gemini"
+        and record.get("lane") == "pro"
+        and record.get("first_class_provider") is True
+    )
+    _validate_report_count(
+        report,
+        "configured_first_class_flash_lane_count",
+        first_class_flash_count,
+        issues,
+    )
+    _validate_report_count(
+        report,
+        "configured_first_class_pro_lane_count",
+        first_class_pro_count,
+        issues,
+    )
     if report.get("claim_ready") is not False:
         issues.append(
             {
@@ -34888,9 +34932,17 @@ def validate_gemini_provider_parity_report(report: object) -> dict:
             "provider_native_usage_telemetry",
             "provider_native_default_telemetry",
             "provider_native_error_diagnostics",
+        ):
+            if readiness.get(field) is not has_gemini_builtin:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must match first-class Gemini adapter availability",
+                    }
+                )
+        for field in (
             "provider_capability_lookup",
             "gemini_model_registry_snapshot",
-            "scheduler_flash_pro_lane_integration",
             "account_model_availability_check",
             "substitution_contract",
             "substitution_equivalence_justification",
@@ -34900,6 +34952,22 @@ def validate_gemini_provider_parity_report(report: object) -> dict:
                     {
                         "code": f"invalid_{field}",
                         "message": f"{field} must remain false until implemented",
+                    }
+                )
+        flash_ready = first_class_flash_count > 0
+        pro_ready = first_class_pro_count > 0
+        pair_ready = has_gemini_builtin and flash_ready and pro_ready
+        for field, expected in (
+            ("gemini_flash_lane_identity", flash_ready),
+            ("gemini_pro_lane_identity", pro_ready),
+            ("flash_pro_lane_contract", pair_ready),
+            ("scheduler_flash_pro_lane_integration", pair_ready),
+        ):
+            if readiness.get(field) is not expected:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must match configured first-class Gemini lanes",
                     }
                 )
         if readiness.get("first_class_gemini_backend") is not has_gemini_builtin:

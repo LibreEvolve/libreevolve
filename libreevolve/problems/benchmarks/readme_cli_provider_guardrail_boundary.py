@@ -22,7 +22,7 @@ EXPECTED_MARKERS = (
     {
         "record_kind": "readme_backend_feature_bullet",
         "path": README_PATH,
-        "marker": "OpenAI, Anthropic, Ollama, experimental Codex CLI, and custom import-path",
+        "marker": "OpenAI, Anthropic, Google Gemini, Ollama, experimental Codex CLI, and custom",
     },
     {
         "record_kind": "readme_cli_provider_guardrail",

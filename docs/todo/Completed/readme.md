@@ -15853,3 +15853,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence remain explicitly absent.
   - Verification: focused fixture/boundary tests and whole-docs sidecars enforce
     the scoped wording.
+- [x] Document first-class Gemini support without claiming model-mix parity.
+  - Status: README, backend/configuration/development guides, environment
+    template, status page, and docs index now describe the built-in Gemini
+    adapter, credential precedence, runnable placeholder commands, request and
+    telemetry behavior, and the remaining live-evidence limits.
+  - Remaining README gap: current account/model availability, a credential-
+    safe Flash/Pro pair run, Gemini 2.0 endpoint status, and substitution or
+    calibrated scheduler evidence are not claimed.
+  - Verification: provider-example, provider-auth, development-guide,
+    backend-guide, and claim-boundary tests guard the updated wording.

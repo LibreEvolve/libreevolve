@@ -492,7 +492,7 @@
     {
       "record_id": "papers_provider_capability_scope",
       "path": "papers/README.md",
-      "required_marker": "capability lookup",
+      "required_marker": "live capability or model-registry",
       "marker_status": "marker_present"
     },
     {

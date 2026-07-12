@@ -1615,21 +1615,22 @@ system/developer/user prompt roles, when configured, are retained as hash-only
 `prompt_role_policy` metadata rather than raw instruction text, and are not
 yet joined into the primary-prompt instruction report. Endpoint/client context now has an
 explicit validated built-in backend surface for OpenAI `base_url`,
-`organization`, and `project`, Anthropic `base_url`, and Ollama `host`, and
+`organization`, and `project`, Anthropic `base_url`, Gemini `api_version`, and
+Ollama `host`, and
 accepted values are recorded in manifests plus call `client_context`
 telemetry. Omitted fields still inherit SDK/environment defaults, so
 unconfigured proxy hosts, organizations/projects, API hosts, and local Ollama
-server selection remain outside self-describing artifacts. There is also no
-first-class Google/Gemini backend yet, so AlphaEvolve's published Gemini 2.0
-Flash/Gemini 2.0 Pro model mix currently requires either a custom backend with
-separate evidence or a future provider/plugin contract before it can be treated
-as provider-parity reproduction evidence. The current boundary also excludes
-Gemini client-context configuration, request-parameter mapping, provider-native
-usage/default/error diagnostics, model-registry snapshots, account/model
-availability checks, scheduler Flash/Pro lane integration, paper-level
-substitution contracts, and substitution-equivalence justification. The
+server selection remain outside self-describing artifacts. Gemini now has a
+first-class `google-genai` GenerateContent adapter with environment credential
+preflight, explicit API-version context, request mapping, role instructions,
+usage/default/error telemetry, strict completion handling, and Flash/Pro lane
+classification. This does not establish AlphaEvolve's published Gemini 2.0
+Flash/Gemini 2.0 Pro model-mix parity: live capability/model-registry and
+account-availability checks, a credential-safe pair run, original endpoint
+availability or a current-model substitution contract, calibrated scheduler
+comparisons, and substitution-equivalence justification remain absent. The
 committed `papers/gemini_provider_parity_boundary.json` sidecar preserves that
-first-class-provider absence boundary for paper-manifest validation.
+partial-readiness boundary for paper-manifest validation.
 The committed `papers/config_validation_boundary.json` sidecar separately
 preserves that current configuration validation is local effective-config
 validation only: it covers CLI override precedence, local backend/plugin spec
@@ -2862,15 +2863,15 @@ Implemented:
   reviewer reliability ablations, per-reviewer provider isolation, or external
   reviewer timeout artifacts.
 - `papers/gemini_provider_parity_boundary.json`: Google/Gemini provider
-  parity sidecar for AlphaEvolve Section 2.3. It records the runtime absence
-  report schema, built-in provider list evidence, Gemini-like custom-model
-  detection, Flash/Pro-shaped lane counts, and false provider-parity readiness.
-  It is not evidence of a first-class Google/Gemini adapter, credential
-  preflight, Gemini client-context configuration, request-parameter mapping,
-  provider-native usage/default/error diagnostics, capability lookup,
-  model-registry snapshots, Flash and Pro lane identity, scheduler Flash/Pro
-  lane integration, account/model availability checks, paper-level
-  substitution contracts, or substitution-equivalence justification.
+  parity sidecar for AlphaEvolve Section 2.3. It records the first-class Gen AI
+  SDK adapter, credential/API-version/request/role/completion contract,
+  provider usage/default/error telemetry, Gemini-like custom-model detection,
+  Flash/Pro lane classification, generic scheduler configuration, and false
+  provider-parity readiness. It is not live capability or model-registry
+  evidence, an account/model availability check, a credential-safe Flash/Pro
+  pair run, proof that the original Gemini 2.0 models remain available,
+  calibrated AlphaEvolve scheduling evidence, a paper-level substitution
+  contract, or substitution-equivalence justification.
 - `papers/prompt_section_packing_boundary.json`: prompt section-packing
   sidecar for AlphaEvolve Sections 2.2, 2.3, and 2.4 prompt-context,
   output-format, and multi-score prompt-diversity evidence. It records prompt
@@ -3611,7 +3612,7 @@ Implemented:
   synchronous reviewer surface. It is not evidence of calibrated reward
   policy, role quota ownership, live provider pricing/default evidence, raw
   provider replay, live hard cancellation, equal-budget scheduler comparator,
-  first-class Gemini lane evidence, async reviewer isolation,
+  live Gemini Flash/Pro pair evidence or substitution equivalence, async reviewer isolation,
   stale-readiness detector, owner review signoff, or full backend scheduler
   parity.
 - `papers/roadmap_backend_control_plane_readiness_boundary.json`: ROADMAP

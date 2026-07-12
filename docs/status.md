@@ -18,8 +18,8 @@ Implemented today:
 - Python-primary candidate workspaces and seed programs.
 - SEARCH/REPLACE diff mutations using the AlphaEvolve fence format.
 - Full-code replacement mode when configured.
-- OpenAI, Anthropic, Ollama, and configured custom import-path backend
-  support.
+- OpenAI, Anthropic, Google Gemini, Ollama, and configured custom import-path
+  backend support.
 - A heuristic UCB-style backend selector.
 - Synchronous MAP-Elites and island archives, with five islands by default.
 - Local subprocess evaluation with staged validator support.
@@ -48,18 +48,21 @@ Important limits:
   identities, dependency wait-event telemetry, worker lifecycle/liveness
   records, scheduler-state snapshots, deterministic async completion/admission
   order, queue backpressure, and pending-work checkpoints.
-- Built-in provider adapters are OpenAI, Anthropic, and Ollama. Custom
-  import-path backends can wrap other services, but Google/Gemini is not a
-  first-class provider yet, so AlphaEvolve's Gemini 2.0 Flash/Gemini 2.0 Pro
-  model mix remains an explicit absence boundary. Runtime histories record
+- Built-in provider adapters are OpenAI, Anthropic, Google Gemini, and Ollama.
+  The Gemini Developer API adapter validates environment credentials, maps
+  GenerateContent request parameters and role instructions, records API-
+  version/client/default/usage/error telemetry, rejects blocked/tool-only/
+  incomplete outputs, and classifies configured Flash/Pro lanes. AlphaEvolve's
+  Gemini 2.0 Flash/Gemini 2.0 Pro model mix remains a partial-readiness
+  boundary because no checked live pair run, account/model availability probe,
+  model-registry snapshot, calibrated scheduling comparison, or substitution
+  evidence exists. Runtime histories record
   `runtime.history.gemini_provider_parity_report`, and
   `papers/gemini_provider_parity_boundary.json` preserves the same boundary
-  for paper-manifest validation. Missing parity gates include Gemini
-  credential preflight, client-context configuration, request-parameter
-  mapping, provider-native usage/default/error diagnostics, capability and
-  model-registry snapshots, account/model availability checks, first-class
-  Flash/Pro lane identity, scheduler lane integration, substitution contracts,
-  and substitution-equivalence justification.
+  for paper-manifest validation. Remaining parity gates include capability and
+  model-registry snapshots, account/model availability checks, a credential-
+  safe live Flash/Pro run, calibrated scheduler evidence, substitution
+  contracts, and substitution-equivalence justification.
 - AlphaEvolve source-version evidence now records arXiv abstract-page-adjacent
   metadata for `2506.13131v1` in `papers/source_versions.json`, including DOI,
   subject classes, submitted timestamp, author count, TeX source URL, and
@@ -1827,7 +1830,7 @@ Important limits:
   checklist derived from those track records. This is not calibrated reward
   policy, role quota ownership, live provider pricing/default evidence, raw
   provider replay, live hard cancellation, equal-budget scheduler comparator,
-  first-class Gemini lane evidence, async reviewer isolation,
+  live Gemini Flash/Pro pair evidence or substitution equivalence, async reviewer isolation,
   stale-readiness detector, owner review signoff, or full backend scheduler
   parity.
 - ROADMAP backend control-plane readiness evidence now records eight criteria

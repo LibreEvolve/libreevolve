@@ -594,8 +594,35 @@ backends:
 ensemble_strategy: throughput_depth
 ```
 
+A first-class Gemini Flash/Pro-shaped configuration uses the same scheduler
+metadata surface:
+
+```yaml
+backends:
+  - type: gemini
+    model: "<gemini-flash-model-id>"
+    api_version: v1beta
+    role: breadth
+    cost: 1.0
+    latency: 1.0
+    depth: 1.0
+  - type: gemini
+    model: "<gemini-pro-model-id>"
+    api_version: v1beta
+    role: depth
+    cost: 4.0
+    latency: 4.0
+    depth: 5.0
+ensemble_strategy: throughput_depth
+```
+
+Replace placeholders with model ids currently available to the configured
+account. This records a Flash/Pro-shaped provider configuration; it is not
+proof that the original Gemini 2.0 endpoints remain available or that the
+schedule reproduces AlphaEvolve.
+
 Backend specs are validated before a run starts. Supported backend types are
-`anthropic`, `openai`, `ollama`, `codex`, and `custom`; `model` is required
+`anthropic`, `gemini`, `openai`, `ollama`, `codex`, and `custom`; `model` is required
 and must match the manifest-safe grammar
 `[A-Za-z0-9][A-Za-z0-9_.:/+-]{0,191}` without matching the shared
 secret-redaction patterns; optional `max_tokens`, `cost`, `latency`, and
@@ -628,17 +655,17 @@ normalization boundary as `build_llm()`, including model-id, token-limit,
 request-parameter, client-context, custom-backend, and unsupported-field
 checks, and returns a defensive normalized copy. Full run resume does not yet
 consume restored backend specs.
-Completed manifests also include
+Gemini specs accept `api_version` as `v1`, `v1alpha`, or `v1beta` and map
+`temperature`, `top_p`, `stop`, and `seed` into the Gen AI SDK
+GenerateContent config. Completed manifests also include
 `runtime.history.gemini_provider_parity_report`, which compares the configured
-backend specs with the built-in registry. The current supported backend types
-remain `anthropic`, `openai`, `ollama`, `codex`, and `custom`; custom backend model
-names containing `gemini` can be reported as Gemini-like substitutions, but
-they do not provide first-class Google/Gemini credential preflight,
-Gemini client-context configuration, request-parameter mapping,
-provider-native usage/default/error diagnostics, model-registry or
-account/model availability checks, scheduler lane integration, substitution
-equivalence justification, or validated AlphaEvolve Flash/Pro lane parity. The
-matching paper-facing absence boundary is preserved in
+backend specs with the built-in registry. It records first-class Gemini
+availability, implemented credential/client/request/default/usage/error
+surfaces, and configured first-class Flash/Pro lane counts while preserving
+`claim_ready: false`. Live model-registry and account/model availability,
+credential-safe Flash/Pro pair runs, calibrated scheduling evidence, and
+substitution-equivalence justification remain absent. The matching paper-facing
+partial-readiness boundary is preserved in
 `papers/gemini_provider_parity_boundary.json`.
 Restored/replay prompt payloads can be preflighted with
 `validate_restored_llm_prompt()`, which delegates to the same non-empty text
@@ -1177,12 +1204,14 @@ Common variables:
 
 - `OPENAI_API_KEY`
 - `ANTHROPIC_API_KEY`
+- `GEMINI_API_KEY` or `GOOGLE_API_KEY` (`GOOGLE_API_KEY` takes precedence)
 - `OLLAMA_HOST`
 
 Provider SDKs may honor additional provider-specific variables.
 LibreEvolve backend config accepts a small explicit endpoint/client-context
 surface for built-in providers: OpenAI accepts `base_url`, `organization`, and
-`project`; Anthropic accepts `base_url`; Ollama accepts `host`. Endpoint URLs
+`project`; Anthropic accepts `base_url`; Gemini accepts `api_version`; Ollama
+accepts `host`. Endpoint URLs
 must be `http` or `https` URLs with a host and no credentials, params, query,
 or fragment, while OpenAI organization/project labels must be manifest-safe
 non-secret strings. Accepted values are persisted in `config.backends` and

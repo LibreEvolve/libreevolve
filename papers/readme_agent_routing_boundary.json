@@ -103,7 +103,7 @@
       "path": "AGENTS.md",
       "required_markers": [
         "docs/backends.md",
-        "OpenAI, Anthropic, Ollama"
+        "OpenAI, Anthropic, Google Gemini, Ollama"
       ],
       "missing_markers": [],
       "record_status": "all_markers_present"

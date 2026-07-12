@@ -120,6 +120,11 @@ def anthropic_system(policy: dict | None, role: str | None) -> str | None:
     return _joined_instruction_text(spec, fields=("system", "developer"))
 
 
+def gemini_system(policy: dict | None, role: str | None) -> str | None:
+    spec = prompt_role_spec_for_role(policy, role)
+    return _joined_instruction_text(spec, fields=("system", "developer"))
+
+
 def ollama_messages(prompt: str, policy: dict | None, role: str | None) -> list[dict]:
     spec = prompt_role_spec_for_role(policy, role)
     messages = []

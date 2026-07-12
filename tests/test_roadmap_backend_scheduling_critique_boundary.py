@@ -205,7 +205,7 @@ def test_roadmap_backend_scheduling_critique_accepts_bounded_matrix():
         "raw_provider_replay": "not_recorded_locally",
         "live_hard_cancellation": "not_recorded_locally",
         "equal_budget_scheduler_comparators": "not_recorded_locally",
-        "first_class_gemini_lanes": "not_recorded_locally",
+        "live_gemini_flash_pro_pair_evidence": "not_recorded_locally",
         "async_reviewer_isolation": "not_recorded_locally",
         "stale_readiness_detector": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",

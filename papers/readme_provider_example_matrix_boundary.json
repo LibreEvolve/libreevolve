@@ -13,7 +13,7 @@
     "tests/integration/test_hello_world.py"
   ],
   "env_example_path": ".env.example",
-  "provider_command_record_count": 3,
+  "provider_command_record_count": 4,
   "missing_provider_command_record_count": 0,
   "missing_provider_command_records": [],
   "provider_command_records": [
@@ -34,6 +34,14 @@
       "command_marker_status": "command_marker_present"
     },
     {
+      "provider": "gemini",
+      "path": "README.md",
+      "required_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends \"gemini:<gemini-model-id>\"",
+      "placeholder": "<gemini-model-id>",
+      "required_env": "GOOGLE_API_KEY or GEMINI_API_KEY",
+      "command_marker_status": "command_marker_present"
+    },
+    {
       "provider": "ollama",
       "path": "README.md",
       "required_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends \"ollama:<installed-ollama-model>\"",
@@ -42,7 +50,7 @@
       "command_marker_status": "command_marker_present"
     }
   ],
-  "contract_marker_record_count": 15,
+  "contract_marker_record_count": 17,
   "missing_contract_marker_count": 0,
   "missing_contract_marker_records": [],
   "contract_marker_records": [
@@ -71,6 +79,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_kind": "env_gemini_placeholder",
+      "path": ".env.example",
+      "required_marker": "GEMINI_API_KEY=your-gemini-key-here",
+      "marker_status": "marker_present"
+    },
+    {
       "record_kind": "env_ollama_host_placeholder",
       "path": ".env.example",
       "required_marker": "OLLAMA_HOST=http://localhost:11434",
@@ -92,6 +106,12 @@
       "record_kind": "cli_anthropic_preflight_env",
       "path": "libreevolve/cli.py",
       "required_marker": "\"anthropic\": \"ANTHROPIC_API_KEY\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "cli_gemini_preflight_env",
+      "path": "libreevolve/cli.py",
+      "required_marker": "(\"GOOGLE_API_KEY\", \"GEMINI_API_KEY\")",
       "marker_status": "marker_present"
     },
     {
@@ -151,20 +171,22 @@
     "integration_anthropic_skip_marker",
     "live_openai_model_availability_probe",
     "live_anthropic_model_availability_probe",
+    "live_gemini_model_availability_probe",
     "live_ollama_inventory_probe",
     "credential_safe_provider_smoke_matrix",
     "account_specific_model_id_provenance",
     "ci_provider_matrix",
-    "google_gemini_provider_parity"
+    "live_gemini_flash_pro_pair_evidence"
   ],
   "missing_evidence": {
     "live_openai_model_availability_probe": "not_recorded_locally",
     "live_anthropic_model_availability_probe": "not_recorded_locally",
+    "live_gemini_model_availability_probe": "not_recorded_locally",
     "live_ollama_inventory_probe": "not_recorded_locally",
     "credential_safe_provider_smoke_matrix": "not_recorded_locally",
     "account_specific_model_id_provenance": "not_recorded_locally",
     "ci_provider_matrix": "not_recorded_locally",
-    "google_gemini_provider_parity": "not_recorded_locally"
+    "live_gemini_flash_pro_pair_evidence": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the README OpenAI, Anthropic, and Ollama placeholder command markers, README account/local-model guidance, provider failure-scope wording, .env.example provider placeholders, CLI type:model backend-shorthand construction and built-in credential preflight markers, config and docs custom-backend class_path/kwargs contract markers, configuration-guide shorthand markers, and the Anthropic-only credential-gated integration-test skip marker. It does not claim live OpenAI model availability, live Anthropic model availability, local Ollama inventory, a credential-safe provider smoke matrix, account-specific model-id provenance, a CI provider matrix, or Google/Gemini provider parity."
+  "claim_boundary": "This boundary records the README OpenAI, Anthropic, Gemini, and Ollama placeholder command markers, README account/local-model guidance, provider failure-scope wording, .env.example provider placeholders, CLI type:model backend-shorthand construction and built-in credential preflight markers, config and docs custom-backend class_path/kwargs contract markers, configuration-guide shorthand markers, and the Anthropic-only credential-gated integration-test skip marker. It does not claim live OpenAI model availability, live Anthropic or Gemini model availability, local Ollama inventory, a credential-safe provider smoke matrix, account-specific model-id provenance, a CI provider matrix, or live Gemini Flash/Pro pair evidence."
 }

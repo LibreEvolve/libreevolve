@@ -1,239 +1,1062 @@
 {
+  "schema": "libreevolve.roadmap_backend_scheduling_critique_boundary.v1",
+  "boundary_status": "bounded_backend_scheduling_critique_matrix_with_role_capability_inventory",
+  "claim_ready": false,
+  "roadmap_heading": "### 7. Backend scheduling and critique",
+  "roadmap_heading_present": true,
+  "track_count": 9,
   "active_todo_ref_count": 18,
-  "backend_role_capability_matrix": [
+  "sidecar_ref_count": 13,
+  "track_records": [
     {
-      "budget_quota_ownership": "global logical/provider budget counters",
-      "cancellation_behavior": "inherits provider cancellation policy",
-      "critique_reviewer_isolation": "not applicable",
-      "diagnostics_replay_support": "selected-index and reward evidence boundary only",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not applicable",
-      "pricing_default_rate_evidence": "not applicable to reward theorem scope",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "resume_semantics": "scheduler state can be snapshotted/restored, not theorem replay",
-      "reward_assumptions": "bounded improvement telemetry without canonical finite-time regret proof",
+      "track_id": "heuristic_ucb_rewards",
       "role_or_lane": "global backend selection",
       "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
+      "reward_assumptions": "bounded improvement telemetry without canonical finite-time regret proof",
+      "budget_quota_ownership": "global logical/provider budget counters",
+      "pricing_default_rate_evidence": "not applicable to reward theorem scope",
+      "diagnostics_replay_support": "selected-index and reward evidence boundary only",
+      "cancellation_behavior": "inherits provider cancellation policy",
+      "resume_semantics": "scheduler state can be snapshotted/restored, not theorem replay",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "not applicable",
+      "roadmap_required_phrase": "Normalize/document UCB rewards against bounded assumptions",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/ucb1_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/llm_role_scheduler_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Implement canonical UCB1 finite-time scheduler evidence beyond the",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Implement UCB1 finite-time bandit paper evidence beyond the source",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
     },
     {
-      "budget_quota_ownership": "role budget maps exist without experiment-owned quota policy",
-      "cancellation_behavior": "role failure policy can quarantine in-run pairs",
-      "critique_reviewer_isolation": "reviewer roles can be routed but not isolated as independent reviewers",
-      "diagnostics_replay_support": "role scheduler audit state and runtime snapshots",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not first-class",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "resume_semantics": "restorable scheduler failure-policy state without cross-run proof",
-      "reward_assumptions": "local reward-accounted role selection without calibrated role rewards",
+      "track_id": "role_scoped_routing",
       "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
       "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
+      "reward_assumptions": "local reward-accounted role selection without calibrated role rewards",
+      "budget_quota_ownership": "role budget maps exist without experiment-owned quota policy",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "role scheduler audit state and runtime snapshots",
+      "cancellation_behavior": "role failure policy can quarantine in-run pairs",
+      "resume_semantics": "restorable scheduler failure-policy state without cross-run proof",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "reviewer roles can be routed but not isolated as independent reviewers",
+      "gemini_substitution_status": "first-class adapter available without role-specific Gemini policy",
+      "roadmap_required_phrase": "role-scoped backend eligibility",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/llm_role_scheduler_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/llm_budget_policy_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote role-scoped LLM routing from shared-bandit audit evidence",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "role-scoped scheduler state",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
     },
     {
-      "budget_quota_ownership": "provider attempts, tokens, configured cost, and latency stops",
-      "cancellation_behavior": "request timeout telemetry only",
-      "critique_reviewer_isolation": "role labels retained in telemetry",
-      "diagnostics_replay_support": "bounded scalar diagnostics without raw payload replay",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "generic provider labels only",
-      "pricing_default_rate_evidence": "configured token-cost estimates only",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "resume_semantics": "controller budget-event replay for provider budget counters",
-      "reward_assumptions": "not applicable",
+      "track_id": "provider_diagnostics_pricing",
       "role_or_lane": "provider call telemetry",
       "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
+      "reward_assumptions": "not applicable",
+      "budget_quota_ownership": "provider attempts, tokens, configured cost, and latency stops",
+      "pricing_default_rate_evidence": "configured token-cost estimates only",
+      "diagnostics_replay_support": "bounded scalar diagnostics without raw payload replay",
+      "cancellation_behavior": "request timeout telemetry only",
+      "resume_semantics": "controller budget-event replay for provider budget counters",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "role labels retained in telemetry",
+      "gemini_substitution_status": "generic provider labels only",
+      "roadmap_required_phrase": "raw provider diagnostics, live provider pricing/default-rate capture",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/provider_pricing_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/provider_diagnostics_replay_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/llm_stochastic_reproducibility_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "live provider pricing/default-rate capture beyond configured",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "provider diagnostics, and scheduler telemetry",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
     },
     {
-      "budget_quota_ownership": "role-scoped budget actions in cancellation policy",
-      "cancellation_behavior": "policy/audit evidence, not live SDK hard cancellation",
-      "critique_reviewer_isolation": "reviewer roles can be labeled but not isolated",
-      "diagnostics_replay_support": "policy observations without raw provider replay",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not applicable",
-      "pricing_default_rate_evidence": "inherits configured-cost telemetry",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "resume_semantics": "restorable scheduler failure state without cross-run quarantine proof",
-      "reward_assumptions": "zero-reward penalties for exhausted reward-accounted failures",
+      "track_id": "provider_cancellation_quarantine",
       "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
       "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
+      "reward_assumptions": "zero-reward penalties for exhausted reward-accounted failures",
+      "budget_quota_ownership": "role-scoped budget actions in cancellation policy",
+      "pricing_default_rate_evidence": "inherits configured-cost telemetry",
+      "diagnostics_replay_support": "policy observations without raw provider replay",
+      "cancellation_behavior": "policy/audit evidence, not live SDK hard cancellation",
+      "resume_semantics": "restorable scheduler failure state without cross-run quarantine proof",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "reviewer roles can be labeled but not isolated",
+      "gemini_substitution_status": "not applicable",
+      "roadmap_required_phrase": "live provider SDK cancellation",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/provider_cancellation_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete live hard provider cancellation and timeout-stop policy.",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "not live provider SDK hard cancellation",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
     },
     {
-      "budget_quota_ownership": "no lane quota schedule",
-      "cancellation_behavior": "inherits provider policy",
-      "critique_reviewer_isolation": "not applicable",
-      "diagnostics_replay_support": "metadata trace boundary",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not first-class Flash/Pro lanes",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "resume_semantics": "no resume replay experiment report",
-      "reward_assumptions": "no lane-specific calibrated reward model",
+      "track_id": "fast_strong_model_mix",
       "role_or_lane": "fast breadth and strong depth lanes",
       "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
+      "reward_assumptions": "no lane-specific calibrated reward model",
+      "budget_quota_ownership": "no lane quota schedule",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "metadata trace boundary",
+      "cancellation_behavior": "inherits provider policy",
+      "resume_semantics": "no resume replay experiment report",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "Flash/Pro classification available without live calibrated lane policy",
+      "roadmap_required_phrase": "fast/strong model-mix reports",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Validate fast/strong model-mix scheduling beyond local metadata tests.",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "fast/strong model-mix scheduling",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
     },
     {
-      "budget_quota_ownership": "logical/provider/cost/latency budgets recorded",
-      "cancellation_behavior": "inherits provider policy",
-      "critique_reviewer_isolation": "not applicable",
-      "diagnostics_replay_support": "bounded cumulative best-score curve",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not separated from sample-efficiency reports",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "resume_semantics": "budget replay exists without benchmark-level sample curves",
-      "reward_assumptions": "target hit and replicate statistics absent",
+      "track_id": "sample_efficiency",
       "role_or_lane": "LLM proposal budget",
       "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
+      "reward_assumptions": "target hit and replicate statistics absent",
+      "budget_quota_ownership": "logical/provider/cost/latency budgets recorded",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "bounded cumulative best-score curve",
+      "cancellation_behavior": "inherits provider policy",
+      "resume_semantics": "budget replay exists without benchmark-level sample curves",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "not separated from sample-efficiency reports",
+      "roadmap_required_phrase": "proposal-count curves, target-hit evidence",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/sample_efficiency_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add sample-efficiency reporting for AlphaEvolve-scale LLM proposal",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve sample-efficiency evidence separately from call caps.",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
     },
     {
-      "budget_quota_ownership": "equal LLM-call budget not enforced by comparator runner",
-      "cancellation_behavior": "not applicable",
-      "critique_reviewer_isolation": "disabled critique proof absent",
-      "diagnostics_replay_support": "observed sample counts linked to missing controls",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not applicable",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "comparator_absence_boundary",
-      "resume_semantics": "not recorded",
-      "reward_assumptions": "controlled base-model comparator absent",
+      "track_id": "repeated_sampling_baseline",
       "role_or_lane": "base-model repeated-sampling comparator",
       "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "budget_quota_ownership": "no Flash/Pro quota or lane integration",
-      "cancellation_behavior": "no Gemini-native cancellation evidence",
-      "critique_reviewer_isolation": "not applicable",
-      "diagnostics_replay_support": "no Gemini-native usage/default/error telemetry",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "first-class provider absent",
-      "pricing_default_rate_evidence": "no Gemini account/model pricing evidence",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "resume_semantics": "not recorded",
-      "reward_assumptions": "not applicable",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "budget_quota_ownership": "role budget routing possible without reviewer quota policy",
-      "cancellation_behavior": "inherits provider timeout policy",
-      "critique_reviewer_isolation": "no async overlap or independent reviewer isolation",
-      "diagnostics_replay_support": "inline reviewer telemetry boundary",
-      "equal_budget_evidence": "no no-reviewer comparator",
-      "gemini_substitution_status": "not applicable",
+      "reward_assumptions": "controlled base-model comparator absent",
+      "budget_quota_ownership": "equal LLM-call budget not enforced by comparator runner",
       "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "resume_semantics": "reviewer-specific replay absent",
-      "reward_assumptions": "no calibrated reviewer score-to-selection policy",
+      "diagnostics_replay_support": "observed sample counts linked to missing controls",
+      "cancellation_behavior": "not applicable",
+      "resume_semantics": "not recorded",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "disabled critique proof absent",
+      "gemini_substitution_status": "not applicable",
+      "roadmap_required_phrase": "repeated-sampling boundary report",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/repeated_sampling_baseline_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add repeated-sampling baseline reports for test-time-compute uplift",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track repeated-sampling baselines for test-time-compute uplift claims.",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "reward_assumptions": "not applicable",
+      "budget_quota_ownership": "no calibrated Flash/Pro quota schedule",
+      "pricing_default_rate_evidence": "no Gemini account/model pricing evidence",
+      "diagnostics_replay_support": "Gemini-native usage/default/error/completion telemetry without raw replay",
+      "cancellation_behavior": "request timeout and bounded retry evidence without live hard cancellation",
+      "resume_semantics": "generic scheduler state without live pair-run replay proof",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "first-class adapter present; original-model availability and substitution equivalence unverified",
+      "roadmap_required_phrase": "first-class Google/Gemini adapter",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/gemini_provider_parity_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend first-class Google/Gemini support to live AlphaEvolve model-mix",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Extend Google/Gemini provider evidence from first-class plumbing to live",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
+      "track_id": "critique_reviewer_pool",
       "role_or_lane": "critique reviewer roles",
       "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "reward_assumptions": "no calibrated reviewer score-to-selection policy",
+      "budget_quota_ownership": "role budget routing possible without reviewer quota policy",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "inline reviewer telemetry boundary",
+      "cancellation_behavior": "inherits provider timeout policy",
+      "resume_semantics": "reviewer-specific replay absent",
+      "equal_budget_evidence": "no no-reviewer comparator",
+      "critique_reviewer_isolation": "no async overlap or independent reviewer isolation",
+      "gemini_substitution_status": "not applicable",
+      "roadmap_required_phrase": "synchronous configurable critique reviewer pools",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/critique_reviewer_pool_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend critique reviewer pools beyond synchronous first/last-valid",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Validate critique reviewer pools beyond synchronous replacement filters.",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
+    }
+  ],
+  "backend_role_capability_matrix": [
+    {
+      "track_id": "heuristic_ucb_rewards",
+      "role_or_lane": "global backend selection",
+      "selection_policy": "heuristic UCB-style routing",
+      "reward_assumptions": "bounded improvement telemetry without canonical finite-time regret proof",
+      "budget_quota_ownership": "global logical/provider budget counters",
+      "pricing_default_rate_evidence": "not applicable to reward theorem scope",
+      "diagnostics_replay_support": "selected-index and reward evidence boundary only",
+      "cancellation_behavior": "inherits provider cancellation policy",
+      "resume_semantics": "scheduler state can be snapshotted/restored, not theorem replay",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "not applicable",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
+    },
+    {
+      "track_id": "role_scoped_routing",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "reward_assumptions": "local reward-accounted role selection without calibrated role rewards",
+      "budget_quota_ownership": "role budget maps exist without experiment-owned quota policy",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "role scheduler audit state and runtime snapshots",
+      "cancellation_behavior": "role failure policy can quarantine in-run pairs",
+      "resume_semantics": "restorable scheduler failure-policy state without cross-run proof",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "reviewer roles can be routed but not isolated as independent reviewers",
+      "gemini_substitution_status": "first-class adapter available without role-specific Gemini policy",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
+    },
+    {
+      "track_id": "provider_diagnostics_pricing",
+      "role_or_lane": "provider call telemetry",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "reward_assumptions": "not applicable",
+      "budget_quota_ownership": "provider attempts, tokens, configured cost, and latency stops",
+      "pricing_default_rate_evidence": "configured token-cost estimates only",
+      "diagnostics_replay_support": "bounded scalar diagnostics without raw payload replay",
+      "cancellation_behavior": "request timeout telemetry only",
+      "resume_semantics": "controller budget-event replay for provider budget counters",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "role labels retained in telemetry",
+      "gemini_substitution_status": "generic provider labels only",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
+    },
+    {
+      "track_id": "provider_cancellation_quarantine",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "reward_assumptions": "zero-reward penalties for exhausted reward-accounted failures",
+      "budget_quota_ownership": "role-scoped budget actions in cancellation policy",
+      "pricing_default_rate_evidence": "inherits configured-cost telemetry",
+      "diagnostics_replay_support": "policy observations without raw provider replay",
+      "cancellation_behavior": "policy/audit evidence, not live SDK hard cancellation",
+      "resume_semantics": "restorable scheduler failure state without cross-run quarantine proof",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "reviewer roles can be labeled but not isolated",
+      "gemini_substitution_status": "not applicable",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
+    },
+    {
+      "track_id": "fast_strong_model_mix",
+      "role_or_lane": "fast breadth and strong depth lanes",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "reward_assumptions": "no lane-specific calibrated reward model",
+      "budget_quota_ownership": "no lane quota schedule",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "metadata trace boundary",
+      "cancellation_behavior": "inherits provider policy",
+      "resume_semantics": "no resume replay experiment report",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "Flash/Pro classification available without live calibrated lane policy",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
+      "track_id": "sample_efficiency",
+      "role_or_lane": "LLM proposal budget",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "reward_assumptions": "target hit and replicate statistics absent",
+      "budget_quota_ownership": "logical/provider/cost/latency budgets recorded",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "bounded cumulative best-score curve",
+      "cancellation_behavior": "inherits provider policy",
+      "resume_semantics": "budget replay exists without benchmark-level sample curves",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "not separated from sample-efficiency reports",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
+    },
+    {
+      "track_id": "repeated_sampling_baseline",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "selection_policy": "absence boundary only",
+      "reward_assumptions": "controlled base-model comparator absent",
+      "budget_quota_ownership": "equal LLM-call budget not enforced by comparator runner",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "observed sample counts linked to missing controls",
+      "cancellation_behavior": "not applicable",
+      "resume_semantics": "not recorded",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "disabled critique proof absent",
+      "gemini_substitution_status": "not applicable",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "reward_assumptions": "not applicable",
+      "budget_quota_ownership": "no calibrated Flash/Pro quota schedule",
+      "pricing_default_rate_evidence": "no Gemini account/model pricing evidence",
+      "diagnostics_replay_support": "Gemini-native usage/default/error/completion telemetry without raw replay",
+      "cancellation_behavior": "request timeout and bounded retry evidence without live hard cancellation",
+      "resume_semantics": "generic scheduler state without live pair-run replay proof",
+      "equal_budget_evidence": "not recorded",
+      "critique_reviewer_isolation": "not applicable",
+      "gemini_substitution_status": "first-class adapter present; original-model availability and substitution equivalence unverified",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
       "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
+      "role_or_lane": "critique reviewer roles",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "reward_assumptions": "no calibrated reviewer score-to-selection policy",
+      "budget_quota_ownership": "role budget routing possible without reviewer quota policy",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "diagnostics_replay_support": "inline reviewer telemetry boundary",
+      "cancellation_behavior": "inherits provider timeout policy",
+      "resume_semantics": "reviewer-specific replay absent",
+      "equal_budget_evidence": "no no-reviewer comparator",
+      "critique_reviewer_isolation": "no async overlap or independent reviewer isolation",
+      "gemini_substitution_status": "not applicable",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
     }
   ],
   "backend_role_capability_matrix_count": 9,
-  "boundary_status": "bounded_backend_scheduling_critique_matrix_with_role_capability_inventory",
+  "reward_assumption_policy": [
+    {
+      "track_id": "heuristic_ucb_rewards",
+      "role_or_lane": "global backend selection",
+      "reward_assumptions": "bounded improvement telemetry without canonical finite-time regret proof",
+      "selection_policy": "heuristic UCB-style routing",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
+    },
+    {
+      "track_id": "role_scoped_routing",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "reward_assumptions": "local reward-accounted role selection without calibrated role rewards",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
+    },
+    {
+      "track_id": "provider_diagnostics_pricing",
+      "role_or_lane": "provider call telemetry",
+      "reward_assumptions": "not applicable",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
+    },
+    {
+      "track_id": "provider_cancellation_quarantine",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "reward_assumptions": "zero-reward penalties for exhausted reward-accounted failures",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
+    },
+    {
+      "track_id": "fast_strong_model_mix",
+      "role_or_lane": "fast breadth and strong depth lanes",
+      "reward_assumptions": "no lane-specific calibrated reward model",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
+      "track_id": "sample_efficiency",
+      "role_or_lane": "LLM proposal budget",
+      "reward_assumptions": "target hit and replicate statistics absent",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
+    },
+    {
+      "track_id": "repeated_sampling_baseline",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "reward_assumptions": "controlled base-model comparator absent",
+      "selection_policy": "absence boundary only",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "reward_assumptions": "not applicable",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
+      "track_id": "critique_reviewer_pool",
+      "role_or_lane": "critique reviewer roles",
+      "reward_assumptions": "no calibrated reviewer score-to-selection policy",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
+    }
+  ],
+  "reward_assumption_policy_count": 9,
+  "role_budget_quota_policy": [
+    {
+      "track_id": "heuristic_ucb_rewards",
+      "role_or_lane": "global backend selection",
+      "budget_quota_ownership": "global logical/provider budget counters",
+      "selection_policy": "heuristic UCB-style routing",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
+    },
+    {
+      "track_id": "role_scoped_routing",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "budget_quota_ownership": "role budget maps exist without experiment-owned quota policy",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
+    },
+    {
+      "track_id": "provider_diagnostics_pricing",
+      "role_or_lane": "provider call telemetry",
+      "budget_quota_ownership": "provider attempts, tokens, configured cost, and latency stops",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
+    },
+    {
+      "track_id": "provider_cancellation_quarantine",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "budget_quota_ownership": "role-scoped budget actions in cancellation policy",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
+    },
+    {
+      "track_id": "fast_strong_model_mix",
+      "role_or_lane": "fast breadth and strong depth lanes",
+      "budget_quota_ownership": "no lane quota schedule",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
+      "track_id": "sample_efficiency",
+      "role_or_lane": "LLM proposal budget",
+      "budget_quota_ownership": "logical/provider/cost/latency budgets recorded",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
+    },
+    {
+      "track_id": "repeated_sampling_baseline",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "budget_quota_ownership": "equal LLM-call budget not enforced by comparator runner",
+      "selection_policy": "absence boundary only",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "budget_quota_ownership": "no calibrated Flash/Pro quota schedule",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
+      "track_id": "critique_reviewer_pool",
+      "role_or_lane": "critique reviewer roles",
+      "budget_quota_ownership": "role budget routing possible without reviewer quota policy",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
+    }
+  ],
+  "role_budget_quota_policy_count": 9,
+  "provider_pricing_default_rate_evidence": [
+    {
+      "track_id": "heuristic_ucb_rewards",
+      "role_or_lane": "global backend selection",
+      "pricing_default_rate_evidence": "not applicable to reward theorem scope",
+      "selection_policy": "heuristic UCB-style routing",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
+    },
+    {
+      "track_id": "role_scoped_routing",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
+    },
+    {
+      "track_id": "provider_diagnostics_pricing",
+      "role_or_lane": "provider call telemetry",
+      "pricing_default_rate_evidence": "configured token-cost estimates only",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
+    },
+    {
+      "track_id": "provider_cancellation_quarantine",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "pricing_default_rate_evidence": "inherits configured-cost telemetry",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
+    },
+    {
+      "track_id": "fast_strong_model_mix",
+      "role_or_lane": "fast breadth and strong depth lanes",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
+      "track_id": "sample_efficiency",
+      "role_or_lane": "LLM proposal budget",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
+    },
+    {
+      "track_id": "repeated_sampling_baseline",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "selection_policy": "absence boundary only",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "pricing_default_rate_evidence": "no Gemini account/model pricing evidence",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
+      "track_id": "critique_reviewer_pool",
+      "role_or_lane": "critique reviewer roles",
+      "pricing_default_rate_evidence": "configured estimates only",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
+    }
+  ],
+  "provider_pricing_default_rate_evidence_count": 9,
+  "diagnostics_replay_policy": [
+    {
+      "track_id": "heuristic_ucb_rewards",
+      "role_or_lane": "global backend selection",
+      "diagnostics_replay_support": "selected-index and reward evidence boundary only",
+      "selection_policy": "heuristic UCB-style routing",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
+    },
+    {
+      "track_id": "role_scoped_routing",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "diagnostics_replay_support": "role scheduler audit state and runtime snapshots",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
+    },
+    {
+      "track_id": "provider_diagnostics_pricing",
+      "role_or_lane": "provider call telemetry",
+      "diagnostics_replay_support": "bounded scalar diagnostics without raw payload replay",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
+    },
+    {
+      "track_id": "provider_cancellation_quarantine",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "diagnostics_replay_support": "policy observations without raw provider replay",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
+    },
+    {
+      "track_id": "fast_strong_model_mix",
+      "role_or_lane": "fast breadth and strong depth lanes",
+      "diagnostics_replay_support": "metadata trace boundary",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
+      "track_id": "sample_efficiency",
+      "role_or_lane": "LLM proposal budget",
+      "diagnostics_replay_support": "bounded cumulative best-score curve",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
+    },
+    {
+      "track_id": "repeated_sampling_baseline",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "diagnostics_replay_support": "observed sample counts linked to missing controls",
+      "selection_policy": "absence boundary only",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "diagnostics_replay_support": "Gemini-native usage/default/error/completion telemetry without raw replay",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
+      "track_id": "critique_reviewer_pool",
+      "role_or_lane": "critique reviewer roles",
+      "diagnostics_replay_support": "inline reviewer telemetry boundary",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
+    }
+  ],
+  "diagnostics_replay_policy_count": 9,
   "cancellation_resume_policy": [
     {
-      "cancellation_behavior": "inherits provider cancellation policy",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "resume_semantics": "scheduler state can be snapshotted/restored, not theorem replay",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
       "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
+      "role_or_lane": "global backend selection",
+      "cancellation_behavior": "inherits provider cancellation policy",
+      "resume_semantics": "scheduler state can be snapshotted/restored, not theorem replay",
+      "selection_policy": "heuristic UCB-style routing",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
     },
     {
-      "cancellation_behavior": "role failure policy can quarantine in-run pairs",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "resume_semantics": "restorable scheduler failure-policy state without cross-run proof",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
       "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "cancellation_behavior": "role failure policy can quarantine in-run pairs",
+      "resume_semantics": "restorable scheduler failure-policy state without cross-run proof",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
     },
     {
-      "cancellation_behavior": "request timeout telemetry only",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "resume_semantics": "controller budget-event replay for provider budget counters",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
       "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
+      "role_or_lane": "provider call telemetry",
+      "cancellation_behavior": "request timeout telemetry only",
+      "resume_semantics": "controller budget-event replay for provider budget counters",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
     },
     {
-      "cancellation_behavior": "policy/audit evidence, not live SDK hard cancellation",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "resume_semantics": "restorable scheduler failure state without cross-run quarantine proof",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
       "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "cancellation_behavior": "policy/audit evidence, not live SDK hard cancellation",
+      "resume_semantics": "restorable scheduler failure state without cross-run quarantine proof",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
     },
     {
-      "cancellation_behavior": "inherits provider policy",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "resume_semantics": "no resume replay experiment report",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
       "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
+      "role_or_lane": "fast breadth and strong depth lanes",
       "cancellation_behavior": "inherits provider policy",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "resume_semantics": "budget replay exists without benchmark-level sample curves",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
+      "resume_semantics": "no resume replay experiment report",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
       "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
+      "role_or_lane": "LLM proposal budget",
+      "cancellation_behavior": "inherits provider policy",
+      "resume_semantics": "budget replay exists without benchmark-level sample curves",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
     },
     {
-      "cancellation_behavior": "not applicable",
-      "readiness_status": "comparator_absence_boundary",
-      "resume_semantics": "not recorded",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
       "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "cancellation_behavior": "no Gemini-native cancellation evidence",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "cancellation_behavior": "not applicable",
       "resume_semantics": "not recorded",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
+      "selection_policy": "absence boundary only",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
     },
     {
-      "cancellation_behavior": "inherits provider timeout policy",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "resume_semantics": "reviewer-specific replay absent",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "cancellation_behavior": "request timeout and bounded retry evidence without live hard cancellation",
+      "resume_semantics": "generic scheduler state without live pair-run replay proof",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
       "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
+      "role_or_lane": "critique reviewer roles",
+      "cancellation_behavior": "inherits provider timeout policy",
+      "resume_semantics": "reviewer-specific replay absent",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
     }
   ],
   "cancellation_resume_policy_count": 9,
-  "claim_boundary": "This boundary records a ROADMAP-level backend-scheduling and critique matrix across heuristic UCB rewards, role-scoped routing, provider diagnostics/pricing, cancellation/quarantine, fast/strong model mix, sample efficiency, repeated sampling, Gemini parity, and critique reviewer pools, with an explicit backend-role capability inventory, reward-assumption policy, role budget/quota policy, provider pricing/default-rate evidence map, diagnostics/replay policy, cancellation/resume policy, equal-budget comparator evidence map, Gemini substitution policy, and critique-control checklist derived from those tracks. It does not claim calibrated reward policy, role quota ownership, live provider pricing/defaults, raw provider replay, live hard cancellation, equal-budget scheduler comparators, first-class Gemini lanes, async reviewer isolation, stale-readiness detector, or owner review signoff.",
-  "claim_ready": false,
+  "equal_budget_comparator_evidence": [
+    {
+      "track_id": "heuristic_ucb_rewards",
+      "role_or_lane": "global backend selection",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "heuristic UCB-style routing",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
+    },
+    {
+      "track_id": "role_scoped_routing",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
+    },
+    {
+      "track_id": "provider_diagnostics_pricing",
+      "role_or_lane": "provider call telemetry",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
+    },
+    {
+      "track_id": "provider_cancellation_quarantine",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
+    },
+    {
+      "track_id": "fast_strong_model_mix",
+      "role_or_lane": "fast breadth and strong depth lanes",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
+      "track_id": "sample_efficiency",
+      "role_or_lane": "LLM proposal budget",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
+    },
+    {
+      "track_id": "repeated_sampling_baseline",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "absence boundary only",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "equal_budget_evidence": "not recorded",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
+      "track_id": "critique_reviewer_pool",
+      "role_or_lane": "critique reviewer roles",
+      "equal_budget_evidence": "no no-reviewer comparator",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
+    }
+  ],
+  "equal_budget_comparator_evidence_count": 9,
+  "gemini_substitution_policy": [
+    {
+      "track_id": "heuristic_ucb_rewards",
+      "role_or_lane": "global backend selection",
+      "gemini_substitution_status": "not applicable",
+      "selection_policy": "heuristic UCB-style routing",
+      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims",
+      "readiness_status": "heuristic_not_canonical_ucb1"
+    },
+    {
+      "track_id": "role_scoped_routing",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
+      "gemini_substitution_status": "first-class adapter available without role-specific Gemini policy",
+      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
+      "validation_gate": "calibrated per-role reward, quota, and budget reports",
+      "readiness_status": "local_role_scoped_audit_boundary"
+    },
+    {
+      "track_id": "provider_diagnostics_pricing",
+      "role_or_lane": "provider call telemetry",
+      "gemini_substitution_status": "generic provider labels only",
+      "selection_policy": "provider diagnostics do not select by themselves",
+      "validation_gate": "live pricing/default evidence and raw replay policy",
+      "readiness_status": "configured_pricing_and_bounded_diagnostics_only"
+    },
+    {
+      "track_id": "provider_cancellation_quarantine",
+      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
+      "gemini_substitution_status": "not applicable",
+      "selection_policy": "retry/fallback/quarantine audit policy",
+      "validation_gate": "live hard cancellation and timeout-stop artifacts",
+      "readiness_status": "policy_audit_without_live_hard_cancel"
+    },
+    {
+      "track_id": "fast_strong_model_mix",
+      "role_or_lane": "fast breadth and strong depth lanes",
+      "gemini_substitution_status": "Flash/Pro classification available without live calibrated lane policy",
+      "selection_policy": "throughput_depth metadata tests and heuristic routing",
+      "validation_gate": "fixed-budget lane traces and equal-budget comparisons",
+      "readiness_status": "metadata_trace_without_lane_policy"
+    },
+    {
+      "track_id": "sample_efficiency",
+      "role_or_lane": "LLM proposal budget",
+      "gemini_substitution_status": "not separated from sample-efficiency reports",
+      "selection_policy": "single-run proposal lifecycle counts",
+      "validation_gate": "target-hit sample curves, replicates, and matched budgets",
+      "readiness_status": "single_run_counts_without_benchmark_curves"
+    },
+    {
+      "track_id": "repeated_sampling_baseline",
+      "role_or_lane": "base-model repeated-sampling comparator",
+      "gemini_substitution_status": "not applicable",
+      "selection_policy": "absence boundary only",
+      "validation_gate": "controlled equal-budget repeated-sampling runner",
+      "readiness_status": "comparator_absence_boundary"
+    },
+    {
+      "track_id": "gemini_provider_parity",
+      "role_or_lane": "Gemini Flash/Pro provider lanes",
+      "gemini_substitution_status": "first-class adapter present; original-model availability and substitution equivalence unverified",
+      "selection_policy": "first-class built-in backend with generic scheduler integration",
+      "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+      "readiness_status": "first_class_adapter_without_live_model_mix_parity"
+    },
+    {
+      "track_id": "critique_reviewer_pool",
+      "role_or_lane": "critique reviewer roles",
+      "gemini_substitution_status": "not applicable",
+      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
+      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations",
+      "readiness_status": "synchronous_replacement_filter_boundary"
+    }
+  ],
+  "gemini_substitution_policy_count": 9,
   "critique_control_checklist": [
     {
       "check_id": "reviewer_pool_selection_policy",
@@ -277,318 +1100,6 @@
     }
   ],
   "critique_control_checklist_count": 8,
-  "diagnostics_replay_policy": [
-    {
-      "diagnostics_replay_support": "selected-index and reward evidence boundary only",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
-    },
-    {
-      "diagnostics_replay_support": "role scheduler audit state and runtime snapshots",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
-    },
-    {
-      "diagnostics_replay_support": "bounded scalar diagnostics without raw payload replay",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
-    },
-    {
-      "diagnostics_replay_support": "policy observations without raw provider replay",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
-    },
-    {
-      "diagnostics_replay_support": "metadata trace boundary",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
-      "diagnostics_replay_support": "bounded cumulative best-score curve",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
-    },
-    {
-      "diagnostics_replay_support": "observed sample counts linked to missing controls",
-      "readiness_status": "comparator_absence_boundary",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "diagnostics_replay_support": "no Gemini-native usage/default/error telemetry",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "diagnostics_replay_support": "inline reviewer telemetry boundary",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
-      "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
-    }
-  ],
-  "diagnostics_replay_policy_count": 9,
-  "equal_budget_comparator_evidence": [
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
-    },
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
-    },
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
-    },
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
-    },
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
-    },
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "comparator_absence_boundary",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "equal_budget_evidence": "not recorded",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "equal_budget_evidence": "no no-reviewer comparator",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
-      "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
-    }
-  ],
-  "equal_budget_comparator_evidence_count": 9,
-  "gemini_substitution_policy": [
-    {
-      "gemini_substitution_status": "not applicable",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
-    },
-    {
-      "gemini_substitution_status": "not first-class",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
-    },
-    {
-      "gemini_substitution_status": "generic provider labels only",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
-    },
-    {
-      "gemini_substitution_status": "not applicable",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
-    },
-    {
-      "gemini_substitution_status": "not first-class Flash/Pro lanes",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
-      "gemini_substitution_status": "not separated from sample-efficiency reports",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
-    },
-    {
-      "gemini_substitution_status": "not applicable",
-      "readiness_status": "comparator_absence_boundary",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "gemini_substitution_status": "first-class provider absent",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "gemini_substitution_status": "not applicable",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
-      "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
-    }
-  ],
-  "gemini_substitution_policy_count": 9,
-  "missing_evidence": {
-    "async_reviewer_isolation": "not_recorded_locally",
-    "calibrated_reward_policy": "not_recorded_locally",
-    "equal_budget_scheduler_comparators": "not_recorded_locally",
-    "first_class_gemini_lanes": "not_recorded_locally",
-    "live_hard_cancellation": "not_recorded_locally",
-    "live_provider_pricing_defaults": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally",
-    "raw_provider_replay": "not_recorded_locally",
-    "role_quota_ownership": "not_recorded_locally",
-    "stale_readiness_detector": "not_recorded_locally"
-  },
-  "provider_pricing_default_rate_evidence": [
-    {
-      "pricing_default_rate_evidence": "not applicable to reward theorem scope",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
-    },
-    {
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
-    },
-    {
-      "pricing_default_rate_evidence": "configured token-cost estimates only",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
-    },
-    {
-      "pricing_default_rate_evidence": "inherits configured-cost telemetry",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
-    },
-    {
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
-    },
-    {
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "comparator_absence_boundary",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "pricing_default_rate_evidence": "no Gemini account/model pricing evidence",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
-      "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
-    }
-  ],
-  "provider_pricing_default_rate_evidence_count": 9,
   "required_evidence_fields": [
     "track_records",
     "roadmap_section_presence",
@@ -603,539 +1114,28 @@
     "gemini_substitution_policy",
     "stale_readiness_detector"
   ],
+  "missing_evidence": {
+    "calibrated_reward_policy": "not_recorded_locally",
+    "role_quota_ownership": "not_recorded_locally",
+    "live_provider_pricing_defaults": "not_recorded_locally",
+    "raw_provider_replay": "not_recorded_locally",
+    "live_hard_cancellation": "not_recorded_locally",
+    "equal_budget_scheduler_comparators": "not_recorded_locally",
+    "live_gemini_flash_pro_pair_evidence": "not_recorded_locally",
+    "async_reviewer_isolation": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
   "resolved_evidence": {
     "backend_role_capability_matrix": "recorded_from_roadmap_backend_scheduling_track_records",
-    "cancellation_resume_policy": "recorded_from_roadmap_backend_scheduling_track_records",
-    "critique_control_checklist": "recorded_from_critique_reviewer_pool_track_boundary",
+    "reward_assumption_policy": "recorded_from_roadmap_backend_scheduling_track_records",
+    "role_budget_quota_policy": "recorded_from_roadmap_backend_scheduling_track_records",
+    "provider_pricing_default_rate_evidence": "recorded_from_roadmap_backend_scheduling_track_records",
     "diagnostics_replay_policy": "recorded_from_roadmap_backend_scheduling_track_records",
+    "cancellation_resume_policy": "recorded_from_roadmap_backend_scheduling_track_records",
     "equal_budget_comparator_evidence": "recorded_from_roadmap_backend_scheduling_track_records",
     "gemini_substitution_policy": "recorded_from_roadmap_backend_scheduling_track_records",
-    "provider_pricing_default_rate_evidence": "recorded_from_roadmap_backend_scheduling_track_records",
-    "reward_assumption_policy": "recorded_from_roadmap_backend_scheduling_track_records",
-    "role_budget_quota_policy": "recorded_from_roadmap_backend_scheduling_track_records"
+    "critique_control_checklist": "recorded_from_critique_reviewer_pool_track_boundary"
   },
-  "reward_assumption_policy": [
-    {
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "reward_assumptions": "bounded improvement telemetry without canonical finite-time regret proof",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
-    },
-    {
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "reward_assumptions": "local reward-accounted role selection without calibrated role rewards",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
-    },
-    {
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "reward_assumptions": "not applicable",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
-    },
-    {
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "reward_assumptions": "zero-reward penalties for exhausted reward-accounted failures",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
-    },
-    {
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "reward_assumptions": "no lane-specific calibrated reward model",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "reward_assumptions": "target hit and replicate statistics absent",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
-    },
-    {
-      "readiness_status": "comparator_absence_boundary",
-      "reward_assumptions": "controlled base-model comparator absent",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "reward_assumptions": "not applicable",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "reward_assumptions": "no calibrated reviewer score-to-selection policy",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
-      "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
-    }
-  ],
-  "reward_assumption_policy_count": 9,
-  "roadmap_heading": "### 7. Backend scheduling and critique",
-  "roadmap_heading_present": true,
-  "role_budget_quota_policy": [
-    {
-      "budget_quota_ownership": "global logical/provider budget counters",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
-    },
-    {
-      "budget_quota_ownership": "role budget maps exist without experiment-owned quota policy",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
-    },
-    {
-      "budget_quota_ownership": "provider attempts, tokens, configured cost, and latency stops",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
-    },
-    {
-      "budget_quota_ownership": "role-scoped budget actions in cancellation policy",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
-    },
-    {
-      "budget_quota_ownership": "no lane quota schedule",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
-      "budget_quota_ownership": "logical/provider/cost/latency budgets recorded",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
-    },
-    {
-      "budget_quota_ownership": "equal LLM-call budget not enforced by comparator runner",
-      "readiness_status": "comparator_absence_boundary",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "budget_quota_ownership": "no Flash/Pro quota or lane integration",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "budget_quota_ownership": "role budget routing possible without reviewer quota policy",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
-      "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
-    }
-  ],
-  "role_budget_quota_policy_count": 9,
-  "schema": "libreevolve.roadmap_backend_scheduling_critique_boundary.v1",
-  "sidecar_ref_count": 13,
-  "track_count": 9,
-  "track_records": [
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Implement canonical UCB1 finite-time scheduler evidence beyond the",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "Implement UCB1 finite-time bandit paper evidence beyond the source",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "global logical/provider budget counters",
-      "cancellation_behavior": "inherits provider cancellation policy",
-      "critique_reviewer_isolation": "not applicable",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/ucb1_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/llm_role_scheduler_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "selected-index and reward evidence boundary only",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not applicable",
-      "pricing_default_rate_evidence": "not applicable to reward theorem scope",
-      "readiness_status": "heuristic_not_canonical_ucb1",
-      "resume_semantics": "scheduler state can be snapshotted/restored, not theorem replay",
-      "reward_assumptions": "bounded improvement telemetry without canonical finite-time regret proof",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "Normalize/document UCB rewards against bounded assumptions",
-      "role_or_lane": "global backend selection",
-      "selection_policy": "heuristic UCB-style routing",
-      "track_id": "heuristic_ucb_rewards",
-      "validation_gate": "canonical reward assumptions and regret evidence before UCB1 claims"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Promote role-scoped LLM routing from shared-bandit audit evidence",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "role-scoped scheduler state",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "role budget maps exist without experiment-owned quota policy",
-      "cancellation_behavior": "role failure policy can quarantine in-run pairs",
-      "critique_reviewer_isolation": "reviewer roles can be routed but not isolated as independent reviewers",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/llm_role_scheduler_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/llm_budget_policy_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "role scheduler audit state and runtime snapshots",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not first-class",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "local_role_scoped_audit_boundary",
-      "resume_semantics": "restorable scheduler failure-policy state without cross-run proof",
-      "reward_assumptions": "local reward-accounted role selection without calibrated role rewards",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "role-scoped backend eligibility",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt roles",
-      "selection_policy": "opt-in role-scoped scheduler state and backend eligibility",
-      "track_id": "role_scoped_routing",
-      "validation_gate": "calibrated per-role reward, quota, and budget reports"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "live provider pricing/default-rate capture beyond configured",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "provider diagnostics, and scheduler telemetry",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "provider attempts, tokens, configured cost, and latency stops",
-      "cancellation_behavior": "request timeout telemetry only",
-      "critique_reviewer_isolation": "role labels retained in telemetry",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/provider_pricing_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/provider_diagnostics_replay_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/llm_stochastic_reproducibility_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "bounded scalar diagnostics without raw payload replay",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "generic provider labels only",
-      "pricing_default_rate_evidence": "configured token-cost estimates only",
-      "readiness_status": "configured_pricing_and_bounded_diagnostics_only",
-      "resume_semantics": "controller budget-event replay for provider budget counters",
-      "reward_assumptions": "not applicable",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "raw provider diagnostics, live provider pricing/default-rate capture",
-      "role_or_lane": "provider call telemetry",
-      "selection_policy": "provider diagnostics do not select by themselves",
-      "track_id": "provider_diagnostics_pricing",
-      "validation_gate": "live pricing/default evidence and raw replay policy"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Complete live hard provider cancellation and timeout-stop policy.",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "not live provider SDK hard cancellation",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "role-scoped budget actions in cancellation policy",
-      "cancellation_behavior": "policy/audit evidence, not live SDK hard cancellation",
-      "critique_reviewer_isolation": "reviewer roles can be labeled but not isolated",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/provider_cancellation_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "policy observations without raw provider replay",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not applicable",
-      "pricing_default_rate_evidence": "inherits configured-cost telemetry",
-      "readiness_status": "policy_audit_without_live_hard_cancel",
-      "resume_semantics": "restorable scheduler failure state without cross-run quarantine proof",
-      "reward_assumptions": "zero-reward penalties for exhausted reward-accounted failures",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "live provider SDK cancellation",
-      "role_or_lane": "mutation, critique, feedback, and meta-prompt provider calls",
-      "selection_policy": "retry/fallback/quarantine audit policy",
-      "track_id": "provider_cancellation_quarantine",
-      "validation_gate": "live hard cancellation and timeout-stop artifacts"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "Validate fast/strong model-mix scheduling beyond local metadata tests.",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "fast/strong model-mix scheduling",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "no lane quota schedule",
-      "cancellation_behavior": "inherits provider policy",
-      "critique_reviewer_isolation": "not applicable",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/fast_strong_model_mix_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "metadata trace boundary",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not first-class Flash/Pro lanes",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "metadata_trace_without_lane_policy",
-      "resume_semantics": "no resume replay experiment report",
-      "reward_assumptions": "no lane-specific calibrated reward model",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "fast/strong model-mix reports",
-      "role_or_lane": "fast breadth and strong depth lanes",
-      "selection_policy": "throughput_depth metadata tests and heuristic routing",
-      "track_id": "fast_strong_model_mix",
-      "validation_gate": "fixed-budget lane traces and equal-budget comparisons"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Add sample-efficiency reporting for AlphaEvolve-scale LLM proposal",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "Track AlphaEvolve sample-efficiency evidence separately from call caps.",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "logical/provider/cost/latency budgets recorded",
-      "cancellation_behavior": "inherits provider policy",
-      "critique_reviewer_isolation": "not applicable",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/sample_efficiency_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "bounded cumulative best-score curve",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not separated from sample-efficiency reports",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "single_run_counts_without_benchmark_curves",
-      "resume_semantics": "budget replay exists without benchmark-level sample curves",
-      "reward_assumptions": "target hit and replicate statistics absent",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "proposal-count curves, target-hit evidence",
-      "role_or_lane": "LLM proposal budget",
-      "selection_policy": "single-run proposal lifecycle counts",
-      "track_id": "sample_efficiency",
-      "validation_gate": "target-hit sample curves, replicates, and matched budgets"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Add repeated-sampling baseline reports for test-time-compute uplift",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "Track repeated-sampling baselines for test-time-compute uplift claims.",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "equal LLM-call budget not enforced by comparator runner",
-      "cancellation_behavior": "not applicable",
-      "critique_reviewer_isolation": "disabled critique proof absent",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/repeated_sampling_baseline_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "observed sample counts linked to missing controls",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "not applicable",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "comparator_absence_boundary",
-      "resume_semantics": "not recorded",
-      "reward_assumptions": "controlled base-model comparator absent",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "repeated-sampling boundary report",
-      "role_or_lane": "base-model repeated-sampling comparator",
-      "selection_policy": "absence boundary only",
-      "track_id": "repeated_sampling_baseline",
-      "validation_gate": "controlled equal-budget repeated-sampling runner"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Add first-class Google/Gemini backend parity for AlphaEvolve model-mix",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "Track Google/Gemini provider-parity evidence separately from generic",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "no Flash/Pro quota or lane integration",
-      "cancellation_behavior": "no Gemini-native cancellation evidence",
-      "critique_reviewer_isolation": "not applicable",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/gemini_provider_parity_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "no Gemini-native usage/default/error telemetry",
-      "equal_budget_evidence": "not recorded",
-      "gemini_substitution_status": "first-class provider absent",
-      "pricing_default_rate_evidence": "no Gemini account/model pricing evidence",
-      "readiness_status": "custom_backend_detection_without_gemini_provider",
-      "resume_semantics": "not recorded",
-      "reward_assumptions": "not applicable",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "first-class Google/Gemini adapter",
-      "role_or_lane": "Gemini Flash/Pro provider lanes",
-      "selection_policy": "custom-backend detection only",
-      "track_id": "gemini_provider_parity",
-      "validation_gate": "Gemini adapter or explicit substitution contract"
-    },
-    {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Extend critique reviewer pools beyond synchronous first/last-valid",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "Validate critique reviewer pools beyond synchronous replacement filters.",
-          "required_phrase_present": true
-        }
-      ],
-      "budget_quota_ownership": "role budget routing possible without reviewer quota policy",
-      "cancellation_behavior": "inherits provider timeout policy",
-      "critique_reviewer_isolation": "no async overlap or independent reviewer isolation",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/critique_reviewer_pool_boundary.json"
-        }
-      ],
-      "diagnostics_replay_support": "inline reviewer telemetry boundary",
-      "equal_budget_evidence": "no no-reviewer comparator",
-      "gemini_substitution_status": "not applicable",
-      "pricing_default_rate_evidence": "configured estimates only",
-      "readiness_status": "synchronous_replacement_filter_boundary",
-      "resume_semantics": "reviewer-specific replay absent",
-      "reward_assumptions": "no calibrated reviewer score-to-selection policy",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "synchronous configurable critique reviewer pools",
-      "role_or_lane": "critique reviewer roles",
-      "selection_policy": "synchronous first-valid or last-valid mutation replacement",
-      "track_id": "critique_reviewer_pool",
-      "validation_gate": "async reviewer overlap, calibrated scoring, isolation, and no-reviewer ablations"
-    }
-  ]
+  "claim_boundary": "This boundary records a ROADMAP-level backend-scheduling and critique matrix across heuristic UCB rewards, role-scoped routing, provider diagnostics/pricing, cancellation/quarantine, fast/strong model mix, sample efficiency, repeated sampling, Gemini parity, and critique reviewer pools, with an explicit backend-role capability inventory, reward-assumption policy, role budget/quota policy, provider pricing/default-rate evidence map, diagnostics/replay policy, cancellation/resume policy, equal-budget comparator evidence map, Gemini substitution policy, and critique-control checklist derived from those tracks. It does not claim calibrated reward policy, role quota ownership, live provider pricing/defaults, raw provider replay, live hard cancellation, equal-budget scheduler comparators, live Gemini Flash/Pro pair evidence or substitution equivalence, async reviewer isolation, stale-readiness detector, or owner review signoff."
 }

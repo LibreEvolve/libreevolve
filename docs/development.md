@@ -70,8 +70,12 @@ Create a `.env` file in the repository root for provider configuration:
 ```text
 OPENAI_API_KEY=...
 ANTHROPIC_API_KEY=...
+GEMINI_API_KEY=...
 OLLAMA_HOST=http://localhost:11434
 ```
+
+`GOOGLE_API_KEY` is also accepted for Gemini and takes precedence when both
+Google credential variables are set.
 
 The `run` command loads `.env` during run setup with `override=True`, before
 backend preflight. Values in the repository `.env` can replace same-named
@@ -99,6 +103,8 @@ py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-gene
 py -3.12 -m libreevolve show runs/development_hello_world
 py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing --max-generations 10 --backends "anthropic:<anthropic-model-id>" --run-name development_circle_packing --overwrite
 py -3.12 -m libreevolve show runs/development_circle_packing
+py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "gemini:<gemini-model-id>" --run-name development_gemini_hello_world --overwrite
+py -3.12 -m libreevolve show runs/development_gemini_hello_world
 ```
 
 Replace placeholder backend model ids with currently available provider/account

@@ -18,9 +18,9 @@ def test_readme_provider_example_matrix_boundary_accepts_current_markers():
     )
     assert boundary["schema"] == README_PROVIDER_EXAMPLE_MATRIX_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
-    assert validation.provider_command_record_count == 3
+    assert validation.provider_command_record_count == 4
     assert validation.missing_provider_command_record_count == 0
-    assert validation.contract_marker_record_count == 15
+    assert validation.contract_marker_record_count == 17
     assert validation.missing_contract_marker_count == 0
     assert boundary["provider_example_matrix_status"] == (
         "readme_provider_example_static_contract_present"
@@ -28,6 +28,7 @@ def test_readme_provider_example_matrix_boundary_accepts_current_markers():
     assert [record["provider"] for record in boundary["provider_command_records"]] == [
         "openai",
         "anthropic",
+        "gemini",
         "ollama",
     ]
     assert boundary["missing_provider_command_records"] == []
@@ -35,11 +36,12 @@ def test_readme_provider_example_matrix_boundary_accepts_current_markers():
     assert boundary["missing_evidence"] == {
         "live_openai_model_availability_probe": "not_recorded_locally",
         "live_anthropic_model_availability_probe": "not_recorded_locally",
+        "live_gemini_model_availability_probe": "not_recorded_locally",
         "live_ollama_inventory_probe": "not_recorded_locally",
         "credential_safe_provider_smoke_matrix": "not_recorded_locally",
         "account_specific_model_id_provenance": "not_recorded_locally",
         "ci_provider_matrix": "not_recorded_locally",
-        "google_gemini_provider_parity": "not_recorded_locally",
+        "live_gemini_flash_pro_pair_evidence": "not_recorded_locally",
     }
     assert "CLI type:model backend-shorthand construction" in boundary["claim_boundary"]
 
@@ -98,8 +100,8 @@ def test_render_readme_provider_example_matrix_boundary_summary_reports_shape():
         "| boundary_status | readme_provider_examples_static_matrix_without_live_provider_smoke |"
         in summary
     )
-    assert "| provider_command_record_count | 3 |" in summary
+    assert "| provider_command_record_count | 4 |" in summary
     assert "| missing_provider_command_record_count | 0 |" in summary
-    assert "| contract_marker_record_count | 15 |" in summary
+    assert "| contract_marker_record_count | 17 |" in summary
     assert "| missing_contract_marker_count | 0 |" in summary
-    assert "| missing_evidence_count | 7 |" in summary
+    assert "| missing_evidence_count | 8 |" in summary

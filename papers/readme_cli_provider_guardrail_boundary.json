@@ -22,7 +22,7 @@
     {
       "record_kind": "readme_backend_feature_bullet",
       "path": "README.md",
-      "required_marker": "OpenAI, Anthropic, Ollama, experimental Codex CLI, and custom import-path",
+      "required_marker": "OpenAI, Anthropic, Google Gemini, Ollama, experimental Codex CLI, and custom",
       "marker_status": "marker_present"
     },
     {

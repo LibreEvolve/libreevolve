@@ -21,10 +21,12 @@ BACKEND_REGISTRY_PATH = "libreevolve/llm/backend_registry.py"
 OPENAI_PATH = "libreevolve/llm/openai.py"
 ANTHROPIC_PATH = "libreevolve/llm/anthropic.py"
 OLLAMA_PATH = "libreevolve/llm/ollama.py"
+GEMINI_PATH = "libreevolve/llm/gemini.py"
 CODEX_CLI_PATH = "libreevolve/llm/codex_cli.py"
 CONFIG_PATH = "libreevolve/core/config.py"
 CLI_PATH = "libreevolve/cli.py"
 TEST_ENSEMBLE_PATH = "tests/llm/test_ensemble.py"
+TEST_GEMINI_PATH = "tests/llm/test_gemini.py"
 TEST_CODEX_CLI_PATH = "tests/llm/test_codex_cli.py"
 TEST_CONFIG_PATH = "tests/core/test_config.py"
 TEST_LOOP_PATH = "tests/core/test_loop.py"
@@ -40,6 +42,7 @@ EXPECTED_GUIDE_MARKERS = (
     ("selection_and_reward", "## Selection and reward"),
     ("openai_backend", "## OpenAI backend"),
     ("anthropic_backend", "## Anthropic backend"),
+    ("gemini_backend", "## Google Gemini backend"),
     ("ollama_backend", "## Ollama backend"),
     ("codex_cli_backend", "## Codex CLI backend"),
     ("environment_setup", "## Environment setup"),
@@ -70,12 +73,14 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("backend_registry", BACKEND_REGISTRY_PATH, "def builtin_backend_registry"),
     ("openai_backend", OPENAI_PATH, "class OpenAIBackend"),
     ("anthropic_backend", ANTHROPIC_PATH, "class AnthropicBackend"),
+    ("gemini_backend", GEMINI_PATH, "class GeminiBackend"),
     ("ollama_backend", OLLAMA_PATH, "class OllamaBackend"),
     ("codex_cli_backend", CODEX_CLI_PATH, "class CodexCLIBackend"),
     ("config_llm_role_backend_indices", CONFIG_PATH, "llm_role_backend_indices"),
     ("config_custom_backend_class_path", CONFIG_PATH, "_require_custom_backend_class_path"),
     ("cli_credential_preflight", CLI_PATH, "_preflight_llm_backends_if_needed"),
     ("ensemble_tests", TEST_ENSEMBLE_PATH, "LLMEnsemble"),
+    ("gemini_tests", TEST_GEMINI_PATH, "test_gemini_generate_maps_config_roles_and_metadata"),
     ("codex_cli_tests", TEST_CODEX_CLI_PATH, "test_codex_backend_invokes_codex_exec_and_writes_transcript"),
     ("config_role_backend_tests", TEST_CONFIG_PATH, "test_accepts_llm_role_backend_indices"),
     ("runtime_budget_tests", TEST_LOOP_PATH, "max_llm_provider_attempts"),
@@ -147,11 +152,13 @@ def backend_guide_contract_drift_boundary_record(root: str | Path = ".") -> dict
         BACKEND_REGISTRY_PATH,
         OPENAI_PATH,
         ANTHROPIC_PATH,
+        GEMINI_PATH,
         OLLAMA_PATH,
         CODEX_CLI_PATH,
         CONFIG_PATH,
         CLI_PATH,
         TEST_ENSEMBLE_PATH,
+        TEST_GEMINI_PATH,
         TEST_CODEX_CLI_PATH,
         TEST_CONFIG_PATH,
         TEST_LOOP_PATH,
@@ -187,11 +194,17 @@ def backend_guide_contract_drift_boundary_record(root: str | Path = ".") -> dict
             BACKEND_REGISTRY_PATH,
             OPENAI_PATH,
             ANTHROPIC_PATH,
+            GEMINI_PATH,
             OLLAMA_PATH,
             CONFIG_PATH,
             CLI_PATH,
         ],
-        "test_paths": [TEST_ENSEMBLE_PATH, TEST_CONFIG_PATH, TEST_LOOP_PATH],
+        "test_paths": [
+            TEST_ENSEMBLE_PATH,
+            TEST_GEMINI_PATH,
+            TEST_CONFIG_PATH,
+            TEST_LOOP_PATH,
+        ],
         "sidecar_paths": [
             GEMINI_BOUNDARY_PATH,
             PROVIDER_PRICING_PATH,
@@ -221,6 +234,7 @@ def backend_guide_contract_drift_boundary_record(root: str | Path = ".") -> dict
             "for provider lanes, scheduler/reward accounting, call-history and "
             "llm_calls replay, restore, prompt validation, provider metadata, "
             "role routing, provider failures, timeouts, OpenAI API-mode policy, "
+            "first-class Gemini behavior, "
             "credential preflight, custom backends, and CLI-provider guardrails. "
             "It also records source-module, focused-test, sidecar, and active "
             "TODO anchors. It does not claim semantic backend-claim "

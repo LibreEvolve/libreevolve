@@ -3828,22 +3828,23 @@ Completed manifests include a Gemini provider-parity boundary report with
 schema `libreevolve.gemini_provider_parity_report.v1`. It is derived from the
 startup config and built-in backend registry, then records built-in backend
 types, configured backend count, configured custom backend count,
-Gemini-like backend count, Flash/Pro-shaped lane counts, and a bounded
-configured-backend summary.
+Gemini-like backend count, first-class Flash/Pro lane counts, and a bounded
+configured-backend summary. Its readiness fields also identify the built-in
+adapter, credential preflight, API-version client context, request mapping,
+usage/default/error telemetry, and configured scheduler lane contract.
 
-The report is intentionally an absence boundary for AlphaEvolve provider
-parity. In the current codebase `gemini_builtin_available` is false,
-`provider_parity_status` is `missing_first_class_gemini_backend`, and
-`claim_ready` is false. A custom backend whose model id contains `gemini` is
-reported as an opaque Gemini-like substitution, not as first-class Google/
-Gemini credential preflight, provider-native usage/default telemetry,
-capability lookup, safe diagnostics, Gemini client-context configuration,
-request-parameter mapping, model-registry snapshots, account/model
-availability checks, scheduler Flash/Pro lane integration, paper-level
-substitution contract, substitution-equivalence justification, or validated
-Flash/Pro lane parity.
+The report is intentionally a partial-readiness boundary for AlphaEvolve
+provider parity. In the current codebase `gemini_builtin_available` is true,
+`provider_parity_status` is
+`first_class_gemini_backend_without_live_model_parity`, and `claim_ready` is
+false. A custom backend whose model id contains `gemini` remains an opaque
+Gemini-like wrapper. First-class configuration records Flash/Pro identity and
+generic scheduler integration, but does not prove provider capability lookup,
+model-registry snapshots, account/model availability, current Gemini 2.0
+endpoint access, a credential-safe live pair run, calibrated AlphaEvolve
+scheduling, paper-level substitution contracts, or substitution equivalence.
 The committed `papers/gemini_provider_parity_boundary.json` sidecar preserves
-the same absence boundary for paper-manifest validation.
+the same partial-readiness boundary for paper-manifest validation.
 
 Prompt feedback for the selected parent also renders bounded, redacted
 summaries from the candidate's persisted evaluation record: recent stage

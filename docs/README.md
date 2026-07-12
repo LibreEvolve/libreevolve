@@ -33,7 +33,7 @@ paper/source status and claim boundaries.
   `config.yaml` behavior.
 - [Plugins](./plugins.md): Hook order, built-in plugins, and extension guidance.
 - [Backends](./backends.md): built-in and custom backend behavior, including
-  the Google/Gemini provider-parity absence boundary.
+  the Google/Gemini adapter and remaining live provider-parity boundary.
 - [Run Artifacts](./run-artifacts.md): What gets written under `runs/`.
 - [Current Status](./status.md): Detailed implemented-versus-absent capability
   ledger moved out of the root README.

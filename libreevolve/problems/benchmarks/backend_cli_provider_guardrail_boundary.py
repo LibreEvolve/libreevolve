@@ -28,7 +28,7 @@ EXPECTED_MARKERS = (
     {
         "record_kind": "backends_builtin_sdk_lane",
         "path": BACKENDS_PATH,
-        "marker": "Built-in SDK adapters: OpenAI, Anthropic, and Ollama",
+        "marker": "Built-in SDK adapters: OpenAI, Anthropic, Google Gemini, and Ollama",
     },
     {
         "record_kind": "backends_builtin_codex_cli_lane",

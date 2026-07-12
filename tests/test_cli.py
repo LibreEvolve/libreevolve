@@ -5400,6 +5400,44 @@ def test_run_preflights_llm_credentials_before_overwrite(tmp_path, monkeypatch):
     assert mock.call_count == 0
 
 
+def test_run_preflights_gemini_credentials_before_overwrite(tmp_path, monkeypatch):
+    _make_problem(tmp_path)
+    log_dir = tmp_path / "runs"
+    run_dir = log_dir / "gemini_provider_probe"
+    run_dir.mkdir(parents=True)
+    old_history = "old history\n"
+    (run_dir / "history.jsonl").write_text(old_history, encoding="utf-8")
+    (tmp_path / "config.yaml").write_text(
+        f"log_dir: {log_dir.as_posix()}\n",
+        encoding="utf-8",
+    )
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+
+    with patch("libreevolve.cli.evolve") as mock:
+        result = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--run-name",
+                "gemini_provider_probe",
+                "--backends",
+                "gemini:gemini-2.0-flash",
+                "--overwrite",
+                "--max-generations",
+                "1",
+            ],
+        )
+
+    assert result.exit_code == 1
+    assert "LLM backend preflight failed" in result.output
+    assert "GOOGLE_API_KEY or GEMINI_API_KEY" in result.output
+    assert (run_dir / "history.jsonl").read_text(encoding="utf-8") == old_history
+    assert not (run_dir / "manifest.json").exists()
+    assert mock.call_count == 0
+
+
 def test_mutation_run_preflights_provider_before_all_invalid_seed_diagnostics(
     tmp_path,
     monkeypatch,

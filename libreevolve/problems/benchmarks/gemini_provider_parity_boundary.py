@@ -11,7 +11,7 @@ GEMINI_PROVIDER_PARITY_BOUNDARY_SCHEMA = (
 )
 GEMINI_PROVIDER_RUNTIME_REPORT_SCHEMA = "libreevolve.gemini_provider_parity_report.v1"
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "missing_first_class_gemini_provider"
+EXPECTED_BOUNDARY_STATUS = "first_class_adapter_without_live_alphaevolve_model_parity"
 EXPECTED_PROVIDER_REQUIREMENT = "gemini_flash_and_gemini_pro"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "built_in_google_gemini_adapter",
@@ -21,6 +21,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "provider_native_usage_telemetry",
     "provider_native_default_telemetry",
     "provider_native_error_diagnostics",
+    "generate_content_completion_contract",
     "provider_capability_lookup",
     "gemini_model_registry_snapshot",
     "gemini_flash_lane_identity",
@@ -29,23 +30,28 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "account_model_availability_check",
     "paper_level_substitution_contract",
     "substitution_equivalence_justification",
+    "credential_safe_live_flash_pro_smoke",
+    "original_gemini_2_0_model_availability",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "built_in_google_gemini_adapter": "not_recorded_locally",
-    "gemini_credential_preflight": "not_recorded_locally",
-    "gemini_client_context_config": "not_recorded_locally",
-    "gemini_request_parameter_mapping": "not_recorded_locally",
-    "provider_native_usage_telemetry": "not_recorded_locally",
-    "provider_native_default_telemetry": "not_recorded_locally",
-    "provider_native_error_diagnostics": "not_recorded_locally",
+    "built_in_google_gemini_adapter": "recorded_locally",
+    "gemini_credential_preflight": "recorded_locally",
+    "gemini_client_context_config": "recorded_locally",
+    "gemini_request_parameter_mapping": "recorded_locally",
+    "provider_native_usage_telemetry": "recorded_locally",
+    "provider_native_default_telemetry": "recorded_locally",
+    "provider_native_error_diagnostics": "recorded_locally",
+    "generate_content_completion_contract": "recorded_locally",
     "provider_capability_lookup": "not_recorded_locally",
     "gemini_model_registry_snapshot": "not_recorded_locally",
-    "gemini_flash_lane_identity": "not_recorded_locally",
-    "gemini_pro_lane_identity": "not_recorded_locally",
-    "scheduler_flash_pro_lane_integration": "not_recorded_locally",
+    "gemini_flash_lane_identity": "recorded_locally",
+    "gemini_pro_lane_identity": "recorded_locally",
+    "scheduler_flash_pro_lane_integration": "recorded_config_contract_without_live_pair_run",
     "account_model_availability_check": "not_recorded_locally",
     "paper_level_substitution_contract": "not_recorded_locally",
     "substitution_equivalence_justification": "not_recorded_locally",
+    "credential_safe_live_flash_pro_smoke": "not_recorded_locally",
+    "original_gemini_2_0_model_availability": "not_recorded_locally",
 }
 
 
@@ -78,22 +84,22 @@ def gemini_provider_parity_boundary_record() -> dict[str, Any]:
             "Google/Gemini surface or explicit paper-level substitution"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
-        "runtime_report_status": "gemini_provider_parity_absence_report_available",
+        "runtime_report_status": "gemini_provider_partial_readiness_report_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records that LibreEvolve has a runtime Gemini "
-            "provider-parity absence report that lists built-in provider types, "
-            "detects Gemini-like custom model ids, and counts Flash/Pro-shaped "
-            "lanes, but does not claim a first-class Google/Gemini adapter, "
-            "Gemini credential preflight, Gemini client-context configuration, "
-            "Gemini request-parameter mapping, provider-native usage/default "
-            "telemetry, provider-native error diagnostics, capability lookup, "
-            "model-registry snapshots, Flash and Pro lane identity, scheduler "
-            "Flash/Pro lane integration, account/model availability checks, "
-            "paper-level substitution contract, or substitution-equivalence "
-            "justification."
+            "This boundary records a first-class Google Gen AI SDK adapter for "
+            "the Gemini Developer API, environment credential preflight, API-"
+            "version client context, GenerateContent request mapping, prompt-"
+            "role system instructions, bounded retry/default/usage/error "
+            "telemetry, strict completion-state handling, Flash/Pro lane "
+            "classification, and generic scheduler configuration. It does not "
+            "claim live Gemini 2.0 Flash/Pro availability, a credential-safe "
+            "live pair run, provider capability lookup, model-registry "
+            "snapshots, account/model availability checks, calibrated "
+            "AlphaEvolve Flash/Pro scheduling, a paper-level substitution "
+            "contract, or substitution-equivalence justification."
         ),
     }
 
@@ -122,8 +128,8 @@ def validate_gemini_provider_parity_boundary(
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
-    if data.get("runtime_report_status") != "gemini_provider_parity_absence_report_available":
-        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to the absence report"))
+    if data.get("runtime_report_status") != "gemini_provider_partial_readiness_report_available":
+        issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to partial provider readiness"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "Gemini provider boundary must not claim provider parity readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
@@ -132,10 +138,10 @@ def validate_gemini_provider_parity_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim" not in boundary_text
-        or "Gemini client-context configuration" not in boundary_text
-        or "Gemini request-parameter mapping" not in boundary_text
-        or "provider-native error diagnostics" not in boundary_text
-        or "Flash and Pro lane identity" not in boundary_text
+        or "first-class Google Gen AI SDK adapter" not in boundary_text
+        or "live Gemini 2.0 Flash/Pro availability" not in boundary_text
+        or "model-registry snapshots" not in boundary_text
+        or "calibrated AlphaEvolve Flash/Pro scheduling" not in boundary_text
         or "substitution-equivalence justification" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim provider parity"))
@@ -225,7 +231,7 @@ def _validate_missing_evidence(
     for key, expected_value in EXPECTED_MISSING_EVIDENCE.items():
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
-    return len(actual_keys)
+    return sum(value != "recorded_locally" for value in value.values())
 
 
 def _issue(code: str, message: str) -> GeminiProviderParityBoundaryIssue:

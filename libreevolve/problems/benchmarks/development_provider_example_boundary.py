@@ -50,6 +50,19 @@ EXPECTED_PROVIDER_EXAMPLES = (
         "expected_run_dir": "runs/development_circle_packing",
         "show_marker": "py -3.12 -m libreevolve show runs/development_circle_packing",
     },
+    {
+        "example_id": "development_gemini_hello_world",
+        "provider": "gemini",
+        "problem": "hello_world",
+        "command_marker": (
+            'py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world '
+            '--max-generations 10 --backends "gemini:<gemini-model-id>" '
+            '--run-name development_gemini_hello_world --overwrite'
+        ),
+        "placeholder": "<gemini-model-id>",
+        "expected_run_dir": "runs/development_gemini_hello_world",
+        "show_marker": "py -3.12 -m libreevolve show runs/development_gemini_hello_world",
+    },
 )
 EXPECTED_GUIDANCE_MARKERS = (
     ("development_placeholder_guidance", DEVELOPMENT_DOC_PATH, "Replace placeholder backend model ids with currently available provider/account\nmodel ids before running."),
@@ -58,8 +71,8 @@ EXPECTED_GUIDANCE_MARKERS = (
     ("docs_index_development_route", DOCS_INDEX_PATH, "[Development](./development.md)"),
     ("docs_index_backend_route", DOCS_INDEX_PATH, "[Backends](./backends.md)"),
     ("backend_builtin_provider_lane", BACKENDS_PATH, "Built-in SDK adapters"),
-    ("backend_gemini_absence", BACKENDS_PATH, "Google/Gemini is not a built-in registry provider yet"),
-    ("status_builtin_provider_boundary", STATUS_PATH, "Built-in provider adapters are OpenAI, Anthropic, and Ollama"),
+    ("backend_gemini_partial_readiness", BACKENDS_PATH, "Google Gemini is a built-in registry provider backed by `google-genai`"),
+    ("status_builtin_provider_boundary", STATUS_PATH, "Built-in provider adapters are OpenAI, Anthropic, Google Gemini, and Ollama"),
     ("papers_readme_provider_matrix", PAPERS_README_PATH, "papers/readme_provider_example_matrix_boundary.json"),
     ("papers_readme_provider_auth", PAPERS_README_PATH, "papers/readme_provider_auth_boundary.json"),
     ("papers_readme_gemini_provider_parity", PAPERS_README_PATH, "papers/gemini_provider_parity_boundary.json"),
@@ -81,6 +94,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "active_todo_owner_anchor",
     "live_openai_model_availability_probe",
     "live_anthropic_model_availability_probe",
+    "live_gemini_model_availability_probe",
     "credential_safe_development_provider_smoke",
     "account_specific_model_id_provenance",
     "ci_development_provider_matrix",
@@ -89,6 +103,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "live_openai_model_availability_probe": "not_recorded_locally",
     "live_anthropic_model_availability_probe": "not_recorded_locally",
+    "live_gemini_model_availability_probe": "not_recorded_locally",
     "credential_safe_development_provider_smoke": "not_recorded_locally",
     "account_specific_model_id_provenance": "not_recorded_locally",
     "ci_development_provider_matrix": "not_recorded_locally",
@@ -176,13 +191,15 @@ def development_provider_example_boundary_record(root: str | Path = ".") -> dict
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records the docs/development.md OpenAI hello_world "
-            "and Anthropic circle_packing provider command markers, placeholder "
-            "model-id guidance, paired show commands for both provider examples, "
+            "This boundary records the docs/development.md OpenAI hello_world, "
+            "Anthropic circle_packing, and Gemini hello_world provider command "
+            "markers, placeholder model-id guidance, paired show commands for all "
+            "three provider examples, "
             "explicit development run-name/overwrite markers, README provider "
             "model/failure guidance, docs-index routes, backend provider-lane "
-            "and Gemini absence markers, status/paper sidecar anchors, and active "
-            "TODO ownership. It does not claim live OpenAI or Anthropic model "
+            "and Gemini partial-readiness markers, status/paper sidecar anchors, "
+            "and active TODO ownership. It does not claim live OpenAI, Anthropic, "
+            "or Gemini model "
             "availability, credential-safe development provider smoke, account-"
             "specific model-id provenance, a CI development provider matrix, or "
             "owner review signoff."
@@ -225,8 +242,8 @@ def validate_development_provider_example_boundary(
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current development provider inputs"))
-    if data.get("provider_example_count") != 2:
-        issues.append(_issue("invalid_provider_example_count", "development guide should record two provider-backed examples"))
+    if data.get("provider_example_count") != 3:
+        issues.append(_issue("invalid_provider_example_count", "development guide should record three provider-backed examples"))
     if data.get("missing_command_count") != 0:
         issues.append(_issue("missing_development_provider_command", "development provider command markers are incomplete"))
     if data.get("unpaired_show_count") != 0:
@@ -241,8 +258,8 @@ def validate_development_provider_example_boundary(
     if (
         not isinstance(boundary_text, str)
         or "docs/development.md OpenAI hello_world" not in boundary_text
-        or "paired show commands for both provider examples" not in boundary_text
-        or "does not claim live OpenAI or Anthropic model availability" not in boundary_text
+        or "paired show commands for all three provider examples" not in boundary_text
+        or "does not claim live OpenAI, Anthropic, or Gemini model availability" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate static development commands from live provider smoke"))
     return DevelopmentProviderExampleBoundaryValidation(

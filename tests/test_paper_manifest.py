@@ -3019,6 +3019,10 @@ def test_validate_paper_manifest_accepts_development_provider_example_boundary(t
             '--max-generations 10 --backends "anthropic:<anthropic-model-id>" '
             '--run-name development_circle_packing --overwrite\n'
             "py -3.12 -m libreevolve show runs/development_circle_packing\n"
+            'py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world '
+            '--max-generations 10 --backends "gemini:<gemini-model-id>" '
+            '--run-name development_gemini_hello_world --overwrite\n'
+            "py -3.12 -m libreevolve show runs/development_gemini_hello_world\n"
             "Replace placeholder backend model ids with currently available provider/account\n"
             "model ids before running.\n"
         ),
@@ -3032,9 +3036,9 @@ def test_validate_paper_manifest_accepts_development_provider_example_boundary(t
         ),
         "docs/backends.md": (
             "Built-in SDK adapters\n"
-            "Google/Gemini is not a built-in registry provider yet\n"
+            "Google Gemini is a built-in registry provider backed by `google-genai`\n"
         ),
-        "docs/status.md": "Built-in provider adapters are OpenAI, Anthropic, and Ollama\n",
+        "docs/status.md": "Built-in provider adapters are OpenAI, Anthropic, Google Gemini, and Ollama\n",
         "papers/README.md": (
             "papers/readme_provider_example_matrix_boundary.json\n"
             "papers/readme_provider_auth_boundary.json\n"
@@ -3285,7 +3289,7 @@ def test_validate_paper_manifest_accepts_configuration_guide_boundary(tmp_path):
         "docs/status.md": "Configuration validation is local effective-config validation\n",
         "papers/README.md": (
             "papers/config_validation_boundary.json\n"
-            "capability lookup\n"
+            "live capability or model-registry\n"
         ),
         "docs/todo/readme.md": "Add configuration-guide field and override drift evidence.\n",
     }

@@ -1741,7 +1741,7 @@ def _require_output_check_scalar(name: str, value: object) -> None:
 def _validate_backends(backends: object) -> None:
     if not isinstance(backends, list) or not backends:
         raise ConfigError("backends must be a non-empty list of mappings")
-    allowed_types = {"anthropic", "codex", "custom", "openai", "ollama"}
+    allowed_types = {"anthropic", "codex", "custom", "gemini", "openai", "ollama"}
     common_keys = {
         "type",
         "model",
@@ -1795,6 +1795,10 @@ def _validate_backends(backends: object) -> None:
             )
         if backend["type"] == "anthropic":
             allowed.add("base_url")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+        if backend["type"] == "gemini":
+            allowed.add("api_version")
             allowed.add("timeout_sec")
             allowed.add("provider_max_retries")
         if backend["type"] == "ollama":

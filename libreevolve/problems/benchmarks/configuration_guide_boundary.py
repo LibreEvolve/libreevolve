@@ -103,7 +103,7 @@ EXPECTED_TEST_AND_DOC_ANCHORS = (
     ("agents_archive_cleanup_test", AGENTS_TEST_PATH, "test_configuration_docs_track_archive_event_cleanup_stream"),
     ("status_config_validation_boundary", STATUS_PATH, "Configuration validation is local effective-config validation"),
     ("papers_config_validation_sidecar", PAPERS_README_PATH, "papers/config_validation_boundary.json"),
-    ("papers_provider_capability_scope", PAPERS_README_PATH, "capability lookup"),
+    ("papers_provider_capability_scope", PAPERS_README_PATH, "live capability or model-registry"),
     ("active_todo_owner", README_TODO_PATH, "Add configuration-guide field and override drift evidence."),
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (

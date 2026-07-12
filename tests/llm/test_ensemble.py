@@ -239,6 +239,34 @@ def test_build_llm_forwards_builtin_backend_timeout(mocker):
     openai_client.assert_called_once_with(timeout=9.0)
 
 
+def test_build_llm_constructs_gemini_backend(mocker, monkeypatch):
+    monkeypatch.setenv("GEMINI_API_KEY", "test-gemini-key")
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    client = mocker.patch("libreevolve.llm.gemini.genai_sdk.Client")
+    config = Config(
+        backends=[
+            {
+                "type": "gemini",
+                "model": "gemini-2.0-pro",
+                "api_version": "v1",
+                "timeout_sec": 9,
+                "provider_max_retries": 1,
+                "role": "depth",
+            }
+        ]
+    )
+
+    ensemble = build_llm(config)
+
+    backend = ensemble.backends[0]
+    assert backend.name == "gemini/gemini-2.0-pro"
+    assert backend.client_context == {"api_version": "v1"}
+    assert backend.backend_defaults["model_lane"] == "pro"
+    assert backend.backend_defaults["timeout_sec"] == 9.0
+    assert client.call_args.kwargs["http_options"].timeout == 9000
+    assert ensemble.backend_metadata[0]["role"] == "depth"
+
+
 def test_build_llm_forwards_ensemble_call_timeout():
     config = Config(
         backends=[
@@ -1016,6 +1044,10 @@ def test_builtin_backend_registry_exposes_validated_constructor_fields():
     assert registry["codex"]["constructor"] == "libreevolve.llm.codex_cli:CodexCLIBackend"
     assert "auth_name" in registry["codex"]["constructor_fields"]
     assert "host" in registry["ollama"]["constructor_fields"]
+    assert registry["gemini"]["constructor"] == (
+        "libreevolve.llm.gemini:GeminiBackend"
+    )
+    assert "api_version" in registry["gemini"]["constructor_fields"]
 
 
 @pytest.mark.parametrize(

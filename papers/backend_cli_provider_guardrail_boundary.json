@@ -27,7 +27,7 @@
     {
       "record_kind": "backends_builtin_sdk_lane",
       "path": "docs/backends.md",
-      "required_marker": "Built-in SDK adapters: OpenAI, Anthropic, and Ollama",
+      "required_marker": "Built-in SDK adapters: OpenAI, Anthropic, Google Gemini, and Ollama",
       "marker_status": "marker_present"
     },
     {

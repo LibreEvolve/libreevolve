@@ -27,8 +27,8 @@ Runnable today:
   open work.
 - SEARCH/REPLACE mutation diffs using canonical AlphaEvolve-style fences, plus
   configurable full-code replacement mode.
-- OpenAI, Anthropic, Ollama, experimental Codex CLI, and custom import-path
-  backend support.
+- OpenAI, Anthropic, Google Gemini, Ollama, experimental Codex CLI, and custom
+  import-path backend support.
 - Heuristic UCB-style backend selection.
 - Local MAP-Elites and island archives, with five islands by default.
 - Local subprocess evaluation with optional staged validators.
@@ -123,8 +123,13 @@ Important limits:
   solution-database analogue with archive retention, descriptor/objective
   indexes, migration/rebin semantics, or async resume; that gap is tracked in
   `papers/prompt_database_parity_boundary.json`.
-- Built-in SDK provider adapters are OpenAI, Anthropic, and Ollama. Google/Gemini
-  parity is tracked as missing work.
+- Built-in SDK provider adapters are OpenAI, Anthropic, Google Gemini, and
+  Ollama. The Gemini adapter provides credential preflight, GenerateContent
+  request/response handling, usage/default/error telemetry, API-version
+  context, and Flash/Pro lane classification. No checked live run proves that
+  the paper's Gemini 2.0 models remain available to this account or that the
+  resulting model mix reproduces AlphaEvolve; that boundary remains in
+  `papers/gemini_provider_parity_boundary.json`.
 - The built-in Codex CLI adapter (`type: codex`) is an experimental local CLI
   lane for authenticated `codex exec` sessions. It records redacted auth/session
   provenance and optional transcripts, but it is not yet benchmark- or
@@ -203,6 +208,7 @@ your account or local Ollama install:
 ```bash
 py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "openai:<openai-model-id>"
 py -3.12 -m libreevolve run libreevolve/problems/examples/sorting --max-generations 10 --backends "anthropic:<anthropic-model-id>"
+py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "gemini:<gemini-model-id>"
 py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "ollama:<installed-ollama-model>"
 ```
 
@@ -364,7 +370,7 @@ py -3.12 -m pytest tests/integration/ -m integration --tb=short
 ```text
 libreevolve/
   core/          orchestration, prompting, evaluation, diffing, database, config
-  llm/           OpenAI, Anthropic, Ollama, custom backends, and ensemble routing
+  llm/           OpenAI, Anthropic, Gemini, Ollama, custom backends, and ensemble routing
   population/    program records, MAP-Elites, island migration
   plugins/       optional lifecycle hooks and paper-inspired plugins
   problems/      examples and problem loading

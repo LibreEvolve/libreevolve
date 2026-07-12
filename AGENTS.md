@@ -7,7 +7,7 @@ LibreEvolve is a Python research platform for LLM-guided evolutionary program di
 ## Tech Stack
 
 - Python 3.11+ (use `py -3.12` on this machine, not `python`)
-- Dependencies: numpy, scikit-learn, anthropic, openai, ollama, pyyaml, click, python-dotenv, packaging, pypdf
+- Dependencies: numpy, scikit-learn, anthropic, openai, google-genai, ollama, pyyaml, click, python-dotenv, packaging, pypdf
 - Testing: pytest, pytest-mock
 - No framework — pure Python with dataclasses
 
@@ -16,7 +16,7 @@ LibreEvolve is a Python research platform for LLM-guided evolutionary program di
 ```
 libreevolve/
   core/       loop.py (evolve orchestration), prompt.py (PromptSampler), evaluator.py, diff.py, database.py, config.py
-  llm/        ensemble.py (UCB-style heuristic), anthropic.py, openai.py (Responses API when configured), ollama.py
+  llm/        ensemble.py (UCB-style heuristic), anthropic.py, gemini.py (GenerateContent), openai.py (Responses API when configured), ollama.py
   population/ program.py, map_elites.py (3D TF-IDF), islands.py (ring migration, explore/exploit)
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
   problems/   loader.py, examples/{hello_world,circle_packing,sorting,matrix_multiplication,workspace_math}/
@@ -77,8 +77,8 @@ py -3.12 -m pytest tests/integration/ -m integration          # needs ANTHROPIC_
 
 Backend details live in `docs/backends.md`, run artifacts in
 `docs/run-artifacts.md`, and paper/source boundaries in `papers/README.md`.
-The built-in backend families are OpenAI, Anthropic, Ollama, and custom
-import-path backends.
+The built-in backend families are OpenAI, Anthropic, Google Gemini, Ollama, and
+custom import-path backends.
 
 ```bash
 py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends "openai:<openai-model-id>"

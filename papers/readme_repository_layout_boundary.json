@@ -43,7 +43,7 @@
       "entry_id": "llm",
       "layout_path": "libreevolve/llm",
       "line_marker": "llm/",
-      "entry_line": "llm/           OpenAI, Anthropic, Ollama, custom backends, and ensemble routing",
+      "entry_line": "llm/           OpenAI, Anthropic, Gemini, Ollama, custom backends, and ensemble routing",
       "layout_path_exists": true,
       "missing_summary_markers": [],
       "evidence_paths": [

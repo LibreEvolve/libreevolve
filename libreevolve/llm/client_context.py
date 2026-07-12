@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 from libreevolve.core.redaction import redact_sensitive_text
 
-CLIENT_CONTEXT_FIELDS = {"base_url", "organization", "project", "host"}
+CLIENT_CONTEXT_FIELDS = {"api_version", "base_url", "organization", "project", "host"}
 _CLIENT_ID_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,127}")
 
 
@@ -31,6 +31,17 @@ def validate_backend_client_context(
         if backend_type != "ollama":
             raise ValueError(f"{field_prefix}.host is supported only for ollama backends")
         normalized["host"] = validate_endpoint_url(spec["host"], field=f"{field_prefix}.host")
+    if "api_version" in spec:
+        if backend_type != "gemini":
+            raise ValueError(
+                f"{field_prefix}.api_version is supported only for gemini backends"
+            )
+        from libreevolve.llm.gemini import validate_gemini_api_version
+
+        normalized["api_version"] = validate_gemini_api_version(
+            spec["api_version"],
+            field=f"{field_prefix}.api_version",
+        )
     for key in ("organization", "project"):
         if key not in spec:
             continue
@@ -100,6 +111,8 @@ def client_context_summary(context: Mapping[str, object] | None) -> dict:
         summary["base_url"] = endpoint_summary(str(context["base_url"]))
     if "host" in context:
         summary["host"] = endpoint_summary(str(context["host"]))
+    if "api_version" in context:
+        summary["api_version"] = context["api_version"]
     for key in ("organization", "project"):
         if key in context:
             summary[key] = context[key]

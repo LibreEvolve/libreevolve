@@ -1441,32 +1441,68 @@ def test_runtime_history_records_gemini_provider_parity_boundary():
     assert report["built_in_backend_types"] == [
         "anthropic",
         "codex",
+        "gemini",
         "ollama",
         "openai",
     ]
-    assert report["gemini_builtin_available"] is False
+    assert report["gemini_builtin_available"] is True
     assert report["configured_backend_count"] == 3
     assert report["configured_custom_backend_count"] == 2
     assert report["configured_gemini_like_backend_count"] == 2
     assert report["configured_flash_lane_count"] == 1
     assert report["configured_pro_lane_count"] == 1
-    assert report["provider_parity_status"] == "missing_first_class_gemini_backend"
+    assert report["provider_parity_status"] == (
+        "first_class_gemini_backend_without_live_model_parity"
+    )
     assert report["substitution_status"] == (
-        "custom_gemini_like_backend_configured_without_first_class_parity"
+        "custom_gemini_like_backend_configured_beside_first_class_adapter"
     )
     assert report["claim_ready"] is False
-    assert report["claim_readiness"]["credential_preflight"] is False
-    assert report["claim_readiness"]["gemini_client_context_config"] is False
-    assert report["claim_readiness"]["gemini_request_parameter_mapping"] is False
-    assert report["claim_readiness"]["provider_native_usage_telemetry"] is False
-    assert report["claim_readiness"]["provider_native_error_diagnostics"] is False
+    assert report["claim_readiness"]["credential_preflight"] is True
+    assert report["claim_readiness"]["gemini_client_context_config"] is True
+    assert report["claim_readiness"]["gemini_request_parameter_mapping"] is True
+    assert report["claim_readiness"]["provider_native_usage_telemetry"] is True
+    assert report["claim_readiness"]["provider_native_error_diagnostics"] is True
     assert report["claim_readiness"]["scheduler_flash_pro_lane_integration"] is False
     assert report["claim_readiness"]["substitution_contract"] is False
-    assert "gemini_flash_lane_identity" in report["claim_readiness"]["remaining_gap"]
+    assert "configured_first_class_gemini_flash_lane" in (
+        report["claim_readiness"]["remaining_gap"]
+    )
     assert "substitution_equivalence_justification" in report["claim_readiness"]["remaining_gap"]
     assert report["configured_backends"][1]["provider_family"] == "gemini"
     assert report["configured_backends"][1]["lane"] == "flash"
     assert report["configured_backends"][1]["first_class_provider"] is False
+
+
+def test_runtime_history_records_configured_first_class_gemini_flash_pro_lanes():
+    tmpdir = tempfile.mkdtemp()
+    backends = [
+        {"type": "gemini", "model": "gemini-2.0-flash", "role": "breadth"},
+        {"type": "gemini", "model": "gemini-2.0-pro", "role": "depth"},
+    ]
+
+    evolve(
+        _problem(),
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            backends=backends,
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    report = manifest["runtime"]["history"]["gemini_provider_parity_report"]
+
+    assert report["validation"]["ok"] is True
+    assert report["configured_first_class_flash_lane_count"] == 1
+    assert report["configured_first_class_pro_lane_count"] == 1
+    assert report["claim_readiness"]["gemini_flash_lane_identity"] is True
+    assert report["claim_readiness"]["gemini_pro_lane_identity"] is True
+    assert report["claim_readiness"]["flash_pro_lane_contract"] is True
+    assert report["claim_readiness"]["scheduler_flash_pro_lane_integration"] is True
+    assert report["claim_readiness"]["account_model_availability_check"] is False
+    assert report["claim_ready"] is False
 
 
 def test_completed_runtime_records_valid_provider_cancellation_policy():

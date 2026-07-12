@@ -3,7 +3,7 @@
   "boundary_status": "development_provider_examples_static_inventory_with_paired_show_commands",
   "claim_ready": false,
   "development_doc_path": "docs/development.md",
-  "provider_example_count": 2,
+  "provider_example_count": 3,
   "missing_command_count": 0,
   "missing_command_records": [],
   "unpaired_show_count": 0,
@@ -29,6 +29,17 @@
       "command_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/circle_packing --max-generations 10 --backends \"anthropic:<anthropic-model-id>\" --run-name development_circle_packing --overwrite",
       "command_marker_status": "command_marker_present",
       "show_marker": "py -3.12 -m libreevolve show runs/development_circle_packing",
+      "show_marker_status": "show_marker_present"
+    },
+    {
+      "example_id": "development_gemini_hello_world",
+      "provider": "gemini",
+      "problem": "hello_world",
+      "placeholder": "<gemini-model-id>",
+      "expected_run_dir": "runs/development_gemini_hello_world",
+      "command_marker": "py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world --max-generations 10 --backends \"gemini:<gemini-model-id>\" --run-name development_gemini_hello_world --overwrite",
+      "command_marker_status": "command_marker_present",
+      "show_marker": "py -3.12 -m libreevolve show runs/development_gemini_hello_world",
       "show_marker_status": "show_marker_present"
     }
   ],
@@ -73,15 +84,15 @@
       "marker_status": "marker_present"
     },
     {
-      "record_id": "backend_gemini_absence",
+      "record_id": "backend_gemini_partial_readiness",
       "path": "docs/backends.md",
-      "required_marker": "Google/Gemini is not a built-in registry provider yet",
+      "required_marker": "Google Gemini is a built-in registry provider backed by `google-genai`",
       "marker_status": "marker_present"
     },
     {
       "record_id": "status_builtin_provider_boundary",
       "path": "docs/status.md",
-      "required_marker": "Built-in provider adapters are OpenAI, Anthropic, and Ollama",
+      "required_marker": "Built-in provider adapters are OpenAI, Anthropic, Google Gemini, and Ollama",
       "marker_status": "marker_present"
     },
     {
@@ -131,6 +142,7 @@
     "active_todo_owner_anchor",
     "live_openai_model_availability_probe",
     "live_anthropic_model_availability_probe",
+    "live_gemini_model_availability_probe",
     "credential_safe_development_provider_smoke",
     "account_specific_model_id_provenance",
     "ci_development_provider_matrix",
@@ -139,10 +151,11 @@
   "missing_evidence": {
     "live_openai_model_availability_probe": "not_recorded_locally",
     "live_anthropic_model_availability_probe": "not_recorded_locally",
+    "live_gemini_model_availability_probe": "not_recorded_locally",
     "credential_safe_development_provider_smoke": "not_recorded_locally",
     "account_specific_model_id_provenance": "not_recorded_locally",
     "ci_development_provider_matrix": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records the docs/development.md OpenAI hello_world and Anthropic circle_packing provider command markers, placeholder model-id guidance, paired show commands for both provider examples, explicit development run-name/overwrite markers, README provider model/failure guidance, docs-index routes, backend provider-lane and Gemini absence markers, status/paper sidecar anchors, and active TODO ownership. It does not claim live OpenAI or Anthropic model availability, credential-safe development provider smoke, account-specific model-id provenance, a CI development provider matrix, or owner review signoff."
+  "claim_boundary": "This boundary records the docs/development.md OpenAI hello_world, Anthropic circle_packing, and Gemini hello_world provider command markers, placeholder model-id guidance, paired show commands for all three provider examples, explicit development run-name/overwrite markers, README provider model/failure guidance, docs-index routes, backend provider-lane and Gemini partial-readiness markers, status/paper sidecar anchors, and active TODO ownership. It does not claim live OpenAI, Anthropic, or Gemini model availability, credential-safe development provider smoke, account-specific model-id provenance, a CI development provider matrix, or owner review signoff."
 }

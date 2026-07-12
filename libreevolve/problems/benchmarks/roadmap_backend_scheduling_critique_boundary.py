@@ -34,7 +34,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "raw_provider_replay": "not_recorded_locally",
     "live_hard_cancellation": "not_recorded_locally",
     "equal_budget_scheduler_comparators": "not_recorded_locally",
-    "first_class_gemini_lanes": "not_recorded_locally",
+    "live_gemini_flash_pro_pair_evidence": "not_recorded_locally",
     "async_reviewer_isolation": "not_recorded_locally",
     "stale_readiness_detector": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
@@ -114,7 +114,7 @@ TRACK_SPECS = (
         "resume_semantics": "restorable scheduler failure-policy state without cross-run proof",
         "equal_budget_evidence": "not recorded",
         "critique_reviewer_isolation": "reviewer roles can be routed but not isolated as independent reviewers",
-        "gemini_substitution_status": "not first-class",
+        "gemini_substitution_status": "first-class adapter available without role-specific Gemini policy",
         "roadmap_required_phrase": "role-scoped backend eligibility",
         "current_sidecars": (
             "papers/llm_role_scheduler_boundary.json",
@@ -205,7 +205,7 @@ TRACK_SPECS = (
         "resume_semantics": "no resume replay experiment report",
         "equal_budget_evidence": "not recorded",
         "critique_reviewer_isolation": "not applicable",
-        "gemini_substitution_status": "not first-class Flash/Pro lanes",
+        "gemini_substitution_status": "Flash/Pro classification available without live calibrated lane policy",
         "roadmap_required_phrase": "fast/strong model-mix reports",
         "current_sidecars": ("papers/fast_strong_model_mix_boundary.json",),
         "active_todos": (
@@ -280,30 +280,30 @@ TRACK_SPECS = (
     {
         "track_id": "gemini_provider_parity",
         "role_or_lane": "Gemini Flash/Pro provider lanes",
-        "selection_policy": "custom-backend detection only",
+        "selection_policy": "first-class built-in backend with generic scheduler integration",
         "reward_assumptions": "not applicable",
-        "budget_quota_ownership": "no Flash/Pro quota or lane integration",
+        "budget_quota_ownership": "no calibrated Flash/Pro quota schedule",
         "pricing_default_rate_evidence": "no Gemini account/model pricing evidence",
-        "diagnostics_replay_support": "no Gemini-native usage/default/error telemetry",
-        "cancellation_behavior": "no Gemini-native cancellation evidence",
-        "resume_semantics": "not recorded",
+        "diagnostics_replay_support": "Gemini-native usage/default/error/completion telemetry without raw replay",
+        "cancellation_behavior": "request timeout and bounded retry evidence without live hard cancellation",
+        "resume_semantics": "generic scheduler state without live pair-run replay proof",
         "equal_budget_evidence": "not recorded",
         "critique_reviewer_isolation": "not applicable",
-        "gemini_substitution_status": "first-class provider absent",
+        "gemini_substitution_status": "first-class adapter present; original-model availability and substitution equivalence unverified",
         "roadmap_required_phrase": "first-class Google/Gemini adapter",
         "current_sidecars": ("papers/gemini_provider_parity_boundary.json",),
         "active_todos": (
             {
                 "path": "docs/todo/code.md",
-                "required_phrase": "Add first-class Google/Gemini backend parity for AlphaEvolve model-mix",
+                "required_phrase": "Extend first-class Google/Gemini support to live AlphaEvolve model-mix",
             },
             {
                 "path": "docs/todo/papers.md",
-                "required_phrase": "Track Google/Gemini provider-parity evidence separately from generic",
+                "required_phrase": "Extend Google/Gemini provider evidence from first-class plumbing to live",
             },
         ),
-        "validation_gate": "Gemini adapter or explicit substitution contract",
-        "readiness_status": "custom_backend_detection_without_gemini_provider",
+        "validation_gate": "live model registry, Flash/Pro pair run, substitution contract, and equal-budget lane evidence",
+        "readiness_status": "first_class_adapter_without_live_model_mix_parity",
     },
     {
         "track_id": "critique_reviewer_pool",
@@ -433,8 +433,9 @@ def roadmap_backend_scheduling_critique_boundary_record(root: str | Path = ".") 
             "and critique-control checklist derived from those tracks. It does "
             "not claim calibrated reward policy, role quota ownership, live "
             "provider pricing/defaults, raw provider replay, live hard "
-            "cancellation, equal-budget scheduler comparators, first-class "
-            "Gemini lanes, async reviewer isolation, stale-readiness detector, "
+            "cancellation, equal-budget scheduler comparators, live Gemini "
+            "Flash/Pro pair evidence or substitution equivalence, async reviewer "
+            "isolation, stale-readiness detector, "
             "or owner review signoff."
         ),
     }
@@ -526,7 +527,7 @@ def validate_roadmap_backend_scheduling_critique_boundary(
         or "equal-budget comparator evidence map" not in boundary_text
         or "Gemini substitution policy" not in boundary_text
         or "critique-control checklist" not in boundary_text
-        or "first-class Gemini lanes" not in boundary_text
+        or "live Gemini Flash/Pro pair evidence" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate bounded matrix from control-plane readiness"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

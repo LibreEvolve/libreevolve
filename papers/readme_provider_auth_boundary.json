@@ -18,9 +18,10 @@
   "expected_provider_variables": {
     "OPENAI_API_KEY": "sk-your-openai-key-here",
     "ANTHROPIC_API_KEY": "sk-ant-your-anthropic-key-here",
+    "GEMINI_API_KEY": "your-gemini-key-here",
     "OLLAMA_HOST": "http://localhost:11434"
   },
-  "env_variable_count": 3,
+  "env_variable_count": 4,
   "env_variable_records": [
     {
       "line": 6,
@@ -36,6 +37,12 @@
     },
     {
       "line": 16,
+      "name": "GEMINI_API_KEY",
+      "value": "your-gemini-key-here",
+      "record_status": "env_variable_recorded"
+    },
+    {
+      "line": 21,
       "name": "OLLAMA_HOST",
       "value": "http://localhost:11434",
       "record_status": "env_variable_recorded"
@@ -55,6 +62,11 @@
       "placeholder_status": "placeholder_safe"
     },
     {
+      "name": "GEMINI_API_KEY",
+      "value": "your-gemini-key-here",
+      "placeholder_status": "placeholder_safe"
+    },
+    {
       "name": "OLLAMA_HOST",
       "value": "http://localhost:11434",
       "placeholder_status": "placeholder_safe"
@@ -62,7 +74,7 @@
   ],
   "unsafe_placeholder_count": 0,
   "unsafe_placeholder_records": [],
-  "marker_record_count": 17,
+  "marker_record_count": 23,
   "missing_marker_count": 0,
   "missing_marker_records": [],
   "marker_records": [
@@ -88,6 +100,18 @@
       "record_kind": "backends_anthropic_key",
       "path": "docs/backends.md",
       "required_marker": "ANTHROPIC_API_KEY=...",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "backends_gemini_key",
+      "path": "docs/backends.md",
+      "required_marker": "GEMINI_API_KEY=...",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "backends_google_key_precedence",
+      "path": "docs/backends.md",
+      "required_marker": "GOOGLE_API_KEY` takes precedence",
       "marker_status": "marker_present"
     },
     {
@@ -121,6 +145,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_kind": "configuration_gemini_env_names",
+      "path": "docs/configuration.md",
+      "required_marker": "`GEMINI_API_KEY` or `GOOGLE_API_KEY`",
+      "marker_status": "marker_present"
+    },
+    {
       "record_kind": "configuration_ollama_env_name",
       "path": "docs/configuration.md",
       "required_marker": "OLLAMA_HOST",
@@ -130,6 +160,18 @@
       "record_kind": "development_env_block",
       "path": "docs/development.md",
       "required_marker": "Create a `.env` file in the repository root",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "development_gemini_key",
+      "path": "docs/development.md",
+      "required_marker": "GEMINI_API_KEY=...",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "development_google_key_precedence",
+      "path": "docs/development.md",
+      "required_marker": "`GOOGLE_API_KEY` is also accepted for Gemini",
       "marker_status": "marker_present"
     },
     {
@@ -148,6 +190,12 @@
       "record_kind": "cli_required_anthropic_env",
       "path": "libreevolve/cli.py",
       "required_marker": "\"anthropic\": \"ANTHROPIC_API_KEY\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_kind": "cli_required_gemini_env",
+      "path": "libreevolve/cli.py",
+      "required_marker": "(\"GOOGLE_API_KEY\", \"GEMINI_API_KEY\")",
       "marker_status": "marker_present"
     },
     {

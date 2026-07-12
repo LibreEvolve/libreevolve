@@ -5,6 +5,7 @@ a common `generate(prompt, **kwargs) -> str` interface:
 
 - OpenAI
 - Anthropic
+- Google Gemini
 - Ollama
 - Codex CLI
 - Custom import-path backends
@@ -16,7 +17,7 @@ The bandit router that selects among them is implemented in
 
 Backend support has four distinct lanes:
 
-- Built-in SDK adapters: OpenAI, Anthropic, and Ollama are constructed by
+- Built-in SDK adapters: OpenAI, Anthropic, Google Gemini, and Ollama are constructed by
   LibreEvolve and participate in the standard credential preflight,
   request-parameter, retry, timeout, scheduler, telemetry, and manifest
   surfaces documented below.
@@ -292,7 +293,7 @@ telemetry, so `Config` accepts only manifest-safe strings matching
 secret-redaction patterns. This is a metadata-safety check, not a provider
 availability or capability check.
 
-The bundled OpenAI, Anthropic, and Ollama adapter constructors apply the same
+The bundled OpenAI, Anthropic, Google Gemini, and Ollama adapter constructors apply the same
 manifest-safe model-id grammar and require positive integer token limits for
 direct library use. OpenAI direct construction also validates `reasoning_effort`
 against the current LibreEvolve/OpenAI compatibility policy.
@@ -310,31 +311,30 @@ objects plus scheduler metadata. Registry-created objects are ordinary backend
 objects; when used through `LLMEnsemble`, they inherit the same prompt type,
 size, role, timeout, retry/fallback, and response-size boundaries.
 
-Google/Gemini is not a built-in registry provider yet. Completed manifests
-record that boundary under `runtime.history.gemini_provider_parity_report`
-with schema `libreevolve.gemini_provider_parity_report.v1`: the report lists
-the built-in backend types, configured backend specs, Gemini-like custom
-models, Flash/Pro-shaped lanes, and `claim_ready: false` until a first-class
-Gemini adapter or equivalent provider-plugin/substitution contract exists.
-The report also keeps Gemini client-context configuration, request-parameter
-mapping, provider-native usage/default/error diagnostics, model-registry and
-account/model availability checks, scheduler lane integration, and
-substitution-equivalence justification out of parity claims until those
-surfaces exist.
-The paper-facing absence boundary is also preserved in
+Google Gemini is a built-in registry provider backed by `google-genai` and the
+Gemini Developer API. Completed manifests record partial readiness under
+`runtime.history.gemini_provider_parity_report` with schema
+`libreevolve.gemini_provider_parity_report.v1`: the report lists configured
+Gemini providers, separates first-class from custom wrappers, classifies
+Flash/Pro-shaped lanes, and credits local credential/client/request/telemetry
+support while keeping `claim_ready: false`. The report does not prove live
+account/model availability, current availability of the paper's Gemini 2.0
+Flash and Pro endpoints, a credential-safe live pair run, a model-registry
+snapshot, calibrated fast/strong scheduling, or substitution equivalence.
+The paper-facing partial-readiness boundary is preserved in
 `papers/gemini_provider_parity_boundary.json` for manifest validation.
 
 Built-in backend specs expose a small validated request-parameter surface:
-`temperature` and `top_p` for OpenAI, Anthropic, and Ollama; `stop` for
-Anthropic, Ollama, and OpenAI Chat Completions mode; and `seed` for Ollama and
-OpenAI Chat Completions mode. OpenAI Responses mode forwards only
+`temperature` and `top_p` for OpenAI, Anthropic, Gemini, and Ollama; `stop` for
+Anthropic, Gemini, Ollama, and OpenAI Chat Completions mode; and `seed` for
+Gemini, Ollama, and OpenAI Chat Completions mode. OpenAI Responses mode forwards only
 `temperature` and `top_p`. Omitted fields use provider SDK defaults.
 
 `llm_prompt_roles` is a run-level structured prompt-message policy keyed by
 call role. Each role can provide bounded `system` and/or `developer` text.
 When a role is configured, OpenAI Chat Completions and Responses receive those
 messages/input items before the rendered user prompt, Anthropic receives the
-provider-supported `system` field composed from the configured text, and
+provider-supported `system` field, Gemini receives `system_instruction`, and
 Ollama receives a system message followed by the user prompt. Omitted roles
 use the default single user message/input item. Call telemetry records the
 matched role, message-role list, instruction field names, and hash/length
@@ -345,7 +345,8 @@ rejected for `type: custom` and `type: codex`.
 
 Built-in SDK backend specs also accept positive `timeout_sec`. LibreEvolve
 passes that value to the bundled provider client constructors as a request
-timeout: OpenAI and Anthropic receive `timeout=...`; Ollama constructs an
+timeout: OpenAI and Anthropic receive `timeout=...`; Gemini converts seconds
+to the Gen AI SDK `HttpOptions.timeout` millisecond field; Ollama constructs an
 `ollama.Client(..., timeout=...)`, with or without a configured `host`. The
 Codex CLI backend uses `timeout_sec` as a local process deadline for
 `codex exec`, then attempts process-tree cleanup and writes a transcript when
@@ -365,12 +366,65 @@ settings through their JSON-safe `kwargs` and expose safe telemetry through
 Built-in backend specs also expose validated client-context fields when a run
 needs explicit endpoint provenance instead of provider SDK/environment
 defaults. OpenAI accepts `base_url`, `organization`, and `project`; Anthropic
-accepts `base_url`; Ollama accepts `host` and uses `ollama.Client(host=...)`
+accepts `base_url`; Gemini accepts `api_version` as `v1`, `v1alpha`, or
+`v1beta`; Ollama accepts `host` and uses `ollama.Client(host=...)`
 when configured. Endpoint URLs must be `http` or `https` URLs with hosts and
 no credentials, params, query, or fragment; organization/project labels must
 be manifest-safe and non-secret. Accepted values are copied into
 `client_context` call telemetry. Omitted fields still use provider SDK
 defaults.
+
+## Google Gemini backend
+
+Implemented in [`libreevolve/llm/gemini.py`](../libreevolve/llm/gemini.py)
+with the official `google-genai` SDK and Gemini Developer API
+`models.generate_content` surface.
+
+Constructor fields:
+
+- `model`
+- `max_tokens`
+- `temperature`
+- `top_p`
+- `stop`
+- `seed`
+- `timeout_sec`
+- `api_version` (`v1beta` by default; `v1` and `v1alpha` are also accepted)
+- `provider_max_retries`
+
+Credential behavior:
+
+- `GOOGLE_API_KEY` and `GEMINI_API_KEY` are accepted from the environment
+- `GOOGLE_API_KEY` takes precedence when both are set, matching the SDK policy
+- API keys are passed to the SDK client but are never copied into config,
+  client-context, call telemetry, or manifests
+- CLI and direct backend construction fail before a provider call when neither
+  variable contains a nonblank value
+
+Generation behavior:
+
+- sends the rendered prompt as the user `contents`
+- maps `max_tokens` to `max_output_tokens`
+- maps `stop` to `stop_sequences` and forwards configured `temperature`,
+  `top_p`, and `seed`
+- composes configured system/developer role instructions into
+  `system_instruction`
+- concatenates all text parts from the first candidate only when its finish
+  reason is `STOP`
+- rejects prompt blocks, safety/recitation/prohibited-content outcomes,
+  `MAX_TOKENS` and other incomplete states, tool-only output, mixed text/tool
+  output, absent candidates, and empty text before mutation parsing
+- records prompt/candidate/total token counts, response id, finish reason,
+  model version, candidate/part counts, tool/text part counts, thinking-token
+  count, API version, local defaults, and bounded retry diagnostics
+
+The adapter classifies model ids containing `flash` or `pro` for runtime lane
+reports, and normal ensemble selection/routing can schedule both configured
+lanes. This is provider plumbing, not proof that the original Gemini 2.0
+endpoints remain available, that an account can access both models, or that
+LibreEvolve reproduces AlphaEvolve's throughput/quality balance. Live model
+lookup, model-registry snapshots, credential-safe pair-run evidence,
+equal-budget scheduling experiments, and substitution policy remain open.
 
 ## OpenAI backend
 
@@ -566,12 +620,14 @@ Typical environment variables:
 ```text
 OPENAI_API_KEY=...
 ANTHROPIC_API_KEY=...
+GEMINI_API_KEY=...
 OLLAMA_HOST=http://localhost:11434
 ```
 
 Endpoint/client context can either be inherited from provider SDKs and
 environment or configured explicitly in backend specs. OpenAI accepts
-`base_url`, `organization`, and `project`; Anthropic accepts `base_url`; Ollama
+`base_url`, `organization`, and `project`; Anthropic accepts `base_url`; Gemini
+accepts `api_version`; Ollama
 accepts `host`. Explicit endpoint URLs are validated as safe `http`/`https`
 URLs without credentials, params, query, or fragment, and accepted values are
 recorded in manifests and copied into `client_context` call telemetry.
@@ -583,7 +639,8 @@ running `libreevolve show` do not load `.env`. Run manifests record non-secret
 dotenv provenance under `manifest.provenance.dotenv`, including load status,
 override policy, source hash/byte count, and key names without values.
 For runs where a mutation LLM can run, startup checks required credentials for
-OpenAI (`OPENAI_API_KEY`) and Anthropic (`ANTHROPIC_API_KEY`) as non-blank
+OpenAI (`OPENAI_API_KEY`), Anthropic (`ANTHROPIC_API_KEY`), and Gemini
+(`GOOGLE_API_KEY` or `GEMINI_API_KEY`) as non-blank
 after trimming, then constructs the configured backend clients before
 run-directory overwrite cleanup. Seed-only runs such as `--max-generations 0`
 skip provider construction.

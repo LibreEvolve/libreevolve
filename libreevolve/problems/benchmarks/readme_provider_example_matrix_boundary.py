@@ -41,6 +41,16 @@ EXPECTED_PROVIDER_COMMANDS = (
         "required_env": "ANTHROPIC_API_KEY",
     },
     {
+        "provider": "gemini",
+        "path": README_PATH,
+        "marker": (
+            'py -3.12 -m libreevolve run libreevolve/problems/examples/hello_world '
+            '--max-generations 10 --backends "gemini:<gemini-model-id>"'
+        ),
+        "placeholder": "<gemini-model-id>",
+        "required_env": "GOOGLE_API_KEY or GEMINI_API_KEY",
+    },
+    {
         "provider": "ollama",
         "path": README_PATH,
         "marker": (
@@ -73,6 +83,11 @@ EXPECTED_CONTRACT_MARKERS = (
         "marker": "ANTHROPIC_API_KEY=sk-ant-your-anthropic-key-here",
     },
     {
+        "record_kind": "env_gemini_placeholder",
+        "path": ENV_EXAMPLE_PATH,
+        "marker": "GEMINI_API_KEY=your-gemini-key-here",
+    },
+    {
         "record_kind": "env_ollama_host_placeholder",
         "path": ENV_EXAMPLE_PATH,
         "marker": "OLLAMA_HOST=http://localhost:11434",
@@ -91,6 +106,11 @@ EXPECTED_CONTRACT_MARKERS = (
         "record_kind": "cli_anthropic_preflight_env",
         "path": CLI_PATH,
         "marker": '"anthropic": "ANTHROPIC_API_KEY"',
+    },
+    {
+        "record_kind": "cli_gemini_preflight_env",
+        "path": CLI_PATH,
+        "marker": '("GOOGLE_API_KEY", "GEMINI_API_KEY")',
     },
     {
         "record_kind": "config_custom_class_path",
@@ -141,20 +161,22 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "integration_anthropic_skip_marker",
     "live_openai_model_availability_probe",
     "live_anthropic_model_availability_probe",
+    "live_gemini_model_availability_probe",
     "live_ollama_inventory_probe",
     "credential_safe_provider_smoke_matrix",
     "account_specific_model_id_provenance",
     "ci_provider_matrix",
-    "google_gemini_provider_parity",
+    "live_gemini_flash_pro_pair_evidence",
 )
 EXPECTED_MISSING_EVIDENCE = {
     "live_openai_model_availability_probe": "not_recorded_locally",
     "live_anthropic_model_availability_probe": "not_recorded_locally",
+    "live_gemini_model_availability_probe": "not_recorded_locally",
     "live_ollama_inventory_probe": "not_recorded_locally",
     "credential_safe_provider_smoke_matrix": "not_recorded_locally",
     "account_specific_model_id_provenance": "not_recorded_locally",
     "ci_provider_matrix": "not_recorded_locally",
-    "google_gemini_provider_parity": "not_recorded_locally",
+    "live_gemini_flash_pro_pair_evidence": "not_recorded_locally",
 }
 
 
@@ -246,7 +268,7 @@ def readme_provider_example_matrix_boundary_record(
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records the README OpenAI, Anthropic, and Ollama "
+            "This boundary records the README OpenAI, Anthropic, Gemini, and Ollama "
             "placeholder command markers, README account/local-model guidance, "
             "provider failure-scope wording, .env.example provider placeholders, "
             "CLI type:model backend-shorthand construction and built-in "
@@ -254,9 +276,9 @@ def readme_provider_example_matrix_boundary_record(
             "class_path/kwargs contract markers, configuration-guide shorthand "
             "markers, and the Anthropic-only credential-gated integration-test "
             "skip marker. It does not claim live OpenAI model availability, "
-            "live Anthropic model availability, local Ollama inventory, a "
+            "live Anthropic or Gemini model availability, local Ollama inventory, a "
             "credential-safe provider smoke matrix, account-specific model-id "
-            "provenance, a CI provider matrix, or Google/Gemini provider parity."
+            "provenance, a CI provider matrix, or live Gemini Flash/Pro pair evidence."
         ),
     }
 
@@ -314,10 +336,10 @@ def validate_readme_provider_example_matrix_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "README OpenAI, Anthropic, and Ollama placeholder command markers" not in boundary_text
+        or "README OpenAI, Anthropic, Gemini, and Ollama placeholder command markers" not in boundary_text
         or "CLI type:model backend-shorthand construction" not in boundary_text
         or "does not claim live OpenAI model availability" not in boundary_text
-        or "Google/Gemini provider parity" not in boundary_text
+        or "live Gemini Flash/Pro pair evidence" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate static provider examples from live provider smoke proof"))
     if required_count != len(EXPECTED_REQUIRED_EVIDENCE_FIELDS):

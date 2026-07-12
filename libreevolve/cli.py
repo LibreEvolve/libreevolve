@@ -1053,9 +1053,18 @@ def _preflight_llm_backends_if_needed(problem, config) -> None:
     required_env = {"openai": "OPENAI_API_KEY", "anthropic": "ANTHROPIC_API_KEY"}
     missing = []
     for backend in config.backends:
-        env_name = required_env.get(backend.get("type"))
-        if env_name and not _has_nonblank_env(env_name):
-            missing.append(f"{backend.get('type')} backend {backend.get('model')!r} requires {env_name}")
+        backend_type = backend.get("type")
+        env_name = required_env.get(backend_type)
+        env_names = (
+            ("GOOGLE_API_KEY", "GEMINI_API_KEY")
+            if backend_type == "gemini"
+            else (env_name,) if env_name else None
+        )
+        if env_names and not any(_has_nonblank_env(name) for name in env_names):
+            required = " or ".join(env_names)
+            missing.append(
+                f"{backend_type} backend {backend.get('model')!r} requires {required}"
+            )
     if missing:
         raise click.ClickException("LLM backend preflight failed: " + "; ".join(missing))
     from libreevolve.llm.ensemble import build_llm

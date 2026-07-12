@@ -1862,6 +1862,28 @@ def test_accepts_codex_backend_config():
     assert config.backends[0]["auth_name"] == "current"
 
 
+def test_accepts_gemini_backend_config():
+    config = Config(
+        backends=[
+            {
+                "type": "gemini",
+                "model": "gemini-2.0-flash",
+                "max_tokens": 4096,
+                "api_version": "v1beta",
+                "temperature": 0.2,
+                "top_p": 0.9,
+                "stop": ["END"],
+                "seed": 7,
+                "timeout_sec": 30,
+                "provider_max_retries": 1,
+            }
+        ]
+    )
+
+    assert config.backends[0]["type"] == "gemini"
+    assert config.backends[0]["api_version"] == "v1beta"
+
+
 def test_rejects_request_parameters_on_codex_backend_config():
     with pytest.raises(ConfigError, match="codex backends"):
         Config(

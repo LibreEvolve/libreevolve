@@ -46,7 +46,7 @@ INSTRUCTION_LINK_MARKERS = {
     ),
     "backend_instruction_links": (
         "docs/backends.md",
-        "OpenAI, Anthropic, Ollama",
+        "OpenAI, Anthropic, Google Gemini, Ollama",
     ),
     "artifact_instruction_links": (
         "docs/run-artifacts.md",

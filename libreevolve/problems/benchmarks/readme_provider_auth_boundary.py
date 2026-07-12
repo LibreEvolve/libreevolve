@@ -22,6 +22,7 @@ SECRETS_BASELINE_PATH = ".secrets.baseline"
 EXPECTED_PROVIDER_VARIABLES = {
     "OPENAI_API_KEY": "sk-your-openai-key-here",
     "ANTHROPIC_API_KEY": "sk-ant-your-anthropic-key-here",
+    "GEMINI_API_KEY": "your-gemini-key-here",
     "OLLAMA_HOST": "http://localhost:11434",
 }
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -94,16 +95,22 @@ def readme_provider_auth_boundary_record(root: str | Path = ".") -> dict[str, An
         _marker_record("readme_provider_failure_scope", README_PATH, texts[README_PATH], "credentials, model IDs, local Ollama state, or account access"),
         _marker_record("backends_openai_key", BACKENDS_PATH, texts[BACKENDS_PATH], "OPENAI_API_KEY=..."),
         _marker_record("backends_anthropic_key", BACKENDS_PATH, texts[BACKENDS_PATH], "ANTHROPIC_API_KEY=..."),
+        _marker_record("backends_gemini_key", BACKENDS_PATH, texts[BACKENDS_PATH], "GEMINI_API_KEY=..."),
+        _marker_record("backends_google_key_precedence", BACKENDS_PATH, texts[BACKENDS_PATH], "GOOGLE_API_KEY` takes precedence"),
         _marker_record("backends_ollama_host", BACKENDS_PATH, texts[BACKENDS_PATH], "OLLAMA_HOST=http://localhost:11434"),
         _marker_record("backends_override_true", BACKENDS_PATH, texts[BACKENDS_PATH], "override=True"),
         _marker_record("configuration_dotenv_override", CONFIGURATION_PATH, texts[CONFIGURATION_PATH], "override=True"),
         _marker_record("configuration_provider_env_names", CONFIGURATION_PATH, texts[CONFIGURATION_PATH], "OPENAI_API_KEY"),
         _marker_record("configuration_anthropic_env_name", CONFIGURATION_PATH, texts[CONFIGURATION_PATH], "ANTHROPIC_API_KEY"),
+        _marker_record("configuration_gemini_env_names", CONFIGURATION_PATH, texts[CONFIGURATION_PATH], "`GEMINI_API_KEY` or `GOOGLE_API_KEY`"),
         _marker_record("configuration_ollama_env_name", CONFIGURATION_PATH, texts[CONFIGURATION_PATH], "OLLAMA_HOST"),
         _marker_record("development_env_block", DEVELOPMENT_PATH, texts[DEVELOPMENT_PATH], "Create a `.env` file in the repository root"),
+        _marker_record("development_gemini_key", DEVELOPMENT_PATH, texts[DEVELOPMENT_PATH], "GEMINI_API_KEY=..."),
+        _marker_record("development_google_key_precedence", DEVELOPMENT_PATH, texts[DEVELOPMENT_PATH], "`GOOGLE_API_KEY` is also accepted for Gemini"),
         _marker_record("cli_dotenv_load", CLI_PATH, texts[CLI_PATH], "load_dotenv(dotenv_path=path, override=True)"),
         _marker_record("cli_required_env", CLI_PATH, texts[CLI_PATH], '"openai": "OPENAI_API_KEY"'),
         _marker_record("cli_required_anthropic_env", CLI_PATH, texts[CLI_PATH], '"anthropic": "ANTHROPIC_API_KEY"'),
+        _marker_record("cli_required_gemini_env", CLI_PATH, texts[CLI_PATH], '("GOOGLE_API_KEY", "GEMINI_API_KEY")'),
         _marker_record("workflow_anthropic_secret", WORKFLOW_PATH, texts[WORKFLOW_PATH], "secrets.ANTHROPIC_API_KEY"),
         _marker_record("integration_anthropic_skip", INTEGRATION_TEST_PATH, texts[INTEGRATION_TEST_PATH], 'os.getenv("ANTHROPIC_API_KEY")'),
         _marker_record("secret_scan_baseline", SECRETS_BASELINE_PATH, texts[SECRETS_BASELINE_PATH], '"plugins_used"'),
@@ -286,7 +293,12 @@ def _env_variable_records(text: str) -> list[dict[str, Any]]:
 def _placeholder_record(name: str, value: str) -> dict[str, Any]:
     safe = (
         value in EXPECTED_PROVIDER_VARIABLES.values()
-        and (value.startswith("sk-your-") or value.startswith("sk-ant-your-") or value == "http://localhost:11434")
+        and (
+            value.startswith("sk-your-")
+            or value.startswith("sk-ant-your-")
+            or value == "your-gemini-key-here"
+            or value == "http://localhost:11434"
+        )
     )
     return {
         "name": name,

@@ -19340,3 +19340,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused fixture tests execute and exactly regenerate the
     four-seed bundle, validate causal linkage and budgets, reject tampering,
     and match the paper runtime boundary.
+- [x] Add first-class Google Gemini provider plumbing.
+  - Spec evidence: AlphaEvolve Section 2.3 used Gemini 2.0 Flash for breadth
+    and Gemini 2.0 Pro for occasional stronger proposals.
+  - Status: the built-in `gemini` registry backend now uses `google-genai`
+    GenerateContent with environment credential preflight, API-version and
+    request controls, role instructions, bounded retries, strict completion
+    admission, provider-native telemetry, and Flash/Pro lane classification.
+  - Remaining code gap: live model capability and account checks, a versioned
+    model registry, credential-safe Flash/Pro pair runs, calibrated lane
+    scheduling, and substitution-equivalence evidence remain open.
+  - Verification: focused provider, config, CLI, registry, runtime-report, and
+    boundary tests validate the implemented contract and false parity claim.

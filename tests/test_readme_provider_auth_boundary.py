@@ -21,9 +21,10 @@ def test_readme_provider_auth_boundary_accepts_current_markers():
     assert boundary["expected_provider_variables"] == {
         "OPENAI_API_KEY": "sk-your-openai-key-here",
         "ANTHROPIC_API_KEY": "sk-ant-your-anthropic-key-here",
+        "GEMINI_API_KEY": "your-gemini-key-here",
         "OLLAMA_HOST": "http://localhost:11434",
     }
-    assert validation.env_variable_count == 3
+    assert validation.env_variable_count == 4
     assert boundary["env_missing_records"] == []
     assert boundary["unsafe_placeholder_records"] == []
     assert validation.missing_marker_count == 0
@@ -95,7 +96,7 @@ def test_render_readme_provider_auth_boundary_summary_reports_shape():
         "| boundary_status | readme_provider_auth_static_markers_without_live_provider_proof |"
         in summary
     )
-    assert "| env_variable_count | 3 |" in summary
+    assert "| env_variable_count | 4 |" in summary
     assert "| missing_marker_count | 0 |" in summary
     assert "| unsafe_placeholder_count | 0 |" in summary
     assert "| missing_evidence_count | 4 |" in summary

@@ -1258,18 +1258,20 @@ by `papers/lineage_replay_boundary.json`.
   alignment, target metric/threshold linkage, comparator artifact hashes, and
   linked evolutionary runs before making test-time-compute uplift claims over
   repeated base-model sampling.
-- Turn the current Gemini provider-parity boundary report into a first-class
-  Google/Gemini adapter or equivalent provider-plugin/substitution contract.
-  Completed manifests and `papers/gemini_provider_parity_boundary.json` now
-  record built-in provider types, configured Gemini-like custom backends,
-  Flash/Pro-shaped model names, and `claim_ready: false`; this is evidence for
-  the missing AlphaEvolve Flash/Pro provider surface, not provider parity.
-  Remaining provider-parity gates include credential preflight, Gemini
-  client-context configuration, request-parameter mapping, provider-native
-  usage/default/error diagnostics, model-registry snapshots, account/model
-  availability checks, first-class Flash and Pro lane identity, scheduler lane
-  integration, paper-level substitution contracts, and
-  substitution-equivalence justification.
+- Extend the first-class Google/Gemini adapter from provider plumbing into
+  live AlphaEvolve model-mix evidence. The built-in `gemini` registry lane now
+  uses `google-genai` GenerateContent with environment credential preflight,
+  API-version client context, mapped sampling/stop/seed controls, role system
+  instructions, bounded retries, usage/default/error telemetry, strict
+  completion-state handling, Flash/Pro model classification, and generic
+  scheduler integration. Completed manifests and
+  `papers/gemini_provider_parity_boundary.json` preserve `claim_ready: false`.
+  Remaining provider-parity gates include live model capability lookup,
+  model-registry snapshots, account/model availability checks, a credential-
+  safe Flash/Pro pair run, evidence that the original Gemini 2.0 endpoints are
+  available or an explicit current-model substitution contract, calibrated
+  throughput/quality scheduling comparisons, and substitution-equivalence
+  justification.
 - Extend current synchronous configurable critique reviewer pools, role routing,
   and first/last-valid aggregation toward async reviewer overlap, calibrated
   reviewer scoring, stronger provider isolation, and runtime artifacts for

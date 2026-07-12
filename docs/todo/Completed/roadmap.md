@@ -16051,3 +16051,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     error rates, and owner review remain active TODOs.
   - Verification: focused evolution and boundary tests plus paper-manifest
     validation cover the updated claims.
+- [x] Keep ROADMAP current with first-class Gemini provider plumbing.
+  - Status: ROADMAP now records the built-in `google-genai` adapter,
+    credential/client/request behavior, strict completion handling, native
+    telemetry, Flash/Pro classification, and generic scheduler integration.
+  - Remaining roadmap gap: live capability/model-registry evidence, account
+    availability, paired model runs, calibrated equal-budget scheduling, and
+    explicit current-model substitution equivalence remain active gates.
+  - Verification: Gemini parity and backend control-plane boundaries now
+    distinguish first-class plumbing from live AlphaEvolve model-mix parity.

@@ -519,10 +519,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     scalar provider diagnostics, retry/fallback quarantine, policy-only
     cancellation evidence, `throughput_depth` metadata tests,
     sample-efficiency reports, repeated-sampling boundaries,
-    Gemini-provider-parity absence records, and synchronous first/last-valid
+    Gemini-provider partial-readiness records, and synchronous first/last-valid
     critique reviewer aggregation from missing calibrated rewards, quotas,
     live provider/default pricing, raw replay, hard cancellation, equal-budget
-    scheduler comparisons, first-class Gemini lanes, async reviewer overlap,
+    scheduler comparisons, live Gemini Flash/Pro pair evidence, async reviewer overlap,
     reviewer isolation, and critique-to-revision attribution. Active code and
     paper TODOs track those individual gaps. The bounded
     `papers/roadmap_backend_scheduling_critique_boundary.json` sidecar now
@@ -559,12 +559,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     bounded policy/snapshot evidence rather than live hard cancellation or full
     resumed-trace proof, the equal-budget comparator evidence map is mostly
     absence evidence rather than an executable comparator, the Gemini
-    substitution policy is a status map rather than first-class Gemini lane
+    substitution policy is a status map rather than live Gemini Flash/Pro pair
     evidence, and the critique-control checklist is a synchronous-reviewer
     structural checklist, not async reviewer-readiness evidence. There is still
     no calibrated reward policy, role quota ownership, live provider
     pricing/default evidence, raw provider replay, live hard cancellation,
-    equal-budget scheduler comparator, first-class Gemini lane evidence, async
+    equal-budget scheduler comparator, live Gemini Flash/Pro pair evidence, async
     reviewer isolation, stale-readiness detector, or owner signoff proving when
     these scheduler/provider/critique pieces are coherent enough to support
     AlphaEvolve-style claims, nor a guard that prevents one completed

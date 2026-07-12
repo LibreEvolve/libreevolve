@@ -5,7 +5,7 @@ from copy import deepcopy
 from libreevolve.llm.request_params import REQUEST_PARAMETER_FIELDS
 
 
-BUILTIN_BACKEND_TYPES = ("anthropic", "codex", "openai", "ollama")
+BUILTIN_BACKEND_TYPES = ("anthropic", "codex", "gemini", "openai", "ollama")
 BACKEND_REGISTRY_SCHEMA = "libreevolve.backend_registry.v1"
 
 
@@ -48,6 +48,19 @@ def builtin_backend_registry() -> dict[str, dict]:
                 "output_json_field",
                 "enable_features",
                 "disable_features",
+            ],
+            "schema": BACKEND_REGISTRY_SCHEMA,
+        },
+        "gemini": {
+            "type": "gemini",
+            "constructor": "libreevolve.llm.gemini:GeminiBackend",
+            "constructor_fields": [
+                "model",
+                "max_tokens",
+                "timeout_sec",
+                "provider_max_retries",
+                "api_version",
+                *sorted(REQUEST_PARAMETER_FIELDS),
             ],
             "schema": BACKEND_REGISTRY_SCHEMA,
         },
@@ -119,7 +132,7 @@ def _constructor_fields(backend_type: str) -> set[str]:
     registry = builtin_backend_registry()
     if backend_type not in registry:
         raise ValueError(
-            f"Unknown backend type {backend_type!r}. Valid: ['anthropic', 'codex', 'custom', 'openai', 'ollama']"
+            f"Unknown backend type {backend_type!r}. Valid: ['anthropic', 'codex', 'custom', 'gemini', 'openai', 'ollama']"
         )
     return set(registry[backend_type]["constructor_fields"])
 
@@ -133,6 +146,10 @@ def _backend_class(backend_type: str):
         from libreevolve.llm.openai import OpenAIBackend
 
         return OpenAIBackend
+    if backend_type == "gemini":
+        from libreevolve.llm.gemini import GeminiBackend
+
+        return GeminiBackend
     if backend_type == "codex":
         from libreevolve.llm.codex_cli import CodexCLIBackend
 
@@ -142,7 +159,7 @@ def _backend_class(backend_type: str):
 
         return OllamaBackend
     raise ValueError(
-        f"Unknown backend type {backend_type!r}. Valid: ['anthropic', 'codex', 'custom', 'openai', 'ollama']"
+        f"Unknown backend type {backend_type!r}. Valid: ['anthropic', 'codex', 'custom', 'gemini', 'openai', 'ollama']"
     )
 
 

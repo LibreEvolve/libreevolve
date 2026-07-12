@@ -5135,35 +5135,29 @@ sidecars, tests, and active TODOs.
     Anthropic, Ollama, and custom/backend exceptions with and without safe
     retry metadata.
 
-- [ ] Add first-class Google/Gemini backend parity for AlphaEvolve model-mix
-      reproduction.
+- [ ] Extend first-class Google/Gemini support to live AlphaEvolve model-mix
+      reproduction evidence.
   - Spec evidence: AlphaEvolve Section 2.3 says the published system used
     an ensemble of Gemini 2.0 Flash and Gemini 2.0 Pro so low-latency Flash
     could generate high-volume candidates while Pro occasionally supplied
     stronger suggestions.
-  - Current evidence: `builtin_backend_registry()` exposes only `openai`,
-    `anthropic`, and `ollama` built-in constructors; backend validation accepts
-    those types plus `custom`. A custom backend can be written by users, but it
-    does not provide a first-class Google/Gemini config surface, provider-native
-    usage/default/capability/error telemetry, credential preflight, Gemini
-    client-context configuration, request-parameter mapping, model-registry or
-    account/model availability checks, substitution-equivalence justification,
-    or Flash/Pro lane labels that the paper-facing scheduler reports can
-    validate. Runtime histories now include
-    `libreevolve.gemini_provider_parity_report.v1`, which records the built-in
-    provider list, detects Gemini-like custom model ids and Flash/Pro-shaped
-    lanes, and preserves `claim_ready: false` while no first-class
-    Google/Gemini backend exists.
-    `papers/gemini_provider_parity_boundary.json` now preserves the same
-    first-class-provider absence boundary for paper-manifest validation.
-  - Required result: add a built-in Google/Gemini backend or an explicitly
-    equivalent provider plugin contract with model-family capability metadata,
-    credential/client preflight, safe client-context and request-parameter
-    mapping, usage/default/error telemetry, model-registry and account/model
-    availability evidence, provider-diagnostic retention policy, scheduler
-    Flash/Pro lane integration, and tests/reports that can reproduce or
-    intentionally substitute the paper's Flash/Pro fast/strong ensemble without
-    hiding behind an opaque custom backend.
+  - Current evidence: `builtin_backend_registry()` now exposes `gemini` through
+    `libreevolve.llm.gemini.GeminiBackend`. The adapter uses the official
+    `google-genai` GenerateContent API, enforces `GOOGLE_API_KEY`/
+    `GEMINI_API_KEY` preflight and documented precedence, validates API version
+    and sampling/stop/seed controls, maps role instructions, records bounded
+    retries plus usage/default/error/completion telemetry, rejects blocked,
+    tool-only, mixed, empty, and incomplete outputs, and classifies Flash/Pro
+    model lanes. Runtime reports distinguish first-class versus custom Gemini
+    specs and configured Flash/Pro scheduler contracts while preserving
+    `claim_ready: false`; the paper sidecar records the same partial boundary.
+  - Required result: add live model capability lookup and a versioned model-
+    registry snapshot, account/model availability checks, a credential-safe
+    live Flash/Pro pair run, and explicit evidence for whether Gemini 2.0
+    endpoints remain usable. If current models substitute for the paper models,
+    record the substitution contract and limits. Add calibrated equal-budget
+    throughput/quality scheduling comparisons before claiming AlphaEvolve
+    provider or model-mix parity.
 
 - [ ] Add sample-efficiency reporting for AlphaEvolve-scale LLM proposal
       budgets.

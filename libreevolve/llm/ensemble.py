@@ -60,9 +60,13 @@ LLM_PROVIDER_PRICING_READINESS_SCHEMA = (
 PROVIDER_RESPONSE_ERROR_CATEGORIES = {
     "non_text",
     "empty_text",
+    "empty_response",
+    "incomplete",
+    "mixed_content",
     "oversized_text",
     "refusal",
     "tool_call_only",
+    "unsupported_completion_state",
 }
 PROVIDER_FAILURE_CATEGORIES = {
     "provider_response",
@@ -4923,7 +4927,7 @@ def build_llm(config) -> LLMEnsemble:
 def _normalize_backend_specs(backends: object) -> list[dict]:
     if not isinstance(backends, list) or not backends:
         raise ValueError("backends must be a non-empty list of mappings")
-    allowed_types = {"anthropic", "codex", "custom", "openai", "ollama"}
+    allowed_types = {"anthropic", "codex", "custom", "gemini", "openai", "ollama"}
     common_keys = {
         "type",
         "model",
@@ -4979,6 +4983,10 @@ def _normalize_backend_specs(backends: object) -> list[dict]:
             )
         if backend_type == "anthropic":
             allowed.add("base_url")
+            allowed.add("timeout_sec")
+            allowed.add("provider_max_retries")
+        if backend_type == "gemini":
+            allowed.add("api_version")
             allowed.add("timeout_sec")
             allowed.add("provider_max_retries")
         if backend_type == "ollama":
@@ -5042,6 +5050,13 @@ def _normalize_backend_specs(backends: object) -> list[dict]:
             for field_name in ("ignore_user_config", "ignore_rules", "ephemeral"):
                 if field_name in spec:
                     item[field_name] = bool(spec[field_name])
+        if backend_type == "gemini" and "api_version" in spec:
+            from libreevolve.llm.gemini import validate_gemini_api_version
+
+            item["api_version"] = validate_gemini_api_version(
+                spec["api_version"],
+                field=f"{label}.api_version",
+            )
         for field_name in ("cost", "latency", "depth"):
             if field_name in spec:
                 item[field_name] = _validate_positive_metadata_number(

@@ -18,9 +18,9 @@ def test_backend_guide_contract_drift_boundary_accepts_current_map():
     )
     assert boundary["schema"] == BACKEND_GUIDE_CONTRACT_DRIFT_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
-    assert validation.guide_marker_count == 22
+    assert validation.guide_marker_count == 23
     assert validation.missing_guide_marker_count == 0
-    assert validation.evidence_anchor_count == 28
+    assert validation.evidence_anchor_count == 30
     assert validation.missing_evidence_anchor_count == 0
     assert boundary["backend_guide_contract_map_status"] == (
         "backend_guide_structural_evidence_map_present"
@@ -89,8 +89,8 @@ def test_render_backend_guide_contract_drift_boundary_summary_reports_shape():
         "| boundary_status | backend_guide_structural_evidence_map_without_semantic_contract_proof |"
         in summary
     )
-    assert "| guide_marker_count | 22 |" in summary
+    assert "| guide_marker_count | 23 |" in summary
     assert "| missing_guide_marker_count | 0 |" in summary
-    assert "| evidence_anchor_count | 28 |" in summary
+    assert "| evidence_anchor_count | 30 |" in summary
     assert "| missing_evidence_anchor_count | 0 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

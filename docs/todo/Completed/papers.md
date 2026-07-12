@@ -14384,3 +14384,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     empirical error rates, target-suite coverage, or record results.
   - Verification: evolution-fixture, cascade-runtime, boundary, and manifest
     tests preserve artifact equality and non-discovery claim boundaries.
+- [x] Promote Gemini provider evidence from absence to partial readiness.
+  - Paper evidence: AlphaEvolve Section 2.3 identifies Gemini 2.0 Flash and
+    Pro as the published fast/strong model mix.
+  - Status: `papers/gemini_provider_parity_boundary.json` now credits the
+    first-class adapter, credential/client/request contract, native telemetry,
+    completion handling, lane identity, and generic scheduler integration.
+  - Remaining paper gap: no live model-registry or account evidence, paired
+    Flash/Pro run, original-model availability proof, substitution contract,
+    or equal-budget throughput/quality comparison has been retained.
+  - Verification: focused Gemini and paper-boundary tests preserve
+    `claim_ready: false` until those live evidence gates are met.

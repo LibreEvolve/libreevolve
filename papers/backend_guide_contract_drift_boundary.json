@@ -8,12 +8,14 @@
     "libreevolve/llm/backend_registry.py",
     "libreevolve/llm/openai.py",
     "libreevolve/llm/anthropic.py",
+    "libreevolve/llm/gemini.py",
     "libreevolve/llm/ollama.py",
     "libreevolve/core/config.py",
     "libreevolve/cli.py"
   ],
   "test_paths": [
     "tests/llm/test_ensemble.py",
+    "tests/llm/test_gemini.py",
     "tests/core/test_config.py",
     "tests/core/test_loop.py"
   ],
@@ -29,7 +31,7 @@
     "docs/todo/readme.md",
     "docs/todo/code.md"
   ],
-  "guide_marker_count": 22,
+  "guide_marker_count": 23,
   "missing_guide_marker_count": 0,
   "missing_guide_marker_records": [],
   "guide_marker_records": [
@@ -55,6 +57,12 @@
       "record_id": "anthropic_backend",
       "path": "docs/backends.md",
       "required_marker": "## Anthropic backend",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "gemini_backend",
+      "path": "docs/backends.md",
+      "required_marker": "## Google Gemini backend",
       "marker_status": "marker_present"
     },
     {
@@ -166,7 +174,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "evidence_anchor_count": 28,
+  "evidence_anchor_count": 30,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -231,6 +239,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "gemini_backend",
+      "path": "libreevolve/llm/gemini.py",
+      "required_marker": "class GeminiBackend",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "ollama_backend",
       "path": "libreevolve/llm/ollama.py",
       "required_marker": "class OllamaBackend",
@@ -264,6 +278,12 @@
       "record_id": "ensemble_tests",
       "path": "tests/llm/test_ensemble.py",
       "required_marker": "LLMEnsemble",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "gemini_tests",
+      "path": "tests/llm/test_gemini.py",
+      "required_marker": "test_gemini_generate_maps_config_roles_and_metadata",
       "marker_status": "marker_present"
     },
     {
@@ -365,5 +385,5 @@
     "backend_docs_ci_drift_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records docs/backends.md section and claim markers for provider lanes, scheduler/reward accounting, call-history and llm_calls replay, restore, prompt validation, provider metadata, role routing, provider failures, timeouts, OpenAI API-mode policy, credential preflight, custom backends, and CLI-provider guardrails. It also records source-module, focused-test, sidecar, and active TODO anchors. It does not claim semantic backend-claim verification, a per-constructor-field evidence map, a per-telemetry-field evidence map, a backend-docs CI drift gate, or owner review signoff."
+  "claim_boundary": "This boundary records docs/backends.md section and claim markers for provider lanes, scheduler/reward accounting, call-history and llm_calls replay, restore, prompt validation, provider metadata, role routing, provider failures, timeouts, OpenAI API-mode policy, first-class Gemini behavior, credential preflight, custom backends, and CLI-provider guardrails. It also records source-module, focused-test, sidecar, and active TODO anchors. It does not claim semantic backend-claim verification, a per-constructor-field evidence map, a per-telemetry-field evidence map, a backend-docs CI drift gate, or owner review signoff."
 }

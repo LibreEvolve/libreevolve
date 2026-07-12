@@ -926,6 +926,14 @@ control is rejected. This fixture calibrates a deterministic boundary between
 known controls; it is not an empirical estimate of false-promotion or
 false-rejection rates under stochastic search.
 
+`matrix_evolution_fixture_stages()` reuses the same checked case sets but sets
+the main lower-confidence-bound threshold to `0.12`, allowing the valid rank-8
+seed into the archive before a scripted rank-7 mutation is evaluated. The
+fixture runs the normal `evolve()` orchestration once per pinned seed and
+records ancestry, histories, consumed evaluations/LLM calls, and cascade
+traces. The scripted backend makes this deterministic control evidence, not a
+stochastic provider benchmark or Strassen rediscovery claim.
+
 `eval_stages[].timeout_sec` is enforced per subprocess attempt: with
 `samples: 2` and `retries: 1`, each sample can run up to two validator
 subprocess attempts. Use `eval_stages[].max_sample_seconds` to add a per-sample

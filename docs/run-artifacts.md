@@ -117,11 +117,13 @@ Completed manifests also include
 metadata with the example-scope registry, records the matching fixture level,
 AlphaEvolve-comparable flag, formulation/review status, task-spec identity,
 benchmark-hardening references, and explicit false readiness for evidence not
-present in that run. The checked matrix cascade bundle separately supplies one
-deterministic repeated-seed protocol, known rank-7/rank-8 values, and emitted
-trace artifacts; it does not make ordinary smoke-fixture manifests or the
-generic readiness report AlphaEvolve-comparable. Anti-gaming evidence for a
-full benchmark remains absent.
+present in that run. The checked matrix cascade bundle separately supplies
+known rank-7/rank-8 calibration values. The linked matrix evolution bundle
+runs four normal run-local `evolve()` pipelines under a scripted mutation
+control and supplies parent/lineage, budget, history, final-rank, and emitted
+cascade trace artifacts. Neither bundle makes ordinary smoke-fixture manifests
+or the generic readiness report AlphaEvolve-comparable. Stochastic discovery
+and anti-gaming evidence for a full benchmark remain absent.
 The paper-facing counterpart is
 `papers/benchmark_fixture_readiness_boundary.json`, which manifest validation
 requires at the repository root so smoke/example-scope readiness telemetry
@@ -2689,6 +2691,16 @@ checked Strassen result report. Artifact hashes are regenerated from canonical
 JSON and `validate_matrix_cascade_fixture_bundle()` verifies file/payload
 parity. These are known-control calibration artifacts, not search transcripts
 or evidence that LibreEvolve rediscovered Strassen.
+`write_matrix_evolution_fixture_bundle()` writes a separate checked bundle
+under `libreevolve/problems/benchmarks/artifacts/matrix_evolution_fixture/`.
+Each seed invokes normal `evolve()` orchestration with one scripted canonical
+rank-7 mutation, then retains compact run history, causal parent and lineage,
+generation and budget counts, final-rank exactness, run-artifact presence,
+matrix result aggregation, and emitted cascade runtime records. The paper
+runtime boundary is generated from this bundle. It proves deterministic
+pipeline integration only: it is not stochastic LLM discovery, an
+AlphaEvolve matrix formulation, a multi-generation search, or target-suite
+scale evidence.
 `validate_benchmark_evidence_scope()` cross-checks a hardening report against
 its example scope record and optional hardening artifact inventory. This keeps
 smoke-only shipped examples from being promoted to benchmark or paper-claim

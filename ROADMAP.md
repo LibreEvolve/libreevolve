@@ -143,8 +143,11 @@ LibreEvolve has:
   promotion-rule attribution, bounded candidate linkage, next-stage exposure,
   and denominator reconciliation, plus an optional complete stage contract for
   strictly increasing difficulty/scale rationale and content-hashed test-set
-  identities. A checked deterministic 2x2 matrix fixture now executes four
-  pinned seeds and calibrates rank-7 promotion against rank-8 rejection;
+  identities. A checked deterministic 2x2 matrix fixture executes four pinned
+  seeds and calibrates rank-7 promotion against rank-8 rejection. A linked
+  four-seed fixture now runs normal run-local `evolve()` pipelines and records
+  causal ancestry, budgets, histories, and stage exposure under a scripted
+  rank-7 mutation control;
   `papers/evaluation_cascade_boundary.json` keeps broader benchmark seed/sample
   policy, stochastic-search calibration, empirical error-rate proof, and
   cost-savings evidence open
@@ -157,8 +160,8 @@ LibreEvolve has:
   `binomial_success_rate` repeated-seed success-rate gates with Wilson
   lower-bound evidence, plus reconciled runtime small-filter-to-main-test
   linkage. `papers/cascade_hypothesis_test_boundary.json` links the executed
-  deterministic matrix calibration while preserving missing stochastic-search
-  and empirical false-decision evidence
+  deterministic matrix calibration and scripted normal-pipeline evidence while
+  preserving missing stochastic discovery and empirical false-decision evidence
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible
@@ -374,9 +377,11 @@ LibreEvolve has:
   `runtime.history.benchmark_fixture_readiness_report`, joining startup
   problem metadata to the example-scope registry and preserving explicit false
   readiness for smoke fixtures and missing anti-gaming negative-fixture
-  evidence. The checked matrix calibration separately records a deterministic
-  repeated-seed protocol, known rank-7/rank-8 baselines, and emitted trace
-  artifacts without promoting the smoke example to benchmark scope, with
+  evidence. The checked matrix calibration and evolution fixtures separately
+  record known rank-7/rank-8 baselines plus four normal run-local `evolve()`
+  pipelines with causal ancestry, budgets, histories, and emitted traces under
+  a scripted mutation control, without promoting the smoke example to
+  benchmark scope, with
   `papers/benchmark_fixture_readiness_boundary.json` preserving the
   paper-facing smoke-scope/calibration boundary
 - optional external feedback metadata under `collaborator_feedback.yaml` or
@@ -2217,23 +2222,27 @@ by `papers/lineage_replay_boundary.json`.
   builds emitted records from component inventories and validates top-level
   ref, mutable-scope, and fixed-hash linkage. Local benchmark runners still
   need to emit those baseline component records.
-- Keep matrix repeated-seed wording scoped to deterministic calibration versus
-  evolutionary search: `libreevolve.matrix_cascade_run_runtime_boundary.v1`
+- Keep matrix repeated-seed wording scoped to scripted pipeline execution
+  versus stochastic discovery: `libreevolve.matrix_cascade_run_runtime_boundary.v1`
   validates emitted
   per-seed records for run/target/seed ids, cascade ids and versions, stage
   traces with threshold/rank/exactness/stop diagnostics, accepted final rank,
   candidate and matrix-result refs, artifact paths, and artifact hashes.
   `papers/matrix_cascade_run_runtime_boundary.json` now emits four checked
-  rank-7 calibration records as a committed sidecar.
+  rank-7 normal-pipeline records as a committed sidecar.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
   records from matrix result seed rows plus per-seed stage traces and validates
   final-stage/result-row linkage plus best-rank, hit-count, and hit-fraction
   aggregation from emitted seed records. The executable
-  `matrix_cascade_fixture.py` runner also verifies that the rank-8 control
+  `matrix_cascade_fixture.py` runner verifies that the rank-8 control
   passes smoke and fails the main confidence-bound gate against content-hashed
-  case sets. This does not yet execute independent per-seed evolutionary
-  searches, preserve discovered-candidate ancestry, or reproduce the Section
-  3.1 target suite and search budgets.
+  case sets. The linked `matrix_evolution_fixture.py` runner executes four
+  independent run-local `evolve()` calls, preserves causal seed-parent lineage,
+  compact histories, stage exposure, and consumed budgets, and emits rank-7
+  results through a scripted canonical mutation. Remaining work is stochastic
+  LLM discovery, the AlphaEvolve tensor-decomposition formulation,
+  multi-generation/comparable search budgets, and Section 3.1 target-suite
+  scale.
 - Keep matrix near-integrality wording scoped to evidence validation rather
   than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
   now validates declared prompt instructions, integer/half-integer nearest

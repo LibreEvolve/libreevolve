@@ -19,6 +19,13 @@ EXPECTED_MATRIX_FIXTURE_REPORT_REF = (
     "libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/"
     "matrix/mm_2x2x2/cascade_fixture_report.json"
 )
+EXPECTED_MATRIX_EVOLUTION_FIXTURE_REPORT_SCHEMA = (
+    "libreevolve.matrix_evolution_fixture_report.v1"
+)
+EXPECTED_MATRIX_EVOLUTION_FIXTURE_REPORT_REF = (
+    "libreevolve/problems/benchmarks/artifacts/matrix_evolution_fixture/"
+    "matrix/mm_2x2x2/evolution_fixture_report.json"
+)
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "example_scope_record_present",
     "scope_registry_valid",
@@ -74,6 +81,15 @@ def benchmark_fixture_readiness_boundary_record() -> dict[str, Any]:
         "matrix_fixture_report_schema": EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA,
         "matrix_fixture_report_ref": EXPECTED_MATRIX_FIXTURE_REPORT_REF,
         "matrix_fixture_status": "executed_rank7_rank8_known_control_calibration",
+        "matrix_evolution_fixture_report_schema": (
+            EXPECTED_MATRIX_EVOLUTION_FIXTURE_REPORT_SCHEMA
+        ),
+        "matrix_evolution_fixture_report_ref": (
+            EXPECTED_MATRIX_EVOLUTION_FIXTURE_REPORT_REF
+        ),
+        "matrix_evolution_fixture_status": (
+            "executed_normal_evolve_pipeline_scripted_control"
+        ),
         "runtime_report_status": "benchmark_fixture_readiness_report_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -83,9 +99,11 @@ def benchmark_fixture_readiness_boundary_record() -> dict[str, Any]:
             "telemetry for example-scope registry linkage, smoke fixture scope, "
             "formulation/review metadata, task-spec identity, and benchmark "
             "hardening references when present. A checked four-seed matrix "
-            "fixture records known rank-7/rank-8 baselines and emitted traces, "
+            "fixture runs the normal evolve pipeline under a scripted mutation "
+            "control and records causal parentage, rank-7 outcomes, budgets, "
+            "known rank-7/rank-8 baselines, and emitted cascade traces, "
             "but does not claim non-smoke AlphaEvolve-comparable fixture scope, "
-            "search-derived repeated-seed results, anti-gaming negative-fixture "
+            "stochastic LLM discovery, anti-gaming negative-fixture "
             "checks for a full benchmark, or paper-claim-ready benchmark fixtures."
         ),
     }
@@ -113,6 +131,18 @@ def validate_benchmark_fixture_readiness_boundary(
         issues.append(_issue("invalid_matrix_fixture_report_ref", "matrix fixture report ref must identify the checked report"))
     if data.get("matrix_fixture_status") != "executed_rank7_rank8_known_control_calibration":
         issues.append(_issue("invalid_matrix_fixture_status", "matrix fixture status must identify known-control calibration"))
+    if (
+        data.get("matrix_evolution_fixture_report_schema")
+        != EXPECTED_MATRIX_EVOLUTION_FIXTURE_REPORT_SCHEMA
+    ):
+        issues.append(_issue("invalid_matrix_evolution_fixture_report_schema", "matrix evolution fixture report schema linkage is invalid"))
+    if (
+        data.get("matrix_evolution_fixture_report_ref")
+        != EXPECTED_MATRIX_EVOLUTION_FIXTURE_REPORT_REF
+    ):
+        issues.append(_issue("invalid_matrix_evolution_fixture_report_ref", "matrix evolution fixture report ref must identify the checked report"))
+    if data.get("matrix_evolution_fixture_status") != "executed_normal_evolve_pipeline_scripted_control":
+        issues.append(_issue("invalid_matrix_evolution_fixture_status", "matrix evolution fixture status must identify the scripted normal-pipeline control"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "benchmark claims" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve benchmark-claim evidence"))
@@ -129,6 +159,8 @@ def validate_benchmark_fixture_readiness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "checked four-seed matrix fixture" not in boundary_text
+        or "normal evolve pipeline" not in boundary_text
+        or "stochastic LLM discovery" not in boundary_text
         or "does not claim" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim benchmark readiness"))

@@ -19324,3 +19324,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused fixture tests execute both controls, validate all
     four emitted records, reject decision/hash drift, and verify checked bundle
     and paper-sidecar parity.
+- [x] Add a per-seed normal-pipeline matrix evolution control fixture.
+  - Spec evidence: AlphaEvolve Section 3.1 links repeated-seed matrix outcomes
+    to evolutionary search and staged evaluation, so fixed-candidate
+    calibration alone does not prove runtime search causality.
+  - Status: `matrix_evolution_fixture.py` executes four independent run-local
+    `evolve()` calls, admits the valid rank-8 seed, applies one scripted
+    canonical rank-7 mutation, and records parent/lineage, generation, compact
+    history, evaluation/LLM-call budgets, stage traces, exactness linkage,
+    matrix-result aggregation, and run-artifact presence.
+  - Remaining code gap: stochastic provider-backed discovery, an AlphaEvolve-
+    aligned tensor-decomposition formulation, multi-generation/comparable
+    budgets, broader target-suite coverage, empirical error rates, and record-
+    beating evidence remain open.
+  - Verification: focused fixture tests execute and exactly regenerate the
+    four-seed bundle, validate causal linkage and budgets, reject tampering,
+    and match the paper runtime boundary.

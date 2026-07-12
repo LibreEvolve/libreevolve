@@ -1,0 +1,81 @@
+{
+  "claim_boundary": "Search outcomes come from normal evolve() runs. Scripted-control mode does not establish stochastic LLM discovery.",
+  "fixture_mode": "scripted_control",
+  "schema": "libreevolve.matrix_evolution_search_summary.v1",
+  "seed_count": 4,
+  "seed_outcomes": [
+    {
+      "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "exact": true,
+      "generation": 1,
+      "inverse_multiplications": 0.14285714285714285,
+      "is_valid": true,
+      "known_strassen_match": true,
+      "lineage": [
+        "candidate-seed-0-336141cef010e8af"
+      ],
+      "parent_id": "candidate-seed-0-336141cef010e8af",
+      "rank": 7,
+      "run_id": "matrix-evolution-fixture-seed-0",
+      "seed": 0,
+      "seed_artifact_path": "matrix/mm_2x2x2/evolution_seed_0.json",
+      "seed_artifact_sha256": "9fa21443fd8c298024d325de7eb90fb1e66c4e274307152053e90ee557c60b77",
+      "workspace_sha256": "aae201f33fddadfb7efc17e927fe4a55a9c4db00380c2a02f81b47156bfb5d08"
+    },
+    {
+      "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "exact": true,
+      "generation": 1,
+      "inverse_multiplications": 0.14285714285714285,
+      "is_valid": true,
+      "known_strassen_match": true,
+      "lineage": [
+        "candidate-seed-0-336141cef010e8af"
+      ],
+      "parent_id": "candidate-seed-0-336141cef010e8af",
+      "rank": 7,
+      "run_id": "matrix-evolution-fixture-seed-1",
+      "seed": 1,
+      "seed_artifact_path": "matrix/mm_2x2x2/evolution_seed_1.json",
+      "seed_artifact_sha256": "5c11f898aacd75bd9edc13cc943bb461d0bca8731c30331a430248e07f391c0e",
+      "workspace_sha256": "aae201f33fddadfb7efc17e927fe4a55a9c4db00380c2a02f81b47156bfb5d08"
+    },
+    {
+      "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "exact": true,
+      "generation": 1,
+      "inverse_multiplications": 0.14285714285714285,
+      "is_valid": true,
+      "known_strassen_match": true,
+      "lineage": [
+        "candidate-seed-0-336141cef010e8af"
+      ],
+      "parent_id": "candidate-seed-0-336141cef010e8af",
+      "rank": 7,
+      "run_id": "matrix-evolution-fixture-seed-2",
+      "seed": 2,
+      "seed_artifact_path": "matrix/mm_2x2x2/evolution_seed_2.json",
+      "seed_artifact_sha256": "fc184aa4b51abdecd53eda879229addb014b75b0f35c25b686707033b95dd0e4",
+      "workspace_sha256": "aae201f33fddadfb7efc17e927fe4a55a9c4db00380c2a02f81b47156bfb5d08"
+    },
+    {
+      "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "exact": true,
+      "generation": 1,
+      "inverse_multiplications": 0.14285714285714285,
+      "is_valid": true,
+      "known_strassen_match": true,
+      "lineage": [
+        "candidate-seed-0-336141cef010e8af"
+      ],
+      "parent_id": "candidate-seed-0-336141cef010e8af",
+      "rank": 7,
+      "run_id": "matrix-evolution-fixture-seed-3",
+      "seed": 3,
+      "seed_artifact_path": "matrix/mm_2x2x2/evolution_seed_3.json",
+      "seed_artifact_sha256": "0218f3665d04defc659bbbdaa073a9e9baac95a7a1eaec214be8844a643f5907",
+      "workspace_sha256": "aae201f33fddadfb7efc17e927fe4a55a9c4db00380c2a02f81b47156bfb5d08"
+    }
+  ],
+  "target_id": "mm_2x2x2"
+}

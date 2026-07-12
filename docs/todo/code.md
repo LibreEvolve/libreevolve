@@ -2103,9 +2103,12 @@ sidecars, tests, and active TODOs.
     committed `papers/evaluation_cascade_boundary.json` sidecar now records
     the paper-manifest-validated boundary for runtime transition linkage
     without benchmark-efficiency evidence. The checked 2x2 matrix cascade
-    fixture now adds one deterministic four-seed known-control calibration:
-    rank 7 is promoted and rank 8 is rejected at the main confidence-bound
-    gate, with file-backed test-set hashes and emitted per-seed traces.
+    fixture adds one deterministic four-seed known-control calibration: rank 7
+    is promoted and rank 8 is rejected at the main confidence-bound gate, with
+    file-backed test-set hashes and emitted per-seed traces. The linked matrix
+    evolution fixture also runs four normal run-local `evolve()` pipelines and
+    records causal parent/lineage, budgets, histories, and stage exposure under
+    a scripted rank-7 mutation control.
   - Required result: finish benchmark seed/sample policy beyond the
     deterministic known-control fixture, stochastic-search calibration,
     empirical false-promotion/false-rejection validation, and counterfactual
@@ -4036,7 +4039,7 @@ sidecars, tests, and active TODOs.
     result reports and from the Figure 8 loss-function-only ablation until an
     executed matrix runner proves the baseline-to-evolved-program path.
 
-- [ ] Add matrix cascade-run provenance for repeated-seed rank reports.
+- [ ] Extend matrix cascade-run provenance to stochastic discovery and scale.
   - Spec evidence: AlphaEvolve Section 3.1 says the matrix-decomposition
     experiments run over multiple random seeds using the evaluation cascade,
     then report the best lowest rank per target and the fraction of seeds that
@@ -4048,21 +4051,25 @@ sidecars, tests, and active TODOs.
     trace records for run/target/seed ids, cascade ids/versions, stage traces,
     accepted final ranks, candidate/result refs, artifact paths, and hashes.
     `papers/matrix_cascade_run_runtime_boundary.json` now emits four checked
-    rank-7 calibration records as a committed sidecar.
+    rank-7 normal-pipeline records as a committed sidecar.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
     records from matrix result seed rows plus per-seed stage traces and
     validates final-stage rank/candidate linkage plus best-rank, hit-count,
     and hit-fraction aggregation from emitted records. The executable
-    `matrix_cascade_fixture.py` runner now records the stage configuration,
+    `matrix_cascade_fixture.py` runner records the stage configuration,
     content-hashed case sets, four pinned seed samples, confidence-bound
     decisions, known rank-7 promotion, known rank-8 rejection, and canonical
-    trace artifacts. It evaluates fixed controls rather than running an
-    evolutionary search independently for each seed.
-  - Required result: connect full matrix evolution runs to these records so
-    per-seed search initialization, proposal ancestry, pruning/early-stop
-    decisions, accepted candidates, budgets, and final rank rows are produced
-    causally by actual Section 3.1-style searches. Keep deterministic control
-    calibration separate from discovery evidence and generic cascade semantics.
+    trace artifacts. `matrix_evolution_fixture.py` now executes four
+    independent run-local `evolve()` calls, links each accepted rank-7 candidate
+    causally to its rank-8 seed parent, records compact histories and consumed
+    evaluation/LLM-call budgets, and emits final rank rows and cascade records.
+    Its backend returns a scripted canonical Strassen mutation, so it is a
+    deterministic pipeline control rather than discovery evidence.
+  - Required result: run stochastic provider-backed searches against an
+    AlphaEvolve-aligned tensor-decomposition formulation, with meaningful
+    multi-generation budgets and target-suite coverage. Preserve discovered
+    ancestry and full proposal/cascade artifacts, compare per-seed outcomes and
+    costs, and keep scripted controls separate from record or rediscovery claims.
 
 - [ ] Wire Appendix A best-known-rank citation provenance into reports.
   - Spec evidence: AlphaEvolve Table 2 reports matrix targets with a

@@ -218,9 +218,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/evaluation_cascade_boundary.json` sidecar now preserves the
     paper-manifest-validated runtime-transition-linkage boundary without
     benchmark-efficiency evidence.
-  - Current gap: paper-facing evidence still lacks benchmark seed/sample
-    policy, built-in repeated-seed benchmark fixtures, empirical false-promotion/false-
-    rejection validation, and counterfactual cost/wall-clock savings. The
+  - Current gap: a checked four-seed scripted-control fixture now exercises the
+    normal `evolve()` pipeline with causal ancestry, budgets, and cascade
+    records, but paper-facing evidence still lacks stochastic benchmark
+    seed/sample calibration, empirical false-promotion/false-rejection
+    validation, and counterfactual cost/wall-clock savings. The
     report therefore remains
     `claim_ready: false` for AlphaEvolve cascade-efficiency claims.
   - Required result: finish cascade-report artifacts and validators with
@@ -2372,14 +2374,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     false-promotion and normal-approximation false-rejection budget evidence.
     `binomial_success_rate` gates now record Wilson lower-bound pass/fail
     repeated-seed evidence and exact binomial diagnostics.
-  - Current gap: paper-facing evidence still lacks benchmark-calibrated
-    thresholds and repeated-seed benchmark fixtures.
+  - Current gap: paper-facing evidence includes a deterministic repeated-seed
+    calibration and scripted normal-pipeline fixture but still lacks
+    stochastic benchmark-calibrated thresholds and empirical error rates.
     `papers/cascade_hypothesis_test_boundary.json` now validates the current
     runtime policy-and-promotion-linkage scope without claiming benchmark-
     calibrated cascade readiness.
-  - Required result: add benchmark-calibrated repeated-seed fixtures and
-    empirical false-promotion/false-rejection validation for the recorded
-    small-filter-to-main-test linkage.
+  - Required result: add stochastic benchmark calibration and empirical false-
+    promotion/false-rejection validation for the recorded small-filter-to-main-
+    test linkage.
 
 - [ ] Track qualitative LLM-feedback criterion provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.
@@ -4014,7 +4017,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     docs that distinguish cited prior baselines from LibreEvolve-generated
     constructions.
 
-- [ ] Track matrix cascade-run evidence behind repeated-seed rank claims.
+- [ ] Extend matrix cascade-run evidence to stochastic discovery claims.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.1 says the matrix
     experiments run over multiple random seeds using the evaluation cascade,
     and paper-visible performance is the best rank plus the fraction of seeds
@@ -4026,19 +4029,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     cascade, stage-trace, final-rank, candidate/result reference,
     artifact-path, and hash fields.
     `papers/matrix_cascade_run_runtime_boundary.json` now emits four checked
-    rank-7 calibration traces as committed paper-facing evidence.
+    rank-7 normal-pipeline traces as committed paper-facing evidence.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds one
     emitted record per seed row from per-seed stage traces and checks final
     stage/result-row linkage plus best-rank/hit-fraction aggregation. The
     checked `libreevolve.matrix_cascade_fixture_report.v1` executes four pinned
-    seeds over known rank-7/rank-8 controls and preserves canonical trace
-    artifacts, but it is not four independent evolutionary searches and does
-    not establish discovery lineage behind Table 2/Appendix A rows.
-  - Required result: connect actual matrix evolution runs to emitted cascade
-    records, with per-seed initialization, candidate ancestry, budgets,
-    pruning/early-stop decisions, accepted candidates, and generated final-rank
-    rows, before treating matrix reports as AlphaEvolve Section 3.1 search
-    evidence.
+    seeds over known rank-7/rank-8 controls. The linked
+    `libreevolve.matrix_evolution_fixture_report.v1` executes four independent
+    run-local `evolve()` calls, preserving seed-parent ancestry, compact
+    histories, evaluation/LLM-call budgets, stage exposure, accepted candidates,
+    and generated rank-7 rows. Its scripted canonical mutation does not
+    establish stochastic discovery behind Table 2/Appendix A rows.
+  - Required result: run provider-backed stochastic evolution against an
+    AlphaEvolve-aligned tensor-decomposition task with meaningful budgets and
+    target-suite coverage, retaining full proposal and cascade artifacts before
+    treating matrix reports as Section 3.1 discovery or record evidence.
 
 - [ ] Wire Table 2/Table 3 matrix-rank table artifacts into paper exports.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 is the main-text

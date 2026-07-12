@@ -81,8 +81,11 @@ Important limits:
   file-backed or embedded-input test-set identities. The checked 2x2 matrix
   calibration fixture executes four pinned seeds and proves that rank 7 passes
   while rank 8 reaches the main stage and fails its pinned confidence-bound
-  gate. This is deterministic local calibration, not stochastic-search,
-  empirical error-rate, cost-efficiency, or AlphaEvolve-scale proof.
+  gate. A second checked four-seed fixture runs the normal `evolve()` pipeline,
+  records parent/lineage and budget causality, and reaches rank 7 under a
+  scripted Strassen mutation control. This is deterministic local pipeline
+  evidence, not stochastic LLM discovery, empirical error-rate,
+  cost-efficiency, target-suite, or AlphaEvolve-scale proof.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed Python `asyncio` AlphaEvolve service.
 - Runtime restore certification is compatible-surface evidence only;

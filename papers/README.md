@@ -626,10 +626,12 @@ The committed `papers/problem_formulation_provenance_boundary.json` sidecar
 preserves that metadata-contract-only boundary for paper-manifest validation.
 The committed `papers/benchmark_fixture_readiness_boundary.json` sidecar
 preserves the related smoke-scope boundary while linking the checked
-deterministic matrix calibration's four-seed protocol, known rank-7/rank-8
-values, and emitted traces. Non-smoke AlphaEvolve-comparable scope,
-search-derived seed outcomes, full-benchmark anti-gaming negative fixtures,
-and paper-claim-ready benchmark scope remain absent.
+deterministic matrix calibration and evolution fixtures. The latter runs four
+normal run-local `evolve()` pipelines with scripted rank-7 mutations and emits
+causal ancestry, budget, history, final-rank, and cascade records. Non-smoke
+AlphaEvolve-comparable scope, stochastic LLM discovery, full-benchmark
+anti-gaming negative fixtures, and paper-claim-ready benchmark scope remain
+absent.
 The committed `papers/systems_result_readiness_boundary.json` sidecar
 preserves the systems-result boundary: LibreEvolve has schemas and validators
 for systems reports, artifact inventories, evidence bundles, domain-specific
@@ -847,11 +849,14 @@ confidence-bound, p-value, optional sequential-stop evidence, and configured
 normal-approximation false-promotion/false-rejection budget evidence. The
 `binomial_success_rate` gate adds Wilson lower-bound repeated-seed success-rate
 evidence and exact binomial tail diagnostics. Benchmark-calibrated thresholds
-and full AlphaEvolve Section 2.4 hypothesis-testing parity remain open. The
+and full AlphaEvolve Section 2.4 hypothesis-testing parity remain open. A
+linked checked fixture runs four normal `evolve()` pipelines under a scripted
+rank-7 mutation control and records causal ancestry, budgets, and stage
+exposure; it is not stochastic discovery or empirical error-rate evidence. The
 committed `papers/cascade_hypothesis_test_boundary.json` sidecar keeps this
-runtime policy-and-linkage scope machine-validated apart from benchmark-calibrated
-thresholds, repeated-seed fixtures, and empirical false-promotion/false-
-rejection validation.
+runtime policy-and-linkage scope machine-validated apart from stochastic
+benchmark calibration and empirical false-promotion/false-rejection
+validation.
 
 AlphaEvolve embedded-evaluator note: configured stages can now opt into
 `mode: embedded_evaluate`, which imports the materialized candidate primary
@@ -2059,16 +2064,21 @@ Implemented:
   threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
   matrix-result refs, artifact paths, and artifact hashes.
   `papers/matrix_cascade_run_runtime_boundary.json` emits four checked rank-7
-  calibration traces as a committed sidecar.
+  normal-pipeline traces as a committed sidecar.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` can build emitted
   records from declared seed rows plus per-seed stage traces, with final-stage
   linkage checks and aggregate best-rank/hit-fraction recomputation. The
   checked `libreevolve.matrix_cascade_fixture_report.v1` bundle executes a
   two-stage, four-seed 2x2 fixture with content-hashed test sets, promotes the
   rank-7 Strassen control, and rejects the rank-8 control at the main
-  confidence-bound gate. This is deterministic calibration of known controls,
-  not per-seed evolutionary search, rediscovery, empirical false-decision
-  measurement, or AlphaEvolve Section 3.1 scale.
+  confidence-bound gate. The separate checked
+  `libreevolve.matrix_evolution_fixture_report.v1` bundle runs four independent
+  run-local `evolve()` calls, links every final candidate to its seed parent,
+  records generation/evaluation/LLM-call budgets and compact histories, and
+  reaches rank 7 through a scripted canonical mutation. This proves normal
+  pipeline and report integration, not stochastic LLM rediscovery, empirical
+  false-decision measurement, AlphaEvolve's tensor formulation, comparable
+  search budgets, or Section 3.1 target-suite scale.
   `libreevolve.matrix_near_integrality_evidence.v1` now
   validates declared search-time evidence that candidates were instructed to
   produce near-integral decompositions, rounded to integer or half-integer

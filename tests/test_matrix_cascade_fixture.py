@@ -1,6 +1,5 @@
 import copy
 import json
-from pathlib import Path
 
 from libreevolve.core.config import Config
 from libreevolve.problems.benchmarks.matrix_cascade_fixture import (
@@ -123,15 +122,7 @@ def test_matrix_cascade_fixture_bundle_checks_source_hashes(tmp_path):
     }
 
 
-def test_checked_matrix_cascade_fixture_bundle_matches_paper_boundary():
+def test_checked_matrix_cascade_fixture_bundle_is_valid():
     validation = validate_matrix_cascade_fixture_bundle(MATRIX_CASCADE_FIXTURE_ROOT)
-    report_path = MATRIX_CASCADE_FIXTURE_ROOT / MATRIX_CASCADE_FIXTURE_REPORT_PATH
-    report = json.loads(report_path.read_text(encoding="utf-8"))
-    paper_boundary = json.loads(
-        Path("papers/matrix_cascade_run_runtime_boundary.json").read_text(
-            encoding="utf-8"
-        )
-    )
 
     assert validation.ok is True
-    assert paper_boundary == report["runtime_boundary"]

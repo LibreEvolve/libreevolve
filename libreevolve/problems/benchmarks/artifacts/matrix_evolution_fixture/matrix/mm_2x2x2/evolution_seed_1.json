@@ -1,0 +1,197 @@
+{
+  "consumed": {
+    "candidate_evaluations": 1,
+    "generations_completed": 1,
+    "generations_started": 1,
+    "llm_calls": 1,
+    "seed_evaluations": 1
+  },
+  "final_candidate": {
+    "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+    "exact": true,
+    "generation": 1,
+    "inverse_multiplications": 0.14285714285714285,
+    "is_valid": true,
+    "known_strassen_match": true,
+    "lineage": [
+      "candidate-seed-0-336141cef010e8af"
+    ],
+    "parent_id": "candidate-seed-0-336141cef010e8af",
+    "rank": 7,
+    "workspace_sha256": "aae201f33fddadfb7efc17e927fe4a55a9c4db00380c2a02f81b47156bfb5d08"
+  },
+  "fixture_mode": "scripted_control",
+  "history": [
+    {
+      "archive_admitted": true,
+      "archive_reason": "empty_cell",
+      "candidate_id": "candidate-seed-0-336141cef010e8af",
+      "candidate_type": "seed",
+      "diff_sha256": null,
+      "generation": 0,
+      "inverse_multiplications": 0.125,
+      "is_valid": true,
+      "lineage": [],
+      "parent_id": null,
+      "rank": 8
+    },
+    {
+      "archive_admitted": true,
+      "archive_reason": "empty_cell",
+      "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "candidate_type": "generated",
+      "diff_sha256": "01b7c36f9fb22f968c95c7a61741681d2f4b20edd7a321e3d0d09e0927167154",
+      "generation": 1,
+      "inverse_multiplications": 0.14285714285714285,
+      "is_valid": true,
+      "lineage": [
+        "candidate-seed-0-336141cef010e8af"
+      ],
+      "parent_id": "candidate-seed-0-336141cef010e8af",
+      "rank": 7
+    }
+  ],
+  "history_row_count": 2,
+  "problem_name": "matrix_evolution_seed_1",
+  "run_artifact_presence": [
+    {
+      "path": "manifest.json",
+      "present": true,
+      "row_count": null
+    },
+    {
+      "path": "history.jsonl",
+      "present": true,
+      "row_count": 2
+    },
+    {
+      "path": "evaluator_results.jsonl",
+      "present": true,
+      "row_count": 2
+    },
+    {
+      "path": "llm_calls.jsonl",
+      "present": true,
+      "row_count": 2
+    },
+    {
+      "path": "prompt_history.jsonl",
+      "present": true,
+      "row_count": 2
+    },
+    {
+      "path": "archive_events.jsonl",
+      "present": true,
+      "row_count": 2
+    }
+  ],
+  "run_id": "matrix-evolution-fixture-seed-1",
+  "runtime_status": "completed",
+  "schema": "libreevolve.matrix_evolution_seed_run.v1",
+  "search_seed": 1,
+  "stage_traces": [
+    {
+      "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "exact": true,
+      "generation": 1,
+      "hypothesis_test_result": {
+        "configured": false,
+        "passed": true,
+        "test_name": null
+      },
+      "lineage": [
+        "candidate-seed-0-336141cef010e8af"
+      ],
+      "metrics": {
+        "inverse_multiplications": 0.14285714285714285,
+        "is_valid": true,
+        "multiplication_count": 7.0
+      },
+      "parent_id": "candidate-seed-0-336141cef010e8af",
+      "rank": 7,
+      "sample_count": 4,
+      "search_seed": 1,
+      "stage_index": 0,
+      "stage_label": "rank_smoke",
+      "stop_reason": "promoted_to_next_stage",
+      "threshold": 0.12
+    },
+    {
+      "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "exact": true,
+      "generation": 1,
+      "hypothesis_test_result": {
+        "confidence": 0.95,
+        "confidence_interval": {
+          "kind": "one_sided_lower",
+          "lower": 0.14285714285714285,
+          "upper": null
+        },
+        "configured": true,
+        "error_budget": {
+          "calibration_method": null,
+          "configured": false,
+          "false_promotion": null,
+          "false_rejection": null,
+          "passed": true
+        },
+        "lower_bound": 0.14285714285714285,
+        "mean": 0.14285714285714285,
+        "metric": "inverse_multiplications",
+        "min": 0.12,
+        "min_samples": 4,
+        "observations": [
+          {
+            "sample_index": 0,
+            "value": 0.14285714285714285
+          },
+          {
+            "sample_index": 1,
+            "value": 0.14285714285714285
+          },
+          {
+            "sample_index": 2,
+            "value": 0.14285714285714285
+          },
+          {
+            "sample_index": 3,
+            "value": 0.14285714285714285
+          }
+        ],
+        "p_value": 0.0,
+        "passed": true,
+        "sample_count": 4,
+        "sample_stddev": 0.0,
+        "sequential_stop": {
+          "enabled": false,
+          "evaluated_samples": 4,
+          "planned_samples": 4,
+          "stop_reason": null,
+          "stopped_early": false
+        },
+        "sequential_stopping": false,
+        "standard_error": 0.0,
+        "test_name": "one_sided_lower_confidence_bound",
+        "z_critical": 1.6448536269514715,
+        "z_score": null
+      },
+      "lineage": [
+        "candidate-seed-0-336141cef010e8af"
+      ],
+      "metrics": {
+        "inverse_multiplications": 0.14285714285714285,
+        "is_valid": true,
+        "multiplication_count": 7.0
+      },
+      "parent_id": "candidate-seed-0-336141cef010e8af",
+      "rank": 7,
+      "sample_count": 4,
+      "search_seed": 1,
+      "stage_index": 1,
+      "stage_label": "rank_main",
+      "stop_reason": "accepted_final_candidate",
+      "threshold": 0.12
+    }
+  ],
+  "stop_reason": "max_evaluations"
+}

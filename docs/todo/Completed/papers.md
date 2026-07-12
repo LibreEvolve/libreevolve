@@ -14372,3 +14372,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     open.
   - Verification: focused runtime and boundary tests validate stage provenance
     completeness and preserve benchmark-efficiency non-readiness.
+- [x] Add paper-facing scripted matrix evolution pipeline evidence.
+  - Paper evidence: AlphaEvolve Section 3.1 reports best ranks and hit fractions
+    over repeated evolutionary runs using the evaluation cascade.
+  - Status: `papers/matrix_cascade_run_runtime_boundary.json` is now generated
+    from the checked `libreevolve.matrix_evolution_fixture_report.v1` bundle,
+    whose four seed rows link accepted rank-7 candidates to seed parents,
+    histories, consumed budgets, stage traces, matrix rows, and artifacts.
+  - Remaining paper gap: the scripted mutation does not prove stochastic LLM
+    rediscovery, AlphaEvolve formulation parity, comparable search budgets,
+    empirical error rates, target-suite coverage, or record results.
+  - Verification: evolution-fixture, cascade-runtime, boundary, and manifest
+    tests preserve artifact equality and non-discovery claim boundaries.

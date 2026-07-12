@@ -1,0 +1,793 @@
+{
+  "claim_boundary": "Emitted records are per-seed matrix cascade traces linked to matrix_result_report seed rows; this still does not claim full AlphaEvolve Section 3.1 scale or state-of-the-art discovery.",
+  "emitted_records": [
+    {
+      "accepted_final_rank": 7,
+      "artifact_paths": [
+        "matrix/mm_2x2x2/evolution_seed_0.json"
+      ],
+      "artifact_sha256": "9fa21443fd8c298024d325de7eb90fb1e66c4e274307152053e90ee557c60b77",
+      "cascade_id": "matrix_rank_evolution_search",
+      "cascade_version": "v1",
+      "final_candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "matrix_result_ref": "matrix/mm_2x2x2/evolution_matrix_result.json",
+      "matrix_result_report": {
+        "alphaevolve_comparable": false,
+        "artifacts": [
+          {
+            "bytes": 3140,
+            "kind": "summary",
+            "path": "matrix/mm_2x2x2/evolution_search_summary.json",
+            "sha256": "1cb5f2b064d0a3482d62c743d16ff1f037fc5dd3cab21e23a7dab6a27330984c",
+            "source_rights": {
+              "artifact_kind": "summary",
+              "as_is_disclaimer_applies": false,
+              "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+              "license": "LibreEvolve-local",
+              "local_project_endorsement": false,
+              "material_type": "local_generated_no_companion_material",
+              "must_keep_libreevolve_mit_license_separate": true,
+              "must_keep_source_pdf_rights_separate": true,
+              "official_google_product": false,
+              "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+              "rights_holder": null,
+              "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+              "source_manifest": "papers/companion_sources.json",
+              "source_paper_id": "2506.13131",
+              "source_relationship": "local_generated_no_companion_material_copied",
+              "source_rights_holder_required": false
+            }
+          }
+        ],
+        "best_rank": 7,
+        "coefficient_domain": "integer",
+        "dimensions": [
+          2,
+          2,
+          2
+        ],
+        "exactness_certificate": {
+          "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+          "method": "checked_strassen_symbolic_tensor_identity_match",
+          "status": "verified"
+        },
+        "hit_count": 4,
+        "hit_fraction": 1.0,
+        "schema": "libreevolve.matrix_result_report.v1",
+        "seed_count": 4,
+        "seed_results": [
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 0
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 1
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 2
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 3
+          }
+        ],
+        "target_id": "mm_2x2x2",
+        "target_suite": "alphaevolve_appendix_a"
+      },
+      "run_id": "matrix_evolution_fixture_v1",
+      "seed": 0,
+      "stage_traces": [
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "configured": false,
+            "passed": true,
+            "test_name": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 0,
+          "stage_index": 0,
+          "stage_label": "rank_smoke",
+          "stop_reason": "promoted_to_next_stage",
+          "threshold": 0.12
+        },
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "confidence": 0.95,
+            "confidence_interval": {
+              "kind": "one_sided_lower",
+              "lower": 0.14285714285714285,
+              "upper": null
+            },
+            "configured": true,
+            "error_budget": {
+              "calibration_method": null,
+              "configured": false,
+              "false_promotion": null,
+              "false_rejection": null,
+              "passed": true
+            },
+            "lower_bound": 0.14285714285714285,
+            "mean": 0.14285714285714285,
+            "metric": "inverse_multiplications",
+            "min": 0.12,
+            "min_samples": 4,
+            "observations": [
+              {
+                "sample_index": 0,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 1,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 2,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 3,
+                "value": 0.14285714285714285
+              }
+            ],
+            "p_value": 0.0,
+            "passed": true,
+            "sample_count": 4,
+            "sample_stddev": 0.0,
+            "sequential_stop": {
+              "enabled": false,
+              "evaluated_samples": 4,
+              "planned_samples": 4,
+              "stop_reason": null,
+              "stopped_early": false
+            },
+            "sequential_stopping": false,
+            "standard_error": 0.0,
+            "test_name": "one_sided_lower_confidence_bound",
+            "z_critical": 1.6448536269514715,
+            "z_score": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 0,
+          "stage_index": 1,
+          "stage_label": "rank_main",
+          "stop_reason": "accepted_final_candidate",
+          "threshold": 0.12
+        }
+      ],
+      "stop_reason": "accepted_final_candidate",
+      "target_id": "mm_2x2x2"
+    },
+    {
+      "accepted_final_rank": 7,
+      "artifact_paths": [
+        "matrix/mm_2x2x2/evolution_seed_1.json"
+      ],
+      "artifact_sha256": "5c11f898aacd75bd9edc13cc943bb461d0bca8731c30331a430248e07f391c0e",
+      "cascade_id": "matrix_rank_evolution_search",
+      "cascade_version": "v1",
+      "final_candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "matrix_result_ref": "matrix/mm_2x2x2/evolution_matrix_result.json",
+      "matrix_result_report": {
+        "alphaevolve_comparable": false,
+        "artifacts": [
+          {
+            "bytes": 3140,
+            "kind": "summary",
+            "path": "matrix/mm_2x2x2/evolution_search_summary.json",
+            "sha256": "1cb5f2b064d0a3482d62c743d16ff1f037fc5dd3cab21e23a7dab6a27330984c",
+            "source_rights": {
+              "artifact_kind": "summary",
+              "as_is_disclaimer_applies": false,
+              "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+              "license": "LibreEvolve-local",
+              "local_project_endorsement": false,
+              "material_type": "local_generated_no_companion_material",
+              "must_keep_libreevolve_mit_license_separate": true,
+              "must_keep_source_pdf_rights_separate": true,
+              "official_google_product": false,
+              "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+              "rights_holder": null,
+              "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+              "source_manifest": "papers/companion_sources.json",
+              "source_paper_id": "2506.13131",
+              "source_relationship": "local_generated_no_companion_material_copied",
+              "source_rights_holder_required": false
+            }
+          }
+        ],
+        "best_rank": 7,
+        "coefficient_domain": "integer",
+        "dimensions": [
+          2,
+          2,
+          2
+        ],
+        "exactness_certificate": {
+          "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+          "method": "checked_strassen_symbolic_tensor_identity_match",
+          "status": "verified"
+        },
+        "hit_count": 4,
+        "hit_fraction": 1.0,
+        "schema": "libreevolve.matrix_result_report.v1",
+        "seed_count": 4,
+        "seed_results": [
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 0
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 1
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 2
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 3
+          }
+        ],
+        "target_id": "mm_2x2x2",
+        "target_suite": "alphaevolve_appendix_a"
+      },
+      "run_id": "matrix_evolution_fixture_v1",
+      "seed": 1,
+      "stage_traces": [
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "configured": false,
+            "passed": true,
+            "test_name": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 1,
+          "stage_index": 0,
+          "stage_label": "rank_smoke",
+          "stop_reason": "promoted_to_next_stage",
+          "threshold": 0.12
+        },
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "confidence": 0.95,
+            "confidence_interval": {
+              "kind": "one_sided_lower",
+              "lower": 0.14285714285714285,
+              "upper": null
+            },
+            "configured": true,
+            "error_budget": {
+              "calibration_method": null,
+              "configured": false,
+              "false_promotion": null,
+              "false_rejection": null,
+              "passed": true
+            },
+            "lower_bound": 0.14285714285714285,
+            "mean": 0.14285714285714285,
+            "metric": "inverse_multiplications",
+            "min": 0.12,
+            "min_samples": 4,
+            "observations": [
+              {
+                "sample_index": 0,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 1,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 2,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 3,
+                "value": 0.14285714285714285
+              }
+            ],
+            "p_value": 0.0,
+            "passed": true,
+            "sample_count": 4,
+            "sample_stddev": 0.0,
+            "sequential_stop": {
+              "enabled": false,
+              "evaluated_samples": 4,
+              "planned_samples": 4,
+              "stop_reason": null,
+              "stopped_early": false
+            },
+            "sequential_stopping": false,
+            "standard_error": 0.0,
+            "test_name": "one_sided_lower_confidence_bound",
+            "z_critical": 1.6448536269514715,
+            "z_score": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 1,
+          "stage_index": 1,
+          "stage_label": "rank_main",
+          "stop_reason": "accepted_final_candidate",
+          "threshold": 0.12
+        }
+      ],
+      "stop_reason": "accepted_final_candidate",
+      "target_id": "mm_2x2x2"
+    },
+    {
+      "accepted_final_rank": 7,
+      "artifact_paths": [
+        "matrix/mm_2x2x2/evolution_seed_2.json"
+      ],
+      "artifact_sha256": "fc184aa4b51abdecd53eda879229addb014b75b0f35c25b686707033b95dd0e4",
+      "cascade_id": "matrix_rank_evolution_search",
+      "cascade_version": "v1",
+      "final_candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "matrix_result_ref": "matrix/mm_2x2x2/evolution_matrix_result.json",
+      "matrix_result_report": {
+        "alphaevolve_comparable": false,
+        "artifacts": [
+          {
+            "bytes": 3140,
+            "kind": "summary",
+            "path": "matrix/mm_2x2x2/evolution_search_summary.json",
+            "sha256": "1cb5f2b064d0a3482d62c743d16ff1f037fc5dd3cab21e23a7dab6a27330984c",
+            "source_rights": {
+              "artifact_kind": "summary",
+              "as_is_disclaimer_applies": false,
+              "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+              "license": "LibreEvolve-local",
+              "local_project_endorsement": false,
+              "material_type": "local_generated_no_companion_material",
+              "must_keep_libreevolve_mit_license_separate": true,
+              "must_keep_source_pdf_rights_separate": true,
+              "official_google_product": false,
+              "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+              "rights_holder": null,
+              "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+              "source_manifest": "papers/companion_sources.json",
+              "source_paper_id": "2506.13131",
+              "source_relationship": "local_generated_no_companion_material_copied",
+              "source_rights_holder_required": false
+            }
+          }
+        ],
+        "best_rank": 7,
+        "coefficient_domain": "integer",
+        "dimensions": [
+          2,
+          2,
+          2
+        ],
+        "exactness_certificate": {
+          "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+          "method": "checked_strassen_symbolic_tensor_identity_match",
+          "status": "verified"
+        },
+        "hit_count": 4,
+        "hit_fraction": 1.0,
+        "schema": "libreevolve.matrix_result_report.v1",
+        "seed_count": 4,
+        "seed_results": [
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 0
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 1
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 2
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 3
+          }
+        ],
+        "target_id": "mm_2x2x2",
+        "target_suite": "alphaevolve_appendix_a"
+      },
+      "run_id": "matrix_evolution_fixture_v1",
+      "seed": 2,
+      "stage_traces": [
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "configured": false,
+            "passed": true,
+            "test_name": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 2,
+          "stage_index": 0,
+          "stage_label": "rank_smoke",
+          "stop_reason": "promoted_to_next_stage",
+          "threshold": 0.12
+        },
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "confidence": 0.95,
+            "confidence_interval": {
+              "kind": "one_sided_lower",
+              "lower": 0.14285714285714285,
+              "upper": null
+            },
+            "configured": true,
+            "error_budget": {
+              "calibration_method": null,
+              "configured": false,
+              "false_promotion": null,
+              "false_rejection": null,
+              "passed": true
+            },
+            "lower_bound": 0.14285714285714285,
+            "mean": 0.14285714285714285,
+            "metric": "inverse_multiplications",
+            "min": 0.12,
+            "min_samples": 4,
+            "observations": [
+              {
+                "sample_index": 0,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 1,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 2,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 3,
+                "value": 0.14285714285714285
+              }
+            ],
+            "p_value": 0.0,
+            "passed": true,
+            "sample_count": 4,
+            "sample_stddev": 0.0,
+            "sequential_stop": {
+              "enabled": false,
+              "evaluated_samples": 4,
+              "planned_samples": 4,
+              "stop_reason": null,
+              "stopped_early": false
+            },
+            "sequential_stopping": false,
+            "standard_error": 0.0,
+            "test_name": "one_sided_lower_confidence_bound",
+            "z_critical": 1.6448536269514715,
+            "z_score": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 2,
+          "stage_index": 1,
+          "stage_label": "rank_main",
+          "stop_reason": "accepted_final_candidate",
+          "threshold": 0.12
+        }
+      ],
+      "stop_reason": "accepted_final_candidate",
+      "target_id": "mm_2x2x2"
+    },
+    {
+      "accepted_final_rank": 7,
+      "artifact_paths": [
+        "matrix/mm_2x2x2/evolution_seed_3.json"
+      ],
+      "artifact_sha256": "0218f3665d04defc659bbbdaa073a9e9baac95a7a1eaec214be8844a643f5907",
+      "cascade_id": "matrix_rank_evolution_search",
+      "cascade_version": "v1",
+      "final_candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+      "matrix_result_ref": "matrix/mm_2x2x2/evolution_matrix_result.json",
+      "matrix_result_report": {
+        "alphaevolve_comparable": false,
+        "artifacts": [
+          {
+            "bytes": 3140,
+            "kind": "summary",
+            "path": "matrix/mm_2x2x2/evolution_search_summary.json",
+            "sha256": "1cb5f2b064d0a3482d62c743d16ff1f037fc5dd3cab21e23a7dab6a27330984c",
+            "source_rights": {
+              "artifact_kind": "summary",
+              "as_is_disclaimer_applies": false,
+              "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+              "license": "LibreEvolve-local",
+              "local_project_endorsement": false,
+              "material_type": "local_generated_no_companion_material",
+              "must_keep_libreevolve_mit_license_separate": true,
+              "must_keep_source_pdf_rights_separate": true,
+              "official_google_product": false,
+              "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+              "rights_holder": null,
+              "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+              "source_manifest": "papers/companion_sources.json",
+              "source_paper_id": "2506.13131",
+              "source_relationship": "local_generated_no_companion_material_copied",
+              "source_rights_holder_required": false
+            }
+          }
+        ],
+        "best_rank": 7,
+        "coefficient_domain": "integer",
+        "dimensions": [
+          2,
+          2,
+          2
+        ],
+        "exactness_certificate": {
+          "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+          "method": "checked_strassen_symbolic_tensor_identity_match",
+          "status": "verified"
+        },
+        "hit_count": 4,
+        "hit_fraction": 1.0,
+        "schema": "libreevolve.matrix_result_report.v1",
+        "seed_count": 4,
+        "seed_results": [
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 0
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 1
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 2
+          },
+          {
+            "achieved_best_rank": true,
+            "exact": true,
+            "rank": 7,
+            "seed": 3
+          }
+        ],
+        "target_id": "mm_2x2x2",
+        "target_suite": "alphaevolve_appendix_a"
+      },
+      "run_id": "matrix_evolution_fixture_v1",
+      "seed": 3,
+      "stage_traces": [
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "configured": false,
+            "passed": true,
+            "test_name": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 3,
+          "stage_index": 0,
+          "stage_label": "rank_smoke",
+          "stop_reason": "promoted_to_next_stage",
+          "threshold": 0.12
+        },
+        {
+          "candidate_id": "candidate-gen-1-0-p0-ea07cc92f4febfae",
+          "exact": true,
+          "generation": 1,
+          "hypothesis_test_result": {
+            "confidence": 0.95,
+            "confidence_interval": {
+              "kind": "one_sided_lower",
+              "lower": 0.14285714285714285,
+              "upper": null
+            },
+            "configured": true,
+            "error_budget": {
+              "calibration_method": null,
+              "configured": false,
+              "false_promotion": null,
+              "false_rejection": null,
+              "passed": true
+            },
+            "lower_bound": 0.14285714285714285,
+            "mean": 0.14285714285714285,
+            "metric": "inverse_multiplications",
+            "min": 0.12,
+            "min_samples": 4,
+            "observations": [
+              {
+                "sample_index": 0,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 1,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 2,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 3,
+                "value": 0.14285714285714285
+              }
+            ],
+            "p_value": 0.0,
+            "passed": true,
+            "sample_count": 4,
+            "sample_stddev": 0.0,
+            "sequential_stop": {
+              "enabled": false,
+              "evaluated_samples": 4,
+              "planned_samples": 4,
+              "stop_reason": null,
+              "stopped_early": false
+            },
+            "sequential_stopping": false,
+            "standard_error": 0.0,
+            "test_name": "one_sided_lower_confidence_bound",
+            "z_critical": 1.6448536269514715,
+            "z_score": null
+          },
+          "lineage": [
+            "candidate-seed-0-336141cef010e8af"
+          ],
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "parent_id": "candidate-seed-0-336141cef010e8af",
+          "rank": 7,
+          "sample_count": 4,
+          "search_seed": 3,
+          "stage_index": 1,
+          "stage_label": "rank_main",
+          "stop_reason": "accepted_final_candidate",
+          "threshold": 0.12
+        }
+      ],
+      "stop_reason": "accepted_final_candidate",
+      "target_id": "mm_2x2x2"
+    }
+  ],
+  "local_runner_scope": "matrix_benchmark_runner",
+  "required_emission_fields": [
+    "run_id",
+    "target_id",
+    "seed",
+    "cascade_id",
+    "cascade_version",
+    "stage_traces",
+    "accepted_final_rank",
+    "stop_reason",
+    "final_candidate_id",
+    "matrix_result_ref",
+    "matrix_result_report",
+    "artifact_paths",
+    "artifact_sha256"
+  ],
+  "result_schema": "libreevolve.matrix_result_report.v1",
+  "runtime_emission_status": "emitted",
+  "schema": "libreevolve.matrix_cascade_run_runtime_boundary.v1",
+  "target_suite": "alphaevolve_appendix_a"
+}

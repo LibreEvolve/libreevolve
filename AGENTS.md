@@ -48,6 +48,10 @@ libreevolve/
 - The checked matrix cascade fixture executes four pinned seeds over known
   rank-7/rank-8 2x2 controls and emits per-seed traces; it is deterministic
   calibration, not Strassen rediscovery or AlphaEvolve-scale search evidence
+- The checked matrix evolution fixture runs four independent run-local
+  `evolve()` calls and records causal parent/lineage, budget, history, and
+  cascade evidence under a scripted rank-7 mutation control; it is normal
+  pipeline evidence, not stochastic LLM discovery or Section 3.1 scale
 - Failed/rejected candidates are persisted to `failure_history.jsonl`, exact
   workspace duplicate/cache audit rows are persisted to
   `duplicate_work_cache_index.jsonl`, and

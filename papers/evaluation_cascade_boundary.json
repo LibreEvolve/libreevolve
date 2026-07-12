@@ -7,6 +7,9 @@
   "matrix_fixture_report_schema": "libreevolve.matrix_cascade_fixture_report.v1",
   "matrix_fixture_report_ref": "libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/matrix/mm_2x2x2/cascade_fixture_report.json",
   "matrix_fixture_status": "executed_deterministic_rank7_rank8_calibration",
+  "matrix_evolution_fixture_report_schema": "libreevolve.matrix_evolution_fixture_report.v1",
+  "matrix_evolution_fixture_report_ref": "libreevolve/problems/benchmarks/artifacts/matrix_evolution_fixture/matrix/mm_2x2x2/evolution_fixture_report.json",
+  "matrix_evolution_fixture_status": "executed_normal_evolve_pipeline_scripted_control",
   "source_paper_id": "2506.13131",
   "source_section_id": "2.4",
   "source_section_ids": [
@@ -43,5 +46,5 @@
     "counterfactual_full_evaluation_costs": "stage_evidence_summary_records_not_recorded",
     "wall_clock_cost_savings": "stage_evidence_summary_records_not_recorded"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has runtime cascade attrition reports, stage evidence summaries, hypothesis-test policy reports, and a runtime transition matrix with promotion-decision attribution, next-stage exposure linkage, bounded candidate ids, and denominator reconciliation. Configured stages can also record strictly increasing difficulty/scale rationale and content-hashed declared-data or eval-input test-set identities. A checked four-seed 2x2 matrix fixture calibrates known rank-7 promotion and rank-8 rejection. It does not claim AlphaEvolve-style cascade-efficiency evidence with benchmark seed/sample policy, counterfactual full-evaluation costs, or observed wall-clock cost savings."
+  "claim_boundary": "This boundary records that LibreEvolve has runtime cascade attrition reports, stage evidence summaries, hypothesis-test policy reports, and a runtime transition matrix with promotion-decision attribution, next-stage exposure linkage, bounded candidate ids, and denominator reconciliation. Configured stages can also record strictly increasing difficulty/scale rationale and content-hashed declared-data or eval-input test-set identities. A checked four-seed 2x2 matrix fixture calibrates known rank-7 promotion and rank-8 rejection. A linked four-seed scripted control runs the normal evolve pipeline and records causal parentage, budget use, and stage exposure. It does not claim stochastic LLM discovery. It does not claim AlphaEvolve-style cascade-efficiency evidence with benchmark seed/sample policy, counterfactual full-evaluation costs, or observed wall-clock cost savings."
 }

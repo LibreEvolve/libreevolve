@@ -20,6 +20,13 @@ MATRIX_CASCADE_FIXTURE_REPORT_REF = (
     "libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/"
     "matrix/mm_2x2x2/cascade_fixture_report.json"
 )
+MATRIX_EVOLUTION_FIXTURE_REPORT_SCHEMA = (
+    "libreevolve.matrix_evolution_fixture_report.v1"
+)
+MATRIX_EVOLUTION_FIXTURE_REPORT_REF = (
+    "libreevolve/problems/benchmarks/artifacts/matrix_evolution_fixture/"
+    "matrix/mm_2x2x2/evolution_fixture_report.json"
+)
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
 EXPECTED_SOURCE_SECTION_IDS = ("2.4",)
@@ -85,6 +92,13 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         "matrix_fixture_report_schema": MATRIX_CASCADE_FIXTURE_REPORT_SCHEMA,
         "matrix_fixture_report_ref": MATRIX_CASCADE_FIXTURE_REPORT_REF,
         "matrix_fixture_status": "executed_deterministic_rank7_rank8_calibration",
+        "matrix_evolution_fixture_report_schema": (
+            MATRIX_EVOLUTION_FIXTURE_REPORT_SCHEMA
+        ),
+        "matrix_evolution_fixture_report_ref": MATRIX_EVOLUTION_FIXTURE_REPORT_REF,
+        "matrix_evolution_fixture_status": (
+            "executed_normal_evolve_pipeline_scripted_control"
+        ),
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
         "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
@@ -112,8 +126,10 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
             "difficulty/scale rationale and content-hashed declared-data or "
             "eval-input test-set identities. A checked four-seed 2x2 matrix "
             "fixture calibrates known rank-7 promotion and rank-8 rejection. "
-            "It does not claim AlphaEvolve-style "
-            "cascade-efficiency evidence with benchmark seed/sample policy, "
+            "A linked four-seed scripted control runs the normal evolve pipeline "
+            "and records causal parentage, budget use, and stage exposure. It "
+            "does not claim stochastic LLM discovery. It does not claim "
+            "AlphaEvolve-style cascade-efficiency evidence with benchmark seed/sample policy, "
             "counterfactual full-evaluation costs, or observed wall-clock cost "
             "savings."
         ),
@@ -146,6 +162,12 @@ def validate_evaluation_cascade_boundary(
         issues.append(_issue("invalid_matrix_fixture_report_ref", "matrix fixture report ref must identify the checked fixture"))
     if data.get("matrix_fixture_status") != "executed_deterministic_rank7_rank8_calibration":
         issues.append(_issue("invalid_matrix_fixture_status", "matrix fixture status must identify the executed calibration"))
+    if data.get("matrix_evolution_fixture_report_schema") != MATRIX_EVOLUTION_FIXTURE_REPORT_SCHEMA:
+        issues.append(_issue("invalid_matrix_evolution_fixture_report_schema", "matrix evolution fixture report schema linkage is invalid"))
+    if data.get("matrix_evolution_fixture_report_ref") != MATRIX_EVOLUTION_FIXTURE_REPORT_REF:
+        issues.append(_issue("invalid_matrix_evolution_fixture_report_ref", "matrix evolution fixture report ref must identify the checked fixture"))
+    if data.get("matrix_evolution_fixture_status") != "executed_normal_evolve_pipeline_scripted_control":
+        issues.append(_issue("invalid_matrix_evolution_fixture_status", "matrix evolution fixture status must identify the scripted normal-pipeline control"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
@@ -177,6 +199,8 @@ def validate_evaluation_cascade_boundary(
         or "denominator reconciliation" not in boundary_text
         or "content-hashed declared-data or eval-input test-set identities" not in boundary_text
         or "checked four-seed 2x2 matrix fixture" not in boundary_text
+        or "normal evolve pipeline" not in boundary_text
+        or "does not claim stochastic LLM discovery" not in boundary_text
         or "does not claim AlphaEvolve-style cascade-efficiency" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim cascade-efficiency evidence"))

@@ -16040,3 +16040,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     and owner review signoff remain active TODOs.
   - Verification: focused fixture and boundary tests plus paper-manifest
     validation cover the updated roadmap claims.
+- [x] Keep ROADMAP current with scripted normal-pipeline matrix evolution.
+  - Spec evidence: roadmap status must distinguish fixed-candidate calibration,
+    normal evolution orchestration, and stochastic discovery.
+  - Status: ROADMAP now records four independent run-local `evolve()` calls
+    with causal lineage, compact histories, budgets, stage exposure, and
+    rank-7 outputs under a scripted mutation control.
+  - Remaining roadmap gap: stochastic LLM discovery, AlphaEvolve tensor-task
+    parity, multi-generation/comparable budgets, target-suite scale, empirical
+    error rates, and owner review remain active TODOs.
+  - Verification: focused evolution and boundary tests plus paper-manifest
+    validation cover the updated claims.

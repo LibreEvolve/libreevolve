@@ -352,10 +352,12 @@ Important limits:
   identity records, evaluator/result artifact linkage, parameter-scope signoff,
   background-reference artifacts, review timestamps or versions, anti-gaming
   review evidence, non-smoke AlphaEvolve-comparable fixture scope,
-  search-derived repeated-seed protocols, anti-gaming negative fixtures, or
-  paper-claim-ready benchmark evidence. The checked 2x2 matrix calibration is
-  the bounded exception for deterministic four-seed known baselines and
-  emitted traces; it does not change the example's smoke scope. Those
+  stochastic-discovery repeated-seed protocols, anti-gaming negative fixtures,
+  or paper-claim-ready benchmark evidence. The checked 2x2 matrix calibration
+  and evolution fixtures are bounded exceptions: they record deterministic
+  known baselines plus four normal run-local `evolve()` pipelines with causal
+  ancestry, budgets, and emitted traces under a scripted mutation control.
+  They do not change the example's smoke scope. Those
   boundaries are tracked by
   `papers/problem_formulation_provenance_boundary.json` and
   `papers/benchmark_fixture_readiness_boundary.json`.
@@ -517,13 +519,14 @@ Important limits:
   Appendix A target; that boundary is tracked by
   `papers/matrix_suite_publication_artifacts.json`.
 - Matrix per-seed reports validate declared seed rows, best rank, and hit
-  fraction. The checked deterministic 2x2 cascade runner now executes four
-  pinned seeds, promotes the known rank-7 control, rejects the rank-8 control
-  at the main confidence-bound gate, writes one trace artifact per seed, and
-  emits the linked records in
-  `papers/matrix_cascade_run_runtime_boundary.json`. It does not run four
-  independent evolutionary searches, establish discovered-candidate lineage,
-  measure false-decision rates, or reproduce Section 3.1 scale.
+  fraction. The checked deterministic 2x2 cascade runner promotes the known
+  rank-7 control and rejects rank 8 at the main confidence-bound gate. The
+  linked evolution runner executes four independent run-local `evolve()`
+  pipelines, preserves causal parent/lineage and budget records, reaches rank
+  7 under a scripted mutation control, and emits the records in
+  `papers/matrix_cascade_run_runtime_boundary.json`. It does not establish
+  stochastic LLM discovery, measure false-decision rates, use AlphaEvolve's
+  tensor-decomposition formulation, or reproduce Section 3.1 budgets/scale.
 - Appendix A matrix target-suite curation records the reported 54 sorted
   targets, rough paper selection wording, symmetry policy, and included-target
   rationales, not an exhaustive locally justified corpus for every excluded

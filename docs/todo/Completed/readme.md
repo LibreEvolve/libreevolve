@@ -15843,3 +15843,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     record-beating evidence.
   - Verification: checked fixture/boundary tests and the whole-docs status pass
     preserve the scoped wording.
+- [x] Document scripted normal-pipeline matrix evolution without overclaiming.
+  - Spec evidence: the root README must distinguish actual `evolve()` runtime
+    evidence from stochastic model discovery and AlphaEvolve-scale results.
+  - Status: README now states that four checked run-local pipelines preserve
+    causal ancestry and budgets and reach rank 7 under a scripted mutation.
+  - Remaining README gap: stochastic discovery, empirical error rates,
+    cost-efficiency, tensor-formulation parity, target-suite scale, and record
+    evidence remain explicitly absent.
+  - Verification: focused fixture/boundary tests and whole-docs sidecars enforce
+    the scoped wording.

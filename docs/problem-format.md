@@ -990,8 +990,10 @@ unambiguous.
   can select the checked `smoke_cases` or `main_cases` data file from stage
   context and records the selected case-set id, case count, and seed as bounded
   output. The separate matrix cascade bundle uses this for deterministic
-  rank-7/rank-8 calibration; the example remains a 2x2 fixture rather than an
-  AlphaEvolve tensor-rank search benchmark.
+  rank-7/rank-8 calibration. The matrix evolution bundle additionally runs the
+  normal `evolve()` pipeline per seed under a scripted rank-7 mutation control,
+  with causal lineage and budget records. The example remains a 2x2 fixture
+  rather than an AlphaEvolve tensor-rank search benchmark.
 - Direct and loaded prompt context entries render in deterministic path order.
   Context-source metadata is matched by path, duplicate metadata records for a
   path are selected canonically rather than by insertion order, and generated

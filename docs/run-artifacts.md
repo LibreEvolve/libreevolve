@@ -249,9 +249,12 @@ boundaries, and a validated
 `libreevolve.evaluation_cascade_transition_matrix.v1` adjacent-stage matrix.
 The matrix records source/target stage roles, promotion-rule attribution,
 source pass/fail counts, next-stage exposure, bounded promoted/pruned candidate
-ids, and denominator reconciliation. `claim_ready: false` remains for missing
-difficulty/test-set, benchmark seed/sample, empirical error-rate, and cost
-evidence. The committed
+ids, and denominator reconciliation. When every stage configures paired
+`difficulty_or_scale` and `test_set` metadata, the same report validates
+strictly increasing levels and records content hashes from declared evaluator
+data or canonical embedded `eval_inputs`. `claim_ready: false` remains for
+missing benchmark seed/sample policy, repeated-seed fixtures, empirical error-
+rate validation, and cost evidence. The committed
 `papers/evaluation_cascade_boundary.json` sidecar preserves the same
 cascade-efficiency absence boundary for paper-manifest validation.
 Completed manifests also include

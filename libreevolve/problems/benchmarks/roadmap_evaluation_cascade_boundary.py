@@ -49,7 +49,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "cascade_transition_artifacts",
         "evaluation_surface": "configured validator stages and candidate promotion/prune flow",
-        "current_scope": "runtime cascade summary with reconciled adjacent-stage transition matrix and bounded candidate linkage",
+        "current_scope": "runtime cascade summary with reconciled adjacent-stage transitions plus optional complete difficulty and content-hashed test-set identity",
         "missing_readiness": "benchmark-calibrated repeated-seed fixtures, empirical promotion error rates, and cost-savings proof",
         "roadmap_required_phrase": "adjacent-stage transition matrix",
         "current_sidecars": ("papers/evaluation_cascade_boundary.json",),

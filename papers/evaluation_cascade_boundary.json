@@ -10,8 +10,9 @@
     "2.4"
   ],
   "source_claim": "evaluation cascades use increasingly difficult test ensembles to promote promising candidates and prune less promising candidates before larger budgets are spent; paper-ready evidence must link candidate-level promotion and prune decisions to next-stage exposure and stage-specific rules",
-  "boundary_status": "runtime_attrition_with_transition_linkage_without_benchmark_efficiency_evidence",
+  "boundary_status": "runtime_transition_and_stage_identity_without_benchmark_efficiency_evidence",
   "runtime_report_status": "evaluation_cascade_report_available_when_stages_run",
+  "stage_provenance_status": "optional_complete_difficulty_and_content_hashed_test_set_contract",
   "claim_ready": false,
   "required_evidence_fields": [
     "stage_id",
@@ -35,13 +36,10 @@
     "claim_readiness"
   ],
   "missing_evidence": {
-    "stage_difficulty_or_scale_rationale": "stage_evidence_summary_records_not_recorded",
-    "evaluator_test_set_identities": "local_evaluator_source_only",
-    "test_set_hashes": "stage_evidence_summary_records_not_recorded",
     "benchmark_seed_sample_policy": "runtime_sample_accounting_only_not_benchmark_policy",
     "counterfactual_full_evaluation_costs": "stage_evidence_summary_records_not_recorded",
     "wall_clock_cost_savings": "stage_evidence_summary_records_not_recorded",
     "matrix_multiplication_repeated_seed_policy": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has runtime cascade attrition reports, stage evidence summaries, hypothesis-test policy reports, and a runtime transition matrix with promotion-decision attribution, next-stage exposure linkage, bounded candidate ids, and denominator reconciliation. It does not claim AlphaEvolve-style cascade-efficiency evidence with stage difficulty rationale, evaluator test-set identities and hashes, benchmark seed/sample policy, counterfactual full-evaluation costs, or observed wall-clock cost savings."
+  "claim_boundary": "This boundary records that LibreEvolve has runtime cascade attrition reports, stage evidence summaries, hypothesis-test policy reports, and a runtime transition matrix with promotion-decision attribution, next-stage exposure linkage, bounded candidate ids, and denominator reconciliation. Configured stages can also record strictly increasing difficulty/scale rationale and content-hashed declared-data or eval-input test-set identities. It does not claim AlphaEvolve-style cascade-efficiency evidence with benchmark seed/sample policy, counterfactual full-evaluation costs, or observed wall-clock cost savings."
 }

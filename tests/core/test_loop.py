@@ -6415,6 +6415,16 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "        score = 1.0 if seed else 0.9\n"
         "    return {'score': score, 'is_valid': True}\n"
     )
+    fixtures = problem.problem_dir / "fixtures"
+    fixtures.mkdir()
+    (fixtures / "smoke.json").write_text(
+        '{"cases": [1, 2]}\n',
+        encoding="utf-8",
+    )
+    (fixtures / "main.json").write_text(
+        '{"cases": [1, 2, 3, 4]}\n',
+        encoding="utf-8",
+    )
     llm = _TelemetryLLM("<<<SEARCH\nx=1\n===\nx=2\n>>>REPLACE")
 
     with patch("libreevolve.core.loop.build_llm", return_value=llm):
@@ -6429,8 +6439,36 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
                         "name": "smoke",
                         "role": "small_scale_filter",
                         "min_score": 0.5,
+                        "data_include": ["fixtures/smoke.json"],
+                        "difficulty_or_scale": {
+                            "label": "small",
+                            "level": 0,
+                            "rationale": "fast small-case fault filter",
+                        },
+                        "test_set": {
+                            "id": "smoke_cases",
+                            "source": "declared_data",
+                            "split": "smoke",
+                            "expected_file_count": 1,
+                        },
                     },
-                    {"name": "main", "role": "main_test", "min_score": 0.5},
+                    {
+                        "name": "main",
+                        "role": "main_test",
+                        "min_score": 0.5,
+                        "data_include": ["fixtures/main.json"],
+                        "difficulty_or_scale": {
+                            "label": "large",
+                            "level": 1,
+                            "rationale": "larger main-test case set",
+                        },
+                        "test_set": {
+                            "id": "main_cases",
+                            "source": "declared_data",
+                            "split": "main",
+                            "expected_file_count": 1,
+                        },
+                    },
                 ],
             ),
         )
@@ -6463,11 +6501,19 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert evidence_summary["stage_source_ref_count"] == 2
     assert evidence_summary["stage_source_hash_count"] == 2
     assert evidence_summary["runtime_sample_count"] == 3
+    assert evidence_summary["difficulty_declared_count"] == 2
+    assert evidence_summary["test_set_identity_count"] == 2
+    assert evidence_summary["test_set_hash_count"] == 2
     assert evidence_summary["main_test_exposure_count"] == 1
     assert evidence_summary["early_prune_count"] == 1
-    assert evidence_summary["difficulty_or_scale_rationale_status"] == "not_recorded"
+    assert evidence_summary["difficulty_or_scale_rationale_status"] == (
+        "declared_for_all_stages"
+    )
     assert evidence_summary["evaluator_test_set_identity_status"] == (
-        "local_evaluator_source_only"
+        "content_hashed_for_all_stages"
+    )
+    assert evidence_summary["test_set_hash_status"] == (
+        "content_hashed_for_all_stages"
     )
     assert evidence_summary["benchmark_seed_sample_policy_status"] == (
         "runtime_accounting_only"
@@ -6476,7 +6522,9 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert evidence_summary["claim_readiness"]["local_stage_source_refs"] is True
     assert evidence_summary["claim_readiness"]["local_stage_source_hashes"] is True
     assert evidence_summary["claim_readiness"]["runtime_sample_accounting"] is True
-    assert evidence_summary["claim_readiness"]["evaluator_test_set_identity"] is False
+    assert evidence_summary["claim_readiness"]["difficulty_or_scale_rationale"] is True
+    assert evidence_summary["claim_readiness"]["evaluator_test_set_identity"] is True
+    assert evidence_summary["claim_readiness"]["test_set_hashes"] is True
     assert (
         evidence_summary["claim_readiness"]["alphaevolve_cascade_efficiency_evidence"]
         is False
@@ -6507,9 +6555,8 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert transition["denominator_reconciled"] is True
     assert transition["candidate_linkage_status"] == "complete"
     assert transition["promoted_candidate_ids"] == transition["target_candidate_ids"]
-    assert "stage_difficulty_or_scale_labels" in (
-        report["claim_readiness"]["remaining_gap"]
-    )
+    assert "stage_difficulty_or_scale_labels" not in report["claim_readiness"]["remaining_gap"]
+    assert "evaluator_test_set_hashes" not in report["claim_readiness"]["remaining_gap"]
     assert "benchmark_seed_sample_denominator_policy" in (
         report["claim_readiness"]["remaining_gap"]
     )
@@ -6517,7 +6564,19 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     smoke, main = report["stages"]
     assert smoke["name"] == "smoke"
     assert smoke["stage_id"] == "0:smoke"
-    assert smoke["difficulty_or_scale"] == {"status": "not_declared"}
+    assert smoke["difficulty_or_scale"] == {
+        "status": "declared",
+        "label": "small",
+        "level": 0,
+        "rationale": "fast small-case fault filter",
+        "estimated_cost": None,
+    }
+    assert smoke["test_set"]["id"] == "smoke_cases"
+    assert smoke["test_set"]["identity_status"] == "expected_identity_verified"
+    assert smoke["test_set"]["file_count"] == 1
+    assert smoke["test_set"]["expected_file_count_match"] is True
+    assert smoke["test_set"]["identity_ready"] is True
+    assert len(smoke["test_set"]["aggregate_sha256"]) == 64
     assert isinstance(smoke["source"], dict)
     assert smoke["candidate_count"] == 2
     assert smoke["passed"] == 1
@@ -6530,6 +6589,9 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert main["candidate_count"] == 1
     assert main["passed"] == 1
     assert main["failed"] == 0
+    assert main["difficulty_or_scale"]["level"] == 1
+    assert main["test_set"]["id"] == "main_cases"
+    assert main["test_set"]["identity_ready"] is True
 
     stage_records = report["candidate_stage_records"]
     assert [record["history_path"] for record in stage_records] == [
@@ -6560,6 +6622,8 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     overclaimed["transition_matrix"]["records"][0][
         "next_stage_exposure_count"
     ] = 2
+    overclaimed["stages"][0]["test_set"]["aggregate_sha256"] = "not-a-hash"
+    overclaimed["stage_evidence_summary"]["difficulty_declared_count"] = 1
     validation = validate_evaluation_cascade_report(overclaimed)
     assert validation["ok"] is False
     codes = {issue["code"] for issue in validation["issues"]}
@@ -6567,6 +6631,8 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     assert "alphaevolve_cascade_efficiency_evidence_overclaim" in codes
     assert "transition_matrix_benchmark_overclaim" in codes
     assert "transition_denominator_delta_mismatch" in codes
+    assert "stage_test_set_hash_overclaim" in codes
+    assert "difficulty_or_scale_rationale_readiness_mismatch" in codes
 
     hypothesis_policy = manifest["runtime"]["history"][
         "cascade_hypothesis_test_policy_report"

@@ -824,12 +824,14 @@ main-test exposure, early-prune counts, bounded candidate-stage cross-links to
 boundaries, `stage_evidence_summary` role/source/hash/sample/exposure counts,
 and a validated `libreevolve.evaluation_cascade_transition_matrix.v1` with
 promotion-rule attribution, bounded candidate linkage, next-stage exposure,
-and denominator reconciliation. Stage difficulty/test-set identities,
-benchmark seed/sample policy, empirical error-rate proof, and cost-savings
-evidence remain open before claiming AlphaEvolve cascade efficiency or
+and denominator reconciliation. Configured stages can also provide strictly
+increasing difficulty/scale rationale and content-hashed declared-data or
+embedded-input test-set identities. Benchmark seed/sample policy, repeated-
+seed fixtures, empirical error-rate proof, and cost-savings evidence remain
+open before claiming AlphaEvolve cascade efficiency or
 hypothesis-testing parity. The committed
 `papers/evaluation_cascade_boundary.json` sidecar now emits that
-`runtime_attrition_with_transition_linkage_without_benchmark_efficiency_evidence`
+`runtime_transition_and_stage_identity_without_benchmark_efficiency_evidence`
 boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
 Completed manifests also include

@@ -180,7 +180,10 @@ from `validate.py` unless explicitly allowlisted.
 - `eval_stages` (`[]`): optional configured evaluator stages with stage
   validator entrypoints, thresholds, samples, validator-managed seed values,
   metric-specific aggregation and min/max thresholds, retries, and timeouts.
-  Each configured stage must have an explicit manifest-safe `name`.
+  Each configured stage must have an explicit manifest-safe `name`. Optional
+  `difficulty_or_scale` and `test_set` provenance must be configured together
+  for every stage, with strictly increasing difficulty levels and content-
+  hashed declared data or embedded evaluation inputs.
 - `prompt_variants` (`[]`): optional prompt templates for stochastic sampling.
 - `prompt_variant_semantic_policy` (`"alphaevolve"`): validation policy for
   configured prompt seeds. The default requires `{task}`, `{parent_code}`,
@@ -821,6 +824,7 @@ evaluator_data_include: ["fixtures/*.json"]
 evaluator_data_exclude: ["fixtures/tmp/**"]
 eval_stages:
   - name: smoke
+    role: small_scale_filter
     validate_path: validate.py
     timeout_sec: 5
     max_sample_seconds: 3
@@ -830,7 +834,18 @@ eval_stages:
     seeds: [1, 2]
     retries: 1
     data_include: ["smoke-fixtures/*.json"]
+    difficulty_or_scale:
+      label: small
+      level: 0
+      rationale: fast small-case fault filter
+      estimated_cost: 1
+    test_set:
+      id: smoke_cases
+      source: declared_data
+      split: smoke
+      expected_file_count: 2
   - name: full
+    role: main_test
     timeout_sec: 30
     min_score: 0.5
     require_program_output: true
@@ -856,11 +871,27 @@ eval_stages:
     artifact_max_files: 5
     artifact_max_bytes: 2000000
     artifact_redact_secrets: true
+    data_include: ["full-fixtures/*.json"]
+    difficulty_or_scale:
+      label: large
+      level: 1
+      rationale: full validation case set
+    test_set:
+      id: full_cases
+      source: declared_data
+      split: main
   - name: candidate_eval
     mode: embedded_evaluate
     timeout_sec: 10
     eval_inputs:
       cases: [1, 2, 3]
+    difficulty_or_scale:
+      label: embedded_large
+      level: 2
+      rationale: candidate-owned full evaluation inputs
+    test_set:
+      id: candidate_eval_cases
+      source: eval_inputs
 backends:
   - type: openai
     model: "<openai-model-id>"
@@ -873,6 +904,17 @@ must be JSON-safe config data; runtime metadata records its type, byte size, and
 SHA-256, not the raw object. Embedded stages currently still require the problem
 to include the normal `validate.py` file for problem loading, but they do not
 run that validator for the embedded stage.
+
+When stage provenance is enabled, every configured stage must define both
+`difficulty_or_scale` and `test_set`. Difficulty records require a manifest-
+safe `label`, a non-negative integer `level`, and a non-empty `rationale`;
+levels must increase strictly in stage order. `test_set.source: declared_data`
+requires non-empty stage `data_include` patterns and records the preflight-
+captured file count plus aggregate SHA-256. `test_set.source: eval_inputs`
+requires an embedded stage and hashes canonical JSON inputs. Optional
+`expected_file_count` and `expected_aggregate_sha256` fields turn capture into
+an expected-identity check. Runtime cascade validation keeps mismatches or
+incomplete captures from becoming test-set-ready evidence.
 
 `eval_stages[].timeout_sec` is enforced per subprocess attempt: with
 `samples: 2` and `retries: 1`, each sample can run up to two validator

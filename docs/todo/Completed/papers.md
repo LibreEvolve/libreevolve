@@ -14348,3 +14348,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     difficulty/test-set evidence, and cost-savings proof remain open.
   - Verification: focused cascade boundary tests require the transition-matrix
     schema and preserve false benchmark-readiness claims.
+- [x] Add paper-facing cascade stage/test-set identity evidence.
+  - Paper evidence: AlphaEvolve Section 2.4 requires increasingly difficult
+    test ensembles and identifiable evaluation populations.
+  - Status: `papers/evaluation_cascade_boundary.json` now records the optional
+    complete difficulty/scale and content-hashed test-set contract rather than
+    listing stage identity as wholly absent.
+  - Remaining paper gap: benchmark seed/sample policy, built-in repeated-seed
+    fixtures, empirical error-rate validation, and cost-savings proof remain
+    open.
+  - Verification: focused runtime and boundary tests validate stage provenance
+    completeness and preserve benchmark-efficiency non-readiness.

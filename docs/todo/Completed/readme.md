@@ -14197,6 +14197,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused cascade tests and documentation inventory checks
     cover the new wording and sidecar schemas.
 
+- [x] Keep README cascade wording current with stage/test-set identity.
+  - Status: README now records strictly increasing stage difficulty/scale
+    rationale and content-hashed file-backed or embedded-input test-set
+    identities as optional runtime evidence, not benchmark-calibrated parity.
+  - Verification: config, runtime cascade, and documentation inventory tests
+    cover the contract and wording.
+
 - [x] Keep README natural-language preamble boundary tied to sidecar.
   - Status: README now states that natural-language preambles are bounded
     leading metadata before structured mutation markers, not complete freeform

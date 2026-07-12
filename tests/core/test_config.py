@@ -1001,6 +1001,100 @@ def test_accepts_maximum_eval_stage_retry_cap():
     assert config.eval_stages[0]["retries"] == 10
 
 
+def test_accepts_complete_eval_stage_difficulty_and_test_set_provenance():
+    config = Config(
+        eval_stages=[
+            {
+                "name": "smoke",
+                "data_include": ["fixtures/smoke.json"],
+                "difficulty_or_scale": {
+                    "label": "small",
+                    "level": 0,
+                    "rationale": "fast fault filter",
+                    "estimated_cost": 1.0,
+                },
+                "test_set": {
+                    "id": "smoke_cases",
+                    "source": "declared_data",
+                    "split": "smoke",
+                    "expected_file_count": 1,
+                },
+            },
+            {
+                "name": "main",
+                "data_include": ["fixtures/main.json"],
+                "difficulty_or_scale": {
+                    "label": "large",
+                    "level": 1,
+                    "rationale": "full validation cases",
+                },
+                "test_set": {
+                    "id": "main_cases",
+                    "source": "declared_data",
+                    "split": "main",
+                },
+            },
+        ]
+    )
+
+    assert config.eval_stages[0]["difficulty_or_scale"]["level"] == 0
+    assert config.eval_stages[1]["test_set"]["id"] == "main_cases"
+
+
+@pytest.mark.parametrize(
+    ("stages", "message"),
+    [
+        (
+            [
+                {
+                    "name": "smoke",
+                    "difficulty_or_scale": {
+                        "label": "small",
+                        "level": 0,
+                        "rationale": "filter",
+                    },
+                }
+            ],
+            "must be configured together",
+        ),
+        (
+            [
+                {
+                    "name": "smoke",
+                    "data_include": ["fixtures/smoke.json"],
+                    "difficulty_or_scale": {
+                        "label": "small",
+                        "level": 1,
+                        "rationale": "filter",
+                    },
+                    "test_set": {
+                        "id": "smoke_cases",
+                        "source": "declared_data",
+                    },
+                },
+                {
+                    "name": "main",
+                    "data_include": ["fixtures/main.json"],
+                    "difficulty_or_scale": {
+                        "label": "main",
+                        "level": 1,
+                        "rationale": "main cases",
+                    },
+                    "test_set": {
+                        "id": "main_cases",
+                        "source": "declared_data",
+                    },
+                },
+            ],
+            "must be strictly increasing",
+        ),
+    ],
+)
+def test_rejects_incomplete_eval_stage_provenance(stages, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(eval_stages=stages)
+
+
 def test_accepts_eval_stage_hypothesis_test_config():
     config = Config(
         eval_stages=[

@@ -1115,6 +1115,7 @@ def _validate_eval_stages(stages: object) -> None:
         raise ConfigError("eval_stages must be a list of mappings")
     reserved_stage_names = {"diff", "syntax", "validate"}
     stage_names: set[str] = set(reserved_stage_names)
+    provenance_levels: list[int] = []
     for index, stage in enumerate(stages):
         label = f"eval_stages[{index}]"
         if not isinstance(stage, dict):
@@ -1122,6 +1123,8 @@ def _validate_eval_stages(stages: object) -> None:
         unsupported = _unsupported_mapping_keys(label, stage, {
             "name",
             "role",
+            "difficulty_or_scale",
+            "test_set",
             "mode",
             "validate_path",
             "eval_inputs",
@@ -1177,6 +1180,25 @@ def _validate_eval_stages(stages: object) -> None:
                 f"{label}.role",
                 stage["role"],
                 {"small_scale_filter", "intermediate_filter", "main_test"},
+            )
+        has_difficulty = "difficulty_or_scale" in stage
+        has_test_set = "test_set" in stage
+        if has_difficulty != has_test_set:
+            raise ConfigError(
+                f"{label}.difficulty_or_scale and {label}.test_set must be "
+                "configured together"
+            )
+        if has_difficulty:
+            provenance_levels.append(
+                _validate_stage_difficulty_or_scale(
+                    f"{label}.difficulty_or_scale",
+                    stage["difficulty_or_scale"],
+                )
+            )
+            _validate_stage_test_set(
+                f"{label}.test_set",
+                stage["test_set"],
+                stage,
             )
         if "validate_path" in stage:
             _require_string(f"{label}.validate_path", stage["validate_path"])
@@ -1259,6 +1281,104 @@ def _validate_eval_stages(stages: object) -> None:
                 raise ConfigError(f"{label}.samples must match the number of seeds")
         if "name" not in stage:
             raise ConfigError(f"{label}.name is required for configured eval stages")
+    if provenance_levels:
+        if len(provenance_levels) != len(stages):
+            raise ConfigError(
+                "eval_stages difficulty_or_scale/test_set provenance must be "
+                "configured for every stage"
+            )
+        if any(
+            current <= previous
+            for previous, current in zip(provenance_levels, provenance_levels[1:])
+        ):
+            raise ConfigError(
+                "eval_stages difficulty_or_scale.level values must be strictly "
+                "increasing"
+            )
+
+
+def _validate_stage_difficulty_or_scale(label: str, value: object) -> int:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    unsupported = _unsupported_mapping_keys(
+        label,
+        value,
+        {"label", "level", "rationale", "estimated_cost"},
+    )
+    if unsupported:
+        raise ConfigError(f"{label} has unsupported fields {unsupported}")
+    for field in ("label", "level", "rationale"):
+        if field not in value:
+            raise ConfigError(f"{label}.{field} is required")
+    _require_stage_label(f"{label}.label", value["label"])
+    _require_int(f"{label}.level", value["level"], minimum=0)
+    _require_string(f"{label}.rationale", value["rationale"])
+    if "estimated_cost" in value:
+        _require_positive_number(
+            f"{label}.estimated_cost",
+            value["estimated_cost"],
+        )
+    return int(value["level"])
+
+
+def _validate_stage_test_set(
+    label: str,
+    value: object,
+    stage: dict,
+) -> None:
+    if not isinstance(value, dict):
+        raise ConfigError(f"{label} must be a mapping")
+    unsupported = _unsupported_mapping_keys(
+        label,
+        value,
+        {
+            "id",
+            "source",
+            "split",
+            "expected_file_count",
+            "expected_aggregate_sha256",
+        },
+    )
+    if unsupported:
+        raise ConfigError(f"{label} has unsupported fields {unsupported}")
+    for field in ("id", "source"):
+        if field not in value:
+            raise ConfigError(f"{label}.{field} is required")
+    _require_stage_label(f"{label}.id", value["id"])
+    _require_enum(
+        f"{label}.source",
+        value["source"],
+        {"declared_data", "eval_inputs"},
+    )
+    source = value["source"]
+    if "split" in value:
+        _require_stage_label(f"{label}.split", value["split"])
+    if "expected_file_count" in value:
+        _require_int(
+            f"{label}.expected_file_count",
+            value["expected_file_count"],
+            minimum=1,
+        )
+    if "expected_aggregate_sha256" in value:
+        _require_sha256(
+            f"{label}.expected_aggregate_sha256",
+            value["expected_aggregate_sha256"],
+        )
+    if source == "declared_data":
+        if not isinstance(stage.get("data_include"), list) or not stage["data_include"]:
+            raise ConfigError(
+                f"{label}.source='declared_data' requires stage data_include"
+            )
+    else:
+        if "expected_file_count" in value:
+            raise ConfigError(
+                f"{label}.expected_file_count is unsupported for eval_inputs"
+            )
+        if stage.get("mode") != "embedded_evaluate" or "eval_inputs" not in stage:
+            raise ConfigError(
+                f"{label}.source='eval_inputs' requires mode='embedded_evaluate' "
+                "and eval_inputs"
+            )
 
 
 def _validate_evaluator_workload(label: str, value: object) -> None:

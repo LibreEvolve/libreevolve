@@ -141,9 +141,11 @@ LibreEvolve has:
   source refs/hashes when available, runtime samples, main-test exposure, and
   early pruning, plus a validated adjacent-stage transition matrix with
   promotion-rule attribution, bounded candidate linkage, next-stage exposure,
-  and denominator reconciliation. `papers/evaluation_cascade_boundary.json`
-  keeps stage difficulty/test-set identities, benchmark seed/sample policy,
-  empirical error-rate proof, and cost-savings evidence open
+  and denominator reconciliation, plus an optional complete stage contract for
+  strictly increasing difficulty/scale rationale and content-hashed test-set
+  identities. `papers/evaluation_cascade_boundary.json` keeps benchmark seed/
+  sample policy, repeated-seed fixtures, empirical error-rate proof, and cost-
+  savings evidence open
 - cascade hypothesis-test boundary reports under
   `runtime.history.cascade_hypothesis_test_policy_report`, naming configured
   or fallback-inferred small-scale-filter/main-test roles, deterministic threshold/artifact

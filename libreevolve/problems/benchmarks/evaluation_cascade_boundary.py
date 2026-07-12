@@ -19,7 +19,7 @@ EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
 EXPECTED_SOURCE_SECTION_IDS = ("2.4",)
 EXPECTED_BOUNDARY_STATUS = (
-    "runtime_attrition_with_transition_linkage_without_benchmark_efficiency_evidence"
+    "runtime_transition_and_stage_identity_without_benchmark_efficiency_evidence"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stage_id",
@@ -43,11 +43,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "claim_readiness",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "stage_difficulty_or_scale_rationale": (
-        "stage_evidence_summary_records_not_recorded"
-    ),
-    "evaluator_test_set_identities": "local_evaluator_source_only",
-    "test_set_hashes": "stage_evidence_summary_records_not_recorded",
     "benchmark_seed_sample_policy": (
         "runtime_sample_accounting_only_not_benchmark_policy"
     ),
@@ -95,6 +90,9 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_status": "evaluation_cascade_report_available_when_stages_run",
+        "stage_provenance_status": (
+            "optional_complete_difficulty_and_content_hashed_test_set_contract"
+        ),
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -103,10 +101,10 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
             "reports, stage evidence summaries, hypothesis-test policy reports, and "
             "a runtime transition matrix with promotion-decision attribution, "
             "next-stage exposure linkage, bounded candidate ids, and denominator "
-            "reconciliation. It does not claim AlphaEvolve-style cascade-efficiency "
-            "evidence with "
-            "stage difficulty rationale, evaluator test-set identities and hashes, "
-            "benchmark seed/sample policy, "
+            "reconciliation. Configured stages can also record strictly increasing "
+            "difficulty/scale rationale and content-hashed declared-data or "
+            "eval-input test-set identities. It does not claim AlphaEvolve-style "
+            "cascade-efficiency evidence with benchmark seed/sample policy, "
             "counterfactual full-evaluation costs, or observed wall-clock cost "
             "savings."
         ),
@@ -150,6 +148,8 @@ def validate_evaluation_cascade_boundary(
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
     if data.get("runtime_report_status") != "evaluation_cascade_report_available_when_stages_run":
         issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to cascade runtime reports"))
+    if data.get("stage_provenance_status") != "optional_complete_difficulty_and_content_hashed_test_set_contract":
+        issues.append(_issue("invalid_stage_provenance_status", "stage provenance status must identify the optional complete contract"))
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "evaluation cascade boundary must not claim paper readiness"))
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
@@ -160,6 +160,7 @@ def validate_evaluation_cascade_boundary(
         or "runtime transition matrix" not in boundary_text
         or "promotion-decision attribution" not in boundary_text
         or "denominator reconciliation" not in boundary_text
+        or "content-hashed declared-data or eval-input test-set identities" not in boundary_text
         or "does not claim AlphaEvolve-style cascade-efficiency" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim cascade-efficiency evidence"))

@@ -190,10 +190,12 @@ Important limits:
   main-test exposure, and early pruning, plus a validated adjacent-stage
   transition matrix with promotion-rule attribution, bounded promoted/pruned
   candidate ids, next-stage exposure counts, and denominator reconciliation.
-  They are not AlphaEvolve-style cascade-efficiency evidence with stage
-  difficulty rationale, evaluator/test-set identities and hashes, benchmark
-  seed/sample policy, counterfactual full-evaluation costs, observed wall-clock
-  cost savings, or empirical error-rate validation; that boundary is tracked by
+  An optional complete config contract records strictly increasing stage
+  difficulty/scale rationale and content-hashed declared-data or embedded-input
+  test-set identities. These reports are not AlphaEvolve-style cascade-
+  efficiency evidence with benchmark seed/sample policy, repeated-seed
+  fixtures, counterfactual full-evaluation costs, observed wall-clock cost
+  savings, or empirical error-rate validation; that boundary is tracked by
   `papers/evaluation_cascade_boundary.json`.
 - Cascade hypothesis-test gates are runtime policy evidence, not
   benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed

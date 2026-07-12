@@ -19295,3 +19295,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     counterfactual cost evidence remain open.
   - Verification: focused cascade runtime tests validate reconciled promotion
     and prune outcomes plus transition overclaim rejection.
+- [x] Add verified cascade stage difficulty and test-set identity contract.
+  - Spec evidence: AlphaEvolve Section 2.4 orders test ensembles by increasing
+    difficulty and uses named test populations before main-test exposure.
+  - Status: configured stages can now pair strictly increasing
+    `difficulty_or_scale` records with `test_set` identities backed by hashed
+    declared evaluator data or canonical embedded `eval_inputs`. Every stage
+    must participate once enabled, and optional expected file-count/hash checks
+    are enforced.
+  - Remaining code gap: built-in benchmark-calibrated repeated-seed fixtures,
+    empirical false-promotion/false-rejection validation, and cost-savings
+    evidence remain open.
+  - Verification: config tests reject partial/non-increasing provenance, and
+    the two-stage runtime fixture verifies real file-backed content hashes.

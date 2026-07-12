@@ -212,19 +212,20 @@ directory and using the AlphaEvolve paper as the primary specification.
     explicit absent-evidence statuses. It now also records a validated
     `libreevolve.evaluation_cascade_transition_matrix.v1` with adjacent-stage
     promotion-rule attribution, bounded promoted/pruned candidate ids,
-    next-stage exposure counts, and denominator reconciliation. The committed
+    next-stage exposure counts, and denominator reconciliation. Configured
+    stages can now add strictly increasing difficulty/scale rationale and
+    content-hashed declared-data or embedded-input test-set identities. The committed
     `papers/evaluation_cascade_boundary.json` sidecar now preserves the
     paper-manifest-validated runtime-transition-linkage boundary without
     benchmark-efficiency evidence.
-  - Current gap: paper-facing evidence still lacks stage difficulty or scale
-    rationale, evaluator/test-set identities and hashes, benchmark seed/sample
-    policy, repeated-seed benchmark fixtures, empirical false-promotion/false-
+  - Current gap: paper-facing evidence still lacks benchmark seed/sample
+    policy, built-in repeated-seed benchmark fixtures, empirical false-promotion/false-
     rejection validation, and counterfactual cost/wall-clock savings. The
     report therefore remains
     `claim_ready: false` for AlphaEvolve cascade-efficiency claims.
-  - Required result: finish cascade-report artifacts and validators with stage
-    difficulty/test-set metadata, random-seed/sample coverage beyond the
-    runtime denominator policy, benchmark-calibrated repeated-seed fixtures,
+  - Required result: finish cascade-report artifacts and validators with
+    random-seed/sample coverage beyond the runtime denominator policy,
+    benchmark-calibrated repeated-seed fixtures,
     empirical error-rate validation, cost summaries, and claim-readiness
     checks.
 

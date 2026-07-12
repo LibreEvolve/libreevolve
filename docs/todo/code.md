@@ -2091,7 +2091,11 @@ sidecars, tests, and active TODOs.
     `libreevolve.evaluation_cascade_transition_matrix.v1`, with adjacent
     source/target stage roles, promotion-rule attribution, bounded promoted and
     pruned candidate ids, next-stage exposure counts, and denominator
-    reconciliation. The hypothesis-test policy report links the same matrix
+    reconciliation. Configured stages can now pair strictly increasing
+    `difficulty_or_scale` metadata with `test_set` identities sourced from
+    content-hashed declared evaluator data or canonical embedded `eval_inputs`;
+    partial provenance and expected hash/count mismatches are rejected. The
+    hypothesis-test policy report links the same matrix
     and marks small-filter-to-main-test linkage ready only when all adjacent
     denominators reconcile. Validation rejects denominator, transition, and
     stage-evidence overclaims. Tests cover a two-stage run where one
@@ -2099,9 +2103,8 @@ sidecars, tests, and active TODOs.
     committed `papers/evaluation_cascade_boundary.json` sidecar now records
     the paper-manifest-validated boundary for runtime transition linkage
     without benchmark-efficiency evidence.
-  - Required result: finish difficulty/scale labels, evaluator/test-set
-    identities and hashes, benchmark seed/sample policy beyond runtime
-    accounting, repeated-seed benchmark fixtures, empirical false-promotion/
+  - Required result: finish benchmark seed/sample policy beyond runtime
+    accounting, built-in repeated-seed benchmark fixtures, empirical false-promotion/
     false-rejection validation, and counterfactual cost-savings evidence before
     claiming AlphaEvolve-style evaluation-cascade efficiency or hypothesis-
     testing evidence.

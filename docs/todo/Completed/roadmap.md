@@ -16020,6 +16020,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Status: ROADMAP now records the validated adjacent-stage transition matrix
     and reconciled small-filter-to-main-test linkage.
   - Remaining roadmap gap: benchmark-calibrated thresholds, repeated-seed
-    fixtures, empirical false-promotion/false-rejection validation, stage
-    difficulty/test-set evidence, cost-savings proof, and owner review signoff
+    fixtures, empirical false-promotion/false-rejection validation, cost-
+    savings proof, and owner review signoff
     remain active TODOs.
+- [x] Keep ROADMAP cascade status current with stage/test-set identity.
+  - Status: ROADMAP now records the optional complete contract for strictly
+    increasing stage difficulty/scale rationale and content-hashed test-set
+    identities.
+  - Remaining roadmap gap: benchmark-calibrated repeated-seed fixtures,
+    empirical false-promotion/false-rejection validation, cost-savings proof,
+    and owner review signoff remain active TODOs.

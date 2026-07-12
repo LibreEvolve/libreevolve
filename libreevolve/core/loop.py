@@ -18042,6 +18042,14 @@ def _evaluation_cascade_report(
                 and not isinstance(raw_stage_index, bool)
                 else {}
             )
+            stage_config = (
+                eval_stages[raw_stage_index]
+                if isinstance(raw_stage_index, int)
+                and not isinstance(raw_stage_index, bool)
+                and 0 <= raw_stage_index < len(eval_stages)
+                and isinstance(eval_stages[raw_stage_index], Mapping)
+                else {}
+            )
             stage = stages.setdefault(
                 f"{raw_stage_index}:{name}",
                 {
@@ -18049,7 +18057,13 @@ def _evaluation_cascade_report(
                     "stage_id": f"{raw_stage_index}:{name}",
                     "stage_index": raw_stage_index,
                     "source": _evaluator_oracle_source_ref(source),
-                    "difficulty_or_scale": {"status": "not_declared"},
+                    "difficulty_or_scale": _cascade_stage_difficulty_or_scale(
+                        stage_config
+                    ),
+                    "test_set": _cascade_stage_test_set_identity(
+                        stage_config,
+                        source,
+                    ),
                     "entered": 0,
                     "passed": 0,
                     "failed": 0,
@@ -18178,6 +18192,12 @@ def _evaluation_cascade_report(
         ordered_stages,
         eval_stages,
     )
+    stage_evidence_summary = _evaluation_cascade_stage_evidence_summary(
+        ordered_stages,
+        eval_stages,
+        main_test_exposure_count,
+        max(0, configured_candidate_count - main_test_exposure_count),
+    )
     report = {
         "schema": "libreevolve.evaluation_cascade_report.v1",
         "source": "runtime_history_configured_stage_results",
@@ -18224,12 +18244,7 @@ def _evaluation_cascade_report(
                 if stage.get("source") == {"status": "not_available"}
             ),
         },
-        "stage_evidence_summary": _evaluation_cascade_stage_evidence_summary(
-            ordered_stages,
-            eval_stages,
-            main_test_exposure_count,
-            max(0, configured_candidate_count - main_test_exposure_count),
-        ),
+        "stage_evidence_summary": stage_evidence_summary,
         "transition_matrix": transition_matrix,
         "main_test_exposure_count": main_test_exposure_count,
         "early_prune_count": max(0, configured_candidate_count - main_test_exposure_count),
@@ -18238,19 +18253,143 @@ def _evaluation_cascade_report(
         "claim_readiness": {
             "alphaevolve_cascade_efficiency": False,
             "reason": (
-                "stage promotion and attrition counts exist, but difficulty/scale "
-                "rationale and evaluator test-set identities are not yet complete"
+                "stage promotion, attrition, and optional stage/test-set identity "
+                "evidence exist, but benchmark calibration and cost proof remain incomplete"
             ),
-            "remaining_gap": [
-                "stage_difficulty_or_scale_labels",
-                "evaluator_test_set_hashes",
-                "benchmark_seed_sample_denominator_policy",
-                "cost_savings_counterfactual",
-            ],
+            "remaining_gap": (
+                (
+                    []
+                    if stage_evidence_summary["claim_readiness"][
+                        "difficulty_or_scale_rationale"
+                    ]
+                    else ["stage_difficulty_or_scale_labels"]
+                )
+                + (
+                    []
+                    if stage_evidence_summary["claim_readiness"][
+                        "evaluator_test_set_identity"
+                    ]
+                    and stage_evidence_summary["claim_readiness"]["test_set_hashes"]
+                    else ["evaluator_test_set_hashes"]
+                )
+                + [
+                    "benchmark_seed_sample_denominator_policy",
+                    "cost_savings_counterfactual",
+                ]
+            ),
         },
     }
     report["validation"] = validate_evaluation_cascade_report(report)
     return report
+
+
+def _cascade_stage_difficulty_or_scale(
+    stage: Mapping[str, object],
+) -> dict:
+    configured = stage.get("difficulty_or_scale")
+    if not isinstance(configured, Mapping):
+        return {"status": "not_declared"}
+    return {
+        "status": "declared",
+        "label": configured.get("label"),
+        "level": configured.get("level"),
+        "rationale": configured.get("rationale"),
+        "estimated_cost": configured.get("estimated_cost"),
+    }
+
+
+def _cascade_stage_test_set_identity(
+    stage: Mapping[str, object],
+    evaluator_source: Mapping[str, object],
+) -> dict:
+    configured = stage.get("test_set")
+    if not isinstance(configured, Mapping):
+        return {"status": "not_declared", "identity_ready": False}
+    source_type = configured.get("source")
+    base = {
+        "status": "declared",
+        "id": configured.get("id"),
+        "split": configured.get("split"),
+        "source": source_type,
+        "expected_file_count": configured.get("expected_file_count"),
+        "expected_aggregate_sha256": configured.get(
+            "expected_aggregate_sha256"
+        ),
+    }
+    if source_type == "eval_inputs":
+        eval_inputs = stage.get("eval_inputs")
+        payload = strict_json_dumps(eval_inputs)
+        aggregate_sha256 = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+        expected_sha256 = configured.get("expected_aggregate_sha256")
+        expected_match = (
+            aggregate_sha256 == expected_sha256
+            if expected_sha256 is not None
+            else None
+        )
+        return {
+            **base,
+            "identity_status": (
+                "expected_identity_mismatch"
+                if expected_match is False
+                else "expected_identity_verified"
+                if expected_match is True
+                else "captured_content_hashed"
+            ),
+            "file_count": 0,
+            "skipped_count": 0,
+            "aggregate_sha256": aggregate_sha256,
+            "hash_scope": "canonical_json_eval_inputs",
+            "expected_file_count_match": None,
+            "expected_aggregate_sha256_match": expected_match,
+            "identity_ready": expected_match is not False,
+        }
+    declared = (
+        evaluator_source.get("declared_data_sources")
+        if isinstance(evaluator_source.get("declared_data_sources"), Mapping)
+        else {}
+    )
+    file_count = declared.get("file_count", 0)
+    skipped_count = declared.get("skipped_count", 0)
+    aggregate_sha256 = declared.get("aggregate_sha256")
+    expected_file_count = configured.get("expected_file_count")
+    expected_sha256 = configured.get("expected_aggregate_sha256")
+    file_count_match = (
+        file_count == expected_file_count
+        if expected_file_count is not None
+        else None
+    )
+    sha256_match = (
+        aggregate_sha256 == expected_sha256
+        if expected_sha256 is not None
+        else None
+    )
+    captured = (
+        isinstance(file_count, int)
+        and not isinstance(file_count, bool)
+        and file_count > 0
+        and skipped_count == 0
+        and _is_sha256_hex(aggregate_sha256)
+    )
+    expected_matches = file_count_match is not False and sha256_match is not False
+    if not captured:
+        identity_status = "declared_data_not_captured"
+    elif not expected_matches:
+        identity_status = "expected_identity_mismatch"
+    elif expected_file_count is not None or expected_sha256 is not None:
+        identity_status = "expected_identity_verified"
+    else:
+        identity_status = "captured_content_hashed"
+    return {
+        **base,
+        "identity_status": identity_status,
+        "file_count": file_count,
+        "skipped_count": skipped_count,
+        "aggregate_sha256": aggregate_sha256,
+        "hash_scope": "declared_evaluator_data_manifest",
+        "expected_file_count_match": file_count_match,
+        "expected_aggregate_sha256_match": sha256_match,
+        "identity_ready": captured and expected_matches,
+    }
 
 
 def _evaluation_cascade_transition_matrix(
@@ -18449,6 +18588,27 @@ def _evaluation_cascade_stage_evidence_summary(
         if isinstance(stage.get("sample_count"), int)
         and not isinstance(stage.get("sample_count"), bool)
     )
+    difficulty_declared_count = sum(
+        1
+        for stage in stages
+        if isinstance(stage.get("difficulty_or_scale"), Mapping)
+        and stage["difficulty_or_scale"].get("status") == "declared"
+    )
+    test_set_identity_count = sum(
+        1
+        for stage in stages
+        if isinstance(stage.get("test_set"), Mapping)
+        and stage["test_set"].get("identity_ready") is True
+    )
+    test_set_hash_count = sum(
+        1
+        for stage in stages
+        if isinstance(stage.get("test_set"), Mapping)
+        and _is_sha256_hex(stage["test_set"].get("aggregate_sha256"))
+    )
+    difficulty_complete = bool(stages) and difficulty_declared_count == len(stages)
+    test_set_identity_complete = bool(stages) and test_set_identity_count == len(stages)
+    test_set_hash_complete = bool(stages) and test_set_hash_count == len(stages)
     return {
         "schema": "libreevolve.evaluation_cascade_stage_evidence_summary.v1",
         "source": "runtime_cascade_stages_and_startup_eval_stages",
@@ -18460,11 +18620,32 @@ def _evaluation_cascade_stage_evidence_summary(
         "stage_sample_config_count": sample_config_count,
         "stage_seed_config_count": seed_config_count,
         "runtime_sample_count": runtime_sample_count,
+        "difficulty_declared_count": difficulty_declared_count,
+        "test_set_identity_count": test_set_identity_count,
+        "test_set_hash_count": test_set_hash_count,
         "main_test_exposure_count": main_test_exposure_count,
         "early_prune_count": early_prune_count,
-        "difficulty_or_scale_rationale_status": "not_recorded",
-        "evaluator_test_set_identity_status": "local_evaluator_source_only",
-        "test_set_hash_status": "not_recorded",
+        "difficulty_or_scale_rationale_status": (
+            "declared_for_all_stages"
+            if difficulty_complete
+            else "partially_declared"
+            if difficulty_declared_count
+            else "not_recorded"
+        ),
+        "evaluator_test_set_identity_status": (
+            "content_hashed_for_all_stages"
+            if test_set_identity_complete
+            else "partially_captured"
+            if test_set_identity_count
+            else "local_evaluator_source_only"
+        ),
+        "test_set_hash_status": (
+            "content_hashed_for_all_stages"
+            if test_set_hash_complete
+            else "partially_hashed"
+            if test_set_hash_count
+            else "not_recorded"
+        ),
         "benchmark_seed_sample_policy_status": (
             "runtime_samples_and_configured_seeds_only"
             if sample_config_count or seed_config_count
@@ -18477,20 +18658,26 @@ def _evaluation_cascade_stage_evidence_summary(
             "local_stage_source_refs": source_ref_count > 0,
             "local_stage_source_hashes": source_hash_count > 0,
             "runtime_sample_accounting": runtime_sample_count > 0,
-            "difficulty_or_scale_rationale": False,
-            "evaluator_test_set_identity": False,
-            "test_set_hashes": False,
+            "difficulty_or_scale_rationale": difficulty_complete,
+            "evaluator_test_set_identity": test_set_identity_complete,
+            "test_set_hashes": test_set_hash_complete,
             "benchmark_seed_sample_policy": False,
             "counterfactual_full_evaluation_cost": False,
             "wall_clock_cost_savings": False,
             "alphaevolve_cascade_efficiency_evidence": False,
-            "remaining_gap": [
-                "stage_difficulty_or_scale_rationale",
-                "evaluator_test_set_identities_and_hashes",
-                "benchmark_seed_sample_policy",
-                "counterfactual_full_evaluation_costs",
-                "wall_clock_cost_savings",
-            ],
+            "remaining_gap": (
+                ([] if difficulty_complete else ["stage_difficulty_or_scale_rationale"])
+                + (
+                    []
+                    if test_set_identity_complete and test_set_hash_complete
+                    else ["evaluator_test_set_identities_and_hashes"]
+                )
+                + [
+                    "benchmark_seed_sample_policy",
+                    "counterfactual_full_evaluation_costs",
+                    "wall_clock_cost_savings",
+                ]
+            ),
         },
     }
 
@@ -38117,6 +38304,10 @@ def validate_evaluation_cascade_report(report: object) -> dict:
             issues.append({"code": "invalid_stage_source", "message": f"stage {index} source must be an object"})
         if not isinstance(stage.get("difficulty_or_scale"), dict):
             issues.append({"code": "invalid_stage_difficulty", "message": f"stage {index} difficulty_or_scale must be an object"})
+        if not isinstance(stage.get("test_set"), dict):
+            issues.append({"code": "invalid_stage_test_set", "message": f"stage {index} test_set must be an object"})
+        if isinstance(stage.get("difficulty_or_scale"), dict) and isinstance(stage.get("test_set"), dict):
+            _validate_evaluation_cascade_stage_provenance(stage, index, issues)
     candidate_stage_records = report.get("candidate_stage_records")
     if not isinstance(candidate_stage_records, list):
         issues.append({"code": "invalid_candidate_stage_records", "message": "candidate_stage_records must be a list"})
@@ -38206,6 +38397,52 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_evaluation_cascade_stage_provenance(
+    stage: Mapping[str, object],
+    index: int,
+    issues: list[dict],
+) -> None:
+    difficulty = stage["difficulty_or_scale"]
+    difficulty_status = difficulty.get("status")
+    if difficulty_status not in {"not_declared", "declared"}:
+        issues.append({"code": "invalid_stage_difficulty_status", "message": f"stage {index} difficulty status is unsupported"})
+    if difficulty_status == "declared":
+        if not isinstance(difficulty.get("label"), str) or not difficulty.get("label"):
+            issues.append({"code": "invalid_stage_difficulty_label", "message": f"stage {index} difficulty label must be non-empty text"})
+        level = difficulty.get("level")
+        if not isinstance(level, int) or isinstance(level, bool) or level < 0:
+            issues.append({"code": "invalid_stage_difficulty_level", "message": f"stage {index} difficulty level must be a non-negative integer"})
+        if not isinstance(difficulty.get("rationale"), str) or not difficulty.get("rationale"):
+            issues.append({"code": "invalid_stage_difficulty_rationale", "message": f"stage {index} difficulty rationale must be non-empty text"})
+    test_set = stage["test_set"]
+    test_set_status = test_set.get("status")
+    if test_set_status not in {"not_declared", "declared"}:
+        issues.append({"code": "invalid_stage_test_set_status", "message": f"stage {index} test-set status is unsupported"})
+    if test_set.get("identity_ready") not in {False, True}:
+        issues.append({"code": "invalid_stage_test_set_readiness", "message": f"stage {index} test-set identity_ready must be boolean"})
+    if test_set_status == "declared":
+        if not isinstance(test_set.get("id"), str) or not test_set.get("id"):
+            issues.append({"code": "invalid_stage_test_set_id", "message": f"stage {index} test-set id must be non-empty text"})
+        if test_set.get("source") not in {"declared_data", "eval_inputs"}:
+            issues.append({"code": "invalid_stage_test_set_source", "message": f"stage {index} test-set source is unsupported"})
+        if test_set.get("identity_status") not in {
+            "captured_content_hashed",
+            "expected_identity_verified",
+            "expected_identity_mismatch",
+            "declared_data_not_captured",
+        }:
+            issues.append({"code": "invalid_stage_test_set_identity_status", "message": f"stage {index} test-set identity status is unsupported"})
+        if test_set.get("identity_ready") is True and not _is_sha256_hex(
+            test_set.get("aggregate_sha256")
+        ):
+            issues.append({"code": "stage_test_set_hash_overclaim", "message": f"stage {index} ready test-set identity requires sha256"})
+        if test_set.get("identity_status") in {
+            "expected_identity_mismatch",
+            "declared_data_not_captured",
+        } and test_set.get("identity_ready") is not False:
+            issues.append({"code": "stage_test_set_readiness_overclaim", "message": f"stage {index} incomplete test-set identity must not be ready"})
 
 
 def _validate_evaluation_cascade_transition_matrix(
@@ -38317,6 +38554,9 @@ def _validate_evaluation_cascade_stage_evidence_summary(
         "stage_sample_config_count",
         "stage_seed_config_count",
         "runtime_sample_count",
+        "difficulty_declared_count",
+        "test_set_identity_count",
+        "test_set_hash_count",
         "main_test_exposure_count",
         "early_prune_count",
     ):
@@ -38324,9 +38564,21 @@ def _validate_evaluation_cascade_stage_evidence_summary(
         if not isinstance(value, int) or isinstance(value, bool) or value < 0:
             issues.append({"code": f"invalid_stage_evidence_{field}", "message": f"stage evidence {field} must be a non-negative integer"})
     expected_statuses = {
-        "difficulty_or_scale_rationale_status": {"not_recorded"},
-        "evaluator_test_set_identity_status": {"local_evaluator_source_only"},
-        "test_set_hash_status": {"not_recorded"},
+        "difficulty_or_scale_rationale_status": {
+            "not_recorded",
+            "partially_declared",
+            "declared_for_all_stages",
+        },
+        "evaluator_test_set_identity_status": {
+            "local_evaluator_source_only",
+            "partially_captured",
+            "content_hashed_for_all_stages",
+        },
+        "test_set_hash_status": {
+            "not_recorded",
+            "partially_hashed",
+            "content_hashed_for_all_stages",
+        },
         "benchmark_seed_sample_policy_status": {
             "runtime_accounting_only",
             "runtime_samples_and_configured_seeds_only",
@@ -38341,10 +38593,50 @@ def _validate_evaluation_cascade_stage_evidence_summary(
     if not isinstance(readiness, Mapping):
         issues.append({"code": "invalid_stage_evidence_claim_readiness", "message": "stage evidence claim_readiness must be an object"})
         return
+    expected_dynamic_readiness = {
+        "difficulty_or_scale_rationale": (
+            summary.get("difficulty_declared_count") == stage_count and stage_count > 0
+        ),
+        "evaluator_test_set_identity": (
+            summary.get("test_set_identity_count") == stage_count and stage_count > 0
+        ),
+        "test_set_hashes": (
+            summary.get("test_set_hash_count") == stage_count and stage_count > 0
+        ),
+    }
+    for field, expected in expected_dynamic_readiness.items():
+        if readiness.get(field) is not expected:
+            issues.append({"code": f"{field}_readiness_mismatch", "message": f"stage evidence readiness {field} must match stage counts"})
+    difficulty_count = summary.get("difficulty_declared_count")
+    identity_count = summary.get("test_set_identity_count")
+    hash_count = summary.get("test_set_hash_count")
+    expected_coverage_statuses = {
+        "difficulty_or_scale_rationale_status": (
+            "declared_for_all_stages"
+            if stage_count > 0 and difficulty_count == stage_count
+            else "partially_declared"
+            if isinstance(difficulty_count, int) and difficulty_count > 0
+            else "not_recorded"
+        ),
+        "evaluator_test_set_identity_status": (
+            "content_hashed_for_all_stages"
+            if stage_count > 0 and identity_count == stage_count
+            else "partially_captured"
+            if isinstance(identity_count, int) and identity_count > 0
+            else "local_evaluator_source_only"
+        ),
+        "test_set_hash_status": (
+            "content_hashed_for_all_stages"
+            if stage_count > 0 and hash_count == stage_count
+            else "partially_hashed"
+            if isinstance(hash_count, int) and hash_count > 0
+            else "not_recorded"
+        ),
+    }
+    for field, expected in expected_coverage_statuses.items():
+        if summary.get(field) != expected:
+            issues.append({"code": f"{field}_count_mismatch", "message": f"stage evidence {field} must match coverage counts"})
     for field in (
-        "difficulty_or_scale_rationale",
-        "evaluator_test_set_identity",
-        "test_set_hashes",
         "benchmark_seed_sample_policy",
         "counterfactual_full_evaluation_cost",
         "wall_clock_cost_savings",

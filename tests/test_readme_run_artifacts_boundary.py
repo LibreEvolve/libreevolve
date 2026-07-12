@@ -23,9 +23,9 @@ def test_readme_run_artifacts_boundary_accepts_current_list_map():
     assert boundary["cleanup_source_path"] == "libreevolve/core/artifact_schema.py"
     assert validation.readme_marker_count == 7
     assert validation.missing_readme_marker_count == 0
-    assert validation.common_artifact_count == 14
+    assert validation.common_artifact_count == 15
     assert validation.missing_common_artifact_count == 0
-    assert validation.cleanup_artifact_count == 23
+    assert validation.cleanup_artifact_count == 24
     assert validation.scoped_omission_count == 9
     assert validation.evidence_anchor_count == 18
     assert validation.missing_evidence_anchor_count == 0
@@ -153,9 +153,9 @@ def test_render_readme_run_artifacts_boundary_summary_reports_shape():
     )
     assert "| readme_marker_count | 7 |" in summary
     assert "| missing_readme_marker_count | 0 |" in summary
-    assert "| common_artifact_count | 14 |" in summary
+    assert "| common_artifact_count | 15 |" in summary
     assert "| missing_common_artifact_count | 0 |" in summary
-    assert "| cleanup_artifact_count | 23 |" in summary
+    assert "| cleanup_artifact_count | 24 |" in summary
     assert "| scoped_omission_count | 9 |" in summary
     assert "| evidence_anchor_count | 18 |" in summary
     assert "| missing_evidence_anchor_count | 0 |" in summary

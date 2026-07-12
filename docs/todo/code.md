@@ -2102,12 +2102,15 @@ sidecars, tests, and active TODOs.
     candidate reaches the final stage and another is pruned at smoke. The
     committed `papers/evaluation_cascade_boundary.json` sidecar now records
     the paper-manifest-validated boundary for runtime transition linkage
-    without benchmark-efficiency evidence.
-  - Required result: finish benchmark seed/sample policy beyond runtime
-    accounting, built-in repeated-seed benchmark fixtures, empirical false-promotion/
-    false-rejection validation, and counterfactual cost-savings evidence before
-    claiming AlphaEvolve-style evaluation-cascade efficiency or hypothesis-
-    testing evidence.
+    without benchmark-efficiency evidence. The checked 2x2 matrix cascade
+    fixture now adds one deterministic four-seed known-control calibration:
+    rank 7 is promoted and rank 8 is rejected at the main confidence-bound
+    gate, with file-backed test-set hashes and emitted per-seed traces.
+  - Required result: finish benchmark seed/sample policy beyond the
+    deterministic known-control fixture, stochastic-search calibration,
+    empirical false-promotion/false-rejection validation, and counterfactual
+    cost-savings evidence before claiming AlphaEvolve-style evaluation-cascade
+    efficiency or hypothesis-testing evidence.
 
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,
@@ -2313,10 +2316,14 @@ sidecars, tests, and active TODOs.
     `papers/cascade_hypothesis_test_boundary.json` now validates this
     runtime policy-and-linkage scope. The report now includes a reconciled
     adjacent-stage transition matrix linking small filters to next-stage
-    exposure. Benchmark-calibrated thresholds, matrix/tensor repeated-seed
-    promotion fixtures, and empirical error-rate validation remain absent.
-  - Required result: add benchmark tests showing noisy repeated-seed candidates
-    are promoted or rejected by calibrated hypothesis-testing rules.
+    exposure and links the checked `libreevolve.matrix_cascade_fixture_report.v1`.
+    That executed four-seed fixture calibrates a deterministic 0.13 boundary
+    between known rank-7 and rank-8 controls. Noisy stochastic candidates,
+    search-derived candidate populations, tensor targets, and empirical
+    false-decision rates remain absent.
+  - Required result: add benchmark tests over noisy repeated-seed search
+    candidates and measure false-promotion/false-rejection rates against
+    declared budgets rather than only separating deterministic controls.
 
 - [ ] Add qualitative LLM-feedback criterion provenance.
   - Spec evidence: AlphaEvolve Section 2.4 says LLM-generated feedback can
@@ -4037,23 +4044,25 @@ sidecars, tests, and active TODOs.
   - Current evidence: generic evaluator cascades can run staged validators,
     and `libreevolve.matrix_result_report.v1` can validate declared per-seed
     rank rows after a report exists.
-    `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates both
-    the current `not_emitted_by_local_runner` boundary and emitted per-seed
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1` validates emitted per-seed
     trace records for run/target/seed ids, cascade ids/versions, stage traces,
     accepted final ranks, candidate/result refs, artifact paths, and hashes.
-    `papers/matrix_cascade_run_runtime_boundary.json` now emits that
-    absence/readiness boundary as a committed sidecar.
+    `papers/matrix_cascade_run_runtime_boundary.json` now emits four checked
+    rank-7 calibration records as a committed sidecar.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
     records from matrix result seed rows plus per-seed stage traces and
     validates final-stage rank/candidate linkage plus best-rank, hit-count,
-    and hit-fraction aggregation from emitted records. No matrix benchmark
-    runner yet emits the cascade configuration used for each matrix
-    target/seed, early-stop or pruning decisions, or candidate lineage through
-    cascade stages.
-  - Required result: connect actual matrix benchmark execution to these records
-    so actual Section 3.1-style runs emit the evidence rather than relying on
-    hand-authored matrix reports plus separately supplied stage traces. Keep
-    this separate from generic cascade semantics.
+    and hit-fraction aggregation from emitted records. The executable
+    `matrix_cascade_fixture.py` runner now records the stage configuration,
+    content-hashed case sets, four pinned seed samples, confidence-bound
+    decisions, known rank-7 promotion, known rank-8 rejection, and canonical
+    trace artifacts. It evaluates fixed controls rather than running an
+    evolutionary search independently for each seed.
+  - Required result: connect full matrix evolution runs to these records so
+    per-seed search initialization, proposal ancestry, pruning/early-stop
+    decisions, accepted candidates, budgets, and final rank rows are produced
+    causally by actual Section 3.1-style searches. Keep deterministic control
+    calibration separate from discovery evidence and generic cascade semantics.
 
 - [ ] Wire Appendix A best-known-rank citation provenance into reports.
   - Spec evidence: AlphaEvolve Table 2 reports matrix targets with a

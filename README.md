@@ -78,9 +78,11 @@ Important limits:
   matrix with promotion-rule attribution, bounded candidate linkage,
   next-stage exposure counts, and denominator reconciliation. Stages can also
   declare strictly increasing difficulty/scale rationale and content-hashed
-  file-backed or embedded-input test-set identities. This is runtime evidence,
-  not benchmark-calibrated AlphaEvolve cascade-efficiency or hypothesis-testing
-  proof.
+  file-backed or embedded-input test-set identities. The checked 2x2 matrix
+  calibration fixture executes four pinned seeds and proves that rank 7 passes
+  while rank 8 reaches the main stage and fails its pinned confidence-bound
+  gate. This is deterministic local calibration, not stochastic-search,
+  empirical error-rate, cost-efficiency, or AlphaEvolve-scale proof.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed Python `asyncio` AlphaEvolve service.
 - Runtime restore certification is compatible-surface evidence only;

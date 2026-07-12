@@ -916,6 +916,16 @@ requires an embedded stage and hashes canonical JSON inputs. Optional
 an expected-identity check. Runtime cascade validation keeps mismatches or
 incomplete captures from becoming test-set-ready evidence.
 
+The checked `matrix_multiplication` calibration demonstrates the complete
+contract in `matrix_cascade_fixture_stages()`: both stages execute seeds
+`[0, 1, 2, 3]`; `rank_smoke` uses the four-case declared-data set and a `0.12`
+fitness threshold; `rank_main` uses the twelve-case set and a
+`one_sided_lower_confidence_bound` gate on `inverse_multiplications` at `0.13`
+with four required samples. The known rank-7 control passes and the rank-8
+control is rejected. This fixture calibrates a deterministic boundary between
+known controls; it is not an empirical estimate of false-promotion or
+false-rejection rates under stochastic search.
+
 `eval_stages[].timeout_sec` is enforced per subprocess attempt: with
 `samples: 2` and `retries: 1`, each sample can run up to two validator
 subprocess attempts. Use `eval_stages[].max_sample_seconds` to add a per-sample

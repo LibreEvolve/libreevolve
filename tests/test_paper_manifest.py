@@ -1830,7 +1830,7 @@ def test_validate_paper_manifest_rejects_benchmark_fixture_readiness_boundary_dr
     record = paper_manifest.benchmark_fixture_readiness_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "paper_claim_ready"
-    record["missing_evidence"]["repeated_seed_protocol"] = "recorded"
+    record["missing_evidence"]["anti_gaming_negative_fixtures_passed"] = "recorded"
     sidecar = tmp_path / paper_manifest.BENCHMARK_FIXTURE_READINESS_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -1841,7 +1841,7 @@ def test_validate_paper_manifest_rejects_benchmark_fixture_readiness_boundary_dr
     assert "benchmark_fixture_readiness_boundary_claim_ready_overclaim" in codes
     assert "benchmark_fixture_readiness_boundary_invalid_boundary_status" in codes
     assert (
-        "benchmark_fixture_readiness_boundary_invalid_missing_evidence_repeated_seed_protocol"
+        "benchmark_fixture_readiness_boundary_invalid_missing_evidence_anti_gaming_negative_fixtures_passed"
         in codes
     )
 
@@ -9007,7 +9007,7 @@ def test_validate_paper_manifest_rejects_cascade_hypothesis_test_boundary_drift(
     record["claim_ready"] = True
     record["boundary_status"] = "benchmark_calibrated_hypothesis_cascade_ready"
     record["source_section_ids"] = ["2.3"]
-    record["missing_evidence"]["benchmark_calibrated_thresholds"] = "recorded"
+    record["missing_evidence"]["empirical_false_promotion_validation"] = "recorded"
     sidecar = tmp_path / paper_manifest.CASCADE_HYPOTHESIS_TEST_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -9019,7 +9019,7 @@ def test_validate_paper_manifest_rejects_cascade_hypothesis_test_boundary_drift(
     assert "cascade_hypothesis_test_boundary_invalid_boundary_status" in codes
     assert "cascade_hypothesis_test_boundary_invalid_source_section_ids" in codes
     assert (
-        "cascade_hypothesis_test_boundary_invalid_missing_evidence_benchmark_calibrated_thresholds"
+        "cascade_hypothesis_test_boundary_invalid_missing_evidence_empirical_false_promotion_validation"
         in codes
     )
 

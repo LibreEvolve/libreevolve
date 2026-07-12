@@ -16030,3 +16030,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining roadmap gap: benchmark-calibrated repeated-seed fixtures,
     empirical false-promotion/false-rejection validation, cost-savings proof,
     and owner review signoff remain active TODOs.
+- [x] Keep ROADMAP current with the executed matrix cascade calibration.
+  - Spec evidence: ROADMAP cascade status must distinguish executable repeated-
+    seed calibration from AlphaEvolve Section 3.1 evolutionary search evidence.
+  - Status: ROADMAP now records the four-seed rank-7/rank-8 fixture, emitted
+    trace sidecar, content-hashed case sets, and confidence-bound decision.
+  - Remaining roadmap gap: independent stochastic searches, candidate ancestry,
+    empirical false-decision rates, cost-savings evidence, target-suite scale,
+    and owner review signoff remain active TODOs.
+  - Verification: focused fixture and boundary tests plus paper-manifest
+    validation cover the updated roadmap claims.

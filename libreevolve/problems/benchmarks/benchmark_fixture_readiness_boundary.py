@@ -13,7 +13,12 @@ BENCHMARK_FIXTURE_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.benchmark_fixture_readiness_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "smoke_fixture_readiness_only"
+EXPECTED_BOUNDARY_STATUS = "smoke_scope_with_deterministic_matrix_calibration_only"
+EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA = "libreevolve.matrix_cascade_fixture_report.v1"
+EXPECTED_MATRIX_FIXTURE_REPORT_REF = (
+    "libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/"
+    "matrix/mm_2x2x2/cascade_fixture_report.json"
+)
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "example_scope_record_present",
     "scope_registry_valid",
@@ -33,9 +38,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 EXPECTED_MISSING_EVIDENCE = {
     "non_smoke_benchmark_scope_record": "not_recorded_locally",
     "alphaevolve_comparable_scope_record": "not_recorded_locally",
-    "repeated_seed_protocol": "not_recorded_locally",
-    "sota_or_target_baseline_values": "not_recorded_locally",
-    "fixture_emitted_result_artifacts": "not_recorded_locally",
     "anti_gaming_negative_fixtures_passed": "not_recorded_locally",
     "paper_claim_ready_benchmark_fixture": "not_recorded_locally",
 }
@@ -69,6 +71,9 @@ def benchmark_fixture_readiness_boundary_record() -> dict[str, Any]:
             "baseline values, emitted result artifacts, and anti-gaming checks"
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
+        "matrix_fixture_report_schema": EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA,
+        "matrix_fixture_report_ref": EXPECTED_MATRIX_FIXTURE_REPORT_REF,
+        "matrix_fixture_status": "executed_rank7_rank8_known_control_calibration",
         "runtime_report_status": "benchmark_fixture_readiness_report_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -77,11 +82,11 @@ def benchmark_fixture_readiness_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has runtime readiness "
             "telemetry for example-scope registry linkage, smoke fixture scope, "
             "formulation/review metadata, task-spec identity, and benchmark "
-            "hardening references when present, but does not claim non-smoke "
-            "AlphaEvolve-comparable fixture scope, repeated-seed protocols, "
-            "SOTA or target baseline values, fixture-emitted result artifacts, "
-            "anti-gaming negative-fixture checks, or paper-claim-ready "
-            "benchmark fixtures."
+            "hardening references when present. A checked four-seed matrix "
+            "fixture records known rank-7/rank-8 baselines and emitted traces, "
+            "but does not claim non-smoke AlphaEvolve-comparable fixture scope, "
+            "search-derived repeated-seed results, anti-gaming negative-fixture "
+            "checks for a full benchmark, or paper-claim-ready benchmark fixtures."
         ),
     }
 
@@ -102,6 +107,12 @@ def validate_benchmark_fixture_readiness_boundary(
         issues.append(_issue("invalid_runtime_report_schema", "runtime report schema must identify benchmark-fixture readiness reports"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("matrix_fixture_report_schema") != EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA:
+        issues.append(_issue("invalid_matrix_fixture_report_schema", "matrix fixture report schema linkage is invalid"))
+    if data.get("matrix_fixture_report_ref") != EXPECTED_MATRIX_FIXTURE_REPORT_REF:
+        issues.append(_issue("invalid_matrix_fixture_report_ref", "matrix fixture report ref must identify the checked report"))
+    if data.get("matrix_fixture_status") != "executed_rank7_rank8_known_control_calibration":
+        issues.append(_issue("invalid_matrix_fixture_status", "matrix fixture status must identify known-control calibration"))
     source_claim = data.get("source_claim")
     if not isinstance(source_claim, str) or "benchmark claims" not in source_claim:
         issues.append(_issue("invalid_source_claim", "source_claim must identify AlphaEvolve benchmark-claim evidence"))
@@ -115,7 +126,11 @@ def validate_benchmark_fixture_readiness_boundary(
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
+    if (
+        not isinstance(boundary_text, str)
+        or "checked four-seed matrix fixture" not in boundary_text
+        or "does not claim" not in boundary_text
+    ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim benchmark readiness"))
     return BenchmarkFixtureReadinessBoundaryValidation(
         ok=not issues,

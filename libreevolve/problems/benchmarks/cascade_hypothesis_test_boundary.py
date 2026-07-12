@@ -19,7 +19,12 @@ EXPECTED_TRANSITION_MATRIX_SCHEMA = (
     "libreevolve.evaluation_cascade_transition_matrix.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "runtime_policy_and_promotion_linkage_without_benchmark_calibrated_fixtures"
+    "runtime_policy_with_deterministic_matrix_calibration_without_empirical_error_rates"
+)
+EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA = "libreevolve.matrix_cascade_fixture_report.v1"
+EXPECTED_MATRIX_FIXTURE_REPORT_REF = (
+    "libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/"
+    "matrix/mm_2x2x2/cascade_fixture_report.json"
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stage_role_inference",
@@ -42,8 +47,6 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "empirical_false_rejection_validation",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "benchmark_calibrated_thresholds": "not_recorded_locally",
-    "repeated_seed_benchmark_fixtures": "not_recorded_locally",
     "empirical_false_promotion_validation": "not_recorded_locally",
     "empirical_false_rejection_validation": "not_recorded_locally",
 }
@@ -80,6 +83,9 @@ def cascade_hypothesis_test_boundary_record() -> dict[str, Any]:
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "runtime_report_schema": EXPECTED_RUNTIME_REPORT_SCHEMA,
         "transition_matrix_schema": EXPECTED_TRANSITION_MATRIX_SCHEMA,
+        "matrix_fixture_report_schema": EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA,
+        "matrix_fixture_report_ref": EXPECTED_MATRIX_FIXTURE_REPORT_REF,
+        "matrix_fixture_status": "executed_deterministic_rank7_rank8_calibration",
         "runtime_report_status": "cascade_hypothesis_test_policy_report_available",
         "claim_ready": False,
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
@@ -92,10 +98,11 @@ def cascade_hypothesis_test_boundary_record() -> dict[str, Any]:
             "sequential stopping diagnostics, configured error-budget fields, "
             "and binomial success-rate gates with Wilson lower-bound evidence. "
             "It also records runtime small-filter-to-main-test promotion linkage "
-            "through a reconciled adjacent-stage transition matrix. "
-            "It does not claim benchmark-calibrated thresholds, repeated-seed "
-            "benchmark fixtures, empirical false-promotion validation, or "
-            "empirical false-rejection validation."
+            "through a reconciled adjacent-stage transition matrix and an "
+            "executed deterministic repeated-seed matrix fixture that promotes "
+            "rank 7 and rejects rank 8 at a pinned threshold. It does not claim "
+            "stochastic-search calibration, empirical false-promotion "
+            "validation, or empirical false-rejection validation."
         ),
     }
 
@@ -132,6 +139,12 @@ def validate_cascade_hypothesis_test_boundary(
         issues.append(_issue("invalid_runtime_report_schema", f"runtime_report_schema must be {EXPECTED_RUNTIME_REPORT_SCHEMA}"))
     if data.get("transition_matrix_schema") != EXPECTED_TRANSITION_MATRIX_SCHEMA:
         issues.append(_issue("invalid_transition_matrix_schema", f"transition_matrix_schema must be {EXPECTED_TRANSITION_MATRIX_SCHEMA}"))
+    if data.get("matrix_fixture_report_schema") != EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA:
+        issues.append(_issue("invalid_matrix_fixture_report_schema", f"matrix_fixture_report_schema must be {EXPECTED_MATRIX_FIXTURE_REPORT_SCHEMA}"))
+    if data.get("matrix_fixture_report_ref") != EXPECTED_MATRIX_FIXTURE_REPORT_REF:
+        issues.append(_issue("invalid_matrix_fixture_report_ref", "matrix_fixture_report_ref must identify the checked fixture report"))
+    if data.get("matrix_fixture_status") != "executed_deterministic_rank7_rank8_calibration":
+        issues.append(_issue("invalid_matrix_fixture_status", "matrix_fixture_status must identify the executed rank-7/rank-8 calibration"))
     if data.get("runtime_report_status") != "cascade_hypothesis_test_policy_report_available":
         issues.append(_issue("invalid_runtime_report_status", "runtime report status must stay scoped to cascade hypothesis-test policy evidence"))
     if data.get("claim_ready") is not False:
@@ -142,8 +155,8 @@ def validate_cascade_hypothesis_test_boundary(
     if (
         not isinstance(boundary_text, str)
         or "runtime small-filter-to-main-test promotion linkage" not in boundary_text
-        or "does not claim benchmark-calibrated thresholds" not in boundary_text
-        or "repeated-seed benchmark fixtures" not in boundary_text
+        or "executed deterministic repeated-seed matrix fixture" not in boundary_text
+        or "does not claim stochastic-search calibration" not in boundary_text
         or "empirical false-promotion validation" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate runtime gates from benchmark-calibrated cascade evidence"))

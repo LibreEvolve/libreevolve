@@ -104,6 +104,16 @@ py -3.12 -m libreevolve show runs/development_circle_packing
 Replace placeholder backend model ids with currently available provider/account
 model ids before running.
 
+Regenerate the deterministic matrix cascade fixture and its paper boundary:
+
+```bash
+py -3.12 -c "from libreevolve.problems.benchmarks.matrix_cascade_fixture import write_matrix_cascade_fixture_bundle, write_matrix_cascade_fixture_paper_boundary; write_matrix_cascade_fixture_bundle(); write_matrix_cascade_fixture_paper_boundary('papers/matrix_cascade_run_runtime_boundary.json')"
+py -3.12 -m pytest tests/test_matrix_cascade_fixture.py --tb=short
+```
+
+The fixture executes known rank-7/rank-8 controls. Regeneration does not run
+LLM evolution or establish rediscovery evidence.
+
 Run pre-commit checks:
 
 ```bash

@@ -3,7 +3,10 @@
   "runtime_report_schema": "libreevolve.benchmark_fixture_readiness_report.v1",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve paper-facing benchmark claims require scoped fixtures, expert formulation, task targets, repeated-seed evidence, baseline values, emitted result artifacts, and anti-gaming checks",
-  "boundary_status": "smoke_fixture_readiness_only",
+  "boundary_status": "smoke_scope_with_deterministic_matrix_calibration_only",
+  "matrix_fixture_report_schema": "libreevolve.matrix_cascade_fixture_report.v1",
+  "matrix_fixture_report_ref": "libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/matrix/mm_2x2x2/cascade_fixture_report.json",
+  "matrix_fixture_status": "executed_rank7_rank8_known_control_calibration",
   "runtime_report_status": "benchmark_fixture_readiness_report_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -25,11 +28,8 @@
   "missing_evidence": {
     "non_smoke_benchmark_scope_record": "not_recorded_locally",
     "alphaevolve_comparable_scope_record": "not_recorded_locally",
-    "repeated_seed_protocol": "not_recorded_locally",
-    "sota_or_target_baseline_values": "not_recorded_locally",
-    "fixture_emitted_result_artifacts": "not_recorded_locally",
     "anti_gaming_negative_fixtures_passed": "not_recorded_locally",
     "paper_claim_ready_benchmark_fixture": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has runtime readiness telemetry for example-scope registry linkage, smoke fixture scope, formulation/review metadata, task-spec identity, and benchmark hardening references when present, but does not claim non-smoke AlphaEvolve-comparable fixture scope, repeated-seed protocols, SOTA or target baseline values, fixture-emitted result artifacts, anti-gaming negative-fixture checks, or paper-claim-ready benchmark fixtures."
+  "claim_boundary": "This boundary records that LibreEvolve has runtime readiness telemetry for example-scope registry linkage, smoke fixture scope, formulation/review metadata, task-spec identity, and benchmark hardening references when present. A checked four-seed matrix fixture records known rank-7/rank-8 baselines and emitted traces, but does not claim non-smoke AlphaEvolve-comparable fixture scope, search-derived repeated-seed results, anti-gaming negative-fixture checks for a full benchmark, or paper-claim-ready benchmark fixtures."
 }

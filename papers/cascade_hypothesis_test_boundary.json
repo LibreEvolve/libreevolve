@@ -6,9 +6,12 @@
     "2.4"
   ],
   "source_claim": "AlphaEvolve describes cascades as hypothesis testing where small-scale filters promote sufficiently promising candidates toward larger main-test cases",
-  "boundary_status": "runtime_policy_and_promotion_linkage_without_benchmark_calibrated_fixtures",
+  "boundary_status": "runtime_policy_with_deterministic_matrix_calibration_without_empirical_error_rates",
   "runtime_report_schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",
   "transition_matrix_schema": "libreevolve.evaluation_cascade_transition_matrix.v1",
+  "matrix_fixture_report_schema": "libreevolve.matrix_cascade_fixture_report.v1",
+  "matrix_fixture_report_ref": "libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/matrix/mm_2x2x2/cascade_fixture_report.json",
+  "matrix_fixture_status": "executed_deterministic_rank7_rank8_calibration",
   "runtime_report_status": "cascade_hypothesis_test_policy_report_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -32,10 +35,8 @@
     "empirical_false_rejection_validation"
   ],
   "missing_evidence": {
-    "benchmark_calibrated_thresholds": "not_recorded_locally",
-    "repeated_seed_benchmark_fixtures": "not_recorded_locally",
     "empirical_false_promotion_validation": "not_recorded_locally",
     "empirical_false_rejection_validation": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve can report inferred or configured stage roles, deterministic threshold and artifact-check promotion policies, opt-in one-sided lower-confidence-bound gates with retained observations, confidence-bound and p-value evidence, sequential stopping diagnostics, configured error-budget fields, and binomial success-rate gates with Wilson lower-bound evidence. It also records runtime small-filter-to-main-test promotion linkage through a reconciled adjacent-stage transition matrix. It does not claim benchmark-calibrated thresholds, repeated-seed benchmark fixtures, empirical false-promotion validation, or empirical false-rejection validation."
+  "claim_boundary": "This boundary records that LibreEvolve can report inferred or configured stage roles, deterministic threshold and artifact-check promotion policies, opt-in one-sided lower-confidence-bound gates with retained observations, confidence-bound and p-value evidence, sequential stopping diagnostics, configured error-budget fields, and binomial success-rate gates with Wilson lower-bound evidence. It also records runtime small-filter-to-main-test promotion linkage through a reconciled adjacent-stage transition matrix and an executed deterministic repeated-seed matrix fixture that promotes rank 7 and rejects rank 8 at a pinned threshold. It does not claim stochastic-search calibration, empirical false-promotion validation, or empirical false-rejection validation."
 }

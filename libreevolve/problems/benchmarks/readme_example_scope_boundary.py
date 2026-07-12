@@ -65,7 +65,11 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("examples_test_sorting_8", EXAMPLES_TEST_PATH, "test_sorting_network_8_known_19_comparator_target_is_valid"),
     ("examples_test_sorting_9", EXAMPLES_TEST_PATH, "test_sorting_network_9_known_25_comparator_target_is_valid"),
     ("sorting_boundary", SORTING_NETWORK_BOUNDARY_PATH, "bounded_sorting_network_fixtures_available"),
-    ("benchmark_fixture_boundary", BENCHMARK_FIXTURE_READINESS_PATH, "smoke_fixture_readiness_only"),
+    (
+        "benchmark_fixture_boundary",
+        BENCHMARK_FIXTURE_READINESS_PATH,
+        "smoke_scope_with_deterministic_matrix_calibration_only",
+    ),
     ("roadmap_portfolio_boundary", ROADMAP_PORTFOLIO_BOUNDARY_PATH, "smoke_fixture_guardrail"),
     ("papers_readme_scope_catalog", PAPERS_README_PATH, "shipped-example scope"),
     ("status_sorting_scope", STATUS_PATH, "non-comparable benchmark candidates"),

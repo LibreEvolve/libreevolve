@@ -987,7 +987,11 @@ unambiguous.
 - The `matrix_multiplication` smoke validator counts scalar multiplications
   inside `matmul2` only and rejects known import/library delegation,
   module-level dead-code counters, and fixed-three-case lookup shortcuts. It
-  remains a 2x2 smoke fixture rather than an AlphaEvolve tensor-rank benchmark.
+  can select the checked `smoke_cases` or `main_cases` data file from stage
+  context and records the selected case-set id, case count, and seed as bounded
+  output. The separate matrix cascade bundle uses this for deterministic
+  rank-7/rank-8 calibration; the example remains a 2x2 fixture rather than an
+  AlphaEvolve tensor-rank search benchmark.
 - Direct and loaded prompt context entries render in deterministic path order.
   Context-source metadata is matched by path, duplicate metadata records for a
   path are selected canonically rather than by insertion order, and generated

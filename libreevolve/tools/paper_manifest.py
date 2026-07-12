@@ -899,6 +899,9 @@ from libreevolve.problems.benchmarks.matrix_exhibits import (
     validate_figure9_matrix_diff_artifact_boundary,
     validate_matrix_rank_table_artifact_boundary,
 )
+from libreevolve.problems.benchmarks.matrix_cascade_fixture import (
+    validate_matrix_cascade_fixture_bundle,
+)
 from libreevolve.problems.benchmarks.matrix_results import (
     matrix_baseline_component_runtime_boundary_record,
     matrix_cascade_run_runtime_boundary_record,
@@ -2830,6 +2833,14 @@ def _validate_appendix_a_matrix_registry_if_present(root_path: Path) -> list[Pap
             issue.message,
         )
         for issue in strassen_bundle_report.issues
+    )
+    matrix_cascade_fixture_report = validate_matrix_cascade_fixture_bundle()
+    issues.extend(
+        PaperManifestIssue(
+            f"matrix_cascade_fixture_{issue.code}",
+            issue.message,
+        )
+        for issue in matrix_cascade_fixture_report.issues
     )
     suite_publication_path = root_path / MATRIX_SUITE_PUBLICATION_ARTIFACTS_FILE
     if suite_publication_path.exists():

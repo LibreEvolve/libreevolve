@@ -1,32 +1,16 @@
 import ast
+import json
 import math
+from pathlib import Path
 
 
-CASES = [
-    (
-        [[1, 2], [3, 4]],
-        [[5, 6], [7, 8]],
-    ),
-    (
-        [[0, -1], [2, 3]],
-        [[4, 5], [-6, 7]],
-    ),
-    (
-        [[2, 0], [0, 2]],
-        [[-1, 3], [4, -5]],
-    ),
-    (
-        [[-3, 5], [7, -11]],
-        [[13, -17], [19, 23]],
-    ),
-    (
-        [[6, -2], [9, 4]],
-        [[-8, 1], [3, -7]],
-    ),
-]
+DEFAULT_CASE_SET_ID = "main_cases"
+CASE_SET_IDS = frozenset({"smoke_cases", "main_cases"})
+FIXTURE_ROOT = Path(__file__).with_name("fixtures")
 
 
-def evaluate(code: str) -> dict:
+def evaluate(code: str, workspace: str | None = None, stage: dict | None = None) -> dict:
+    del workspace
     try:
         tree = ast.parse(code)
     except SyntaxError:
@@ -48,7 +32,11 @@ def evaluate(code: str) -> dict:
     if not callable(fn):
         return _invalid(count)
     try:
-        for a, b in CASES:
+        case_set_id, cases, seed = _load_cases(stage)
+    except (OSError, TypeError, ValueError, json.JSONDecodeError):
+        return _invalid(count)
+    try:
+        for a, b in _seed_ordered_cases(cases, seed):
             got = fn(a, b)
             if got != _expected(a, b):
                 return _invalid(count)
@@ -58,7 +46,65 @@ def evaluate(code: str) -> dict:
         "inverse_multiplications": 1.0 / count,
         "multiplication_count": count,
         "is_valid": True,
+        "outputs": {
+            "case_set_id": case_set_id,
+            "case_count": len(cases),
+            "seed": seed,
+        },
     }
+
+
+def _load_cases(stage: dict | None) -> tuple[str, list[tuple[list, list]], int | None]:
+    case_set_id = DEFAULT_CASE_SET_ID
+    seed = None
+    if isinstance(stage, dict):
+        raw_seed = stage.get("seed")
+        if isinstance(raw_seed, int) and not isinstance(raw_seed, bool):
+            seed = raw_seed
+        config = stage.get("config")
+        test_set = config.get("test_set") if isinstance(config, dict) else None
+        if isinstance(test_set, dict):
+            case_set_id = str(test_set.get("id", DEFAULT_CASE_SET_ID))
+    if case_set_id not in CASE_SET_IDS:
+        raise ValueError(f"unknown matrix case set: {case_set_id}")
+    payload = json.loads(
+        (FIXTURE_ROOT / f"{case_set_id}.json").read_text(encoding="utf-8")
+    )
+    if payload.get("schema") != "libreevolve.matrix_2x2_case_set.v1":
+        raise ValueError("unsupported matrix case-set schema")
+    if payload.get("id") != case_set_id:
+        raise ValueError("matrix case-set id mismatch")
+    raw_cases = payload.get("cases")
+    if not isinstance(raw_cases, list) or not raw_cases:
+        raise ValueError("matrix case set must contain cases")
+    cases: list[tuple[list, list]] = []
+    for item in raw_cases:
+        if not isinstance(item, dict) or not _is_2x2_matrix(item.get("a")) or not _is_2x2_matrix(item.get("b")):
+            raise ValueError("matrix case entries must contain 2x2 matrices")
+        cases.append((item["a"], item["b"]))
+    return case_set_id, cases, seed
+
+
+def _is_2x2_matrix(value: object) -> bool:
+    return (
+        isinstance(value, list)
+        and len(value) == 2
+        and all(isinstance(row, list) and len(row) == 2 for row in value)
+        and all(
+            isinstance(item, (int, float)) and not isinstance(item, bool)
+            for row in value
+            for item in row
+        )
+    )
+
+
+def _seed_ordered_cases(
+    cases: list[tuple[list, list]], seed: int | None
+) -> list[tuple[list, list]]:
+    if seed is None:
+        return cases
+    offset = seed % len(cases)
+    return cases[offset:] + cases[:offset]
 
 
 def _find_matmul2_function(tree: ast.AST) -> ast.FunctionDef | ast.AsyncFunctionDef | None:

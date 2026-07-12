@@ -1438,7 +1438,12 @@ def test_runtime_history_records_gemini_provider_parity_boundary():
     assert report["schema"] == "libreevolve.gemini_provider_parity_report.v1"
     assert report["validation"]["ok"] is True
     assert validate_gemini_provider_parity_report(report)["ok"] is True
-    assert report["built_in_backend_types"] == ["anthropic", "ollama", "openai"]
+    assert report["built_in_backend_types"] == [
+        "anthropic",
+        "codex",
+        "ollama",
+        "openai",
+    ]
     assert report["gemini_builtin_available"] is False
     assert report["configured_backend_count"] == 3
     assert report["configured_custom_backend_count"] == 2

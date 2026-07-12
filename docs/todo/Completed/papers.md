@@ -14348,6 +14348,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     difficulty/test-set evidence, and cost-savings proof remain open.
   - Verification: focused cascade boundary tests require the transition-matrix
     schema and preserve false benchmark-readiness claims.
+- [x] Add paper-facing deterministic matrix cascade calibration evidence.
+  - Paper evidence: AlphaEvolve Section 3.1 reports matrix outcomes over
+    multiple random seeds using the evaluation cascade.
+  - Status: `papers/matrix_cascade_run_runtime_boundary.json` now contains four
+    emitted rank-7 seed records backed by checked canonical trace artifacts,
+    while `papers/cascade_hypothesis_test_boundary.json` links the executed
+    rank-7/rank-8 calibration report.
+  - Remaining paper gap: fixed known controls do not prove stochastic search,
+    rediscovery, per-seed candidate ancestry, empirical error rates, Section
+    3.1 budgets, target-suite coverage, or AlphaEvolve-scale results.
+  - Verification: matrix fixture, matrix runtime-boundary, cascade-boundary,
+    and paper-manifest tests validate linkage and preserve the non-search claim
+    boundary.
 - [x] Add paper-facing cascade stage/test-set identity evidence.
   - Paper evidence: AlphaEvolve Section 2.4 requires increasingly difficult
     test ensembles and identifiable evaluation populations.

@@ -116,9 +116,12 @@ Completed manifests also include
 `libreevolve.benchmark_fixture_readiness_report.v1`. It joins startup problem
 metadata with the example-scope registry, records the matching fixture level,
 AlphaEvolve-comparable flag, formulation/review status, task-spec identity,
-benchmark-hardening references, and explicit false readiness for repeated-seed
-protocols, SOTA/target baseline values, fixture-emitted result artifacts, and
-anti-gaming negative-fixture evidence.
+benchmark-hardening references, and explicit false readiness for evidence not
+present in that run. The checked matrix cascade bundle separately supplies one
+deterministic repeated-seed protocol, known rank-7/rank-8 values, and emitted
+trace artifacts; it does not make ordinary smoke-fixture manifests or the
+generic readiness report AlphaEvolve-comparable. Anti-gaming evidence for a
+full benchmark remains absent.
 The paper-facing counterpart is
 `papers/benchmark_fixture_readiness_boundary.json`, which manifest validation
 requires at the repository root so smoke/example-scope readiness telemetry
@@ -2674,6 +2677,18 @@ JSON files, a detector log, hardening report, artifact inventory, summary, and
 scope-validation JSON. Its scope policy keeps the shipped matrix example
 smoke-only with `alphaevolve_comparable: false`; it is not tensor-rank
 benchmark evidence.
+`write_matrix_cascade_fixture_bundle()` executes the checked two-stage 2x2
+matrix calibration and writes
+`libreevolve.matrix_cascade_fixture_report.v1` plus one
+`libreevolve.matrix_cascade_seed_trace.v1` artifact for each pinned seed under
+`libreevolve/problems/benchmarks/artifacts/matrix_cascade_fixture/`. The report
+retains stage configuration, content hashes for both case sets, deterministic
+rank-7/rank-8 control outcomes, confidence-bound decisions, and an emitted
+`libreevolve.matrix_cascade_run_runtime_boundary.v1` record set linked to the
+checked Strassen result report. Artifact hashes are regenerated from canonical
+JSON and `validate_matrix_cascade_fixture_bundle()` verifies file/payload
+parity. These are known-control calibration artifacts, not search transcripts
+or evidence that LibreEvolve rediscovered Strassen.
 `validate_benchmark_evidence_scope()` cross-checks a hardening report against
 its example scope record and optional hardening artifact inventory. This keeps
 smoke-only shipped examples from being promoted to benchmark or paper-claim

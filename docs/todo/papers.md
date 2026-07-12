@@ -4022,21 +4022,23 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: the paper-facing matrix report contract validates declared
     seed rows and aggregate hit fractions, while generic cascade TODOs track
     cascade semantics.
-    `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates the
-    current `not_emitted_by_local_runner` boundary and emitted target/seed,
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1` validates emitted target/seed,
     cascade, stage-trace, final-rank, candidate/result reference,
     artifact-path, and hash fields.
-    `papers/matrix_cascade_run_runtime_boundary.json` now emits that
-    absence/readiness boundary as committed paper-facing evidence.
+    `papers/matrix_cascade_run_runtime_boundary.json` now emits four checked
+    rank-7 calibration traces as committed paper-facing evidence.
     `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds one
     emitted record per seed row from per-seed stage traces and checks final
-    stage/result-row linkage plus best-rank/hit-fraction aggregation. It does
-    not yet require local matrix runners to preserve emitted matrix-specific
-    executed cascade traces behind the published Table 2/Appendix A rank and
-    hit-fraction rows.
-  - Required result: connect actual matrix runners to emitted cascade records
-    before treating per-seed matrix result reports as AlphaEvolve Section 3.1
-    search evidence.
+    stage/result-row linkage plus best-rank/hit-fraction aggregation. The
+    checked `libreevolve.matrix_cascade_fixture_report.v1` executes four pinned
+    seeds over known rank-7/rank-8 controls and preserves canonical trace
+    artifacts, but it is not four independent evolutionary searches and does
+    not establish discovery lineage behind Table 2/Appendix A rows.
+  - Required result: connect actual matrix evolution runs to emitted cascade
+    records, with per-seed initialization, candidate ancestry, budgets,
+    pruning/early-stop decisions, accepted candidates, and generated final-rank
+    rows, before treating matrix reports as AlphaEvolve Section 3.1 search
+    evidence.
 
 - [ ] Wire Table 2/Table 3 matrix-rank table artifacts into paper exports.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Table 2 is the main-text

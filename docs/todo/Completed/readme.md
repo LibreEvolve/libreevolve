@@ -15833,3 +15833,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining README gap: there is still no machine-readable cross-document
     claim inventory, semantic stale-claim verifier, or CI-generated evidence
     map proving every AlphaEvolve-facing docs claim is current.
+- [x] Document the executed deterministic matrix cascade calibration.
+  - Spec evidence: the root README must distinguish runnable evidence from
+    AlphaEvolve-scale search and result claims.
+  - Status: README now states that the checked four-seed 2x2 fixture promotes
+    rank 7 and rejects rank 8 at the main confidence-bound gate.
+  - Remaining README gap: the fixture does not establish stochastic-search,
+    empirical error-rate, cost-efficiency, target-suite, rediscovery, or
+    record-beating evidence.
+  - Verification: checked fixture/boundary tests and the whole-docs status pass
+    preserve the scoped wording.

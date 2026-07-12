@@ -352,9 +352,11 @@ Important limits:
   identity records, evaluator/result artifact linkage, parameter-scope signoff,
   background-reference artifacts, review timestamps or versions, anti-gaming
   review evidence, non-smoke AlphaEvolve-comparable fixture scope,
-  repeated-seed protocols, SOTA/target baselines, fixture-emitted result
-  artifacts, anti-gaming negative fixtures, or paper-claim-ready benchmark
-  evidence; those boundaries are tracked by
+  search-derived repeated-seed protocols, anti-gaming negative fixtures, or
+  paper-claim-ready benchmark evidence. The checked 2x2 matrix calibration is
+  the bounded exception for deterministic four-seed known baselines and
+  emitted traces; it does not change the example's smoke scope. Those
+  boundaries are tracked by
   `papers/problem_formulation_provenance_boundary.json` and
   `papers/benchmark_fixture_readiness_boundary.json`.
 - Constructive-math Section 3.2 heuristic-handoff records preserve the
@@ -515,11 +517,13 @@ Important limits:
   Appendix A target; that boundary is tracked by
   `papers/matrix_suite_publication_artifacts.json`.
 - Matrix per-seed reports validate declared seed rows, best rank, and hit
-  fraction, and matrix cascade-run boundary records can link seed rows to
-  stage traces, but local matrix runners do not yet emit AlphaEvolve Section
-  3.1-style repeated-seed cascade traces, pruning decisions, or early-stop
-  provenance; that boundary is tracked by
-  `papers/matrix_cascade_run_runtime_boundary.json`.
+  fraction. The checked deterministic 2x2 cascade runner now executes four
+  pinned seeds, promotes the known rank-7 control, rejects the rank-8 control
+  at the main confidence-bound gate, writes one trace artifact per seed, and
+  emits the linked records in
+  `papers/matrix_cascade_run_runtime_boundary.json`. It does not run four
+  independent evolutionary searches, establish discovered-candidate lineage,
+  measure false-decision rates, or reproduce Section 3.1 scale.
 - Appendix A matrix target-suite curation records the reported 54 sorted
   targets, rough paper selection wording, symmetry policy, and included-target
   rationales, not an exhaustive locally justified corpus for every excluded

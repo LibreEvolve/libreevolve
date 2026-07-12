@@ -45,6 +45,9 @@ libreevolve/
   sampling_eligible.
 - Default `mixed` parent sampling uses 30% explore / 70% exploit; explicit
   parent-selection strategies bypass that ratio
+- The checked matrix cascade fixture executes four pinned seeds over known
+  rank-7/rank-8 2x2 controls and emits per-seed traces; it is deterministic
+  calibration, not Strassen rediscovery or AlphaEvolve-scale search evidence
 - Failed/rejected candidates are persisted to `failure_history.jsonl`, exact
   workspace duplicate/cache audit rows are persisted to
   `duplicate_work_cache_index.jsonl`, and

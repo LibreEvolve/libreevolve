@@ -63,7 +63,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "common_artifact_count": 14,
+  "common_artifact_count": 15,
   "missing_common_artifact_count": 0,
   "missing_common_artifact_records": [],
   "common_artifact_records": [
@@ -84,6 +84,13 @@
     {
       "name": "controller_budget_events.jsonl",
       "readme_marker": "`controller_budget_events.jsonl`",
+      "readme_status": "listed_in_readme",
+      "present_in_run_artifacts_doc": true,
+      "entry_kind": "file"
+    },
+    {
+      "name": "duplicate_work_cache_index.jsonl",
+      "readme_marker": "`duplicate_work_cache_index.jsonl`",
       "readme_status": "listed_in_readme",
       "present_in_run_artifacts_doc": true,
       "entry_kind": "file"
@@ -226,7 +233,7 @@
     },
     {
       "name": "duplicate_work_cache_index.jsonl",
-      "present_in_readme_common_list": false,
+      "present_in_readme_common_list": true,
       "present_in_run_artifacts_doc": true
     },
     {
@@ -319,7 +326,6 @@
   "cleanup_without_readme_common_names": [
     "archive_events_invalid.jsonl",
     "controller_budget_events_invalid.jsonl",
-    "duplicate_work_cache_index.jsonl",
     "failure_history_invalid.jsonl",
     "history_invalid.jsonl",
     "llm_calls_invalid.jsonl",

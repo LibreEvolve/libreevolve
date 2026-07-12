@@ -625,9 +625,11 @@ before making that class of paper claim.
 The committed `papers/problem_formulation_provenance_boundary.json` sidecar
 preserves that metadata-contract-only boundary for paper-manifest validation.
 The committed `papers/benchmark_fixture_readiness_boundary.json` sidecar
-preserves the related smoke-fixture readiness boundary for repeated-seed
-protocols, SOTA/target baselines, emitted result artifacts, anti-gaming
-negative fixtures, and paper-claim-ready benchmark scope.
+preserves the related smoke-scope boundary while linking the checked
+deterministic matrix calibration's four-seed protocol, known rank-7/rank-8
+values, and emitted traces. Non-smoke AlphaEvolve-comparable scope,
+search-derived seed outcomes, full-benchmark anti-gaming negative fixtures,
+and paper-claim-ready benchmark scope remain absent.
 The committed `papers/systems_result_readiness_boundary.json` sidecar
 preserves the systems-result boundary: LibreEvolve has schemas and validators
 for systems reports, artifact inventories, evidence bundles, domain-specific
@@ -2051,18 +2053,22 @@ Implemented:
   emitted boundary from a component inventory and validates ref/scope/hash
   linkage, but local matrix runs still do not emit those baseline component
   records automatically.
-  `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
-  records the current `not_emitted_by_local_runner` boundary and validates
+  `libreevolve.matrix_cascade_run_runtime_boundary.v1` now validates
   emitted Section 3.1-style repeated-seed matrix cascade traces for
   run/target/seed ids, cascade ids and versions, stage traces with
   threshold/rank/exactness/stop diagnostics, accepted final rank, candidate and
   matrix-result refs, artifact paths, and artifact hashes.
-  `papers/matrix_cascade_run_runtime_boundary.json` emits that
-  absence/readiness boundary as a committed sidecar.
+  `papers/matrix_cascade_run_runtime_boundary.json` emits four checked rank-7
+  calibration traces as a committed sidecar.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` can build emitted
   records from declared seed rows plus per-seed stage traces, with final-stage
-  linkage checks and aggregate best-rank/hit-fraction recomputation. Local
-  matrix runners still do not emit these traces automatically.
+  linkage checks and aggregate best-rank/hit-fraction recomputation. The
+  checked `libreevolve.matrix_cascade_fixture_report.v1` bundle executes a
+  two-stage, four-seed 2x2 fixture with content-hashed test sets, promotes the
+  rank-7 Strassen control, and rejects the rank-8 control at the main
+  confidence-bound gate. This is deterministic calibration of known controls,
+  not per-seed evolutionary search, rediscovery, empirical false-decision
+  measurement, or AlphaEvolve Section 3.1 scale.
   `libreevolve.matrix_near_integrality_evidence.v1` now
   validates declared search-time evidence that candidates were instructed to
   produce near-integral decompositions, rounded to integer or half-integer

@@ -26,6 +26,7 @@ EXPECTED_README_COMMON_ARTIFACTS = (
     "manifest.json",
     "archive_events.jsonl",
     "controller_budget_events.jsonl",
+    "duplicate_work_cache_index.jsonl",
     "evaluator_results.jsonl",
     "failure_history.jsonl",
     "history.jsonl",

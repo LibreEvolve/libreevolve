@@ -19308,3 +19308,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     evidence remain open.
   - Verification: config tests reject partial/non-increasing provenance, and
     the two-stage runtime fixture verifies real file-backed content hashes.
+- [x] Add an executable deterministic matrix cascade calibration fixture.
+  - Spec evidence: AlphaEvolve Sections 2.4 and 3.1 use increasingly difficult
+    evaluation stages and repeated seeds before reporting matrix ranks.
+  - Status: `matrix_cascade_fixture.py` now executes four pinned seeds through
+    content-hashed smoke/main 2x2 case sets, promotes a known rank-7 Strassen
+    control, rejects the rank-8 seed at a pinned 0.13 lower-confidence-bound
+    gate, writes canonical per-seed trace artifacts, and builds emitted
+    `libreevolve.matrix_cascade_run_runtime_boundary.v1` records linked to the
+    checked matrix result report.
+  - Remaining code gap: this is deterministic known-control calibration, not
+    independent per-seed evolutionary search, discovered-candidate ancestry,
+    empirical false-decision measurement, target-suite scale, or record-beating
+    discovery.
+  - Verification: focused fixture tests execute both controls, validate all
+    four emitted records, reject decision/hash drift, and verify checked bundle
+    and paper-sidecar parity.

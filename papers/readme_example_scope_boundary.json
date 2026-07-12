@@ -208,7 +208,7 @@
     {
       "record_id": "benchmark_fixture_boundary",
       "path": "papers/benchmark_fixture_readiness_boundary.json",
-      "required_marker": "smoke_fixture_readiness_only",
+      "required_marker": "smoke_scope_with_deterministic_matrix_calibration_only",
       "marker_status": "marker_present"
     },
     {

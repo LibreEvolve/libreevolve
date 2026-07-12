@@ -143,9 +143,11 @@ LibreEvolve has:
   promotion-rule attribution, bounded candidate linkage, next-stage exposure,
   and denominator reconciliation, plus an optional complete stage contract for
   strictly increasing difficulty/scale rationale and content-hashed test-set
-  identities. `papers/evaluation_cascade_boundary.json` keeps benchmark seed/
-  sample policy, repeated-seed fixtures, empirical error-rate proof, and cost-
-  savings evidence open
+  identities. A checked deterministic 2x2 matrix fixture now executes four
+  pinned seeds and calibrates rank-7 promotion against rank-8 rejection;
+  `papers/evaluation_cascade_boundary.json` keeps broader benchmark seed/sample
+  policy, stochastic-search calibration, empirical error-rate proof, and
+  cost-savings evidence open
 - cascade hypothesis-test boundary reports under
   `runtime.history.cascade_hypothesis_test_policy_report`, naming configured
   or fallback-inferred small-scale-filter/main-test roles, deterministic threshold/artifact
@@ -154,8 +156,9 @@ LibreEvolve has:
   configured false-promotion/false-rejection budget evidence, plus
   `binomial_success_rate` repeated-seed success-rate gates with Wilson
   lower-bound evidence, plus reconciled runtime small-filter-to-main-test
-  linkage, with `papers/cascade_hypothesis_test_boundary.json` preserving the
-  non-benchmark-calibrated boundary
+  linkage. `papers/cascade_hypothesis_test_boundary.json` links the executed
+  deterministic matrix calibration while preserving missing stochastic-search
+  and empirical false-decision evidence
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible
@@ -370,11 +373,12 @@ LibreEvolve has:
 - benchmark-fixture readiness reports under
   `runtime.history.benchmark_fixture_readiness_report`, joining startup
   problem metadata to the example-scope registry and preserving explicit false
-  readiness for smoke fixtures, missing repeated-seed protocols, missing
-  SOTA/target baselines, missing fixture-emitted result artifacts, and missing
-  anti-gaming negative-fixture evidence, with
+  readiness for smoke fixtures and missing anti-gaming negative-fixture
+  evidence. The checked matrix calibration separately records a deterministic
+  repeated-seed protocol, known rank-7/rank-8 baselines, and emitted trace
+  artifacts without promoting the smoke example to benchmark scope, with
   `papers/benchmark_fixture_readiness_boundary.json` preserving the
-  paper-facing smoke-fixture readiness boundary
+  paper-facing smoke-scope/calibration boundary
 - optional external feedback metadata under `collaborator_feedback.yaml` or
   direct `Problem.collaborator_feedback_metadata`, normalized into
   `problem.collaborator_feedback_metadata` and summarized by
@@ -691,9 +695,9 @@ is not yet an AlphaEvolve reproduction.
   extending the current `one_sided_lower_confidence_bound` plus
   normal-approximation error-budget support and `binomial_success_rate`
   Wilson-bound gates and reconciled runtime promotion linkage into
-  benchmark-calibrated thresholds, repeated-seed matrix/tensor fixtures, and
-  empirical false-promotion/false-rejection validation. The current boundary
-  is tracked by
+  stochastic/noisy matrix and tensor search fixtures beyond the deterministic
+  2x2 known-control calibration, plus empirical false-promotion/false-rejection
+  validation. The current boundary is tracked by
   `papers/cascade_hypothesis_test_boundary.json`.
 - Extend the evaluator/oracle registry beyond the current arbitration-policy
   matrix and local post-evaluator disagreement outcomes into independent
@@ -2213,19 +2217,23 @@ by `papers/lineage_replay_boundary.json`.
   builds emitted records from component inventories and validates top-level
   ref, mutable-scope, and fixed-hash linkage. Local benchmark runners still
   need to emit those baseline component records.
-- Keep matrix repeated-seed wording scoped to result reports versus executed
-  cascade traces: `libreevolve.matrix_cascade_run_runtime_boundary.v1` now
-  validates the current `not_emitted_by_local_runner` boundary and emitted
+- Keep matrix repeated-seed wording scoped to deterministic calibration versus
+  evolutionary search: `libreevolve.matrix_cascade_run_runtime_boundary.v1`
+  validates emitted
   per-seed records for run/target/seed ids, cascade ids and versions, stage
   traces with threshold/rank/exactness/stop diagnostics, accepted final rank,
   candidate and matrix-result refs, artifact paths, and artifact hashes.
-  `papers/matrix_cascade_run_runtime_boundary.json` now emits that
-  absence/readiness boundary as a committed sidecar.
+  `papers/matrix_cascade_run_runtime_boundary.json` now emits four checked
+  rank-7 calibration records as a committed sidecar.
   `matrix_cascade_run_runtime_boundary_from_matrix_result()` builds emitted
   records from matrix result seed rows plus per-seed stage traces and validates
   final-stage/result-row linkage plus best-rank, hit-count, and hit-fraction
-  aggregation from emitted seed records. Local benchmark runners still need to
-  emit those AlphaEvolve Section 3.1-style matrix cascade traces automatically.
+  aggregation from emitted seed records. The executable
+  `matrix_cascade_fixture.py` runner also verifies that the rank-8 control
+  passes smoke and fails the main confidence-bound gate against content-hashed
+  case sets. This does not yet execute independent per-seed evolutionary
+  searches, preserve discovered-candidate ancestry, or reproduce the Section
+  3.1 target suite and search budgets.
 - Keep matrix near-integrality wording scoped to evidence validation rather
   than executed search parity: `libreevolve.matrix_near_integrality_evidence.v1`
   now validates declared prompt instructions, integer/half-integer nearest

@@ -1,0 +1,2862 @@
+{
+  "calibration": {
+    "metric": "inverse_multiplications",
+    "negative_expected_decision": "hypothesis_test_not_met",
+    "negative_margin": -0.0050000000000000044,
+    "negative_metric": 0.125,
+    "negative_rank": 8,
+    "positive_expected_decision": "accepted_final_candidate",
+    "positive_margin": 0.012857142857142845,
+    "positive_metric": 0.14285714285714285,
+    "positive_rank": 7,
+    "promotion_threshold": 0.13
+  },
+  "candidate_results": {
+    "negative_control": {
+      "candidate_id": "naive_rank8",
+      "final_metric": 0.125,
+      "final_passed": false,
+      "final_rank": 8,
+      "final_stop_reason": "hypothesis_test_not_met",
+      "samples_by_stage": {
+        "rank_main": [
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 0
+            },
+            "program_outputs_sha256": "156f6bfa805c8af26fa16dc781a66eec9b92032261a4e760a9b47a558ef05134",
+            "sample_index": 0,
+            "seed": 0,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 1
+            },
+            "program_outputs_sha256": "e2888d30cb45293dbbd6d5aa7bbc566ef1ee5f78bf53abec59c0d599312b27d0",
+            "sample_index": 1,
+            "seed": 1,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 2
+            },
+            "program_outputs_sha256": "c31bbb3cfeaae7d4ff224dc60c9a192e93521f25423d0f1780a7036b23c2e566",
+            "sample_index": 2,
+            "seed": 2,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 3
+            },
+            "program_outputs_sha256": "81c5140b53af65becc9f2e0bfbc51012e4f637977169d8a588a291a2545c8050",
+            "sample_index": 3,
+            "seed": 3,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          }
+        ],
+        "rank_smoke": [
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 0
+            },
+            "program_outputs_sha256": "e3586427e7011522ace49df10aae7505b886809bf542acdd2a521dedf72086dd",
+            "sample_index": 0,
+            "seed": 0,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 1
+            },
+            "program_outputs_sha256": "28381c9e0910527098d6055dea9eb7879291957d03883cbe8107258d821c51ea",
+            "sample_index": 1,
+            "seed": 1,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 2
+            },
+            "program_outputs_sha256": "c54e90918a92cfd951c04e0971dfdbb6d849e6bf06fca2b43764c7009c39eae6",
+            "sample_index": 2,
+            "seed": 2,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.125,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.125,
+              "is_valid": true,
+              "multiplication_count": 8.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 3
+            },
+            "program_outputs_sha256": "cedfb9e90c343b891ec1e2bfd5dbfa612eca99d2b6e3b032528026e7d5e1ab73",
+            "sample_index": 3,
+            "seed": 3,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          }
+        ]
+      },
+      "source_path": "libreevolve/problems/examples/matrix_multiplication/initial_programs/seed.py",
+      "source_sha256": "8f2b5f3217ae0f3d78ff11229e4cdff3a981c2d9950aef9cc1a7431dfe146c33",
+      "stages": [
+        {
+          "fitness": 0.125,
+          "hypothesis_test_result": {
+            "configured": false,
+            "passed": true,
+            "test_name": null
+          },
+          "metrics": {
+            "inverse_multiplications": 0.125,
+            "is_valid": true,
+            "multiplication_count": 8.0
+          },
+          "name": "rank_smoke",
+          "passed": true,
+          "stage_index": 0,
+          "stop_reason": null,
+          "threshold": 0.12,
+          "threshold_passed": true
+        },
+        {
+          "fitness": 0.125,
+          "hypothesis_test_result": {
+            "confidence": 0.95,
+            "confidence_interval": {
+              "kind": "one_sided_lower",
+              "lower": 0.125,
+              "upper": null
+            },
+            "configured": true,
+            "error_budget": {
+              "calibration_method": null,
+              "configured": false,
+              "false_promotion": null,
+              "false_rejection": null,
+              "passed": true
+            },
+            "lower_bound": 0.125,
+            "mean": 0.125,
+            "metric": "inverse_multiplications",
+            "min": 0.13,
+            "min_samples": 4,
+            "observations": [
+              {
+                "sample_index": 0,
+                "value": 0.125
+              },
+              {
+                "sample_index": 1,
+                "value": 0.125
+              },
+              {
+                "sample_index": 2,
+                "value": 0.125
+              },
+              {
+                "sample_index": 3,
+                "value": 0.125
+              }
+            ],
+            "p_value": 1.0,
+            "passed": false,
+            "reason": "lower_confidence_bound_below_min",
+            "sample_count": 4,
+            "sample_stddev": 0.0,
+            "sequential_stop": {
+              "enabled": false,
+              "evaluated_samples": 4,
+              "planned_samples": 4,
+              "stop_reason": null,
+              "stopped_early": false
+            },
+            "sequential_stopping": false,
+            "standard_error": 0.0,
+            "test_name": "one_sided_lower_confidence_bound",
+            "z_critical": 1.6448536269514715,
+            "z_score": null
+          },
+          "metrics": {
+            "inverse_multiplications": 0.125,
+            "is_valid": true,
+            "multiplication_count": 8.0
+          },
+          "name": "rank_main",
+          "passed": false,
+          "stage_index": 1,
+          "stop_reason": "hypothesis_test_not_met",
+          "threshold": null,
+          "threshold_passed": true
+        }
+      ]
+    },
+    "positive_control": {
+      "candidate_id": "strassen_rank7",
+      "final_metric": 0.14285714285714285,
+      "final_passed": true,
+      "final_rank": 7,
+      "final_stop_reason": "accepted_final_candidate",
+      "samples_by_stage": {
+        "rank_main": [
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 0
+            },
+            "program_outputs_sha256": "156f6bfa805c8af26fa16dc781a66eec9b92032261a4e760a9b47a558ef05134",
+            "sample_index": 0,
+            "seed": 0,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 1
+            },
+            "program_outputs_sha256": "e2888d30cb45293dbbd6d5aa7bbc566ef1ee5f78bf53abec59c0d599312b27d0",
+            "sample_index": 1,
+            "seed": 1,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 2
+            },
+            "program_outputs_sha256": "c31bbb3cfeaae7d4ff224dc60c9a192e93521f25423d0f1780a7036b23c2e566",
+            "sample_index": 2,
+            "seed": 2,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/main_cases.json",
+                  "problem_relative_path": "fixtures/main_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/main_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 12,
+              "case_set_id": "main_cases",
+              "seed": 3
+            },
+            "program_outputs_sha256": "81c5140b53af65becc9f2e0bfbc51012e4f637977169d8a588a291a2545c8050",
+            "sample_index": 3,
+            "seed": 3,
+            "stage_config": {
+              "data_include": [
+                "fixtures/main_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 12,
+                "label": "main_12_cases",
+                "level": 1,
+                "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+              },
+              "hypothesis_test": {
+                "confidence": 0.95,
+                "metric": "inverse_multiplications",
+                "min": 0.13,
+                "min_samples": 4,
+                "type": "one_sided_lower_confidence_bound"
+              },
+              "name": "rank_main",
+              "role": "main_test",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "main_cases",
+                "source": "declared_data",
+                "split": "main"
+              }
+            }
+          }
+        ],
+        "rank_smoke": [
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 0
+            },
+            "program_outputs_sha256": "e3586427e7011522ace49df10aae7505b886809bf542acdd2a521dedf72086dd",
+            "sample_index": 0,
+            "seed": 0,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 1
+            },
+            "program_outputs_sha256": "28381c9e0910527098d6055dea9eb7879291957d03883cbe8107258d821c51ea",
+            "sample_index": 1,
+            "seed": 1,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 2
+            },
+            "program_outputs_sha256": "c54e90918a92cfd951c04e0971dfdbb6d849e6bf06fca2b43764c7009c39eae6",
+            "sample_index": 2,
+            "seed": 2,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          },
+          {
+            "evaluator_data": {
+              "enabled": true,
+              "exclude": [],
+              "file_count": 1,
+              "files": [
+                {
+                  "path": "fixtures/smoke_cases.json",
+                  "problem_relative_path": "fixtures/smoke_cases.json"
+                }
+              ],
+              "include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "policy": "declared_evaluator_data_files_v1",
+              "root": ".",
+              "root_scope": "problem_relative",
+              "skipped_count": 0
+            },
+            "fitness": 0.14285714285714285,
+            "is_valid": true,
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "program_outputs": {
+              "case_count": 4,
+              "case_set_id": "smoke_cases",
+              "seed": 3
+            },
+            "program_outputs_sha256": "cedfb9e90c343b891ec1e2bfd5dbfa612eca99d2b6e3b032528026e7d5e1ab73",
+            "sample_index": 3,
+            "seed": 3,
+            "stage_config": {
+              "data_include": [
+                "fixtures/smoke_cases.json"
+              ],
+              "difficulty_or_scale": {
+                "estimated_cost": 4,
+                "label": "smoke_4_cases",
+                "level": 0,
+                "rationale": "Cheap exact-arithmetic rejection before the main case set."
+              },
+              "min_score": 0.12,
+              "name": "rank_smoke",
+              "role": "small_scale_filter",
+              "samples": 4,
+              "seeds": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "test_set": {
+                "expected_file_count": 1,
+                "id": "smoke_cases",
+                "source": "declared_data",
+                "split": "smoke"
+              }
+            }
+          }
+        ]
+      },
+      "source_path": "libreevolve/problems/examples/matrix_multiplication/benchmark_candidates/strassen_rank7.py",
+      "source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+      "stages": [
+        {
+          "fitness": 0.14285714285714285,
+          "hypothesis_test_result": {
+            "configured": false,
+            "passed": true,
+            "test_name": null
+          },
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "name": "rank_smoke",
+          "passed": true,
+          "stage_index": 0,
+          "stop_reason": null,
+          "threshold": 0.12,
+          "threshold_passed": true
+        },
+        {
+          "fitness": 0.14285714285714285,
+          "hypothesis_test_result": {
+            "confidence": 0.95,
+            "confidence_interval": {
+              "kind": "one_sided_lower",
+              "lower": 0.14285714285714285,
+              "upper": null
+            },
+            "configured": true,
+            "error_budget": {
+              "calibration_method": null,
+              "configured": false,
+              "false_promotion": null,
+              "false_rejection": null,
+              "passed": true
+            },
+            "lower_bound": 0.14285714285714285,
+            "mean": 0.14285714285714285,
+            "metric": "inverse_multiplications",
+            "min": 0.13,
+            "min_samples": 4,
+            "observations": [
+              {
+                "sample_index": 0,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 1,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 2,
+                "value": 0.14285714285714285
+              },
+              {
+                "sample_index": 3,
+                "value": 0.14285714285714285
+              }
+            ],
+            "p_value": 0.0,
+            "passed": true,
+            "sample_count": 4,
+            "sample_stddev": 0.0,
+            "sequential_stop": {
+              "enabled": false,
+              "evaluated_samples": 4,
+              "planned_samples": 4,
+              "stop_reason": null,
+              "stopped_early": false
+            },
+            "sequential_stopping": false,
+            "standard_error": 0.0,
+            "test_name": "one_sided_lower_confidence_bound",
+            "z_critical": 1.6448536269514715,
+            "z_score": null
+          },
+          "metrics": {
+            "inverse_multiplications": 0.14285714285714285,
+            "is_valid": true,
+            "multiplication_count": 7.0
+          },
+          "name": "rank_main",
+          "passed": true,
+          "stage_index": 1,
+          "stop_reason": null,
+          "threshold": null,
+          "threshold_passed": true
+        }
+      ]
+    }
+  },
+  "cascade_id": "matrix_rank7_calibration",
+  "cascade_version": "v1",
+  "claim_boundary": "This executed fixture proves deterministic local rank-7 promotion, rank-8 rejection, repeated-seed stage tracing, and matrix-result linkage. It does not claim AlphaEvolve-scale stochastic search, rediscovery of Strassen, empirical false-decision rates, or a new matrix-multiplication result.",
+  "claim_ready": false,
+  "fixture_scope": "deterministic_local_cascade_calibration",
+  "matrix_result_report_sha256": "bff8875c2b22ef1b8a92a6ee51b43ac0a351f387d94b50245544a6b94880e6da",
+  "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+  "runtime_boundary": {
+    "claim_boundary": "Emitted records are per-seed matrix cascade traces linked to matrix_result_report seed rows; this still does not claim full AlphaEvolve Section 3.1 scale or state-of-the-art discovery.",
+    "emitted_records": [
+      {
+        "accepted_final_rank": 7,
+        "artifact_paths": [
+          "matrix/mm_2x2x2/cascade_seed_0.json"
+        ],
+        "artifact_sha256": "f42b4cefab1fdba32b3e09eaf7776ba60bf8321d9a12b9b2825ce1150bb49348",
+        "cascade_id": "matrix_rank7_calibration",
+        "cascade_version": "v1",
+        "final_candidate_id": "strassen_rank7_seed_0",
+        "matrix_result_ref": "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/matrix/mm_2x2x2/report.json",
+        "matrix_result_report": {
+          "alphaevolve_comparable": true,
+          "artifacts": [
+            {
+              "bytes": 1896,
+              "kind": "algorithm",
+              "path": "matrix/mm_2x2x2/algorithm.json",
+              "sha256": "74329e62b00bdf90d06a2c72a6b258af0bf303376a548d741744668163bb6c16",
+              "source_rights": {
+                "artifact_kind": "algorithm",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 402,
+              "kind": "certificate",
+              "path": "matrix/mm_2x2x2/certificate.json",
+              "sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+              "source_rights": {
+                "artifact_kind": "certificate",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 680,
+              "kind": "notebook",
+              "path": "matrix/mm_2x2x2/reproduce.ipynb",
+              "sha256": "ce5c256c25d2c0e16cfde99524c06c90f0ab318d4c262c733384481933e5b7b3",
+              "source_rights": {
+                "artifact_kind": "notebook",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            }
+          ],
+          "best_rank": 7,
+          "coefficient_domain": "integer",
+          "dimensions": [
+            2,
+            2,
+            2
+          ],
+          "exactness_certificate": {
+            "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+            "method": "symbolic_tensor_identity",
+            "status": "verified"
+          },
+          "hit_count": 4,
+          "hit_fraction": 1.0,
+          "schema": "libreevolve.matrix_result_report.v1",
+          "seed_count": 4,
+          "seed_results": [
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 0
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 1
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 2
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 3
+            }
+          ],
+          "target_id": "mm_2x2x2",
+          "target_suite": "alphaevolve_appendix_a"
+        },
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "seed": 0,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_0",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 0,
+            "seed": 0,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_0",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 0,
+            "seed": 0,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "stop_reason": "accepted_final_candidate",
+        "target_id": "mm_2x2x2"
+      },
+      {
+        "accepted_final_rank": 7,
+        "artifact_paths": [
+          "matrix/mm_2x2x2/cascade_seed_1.json"
+        ],
+        "artifact_sha256": "a2d906b8451ded7ee201c5f2127530aa1928957bee3ef72c94f7b2e7856ae525",
+        "cascade_id": "matrix_rank7_calibration",
+        "cascade_version": "v1",
+        "final_candidate_id": "strassen_rank7_seed_1",
+        "matrix_result_ref": "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/matrix/mm_2x2x2/report.json",
+        "matrix_result_report": {
+          "alphaevolve_comparable": true,
+          "artifacts": [
+            {
+              "bytes": 1896,
+              "kind": "algorithm",
+              "path": "matrix/mm_2x2x2/algorithm.json",
+              "sha256": "74329e62b00bdf90d06a2c72a6b258af0bf303376a548d741744668163bb6c16",
+              "source_rights": {
+                "artifact_kind": "algorithm",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 402,
+              "kind": "certificate",
+              "path": "matrix/mm_2x2x2/certificate.json",
+              "sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+              "source_rights": {
+                "artifact_kind": "certificate",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 680,
+              "kind": "notebook",
+              "path": "matrix/mm_2x2x2/reproduce.ipynb",
+              "sha256": "ce5c256c25d2c0e16cfde99524c06c90f0ab318d4c262c733384481933e5b7b3",
+              "source_rights": {
+                "artifact_kind": "notebook",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            }
+          ],
+          "best_rank": 7,
+          "coefficient_domain": "integer",
+          "dimensions": [
+            2,
+            2,
+            2
+          ],
+          "exactness_certificate": {
+            "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+            "method": "symbolic_tensor_identity",
+            "status": "verified"
+          },
+          "hit_count": 4,
+          "hit_fraction": 1.0,
+          "schema": "libreevolve.matrix_result_report.v1",
+          "seed_count": 4,
+          "seed_results": [
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 0
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 1
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 2
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 3
+            }
+          ],
+          "target_id": "mm_2x2x2",
+          "target_suite": "alphaevolve_appendix_a"
+        },
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "seed": 1,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_1",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 1,
+            "seed": 1,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_1",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 1,
+            "seed": 1,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "stop_reason": "accepted_final_candidate",
+        "target_id": "mm_2x2x2"
+      },
+      {
+        "accepted_final_rank": 7,
+        "artifact_paths": [
+          "matrix/mm_2x2x2/cascade_seed_2.json"
+        ],
+        "artifact_sha256": "ab2b3a8c47db797b7e70966d5974c6b2f0bf1f59b89a96a7e967ca1c0d775cf0",
+        "cascade_id": "matrix_rank7_calibration",
+        "cascade_version": "v1",
+        "final_candidate_id": "strassen_rank7_seed_2",
+        "matrix_result_ref": "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/matrix/mm_2x2x2/report.json",
+        "matrix_result_report": {
+          "alphaevolve_comparable": true,
+          "artifacts": [
+            {
+              "bytes": 1896,
+              "kind": "algorithm",
+              "path": "matrix/mm_2x2x2/algorithm.json",
+              "sha256": "74329e62b00bdf90d06a2c72a6b258af0bf303376a548d741744668163bb6c16",
+              "source_rights": {
+                "artifact_kind": "algorithm",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 402,
+              "kind": "certificate",
+              "path": "matrix/mm_2x2x2/certificate.json",
+              "sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+              "source_rights": {
+                "artifact_kind": "certificate",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 680,
+              "kind": "notebook",
+              "path": "matrix/mm_2x2x2/reproduce.ipynb",
+              "sha256": "ce5c256c25d2c0e16cfde99524c06c90f0ab318d4c262c733384481933e5b7b3",
+              "source_rights": {
+                "artifact_kind": "notebook",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            }
+          ],
+          "best_rank": 7,
+          "coefficient_domain": "integer",
+          "dimensions": [
+            2,
+            2,
+            2
+          ],
+          "exactness_certificate": {
+            "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+            "method": "symbolic_tensor_identity",
+            "status": "verified"
+          },
+          "hit_count": 4,
+          "hit_fraction": 1.0,
+          "schema": "libreevolve.matrix_result_report.v1",
+          "seed_count": 4,
+          "seed_results": [
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 0
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 1
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 2
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 3
+            }
+          ],
+          "target_id": "mm_2x2x2",
+          "target_suite": "alphaevolve_appendix_a"
+        },
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "seed": 2,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_2",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 2,
+            "seed": 2,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_2",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 2,
+            "seed": 2,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "stop_reason": "accepted_final_candidate",
+        "target_id": "mm_2x2x2"
+      },
+      {
+        "accepted_final_rank": 7,
+        "artifact_paths": [
+          "matrix/mm_2x2x2/cascade_seed_3.json"
+        ],
+        "artifact_sha256": "7a7329884456db5fafd42d2b6c62d8a335df3fa73228e0b6324a40dad09344be",
+        "cascade_id": "matrix_rank7_calibration",
+        "cascade_version": "v1",
+        "final_candidate_id": "strassen_rank7_seed_3",
+        "matrix_result_ref": "libreevolve/problems/benchmarks/artifacts/strassen_2x2_publication_bundle/matrix/mm_2x2x2/report.json",
+        "matrix_result_report": {
+          "alphaevolve_comparable": true,
+          "artifacts": [
+            {
+              "bytes": 1896,
+              "kind": "algorithm",
+              "path": "matrix/mm_2x2x2/algorithm.json",
+              "sha256": "74329e62b00bdf90d06a2c72a6b258af0bf303376a548d741744668163bb6c16",
+              "source_rights": {
+                "artifact_kind": "algorithm",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 402,
+              "kind": "certificate",
+              "path": "matrix/mm_2x2x2/certificate.json",
+              "sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+              "source_rights": {
+                "artifact_kind": "certificate",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            },
+            {
+              "bytes": 680,
+              "kind": "notebook",
+              "path": "matrix/mm_2x2x2/reproduce.ipynb",
+              "sha256": "ce5c256c25d2c0e16cfde99524c06c90f0ab318d4c262c733384481933e5b7b3",
+              "source_rights": {
+                "artifact_kind": "notebook",
+                "as_is_disclaimer_applies": false,
+                "companion_source_id": "alphaevolve_results_mathematical_results_colab",
+                "license": "LibreEvolve-local",
+                "local_project_endorsement": false,
+                "material_type": "local_generated_no_companion_material",
+                "must_keep_libreevolve_mit_license_separate": true,
+                "must_keep_source_pdf_rights_separate": true,
+                "official_google_product": false,
+                "reuse_policy": "local_project_terms_apply_no_companion_material_copied",
+                "rights_holder": null,
+                "schema": "libreevolve.alphaevolve_companion_artifact_rights.v1",
+                "source_manifest": "papers/companion_sources.json",
+                "source_paper_id": "2506.13131",
+                "source_relationship": "local_generated_no_companion_material_copied",
+                "source_rights_holder_required": false
+              }
+            }
+          ],
+          "best_rank": 7,
+          "coefficient_domain": "integer",
+          "dimensions": [
+            2,
+            2,
+            2
+          ],
+          "exactness_certificate": {
+            "certificate_sha256": "5188e389e0ef3831d01a36206452fc9907b841cc4fdcbc26aa8e1686751ca570",
+            "method": "symbolic_tensor_identity",
+            "status": "verified"
+          },
+          "hit_count": 4,
+          "hit_fraction": 1.0,
+          "schema": "libreevolve.matrix_result_report.v1",
+          "seed_count": 4,
+          "seed_results": [
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 0
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 1
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 2
+            },
+            {
+              "achieved_best_rank": true,
+              "exact": true,
+              "rank": 7,
+              "seed": 3
+            }
+          ],
+          "target_id": "mm_2x2x2",
+          "target_suite": "alphaevolve_appendix_a"
+        },
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "seed": 3,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_3",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 3,
+            "seed": 3,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_3",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 3,
+            "seed": 3,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "stop_reason": "accepted_final_candidate",
+        "target_id": "mm_2x2x2"
+      }
+    ],
+    "local_runner_scope": "matrix_benchmark_runner",
+    "required_emission_fields": [
+      "run_id",
+      "target_id",
+      "seed",
+      "cascade_id",
+      "cascade_version",
+      "stage_traces",
+      "accepted_final_rank",
+      "stop_reason",
+      "final_candidate_id",
+      "matrix_result_ref",
+      "matrix_result_report",
+      "artifact_paths",
+      "artifact_sha256"
+    ],
+    "result_schema": "libreevolve.matrix_result_report.v1",
+    "runtime_emission_status": "emitted",
+    "schema": "libreevolve.matrix_cascade_run_runtime_boundary.v1",
+    "target_suite": "alphaevolve_appendix_a"
+  },
+  "runtime_boundary_schema": "libreevolve.matrix_cascade_run_runtime_boundary.v1",
+  "schema": "libreevolve.matrix_cascade_fixture_report.v1",
+  "seeds": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "source_paper_id": "2506.13131",
+  "source_section_id": "3.1",
+  "stage_config": [
+    {
+      "data_include": [
+        "fixtures/smoke_cases.json"
+      ],
+      "difficulty_or_scale": {
+        "estimated_cost": 4,
+        "label": "smoke_4_cases",
+        "level": 0,
+        "rationale": "Cheap exact-arithmetic rejection before the main case set."
+      },
+      "min_score": 0.12,
+      "name": "rank_smoke",
+      "role": "small_scale_filter",
+      "samples": 4,
+      "seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "test_set": {
+        "expected_file_count": 1,
+        "id": "smoke_cases",
+        "source": "declared_data",
+        "split": "smoke"
+      }
+    },
+    {
+      "data_include": [
+        "fixtures/main_cases.json"
+      ],
+      "difficulty_or_scale": {
+        "estimated_cost": 12,
+        "label": "main_12_cases",
+        "level": 1,
+        "rationale": "Broader exact-arithmetic validation and rank promotion gate."
+      },
+      "hypothesis_test": {
+        "confidence": 0.95,
+        "metric": "inverse_multiplications",
+        "min": 0.13,
+        "min_samples": 4,
+        "type": "one_sided_lower_confidence_bound"
+      },
+      "name": "rank_main",
+      "role": "main_test",
+      "samples": 4,
+      "seeds": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "test_set": {
+        "expected_file_count": 1,
+        "id": "main_cases",
+        "source": "declared_data",
+        "split": "main"
+      }
+    }
+  ],
+  "target_id": "mm_2x2x2",
+  "test_set_artifacts": [
+    {
+      "bytes": 378,
+      "case_count": 4,
+      "id": "smoke_cases",
+      "path": "libreevolve/problems/examples/matrix_multiplication/fixtures/smoke_cases.json",
+      "sha256": "5db24c3b11715369548f06309cbe4167c84d5fbbaf941bbaf6446943a3c33f71"
+    },
+    {
+      "bytes": 980,
+      "case_count": 12,
+      "id": "main_cases",
+      "path": "libreevolve/problems/examples/matrix_multiplication/fixtures/main_cases.json",
+      "sha256": "b7ad87ca3eaa769b05a6b253f7e258e3561213f63bc81e5e31627d548b66d0fa"
+    }
+  ],
+  "trace_artifacts": [
+    {
+      "bytes": 3227,
+      "path": "matrix/mm_2x2x2/cascade_seed_0.json",
+      "payload": {
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "schema": "libreevolve.matrix_cascade_seed_trace.v1",
+        "seed": 0,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_0",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 0,
+            "seed": 0,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_0",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 0,
+            "seed": 0,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "target_id": "mm_2x2x2"
+      },
+      "seed": 0,
+      "sha256": "f42b4cefab1fdba32b3e09eaf7776ba60bf8321d9a12b9b2825ce1150bb49348"
+    },
+    {
+      "bytes": 3227,
+      "path": "matrix/mm_2x2x2/cascade_seed_1.json",
+      "payload": {
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "schema": "libreevolve.matrix_cascade_seed_trace.v1",
+        "seed": 1,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_1",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 1,
+            "seed": 1,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_1",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 1,
+            "seed": 1,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "target_id": "mm_2x2x2"
+      },
+      "seed": 1,
+      "sha256": "a2d906b8451ded7ee201c5f2127530aa1928957bee3ef72c94f7b2e7856ae525"
+    },
+    {
+      "bytes": 3227,
+      "path": "matrix/mm_2x2x2/cascade_seed_2.json",
+      "payload": {
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "schema": "libreevolve.matrix_cascade_seed_trace.v1",
+        "seed": 2,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_2",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 2,
+            "seed": 2,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_2",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 2,
+            "seed": 2,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "target_id": "mm_2x2x2"
+      },
+      "seed": 2,
+      "sha256": "ab2b3a8c47db797b7e70966d5974c6b2f0bf1f59b89a96a7e967ca1c0d775cf0"
+    },
+    {
+      "bytes": 3227,
+      "path": "matrix/mm_2x2x2/cascade_seed_3.json",
+      "payload": {
+        "run_id": "matrix_cascade_fixture_mm_2x2x2_v1",
+        "schema": "libreevolve.matrix_cascade_seed_trace.v1",
+        "seed": 3,
+        "stage_traces": [
+          {
+            "candidate_id": "strassen_rank7_seed_3",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "configured": false,
+              "passed": true,
+              "test_name": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 3,
+            "seed": 3,
+            "stage_index": 0,
+            "stage_label": "rank_smoke",
+            "stage_role": "small_scale_filter",
+            "stop_reason": "promoted_to_next_stage",
+            "test_set": {
+              "case_count": 4,
+              "id": "smoke_cases",
+              "source": "declared_data",
+              "split": "smoke"
+            },
+            "threshold": 0.12
+          },
+          {
+            "candidate_id": "strassen_rank7_seed_3",
+            "candidate_source_sha256": "be2b906eba4d47349a1fb9837a5054474a10e42ab466bdb847475e447d27e3e7",
+            "exact": true,
+            "hypothesis_test_result": {
+              "confidence": 0.95,
+              "confidence_interval": {
+                "kind": "one_sided_lower",
+                "lower": 0.14285714285714285,
+                "upper": null
+              },
+              "configured": true,
+              "error_budget": {
+                "calibration_method": null,
+                "configured": false,
+                "false_promotion": null,
+                "false_rejection": null,
+                "passed": true
+              },
+              "lower_bound": 0.14285714285714285,
+              "mean": 0.14285714285714285,
+              "metric": "inverse_multiplications",
+              "min": 0.13,
+              "min_samples": 4,
+              "observations": [
+                {
+                  "sample_index": 0,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 1,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 2,
+                  "value": 0.14285714285714285
+                },
+                {
+                  "sample_index": 3,
+                  "value": 0.14285714285714285
+                }
+              ],
+              "p_value": 0.0,
+              "passed": true,
+              "sample_count": 4,
+              "sample_stddev": 0.0,
+              "sequential_stop": {
+                "enabled": false,
+                "evaluated_samples": 4,
+                "planned_samples": 4,
+                "stop_reason": null,
+                "stopped_early": false
+              },
+              "sequential_stopping": false,
+              "standard_error": 0.0,
+              "test_name": "one_sided_lower_confidence_bound",
+              "z_critical": 1.6448536269514715,
+              "z_score": null
+            },
+            "metrics": {
+              "inverse_multiplications": 0.14285714285714285,
+              "is_valid": true,
+              "multiplication_count": 7.0
+            },
+            "rank": 7,
+            "sample_index": 3,
+            "seed": 3,
+            "stage_index": 1,
+            "stage_label": "rank_main",
+            "stage_role": "main_test",
+            "stop_reason": "accepted_final_candidate",
+            "test_set": {
+              "case_count": 12,
+              "id": "main_cases",
+              "source": "declared_data",
+              "split": "main"
+            },
+            "threshold": 0.13
+          }
+        ],
+        "target_id": "mm_2x2x2"
+      },
+      "seed": 3,
+      "sha256": "7a7329884456db5fafd42d2b6c62d8a335df3fa73228e0b6324a40dad09344be"
+    }
+  ]
+}

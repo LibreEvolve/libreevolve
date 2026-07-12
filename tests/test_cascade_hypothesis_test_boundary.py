@@ -14,13 +14,19 @@ def test_cascade_hypothesis_test_boundary_accepts_runtime_policy_boundary():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "runtime_policy_gates_without_benchmark_calibrated_fixtures"
+        == "runtime_policy_and_promotion_linkage_without_benchmark_calibrated_fixtures"
     )
     assert validation.required_evidence_field_count == 18
-    assert validation.missing_evidence_count == 5
+    assert validation.missing_evidence_count == 4
     assert boundary["schema"] == CASCADE_HYPOTHESIS_TEST_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert boundary["source_section_ids"] == ["2.4"]
+    assert boundary["transition_matrix_schema"] == (
+        "libreevolve.evaluation_cascade_transition_matrix.v1"
+    )
+    assert "runtime small-filter-to-main-test promotion linkage" in (
+        boundary["claim_boundary"]
+    )
     assert "does not claim benchmark-calibrated thresholds" in boundary["claim_boundary"]
 
 
@@ -51,8 +57,8 @@ def test_render_cascade_hypothesis_test_boundary_summary_reports_shape():
     assert "Cascade hypothesis-test boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | runtime_policy_gates_without_benchmark_calibrated_fixtures |"
+        "| boundary_status | runtime_policy_and_promotion_linkage_without_benchmark_calibrated_fixtures |"
         in summary
     )
     assert "| required_evidence_field_count | 18 |" in summary
-    assert "| missing_evidence_count | 5 |" in summary
+    assert "| missing_evidence_count | 4 |" in summary

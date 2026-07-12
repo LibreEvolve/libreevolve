@@ -6481,6 +6481,32 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         evidence_summary["claim_readiness"]["alphaevolve_cascade_efficiency_evidence"]
         is False
     )
+    transition_matrix = report["transition_matrix"]
+    assert transition_matrix["schema"] == (
+        "libreevolve.evaluation_cascade_transition_matrix.v1"
+    )
+    assert transition_matrix["transition_count"] == 1
+    assert transition_matrix["reconciled_transition_count"] == 1
+    assert transition_matrix["unreconciled_transition_count"] == 0
+    assert transition_matrix["complete_candidate_linkage_count"] == 1
+    assert transition_matrix["benchmark_claim_ready"] is False
+    transition = transition_matrix["records"][0]
+    assert transition["transition_id"] == "0:smoke->1:main"
+    assert transition["source_stage_role"] == "small_scale_filter"
+    assert transition["target_stage_role"] == "main_test"
+    assert transition["source_entered_count"] == 2
+    assert transition["source_passed_count"] == 1
+    assert transition["source_failed_count"] == 1
+    assert transition["next_stage_exposure_count"] == 1
+    assert transition["promotion_count"] == 1
+    assert transition["prune_count"] == 1
+    assert transition["promotion_decision_source"] == (
+        "fixed_threshold_and_artifact_checks"
+    )
+    assert transition["denominator_delta"] == 0
+    assert transition["denominator_reconciled"] is True
+    assert transition["candidate_linkage_status"] == "complete"
+    assert transition["promoted_candidate_ids"] == transition["target_candidate_ids"]
     assert "stage_difficulty_or_scale_labels" in (
         report["claim_readiness"]["remaining_gap"]
     )
@@ -6530,11 +6556,17 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
     overclaimed["stage_evidence_summary"]["claim_readiness"][
         "alphaevolve_cascade_efficiency_evidence"
     ] = True
+    overclaimed["transition_matrix"]["benchmark_claim_ready"] = True
+    overclaimed["transition_matrix"]["records"][0][
+        "next_stage_exposure_count"
+    ] = 2
     validation = validate_evaluation_cascade_report(overclaimed)
     assert validation["ok"] is False
     codes = {issue["code"] for issue in validation["issues"]}
     assert "cascade_denominator_overclaim" in codes
     assert "alphaevolve_cascade_efficiency_evidence_overclaim" in codes
+    assert "transition_matrix_benchmark_overclaim" in codes
+    assert "transition_denominator_delta_mismatch" in codes
 
     hypothesis_policy = manifest["runtime"]["history"][
         "cascade_hypothesis_test_policy_report"
@@ -6558,12 +6590,20 @@ def test_runtime_history_reports_configured_stage_promotion_and_attrition():
         "sequential_stopping_supported": False,
         "false_promotion_budget_supported": False,
         "false_rejection_budget_supported": False,
+        "runtime_promotion_linkage_supported": True,
         "per_sample_observation_retention": (
             "stage_accounting_and_candidate_stage_summary_only"
         ),
         "paper_claim_ready": False,
     }
     assert hypothesis_policy["claim_ready"] is False
+    assert hypothesis_policy["promotion_linkage_matrix"] == transition_matrix
+    assert (
+        hypothesis_policy["claim_readiness"][
+            "small_filter_to_main_test_linkage"
+        ]
+        is True
+    )
     assert (
         hypothesis_policy["claim_readiness"][
             "alphaevolve_section_2_4_hypothesis_testing"

@@ -2087,20 +2087,24 @@ sidecars, tests, and active TODOs.
     stage-entry, main-test exposure, and early-prune populations. It also emits
     `stage_evidence_summary` counts for configured stage roles, source/hash
     evidence, runtime samples, main-test exposure, early pruning, and explicit
-    absent-evidence statuses. Validation rejects denominator and stage-evidence
-    overclaims. Tests cover a two-stage run where one
+    absent-evidence statuses. It now also emits
+    `libreevolve.evaluation_cascade_transition_matrix.v1`, with adjacent
+    source/target stage roles, promotion-rule attribution, bounded promoted and
+    pruned candidate ids, next-stage exposure counts, and denominator
+    reconciliation. The hypothesis-test policy report links the same matrix
+    and marks small-filter-to-main-test linkage ready only when all adjacent
+    denominators reconcile. Validation rejects denominator, transition, and
+    stage-evidence overclaims. Tests cover a two-stage run where one
     candidate reaches the final stage and another is pruned at smoke. The
     committed `papers/evaluation_cascade_boundary.json` sidecar now records
-    the paper-manifest-validated absence boundary for missing cascade-
-    efficiency evidence, including candidate transition matrix, promotion-
-    decision rule attribution, next-stage exposure linkage, and transition-
-    denominator reconciliation.
+    the paper-manifest-validated boundary for runtime transition linkage
+    without benchmark-efficiency evidence.
   - Required result: finish difficulty/scale labels, evaluator/test-set
     identities and hashes, benchmark seed/sample policy beyond runtime
-    accounting, candidate transition matrix with promotion/prune rule
-    attribution and next-stage linkage, transition denominator reconciliation,
-    and counterfactual cost-savings evidence before claiming AlphaEvolve-style
-    evaluation-cascade efficiency or hypothesis-testing evidence.
+    accounting, repeated-seed benchmark fixtures, empirical false-promotion/
+    false-rejection validation, and counterfactual cost-savings evidence before
+    claiming AlphaEvolve-style evaluation-cascade efficiency or hypothesis-
+    testing evidence.
 
 - [ ] Add evaluator workload provenance for inner search and ML-training tasks.
   - Spec evidence: AlphaEvolve Section 2.1 says the evaluator can be simple,
@@ -2304,8 +2308,10 @@ sidecars, tests, and active TODOs.
   - Remaining gap: these are configured lower-bound and binomial repeated-
     sample gates, not full AlphaEvolve Section 2.4 hypothesis testing.
     `papers/cascade_hypothesis_test_boundary.json` now validates this
-    runtime-policy-only scope. Benchmark-calibrated thresholds and
-    matrix/tensor repeated-seed promotion fixtures remain absent.
+    runtime policy-and-linkage scope. The report now includes a reconciled
+    adjacent-stage transition matrix linking small filters to next-stage
+    exposure. Benchmark-calibrated thresholds, matrix/tensor repeated-seed
+    promotion fixtures, and empirical error-rate validation remain absent.
   - Required result: add benchmark tests showing noisy repeated-seed candidates
     are promoted or rejected by calibrated hypothesis-testing rules.
 

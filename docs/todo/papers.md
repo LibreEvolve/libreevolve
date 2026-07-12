@@ -209,23 +209,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     stage-entry, main-test exposure, and early-prune populations, and explicit
     denominator overclaim validation. It also records a
     `stage_evidence_summary` with role/source/hash/sample/exposure counts and
-    explicit absent-evidence statuses. The committed
+    explicit absent-evidence statuses. It now also records a validated
+    `libreevolve.evaluation_cascade_transition_matrix.v1` with adjacent-stage
+    promotion-rule attribution, bounded promoted/pruned candidate ids,
+    next-stage exposure counts, and denominator reconciliation. The committed
     `papers/evaluation_cascade_boundary.json` sidecar now preserves the
-    paper-manifest-validated cascade-efficiency absence boundary, including
-    missing candidate transition matrix, promotion-decision rule attribution,
-    next-stage exposure linkage, and transition-denominator reconciliation.
+    paper-manifest-validated runtime-transition-linkage boundary without
+    benchmark-efficiency evidence.
   - Current gap: paper-facing evidence still lacks stage difficulty or scale
     rationale, evaluator/test-set identities and hashes, benchmark seed/sample
-    policy, candidate-by-candidate transition proof from each small-filter
-    decision to next-stage exposure or prune outcome, transition denominator
-    reconciliation, and counterfactual cost/wall-clock savings; the new summary
-    records those absences explicitly. The report therefore remains
+    policy, repeated-seed benchmark fixtures, empirical false-promotion/false-
+    rejection validation, and counterfactual cost/wall-clock savings. The
+    report therefore remains
     `claim_ready: false` for AlphaEvolve cascade-efficiency claims.
   - Required result: finish cascade-report artifacts and validators with stage
     difficulty/test-set metadata, random-seed/sample coverage beyond the
-    runtime denominator policy, candidate transition matrix with
-    promotion/prune rule attribution and next-stage linkage, cost summaries,
-    and claim-readiness checks.
+    runtime denominator policy, benchmark-calibrated repeated-seed fixtures,
+    empirical error-rate validation, cost summaries, and claim-readiness
+    checks.
 
 - [ ] Track explicit controller backtracking policy beyond observed redirect
       evidence.
@@ -2373,10 +2374,11 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Current gap: paper-facing evidence still lacks benchmark-calibrated
     thresholds and repeated-seed benchmark fixtures.
     `papers/cascade_hypothesis_test_boundary.json` now validates the current
-    runtime policy-gate scope without claiming benchmark-calibrated cascade
-    readiness.
-  - Required result: add paper-facing benchmark promotion/rejection linkage
-    from small-scale filters to main test cases.
+    runtime policy-and-promotion-linkage scope without claiming benchmark-
+    calibrated cascade readiness.
+  - Required result: add benchmark-calibrated repeated-seed fixtures and
+    empirical false-promotion/false-rejection validation for the recorded
+    small-filter-to-main-test linkage.
 
 - [ ] Track qualitative LLM-feedback criterion provenance.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.4.

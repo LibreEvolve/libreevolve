@@ -139,11 +139,11 @@ LibreEvolve has:
   claim-readiness limitations under `runtime.history.evaluation_cascade_report`,
   including `stage_evidence_summary` counts for configured roles, local stage
   source refs/hashes when available, runtime samples, main-test exposure, and
-  early pruning, with `papers/evaluation_cascade_boundary.json` now carrying
-  the paper-manifest-validated absence boundary for stage difficulty/test-set
-  identities, benchmark seed/sample policy, candidate transition matrices,
-  promotion-decision rule attribution, next-stage exposure linkage,
-  transition-denominator reconciliation, and cost-savings evidence
+  early pruning, plus a validated adjacent-stage transition matrix with
+  promotion-rule attribution, bounded candidate linkage, next-stage exposure,
+  and denominator reconciliation. `papers/evaluation_cascade_boundary.json`
+  keeps stage difficulty/test-set identities, benchmark seed/sample policy,
+  empirical error-rate proof, and cost-savings evidence open
 - cascade hypothesis-test boundary reports under
   `runtime.history.cascade_hypothesis_test_policy_report`, naming configured
   or fallback-inferred small-scale-filter/main-test roles, deterministic threshold/artifact
@@ -151,8 +151,9 @@ LibreEvolve has:
   gates with confidence-bound, p-value, sequential early-stop, and
   configured false-promotion/false-rejection budget evidence, plus
   `binomial_success_rate` repeated-seed success-rate gates with Wilson
-  lower-bound evidence, with `papers/cascade_hypothesis_test_boundary.json`
-  preserving the runtime-policy-only boundary
+  lower-bound evidence, plus reconciled runtime small-filter-to-main-test
+  linkage, with `papers/cascade_hypothesis_test_boundary.json` preserving the
+  non-benchmark-calibrated boundary
 - evaluator-workload declarations for configured stages, including
   `simple_check`, `inner_search`, `ml_training`, and `custom` classifications,
   validated dataset/budget/checkpoint/score-field metadata, validator-visible
@@ -687,8 +688,10 @@ is not yet an AlphaEvolve reproduction.
 - Add broader statistical hypothesis-test promotion policies for cascades,
   extending the current `one_sided_lower_confidence_bound` plus
   normal-approximation error-budget support and `binomial_success_rate`
-  Wilson-bound gates into benchmark-calibrated thresholds and repeated-seed
-  matrix/tensor fixtures. The current boundary is tracked by
+  Wilson-bound gates and reconciled runtime promotion linkage into
+  benchmark-calibrated thresholds, repeated-seed matrix/tensor fixtures, and
+  empirical false-promotion/false-rejection validation. The current boundary
+  is tracked by
   `papers/cascade_hypothesis_test_boundary.json`.
 - Extend the evaluator/oracle registry beyond the current arbitration-policy
   matrix and local post-evaluator disagreement outcomes into independent

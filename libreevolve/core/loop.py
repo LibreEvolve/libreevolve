@@ -18174,6 +18174,10 @@ def _evaluation_cascade_report(
         _finalize_cascade_stage_record(record)
         for record in sorted(stages.values(), key=lambda item: (item["stage_index"], item["name"]))
     ]
+    transition_matrix = _evaluation_cascade_transition_matrix(
+        ordered_stages,
+        eval_stages,
+    )
     report = {
         "schema": "libreevolve.evaluation_cascade_report.v1",
         "source": "runtime_history_configured_stage_results",
@@ -18226,6 +18230,7 @@ def _evaluation_cascade_report(
             main_test_exposure_count,
             max(0, configured_candidate_count - main_test_exposure_count),
         ),
+        "transition_matrix": transition_matrix,
         "main_test_exposure_count": main_test_exposure_count,
         "early_prune_count": max(0, configured_candidate_count - main_test_exposure_count),
         "stop_reasons": dict(sorted(stop_reasons.items())),
@@ -18246,6 +18251,162 @@ def _evaluation_cascade_report(
     }
     report["validation"] = validate_evaluation_cascade_report(report)
     return report
+
+
+def _evaluation_cascade_transition_matrix(
+    stages: list[dict],
+    eval_stages: list,
+) -> dict:
+    records: list[dict] = []
+    for index, (source_stage, target_stage) in enumerate(
+        zip(stages, stages[1:])
+    ):
+        source_config = (
+            eval_stages[index]
+            if index < len(eval_stages) and isinstance(eval_stages[index], Mapping)
+            else {}
+        )
+        target_config = (
+            eval_stages[index + 1]
+            if index + 1 < len(eval_stages)
+            and isinstance(eval_stages[index + 1], Mapping)
+            else {}
+        )
+        source_entered = int(source_stage.get("candidate_count", 0))
+        source_passed = int(source_stage.get("passed", 0))
+        source_failed = int(source_stage.get("failed", 0))
+        target_entered = int(target_stage.get("candidate_count", 0))
+        source_ids = [
+            candidate_id
+            for candidate_id in source_stage.get("candidate_ids", [])
+            if isinstance(candidate_id, str)
+        ]
+        target_ids = [
+            candidate_id
+            for candidate_id in target_stage.get("candidate_ids", [])
+            if isinstance(candidate_id, str)
+        ]
+        ids_truncated = (
+            source_stage.get("candidate_ids_truncated") is True
+            or target_stage.get("candidate_ids_truncated") is True
+        )
+        target_id_set = set(target_ids)
+        promoted_ids = [candidate_id for candidate_id in source_ids if candidate_id in target_id_set]
+        pruned_ids = [candidate_id for candidate_id in source_ids if candidate_id not in target_id_set]
+        denominator_delta = target_entered - source_passed
+        denominator_reconciled = denominator_delta == 0
+        candidate_linkage_complete = (
+            not ids_truncated
+            and len(promoted_ids) == source_passed
+            and len(target_ids) == target_entered
+            and set(target_ids).issubset(set(source_ids))
+        )
+        hypothesis_test = (
+            source_config.get("hypothesis_test")
+            if isinstance(source_config.get("hypothesis_test"), Mapping)
+            else {}
+        )
+        records.append(
+            {
+                "transition_id": (
+                    f"{source_stage.get('stage_id')}->{target_stage.get('stage_id')}"
+                ),
+                "source_stage_id": source_stage.get("stage_id"),
+                "source_stage_role": _cascade_stage_role(
+                    index,
+                    len(stages),
+                    source_config,
+                ),
+                "target_stage_id": target_stage.get("stage_id"),
+                "target_stage_role": _cascade_stage_role(
+                    index + 1,
+                    len(stages),
+                    target_config,
+                ),
+                "source_entered_count": source_entered,
+                "source_passed_count": source_passed,
+                "source_failed_count": source_failed,
+                "next_stage_exposure_count": target_entered,
+                "promotion_count": source_passed,
+                "prune_count": source_failed,
+                "promotion_decision_source": (
+                    "statistical_hypothesis_test"
+                    if hypothesis_test
+                    else "fixed_threshold_and_artifact_checks"
+                ),
+                "promotion_rule": {
+                    "min_score": source_config.get("min_score"),
+                    "metric_thresholds_configured": isinstance(
+                        source_config.get("metric_thresholds"), Mapping
+                    ),
+                    "artifact_checks_configured": any(
+                        key in source_config
+                        for key in (
+                            "min_artifacts",
+                            "program_output_checks",
+                            "require_program_output",
+                            "required_artifacts",
+                        )
+                    ),
+                    "hypothesis_test_type": hypothesis_test.get("type"),
+                },
+                "denominator_delta": denominator_delta,
+                "denominator_reconciled": denominator_reconciled,
+                "candidate_linkage_status": (
+                    "complete"
+                    if candidate_linkage_complete
+                    else "bounded_ids_truncated"
+                    if ids_truncated
+                    else "inconsistent"
+                ),
+                "source_candidate_ids": source_ids,
+                "promoted_candidate_ids": promoted_ids,
+                "pruned_candidate_ids": pruned_ids,
+                "target_candidate_ids": target_ids,
+                "candidate_ids_truncated": ids_truncated,
+            }
+        )
+    reconciled_count = sum(
+        1 for record in records if record["denominator_reconciled"] is True
+    )
+    complete_linkage_count = sum(
+        1 for record in records if record["candidate_linkage_status"] == "complete"
+    )
+    return {
+        "schema": "libreevolve.evaluation_cascade_transition_matrix.v1",
+        "source": "runtime_evaluation_cascade_stage_records",
+        "transition_count": len(records),
+        "reconciled_transition_count": reconciled_count,
+        "unreconciled_transition_count": len(records) - reconciled_count,
+        "complete_candidate_linkage_count": complete_linkage_count,
+        "records": records,
+        "denominator_policy": (
+            "source_stage_passed_count_equals_next_stage_exposure_count"
+        ),
+        "benchmark_claim_ready": False,
+        "remaining_gap": [
+            "benchmark_calibrated_stage_thresholds",
+            "repeated_seed_benchmark_fixtures",
+            "empirical_false_promotion_validation",
+            "empirical_false_rejection_validation",
+            "counterfactual_cost_savings",
+        ],
+    }
+
+
+def _cascade_stage_role(
+    index: int,
+    stage_count: int,
+    stage: Mapping[str, object],
+) -> str:
+    configured_role = stage.get("role")
+    if isinstance(configured_role, str):
+        return configured_role
+    if index == stage_count - 1:
+        return "main_test"
+    if stage_count > 2 and index > 0:
+        return "intermediate_filter"
+    return "small_scale_filter"
 
 
 def _evaluation_cascade_stage_evidence_summary(
@@ -18393,6 +18554,15 @@ def _cascade_hypothesis_test_policy_report(
         and not isinstance(cascade_report.get("stage_count"), bool)
         else 0
     )
+    transition_matrix = (
+        cascade_report.get("transition_matrix")
+        if isinstance(cascade_report.get("transition_matrix"), Mapping)
+        else {}
+    )
+    runtime_promotion_linkage = (
+        transition_matrix.get("transition_count", 0) > 0
+        and transition_matrix.get("unreconciled_transition_count") == 0
+    )
     report = {
         "schema": "libreevolve.cascade_hypothesis_test_policy_report.v1",
         "source": "config_eval_stages_and_evaluation_cascade_report",
@@ -18400,6 +18570,7 @@ def _cascade_hypothesis_test_policy_report(
         "configured_stage_policy_count": len(stage_policies),
         "observed_stage_count": observed_stage_count,
         "stage_policies": stage_policies,
+        "promotion_linkage_matrix": copy.deepcopy(transition_matrix),
         "current_policy": {
             "schema": "libreevolve.cascade_promotion_policy_boundary.v1",
             "promotion_mechanism": (
@@ -18413,6 +18584,7 @@ def _cascade_hypothesis_test_policy_report(
             "sequential_stopping_supported": sequential_stopping_configured,
             "false_promotion_budget_supported": false_promotion_budget_configured,
             "false_rejection_budget_supported": false_rejection_budget_configured,
+            "runtime_promotion_linkage_supported": runtime_promotion_linkage,
             "per_sample_observation_retention": (
                 "hypothesis_test_observations_when_configured"
                 if statistical_test_configured
@@ -18434,6 +18606,7 @@ def _cascade_hypothesis_test_policy_report(
                 false_promotion_budget_configured
                 and false_rejection_budget_configured
             ),
+            "small_filter_to_main_test_linkage": runtime_promotion_linkage,
             "remaining_gap": [
                 "statistical_test_configuration",
                 "retained_per_sample_observations",
@@ -37904,6 +38077,7 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         "denominator_policy",
         "source_identity_summary",
         "stage_evidence_summary",
+        "transition_matrix",
         "main_test_exposure_count",
         "early_prune_count",
         "stop_reasons",
@@ -38001,6 +38175,19 @@ def validate_evaluation_cascade_report(report: object) -> dict:
             len(stages),
             issues,
         )
+    transition_matrix = report.get("transition_matrix")
+    if not isinstance(transition_matrix, dict):
+        issues.append({"code": "invalid_transition_matrix", "message": "transition_matrix must be an object"})
+    else:
+        _validate_evaluation_cascade_transition_matrix(
+            transition_matrix,
+            [
+                stage.get("stage_id")
+                for stage in stages
+                if isinstance(stage, dict) and isinstance(stage.get("stage_id"), str)
+            ],
+            issues,
+        )
     configured = report.get("configured_candidate_count")
     exposure = report.get("main_test_exposure_count")
     early = report.get("early_prune_count")
@@ -38019,6 +38206,95 @@ def validate_evaluation_cascade_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_evaluation_cascade_transition_matrix(
+    matrix: Mapping[str, object],
+    stage_ids: list[str],
+    issues: list[dict],
+) -> None:
+    if matrix.get("schema") != "libreevolve.evaluation_cascade_transition_matrix.v1":
+        issues.append({"code": "invalid_transition_matrix_schema", "message": "transition matrix schema is unsupported"})
+    if matrix.get("source") != "runtime_evaluation_cascade_stage_records":
+        issues.append({"code": "invalid_transition_matrix_source", "message": "transition matrix source is unsupported"})
+    records = matrix.get("records")
+    if not isinstance(records, list):
+        issues.append({"code": "invalid_transition_matrix_records", "message": "transition matrix records must be a list"})
+        records = []
+    transition_count = matrix.get("transition_count")
+    expected_transition_count = max(0, len(stage_ids) - 1)
+    if transition_count != len(records) or transition_count != expected_transition_count:
+        issues.append({"code": "transition_matrix_count_mismatch", "message": "transition count must match adjacent stage pairs"})
+    reconciled_count = 0
+    complete_linkage_count = 0
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            issues.append({"code": "invalid_transition_matrix_record", "message": f"transition record {index} must be an object"})
+            continue
+        expected_source = stage_ids[index] if index < len(stage_ids) else None
+        expected_target = stage_ids[index + 1] if index + 1 < len(stage_ids) else None
+        if record.get("source_stage_id") != expected_source or record.get("target_stage_id") != expected_target:
+            issues.append({"code": "transition_stage_link_mismatch", "message": f"transition record {index} must link adjacent stages"})
+        source_entered = record.get("source_entered_count")
+        source_passed = record.get("source_passed_count")
+        source_failed = record.get("source_failed_count")
+        next_exposure = record.get("next_stage_exposure_count")
+        for field, value in (
+            ("source_entered_count", source_entered),
+            ("source_passed_count", source_passed),
+            ("source_failed_count", source_failed),
+            ("next_stage_exposure_count", next_exposure),
+            ("promotion_count", record.get("promotion_count")),
+            ("prune_count", record.get("prune_count")),
+        ):
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                issues.append({"code": "invalid_transition_count", "message": f"transition record {index} {field} must be a non-negative integer"})
+        if all(
+            isinstance(value, int) and not isinstance(value, bool)
+            for value in (source_entered, source_passed, source_failed, next_exposure)
+        ):
+            expected_reconciled = source_passed == next_exposure
+            if source_entered != source_passed + source_failed:
+                issues.append({"code": "transition_source_count_inconsistent", "message": f"transition record {index} source counts must balance"})
+            if record.get("promotion_count") != source_passed or record.get("prune_count") != source_failed:
+                issues.append({"code": "transition_decision_count_mismatch", "message": f"transition record {index} promotion/prune counts must match source outcomes"})
+            if record.get("denominator_delta") != next_exposure - source_passed:
+                issues.append({"code": "transition_denominator_delta_mismatch", "message": f"transition record {index} denominator delta is inconsistent"})
+            if record.get("denominator_reconciled") is not expected_reconciled:
+                issues.append({"code": "transition_denominator_reconciliation_mismatch", "message": f"transition record {index} reconciliation flag is inconsistent"})
+            if expected_reconciled:
+                reconciled_count += 1
+        if record.get("promotion_decision_source") not in {
+            "fixed_threshold_and_artifact_checks",
+            "statistical_hypothesis_test",
+        }:
+            issues.append({"code": "invalid_transition_promotion_source", "message": f"transition record {index} promotion source is unsupported"})
+        if not isinstance(record.get("promotion_rule"), dict):
+            issues.append({"code": "invalid_transition_promotion_rule", "message": f"transition record {index} promotion_rule must be an object"})
+        linkage_status = record.get("candidate_linkage_status")
+        if linkage_status not in {"complete", "bounded_ids_truncated", "inconsistent"}:
+            issues.append({"code": "invalid_transition_candidate_linkage", "message": f"transition record {index} candidate linkage status is unsupported"})
+        if linkage_status == "complete":
+            complete_linkage_count += 1
+        for field in (
+            "source_candidate_ids",
+            "promoted_candidate_ids",
+            "pruned_candidate_ids",
+            "target_candidate_ids",
+        ):
+            value = record.get(field)
+            if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
+                issues.append({"code": "invalid_transition_candidate_ids", "message": f"transition record {index} {field} must be a string list"})
+    if matrix.get("reconciled_transition_count") != reconciled_count:
+        issues.append({"code": "transition_reconciled_count_mismatch", "message": "reconciled transition count must match records"})
+    if matrix.get("unreconciled_transition_count") != len(records) - reconciled_count:
+        issues.append({"code": "transition_unreconciled_count_mismatch", "message": "unreconciled transition count must match records"})
+    if matrix.get("complete_candidate_linkage_count") != complete_linkage_count:
+        issues.append({"code": "transition_complete_linkage_count_mismatch", "message": "complete candidate linkage count must match records"})
+    if matrix.get("denominator_policy") != "source_stage_passed_count_equals_next_stage_exposure_count":
+        issues.append({"code": "invalid_transition_denominator_policy", "message": "transition denominator policy is unsupported"})
+    if matrix.get("benchmark_claim_ready") is not False:
+        issues.append({"code": "transition_matrix_benchmark_overclaim", "message": "transition matrix must not claim benchmark readiness"})
 
 
 def _validate_evaluation_cascade_stage_evidence_summary(
@@ -38098,6 +38374,7 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
         "configured_stage_policy_count",
         "observed_stage_count",
         "stage_policies",
+        "promotion_linkage_matrix",
         "current_policy",
         "claim_ready",
         "claim_readiness",
@@ -38160,6 +38437,24 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                 "code": "invalid_stage_policy_count",
                 "message": "configured_stage_policy_count must be a non-negative integer",
             }
+        )
+    promotion_linkage_matrix = report.get("promotion_linkage_matrix")
+    if not isinstance(promotion_linkage_matrix, dict):
+        issues.append(
+            {
+                "code": "invalid_promotion_linkage_matrix",
+                "message": "promotion_linkage_matrix must be an object",
+            }
+        )
+    else:
+        _validate_evaluation_cascade_transition_matrix(
+            promotion_linkage_matrix,
+            [
+                stage.get("stage_id")
+                for stage in stage_policies
+                if isinstance(stage, dict) and isinstance(stage.get("stage_id"), str)
+            ],
+            issues,
         )
     for index, stage in enumerate(stage_policies):
         if not isinstance(stage, dict):
@@ -38488,6 +38783,11 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
             "sequential_stopping_supported": any_sequential_stopping,
             "false_promotion_budget_supported": any_false_promotion_budget,
             "false_rejection_budget_supported": any_false_rejection_budget,
+            "runtime_promotion_linkage_supported": (
+                isinstance(promotion_linkage_matrix, dict)
+                and promotion_linkage_matrix.get("transition_count", 0) > 0
+                and promotion_linkage_matrix.get("unreconciled_transition_count") == 0
+            ),
         }
         for field, expected in expected_bool_fields.items():
             if current_policy.get(field) is not expected:
@@ -38522,6 +38822,18 @@ def validate_cascade_hypothesis_test_policy_report(report: object) -> dict:
                 {
                     "code": "alphaevolve_hypothesis_testing_overclaim",
                     "message": "current cascade policy must not claim Section 2.4 parity",
+                }
+            )
+        expected_linkage = (
+            isinstance(promotion_linkage_matrix, dict)
+            and promotion_linkage_matrix.get("transition_count", 0) > 0
+            and promotion_linkage_matrix.get("unreconciled_transition_count") == 0
+        )
+        if readiness.get("small_filter_to_main_test_linkage") is not expected_linkage:
+            issues.append(
+                {
+                    "code": "promotion_linkage_readiness_mismatch",
+                    "message": "small-filter linkage readiness must match transition evidence",
                 }
             )
     if report.get("claim_ready") is not False:

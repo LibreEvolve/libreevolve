@@ -245,10 +245,13 @@ counts, threshold failures, failure reasons, sample/retry/subprocess/timeout
 totals, elapsed seconds, promotion rates, main-test exposure, early-prune
 counts, stop reasons, bounded candidate-stage records with `history.jsonl`
 metadata paths, evaluator source refs when available, denominator-policy
-boundaries, and `claim_ready: false` limitations for missing difficulty/
-test-set, benchmark seed/sample, candidate transition matrix, promotion-
-decision rule attribution, next-stage exposure linkage, transition-denominator
-reconciliation, and cost evidence. The committed
+boundaries, and a validated
+`libreevolve.evaluation_cascade_transition_matrix.v1` adjacent-stage matrix.
+The matrix records source/target stage roles, promotion-rule attribution,
+source pass/fail counts, next-stage exposure, bounded promoted/pruned candidate
+ids, and denominator reconciliation. `claim_ready: false` remains for missing
+difficulty/test-set, benchmark seed/sample, empirical error-rate, and cost
+evidence. The committed
 `papers/evaluation_cascade_boundary.json` sidecar preserves the same
 cascade-efficiency absence boundary for paper-manifest validation.
 Completed manifests also include
@@ -257,7 +260,8 @@ Completed manifests also include
 stage roles from `eval_stages[].role` when configured, falling back to stage
 order inference for compatibility. It links each stage to observed
 entry/pass/fail/sample/promotion-rate summaries, records configured sample and
-seed counts, and identifies whether promotion used fixed threshold/artifact
+seed counts, includes the same runtime promotion-linkage matrix, and identifies
+whether promotion used fixed threshold/artifact
 checks or an opt-in `one_sided_lower_confidence_bound` hypothesis test. For
 configured tests, candidate-stage records retain numeric observations, the
 lower confidence bound, p-value evidence, and sequential-stop counts when
@@ -2933,6 +2937,10 @@ Configured stages can set `role` to `small_scale_filter`,
 `intermediate_filter`, or `main_test`. The manifest policy report stores
 `stage_role`, `configured_role`, the order-derived `inferred_role`, and
 `role_source` so role evidence is explicit when supplied.
+The report marks `small_filter_to_main_test_linkage` true only when at least
+one adjacent transition is present and every source-stage pass count equals the
+next-stage exposure count. This does not make benchmark calibration or
+empirical false-promotion/false-rejection validation ready.
 Configured stages can also require evaluator evidence. `require_program_output`
 adds an artifact/output check that passes only when `program_outputs.value` is
 retained rather than missing or omitted, and `min_artifacts` checks the count of

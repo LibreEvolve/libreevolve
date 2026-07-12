@@ -74,6 +74,11 @@ Important limits:
   implementations of the cited methods unless a specific plugin document says
   otherwise.
 - Evaluators run in local subprocesses, not hardened security sandboxes.
+- Configured evaluation cascades emit a validated adjacent-stage transition
+  matrix with promotion-rule attribution, bounded candidate linkage,
+  next-stage exposure counts, and denominator reconciliation. This is runtime
+  telemetry, not benchmark-calibrated AlphaEvolve cascade-efficiency or
+  hypothesis-testing proof.
 - The controller, archive, migration, and evaluator flow are local and
   synchronous, not a distributed Python `asyncio` AlphaEvolve service.
 - Runtime restore certification is compatible-surface evidence only;

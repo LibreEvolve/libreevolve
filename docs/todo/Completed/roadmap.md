@@ -16014,3 +16014,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     positioning review, local implementation parity, benchmark reproduction,
     release-ready positioning claims, and owner review signoff remain active
     TODOs.
+- [x] Keep ROADMAP evaluation-cascade status current with promotion linkage.
+  - Spec evidence: ROADMAP cascade readiness must separate runtime stage
+    transitions from benchmark-calibrated Section 2.4 evidence.
+  - Status: ROADMAP now records the validated adjacent-stage transition matrix
+    and reconciled small-filter-to-main-test linkage.
+  - Remaining roadmap gap: benchmark-calibrated thresholds, repeated-seed
+    fixtures, empirical false-promotion/false-rejection validation, stage
+    difficulty/test-set evidence, cost-savings proof, and owner review signoff
+    remain active TODOs.

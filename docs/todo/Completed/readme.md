@@ -14190,6 +14190,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: focused Related Work taxonomy tests and README/paper-manifest
     checks pass.
 
+- [x] Keep README cascade wording current with runtime transition linkage.
+  - Status: README now states that configured cascades emit a validated
+    adjacent-stage transition matrix while explicitly separating runtime
+    telemetry from benchmark-calibrated AlphaEvolve cascade proof.
+  - Verification: focused cascade tests and documentation inventory checks
+    cover the new wording and sidecar schemas.
+
 - [x] Keep README natural-language preamble boundary tied to sidecar.
   - Status: README now states that natural-language preambles are bounded
     leading metadata before structured mutation markers, not complete freeform

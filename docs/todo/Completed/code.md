@@ -19282,3 +19282,16 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     reproduction evidence.
   - Verification: focused Related Work taxonomy tests validate record counts,
     required ids, scoped claim gates, and overclaim rejection.
+- [x] Add evaluation-cascade promotion linkage matrix.
+  - Spec evidence: AlphaEvolve Section 2.4 requires sufficiently promising
+    small-scale results to control exposure to harder/main test stages.
+  - Status: `runtime.history.evaluation_cascade_report` now emits
+    `libreevolve.evaluation_cascade_transition_matrix.v1` with adjacent stage
+    roles, promotion-rule attribution, source pass/fail counts, next-stage
+    exposure, bounded promoted/pruned candidate ids, and denominator
+    reconciliation. The hypothesis-test policy report links the same matrix.
+  - Remaining code gap: benchmark-calibrated thresholds, repeated-seed
+    fixtures, empirical false-promotion/false-rejection validation, and
+    counterfactual cost evidence remain open.
+  - Verification: focused cascade runtime tests validate reconciled promotion
+    and prune outcomes plus transition overclaim rejection.

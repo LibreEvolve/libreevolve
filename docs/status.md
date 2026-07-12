@@ -187,19 +187,20 @@ Important limits:
 - Evaluation-cascade reports are runtime attrition and promotion telemetry when
   stages run. They now include `stage_evidence_summary` counts for configured
   stage roles, local stage source refs/hashes when available, runtime samples,
-  main-test exposure, and early pruning, plus explicit absent-evidence statuses.
+  main-test exposure, and early pruning, plus a validated adjacent-stage
+  transition matrix with promotion-rule attribution, bounded promoted/pruned
+  candidate ids, next-stage exposure counts, and denominator reconciliation.
   They are not AlphaEvolve-style cascade-efficiency evidence with stage
   difficulty rationale, evaluator/test-set identities and hashes, benchmark
-  seed/sample policy, candidate transition matrices, promotion-decision rule
-  attribution, next-stage exposure linkage, transition-denominator
-  reconciliation, counterfactual full-evaluation costs, or observed wall-clock
-  cost savings; that boundary is tracked by
+  seed/sample policy, counterfactual full-evaluation costs, observed wall-clock
+  cost savings, or empirical error-rate validation; that boundary is tracked by
   `papers/evaluation_cascade_boundary.json`.
 - Cascade hypothesis-test gates are runtime policy evidence, not
   benchmark-calibrated AlphaEvolve Section 2.4 cascade proof with repeated-seed
-  fixtures, small-filter-to-main-test linkage, benchmark-calibrated
-  thresholds, or empirical false-promotion/false-rejection validation; that
-  boundary is tracked by `papers/cascade_hypothesis_test_boundary.json`.
+  fixtures, benchmark-calibrated thresholds, or empirical false-promotion/
+  false-rejection validation. Runtime small-filter-to-main-test linkage is now
+  recorded through the reconciled transition matrix; the remaining boundary is
+  tracked by `papers/cascade_hypothesis_test_boundary.json`.
 - Evaluator/oracle reports register local validators, configured cascade
   stages, and optional LLM feedback graders with arbitration metadata, not
   candidate-level oracle lineage, per-generation feedback traces, primary

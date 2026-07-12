@@ -689,6 +689,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     policy reports, lower-confidence/Wilson statistical gates, evaluator
     arbitration matrices, workload-provenance boundaries, automated evaluator
     scope reports, executable-code versus natural-language proposal boundaries,
+    reconciled adjacent-stage promotion-linkage matrices,
     validator subprocess controls, dependency policy, package/version
     snapshots, release-smoke boundaries, and reproducibility sidecars.
     `papers/roadmap_evaluation_cascade_boundary.json` now records a bounded

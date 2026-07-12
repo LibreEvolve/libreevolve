@@ -12,10 +12,15 @@ CASCADE_HYPOTHESIS_TEST_POLICY_REPORT_SCHEMA = "libreevolve.cascade_hypothesis_t
 EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA = (
     "libreevolve.evaluation_cascade_stage_evidence_summary.v1"
 )
+EVALUATION_CASCADE_TRANSITION_MATRIX_SCHEMA = (
+    "libreevolve.evaluation_cascade_transition_matrix.v1"
+)
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_ID = "2.4"
 EXPECTED_SOURCE_SECTION_IDS = ("2.4",)
-EXPECTED_BOUNDARY_STATUS = "runtime_attrition_without_benchmark_efficiency_evidence"
+EXPECTED_BOUNDARY_STATUS = (
+    "runtime_attrition_with_transition_linkage_without_benchmark_efficiency_evidence"
+)
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stage_id",
     "stage_role",
@@ -46,10 +51,6 @@ EXPECTED_MISSING_EVIDENCE = {
     "benchmark_seed_sample_policy": (
         "runtime_sample_accounting_only_not_benchmark_policy"
     ),
-    "candidate_transition_matrix": "not_recorded_locally",
-    "promotion_decision_rule_attribution": "runtime_stage_counts_only",
-    "next_stage_exposure_linkage": "runtime_stage_counts_only",
-    "transition_denominator_reconciliation": "not_recorded_locally",
     "counterfactual_full_evaluation_costs": (
         "stage_evidence_summary_records_not_recorded"
     ),
@@ -81,6 +82,7 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         "runtime_report_schema": EVALUATION_CASCADE_RUNTIME_REPORT_SCHEMA,
         "hypothesis_test_policy_report_schema": CASCADE_HYPOTHESIS_TEST_POLICY_REPORT_SCHEMA,
         "stage_evidence_summary_schema": EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA,
+        "transition_matrix_schema": EVALUATION_CASCADE_TRANSITION_MATRIX_SCHEMA,
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "source_section_id": EXPECTED_SOURCE_SECTION_ID,
         "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
@@ -98,12 +100,13 @@ def evaluation_cascade_boundary_record() -> dict[str, Any]:
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records that LibreEvolve has runtime cascade attrition "
-            "reports, stage evidence summaries, and hypothesis-test policy reports, "
-            "but does not claim AlphaEvolve-style cascade-efficiency evidence with "
+            "reports, stage evidence summaries, hypothesis-test policy reports, and "
+            "a runtime transition matrix with promotion-decision attribution, "
+            "next-stage exposure linkage, bounded candidate ids, and denominator "
+            "reconciliation. It does not claim AlphaEvolve-style cascade-efficiency "
+            "evidence with "
             "stage difficulty rationale, evaluator test-set identities and hashes, "
             "benchmark seed/sample policy, "
-            "candidate transition matrix, promotion-decision rule attribution, "
-            "next-stage exposure linkage, transition-denominator reconciliation, "
             "counterfactual full-evaluation costs, or observed wall-clock cost "
             "savings."
         ),
@@ -128,6 +131,8 @@ def validate_evaluation_cascade_boundary(
         issues.append(_issue("invalid_hypothesis_policy_schema", "hypothesis policy schema must identify cascade hypothesis reports"))
     if data.get("stage_evidence_summary_schema") != EVALUATION_CASCADE_STAGE_EVIDENCE_SUMMARY_SCHEMA:
         issues.append(_issue("invalid_stage_evidence_summary_schema", "stage evidence summary schema must identify cascade stage evidence summaries"))
+    if data.get("transition_matrix_schema") != EVALUATION_CASCADE_TRANSITION_MATRIX_SCHEMA:
+        issues.append(_issue("invalid_transition_matrix_schema", "transition matrix schema must identify cascade transition evidence"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_section_id") != EXPECTED_SOURCE_SECTION_ID:
@@ -152,10 +157,10 @@ def validate_evaluation_cascade_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim" not in boundary_text
-        or "candidate transition matrix" not in boundary_text
-        or "promotion-decision rule attribution" not in boundary_text
-        or "transition-denominator reconciliation" not in boundary_text
+        or "runtime transition matrix" not in boundary_text
+        or "promotion-decision attribution" not in boundary_text
+        or "denominator reconciliation" not in boundary_text
+        or "does not claim AlphaEvolve-style cascade-efficiency" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim cascade-efficiency evidence"))
     return EvaluationCascadeBoundaryValidation(

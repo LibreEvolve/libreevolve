@@ -822,21 +822,21 @@ sample/retry/subprocess/timeout totals, elapsed seconds, promotion rates,
 main-test exposure, early-prune counts, bounded candidate-stage cross-links to
 `history.jsonl`, evaluator source refs when available, denominator-policy
 boundaries, `stage_evidence_summary` role/source/hash/sample/exposure counts,
-and explicit `claim_ready: false` limitations. That summary also records
-stage difficulty rationale, test-set hashes, benchmark seed/sample policy, and
-candidate transition matrices, promotion-decision rule attribution, next-stage
-exposure linkage, transition-denominator reconciliation, and counterfactual/
-wall-clock cost-savings evidence as absent. Stage difficulty/test-set
-identities, benchmark seed/sample policy, transition proof, and cost-savings
+and a validated `libreevolve.evaluation_cascade_transition_matrix.v1` with
+promotion-rule attribution, bounded candidate linkage, next-stage exposure,
+and denominator reconciliation. Stage difficulty/test-set identities,
+benchmark seed/sample policy, empirical error-rate proof, and cost-savings
 evidence remain open before claiming AlphaEvolve cascade efficiency or
 hypothesis-testing parity. The committed
 `papers/evaluation_cascade_boundary.json` sidecar now emits that
-`runtime_attrition_without_benchmark_efficiency_evidence` boundary, and
+`runtime_attrition_with_transition_linkage_without_benchmark_efficiency_evidence`
+boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
 Completed manifests also include
 `runtime.history.cascade_hypothesis_test_policy_report`, which names configured
 or fallback-inferred small-scale-filter/intermediate/main-test roles, links
-current promotion counts and sample/seed configuration, and validates that
+current promotion counts, sample/seed configuration, and the reconciled
+runtime adjacent-stage promotion matrix, and validates that
 current promotion is either deterministic thresholds/artifact checks or the configured
 `one_sided_lower_confidence_bound` repeated-sample gate. Configured gates retain
 confidence-bound, p-value, optional sequential-stop evidence, and configured
@@ -845,7 +845,7 @@ normal-approximation false-promotion/false-rejection budget evidence. The
 evidence and exact binomial tail diagnostics. Benchmark-calibrated thresholds
 and full AlphaEvolve Section 2.4 hypothesis-testing parity remain open. The
 committed `papers/cascade_hypothesis_test_boundary.json` sidecar keeps this
-runtime policy-gate scope machine-validated apart from benchmark-calibrated
+runtime policy-and-linkage scope machine-validated apart from benchmark-calibrated
 thresholds, repeated-seed fixtures, and empirical false-promotion/false-
 rejection validation.
 
@@ -2269,7 +2269,8 @@ Implemented:
   seeds, retries, and stage/sample budgets. Completed manifests include
   `runtime.history.cascade_hypothesis_test_policy_report`, which records
   configured or fallback-inferred small-scale-filter/main-test roles and
-  validates the current promotion boundary. Stages can now opt into
+  validates the current promotion boundary plus adjacent-stage candidate and
+  denominator linkage. Stages can now opt into
   `one_sided_lower_confidence_bound` promotion tests that apply confidence-bound
   and p-value evidence to repeated samples, with optional sequential stopping
   and configured normal-approximation error-budget evidence. Stages can also

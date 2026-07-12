@@ -49,9 +49,9 @@ CRITERION_SPECS = (
     {
         "criterion_id": "cascade_transition_artifacts",
         "evaluation_surface": "configured validator stages and candidate promotion/prune flow",
-        "current_scope": "runtime cascade summary with bounded candidate-stage records and absent-evidence labels",
-        "missing_readiness": "candidate transition matrix, promotion/prune attribution, next-stage linkage, denominator reconciliation, and cost-savings proof",
-        "roadmap_required_phrase": "candidate transition matrices",
+        "current_scope": "runtime cascade summary with reconciled adjacent-stage transition matrix and bounded candidate linkage",
+        "missing_readiness": "benchmark-calibrated repeated-seed fixtures, empirical promotion error rates, and cost-savings proof",
+        "roadmap_required_phrase": "adjacent-stage transition matrix",
         "current_sidecars": ("papers/evaluation_cascade_boundary.json",),
         "active_todos": (
             {
@@ -63,8 +63,8 @@ CRITERION_SPECS = (
                 "required_phrase": "Track evaluation-cascade promotion and attrition evidence.",
             },
         ),
-        "validation_gate": "candidate transition matrix and promotion/prune proof",
-        "readiness_status": "summary_without_transition_matrix",
+        "validation_gate": "benchmark-calibrated transition and cost-savings proof",
+        "readiness_status": "runtime_transition_linkage_without_benchmark_efficiency",
     },
     {
         "criterion_id": "artifact_schema_hash_coverage",

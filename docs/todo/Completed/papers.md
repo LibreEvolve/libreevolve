@@ -14337,3 +14337,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     reproduction evidence, and release-ready positioning claims remain open.
   - Verification: focused Related Work taxonomy tests and paper-manifest
     validation require the taxonomy rows and scoped claim gates.
+- [x] Add paper-facing cascade promotion linkage evidence.
+  - Paper evidence: AlphaEvolve Section 2.4 describes staged hypothesis testing
+    where promising small-scale results gate harder/main-test exposure.
+  - Status: `papers/evaluation_cascade_boundary.json` and
+    `papers/cascade_hypothesis_test_boundary.json` now record that runtime
+    adjacent-stage promotion linkage and denominator reconciliation exist.
+  - Remaining paper gap: benchmark-calibrated thresholds, repeated-seed
+    fixtures, empirical false-promotion/false-rejection validation, stage
+    difficulty/test-set evidence, and cost-savings proof remain open.
+  - Verification: focused cascade boundary tests require the transition-matrix
+    schema and preserve false benchmark-readiness claims.

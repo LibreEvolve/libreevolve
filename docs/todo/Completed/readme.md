@@ -15936,3 +15936,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: documentation boundaries, example-scope registry, candidate-
     language sidecar, runtime-report validation, and focused tests guard the
     scoped wording.
+- [x] Document bounded AlphaEvolve claim-level audit coverage.
+  - Status: README now distinguishes the complete 55-span named-structure
+    inventory from the 50-requirement Table 1/Section 2 claim inventory and
+    reports the implemented, partial, missing, and undemonstrated status split.
+  - Remaining README gap: it explicitly does not present the bounded inventory
+    as whole-paper completeness, benchmark reproduction, production-scale
+    evidence, or AlphaEvolve parity.
+  - Verification: documentation and paper-manifest tests guard the source paths,
+    counts, scope boundary, and parity disclaimer.

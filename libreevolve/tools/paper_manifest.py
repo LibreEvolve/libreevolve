@@ -539,6 +539,10 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
     alphaevolve_source_inventory_boundary_record,
     validate_alphaevolve_source_inventory_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_system_requirement_inventory_boundary import (
+    alphaevolve_system_requirement_inventory_boundary_record,
+    validate_alphaevolve_system_requirement_inventory_boundary,
+)
 from libreevolve.problems.benchmarks.release_artifact_reproducibility_boundary import (
     release_artifact_reproducibility_boundary_record,
     validate_release_artifact_reproducibility_boundary,
@@ -1215,6 +1219,9 @@ ROADMAP_MULTI_OBJECTIVE_SEARCH_BOUNDARY_FILE = "papers/roadmap_multi_objective_s
 ROADMAP_MULTI_OBJECTIVE_READINESS_BOUNDARY_FILE = "papers/roadmap_multi_objective_readiness_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
 ALPHAEVOLVE_SOURCE_INVENTORY_BOUNDARY_FILE = "papers/alphaevolve_source_inventory_boundary.json"
+ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_FILE = (
+    "papers/alphaevolve_system_requirement_inventory_boundary.json"
+)
 BENCHMARK_COVERAGE_INVENTORY_FILE = "papers/benchmark_coverage_inventory.json"
 STATUS_CLAIM_INVENTORY_FILE = "papers/status_claim_inventory.json"
 RELEASE_ARTIFACT_REPRODUCIBILITY_BOUNDARY_FILE = "papers/release_artifact_reproducibility_boundary.json"
@@ -1969,6 +1976,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_multi_objective_search_boundary(root_path))
     issues.extend(_validate_roadmap_multi_objective_readiness_boundary(root_path))
     issues.extend(_validate_alphaevolve_source_inventory_boundary(root_path))
+    issues.extend(_validate_alphaevolve_system_requirement_inventory_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
     issues.extend(_validate_release_artifact_reproducibility_boundary(root_path))
     issues.extend(_validate_release_checklist_documentation_boundary(root_path))
@@ -7343,6 +7351,47 @@ def _validate_alphaevolve_source_inventory_boundary(
             f"alphaevolve_source_inventory_boundary_{issue.code}",
             issue.message,
             "alphaevolve_source_inventory",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_system_requirement_inventory_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_FILE
+    validation_root = _repo_root()
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_system_requirement_inventory_boundary_record(
+            validation_root
+        )
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_system_requirement_inventory_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_FILE} "
+                        "must emit the PDF-anchored Table 1 and Section 2 "
+                        "system-requirement inventory"
+                    ),
+                    "alphaevolve_system_requirement_inventory",
+                )
+            ]
+    report = validate_alphaevolve_system_requirement_inventory_boundary(
+        recordset,
+        root=validation_root,
+    )
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_system_requirement_inventory_boundary_{issue.code}",
+            issue.message,
+            "alphaevolve_system_requirement_inventory",
         )
         for issue in report.issues
     ]

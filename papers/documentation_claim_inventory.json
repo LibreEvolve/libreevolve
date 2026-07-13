@@ -38,88 +38,88 @@
     },
     {
       "path": "README.md",
-      "line_start": 226,
-      "line_end": 226,
+      "line_start": 232,
+      "line_end": 232,
       "level": 2,
       "heading_text": "Requirements",
       "heading_slug": "requirements"
     },
     {
       "path": "README.md",
-      "line_start": 238,
-      "line_end": 238,
+      "line_start": 244,
+      "line_end": 244,
       "level": 2,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start"
     },
     {
       "path": "README.md",
-      "line_start": 290,
-      "line_end": 290,
+      "line_start": 296,
+      "line_end": 296,
       "level": 2,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout"
     },
     {
       "path": "README.md",
-      "line_start": 305,
-      "line_end": 305,
+      "line_start": 311,
+      "line_end": 311,
       "level": 2,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope"
     },
     {
       "path": "README.md",
-      "line_start": 370,
-      "line_end": 370,
+      "line_start": 376,
+      "line_end": 376,
       "level": 2,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts"
     },
     {
       "path": "README.md",
-      "line_start": 393,
-      "line_end": 393,
+      "line_start": 399,
+      "line_end": 399,
       "level": 2,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map"
     },
     {
       "path": "README.md",
-      "line_start": 416,
-      "line_end": 416,
+      "line_start": 422,
+      "line_end": 422,
       "level": 2,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources"
     },
     {
       "path": "README.md",
-      "line_start": 440,
-      "line_end": 440,
+      "line_start": 446,
+      "line_end": 446,
       "level": 2,
       "heading_text": "Testing",
       "heading_slug": "testing"
     },
     {
       "path": "README.md",
-      "line_start": 454,
-      "line_end": 454,
+      "line_start": 460,
+      "line_end": 460,
       "level": 2,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout"
     },
     {
       "path": "README.md",
-      "line_start": 472,
-      "line_end": 472,
+      "line_start": 478,
+      "line_end": 478,
       "level": 2,
       "heading_text": "Contributing",
       "heading_slug": "contributing"
     },
     {
       "path": "README.md",
-      "line_start": 484,
-      "line_end": 484,
+      "line_start": 490,
+      "line_end": 490,
       "level": 2,
       "heading_text": "License",
       "heading_slug": "license"
@@ -190,72 +190,72 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1122,
-      "line_end": 1122,
+      "line_start": 1128,
+      "line_end": 1128,
       "level": 2,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1124,
-      "line_end": 1124,
+      "line_start": 1130,
+      "line_end": 1130,
       "level": 3,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1220,
-      "line_end": 1220,
+      "line_start": 1226,
+      "line_end": 1226,
       "level": 3,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1327,
-      "line_end": 1327,
+      "line_start": 1333,
+      "line_end": 1333,
       "level": 3,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1345,
-      "line_end": 1345,
+      "line_start": 1351,
+      "line_end": 1351,
       "level": 2,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1347,
-      "line_end": 1347,
+      "line_start": 1353,
+      "line_end": 1353,
       "level": 3,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2677,
-      "line_end": 2677,
+      "line_start": 2683,
+      "line_end": 2683,
       "level": 3,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2707,
-      "line_end": 2707,
+      "line_start": 2713,
+      "line_end": 2713,
       "level": 2,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2714,
-      "line_end": 2714,
+      "line_start": 2720,
+      "line_end": 2720,
       "level": 2,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups"
@@ -278,16 +278,16 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1883,
-      "line_end": 1883,
+      "line_start": 1888,
+      "line_end": 1888,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1964,
-      "line_end": 1964,
+      "line_start": 1969,
+      "line_end": 1969,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions"
@@ -323,7 +323,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 226,
+      "line_start": 232,
       "level": 2,
       "heading_text": "Requirements",
       "heading_slug": "requirements",
@@ -332,7 +332,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 238,
+      "line_start": 244,
       "level": 2,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start",
@@ -341,7 +341,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 290,
+      "line_start": 296,
       "level": 2,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout",
@@ -350,7 +350,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 305,
+      "line_start": 311,
       "level": 2,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope",
@@ -359,7 +359,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 370,
+      "line_start": 376,
       "level": 2,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts",
@@ -368,7 +368,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 393,
+      "line_start": 399,
       "level": 2,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map",
@@ -377,7 +377,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 416,
+      "line_start": 422,
       "level": 2,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources",
@@ -386,7 +386,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 440,
+      "line_start": 446,
       "level": 2,
       "heading_text": "Testing",
       "heading_slug": "testing",
@@ -395,7 +395,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 454,
+      "line_start": 460,
       "level": 2,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout",
@@ -404,7 +404,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 472,
+      "line_start": 478,
       "level": 2,
       "heading_text": "Contributing",
       "heading_slug": "contributing",
@@ -413,7 +413,7 @@
     },
     {
       "path": "README.md",
-      "line_start": 484,
+      "line_start": 490,
       "level": 2,
       "heading_text": "License",
       "heading_slug": "license",
@@ -500,7 +500,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1122,
+      "line_start": 1128,
       "level": 2,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term",
@@ -509,7 +509,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1124,
+      "line_start": 1130,
       "level": 3,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime",
@@ -518,7 +518,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1220,
+      "line_start": 1226,
       "level": 3,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique",
@@ -527,7 +527,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1327,
+      "line_start": 1333,
       "level": 3,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility",
@@ -536,7 +536,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1345,
+      "line_start": 1351,
       "level": 2,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term",
@@ -545,7 +545,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1347,
+      "line_start": 1353,
       "level": 3,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks",
@@ -554,7 +554,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2677,
+      "line_start": 2683,
       "level": 3,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity",
@@ -563,7 +563,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2707,
+      "line_start": 2713,
       "level": 2,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now",
@@ -572,7 +572,7 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2714,
+      "line_start": 2720,
       "level": 2,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups",
@@ -603,7 +603,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1883,
+      "line_start": 1888,
       "level": 2,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
@@ -612,7 +612,7 @@
     },
     {
       "path": "papers/README.md",
-      "line_start": 1964,
+      "line_start": 1969,
       "level": 2,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
@@ -630,77 +630,77 @@
     },
     {
       "path": "README.md",
-      "line_start": 226,
+      "line_start": 232,
       "heading_text": "Requirements",
       "heading_slug": "requirements",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 238,
+      "line_start": 244,
       "heading_text": "Quick Start",
       "heading_slug": "quick-start",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 290,
+      "line_start": 296,
       "heading_text": "Problem Layout",
       "heading_slug": "problem-layout",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 305,
+      "line_start": 311,
       "heading_text": "Example Scope",
       "heading_slug": "example-scope",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 370,
+      "line_start": 376,
       "heading_text": "Run Artifacts",
       "heading_slug": "run-artifacts",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 393,
+      "line_start": 399,
       "heading_text": "Documentation Map",
       "heading_slug": "documentation-map",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 416,
+      "line_start": 422,
       "heading_text": "Research Sources",
       "heading_slug": "research-sources",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 440,
+      "line_start": 446,
       "heading_text": "Testing",
       "heading_slug": "testing",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 454,
+      "line_start": 460,
       "heading_text": "Repository Layout",
       "heading_slug": "repository-layout",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 472,
+      "line_start": 478,
       "heading_text": "Contributing",
       "heading_slug": "contributing",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "README.md",
-      "line_start": 484,
+      "line_start": 490,
       "heading_text": "License",
       "heading_slug": "license",
       "reason": "no_claim_record_for_heading"
@@ -742,77 +742,77 @@
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1122,
+      "line_start": 1128,
       "heading_text": "Mid Term",
       "heading_slug": "mid-term",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1124,
+      "line_start": 1130,
       "heading_text": "6. Async and resumable runtime",
       "heading_slug": "6-async-and-resumable-runtime",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1220,
+      "line_start": 1226,
       "heading_text": "7. Backend scheduling and critique",
       "heading_slug": "7-backend-scheduling-and-critique",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1327,
+      "line_start": 1333,
       "heading_text": "8. Plugin extensibility",
       "heading_slug": "8-plugin-extensibility",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1345,
+      "line_start": 1351,
       "heading_text": "Longer Term",
       "heading_slug": "longer-term",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 1347,
+      "line_start": 1353,
       "heading_text": "9. Representative benchmarks",
       "heading_slug": "9-representative-benchmarks",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2677,
+      "line_start": 2683,
       "heading_text": "10. Operational maturity",
       "heading_slug": "10-operational-maturity",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2707,
+      "line_start": 2713,
       "heading_text": "Non-Goals For Now",
       "heading_slug": "non-goals-for-now",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "ROADMAP.md",
-      "line_start": 2714,
+      "line_start": 2720,
       "heading_text": "Good First Follow-Ups",
       "heading_slug": "good-first-follow-ups",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1883,
+      "line_start": 1888,
       "heading_text": "TODO coverage cross-references",
       "heading_slug": "todo-coverage-cross-references",
       "reason": "no_claim_record_for_heading"
     },
     {
       "path": "papers/README.md",
-      "line_start": 1964,
+      "line_start": 1969,
       "heading_text": "Benchmark coverage decisions",
       "heading_slug": "benchmark-coverage-decisions",
       "reason": "no_claim_record_for_heading"
@@ -863,10 +863,10 @@
         "path": "docs/todo/papers.md",
         "anchor_text": "- [ ] Add semantic evidence mapping for every paper-index status row.",
         "found": true,
-        "file_text_char_start": 252,
-        "file_text_char_end": 321,
-        "line_start": 8,
-        "line_end": 8
+        "file_text_char_start": 2149,
+        "file_text_char_end": 2218,
+        "line_start": 37,
+        "line_end": 37
       }
     }
   ],

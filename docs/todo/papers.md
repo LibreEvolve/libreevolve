@@ -5,6 +5,35 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
+- [ ] Extend the bounded AlphaEvolve system-requirement inventory to the whole
+      paper.
+  - Paper evidence: Table 1, Sections 2.1-2.6, and Figures 1-3 specify the core
+    task API, prompt, generation, evaluation, evolutionary-database, and
+    distributed-pipeline behavior, while the introduction, Sections 3-6,
+    appendices, remaining figures/tables, equations, footnotes, and citations
+    contain additional implementation, result, limitation, and provenance
+    claims that the full audit must disposition.
+  - Current evidence: the committed
+    `papers/alphaevolve_system_requirement_inventory_boundary.json` verifies
+    50 page-local source anchors against the pinned PDF and maps every bounded
+    requirement to implementation/audit evidence, ROADMAP section and phase,
+    local status, and active domain TODO ownership. Its status split is 13
+    locally implemented, 30 partially implemented, 2 not implemented, and 5
+    not demonstrated; all 37 incomplete rows have live TODO-title checks. The
+    paper manifest rejects sidecar absence, source/reference drift, status
+    drift, stale TODO ownership, and parity overclaims.
+  - Current gap: this inventory deliberately excludes Introduction claims
+    outside Table 1, Sections 3-6, appendices, Figures 4-14, Tables 2-3,
+    equation/footnote/citation-level requirements, result reproduction, and
+    independent reviewer proof that the 50-row decomposition is semantically
+    exhaustive even within its bounded scope.
+  - Required result: extract every remaining implementation-bearing claim,
+    assign stable ids and exact source spans, classify implementation and
+    reproduction status, link modules/tests/runtime evidence and domain TODOs
+    or explicit non-goals, add phase/dependency ownership, then require
+    independent review and CI coverage before claiming a complete AlphaEvolve
+    specification audit.
+
 - [ ] Add semantic evidence mapping for every paper-index status row.
   - Paper evidence: `papers/README.md` is the paper-facing implementation
     status index for the local cache, and AlphaEvolve-alignment work depends on

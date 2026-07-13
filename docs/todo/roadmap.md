@@ -166,6 +166,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     benchmarks. `papers/alphaevolve_source_inventory_boundary.json` now
     verifies the pinned 44-page PDF and all 55 named spans using 57 page-local
     anchors: 38 structural spans, 14 numbered figures, and 3 numbered tables.
+    `papers/alphaevolve_system_requirement_inventory_boundary.json` now adds
+    claim-level dispositions for 50 implementation-bearing requirements across
+    all eight Table 1 rows, Sections 2.1-2.6, and Figures 1-3. It records 13
+    locally implemented, 30 partial, 2 not-implemented, and 5 undemonstrated
+    requirements, with live domain TODO ownership for all 37 incomplete rows.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -179,15 +184,18 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
     bounded eight-criterion exhaustiveness gate that credits the named PDF
-    structure walk and preserves remaining claim-level work for the
-    figure/table/appendix matrix, application-result claim matrix,
+    structure walk and bounded Table 1/Section 2 requirement walk while
+    preserving remaining claim-level work for the figure/table/appendix
+    matrix, application-result claim matrix,
     status-row disposition map, span status classification, missing/partial
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases. The matrix is not exhaustive below that named level:
-    it does not extract every sentence-, paragraph-, equation-, footnote-,
-    citation-, capability-, or result-claim span; prove domain-specific TODO
+    sections, and phases, and the 50 bounded Table 1/Section 2 system
+    requirements have claim-level mappings. The matrix is not exhaustive
+    across the rest of the paper: it does not extract every remaining
+    sentence-, paragraph-, equation-, footnote-, citation-, capability-, or
+    result-claim span; prove domain-specific TODO
     ownership for every missing or partial claim; provide a complete
     application-result claim matrix; or disposition all paper/status sidecar
     rows.

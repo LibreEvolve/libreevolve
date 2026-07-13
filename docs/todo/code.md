@@ -46,7 +46,13 @@ sidecars, tests, and active TODOs.
     AlphaEvolve requirement anchors for markers, Sections 2.2/2.3 prompting,
     Section 2.4 evaluation, Section 2.5 evolution, Section 2.6 distributed
     execution, and published benchmarks with 81 existence-checked source-span,
-    module, test, sidecar, and active-TODO references while
+    module, test, sidecar, and active-TODO references. The committed
+    `papers/alphaevolve_system_requirement_inventory_boundary.json` adds 50
+    PDF-anchored implementation requirements covering all eight Table 1 rows,
+    Sections 2.1-2.6, and Figures 1-3. It classifies 13 requirements as locally
+    implemented, 30 as partial, 2 as not implemented, and 5 as not demonstrated;
+    all 37 incomplete requirements resolve to live domain TODO titles. This is
+    bounded system-section coverage, not whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -63,10 +69,11 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure is now machine-readable and
-    PDF-verified, but there is no AlphaEvolve requirement inventory exhaustive
-    at sentence, paragraph, equation, footnote, citation, or claim level across
-    all code modules, tests, runtime report
+  - Current gap: the named source structure and bounded Table 1/Section 2
+    system requirements are now machine-readable and PDF-verified, but there
+    is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
+    equation, footnote, citation, or claim level across the remaining paper
+    spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
     coverage; no per-phrase evidence-sufficiency check proves long status-cell
@@ -81,10 +88,11 @@ sidecars, tests, and active TODOs.
     structurally detected absence phrases are still current; and no generated
     code-audit report proves that all implemented and missing
     AlphaEvolve-facing behavior has been classified.
-  - Required result: build an implementation-evidence map with requirement ids,
+  - Required result: extend the bounded system inventory through every
+    remaining implementation-bearing paper claim with requirement ids,
     source-paper spans, relevant modules/tests, runtime/report artifacts,
-    sidecar/TODO links, claim status, freshness checks, and CI validation
-    before treating the code audit as exhaustive.
+    sidecar/TODO or non-goal links, claim status, freshness checks, independent
+    review, and CI validation before treating the code audit as exhaustive.
 
 - [ ] Classify tracked legacy implementation-plan surfaces.
   - Spec evidence: an AlphaEvolve-facing repository audit should make clear

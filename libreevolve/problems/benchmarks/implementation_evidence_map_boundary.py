@@ -12,22 +12,26 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v2"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v3"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_requirement_anchors_without_claim_level_exhaustiveness"
+    "verified_core_anchors_and_section_2_inventory_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
+EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
+    "papers/alphaevolve_system_requirement_inventory_boundary.json"
+)
 EXPECTED_RECORDED_EVIDENCE = {
     "named_source_structure_inventory": "55_pdf_verified_spans",
+    "bounded_system_requirement_inventory": "50_pdf_anchored_table_1_and_section_2_requirements",
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "not_recorded_locally",
-    "claim_level_source_span_coverage_matrix": "not_recorded_locally",
+    "exhaustive_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
+    "claim_level_source_span_coverage_matrix": "section_2_only_remaining_paper_not_recorded",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -305,6 +309,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "status claim."
         ),
         "source_inventory_ref": EXPECTED_SOURCE_INVENTORY_REF,
+        "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
         "requirements": deepcopy(list(EXPECTED_REQUIREMENTS)),
@@ -313,8 +318,9 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records corrected core AlphaEvolve requirement anchors "
             "with verified module, test, sidecar, and TODO links and connects them "
-            "to the PDF-verified named source inventory. It does not claim an "
-            "exhaustive requirement inventory or claim-level source-span coverage matrix, "
+            "to the PDF-verified named source inventory and bounded 50-requirement "
+            "Table 1/Section 2 inventory. It does not claim a whole-paper "
+            "exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
             "semantic verifier, implemented benchmark "
             "bullet semantic verifier, absence-sentence freshness matrix, module "
@@ -344,6 +350,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_inventory_ref") != EXPECTED_SOURCE_INVENTORY_REF:
         issues.append(_issue("invalid_source_inventory_ref", f"source_inventory_ref must be {EXPECTED_SOURCE_INVENTORY_REF}"))
+    if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
+        issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_system_requirement_inventory_ref", f"{EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF} is missing"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)
@@ -363,8 +373,8 @@ def validate_implementation_evidence_map_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim an exhaustive requirement inventory" not in boundary_text
-        or "claim-level source-span coverage matrix" not in boundary_text
+        or "does not claim a whole-paper exhaustive requirement inventory" not in boundary_text
+        or "whole-paper claim-level source-span coverage matrix" not in boundary_text
         or "paper-index phrase evidence-link sufficiency" not in boundary_text
         or "implemented benchmark bullet semantic verifier" not in boundary_text
         or "absence-sentence freshness matrix" not in boundary_text

@@ -14485,3 +14485,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: source boundary, runtime report, example-scope, paper-manifest,
     and overclaim tests retain `claim_ready: false`; the live OCI fixture remains
     opt-in.
+- [x] Add Table 1 and Section 2 claim-level source dispositions.
+  - Paper evidence: the pinned AlphaEvolve PDF contains eight Table 1 capability
+    rows and implementation-bearing system requirements in Sections 2.1-2.6
+    and Figures 1-3.
+  - Status: `papers/alphaevolve_system_requirement_inventory_boundary.json`
+    records 50 page-anchored requirements with local status, evidence links,
+    ROADMAP ownership, and live domain TODO checks for all 37 incomplete rows.
+  - Remaining paper gap: Introduction claims outside Table 1, Sections 3-6,
+    appendices, Figures 4-14, Tables 2-3, equations, footnotes, citations, result
+    reproduction, and independent semantic review remain open.
+  - Verification: the paper manifest requires the sidecar and rejects missing,
+    stale, drifted, or parity-overclaiming records.

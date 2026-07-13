@@ -19466,3 +19466,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     cover command construction, digest and pull gates, accounting, probe
     fallback, tamper rejection, and fixture loading. The live runtime test is
     opt-in and skipped when no local daemon is healthy.
+- [x] Add a PDF-anchored AlphaEvolve system-requirement inventory.
+  - Spec evidence: Table 1, Sections 2.1-2.6, and Figures 1-3 define the core
+    AlphaEvolve task, prompt, generation, evaluation, evolution, and distributed
+    pipeline behavior.
+  - Status: a new public boundary records 50 stable requirement ids, exact PDF
+    pages and anchors, implementation status, ROADMAP phase/section, code and
+    audit evidence, and live TODO ownership. It classifies 13 requirements as
+    locally implemented and 37 as partial, absent, or undemonstrated.
+  - Remaining code gap: the bounded inventory does not cover the rest of the
+    paper, prove semantic completeness, reproduce benchmark results, or prove
+    production-scale AlphaEvolve parity.
+  - Verification: focused boundary tests validate PDF identity and anchors,
+    stable counts, evidence paths, TODO-title ownership, drift rejection, and
+    parity-overclaim rejection.

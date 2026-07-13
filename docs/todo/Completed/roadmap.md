@@ -16133,3 +16133,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: candidate-workspace fidelity/readiness, candidate-language,
     example-scope, and runtime-report boundaries retain those gates while
     crediting the narrower OCI contract.
+- [x] Credit bounded Table 1 and Section 2 requirement coverage in ROADMAP.
+  - Status: ROADMAP source coverage and exhaustiveness boundaries now credit 50
+    claim-level system requirements, including Figures 1-3 and all Table 1
+    capability rows, while preserving the remaining whole-paper audit as open.
+  - Remaining roadmap gap: result/application claims, remaining exhibits,
+    appendices, paper-status joins, non-goal decisions, claim-level priorities,
+    CI exhaustiveness, and owner signoff remain incomplete.
+  - Verification: focused coverage and exhaustiveness tests validate the new
+    sidecar references, counts, readiness states, and non-overclaim boundary.

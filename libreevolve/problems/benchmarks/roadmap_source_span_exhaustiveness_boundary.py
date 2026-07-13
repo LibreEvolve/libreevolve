@@ -14,7 +14,7 @@ ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_source_span_exhaustiveness_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "named_structure_exhaustiveness_gate_without_claim_level_walk"
+    "named_structure_plus_section_2_requirements_without_whole_paper_claim_walk"
 )
 SOURCE_COVERAGE_BOUNDARY_INPUT = "papers/roadmap_source_span_coverage_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -28,7 +28,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_exhaustiveness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "not_recorded_locally",
+    "claim_level_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
     "claim_level_figure_table_appendix_matrix": "not_recorded_locally",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
@@ -44,9 +44,10 @@ CRITERION_SPECS = (
     {
         "criterion_id": "pdf_section_walk",
         "source_surface": "retained AlphaEvolve source PDF sections and requirement spans",
-        "current_scope": "all 38 named structural spans are page- and anchor-verified",
-        "missing_exhaustiveness": "sentence-, paragraph-, and claim-level requirement extraction",
+        "current_scope": "all 38 named structural spans are page- and anchor-verified and 50 Table 1/Section 2 system requirements have claim-level dispositions",
+        "missing_exhaustiveness": "claim-level requirement extraction for the remaining main-text, result, discussion, and appendix spans",
         "sidecars": (
+            "papers/alphaevolve_system_requirement_inventory_boundary.json",
             "papers/roadmap_source_span_coverage_boundary.json",
             "papers/roadmap_source_span_disposition_boundary.json",
         ),
@@ -55,14 +56,15 @@ CRITERION_SPECS = (
             {"path": "docs/todo/roadmap.md", "required_phrase": "every relevant AlphaEvolve source span"},
         ),
         "validation_gate": "retained PDF section-walk exhaustiveness gate",
-        "readiness_status": "named_structure_walk_complete_without_claim_level_requirements",
+        "readiness_status": "section_2_claim_walk_complete_without_whole_paper_requirements",
     },
     {
         "criterion_id": "figure_table_appendix_matrix",
         "source_surface": "figures, tables, appendices, benchmark families, and appendix rows",
-        "current_scope": "all 14 figures, 3 tables, 2 appendices, and 13 Appendix B subsections have named-span dispositions",
-        "missing_exhaustiveness": "claim- and result-row-level exhibit matrix with reproduction evidence",
+        "current_scope": "all 14 figures, 3 tables, 2 appendices, and 13 Appendix B subsections have named-span dispositions; Figures 1-3 and all eight Table 1 rows have claim-level system dispositions",
+        "missing_exhaustiveness": "claim- and result-row-level exhibit matrix with reproduction evidence for Figures 4-14, Tables 2-3, and appendices",
         "sidecars": (
+            "papers/alphaevolve_system_requirement_inventory_boundary.json",
             "papers/roadmap_source_span_coverage_boundary.json",
             "papers/implementation_evidence_map_boundary.json",
         ),
@@ -71,7 +73,7 @@ CRITERION_SPECS = (
             {"path": "docs/todo/roadmap.md", "required_phrase": "benchmark family"},
         ),
         "validation_gate": "figure/table/appendix joined matrix gate",
-        "readiness_status": "named_exhibit_matrix_complete_without_claim_level_rows",
+        "readiness_status": "system_exhibit_claims_partial_without_result_exhibit_rows",
     },
     {
         "criterion_id": "application_claim_matrix",
@@ -220,13 +222,16 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             ],
             "named_structure_inventory": "pdf_page_and_anchor_verified",
             "named_span_status_and_phase_map": "recorded",
+            "section_2_system_requirement_count": 50,
+            "section_2_system_requirement_inventory": "pdf_anchor_and_todo_owner_verified",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records a complete named-structure gate for all 55 "
-            "PDF-verified sections, figures, tables, and appendices. It does "
-            "not claim sentence- or claim-level requirement exhaustiveness, a "
+            "PDF-verified sections, figures, tables, and appendices plus a "
+            "bounded inventory of 50 Table 1 and Section 2 system requirements. "
+            "It does not claim whole-paper claim-level requirement exhaustiveness, a "
             "claim-level figure/table/appendix matrix, application-result claim matrix, status-row to ROADMAP "
             "disposition map, missing/partial TODO proof, non-goal decision "
             "map, phase-priority map, CI source-span exhaustiveness gate, or "

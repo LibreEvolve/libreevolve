@@ -1,0 +1,2033 @@
+{
+  "schema": "libreevolve.alphaevolve_system_requirement_inventory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "boundary_status": "section_2_system_requirements_inventory_complete_without_whole_paper_claim_exhaustiveness",
+  "section_2_requirement_inventory_ready": true,
+  "alphaevolve_parity_claim_ready": false,
+  "source_artifact": {
+    "path": "papers/2506.13131__AlphaEvolve.pdf",
+    "exists": true,
+    "expected_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "actual_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "expected_page_count": 44,
+    "page_count": 44,
+    "identity_ok": true,
+    "error": null
+  },
+  "source_inventory_schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+  "source_inventory_span_count": 55,
+  "inventory_scope": {
+    "included": [
+      "all eight AlphaEvolve capability rows in Table 1",
+      "implementation-bearing prose requirements in Sections 2.1 through 2.6",
+      "system behavior shown or stated in Figures 1, 2, and 3"
+    ],
+    "excluded": [
+      "Introduction claims outside Table 1 and Section 2",
+      "Sections 3 through 6, appendices, and result reproduction claims",
+      "equation, footnote, citation, and bibliography-level extraction",
+      "independent reviewer proof that the bounded requirement decomposition is semantically exhaustive",
+      "AlphaEvolve production scale, benchmark results, or system parity"
+    ]
+  },
+  "requirement_count": 50,
+  "expected_requirement_count": 50,
+  "category_counts": {
+    "creative_generation": 7,
+    "distributed_pipeline": 3,
+    "evaluation": 6,
+    "evolution": 4,
+    "platform_overview": 5,
+    "prompt_sampling": 6,
+    "table_1_capability": 8,
+    "task_specification": 11
+  },
+  "implementation_status_counts": {
+    "implemented_local": 13,
+    "not_demonstrated": 5,
+    "not_implemented": 2,
+    "partially_implemented": 30
+  },
+  "implemented_local_count": 13,
+  "implementation_gap_count": 37,
+  "todo_owned_gap_count": 37,
+  "missing_anchor_count": 0,
+  "missing_reference_count": 0,
+  "requirement_records": [
+    {
+      "requirement_id": "table1_entire_code_file",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "evolves entire code file",
+      "source_anchor_present": true,
+      "requirement": "Evolve an entire code file rather than only one function.",
+      "category": "table_1_capability",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/table1_capability_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_table1_capability_exhibit_boundary.v1",
+          "boundary_status": "table_exhibit_provenance_only",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_candidate.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "codebase_scale",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add codebase-scale benchmark evidence for multi-component generated",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "table1_hundreds_of_lines",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "evolves up to hundreds of lines of code",
+      "source_anchor_present": true,
+      "requirement": "Demonstrate evolution of programs containing up to hundreds of lines.",
+      "category": "table_1_capability",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/table1_capability_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_table1_capability_exhibit_boundary.v1",
+          "boundary_status": "table_exhibit_provenance_only",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/codebase_scale_benchmark_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_codebase_scale_benchmark_boundary.v1",
+          "boundary_status": "runtime_scale_telemetry_only",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_codebase_scale_benchmark_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "codebase_scale",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add codebase-scale benchmark evidence for multi-component generated",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "table1_any_language",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "evolves any language",
+      "source_anchor_present": true,
+      "requirement": "Support task-defined candidate languages rather than a Python-first boundary.",
+      "category": "table_1_capability",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_language_runner_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_language_runner_boundary.v1",
+          "boundary_status": "digest_pinned_oci_candidate_execution_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_candidate_language_runner_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "candidate_runner",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend the task-primary local candidate runner beyond host C smoke to",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "table1_expensive_parallel_accelerated_evaluation",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "can evaluate for hours, in parallel, on accelerators",
+      "source_anchor_present": true,
+      "requirement": "Support long-running parallel evaluation on accelerator-backed workers.",
+      "category": "table_1_capability",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.expensive_evaluation_budget_boundary.v1",
+          "boundary_status": "local_cooperative_budgets_without_compute_hour_runtime",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/parallel_evaluation_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_parallel_evaluation_readiness_boundary.v1",
+          "boundary_status": "local_cross_generation_async_pipeline_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_expensive_evaluation_budget_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "accelerator_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add accelerator and worker budget stops plus budget resume state.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "expensive_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add unified expensive-evaluation compute budgets and resumable state.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "table1_thousands_of_samples_suffice",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "thousands of LLM samples suffice",
+      "source_anchor_present": true,
+      "requirement": "Measure AlphaEvolve-scale proposal sample efficiency.",
+      "category": "table_1_capability",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/sample_efficiency_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_sample_efficiency_boundary.v1",
+          "boundary_status": "single_run_counts_only",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_sample_efficiency_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "sample_efficiency",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add sample-efficiency reporting for AlphaEvolve-scale LLM proposal",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "table1_benefits_from_sota_models",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "benefits from SOTA LLMs",
+      "source_anchor_present": true,
+      "requirement": "Demonstrate improved search outcomes from stronger language models.",
+      "category": "table_1_capability",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "backend_scheduling_and_critique",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_fast_strong_model_mix_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "model_mix",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend first-class Google/Gemini support to live AlphaEvolve model-mix",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "table1_rich_context_and_feedback",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "rich context and feedback in prompts",
+      "source_anchor_present": true,
+      "requirement": "Build mutation prompts from rich task context, prior programs, and feedback.",
+      "category": "table_1_capability",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/prompt_section_packing_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.prompt_section_packing_boundary.v1",
+          "boundary_status": "mutation_section_packing_without_all_role_provider_token_policy",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_prompt_section_packing_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "prompt_context",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend structured prompt context policy beyond validated current fields.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "prompt_packing",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete provider-token prompt section fitting beyond mutation prompts",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "table1_multiple_metrics",
+      "source_span_id": "table_1",
+      "source_page": 2,
+      "source_anchor": "can simultaneously optimize multiple metrics",
+      "source_anchor_present": true,
+      "requirement": "Optimize multiple metrics as primary search objectives.",
+      "category": "table_1_capability",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/objective_archive_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.objective_archive_boundary.v1",
+          "boundary_status": "bounded_retained_overlays_not_primary_pareto_archive",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_objective_archive_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "multi_objective",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote multi-objective overlays to primary archive optimization.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_1",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Keep Table 1 capability-comparison exhibit provenance scoped to row",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "section2_autonomous_pipeline",
+      "source_span_id": "section_2",
+      "source_page": 3,
+      "source_anchor": "orchestrates an autonomous pipeline of computations including queries to LLMs",
+      "source_anchor_present": true,
+      "requirement": "Orchestrate an autonomous computation and LLM-query pipeline.",
+      "category": "platform_overview",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/process_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_process_exhibit_boundary.v1",
+          "boundary_status": "process_mapping_with_source_text_boundary_without_full_parity",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_loop.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "section2_user_specified_task",
+      "source_span_id": "section_2",
+      "source_page": 3,
+      "source_anchor": "produces algorithms that address a user-specified task",
+      "source_anchor_present": true,
+      "requirement": "Accept a user-specified task and evolve executable candidate programs for it.",
+      "category": "platform_overview",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/task_specification_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_task_specification_boundary.v1",
+          "boundary_status": "runtime_artifact_resolution_only",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_loader.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "section2_evolutionary_metric_improvement",
+      "source_span_id": "section_2",
+      "source_page": 3,
+      "source_anchor": "gradually develops programs that improve the score on the automated evaluation metrics",
+      "source_anchor_present": true,
+      "requirement": "Use an evolutionary loop to improve automated evaluation scores.",
+      "category": "platform_overview",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/process_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_process_exhibit_boundary.v1",
+          "boundary_status": "process_mapping_with_source_text_boundary_without_full_parity",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_loop.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "figure1_human_inputs",
+      "source_span_id": "figure_1",
+      "source_page": 3,
+      "source_anchor": "sets evaluation criteria, provides initial solution and optional background knowledge",
+      "source_anchor_present": true,
+      "requirement": "Represent evaluation criteria, an initial solution, and optional background knowledge as task inputs.",
+      "category": "platform_overview",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/process_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_process_exhibit_boundary.v1",
+          "boundary_status": "process_mapping_with_source_text_boundary_without_full_parity",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/task_specification_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_task_specification_boundary.v1",
+          "boundary_status": "runtime_artifact_resolution_only",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_task_specification_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "task_spec",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend unified AlphaEvolve task-specification reports into full",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "process_exhibit",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Figure 1/Figure 2 process-exhibit report into rendered diagram",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "figure2_expanded_loop",
+      "source_span_id": "figure_2",
+      "source_page": 4,
+      "source_anchor": "user provides an initial program (with components to evolve marked), evaluation code, and optional configurations",
+      "source_anchor_present": true,
+      "requirement": "Run the sample-prompt-generate-apply-evaluate-database loop over user task artifacts.",
+      "category": "platform_overview",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/process_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_process_exhibit_boundary.v1",
+          "boundary_status": "process_mapping_with_source_text_boundary_without_full_parity",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_process_exhibit_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "task_scalar_metric_mapping",
+      "source_span_id": "section_2_1",
+      "source_page": 3,
+      "source_anchor": "mapping a solution to a set of scalar evaluation metrics",
+      "source_anchor_present": true,
+      "requirement": "Map each candidate to finite scalar metrics that are maximized by convention.",
+      "category": "task_specification",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/automated_evaluator_scope_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.automated_evaluator_scope_boundary.v1",
+          "boundary_status": "machine_gradeable_scope_with_environment_fixture_gap_matrix",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/population/program.py",
+          "exists": true
+        },
+        {
+          "path": "tests/population/test_program.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "task_fixed_evaluate_signature",
+      "source_span_id": "section_2_1",
+      "source_page": 4,
+      "source_anchor": "evaluate, with a fixed input/output signature, returning a dictionary of scalars",
+      "source_anchor_present": true,
+      "requirement": "Support the paper-style evaluate entrypoint with a fixed dictionary-of-scalars contract.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/task_specification_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_task_specification_boundary.v1",
+          "boundary_status": "runtime_artifact_resolution_only",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_evaluator.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "embedded_evaluate",
+          "path": "docs/todo/code.md",
+          "required_phrase": "candidate-embedded `evaluate(eval_inputs)` entrypoint support",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "task_spec",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend unified AlphaEvolve task-specification reports into full",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_evaluation_workload_range",
+      "source_span_id": "section_2_1",
+      "source_page": 4,
+      "source_anchor": "executing this function may take only seconds on a single device or spawn extensive computations",
+      "source_anchor_present": true,
+      "requirement": "Represent and audit simple through extensive evaluator workloads.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.expensive_evaluation_budget_boundary.v1",
+          "boundary_status": "local_cooperative_budgets_without_compute_hour_runtime",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_expensive_evaluation_budget_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workload",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add evaluator workload provenance for inner search and ML-training tasks.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "expensive_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add unified expensive-evaluation compute budgets and resumable state.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_multiple_marked_components",
+      "source_span_id": "section_2_1",
+      "source_page": 4,
+      "source_anchor": "support evolving multiple components across a codebase",
+      "source_anchor_present": true,
+      "requirement": "Evolve multiple marked components across a task workspace.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/existing_codebase_integration_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_existing_codebase_integration_boundary.v1",
+          "boundary_status": "smoke_source_setup_fixture_recorded_missing_real_upstream",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_existing_codebase_integration_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "markers",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend existing-codebase minimal-marker integration provenance beyond",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "codebase_scale",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add codebase-scale benchmark evidence for multi-component generated",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_minimal_marker_integration",
+      "source_span_id": "section_2_1",
+      "source_page": 4,
+      "source_anchor": "requiring only minimal changes, simply by adding special markers",
+      "source_anchor_present": true,
+      "requirement": "Integrate existing codebases through evolve-block markers with minimal source changes.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/existing_codebase_integration_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_existing_codebase_integration_boundary.v1",
+          "boundary_status": "smoke_source_setup_fixture_recorded_missing_real_upstream",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_candidate.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "markers",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend existing-codebase minimal-marker integration provenance beyond",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_evolved_blocks_and_skeleton",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "the rest of the code forms a skeleton that ties the evolved pieces together",
+      "source_anchor_present": true,
+      "requirement": "Keep non-evolved code as a stable skeleton that invokes evolved blocks from evaluation.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/task_specification_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_task_specification_boundary.v1",
+          "boundary_status": "runtime_artifact_resolution_only",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_candidate.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "embedded_evaluate",
+          "path": "docs/todo/code.md",
+          "required_phrase": "candidate-embedded `evaluate(eval_inputs)` entrypoint support",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "markers",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend existing-codebase minimal-marker integration provenance beyond",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_complete_initial_program",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "this initial implementation must be complete",
+      "source_anchor_present": true,
+      "requirement": "Require a complete evaluator-valid initial program for AlphaEvolve-strict runs.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/initial_program_validity_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_initial_program_validity_boundary.v1",
+          "boundary_status": "strict_policy_available",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_initial_program_validity_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "initial_program",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an AlphaEvolve-strict seed validity policy for complete initial",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_raw_representation_abstraction",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "evolve the solution in raw string representation",
+      "source_anchor_present": true,
+      "requirement": "Allow a task to select raw solution representation as the evolved abstraction.",
+      "category": "task_specification",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+          "boundary_status": "not_configured_as_problem_defined_abstractions",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_candidate_abstraction_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "abstraction",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add abstraction-choice metadata and benchmark evidence for candidate",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_constructor_function_abstraction",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "evolve a function of a definite form that specifies how to construct the solution from scratch",
+      "source_anchor_present": true,
+      "requirement": "Allow constructor-function candidate abstractions.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+          "boundary_status": "not_configured_as_problem_defined_abstractions",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/examples/circle_packing/initial_programs/seed.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_candidate_abstraction_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "abstraction",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add abstraction-choice metadata and benchmark evidence for candidate",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_bespoke_search_abstraction",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "evolve a bespoke search algorithm to find the solution within some fixed compute budget",
+      "source_anchor_present": true,
+      "requirement": "Allow budgeted bespoke-search algorithms as candidate abstractions.",
+      "category": "task_specification",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+          "boundary_status": "not_configured_as_problem_defined_abstractions",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.expensive_evaluation_budget_boundary.v1",
+          "boundary_status": "local_cooperative_budgets_without_compute_hour_runtime",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_candidate_abstraction_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "abstraction",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add abstraction-choice metadata and benchmark evidence for candidate",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "expensive_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add unified expensive-evaluation compute budgets and resumable state.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_solution_search_coevolution",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "co-evolve intermediate solutions and search algorithms together",
+      "source_anchor_present": true,
+      "requirement": "Co-evolve intermediate solutions with search algorithms tailored to improve them.",
+      "category": "task_specification",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+          "boundary_status": "not_configured_as_problem_defined_abstractions",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_candidate_abstraction_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "abstraction",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add abstraction-choice metadata and benchmark evidence for candidate",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "prompt_long_context_customization",
+      "source_span_id": "section_2_2",
+      "source_page": 5,
+      "source_anchor": "supports various types of customization and providing long contexts as part of the primary evolution prompt",
+      "source_anchor_present": true,
+      "requirement": "Support configurable long-context primary evolution prompts.",
+      "category": "prompt_sampling",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/prompt_section_packing_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.prompt_section_packing_boundary.v1",
+          "boundary_status": "mutation_section_packing_without_all_role_provider_token_policy",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_prompt_section_packing_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "prompt_context",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend structured prompt context policy beyond validated current fields.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "prompt_packing",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete provider-token prompt section fitting beyond mutation prompts",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "prompt_prior_solutions_and_instructions",
+      "source_span_id": "section_2_2",
+      "source_page": 5,
+      "source_anchor": "multiple previously discovered solutions sampled from the program database",
+      "source_anchor_present": true,
+      "requirement": "Include sampled prior solutions and mutation instructions in primary prompts.",
+      "category": "prompt_sampling",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_prompt.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "prompt_explicit_context",
+      "source_span_id": "section_2_2",
+      "source_page": 5,
+      "source_anchor": "fixed human-written instructions, equations, code snippets, or relevant literature",
+      "source_anchor_present": true,
+      "requirement": "Accept explicit human instructions, equations, code snippets, and literature context.",
+      "category": "prompt_sampling",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/prompt_section_packing_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.prompt_section_packing_boundary.v1",
+          "boundary_status": "mutation_section_packing_without_all_role_provider_token_policy",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_prompt.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "prompt_context",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend structured prompt context policy beyond validated current fields.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "prompt_packing",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete provider-token prompt section fitting beyond mutation prompts",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "prompt_stochastic_formatting",
+      "source_span_id": "section_2_2",
+      "source_page": 5,
+      "source_anchor": "template placeholders with human-provided alternatives for increased diversity",
+      "source_anchor_present": true,
+      "requirement": "Sample human-provided prompt alternatives from configured probability distributions.",
+      "category": "prompt_sampling",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/stochastic_prompt_format_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.stochastic_prompt_format_boundary.v1",
+          "boundary_status": "effective_config_distribution_without_separate_source_identity",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_stochastic_prompt_format_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "stochastic_prompt",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add separate-source provenance for stochastic prompt-format",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "prompt_rendered_evaluation_results",
+      "source_span_id": "section_2_2",
+      "source_page": 5,
+      "source_anchor": "Rendered evaluation results",
+      "source_anchor_present": true,
+      "requirement": "Render candidate programs, evaluator outputs, and scores into prompt context.",
+      "category": "prompt_sampling",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/program_output_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.program_output_boundary.v1",
+          "boundary_status": "exact_current_run_output_lookup_not_semantic_retrieval",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_program_output_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "prompt_context",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend structured prompt context policy beyond validated current fields.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "prompt_meta_evolution_database",
+      "source_span_id": "section_2_2",
+      "source_page": 5,
+      "source_anchor": "Meta prompt evolution",
+      "source_anchor_present": true,
+      "requirement": "Generate and co-evolve prompt instructions and context in a separate prompt database.",
+      "category": "prompt_sampling",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/prompt_database_parity_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.prompt_database_parity_boundary.v1",
+          "boundary_status": "local_prompt_arm_history_without_solution_database_equivalent_archive",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/meta_prompt_scoring_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.meta_prompt_scoring_boundary.v1",
+          "boundary_status": "child_score_prompt_rewards_without_calibrated_lineage_attribution",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_prompt_database_parity_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "meta_prompt",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Calibrate meta-prompt scoring beyond absolute/improvement child rewards.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "prompt_database",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote the prompt-program store to a solution-database-equivalent",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "generation_model_agnostic",
+      "source_span_id": "section_2_3",
+      "source_page": 5,
+      "source_anchor": "Although AlphaEvolve is model-agnostic",
+      "source_anchor_present": true,
+      "requirement": "Route generation through interchangeable model backends.",
+      "category": "creative_generation",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "backend_scheduling_and_critique",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/llm/backend_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/llm/base.py",
+          "exists": true
+        },
+        {
+          "path": "tests/llm/test_backends.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "generation_stronger_model_effect",
+      "source_span_id": "section_2_3",
+      "source_page": 5,
+      "source_anchor": "performs increasingly better as the underlying LLM improves",
+      "source_anchor_present": true,
+      "requirement": "Measure search-quality improvement as the underlying model improves.",
+      "category": "creative_generation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "backend_scheduling_and_critique",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_fast_strong_model_mix_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "model_mix",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend first-class Google/Gemini support to live AlphaEvolve model-mix",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "figure3_supervised_pipeline_exhibit",
+      "source_span_id": "figure_3",
+      "source_page": 6,
+      "source_anchor": "Illustrative example of applying AlphaEvolve to evolving a supervised learning pipeline",
+      "source_anchor_present": true,
+      "requirement": "Reproduce the Figure 3 marked-file, assembled-prompt, generated-diff, and evaluator flow.",
+      "category": "creative_generation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure3_supervised_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure3_supervised_exhibit_boundary.v1",
+          "boundary_status": "figure3_supervised_exhibit_not_reproduced",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_figure3_supervised_exhibit_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure_3",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 3 supervised-learning example exhibit provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "generation_search_replace_blocks",
+      "source_span_id": "section_2_3",
+      "source_page": 7,
+      "source_anchor": "sequence of diff blocks in a specific format",
+      "source_anchor_present": true,
+      "requirement": "Request and apply canonical SEARCH/REPLACE diff blocks.",
+      "category": "creative_generation",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_diff.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "generation_direct_full_code_output",
+      "source_span_id": "section_2_3",
+      "source_page": 7,
+      "source_anchor": "output the entire code block directly",
+      "source_anchor_present": true,
+      "requirement": "Allow direct full-code replacement instead of localized diffs.",
+      "category": "creative_generation",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/adaptive_mutation_mode_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_adaptive_mutation_mode_boundary.v1",
+          "boundary_status": "adaptive_candidate_shape_selection_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_adaptive_mutation_mode_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "generation_model_ensemble",
+      "source_span_id": "section_2_3",
+      "source_page": 7,
+      "source_anchor": "employs an ensemble of large language models",
+      "source_anchor_present": true,
+      "requirement": "Generate proposals through a configurable ensemble of language models.",
+      "category": "creative_generation",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "backend_scheduling_and_critique",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/llm/ensemble.py",
+          "exists": true
+        },
+        {
+          "path": "tests/llm/test_ensemble.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "generation_fast_strong_model_mix",
+      "source_span_id": "section_2_3",
+      "source_page": 7,
+      "source_anchor": "combination of Gemini 2.0 Flash and Gemini 2.0 Pro",
+      "source_anchor_present": true,
+      "requirement": "Use and validate a high-throughput and high-capability model mix.",
+      "category": "creative_generation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "backend_scheduling_and_critique",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/llm_role_scheduler_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.llm_role_scheduler_boundary.v1",
+          "boundary_status": "role_scoped_local_ucb_without_calibrated_experiment_policy",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/gemini_provider_parity_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_gemini_provider_parity_boundary.v1",
+          "boundary_status": "first_class_adapter_without_live_alphaevolve_model_parity",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_fast_strong_model_mix_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "model_mix",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend first-class Google/Gemini support to live AlphaEvolve model-mix",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "role_scheduler",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote role-scoped LLM routing from shared-bandit audit evidence to",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evaluation_every_proposal",
+      "source_span_id": "section_2_4",
+      "source_page": 7,
+      "source_anchor": "each new solution proposed by the LLMs is automatically evaluated",
+      "source_anchor_present": true,
+      "requirement": "Automatically execute the evaluator for every accepted mutation payload.",
+      "category": "evaluation",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_evaluator.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "evaluation_increasing_difficulty_cascade",
+      "source_span_id": "section_2_4",
+      "source_page": 7,
+      "source_anchor": "ensembles of test cases of increasing difficulty",
+      "source_anchor_present": true,
+      "requirement": "Promote promising candidates through increasingly difficult evaluation stages.",
+      "category": "evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/evaluation_cascade_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_evaluation_cascade_boundary.v1",
+          "boundary_status": "runtime_transition_and_stage_identity_without_benchmark_efficiency_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/cascade_hypothesis_test_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.cascade_hypothesis_test_boundary.v1",
+          "boundary_status": "runtime_policy_with_deterministic_matrix_calibration_without_empirical_error_rates",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_evaluation_cascade_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "cascade",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Finish paper-facing evaluation-cascade promotion and attrition evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "hypothesis_tests",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add statistical hypothesis-test gates to evaluation cascades.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evaluation_llm_generated_feedback",
+      "source_span_id": "section_2_4",
+      "source_page": 8,
+      "source_anchor": "graded using separate LLM calls and added to the dictionary of scores",
+      "source_anchor_present": true,
+      "requirement": "Use calibrated LLM graders as score signals or candidate-discard criteria.",
+      "category": "evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/qualitative_feedback_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.qualitative_feedback_boundary.v1",
+          "boundary_status": "declared_qualitative_policy_without_executed_calibration",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/feedback.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_qualitative_feedback_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "qualitative_feedback",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add qualitative LLM-feedback criterion provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evaluation_async_cluster_parallelism",
+      "source_span_id": "section_2_4",
+      "source_page": 8,
+      "source_anchor": "distribute this work through asynchronous calls to an evaluation cluster",
+      "source_anchor_present": true,
+      "requirement": "Parallelize evaluator work through asynchronous distributed workers.",
+      "category": "evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/parallel_evaluation_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_parallel_evaluation_readiness_boundary.v1",
+          "boundary_status": "local_cross_generation_async_pipeline_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/async_evaluator.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_parallel_evaluation_readiness_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "async_workers",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete asynchronous worker and concurrent proposal control beyond the",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "distributed",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete distributed-pipeline topology evidence for controller, LLM samplers,",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "accelerator_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add accelerator and worker budget stops plus budget resume state.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evaluation_multiple_user_scores",
+      "source_span_id": "section_2_4",
+      "source_page": 8,
+      "source_anchor": "allows for optimizing multiple user-provided scores",
+      "source_anchor_present": true,
+      "requirement": "Treat multiple user-provided metrics as first-class search objectives.",
+      "category": "evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/objective_archive_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.objective_archive_boundary.v1",
+          "boundary_status": "bounded_retained_overlays_not_primary_pareto_archive",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_objective_archive_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "multi_objective",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote multi-objective overlays to primary archive optimization.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evaluation_metric_diverse_prompting",
+      "source_span_id": "section_2_4",
+      "source_page": 8,
+      "source_anchor": "programs excelling under different evaluation criteria often possess distinct structures or logic",
+      "source_anchor_present": true,
+      "requirement": "Use metric-diverse high-performing programs as prompt inspirations.",
+      "category": "evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/metric_diverse_prompt_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.metric_diverse_prompt_boundary.v1",
+          "boundary_status": "prompt_visible_evidence_not_benchmark_policy",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_metric_diverse_prompt_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "metric_diversity",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend metric-diverse inspiration selection provenance into benchmark",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evolution_results_attached_to_solutions",
+      "source_span_id": "section_2_5",
+      "source_page": 8,
+      "source_anchor": "solutions with evaluation results (scores and program outputs) attached to them",
+      "source_anchor_present": true,
+      "requirement": "Persist scores and evaluator program outputs with candidate records.",
+      "category": "evolution",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/program_output_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.program_output_boundary.v1",
+          "boundary_status": "exact_current_run_output_lookup_not_semantic_retrieval",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/population/program.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_program_output_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "evolution_database_resurfacing",
+      "source_span_id": "section_2_5",
+      "source_page": 8,
+      "source_anchor": "primary goal of which is to optimally resurface previously explored ideas",
+      "source_anchor_present": true,
+      "requirement": "Resurface prior ideas by quality, diversity, feedback, output, and lineage evidence.",
+      "category": "evolution",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/evolutionary_database_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_evolutionary_database_boundary.v1",
+          "boundary_status": "current_run_resurfacing_without_durable_database",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_evolutionary_database_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "evolutionary_database",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Replace bounded run-local resurfacing indexes with a durable",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evolution_exploration_exploitation_balance",
+      "source_span_id": "section_2_5",
+      "source_page": 8,
+      "source_anchor": "balancing exploration and exploitation",
+      "source_anchor_present": true,
+      "requirement": "Balance exploitation of strong programs with diversity-preserving exploration.",
+      "category": "evolution",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/sampling_balance_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.sampling_balance_boundary.v1",
+          "boundary_status": "local_sampling_counts_with_repetition_and_source_provenance",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/population/sampling.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_sampling_balance_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "sampling_balance",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend exploration/exploitation sampling-balance reports into calibrated",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evolution_map_elites_and_islands",
+      "source_span_id": "section_2_5",
+      "source_page": 8,
+      "source_anchor": "inspired by a combination of the MAP elites algorithm",
+      "source_anchor_present": true,
+      "requirement": "Combine a MAP-Elites quality-diversity archive with island populations.",
+      "category": "evolution",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/map_elites_descriptor_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.map_elites_descriptor_boundary.v1",
+          "boundary_status": "insertion_time_local_descriptor_snapshots_only",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/population/map_elites.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/islands.py",
+          "exists": true
+        },
+        {
+          "path": "tests/population/test_islands.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "requirement_id": "distributed_asyncio_dependency_pipeline",
+      "source_span_id": "section_2_6",
+      "source_page": 8,
+      "source_anchor": "implemented as an asynchronous computational pipeline (using the asyncio Python library)",
+      "source_anchor_present": true,
+      "requirement": "Run concurrent pipeline tasks that await unfinished dependencies.",
+      "category": "distributed_pipeline",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/distributed_pipeline_topology_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_distributed_pipeline_topology_boundary.v1",
+          "boundary_status": "local_cross_generation_async_pipeline_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/async_sampler.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/async_evaluator.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_distributed_pipeline_topology_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "async_workers",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete asynchronous worker and concurrent proposal control beyond the",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "distributed",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete distributed-pipeline topology evidence for controller, LLM samplers,",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "distributed_controller_sampler_evaluator_nodes",
+      "source_span_id": "section_2_6",
+      "source_page": 8,
+      "source_anchor": "comprises a controller, LLM samplers, and evaluation nodes",
+      "source_anchor_present": true,
+      "requirement": "Expose controller, LLM-sampler, and evaluator-node topology with worker ownership.",
+      "category": "distributed_pipeline",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/distributed_pipeline_topology_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_distributed_pipeline_topology_boundary.v1",
+          "boundary_status": "local_cross_generation_async_pipeline_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_distributed_pipeline_topology_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "distributed",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete distributed-pipeline topology evidence for controller, LLM samplers,",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "distributed_throughput_budget_optimization",
+      "source_span_id": "section_2_6",
+      "source_page": 8,
+      "source_anchor": "optimized for throughput (rather than the speed of any one particular computation)",
+      "source_anchor_present": true,
+      "requirement": "Optimize aggregate proposal/evaluation throughput under an overall compute budget.",
+      "category": "distributed_pipeline",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/distributed_pipeline_topology_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_distributed_pipeline_topology_boundary.v1",
+          "boundary_status": "local_cross_generation_async_pipeline_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.expensive_evaluation_budget_boundary.v1",
+          "boundary_status": "local_cooperative_budgets_without_compute_hour_runtime",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_distributed_pipeline_topology_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "distributed",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete distributed-pipeline topology evidence for controller, LLM samplers,",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "expensive_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add unified expensive-evaluation compute budgets and resumable state.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "accelerator_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add accelerator and worker budget stops plus budget resume state.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    }
+  ],
+  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 50 implementation-bearing AlphaEvolve requirements from Table 1, Sections 2.1 through 2.6, and Figures 1 through 3. Local status labels distinguish implemented behavior from partial, missing, and undemonstrated claims. It does not claim whole-paper claim-level exhaustiveness, semantic reviewer signoff, benchmark reproduction, production-scale evidence, or AlphaEvolve system parity."
+}

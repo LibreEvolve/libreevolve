@@ -73,6 +73,12 @@ Important limits:
   matter/appendix spans, 14 numbered figures, and 3 numbered tables. This is a
   source-audit completeness boundary, not sentence-level requirement coverage,
   benchmark reproduction, production-scale evidence, or AlphaEvolve parity.
+- `papers/alphaevolve_system_requirement_inventory_boundary.json` adds a
+  bounded claim-level audit of 50 implementation-bearing requirements from all
+  eight Table 1 rows, Sections 2.1-2.6, and Figures 1-3. Thirteen are locally
+  implemented, 30 are partial, 2 are not implemented, and 5 are not
+  demonstrated; all 37 incomplete requirements have live TODO ownership. This
+  does not cover the remaining paper claims or prove AlphaEvolve parity.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
 - `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve

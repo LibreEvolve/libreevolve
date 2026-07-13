@@ -15953,3 +15953,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     result reproduction, production-scale evidence, and AlphaEvolve parity.
   - Verification: documentation and paper-manifest tests guard the paths,
     counts, classifications, and non-overclaim boundary.
+- [x] Document the bounded AlphaEvolve matrix-result claim audit.
+  - Status: README now reports the 41-claim Section 3.1/Table 2/Figure 4
+    inventory, its strict status split, TODO ownership, and the combined
+    132-claim bounded coverage with 113 incomplete claims.
+  - Remaining README gap: the wording explicitly excludes Sections 3.2-5,
+    Figures 5-14, Table 3, detailed appendices, source-detail exhaustiveness,
+    independent result reproduction, production-scale evidence, and
+    AlphaEvolve parity.
+  - Verification: documentation and paper-manifest tests guard the path,
+    counts, classifications, TODO ownership, and non-overclaim boundary.

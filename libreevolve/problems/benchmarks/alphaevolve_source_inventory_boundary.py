@@ -135,6 +135,7 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
         "sidecars": (
             "papers/matrix_suite_publication_artifacts.json",
             "papers/appendix_a_matrix_curation.json",
+            "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
         ),
         "todos": _AUDIT_TODOS,
     },

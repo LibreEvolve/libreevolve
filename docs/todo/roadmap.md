@@ -174,9 +174,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/alphaevolve_context_claim_inventory_boundary.json` now adds 41
     exact-page Abstract, Introduction, Discussion, and collaborator-context
     dispositions: 6 locally implemented, 11 partial, 4 not implemented, and 20
-    not demonstrated, with live TODO ownership for all 35 gaps. The bounded
-    claim-level ROADMAP surface therefore covers 91 claims, 19 locally
-    implemented.
+    not demonstrated, with live TODO ownership for all 35 gaps.
+    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` now adds
+    41 exact-page Section 3.1, Table 2, Figure 4, and footnote 3 dispositions:
+    none locally implemented, 6 partial, 3 not implemented, and 32 not
+    demonstrated, with live TODO ownership for all 41 gaps. The bounded
+    claim-level ROADMAP surface therefore covers 132 claims: 19 locally
+    implemented, 47 partial, 9 not implemented, and 57 not demonstrated.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -190,15 +194,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
     bounded eight-criterion exhaustiveness gate that credits the named PDF
-    structure walk and both bounded claim inventories while preserving
+    structure walk and all three bounded claim inventories while preserving
     remaining claim-level work for the figure/table/appendix matrix,
-    detailed Sections 3-5 and application-result claim matrix,
+    Sections 3.2-5 and the application-result claim matrix,
     status-row disposition map, span status classification, missing/partial
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 91 bounded system/context claims have claim-level
-    mappings. The matrix is not exhaustive across the rest of the paper: it
+    sections, and phases, and 132 bounded system/context/matrix-result claims
+    have claim-level mappings. The matrix is not exhaustive across the rest of
+    the paper: it
     does not extract every remaining
     sentence-, paragraph-, equation-, footnote-, citation-, capability-, or
     result-claim span; prove domain-specific TODO

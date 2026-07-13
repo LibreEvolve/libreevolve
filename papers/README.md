@@ -1549,14 +1549,19 @@ and verifies live domain TODO ownership for all 37 incomplete rows. The committe
 claims from the Abstract, Introduction, Discussion, and one Acknowledgements
 sentence. It classifies 6 as locally implemented, 11 as partial, 4 as not
 implemented, and 20 as not demonstrated, with live TODO ownership for all 35
-gaps. Together these bounded inventories disposition 91 claims, 19 as locally
-implemented. The corrected
+gaps. `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 41
+exact-page claims from Section 3.1, all sixteen selected Table 2 rank rows,
+Figure 4, and footnote 3. It classifies none as locally implemented, 6 as
+partial, 3 as not implemented, and 32 as not demonstrated, with live TODO
+ownership for all 41 gaps. Together the three bounded inventories disposition
+132 claims: 19 locally implemented, 47 partial, 9 not implemented, and 57 not
+demonstrated. The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
 whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-Sections 3-5/exhibit/appendix claim inventory, per-phrase evidence-link
+Sections 3.2-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
 sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index

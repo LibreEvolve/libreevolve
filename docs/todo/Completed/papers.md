@@ -14510,3 +14510,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     independent semantic exhaustiveness review remain open.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, and parity drift.
+- [x] Add Section 3.1, Table 2, Figure 4, and footnote 3 claim dispositions.
+  - Paper evidence: the pinned AlphaEvolve PDF reports matrix-search protocol,
+    sixteen selected rank rows, exactness and scalar-field scope, historical
+    results, initialization/collaboration details, and a 15-mutation exhibit.
+  - Status: `papers/alphaevolve_matrix_result_claim_inventory_boundary.json`
+    records 41 exact-page anchors, local classifications, evidence refs,
+    ROADMAP ownership, and active TODO checks. Six are partial, 3 not
+    implemented, and 32 not demonstrated; none is locally implemented.
+  - Remaining paper gap: published-result reproduction, Appendix A Table 3 and
+    Figure 9 details, Sections 3.2-5, remaining exhibits, equations, citations,
+    and independent semantic exhaustiveness review remain open.
+  - Verification: the paper manifest requires the sidecar and rejects source,
+    count, status, reference, ownership, result-reproduction, and parity drift.

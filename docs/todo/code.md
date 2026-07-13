@@ -56,9 +56,13 @@ sidecars, tests, and active TODOs.
     41 anchored Abstract, Introduction, Discussion, and collaborator-context
     claims. It classifies 6 as locally implemented, 11 partial, 4 not
     implemented, and 20 not demonstrated, and resolves all 35 gaps to live
-    domain TODO titles. The two bounded inventories therefore cover 91 claims,
-    including 19 locally implemented claims. This is not whole-paper
-    completeness. Meanwhile,
+    domain TODO titles. The committed
+    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 41
+    Section 3.1, Table 2, Figure 4, and footnote 3 claims. It classifies 6 as
+    partial, 3 as not implemented, and 32 as not demonstrated, and resolves all
+    41 gaps to live domain TODO titles. The three bounded inventories therefore
+    cover 132 claims: 19 locally implemented, 47 partial, 9 not implemented,
+    and 57 not demonstrated. This is not whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -75,10 +79,11 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and bounded Table 1/Section 2
-    system requirements are now machine-readable and PDF-verified, but there
+  - Current gap: the named source structure and 132 bounded system, context,
+    and matrix-result claims are now machine-readable and PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across the remaining paper
+    equation, footnote, citation, or claim level across Sections 3.2-5,
+    remaining exhibits, Table 3, appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit

@@ -19495,3 +19495,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary, source-inventory, implementation-map, and
     ROADMAP coverage tests validate counts, anchors, references, TODO ownership,
     drift rejection, and parity disclaimers.
+- [x] Add a PDF-anchored AlphaEvolve matrix-result claim inventory.
+  - Spec evidence: Section 3.1, Table 2, Figure 4, and footnote 3 state matrix-
+    search methods, sixteen selected rank results, exactness and field scope,
+    historical claims, initialization details, and discovery-lineage claims.
+  - Status: a new public boundary records 41 stable claim ids, exact PDF pages
+    and anchors, implementation status, ROADMAP phase/section, evidence links,
+    and live TODO ownership. It classifies 6 claims as partial, 3 as not
+    implemented, and 32 as not demonstrated; none is locally implemented.
+  - Remaining code gap: search-time gradient optimization, near-integrality
+    behavior, stochastic result reproduction, exact decomposition artifacts,
+    historical review, Appendix A details, and production-scale parity remain
+    open.
+  - Verification: focused boundary, paper-manifest, source-inventory,
+    implementation-map, and ROADMAP coverage tests validate counts, anchors,
+    references, TODO ownership, drift rejection, and result/parity disclaimers.

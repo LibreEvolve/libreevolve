@@ -451,6 +451,10 @@
         {
           "path": "papers/appendix_a_matrix_curation.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "exists": true
         }
       ],
       "active_todo_refs": [
@@ -493,6 +497,10 @@
         },
         {
           "path": "papers/appendix_a_matrix_curation.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "exists": true
         }
       ],
@@ -1012,6 +1020,10 @@
         },
         {
           "path": "papers/appendix_a_matrix_curation.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "exists": true
         }
       ],
@@ -1787,6 +1799,10 @@
         {
           "path": "papers/appendix_a_matrix_curation.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "exists": true
         }
       ],
       "active_todo_refs": [
@@ -2015,6 +2031,10 @@
         },
         {
           "path": "papers/appendix_a_matrix_curation.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "exists": true
         }
       ],
@@ -2317,6 +2337,10 @@
         {
           "path": "papers/appendix_a_matrix_curation.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+          "exists": true
         }
       ],
       "active_todo_refs": [
@@ -2359,6 +2383,10 @@
         },
         {
           "path": "papers/appendix_a_matrix_curation.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "exists": true
         }
       ],

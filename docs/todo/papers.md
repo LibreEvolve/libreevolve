@@ -19,16 +19,22 @@ directory and using the AlphaEvolve paper as the primary specification.
     local status, and active domain TODO ownership. Its status split is 13
     locally implemented, 30 partially implemented, 2 not implemented, and 5
     not demonstrated; all 37 incomplete rows have live TODO-title checks. The
-    new `papers/alphaevolve_context_claim_inventory_boundary.json` adds 41
+    `papers/alphaevolve_context_claim_inventory_boundary.json` adds 41
     exact-page claims from the Abstract, Introduction, Discussion, and one
     Acknowledgements sentence: 6 locally implemented, 11 partial, 4 not
     implemented, and 20 not demonstrated, with live ownership for all 35 gaps.
-    The paper manifest rejects either sidecar's absence, source/reference drift,
-    status drift, stale TODO ownership, and parity overclaims.
-  - Current gap: the combined 91-claim inventory deliberately excludes detailed
-    Sections 3-5 claims, Figures 4-14, Tables 2-3, appendices,
+    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 41
+    exact-page Section 3.1, Table 2, Figure 4, and footnote 3 claims: none
+    locally implemented, 6 partial, 3 not implemented, and 32 not demonstrated,
+    with live ownership for all 41 gaps. Combined coverage is 132 claims: 19
+    implemented, 47 partial, 9 not implemented, and 57 not demonstrated. The
+    paper manifest rejects any inventory sidecar's absence, source/reference
+    drift, status drift, stale TODO ownership, result-reproduction overclaims,
+    and parity overclaims.
+  - Current gap: the combined 132-claim inventory deliberately excludes
+    Sections 3.2-5 claims, Figures 5-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
-    independent reviewer proof that either bounded decomposition is
+    independent reviewer proof that any bounded inventory is
     semantically exhaustive.
   - Required result: extract every remaining implementation-bearing claim,
     assign stable ids and exact source spans, classify implementation and

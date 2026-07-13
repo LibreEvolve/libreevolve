@@ -922,8 +922,13 @@ AlphaEvolve reproduction.
   `papers/alphaevolve_context_claim_inventory_boundary.json` adds 41 anchored
   Abstract, Introduction, Discussion, and collaborator-context claims: 6 are
   locally implemented, 11 partial, 4 not implemented, and 20 not demonstrated,
-  with live TODO ownership for all 35 gaps. The two bounded inventories now
-  disposition 91 claims in total, 19 of them locally implemented,
+  with live TODO ownership for all 35 gaps. The additional
+  `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` dispositions
+  41 Section 3.1, Table 2, Figure 4, and footnote 3 claims: 6 are partial, 3
+  not implemented, and 32 not demonstrated, with no locally implemented result
+  claims and live TODO ownership for all 41 gaps. The three bounded inventories
+  now disposition 132 claims in total: 19 locally implemented, 47 partial, 9
+  not implemented, and 57 not demonstrated,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
@@ -935,7 +940,7 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus bounded 91-claim coverage,
+  This is complete named-structure coverage plus bounded 132-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,

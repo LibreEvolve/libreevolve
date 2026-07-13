@@ -1,0 +1,1694 @@
+{
+  "schema": "libreevolve.alphaevolve_matrix_result_claim_inventory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "boundary_status": "section_3_1_table_2_figure_4_claim_inventory_complete_without_appendix_a_or_result_reproduction",
+  "matrix_result_claim_inventory_ready": true,
+  "alphaevolve_result_reproduction_claim_ready": false,
+  "alphaevolve_parity_claim_ready": false,
+  "source_artifact": {
+    "path": "papers/2506.13131__AlphaEvolve.pdf",
+    "exists": true,
+    "expected_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "actual_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "expected_page_count": 44,
+    "page_count": 44,
+    "identity_ok": true,
+    "error": null
+  },
+  "source_inventory_schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+  "source_inventory_span_count": 55,
+  "source_span_ids": [
+    "section_3_1",
+    "table_2",
+    "figure_4"
+  ],
+  "inventory_scope": {
+    "included": [
+      "all sixteen selected matrix-rank rows in Table 2",
+      "Table 2 aggregate, exactness, scalar-field, and notebook claims",
+      "Section 3.1 matrix-search protocol, rank, historicity, initialization, and collaboration claims",
+      "the Section 3.1 footnote 3 tensor-rank and recursive-use caveat",
+      "Figure 4 diff, component-change, and mutation-lineage claims"
+    ],
+    "excluded": [
+      "Appendix A Table 3 rows, curation notes, resource-frontier claims, and Figures 9a through 9c details",
+      "Sections 3.2 through 5 and Figures 5 through 8",
+      "independent result reproduction or external historicity review",
+      "equation-, citation-, bibliography-, and all-other-footnote-level exhaustiveness",
+      "AlphaEvolve production scale or system parity"
+    ]
+  },
+  "claim_count": 41,
+  "expected_claim_count": 41,
+  "category_counts": {
+    "figure_4_exhibit": 3,
+    "matrix_headline_result": 6,
+    "matrix_initialization_and_collaboration": 5,
+    "matrix_method": 7,
+    "table_2_row_result": 16,
+    "table_2_scope_result": 3,
+    "table_2_structure": 1
+  },
+  "implementation_status_counts": {
+    "not_demonstrated": 32,
+    "not_implemented": 3,
+    "partially_implemented": 6
+  },
+  "implemented_local_count": 0,
+  "implementation_gap_count": 41,
+  "todo_owned_gap_count": 41,
+  "missing_anchor_count": 0,
+  "missing_reference_count": 0,
+  "claim_records": [
+    {
+      "claim_id": "table2_best_known_reference_comparison",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e8\ud835\udc5a, \ud835\udc5b, \ud835\udc5d\u27e9 best known [reference] AlphaEvolve",
+      "source_anchor_present": true,
+      "claim": "Table 2 compares AlphaEvolve ranks with cited best-known ranks.",
+      "category": "table_2_structure",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        },
+        {
+          "path": "papers/appendix_a_matrix_baseline_citations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_baseline_citation_boundary.v1"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_2x4x5_rank32",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e82, 4, 5\u27e9 33 [42] 32",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <2,4,5> best-known rank 33 and AlphaEvolve rank 32.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_2x4x7_rank45",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e82, 4, 7\u27e9 46 [93] 45",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <2,4,7> best-known rank 46 and AlphaEvolve rank 45.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_2x4x8_rank51",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e82, 4, 8\u27e9 52 [93] 51",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <2,4,8> best-known rank 52 and AlphaEvolve rank 51.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_2x5x6_rank47",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e82, 5, 6\u27e9 48 [93] 47",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <2,5,6> best-known rank 48 and AlphaEvolve rank 47.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_3x3x3_rank23",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e83, 3, 3\u27e9 23 [52] 23",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <3,3,3> best-known rank 23 and AlphaEvolve rank 23.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_3x4x6_rank54",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e83, 4, 6\u27e9 56 [48] 54",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <3,4,6> best-known rank 56 and AlphaEvolve rank 54.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_3x4x7_rank63",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e83, 4, 7\u27e9 66 [91] 63",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <3,4,7> best-known rank 66 and AlphaEvolve rank 63.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_3x4x8_rank74",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e83, 4, 8\u27e9 75 [91] 74",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <3,4,8> best-known rank 75 and AlphaEvolve rank 74.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_3x5x6_rank68",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e83, 5, 6\u27e9 70 [48] 68",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <3,5,6> best-known rank 70 and AlphaEvolve rank 68.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_3x5x7_rank80",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e83, 5, 7\u27e9 82 [91] 80",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <3,5,7> best-known rank 82 and AlphaEvolve rank 80.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_4x4x4_rank48",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e84, 4, 4\u27e9 49 [95] 48",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <4,4,4> best-known rank 49 and AlphaEvolve rank 48.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_4x4x5_rank61",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e84, 4, 5\u27e9 62 [47] 61",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <4,4,5> best-known rank 62 and AlphaEvolve rank 61.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_4x4x7_rank85",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e84, 4, 7\u27e9 87 [93] 85",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <4,4,7> best-known rank 87 and AlphaEvolve rank 85.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_4x4x8_rank96",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e84, 4, 8\u27e9 98 [95] 96",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <4,4,8> best-known rank 98 and AlphaEvolve rank 96.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_4x5x6_rank90",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e84, 5, 6\u27e9 93 [48] 90",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <4,5,6> best-known rank 93 and AlphaEvolve rank 90.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mm_5x5x5_rank93",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "\u27e85, 5, 5\u27e9 93 [72] 93",
+      "source_anchor_present": true,
+      "claim": "Table 2 reports <5,5,5> best-known rank 93 and AlphaEvolve rank 93.",
+      "category": "table_2_row_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_appendix_a_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_appendix_a_matrix_registry.v1"
+        },
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_mnp_le_5_match_or_surpass_exact",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "for all parameters\ud835\udc5a, \ud835\udc5b, \ud835\udc5d \u2264 5, AlphaEvolve either matched or surpassed the best known solutions, and provided exact algorithms",
+      "source_anchor_present": true,
+      "claim": "For every m,n,p <= 5 target, match or surpass the best-known rank with an exact algorithm.",
+      "category": "table_2_scope_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/appendix_a_matrix_subset_scope_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_subset_scope_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        },
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_suite_publication_artifact_boundary.v1",
+          "artifact_status": "not_generated_locally"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "subset_scope",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add matrix result subset-scope validation for main-text versus",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_complex_rows_exact_real_and_complex",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "the algorithms discovered byAlphaEvolveuse complex-valued multiplications which can be used for exact multiplication of complex or real-valued matrices",
+      "source_anchor_present": true,
+      "claim": "Certify the declared complex-valued rows for exact complex and real matrix multiplication.",
+      "category": "table_2_scope_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_scalar_field_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_scalar_field_runtime_boundary.v1",
+          "runtime_emission_status": "not_emitted_by_local_runner"
+        },
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_suite_publication_artifact_boundary.v1",
+          "artifact_status": "not_generated_locally"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "scalar_field",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add matrix scalar-field provenance for real, complex, and characteristic",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "table2_decompositions_in_companion_colab",
+      "source_span_id": "table_2",
+      "source_page": 9,
+      "source_anchor": "The decompositions shown in this table can be found in the accompanying Google Colab",
+      "source_anchor_present": true,
+      "claim": "Publish the Table 2 decompositions in a linked reproducible notebook.",
+      "category": "table_2_scope_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_suite_publication_artifact_boundary.v1",
+          "artifact_status": "not_generated_locally"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_tensor_rank_equals_scalar_multiplications",
+      "source_span_id": "section_3_1",
+      "source_page": 9,
+      "source_anchor": "The rank (number of terms) of the decomposition exactly specifies the number of scalar multiplications needed to compute the matrix product",
+      "source_anchor_present": true,
+      "claim": "Treat tensor-decomposition rank as the scalar-multiplication count for comparable algorithms.",
+      "category": "matrix_method",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_tensor_rank_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_tensor_rank_runtime_boundary.v1",
+          "runtime_emission_status": "not_emitted_by_local_runner"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "tensor_rank",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add matrix tensor-rank applicability and recursive-use caveats.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_standard_gradient_baseline_components",
+      "source_span_id": "section_3_1",
+      "source_page": 9,
+      "source_anchor": "standardgradient-basedalgorithm(including an initializer, a reconstruction loss function, and an Adam optimizer",
+      "source_anchor_present": true,
+      "claim": "Start matrix search from a standard gradient solver with initializer, reconstruction loss, and Adam.",
+      "category": "matrix_method",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_baseline_component_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_baseline_component_runtime_boundary.v1",
+          "runtime_emission_status": "not_emitted_by_local_runner"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "baseline",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Record matrix baseline-component provenance for Section 3.1 starts.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_sophisticated_algorithms_outperform_approaches",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "able to develop sophisticated tensor decomposition algorithms that outperform existing approaches",
+      "source_anchor_present": true,
+      "claim": "Demonstrate evolved tensor-decomposition algorithms that outperform prior approaches.",
+      "category": "matrix_method",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_suite_publication_artifact_boundary.v1",
+          "artifact_status": "not_generated_locally"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "baseline_citations",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Appendix A best-known-rank citation provenance into reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_multi_seed_evaluation_cascade",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "run the algorithm, initialized with multiple random seeds using the evaluation cascade described in Section 2.4",
+      "source_anchor_present": true,
+      "claim": "Run each target with multiple random seeds through the evaluation cascade.",
+      "category": "matrix_method",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_cascade_run_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_cascade_run_runtime_boundary.v1",
+          "runtime_emission_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "cascade",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend matrix cascade-run provenance to stochastic discovery and scale.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_best_rank_and_seed_hit_fraction",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "best (lowest) rank achieved on each target as well as the fraction of seeds that achieved this rank",
+      "source_anchor_present": true,
+      "claim": "Report each target's best rank and the fraction of seeds attaining it.",
+      "category": "matrix_method",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/matrix_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/matrix_cascade_run_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_cascade_run_runtime_boundary.v1",
+          "runtime_emission_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "cascade",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend matrix cascade-run provenance to stochastic discovery and scale.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_integer_half_integer_rounding_exactness",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "we round each element to the nearest integer or the nearest half-integer",
+      "source_anchor_present": true,
+      "claim": "Round candidate coefficients to integers or half-integers before exactness verification.",
+      "category": "matrix_method",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_near_integrality_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_near_integrality_runtime_boundary.v1",
+          "runtime_emission_status": "not_emitted_by_local_runner"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "near_integrality",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add a matrix coefficient-domain prompt/evaluator contract for",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_natural_language_near_integrality_prompt",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "to encourage the algorithm to generate near-integral solutions, we include this request in natural language in the LLM\u2019s prompt",
+      "source_anchor_present": true,
+      "claim": "Inject a natural-language near-integrality instruction into matrix-search prompts.",
+      "category": "matrix_method",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_near_integrality_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_near_integrality_runtime_boundary.v1",
+          "runtime_emission_status": "not_emitted_by_local_runner"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "near_integrality",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add a matrix coefficient-domain prompt/evaluator contract for",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_fourteen_target_sota_improvements",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "improve the state of the art for 14 different matrix multiplication targets",
+      "source_anchor_present": true,
+      "claim": "Reproduce state-of-the-art improvements on 14 matrix targets.",
+      "category": "matrix_headline_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_rank_table_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_matrix_rank_table_artifact_boundary.v1",
+          "artifact_status": "emitted"
+        },
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_suite_publication_artifact_boundary.v1",
+          "artifact_status": "not_generated_locally"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "table_export",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire Table 2/Table 3 matrix-rank table artifacts into report/export.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_recursive_strassen_rank49_any_field",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "applying the algorithm of Strassen[95] recursively results in an algorithm with rank (number of scalar multiplications) equal to 49, which works over any field",
+      "source_anchor_present": true,
+      "claim": "Support the recursive Strassen rank-49 any-field baseline with evidence.",
+      "category": "matrix_headline_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_headline_historicity_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_headline_historicity_runtime_boundary.v1",
+          "runtime_emission_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "historicity",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire matrix headline historicity artifacts into runner/export outputs.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_fawzi_rank47_field_two",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "For the very specific case of multiplying in the field with 2 elements, Fawzi et al.[26] found an algorithm with rank 47",
+      "source_anchor_present": true,
+      "claim": "Support the Fawzi rank-47 field-of-two comparison with evidence.",
+      "category": "matrix_headline_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_headline_historicity_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_headline_historicity_runtime_boundary.v1",
+          "runtime_emission_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "historicity",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire matrix headline historicity artifacts into runner/export outputs.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "scalar_field",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add matrix scalar-field provenance for real, complex, and characteristic",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_fifty_six_year_open_problem",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "For 56 years, designing an algorithm with rank less than 49 over any field with characteristic 0 was an open problem",
+      "source_anchor_present": true,
+      "claim": "Independently substantiate the 56-year characteristic-zero historicity claim.",
+      "category": "matrix_headline_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_headline_historicity_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_headline_historicity_runtime_boundary.v1",
+          "runtime_emission_status": "emitted"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "historicity",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire matrix headline historicity artifacts into runner/export outputs.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_first_rank48_complex_4x4",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "AlphaEvolveis the first method to find a rank-48 algorithm to multiply two4 \u00d7 4 complex-valued matrices",
+      "source_anchor_present": true,
+      "claim": "Reproduce and independently certify the first rank-48 complex 4x4 algorithm claim.",
+      "category": "matrix_headline_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_headline_historicity_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_headline_historicity_runtime_boundary.v1",
+          "runtime_emission_status": "emitted"
+        },
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_suite_publication_artifact_boundary.v1",
+          "artifact_status": "not_generated_locally"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "historicity",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire matrix headline historicity artifacts into runner/export outputs.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "scalar_field",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add matrix scalar-field provenance for real, complex, and characteristic",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_significant_initial_program_changes",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "AlphaEvolve makes significant changes to the initial program",
+      "source_anchor_present": true,
+      "claim": "Demonstrate significant accepted changes from the initial matrix-search program.",
+      "category": "matrix_initialization_and_collaboration",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure4_matrix_discovery_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure4",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 4 matrix-discovery exhibit provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_original_ideas_increasingly_better",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "introducing several original ideas to design increasingly better algorithms",
+      "source_anchor_present": true,
+      "claim": "Trace original evolved ideas to increasingly better matrix-search outcomes.",
+      "category": "matrix_initialization_and_collaboration",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure4_matrix_discovery_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure4",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 4 matrix-discovery exhibit provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_most_table2_simple_initial_program",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "most results in Table 2 (including\u27e84, 4, 4\u27e9) were obtained from a simple initial program",
+      "source_anchor_present": true,
+      "claim": "Record which Table 2 targets used a simple initial program.",
+      "category": "matrix_initialization_and_collaboration",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/initial_program_seed_variant_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_initial_program_seed_variant_matrix.v1",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "initial_ideas",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add structured initial-program idea provenance for benchmark seeds.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_researcher_ideas_boost_performance",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "seeding the initial program with our own ideas (such as adding stochasticity to the evaluation function or using evolutionary approaches) could further boost performance",
+      "source_anchor_present": true,
+      "claim": "Demonstrate equal-budget gains from researcher-seeded stochastic or evolutionary ideas.",
+      "category": "matrix_initialization_and_collaboration",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/initial_program_seed_variant_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_initial_program_seed_variant_matrix.v1",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "initial_ideas",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add structured initial-program idea provenance for benchmark seeds.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_scientific_collaboration_possibility",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "highlighting the possibility of scientific collaboration between researchers and AlphaEvolve",
+      "source_anchor_present": true,
+      "claim": "Support researcher-agent collaboration claims with executed provenance and review.",
+      "category": "matrix_initialization_and_collaboration",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/initial_program_seed_variant_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_initial_program_seed_variant_matrix.v1",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/initial_program_idea_provenance_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_initial_program_idea_provenance_boundary.v1",
+          "boundary_status": "metadata_contract_only",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "initial_ideas",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add structured initial-program idea provenance for benchmark seeds.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_1_footnote_non_tensor_nonrecursive_caveat",
+      "source_span_id": "section_3_1",
+      "source_page": 10,
+      "source_anchor": "There exist algorithms using fewer than 49 multiplications, but they do not correspond to decompositions of the matrix multiplication tensor, and they cannot be applied recursively",
+      "source_anchor_present": true,
+      "claim": "Preserve the non-tensor, non-recursive caveat for algorithms below 49 multiplications.",
+      "category": "matrix_headline_result",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_tensor_rank_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_tensor_rank_runtime_boundary.v1",
+          "runtime_emission_status": "not_emitted_by_local_runner"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "tensor_rank",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add matrix tensor-rank applicability and recursive-use caveats.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure4_full_diff_and_figure9_linkage",
+      "source_span_id": "figure_4",
+      "source_page": 11,
+      "source_anchor": "The full diff is outlined on the left (see magnified version in Figures 9a to 9c)",
+      "source_anchor_present": true,
+      "claim": "Link the Figure 4 full diff to concrete magnified Figure 9 artifacts.",
+      "category": "figure_4_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure4_matrix_discovery_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        },
+        {
+          "path": "papers/figure9_matrix_diff_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure9_matrix_diff_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure4",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 4 matrix-discovery exhibit provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "figure9",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Appendix A Figure 9a-9c magnified matrix-diff exhibit provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure4_optimizer_init_loss_sweep_changes",
+      "source_span_id": "figure_4",
+      "source_page": 11,
+      "source_anchor": "extensive changes across several components, including the optimizer and weight initialization (top right), the loss function (middle right), and hyperparameter sweep (bottom right)",
+      "source_anchor_present": true,
+      "claim": "Reproduce Figure 4's optimizer, initialization, loss, and sweep changes.",
+      "category": "figure_4_exhibit",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure4_matrix_discovery_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        },
+        {
+          "path": "papers/matrix_sweep_space_runtime_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_sweep_space_runtime_boundary.v1",
+          "runtime_emission_status": "not_emitted_by_local_runner"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure4",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 4 matrix-discovery exhibit provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "sweep",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add matrix hyperparameter-sweep provenance for evolved search programs.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure4_fifteen_mutation_lineage",
+      "source_span_id": "figure_4",
+      "source_page": 11,
+      "source_anchor": "These changes are highly non-trivial, requiring 15 mutations during the evolutionary process",
+      "source_anchor_present": true,
+      "claim": "Reproduce the accepted 15-mutation lineage shown by Figure 4.",
+      "category": "figure_4_exhibit",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure4_matrix_discovery_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure4_matrix_discovery_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure4",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 4 matrix-discovery exhibit provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    }
+  ],
+  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 41 AlphaEvolve matrix-result claims from Section 3.1, Table 2, Figure 4, and footnote 3. Status labels distinguish local schemas and deterministic controls from absent search-time behavior and undemonstrated published outcomes. It does not claim Appendix A claim exhaustiveness, stochastic rediscovery, exact decomposition reproduction, independent historicity review, production-scale evidence, AlphaEvolve result reproduction, or AlphaEvolve system parity."
+}

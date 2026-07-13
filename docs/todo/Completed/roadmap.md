@@ -16152,3 +16152,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused source, disposition, coverage, and exhaustiveness
     tests validate the combined 91-claim counts and retained non-overclaim
     boundary.
+- [x] Credit bounded matrix-result claim coverage in ROADMAP.
+  - Status: ROADMAP source disposition, coverage, and exhaustiveness boundaries
+    now credit 41 Section 3.1, Table 2, Figure 4, and footnote 3 claims alongside
+    the 50 Table 1/Section 2 requirements and 41 context claims.
+  - Remaining roadmap gap: Sections 3.2-5, result reproduction, remaining
+    exhibits, Table 3, appendices, application-result joins, status-row joins,
+    claim-level priorities, CI exhaustiveness, and owner signoff remain open.
+  - Verification: focused source, disposition, coverage, and exhaustiveness
+    tests validate the combined 132-claim counts, expanded sidecar references,
+    and retained non-overclaim boundary.

@@ -39,13 +39,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_kernel_claim_inventory_boundary.json` adds 59
     exact-page Section 3.3.2 and Figure 7 claims: none locally implemented, 6
     partial, 37 not implemented, and 16 not demonstrated, with live ownership
-    for all 59 gaps. Combined coverage is 299 claims: 21 implemented, 88
-    partial, 64 not implemented, and 126 not demonstrated. The
+    for all 59 gaps. The
+    `papers/alphaevolve_hardware_claim_inventory_boundary.json` adds 35
+    exact-page Section 3.3.3 claims: none locally implemented, 12 partial, 4
+    not implemented, and 19 not demonstrated, with live ownership for all 35
+    gaps and checked source-fidelity corrections. Combined coverage is 334
+    claims: 21 implemented, 100 partial, 68 not implemented, and 145 not
+    demonstrated. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 299-claim inventory deliberately excludes
-    Sections 3.3.3-5 claims, Figures 8-14, Table 3, detailed appendices,
+  - Current gap: the combined 334-claim inventory deliberately excludes
+    Sections 3.3.4-5 claims, Figures 8-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.
@@ -4984,10 +4989,45 @@ directory and using the AlphaEvolve paper as the primary specification.
     wording that distinguishes regular kernel deployment evidence from
     AlphaEvolve-style self-optimization of Gemini's training pipeline.
 
+- [ ] Track executable Verilog/RTL optimization benchmark evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 describes an
+    already highly optimized Verilog implementation of a key TPU arithmetic
+    circuit in the matrix multiplication unit, with area and power objectives,
+    preserved functionality, and a robust-verification requirement.
+  - Current gap: generic non-Python workspace mutation, `candidate_runner`, and
+    hardware metadata validators do not constitute an executable HDL task.
+    There is no committed Verilog/SystemVerilog seed, circuit specification,
+    simulator or synthesis command, deterministic test set, equivalence/formal
+    check, PPA baseline, toolchain identity, or emitted candidate artifact set.
+  - Required result: publish a source-linked evidence bundle for a reproducible
+    open RTL arithmetic-circuit benchmark: problem and seed identities,
+    before/after HDL, exact edit, simulation and equivalence results, synthesis
+    and PPA outputs, toolchain/runtime identity, deterministic test vectors,
+    baseline and candidate metrics, run links, and artifact hashes. Explicitly
+    label it an open analogue unless the proprietary TPU circuit and review
+    evidence become available; do not claim the AlphaEvolve TPU result from a
+    substitute fixture.
+
+- [ ] Track RTL optimization workflow-baseline evidence.
+  - Paper evidence: Section 3.3.3 gives contextual workflow claims that chip
+    design can span years and manual RTL optimization can demand months of
+    iteration by highly skilled engineers while targeting power, performance,
+    and area.
+  - Current gap: existing hardware sidecars track RTL/EDA artifacts, concrete
+    rewrite evidence, contribution attribution, and a free-text deployment
+    impact field, but not the manual-workflow denominator or evidence behind
+    those contextual duration and expertise statements.
+  - Required result: preserve whether each duration is source context or a
+    measured local baseline, and record workflow scope, engineer role,
+    elapsed/active effort, iteration and review stages, PPA objectives,
+    uncertainty, source anchors, and artifact refs. Require matched local
+    baseline evidence before reporting automation, design-cycle, engineering-
+    effort, adoption, or time-to-market improvements.
+
 - [ ] Record RTL/EDA verification evidence for hardware-circuit results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.3 describes
-    optimizing Verilog RTL for a TPU arithmetic circuit, reducing power and
-    area while preserving functionality. It says the final proposal must pass
+    optimizing Verilog RTL for a TPU arithmetic circuit, with objectives to
+    reduce power and area while preserving functionality. It says the final proposal must pass
     robust verification, was validated by TPU designers, and was also found by
     downstream synthesis tools. It also says the contribution was useful at
     the RTL stage before downstream synthesis, was integrated into an upcoming

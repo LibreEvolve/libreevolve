@@ -80,11 +80,12 @@ def hardware_rtl_eda_evidence_boundary_record() -> dict[str, Any]:
         "source_section_ids": list(EXPECTED_SOURCE_SECTION_IDS),
         "source_claim": (
             "AlphaEvolve Section 3.3.3 reports a Verilog RTL rewrite for a "
-            "TPU arithmetic circuit that reduced power and area while "
-            "preserving functionality; it says the final proposal passed "
-            "robust verification, was validated by TPU designers, was later "
-            "found by downstream synthesis tools, and was useful at the RTL "
-            "stage before integration into an upcoming TPU."
+            "TPU arithmetic circuit whose optimization objectives were to "
+            "reduce power and area while preserving functionality; it says "
+            "the final proposal was required to pass robust verification, "
+            "the rewrite was validated by TPU designers, was later found by "
+            "downstream synthesis tools, and was useful at the RTL stage "
+            "before integration into an upcoming TPU."
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "systems_result_schema": "libreevolve.systems_result_report.v1",

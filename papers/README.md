@@ -1577,15 +1577,24 @@ Section 3.3.2 and Figure 7 claims. It classifies 6 as partial, 37 as not
 implemented, and 16 as not demonstrated, with live TODO ownership for all 59
 gaps. It covers the JAX/Pallas context, Figure 7 semantics, tiling formulation,
 baseline workflows, shape collection and splits, real-TPU evaluation claims,
-quantitative results, deployment, and Gemini self-optimization. Together the
-six bounded inventories disposition 299 claims: 21 locally implemented, 88
-partial, 64 not implemented, and 126 not demonstrated. The corrected
+quantitative results, deployment, and Gemini self-optimization.
+`papers/alphaevolve_hardware_claim_inventory_boundary.json` adds 35 exact-page
+Section 3.3.3 claims. It classifies 12 as partial, 4 as not implemented, and 19
+as not demonstrated, with live TODO ownership for all 35 gaps. It covers
+hardware-design and manual-RTL context, Verilog task/objective and verification
+requirements, the unnecessary-bit rewrite, downstream synthesis, early RTL
+flow value, TPU integration, Gemini attribution, adoption, and time-to-market
+wording. It also checks that area/power are represented as optimization
+objectives and robust verification as a proposal requirement, not stronger
+results than the pinned source states. Together the seven bounded inventories
+disposition 334 claims: 21 locally implemented, 100 partial, 68 not
+implemented, and 145 not demonstrated. The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
 whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-Sections 3.3.3-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
+Sections 3.3.4-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
 sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -3063,6 +3072,12 @@ Implemented:
   training-efficiency deltas, research or engineering velocity evidence,
   causal linkage to Gemini's training pipeline, rollback/safety status, or
   owner confirmation.
+- `papers/alphaevolve_hardware_claim_inventory_boundary.json`: PDF-anchored
+  35-claim Section 3.3.3 inventory. It records source anchors, implementation
+  statuses, code/sidecar evidence, ROADMAP phase, and active TODO ownership for
+  every hardware-design, RTL-workflow, task, verification, rewrite-result,
+  design-flow, deployment, attribution, adoption, and impact claim. It is not
+  an executable HDL benchmark or evidence of the proprietary TPU result.
 - `papers/hardware_rtl_eda_evidence_boundary.json`: hardware RTL/EDA evidence
   sidecar for AlphaEvolve Section 3.3.3. It records that hardware-domain
   report metadata is not evidence of exact RTL/circuit identity, source and
@@ -3467,7 +3482,7 @@ Implemented:
   marker drift, raw checklist completion, and exact normalized-title duplicate
   groups. It now also records a bounded exact-title raw-count inflation
   estimate: 123 exact duplicate-title groups, 246 duplicate records, 123
-  inflated raw checklist rows, and a 5166 collapsed exact-title total
+  inflated raw checklist rows, and a 5174 collapsed exact-title total
   estimate. It also records an exact duplicate owner/status profile: all 123
   exact-title duplicate groups are completed-only, 122 groups are cross-owner,
   one group is same-owner, and zero groups involve active TODO rows. It also

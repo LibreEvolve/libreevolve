@@ -4,7 +4,7 @@
   "source_section_ids": [
     "3.3.3"
   ],
-  "source_claim": "AlphaEvolve Section 3.3.3 says the hardware result was a simple rewrite in an already highly optimized Verilog implementation of a key TPU arithmetic circuit in the matrix multiplication unit; the rewrite removed unnecessary bits while reducing power and area.",
+  "source_claim": "AlphaEvolve Section 3.3.3 says the hardware result was a simple rewrite in an already highly optimized Verilog implementation of a key TPU arithmetic circuit in the matrix multiplication unit; the optimization objectives were to reduce power and area while preserving functionality, and the rewrite removed unnecessary bits.",
   "boundary_status": "metadata_contract_without_concrete_rewrite_artifacts",
   "systems_result_schema": "libreevolve.systems_result_report.v1",
   "claim_ready": false,

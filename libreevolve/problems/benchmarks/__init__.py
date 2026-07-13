@@ -330,6 +330,12 @@ from libreevolve.problems.benchmarks.alphaevolve_context_claim_inventory_boundar
     render_alphaevolve_context_claim_inventory_boundary_summary,
     validate_alphaevolve_context_claim_inventory_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_hardware_claim_inventory_boundary import (
+    ALPHAEVOLVE_HARDWARE_CLAIM_INVENTORY_BOUNDARY_SCHEMA,
+    alphaevolve_hardware_claim_inventory_boundary_record,
+    render_alphaevolve_hardware_claim_inventory_boundary_summary,
+    validate_alphaevolve_hardware_claim_inventory_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_matrix_result_claim_inventory_boundary import (
     ALPHAEVOLVE_MATRIX_RESULT_CLAIM_INVENTORY_BOUNDARY_SCHEMA,
     alphaevolve_matrix_result_claim_inventory_boundary_record,
@@ -1221,6 +1227,7 @@ __all__ = [
     "DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA",
     "WORKSPACE_MATERIALIZATION_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_HARDWARE_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_KERNEL_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_MATRIX_RESULT_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_MATH_RESULT_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
@@ -1455,6 +1462,7 @@ __all__ = [
     "gigaevo_framework_boundary_record",
     "kernel_tiling_shape_corpus_boundary_record",
     "alphaevolve_context_claim_inventory_boundary_record",
+    "alphaevolve_hardware_claim_inventory_boundary_record",
     "alphaevolve_kernel_claim_inventory_boundary_record",
     "alphaevolve_matrix_result_claim_inventory_boundary_record",
     "alphaevolve_math_result_claim_inventory_boundary_record",
@@ -1643,6 +1651,7 @@ __all__ = [
     "render_hardware_rewrite_artifact_boundary_summary",
     "render_kernel_tiling_shape_corpus_boundary_summary",
     "render_alphaevolve_context_claim_inventory_boundary_summary",
+    "render_alphaevolve_hardware_claim_inventory_boundary_summary",
     "render_alphaevolve_kernel_claim_inventory_boundary_summary",
     "render_alphaevolve_matrix_result_claim_inventory_boundary_summary",
     "render_alphaevolve_math_result_claim_inventory_boundary_summary",
@@ -1851,6 +1860,7 @@ __all__ = [
     "validate_gigaevo_framework_boundary",
     "validate_kernel_tiling_shape_corpus_boundary",
     "validate_alphaevolve_context_claim_inventory_boundary",
+    "validate_alphaevolve_hardware_claim_inventory_boundary",
     "validate_alphaevolve_kernel_claim_inventory_boundary",
     "validate_alphaevolve_matrix_result_claim_inventory_boundary",
     "validate_alphaevolve_math_result_claim_inventory_boundary",

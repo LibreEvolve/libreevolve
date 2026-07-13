@@ -14523,6 +14523,24 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and independent semantic exhaustiveness review remain open.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
+- [x] Add Section 3.3.3 hardware-circuit-design claim dispositions.
+  - Paper evidence: the pinned PDF gives hardware-design and RTL-workflow
+    context, Verilog task/objective and verification requirements, rewrite and
+    validation claims, downstream-synthesis caveat, early-flow value,
+    integration and attribution claims, adoption rationale, and potential
+    time-to-market impact.
+  - Status: `papers/alphaevolve_hardware_claim_inventory_boundary.json`
+    records 35 exact-page claims with 12 partial, 4 absent, and 19
+    undemonstrated dispositions and active ownership for all 35 gaps.
+  - Source correction: the inventory and prerequisite sidecars distinguish
+    area/power objectives from achieved quantitative outcomes and required
+    robust verification from a source-reported passed verification run.
+  - Remaining paper gap: open RTL benchmark artifacts, proprietary TPU source,
+    HDL/EDA runs, workflow baselines, rewrite and review evidence, chip
+    integration, attribution, adoption/impact evidence, Sections 3.3.4-5, and
+    AlphaEvolve parity remain unproven.
+  - Verification: the paper manifest requires the sidecar and rejects source,
+    count, status, reference, ownership, result-reproduction, and parity drift.
 - [x] Add Section 3.3.2 and Figure 7 kernel-engineering claim dispositions.
   - Paper evidence: the pinned PDF describes Gemini/JAX/Pallas context, the
     Figure 7 tiling problem, baseline workflow burdens, real-TPU candidate

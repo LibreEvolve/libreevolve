@@ -110,9 +110,17 @@ Important limits:
   shape-corpus splits, measured speedups, deployment, and Gemini
   self-optimization. Six are partial, 37 are not implemented, and 16 are not
   demonstrated; all 59 gaps have live TODO ownership.
-- Together the six bounded inventories cover 299 claims: 21 locally
-  implemented, 88 partial, 64 not implemented, and 126 not demonstrated,
-  leaving 278 gaps. They still exclude Sections 3.3.3-5, Figures 8-14, Table 3,
+- `papers/alphaevolve_hardware_claim_inventory_boundary.json` audits 35 claims
+  from Section 3.3.3, including hardware-design context, the manual RTL
+  workflow, Verilog task and verification requirements, the unnecessary-bit
+  rewrite, downstream-synthesis caveat, TPU integration, Gemini attribution,
+  adoption, and time-to-market wording. Twelve are partial, 4 are not
+  implemented, and 19 are not demonstrated; all 35 gaps have live TODO
+  ownership. It also corrects objective-versus-result and required-versus-
+  passed-verification overstatements in earlier hardware sidecars.
+- Together the seven bounded inventories cover 334 claims: 21 locally
+  implemented, 100 partial, 68 not implemented, and 145 not demonstrated,
+  leaving 313 gaps. They still exclude Sections 3.3.4-5, Figures 8-14, Table 3,
   detailed appendix claims, source-detail exhaustiveness, and independent
   result reproduction.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.roadmap_source_span_coverage_boundary.v5",
+  "schema": "libreevolve.roadmap_source_span_coverage_boundary.v6",
   "source_paper_id": "2506.13131",
-  "boundary_status": "named_structure_plus_299_bounded_claims_without_whole_paper_claim_walk",
+  "boundary_status": "named_structure_plus_334_bounded_claims_without_whole_paper_claim_walk",
   "claim_ready": false,
   "named_source_inventory_input": "papers/alphaevolve_source_inventory_boundary.json",
   "named_source_span_disposition_input": "papers/roadmap_source_span_disposition_boundary.json",
@@ -9,14 +9,14 @@
   "paper_status_row_count": 53,
   "paper_status_row_dispositioned_count": 1,
   "coverage_surface_count": 8,
-  "sidecar_ref_count": 47,
+  "sidecar_ref_count": 49,
   "active_todo_ref_count": 15,
   "coverage_surface_records": [
     {
       "surface_id": "main_text_section_walk",
       "source_surface": "AlphaEvolve main-text sections and requirement claims",
-      "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, 41 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, and 59 Section 3.3.2/Figure 7 kernel-engineering claims with implementation and TODO disposition",
-      "missing_readiness": "claim-level extraction for Sections 3.3.3-5, remaining exhibits, appendices, and source details with semantic implementation and TODO disposition",
+      "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, 41 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, 59 Section 3.3.2/Figure 7 kernel-engineering claims, and 35 Section 3.3.3 hardware-circuit-design claims with implementation and TODO disposition",
+      "missing_readiness": "claim-level extraction for Sections 3.3.4-5, remaining exhibits, appendices, and source details with semantic implementation and TODO disposition",
       "sidecar_refs": [
         {
           "path": "papers/roadmap_source_span_disposition_boundary.json",
@@ -49,6 +49,10 @@
         {
           "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+          "exists": true
         }
       ],
       "active_todo_refs": [
@@ -60,7 +64,7 @@
         }
       ],
       "validation_gate": "section-level source-span disposition matrix",
-      "readiness_status": "299_bounded_claims_complete_remaining_sections_3_3_3_to_5_and_exhibits_appendices_unmapped"
+      "readiness_status": "334_bounded_claims_complete_remaining_sections_3_3_4_to_5_and_exhibits_appendices_unmapped"
     },
     {
       "surface_id": "figure_exhibit_matrix",
@@ -261,8 +265,8 @@
     {
       "surface_id": "application_result_claims",
       "source_surface": "AlphaEvolve application-result claims for systems, kernels, hardware, and compiler work",
-      "current_scope": "all named Section 3.3 application subsections and Figures 6-7 are page- and anchor-verified; the Section 3.3 opening, Section 3.3.1, and Figure 6 have 45 scheduling claim dispositions, and Section 3.3.2 and Figure 7 have 59 kernel-engineering claim dispositions alongside systems absence/readiness boundaries",
-      "missing_readiness": "Section 3.3.3-3.3.4 application-result claim matrix with reproduction artifacts, phase priority, and domain TODO/non-goal proof",
+      "current_scope": "all named Section 3.3 application subsections and Figures 6-7 are page- and anchor-verified; the Section 3.3 opening, Section 3.3.1, and Figure 6 have 45 scheduling claim dispositions, Section 3.3.2 and Figure 7 have 59 kernel-engineering claim dispositions, and Section 3.3.3 has 35 hardware-circuit-design claim dispositions alongside systems absence/readiness boundaries",
+      "missing_readiness": "Section 3.3.4 application-result claim matrix with reproduction artifacts, phase priority, and domain TODO/non-goal proof",
       "sidecar_refs": [
         {
           "path": "papers/systems_result_readiness_boundary.json",
@@ -274,6 +278,10 @@
         },
         {
           "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
           "exists": true
         },
         {
@@ -316,7 +324,7 @@
         }
       ],
       "validation_gate": "application-result claim to ROADMAP/TODO disposition matrix",
-      "readiness_status": "scheduling_and_kernel_claim_matrices_complete_without_remaining_application_claims"
+      "readiness_status": "scheduling_kernel_and_hardware_claim_matrices_complete_without_compiler_claims"
     },
     {
       "surface_id": "paper_status_row_dispositions",
@@ -402,7 +410,9 @@
     "scheduling_claim_count": 45,
     "scheduling_claim_scope": "section_3_3_opening_section_3_3_1_and_figure_6",
     "kernel_claim_count": 59,
-    "kernel_claim_scope": "section_3_3_2_and_figure_7"
+    "kernel_claim_scope": "section_3_3_2_and_figure_7",
+    "hardware_claim_count": 35,
+    "hardware_claim_scope": "section_3_3_3"
   },
   "required_evidence_fields": [
     "coverage_surface_records",
@@ -418,7 +428,7 @@
     "ci_source_span_exhaustiveness_gate"
   ],
   "missing_evidence": {
-    "claim_level_requirement_inventory": "299_bounded_claims_remaining_sections_3_3_3_to_5_and_remaining_exhibits_appendices_not_recorded",
+    "claim_level_requirement_inventory": "334_bounded_claims_remaining_sections_3_3_4_to_5_and_remaining_exhibits_appendices_not_recorded",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -427,5 +437,5 @@
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a ROADMAP-level AlphaEvolve source-span coverage matrix for all 55 PDF-verified named main-text sections, figures, tables, Appendix A/B spans, and named application sections, plus 299 bounded claim-level records across Table 1, Section 2, the Abstract, Introduction, Discussion, collaborator context, Section 3.1, Table 2, Figure 4, footnote 3, Section 3.2, Figure 5, the Section 3.3 opening, Section 3.3.1, Figure 6, Section 3.3.2, and Figure 7, paper-status rows, and TODO/non-goal/phase proof. It does not claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
+  "claim_boundary": "This boundary records a ROADMAP-level AlphaEvolve source-span coverage matrix for all 55 PDF-verified named main-text sections, figures, tables, Appendix A/B spans, and named application sections, plus 334 bounded claim-level records across Table 1, Section 2, the Abstract, Introduction, Discussion, collaborator context, Section 3.1, Table 2, Figure 4, footnote 3, Section 3.2, Figure 5, the Section 3.3 opening, Section 3.3.1, Figure 6, Section 3.3.2, Figure 7, and Section 3.3.3, paper-status rows, and TODO/non-goal/phase proof. It does not claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
 }

@@ -21,6 +21,9 @@ def test_hardware_rtl_eda_evidence_boundary_accepts_metadata_only_boundary():
     assert boundary["schema"] == HARDWARE_RTL_EDA_EVIDENCE_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["3.3.3"]
     assert boundary["claim_ready"] is False
+    assert "optimization objectives were to reduce power and area" in boundary["source_claim"]
+    assert "was required to pass robust verification" in boundary["source_claim"]
+    assert "passed robust verification" not in boundary["source_claim"]
     assert "does not claim exact RTL module" in boundary["claim_boundary"]
 
 

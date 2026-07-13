@@ -442,6 +442,22 @@ Important limits:
   report gates do not establish Pallas support, a real TPU lane, a kernel-user
   shape corpus, candidate tiling-only scope, or unchanged-math correctness
   evidence; those remain active code and paper TODO work.
+- The bounded Section 3.3.3 hardware-circuit-design inventory records 35
+  PDF-anchored claims: 12 partial, 4 not implemented, and 19 not demonstrated,
+  with active TODO ownership for all 35 gaps. It covers hardware-design and
+  manual-RTL context, Verilog task/objective and verification requirements,
+  the unnecessary-bit rewrite, downstream synthesis, early-flow value, TPU
+  integration, Gemini attribution, adoption, and time-to-market wording. It
+  also corrects earlier wording that treated area/power objectives as achieved
+  reductions and a robust-verification requirement as a reported passed run;
+  the checked sidecar is
+  `papers/alphaevolve_hardware_claim_inventory_boundary.json`.
+- There is no executable Verilog/SystemVerilog optimization problem, declared
+  HDL/EDA toolchain, simulation/synthesis/PPA lane, equivalence or formal-
+  verification run, deterministic circuit test corpus, before/after RTL
+  artifact set, or matched manual-workflow baseline. Generic non-Python
+  workspaces, candidate runners, and hardware metadata schemas do not
+  establish AlphaEvolve Section 3.3.3 behavior or result reproduction.
 - Figure 5 constructive-math exhibit provenance remains absent: README
   describes Appendix B family/status coverage, smoke-fixture boundaries, and
   constructive-math absence boundaries, not main-text Figure 5 exhibit ids,

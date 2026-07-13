@@ -79,8 +79,9 @@ def hardware_rewrite_artifact_boundary_record() -> dict[str, Any]:
             "AlphaEvolve Section 3.3.3 says the hardware result was a simple "
             "rewrite in an already highly optimized Verilog implementation "
             "of a key TPU arithmetic circuit in the matrix multiplication "
-            "unit; the rewrite removed unnecessary bits while reducing power "
-            "and area."
+            "unit; the optimization objectives were to reduce power and area "
+            "while preserving functionality, and the rewrite removed "
+            "unnecessary bits."
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "systems_result_schema": "libreevolve.systems_result_report.v1",

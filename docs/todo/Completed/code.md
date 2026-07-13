@@ -19564,3 +19564,25 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused inventory, implementation-map, ROADMAP coverage, and
     paper-manifest tests validate anchors, counts, references, TODO ownership,
     drift rejection, and result/parity disclaimers.
+- [x] Add a PDF-anchored AlphaEvolve Section 3.3.3 hardware claim inventory.
+  - Spec evidence: Section 3.3.3 describes specialized-hardware and manual-RTL
+    context, a Verilog TPU arithmetic-circuit task, area/power objectives,
+    functionality and robust-verification requirements, a simple unnecessary-
+    bit rewrite, designer validation, downstream synthesis, early-flow value,
+    upcoming-TPU integration, Gemini attribution, direct-Verilog adoption, and
+    potential time-to-market impact.
+  - Status: a new public boundary records 35 stable claim ids, exact PDF page
+    and anchors, implementation status, ROADMAP phase/section, evidence links,
+    and live TODO ownership. It classifies 12 claims as partial, 4 as not
+    implemented, and 19 as not demonstrated; none is locally implemented.
+  - Source correction: hardware sidecars now state area and power as
+    optimization objectives and robust verification as a proposal requirement,
+    rather than claiming achieved reductions or a reported passed verification
+    run that the pinned Section 3.3.3 text does not explicitly state.
+  - Remaining code gap: an executable Verilog/SystemVerilog task, simulation,
+    synthesis/PPA, equivalence/formal verification, workflow baseline, real
+    rewrite/signoff/integration artifacts, and hardware-result reproduction
+    remain open.
+  - Verification: focused inventory, implementation-map, ROADMAP coverage, and
+    paper-manifest tests validate anchors, counts, references, TODO ownership,
+    source wording, drift rejection, and result/parity disclaimers.

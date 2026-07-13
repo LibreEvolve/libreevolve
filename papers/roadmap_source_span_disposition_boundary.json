@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.roadmap_source_span_disposition_boundary.v5",
+  "schema": "libreevolve.roadmap_source_span_disposition_boundary.v6",
   "source_paper_id": "2506.13131",
-  "boundary_status": "named_span_dispositions_plus_299_bounded_claims_without_whole_paper_exhaustiveness",
+  "boundary_status": "named_span_dispositions_plus_334_bounded_claims_without_whole_paper_exhaustiveness",
   "claim_ready": false,
   "source_boundary_input": "papers/alphaevolve_source_inventory_boundary.json",
   "implementation_evidence_map_input": "papers/implementation_evidence_map_boundary.json",
@@ -10,6 +10,7 @@
   "math_result_claim_inventory_input": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
   "scheduling_claim_inventory_input": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
   "kernel_claim_inventory_input": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+  "hardware_claim_inventory_input": "papers/alphaevolve_hardware_claim_inventory_boundary.json",
   "system_requirement_inventory_input": "papers/alphaevolve_system_requirement_inventory_boundary.json",
   "source_status_inventory_input": "papers/status_claim_inventory.json",
   "disposition_record_count": 55,
@@ -393,6 +394,7 @@
         "papers/systems_result_readiness_boundary.json",
         "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
         "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+        "papers/alphaevolve_hardware_claim_inventory_boundary.json",
         "papers/hardware_rtl_eda_evidence_boundary.json",
         "papers/compiler_adoption_path_boundary.json"
       ],
@@ -426,6 +428,7 @@
         "papers/systems_result_readiness_boundary.json",
         "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
         "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+        "papers/alphaevolve_hardware_claim_inventory_boundary.json",
         "papers/hardware_rtl_eda_evidence_boundary.json",
         "papers/compiler_adoption_path_boundary.json"
       ],
@@ -459,6 +462,7 @@
         "papers/systems_result_readiness_boundary.json",
         "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
         "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+        "papers/alphaevolve_hardware_claim_inventory_boundary.json",
         "papers/hardware_rtl_eda_evidence_boundary.json",
         "papers/compiler_adoption_path_boundary.json"
       ],
@@ -492,6 +496,7 @@
         "papers/systems_result_readiness_boundary.json",
         "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
         "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+        "papers/alphaevolve_hardware_claim_inventory_boundary.json",
         "papers/hardware_rtl_eda_evidence_boundary.json",
         "papers/compiler_adoption_path_boundary.json"
       ],
@@ -525,6 +530,7 @@
         "papers/systems_result_readiness_boundary.json",
         "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
         "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+        "papers/alphaevolve_hardware_claim_inventory_boundary.json",
         "papers/hardware_rtl_eda_evidence_boundary.json",
         "papers/compiler_adoption_path_boundary.json"
       ],
@@ -1317,6 +1323,7 @@
         "papers/systems_result_readiness_boundary.json",
         "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
         "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+        "papers/alphaevolve_hardware_claim_inventory_boundary.json",
         "papers/hardware_rtl_eda_evidence_boundary.json",
         "papers/compiler_adoption_path_boundary.json"
       ],
@@ -1350,6 +1357,7 @@
         "papers/systems_result_readiness_boundary.json",
         "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
         "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+        "papers/alphaevolve_hardware_claim_inventory_boundary.json",
         "papers/hardware_rtl_eda_evidence_boundary.json",
         "papers/compiler_adoption_path_boundary.json"
       ],
@@ -1742,7 +1750,8 @@
     "matrix_result_claims": "41_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_dispositions",
     "math_result_claims": "63_pdf_anchored_section_3_2_and_figure_5_dispositions",
     "scheduling_claims": "45_pdf_anchored_section_3_3_opening_section_3_3_1_and_figure_6_dispositions",
-    "kernel_claims": "59_pdf_anchored_section_3_3_2_and_figure_7_dispositions"
+    "kernel_claims": "59_pdf_anchored_section_3_3_2_and_figure_7_dispositions",
+    "hardware_claims": "35_pdf_anchored_section_3_3_3_dispositions"
   },
   "required_evidence_fields": [
     "pdf_verified_named_source_span_dispositions",
@@ -1756,11 +1765,11 @@
     "ci_source_span_exhaustiveness_gate"
   ],
   "missing_evidence": {
-    "claim_level_requirement_inventory": "299_bounded_claims_remaining_sections_3_3_3_to_5_and_remaining_exhibits_appendices_not_recorded",
+    "claim_level_requirement_inventory": "334_bounded_claims_remaining_sections_3_3_4_to_5_and_remaining_exhibits_appendices_not_recorded",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records ROADMAP dispositions for all 55 PDF-verified named AlphaEvolve structural spans, including sections, figures, tables, appendices, source pages, local status, roadmap section, phase bucket, sidecars, and active audit TODO links, plus 299 bounded claim-level records: 50 Table 1/Section 2 system requirements and 41 Abstract, Introduction, Discussion, and collaborator-context claims, plus 41 Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result claims, plus 63 Section 3.2 and Figure 5 constructive-math claims, plus 45 Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling claims, plus 59 Section 3.3.2 and Figure 7 kernel-engineering claims. It does not claim whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete paper-index row to ROADMAP disposition map, proof that every missing or partial source span has a live TODO, or a CI source-span exhaustiveness gate."
+  "claim_boundary": "This boundary records ROADMAP dispositions for all 55 PDF-verified named AlphaEvolve structural spans, including sections, figures, tables, appendices, source pages, local status, roadmap section, phase bucket, sidecars, and active audit TODO links, plus 334 bounded claim-level records: 50 Table 1/Section 2 system requirements and 41 Abstract, Introduction, Discussion, and collaborator-context claims, plus 41 Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result claims, plus 63 Section 3.2 and Figure 5 constructive-math claims, plus 45 Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling claims, plus 59 Section 3.3.2 and Figure 7 kernel-engineering claims, plus 35 Section 3.3.3 hardware-circuit-design claims. It does not claim whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete paper-index row to ROADMAP disposition map, proof that every missing or partial source span has a live TODO, or a CI source-span exhaustiveness gate."
 }

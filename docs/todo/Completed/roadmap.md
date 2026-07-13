@@ -16179,6 +16179,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining boundary: Sections 3.3-5, Figures 6-14, Table 3, detailed
     appendices, result reproduction, whole-paper semantic exhaustiveness, and
     owner signoff remain open.
+- [x] Credit bounded Section 3.3.3 hardware coverage in ROADMAP.
+  - Status: ROADMAP source disposition, coverage, exhaustiveness, and
+    implementation-evidence boundaries now include 35 hardware-circuit-design
+    claims with exact PDF anchors, implementation status, phase/section
+    routing, evidence links, and active ownership for every gap.
+  - Combined boundary: the ROADMAP surface now covers 334 bounded claims: 21
+    local, 100 partial, 68 absent, and 145 undemonstrated. The source walk now
+    advances to Section 3.3.4; Figure 8 remains part of the later Section 4
+    ablation slice.
+  - Remaining boundary: Sections 3.3.4-5, Figures 8-14, Table 3, detailed
+    appendices, result reproduction, whole-paper semantic exhaustiveness, and
+    owner signoff remain open.
 - [x] Credit bounded Section 3.3.1 and Figure 6 scheduling coverage in ROADMAP.
   - Status: ROADMAP source disposition, coverage, exhaustiveness, and
     implementation-evidence boundaries now include 45 scheduling claims with

@@ -74,8 +74,13 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_kernel_claim_inventory_boundary.json` adds 59 Section
     3.3.2 and Figure 7 kernel-engineering claims. It classifies 6 as partial,
     37 as not implemented, and 16 as not demonstrated, and resolves all 59
-    gaps to live TODO titles. The six bounded inventories therefore cover 299
-    claims: 21 locally implemented, 88 partial, 64 not implemented, and 126
+    gaps to live TODO titles. The committed
+    `papers/alphaevolve_hardware_claim_inventory_boundary.json` adds 35
+    Section 3.3.3 hardware-circuit-design claims. It classifies 12 as partial,
+    4 as not implemented, and 19 as not demonstrated, resolves all 35 gaps to
+    live TODO titles, and checks source-faithful objective and verification
+    wording. The seven bounded inventories therefore cover 334 claims: 21
+    locally implemented, 100 partial, 68 not implemented, and 145
     not demonstrated. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
@@ -94,11 +99,12 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 299 bounded system, context,
-    matrix-result, constructive-math, scheduling, and kernel-engineering claims are now machine-readable and
+  - Current gap: the named source structure and 334 bounded system, context,
+    matrix-result, constructive-math, scheduling, kernel-engineering, and
+    hardware-circuit-design claims are now machine-readable and
     PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Sections 3.3.3-5,
+    equation, footnote, citation, or claim level across Sections 3.3.4-5,
     remaining exhibits, Table 3, appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
@@ -4940,6 +4946,45 @@ sidecars, tests, and active TODOs.
     research-velocity or engineering-turnaround evidence, safety/rollback
     status, and docs wording that separates ordinary kernel deployment from
     AlphaEvolve-style self-optimization of Gemini's own training pipeline.
+
+- [ ] Add an executable Verilog/RTL optimization benchmark contract.
+  - Spec evidence: AlphaEvolve Section 3.3.3 evolves an already highly
+    optimized Verilog implementation of a key TPU arithmetic circuit in the
+    matrix multiplication unit. Candidate edits target area and power while
+    preserving functionality and are subject to robust verification.
+  - Current evidence: LibreEvolve can mutate bounded non-Python text
+    workspaces, select a task-declared primary file, run build and execution
+    commands through `candidate_runner`, and validate hardware-result metadata.
+    It has no checked Verilog/SystemVerilog problem, HDL build/run declaration,
+    synthesis or PPA tool invocation, equivalence/formal-verification command,
+    deterministic RTL test corpus, or emitted before/after hardware artifacts.
+  - Required result: add a reproducible open RTL arithmetic-circuit fixture
+    with Verilog/SystemVerilog as the primary candidate, a deliberately
+    improvable seed, task-owned simulation and synthesis commands, functional
+    and equivalence checks, bounded power/performance/area proxy metrics,
+    deterministic test vectors, baseline measurements, and candidate-runner
+    artifacts. Keep a host smoke lane separate from a digest-pinned OCI lane
+    with an identified HDL/EDA toolchain; do not present the open fixture as
+    Google TPU source or as reproduction of the proprietary hardware result.
+
+- [ ] Add an RTL optimization workflow-baseline evidence contract.
+  - Spec evidence: AlphaEvolve Section 3.3.3 describes chip design as complex
+    and often spanning years, and describes RTL optimization as manual
+    hardware-description rewriting that can require months of iteration by
+    highly skilled engineers to improve power, performance, and area.
+  - Current evidence: hardware result schemas can carry PPA provenance,
+    RTL-flow placement, adoption rationale, and a time-to-market impact string,
+    but no schema or run artifact records a manual RTL baseline, engineer-time
+    denominator, iteration count, design-cycle scope, or matched evolved-run
+    comparison. The paper reports this as workflow context rather than a
+    measured AlphaEvolve experiment, so local docs must not turn it into a
+    reproduced productivity result.
+  - Required result: define source-faithful workflow-baseline records for the
+    manual optimization procedure, engineer role and expertise assumptions,
+    elapsed and active effort, iteration/review stages, PPA objectives,
+    hardware-design scope, uncertainty, and evidence refs. Any automation or
+    time-to-market comparison must use a matched local baseline and remain
+    separate from the paper's contextual years/months statements.
 
 - [ ] Add RTL/EDA verification provenance for hardware-circuit optimization.
   - Spec evidence: AlphaEvolve Section 3.3.3 optimizes an already highly

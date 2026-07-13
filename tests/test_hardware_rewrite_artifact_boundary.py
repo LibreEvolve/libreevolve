@@ -21,6 +21,9 @@ def test_hardware_rewrite_artifact_boundary_accepts_metadata_only_boundary():
     assert boundary["schema"] == HARDWARE_REWRITE_ARTIFACT_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["3.3.3"]
     assert boundary["claim_ready"] is False
+    assert "optimization objectives were to reduce power and area" in boundary["source_claim"]
+    assert "rewrite removed unnecessary bits" in boundary["source_claim"]
+    assert "while reducing power and area" not in boundary["source_claim"]
     assert "does not claim an exact TPU arithmetic-circuit identity" in boundary["claim_boundary"]
 
 

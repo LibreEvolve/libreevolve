@@ -14,7 +14,7 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_span_dispositions_plus_section_2_requirements_without_whole_paper_exhaustiveness"
+        == "named_span_dispositions_plus_91_bounded_claims_without_whole_paper_exhaustiveness"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA
     assert boundary["source_paper_id"] == "2506.13131"
@@ -36,16 +36,27 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
         "source_ref_count": 1,
         "source_anchor_count": 1,
         "source_anchors_verified": True,
-        "local_claim_status": "background_only",
+        "local_claim_status": "mixed_implemented_partial_missing_and_undemonstrated",
         "roadmap_section_id": "documentation_truthfulness",
         "roadmap_phase": "near_term",
         "coverage_scope": "named_structure_span",
-        "sidecar_refs": ["papers/documentation_truthfulness_boundary.json"],
-        "todo_refs": [],
+        "sidecar_refs": [
+            "papers/alphaevolve_context_claim_inventory_boundary.json"
+        ],
+        "todo_refs": [
+            {
+                "path": "docs/todo/code.md",
+                "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve",
+            },
+            {
+                "path": "docs/todo/roadmap.md",
+                "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage.",
+            },
+        ],
         "disposition_status": "named_structure_disposition_only",
     }
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
+        "claim_level_requirement_inventory": "91_bounded_claims_remaining_paper_not_recorded",
         "application_result_claim_matrix": "not_recorded_locally",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
         "missing_partial_todo_proof": "not_recorded_locally",
@@ -84,7 +95,7 @@ def test_render_roadmap_source_span_disposition_summary_reports_shape():
     assert "ROADMAP source-span disposition boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_span_dispositions_plus_section_2_requirements_without_whole_paper_exhaustiveness |"
+        "| boundary_status | named_span_dispositions_plus_91_bounded_claims_without_whole_paper_exhaustiveness |"
         in summary
     )
     assert "| disposition_record_count | 55 |" in summary

@@ -16142,3 +16142,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     CI exhaustiveness, and owner signoff remain incomplete.
   - Verification: focused coverage and exhaustiveness tests validate the new
     sidecar references, counts, readiness states, and non-overclaim boundary.
+- [x] Credit bounded context-claim coverage in ROADMAP.
+  - Status: ROADMAP source disposition, coverage, and exhaustiveness boundaries
+    now credit 41 Abstract, Introduction, Discussion, and collaborator-context
+    claims alongside the 50 Table 1/Section 2 requirements.
+  - Remaining roadmap gap: detailed Sections 3-5, remaining exhibits,
+    appendices, application-result joins, status-row joins, claim-level
+    priorities, CI exhaustiveness, and owner signoff remain incomplete.
+  - Verification: focused source, disposition, coverage, and exhaustiveness
+    tests validate the combined 91-claim counts and retained non-overclaim
+    boundary.

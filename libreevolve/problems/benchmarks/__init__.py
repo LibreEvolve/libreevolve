@@ -324,6 +324,12 @@ from libreevolve.problems.benchmarks.documentation_claim_inventory import (
     render_documentation_claim_inventory_summary,
     validate_documentation_claim_inventory,
 )
+from libreevolve.problems.benchmarks.alphaevolve_context_claim_inventory_boundary import (
+    ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_SCHEMA,
+    alphaevolve_context_claim_inventory_boundary_record,
+    render_alphaevolve_context_claim_inventory_boundary_summary,
+    validate_alphaevolve_context_claim_inventory_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary import (
     ALPHAEVOLVE_SOURCE_INVENTORY_BOUNDARY_SCHEMA,
     alphaevolve_source_inventory_boundary_record,
@@ -1190,6 +1196,7 @@ __all__ = [
     "DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA",
     "DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA",
     "WORKSPACE_MATERIALIZATION_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_SOURCE_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_SCHEMA",
     "DUPLICATE_WORK_POLICY_BOUNDARY_SCHEMA",
@@ -1419,6 +1426,7 @@ __all__ = [
     "failure_memory_boundary_record",
     "gigaevo_framework_boundary_record",
     "kernel_tiling_shape_corpus_boundary_record",
+    "alphaevolve_context_claim_inventory_boundary_record",
     "alphaevolve_source_inventory_boundary_record",
     "alphaevolve_system_requirement_inventory_boundary_record",
     "implementation_evidence_map_boundary_record",
@@ -1602,6 +1610,7 @@ __all__ = [
     "render_hardware_rtl_eda_evidence_boundary_summary",
     "render_hardware_rewrite_artifact_boundary_summary",
     "render_kernel_tiling_shape_corpus_boundary_summary",
+    "render_alphaevolve_context_claim_inventory_boundary_summary",
     "render_alphaevolve_source_inventory_boundary_summary",
     "render_alphaevolve_system_requirement_inventory_boundary_summary",
     "render_implementation_evidence_map_boundary_summary",
@@ -1805,6 +1814,7 @@ __all__ = [
     "validate_gemini_self_training_loop_boundary",
     "validate_gigaevo_framework_boundary",
     "validate_kernel_tiling_shape_corpus_boundary",
+    "validate_alphaevolve_context_claim_inventory_boundary",
     "validate_alphaevolve_source_inventory_boundary",
     "validate_alphaevolve_system_requirement_inventory_boundary",
     "validate_implementation_evidence_map_boundary",

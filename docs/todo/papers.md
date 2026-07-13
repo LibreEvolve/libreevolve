@@ -5,14 +5,13 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 ## AlphaEvolve Paper Requirements Not Yet Implemented
 
-- [ ] Extend the bounded AlphaEvolve system-requirement inventory to the whole
-      paper.
+- [ ] Extend the bounded AlphaEvolve claim inventories to the whole paper.
   - Paper evidence: Table 1, Sections 2.1-2.6, and Figures 1-3 specify the core
     task API, prompt, generation, evaluation, evolutionary-database, and
-    distributed-pipeline behavior, while the introduction, Sections 3-6,
-    appendices, remaining figures/tables, equations, footnotes, and citations
-    contain additional implementation, result, limitation, and provenance
-    claims that the full audit must disposition.
+    distributed-pipeline behavior, while the Abstract, Introduction, Sections
+    3-6, appendices, remaining figures/tables, equations, footnotes, and
+    citations contain additional implementation, result, limitation, and
+    provenance claims that the full audit must disposition.
   - Current evidence: the committed
     `papers/alphaevolve_system_requirement_inventory_boundary.json` verifies
     50 page-local source anchors against the pinned PDF and maps every bounded
@@ -20,13 +19,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     local status, and active domain TODO ownership. Its status split is 13
     locally implemented, 30 partially implemented, 2 not implemented, and 5
     not demonstrated; all 37 incomplete rows have live TODO-title checks. The
-    paper manifest rejects sidecar absence, source/reference drift, status
-    drift, stale TODO ownership, and parity overclaims.
-  - Current gap: this inventory deliberately excludes Introduction claims
-    outside Table 1, Sections 3-6, appendices, Figures 4-14, Tables 2-3,
+    new `papers/alphaevolve_context_claim_inventory_boundary.json` adds 41
+    exact-page claims from the Abstract, Introduction, Discussion, and one
+    Acknowledgements sentence: 6 locally implemented, 11 partial, 4 not
+    implemented, and 20 not demonstrated, with live ownership for all 35 gaps.
+    The paper manifest rejects either sidecar's absence, source/reference drift,
+    status drift, stale TODO ownership, and parity overclaims.
+  - Current gap: the combined 91-claim inventory deliberately excludes detailed
+    Sections 3-5 claims, Figures 4-14, Tables 2-3, appendices,
     equation/footnote/citation-level requirements, result reproduction, and
-    independent reviewer proof that the 50-row decomposition is semantically
-    exhaustive even within its bounded scope.
+    independent reviewer proof that either bounded decomposition is
+    semantically exhaustive.
   - Required result: extract every remaining implementation-bearing claim,
     assign stable ids and exact source spans, classify implementation and
     reproduction status, link modules/tests/runtime evidence and domain TODOs

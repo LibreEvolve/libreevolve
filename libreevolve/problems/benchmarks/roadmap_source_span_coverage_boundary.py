@@ -11,10 +11,10 @@ from libreevolve.problems.benchmarks.roadmap_source_span_disposition_boundary im
 
 
 ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_coverage_boundary.v1"
+    "libreevolve.roadmap_source_span_coverage_boundary.v2"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "named_structure_plus_section_2_requirements_without_whole_paper_claim_walk"
+    "named_structure_plus_91_bounded_claims_without_whole_paper_claim_walk"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -31,7 +31,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
+    "claim_level_requirement_inventory": "91_bounded_claims_remaining_paper_not_recorded",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -46,12 +46,13 @@ COVERAGE_SURFACE_SPECS = (
     {
         "surface_id": "main_text_section_walk",
         "source_surface": "AlphaEvolve main-text sections and requirement claims",
-        "current_scope": "PDF-verified named main-text sections plus 50 Table 1, Section 2.1-2.6, and Figure 1-3 system requirements with implementation and TODO disposition",
-        "missing_readiness": "claim-level requirement extraction for the remaining paper spans with semantic implementation and TODO disposition",
+        "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements and 41 Abstract/Introduction/Discussion/collaborator claims with implementation and TODO disposition",
+        "missing_readiness": "claim-level extraction for Sections 3-5, remaining exhibits, appendices, and source details with semantic implementation and TODO disposition",
         "sidecars": (
             "papers/roadmap_source_span_disposition_boundary.json",
             "papers/implementation_evidence_map_boundary.json",
             "papers/alphaevolve_system_requirement_inventory_boundary.json",
+            "papers/alphaevolve_context_claim_inventory_boundary.json",
         ),
         "active_todos": (
             {
@@ -60,7 +61,7 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "section-level source-span disposition matrix",
-        "readiness_status": "section_2_claim_inventory_complete_remaining_main_text_unmapped",
+        "readiness_status": "91_bounded_claims_complete_remaining_results_related_work_and_exhibits_unmapped",
     },
     {
         "surface_id": "figure_exhibit_matrix",
@@ -284,6 +285,8 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
             "named_structure_scope": "38_structure_14_figure_3_table_spans",
             "section_2_system_requirement_count": 50,
             "section_2_system_requirement_scope": "table_1_sections_2_1_through_2_6_figures_1_through_3",
+            "context_claim_count": 41,
+            "context_claim_scope": "abstract_introduction_discussion_and_collaborator_context",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -291,7 +294,8 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
             "This boundary records a ROADMAP-level AlphaEvolve source-span "
             "coverage matrix for all 55 PDF-verified named main-text sections, "
             "figures, tables, Appendix A/B spans, and named application sections, "
-            "plus 50 claim-level Table 1 and Section 2 system requirements, "
+            "plus 91 bounded claim-level records across Table 1, Section 2, "
+            "the Abstract, Introduction, Discussion, and collaborator context, "
             "paper-status rows, and TODO/non-goal/phase proof. It does not "
             "claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, "
             "status-row to ROADMAP disposition map, missing/partial TODO "

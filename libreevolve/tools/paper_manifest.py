@@ -535,6 +535,10 @@ from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import
     implementation_evidence_map_boundary_record,
     validate_implementation_evidence_map_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_context_claim_inventory_boundary import (
+    alphaevolve_context_claim_inventory_boundary_record,
+    validate_alphaevolve_context_claim_inventory_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary import (
     alphaevolve_source_inventory_boundary_record,
     validate_alphaevolve_source_inventory_boundary,
@@ -1218,6 +1222,9 @@ ROADMAP_CANDIDATE_WORKSPACE_READINESS_BOUNDARY_FILE = "papers/roadmap_candidate_
 ROADMAP_MULTI_OBJECTIVE_SEARCH_BOUNDARY_FILE = "papers/roadmap_multi_objective_search_boundary.json"
 ROADMAP_MULTI_OBJECTIVE_READINESS_BOUNDARY_FILE = "papers/roadmap_multi_objective_readiness_boundary.json"
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_FILE = "papers/implementation_evidence_map_boundary.json"
+ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_FILE = (
+    "papers/alphaevolve_context_claim_inventory_boundary.json"
+)
 ALPHAEVOLVE_SOURCE_INVENTORY_BOUNDARY_FILE = "papers/alphaevolve_source_inventory_boundary.json"
 ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_FILE = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
@@ -1975,6 +1982,7 @@ def validate_paper_manifest(
     issues.extend(_validate_roadmap_candidate_workspace_readiness_boundary(root_path))
     issues.extend(_validate_roadmap_multi_objective_search_boundary(root_path))
     issues.extend(_validate_roadmap_multi_objective_readiness_boundary(root_path))
+    issues.extend(_validate_alphaevolve_context_claim_inventory_boundary(root_path))
     issues.extend(_validate_alphaevolve_source_inventory_boundary(root_path))
     issues.extend(_validate_alphaevolve_system_requirement_inventory_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
@@ -7313,6 +7321,47 @@ def _validate_roadmap_multi_objective_readiness_boundary(root_path: Path) -> lis
             f"roadmap_multi_objective_readiness_boundary_{issue.code}",
             issue.message,
             "roadmap_multi_objective_readiness",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_context_claim_inventory_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_FILE
+    validation_root = _repo_root()
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_context_claim_inventory_boundary_record(
+            validation_root
+        )
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_context_claim_inventory_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_FILE} "
+                        "must emit the PDF-anchored Abstract, Introduction, "
+                        "Discussion, and collaborator-context claim inventory"
+                    ),
+                    "alphaevolve_context_claim_inventory",
+                )
+            ]
+    report = validate_alphaevolve_context_claim_inventory_boundary(
+        recordset,
+        root=validation_root,
+    )
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_context_claim_inventory_boundary_{issue.code}",
+            issue.message,
+            "alphaevolve_context_claim_inventory",
         )
         for issue in report.issues
     ]

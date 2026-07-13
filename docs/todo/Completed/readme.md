@@ -15945,3 +15945,11 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     evidence, or AlphaEvolve parity.
   - Verification: documentation and paper-manifest tests guard the source paths,
     counts, scope boundary, and parity disclaimer.
+- [x] Document the bounded AlphaEvolve context-claim audit.
+  - Status: README now reports the 41-claim context inventory, its four-way
+    status split, TODO ownership, and the combined 91-claim bounded coverage.
+  - Remaining README gap: the wording explicitly excludes detailed Sections
+    3-5, remaining figures/tables, appendices, source-detail exhaustiveness,
+    result reproduction, production-scale evidence, and AlphaEvolve parity.
+  - Verification: documentation and paper-manifest tests guard the paths,
+    counts, classifications, and non-overclaim boundary.

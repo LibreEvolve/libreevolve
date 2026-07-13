@@ -49,6 +49,18 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
         "sidecars": ("papers/documentation_truthfulness_boundary.json",),
         "todos": (),
     },
+    "context": {
+        "audit_surface": "platform_method_scope_and_headline_results",
+        "local_status": (
+            "mixed_implemented_partial_missing_and_undemonstrated"
+        ),
+        "roadmap_section_id": "documentation_truthfulness",
+        "roadmap_phase": "near_term",
+        "sidecars": (
+            "papers/alphaevolve_context_claim_inventory_boundary.json",
+        ),
+        "todos": _AUDIT_TODOS,
+    },
     "platform": {
         "audit_surface": "platform_overview",
         "local_status": "partially_implemented",
@@ -166,12 +178,17 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
         "todos": (),
     },
     "discussion": {
-        "audit_surface": "discussion",
-        "local_status": "background_only",
+        "audit_surface": "capability_self_improvement_and_limitations",
+        "local_status": (
+            "mixed_implemented_partial_missing_and_undemonstrated"
+        ),
         "roadmap_section_id": "documentation_truthfulness",
         "roadmap_phase": "near_term",
-        "sidecars": ("papers/self_improvement_distillation_boundary.json",),
-        "todos": (),
+        "sidecars": (
+            "papers/alphaevolve_context_claim_inventory_boundary.json",
+            "papers/self_improvement_distillation_boundary.json",
+        ),
+        "todos": _AUDIT_TODOS,
     },
     "provenance": {
         "audit_surface": "source_provenance",
@@ -214,10 +231,10 @@ NAMED_SOURCE_SPAN_SPECS = (
         "Abstract",
         1,
         1,
-        "background",
+        "context",
         (1, "In this white paper, we present AlphaEvolve"),
     ),
-    _span("section_1", "structure", "1. Introduction", 1, 3, "background", (1, "1. Introduction")),
+    _span("section_1", "structure", "1. Introduction", 1, 3, "context", (1, "1. Introduction")),
     _span("section_2", "structure", "2. AlphaEvolve", 3, 4, "platform", (3, "2. AlphaEvolve")),
     _span("section_2_1", "structure", "2.1. Task specification", 3, 5, "task", (3, "2.1. Task specification")),
     _span("section_2_2", "structure", "2.2. Prompt sampling", 5, 5, "prompting", (5, "2.2. Prompt sampling")),

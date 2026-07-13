@@ -51,8 +51,14 @@ sidecars, tests, and active TODOs.
     PDF-anchored implementation requirements covering all eight Table 1 rows,
     Sections 2.1-2.6, and Figures 1-3. It classifies 13 requirements as locally
     implemented, 30 as partial, 2 as not implemented, and 5 as not demonstrated;
-    all 37 incomplete requirements resolve to live domain TODO titles. This is
-    bounded system-section coverage, not whole-paper completeness. Meanwhile,
+    all 37 incomplete requirements resolve to live domain TODO titles. The
+    committed `papers/alphaevolve_context_claim_inventory_boundary.json` adds
+    41 anchored Abstract, Introduction, Discussion, and collaborator-context
+    claims. It classifies 6 as locally implemented, 11 partial, 4 not
+    implemented, and 20 not demonstrated, and resolves all 35 gaps to live
+    domain TODO titles. The two bounded inventories therefore cover 91 claims,
+    including 19 locally implemented claims. This is not whole-paper
+    completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with

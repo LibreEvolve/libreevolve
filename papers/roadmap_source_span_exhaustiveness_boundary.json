@@ -1,6 +1,6 @@
 {
-  "schema": "libreevolve.roadmap_source_span_exhaustiveness_boundary.v1",
-  "boundary_status": "named_structure_plus_section_2_requirements_without_whole_paper_claim_walk",
+  "schema": "libreevolve.roadmap_source_span_exhaustiveness_boundary.v2",
+  "boundary_status": "named_structure_plus_91_bounded_claims_without_whole_paper_claim_walk",
   "claim_ready": false,
   "source_coverage_boundary_input": "papers/roadmap_source_span_coverage_boundary.json",
   "source_coverage_surface_count": 8,
@@ -9,17 +9,21 @@
   "source_paper_status_row_dispositioned_count": 1,
   "source_missing_evidence_count": 8,
   "exhaustiveness_criterion_count": 8,
-  "sidecar_ref_count": 18,
+  "sidecar_ref_count": 19,
   "active_todo_ref_count": 16,
   "exhaustiveness_criteria": [
     {
       "criterion_id": "pdf_section_walk",
       "source_surface": "retained AlphaEvolve source PDF sections and requirement spans",
-      "current_scope": "all 38 named structural spans are page- and anchor-verified and 50 Table 1/Section 2 system requirements have claim-level dispositions",
-      "missing_exhaustiveness": "claim-level requirement extraction for the remaining main-text, result, discussion, and appendix spans",
+      "current_scope": "all 38 named structural spans are page- and anchor-verified and 91 bounded Table 1/Section 2 plus context claims have dispositions",
+      "missing_exhaustiveness": "claim-level extraction for Sections 3-5, remaining figures/tables, appendices, and source details",
       "sidecar_refs": [
         {
           "path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_context_claim_inventory_boundary.json",
           "exists": true
         },
         {
@@ -46,7 +50,7 @@
         }
       ],
       "validation_gate": "retained PDF section-walk exhaustiveness gate",
-      "readiness_status": "section_2_claim_walk_complete_without_whole_paper_requirements"
+      "readiness_status": "91_bounded_claims_complete_without_whole_paper_requirements"
     },
     {
       "criterion_id": "figure_table_appendix_matrix",
@@ -282,7 +286,9 @@
     "named_structure_inventory": "pdf_page_and_anchor_verified",
     "named_span_status_and_phase_map": "recorded",
     "section_2_system_requirement_count": 50,
-    "section_2_system_requirement_inventory": "pdf_anchor_and_todo_owner_verified"
+    "section_2_system_requirement_inventory": "pdf_anchor_and_todo_owner_verified",
+    "context_claim_count": 41,
+    "context_claim_inventory": "pdf_anchor_and_todo_owner_verified"
   },
   "required_evidence_fields": [
     "pdf_section_walk",
@@ -295,7 +301,7 @@
     "ci_exhaustiveness_and_owner_signoff"
   ],
   "missing_evidence": {
-    "claim_level_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
+    "claim_level_requirement_inventory": "91_bounded_claims_remaining_paper_not_recorded",
     "claim_level_figure_table_appendix_matrix": "not_recorded_locally",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
@@ -305,5 +311,5 @@
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a complete named-structure gate for all 55 PDF-verified sections, figures, tables, and appendices plus a bounded inventory of 50 Table 1 and Section 2 system requirements. It does not claim whole-paper claim-level requirement exhaustiveness, a claim-level figure/table/appendix matrix, application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
+  "claim_boundary": "This boundary records a complete named-structure gate for all 55 PDF-verified sections, figures, tables, and appendices plus a bounded inventory of 91 Table 1, Section 2, Abstract, Introduction, Discussion, and collaborator-context claims. It does not claim whole-paper claim-level requirement exhaustiveness, a claim-level figure/table/appendix matrix, application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
 }

@@ -12,26 +12,32 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v3"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v4"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_anchors_and_section_2_inventory_without_whole_paper_exhaustiveness"
+    "verified_core_anchors_plus_91_bounded_claims_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
+EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
+    "papers/alphaevolve_context_claim_inventory_boundary.json"
+)
 EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
 EXPECTED_RECORDED_EVIDENCE = {
     "named_source_structure_inventory": "55_pdf_verified_spans",
     "bounded_system_requirement_inventory": "50_pdf_anchored_table_1_and_section_2_requirements",
+    "bounded_context_claim_inventory": (
+        "41_pdf_anchored_abstract_introduction_discussion_and_collaborator_claims"
+    ),
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
-    "claim_level_source_span_coverage_matrix": "section_2_only_remaining_paper_not_recorded",
+    "exhaustive_requirement_inventory": "sections_3_to_5_figures_tables_and_appendices_not_fully_recorded",
+    "claim_level_source_span_coverage_matrix": "91_bounded_claims_remaining_paper_not_recorded",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -309,6 +315,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "status claim."
         ),
         "source_inventory_ref": EXPECTED_SOURCE_INVENTORY_REF,
+        "context_claim_inventory_ref": EXPECTED_CONTEXT_CLAIM_INVENTORY_REF,
         "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -318,8 +325,10 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records corrected core AlphaEvolve requirement anchors "
             "with verified module, test, sidecar, and TODO links and connects them "
-            "to the PDF-verified named source inventory and bounded 50-requirement "
-            "Table 1/Section 2 inventory. It does not claim a whole-paper "
+            "to the PDF-verified named source inventory, bounded 50-requirement "
+            "Table 1/Section 2 inventory, and bounded 41-claim Abstract, "
+            "Introduction, Discussion, and collaborator-context inventory. It "
+            "does not claim a whole-paper "
             "exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
             "semantic verifier, implemented benchmark "
@@ -350,6 +359,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
     if data.get("source_inventory_ref") != EXPECTED_SOURCE_INVENTORY_REF:
         issues.append(_issue("invalid_source_inventory_ref", f"source_inventory_ref must be {EXPECTED_SOURCE_INVENTORY_REF}"))
+    if data.get("context_claim_inventory_ref") != EXPECTED_CONTEXT_CLAIM_INVENTORY_REF:
+        issues.append(_issue("invalid_context_claim_inventory_ref", f"context_claim_inventory_ref must be {EXPECTED_CONTEXT_CLAIM_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_CONTEXT_CLAIM_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_context_claim_inventory_ref", f"{EXPECTED_CONTEXT_CLAIM_INVENTORY_REF} is missing"))
     if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
         issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():

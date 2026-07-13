@@ -36,8 +36,9 @@
     "table": 3
   },
   "local_status_counts": {
-    "background_only": 4,
+    "background_only": 1,
     "missing_result_reproduction": 37,
+    "mixed_implemented_partial_missing_and_undemonstrated": 3,
     "partially_implemented": 11,
     "source_provenance_only": 3
   },
@@ -59,17 +60,30 @@
         }
       ],
       "all_anchors_present": true,
-      "audit_surface": "paper_context",
-      "local_status": "background_only",
+      "audit_surface": "platform_method_scope_and_headline_results",
+      "local_status": "mixed_implemented_partial_missing_and_undemonstrated",
       "roadmap_section_id": "documentation_truthfulness",
       "roadmap_phase": "near_term",
       "sidecar_refs": [
         {
-          "path": "papers/documentation_truthfulness_boundary.json",
+          "path": "papers/alphaevolve_context_claim_inventory_boundary.json",
           "exists": true
         }
       ],
-      "active_todo_refs": []
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
     },
     {
       "span_id": "section_1",
@@ -85,17 +99,30 @@
         }
       ],
       "all_anchors_present": true,
-      "audit_surface": "paper_context",
-      "local_status": "background_only",
+      "audit_surface": "platform_method_scope_and_headline_results",
+      "local_status": "mixed_implemented_partial_missing_and_undemonstrated",
       "roadmap_section_id": "documentation_truthfulness",
       "roadmap_phase": "near_term",
       "sidecar_refs": [
         {
-          "path": "papers/documentation_truthfulness_boundary.json",
+          "path": "papers/alphaevolve_context_claim_inventory_boundary.json",
           "exists": true
         }
       ],
-      "active_todo_refs": []
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
     },
     {
       "span_id": "section_2",
@@ -841,17 +868,34 @@
         }
       ],
       "all_anchors_present": true,
-      "audit_surface": "discussion",
-      "local_status": "background_only",
+      "audit_surface": "capability_self_improvement_and_limitations",
+      "local_status": "mixed_implemented_partial_missing_and_undemonstrated",
       "roadmap_section_id": "documentation_truthfulness",
       "roadmap_phase": "near_term",
       "sidecar_refs": [
+        {
+          "path": "papers/alphaevolve_context_claim_inventory_boundary.json",
+          "exists": true
+        },
         {
           "path": "papers/self_improvement_distillation_boundary.json",
           "exists": true
         }
       ],
-      "active_todo_refs": []
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
     },
     {
       "span_id": "acknowledgements",

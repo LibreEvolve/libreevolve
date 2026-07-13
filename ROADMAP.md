@@ -918,7 +918,12 @@ AlphaEvolve reproduction.
   PDF-anchored implementation requirements across all eight Table 1 rows,
   Sections 2.1-2.6, and Figures 1-3, classifies 13 as locally implemented and
   37 as incomplete, and verifies live domain TODO ownership for every
-  incomplete requirement,
+  incomplete requirement. The separate
+  `papers/alphaevolve_context_claim_inventory_boundary.json` adds 41 anchored
+  Abstract, Introduction, Discussion, and collaborator-context claims: 6 are
+  locally implemented, 11 partial, 4 not implemented, and 20 not demonstrated,
+  with live TODO ownership for all 35 gaps. The two bounded inventories now
+  disposition 91 claims in total, 19 of them locally implemented,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
@@ -930,8 +935,8 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus a bounded Table 1/Section 2
-  claim-level inventory, not a whole-paper sentence-, paragraph-, equation-,
+  This is complete named-structure coverage plus bounded 91-claim coverage,
+  not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

@@ -14,7 +14,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_structure_plus_section_2_requirements_without_whole_paper_claim_walk"
+        == "named_structure_plus_91_bounded_claims_without_whole_paper_claim_walk"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -28,7 +28,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert boundary["source_paper_status_row_dispositioned_count"] == 1
     assert boundary["source_missing_evidence_count"] == 8
     assert boundary["exhaustiveness_criterion_count"] == 8
-    assert boundary["sidecar_ref_count"] == 18
+    assert boundary["sidecar_ref_count"] == 19
     assert boundary["active_todo_ref_count"] == 16
     assert [record["criterion_id"] for record in boundary["exhaustiveness_criteria"]] == [
         "pdf_section_walk",
@@ -51,7 +51,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
+        "claim_level_requirement_inventory": "91_bounded_claims_remaining_paper_not_recorded",
         "claim_level_figure_table_appendix_matrix": "not_recorded_locally",
         "application_result_claim_matrix": "not_recorded_locally",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
@@ -102,10 +102,10 @@ def test_render_roadmap_source_span_exhaustiveness_summary_reports_shape():
     assert "ROADMAP source-span exhaustiveness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_structure_plus_section_2_requirements_without_whole_paper_claim_walk |"
+        "| boundary_status | named_structure_plus_91_bounded_claims_without_whole_paper_claim_walk |"
         in summary
     )
     assert "| exhaustiveness_criterion_count | 8 |" in summary
-    assert "| sidecar_ref_count | 18 |" in summary
+    assert "| sidecar_ref_count | 19 |" in summary
     assert "| active_todo_ref_count | 16 |" in summary
     assert "| missing_evidence_count | 9 |" in summary

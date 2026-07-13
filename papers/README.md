@@ -1544,13 +1544,20 @@ structural spans, 14 numbered figures, and 3 numbered tables. The bounded
 PDF-anchored implementation requirements covering all eight Table 1 rows,
 Sections 2.1-2.6, and Figures 1-3. It classifies 13 requirements as locally
 implemented, 30 as partial, 2 as not implemented, and 5 as not demonstrated,
-and verifies live domain TODO ownership for all 37 incomplete rows. The corrected
+and verifies live domain TODO ownership for all 37 incomplete rows. The committed
+`papers/alphaevolve_context_claim_inventory_boundary.json` adds 41 exact-page
+claims from the Abstract, Introduction, Discussion, and one Acknowledgements
+sentence. It classifies 6 as locally implemented, 11 as partial, 4 as not
+implemented, and 20 as not demonstrated, with live TODO ownership for all 35
+gaps. Together these bounded inventories disposition 91 claims, 19 as locally
+implemented. The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
-whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or
-claim-level requirement inventory, per-phrase evidence-link sufficiency proof, coverage detector,
+whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
+Sections 3-5/exhibit/appendix claim inventory, per-phrase evidence-link
+sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
 status inventory with status text hashes, status classes, local artifact

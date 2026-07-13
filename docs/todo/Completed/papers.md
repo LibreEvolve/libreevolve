@@ -14497,3 +14497,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     reproduction, and independent semantic review remain open.
   - Verification: the paper manifest requires the sidecar and rejects missing,
     stale, drifted, or parity-overclaiming records.
+- [x] Add Abstract, Introduction, Discussion, and collaborator claim dispositions.
+  - Paper evidence: the pinned AlphaEvolve PDF states platform, method, scope,
+    headline-result, capability, self-improvement, limitation, and collaborator-
+    shaping claims outside Table 1 and Section 2.
+  - Status: `papers/alphaevolve_context_claim_inventory_boundary.json` records
+    41 exact-page anchors, local classifications, evidence refs, ROADMAP
+    ownership, and active TODO checks. Six are locally implemented, 11 partial,
+    4 not implemented, and 20 not demonstrated.
+  - Remaining paper gap: detailed Sections 3-5, Figures 4-14, Tables 2-3,
+    appendices, equations, footnotes, citations, result reproduction, and
+    independent semantic exhaustiveness review remain open.
+  - Verification: the paper manifest requires the sidecar and rejects source,
+    count, status, reference, ownership, and parity drift.

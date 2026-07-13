@@ -11,14 +11,17 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_disposition_boundary.v1"
+    "libreevolve.roadmap_source_span_disposition_boundary.v2"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "named_span_dispositions_plus_section_2_requirements_without_whole_paper_exhaustiveness"
+    "named_span_dispositions_plus_91_bounded_claims_without_whole_paper_exhaustiveness"
 )
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
 SOURCE_INVENTORY_PATH = "papers/alphaevolve_source_inventory_boundary.json"
+CONTEXT_CLAIM_INVENTORY_PATH = (
+    "papers/alphaevolve_context_claim_inventory_boundary.json"
+)
 SYSTEM_REQUIREMENT_INVENTORY_PATH = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
@@ -34,7 +37,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "section_2_only_remaining_paper_not_recorded",
+    "claim_level_requirement_inventory": "91_bounded_claims_remaining_paper_not_recorded",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -75,6 +78,7 @@ def roadmap_source_span_disposition_boundary_record(
         "implementation_evidence_map_input": (
             "papers/implementation_evidence_map_boundary.json"
         ),
+        "context_claim_inventory_input": CONTEXT_CLAIM_INVENTORY_PATH,
         "system_requirement_inventory_input": SYSTEM_REQUIREMENT_INVENTORY_PATH,
         "source_status_inventory_input": STATUS_CLAIM_INVENTORY_PATH,
         "disposition_record_count": len(disposition_records),
@@ -94,6 +98,7 @@ def roadmap_source_span_disposition_boundary_record(
             "appendix_matrix": "appendix_a_appendix_b_and_13_appendix_b_subsections",
             "named_application_sections": "section_3_3_and_4_named_subsections",
             "section_2_system_requirements": "50_pdf_anchored_requirement_dispositions",
+            "context_claims": "41_pdf_anchored_abstract_introduction_discussion_and_collaborator_dispositions",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -101,8 +106,10 @@ def roadmap_source_span_disposition_boundary_record(
             "This boundary records ROADMAP dispositions for all 55 PDF-verified "
             "named AlphaEvolve structural spans, including sections, figures, "
             "tables, appendices, source pages, local status, roadmap section, "
-            "phase bucket, sidecars, and active audit TODO links, plus 50 "
-            "claim-level Table 1 and Section 2 system requirements. It does not "
+            "phase bucket, sidecars, and active audit TODO links, plus 91 "
+            "bounded claim-level records: 50 Table 1/Section 2 system "
+            "requirements and 41 Abstract, Introduction, Discussion, and "
+            "collaborator-context claims. It does not "
             "claim whole-paper sentence-, paragraph-, equation-, footnote-, "
             "citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete "
             "paper-index row to ROADMAP disposition map, proof that every "
@@ -140,6 +147,7 @@ def validate_roadmap_source_span_disposition_boundary(
     for key in (
         "source_boundary_input",
         "implementation_evidence_map_input",
+        "context_claim_inventory_input",
         "system_requirement_inventory_input",
         "source_status_inventory_input",
         "disposition_record_count",

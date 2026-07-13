@@ -79,6 +79,14 @@ Important limits:
   implemented, 30 are partial, 2 are not implemented, and 5 are not
   demonstrated; all 37 incomplete requirements have live TODO ownership. This
   does not cover the remaining paper claims or prove AlphaEvolve parity.
+- `papers/alphaevolve_context_claim_inventory_boundary.json` separately audits
+  41 platform, method, scope, headline-result, capability, self-improvement,
+  limitation, and collaborator-context claims from the Abstract, Introduction,
+  Discussion, and one Acknowledgements sentence. Six are locally implemented,
+  11 are partial, 4 are not implemented, and 20 are not demonstrated; all 35
+  gaps have live TODO ownership. Together the two bounded inventories cover 91
+  claims, with 19 locally implemented, but still exclude detailed Sections
+  3-5, Figures 4-14, Tables 2-3, appendices, and source-detail exhaustiveness.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
 - `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve

@@ -19480,3 +19480,18 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary tests validate PDF identity and anchors,
     stable counts, evidence paths, TODO-title ownership, drift rejection, and
     parity-overclaim rejection.
+- [x] Add a PDF-anchored AlphaEvolve context-claim inventory.
+  - Spec evidence: the Abstract, Introduction, Discussion, and collaborator
+    acknowledgement contain platform, method, scope, headline-result,
+    self-improvement, limitation, and provenance claims outside the bounded
+    Table 1/Section 2 system inventory.
+  - Status: a new public boundary records 41 stable claim ids, exact PDF pages
+    and anchors, implementation status, ROADMAP phase/section, evidence links,
+    and live TODO ownership. It classifies 6 claims as locally implemented and
+    35 as partial, absent, or undemonstrated.
+  - Remaining code gap: detailed Sections 3-5, remaining exhibits, appendices,
+    source-detail extraction, independent semantic review, benchmark
+    reproduction, and production-scale parity remain open.
+  - Verification: focused boundary, source-inventory, implementation-map, and
+    ROADMAP coverage tests validate counts, anchors, references, TODO ownership,
+    drift rejection, and parity disclaimers.

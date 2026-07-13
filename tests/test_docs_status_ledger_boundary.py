@@ -40,7 +40,7 @@ def test_docs_status_ledger_boundary_accepts_current_status_inventory():
         "unique_local_artifact_count": 60,
         "local_artifact_mention_record_count": 60,
         "absence_phrase_count": 87,
-        "absence_signal_record_count": 99,
+        "absence_signal_record_count": 98,
     }
     assert boundary["missing_evidence"] == {
         "per_bullet_source_test_sidecar_todo_map": "not_recorded_locally",

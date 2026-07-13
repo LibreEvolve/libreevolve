@@ -15,7 +15,8 @@
   ],
   "example_paths": [
     "libreevolve/problems/examples/workspace_math",
-    "libreevolve/problems/examples/embedded_evaluate_math"
+    "libreevolve/problems/examples/embedded_evaluate_math",
+    "libreevolve/problems/examples/candidate_runner_expression"
   ],
   "sidecar_paths": [
     "papers/readme_problem_layout_boundary.json",
@@ -31,7 +32,7 @@
     "docs/todo/code.md",
     "docs/todo/papers.md"
   ],
-  "guide_marker_count": 22,
+  "guide_marker_count": 23,
   "missing_guide_marker_count": 0,
   "missing_guide_marker_records": [],
   "guide_marker_records": [
@@ -146,7 +147,13 @@
     {
       "record_id": "candidate_runner_declarations",
       "path": "docs/problem-format.md",
-      "required_marker": "`config.yaml` can declare future candidate-language and build-system runner",
+      "required_marker": "`config.yaml` can declare candidate-language and build-system records.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_runner_execution",
+      "path": "docs/problem-format.md",
+      "required_marker": "Candidate commands require `validator_network_policy: host`.",
       "marker_status": "marker_present"
     },
     {
@@ -162,13 +169,13 @@
       "marker_status": "marker_present"
     },
     {
-      "record_id": "unsupported_runner_scope",
+      "record_id": "seed_primary_file",
       "path": "docs/problem-format.md",
-      "required_marker": "These records are manifest metadata only.",
+      "required_marker": "When `seed_policy.yaml` sets `primary_file`",
       "marker_status": "marker_present"
     }
   ],
-  "evidence_anchor_count": 41,
+  "evidence_anchor_count": 48,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -245,6 +252,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "loader_seed_primary_file",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def _seed_workspace_primary_file",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "loader_metric_schema",
       "path": "libreevolve/problems/loader.py",
       "required_marker": "def _normalize_metric_schema",
@@ -287,9 +300,21 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "config_candidate_runner_stage_bindings",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "def _validate_candidate_runner_stage_bindings",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "evaluator_cascade",
       "path": "libreevolve/core/evaluator.py",
       "required_marker": "class CascadeEvaluator:",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_candidate_runner",
+      "path": "libreevolve/core/evaluator.py",
+      "required_marker": "def _run_candidate_runner_subprocess",
       "marker_status": "marker_present"
     },
     {
@@ -323,6 +348,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "loader_tests_non_python_primary",
+      "path": "tests/core/test_loader.py",
+      "required_marker": "test_seed_policy_selects_non_python_primary_file_for_workspace",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "loader_tests_embedded_only",
       "path": "tests/core/test_loader.py",
       "required_marker": "test_allows_missing_validate_py_for_embedded_only_problem_config",
@@ -332,6 +363,12 @@
       "record_id": "evaluator_tests_stage_validate",
       "path": "tests/core/test_evaluator.py",
       "required_marker": "stage_validate.py",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_tests_candidate_runner",
+      "path": "tests/core/test_evaluator.py",
+      "required_marker": "test_candidate_runner_stage_builds_runs_and_uses_problem_owned_validator",
       "marker_status": "marker_present"
     },
     {
@@ -347,6 +384,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "examples_candidate_runner",
+      "path": "tests/test_examples.py",
+      "required_marker": "test_candidate_runner_expression_example_loads_builds_and_scores",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "workspace_math_example",
       "path": "libreevolve/problems/examples/workspace_math",
       "required_marker": "codebase_integration.yaml",
@@ -355,6 +398,12 @@
     {
       "record_id": "embedded_evaluate_example",
       "path": "libreevolve/problems/examples/embedded_evaluate_math",
+      "required_marker": "config.yaml",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_runner_example",
+      "path": "libreevolve/problems/examples/candidate_runner_expression",
       "required_marker": "config.yaml",
       "marker_status": "marker_present"
     },
@@ -428,8 +477,10 @@
     "task_and_metrics_contract_markers",
     "validator_signature_and_stage_markers",
     "candidate_runner_declaration_markers",
+    "candidate_runner_execution_markers",
     "evaluation_semantics_markers",
     "initial_program_and_seed_policy_markers",
+    "seed_primary_file_markers",
     "mutation_mode_markers",
     "loader_source_anchor_map",
     "config_and_evaluator_anchor_map",
@@ -449,5 +500,5 @@
     "new_problem_surface_detector": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records docs/problem-format.md section and claim markers for required layout, context manifests, codebase integration metadata, task and metrics files, validator signatures, configured evaluator stages, candidate runner declarations, evaluation semantics, seed workspaces, seed policy, mutation modes, and unsupported runner scope. It also records loader/config/evaluator source anchors, focused loader/evaluator/example test anchors, example path anchors, sidecar anchors, and active TODO ownership. It does not claim semantic problem-format claim verification, per-manifest-key executable traces, a problem-format docs CI drift gate, a new problem-surface detector, or owner review signoff."
+  "claim_boundary": "This boundary records docs/problem-format.md section and claim markers for required layout, context manifests, codebase integration metadata, task and metrics files, validator signatures, configured evaluator stages, candidate runner declarations, evaluation semantics, seed workspaces, seed policy, mutation modes, executable candidate-runner security scope, and explicit seed-primary selection. It also records loader/config/evaluator source anchors, focused loader/evaluator/example test anchors, example path anchors, sidecar anchors, and active TODO ownership. It does not claim semantic problem-format claim verification, per-manifest-key executable traces, a problem-format docs CI drift gate, a new problem-surface detector, or owner review signoff."
 }

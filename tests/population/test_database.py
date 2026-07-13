@@ -4417,15 +4417,15 @@ def test_manifest_written():
     candidate_language = manifest["policies"]["candidate_language"]
     assert candidate_language == {
         "schema": "libreevolve.candidate_language_policy.v1",
-        "policy": "python_primary_text_workspace_v1",
+        "policy": "task_primary_text_workspace_v2",
         "candidate_representation": (
             "bounded_utf8_text_workspace_with_typed_static_members"
         ),
-        "primary_language": "python",
-        "primary_file_policy": "python_primary_file_required_for_seed_and_best_py",
+        "primary_language": "task_declared_runner_or_python_default",
+        "primary_file_policy": "seed_policy_primary_file_or_python_autodetection",
         "text_member_policy": {
             "python_files": "evolve_block_markers_supported",
-            "non_python_text_files": "allowed_as_unmarked_workspace_members",
+            "non_python_text_files": "allowed_as_task_primary_or_workspace_members",
             "non_python_marker_like_declarations": "rejected_fail_closed",
         },
         "static_member_policy": {
@@ -4436,27 +4436,34 @@ def test_manifest_written():
         "runner_policy": {
             "validator_runner": "python_subprocess_entrypoint",
             "validator_entrypoints": "problem_local_python_files_or_packages",
-            "arbitrary_language_runners": "unsupported",
-            "build_system_runners": "unsupported",
+            "task_declared_language_runners": "local_subprocess_without_shell_partial",
+            "build_system_runners": "local_subprocess_without_shell_partial",
+            "metrics_authority": "problem_owned_python_validator",
+            "network_policy": "host_only_for_candidate_runner",
             "problem_defined_solution_abstractions": "unsupported",
         },
         "runner_declarations": {
             "declaration_status": "not_configured",
             "language_runner_declarations": [],
             "build_system_declarations": [],
+            "stage_bindings": [],
             "execution_status": "unsupported",
-            "declaration_scope": "manifest_metadata_only_not_executed",
+            "declaration_scope": "stage_bound_local_subprocess_or_metadata_only",
         },
         "alphaevolve_divergence": (
-            "LibreEvolve currently evolves bounded Python-primary workspace "
-            "file sets instead of arbitrary language/codebase solution objects."
+            "LibreEvolve can execute task-declared local language/build commands "
+            "for bounded text workspaces, but lacks language-aware marker grammars, "
+            "OS sandboxing, replayable toolchains, task-defined solution objects, "
+            "and real codebase-scale language benchmark evidence."
         ),
         "language_runner_ready": False,
         "remaining_gap": [
             "language_or_runner_declarations_for_non_python_candidates",
             "language_aware_evolve_block_marker_grammars",
             "problem_defined_candidate_abstraction_hooks",
-            "build_system_and_arbitrary_language_runner_contracts",
+            "os_sandboxed_arbitrary_language_runner_isolation",
+            "toolchain_version_and_dependency_replay_artifacts",
+            "real_language_codebase_benchmark_evidence",
         ],
     }
     candidate_language_validation = validate_candidate_language_policy(
@@ -4466,7 +4473,7 @@ def test_manifest_written():
         "schema": "libreevolve.candidate_language_policy.v1",
         "ok": True,
         "language_runner_ready": False,
-        "primary_language": "python",
+        "primary_language": "task_declared_runner_or_python_default",
         "issues": [],
     }
     assert manifest["policies"]["prompt_config_retention"] == {
@@ -4774,13 +4781,13 @@ def test_validate_candidate_language_policy_rejects_runner_overclaims():
     codes = {issue["code"] for issue in validation["issues"]}
     assert validation["ok"] is False
     assert validation["language_runner_ready"] is False
-    assert "runner_policy_arbitrary_language_runners_mismatch" in codes
-    assert "arbitrary_language_runners_overclaim" in codes
-    assert "build_system_runners_overclaim" in codes
-    assert "problem_defined_solution_abstractions_overclaim" in codes
-    assert "runner_declaration_execution_overclaim" in codes
+    assert "invalid_policy" in codes
+    assert "runner_policy_task_declared_language_runners_mismatch" in codes
+    assert "runner_policy_build_system_runners_mismatch" in codes
+    assert "runner_policy_problem_defined_solution_abstractions_mismatch" in codes
+    assert "runner_declaration_execution_status_mismatch" in codes
     assert "language_runner_declaration_execution_overclaim" in codes
-    assert "language_runner_ready_overclaim" in codes
+    assert "language_runner_ready_mismatch" in codes
     assert "missing_remaining_gap" in codes
 
 

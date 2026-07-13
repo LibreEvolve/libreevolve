@@ -509,30 +509,68 @@ memory limit, or general resource policy.
 
 ## Candidate Runner Declarations
 
-`config.yaml` can declare future candidate-language and build-system runner
-surfaces without enabling execution:
+`config.yaml` can declare candidate-language and build-system records. A
+declaration remains metadata-only until an `eval_stages` entry binds it with
+`mode: candidate_runner` and its `execution_status` is
+`executable_local_subprocess`:
 
 ```yaml
 candidate_language_runners:
-  - language: rust
-    candidate_role: supporting_text_workspace_member
-    file_patterns: ["src/*.rs"]
-    marker_grammar: custom_declared_unsupported
-    runner_command: ["cargo", "test"]
+  - language: expression
+    candidate_role: task_primary_text
+    file_patterns: ["solution.expr"]
+    marker_grammar: whole_file_text_v1
+    runner_command: ["{python}", "-c", "<trusted local adapter>", "{primary}"]
+    execution_status: executable_local_subprocess
 
 candidate_build_systems:
-  - name: cargo
-    build_files: ["Cargo.toml"]
-    build_command: ["cargo", "build"]
-    artifact_patterns: ["target/debug/*"]
+  - name: expression_copy
+    build_files: ["solution.expr"]
+    build_command: ["{python}", "-c", "<trusted local build adapter>"]
+    artifact_patterns: ["build/**"]
+    execution_status: executable_local_subprocess
+
+eval_stages:
+  - name: run_expression
+    mode: candidate_runner
+    language_runner: expression
+    build_system: expression_copy
+    timeout_sec: 10
 ```
 
-These records are manifest metadata only. LibreEvolve validates them as
-manifest-safe declarations, stores them under `config` and
-`policies.candidate_language.runner_declarations`, and includes them in
-`runtime.history.candidate_language_runner_contract_report`. They do not run
-commands, do not enable non-Python mutation or build execution, and keep
-`language_runner_ready: false`.
+The declaration IDs are case-normalized and stage references must resolve to
+executable declarations. The build reference is optional. Before execution,
+`file_patterns` and any `build_files` must match at least one materialized
+candidate path. Commands are token arrays executed without a shell from the
+candidate workspace. Supported token substitutions are `{workspace}` for the
+temporary workspace root, `{primary}` for the materialized primary file, and
+`{python}` for the current Python executable. A non-absolute tool such as
+`cargo` may require `PATH` in `validator_env_allowlist`; tool availability is
+not installed or managed by LibreEvolve.
+
+The optional build runs first. Files matching its `artifact_patterns` are
+copied through the normal bounded evaluator-artifact policy. The language
+runner then receives configured evaluator stdin, if any. Build and runner
+stdout/stderr are decoded, secret-redacted, and truncated before persistence.
+The configured stage timeout is shared by build, runner, and scorer phases.
+Nonzero returns, launch failures, timeouts, and workspace-pattern mismatches
+produce typed failed evaluations.
+
+After a successful runner process, the problem-owned Python validator receives
+the normal three-argument call plus `stage["candidate_runner"]`, which contains
+the bounded process, environment, command-hash, artifact, and security records.
+The validator remains the metrics authority; candidate stdout is not parsed
+into fitness by the framework. See `candidate_runner_expression` for the
+checked provider-free contract fixture.
+
+Candidate commands require `validator_network_policy: host`. They inherit the
+host network and use the minimal validator environment plus the explicit
+allowlist. They are ordinary local subprocesses, not a security sandbox. The
+current fixture does not prove a real language/compiler/package-manager
+toolchain, pinned dependency replay, language-aware marker grammar, or
+codebase-scale arbitrary-language parity. Declarations with
+`declared_metadata_only` or `unsupported` status are still retained as
+manifest metadata but cannot be bound to a `candidate_runner` stage.
 
 ## Evaluation semantics
 
@@ -556,7 +594,8 @@ running `validate.py` and reports all Python syntax errors with file, line,
 offset, and message metadata. Non-Python files are skipped by this Python-only
 prefilter.
 
-`Config.eval_stages` can run configured validator stages with per-stage
+`Config.eval_stages` can run configured `external_validator`,
+`embedded_evaluate`, or `candidate_runner` stages with per-stage
 `validate_path`, per-attempt `timeout_sec`, per-sample `max_sample_seconds`,
 stage-level `max_stage_seconds`, `min_score`, `metric_thresholds`, `samples`,
 `sample_workers`, `seeds`, `retries`, `metric_aggregation`,
@@ -613,16 +652,21 @@ as relative labels in `stage["evaluator_data"]`.
 Workspace-aware validators that accept `evaluate(code, workspace_path, stage)`
 receive stage context containing stage name, index, sample index, seed, attempt,
 declared evaluator data, and the raw stage config.
+For `candidate_runner`, that stage context also contains the bounded
+`candidate_runner` execution record after a successful build/run. Multi-sample
+aggregation retains the per-sample records and reports the candidate-runner
+mode at the aggregate level.
 
 ## `initial_programs`
 
 All `*.py` files in `initial_programs/` are loaded, sorted by filename, and used
 as single-file seed candidates. Directories under `initial_programs/` are loaded
-as multi-file workspace seeds. For a seed directory, `main.py` is preferred as
-the primary file, then `seed.py`, then the first `.py` file by path. A seed
-directory with visible files but no `.py` file is skipped with
-`reason: no_python_seed_primary`; this keeps the current seed compatibility
-view Python-primary until first-class non-Python candidate abstractions exist.
+as multi-file workspace seeds. When `seed_policy.yaml` sets `primary_file`, the
+normalized candidate-relative path must exist in every seed workspace and is
+used even when it is not Python. Without that setting, `main.py` is preferred,
+then `seed.py`, then the first `.py` file by path. A workspace with visible
+files but no autodetectable `.py` primary is skipped with
+`reason: no_python_seed_primary`.
 Loaded seed records carry safe source provenance. Run manifests include
 `problem.seed_sources`, and seed history/failure rows include
 `seed_source_path` such as `initial_programs/seed.py` or
@@ -671,9 +715,11 @@ directory when they should be part of a candidate workspace. Within visible seed
 workspace directories, any path component starting with `.` and any
 `__pycache__` component is also skipped. Empty directories and directories
 whose contents are all skipped produce skipped-seed diagnostics. Visible
-workspace directories with no Python primary file are also skipped with
-`no_python_seed_primary`. If no other seed is present, the no-seeds diagnostic
-includes skipped seed paths and reasons.
+workspace directories with no Python primary file are skipped with
+`no_python_seed_primary` only when no explicit `primary_file` is configured. A
+configured primary that is missing from any seed workspace is a problem-load
+error rather than a skipped seed. If no other seed is present, the no-seeds
+diagnostic includes skipped seed paths and reasons.
 When a problem intentionally needs selected dot-prefixed or `__pycache__` seed
 paths, add `initial_programs/seed_policy.yaml`:
 
@@ -683,6 +729,7 @@ include:
   - baseline/__pycache__/cached.py
 exclude:
   - baseline/.env
+primary_file: solution.expr
 ```
 
 Patterns are relative to `initial_programs/`, are matched by path component,
@@ -694,7 +741,8 @@ opt into reserved paths; the include pattern itself must name a dot-prefixed or
 `workspace_path_policy.allowed_reserved_paths`. The default policy remains
 secret-safe: hidden/cache paths are skipped unless explicitly included, and
 source labels that look like secrets are still rejected or redacted before
-persistence.
+persistence. `primary_file` is a normalized candidate path, not a glob; it
+must identify a loaded text member in every seed workspace.
 When candidate workspaces are materialized for evaluation or export, the target
 directory is treated as an owned snapshot root. After path and collision
 preflight succeeds, the current candidate files are written to a temporary
@@ -723,7 +771,7 @@ copying that source file only after link checks plus byte-count and SHA-256
 verification. Raw byte values in direct workspace file maps are normalized into
 immutable binary static members with bounded encoded bytes for persistence.
 
-Seeds can be unmarked whole Python programs, preserving backward compatibility,
+Python seeds can be unmarked whole programs, preserving backward compatibility,
 or they can mark one or more evolvable regions:
 
 ```python
@@ -738,6 +786,8 @@ def solve():
 
 With markers, the surrounding skeleton is preserved and mutations are applied to
 the marked region(s). Without markers, the whole program remains evolvable.
+Task-primary non-Python text files are likewise whole-file mutation targets;
+they do not gain language-aware protected regions from the runner declaration.
 The start marker grammar is exact: `# EVOLVE-BLOCK-START` with no name, or the
 same token followed by whitespace and one valid block name. Prefix typos such
 as `# EVOLVE-BLOCK-STARTED` are rejected. For Python candidates, marker

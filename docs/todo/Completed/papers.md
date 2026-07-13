@@ -14432,3 +14432,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     train the policy, and no equal-budget ablation proves an advantage.
   - Verification: runtime and paper-boundary validators preserve the partial
     status and reject full AlphaEvolve mutation-mode parity claims.
+- [x] Promote candidate-language runner evidence from absence to bounded local partial support.
+  - Paper evidence: AlphaEvolve Sections 2.1-2.2 treat program artifacts,
+    existing codebases, and evaluator interfaces as task-defined surfaces.
+  - Status: the candidate-language boundary now credits task-primary seed
+    selection, executable stage-bound local build/runner commands, problem-owned
+    scoring, bounded generated-artifact capture, command and executable-path
+    hashes, and one checked non-Python expression fixture. The runtime report
+    reconciles declarations, stage bindings, executed records, successful
+    records, builds, artifacts, languages, and build-system IDs.
+  - Remaining paper gap: no real-language toolchain, dependency replay,
+    language-aware marker grammar, OS sandbox, task-defined abstraction API, or
+    codebase-scale benchmark supports arbitrary-language parity.
+  - Verification: boundary, paper-manifest, runtime-report, example, and CLI
+    regressions keep `claim_ready: false` while rejecting metadata-only stale
+    classifications and unsupported parity claims.

@@ -798,41 +798,45 @@ directory and using the AlphaEvolve paper as the primary specification.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.1 and 2.2.
   - Requirement: tasks define the program artifact and evaluator interface; a
     faithful system should be able to operate on codebases and task-specific
-    solution representations rather than only one Python-primary workspace
-    shape.
+    solution representations rather than only one fixed Python-primary
+    workspace shape.
   - Partial status: startup manifests now include
     `libreevolve.candidate_language_policy.v1`, declaring the current
-    `python_primary_text_workspace_v1` boundary, bounded UTF-8 workspace plus
-    typed static members, fail-closed non-Python marker handling, Python
-    subprocess validator runner, and unsupported arbitrary-language,
-    build-system, and problem-defined solution-abstraction surfaces.
-    `validate_candidate_language_policy()` rejects overclaims that those
-    surfaces are ready. Completed manifests now also include
+    `task_primary_text_workspace_v2` boundary, bounded UTF-8 workspaces plus
+    typed static members, Python primary autodetection or explicit seed-policy
+    primary selection, fail-closed non-Python marker handling, problem-owned
+    Python scoring, and partial task-declared local language/build execution.
+    Problem-defined solution abstractions remain unsupported.
+    `validate_candidate_language_policy()` requires executable declarations and
+    stage bindings before language-runner readiness is true. Completed
+    manifests also include
     `runtime.history.candidate_language_runner_contract_report`, a checked
-    negative-boundary contract report that records the current Python runner,
-    non-Python text members as workspace-only/no-runner records, unsupported
-    arbitrary-language and build-system runner contracts, metadata-only
-    `candidate_language_runners` and `candidate_build_systems` declarations
-    when configured, `runner_declaration_evidence` counts/status records,
+    contract report that records the default Python path, metadata-only or
+    executable `candidate_language_runners` and `candidate_build_systems`, stage
+    bindings, problem-owned score authority, `runner_declaration_evidence`
+    counts/status records,
     bounded retained-workspace path-match records under
     `runner_declaration_workspace_evidence`, current-Python-runner
-    environment linkage under `runner_environment_provenance`, unsupported
-    task candidate-abstraction hooks, and the remaining executable contract
-    gaps for AlphaEvolve-style language/build parity. The committed
+    environment linkage under `runner_environment_provenance`, bounded executed
+    process records and generated build artifacts, host-network/unsandboxed
+    scope, unsupported task candidate-abstraction hooks, and the remaining
+    real-toolchain contract gaps for AlphaEvolve-style language/build parity.
+    The checked `candidate_runner_expression` fixture executes an explicit
+    `.expr` primary, local copy-build, local expression adapter, generated
+    artifact capture, problem-owned scoring, and CLI/show validation. The committed
     `papers/candidate_language_runner_boundary.json` sidecar now preserves the
-    paper-manifest-validated arbitrary-language/build-runner execution absence
-    boundary.
-  - Current gap: this is an honest boundary record, not non-Python or
-    arbitrary-codebase support. Metadata-only language/build declarations can
-    now be recorded and matched to retained workspace paths, but there are no
-    executable non-Python language runners, build-system execution contracts,
-    arbitrary-runner environment artifacts, language-aware marker grammars, or
-    task-defined candidate abstraction hooks.
-  - Required result: add executable configured language runners, build-system
-    contracts, language-aware marker grammars, and task-defined candidate
-    abstraction hooks before treating the current Python-primary workspace
-    policy as AlphaEvolve-grade arbitrary-codebase or arbitrary-language
-    support.
+    paper-manifest-validated partial local candidate-runner boundary.
+  - Current gap: this is trusted-local command execution and smoke evidence,
+    not arbitrary-language or arbitrary-codebase parity. There is no real
+    compiler/package-manager fixture, pinned toolchain/dependency replay,
+    OS/container sandbox, arbitrary-language validator contract, language-aware
+    marker grammar, codebase-scale generated-artifact evidence, or task-defined
+    candidate abstraction hook.
+  - Required result: add real-language and build-system contracts with pinned
+    versions and dependencies, deterministic replay, stronger isolation,
+    language-aware marker grammars, and codebase-scale benchmark evidence. Add
+    task-defined candidate abstraction hooks separately before treating the
+    task-primary local runner as AlphaEvolve-grade arbitrary-codebase support.
 
 - [ ] Extend existing-codebase minimal-marker integration evidence beyond
       runtime workspace inventory.
@@ -891,13 +895,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     direct search, constructor functions, and search algorithms come with
     different biases.
   - Partial status: the papers index and README state that LibreEvolve's
-    current boundary is a Python-primary code-file-set abstraction and that
+    current boundary is a task-primary bounded text-workspace abstraction and that
     flexible non-code or paired solution/search abstractions are unsupported.
     Current manifests record this through
-    `libreevolve.candidate_language_policy.v1`: `python_primary_text_workspace_v1`,
+    `libreevolve.candidate_language_policy.v1`: `task_primary_text_workspace_v2`,
     bounded UTF-8 text workspace plus typed static members, primary language
-    `python`, `problem_defined_solution_abstractions: unsupported`, and
-    `language_runner_ready: False`. Completed manifests also include
+    `task_declared_runner_or_python_default`, and
+    `problem_defined_solution_abstractions: unsupported`. Language-runner
+    readiness is stage-binding-specific and does not imply abstraction parity.
+    Completed manifests also include
     `runtime.history.candidate_abstraction_choice_report`, which records the
     selected code-file-set abstraction, serializer/runner linkage, runtime
     workspace shape, unsupported constructor/search/paired alternatives, and
@@ -1148,9 +1154,10 @@ directory and using the AlphaEvolve paper as the primary specification.
     lines of code, any language, and complex algorithms spanning multiple
     functions and components. Local PDF page 2 contains the Table 1 code-scale
     rows; pages 18-19 discuss entire-codebase evolution.
-  - Partial status: LibreEvolve has Python-primary workspaces, multi-file seed
-    loading, file-topology mutations, materialization diagnostics,
-    full-workspace prompt/export paths, and a small multi-file smoke fixture.
+  - Partial status: LibreEvolve has task-primary bounded text workspaces,
+    multi-file seed loading, file-topology mutations, materialization
+    diagnostics, full-workspace prompt/export paths, a small multi-file smoke
+    fixture, and a non-comparable local expression build/runner fixture.
     Completed manifests now include
     `runtime.history.codebase_scale_benchmark_report`, which records
     generated/changed line counts, component/file counts, static-file
@@ -1163,7 +1170,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     absence boundary for paper-manifest validation.
   - Current gap: there is no realistic benchmark fixture that demonstrates
     hundreds-line generated programs, coupled multi-component edits,
-    dependency-graph validation, non-Python or build-runner execution,
+    dependency-graph validation, real-language or replayable build-runner execution,
     realistic codebase dependency edits, evaluator workload budgets, retained
     best-workspace artifact hashes, reproducibility bundles, smoke-fixture
     scope separation, valid/admitted/retained-rate curves, or quality progress

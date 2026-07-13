@@ -439,10 +439,12 @@ LibreEvolve has:
   `papers/system_contribution_provenance_boundary.json` preserving that
   paper-facing scope
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
-  declare the current Python-primary text-workspace boundary and explicitly
-  mark arbitrary-language/build-system runners as unsupported, while
-  preserving metadata-only `candidate_language_runners` and
-  `candidate_build_systems` declarations when configured
+  declare the current task-primary bounded text-workspace boundary, Python
+  primary autodetection by default, explicit seed-policy primary selection,
+  and partial stage-bound local language/build subprocess execution while
+  keeping language-aware markers, OS sandboxing, replayable real toolchains,
+  problem-defined candidate abstractions, and codebase-scale language evidence
+  unsupported
 - local workspace materialization diagnostics with typed
   `CandidateMaterializationError` reasons, bounded paths, casefold collision
   checks, recursive link preflight, and static source-copy hash checks, with
@@ -452,19 +454,21 @@ LibreEvolve has:
   invalid-workspace fixture rows, and future-surface reason/path stability
 - runtime candidate-language runner contract reports under
   `runtime.history.candidate_language_runner_contract_report`, recording the
-  current Python subprocess validator runner, non-Python text files as
-  workspace-only/no-runner members, unsupported arbitrary-language and
-  build-system runner contracts, metadata-only language/build declarations
-  plus `runner_declaration_evidence` counts, bounded
+  default Python path, task-declared non-Python text primaries, stage-bound
+  local build/runner command contracts, problem-owned scoring authority,
+  metadata-only or executable declarations plus
+  `runner_declaration_evidence` counts, bounded
   `runner_declaration_workspace_evidence` path-match records against retained
-  candidate workspaces, current-Python-runner environment linkage under
-  `runner_environment_provenance`, unsupported task-abstraction hooks, and
-  exact remaining gaps before
+  candidate workspaces, bounded executed-process and generated-build-artifact
+  records, executable path hashes and environment linkage under
+  `runner_environment_provenance`, unsupported task-abstraction hooks, and exact
+  remaining gaps before
   AlphaEvolve-grade executable language/build parity, with
   `papers/candidate_language_runner_boundary.json` now carrying the
-  paper-manifest-validated absence boundary for executable configured
-  non-Python runners, language-aware marker grammars, build-system contracts,
-  arbitrary-runner environment artifacts, and generated build artifacts
+  paper-manifest-validated partial-capability boundary: the checked expression
+  smoke fixture executes one non-Python primary and copy-build contract, while
+  real-language toolchains, language-aware marker grammars, sandboxed/replayable
+  builds, full environment artifacts, and codebase-scale evidence remain open
 - runtime candidate-abstraction choice reports under
   `runtime.history.candidate_abstraction_choice_report`, recording the current
   code-file-set selection, policy/runner linkage, runtime workspace shape,
@@ -484,18 +488,22 @@ LibreEvolve has:
 - framework-owned run-local RNG isolation plus persisted `runtime.rng`
   snapshots that direct callers and CLI runs can restore before startup
 - example problems including `hello_world`, `sorting`, `circle_packing`,
-  `matrix_multiplication`, and `workspace_math`
+  `matrix_multiplication`, `workspace_math`, and the non-comparable
+  `candidate_runner_expression` contract fixture
 
-The project is still a Python-only, synchronous, local-workspace prototype. It
-is not yet an AlphaEvolve reproduction.
+The project is still a Python-hosted, local-workspace research prototype. Its
+task-declared runner path is partial and unsandboxed, and it is not yet an
+AlphaEvolve reproduction.
 
 ## Near Term
 
 ### 1. Finish candidate workspace fidelity
 
-- Extend the checked candidate-language runner contracts into actual
-  non-Python language runners when non-Python candidates become supported; the
-  current declaration fields are manifest metadata only.
+- Extend the checked local expression runner/build smoke contract into real
+  language and toolchain fixtures with pinned dependency/toolchain identity,
+  replayable builds, stronger isolation, generated-artifact evidence, and
+  codebase-scale benchmark runs. The current command-token execution path is
+  usable for trusted local tasks but is not arbitrary-language parity.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.

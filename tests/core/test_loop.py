@@ -9457,7 +9457,7 @@ def test_runtime_history_reports_candidate_abstraction_choice():
         "policies.candidate_language"
     )
     assert report["selected_representation"]["policy"] == (
-        "python_primary_text_workspace_v1"
+        "task_primary_text_workspace_v2"
     )
     assert report["selected_representation"]["candidate_representation"] == (
         "bounded_utf8_text_workspace_with_typed_static_members"
@@ -9489,7 +9489,7 @@ def test_runtime_history_reports_candidate_abstraction_choice():
     }
     assert options["direct_solution"]["selection_status"] == "selected_current_default"
     assert options["constructor_function"]["local_status"] == (
-        "not_distinguished_from_python_workspace"
+        "not_distinguished_from_text_workspace"
     )
     assert options["coevolved_solution_and_search"]["local_status"] == "unsupported"
     assert report["abstraction_rationale"]["status"] == "not_recorded"
@@ -9531,32 +9531,34 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert report["validation"]["ok"] is True
     assert validate_candidate_language_runner_contract_report(report)["ok"] is True
     assert report["selected_policy"]["manifest_path"] == "policies.candidate_language"
-    assert report["selected_policy"]["policy"] == "python_primary_text_workspace_v1"
-    assert report["selected_policy"]["primary_language"] == "python"
+    assert report["selected_policy"]["policy"] == "task_primary_text_workspace_v2"
+    assert report["selected_policy"]["primary_language"] == (
+        "task_declared_runner_or_python_default"
+    )
     assert report["selected_policy"]["language_runner_ready"] is False
     assert report["selected_policy"]["policy_validation"]["ok"] is True
 
     runners = {item["language"]: item for item in report["configured_language_runners"]}
     assert set(runners) == {"python", "non_python_text", "arbitrary_language"}
-    assert runners["python"]["status"] == "supported_current_primary"
+    assert runners["python"]["status"] == "supported_default_primary"
     assert runners["python"]["marker_grammar"] == "python_hash_evolve_block_markers"
     assert runners["python"]["runner_contract"] == (
         "python_subprocess_validator_entrypoint"
     )
-    assert runners["non_python_text"]["status"] == "workspace_member_only_no_runner"
+    assert runners["non_python_text"]["status"] == "capability_available_not_configured"
     assert runners["non_python_text"]["marker_grammar"] == (
         "unsupported_fail_closed_marker_like_declarations"
     )
-    assert runners["non_python_text"]["runner_contract"] == "unsupported"
-    assert runners["arbitrary_language"]["runner_contract"] == "unsupported"
-    assert runners["arbitrary_language"]["build_contract"] == "unsupported"
+    assert runners["non_python_text"]["runner_contract"] == (
+        "task_declared_local_subprocess_without_shell"
+    )
+    assert runners["arbitrary_language"]["status"] == "real_toolchain_fixture_not_proven"
 
     build_contracts = report["build_system_runner_contracts"]
-    assert build_contracts["status"] == "unsupported"
+    assert build_contracts["status"] == "capability_available_not_configured"
     assert build_contracts["declared_build_files"] == []
-    assert build_contracts["build_runner"] == "unsupported"
-    assert build_contracts["package_install_runner"] == "unsupported"
-    assert build_contracts["compiled_artifact_capture"] == "unsupported"
+    assert build_contracts["build_runner"] == "task_declared_command_tokens_without_shell"
+    assert build_contracts["compiled_artifact_capture"] == "bounded_declared_pattern_copyout"
     assert report["declared_language_runner_records"] == []
     assert report["declared_build_system_records"] == []
     declaration_evidence = report["runner_declaration_evidence"]
@@ -9570,9 +9572,14 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "runner_command_metadata_count": 0,
         "build_command_metadata_count": 0,
         "artifact_pattern_metadata_count": 0,
+        "executable_language_runner_declaration_count": 0,
+        "executable_build_system_declaration_count": 0,
+        "candidate_runner_stage_binding_count": 0,
+        "execution_record_count": 0,
+        "successful_execution_record_count": 0,
         "execution_status": "unsupported",
         "runner_environment_artifacts": "not_recorded",
-        "generated_build_artifact_records": "not_recorded",
+        "generated_build_artifact_records": 0,
     }
     workspace_evidence = report["runner_declaration_workspace_evidence"]
     assert workspace_evidence["schema"] == (
@@ -9585,6 +9592,16 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert workspace_evidence["build_system_matches"] == []
     assert workspace_evidence["declaration_workspace_status"] == "not_configured"
     assert workspace_evidence["execution_status"] == "unsupported"
+    assert report["executed_runner_records"] == []
+    assert report["execution_summary"] == {
+        "schema": "libreevolve.candidate_runner_execution_summary.v1",
+        "record_count": 0,
+        "successful_record_count": 0,
+        "executed_build_count": 0,
+        "generated_build_artifact_count": 0,
+        "language_ids": [],
+        "build_system_ids": [],
+    }
     environment_provenance = report["runner_environment_provenance"]
     assert environment_provenance["schema"] == (
         "libreevolve.candidate_runner_environment_provenance.v1"
@@ -9602,6 +9619,15 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert environment_provenance["build_runner_environment_artifacts"] == (
         "not_recorded"
     )
+    assert environment_provenance["candidate_runner_process_environment"] == {
+        "policy": "minimal_allowlist_values_redacted",
+        "execution_record_count": 0,
+        "resolved_runner_executable_count": 0,
+        "resolved_build_executable_count": 0,
+        "absolute_paths_retained": False,
+        "toolchain_versions_recorded": False,
+        "dependency_manifests_recorded": False,
+    }
     assert environment_provenance["environment_replay_ready"] is False
 
     hooks = report["task_candidate_abstraction_hooks"]
@@ -9615,14 +9641,16 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert report["claim_readiness"]["python_runner_contract_recorded"] is True
     assert report["claim_readiness"]["metadata_runner_declarations_recorded"] is False
     assert report["claim_readiness"]["non_python_language_runners_configured"] is False
+    assert report["claim_readiness"]["candidate_runner_executions_recorded"] is False
     assert report["claim_readiness"]["language_aware_marker_grammars_configured"] is False
     assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False
+    assert report["claim_readiness"]["generated_build_artifacts_recorded"] is False
     assert report["claim_readiness"]["task_candidate_abstraction_hooks_configured"] is False
     assert report["claim_readiness"]["alphaevolve_language_runner_parity"] is False
     assert report["alphaevolve_contract_gap"]["required_before_parity_claim"] == (
         report["claim_readiness"]["remaining_gap"]
     )
-    assert "configured_non_python_language_runners" in (
+    assert "configured_executable_candidate_runner_stages" in (
         report["claim_readiness"]["remaining_gap"]
     )
 
@@ -9630,7 +9658,7 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     edited["claim_ready"] = True
     edited["selected_policy"]["language_runner_ready"] = True
     edited["configured_language_runners"][1]["runner_contract"] = "supported"
-    edited["configured_language_runners"][2]["build_contract"] = "supported"
+    edited["configured_language_runners"][2]["status"] = "supported"
     edited["build_system_runner_contracts"]["build_runner"] = "supported"
     edited["declared_language_runner_records"] = [
         {"language": "rust", "execution_status": "supported"}
@@ -9640,9 +9668,7 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     ]
     edited["runner_declaration_evidence"]["execution_status"] = "supported"
     edited["runner_declaration_evidence"]["runner_environment_artifacts"] = "recorded"
-    edited["runner_declaration_evidence"]["generated_build_artifact_records"] = (
-        "recorded"
-    )
+    edited["runner_declaration_evidence"]["generated_build_artifact_records"] = -1
     edited["runner_declaration_workspace_evidence"]["execution_status"] = "supported"
     edited["runner_declaration_workspace_evidence"]["language_runner_matches"] = [
         {
@@ -9668,19 +9694,16 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert validation["ok"] is False
     assert {issue["code"] for issue in validation["issues"]} >= {
         "claim_ready_overclaim",
-        "language_runner_ready_overclaim",
-        "non_python_text_runner_overclaim",
-        "arbitrary_language_build_overclaim",
-        "build_runner_overclaim",
+        "invalid_non_python_runner_contract",
+        "arbitrary_language_fixture_overclaim",
+        "invalid_build_runner_contract",
         "declared_language_runner_execution_overclaim",
         "declared_build_system_execution_overclaim",
-        "runner_declaration_execution_overclaim",
-        "runner_environment_artifacts_overclaim",
-        "generated_build_artifact_records_overclaim",
-        "runner_workspace_execution_overclaim",
-        "language_workspace_execution_overclaim",
-        "arbitrary_runner_environment_overclaim",
-        "build_runner_environment_overclaim",
+        "runner_declaration_execution_status_mismatch",
+        "invalid_generated_build_artifact_records",
+        "runner_workspace_execution_status_mismatch",
+        "invalid_arbitrary_runner_environment_artifacts",
+        "invalid_build_runner_environment_artifacts",
         "runner_environment_replay_overclaim",
         "serializer_hook_overclaim",
         "alphaevolve_language_runner_parity_overclaim",
@@ -9753,7 +9776,9 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
     assert declaration_evidence["artifact_pattern_metadata_count"] == 1
     assert declaration_evidence["execution_status"] == "unsupported"
     assert declaration_evidence["runner_environment_artifacts"] == "not_recorded"
-    assert declaration_evidence["generated_build_artifact_records"] == "not_recorded"
+    assert declaration_evidence["generated_build_artifact_records"] == 0
+    assert declaration_evidence["candidate_runner_stage_binding_count"] == 0
+    assert declaration_evidence["execution_record_count"] == 0
     workspace_evidence = report["runner_declaration_workspace_evidence"]
     assert workspace_evidence["workspace_file_paths"] == [
         "Cargo.toml",
@@ -9773,7 +9798,7 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
             "matched_path_count": 1,
             "matched_paths_truncated": False,
             "match_status": "matched",
-            "execution_status": "unsupported",
+            "execution_status": "metadata_only",
         }
     ]
     assert workspace_evidence["build_system_matches"] == [
@@ -9784,7 +9809,7 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
             "matched_path_count": 1,
             "matched_paths_truncated": False,
             "match_status": "matched",
-            "execution_status": "unsupported",
+            "execution_status": "metadata_only",
         }
     ]
     environment_provenance = report["runner_environment_provenance"]
@@ -9795,9 +9820,117 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
     assert report["claim_readiness"]["metadata_runner_declarations_recorded"] is True
     assert report["claim_readiness"]["non_python_language_runners_configured"] is False
     assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False
-    assert "execution_for_declared_non_python_language_or_build_runners" in (
+    assert "configured_executable_candidate_runner_stages" in (
         report["claim_readiness"]["remaining_gap"]
     )
+
+
+def test_runtime_history_reports_executed_candidate_language_and_build_runner():
+    tmpdir = tempfile.mkdtemp()
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    output = stage['candidate_runner']['runner']['stdout'].strip()\n"
+        "    return {'score': 1.0 if output == '42' else 0.0, "
+        "'is_valid': output == '42'}\n"
+    )
+    problem.initial_programs = []
+    problem.initial_workspaces = [
+        CandidateWorkspace(
+            files={"solution.expr": "40 + 2\n"},
+            primary_file="solution.expr",
+        )
+    ]
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="t",
+            candidate_language_runners=[
+                {
+                    "language": "expression",
+                    "candidate_role": "task_primary_text",
+                    "file_patterns": ["solution.expr"],
+                    "marker_grammar": "whole_file_text_v1",
+                    "runner_command": [
+                        "{python}",
+                        "-c",
+                        (
+                            "from pathlib import Path; import sys; "
+                            "print(eval(Path(sys.argv[1]).read_text(encoding='utf-8'), "
+                            "{'__builtins__': {}}, {}))"
+                        ),
+                        "{workspace}/build/program.expr",
+                    ],
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+            candidate_build_systems=[
+                {
+                    "name": "expression_copy",
+                    "build_files": ["solution.expr"],
+                    "build_command": [
+                        "{python}",
+                        "-c",
+                        (
+                            "from pathlib import Path; Path('build').mkdir(exist_ok=True); "
+                            "Path('build/program.expr').write_text("
+                            "Path('solution.expr').read_text(encoding='utf-8'), "
+                            "encoding='utf-8')"
+                        ),
+                    ],
+                    "artifact_patterns": ["build/**"],
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+            eval_stages=[
+                {
+                    "name": "run_expression",
+                    "mode": "candidate_runner",
+                    "language_runner": "expression",
+                    "build_system": "expression_copy",
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    policy = manifest["policies"]["candidate_language"]
+    report = manifest["runtime"]["history"][
+        "candidate_language_runner_contract_report"
+    ]
+
+    assert policy["language_runner_ready"] is True
+    assert policy["runner_declarations"]["declaration_status"] == (
+        "executable_stage_bound"
+    )
+    assert validate_candidate_language_runner_contract_report(report)["ok"] is True
+    assert report["execution_summary"]["record_count"] == 1
+    assert report["execution_summary"]["successful_record_count"] == 1
+    assert report["execution_summary"]["executed_build_count"] == 1
+    assert report["execution_summary"]["generated_build_artifact_count"] == 1
+    execution = report["executed_runner_records"][0]
+    assert execution["language_runner"] == "expression"
+    assert execution["build_system"] == "expression_copy"
+    assert execution["successful"] is True
+    assert execution["runner"]["returncode"] == 0
+    assert execution["build"]["returncode"] == 0
+    assert execution["generated_build_artifacts"][0]["path"] == "build/program.expr"
+    readiness = report["claim_readiness"]
+    assert readiness["non_python_language_runners_configured"] is True
+    assert readiness["candidate_runner_executions_recorded"] is True
+    assert readiness["build_system_runner_contracts_configured"] is True
+    assert readiness["generated_build_artifacts_recorded"] is True
+    assert readiness["alphaevolve_language_runner_parity"] is False
+
+    edited = copy.deepcopy(report)
+    edited["executed_runner_records"][0]["metrics_authority"] = "candidate_process"
+    validation = validate_candidate_language_runner_contract_report(edited)
+    assert validation["ok"] is False
+    assert "candidate_runner_metrics_authority_overclaim" in {
+        issue["code"] for issue in validation["issues"]
+    }
 
 
 def test_runtime_history_reports_initial_program_idea_provenance():

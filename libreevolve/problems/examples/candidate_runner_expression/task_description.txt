@@ -1,0 +1,3 @@
+Evolve the arithmetic expression in solution.expr so its numeric value is as close as possible to 42.
+
+The expression is copied by a task-declared build command and executed by a task-declared local runner. The problem-owned Python validator remains the only authority that converts runner output into metrics.

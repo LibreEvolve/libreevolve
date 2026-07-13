@@ -795,8 +795,10 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     diagnostics, and resume semantics are faithful enough to support
     AlphaEvolve-alignment claims rather than only Python-local workspace
     experiments.
-  - Current evidence: ROADMAP records manifest-only candidate-language runner
-    declarations, code-file-set divergence from AlphaEvolve's flexible
+  - Current evidence: ROADMAP records metadata-only or executable
+    candidate-language/build declarations, a checked task-primary local
+    expression build/runner/scorer fixture, code-file-set divergence from
+    AlphaEvolve's flexible
     solution-abstraction API, candidate-abstraction design matrices,
     Python-only evolve-block marker handling, `workspace_math` smoke fixtures,
     Table 1 codebase-scale absence reports, fixed diff/full/file/block/topology
@@ -812,7 +814,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/roadmap_candidate_workspace_fidelity_boundary.json` now records a
     ten-criterion section-level readiness matrix with current scope,
     missing-readiness, sidecar-ref, active-TODO, validation-gate, and readiness
-    labels.
+    labels. The matrix now treats local command execution as partial capability
+    rather than absent support.
     `papers/roadmap_candidate_workspace_readiness_boundary.json` now records a
     bounded eight-criterion readiness matrix for language/build runner and
     candidate API readiness, embedded evaluator and codebase-scale readiness,
@@ -823,11 +826,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     guard.
   - Current gap: the per-surface candidate-workspace claim guard is a bounded
     allowed-scope map, not evidence that the missing candidate-workspace
-    capabilities are implemented. A passing Python workspace fixture, fixed
-    diff parser, snapshot restore, or materialization diagnostic still must
+    capabilities are implemented. A passing Python workspace or local
+    expression-runner fixture, fixed diff parser, snapshot restore, or
+    materialization diagnostic still must
     not be mistaken for complete AlphaEvolve-style workspace support.
   - Required result: implement the missing readiness fields recorded by the
-    readiness sidecar: configured language/build runners, flexible solution
+    readiness sidecar: real-language/replayable build runners beyond the local
+    expression smoke, flexible solution
     abstraction API, candidate-embedded evaluator contracts, realistic codebase
     fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family
     provenance, semantic prompt-example-copy detection, cross-file consistency

@@ -15,7 +15,9 @@ full AlphaEvolve reproduction.
 
 Implemented today:
 
-- Python-primary candidate workspaces and seed programs.
+- Task-primary bounded text workspaces and seed programs. Python primaries are
+  autodetected by default; seed policy can select a non-Python primary for a
+  configured local candidate-runner stage.
 - SEARCH/REPLACE diff mutations using the AlphaEvolve fence format.
 - Full-code replacement mode when configured.
 - OpenAI, Anthropic, Google Gemini, Ollama, and configured custom import-path
@@ -117,10 +119,12 @@ Important limits:
   `papers/existing_codebase_integration_boundary.json`.
 - Workspace topology and materialization diagnostics cover local file-workspace
   path/case-folding/source-copy preflights, topology-command validation, and
-  prompt-visible `materialization_error` summaries. Metadata-only language and
-  build runner declarations can be recorded, but arbitrary-language or
-  build-runner artifacts, dependency-graph validation, bulk directory or
-  external-path operations, portable static source-copy identity,
+  prompt-visible `materialization_error` summaries. Language and build runner
+  declarations can remain metadata-only or bind a local `candidate_runner`
+  stage; the checked expression fixture records one non-Python primary,
+  copy-build, generated artifact, runner process, and problem-owned score.
+  Real-language/build-toolchain artifacts, dependency-graph validation, bulk
+  directory or external-path operations, portable static source-copy identity,
   remote/container workspaces, paper-facing invalid-workspace fixture rows, or
   codebase-scale workspace parity are still not implemented; that boundary is
   tracked by `papers/workspace_materialization_boundary.json`.
@@ -128,7 +132,7 @@ Important limits:
   file/line counts, generated candidates, multi-file and hundreds-line
   observations, and parent-relative edits, not realistic multi-component
   benchmark fixtures, coupled cross-file dependency edits, dependency-graph
-  validation, non-Python fixtures, arbitrary-language or build-runner
+  validation, real-language/compiler fixtures, replayable build-runner
   execution, evaluator workload budgets, retained artifact hashes,
   reproducibility bundles, long-horizon quality progress, retained-rate
   benchmark curves, or AlphaEvolve Table 1 code-scale parity; those
@@ -182,7 +186,8 @@ Important limits:
   score causality, standalone schema completeness for the full user-provided
   Figure 2 contract, user-authored source identity, prompt/config content
   identity, cross-field consistency validation, task-spec replay preflight,
-  arbitrary-language/build-runner task specs, user-authored standalone
+  real-language/replayable-build task specs beyond the local expression smoke,
+  user-authored standalone
   task-spec parity, or full AlphaEvolve task-spec parity; that boundary is
   tracked by `papers/task_specification_boundary.json`.
 - Archive restore uses manifest archive-state snapshots plus accepted-history
@@ -625,7 +630,9 @@ Important limits:
   tracked by `papers/related_work_taxonomy_boundary.json`, while exhaustive
   coverage, independent review, local parity, and benchmark reproduction
   remain unproven.
-- Candidate execution is Python-primary code-file-set execution. The
+- Candidate execution uses a task-primary bounded text-workspace abstraction,
+  with Python autodetection as the default and an optional stage-bound local
+  language/build command path. The
   abstraction-choice report does not claim AlphaEvolve-style problem-defined
   serializers/materializers/runners, paired solution/search representations,
   abstraction-specific prompts, validators, archive descriptor mappings,
@@ -635,13 +642,15 @@ Important limits:
   fields but not benchmark results; these boundaries are tracked by
   `papers/candidate_abstraction_boundary.json` and
   `papers/candidate_abstraction_bias_matrix.json`.
-- Candidate language runner reports record metadata-only non-Python language
-  and build declarations when configured, including declaration counts and
-  unsupported execution status, and link the current Python runner to bounded
-  manifest environment provenance. They do not implement arbitrary-language
-  runners, build-system execution, arbitrary-runner environment artifacts,
-  generated build artifacts, or language-aware marker grammars; that boundary
-  is tracked by `papers/candidate_language_runner_boundary.json`.
+- Candidate language runner reports record metadata-only or executable
+  non-Python language/build declarations, stage bindings, workspace matches,
+  bounded process output and command hashes, executable-path hashes, generated
+  build artifacts, environment policy, host-network/unsandboxed scope, and
+  problem-owned score authority. The checked expression fixture executes that
+  local contract. It does not prove real compiler/package-manager toolchains,
+  dependency/toolchain replay, arbitrary-language validators, OS sandboxing,
+  codebase-scale artifacts, or language-aware marker grammars; that partial
+  boundary is tracked by `papers/candidate_language_runner_boundary.json`.
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.
@@ -2002,7 +2011,7 @@ Important limits:
   artifact paths missing from linked row-specific TODO evidence, 286
   phrase-level TODO block records, and
   structurally classifies 87 status-cell
-  absence-signal phrases with 99 source-offset records. This is path/content
+  absence-signal phrases with 98 source-offset records. This is path/content
   linkage and signal evidence, not proof that each artifact or TODO link is
   semantically sufficient or that absence wording is fresh.
 - AlphaEvolve arXiv abstract-page metadata now has a pinned HTML byte count,

@@ -191,7 +191,7 @@ EXPECTED_SECTIONS = (
         "section_id": "known_gaps",
         "heading": "## Known gaps",
         "markers": (
-            "Candidate workspaces are local text file sets",
+            "Candidate workspaces are bounded local text/static file sets",
             "Proposal generation can overlap on opt-in",
             "Archive cell/island state is persisted",
             "Plugin names are paper-inspired approximations",

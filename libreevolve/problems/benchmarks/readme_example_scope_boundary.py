@@ -35,6 +35,7 @@ EXPECTED_README_MARKERS = (
     ("intro", "The bundled examples are intentionally small:"),
     ("optimization_pressure", "Optimization-pressure seeds"),
     ("neutral_plateau", "Neutral plateau/diversity fixtures"),
+    ("candidate_runner_scope", "`candidate_runner_expression` is a non-comparable contract smoke fixture."),
     ("sorting_network_pair", "`sorting_network_8` and `sorting_network_9`"),
     ("bounded_candidates", "bounded benchmark candidates"),
     ("zero_one_validation", "exhaustive zero-one validation"),
@@ -56,6 +57,7 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("scope_json_schema", EXAMPLE_SCOPE_JSON_PATH, "libreevolve.example_benchmark_scope.v1"),
     ("scope_json_sorting_8", EXAMPLE_SCOPE_JSON_PATH, "\"problem_id\": \"sorting_network_8\""),
     ("scope_json_sorting_9", EXAMPLE_SCOPE_JSON_PATH, "\"problem_id\": \"sorting_network_9\""),
+    ("scope_json_candidate_runner", EXAMPLE_SCOPE_JSON_PATH, "\"problem_id\": \"candidate_runner_expression\""),
     ("scope_json_no_comparable", EXAMPLE_SCOPE_JSON_PATH, "\"alphaevolve_comparable\": false"),
     ("scope_test_non_comparable", EXAMPLE_SCOPE_TEST_PATH, "test_example_scope_records_keep_shipped_examples_non_comparable"),
     ("scope_test_reject_smoke", EXAMPLE_SCOPE_TEST_PATH, "test_example_scope_rejects_smoke_record_marked_alphaevolve_comparable"),
@@ -64,6 +66,7 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("hardening_test_sorting_9", BENCHMARK_HARDENING_TEST_PATH, "test_sorting_network_9_hardening_bundle_writes_benchmark_evidence"),
     ("examples_test_sorting_8", EXAMPLES_TEST_PATH, "test_sorting_network_8_known_19_comparator_target_is_valid"),
     ("examples_test_sorting_9", EXAMPLES_TEST_PATH, "test_sorting_network_9_known_25_comparator_target_is_valid"),
+    ("examples_test_candidate_runner", EXAMPLES_TEST_PATH, "test_candidate_runner_expression_example_loads_builds_and_scores"),
     ("sorting_boundary", SORTING_NETWORK_BOUNDARY_PATH, "bounded_sorting_network_fixtures_available"),
     (
         "benchmark_fixture_boundary",

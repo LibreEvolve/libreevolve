@@ -250,9 +250,23 @@ from `validate.py` unless explicitly allowlisted.
 - `adaptive_mutation_parser_fallback` (`true`): in adaptive mode, apply a
   response that clearly uses the opposite diff/full format through that parser;
   selected and effective modes remain separately recorded.
-- `eval_stages` (`[]`): optional configured evaluator stages with stage
-  validator entrypoints, thresholds, samples, validator-managed seed values,
-  metric-specific aggregation and min/max thresholds, retries, and timeouts.
+- `candidate_language_runners` (`[]`): manifest-safe task language declarations
+  with `language`, `candidate_role`, `file_patterns`, `marker_grammar`, command
+  tokens in `runner_command`, `execution_status`, and optional `notes`.
+  `execution_status: executable_local_subprocess` requires a non-empty command
+  and permits a `candidate_runner` stage to bind the declaration. The other
+  statuses, `declared_metadata_only` and `unsupported`, remain non-executable.
+- `candidate_build_systems` (`[]`): optional build declarations with `name`,
+  `build_files`, `build_command`, `artifact_patterns`, `execution_status`, and
+  optional `notes`. Executable build declarations require a command and may be
+  bound by a candidate-runner stage; build output capture remains subject to
+  evaluator artifact count/byte/redaction limits.
+- `eval_stages` (`[]`): optional configured evaluator stages with
+  `external_validator` (default), `embedded_evaluate`, or `candidate_runner`
+  mode, stage validator entrypoints, thresholds, samples, validator-managed
+  seed values, metric-specific aggregation and min/max thresholds, retries,
+  and timeouts. Candidate-runner stages require `language_runner`, may name a
+  `build_system`, and require `validator_network_policy: host`.
   Each configured stage must have an explicit manifest-safe `name`. Optional
   `difficulty_or_scale` and `test_set` provenance must be configured together
   for every stage, with strictly increasing difficulty levels and content-
@@ -1005,6 +1019,41 @@ SHA-256, not the raw object. Embedded stages currently still require the problem
 to include the normal `validate.py` file for problem loading, but they do not
 run that validator for the embedded stage.
 
+For a trusted local non-Python adapter, bind executable declarations from the
+same config:
+
+```yaml
+validator_network_policy: host
+candidate_language_runners:
+  - language: expression
+    candidate_role: task_primary_text
+    file_patterns: ["solution.expr"]
+    marker_grammar: whole_file_text_v1
+    runner_command: ["{python}", "-c", "<adapter>", "{primary}"]
+    execution_status: executable_local_subprocess
+candidate_build_systems:
+  - name: expression_copy
+    build_files: ["solution.expr"]
+    build_command: ["{python}", "-c", "<build adapter>"]
+    artifact_patterns: ["build/**"]
+    execution_status: executable_local_subprocess
+eval_stages:
+  - name: run_expression
+    mode: candidate_runner
+    language_runner: expression
+    build_system: expression_copy
+    timeout_sec: 10
+```
+
+Commands are arrays, not shell strings. `{workspace}`, `{primary}`, and
+`{python}` are expanded in each token. The optional build, language runner, and
+problem-owned Python scorer share the stage timeout. The scorer receives a
+bounded/redacted candidate process record and remains metrics authority.
+Candidate commands inherit the host network, use the minimal validator
+environment plus `validator_env_allowlist`, and are not sandboxed. The checked
+`candidate_runner_expression` fixture is a local contract smoke test rather
+than real-toolchain or arbitrary-language parity evidence.
+
 When stage provenance is enabled, every configured stage must define both
 `difficulty_or_scale` and `test_set`. Difficulty records require a manifest-
 safe `label`, a non-negative integer `level`, and a non-empty `rationale`;
@@ -1043,6 +1092,9 @@ attempt is clipped to the smallest remaining attempt, sample, or stage budget;
 later retries or samples stop after exhaustion; and the result records
 `sample_budget_exhausted` or `stage_budget_exhausted` plus
 `evaluation.metadata.sample_budget` / `evaluation.metadata.stage_budget`.
+For `candidate_runner`, one attempt can contain build, runner, and scorer
+subprocesses; those phases share the stage attempt timeout and each launched
+process contributes to evaluator subprocess-attempt accounting.
 Set `eval_stages[].sample_workers` above `1` to run planned samples for that
 configured stage through a local thread pool. Results are merged in
 sample-index order and recorded under `evaluation.metadata.sample_execution`,
@@ -1424,9 +1476,10 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   boundary and explicit external exclusions; the paper-facing boundary is
   tracked by `papers/runtime_rng_replay_boundary.json`.
 - `eval_stages` is still local subprocess execution. Candidate evaluations can
-  be queued across local asyncio workers, and configured stage samples can use
-  local thread-pool fan-out, but neither mode is a distributed evaluator-worker
-  scheduler.
+  be queued across local asyncio workers, configured stage samples can use
+  local thread-pool fan-out, and `candidate_runner` can launch a task-declared
+  build and language command without a shell, but none of these modes is a
+  distributed evaluator-worker scheduler or security sandbox.
 - Validator entrypoints are loaded from a temporary runner as either direct
   Python files or package `__init__.py` files. The validator directory is added
   to `sys.path`; package validators also add the problem root so package
@@ -1436,6 +1489,8 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   container sandbox. `validator_network_policy: deny` blocks Python socket APIs
   during preflight/evaluation and records the boundary, but LibreEvolve still
   does not provide OS/container-level network isolation for validator code.
+  Candidate-runner stages reject `deny` and require `host`, because arbitrary
+  child-process network denial would require an OS-level sandbox.
 - Validator boundary metadata and startup `policies.validator_execution` include
   `filesystem_capabilities` and `resource_limit_policy` records. These declare
   the temporary candidate-root workspace, declared-problem-file provenance

@@ -20,7 +20,9 @@ distributed service, and not a full AlphaEvolve reproduction.
 
 Runnable today:
 
-- Python-primary seed programs and bounded text workspaces.
+- Task-primary bounded UTF-8 text workspaces. Python seed primaries are
+  autodetected by default; `initial_programs/seed_policy.yaml` can select a
+  non-Python primary for a stage-bound local language/build runner.
 - Opt-in strict initial-program validity reports for runs that require every
   selected seed to be evaluator-valid before mutation; multi-seed,
   provider-startup, matrix, and constructive-math strict evidence remains
@@ -117,10 +119,15 @@ Important limits:
   `papers/non_jsonl_artifact_boundary.json` records current manifest schema,
   hash policies, docs anchors, and show/restore checks for artifacts such as
   `best.py`, `best_workspace/`, `plugin_artifacts/`, and `paper_artifacts/`.
-- Candidate execution is Python-primary. Non-Python files can be workspace
-  members, metadata-only runner/build declarations can be recorded, and the
-  current Python runner links to bounded environment provenance, but
-  arbitrary-language runners and build-system runners are not implemented.
+- Candidate execution is Python by default, with a partial task-declared local
+  subprocess path for non-Python text primaries. A `candidate_runner` stage can
+  run validated command-token arrays without a shell, optionally run a build
+  command first, capture bounded declared build artifacts, and pass a
+  redacted/bounded process record to the problem-owned Python validator that
+  remains metrics authority. The checked expression fixture proves that local
+  contract only. It does not prove real-language toolchains, language-aware
+  marker grammars, dependency/toolchain replay, OS-sandboxed isolation, or
+  AlphaEvolve-scale arbitrary-codebase support.
 - Candidate abstractions are code-file/workspace based; problem-defined direct
   solution objects, constructor-function search, bespoke search-algorithm
   candidates, paired solution/search representations, abstraction-specific
@@ -227,6 +234,18 @@ py -3.12 -m libreevolve show runs/readme_smoke_sorting
 That evaluates the bundled sorting seed, writes normal run artifacts, and stops
 before constructing LLM providers. It is a smoke check, not an evolution run.
 
+Exercise the task-declared non-Python build/runner contract without a provider:
+
+```bash
+py -3.12 -m libreevolve run libreevolve/problems/examples/candidate_runner_expression --run-name readme_smoke_candidate_runner --max-generations 0 --overwrite
+py -3.12 -m libreevolve show runs/readme_smoke_candidate_runner
+```
+
+This fixture builds and runs a small `.expr` primary, then lets the
+problem-owned Python validator score the bounded process record. The commands
+inherit the host network and run as ordinary local subprocesses; this is a
+contract smoke test, not a security sandbox or real-language benchmark.
+
 Run a provider-backed evolution after choosing a model that is available in
 your account or local Ollama install:
 
@@ -253,6 +272,8 @@ problem usually contains:
 - `metrics.yaml`: metric names, directions, bounds, and primary metric.
 - `task_description.txt`: task instructions for the mutation prompt.
 - optional `config.yaml`: backend, archive, prompt, and evaluator settings.
+- optional `initial_programs/seed_policy.yaml`: hidden/cache path policy and an
+  explicit workspace `primary_file` when Python autodetection is not desired.
 
 See [docs/problem-format.md](docs/problem-format.md) for the full contract.
 
@@ -264,6 +285,10 @@ The bundled examples are intentionally small:
   baselines that leave room for measurable improvement.
 - Neutral plateau/diversity fixtures mainly exercise loading, validation,
   artifact writing, or archive behavior.
+- `candidate_runner_expression` is a non-comparable contract smoke fixture. It
+  exercises an explicit non-Python primary, local build and runner commands,
+  generated-artifact capture, and problem-owned scoring; it is not evidence
+  for a real language, compiler, package manager, or codebase-scale benchmark.
 - `sorting_network_8` and `sorting_network_9` are bounded benchmark candidates
   with exhaustive zero-one validation and known comparator targets, but they
   are not paper-comparable evidence until repeated runs and certification are

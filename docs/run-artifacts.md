@@ -229,7 +229,7 @@ Completed manifests also include
 `runtime.history.candidate_abstraction_choice_report` with schema
 `libreevolve.candidate_abstraction_choice_report.v1`. This report derives the
 selected abstraction from `policies.candidate_language`, records the current
-Python-primary code-file-set representation, links serializer/materializer/
+task-primary bounded text-workspace representation, links serializer/materializer/
 mutation/validator-runner surfaces, summarizes runtime workspace shape, and
 lists direct solution, constructor function, bespoke search algorithm, and
 paired solution/search alternatives. It remains `claim_ready: false` because
@@ -605,14 +605,16 @@ Metadata-only static records remain manifest-only and are not copied as bytes.
   `allowed_reserved_paths` under `problem.seed_sources`; loaded seed source
   labels that look like secrets are rejected before they can be persisted.
   `problem.seed_policy` records the problem-local hidden/cache seed policy,
-  including `seed_policy.yaml` include/exclude patterns when configured.
+  including `seed_policy.yaml` include/exclude patterns and explicit
+  `primary_file` when configured.
   Skipped top-level hidden/cache seed entries, unsupported top-level seed
   files, empty directories, hidden/cache workspace paths, seed-policy excluded
   paths, and directories whose files are all skipped are recorded under
-  `problem.seed_skipped` with redacted path labels and reasons. Seed workspace
-  directories with visible files but no `.py` primary file are skipped with
-  `reason: no_python_seed_primary`, keeping loaded seed workspaces
-  Python-primary under the current candidate model. Direct in-memory
+  `problem.seed_skipped` with redacted path labels and reasons. Without an
+  explicit primary, seed workspace directories with visible files but no
+  `.py` primary are skipped with `reason: no_python_seed_primary`. A configured
+  `primary_file` can select a non-Python text member and must exist in every
+  seed workspace; a missing configured path fails problem loading. Direct in-memory
   `Problem(...)` seeds use `seed_source_kind: inline` plus `seed_index`; when
   `initial_workspaces` is empty, direct
   `initial_programs` is preflighted as a list of UTF-8 text seeds bounded to
@@ -1116,29 +1118,41 @@ non-`.py` candidate files produce `unsupported_evolve_block_marker_syntax`
 before mutation or persistence.
 Startup manifests include `policies.candidate_language` with schema
 `libreevolve.candidate_language_policy.v1`. That record declares the current
-Python-primary bounded text-workspace representation, typed static-member
-support, fail-closed non-Python marker handling, Python subprocess validator
-runner boundary, and explicit unsupported status for arbitrary-language
-runners, build-system runners, and problem-defined solution abstractions.
+task-primary bounded text-workspace representation, Python autodetection or
+explicit seed-policy primary selection, typed static-member support,
+fail-closed non-Python marker handling, Python subprocess scoring boundary, and
+partial stage-bound local language/build command support. It keeps
+problem-defined solution abstractions, language-aware non-Python markers,
+OS-sandboxed runner isolation, replayable toolchains, and real-language
+codebase-scale evidence unsupported.
 When `config.yaml` sets `candidate_language_runners` or
 `candidate_build_systems`, those entries are normalized as manifest-safe,
-metadata-only declarations under `config` and
-`policies.candidate_language.runner_declarations`; they are not executed and
-the policy keeps `language_runner_ready: false`.
+declarations under `config` and
+`policies.candidate_language.runner_declarations`. They remain metadata-only
+unless an `eval_stages[].mode: candidate_runner` stage binds declarations whose
+`execution_status` is `executable_local_subprocess`. A bound stage sets
+`language_runner_ready: true`; this means the local command contract is
+configured, not that AlphaEvolve arbitrary-language parity is ready.
 Completed manifests include
 `runtime.history.candidate_language_runner_contract_report` with schema
 `libreevolve.candidate_language_runner_contract_report.v1`. The report records
-the selected startup policy, the current Python subprocess validator runner
-contract, non-Python text members as workspace-only/no-runner records,
-unsupported arbitrary-language and build-system runner contracts, any
-metadata-only language/build declarations, `runner_declaration_evidence`
-counts/status, current-Python-runner environment linkage under
-`runner_environment_provenance`, unsupported task candidate-abstraction hooks,
-and the exact executable contract gaps that must close before
-AlphaEvolve-style arbitrary-language/codebase parity can be claimed.
+the selected startup policy, the default Python path, task-declared non-Python
+text runner/build contracts, metadata-only or executable declarations,
+`runner_declaration_evidence` counts/status, retained-workspace glob matches,
+and up to 100 deduplicated executed-runner records. Execution records retain
+configured/expanded command hashes rather than raw expanded commands,
+executable basenames and resolved-path hashes rather than absolute paths,
+bounded/redacted stdout and stderr plus hashes, return/timeout/cleanup state,
+minimal-environment metadata, stdin metadata, generated build artifacts, the
+host-network/unsandboxed boundary, and problem-owned scoring authority.
+`execution_summary` reconciles record, success, build, artifact, language, and
+build-system counts. `runner_environment_provenance` links those records to the
+startup environment policy. The report keeps task candidate-abstraction hooks
+unsupported and lists the remaining real-toolchain, marker, sandbox, replay,
+and codebase-scale gaps before AlphaEvolve-style parity can be claimed.
 The committed `papers/candidate_language_runner_boundary.json` sidecar
-preserves the same arbitrary-language/build-runner execution absence boundary
-for paper-manifest validation.
+preserves the same partial local expression-runner boundary for paper-manifest
+validation. The checked fixture is not real-language or compiler evidence.
 For runs that can perform mutation LLM calls, backend client construction is
 preflighted before overwrite cleanup in the core runtime. The CLI also checks
 OpenAI and Anthropic credentials as non-blank after trimming. Seed-only runs

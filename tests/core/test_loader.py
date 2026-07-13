@@ -3038,6 +3038,45 @@ def test_seed_policy_allows_explicit_hidden_workspace_file():
         }
 
 
+def test_seed_policy_selects_non_python_primary_file_for_workspace():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        seed_root = d / "initial_programs"
+        (seed_root / "seed.py").unlink()
+        (seed_root / "seed_policy.yaml").write_text(
+            yaml.dump({"primary_file": "solution.expr"}),
+            encoding="utf-8",
+        )
+        seed = seed_root / "expression_seed"
+        seed.mkdir()
+        (seed / "solution.expr").write_text("1 + 1\n", encoding="utf-8")
+        (seed / "README.txt").write_text("expression fixture\n", encoding="utf-8")
+
+        problem = load_problem(d)
+
+        workspace = problem.initial_workspaces[0]
+        assert workspace.primary_file == "solution.expr"
+        assert workspace.code == "1 + 1\n"
+        assert problem.initial_workspace_policy["primary_file"] == "solution.expr"
+
+
+def test_seed_policy_rejects_missing_configured_primary_file():
+    with tempfile.TemporaryDirectory() as t:
+        d = _make(t)
+        seed_root = d / "initial_programs"
+        (seed_root / "seed.py").unlink()
+        (seed_root / "seed_policy.yaml").write_text(
+            yaml.dump({"primary_file": "solution.expr"}),
+            encoding="utf-8",
+        )
+        seed = seed_root / "expression_seed"
+        seed.mkdir()
+        (seed / "other.txt").write_text("missing primary\n", encoding="utf-8")
+
+        with pytest.raises(ValueError, match="primary_file is not present"):
+            load_problem(d)
+
+
 def test_seed_policy_allows_top_level_hidden_seed_file():
     with tempfile.TemporaryDirectory() as t:
         d = _make(t)

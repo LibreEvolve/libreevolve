@@ -970,6 +970,8 @@ def evolve(
             stdin_text=config.evaluator_stdin_text,
             stdin_file=config.evaluator_stdin_file,
             validator_network_policy=config.validator_network_policy,
+            candidate_language_runners=config.candidate_language_runners,
+            candidate_build_systems=config.candidate_build_systems,
         )
         evaluation_cache_contract_sha256 = _evaluation_cache_contract_sha256(
             problem,
@@ -13519,21 +13521,21 @@ def _candidate_abstraction_choice_report(
         "abstraction_options": [
             {
                 "option": "direct_solution",
-                "local_status": "supported_as_python_file_or_workspace",
+                "local_status": "supported_as_task_primary_text_file_or_workspace",
                 "selection_status": "selected_current_default",
                 "bias_evidence": "not_recorded",
                 "equal_budget_benchmark": "not_recorded",
             },
             {
                 "option": "constructor_function",
-                "local_status": "not_distinguished_from_python_workspace",
+                "local_status": "not_distinguished_from_text_workspace",
                 "selection_status": "unsupported_as_typed_abstraction",
                 "bias_evidence": "not_recorded",
                 "equal_budget_benchmark": "not_recorded",
             },
             {
                 "option": "bespoke_search_algorithm",
-                "local_status": "not_distinguished_from_python_workspace",
+                "local_status": "not_distinguished_from_text_workspace",
                 "selection_status": "unsupported_as_typed_abstraction",
                 "bias_evidence": "not_recorded",
                 "equal_budget_benchmark": "not_recorded",
@@ -13614,6 +13616,19 @@ def _candidate_language_runner_contract_report(
         if isinstance(runner_declarations.get("build_system_declarations"), list)
         else []
     )
+    stage_bindings = list(
+        runner_declarations.get("stage_bindings")
+        if isinstance(runner_declarations.get("stage_bindings"), list)
+        else []
+    )
+    execution_records = _candidate_runner_execution_records(programs)
+    executed_build_count = sum(
+        1 for record in execution_records if isinstance(record.get("build"), Mapping)
+    )
+    generated_build_artifact_count = sum(
+        int(record.get("generated_build_artifact_count", 0))
+        for record in execution_records
+    )
     provenance = (
         startup_manifest.get("provenance")
         if isinstance(startup_manifest.get("provenance"), Mapping)
@@ -13625,16 +13640,16 @@ def _candidate_language_runner_contract_report(
         else {}
     )
     remaining_runner_gaps = [
-        (
-            "execution_for_declared_non_python_language_or_build_runners"
-            if language_runner_declarations or build_system_declarations
-            else "configured_non_python_language_runners"
-        ),
         "language_aware_evolve_block_marker_grammars",
-        "build_system_runner_contracts",
         "task_defined_candidate_abstraction_hooks",
-        "arbitrary_runner_artifact_and_environment_provenance",
+        "os_sandboxed_arbitrary_language_runner_isolation",
+        "toolchain_version_and_dependency_replay_artifacts",
+        "real_language_codebase_benchmark_evidence",
     ]
+    if not stage_bindings:
+        remaining_runner_gaps.insert(0, "configured_executable_candidate_runner_stages")
+    if not execution_records:
+        remaining_runner_gaps.insert(1, "successful_candidate_runner_execution_records")
     report = {
         "schema": "libreevolve.candidate_language_runner_contract_report.v1",
         "source": "candidate_language_policy_and_runtime_workspace_contracts",
@@ -13651,8 +13666,8 @@ def _candidate_language_runner_contract_report(
         "configured_language_runners": [
             {
                 "language": "python",
-                "status": "supported_current_primary",
-                "candidate_role": "primary_text_workspace_language",
+                "status": "supported_default_primary",
+                "candidate_role": "default_primary_text_workspace_language",
                 "marker_grammar": "python_hash_evolve_block_markers",
                 "runner_contract": "python_subprocess_validator_entrypoint",
                 "build_contract": "not_required_for_default_validator",
@@ -13660,25 +13675,37 @@ def _candidate_language_runner_contract_report(
             },
             {
                 "language": "non_python_text",
-                "status": "workspace_member_only_no_runner",
-                "candidate_role": "unmarked_supporting_text_member",
+                "status": (
+                    "stage_bound_local_runner_partial"
+                    if stage_bindings
+                    else "capability_available_not_configured"
+                ),
+                "candidate_role": "task_primary_or_workspace_member",
                 "marker_grammar": "unsupported_fail_closed_marker_like_declarations",
-                "runner_contract": "unsupported",
-                "build_contract": "unsupported",
-                "artifact_boundary": "workspace_file_only",
+                "runner_contract": "task_declared_local_subprocess_without_shell",
+                "build_contract": "optional_task_declared_local_subprocess",
+                "artifact_boundary": "bounded_declared_build_artifact_copyout",
             },
             {
                 "language": "arbitrary_language",
-                "status": "unsupported",
-                "candidate_role": "not_configured",
+                "status": "real_toolchain_fixture_not_proven",
+                "candidate_role": "task_declared_text_workspace_partial",
                 "marker_grammar": "unsupported",
-                "runner_contract": "unsupported",
-                "build_contract": "unsupported",
-                "artifact_boundary": "not_configured",
+                "runner_contract": "local_command_capability_without_real_language_fixture",
+                "build_contract": "local_command_capability_without_replayable_toolchain",
+                "artifact_boundary": "bounded_declared_patterns_when_configured",
             },
         ],
         "build_system_runner_contracts": {
-            "status": "unsupported",
+            "status": (
+                "stage_bound_local_subprocess_partial"
+                if any(
+                    binding.get("build_system")
+                    for binding in stage_bindings
+                    if isinstance(binding, Mapping)
+                )
+                else "capability_available_not_configured"
+            ),
             "declared_build_files": sorted(
                 {
                     pattern
@@ -13688,9 +13715,9 @@ def _candidate_language_runner_contract_report(
                     if isinstance(pattern, str)
                 }
             ),
-            "build_runner": "unsupported",
-            "package_install_runner": "unsupported",
-            "compiled_artifact_capture": "unsupported",
+            "build_runner": "task_declared_command_tokens_without_shell",
+            "package_install_runner": "not_special_cased_or_network_isolated",
+            "compiled_artifact_capture": "bounded_declared_pattern_copyout",
             "accelerator_or_hardware_contract": "unsupported",
         },
         "declared_language_runner_records": language_runner_declarations,
@@ -13699,6 +13726,8 @@ def _candidate_language_runner_contract_report(
             _candidate_runner_declaration_evidence(
                 language_runner_declarations,
                 build_system_declarations,
+                stage_bindings,
+                execution_records,
             )
         ),
         "runner_declaration_workspace_evidence": (
@@ -13708,8 +13737,32 @@ def _candidate_language_runner_contract_report(
                 programs,
             )
         ),
+        "executed_runner_records": execution_records,
+        "execution_summary": {
+            "schema": "libreevolve.candidate_runner_execution_summary.v1",
+            "record_count": len(execution_records),
+            "successful_record_count": sum(
+                1 for record in execution_records if record.get("successful") is True
+            ),
+            "executed_build_count": executed_build_count,
+            "generated_build_artifact_count": generated_build_artifact_count,
+            "language_ids": sorted(
+                {
+                    record["language_runner"]
+                    for record in execution_records
+                    if isinstance(record.get("language_runner"), str)
+                }
+            ),
+            "build_system_ids": sorted(
+                {
+                    record["build_system"]
+                    for record in execution_records
+                    if isinstance(record.get("build_system"), str)
+                }
+            ),
+        },
         "runner_environment_provenance": (
-            _candidate_runner_environment_provenance(environment)
+            _candidate_runner_environment_provenance(environment, execution_records)
         ),
         "task_candidate_abstraction_hooks": {
             "status": "unsupported",
@@ -13730,9 +13783,15 @@ def _candidate_language_runner_contract_report(
             "metadata_runner_declarations_recorded": bool(
                 language_runner_declarations or build_system_declarations
             ),
-            "non_python_language_runners_configured": False,
+            "non_python_language_runners_configured": bool(stage_bindings),
+            "candidate_runner_executions_recorded": bool(execution_records),
             "language_aware_marker_grammars_configured": False,
-            "build_system_runner_contracts_configured": False,
+            "build_system_runner_contracts_configured": any(
+                binding.get("build_system")
+                for binding in stage_bindings
+                if isinstance(binding, Mapping)
+            ),
+            "generated_build_artifacts_recorded": generated_build_artifact_count > 0,
             "task_candidate_abstraction_hooks_configured": False,
             "alphaevolve_language_runner_parity": False,
             "remaining_gap": list(remaining_runner_gaps),
@@ -13742,7 +13801,140 @@ def _candidate_language_runner_contract_report(
     return report
 
 
-def _candidate_runner_environment_provenance(environment: Mapping[str, object]) -> dict:
+def _candidate_runner_execution_records(programs: list[Program]) -> list[dict]:
+    records: list[dict] = []
+    seen: set[tuple[str, str]] = set()
+    for program in programs:
+        for source_path, execution in _walk_candidate_runner_executions(
+            program.evaluation,
+            "evaluation",
+        ):
+            payload_hash = hashlib.sha256(
+                strict_json_dumps(execution).encode("utf-8")
+            ).hexdigest()
+            key = (program.id, payload_hash)
+            if key in seen:
+                continue
+            seen.add(key)
+            records.append(
+                _candidate_runner_execution_summary_record(
+                    program,
+                    execution,
+                    source_path,
+                    payload_hash,
+                )
+            )
+    return records[:100]
+
+
+def _walk_candidate_runner_executions(
+    value: object,
+    path: str,
+) -> list[tuple[str, Mapping[str, object]]]:
+    found: list[tuple[str, Mapping[str, object]]] = []
+    if isinstance(value, Mapping):
+        execution = value.get("candidate_runner")
+        if (
+            isinstance(execution, Mapping)
+            and execution.get("schema") == "libreevolve.candidate_runner_execution.v1"
+        ):
+            found.append((f"{path}.candidate_runner", execution))
+        for key, item in value.items():
+            if key == "candidate_runner":
+                continue
+            found.extend(
+                _walk_candidate_runner_executions(item, f"{path}.{key}")
+            )
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            found.extend(
+                _walk_candidate_runner_executions(item, f"{path}[{index}]")
+            )
+    return found
+
+
+def _candidate_runner_execution_summary_record(
+    program: Program,
+    execution: Mapping[str, object],
+    source_path: str,
+    payload_hash: str,
+) -> dict:
+    build = execution.get("build") if isinstance(execution.get("build"), Mapping) else None
+    runner = execution.get("runner") if isinstance(execution.get("runner"), Mapping) else None
+    artifacts = (
+        build.get("artifacts")
+        if isinstance(build, Mapping) and isinstance(build.get("artifacts"), Mapping)
+        else {}
+    )
+    artifact_files = (
+        artifacts.get("files")
+        if isinstance(artifacts.get("files"), list)
+        else []
+    )
+    runner_success = (
+        isinstance(runner, Mapping)
+        and runner.get("returncode") == 0
+        and runner.get("timed_out") is False
+        and runner.get("launch_error") is None
+    )
+    build_success = (
+        build is None
+        or (
+            build.get("returncode") == 0
+            and build.get("timed_out") is False
+            and build.get("launch_error") is None
+        )
+    )
+    return {
+        "program_id": program.id,
+        "generation": program.generation,
+        "source_path": source_path,
+        "execution_sha256": payload_hash,
+        "language_runner": execution.get("language_runner"),
+        "build_system": execution.get("build_system"),
+        "primary_file": execution.get("primary_file"),
+        "successful": bool(runner_success and build_success),
+        "build": _candidate_process_report_record(build),
+        "runner": _candidate_process_report_record(runner),
+        "generated_build_artifact_count": len(artifact_files),
+        "generated_build_artifacts": [
+            {
+                "path": item.get("path"),
+                "artifact_path": item.get("artifact_path"),
+                "bytes": item.get("bytes"),
+                "sha256": item.get("sha256"),
+            }
+            for item in artifact_files[:20]
+            if isinstance(item, Mapping)
+        ],
+        "metrics_authority": execution.get("metrics_authority"),
+        "network_policy": execution.get("network_policy"),
+        "security_boundary": execution.get("security_boundary"),
+    }
+
+
+def _candidate_process_report_record(value: object) -> dict | None:
+    if not isinstance(value, Mapping):
+        return None
+    executable = value.get("executable")
+    return {
+        "phase": value.get("phase"),
+        "configured_command_sha256": value.get("configured_command_sha256"),
+        "expanded_command_sha256": value.get("expanded_command_sha256"),
+        "returncode": value.get("returncode"),
+        "timed_out": value.get("timed_out"),
+        "elapsed_sec": value.get("elapsed_sec"),
+        "stdout_sha256": value.get("stdout_sha256"),
+        "stderr_sha256": value.get("stderr_sha256"),
+        "launch_error": copy.deepcopy(value.get("launch_error")),
+        "executable": copy.deepcopy(executable) if isinstance(executable, Mapping) else None,
+    }
+
+
+def _candidate_runner_environment_provenance(
+    environment: Mapping[str, object],
+    execution_records: list[dict],
+) -> dict:
     python = (
         environment.get("python")
         if isinstance(environment.get("python"), Mapping)
@@ -13774,8 +13966,37 @@ def _candidate_runner_environment_provenance(environment: Mapping[str, object]) 
                 "platform": platform.get("platform"),
             },
         },
-        "arbitrary_language_runner_environment_artifacts": "not_recorded",
-        "build_runner_environment_artifacts": "not_recorded",
+        "candidate_runner_process_environment": {
+            "policy": "minimal_allowlist_values_redacted",
+            "execution_record_count": len(execution_records),
+            "resolved_runner_executable_count": sum(
+                1
+                for record in execution_records
+                if isinstance(record.get("runner"), Mapping)
+                and isinstance(record["runner"].get("executable"), Mapping)
+                and record["runner"]["executable"].get("resolution_status") == "resolved"
+            ),
+            "resolved_build_executable_count": sum(
+                1
+                for record in execution_records
+                if isinstance(record.get("build"), Mapping)
+                and isinstance(record["build"].get("executable"), Mapping)
+                and record["build"]["executable"].get("resolution_status") == "resolved"
+            ),
+            "absolute_paths_retained": False,
+            "toolchain_versions_recorded": False,
+            "dependency_manifests_recorded": False,
+        },
+        "arbitrary_language_runner_environment_artifacts": (
+            "executable_path_hashes_without_toolchain_versions"
+            if execution_records
+            else "not_recorded"
+        ),
+        "build_runner_environment_artifacts": (
+            "executable_path_hashes_without_toolchain_versions"
+            if any(isinstance(record.get("build"), Mapping) for record in execution_records)
+            else "not_recorded"
+        ),
         "environment_replay_ready": False,
     }
 
@@ -13783,6 +14004,8 @@ def _candidate_runner_environment_provenance(environment: Mapping[str, object]) 
 def _candidate_runner_declaration_evidence(
     language_runner_declarations: list[dict],
     build_system_declarations: list[dict],
+    stage_bindings: list[dict],
+    execution_records: list[dict],
 ) -> dict:
     language_ids = [
         record["language"]
@@ -13815,10 +14038,24 @@ def _candidate_runner_declaration_evidence(
         and isinstance(record.get("artifact_patterns"), list)
     )
     declaration_count = len(language_ids) + len(build_ids)
+    executable_language_count = sum(
+        1
+        for record in language_runner_declarations
+        if isinstance(record, Mapping)
+        and record.get("execution_status") == "executable_local_subprocess"
+    )
+    executable_build_count = sum(
+        1
+        for record in build_system_declarations
+        if isinstance(record, Mapping)
+        and record.get("execution_status") == "executable_local_subprocess"
+    )
     return {
         "schema": "libreevolve.candidate_runner_declaration_evidence.v1",
         "declaration_status": (
-            "metadata_only_no_execution" if declaration_count else "not_configured"
+            "executable_stage_bound"
+            if stage_bindings
+            else "metadata_only_no_execution" if declaration_count else "not_configured"
         ),
         "language_runner_declaration_count": len(language_ids),
         "build_system_declaration_count": len(build_ids),
@@ -13827,9 +14064,27 @@ def _candidate_runner_declaration_evidence(
         "runner_command_metadata_count": runner_command_count,
         "build_command_metadata_count": build_command_count,
         "artifact_pattern_metadata_count": artifact_pattern_count,
-        "execution_status": "unsupported",
-        "runner_environment_artifacts": "not_recorded",
-        "generated_build_artifact_records": "not_recorded",
+        "executable_language_runner_declaration_count": executable_language_count,
+        "executable_build_system_declaration_count": executable_build_count,
+        "candidate_runner_stage_binding_count": len(stage_bindings),
+        "execution_record_count": len(execution_records),
+        "successful_execution_record_count": sum(
+            1 for record in execution_records if record.get("successful") is True
+        ),
+        "execution_status": (
+            "executed_local_subprocess_records"
+            if execution_records
+            else "configured_not_observed" if stage_bindings else "unsupported"
+        ),
+        "runner_environment_artifacts": (
+            "executable_path_hashes_without_versions"
+            if execution_records
+            else "not_recorded"
+        ),
+        "generated_build_artifact_records": sum(
+            int(record.get("generated_build_artifact_count", 0))
+            for record in execution_records
+        ),
     }
 
 
@@ -13852,6 +14107,7 @@ def _candidate_runner_declaration_workspace_evidence(
             record.get("language"),
             record.get("file_patterns", []),
             workspace_paths,
+            record.get("execution_status"),
         )
         for record in language_runner_declarations
         if isinstance(record, Mapping)
@@ -13862,6 +14118,7 @@ def _candidate_runner_declaration_workspace_evidence(
             record.get("name"),
             record.get("build_files", []),
             workspace_paths,
+            record.get("execution_status"),
         )
         for record in build_system_declarations
         if isinstance(record, Mapping)
@@ -13894,7 +14151,15 @@ def _candidate_runner_declaration_workspace_evidence(
                 else "not_configured"
             )
         ),
-        "execution_status": "unsupported",
+        "execution_status": (
+            "executable_declarations_present"
+            if any(
+                isinstance(record, Mapping)
+                and record.get("execution_status") == "executable_local_subprocess"
+                for record in [*language_runner_declarations, *build_system_declarations]
+            )
+            else "unsupported"
+        ),
     }
 
 
@@ -13903,6 +14168,7 @@ def _candidate_runner_workspace_match_record(
     record_id: object,
     patterns: object,
     workspace_paths: list[str],
+    execution_status: object,
 ) -> dict:
     pattern_list = [pattern for pattern in patterns if isinstance(pattern, str)]
     matched_paths = sorted(
@@ -13928,7 +14194,13 @@ def _candidate_runner_workspace_match_record(
                 else "no_matching_workspace_files"
             )
         ),
-        "execution_status": "unsupported",
+        "execution_status": (
+            "executable_local_subprocess_declared"
+            if execution_status == "executable_local_subprocess"
+            else "metadata_only"
+            if execution_status == "declared_metadata_only"
+            else "unsupported"
+        ),
     }
 
 
@@ -13956,6 +14228,8 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
         "declared_build_system_records",
         "runner_declaration_evidence",
         "runner_declaration_workspace_evidence",
+        "executed_runner_records",
+        "execution_summary",
         "runner_environment_provenance",
         "task_candidate_abstraction_hooks",
         "alphaevolve_contract_gap",
@@ -13996,25 +14270,25 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             }
         )
     else:
-        if selected.get("policy") != "python_primary_text_workspace_v1":
+        if selected.get("policy") != "task_primary_text_workspace_v2":
             issues.append(
                 {
                     "code": "invalid_candidate_policy",
-                    "message": "selected policy must remain the Python-primary boundary",
+                    "message": "selected policy must use the task-primary workspace contract",
                 }
             )
-        if selected.get("primary_language") != "python":
+        if selected.get("primary_language") != "task_declared_runner_or_python_default":
             issues.append(
                 {
                     "code": "invalid_primary_language",
-                    "message": "primary language must remain python",
+                    "message": "primary language must state task-runner or Python-default policy",
                 }
             )
-        if selected.get("language_runner_ready") is not False:
+        if selected.get("language_runner_ready") not in {True, False}:
             issues.append(
                 {
-                    "code": "language_runner_ready_overclaim",
-                    "message": "language_runner_ready must remain false",
+                    "code": "invalid_language_runner_ready",
+                    "message": "language_runner_ready must be boolean",
                 }
             )
         validation = selected.get("policy_validation")
@@ -14049,29 +14323,29 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                     }
                 )
         python_record = by_language.get("python", {})
-        if python_record.get("status") != "supported_current_primary":
+        if python_record.get("status") != "supported_default_primary":
             issues.append(
                 {
                     "code": "invalid_python_runner_status",
-                    "message": "python runner must be the only supported current primary",
+                    "message": "python runner must remain the supported default primary",
                 }
             )
-        for language in ("non_python_text", "arbitrary_language"):
-            record = by_language.get(language, {})
-            if record.get("runner_contract") != "unsupported":
-                issues.append(
-                    {
-                        "code": f"{language}_runner_overclaim",
-                        "message": f"{language} runner contract must remain unsupported",
-                    }
-                )
-            if record.get("build_contract") != "unsupported":
-                issues.append(
-                    {
-                        "code": f"{language}_build_overclaim",
-                        "message": f"{language} build contract must remain unsupported",
-                    }
-                )
+        non_python = by_language.get("non_python_text", {})
+        if non_python.get("runner_contract") != "task_declared_local_subprocess_without_shell":
+            issues.append(
+                {
+                    "code": "invalid_non_python_runner_contract",
+                    "message": "non-Python runner contract must state the local subprocess boundary",
+                }
+            )
+        arbitrary = by_language.get("arbitrary_language", {})
+        if arbitrary.get("status") != "real_toolchain_fixture_not_proven":
+            issues.append(
+                {
+                    "code": "arbitrary_language_fixture_overclaim",
+                    "message": "arbitrary-language status must retain the missing real-toolchain fixture boundary",
+                }
+            )
     build_contracts = report.get("build_system_runner_contracts")
     if not isinstance(build_contracts, Mapping):
         issues.append(
@@ -14081,20 +14355,30 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             }
         )
     else:
-        for field in (
-            "status",
-            "build_runner",
-            "package_install_runner",
-            "compiled_artifact_capture",
-            "accelerator_or_hardware_contract",
-        ):
-            if build_contracts.get(field) != "unsupported":
-                issues.append(
-                    {
-                        "code": f"{field}_overclaim",
-                        "message": f"{field} must remain unsupported",
-                    }
-                )
+        if build_contracts.get("status") not in {
+            "stage_bound_local_subprocess_partial",
+            "capability_available_not_configured",
+        }:
+            issues.append(
+                {
+                    "code": "invalid_build_runner_status",
+                    "message": "build runner status is unsupported",
+                }
+            )
+        if build_contracts.get("build_runner") != "task_declared_command_tokens_without_shell":
+            issues.append(
+                {
+                    "code": "invalid_build_runner_contract",
+                    "message": "build runner must use task-declared command tokens without a shell",
+                }
+            )
+        if build_contracts.get("accelerator_or_hardware_contract") != "unsupported":
+            issues.append(
+                {
+                    "code": "accelerator_or_hardware_contract_overclaim",
+                    "message": "accelerator or hardware build contracts remain unsupported",
+                }
+            )
         declared_build_files = build_contracts.get("declared_build_files")
         if not isinstance(declared_build_files, list) or not all(
             isinstance(item, str) and item for item in declared_build_files
@@ -14122,11 +14406,15 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                     "message": "declared language runner records must be objects",
                 }
             )
-        elif record.get("execution_status") not in {"declared_metadata_only", "unsupported"}:
+        elif record.get("execution_status") not in {
+            "declared_metadata_only",
+            "unsupported",
+            "executable_local_subprocess",
+        }:
             issues.append(
                 {
                     "code": "declared_language_runner_execution_overclaim",
-                    "message": "declared language runners must not claim supported execution",
+                    "message": "declared language runner execution status is unsupported",
                 }
             )
     declared_build_systems = report.get("declared_build_system_records")
@@ -14146,11 +14434,15 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                     "message": "declared build system records must be objects",
                 }
             )
-        elif record.get("execution_status") not in {"declared_metadata_only", "unsupported"}:
+        elif record.get("execution_status") not in {
+            "declared_metadata_only",
+            "unsupported",
+            "executable_local_subprocess",
+        }:
             issues.append(
                 {
                     "code": "declared_build_system_execution_overclaim",
-                    "message": "declared build systems must not claim supported execution",
+                    "message": "declared build system execution status is unsupported",
                 }
             )
     declaration_evidence = report.get("runner_declaration_evidence")
@@ -14183,6 +14475,50 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             declared_build_systems,
             issues,
         )
+    executed_records = report.get("executed_runner_records")
+    if not isinstance(executed_records, list):
+        issues.append(
+            {
+                "code": "invalid_executed_runner_records",
+                "message": "executed_runner_records must be a list",
+            }
+        )
+        executed_records = []
+    else:
+        _validate_candidate_runner_execution_records(executed_records, issues)
+    execution_summary = report.get("execution_summary")
+    if not isinstance(execution_summary, Mapping):
+        issues.append(
+            {
+                "code": "invalid_candidate_runner_execution_summary",
+                "message": "execution_summary must be an object",
+            }
+        )
+    else:
+        _validate_candidate_runner_execution_summary(
+            execution_summary,
+            executed_records,
+            issues,
+        )
+    if isinstance(declaration_evidence, Mapping):
+        if declaration_evidence.get("execution_record_count") != len(executed_records):
+            issues.append(
+                {
+                    "code": "runner_declaration_execution_record_count_mismatch",
+                    "message": "declaration evidence execution count must match records",
+                }
+            )
+        if declaration_evidence.get("successful_execution_record_count") != sum(
+            1
+            for record in executed_records
+            if isinstance(record, Mapping) and record.get("successful") is True
+        ):
+            issues.append(
+                {
+                    "code": "runner_declaration_successful_execution_count_mismatch",
+                    "message": "declaration evidence success count must match records",
+                }
+            )
     environment_provenance = report.get("runner_environment_provenance")
     if not isinstance(environment_provenance, Mapping):
         issues.append(
@@ -14223,9 +14559,7 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
         )
     else:
         for field in (
-            "non_python_language_runners_configured",
             "language_aware_marker_grammars_configured",
-            "build_system_runner_contracts_configured",
             "task_candidate_abstraction_hooks_configured",
             "alphaevolve_language_runner_parity",
         ):
@@ -14236,6 +14570,42 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                         "message": f"{field} must remain false",
                     }
                 )
+        for field in (
+            "non_python_language_runners_configured",
+            "candidate_runner_executions_recorded",
+            "build_system_runner_contracts_configured",
+            "generated_build_artifacts_recorded",
+        ):
+            if readiness.get(field) not in {True, False}:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}",
+                        "message": f"{field} must be boolean",
+                    }
+                )
+        if readiness.get("candidate_runner_executions_recorded") is not bool(
+            executed_records
+        ):
+            issues.append(
+                {
+                    "code": "candidate_runner_execution_readiness_mismatch",
+                    "message": "execution readiness must match executed runner records",
+                }
+            )
+        generated_artifacts = sum(
+            int(record.get("generated_build_artifact_count", 0))
+            for record in executed_records
+            if isinstance(record, Mapping)
+        )
+        if readiness.get("generated_build_artifacts_recorded") is not (
+            generated_artifacts > 0
+        ):
+            issues.append(
+                {
+                    "code": "generated_build_artifact_readiness_mismatch",
+                    "message": "generated build artifact readiness must match records",
+                }
+            )
         remaining_gap = readiness.get("remaining_gap")
         if not isinstance(remaining_gap, list) or not remaining_gap:
             issues.append(
@@ -14275,6 +14645,206 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
         "ok": not issues,
         "issues": issues,
     }
+
+
+def _validate_candidate_runner_execution_records(
+    records: list[object],
+    issues: list[dict],
+) -> None:
+    if len(records) > 100:
+        issues.append(
+            {
+                "code": "candidate_runner_execution_record_limit_exceeded",
+                "message": "executed runner records must be bounded to 100",
+            }
+        )
+    seen: set[tuple[str, str]] = set()
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_candidate_runner_execution_record",
+                    "message": f"executed runner record {index} must be an object",
+                }
+            )
+            continue
+        program_id = record.get("program_id")
+        digest = record.get("execution_sha256")
+        if not isinstance(program_id, str) or not program_id:
+            issues.append(
+                {
+                    "code": "invalid_candidate_runner_program_id",
+                    "message": "executed runner records require program ids",
+                }
+            )
+        if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+            issues.append(
+                {
+                    "code": "invalid_candidate_runner_execution_sha256",
+                    "message": "executed runner records require SHA-256 evidence",
+                }
+            )
+        elif isinstance(program_id, str):
+            key = (program_id, digest)
+            if key in seen:
+                issues.append(
+                    {
+                        "code": "duplicate_candidate_runner_execution_record",
+                        "message": "executed runner records must be deduplicated",
+                    }
+                )
+            seen.add(key)
+        if not isinstance(record.get("language_runner"), str):
+            issues.append(
+                {
+                    "code": "invalid_candidate_runner_language_id",
+                    "message": "executed runner records require a language id",
+                }
+            )
+        runner_ok = _validate_candidate_process_report_record(
+            record.get("runner"),
+            "runner",
+            issues,
+        )
+        build_value = record.get("build")
+        build_ok = True
+        if build_value is not None:
+            build_ok = _validate_candidate_process_report_record(
+                build_value,
+                "build",
+                issues,
+            )
+        if record.get("successful") is not bool(runner_ok and build_ok):
+            issues.append(
+                {
+                    "code": "candidate_runner_success_mismatch",
+                    "message": "candidate runner success must match process results",
+                }
+            )
+        artifacts = record.get("generated_build_artifacts")
+        if not isinstance(artifacts, list):
+            issues.append(
+                {
+                    "code": "invalid_candidate_runner_build_artifacts",
+                    "message": "generated build artifacts must be a list",
+                }
+            )
+            artifacts = []
+        count = record.get("generated_build_artifact_count")
+        if not isinstance(count, int) or isinstance(count, bool) or count < len(artifacts):
+            issues.append(
+                {
+                    "code": "candidate_runner_build_artifact_count_mismatch",
+                    "message": "generated build artifact count must cover retained records",
+                }
+            )
+        if record.get("metrics_authority") != "problem_owned_validator_not_candidate_process":
+            issues.append(
+                {
+                    "code": "candidate_runner_metrics_authority_overclaim",
+                    "message": "problem-owned validator must remain metrics authority",
+                }
+            )
+        if record.get("network_policy") != "host":
+            issues.append(
+                {
+                    "code": "candidate_runner_network_policy_overclaim",
+                    "message": "candidate runner records must retain host network policy",
+                }
+            )
+        if record.get("security_boundary") != "local_subprocess_not_security_sandbox":
+            issues.append(
+                {
+                    "code": "candidate_runner_security_boundary_overclaim",
+                    "message": "candidate runners must not claim a security sandbox",
+                }
+            )
+
+
+def _validate_candidate_process_report_record(
+    record: object,
+    phase: str,
+    issues: list[dict],
+) -> bool:
+    if not isinstance(record, Mapping):
+        issues.append(
+            {
+                "code": f"invalid_candidate_{phase}_process_record",
+                "message": f"candidate {phase} process record must be an object",
+            }
+        )
+        return False
+    if record.get("phase") != phase:
+        issues.append(
+            {
+                "code": f"invalid_candidate_{phase}_phase",
+                "message": f"candidate {phase} process phase is invalid",
+            }
+        )
+    for field in ("configured_command_sha256", "expanded_command_sha256"):
+        value = record.get(field)
+        if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+            issues.append(
+                {
+                    "code": f"invalid_candidate_{phase}_{field}",
+                    "message": f"candidate {phase} process must retain command hashes",
+                }
+            )
+    return (
+        record.get("returncode") == 0
+        and record.get("timed_out") is False
+        and record.get("launch_error") is None
+    )
+
+
+def _validate_candidate_runner_execution_summary(
+    summary: Mapping[str, object],
+    records: list[object],
+    issues: list[dict],
+) -> None:
+    if summary.get("schema") != "libreevolve.candidate_runner_execution_summary.v1":
+        issues.append(
+            {
+                "code": "invalid_candidate_runner_execution_summary_schema",
+                "message": "candidate runner execution summary schema is unsupported",
+            }
+        )
+    valid_records = [record for record in records if isinstance(record, Mapping)]
+    expected = {
+        "record_count": len(records),
+        "successful_record_count": sum(
+            1 for record in valid_records if record.get("successful") is True
+        ),
+        "executed_build_count": sum(
+            1 for record in valid_records if isinstance(record.get("build"), Mapping)
+        ),
+        "generated_build_artifact_count": sum(
+            int(record.get("generated_build_artifact_count", 0))
+            for record in valid_records
+        ),
+        "language_ids": sorted(
+            {
+                record["language_runner"]
+                for record in valid_records
+                if isinstance(record.get("language_runner"), str)
+            }
+        ),
+        "build_system_ids": sorted(
+            {
+                record["build_system"]
+                for record in valid_records
+                if isinstance(record.get("build_system"), str)
+            }
+        ),
+    }
+    for field, expected_value in expected.items():
+        if summary.get(field) != expected_value:
+            issues.append(
+                {
+                    "code": f"candidate_runner_execution_summary_{field}_mismatch",
+                    "message": f"execution summary {field} must match records",
+                }
+            )
 
 
 def _candidate_abstraction_runtime_record(program: Program) -> dict:
@@ -14347,9 +14917,10 @@ def _validate_candidate_runner_declaration_evidence(
             }
         )
     expected_status = (
-        "metadata_only_no_execution"
-        if language_ids or build_ids
-        else "not_configured"
+        "executable_stage_bound"
+        if isinstance(evidence.get("candidate_runner_stage_binding_count"), int)
+        and evidence.get("candidate_runner_stage_binding_count", 0) > 0
+        else "metadata_only_no_execution" if language_ids or build_ids else "not_configured"
     )
     if evidence.get("declaration_status") != expected_status:
         issues.append(
@@ -14358,25 +14929,72 @@ def _validate_candidate_runner_declaration_evidence(
                 "message": "runner declaration status must match configured records",
             }
         )
-    if evidence.get("execution_status") != "unsupported":
+    executable_language_count = sum(
+        1
+        for record in declared_language_runners
+        if isinstance(record, Mapping)
+        and record.get("execution_status") == "executable_local_subprocess"
+    )
+    executable_build_count = sum(
+        1
+        for record in declared_build_systems
+        if isinstance(record, Mapping)
+        and record.get("execution_status") == "executable_local_subprocess"
+    )
+    if evidence.get("executable_language_runner_declaration_count") != executable_language_count:
         issues.append(
             {
-                "code": "runner_declaration_execution_overclaim",
-                "message": "runner declaration evidence must not claim execution support",
+                "code": "executable_language_runner_declaration_count_mismatch",
+                "message": "executable language declaration count must match records",
             }
         )
-    if evidence.get("runner_environment_artifacts") != "not_recorded":
+    if evidence.get("executable_build_system_declaration_count") != executable_build_count:
         issues.append(
             {
-                "code": "runner_environment_artifacts_overclaim",
-                "message": "runner environment artifacts must remain not_recorded",
+                "code": "executable_build_system_declaration_count_mismatch",
+                "message": "executable build declaration count must match records",
             }
         )
-    if evidence.get("generated_build_artifact_records") != "not_recorded":
+    for field in (
+        "candidate_runner_stage_binding_count",
+        "execution_record_count",
+        "successful_execution_record_count",
+        "generated_build_artifact_records",
+    ):
+        value = evidence.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+    execution_count = evidence.get("execution_record_count")
+    expected_execution_status = (
+        "executed_local_subprocess_records"
+        if isinstance(execution_count, int) and execution_count > 0
+        else "configured_not_observed"
+        if isinstance(evidence.get("candidate_runner_stage_binding_count"), int)
+        and evidence.get("candidate_runner_stage_binding_count", 0) > 0
+        else "unsupported"
+    )
+    if evidence.get("execution_status") != expected_execution_status:
         issues.append(
             {
-                "code": "generated_build_artifact_records_overclaim",
-                "message": "generated build artifact records must remain not_recorded",
+                "code": "runner_declaration_execution_status_mismatch",
+                "message": "runner declaration execution status must match runtime records",
+            }
+        )
+    expected_environment = (
+        "executable_path_hashes_without_versions"
+        if isinstance(execution_count, int) and execution_count > 0
+        else "not_recorded"
+    )
+    if evidence.get("runner_environment_artifacts") != expected_environment:
+        issues.append(
+            {
+                "code": "runner_environment_artifacts_mismatch",
+                "message": "runner environment artifact status must match execution records",
             }
         )
 
@@ -14469,12 +15087,22 @@ def _validate_candidate_runner_declaration_workspace_evidence(
         "language",
         language_matches,
         language_ids,
+        {
+            record.get("language"): record.get("execution_status")
+            for record in declared_language_runners
+            if isinstance(record, Mapping)
+        },
         issues,
     )
     _validate_candidate_runner_workspace_match_records(
         "build_system",
         build_matches,
         build_ids,
+        {
+            record.get("name"): record.get("execution_status")
+            for record in declared_build_systems
+            if isinstance(record, Mapping)
+        },
         issues,
     )
     matched_language_count = sum(
@@ -14517,11 +15145,20 @@ def _validate_candidate_runner_declaration_workspace_evidence(
                 "message": "declaration workspace status must match declaration and path matches",
             }
         )
-    if evidence.get("execution_status") != "unsupported":
+    expected_execution_status = (
+        "executable_declarations_present"
+        if any(
+            isinstance(record, Mapping)
+            and record.get("execution_status") == "executable_local_subprocess"
+            for record in [*declared_language_runners, *declared_build_systems]
+        )
+        else "unsupported"
+    )
+    if evidence.get("execution_status") != expected_execution_status:
         issues.append(
             {
-                "code": "runner_workspace_execution_overclaim",
-                "message": "runner declaration workspace evidence must not claim execution support",
+                "code": "runner_workspace_execution_status_mismatch",
+                "message": "runner workspace execution status must match declarations",
             }
         )
 
@@ -14530,6 +15167,7 @@ def _validate_candidate_runner_workspace_match_records(
     record_kind: str,
     records: list[object],
     expected_ids: list[str],
+    execution_status_by_id: dict[object, object],
     issues: list[dict],
 ) -> None:
     id_field = f"{record_kind}_id"
@@ -14611,11 +15249,19 @@ def _validate_candidate_runner_workspace_match_records(
                     "message": f"{record_kind} workspace match status is unsupported",
                 }
             )
-        if record.get("execution_status") != "unsupported":
+        declaration_status = execution_status_by_id.get(record.get(id_field))
+        expected_execution_status = (
+            "executable_local_subprocess_declared"
+            if declaration_status == "executable_local_subprocess"
+            else "metadata_only"
+            if declaration_status == "declared_metadata_only"
+            else "unsupported"
+        )
+        if record.get("execution_status") != expected_execution_status:
             issues.append(
                 {
-                    "code": f"{record_kind}_workspace_execution_overclaim",
-                    "message": f"{record_kind} workspace match {index} must not claim execution support",
+                    "code": f"{record_kind}_workspace_execution_status_mismatch",
+                    "message": f"{record_kind} workspace match {index} execution status must match declaration",
                 }
             )
 
@@ -14685,21 +15331,65 @@ def _validate_candidate_runner_environment_provenance(
                         "message": "recorded Python runner environment must include platform system",
                     }
                 )
-    if (
-        provenance.get("arbitrary_language_runner_environment_artifacts")
-        != "not_recorded"
-    ):
+    process_environment = provenance.get("candidate_runner_process_environment")
+    if not isinstance(process_environment, Mapping):
         issues.append(
             {
-                "code": "arbitrary_runner_environment_overclaim",
-                "message": "arbitrary-language runner environment artifacts must remain not_recorded",
+                "code": "invalid_candidate_runner_process_environment",
+                "message": "candidate runner process environment must be an object",
             }
         )
-    if provenance.get("build_runner_environment_artifacts") != "not_recorded":
+    else:
+        if process_environment.get("policy") != "minimal_allowlist_values_redacted":
+            issues.append(
+                {
+                    "code": "invalid_candidate_runner_environment_policy",
+                    "message": "candidate runner environment must use the redacted minimal allowlist",
+                }
+            )
+        for field in (
+            "execution_record_count",
+            "resolved_runner_executable_count",
+            "resolved_build_executable_count",
+        ):
+            value = process_environment.get(field)
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                issues.append(
+                    {
+                        "code": f"invalid_candidate_runner_environment_{field}",
+                        "message": f"candidate runner environment {field} must be non-negative",
+                    }
+                )
+        for field in (
+            "absolute_paths_retained",
+            "toolchain_versions_recorded",
+            "dependency_manifests_recorded",
+        ):
+            if process_environment.get(field) is not False:
+                issues.append(
+                    {
+                        "code": f"candidate_runner_environment_{field}_overclaim",
+                        "message": f"candidate runner environment {field} must remain false",
+                    }
+                )
+    if provenance.get("arbitrary_language_runner_environment_artifacts") not in {
+        "not_recorded",
+        "executable_path_hashes_without_toolchain_versions",
+    }:
         issues.append(
             {
-                "code": "build_runner_environment_overclaim",
-                "message": "build runner environment artifacts must remain not_recorded",
+                "code": "invalid_arbitrary_runner_environment_artifacts",
+                "message": "arbitrary runner environment artifact status is unsupported",
+            }
+        )
+    if provenance.get("build_runner_environment_artifacts") not in {
+        "not_recorded",
+        "executable_path_hashes_without_toolchain_versions",
+    }:
+        issues.append(
+            {
+                "code": "invalid_build_runner_environment_artifacts",
+                "message": "build runner environment artifact status is unsupported",
             }
         )
     if provenance.get("environment_replay_ready") is not False:
@@ -14775,11 +15465,11 @@ def validate_candidate_abstraction_choice_report(report: object) -> dict:
             }
         )
     else:
-        if selected.get("policy") != "python_primary_text_workspace_v1":
+        if selected.get("policy") != "task_primary_text_workspace_v2":
             issues.append(
                 {
                     "code": "invalid_candidate_policy",
-                    "message": "candidate policy must be python_primary_text_workspace_v1",
+                    "message": "candidate policy must be task_primary_text_workspace_v2",
                 }
             )
         if (
@@ -14792,11 +15482,11 @@ def validate_candidate_abstraction_choice_report(report: object) -> dict:
                     "message": "candidate representation must be the bounded workspace",
                 }
             )
-        if selected.get("primary_language") != "python":
+        if selected.get("primary_language") != "task_declared_runner_or_python_default":
             issues.append(
                 {
                     "code": "invalid_primary_language",
-                    "message": "primary language must remain python",
+                    "message": "primary language must retain the task-runner/Python-default boundary",
                 }
             )
         validation = selected.get("policy_validation")
@@ -14807,11 +15497,11 @@ def validate_candidate_abstraction_choice_report(report: object) -> dict:
                     "message": "selected candidate-language policy must validate",
                 }
             )
-        if selected.get("language_runner_ready") is not False:
+        if selected.get("language_runner_ready") not in {True, False}:
             issues.append(
                 {
-                    "code": "language_runner_ready_overclaim",
-                    "message": "language_runner_ready must remain false",
+                    "code": "invalid_language_runner_ready",
+                    "message": "language_runner_ready must be boolean",
                 }
             )
     linkage = report.get("serializer_runner_linkage")

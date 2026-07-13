@@ -22,12 +22,16 @@ from libreevolve.core.candidate import (
     CandidateWorkspace,
 )
 from libreevolve.core.config import (
+    CANDIDATE_RUNNER_EXECUTION_STATUS,
     MAX_EVALUATOR_STDIN_CHARS,
     _require_bool,
     _require_int,
     _require_positive_number,
     _validate_evaluator_stdin_text,
     _validate_artifact_glob_list,
+    _validate_candidate_build_systems,
+    _validate_candidate_language_runners,
+    _validate_candidate_runner_stage_bindings,
     _validate_eval_stages,
     _validate_validator_network_policy,
     canonicalize_env_var_allowlist,
@@ -133,7 +137,8 @@ _RUNNER = (
     "result_path=sys.argv[5]\n"
     "problem_root=os.path.abspath(sys.argv[6])\n"
     "allowed_problem_files={os.path.abspath(item) for item in json.loads(sys.argv[7])}\n"
-    "stage=json.loads(sys.argv[4])\n"
+    "with open(sys.argv[4],encoding='utf-8') as _stage_handle:\n"
+    "    stage=json.load(_stage_handle)\n"
     "_rng_seed=stage.get('rng_seed') if isinstance(stage,dict) else None\n"
     "if _rng_seed is not None:\n"
     "    import random\n"
@@ -544,6 +549,8 @@ class CascadeEvaluator:
         stdin_text: str | None = None,
         stdin_file: str | Path | None = None,
         validator_network_policy: str = "host",
+        candidate_language_runners: list[dict] | None = None,
+        candidate_build_systems: list[dict] | None = None,
     ):
         stage_specs = copy.deepcopy(stages or [])
         _validate_eval_stages(stage_specs)
@@ -569,6 +576,26 @@ class CascadeEvaluator:
         self._validator_network_policy = _validate_validator_network_policy(
             validator_network_policy
         )
+        self._candidate_language_runners = _validate_candidate_language_runners(
+            candidate_language_runners or []
+        )
+        self._candidate_build_systems = _validate_candidate_build_systems(
+            candidate_build_systems or []
+        )
+        _validate_candidate_runner_stage_bindings(
+            stage_specs,
+            self._candidate_language_runners,
+            self._candidate_build_systems,
+            validator_network_policy=self._validator_network_policy,
+        )
+        self._candidate_language_runners_by_id = {
+            record["language"]: record
+            for record in self._candidate_language_runners
+        }
+        self._candidate_build_systems_by_id = {
+            record["name"]: record
+            for record in self._candidate_build_systems
+        }
         self._artifact_dir = artifact_dir
         self._artifact_include = list(top_level_artifact_include)
         self._artifact_exclude = list(top_level_artifact_exclude)
@@ -1020,22 +1047,38 @@ class CascadeEvaluator:
                     if clipped < attempt_timeout:
                         attempt_timeout = clipped
                         budget_limited_by = "sample"
-            result = self._run_subprocess(
-                workspace=workspace,
-                stage_name=stage_name,
-                timeout_sec=attempt_timeout,
-                validate_path=validate_path,
-                stage_context=context,
-                stdin_text=stdin_text,
-                stdin_file=stdin_file,
-                artifact_policy=artifact_policy,
-            ) if evaluator_mode == "external_validator" else self._run_embedded_evaluate_subprocess(
-                workspace=workspace,
-                stage_name=stage_name,
-                timeout_sec=attempt_timeout,
-                stage_context=context,
-                artifact_policy=artifact_policy,
-            )
+            if evaluator_mode == "external_validator":
+                result = self._run_subprocess(
+                    workspace=workspace,
+                    stage_name=stage_name,
+                    timeout_sec=attempt_timeout,
+                    validate_path=validate_path,
+                    stage_context=context,
+                    stdin_text=stdin_text,
+                    stdin_file=stdin_file,
+                    artifact_policy=artifact_policy,
+                )
+            elif evaluator_mode == "embedded_evaluate":
+                result = self._run_embedded_evaluate_subprocess(
+                    workspace=workspace,
+                    stage_name=stage_name,
+                    timeout_sec=attempt_timeout,
+                    stage_context=context,
+                    artifact_policy=artifact_policy,
+                )
+            else:
+                assert evaluator_mode == "candidate_runner"
+                assert validate_path is not None
+                result = self._run_candidate_runner_subprocess(
+                    workspace=workspace,
+                    stage_name=stage_name,
+                    timeout_sec=attempt_timeout,
+                    validate_path=validate_path,
+                    stage_context=context,
+                    stdin_text=stdin_text,
+                    stdin_file=stdin_file,
+                    artifact_policy=artifact_policy,
+                )
             if budget_limited_by == "stage" and result.error == "timeout" and stage_deadline is not None:
                 _mark_stage_budget_exhausted(result, stage_deadline)
             if budget_limited_by == "sample" and result.error == "timeout" and sample_deadline is not None:
@@ -1079,12 +1122,22 @@ class CascadeEvaluator:
         stdin_text: str | None = None,
         stdin_file: str | Path | None = None,
         artifact_policy: dict | None = None,
+        use_default_stdin: bool = True,
+        materialized_workspace_root: Path | None = None,
+        materialized_primary_path: Path | None = None,
     ) -> "EvaluationResult":
+        if (materialized_workspace_root is None) != (
+            materialized_primary_path is None
+        ):
+            raise ValueError(
+                "materialized workspace root and primary path must be provided together"
+            )
         validate_path = validate_path or self._resolve_validate_path(None)
         stage_context = stage_context or {"name": stage_name}
         artifact_policy = artifact_policy or self._artifact_policy({})
-        stdin_text = self._stdin_text if stdin_text is None and stdin_file is None else stdin_text
-        stdin_file = self._stdin_file if stdin_text is None and stdin_file is None else stdin_file
+        if use_default_stdin and stdin_text is None and stdin_file is None:
+            stdin_text = self._stdin_text
+            stdin_file = self._stdin_file
         stage_context = self._stage_context_with_default_data(validate_path, stage_context)
         stage_context = _stage_context_with_rng_seed(stage_context)
         stdin_text, stdin_metadata = _validator_stdin_source(
@@ -1096,44 +1149,54 @@ class CascadeEvaluator:
             tmp_path = Path(tmp)
             runner = tmp_path / "_runner.py"
             result_path = tmp_path / "evaluator_result.json"
-            cand_root = tmp_path / "candidate"
+            stage_context_path = tmp_path / "stage_context.json"
+            cand_root = materialized_workspace_root or (tmp_path / "candidate")
             runner.write_text(_RUNNER, encoding="utf-8")
+            stage_context_path.write_text(
+                strict_json_dumps(stage_context),
+                encoding="utf-8",
+            )
             started = time.perf_counter()
-            try:
-                primary = workspace.materialize(cand_root)
-            except Exception as exc:
-                elapsed = time.perf_counter() - started
-                metadata = _eval_metadata(
-                    workspace,
-                    validate_path,
-                    self._problem.problem_dir,
-                    stage_context,
-                    network_policy=self._validator_network_policy,
-                    stdin_metadata=stdin_metadata,
-                )
-                metadata["materialization_error"] = _materialization_error_metadata(exc)
-                metadata["synthetic_metrics"] = _synthetic_failure_metric_metadata(
-                    self._problem, -0.2
-                )
-                metrics = _synthetic_failure_metrics(self._problem, -0.2)
-                return EvaluationResult(
-                    fitness=-0.2,
-                    metrics=metrics,
-                    is_valid=False,
-                    stages=[
-                        EvaluationStageResult(
-                            name=stage_name,
-                            passed=False,
-                            score=-0.2,
-                            metrics=metrics,
-                            error="materialization_error",
-                            elapsed_sec=elapsed,
-                        )
-                    ],
-                    error="materialization_error",
-                    elapsed_sec=elapsed,
-                    metadata=metadata,
-                )
+            if materialized_primary_path is not None:
+                primary = materialized_primary_path
+            else:
+                try:
+                    primary = workspace.materialize(cand_root)
+                except Exception as exc:
+                    elapsed = time.perf_counter() - started
+                    metadata = _eval_metadata(
+                        workspace,
+                        validate_path,
+                        self._problem.problem_dir,
+                        stage_context,
+                        network_policy=self._validator_network_policy,
+                        stdin_metadata=stdin_metadata,
+                    )
+                    metadata["materialization_error"] = (
+                        _materialization_error_metadata(exc)
+                    )
+                    metadata["synthetic_metrics"] = (
+                        _synthetic_failure_metric_metadata(self._problem, -0.2)
+                    )
+                    metrics = _synthetic_failure_metrics(self._problem, -0.2)
+                    return EvaluationResult(
+                        fitness=-0.2,
+                        metrics=metrics,
+                        is_valid=False,
+                        stages=[
+                            EvaluationStageResult(
+                                name=stage_name,
+                                passed=False,
+                                score=-0.2,
+                                metrics=metrics,
+                                error="materialization_error",
+                                elapsed_sec=elapsed,
+                            )
+                        ],
+                        error="materialization_error",
+                        elapsed_sec=elapsed,
+                        metadata=metadata,
+                    )
             validator_env = _validator_env(self._validator_env_allowlist)
             if stage_context.get("rng_seed") is not None:
                 validator_env["PYTHONHASHSEED"] = str(stage_context["rng_seed"])
@@ -1149,7 +1212,7 @@ class CascadeEvaluator:
             res = _run_validator_process(
                 [sys.executable, str(runner),
                  str(validate_path), str(primary), str(cand_root),
-                 json.dumps(stage_context), str(result_path),
+                 str(stage_context_path), str(result_path),
                  str(self._problem.problem_dir),
                  json.dumps([str(path) for path in allowed_dependency_paths])],
                 cwd=cand_root,
@@ -1622,6 +1685,246 @@ class CascadeEvaluator:
                     metadata=metadata,
                 )
 
+    def _run_candidate_runner_subprocess(
+        self,
+        workspace: CandidateWorkspace,
+        stage_name: str,
+        timeout_sec: float,
+        validate_path: Path,
+        stage_context: dict,
+        stdin_text: str | None,
+        stdin_file: str | Path | None,
+        artifact_policy: dict,
+    ) -> "EvaluationResult":
+        stage_config = stage_context.get("config")
+        if not isinstance(stage_config, dict):
+            raise ValueError("candidate_runner stage context is missing config")
+        language_id = str(stage_config["language_runner"])
+        language = self._candidate_language_runners_by_id[language_id]
+        build_id = stage_config.get("build_system")
+        build = (
+            self._candidate_build_systems_by_id[str(build_id)]
+            if isinstance(build_id, str)
+            else None
+        )
+        started = time.perf_counter()
+        stdin_payload, stdin_metadata = _validator_stdin_source(
+            stdin_text,
+            stdin_file,
+            self._problem.problem_dir,
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            cand_root = Path(tmp) / "candidate"
+            try:
+                primary = workspace.materialize(cand_root)
+            except Exception as exc:
+                metadata = _eval_metadata(
+                    workspace,
+                    validate_path,
+                    self._problem.problem_dir,
+                    stage_context,
+                    network_policy=self._validator_network_policy,
+                    stdin_metadata=stdin_metadata,
+                )
+                metadata["materialization_error"] = _materialization_error_metadata(exc)
+                return _candidate_runner_failure_result(
+                    self._problem,
+                    workspace,
+                    stage_name,
+                    "materialization_error",
+                    time.perf_counter() - started,
+                    metadata,
+                )
+
+            match_error = _candidate_runner_workspace_match_error(
+                workspace,
+                language,
+                build,
+            )
+            if match_error is not None:
+                metadata = _eval_metadata(
+                    workspace,
+                    validate_path,
+                    self._problem.problem_dir,
+                    stage_context,
+                    network_policy=self._validator_network_policy,
+                    stdin_metadata=stdin_metadata,
+                )
+                metadata["candidate_runner"] = match_error
+                return _candidate_runner_failure_result(
+                    self._problem,
+                    workspace,
+                    stage_name,
+                    "candidate_runner_workspace_mismatch",
+                    time.perf_counter() - started,
+                    metadata,
+                )
+
+            runner_env = _validator_env(self._validator_env_allowlist)
+            if stage_context.get("rng_seed") is not None:
+                runner_env["PYTHONHASHSEED"] = str(stage_context["rng_seed"])
+            env_metadata = _validator_env_metadata(
+                runner_env,
+                self._validator_env_allowlist,
+            )
+            build_record = None
+            build_artifacts = None
+            if build is not None:
+                build_command = _expand_candidate_runner_command(
+                    build["build_command"],
+                    cand_root,
+                    primary,
+                )
+                build_result, launch_error, build_elapsed = _run_candidate_command(
+                    build_command,
+                    cwd=cand_root,
+                    timeout_sec=_candidate_runner_remaining_timeout(
+                        timeout_sec,
+                        started,
+                    ),
+                    env=runner_env,
+                    stdin_text=None,
+                )
+                build_record = _candidate_process_record(
+                    "build",
+                    build["build_command"],
+                    build_command,
+                    build_result,
+                    launch_error,
+                    build_elapsed,
+                    self._output_max_chars,
+                )
+                if (
+                    build_result is not None
+                    and not build_result.timed_out
+                    and build_result.returncode == 0
+                ):
+                    build_artifacts = _collect_evaluator_artifacts(
+                        cand_root,
+                        artifact_policy["dir"],
+                        include=list(build.get("artifact_patterns", [])),
+                        exclude=artifact_policy["exclude"],
+                        max_files=artifact_policy["max_files"],
+                        max_bytes=artifact_policy["max_bytes"],
+                        redact_secrets=artifact_policy["redact_secrets"],
+                        stage_context={**stage_context, "artifact_phase": "candidate_build"},
+                    )
+                    build_record["artifacts"] = build_artifacts
+                build_error = _candidate_process_error(
+                    "candidate_build",
+                    build_result,
+                    launch_error,
+                )
+                if build_error is not None:
+                    candidate_record = _candidate_runner_execution_record(
+                        language,
+                        build,
+                        build_record,
+                        None,
+                        env_metadata,
+                        stdin_metadata,
+                        workspace,
+                    )
+                    metadata = _eval_metadata(
+                        workspace,
+                        validate_path,
+                        self._problem.problem_dir,
+                        stage_context,
+                        env_metadata,
+                        network_policy=self._validator_network_policy,
+                        stdin_metadata=stdin_metadata,
+                    )
+                    metadata["candidate_runner"] = candidate_record
+                    return _candidate_runner_failure_result(
+                        self._problem,
+                        workspace,
+                        stage_name,
+                        build_error,
+                        time.perf_counter() - started,
+                        metadata,
+                        process_record=build_record,
+                    )
+
+            runner_command = _expand_candidate_runner_command(
+                language["runner_command"],
+                cand_root,
+                primary,
+            )
+            runner_result, launch_error, runner_elapsed = _run_candidate_command(
+                runner_command,
+                cwd=cand_root,
+                timeout_sec=_candidate_runner_remaining_timeout(timeout_sec, started),
+                env=runner_env,
+                stdin_text=stdin_payload,
+            )
+            runner_record = _candidate_process_record(
+                "runner",
+                language["runner_command"],
+                runner_command,
+                runner_result,
+                launch_error,
+                runner_elapsed,
+                self._output_max_chars,
+            )
+            runner_error = _candidate_process_error(
+                "candidate_runner",
+                runner_result,
+                launch_error,
+            )
+            candidate_record = _candidate_runner_execution_record(
+                language,
+                build,
+                build_record,
+                runner_record,
+                env_metadata,
+                stdin_metadata,
+                workspace,
+            )
+            if runner_error is not None:
+                metadata = _eval_metadata(
+                    workspace,
+                    validate_path,
+                    self._problem.problem_dir,
+                    stage_context,
+                    env_metadata,
+                    network_policy=self._validator_network_policy,
+                    stdin_metadata=stdin_metadata,
+                )
+                metadata["candidate_runner"] = candidate_record
+                return _candidate_runner_failure_result(
+                    self._problem,
+                    workspace,
+                    stage_name,
+                    runner_error,
+                    time.perf_counter() - started,
+                    metadata,
+                    process_record=runner_record,
+                )
+
+            scoring_context = copy.deepcopy(stage_context)
+            candidate_record["scorer_process_started"] = True
+            scoring_context["candidate_runner"] = candidate_record
+            runner_elapsed = time.perf_counter() - started
+            scorer = self._run_subprocess(
+                workspace=workspace,
+                stage_name=stage_name,
+                timeout_sec=_candidate_runner_remaining_timeout(timeout_sec, started),
+                validate_path=validate_path,
+                stage_context=scoring_context,
+                stdin_text=None,
+                stdin_file=None,
+                artifact_policy=artifact_policy,
+                use_default_stdin=False,
+                materialized_workspace_root=cand_root,
+                materialized_primary_path=primary,
+            )
+            scorer.elapsed_sec += runner_elapsed
+            for stage in scorer.stages:
+                stage.elapsed_sec += runner_elapsed
+                stage.metadata["candidate_runner"] = copy.deepcopy(candidate_record)
+            scorer.metadata["candidate_runner"] = candidate_record
+            return scorer
+
     def _resolve_validate_path(self, raw: object) -> Path:
         if raw is None:
             path = self._problem.validate_path
@@ -1705,6 +2008,13 @@ class CascadeEvaluator:
                 "stderr": stderr_meta,
             },
         }
+        evaluator_mode = (
+            results[0].metadata.get("evaluator_mode")
+            if results and isinstance(results[0].metadata, dict)
+            else None
+        )
+        if isinstance(evaluator_mode, str):
+            metadata["evaluator_mode"] = evaluator_mode
         if validate_path is not None:
             metadata.update(_evaluator_path_metadata(validate_path, self._problem.problem_dir))
         else:
@@ -1724,6 +2034,313 @@ class CascadeEvaluator:
             elapsed_sec=sum(r.elapsed_sec for r in results),
             metadata=metadata,
         )
+
+
+def _candidate_runner_remaining_timeout(timeout_sec: float, started: float) -> float:
+    return max(0.001, float(timeout_sec) - (time.perf_counter() - started))
+
+
+def _expand_candidate_runner_command(
+    configured: list[str],
+    workspace_root: Path,
+    primary_path: Path,
+) -> list[str]:
+    replacements = {
+        "{workspace}": str(workspace_root),
+        "{primary}": str(primary_path),
+        "{python}": sys.executable,
+    }
+    return [
+        _replace_candidate_command_placeholders(token, replacements)
+        for token in configured
+    ]
+
+
+def _replace_candidate_command_placeholders(
+    token: str,
+    replacements: dict[str, str],
+) -> str:
+    expanded = token
+    for placeholder, value in replacements.items():
+        expanded = expanded.replace(placeholder, value)
+    return expanded
+
+
+def _run_candidate_command(
+    command: list[str],
+    *,
+    cwd: Path,
+    timeout_sec: float,
+    env: dict[str, str],
+    stdin_text: str | None,
+) -> tuple[_ValidatorProcessResult | None, dict | None, float]:
+    started = time.perf_counter()
+    try:
+        result = _run_validator_process(
+            command,
+            cwd=cwd,
+            timeout_sec=timeout_sec,
+            env=env,
+            stdin_text=stdin_text,
+            validator_network_policy="host",
+            python_script_bootstrap=False,
+        )
+    except (OSError, ValueError) as exc:
+        return (
+            None,
+            {
+                "exception_type": exc.__class__.__name__,
+                "message": _bounded_redacted_text(str(exc), 500),
+            },
+            time.perf_counter() - started,
+        )
+    return result, None, time.perf_counter() - started
+
+
+def _candidate_process_record(
+    phase: str,
+    configured_command: list[str],
+    expanded_command: list[str],
+    result: _ValidatorProcessResult | None,
+    launch_error: dict | None,
+    elapsed_sec: float,
+    output_max_chars: int,
+) -> dict:
+    configured_payload = strict_json_dumps(configured_command)
+    expanded_payload = strict_json_dumps(expanded_command)
+    record = {
+        "schema": "libreevolve.candidate_runner_process.v1",
+        "phase": phase,
+        "execution": "local_subprocess_without_shell",
+        "configured_command_token_count": len(configured_command),
+        "configured_command_sha256": hashlib.sha256(
+            configured_payload.encode("utf-8")
+        ).hexdigest(),
+        "expanded_command_sha256": hashlib.sha256(
+            expanded_payload.encode("utf-8")
+        ).hexdigest(),
+        "executable": _candidate_executable_record(expanded_command[0]),
+        "elapsed_sec": elapsed_sec,
+        "launch_error": copy.deepcopy(launch_error),
+    }
+    if result is None:
+        record.update(
+            {
+                "returncode": None,
+                "timed_out": False,
+                "stdout": "",
+                "stderr": "",
+                "diagnostic_output": _empty_candidate_process_diagnostics(
+                    output_max_chars
+                ),
+            }
+        )
+        return record
+    stdout, stderr, diagnostics = _validator_output_diagnostics(
+        result.stdout,
+        result.stderr,
+        output_max_chars,
+        stream_decoding=result.stream_decoding,
+    )
+    record.update(
+        {
+            "returncode": result.returncode,
+            "timed_out": result.timed_out,
+            "stdout": stdout,
+            "stderr": stderr,
+            "stdout_sha256": hashlib.sha256(
+                result.stdout.encode("utf-8")
+            ).hexdigest(),
+            "stderr_sha256": hashlib.sha256(
+                result.stderr.encode("utf-8")
+            ).hexdigest(),
+            "diagnostic_output": diagnostics,
+        }
+    )
+    if result.cleanup:
+        record["timeout_cleanup"] = copy.deepcopy(result.cleanup)
+    return record
+
+
+def _candidate_executable_record(executable: str) -> dict:
+    resolved = shutil.which(executable)
+    path = Path(executable)
+    if resolved is None and path.is_absolute() and path.exists():
+        resolved = str(path)
+    display = redact_sensitive_text(_escape_diagnostic_controls(path.name))
+    return {
+        "requested_basename": display,
+        "resolution_status": "resolved" if resolved is not None else "unresolved",
+        "resolved_path_sha256": (
+            hashlib.sha256(str(Path(resolved).resolve()).encode("utf-8")).hexdigest()
+            if resolved is not None
+            else None
+        ),
+        "absolute_path_retained": False,
+    }
+
+
+def _empty_candidate_process_diagnostics(max_chars: int) -> dict:
+    return {
+        "policy": "decode_utf8_replace_then_redact_then_truncate",
+        "max_chars": max_chars,
+        "stdout": {
+            "redacted": False,
+            "redacted_chars": 0,
+            "stored_chars": 0,
+            "truncated": False,
+            "omitted_chars": 0,
+        },
+        "stderr": {
+            "redacted": False,
+            "redacted_chars": 0,
+            "stored_chars": 0,
+            "truncated": False,
+            "omitted_chars": 0,
+        },
+    }
+
+
+def _candidate_process_error(
+    prefix: str,
+    result: _ValidatorProcessResult | None,
+    launch_error: dict | None,
+) -> str | None:
+    if launch_error is not None or result is None:
+        return f"{prefix}_launch_error"
+    if result.timed_out:
+        return f"{prefix}_timeout"
+    if result.returncode != 0:
+        return f"{prefix}_returncode_{result.returncode}"
+    return None
+
+
+def _candidate_runner_execution_record(
+    language: dict,
+    build: dict | None,
+    build_record: dict | None,
+    runner_record: dict | None,
+    env_metadata: dict,
+    stdin_metadata: dict,
+    workspace: CandidateWorkspace,
+) -> dict:
+    return {
+        "schema": "libreevolve.candidate_runner_execution.v1",
+        "policy": "task_declared_local_build_run_then_problem_validator_v1",
+        "language_runner": language["language"],
+        "build_system": build["name"] if build is not None else None,
+        "primary_file": workspace.primary_file,
+        "workspace_file_count": len(workspace.files),
+        "language_file_patterns": list(language.get("file_patterns", [])),
+        "marker_grammar": language.get("marker_grammar"),
+        "build_file_patterns": (
+            list(build.get("build_files", [])) if build is not None else []
+        ),
+        "build": copy.deepcopy(build_record),
+        "runner": copy.deepcopy(runner_record),
+        "validator_contract": "problem_owned_python_evaluate_receives_candidate_runner_record",
+        "metrics_authority": "problem_owned_validator_not_candidate_process",
+        "scorer_process_started": False,
+        "environment": copy.deepcopy(env_metadata),
+        "stdin": copy.deepcopy(stdin_metadata),
+        "network_policy": "host",
+        "security_boundary": "local_subprocess_not_security_sandbox",
+    }
+
+
+def _candidate_runner_workspace_match_error(
+    workspace: CandidateWorkspace,
+    language: dict,
+    build: dict | None,
+) -> dict | None:
+    paths = sorted(workspace.files)
+    language_patterns = list(language.get("file_patterns", []))
+    language_matches = _candidate_workspace_pattern_matches(paths, language_patterns)
+    build_patterns = list(build.get("build_files", [])) if build is not None else []
+    build_matches = _candidate_workspace_pattern_matches(paths, build_patterns)
+    missing_language = bool(language_patterns) and not language_matches
+    missing_build = bool(build_patterns) and not build_matches
+    if not missing_language and not missing_build:
+        return None
+    return {
+        "schema": "libreevolve.candidate_runner_workspace_match.v1",
+        "language_runner": language.get("language"),
+        "language_patterns": language_patterns,
+        "language_matches": language_matches,
+        "build_system": build.get("name") if build is not None else None,
+        "build_patterns": build_patterns,
+        "build_matches": build_matches,
+        "missing_language_match": missing_language,
+        "missing_build_match": missing_build,
+    }
+
+
+def _candidate_workspace_pattern_matches(
+    paths: list[str],
+    patterns: list[str],
+) -> list[str]:
+    return sorted(
+        {
+            path
+            for path in paths
+            for pattern in patterns
+            if _artifact_glob_matches(path, pattern)
+        }
+    )
+
+
+def _candidate_runner_failure_result(
+    problem: Problem,
+    workspace: CandidateWorkspace,
+    stage_name: str,
+    error: str,
+    elapsed_sec: float,
+    metadata: dict,
+    *,
+    process_record: dict | None = None,
+) -> "EvaluationResult":
+    metrics = _synthetic_failure_metrics(problem, -0.2)
+    metadata["synthetic_metrics"] = _synthetic_failure_metric_metadata(
+        problem,
+        -0.2,
+    )
+    stdout = (
+        str(process_record.get("stdout", ""))
+        if isinstance(process_record, dict)
+        else ""
+    )
+    stderr = (
+        str(process_record.get("stderr", ""))
+        if isinstance(process_record, dict)
+        else ""
+    )
+    return EvaluationResult(
+        fitness=-0.2,
+        metrics=metrics,
+        is_valid=False,
+        stages=[
+            EvaluationStageResult(
+                name=stage_name,
+                passed=False,
+                score=-0.2,
+                metrics=metrics,
+                stdout=stdout,
+                stderr=stderr,
+                error=error,
+                elapsed_sec=elapsed_sec,
+                metadata={
+                    "candidate_runner": copy.deepcopy(
+                        metadata.get("candidate_runner", {})
+                    )
+                },
+            )
+        ],
+        stdout=stdout,
+        stderr=stderr,
+        error=error,
+        elapsed_sec=elapsed_sec,
+        metadata=metadata,
+    )
 
 
 def _sample_execution_metadata(
@@ -2005,7 +2622,15 @@ def _add_evaluation_accounting(accounting: dict, result: EvaluationResult | dict
     if isinstance(attempts, list):
         if _is_configured_stage_metadata(metadata):
             accounting["configured_stage_samples"] += 1
-        accounting["subprocess_attempts"] += len(attempts)
+        if any(_is_candidate_runner_attempt_record(attempt) for attempt in attempts):
+            accounting["subprocess_attempts"] += sum(
+                _candidate_runner_process_attempt_count(attempt)
+                + _candidate_runner_scorer_attempt_count(attempt)
+                for attempt in attempts
+                if isinstance(attempt, dict)
+            )
+        else:
+            accounting["subprocess_attempts"] += len(attempts)
         accounting["retry_attempts"] += max(0, len(attempts) - 1)
         for attempt in attempts:
             if isinstance(attempt, dict):
@@ -2014,6 +2639,9 @@ def _add_evaluation_accounting(accounting: dict, result: EvaluationResult | dict
             _add_accounting_error(accounting, error)
         return
 
+    accounting["subprocess_attempts"] += _candidate_runner_process_attempt_count(
+        metadata
+    ) + _candidate_runner_scorer_attempt_count(metadata)
     if _metadata_has_subprocess_attempt(metadata):
         accounting["subprocess_attempts"] += 1
     _add_accounting_error(accounting, error)
@@ -2039,8 +2667,39 @@ def _metadata_has_subprocess_attempt(metadata: dict) -> bool:
     return True
 
 
+def _candidate_runner_process_attempt_count(metadata: dict) -> int:
+    candidate_runner = metadata.get("candidate_runner")
+    if not isinstance(candidate_runner, dict):
+        return 0
+    return sum(
+        1
+        for phase in ("build", "runner")
+        if isinstance(candidate_runner.get(phase), dict)
+    )
+
+
+def _candidate_runner_scorer_attempt_count(metadata: dict) -> int:
+    candidate_runner = metadata.get("candidate_runner")
+    return int(
+        isinstance(candidate_runner, dict)
+        and candidate_runner.get("scorer_process_started") is True
+    )
+
+
+def _is_candidate_runner_attempt_record(value: object) -> bool:
+    if not isinstance(value, dict):
+        return False
+    if isinstance(value.get("candidate_runner"), dict):
+        return True
+    stage = value.get("stage")
+    return isinstance(stage, dict) and stage.get("mode") == "candidate_runner"
+
+
 def _add_accounting_error(accounting: dict, error: object) -> None:
-    if error == "timeout":
+    if error == "timeout" or (
+        isinstance(error, str)
+        and error in {"candidate_build_timeout", "candidate_runner_timeout"}
+    ):
         accounting["timeout_count"] += 1
     elif error == "sample_budget_exhausted":
         accounting["sample_budget_exhaustions"] += 1
@@ -2247,6 +2906,7 @@ def _run_validator_process(
     env: dict[str, str],
     stdin_text: str | None = None,
     validator_network_policy: str = "host",
+    python_script_bootstrap: bool = True,
 ) -> _ValidatorProcessResult:
     launch_args = list(args)
     launch_env = dict(env)
@@ -2254,7 +2914,12 @@ def _run_validator_process(
         _validate_validator_network_policy(validator_network_policy)
     )
     release_file: Path | None = None
-    if os.name == "nt" and len(args) > 1 and args[1] != "-c":
+    if (
+        python_script_bootstrap
+        and os.name == "nt"
+        and len(args) > 1
+        and args[1] != "-c"
+    ):
         release_file = cwd / f".libreevolve-validator-release-{uuid4().hex}"
         launch_env["LIBREEVOLVE_VALIDATOR_RELEASE"] = str(release_file)
         launch_args = [
@@ -4126,6 +4791,9 @@ def _retry_attempt_record(
         record["threshold_result"] = threshold_result
         record["metric_thresholds"] = threshold_result["metric_thresholds"]
         record["artifact_output_checks"] = threshold_result["artifact_output_checks"]
+    candidate_runner = result.metadata.get("candidate_runner")
+    if isinstance(candidate_runner, dict):
+        record["candidate_runner"] = copy.deepcopy(candidate_runner)
     return record
 
 

@@ -13,7 +13,7 @@ paper/source status and claim boundaries.
 
 ## Reader Paths
 
-- New user: start with the root README, run the provider-free smoke command,
+- New user: start with the root README, run a provider-free smoke command,
   then read [Problem Format](./problem-format.md) before creating a custom
   problem.
 - Operator/debugger: use [Run Artifacts](./run-artifacts.md),
@@ -27,8 +27,9 @@ paper/source status and claim boundaries.
 ## Operational Guides
 
 - [Architecture](./architecture.md): End-to-end runtime flow and component roles.
-- [Problem Format](./problem-format.md): Required files and the validator
-  contract for custom problems.
+- [Problem Format](./problem-format.md): Required files, seed-primary policy,
+  validator contracts, and trusted-local candidate build/runner stages for
+  custom problems.
 - [Configuration](./configuration.md): `Config` fields, CLI overrides, and
   `config.yaml` behavior.
 - [Plugins](./plugins.md): Hook order, built-in plugins, and extension guidance.

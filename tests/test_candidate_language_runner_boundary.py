@@ -6,7 +6,7 @@ from libreevolve.problems.benchmarks.candidate_language_runner_boundary import (
 )
 
 
-def test_candidate_language_runner_boundary_accepts_absence_record():
+def test_candidate_language_runner_boundary_accepts_partial_record():
     boundary = candidate_language_runner_boundary_record()
 
     validation = validate_candidate_language_runner_boundary(boundary)
@@ -14,7 +14,7 @@ def test_candidate_language_runner_boundary_accepts_absence_record():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "python_primary_without_arbitrary_language_runner_evidence"
+        == "local_candidate_runner_execution_partial"
     )
     assert validation.required_evidence_field_count == 16
     assert validation.missing_evidence_count == 7
@@ -49,7 +49,7 @@ def test_render_candidate_language_runner_boundary_summary_reports_shape():
     assert "AlphaEvolve candidate language runner boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | python_primary_without_arbitrary_language_runner_evidence |"
+        "| boundary_status | local_candidate_runner_execution_partial |"
         in summary
     )
     assert "| required_evidence_field_count | 16 |" in summary

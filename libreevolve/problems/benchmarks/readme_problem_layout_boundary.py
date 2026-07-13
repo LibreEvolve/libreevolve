@@ -137,8 +137,8 @@ EXPECTED_LAYOUT_ITEMS = (
         "readme_marker": "optional `config.yaml`: backend, archive, prompt, and evaluator settings.",
         "problem_format_markers": (
             "Problem `config.yaml` stages accept",
-            "`config.yaml` can declare future candidate-language and build-system runner",
-            "Config.eval_stages` can run configured validator stages",
+            "`config.yaml` can declare candidate-language and build-system records.",
+            "`Config.eval_stages` can run configured `external_validator`",
         ),
         "loader_markers": (
             "config_source:    dict = field(",
@@ -147,12 +147,36 @@ EXPECTED_LAYOUT_ITEMS = (
         ),
         "example_paths": (
             "libreevolve/problems/examples/embedded_evaluate_math/config.yaml",
+            "libreevolve/problems/examples/candidate_runner_expression/config.yaml",
         ),
         "test_markers": (
             "test_allows_missing_validate_py_for_embedded_only_problem_config",
             "test_requires_validate_py_when_problem_config_has_external_stage",
         ),
         "status": "optional_problem_runtime_configuration",
+    },
+    {
+        "item_id": "seed_policy_yaml",
+        "path_label": "initial_programs/seed_policy.yaml",
+        "readme_marker": "optional `initial_programs/seed_policy.yaml`: hidden/cache path policy",
+        "problem_format_markers": (
+            "add `initial_programs/seed_policy.yaml`",
+            "When `seed_policy.yaml` sets `primary_file`",
+            "`primary_file` is a normalized candidate path, not a glob",
+        ),
+        "loader_markers": (
+            "_SEED_POLICY_MANIFEST_NAMES = (\"seed_policy.yaml\", \"seed_policy.yml\")",
+            "def _load_seed_workspace_policy",
+            "def _seed_policy_primary_file",
+        ),
+        "example_paths": (
+            "libreevolve/problems/examples/candidate_runner_expression/initial_programs/seed_policy.yaml",
+        ),
+        "test_markers": (
+            "test_seed_policy_selects_non_python_primary_file_for_workspace",
+            "test_seed_policy_rejects_missing_configured_primary_file",
+        ),
+        "status": "optional_seed_workspace_policy_and_primary_selection",
     },
 )
 EXPECTED_CONTRACT_MARKERS = (
@@ -168,7 +192,10 @@ EXPECTED_CONTRACT_MARKERS = (
     ("loader_codebase_integration_names", LOADER_PATH, "_CODEBASE_INTEGRATION_METADATA_NAMES"),
     ("config_eval_stages", CONFIG_PATH, "eval_stages:            list[dict] = field(default_factory=list)"),
     ("config_candidate_language_runners", CONFIG_PATH, "candidate_language_runners: list[dict] = field(default_factory=list)"),
+    ("config_candidate_runner_stage_bindings", CONFIG_PATH, "def _validate_candidate_runner_stage_bindings"),
     ("evaluator_cascade", EVALUATOR_PATH, "class CascadeEvaluator"),
+    ("evaluator_candidate_runner", EVALUATOR_PATH, "def _run_candidate_runner_subprocess"),
+    ("loader_seed_primary_file", LOADER_PATH, "def _seed_workspace_primary_file"),
     ("examples_loader_smoke", TEST_EXAMPLES_PATH, "problem = load_problem(SORTING_NETWORK_8_EXAMPLE_DIR)"),
     ("readme_todo_owner", README_TODO_PATH, "Add README problem-layout contract drift evidence."),
     ("code_todo_candidate_workspace", CODE_TODO_PATH, "Candidate Workspace Fidelity"),

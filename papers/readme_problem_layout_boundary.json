@@ -27,7 +27,7 @@
     "docs/todo/papers.md"
   ],
   "problem_layout_block_status": "problem_layout_block_present",
-  "layout_item_count": 5,
+  "layout_item_count": 6,
   "missing_layout_item_count": 0,
   "missing_layout_item_records": [],
   "layout_item_records": [
@@ -329,13 +329,13 @@
         {
           "record_id": "config_yaml:problem_format:1",
           "path": "docs/problem-format.md",
-          "required_marker": "`config.yaml` can declare future candidate-language and build-system runner",
+          "required_marker": "`config.yaml` can declare candidate-language and build-system records.",
           "marker_status": "marker_present"
         },
         {
           "record_id": "config_yaml:problem_format:2",
           "path": "docs/problem-format.md",
-          "required_marker": "Config.eval_stages` can run configured validator stages",
+          "required_marker": "`Config.eval_stages` can run configured `external_validator`",
           "marker_status": "marker_present"
         }
       ],
@@ -377,13 +377,83 @@
       ],
       "missing_test_marker_records": [],
       "example_paths": [
-        "libreevolve/problems/examples/embedded_evaluate_math/config.yaml"
+        "libreevolve/problems/examples/embedded_evaluate_math/config.yaml",
+        "libreevolve/problems/examples/candidate_runner_expression/config.yaml"
+      ],
+      "missing_example_paths": [],
+      "item_status": "item_markers_and_examples_present"
+    },
+    {
+      "item_id": "seed_policy_yaml",
+      "path_label": "initial_programs/seed_policy.yaml",
+      "status": "optional_seed_workspace_policy_and_primary_selection",
+      "readme_marker": "optional `initial_programs/seed_policy.yaml`: hidden/cache path policy",
+      "readme_marker_status": "marker_present",
+      "problem_format_marker_records": [
+        {
+          "record_id": "seed_policy_yaml:problem_format:0",
+          "path": "docs/problem-format.md",
+          "required_marker": "add `initial_programs/seed_policy.yaml`",
+          "marker_status": "marker_present"
+        },
+        {
+          "record_id": "seed_policy_yaml:problem_format:1",
+          "path": "docs/problem-format.md",
+          "required_marker": "When `seed_policy.yaml` sets `primary_file`",
+          "marker_status": "marker_present"
+        },
+        {
+          "record_id": "seed_policy_yaml:problem_format:2",
+          "path": "docs/problem-format.md",
+          "required_marker": "`primary_file` is a normalized candidate path, not a glob",
+          "marker_status": "marker_present"
+        }
+      ],
+      "missing_problem_format_marker_records": [],
+      "loader_marker_records": [
+        {
+          "record_id": "seed_policy_yaml:loader:0",
+          "path": "libreevolve/problems/loader.py",
+          "required_marker": "_SEED_POLICY_MANIFEST_NAMES = (\"seed_policy.yaml\", \"seed_policy.yml\")",
+          "marker_status": "marker_present"
+        },
+        {
+          "record_id": "seed_policy_yaml:loader:1",
+          "path": "libreevolve/problems/loader.py",
+          "required_marker": "def _load_seed_workspace_policy",
+          "marker_status": "marker_present"
+        },
+        {
+          "record_id": "seed_policy_yaml:loader:2",
+          "path": "libreevolve/problems/loader.py",
+          "required_marker": "def _seed_policy_primary_file",
+          "marker_status": "marker_present"
+        }
+      ],
+      "missing_loader_marker_records": [],
+      "test_marker_records": [
+        {
+          "record_id": "seed_policy_yaml:test:0",
+          "path": "tests/core/test_loader.py;tests/test_examples.py",
+          "required_marker": "test_seed_policy_selects_non_python_primary_file_for_workspace",
+          "marker_status": "marker_present"
+        },
+        {
+          "record_id": "seed_policy_yaml:test:1",
+          "path": "tests/core/test_loader.py;tests/test_examples.py",
+          "required_marker": "test_seed_policy_rejects_missing_configured_primary_file",
+          "marker_status": "marker_present"
+        }
+      ],
+      "missing_test_marker_records": [],
+      "example_paths": [
+        "libreevolve/problems/examples/candidate_runner_expression/initial_programs/seed_policy.yaml"
       ],
       "missing_example_paths": [],
       "item_status": "item_markers_and_examples_present"
     }
   ],
-  "contract_marker_count": 23,
+  "contract_marker_count": 26,
   "missing_contract_marker_count": 0,
   "missing_contract_marker_records": [],
   "contract_marker_records": [
@@ -460,9 +530,27 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "config_candidate_runner_stage_bindings",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "def _validate_candidate_runner_stage_bindings",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "evaluator_cascade",
       "path": "libreevolve/core/evaluator.py",
       "required_marker": "class CascadeEvaluator",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_candidate_runner",
+      "path": "libreevolve/core/evaluator.py",
+      "required_marker": "def _run_candidate_runner_subprocess",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "loader_seed_primary_file",
+      "path": "libreevolve/problems/loader.py",
+      "required_marker": "def _seed_workspace_primary_file",
       "marker_status": "marker_present"
     },
     {

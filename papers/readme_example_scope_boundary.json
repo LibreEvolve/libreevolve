@@ -22,7 +22,7 @@
   "todo_paths": [
     "docs/todo/readme.md"
   ],
-  "readme_marker_count": 13,
+  "readme_marker_count": 14,
   "missing_readme_marker_count": 0,
   "missing_readme_marker_records": [],
   "readme_marker_records": [
@@ -48,6 +48,12 @@
       "record_id": "neutral_plateau",
       "path": "README.md",
       "required_marker": "Neutral plateau/diversity fixtures",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_runner_scope",
+      "path": "README.md",
+      "required_marker": "`candidate_runner_expression` is a non-comparable contract smoke fixture.",
       "marker_status": "marker_present"
     },
     {
@@ -105,7 +111,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "evidence_anchor_count": 21,
+  "evidence_anchor_count": 23,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -149,6 +155,12 @@
       "record_id": "scope_json_sorting_9",
       "path": "papers/example_benchmark_scope.json",
       "required_marker": "\"problem_id\": \"sorting_network_9\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "scope_json_candidate_runner",
+      "path": "papers/example_benchmark_scope.json",
+      "required_marker": "\"problem_id\": \"candidate_runner_expression\"",
       "marker_status": "marker_present"
     },
     {
@@ -200,6 +212,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "examples_test_candidate_runner",
+      "path": "tests/test_examples.py",
+      "required_marker": "test_candidate_runner_expression_example_loads_builds_and_scores",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "sorting_boundary",
       "path": "papers/sorting_network_rediscovery_boundary.json",
       "required_marker": "bounded_sorting_network_fixtures_available",
@@ -236,13 +254,14 @@
       "marker_status": "marker_present"
     }
   ],
-  "scope_record_count": 8,
+  "scope_record_count": 9,
   "scope_registry_validation_status": "scope_registry_valid",
   "smoke_problem_ids": [
     "hello_world",
     "sorting",
     "workspace_math",
     "embedded_evaluate_math",
+    "candidate_runner_expression",
     "matrix_multiplication",
     "circle_packing"
   ],
@@ -291,6 +310,13 @@
     {
       "problem_id": "embedded_evaluate_math",
       "path": "libreevolve/problems/examples/embedded_evaluate_math",
+      "level": "smoke",
+      "alphaevolve_comparable": false,
+      "path_status": "path_present"
+    },
+    {
+      "problem_id": "candidate_runner_expression",
+      "path": "libreevolve/problems/examples/candidate_runner_expression",
       "level": "smoke",
       "alphaevolve_comparable": false,
       "path_status": "path_present"

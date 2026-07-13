@@ -77,8 +77,7 @@ NON_GOAL_SPECS = (
             {
                 "path": "README.md",
                 "required_safe_phrase": (
-                    "arbitrary-language runners and build-system runners are not "
-                    "implemented"
+                    "does not prove real-language toolchains"
                 ),
                 "forbidden_claim_phrases": (
                     "arbitrary-language runners are implemented",
@@ -89,8 +88,7 @@ NON_GOAL_SPECS = (
             {
                 "path": "docs/run-artifacts.md",
                 "required_safe_phrase": (
-                    "unsupported arbitrary-language and build-system runner "
-                    "contracts"
+                    "real-language codebase-scale evidence unsupported"
                 ),
                 "forbidden_claim_phrases": (
                     "arbitrary-language/build-runner execution is supported",

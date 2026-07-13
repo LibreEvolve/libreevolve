@@ -1611,6 +1611,54 @@ def test_run_records_best_artifact_export_success_in_manifest(tmp_path):
     assert manifest["runtime"]["artifacts"]["best_workspace"]["exists"] is True
 
 
+def test_candidate_runner_example_runs_and_show_accepts_validator_boundary(tmp_path):
+    source = (
+        Path(__file__).resolve().parents[1]
+        / "libreevolve"
+        / "problems"
+        / "examples"
+        / "candidate_runner_expression"
+    )
+    problem_dir = tmp_path / "candidate_runner_expression"
+    shutil.copytree(source, problem_dir)
+    log_dir = tmp_path / "runs"
+    with (problem_dir / "config.yaml").open("a", encoding="utf-8") as handle:
+        handle.write(f"\nlog_dir: {log_dir.as_posix()}\n")
+
+    run_result = CliRunner().invoke(
+        cli,
+        [
+            "run",
+            str(problem_dir),
+            "--run-name",
+            "candidate_runner_cli",
+            "--max-generations",
+            "0",
+            "--overwrite",
+        ],
+    )
+
+    run_dir = log_dir / "candidate_runner_cli"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"][
+        "candidate_language_runner_contract_report"
+    ]
+    assert run_result.exit_code == 0, run_result.output
+    assert manifest["policies"]["candidate_language"]["language_runner_ready"] is True
+    assert report["execution_summary"]["record_count"] == 1
+    assert report["execution_summary"]["successful_record_count"] == 1
+    assert report["execution_summary"]["generated_build_artifact_count"] == 1
+    assert (run_dir / "best_workspace" / "solution.expr").read_text(
+        encoding="utf-8"
+    ) == "6 * 6\n"
+
+    show_result = CliRunner().invoke(cli, ["show", str(run_dir)])
+
+    assert show_result.exit_code == 0, show_result.output
+    assert "Validator boundary" in show_result.output
+    assert "checked_attempts=1" in show_result.output
+
+
 def test_run_records_best_artifact_export_failure_in_manifest(tmp_path):
     _make_problem(tmp_path)
     log_dir = tmp_path / "runs"

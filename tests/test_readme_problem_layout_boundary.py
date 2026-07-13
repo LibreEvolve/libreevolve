@@ -21,9 +21,9 @@ def test_readme_problem_layout_boundary_accepts_current_map():
     assert boundary["readme_path"] == "README.md"
     assert boundary["problem_format_path"] == "docs/problem-format.md"
     assert boundary["problem_layout_block_status"] == "problem_layout_block_present"
-    assert validation.layout_item_count == 5
+    assert validation.layout_item_count == 6
     assert validation.missing_layout_item_count == 0
-    assert validation.contract_marker_count == 23
+    assert validation.contract_marker_count == 26
     assert validation.missing_contract_marker_count == 0
     assert validation.missing_example_path_count == 0
     assert boundary["missing_layout_item_records"] == []
@@ -41,6 +41,7 @@ def test_readme_problem_layout_boundary_accepts_current_map():
         "metrics_yaml": "required_metric_schema_file",
         "task_description": "required_prompt_task_file",
         "config_yaml": "optional_problem_runtime_configuration",
+        "seed_policy_yaml": "optional_seed_workspace_policy_and_primary_selection",
     }
     assert boundary["missing_evidence"] == {
         "semantic_loader_contract_verifier": "not_recorded_locally",
@@ -108,9 +109,9 @@ def test_render_readme_problem_layout_boundary_summary_reports_shape():
         "| boundary_status | readme_problem_layout_structural_map_without_semantic_loader_proof |"
         in summary
     )
-    assert "| layout_item_count | 5 |" in summary
+    assert "| layout_item_count | 6 |" in summary
     assert "| missing_layout_item_count | 0 |" in summary
-    assert "| contract_marker_count | 23 |" in summary
+    assert "| contract_marker_count | 26 |" in summary
     assert "| missing_contract_marker_count | 0 |" in summary
     assert "| missing_example_path_count | 0 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

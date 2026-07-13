@@ -1150,12 +1150,17 @@ queued/running pending-work restore.
 
 ## Known gaps
 
-- Candidate workspaces are local text file sets, not arbitrary-language build
-  systems or external repositories.
-- Materialized workspace execution uses the candidate root as subprocess `cwd`
-  and import path, but it is still a local Python subprocess rather than a
-  container or arbitrary build-system runner. Startup manifests record
-  `policies.validator_execution` for this local-subprocess boundary.
+- Candidate workspaces are bounded local text/static file sets. A task can
+  select a non-Python text primary and bind local build/runner command arrays,
+  but this is not a typed arbitrary-language solution API, external repository
+  workspace, or codebase-scale build system.
+- Materialized workspace execution uses the candidate root as subprocess `cwd`.
+  External validators and scoring adapters remain Python. A
+  `candidate_runner` stage can execute one task-declared language command and
+  optional build command without a shell, then pass a bounded/redacted process
+  record to the problem-owned Python scorer. Startup manifests record this
+  partial local-subprocess contract under `policies.validator_execution` and
+  `policies.candidate_language`.
 - Evaluator timeouts attempt best-effort process-tree cleanup and record cleanup
   metadata, but this remains local subprocess management rather than a
   deterministic descendant-process guarantee, container, network sandbox, or
@@ -1163,7 +1168,14 @@ queued/running pending-work restore.
 - Validator subprocesses use a minimal environment plus
   `validator_env_allowlist`; provider keys loaded through `.env` are hidden by
   default and persisted evaluator stdout/stderr is secret-redacted for common
-  assignment and provider-token shapes. This is not a network sandbox.
+  assignment and provider-token shapes. Candidate-runner stages require the
+  host network policy because arbitrary child commands cannot be denied network
+  access by the Python socket hook. This is not a network sandbox.
+- The checked expression runner/build fixture proves command dispatch,
+  generated-artifact capture, and problem-owned scoring only. Real compiler or
+  package-manager fixtures, toolchain/dependency version capture and replay,
+  language-aware evolve-block grammars, OS sandboxing, and codebase-scale
+  benchmark evidence remain open.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - Proposal generation can overlap on opt-in, worker-owned local asyncio sampler

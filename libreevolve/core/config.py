@@ -50,6 +50,7 @@ MAX_ASYNC_GENERATION_WINDOW = 64
 CONFIGURED_MUTATION_MODES = frozenset({*MUTATION_MODES, "adaptive"})
 ADAPTIVE_MUTATION_TASK_PREFERENCES = frozenset({"auto", "diff", "full"})
 MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT = 5
+CANDIDATE_RUNNER_EXECUTION_STATUS = "executable_local_subprocess"
 _CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
     r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
 )
@@ -493,6 +494,12 @@ class Config:
         )
         self.llm_prompt_roles = _validate_llm_prompt_roles(self.llm_prompt_roles)
         _validate_eval_stages(self.eval_stages)
+        _validate_candidate_runner_stage_bindings(
+            self.eval_stages,
+            self.candidate_language_runners,
+            self.candidate_build_systems,
+            validator_network_policy=self.validator_network_policy,
+        )
         _validate_backends(self.backends)
         self.llm_role_backend_indices = _validate_llm_role_backend_indices(
             self.llm_role_backend_indices,
@@ -704,12 +711,25 @@ def _validate_candidate_language_runners(value: object) -> list[dict]:
         _require_enum(
             f"{path}.execution_status",
             execution_status,
-            {"declared_metadata_only", "unsupported"},
+            {
+                "declared_metadata_only",
+                "unsupported",
+                CANDIDATE_RUNNER_EXECUTION_STATUS,
+            },
         )
         file_patterns = _validate_candidate_glob_patterns(
             f"{path}.file_patterns",
             item.get("file_patterns", []),
         )
+        runner_command = _validate_candidate_runner_command(
+            f"{path}.runner_command",
+            item.get("runner_command"),
+        )
+        if execution_status == CANDIDATE_RUNNER_EXECUTION_STATUS and not runner_command:
+            raise ConfigError(
+                f"{path}.runner_command is required when execution_status="
+                f"{CANDIDATE_RUNNER_EXECUTION_STATUS!r}"
+            )
         normalized.append(
             {
                 "language": language,
@@ -722,10 +742,7 @@ def _validate_candidate_language_runners(value: object) -> list[dict]:
                     f"{path}.marker_grammar",
                     item.get("marker_grammar", "unsupported"),
                 ),
-                "runner_command": _validate_candidate_runner_command(
-                    f"{path}.runner_command",
-                    item.get("runner_command"),
-                ),
+                "runner_command": runner_command,
                 "execution_status": execution_status,
                 "notes": _validate_candidate_declaration_text(
                     f"{path}.notes",
@@ -767,7 +784,11 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
         _require_enum(
             f"{path}.execution_status",
             execution_status,
-            {"declared_metadata_only", "unsupported"},
+            {
+                "declared_metadata_only",
+                "unsupported",
+                CANDIDATE_RUNNER_EXECUTION_STATUS,
+            },
         )
         build_files = _validate_candidate_glob_patterns(
             f"{path}.build_files",
@@ -777,14 +798,20 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
             f"{path}.artifact_patterns",
             item.get("artifact_patterns", []),
         )
+        build_command = _validate_candidate_runner_command(
+            f"{path}.build_command",
+            item.get("build_command"),
+        )
+        if execution_status == CANDIDATE_RUNNER_EXECUTION_STATUS and not build_command:
+            raise ConfigError(
+                f"{path}.build_command is required when execution_status="
+                f"{CANDIDATE_RUNNER_EXECUTION_STATUS!r}"
+            )
         normalized.append(
             {
                 "name": name,
                 "build_files": build_files,
-                "build_command": _validate_candidate_runner_command(
-                    f"{path}.build_command",
-                    item.get("build_command"),
-                ),
+                "build_command": build_command,
                 "artifact_patterns": artifact_patterns,
                 "execution_status": execution_status,
                 "notes": _validate_candidate_declaration_text(
@@ -830,6 +857,82 @@ def _validate_candidate_runner_command(path: str, value: object) -> list[str]:
             _validate_candidate_declaration_text(f"{path}[{index}]", token)
         )
     return command
+
+
+def _validate_candidate_runner_stage_bindings(
+    stages: object,
+    language_runners: object,
+    build_systems: object,
+    *,
+    validator_network_policy: str,
+) -> None:
+    if not isinstance(stages, list):
+        return
+    language_by_id = (
+        {
+            record.get("language"): record
+            for record in language_runners
+            if isinstance(record, dict)
+            and isinstance(record.get("language"), str)
+        }
+        if isinstance(language_runners, list)
+        else {}
+    )
+    build_by_id = (
+        {
+            record.get("name"): record
+            for record in build_systems
+            if isinstance(record, dict) and isinstance(record.get("name"), str)
+        }
+        if isinstance(build_systems, list)
+        else {}
+    )
+    for index, stage in enumerate(stages):
+        if (
+            not isinstance(stage, dict)
+            or stage.get("mode", "external_validator") != "candidate_runner"
+        ):
+            continue
+        label = f"eval_stages[{index}]"
+        language_id = stage.get("language_runner")
+        if not isinstance(language_id, str) or not language_id:
+            raise ConfigError(
+                f"{label}.language_runner is required for candidate_runner stages"
+            )
+        language = language_by_id.get(language_id.lower())
+        if language is None:
+            raise ConfigError(
+                f"{label}.language_runner references unknown candidate language "
+                f"runner {language_id!r}"
+            )
+        stage["language_runner"] = language_id.lower()
+        if language.get("execution_status") != CANDIDATE_RUNNER_EXECUTION_STATUS:
+            raise ConfigError(
+                f"{label}.language_runner must reference an "
+                f"{CANDIDATE_RUNNER_EXECUTION_STATUS} declaration"
+            )
+        build_id = stage.get("build_system")
+        if build_id is not None:
+            if not isinstance(build_id, str) or not build_id:
+                raise ConfigError(f"{label}.build_system must be a non-empty identifier")
+            build = build_by_id.get(build_id.lower())
+            if build is None:
+                raise ConfigError(
+                    f"{label}.build_system references unknown candidate build "
+                    f"system {build_id!r}"
+                )
+            stage["build_system"] = build_id.lower()
+            if build.get("execution_status") != CANDIDATE_RUNNER_EXECUTION_STATUS:
+                raise ConfigError(
+                    f"{label}.build_system must reference an "
+                    f"{CANDIDATE_RUNNER_EXECUTION_STATUS} declaration"
+                )
+        if validator_network_policy != "host":
+            raise ConfigError(
+                f"{label}.mode='candidate_runner' requires validator_network_policy="
+                "'host' because arbitrary child-process network denial requires an OS "
+                "sandbox"
+            )
 
 
 def _normalize_path_string(name: str, value: object) -> str:
@@ -1240,6 +1343,8 @@ def _validate_eval_stages(stages: object) -> None:
             "difficulty_or_scale",
             "test_set",
             "mode",
+            "language_runner",
+            "build_system",
             "validate_path",
             "eval_inputs",
             "timeout_sec",
@@ -1272,7 +1377,11 @@ def _validate_eval_stages(stages: object) -> None:
             raise ConfigError(f"{label} has unsupported fields {unsupported}")
         mode = str(stage.get("mode", "external_validator"))
         if "mode" in stage:
-            _require_enum(f"{label}.mode", stage["mode"], {"external_validator", "embedded_evaluate"})
+            _require_enum(
+                f"{label}.mode",
+                stage["mode"],
+                {"external_validator", "embedded_evaluate", "candidate_runner"},
+            )
         if mode == "embedded_evaluate":
             if "validate_path" in stage:
                 raise ConfigError(f"{label}.validate_path is not supported for embedded_evaluate stages")
@@ -1282,6 +1391,18 @@ def _validate_eval_stages(stages: object) -> None:
                 raise ConfigError(f"{label}.data_include/data_exclude are not supported for embedded_evaluate stages")
         elif "eval_inputs" in stage:
             raise ConfigError(f"{label}.eval_inputs requires mode='embedded_evaluate'")
+        if mode != "candidate_runner" and (
+            "language_runner" in stage or "build_system" in stage
+        ):
+            raise ConfigError(
+                f"{label}.language_runner/build_system require mode='candidate_runner'"
+            )
+        if "language_runner" in stage:
+            _require_safe_identifier(
+                f"{label}.language_runner", stage["language_runner"]
+            )
+        if "build_system" in stage:
+            _require_safe_identifier(f"{label}.build_system", stage["build_system"])
         if "name" in stage:
             name = _require_stage_label(f"{label}.name", stage["name"])
             if name in stage_names:

@@ -13,7 +13,7 @@
   "implemented_today_bullet_count": 9,
   "important_limits_bullet_count": 242,
   "status_ledger_signal_term_count": 11,
-  "status_ledger_signal_record_count": 615,
+  "status_ledger_signal_record_count": 616,
   "status_ledger_local_path_ref_count": 270,
   "status_ledger_unique_local_path_ref_count": 215,
   "status_ledger_missing_local_path_refs": [],
@@ -74,7 +74,7 @@
     "unique_local_artifact_count": 60,
     "local_artifact_mention_record_count": 60,
     "absence_phrase_count": 87,
-    "absence_signal_record_count": 99
+    "absence_signal_record_count": 98
   },
   "required_evidence_fields": [
     "status_ledger_heading",

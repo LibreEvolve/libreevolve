@@ -16089,3 +16089,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     operator-family provenance remain active criteria.
   - Verification: candidate-workspace and adaptive-mutation sidecars separate
     implemented format selection from those broader readiness gaps.
+- [x] Keep ROADMAP current with bounded local candidate-runner execution.
+  - Status: ROADMAP now credits task-primary seed selection, executable
+    language/build declaration bindings, trusted local command-token execution,
+    problem-owned scoring, generated-artifact capture, runtime process evidence,
+    and the checked non-Python expression fixture.
+  - Remaining roadmap gap: real-language and codebase-scale fixtures, pinned
+    toolchain/dependency replay, language-aware markers, OS/container isolation,
+    task-defined abstraction APIs, and benchmark-backed parity remain active
+    readiness criteria.
+  - Verification: candidate-workspace fidelity/readiness and
+    candidate-language sidecars distinguish local partial capability from full
+    AlphaEvolve arbitrary-language support.

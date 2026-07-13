@@ -14,6 +14,7 @@ import yaml
 from libreevolve.core.candidate import (
     CandidateWorkspace,
     DEFAULT_MAX_CANDIDATE_STATIC_FILE_BYTES,
+    normalize_candidate_path,
     validate_evolve_blocks,
 )
 from libreevolve.core.redaction import redact_sensitive_text
@@ -181,7 +182,8 @@ def load_problem(problem_dir: str | Path) -> Problem:
     if not seeds:
         detail = _seed_skipped_error_detail(seed_skipped)
         raise ValueError(
-            f"No seed programs (*.py) or seed directories found in {seed_dir}{detail}"
+            f"No seed programs (*.py) or configured seed workspaces found in "
+            f"{seed_dir}{detail}"
         )
     context_files, context_sources, context_policy = _load_context_files(
         d,
@@ -1008,7 +1010,10 @@ def _load_initial_workspaces(seed_dir: Path) -> tuple[list[CandidateWorkspace], 
                 if _is_reserved_seed_path(rel):
                     allowed_reserved_paths.add(rel)
             if files:
-                preferred = _seed_workspace_primary_file(files)
+                preferred = _seed_workspace_primary_file(
+                    files,
+                    configured=seed_policy.get("primary_file"),
+                )
                 if preferred is None:
                     skipped.append(
                         _seed_skipped_record(
@@ -1091,12 +1096,18 @@ def _load_seed_workspace_policy(seed_dir: Path) -> dict:
         raise ValueError(f"{policy_path}: seed policy must be a mapping")
     if not all(isinstance(key, str) for key in raw):
         raise ValueError(f"{policy_path}: seed policy keys must be strings")
-    unsupported = sorted(set(raw) - {"include", "exclude"})
+    unsupported = sorted(set(raw) - {"include", "exclude", "primary_file"})
     if unsupported:
         raise ValueError(f"{policy_path}: unsupported seed policy fields {unsupported}")
     include = _seed_policy_pattern_list(policy_path, raw.get("include", []), "include")
     exclude = _seed_policy_pattern_list(policy_path, raw.get("exclude", []), "exclude")
-    return _seed_workspace_policy(policy_path.name, include=include, exclude=exclude)
+    primary_file = _seed_policy_primary_file(policy_path, raw.get("primary_file"))
+    return _seed_workspace_policy(
+        policy_path.name,
+        include=include,
+        exclude=exclude,
+        primary_file=primary_file,
+    )
 
 
 def _seed_workspace_policy(
@@ -1104,8 +1115,9 @@ def _seed_workspace_policy(
     *,
     include: list[str] | None = None,
     exclude: list[str] | None = None,
+    primary_file: str | None = None,
 ) -> dict:
-    return {
+    policy = {
         "policy": "skip_reserved_seed_paths_by_default",
         "reserved_components": ["dot-prefixed", "__pycache__"],
         "source": source,
@@ -1113,6 +1125,22 @@ def _seed_workspace_policy(
         "exclude": list(exclude or []),
         "exclude_precedence": True,
     }
+    if primary_file is not None:
+        policy["primary_file"] = primary_file
+    return policy
+
+
+def _seed_policy_primary_file(path: Path, value: object) -> str | None:
+    if value is None:
+        return None
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{path}: seed policy primary_file must be a non-empty path")
+    try:
+        return normalize_candidate_path(value)
+    except ValueError as exc:
+        raise ValueError(
+            f"{path}: seed policy primary_file must be a safe candidate path: {exc}"
+        ) from exc
 
 
 def _seed_policy_pattern_list(path: Path, value: object, field_name: str) -> list[str]:
@@ -1185,7 +1213,18 @@ def _ignored_seed_reason(part: str, *, top_level: bool = False) -> str:
     return "top_level_hidden_seed_entry" if top_level else "hidden_seed_workspace_path"
 
 
-def _seed_workspace_primary_file(files: dict[str, str]) -> str | None:
+def _seed_workspace_primary_file(
+    files: dict[str, str],
+    *,
+    configured: object = None,
+) -> str | None:
+    if configured is not None:
+        if not isinstance(configured, str) or configured not in files:
+            raise ValueError(
+                "Configured seed workspace primary_file is not present in every "
+                f"seed directory: {configured!r}"
+            )
+        return configured
     return next(
         (p for p in ("main.py", "seed.py") if p in files),
         next((p for p in sorted(files) if p.endswith(".py")), None),

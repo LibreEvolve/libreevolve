@@ -46,7 +46,7 @@ def test_roadmap_candidate_workspace_fidelity_accepts_bounded_criteria_map():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "configured_language_build_runners": "not_recorded_locally",
+        "real_language_replayable_build_runner_evidence": "not_recorded_locally",
         "flexible_solution_abstraction_api": "not_recorded_locally",
         "candidate_embedded_evaluator_contracts": "not_recorded_locally",
         "realistic_codebase_fixtures": "not_recorded_locally",
@@ -59,7 +59,7 @@ def test_roadmap_candidate_workspace_fidelity_accepts_bounded_criteria_map():
         "topology_resume_replay_proof": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "does not claim configured language/build runners" in boundary["claim_boundary"]
+    assert "does not claim real-language replayable build-runner evidence" in boundary["claim_boundary"]
 
 
 def test_roadmap_candidate_workspace_fidelity_rejects_overclaim_and_drift():
@@ -68,7 +68,7 @@ def test_roadmap_candidate_workspace_fidelity_rejects_overclaim_and_drift():
     boundary["boundary_status"] = "full_candidate_workspace_fidelity_ready"
     boundary["criterion_count"] = 9
     boundary["criterion_records"][0]["roadmap_phrase_present"] = False
-    boundary["missing_evidence"]["configured_language_build_runners"] = "recorded"
+    boundary["missing_evidence"]["real_language_replayable_build_runner_evidence"] = "recorded"
     boundary["required_evidence_fields"] = ["criterion_records"]
 
     validation = validate_roadmap_candidate_workspace_fidelity_boundary(boundary)
@@ -79,7 +79,7 @@ def test_roadmap_candidate_workspace_fidelity_rejects_overclaim_and_drift():
     assert "invalid_boundary_status" in codes
     assert "invalid_criterion_count" in codes
     assert "invalid_criterion_records" in codes
-    assert "invalid_missing_evidence_configured_language_build_runners" in codes
+    assert "invalid_missing_evidence_real_language_replayable_build_runner_evidence" in codes
     assert "missing_required_evidence_field" in codes
 
 

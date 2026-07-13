@@ -186,7 +186,7 @@ def test_manifest_includes_package_data():
     manifest = Path("MANIFEST.in").read_text(encoding="utf-8")
 
     assert "recursive-include libreevolve/problems/examples" in manifest
-    for pattern in ("*.yaml", "*.txt", "*.json", "*.bin", "*.md"):
+    for pattern in ("*.yaml", "*.txt", "*.json", "*.bin", "*.md", "*.expr"):
         assert pattern in manifest
     assert "recursive-include libreevolve/problems/benchmarks" in manifest
     assert "*.ipynb" in manifest

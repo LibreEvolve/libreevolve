@@ -24,6 +24,9 @@ TEST_EVALUATOR_PATH = "tests/core/test_evaluator.py"
 TEST_EXAMPLES_PATH = "tests/test_examples.py"
 WORKSPACE_MATH_PATH = "libreevolve/problems/examples/workspace_math"
 EMBEDDED_EVALUATE_PATH = "libreevolve/problems/examples/embedded_evaluate_math"
+CANDIDATE_RUNNER_EXAMPLE_PATH = (
+    "libreevolve/problems/examples/candidate_runner_expression"
+)
 README_PROBLEM_LAYOUT_PATH = "papers/readme_problem_layout_boundary.json"
 VALIDATOR_EXECUTION_PATH = "papers/validator_execution_boundary.json"
 EMBEDDED_EVALUATOR_PATH = "papers/embedded_evaluator_boundary.json"
@@ -51,10 +54,11 @@ EXPECTED_GUIDE_MARKERS = (
     ("codebase_manifest_exclusivity", "Use either `codebase_integration.yaml` or `codebase_integration.yml`, not both."),
     ("validator_signatures", "`validate.py` must expose either the legacy one-argument signature"),
     ("configured_eval_stages", "Problem `config.yaml` stages accept\nonly the documented `eval_stages` keys"),
-    ("candidate_runner_declarations", "`config.yaml` can declare future candidate-language and build-system runner"),
+    ("candidate_runner_declarations", "`config.yaml` can declare candidate-language and build-system records."),
+    ("candidate_runner_execution", "Candidate commands require `validator_network_policy: host`."),
     ("evaluation_validity_gate", "The evaluator treats `is_valid` as a required boolean validity gate"),
     ("seed_policy", "add `initial_programs/seed_policy.yaml`"),
-    ("unsupported_runner_scope", "These records are manifest metadata only."),
+    ("seed_primary_file", "When `seed_policy.yaml` sets `primary_file`"),
 )
 EXPECTED_EVIDENCE_ANCHORS = (
     ("loader_problem_dataclass", LOADER_PATH, "class Problem:"),
@@ -69,6 +73,7 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("loader_context_files", LOADER_PATH, "def _load_context_files"),
     ("loader_initial_workspaces", LOADER_PATH, "def _load_initial_workspaces"),
     ("loader_seed_policy", LOADER_PATH, "def _load_seed_workspace_policy"),
+    ("loader_seed_primary_file", LOADER_PATH, "def _seed_workspace_primary_file"),
     ("loader_metric_schema", LOADER_PATH, "def _normalize_metric_schema"),
     ("loader_config_embedded_only", LOADER_PATH, "def _problem_config_declares_embedded_only_evaluation"),
     ("config_eval_stages", CONFIG_PATH, "eval_stages:            list[dict] = field(default_factory=list)"),
@@ -76,18 +81,24 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("config_candidate_build_systems", CONFIG_PATH, "candidate_build_systems: list[dict] = field(default_factory=list)"),
     ("config_eval_stage_validation", CONFIG_PATH, "def _validate_eval_stages"),
     ("config_candidate_runner_validation", CONFIG_PATH, "def _validate_candidate_language_runners"),
+    ("config_candidate_runner_stage_bindings", CONFIG_PATH, "def _validate_candidate_runner_stage_bindings"),
     ("evaluator_cascade", EVALUATOR_PATH, "class CascadeEvaluator:"),
+    ("evaluator_candidate_runner", EVALUATOR_PATH, "def _run_candidate_runner_subprocess"),
     ("evaluator_stage_preflight", EVALUATOR_PATH, "preflight_evaluator_contracts"),
     ("evaluator_validate_path_metadata", EVALUATOR_PATH, "\"validate_path\""),
     ("loader_tests_minimal", TEST_LOADER_PATH, "assert isinstance(load_problem(_make(t)), Problem)"),
     ("loader_tests_context", TEST_LOADER_PATH, "context.yaml"),
     ("loader_tests_seed_policy", TEST_LOADER_PATH, "seed_policy"),
+    ("loader_tests_non_python_primary", TEST_LOADER_PATH, "test_seed_policy_selects_non_python_primary_file_for_workspace"),
     ("loader_tests_embedded_only", TEST_LOADER_PATH, "test_allows_missing_validate_py_for_embedded_only_problem_config"),
     ("evaluator_tests_stage_validate", TEST_EVALUATOR_PATH, "stage_validate.py"),
+    ("evaluator_tests_candidate_runner", TEST_EVALUATOR_PATH, "test_candidate_runner_stage_builds_runs_and_uses_problem_owned_validator"),
     ("examples_workspace_math", TEST_EXAMPLES_PATH, "test_workspace_math_loader_records_nested_static_seed_workspace"),
     ("examples_embedded_evaluate", TEST_EXAMPLES_PATH, "test_embedded_evaluate_example_loads_without_external_validate_py"),
+    ("examples_candidate_runner", TEST_EXAMPLES_PATH, "test_candidate_runner_expression_example_loads_builds_and_scores"),
     ("workspace_math_example", WORKSPACE_MATH_PATH, "codebase_integration.yaml"),
     ("embedded_evaluate_example", EMBEDDED_EVALUATE_PATH, "config.yaml"),
+    ("candidate_runner_example", CANDIDATE_RUNNER_EXAMPLE_PATH, "config.yaml"),
     ("readme_problem_layout_sidecar", README_PROBLEM_LAYOUT_PATH, "readme_problem_layout"),
     ("validator_execution_sidecar", VALIDATOR_EXECUTION_PATH, "validator_execution_boundary"),
     ("embedded_evaluator_sidecar", EMBEDDED_EVALUATOR_PATH, "embedded_entrypoint_without_full_figure3_parity"),
@@ -107,8 +118,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "task_and_metrics_contract_markers",
     "validator_signature_and_stage_markers",
     "candidate_runner_declaration_markers",
+    "candidate_runner_execution_markers",
     "evaluation_semantics_markers",
     "initial_program_and_seed_policy_markers",
+    "seed_primary_file_markers",
     "mutation_mode_markers",
     "loader_source_anchor_map",
     "config_and_evaluator_anchor_map",
@@ -165,6 +178,7 @@ def problem_format_loader_contract_boundary_record(root: str | Path = ".") -> di
         TEST_EXAMPLES_PATH,
         WORKSPACE_MATH_PATH,
         EMBEDDED_EVALUATE_PATH,
+        CANDIDATE_RUNNER_EXAMPLE_PATH,
         README_PROBLEM_LAYOUT_PATH,
         VALIDATOR_EXECUTION_PATH,
         EMBEDDED_EVALUATOR_PATH,
@@ -195,7 +209,11 @@ def problem_format_loader_contract_boundary_record(root: str | Path = ".") -> di
         "problem_format_path": PROBLEM_FORMAT_PATH,
         "source_paths": [LOADER_PATH, CONFIG_PATH, EVALUATOR_PATH],
         "test_paths": [TEST_LOADER_PATH, TEST_EVALUATOR_PATH, TEST_EXAMPLES_PATH],
-        "example_paths": [WORKSPACE_MATH_PATH, EMBEDDED_EVALUATE_PATH],
+        "example_paths": [
+            WORKSPACE_MATH_PATH,
+            EMBEDDED_EVALUATE_PATH,
+            CANDIDATE_RUNNER_EXAMPLE_PATH,
+        ],
         "sidecar_paths": [
             README_PROBLEM_LAYOUT_PATH,
             VALIDATOR_EXECUTION_PATH,
@@ -227,7 +245,8 @@ def problem_format_loader_contract_boundary_record(root: str | Path = ".") -> di
             "integration metadata, task and metrics files, validator "
             "signatures, configured evaluator stages, candidate runner "
             "declarations, evaluation semantics, seed workspaces, seed policy, "
-            "mutation modes, and unsupported runner scope. It also records "
+            "mutation modes, executable candidate-runner security scope, and "
+            "explicit seed-primary selection. It also records "
             "loader/config/evaluator source anchors, focused loader/evaluator/"
             "example test anchors, example path anchors, sidecar anchors, and "
             "active TODO ownership. It does not claim semantic problem-format "

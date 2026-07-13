@@ -15,7 +15,7 @@ CANDIDATE_LANGUAGE_RUNNER_CONTRACT_REPORT_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.1", "2.2")
-EXPECTED_BOUNDARY_STATUS = "python_primary_without_arbitrary_language_runner_evidence"
+EXPECTED_BOUNDARY_STATUS = "local_candidate_runner_execution_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "candidate_language",
     "runner_id",
@@ -36,18 +36,22 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "configured_non_python_language_runners": (
-        "metadata_declarations_and_workspace_matches_recorded_execution_not_supported"
+        "local_expression_smoke_execution_recorded_real_language_toolchains_not_recorded"
     ),
     "build_system_runner_contracts": (
-        "metadata_declarations_and_workspace_matches_recorded_runner_contract_not_supported"
+        "local_expression_copy_build_recorded_replayable_real_toolchain_not_recorded"
     ),
     "language_aware_marker_grammars": "not_recorded_locally",
-    "arbitrary_language_validator_contracts": "not_recorded_locally",
+    "arbitrary_language_validator_contracts": (
+        "problem_owned_python_scoring_adapter_recorded_real_language_contract_not_recorded"
+    ),
     "task_defined_candidate_abstraction_hooks": "not_recorded_locally",
     "runner_environment_artifacts": (
-        "current_python_runner_environment_link_recorded_arbitrary_runner_artifacts_not_recorded"
+        "executable_path_hashes_recorded_toolchain_versions_and_dependencies_not_recorded"
     ),
-    "generated_build_artifact_records": "not_recorded_locally",
+    "generated_build_artifact_records": (
+        "bounded_expression_build_artifact_recorded_codebase_scale_not_recorded"
+    ),
 }
 
 
@@ -67,7 +71,7 @@ class CandidateLanguageRunnerBoundaryValidation:
 
 
 def candidate_language_runner_boundary_record() -> dict[str, Any]:
-    """Return the current arbitrary-language/build-runner absence boundary."""
+    """Return the current local language/build-runner partial boundary."""
 
     return {
         "schema": CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA,
@@ -87,16 +91,15 @@ def candidate_language_runner_boundary_record() -> dict[str, Any]:
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-        "This boundary records that LibreEvolve has a validated "
-        "Python-primary candidate-language policy and runtime runner "
-        "contract report with metadata-only non-Python language and build "
-        "declaration evidence plus retained-workspace path-match evidence "
-        "when configured and current Python-runner environment linkage, but "
-        "does not claim AlphaEvolve-style "
-        "arbitrary language or build-system runner execution evidence with "
-            "language-aware marker grammars, executable build contracts, "
+            "This boundary records that LibreEvolve has a validated task-primary "
+            "candidate-language policy, stage-bound local build and runner commands, "
+            "problem-owned scoring, bounded generated-artifact capture, and an "
+            "executed non-Python expression smoke fixture, but does not claim "
+            "AlphaEvolve-style arbitrary language or build-system parity with "
+            "language-aware marker grammars, sandboxed replayable real-language "
+            "build contracts, "
             "task-defined abstraction hooks, arbitrary-runner environment "
-            "artifacts, or generated build artifacts."
+            "artifacts, or codebase-scale generated build-artifact evidence."
         ),
     }
 
@@ -134,7 +137,7 @@ def validate_candidate_language_runner_boundary(
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if not isinstance(boundary_text, str) or "does not claim" not in boundary_text:
-        issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim arbitrary-language runner evidence"))
+        issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim arbitrary-language runner parity"))
     return CandidateLanguageRunnerBoundaryValidation(
         ok=not issues,
         boundary_status=status if isinstance(status, str) else None,

@@ -19402,3 +19402,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused synchronous, async sampler, short-full/large-diff,
     failure-switch, bidirectional parser-fallback, critique, config, CLI,
     persistence, report-validator, and paper-boundary tests cover the contract.
+- [x] Add stage-bound local candidate language/build execution.
+  - Spec evidence: AlphaEvolve Sections 2.1-2.2 make the task's program
+    representation and evaluator contract first-class rather than requiring one
+    fixed Python primary path.
+  - Status: `candidate_runner` stages now bind executable language and optional
+    build declarations, materialize task-primary text workspaces, validate
+    declared path globs, execute command-token arrays without a shell, capture
+    bounded generated artifacts, and pass bounded/redacted process records to
+    the problem-owned Python scorer. Seed policy can select a non-Python
+    `primary_file`; manifests and runtime reports retain stage bindings,
+    process/command/executable hashes, environment and security scope, artifact
+    summaries, and readiness gaps. The checked expression fixture exercises the
+    full provider-free CLI run/show path.
+  - Remaining code gap: real compiler/package-manager fixtures, pinned
+    toolchain and dependency replay, language-aware markers, OS/container
+    isolation, task-defined abstraction APIs, and codebase-scale benchmarks.
+  - Verification: focused config, loader, evaluator, database, loop, example,
+    boundary, and end-to-end CLI/show tests cover the trusted-local contract.

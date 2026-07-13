@@ -623,7 +623,9 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     from the README problem-layout block to required/optional file markers,
     `docs/problem-format.md`, loader/config/evaluator anchors, example problem
     path checks, focused loader/example test anchors, AlphaEvolve
-    problem-surface sidecars, and active TODO ownership.
+    problem-surface sidecars, and active TODO ownership. The README now also
+    names `seed_policy.yaml` primary selection and provides a provider-free
+    `candidate_runner_expression` run/show smoke command.
   - Current gap: the committed sidecar is structural evidence only. It does not
     prove every loader branch or problem-format claim semantically, does not
     add a dedicated minimal-problem smoke fixture, does not validate the full
@@ -641,14 +643,14 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     contract that readers are sent to after the root README. It specifies the
     required layout, context manifest semantics, codebase-integration metadata,
     task and metrics files, validator signatures, configured evaluator stages,
-    language/build-runner declarations, seed workspaces, seed policies, and
-    unsupported AlphaEvolve-facing surfaces.
+    language/build-runner declarations and executable stage bindings, seed
+    workspaces, seed policies, and the remaining AlphaEvolve-facing limits.
   - Current evidence: `papers/problem_format_loader_contract_boundary.json`
     now records `docs/problem-format.md` section and claim markers for required
     layout, context manifests, codebase-integration metadata, task and metrics
     files, validator signatures, configured evaluator stages, candidate runner
     declarations, evaluation semantics, seed workspaces, seed policy, mutation
-    modes, and unsupported runner scope. It also records loader/config/
+    modes, and the local-runner security/parity scope. It also records loader/config/
     evaluator anchors, focused loader/evaluator/example test anchors, example
     path anchors, related sidecar anchors, and TODO owner anchors.
   - Current gap: the new boundary is still structural evidence. It does not
@@ -657,8 +659,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     drift gate, does not detect every newly introduced problem surface, and
     does not include owner review signoff. Changes to `context.yaml`,
     `seed_policy.yaml`, embedded evaluator stages, metrics semantics, or
-    candidate-language/build declarations can therefore still require manual
-    interpretation beyond the structural marker checks.
+    candidate-language/build execution can therefore still require manual
+    interpretation beyond the structural marker checks. The checked expression
+    fixture covers one local build/run/scorer path, not every declared command,
+    platform, or toolchain.
   - Required result: add a semantic problem-format claim verifier,
     per-manifest-key executable traces, docs CI drift gating, new
     problem-surface detection, and owner review signoff that require
@@ -676,7 +680,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
   - Current evidence: `papers/readme_example_scope_boundary.json` now records
     README section markers, the shipped-example scope registry, the committed
     `papers/example_benchmark_scope.json` sidecar, example path existence,
-    smoke and benchmark-candidate classifications, sorting-network boundary
+    smoke and benchmark-candidate classifications, the non-comparable
+    `candidate_runner_expression` contract fixture, sorting-network boundary
     anchors, benchmark fixture-readiness anchors, hardening and validator test
     anchors, status/papers index anchors, and active TODO ownership. It
     preserves the current split between six smoke fixtures and two

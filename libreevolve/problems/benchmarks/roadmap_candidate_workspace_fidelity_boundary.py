@@ -29,7 +29,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_readiness_detector",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "configured_language_build_runners": "not_recorded_locally",
+    "real_language_replayable_build_runner_evidence": "not_recorded_locally",
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",
@@ -48,27 +48,27 @@ CRITERION_SPECS = (
     {
         "criterion_id": "language_build_runner_support",
         "search_surface": "candidate language/build/runner declarations and execution policy",
-        "current_scope": "manifest metadata and Python-primary runner contracts without executable non-Python/build runners",
-        "missing_readiness": "configured language runners, build-system execution contracts, and runner capability tests",
-        "roadmap_required_phrase": "actual non-Python language runners",
+        "current_scope": "task-primary local expression build/runner/scorer execution without real-language toolchain parity",
+        "missing_readiness": "real-language runners, replayable build-system contracts, isolation, and codebase-scale capability evidence",
+        "roadmap_required_phrase": "real language and toolchain fixtures",
         "current_sidecars": ("papers/candidate_language_runner_boundary.json",),
         "active_todos": (
             {
                 "path": "docs/todo/code.md",
-                "required_phrase": "executable language and build runner contracts",
+                "required_phrase": "real compiler or package-manager toolchain",
             },
             {
                 "path": "docs/todo/papers.md",
-                "required_phrase": "executable configured language runners",
+                "required_phrase": "real-language and build-system contracts",
             },
         ),
-        "validation_gate": "non-Python and build-runner contract tests with manifest evidence",
-        "readiness_status": "metadata_only_language_build_contracts",
+        "validation_gate": "real-language and replayable-build contract tests with manifest evidence",
+        "readiness_status": "local_expression_build_runner_partial_without_real_toolchain_gate",
     },
     {
         "criterion_id": "candidate_abstraction_api",
         "search_surface": "problem-defined solution abstraction choices",
-        "current_scope": "Python-primary code-file-set abstraction plus design/bias matrices",
+        "current_scope": "task-primary bounded text-workspace abstraction plus design/bias matrices",
         "missing_readiness": "typed problem-defined abstraction APIs and equal-budget abstraction-choice evidence",
         "roadmap_required_phrase": "problem-defined candidate abstraction hooks",
         "current_sidecars": (
@@ -308,7 +308,7 @@ def roadmap_candidate_workspace_fidelity_boundary_record(
             "scale, mutation-mode/operator provenance, prompt-example-copy "
             "guards, cross-file consistency, initial-pool/static-binary "
             "handling, and workspace resume integrity. It does not claim "
-            "configured language/build runners, flexible solution abstraction "
+            "real-language replayable build-runner evidence, flexible solution abstraction "
             "APIs, candidate-embedded evaluator contracts, realistic codebase "
             "fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator "
             "family provenance, semantic prompt-example-copy detection, "
@@ -367,7 +367,7 @@ def validate_roadmap_candidate_workspace_fidelity_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim configured language/build runners" not in boundary_text
+        or "does not claim real-language replayable build-runner evidence" not in boundary_text
         or "candidate-embedded evaluator contracts" not in boundary_text
         or "topology resume replay proof" not in boundary_text
     ):

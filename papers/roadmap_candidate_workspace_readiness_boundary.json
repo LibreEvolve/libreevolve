@@ -14,8 +14,8 @@
     {
       "criterion_id": "language_build_and_candidate_api",
       "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
-      "current_scope": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
-      "missing_readiness": "configured language/build runners plus flexible solution abstraction API evidence",
+      "current_scope": "task-primary local expression build/runner execution plus code-file-set abstraction without real-toolchain parity",
+      "missing_readiness": "real-language/replayable build-runner evidence plus flexible solution abstraction API evidence",
       "sidecar_refs": [
         {
           "path": "papers/candidate_language_runner_boundary.json",
@@ -29,7 +29,7 @@
       "active_todo_refs": [
         {
           "path": "docs/todo/roadmap.md",
-          "required_phrase": "configured language/build runners",
+          "required_phrase": "real-language/replayable build runners",
           "required_phrase_present": true,
           "exists": true
         },
@@ -40,8 +40,8 @@
           "exists": true
         }
       ],
-      "validation_gate": "language/build runner and candidate abstraction readiness gate",
-      "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate"
+      "validation_gate": "real-toolchain runner and candidate abstraction readiness gate",
+      "readiness_status": "local_expression_runner_and_design_matrix_without_real_toolchain_gate"
     },
     {
       "criterion_id": "embedded_evaluator_and_codebase_scale",
@@ -272,10 +272,10 @@
     {
       "criterion_id": "language_build_and_candidate_api",
       "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
-      "allowed_current_claim": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
-      "missing_before_parity_claim": "configured language/build runners plus flexible solution abstraction API evidence",
-      "validation_gate": "language/build runner and candidate abstraction readiness gate",
-      "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate"
+      "allowed_current_claim": "task-primary local expression build/runner execution plus code-file-set abstraction without real-toolchain parity",
+      "missing_before_parity_claim": "real-language/replayable build-runner evidence plus flexible solution abstraction API evidence",
+      "validation_gate": "real-toolchain runner and candidate abstraction readiness gate",
+      "readiness_status": "local_expression_runner_and_design_matrix_without_real_toolchain_gate"
     },
     {
       "criterion_id": "embedded_evaluator_and_codebase_scale",
@@ -346,7 +346,7 @@
     "stale_readiness_and_owner_signoff"
   ],
   "missing_evidence": {
-    "configured_language_build_runners": "not_recorded_locally",
+    "real_language_replayable_build_runner_evidence": "not_recorded_locally",
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",
@@ -360,5 +360,5 @@
     "stale_readiness_detector": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records candidate-workspace readiness criteria tied to the bounded candidate-workspace fidelity matrix, plus a claim guard for each workspace surface. It does not claim configured language/build runners, flexible solution abstraction API, candidate-embedded evaluator contracts, realistic codebase fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, stale-readiness detector, or owner review signoff."
+  "claim_boundary": "This boundary records candidate-workspace readiness criteria tied to the bounded candidate-workspace fidelity matrix, plus a claim guard for each workspace surface. It does not claim real-language replayable build-runner evidence, flexible solution abstraction API, candidate-embedded evaluator contracts, realistic codebase fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, stale-readiness detector, or owner review signoff."
 }

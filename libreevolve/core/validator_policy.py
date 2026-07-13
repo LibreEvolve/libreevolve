@@ -381,6 +381,10 @@ def _is_non_validator_attempt_record(
     """Return True for persisted failures that never crossed the validator boundary."""
     if evaluation is not None:
         metadata = evaluation.get("metadata")
+        if isinstance(metadata, dict):
+            candidate_runner_scorers = _candidate_runner_scorer_states(metadata)
+            if candidate_runner_scorers:
+                return not any(candidate_runner_scorers)
         if isinstance(metadata, dict) and (
             isinstance(metadata.get("syntax_errors"), list)
             or isinstance(metadata.get("synthetic_metrics"), dict)
@@ -400,6 +404,25 @@ def _is_non_validator_attempt_record(
     if record.get("error") == "llm_mutation_failed" or record.get("diff_error") == "llm_mutation_failed":
         return True
     return False
+
+
+def _candidate_runner_scorer_states(value: object) -> list[bool]:
+    states: list[bool] = []
+    if isinstance(value, dict):
+        candidate_runner = value.get("candidate_runner")
+        if (
+            isinstance(candidate_runner, dict)
+            and candidate_runner.get("schema")
+            == "libreevolve.candidate_runner_execution.v1"
+        ):
+            states.append(candidate_runner.get("scorer_process_started") is True)
+        for key, item in value.items():
+            if key != "candidate_runner":
+                states.extend(_candidate_runner_scorer_states(item))
+    elif isinstance(value, list):
+        for item in value:
+            states.extend(_candidate_runner_scorer_states(item))
+    return states
 
 
 def _load_policy(

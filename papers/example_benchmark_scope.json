@@ -79,6 +79,19 @@
   },
   {
     "schema": "libreevolve.example_benchmark_scope.v1",
+    "problem_id": "candidate_runner_expression",
+    "path": "libreevolve/problems/examples/candidate_runner_expression",
+    "level": "smoke",
+    "alphaevolve_comparable": false,
+    "current_role": "non_python_build_runner_contract_fixture",
+    "reason": "Exercises a task-declared non-Python primary file, local build command, local runner command, generated artifact capture, and problem-owned scoring; it is not a real-language or paper benchmark.",
+    "required_upgrades": [
+      "Replace the expression adapter with real compiled and interpreted language toolchains plus pinned dependency manifests.",
+      "Record repeated-seed benchmark results under sandboxed, replayable runner environments."
+    ]
+  },
+  {
+    "schema": "libreevolve.example_benchmark_scope.v1",
     "problem_id": "matrix_multiplication",
     "path": "libreevolve/problems/examples/matrix_multiplication",
     "level": "smoke",

@@ -232,6 +232,128 @@ def test_candidate_runner_declarations_reject_invalid_values(kwargs, message):
         Config(**kwargs)
 
 
+def test_candidate_runner_stage_binds_executable_language_and_build_declarations():
+    config = Config(
+        candidate_language_runners=[
+            {
+                "language": "Expression",
+                "file_patterns": ["solution.expr"],
+                "runner_command": ["{python}", "-c", "print(42)"],
+                "execution_status": "executable_local_subprocess",
+            }
+        ],
+        candidate_build_systems=[
+            {
+                "name": "ExpressionBuild",
+                "build_files": ["solution.expr"],
+                "build_command": ["{python}", "-c", "print('build')"],
+                "execution_status": "executable_local_subprocess",
+            }
+        ],
+        eval_stages=[
+            {
+                "name": "run_expression",
+                "mode": "candidate_runner",
+                "language_runner": "Expression",
+                "build_system": "ExpressionBuild",
+            }
+        ],
+    )
+
+    assert config.eval_stages[0]["language_runner"] == "expression"
+    assert config.eval_stages[0]["build_system"] == "expressionbuild"
+
+
+@pytest.mark.parametrize(
+    ("kwargs", "message"),
+    [
+        (
+            {
+                "candidate_language_runners": [
+                    {
+                        "language": "expression",
+                        "execution_status": "executable_local_subprocess",
+                    }
+                ]
+            },
+            "runner_command is required",
+        ),
+        (
+            {
+                "candidate_build_systems": [
+                    {
+                        "name": "expression",
+                        "execution_status": "executable_local_subprocess",
+                    }
+                ]
+            },
+            "build_command is required",
+        ),
+        (
+            {
+                "eval_stages": [
+                    {"name": "run", "mode": "candidate_runner"}
+                ]
+            },
+            "language_runner is required",
+        ),
+        (
+            {
+                "eval_stages": [
+                    {
+                        "name": "run",
+                        "mode": "candidate_runner",
+                        "language_runner": "missing",
+                    }
+                ]
+            },
+            "unknown candidate language runner",
+        ),
+        (
+            {
+                "candidate_language_runners": [
+                    {
+                        "language": "expression",
+                        "runner_command": ["tool"],
+                    }
+                ],
+                "eval_stages": [
+                    {
+                        "name": "run",
+                        "mode": "candidate_runner",
+                        "language_runner": "expression",
+                    }
+                ],
+            },
+            "must reference an executable_local_subprocess declaration",
+        ),
+        (
+            {
+                "validator_network_policy": "deny",
+                "candidate_language_runners": [
+                    {
+                        "language": "expression",
+                        "runner_command": ["tool"],
+                        "execution_status": "executable_local_subprocess",
+                    }
+                ],
+                "eval_stages": [
+                    {
+                        "name": "run",
+                        "mode": "candidate_runner",
+                        "language_runner": "expression",
+                    }
+                ],
+            },
+            "requires validator_network_policy='host'",
+        ),
+    ],
+)
+def test_candidate_runner_stage_rejects_incomplete_or_unsafe_bindings(kwargs, message):
+    with pytest.raises(ConfigError, match=message):
+        Config(**kwargs)
+
+
 def test_config_accepts_adaptive_mutation_policy_defaults():
     config = Config(mutation_mode="adaptive")
 

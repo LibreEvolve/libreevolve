@@ -15891,3 +15891,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     or AlphaEvolve result reproduction.
   - Verification: linked runtime and paper-boundary validators preserve the
     distinction between implemented local policy and missing parity evidence.
+- [x] Document the executable local candidate-runner contract and smoke workflow.
+  - Status: README, problem-format, configuration, architecture, run-artifact,
+    status, ROADMAP, and agent docs now explain task-primary seed selection,
+    executable declaration/stage binding, build/run/scorer ordering, command
+    placeholders, bounded/redacted process records, generated-artifact capture,
+    problem-owned scoring, and the provider-free expression run/show command.
+  - Remaining README gap: the docs explicitly distinguish this trusted-local,
+    host-network subprocess fixture from real toolchain replay, language-aware
+    markers, OS sandboxing, task-defined abstractions, codebase-scale evidence,
+    and AlphaEvolve arbitrary-language parity.
+  - Verification: structural docs boundaries, example-scope records, focused
+    runtime tests, and the CLI/show regression guard the updated contract.

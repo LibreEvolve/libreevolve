@@ -115,47 +115,51 @@ sidecars, tests, and active TODOs.
 
 ## Candidate Workspace Fidelity
 
-- [ ] Extend the Python-primary candidate-language policy to real language and
-  runner declarations.
+- [ ] Extend the task-primary local candidate runner to real language and
+  replayable toolchain evidence.
   - Spec evidence: AlphaEvolve describes evolving code in existing codebases
     with task-defined evaluators; a faithful implementation needs explicit
-    candidate language/build/runner boundaries instead of treating every
-    candidate as a Python-primary file set.
+    candidate language/build/runner boundaries rather than assuming one Python
+    primary and validator path for every task.
   - Current evidence: startup manifests now include
     `policies.candidate_language` with schema
-    `libreevolve.candidate_language_policy.v1`. The record declares
-    `python_primary_text_workspace_v1`, bounded UTF-8 text workspace plus typed
-    static members, Python-primary seed and `best.py` compatibility policy,
-    fail-closed marker handling for non-Python marker-like files, Python
-    subprocess validator entrypoints, and explicit unsupported status for
-    arbitrary-language runners, build-system runners, and problem-defined
-    solution abstractions. `validate_candidate_language_policy()` rejects
-    overclaims that those runner surfaces are supported or language-runner
-    ready. Completed manifests now also include
+    `libreevolve.candidate_language_policy.v1`. The record now declares
+    `task_primary_text_workspace_v2`, bounded UTF-8 text workspaces plus typed
+    static members, Python primary autodetection or explicit seed-policy
+    `primary_file`, fail-closed marker handling for non-Python marker-like
+    files, problem-owned Python scoring, and partial task-declared local build
+    and runner subprocess support. `validate_candidate_language_policy()`
+    requires executable declaration/stage bindings before
+    `language_runner_ready` can be true. Completed manifests also include
     `runtime.history.candidate_language_runner_contract_report` with schema
     `libreevolve.candidate_language_runner_contract_report.v1`, recording the
-    selected startup policy, the current Python subprocess validator runner,
-    non-Python text members as workspace-only/no-runner records, unsupported
-    arbitrary-language and build-system runner contracts, metadata-only
-    `candidate_language_runners` and `candidate_build_systems` declarations
-    when configured, `runner_declaration_evidence` counts/status records,
+    selected startup policy, metadata-only or executable
+    `candidate_language_runners` and `candidate_build_systems`, stage bindings,
+    problem-owned scoring authority, `runner_declaration_evidence` counts/status
+    records,
     bounded retained-workspace path-match records under
     `runner_declaration_workspace_evidence`, current-Python-runner
-    environment linkage under `runner_environment_provenance`, unsupported
-    task candidate-abstraction hooks, and the exact remaining
-    executable-contract gaps before
+    environment linkage under `runner_environment_provenance`, bounded executed
+    build/runner records, command and executable-path hashes, generated build
+    artifacts, the host-network/unsandboxed boundary, unsupported task
+    candidate-abstraction hooks, and the exact remaining gaps before
     AlphaEvolve-style language/build parity.
     The committed
     `papers/candidate_language_runner_boundary.json` sidecar now records the
-    paper-manifest-validated arbitrary-language/build-runner execution absence
-    boundary.
-  - Required result: turn metadata declarations and retained-workspace path
-    matches into executable language and build runner contracts, add
-    language-aware evolve-block grammars, and add problem-defined candidate
-    abstraction hooks before claiming non-Python or arbitrary-codebase
-    AlphaEvolve fidelity. The remaining gap is implementing those runners and
-    abstractions, not making the current Python-only divergence
-    manifest-visible.
+    paper-manifest-validated partial local candidate-runner boundary. The
+    checked `candidate_runner_expression` fixture selects `solution.expr` as
+    task primary, executes a local copy-build and expression adapter without a
+    shell, captures a generated build artifact, delegates metrics to
+    `validate.py`, survives `libreevolve show` boundary validation, and has
+    focused loader/config/evaluator/loop/CLI coverage.
+  - Required result: extend these executable language and build runner
+    contracts to at least one real compiler or package-manager toolchain with
+    pinned versions/dependencies, deterministic replay, stronger OS/container
+    isolation, language-aware evolve-block grammars, and codebase-scale
+    generated-artifact benchmark evidence. Add problem-defined candidate
+    abstraction hooks separately before claiming arbitrary-codebase
+    AlphaEvolve fidelity. The remaining gap is real-toolchain breadth and
+    evidence, not local command dispatch.
 
 - [ ] Extend existing-codebase minimal-marker integration provenance beyond
       runtime workspace evidence.
@@ -500,9 +504,9 @@ sidecars, tests, and active TODOs.
     candidate boundary and records unsupported problem-defined candidate
     abstraction hooks through `libreevolve.candidate_language_policy.v1`.
     `_candidate_language_policy()` declares
-    `python_primary_text_workspace_v1`,
+    `task_primary_text_workspace_v2`,
     `bounded_utf8_text_workspace_with_typed_static_members`, primary language
-    `python`, validator runner `python_subprocess_entrypoint`, and
+    `task_declared_runner_or_python_default`, problem-owned Python scoring, and
     `problem_defined_solution_abstractions: unsupported`; its remaining gaps
     include `problem_defined_candidate_abstraction_hooks`.
     Completed manifests now include
@@ -768,15 +772,16 @@ sidecars, tests, and active TODOs.
     functions and components. Local PDF page 2 includes the Table 1 rows for
     single-function versus entire-code-file evolution and 10-20 lines versus
     hundreds of lines; pages 18-19 discuss evolving entire codebases.
-  - Current evidence: LibreEvolve supports Python-primary text workspaces,
-    multi-file seed loading, topology mutations, full-workspace prompt
-    rendering/materialization, complete `best_workspace/` export, and a small
-    `workspace_math` smoke fixture. Completed manifests now include
+  - Current evidence: LibreEvolve supports task-primary bounded text
+    workspaces, multi-file seed loading, topology mutations, full-workspace
+    prompt rendering/materialization, complete `best_workspace/` export, a
+    small `workspace_math` smoke fixture, and a non-comparable local expression
+    build/runner fixture. Completed manifests now include
     `runtime.history.codebase_scale_benchmark_report`, which measures retained
     program file/line scale, generated-program counts, parent-relative changed
     files/lines, multi-file and hundreds-line threshold evidence, static-file
     references, and false readiness for realistic codebase fixtures,
-    arbitrary-language/build runners, cross-file dependency-edit evidence,
+    real-language/replayable build runners, cross-file dependency-edit evidence,
     coupled multi-component edit evidence, dependency-graph validation,
     non-Python fixture execution, evaluator workload budgets, retained best
     workspace artifact hashes, reproducibility bundles, long-horizon quality
@@ -7398,7 +7403,7 @@ sidecars, tests, and active TODOs.
     source-specific boundary for `2601.21096`, including title/authors/arXiv
     version/date, cached PDF digest/license, LLVM reference links, absence of
     a dedicated Magellan runtime repository in extracted links, component rows,
-    current no-compiler-runner/local Python-primary scope, required evidence
+    current local-expression-runner-only/no-compiler-toolchain scope, required evidence
     fields, and missing-evidence keys. `papers/README.md`, `README.md`, and
     `ROADMAP.md` keep Magellan compiler optimization source-scoped rather
     than implemented.
@@ -7434,8 +7439,8 @@ sidecars, tests, and active TODOs.
     source-specific boundary for `2602.22425`, including title/authors/arXiv
     version/date, cached PDF digest/license, Google Workload Trace and CRC
     reference links, absence of a dedicated ArchAgent runtime repository in
-    extracted links, component rows, current no-architecture-simulator/local
-    Python-primary scope, required evidence fields, and missing-evidence keys.
+    extracted links, component rows, current local-expression-runner-only/no-
+    architecture-simulator scope, required evidence fields, and missing-evidence keys.
     `papers/README.md` and `ROADMAP.md` keep ArchAgent computer-architecture
     discovery source-scoped rather than implemented, while the root README
     omits ArchAgent-specific claims.

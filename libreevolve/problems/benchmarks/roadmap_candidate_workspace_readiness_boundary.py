@@ -30,7 +30,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_readiness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "configured_language_build_runners": "not_recorded_locally",
+    "real_language_replayable_build_runner_evidence": "not_recorded_locally",
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",
@@ -50,8 +50,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "language_build_and_candidate_api",
         "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
-        "current_scope": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
-        "missing_readiness": "configured language/build runners plus flexible solution abstraction API evidence",
+        "current_scope": "task-primary local expression build/runner execution plus code-file-set abstraction without real-toolchain parity",
+        "missing_readiness": "real-language/replayable build-runner evidence plus flexible solution abstraction API evidence",
         "sidecars": (
             "papers/candidate_language_runner_boundary.json",
             "papers/candidate_abstraction_boundary.json",
@@ -59,15 +59,15 @@ CRITERION_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "configured language/build runners",
+                "required_phrase": "real-language/replayable build runners",
             },
             {
                 "path": "docs/todo/roadmap.md",
                 "required_phrase": "flexible solution abstraction API",
             },
         ),
-        "validation_gate": "language/build runner and candidate abstraction readiness gate",
-        "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate",
+        "validation_gate": "real-toolchain runner and candidate abstraction readiness gate",
+        "readiness_status": "local_expression_runner_and_design_matrix_without_real_toolchain_gate",
     },
     {
         "criterion_id": "embedded_evaluator_and_codebase_scale",
@@ -274,8 +274,8 @@ def roadmap_candidate_workspace_readiness_boundary_record(
         "claim_boundary": (
             "This boundary records candidate-workspace readiness criteria tied "
             "to the bounded candidate-workspace fidelity matrix, plus a claim "
-            "guard for each workspace surface. It does not claim configured "
-            "language/build runners, flexible solution abstraction API, "
+            "guard for each workspace surface. It does not claim real-language "
+            "replayable build-runner evidence, flexible solution abstraction API, "
             "candidate-embedded evaluator contracts, realistic codebase "
             "fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator "
             "family provenance, semantic prompt-example-copy detection, "
@@ -330,7 +330,7 @@ def validate_roadmap_candidate_workspace_readiness_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim configured language/build runners" not in boundary_text
+        or "does not claim real-language replayable build-runner evidence" not in boundary_text
         or "claim guard for each workspace surface" not in boundary_text
         or "topology resume replay proof" not in boundary_text
         or "stale-readiness detector" not in boundary_text

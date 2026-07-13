@@ -20,7 +20,8 @@ libreevolve/
   llm/        ensemble.py (UCB-style heuristic), anthropic.py, gemini.py (GenerateContent), openai.py (Responses API when configured), ollama.py
   population/ program.py, map_elites.py (3D TF-IDF), islands.py (ring migration, explore/exploit)
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
-  problems/   loader.py, examples/{hello_world,circle_packing,sorting,matrix_multiplication,workspace_math}/
+  problems/   loader.py, examples/{hello_world,circle_packing,sorting,
+              matrix_multiplication,workspace_math,candidate_runner_expression}/
   cli.py      Click CLI with run/show commands
 ```
 
@@ -34,6 +35,15 @@ libreevolve/
 - Validator execution and CLI/direct contract preflight run in temporary local
   subprocesses, not security sandboxes; validator modules are not imported in
   the parent CLI/runtime process during preflight
+- `eval_stages[].mode: candidate_runner` can execute a task-declared language
+  command and optional build command as local subprocesses without a shell.
+  It requires `validator_network_policy: host`; commands inherit the host
+  network, use the minimal validator environment plus the allowlist, and are
+  not security sandboxes. The problem-owned Python validator remains metrics
+  authority and receives only the bounded/redacted runner record.
+- `initial_programs/seed_policy.yaml` may set `primary_file` for every seed
+  workspace. Without it, seed-workspace primary selection remains `main.py`,
+  then `seed.py`, then the first Python path.
 - SEARCH/REPLACE diff format: use canonical AlphaEvolve fences
   `<<<<<<< SEARCH\n...\n=======\n...\n>>>>>>> REPLACE`; the compact
   `<<<SEARCH\n...\n===\n...\n>>>REPLACE` spelling remains accepted as
@@ -119,5 +129,7 @@ model ids before running.
 - Models add markdown fences around diffs — _strip_fences() handles one outer response wrapper
 - Models add comments that break diff matching — prompt says "No comments"
 - The seed program should be intentionally suboptimal to give evolution room to improve
+- For non-Python primaries, `best_workspace/` is the authoritative export;
+  `best.py` remains a legacy primary-text compatibility artifact.
 - `config.seed` initializes the run-local framework `random.Random`; `evolve()`
   no longer reseeds Python's process-global `random` module

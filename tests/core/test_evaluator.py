@@ -4598,6 +4598,181 @@ def test_embedded_evaluate_stage_reports_unsupported_candidate_signature():
         shutil.rmtree(d)
 
 
+def test_candidate_runner_stage_builds_runs_and_uses_problem_owned_validator():
+    p, d = _problem(
+        "from pathlib import Path\n"
+        "def evaluate(code, workspace, stage):\n"
+        "    runner = stage['candidate_runner']\n"
+        "    output = runner['runner']['stdout'].strip()\n"
+        "    built = Path(workspace, 'build/program.expr').read_text(encoding='utf-8')\n"
+        "    artifact_paths = [item['path'] for item in "
+        "runner['build']['artifacts']['files']]\n"
+        "    ok = (output == '42' and built == code and "
+        "artifact_paths == ['build/program.expr'])\n"
+        "    return {'score': 0.75 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    artifact_dir = d / "runner_artifacts"
+    workspace = CandidateWorkspace(
+        files={"solution.expr": "40 + 2\n"},
+        primary_file="solution.expr",
+    )
+    language_runners = [
+        {
+            "language": "expression",
+            "candidate_role": "task_primary_text",
+            "file_patterns": ["solution.expr"],
+            "marker_grammar": "whole_file_text_v1",
+            "runner_command": [
+                "{python}",
+                "-c",
+                (
+                    "from pathlib import Path; import sys; "
+                    "print(eval(Path(sys.argv[1]).read_text(encoding='utf-8'), "
+                    "{'__builtins__': {}}, {}))"
+                ),
+                "{workspace}/build/program.expr",
+            ],
+            "execution_status": "executable_local_subprocess",
+        }
+    ]
+    build_systems = [
+        {
+            "name": "expression_copy",
+            "build_files": ["solution.expr"],
+            "build_command": [
+                "{python}",
+                "-c",
+                (
+                    "from pathlib import Path; Path('build').mkdir(exist_ok=True); "
+                    "Path('build/program.expr').write_text("
+                    "Path('solution.expr').read_text(encoding='utf-8'), "
+                    "encoding='utf-8')"
+                ),
+            ],
+            "artifact_patterns": ["build/**"],
+            "execution_status": "executable_local_subprocess",
+        }
+    ]
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "run_expression",
+                    "mode": "candidate_runner",
+                    "language_runner": "expression",
+                    "build_system": "expression_copy",
+                }
+            ],
+            artifact_dir=artifact_dir,
+            candidate_language_runners=language_runners,
+            candidate_build_systems=build_systems,
+        ).evaluate(workspace, None)
+
+        assert result.is_valid is True
+        assert result.metrics["score"] == 0.75
+        assert result.metadata["evaluator_mode"] == "candidate_runner"
+        record = result.metadata["candidate_runner"]
+        assert record["language_runner"] == "expression"
+        assert record["build_system"] == "expression_copy"
+        assert record["metrics_authority"] == "problem_owned_validator_not_candidate_process"
+        assert record["runner"]["stdout"].strip() == "42"
+        assert record["runner"]["returncode"] == 0
+        assert record["build"]["returncode"] == 0
+        artifact = record["build"]["artifacts"]["files"][0]
+        assert artifact["path"] == "build/program.expr"
+        assert (d / artifact["artifact_path"]).read_text(encoding="utf-8") == "40 + 2\n"
+        accounting = evaluation_accounting(result)
+        assert accounting["subprocess_attempts"] == 3
+        assert accounting["configured_stage_samples"] == 1
+    finally:
+        shutil.rmtree(d)
+
+
+def test_candidate_runner_stage_reports_runner_timeout():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={"solution.expr": "1\n"},
+        primary_file="solution.expr",
+    )
+    runners = [
+        {
+            "language": "expression",
+            "file_patterns": ["solution.expr"],
+            "runner_command": [
+                "{python}",
+                "-c",
+                "import time; time.sleep(5)",
+            ],
+            "execution_status": "executable_local_subprocess",
+        }
+    ]
+    try:
+        result = CascadeEvaluator(
+            p,
+            timeout_sec=0.2,
+            stages=[
+                {
+                    "name": "run_expression",
+                    "mode": "candidate_runner",
+                    "language_runner": "expression",
+                    "timeout_sec": 0.2,
+                }
+            ],
+            candidate_language_runners=runners,
+        ).evaluate(workspace, None)
+
+        assert result.is_valid is False
+        assert result.error == "candidate_runner_timeout"
+        assert result.metadata["candidate_runner"]["runner"]["timed_out"] is True
+        assert "timeout_cleanup" in result.metadata["candidate_runner"]["runner"]
+        accounting = evaluation_accounting(result)
+        assert accounting["subprocess_attempts"] == 1
+        assert accounting["timeout_count"] == 1
+    finally:
+        shutil.rmtree(d)
+
+
+def test_candidate_runner_stage_rejects_workspace_without_declared_language_match():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={"solution.txt": "1\n"},
+        primary_file="solution.txt",
+    )
+    runners = [
+        {
+            "language": "expression",
+            "file_patterns": ["*.expr"],
+            "runner_command": ["{python}", "-c", "print(1)"],
+            "execution_status": "executable_local_subprocess",
+        }
+    ]
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "run_expression",
+                    "mode": "candidate_runner",
+                    "language_runner": "expression",
+                }
+            ],
+            candidate_language_runners=runners,
+        ).evaluate(workspace, None)
+
+        assert result.is_valid is False
+        assert result.error == "candidate_runner_workspace_mismatch"
+        assert result.metadata["candidate_runner"]["missing_language_match"] is True
+    finally:
+        shutil.rmtree(d)
+
+
 def test_workspace_imports_work_from_candidate_root_by_default():
     p, d = _problem(
         "def evaluate(code, workspace):\n"

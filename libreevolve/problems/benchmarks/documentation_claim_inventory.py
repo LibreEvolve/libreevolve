@@ -93,8 +93,9 @@ EXPECTED_CLAIMS = (
         "document_section": "Current Status / Runnable today",
         "claim_kind": "feature_scope",
         "claim_summary": (
-            "README runnable-today bullets describe Python-primary workspaces, "
-            "SEARCH/REPLACE mutations, configured provider backends, local "
+            "README runnable-today bullets describe task-primary bounded text "
+            "workspaces with optional local candidate runners, SEARCH/REPLACE "
+            "mutations, configured provider backends, local "
             "MAP-Elites/island archives, local evaluation, hooks, and runs/ "
             "artifacts."
         ),
@@ -117,8 +118,8 @@ EXPECTED_CLAIMS = (
         "claim_kind": "limitation_scope",
         "claim_summary": (
             "README important limits keep AlphaEvolve-scale benchmarks, "
-            "Google/Gemini parity, distributed async topology, arbitrary "
-            "language runners, hardened sandboxing, and paper-cache claims "
+            "Google/Gemini parity, distributed async topology, real-language "
+            "toolchain parity, hardened sandboxing, and paper-cache claims "
             "scoped as missing or non-proof evidence."
         ),
         "evidence_refs": [

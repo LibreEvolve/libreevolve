@@ -65,6 +65,13 @@ EMBEDDED_EVALUATE_EXAMPLE_DIR = (
     / "examples"
     / "embedded_evaluate_math"
 )
+CANDIDATE_RUNNER_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "candidate_runner_expression"
+)
 EXAMPLE_RUNS_DIR = Path(__file__).resolve().parents[1] / "examples" / "runs"
 
 
@@ -716,6 +723,34 @@ def test_embedded_evaluate_example_loads_without_external_validate_py():
     assert result.metrics["score"] == 0.25
     assert result.metadata["evaluator_mode"] == "embedded_evaluate"
     assert "validate_path" not in result.metadata
+
+
+def test_candidate_runner_expression_example_loads_builds_and_scores(tmp_path):
+    problem = load_problem(CANDIDATE_RUNNER_EXAMPLE_DIR)
+    raw_config = yaml.safe_load(
+        (CANDIDATE_RUNNER_EXAMPLE_DIR / "config.yaml").read_text(encoding="utf-8")
+    )
+    config = Config(**raw_config)
+
+    assert problem.initial_workspaces[0].primary_file == "solution.expr"
+    assert config.eval_stages[0]["mode"] == "candidate_runner"
+    result = CascadeEvaluator(
+        problem,
+        stages=config.eval_stages,
+        artifact_dir=tmp_path / "artifacts",
+        candidate_language_runners=config.candidate_language_runners,
+        candidate_build_systems=config.candidate_build_systems,
+    ).evaluate(problem.initial_workspaces[0], None)
+
+    assert result.is_valid is True
+    assert result.metrics["score"] == 1.0 / 7.0
+    assert result.metadata["evaluator_mode"] == "candidate_runner"
+    execution = result.metadata["candidate_runner"]
+    assert execution["language_runner"] == "expression"
+    assert execution["build_system"] == "expression_copy"
+    assert execution["build"]["artifacts"]["files"][0]["path"] == (
+        "build/program.expr"
+    )
 
 
 def _write_workspace_math_support_files(tmp_path: Path) -> None:

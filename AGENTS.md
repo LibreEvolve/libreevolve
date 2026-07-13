@@ -39,6 +39,12 @@ libreevolve/
   `<<<SEARCH\n...\n===\n...\n>>>REPLACE` spelling remains accepted as
   compatibility input.
 - Diff engine strips a single outer markdown fence wrapper automatically
+- `mutation_mode: adaptive` selects `full` for threshold-eligible short,
+  single-file workspaces and `diff` otherwise, unless task preference or recent
+  same-parent selected-mode failures override the shape decision. Opposite-
+  format responses can use the configured parser fallback. Runtime evidence is
+  under `runtime.history.adaptive_mutation_mode_report`; benchmark-calibrated
+  thresholds and equal-budget diff/full/adaptive evidence remain open.
 - VALID_THRESHOLD = 0.0 is the pre-admission eligibility gate. A valid finite
   program with score >= 0 is passed to ProgramDatabase.admit(), but MAP-Elites
   cell replacement/elite retention can still reject it (for example

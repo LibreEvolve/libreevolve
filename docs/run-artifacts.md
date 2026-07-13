@@ -3788,20 +3788,41 @@ hallucination resistance, long-horizon evolution, or a full AI-Co-Scientist-
 style natural-language hypothesis stage bridged into programmatic candidate
 evaluation.
 
+## `runtime.history.adaptive_mutation_mode_report`
+
+Completed manifests include an adaptive mutation-mode report with schema
+`libreevolve.adaptive_mutation_mode_report.v1`. It records the configured
+run-wide or adaptive mode; character, text-file, and Python evolve-block
+thresholds; task preference; same-parent failure switch threshold; parser
+fallback setting; generated/selection counts; selected and effective diff/full
+counts; reason counts; short-full and large-diff counts; failure switches;
+fallback attempts/uses; mixed-mode observation; and up to 100 candidate records.
+
+Each sample record preserves its `history.jsonl` or failure-only
+`failure_history.jsonl` source, candidate shape, initial selected mode,
+effective parser mode, selection reason, relevant parent-failure counts, and
+response-format fallback status. The validator reconciles aggregate counts,
+policy shape, bounded records, and scoped readiness. Top-level `claim_ready` intentionally
+remains false: the report does not prove benchmark-calibrated thresholds,
+semantic full-rewrite appropriateness, response-quality-aware policy, or an
+equal-budget diff/full/adaptive advantage.
+
 ## `runtime.history.mutation_operator_boundary_report`
 
 Completed manifests include a mutation-operator boundary report with schema
 `libreevolve.mutation_operator_boundary_report.v1`. It records the configured
-run-wide mutation mode, generated-candidate counts by mutation mode, observed
+run-wide or adaptive mutation mode, generated-candidate counts by effective
+mutation mode, per-candidate adaptive diff/full-selection flags, observed
 payload surfaces such as SEARCH/REPLACE diff, full replacement, file sections,
 block sections, topology commands, and static/binary sections, plus bounded
 sample records with proposal-field presence and evaluator validity.
 
 The report embeds `libreevolve.fixed_edit_grammar_policy.v1`, which separates
 the current local parser/edit grammar from AlphaEvolve-style claims that the
-LLM constructs or adapts higher-level mutation operator families. Its
-`claim_ready: false` boundary is intentional: it does not prove adaptive
-operator-family selection, task/failure-aware operator construction, operator
+LLM constructs or adapts higher-level mutation operator families. Per-candidate
+diff/full format selection is narrower than higher-level operator-family
+selection. The report's `claim_ready: false` boundary is intentional: it does
+not prove adaptive operator-family selection, task/failure-aware operator construction, operator
 family scoring, or benchmark telemetry for replacing handwritten
 mutation/crossover operators.
 

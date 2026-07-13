@@ -322,11 +322,15 @@ Important limits:
   construction, adaptive operator-family selection, operator scoring, or
   benchmark telemetry; that boundary is tracked by
   `papers/mutation_operator_boundary.json`.
-- Mutation mode is a configured run-wide `diff` or `full` prompt/parser
-  contract, not adaptive per-candidate diff-versus-full selection based on
-  code size, workspace shape, task shape, failure history, parser/critique
-  fallback policy, selection-reason telemetry, mixed-mode run history, or
-  AlphaEvolve-style selection tests; that boundary is tracked by
+- Mutation mode can be configured as run-wide `diff`/`full` or per-candidate
+  `adaptive`. The adaptive policy uses workspace character/file/evolve-block
+  thresholds, explicit task preference, recent same-parent selected-mode
+  failures, opposite-format parser fallback, and selected-mode critique
+  validation. Candidate/failure metadata and
+  `runtime.history.adaptive_mutation_mode_report` record reasons, selected and
+  effective modes, fallback, and mixed-mode counts. Threshold calibration,
+  semantic rewrite appropriateness, response-quality-aware selection, and an
+  equal-budget ablation remain open in
   `papers/adaptive_mutation_mode_boundary.json`.
 - Initial-pool divergence reports are syntactic and shared-metric telemetry,
   not task-specific functional-distance artifacts, evaluator-output distance,
@@ -1923,7 +1927,7 @@ Important limits:
   missing-readiness, sidecar-ref, active-TODO, validation-gate, and readiness
   labels. This is not configured language/build runners, a flexible solution
   abstraction API, candidate-embedded evaluator contracts, realistic codebase
-  fixtures, adaptive mutation-mode selection, mutation-operator family
+  fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family
   provenance, semantic prompt-example-copy detection, cross-file consistency
   benchmark evidence, initial-pool divergence benchmark evidence,
   static/binary replay policy, topology resume replay proof,

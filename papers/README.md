@@ -566,15 +566,16 @@ AlphaEvolve mutation-operator note: LibreEvolve supports the edit payload
 surfaces listed in the table, including SEARCH/REPLACE, configured full
 replacement, file/block sections, and topology commands. Completed manifests
 now include `runtime.history.mutation_operator_boundary_report`, which records
-the configured run-wide mutation mode, observed payload surfaces, fixed parser
-policy, sample generated-candidate mutation records, and `claim_ready: false`
-for LLM-constructed operator families or adaptive operator selection. The
+the configured mutation mode, per-candidate adaptive diff/full-format flags,
+observed payload surfaces, fixed parser policy, sample generated-candidate
+mutation records, and `claim_ready: false` for LLM-constructed or adaptively
+selected higher-level operator families. The
 AlphaEvolve Section 5 Related Work distinction from handwritten mutation/crossover
 operator sets remains open until LibreEvolve records proposal-level
 operator-family provenance, construction or selection evidence, and benchmark
 telemetry beyond those fixed local parser surfaces. The committed
-`papers/mutation_operator_boundary.json` sidecar preserves this fixed edit
-payload grammar versus operator-family evidence boundary for paper-manifest
+`papers/mutation_operator_boundary.json` sidecar preserves this edit-payload
+format selection versus operator-family evidence boundary for paper-manifest
 validation.
 Completed manifests now also include
 `runtime.history.prompt_example_copy_report`, which inventories the built-in
@@ -1777,15 +1778,18 @@ after mutation sections remains rejected. The committed
 bounded-leading-capture-only scope, so raw full-replacement disambiguation and
 broader rationale-quality/proposal-memory handling remain open.
 
-AlphaEvolve mutation-mode note: LibreEvolve implements canonical diff parsing
-and configured `full` replacement mode, but `Config.mutation_mode` is currently
-a run-wide prompt/parser contract. AlphaEvolve Section 2.3 distinguishes
-diff-block output for larger codebases from direct full-code output for very
-short code or rewrite-friendly cases, so LibreEvolve still needs adaptive
-per-candidate mutation-mode policy and telemetry before claiming that
-diff-versus-full prompting follows the paper's conditions. The committed
-`papers/adaptive_mutation_mode_boundary.json` sidecar preserves this run-wide
-configured-mode-only boundary for paper-manifest validation.
+AlphaEvolve mutation-mode note: LibreEvolve implements canonical diff parsing,
+configured `full` replacement, and opt-in `adaptive` per-candidate selection.
+The adaptive policy resolves the prompt contract from workspace characters,
+text-file count, Python evolve-block count, explicit task preference, and recent
+same-parent selected-mode failures; critique validation and opposite-format
+parser fallback use the selected contract. Candidate/failure metadata and
+`runtime.history.adaptive_mutation_mode_report` retain selection reasons,
+selected/effective modes, shape, failure, fallback, and mixed-mode evidence.
+The committed `papers/adaptive_mutation_mode_boundary.json` sidecar classifies
+this as partial Section 2.3 support: benchmark-calibrated thresholds, semantic
+rewrite appropriateness, response-quality-aware policy, and equal-budget
+diff/full/adaptive ablation remain absent.
 
 AlphaEvolve multi-edit consistency note: LibreEvolve prompt instructions ask
 models to keep same-response edits consistent, including matching new helpers,
@@ -2791,15 +2795,17 @@ Implemented:
   throughput outcomes, candidate quality/depth outcomes, or equal-budget
   scheduler comparisons.
 - `papers/adaptive_mutation_mode_boundary.json`: adaptive mutation-mode
-  sidecar for AlphaEvolve Section 2.3. It records configured run-wide `diff`
-  and `full` mutation modes, prompt fields, diff/full parsers, and history
-  metadata. It is not evidence of per-candidate diff-versus-full selection,
-  candidate-size or task-shape thresholds, failure-aware fallback policy,
-  mixed-mode run telemetry, or AlphaEvolve-style selection tests.
+  sidecar for AlphaEvolve Section 2.3. It records configured run-wide modes and
+  partial adaptive per-candidate support: shape thresholds, task preference,
+  selected-mode failure switching, parser/critique fallback, prompt/history
+  metadata, selection telemetry, and short-full/large-diff executable tests. It
+  is not evidence of benchmark-calibrated thresholds, semantic full-rewrite
+  appropriateness, response-quality-aware selection, or equal-budget adaptive
+  advantage.
 - `papers/mutation_operator_boundary.json`: mutation-operator sidecar for
   AlphaEvolve Section 2.3 and Section 5 Related Work. It records the mutation-operator
   runtime report schema, fixed local parser surfaces, configured mutation
-  mode, payload-surface counts, sample generated-candidate records, proposal
+  mode, per-candidate adaptive diff/full flags, payload-surface counts, sample generated-candidate records, proposal
   metadata fields, and fixed edit grammar policy. It is not evidence of
   proposal-level operator-family provenance, LLM-constructed operator
   families, task/failure-aware operator construction, adaptive operator-family
@@ -3744,7 +3750,7 @@ Implemented:
   validation-gate, and readiness labels. It is not evidence of configured
   language/build runners, a flexible solution abstraction API,
   candidate-embedded evaluator contracts, realistic codebase fixtures,
-  adaptive mutation-mode selection, mutation-operator family provenance,
+  benchmark-calibrated adaptive mutation-mode policy, mutation-operator family provenance,
   semantic prompt-example-copy detection, cross-file consistency benchmark
   evidence, initial-pool divergence benchmark evidence, static/binary replay
   policy, topology resume replay proof, stale-readiness detector, or owner

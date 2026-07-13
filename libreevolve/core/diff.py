@@ -60,9 +60,7 @@ def apply_diff(code: str, diff_text: str) -> tuple[str, str | None]:
     no_valid_changes
     """
     blocks = parse_diff_blocks(diff_text)
-    if not blocks:
-        return code, "no_diff_blocks"
-    consumed_error = _validate_consumed_diff_text(diff_text)
+    consumed_error = validate_diff_payload_shape(diff_text)
     if consumed_error is not None:
         return code, consumed_error
     result = code
@@ -78,6 +76,13 @@ def apply_diff(code: str, diff_text: str) -> tuple[str, str | None]:
     if result == code:
         return code, "no_valid_changes"
     return result, None
+
+
+def validate_diff_payload_shape(diff_text: str) -> str | None:
+    """Validate diff syntax without requiring SEARCH text to match a candidate."""
+    if not parse_diff_blocks(diff_text):
+        return "no_diff_blocks"
+    return _validate_consumed_diff_text(diff_text)
 
 
 def _line_ending_tolerant_matches(code: str, search: str) -> int:

@@ -230,10 +230,26 @@ from `validate.py` unless explicitly allowlisted.
   random fill for any remaining slots.
   Recency strategies use the in-memory archive update sequence before
   generation and score tie-breaks.
-- `mutation_mode` (`"diff"`): `diff` or `full`. The built-in prompt template
-  renders mode-specific mutation instructions; custom prompt variants can use
-  `{mutation_mode}` and `{mutation_instructions}` or ignore them for backward
-  compatibility.
+- `mutation_mode` (`"diff"`): `diff`, `full`, or `adaptive`. The built-in prompt
+  template renders the resolved diff/full instructions; custom prompt variants
+  can use `{mutation_mode}` and `{mutation_instructions}` or ignore them for
+  backward compatibility.
+- `adaptive_mutation_full_max_chars` (`2000`): maximum total text-workspace
+  characters eligible for automatic full replacement.
+- `adaptive_mutation_full_max_files` (`1`): maximum text-file count eligible for
+  automatic full replacement.
+- `adaptive_mutation_full_max_evolve_blocks` (`1`): maximum Python evolve-block
+  count eligible for automatic full replacement.
+- `adaptive_mutation_task_preference` (`"auto"`): `auto`, `diff`, or `full`;
+  explicit diff/full preference overrides workspace-shape selection.
+- `adaptive_mutation_failure_switch_count` (`2`): recent same-parent failures
+  of the initially selected prompt mode required to switch to the opposite
+  mode. The value is limited to `1..5` to match bounded runtime failure memory.
+  Provider-generation failures are excluded, and the selected prompt mode is
+  used even when a prior response applied through parser fallback.
+- `adaptive_mutation_parser_fallback` (`true`): in adaptive mode, apply a
+  response that clearly uses the opposite diff/full format through that parser;
+  selected and effective modes remain separately recorded.
 - `eval_stages` (`[]`): optional configured evaluator stages with stage
   validator entrypoints, thresholds, samples, validator-managed seed values,
   metric-specific aggregation and min/max thresholds, retries, and timeouts.
@@ -1190,7 +1206,7 @@ The `run` command exposes:
 - `--max-llm-seconds`
 - `--plugins`, `-p` (repeatable)
 - `--backends`, `-b` as `type:model` (repeatable)
-- `--mutation-mode` (`diff` or `full`)
+- `--mutation-mode` (`diff`, `full`, or `adaptive`)
 - `--seed`
 - `--reasoning-effort`, `-r`
 - `--llm-max-retries`

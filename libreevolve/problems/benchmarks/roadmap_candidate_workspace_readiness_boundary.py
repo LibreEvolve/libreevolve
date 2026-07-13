@@ -34,7 +34,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",
-    "adaptive_mutation_mode_selection": "not_recorded_locally",
+    "benchmark_calibrated_adaptive_mutation_mode_policy": "not_recorded_locally",
     "mutation_operator_family_provenance": "not_recorded_locally",
     "semantic_prompt_example_copy_detection": "not_recorded_locally",
     "cross_file_consistency_benchmark_evidence": "not_recorded_locally",
@@ -116,8 +116,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "mutation_mode_operator_provenance",
         "search_surface": "adaptive mutation mode selection and operator-family provenance",
-        "current_scope": "fixed parser surfaces and run-wide mutation reports",
-        "missing_readiness": "adaptive mutation-mode selection with proposal-level operator-family provenance",
+        "current_scope": "per-candidate adaptive diff-full format selection plus fixed parser surfaces",
+        "missing_readiness": "benchmark-calibrated adaptive mutation-mode policy with proposal-level operator-family provenance",
         "sidecars": (
             "papers/adaptive_mutation_mode_boundary.json",
             "papers/mutation_operator_boundary.json",
@@ -125,15 +125,15 @@ CRITERION_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "adaptive mutation-mode selection",
+                "required_phrase": "benchmark-calibrated adaptive mutation-mode policy",
             },
             {
                 "path": "docs/todo/roadmap.md",
                 "required_phrase": "mutation-operator family provenance",
             },
         ),
-        "validation_gate": "adaptive mutation and operator provenance readiness gate",
-        "readiness_status": "fixed_parser_surfaces_without_proposal_level_operator_policy",
+        "validation_gate": "calibrated adaptive mutation and operator provenance readiness gate",
+        "readiness_status": "adaptive_format_selection_without_calibrated_operator_policy",
     },
     {
         "criterion_id": "prompt_copy_and_cross_file_consistency",
@@ -277,7 +277,7 @@ def roadmap_candidate_workspace_readiness_boundary_record(
             "guard for each workspace surface. It does not claim configured "
             "language/build runners, flexible solution abstraction API, "
             "candidate-embedded evaluator contracts, realistic codebase "
-            "fixtures, adaptive mutation-mode selection, mutation-operator "
+            "fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator "
             "family provenance, semantic prompt-example-copy detection, "
             "cross-file consistency benchmark evidence, initial-pool "
             "divergence benchmark evidence, static/binary replay policy, "

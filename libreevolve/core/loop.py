@@ -61,7 +61,10 @@ from libreevolve.core.budget import (
     validate_controller_budget_state,
     validate_restored_budget_snapshot,
 )
-from libreevolve.core.config import Config
+from libreevolve.core.config import (
+    Config,
+    MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT,
+)
 from libreevolve.core.candidate import (
     CandidateWorkspace,
     apply_workspace_mutation,
@@ -84,6 +87,7 @@ from libreevolve.core.diff import (
     extract_proposal_metadata,
     parse_diff_blocks,
     strip_proposal_metadata,
+    validate_diff_payload_shape,
     validate_proposal_metadata_preamble,
 )
 from libreevolve.core.evaluator import (
@@ -220,6 +224,8 @@ class _PreparedCandidate:
     inspiration_selection_metadata: dict
     plugin_context: list[dict]
     prompt_program: PromptProgram
+    mutation_mode: str
+    mutation_mode_selection: dict
     mutation_llm_call: dict | None
     proposal_llm_calls: list[dict]
     async_llm_sampler: dict | None = None
@@ -235,6 +241,8 @@ class _PreparedMutationRequest:
     parent: Program
     parent_selection_metadata: dict
     prompt_program: PromptProgram
+    mutation_mode: str
+    mutation_mode_selection: dict
     proposal_metadata_enabled: bool
     prompt: str
     prompt_diagnostics: dict
@@ -1004,7 +1012,7 @@ def evolve(
         )
 
         recent_failures: list[dict] = []
-        _MAX_FAILURES = 5
+        _MAX_FAILURES = MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT
         strict_seed_invalid_count = 0
         pending_async_evaluations: list[_PendingCandidateEvaluation] = []
         pending_async_generation_finalizations: list[int] = []
@@ -1245,6 +1253,11 @@ def evolve(
                 budget.stop_reason = "no_valid_programs" if db.best() is None else "no_parent"
                 break
             parent_selection_metadata = db.last_sample_metadata()
+            mutation_mode, mutation_mode_selection = _select_mutation_mode(
+                config,
+                parent,
+                recent_failures,
+            )
 
             if proposal_index == 0:
                 budget.record_generation_start()
@@ -1385,12 +1398,15 @@ def evolve(
                 parent, inspirations, problem, context,
                 recent_failures=recent_failures or None,
                 template=prompt_program.template,
-                mutation_mode=config.mutation_mode,
+                mutation_mode=mutation_mode,
                 capture_proposal_metadata=proposal_metadata_enabled,
                 context_policy=prompt_program.context_policy,
             )
             prompt_sampler.last_metadata["prompt_token_counter_capability"] = dict(
                 prompt_token_counter_capability
+            )
+            prompt_sampler.last_metadata["mutation_mode_selection"] = copy.deepcopy(
+                mutation_mode_selection
             )
             metric_diverse_inspiration = _metric_diverse_inspiration_record(
                 inspirations,
@@ -1483,7 +1499,10 @@ def evolve(
                         "prompt_diagnostics": dict(prompt_sampler.last_metadata),
                         "proposal": {},
                         "backend_idx": None,
-                        "mutation_mode": config.mutation_mode,
+                        "mutation_mode": mutation_mode,
+                        "mutation_mode_selection": copy.deepcopy(
+                            mutation_mode_selection
+                        ),
                         "parent_selection": parent_selection_metadata,
                         "inspiration_selection": inspiration_selection_metadata,
                         "plugin_context": plugin_context,
@@ -1533,6 +1552,7 @@ def evolve(
                     original_diff=diff,
                     original_proposal_metadata=original_proposal_metadata,
                     config=config,
+                    mutation_mode=mutation_mode,
                     capture_proposal_metadata=proposal_metadata_enabled,
                     budget_event_sink=db.log_controller_budget_event,
                 )
@@ -1561,8 +1581,14 @@ def evolve(
                 child_workspace = parent.workspace()
                 diff_error = proposal_metadata_error
             else:
-                child_workspace, diff_error = apply_workspace_mutation(
-                    parent.workspace(), mutation_payload, mutation_mode=config.mutation_mode
+                (
+                    child_workspace,
+                    diff_error,
+                    mutation_mode_selection,
+                ) = _apply_selected_workspace_mutation(
+                    parent.workspace(),
+                    mutation_payload,
+                    mutation_mode_selection,
                 )
             _validate_workspace_size_for_config(child_workspace, config)
             candidate_id = _deterministic_generated_candidate_id(
@@ -1610,6 +1636,8 @@ def evolve(
                 ),
                 plugin_context=copy.deepcopy(plugin_context),
                 prompt_program=copy.deepcopy(prompt_program),
+                mutation_mode=str(mutation_mode_selection["effective_mode"]),
+                mutation_mode_selection=copy.deepcopy(mutation_mode_selection),
                 mutation_llm_call=copy.deepcopy(mutation_llm_call),
                 proposal_llm_calls=copy.deepcopy(
                     _llm_call_span(llm, candidate_llm_call_start)
@@ -1730,7 +1758,10 @@ def evolve(
                                         "explanatory_preamble": explanatory_preamble_metadata,
                                         "backend_idx": backend_idx,
                                         "critique": critique_metadata,
-                                        "mutation_mode": config.mutation_mode,
+                                        "mutation_mode": prepared.mutation_mode,
+                                        "mutation_mode_selection": copy.deepcopy(
+                                            prepared.mutation_mode_selection
+                                        ),
                                         "causal_reward_baseline": {
                                             "source": "parent_program",
                                             "parent_id": parent.id,
@@ -2271,6 +2302,204 @@ def _cross_generation_pipeline_budget_incompatibility_fields(
     ]
 
 
+def _select_mutation_mode(
+    config: Config,
+    parent: Program,
+    recent_failures: list[dict],
+) -> tuple[str, dict]:
+    workspace = parent.workspace()
+    text_char_count = sum(len(content) for content in workspace.files.values())
+    evolve_block_count = sum(
+        len(extract_evolve_blocks(content))
+        for path, content in workspace.files.items()
+        if path.endswith(".py")
+    )
+    candidate_shape = {
+        "text_file_count": len(workspace.files),
+        "text_char_count": text_char_count,
+        "evolve_block_count": evolve_block_count,
+        "static_file_count": len(workspace.static_files),
+        "primary_file": workspace.primary_file,
+    }
+    policy = {
+        "schema": "libreevolve.adaptive_mutation_mode_policy.v1",
+        "full_max_chars": config.adaptive_mutation_full_max_chars,
+        "full_max_files": config.adaptive_mutation_full_max_files,
+        "full_max_evolve_blocks": (
+            config.adaptive_mutation_full_max_evolve_blocks
+        ),
+        "task_preference": config.adaptive_mutation_task_preference,
+        "failure_switch_count": config.adaptive_mutation_failure_switch_count,
+        "parser_fallback_enabled": (
+            config.mutation_mode == "adaptive"
+            and config.adaptive_mutation_parser_fallback
+        ),
+    }
+    adaptive = config.mutation_mode == "adaptive"
+    full_shape_eligible = (
+        len(workspace.files) <= config.adaptive_mutation_full_max_files
+        and text_char_count <= config.adaptive_mutation_full_max_chars
+        and evolve_block_count
+        <= config.adaptive_mutation_full_max_evolve_blocks
+    )
+    if not adaptive:
+        selected_mode = config.mutation_mode
+        reason = "configured_run_wide_mode"
+    elif config.adaptive_mutation_task_preference in {"diff", "full"}:
+        selected_mode = config.adaptive_mutation_task_preference
+        reason = "explicit_task_preference"
+    elif full_shape_eligible:
+        selected_mode = "full"
+        reason = "short_single_workspace_full_rewrite"
+    else:
+        selected_mode = "diff"
+        reason = "large_or_multi_file_workspace_search_replace"
+
+    parent_failures = [
+        failure
+        for failure in recent_failures
+        if isinstance(failure, Mapping) and failure.get("parent_id") == parent.id
+    ]
+    selected_mode_failure_count = sum(
+        1
+        for failure in parent_failures
+        if _failure_selected_mutation_mode(failure) == selected_mode
+        and failure.get("diff_error") != "llm_mutation_failed"
+        and failure.get("error") != "llm_mutation_failed"
+    )
+    failure_switched = False
+    initial_mode = selected_mode
+    if (
+        adaptive
+        and selected_mode_failure_count
+        >= config.adaptive_mutation_failure_switch_count
+    ):
+        selected_mode = "full" if selected_mode == "diff" else "diff"
+        reason = "parent_mode_failure_threshold_switch"
+        failure_switched = True
+
+    selection = {
+        "schema": "libreevolve.mutation_mode_selection.v1",
+        "configured_mode": config.mutation_mode,
+        "adaptive": adaptive,
+        "selected_mode": selected_mode,
+        "effective_mode": selected_mode,
+        "selection_reason": reason,
+        "candidate_shape": candidate_shape,
+        "full_shape_eligible": full_shape_eligible,
+        "policy": policy,
+        "failure_history": {
+            "parent_failure_count": len(parent_failures),
+            "initial_mode": initial_mode,
+            "initial_mode_failure_count": selected_mode_failure_count,
+            "switch_threshold": config.adaptive_mutation_failure_switch_count,
+            "switched": failure_switched,
+        },
+        "parser_fallback": {
+            "enabled": policy["parser_fallback_enabled"],
+            "strict_format": adaptive,
+            "attempted": False,
+            "used": False,
+            "from_mode": selected_mode,
+            "to_mode": None,
+            "trigger": None,
+            "selected_mode_error": None,
+            "fallback_mode_error": None,
+        },
+    }
+    return selected_mode, selection
+
+
+def _failure_selected_mutation_mode(failure: Mapping[str, object]) -> object:
+    selection = failure.get("mutation_mode_selection")
+    if isinstance(selection, Mapping):
+        selected_mode = selection.get("selected_mode")
+        if selected_mode in {"diff", "full"}:
+            return selected_mode
+    return failure.get("mutation_mode")
+
+
+def _apply_selected_workspace_mutation(
+    workspace: CandidateWorkspace,
+    mutation_payload: object,
+    raw_selection: Mapping[str, object],
+) -> tuple[CandidateWorkspace, str | None, dict]:
+    selection = copy.deepcopy(dict(raw_selection))
+    selected_mode = selection.get("selected_mode")
+    if selected_mode not in {"diff", "full"}:
+        raise RuntimeError("mutation-mode selection is missing a supported mode")
+    fallback = selection.get("parser_fallback")
+    if not isinstance(fallback, dict):
+        raise RuntimeError("mutation-mode selection parser fallback is invalid")
+    fallback_enabled = fallback.get("enabled") is True
+    strict_format = fallback.get("strict_format") is True
+    declared_mode = _mutation_payload_declared_mode(mutation_payload)
+    opposite_mode = "full" if selected_mode == "diff" else "diff"
+
+    selected_error: str | None
+    if (fallback_enabled or strict_format) and declared_mode == opposite_mode:
+        child_workspace = workspace
+        selected_error = (
+            f"response_format_mismatch:{selected_mode}_prompt_received_"
+            f"{opposite_mode}_payload"
+        )
+    else:
+        child_workspace, selected_error = apply_workspace_mutation(
+            workspace,
+            mutation_payload,
+            mutation_mode=selected_mode,
+        )
+    fallback["selected_mode_error"] = selected_error
+    if not (
+        fallback_enabled
+        and selected_error is not None
+        and declared_mode == opposite_mode
+    ):
+        selection["effective_mode"] = selected_mode
+        return child_workspace, selected_error, selection
+
+    fallback["attempted"] = True
+    fallback["to_mode"] = opposite_mode
+    fallback["trigger"] = "response_format_mismatch"
+    fallback_workspace, fallback_error = apply_workspace_mutation(
+        workspace,
+        mutation_payload,
+        mutation_mode=opposite_mode,
+    )
+    fallback["fallback_mode_error"] = fallback_error
+    if fallback_error is None:
+        fallback["used"] = True
+        selection["effective_mode"] = opposite_mode
+        return fallback_workspace, None, selection
+    selection["effective_mode"] = selected_mode
+    return workspace, fallback_error, selection
+
+
+def _mutation_payload_declared_mode(mutation_payload: object) -> str | None:
+    if not isinstance(mutation_payload, str):
+        return None
+    normalized = mutation_payload.replace("\r\n", "\n")
+    candidate = normalized.lstrip()
+    if candidate.startswith("```"):
+        first_line_end = candidate.find("\n")
+        if first_line_end != -1:
+            candidate = candidate[first_line_end + 1 :].lstrip()
+    if candidate.startswith(
+        (
+            "<<<SEARCH\n",
+            "<<<<<<< SEARCH\n",
+            ">>>REPLACE\n",
+            ">>>>>>> REPLACE\n",
+        )
+    ):
+        return "diff"
+    if candidate.startswith("<<<FILE"):
+        return "diff" if parse_diff_blocks(mutation_payload) else "full"
+    if validate_diff_payload_shape(mutation_payload) is None:
+        return "diff"
+    return "full"
+
+
 def _prepare_async_mutation_request(
     *,
     generation: int,
@@ -2301,6 +2530,11 @@ def _prepare_async_mutation_request(
         )
         return None
     parent_selection_metadata = db.last_sample_metadata()
+    mutation_mode, mutation_mode_selection = _select_mutation_mode(
+        config,
+        parent,
+        recent_failures,
+    )
     if proposal_index == 0:
         budget.record_generation_start()
         db.log_controller_budget_event({"kind": "generation_started"})
@@ -2417,12 +2651,15 @@ def _prepare_async_mutation_request(
         context,
         recent_failures=recent_failures or None,
         template=prompt_program.template,
-        mutation_mode=config.mutation_mode,
+        mutation_mode=mutation_mode,
         capture_proposal_metadata=proposal_metadata_enabled,
         context_policy=prompt_program.context_policy,
     )
     prompt_sampler.last_metadata["prompt_token_counter_capability"] = dict(
         prompt_token_counter_capability
+    )
+    prompt_sampler.last_metadata["mutation_mode_selection"] = copy.deepcopy(
+        mutation_mode_selection
     )
     metric_diversity = _metric_diverse_inspiration_record(
         inspirations,
@@ -2442,6 +2679,8 @@ def _prepare_async_mutation_request(
         parent=parent,
         parent_selection_metadata=copy.deepcopy(parent_selection_metadata),
         prompt_program=copy.deepcopy(prompt_program),
+        mutation_mode=mutation_mode,
+        mutation_mode_selection=copy.deepcopy(mutation_mode_selection),
         proposal_metadata_enabled=proposal_metadata_enabled,
         prompt=prompt,
         prompt_diagnostics=copy.deepcopy(prompt_sampler.last_metadata),
@@ -2547,6 +2786,7 @@ def _prepare_candidate_from_async_mutation(
             original_diff=diff,
             original_proposal_metadata=original_proposal_metadata,
             config=config,
+            mutation_mode=request.mutation_mode,
             capture_proposal_metadata=request.proposal_metadata_enabled,
             budget_event_sink=db.log_controller_budget_event,
         )
@@ -2572,14 +2812,19 @@ def _prepare_candidate_from_async_mutation(
         if request.proposal_metadata_enabled
         else None
     )
+    mutation_mode_selection = copy.deepcopy(request.mutation_mode_selection)
     if proposal_metadata_error is not None:
         child_workspace = request.parent.workspace()
         diff_error = proposal_metadata_error
     else:
-        child_workspace, diff_error = apply_workspace_mutation(
+        (
+            child_workspace,
+            diff_error,
+            mutation_mode_selection,
+        ) = _apply_selected_workspace_mutation(
             request.parent.workspace(),
             mutation_payload,
-            mutation_mode=config.mutation_mode,
+            mutation_mode_selection,
         )
     _validate_workspace_size_for_config(child_workspace, config)
     candidate_id = _deterministic_generated_candidate_id(
@@ -2625,6 +2870,8 @@ def _prepare_candidate_from_async_mutation(
         ),
         plugin_context=copy.deepcopy(request.plugin_context),
         prompt_program=copy.deepcopy(request.prompt_program),
+        mutation_mode=str(mutation_mode_selection["effective_mode"]),
+        mutation_mode_selection=copy.deepcopy(mutation_mode_selection),
         mutation_llm_call=copy.deepcopy(mutation_llm_call),
         proposal_llm_calls=(
             copy.deepcopy(proposal_llm_calls)
@@ -2707,7 +2954,10 @@ def _log_async_mutation_failure(
             "prompt_diagnostics": copy.deepcopy(request.prompt_diagnostics),
             "proposal": {},
             "backend_idx": None,
-            "mutation_mode": config.mutation_mode,
+            "mutation_mode": request.mutation_mode,
+            "mutation_mode_selection": copy.deepcopy(
+                request.mutation_mode_selection
+            ),
             "parent_selection": copy.deepcopy(
                 request.parent_selection_metadata
             ),
@@ -2858,7 +3108,10 @@ def _commit_evaluated_candidate(
             "explanatory_preamble": prepared.explanatory_preamble,
             "backend_idx": prepared.backend_idx,
             "critique": prepared.critique_metadata,
-            "mutation_mode": config.mutation_mode,
+            "mutation_mode": prepared.mutation_mode,
+            "mutation_mode_selection": copy.deepcopy(
+                prepared.mutation_mode_selection
+            ),
             "causal_reward_baseline": {
                 "source": "parent_program",
                 "parent_id": prepared.parent.id,
@@ -8101,6 +8354,11 @@ def _runtime_history_summary(
                 db.startup_manifest_snapshot(),
                 programs,
             )
+        ),
+        "adaptive_mutation_mode_report": _adaptive_mutation_mode_report(
+            db.startup_manifest_snapshot(),
+            programs,
+            db.failure_records_snapshot(),
         ),
         "mutation_consistency_report": _mutation_consistency_report(programs),
         "prompt_example_copy_report": _prompt_example_copy_report(programs),
@@ -26219,6 +26477,605 @@ def _validate_programmatic_representation_claim_matrix(
         )
 
 
+def _adaptive_mutation_mode_report(
+    startup_manifest: Mapping[str, object],
+    programs: list[Program],
+    failure_records: list[dict] | None = None,
+) -> dict:
+    config = (
+        startup_manifest.get("config")
+        if isinstance(startup_manifest.get("config"), Mapping)
+        else {}
+    )
+    configured_mode = config.get("mutation_mode")
+    if configured_mode not in {"diff", "full", "adaptive"}:
+        configured_mode = "unknown"
+    generated = [
+        program for program in programs if _program_candidate_type(program) == "generated"
+    ]
+    generated_ids = {program.id for program in generated}
+    selection_inputs: dict[str, tuple[int, Mapping[str, object], str]] = {}
+    for program in generated:
+        metadata = program.metadata if isinstance(program.metadata, Mapping) else {}
+        selection = metadata.get("mutation_mode_selection")
+        if isinstance(selection, Mapping):
+            selection_inputs[program.id] = (
+                program.generation,
+                selection,
+                "history.jsonl",
+            )
+    for failure in failure_records or []:
+        if not isinstance(failure, Mapping) or not isinstance(
+            failure.get("parent_id"), str
+        ):
+            continue
+        program_id = failure.get("program_id")
+        if not isinstance(program_id, str) or not program_id:
+            continue
+        generated_ids.add(program_id)
+        selection = failure.get("mutation_mode_selection")
+        generation = failure.get("generation")
+        if (
+            program_id not in selection_inputs
+            and isinstance(selection, Mapping)
+            and isinstance(generation, int)
+            and not isinstance(generation, bool)
+        ):
+            selection_inputs[program_id] = (
+                generation,
+                selection,
+                "failure_history.jsonl",
+            )
+    selected_mode_counts: dict[str, int] = {}
+    effective_mode_counts: dict[str, int] = {}
+    reason_counts: dict[str, int] = {}
+    records: list[dict] = []
+    fallback_attempt_count = 0
+    fallback_use_count = 0
+    failure_switch_count = 0
+    short_full_count = 0
+    large_diff_count = 0
+    for program_id, (generation, selection, source_stream) in selection_inputs.items():
+        selected_mode = str(selection.get("selected_mode") or "unknown")
+        effective_mode = str(selection.get("effective_mode") or "unknown")
+        reason = str(selection.get("selection_reason") or "unknown")
+        _increment_count(selected_mode_counts, selected_mode)
+        _increment_count(effective_mode_counts, effective_mode)
+        _increment_count(reason_counts, reason)
+        shape = (
+            selection.get("candidate_shape")
+            if isinstance(selection.get("candidate_shape"), Mapping)
+            else {}
+        )
+        failure_history = (
+            selection.get("failure_history")
+            if isinstance(selection.get("failure_history"), Mapping)
+            else {}
+        )
+        parser_fallback = (
+            selection.get("parser_fallback")
+            if isinstance(selection.get("parser_fallback"), Mapping)
+            else {}
+        )
+        if parser_fallback.get("attempted") is True:
+            fallback_attempt_count += 1
+        if parser_fallback.get("used") is True:
+            fallback_use_count += 1
+        if failure_history.get("switched") is True:
+            failure_switch_count += 1
+        if selection.get("full_shape_eligible") is True and selected_mode == "full":
+            short_full_count += 1
+        if selection.get("full_shape_eligible") is False and selected_mode == "diff":
+            large_diff_count += 1
+        records.append(
+            {
+                "program_id": program_id,
+                "generation": generation,
+                "source_stream": source_stream,
+                "configured_mode": selection.get("configured_mode"),
+                "adaptive": selection.get("adaptive"),
+                "selected_mode": selected_mode,
+                "effective_mode": effective_mode,
+                "selection_reason": reason,
+                "full_shape_eligible": selection.get("full_shape_eligible"),
+                "candidate_shape": copy.deepcopy(dict(shape)),
+                "failure_history": copy.deepcopy(dict(failure_history)),
+                "parser_fallback": copy.deepcopy(dict(parser_fallback)),
+            }
+        )
+    records.sort(key=lambda record: (record["generation"], record["program_id"]))
+    selection_count = len(records)
+    adaptive_enabled = configured_mode == "adaptive"
+    complete_selection_evidence = (
+        bool(generated_ids) and selection_count == len(generated_ids)
+    )
+    report = {
+        "schema": "libreevolve.adaptive_mutation_mode_report.v1",
+        "source": "startup_manifest_config_runtime_and_failure_history",
+        "configured_mode": configured_mode,
+        "policy": {
+            "schema": "libreevolve.adaptive_mutation_mode_policy.v1",
+            "adaptive_enabled": adaptive_enabled,
+            "full_max_chars": config.get("adaptive_mutation_full_max_chars"),
+            "full_max_files": config.get("adaptive_mutation_full_max_files"),
+            "full_max_evolve_blocks": config.get(
+                "adaptive_mutation_full_max_evolve_blocks"
+            ),
+            "task_preference": config.get("adaptive_mutation_task_preference"),
+            "failure_switch_count": config.get(
+                "adaptive_mutation_failure_switch_count"
+            ),
+            "parser_fallback_enabled": config.get(
+                "adaptive_mutation_parser_fallback"
+            )
+            is True
+            and adaptive_enabled,
+            "selection_order": [
+                "task_preference",
+                "candidate_workspace_shape",
+                "parent_mode_failure_threshold",
+                "response_format_parser_fallback",
+            ],
+        },
+        "generated_candidate_count": len(generated_ids),
+        "selection_record_count": selection_count,
+        "selected_mode_counts": dict(sorted(selected_mode_counts.items())),
+        "effective_mode_counts": dict(sorted(effective_mode_counts.items())),
+        "selection_reason_counts": dict(sorted(reason_counts.items())),
+        "short_candidate_full_selection_count": short_full_count,
+        "large_candidate_diff_selection_count": large_diff_count,
+        "failure_history_switch_count": failure_switch_count,
+        "parser_fallback_attempt_count": fallback_attempt_count,
+        "parser_fallback_use_count": fallback_use_count,
+        "mixed_mode_observed": len(effective_mode_counts) > 1,
+        "sample_records": records[:100],
+        "records_truncated": len(records) > 100,
+        "claim_ready": False,
+        "claim_readiness": {
+            "adaptive_per_candidate_selection": (
+                adaptive_enabled and complete_selection_evidence
+            ),
+            "candidate_size_and_workspace_shape_policy": adaptive_enabled,
+            "task_preference_policy": adaptive_enabled,
+            "parent_failure_history_switch_policy": adaptive_enabled,
+            "parser_format_fallback_policy": (
+                adaptive_enabled
+                and config.get("adaptive_mutation_parser_fallback") is True
+            ),
+            "critique_validation_uses_selected_mode": adaptive_enabled,
+            "mixed_mode_runtime_telemetry": (
+                adaptive_enabled and complete_selection_evidence
+            ),
+            "benchmark_calibrated_thresholds": False,
+            "semantic_complete_rewrite_appropriateness": False,
+            "quality_ablation_evidence": False,
+            "remaining_gap": [
+                "benchmark_calibrated_size_and_workspace_thresholds",
+                "semantic_complete_rewrite_appropriateness",
+                "response_quality_aware_mode_policy",
+                "equal_budget_diff_full_adaptive_ablation",
+            ],
+        },
+    }
+    report["validation"] = validate_adaptive_mutation_mode_report(report)
+    return report
+
+
+def validate_adaptive_mutation_mode_report(report: object) -> dict:
+    issues: list[dict] = []
+    if not isinstance(report, dict):
+        return {
+            "schema": "libreevolve.adaptive_mutation_mode_report.v1",
+            "ok": False,
+            "issues": [
+                {
+                    "code": "invalid_shape",
+                    "message": "adaptive mutation-mode report must be an object",
+                }
+            ],
+        }
+    required = {
+        "schema",
+        "source",
+        "configured_mode",
+        "policy",
+        "generated_candidate_count",
+        "selection_record_count",
+        "selected_mode_counts",
+        "effective_mode_counts",
+        "selection_reason_counts",
+        "short_candidate_full_selection_count",
+        "large_candidate_diff_selection_count",
+        "failure_history_switch_count",
+        "parser_fallback_attempt_count",
+        "parser_fallback_use_count",
+        "mixed_mode_observed",
+        "sample_records",
+        "records_truncated",
+        "claim_ready",
+        "claim_readiness",
+    }
+    missing = required - set(report)
+    if missing:
+        issues.append(
+            {
+                "code": "missing_fields",
+                "message": f"adaptive mutation-mode report missing fields: {sorted(missing)}",
+            }
+        )
+    if report.get("schema") != "libreevolve.adaptive_mutation_mode_report.v1":
+        issues.append(
+            {
+                "code": "invalid_schema",
+                "message": "adaptive mutation-mode report schema is unsupported",
+            }
+        )
+    if (
+        report.get("source")
+        != "startup_manifest_config_runtime_and_failure_history"
+    ):
+        issues.append(
+            {
+                "code": "invalid_source",
+                "message": "adaptive mutation-mode report source is unsupported",
+            }
+        )
+    configured_mode = report.get("configured_mode")
+    if configured_mode not in {"diff", "full", "adaptive"}:
+        issues.append(
+            {
+                "code": "invalid_configured_mode",
+                "message": "configured_mode must be diff, full, or adaptive",
+            }
+        )
+    counts: dict[str, int] = {}
+    for field in (
+        "generated_candidate_count",
+        "selection_record_count",
+        "short_candidate_full_selection_count",
+        "large_candidate_diff_selection_count",
+        "failure_history_switch_count",
+        "parser_fallback_attempt_count",
+        "parser_fallback_use_count",
+    ):
+        value = report.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            issues.append(
+                {
+                    "code": f"invalid_{field}",
+                    "message": f"{field} must be a non-negative integer",
+                }
+            )
+            value = 0
+        counts[field] = value
+    if counts["selection_record_count"] > counts["generated_candidate_count"]:
+        issues.append(
+            {
+                "code": "selection_count_overclaim",
+                "message": "selection records cannot exceed generated candidates",
+            }
+        )
+    if counts["parser_fallback_use_count"] > counts["parser_fallback_attempt_count"]:
+        issues.append(
+            {
+                "code": "fallback_use_overclaim",
+                "message": "fallback use cannot exceed fallback attempts",
+            }
+        )
+    mode_count_maps: dict[str, dict[str, int]] = {}
+    for field in (
+        "selected_mode_counts",
+        "effective_mode_counts",
+        "selection_reason_counts",
+    ):
+        value = report.get(field)
+        if not isinstance(value, dict):
+            issues.append(
+                {"code": f"invalid_{field}", "message": f"{field} must be an object"}
+            )
+            value = {}
+        normalized_counts: dict[str, int] = {}
+        for key, count in value.items():
+            if not isinstance(key, str) or not key:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}_key",
+                        "message": f"{field} keys must be non-empty strings",
+                    }
+                )
+            if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+                issues.append(
+                    {
+                        "code": f"invalid_{field}_count",
+                        "message": f"{field} values must be non-negative integers",
+                    }
+                )
+                continue
+            if isinstance(key, str) and key:
+                normalized_counts[key] = count
+        mode_count_maps[field] = normalized_counts
+    for field in ("selected_mode_counts", "effective_mode_counts"):
+        if any(mode not in {"diff", "full"} for mode in mode_count_maps[field]):
+            issues.append(
+                {
+                    "code": f"invalid_{field}_mode",
+                    "message": f"{field} may contain only diff and full",
+                }
+            )
+        if sum(mode_count_maps[field].values()) != counts["selection_record_count"]:
+            issues.append(
+                {
+                    "code": f"{field}_count_mismatch",
+                    "message": f"{field} must reconcile with selection_record_count",
+                }
+            )
+    if (
+        sum(mode_count_maps["selection_reason_counts"].values())
+        != counts["selection_record_count"]
+    ):
+        issues.append(
+            {
+                "code": "selection_reason_counts_count_mismatch",
+                "message": "selection_reason_counts must reconcile with selection records",
+            }
+        )
+    expected_mixed = (
+        sum(
+            1
+            for count in mode_count_maps["effective_mode_counts"].values()
+            if count > 0
+        )
+        > 1
+    )
+    if report.get("mixed_mode_observed") is not expected_mixed:
+        issues.append(
+            {
+                "code": "invalid_mixed_mode_observed",
+                "message": "mixed_mode_observed must match effective mode counts",
+            }
+        )
+    policy = report.get("policy")
+    if not isinstance(policy, Mapping):
+        issues.append(
+            {"code": "invalid_policy", "message": "policy must be an object"}
+        )
+        policy = {}
+    if policy.get("schema") != "libreevolve.adaptive_mutation_mode_policy.v1":
+        issues.append(
+            {
+                "code": "invalid_policy_schema",
+                "message": "adaptive mutation policy schema is unsupported",
+            }
+        )
+    if policy.get("adaptive_enabled") is not (configured_mode == "adaptive"):
+        issues.append(
+            {
+                "code": "adaptive_policy_overclaim",
+                "message": "adaptive_enabled must match configured mode",
+            }
+        )
+    parser_fallback_enabled = policy.get("parser_fallback_enabled")
+    if not isinstance(parser_fallback_enabled, bool):
+        issues.append(
+            {
+                "code": "invalid_policy_parser_fallback_enabled",
+                "message": "policy.parser_fallback_enabled must be boolean",
+            }
+        )
+        parser_fallback_enabled = False
+    if configured_mode != "adaptive" and parser_fallback_enabled:
+        issues.append(
+            {
+                "code": "parser_fallback_policy_overclaim",
+                "message": "parser fallback may only be enabled in adaptive mode",
+            }
+        )
+    expected_selection_order = [
+        "task_preference",
+        "candidate_workspace_shape",
+        "parent_mode_failure_threshold",
+        "response_format_parser_fallback",
+    ]
+    if policy.get("selection_order") != expected_selection_order:
+        issues.append(
+            {
+                "code": "invalid_policy_selection_order",
+                "message": "policy.selection_order does not match runtime policy order",
+            }
+        )
+    for field in (
+        "full_max_chars",
+        "full_max_files",
+        "failure_switch_count",
+    ):
+        value = policy.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 1:
+            issues.append(
+                {
+                    "code": f"invalid_policy_{field}",
+                    "message": f"policy.{field} must be a positive integer",
+                }
+            )
+    block_limit = policy.get("full_max_evolve_blocks")
+    if isinstance(block_limit, bool) or not isinstance(block_limit, int) or block_limit < 0:
+        issues.append(
+            {
+                "code": "invalid_policy_full_max_evolve_blocks",
+                "message": "policy.full_max_evolve_blocks must be non-negative",
+            }
+        )
+    if policy.get("task_preference") not in {"auto", "diff", "full"}:
+        issues.append(
+            {
+                "code": "invalid_policy_task_preference",
+                "message": "policy.task_preference is unsupported",
+            }
+        )
+    for field in (
+        "short_candidate_full_selection_count",
+        "large_candidate_diff_selection_count",
+        "failure_history_switch_count",
+        "parser_fallback_attempt_count",
+    ):
+        if counts[field] > counts["selection_record_count"]:
+            issues.append(
+                {
+                    "code": f"{field}_overclaim",
+                    "message": f"{field} cannot exceed selection records",
+                }
+            )
+    if not parser_fallback_enabled and counts["parser_fallback_attempt_count"]:
+        issues.append(
+            {
+                "code": "disabled_parser_fallback_attempt_overclaim",
+                "message": "disabled parser fallback cannot report attempts",
+            }
+        )
+    records = report.get("sample_records")
+    if not isinstance(records, list):
+        issues.append(
+            {"code": "invalid_sample_records", "message": "sample_records must be a list"}
+        )
+        records = []
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_sample_record",
+                    "message": f"sample record {index} must be an object",
+                }
+            )
+            continue
+        if record.get("selected_mode") not in {"diff", "full"} or record.get(
+            "effective_mode"
+        ) not in {"diff", "full"}:
+            issues.append(
+                {
+                    "code": "invalid_sample_record_mode",
+                    "message": f"sample record {index} mode is invalid",
+                }
+            )
+        if record.get("source_stream") not in {
+            "history.jsonl",
+            "failure_history.jsonl",
+        }:
+            issues.append(
+                {
+                    "code": "invalid_sample_source_stream",
+                    "message": f"sample record {index} source stream is invalid",
+                }
+            )
+        if record.get("configured_mode") != configured_mode or record.get(
+            "adaptive"
+        ) is not (configured_mode == "adaptive"):
+            issues.append(
+                {
+                    "code": "sample_record_policy_mismatch",
+                    "message": f"sample record {index} policy does not match configured mode",
+                }
+            )
+        if not isinstance(record.get("candidate_shape"), Mapping):
+            issues.append(
+                {
+                    "code": "invalid_sample_candidate_shape",
+                    "message": f"sample record {index} candidate shape is invalid",
+                }
+            )
+        if not isinstance(record.get("parser_fallback"), Mapping):
+            issues.append(
+                {
+                    "code": "invalid_sample_parser_fallback",
+                    "message": f"sample record {index} parser fallback is invalid",
+                }
+            )
+        if not isinstance(record.get("failure_history"), Mapping):
+            issues.append(
+                {
+                    "code": "invalid_sample_failure_history",
+                    "message": f"sample record {index} failure history is invalid",
+                }
+            )
+    expected_sample_count = min(counts["selection_record_count"], 100)
+    if len(records) != expected_sample_count:
+        issues.append(
+            {
+                "code": "sample_record_count_mismatch",
+                "message": "sample records must match the bounded selection record count",
+            }
+        )
+    if report.get("records_truncated") is not (
+        counts["selection_record_count"] > 100
+    ):
+        issues.append(
+            {
+                "code": "invalid_records_truncated",
+                "message": "records_truncated must match retained records",
+            }
+        )
+    readiness = report.get("claim_readiness")
+    if not isinstance(readiness, Mapping):
+        issues.append(
+            {
+                "code": "invalid_claim_readiness",
+                "message": "claim_readiness must be an object",
+            }
+        )
+        readiness = {}
+    selection_ready = (
+        configured_mode == "adaptive"
+        and counts["generated_candidate_count"] > 0
+        and counts["selection_record_count"] == counts["generated_candidate_count"]
+    )
+    adaptive_enabled = configured_mode == "adaptive"
+    expected_readiness = {
+        "adaptive_per_candidate_selection": selection_ready,
+        "candidate_size_and_workspace_shape_policy": adaptive_enabled,
+        "task_preference_policy": adaptive_enabled,
+        "parent_failure_history_switch_policy": adaptive_enabled,
+        "parser_format_fallback_policy": (
+            adaptive_enabled and parser_fallback_enabled
+        ),
+        "critique_validation_uses_selected_mode": adaptive_enabled,
+        "mixed_mode_runtime_telemetry": selection_ready,
+        "benchmark_calibrated_thresholds": False,
+        "semantic_complete_rewrite_appropriateness": False,
+        "quality_ablation_evidence": False,
+    }
+    for field, expected in expected_readiness.items():
+        if readiness.get(field) is not expected:
+            issues.append(
+                {
+                    "code": f"invalid_claim_readiness_{field}",
+                    "message": f"claim_readiness.{field} does not match evidence",
+                }
+            )
+    expected_remaining = [
+        "benchmark_calibrated_size_and_workspace_thresholds",
+        "semantic_complete_rewrite_appropriateness",
+        "response_quality_aware_mode_policy",
+        "equal_budget_diff_full_adaptive_ablation",
+    ]
+    if readiness.get("remaining_gap") != expected_remaining:
+        issues.append(
+            {
+                "code": "invalid_claim_readiness_remaining_gap",
+                "message": "claim_readiness.remaining_gap must preserve parity gaps",
+            }
+        )
+    if report.get("claim_ready") is not False:
+        issues.append(
+            {
+                "code": "claim_ready_overclaim",
+                "message": "adaptive mutation report must not claim full parity",
+            }
+        )
+    return {
+        "schema": "libreevolve.adaptive_mutation_mode_report.v1",
+        "ok": not issues,
+        "issues": issues,
+    }
+
+
 def _mutation_operator_boundary_report(
     startup_manifest: Mapping[str, object],
     programs: list[Program],
@@ -26249,6 +27106,11 @@ def _mutation_operator_boundary_report(
             else {}
         )
         family = _mutation_operator_family_from_proposal(proposal)
+        mode_selection = (
+            metadata.get("mutation_mode_selection")
+            if isinstance(metadata.get("mutation_mode_selection"), Mapping)
+            else {}
+        )
         _increment_count(proposal_family_counts, family)
         records.append(
             {
@@ -26259,6 +27121,9 @@ def _mutation_operator_boundary_report(
                 "operator_family_source": "not_declared",
                 "operator_family": family,
                 "llm_constructed_operator_family": False,
+                "adaptive_diff_full_selection": (
+                    mode_selection.get("adaptive") is True
+                ),
                 "adaptive_operator_selection": False,
                 "prompt_program_id": metadata.get("prompt_program_id"),
                 "proposal_fields_present": _mutation_operator_proposal_fields(proposal),
@@ -26270,12 +27135,12 @@ def _mutation_operator_boundary_report(
             }
         )
     records.sort(key=lambda record: (record["generation"], record["program_id"]))
+    configured_mutation_mode = _mutation_operator_mode(config.get("mutation_mode"))
+    adaptive_diff_full_selection = configured_mutation_mode == "adaptive"
     report = {
         "schema": "libreevolve.mutation_operator_boundary_report.v1",
         "source": "startup_manifest_and_runtime_history",
-        "configured_mutation_mode": _mutation_operator_mode(
-            config.get("mutation_mode")
-        ),
+        "configured_mutation_mode": configured_mutation_mode,
         "generated_candidate_count": len(generated),
         "mutation_mode_counts": dict(sorted(mode_counts.items())),
         "payload_surface_counts": dict(sorted(surface_counts.items())),
@@ -26291,8 +27156,8 @@ def _mutation_operator_boundary_report(
                 "static_or_binary_sections",
             ],
             "mutation_applier": "apply_workspace_mutation",
-            "run_wide_mutation_mode": True,
-            "adaptive_diff_full_selection": False,
+            "run_wide_mutation_mode": not adaptive_diff_full_selection,
+            "adaptive_diff_full_selection": adaptive_diff_full_selection,
             "llm_constructed_operator_families": False,
             "operator_family_scoring": False,
         },
@@ -26475,15 +27340,24 @@ def validate_mutation_operator_boundary_report(report: object) -> dict:
             }
         )
         policy = {}
-    if policy.get("run_wide_mutation_mode") is not True:
+    adaptive_diff_full_selection = report.get("configured_mutation_mode") == "adaptive"
+    if policy.get("run_wide_mutation_mode") is not (
+        not adaptive_diff_full_selection
+    ):
         issues.append(
             {
                 "code": "invalid_run_wide_mutation_mode",
-                "message": "current report must record run-wide mutation mode",
+                "message": "run-wide mutation mode must match configured mode",
+            }
+        )
+    if policy.get("adaptive_diff_full_selection") is not adaptive_diff_full_selection:
+        issues.append(
+            {
+                "code": "invalid_adaptive_diff_full_selection",
+                "message": "adaptive diff/full selection must match configured mode",
             }
         )
     for field in (
-        "adaptive_diff_full_selection",
         "llm_constructed_operator_families",
         "operator_family_scoring",
     ):
@@ -46133,11 +47007,16 @@ def _run_critique_reviewers(
     original_diff: str,
     original_proposal_metadata: dict,
     config: Config,
+    mutation_mode: str | None = None,
     capture_proposal_metadata: bool | None = None,
     budget_event_sink: Callable[[dict], dict] | None = None,
 ) -> tuple[str, dict, dict]:
     if capture_proposal_metadata is None:
         capture_proposal_metadata = config.capture_proposal_metadata
+    if mutation_mode is None:
+        mutation_mode = config.mutation_mode
+    if mutation_mode not in {"diff", "full"}:
+        raise RuntimeError("critique review requires a selected mutation mode")
     reviewers = _critique_reviewer_specs(config)
     records: list[dict] = []
     valid_records: list[dict] = []
@@ -46245,7 +47124,12 @@ def _run_critique_reviewers(
             workspace,
             original_diff,
             revised_diff,
-            config.mutation_mode,
+            mutation_mode,
+            parser_fallback_enabled=(
+                config.mutation_mode == "adaptive"
+                and config.adaptive_mutation_parser_fallback
+            ),
+            strict_format=config.mutation_mode == "adaptive",
         )
         if capture_proposal_metadata:
             proposal_source = status.get("selected_diff")
@@ -46402,11 +47286,21 @@ def _select_critique_mutation(
     original_diff: str,
     revised_diff: object,
     mutation_mode: str,
+    parser_fallback_enabled: bool = False,
+    strict_format: bool = False,
 ) -> tuple[str, dict]:
     """Validate critique revisions before replacing the original mutation."""
 
-    _, revised_error = apply_workspace_mutation(
-        workspace, revised_diff, mutation_mode=mutation_mode
+    _, revised_error, revised_selection = _apply_selected_workspace_mutation(
+        workspace,
+        revised_diff,
+        {
+            "selected_mode": mutation_mode,
+            "parser_fallback": {
+                "enabled": parser_fallback_enabled,
+                "strict_format": strict_format,
+            },
+        },
     )
     status = {
         "selected_diff": "revised",
@@ -46414,14 +47308,26 @@ def _select_critique_mutation(
         "revised_diff_error": revised_error,
         "original_diff_error": None,
         "fallback_reason": None,
+        "revised_mutation_mode": revised_selection.get("effective_mode"),
+        "revised_parser_fallback": revised_selection.get("parser_fallback"),
     }
     if revised_error is None:
         return revised_diff, status
 
-    _, original_error = apply_workspace_mutation(
-        workspace, original_diff, mutation_mode=mutation_mode
+    _, original_error, original_selection = _apply_selected_workspace_mutation(
+        workspace,
+        original_diff,
+        {
+            "selected_mode": mutation_mode,
+            "parser_fallback": {
+                "enabled": parser_fallback_enabled,
+                "strict_format": strict_format,
+            },
+        },
     )
     status["original_diff_error"] = original_error
+    status["original_mutation_mode"] = original_selection.get("effective_mode")
+    status["original_parser_fallback"] = original_selection.get("parser_fallback")
     if original_error is None:
         status["selected_diff"] = "original"
         status["fallback_reason"] = "invalid_revised_diff"

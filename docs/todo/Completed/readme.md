@@ -15882,3 +15882,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     reproduction remain explicitly absent.
   - Verification: documentation claims are linked to the runtime topology and
     parallel-readiness reports plus executable paper boundaries.
+- [x] Document adaptive mutation-mode selection without claiming calibrated parity.
+  - Status: README now lists adaptive per-candidate diff/full selection as
+    runnable and identifies shape thresholds, task preference, selected-mode
+    failure switching, and opposite-format parser fallback.
+  - Remaining README gap: it explicitly does not claim benchmark-calibrated
+    rewrite decisions, learned response-quality policy, equal-budget advantage,
+    or AlphaEvolve result reproduction.
+  - Verification: linked runtime and paper-boundary validators preserve the
+    distinction between implemented local policy and missing parity evidence.

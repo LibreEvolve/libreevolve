@@ -829,7 +829,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Required result: implement the missing readiness fields recorded by the
     readiness sidecar: configured language/build runners, flexible solution
     abstraction API, candidate-embedded evaluator contracts, realistic codebase
-    fixtures, adaptive mutation-mode selection, mutation-operator family
+    fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family
     provenance, semantic prompt-example-copy detection, cross-file consistency
     benchmark evidence, initial-pool divergence benchmark evidence,
     static/binary replay policy, topology resume replay proof,

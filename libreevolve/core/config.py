@@ -47,6 +47,9 @@ MAX_ASYNC_EVALUATION_QUEUE_CAPACITY = 4096
 MAX_ASYNC_LLM_SAMPLER_WORKERS = 64
 MAX_ASYNC_LLM_QUEUE_CAPACITY = 4096
 MAX_ASYNC_GENERATION_WINDOW = 64
+CONFIGURED_MUTATION_MODES = frozenset({*MUTATION_MODES, "adaptive"})
+ADAPTIVE_MUTATION_TASK_PREFERENCES = frozenset({"auto", "diff", "full"})
+MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT = 5
 _CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
     r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
 )
@@ -95,6 +98,12 @@ class Config:
     parent_selection_strategy: str = "mixed"
     inspiration_strategy:   str = "mixed"
     mutation_mode:          str   = "diff"
+    adaptive_mutation_full_max_chars: int = 2000
+    adaptive_mutation_full_max_files: int = 1
+    adaptive_mutation_full_max_evolve_blocks: int = 1
+    adaptive_mutation_task_preference: str = "auto"
+    adaptive_mutation_failure_switch_count: int = 2
+    adaptive_mutation_parser_fallback: bool = True
     initial_program_validity_policy: str = "permissive_baseline"
     max_candidate_workspace_files: int = DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES
     max_candidate_file_chars: int = DEFAULT_MAX_CANDIDATE_FILE_CHARS
@@ -322,7 +331,48 @@ class Config:
                 "recency",
             },
         )
-        _require_enum("mutation_mode", self.mutation_mode, MUTATION_MODES)
+        _require_enum(
+            "mutation_mode",
+            self.mutation_mode,
+            CONFIGURED_MUTATION_MODES,
+        )
+        _require_int(
+            "adaptive_mutation_full_max_chars",
+            self.adaptive_mutation_full_max_chars,
+            minimum=1,
+        )
+        _require_int(
+            "adaptive_mutation_full_max_files",
+            self.adaptive_mutation_full_max_files,
+            minimum=1,
+        )
+        _require_int(
+            "adaptive_mutation_full_max_evolve_blocks",
+            self.adaptive_mutation_full_max_evolve_blocks,
+            minimum=0,
+        )
+        _require_enum(
+            "adaptive_mutation_task_preference",
+            self.adaptive_mutation_task_preference,
+            ADAPTIVE_MUTATION_TASK_PREFERENCES,
+        )
+        _require_int(
+            "adaptive_mutation_failure_switch_count",
+            self.adaptive_mutation_failure_switch_count,
+            minimum=1,
+        )
+        if (
+            self.adaptive_mutation_failure_switch_count
+            > MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT
+        ):
+            raise ConfigError(
+                "adaptive_mutation_failure_switch_count must be <= "
+                f"{MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT}"
+            )
+        _require_bool(
+            "adaptive_mutation_parser_fallback",
+            self.adaptive_mutation_parser_fallback,
+        )
         _require_enum(
             "initial_program_validity_policy",
             self.initial_program_validity_policy,

@@ -847,6 +847,14 @@ class ProgramDatabase:
             ),
             "repetition_count": repetition_count,
         }
+        mutation_mode = program.metadata.get("mutation_mode")
+        if isinstance(mutation_mode, str) and mutation_mode:
+            record["mutation_mode"] = mutation_mode
+        mutation_mode_selection = program.metadata.get("mutation_mode_selection")
+        if isinstance(mutation_mode_selection, Mapping):
+            record["mutation_mode_selection"] = copy.deepcopy(
+                dict(mutation_mode_selection)
+            )
         failure_llm = _failure_program_llm_summary(program)
         if failure_llm:
             record["llm"] = failure_llm
@@ -9227,6 +9235,24 @@ def _startup_manifest_payload(
             ),
             "max_runtime_seconds": config.max_runtime_seconds,
             "proposals_per_generation": config.proposals_per_generation,
+            "adaptive_mutation_full_max_chars": (
+                config.adaptive_mutation_full_max_chars
+            ),
+            "adaptive_mutation_full_max_files": (
+                config.adaptive_mutation_full_max_files
+            ),
+            "adaptive_mutation_full_max_evolve_blocks": (
+                config.adaptive_mutation_full_max_evolve_blocks
+            ),
+            "adaptive_mutation_task_preference": (
+                config.adaptive_mutation_task_preference
+            ),
+            "adaptive_mutation_failure_switch_count": (
+                config.adaptive_mutation_failure_switch_count
+            ),
+            "adaptive_mutation_parser_fallback": (
+                config.adaptive_mutation_parser_fallback
+            ),
             "async_candidate_evaluation": config.async_candidate_evaluation,
             "async_evaluator_workers": config.async_evaluator_workers,
             "async_evaluation_queue_capacity": (

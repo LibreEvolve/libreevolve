@@ -16080,3 +16080,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     environment replay, and resumed-trace proof remain active criteria.
   - Verification: roadmap async/resumable and runtime-readiness sidecars retain
     those missing criteria while crediting the narrower local overlap surface.
+- [x] Keep ROADMAP current with adaptive mutation-mode partial support.
+  - Status: ROADMAP now records per-candidate shape/task/failure selection,
+    selected-mode critique validation, response-format fallback, runtime
+    telemetry, and the paper boundary's partial-support classification.
+  - Remaining roadmap gap: benchmark calibration, semantic rewrite judgment,
+    response-quality-aware adaptation, equal-budget ablation, and higher-level
+    operator-family provenance remain active criteria.
+  - Verification: candidate-workspace and adaptive-mutation sidecars separate
+    implemented format selection from those broader readiness gaps.

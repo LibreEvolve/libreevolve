@@ -43,12 +43,13 @@ LibreEvolve has:
 - SEARCH/REPLACE diff mutation, including canonical AlphaEvolve fences, and
   configurable full-block/full-code replacement with unknown named block
   targets rejected before partial replacement
-- adaptive mutation-mode absence boundary evidence under
-  `papers/adaptive_mutation_mode_boundary.json`, preserving the distinction
-  between configured run-wide `diff`/`full` prompt/parser support and
-  unimplemented per-candidate diff-versus-full selection by code size,
-  workspace shape, task shape, failure history, fallback behavior, or
-  selection telemetry
+- adaptive per-candidate diff/full mutation selection using configured
+  character, text-file, and evolve-block thresholds, explicit task preference,
+  recent same-parent selected-mode failures, opposite-format parser fallback,
+  selected-mode critique validation, candidate/failure metadata, and validated
+  mixed-mode runtime telemetry. `papers/adaptive_mutation_mode_boundary.json`
+  keeps benchmark-calibrated thresholds, semantic rewrite appropriateness,
+  response-quality-aware policy, and equal-budget ablation explicitly open
 - workspace file topology mutations for create/edit/delete/move/rename and
   primary-file changes
 - candidate path hardening for unsafe, ambiguous, overlong, Unicode-control,
@@ -124,15 +125,13 @@ LibreEvolve has:
   absence boundary
 - distributed-pipeline topology boundary reports under
   `runtime.history.distributed_pipeline_topology_report`, naming the current
-  single-process controller, in-process database, configured LLM sampler
-  backends, local evaluator nodes, zero queues, blocking dependency edges, and
-  runtime-budget linkage, with
-  `papers/distributed_pipeline_topology_boundary.json` preserving the
-  paper-facing absence boundary while keeping AlphaEvolve async pipeline parity
-  explicitly false, including missing async task/coroutine identities,
-  dependency wait-event telemetry, worker lifecycle/liveness records,
-  scheduler-state snapshots, deterministic async completion/admission order,
-  queue backpressure, and pending-work checkpoints
+  single-process controller and in-process database plus optional bounded local
+  sampler/evaluator queues, worker/task identities, backpressure, completion
+  and deterministic merge/admission order, and bounded cross-generation overlap
+  when enabled. `papers/distributed_pipeline_topology_boundary.json` keeps full
+  AlphaEvolve parity false because distributed evaluator nodes, complete
+  dependency-wait scheduling, scheduler/pending-work checkpoints, provider
+  replay, and worker leases remain absent
 - runtime cascade summaries that aggregate configured-stage promotion,
   attrition, threshold failures, work counters, bounded candidate-stage
   history cross-links, denominator-policy boundaries, and explicit

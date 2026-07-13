@@ -5,7 +5,7 @@
     "2.3"
   ],
   "source_claim": "AlphaEvolve Section 2.3 requests SEARCH/REPLACE diffs for larger codebases and full-code output for very short code or complete rewrite cases",
-  "boundary_status": "run_wide_mutation_mode_without_adaptive_selection",
+  "boundary_status": "adaptive_candidate_shape_selection_partial",
   "claim_ready": false,
   "supported_modes": [
     "diff",
@@ -17,7 +17,8 @@
     "prompt_mutation_mode_fields",
     "diff_parser",
     "full_replacement_parser",
-    "mutation_mode_history_metadata"
+    "mutation_mode_history_metadata",
+    "adaptive_mutation_mode_runtime_report"
   ],
   "required_evidence_fields": [
     "run_wide_configured_mode",
@@ -35,16 +36,26 @@
     "mixed_mode_run_history",
     "paper_visible_selection_report"
   ],
-  "missing_evidence": {
-    "per_candidate_mode_selection": "not_recorded_locally",
-    "candidate_size_thresholds": "not_recorded_locally",
-    "workspace_shape_thresholds": "not_recorded_locally",
-    "task_shape_policy": "not_recorded_locally",
-    "parent_failure_history_policy": "not_recorded_locally",
-    "parser_fallback_policy": "not_recorded_locally",
-    "critique_fallback_policy": "not_recorded_locally",
-    "selection_reason_telemetry": "not_recorded_locally",
-    "mixed_mode_run_history": "not_recorded_locally"
+  "implemented_evidence": {
+    "per_candidate_mode_selection": "recorded_in_candidate_history",
+    "candidate_size_thresholds": "configured_and_recorded",
+    "workspace_shape_thresholds": "file_char_and_evolve_block_counts_recorded",
+    "task_shape_policy": "explicit_auto_diff_or_full_preference",
+    "parent_failure_history_policy": "threshold_mode_switch_recorded",
+    "parser_fallback_policy": "opposite_mode_response_format_fallback_recorded",
+    "critique_fallback_policy": "selected_mode_validation_with_parser_fallback",
+    "prompt_metadata": "selected_mode_and_policy_recorded",
+    "selection_reason_telemetry": "runtime_report_counts_and_sample_records",
+    "large_codebase_diff_selection_test": "executable_regression",
+    "short_code_full_selection_test": "executable_regression",
+    "mixed_mode_run_history": "runtime_reported_when_observed",
+    "paper_visible_selection_report": "runtime_history_adaptive_mutation_mode_report"
   },
-  "claim_boundary": "This boundary records that LibreEvolve supports configured run-wide diff and full mutation modes with prompt fields, parsers, and history metadata. It does not claim adaptive per-candidate diff-versus-full selection, candidate-size or task-shape thresholds, failure-aware fallback policy, mixed-mode run telemetry, or AlphaEvolve-style selection tests."
+  "missing_evidence": {
+    "benchmark_calibrated_thresholds": "not_recorded_locally",
+    "semantic_complete_rewrite_appropriateness": "not_recorded_locally",
+    "response_quality_aware_mode_policy": "not_recorded_locally",
+    "equal_budget_diff_full_adaptive_ablation": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records configured run-wide diff/full modes plus an adaptive per-candidate policy using workspace size, file and evolve-block shape, explicit task preference, parent-mode failure history, response-format parser fallback, selected-mode critique validation, prompt/history metadata, mixed-mode telemetry, and executable short-full/large-diff tests. It does not claim benchmark-calibrated thresholds, semantic proof that a complete rewrite is appropriate, response-quality-aware selection, or an equal-budget adaptive ablation."
 }

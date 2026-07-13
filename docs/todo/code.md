@@ -3159,30 +3159,26 @@ sidecars, tests, and active TODOs.
     candidate history, evaluator results, and paper-source evidence so docs can
     distinguish feature support from reproduced paper example evidence.
 
-- [ ] Add adaptive mutation-output mode selection instead of one run-wide
-      `diff`/`full` contract.
-  - Spec evidence: AlphaEvolve Section 2.3 says larger codebases request
-    SEARCH/REPLACE diff blocks, while very short code or cases where complete
-    rewrites are more appropriate can request the entire code block directly.
-    That is a task/candidate-shape choice, not merely a static parser feature.
-  - Current evidence: LibreEvolve implements both `diff` and `full` mutation
-    modes, validates the mode through `Config.mutation_mode` and CLI
-    `--mutation-mode`, renders matching `{mutation_mode}` and
-    `{mutation_instructions}` prompt fields, and applies all candidates in a
-    run with the same configured mode.
-    `libreevolve.alphaevolve_adaptive_mutation_mode_boundary.v1` now preserves
-    the absence boundary for per-candidate diff-versus-full selection,
-    candidate-size/task-shape thresholds, failure-aware fallback policy,
-    mixed-mode run telemetry, and AlphaEvolve-style selection tests. It does
-    not choose the mutation-output contract per problem, candidate size,
-    file/block count, parent failure history, or model response quality, and it
-    does not report why a candidate was asked for a diff versus a full rewrite.
-  - Required result: add a versioned mutation-mode policy that can choose
-    between diff and full-output contracts per candidate or prompt arm,
-    including candidate-size/task-shape thresholds, prompt metadata,
-    parser/critique fallback behavior, manifest/report telemetry, and tests
-    proving large-codebase diff prompts and short-code/full-rewrite prompts
-    are selected under documented AlphaEvolve-style conditions.
+- [ ] Calibrate and evaluate the adaptive mutation-output policy.
+  - Spec evidence: AlphaEvolve Section 2.3 distinguishes larger-codebase diff
+    output from very-short-code or rewrite-appropriate full output, but does not
+    establish that LibreEvolve's local thresholds or overrides reproduce the
+    paper system's decisions or outcomes.
+  - Current evidence: `mutation_mode: adaptive` now selects per candidate from
+    configured character, text-file, and Python evolve-block thresholds,
+    explicit task preference, and recent same-parent selected-mode failures.
+    It validates critique revisions against the selected mode, can apply a
+    clearly opposite response format through the other parser, and records
+    policy, reason, shape, selected/effective mode, fallback, and mixed-mode
+    telemetry under `runtime.history.adaptive_mutation_mode_report`.
+  - Current gap: the thresholds are hand-configured heuristics; task preference
+    is declarative rather than inferred; no semantic policy decides when a
+    complete rewrite is appropriate; response quality does not update the
+    mode policy; and no matched-budget diff/full/adaptive ablation exists.
+  - Required result: add benchmark-calibrated thresholds or a justified
+    policy, semantic/task evidence for complete-rewrite appropriateness,
+    response-quality-aware adaptation, and equal-budget multi-seed comparisons
+    with prompt, parse, validity, score, cost, and latency outcomes.
 
 - [ ] Extend mutation-operator policy beyond the current fixed-edit boundary
       report.
@@ -3198,9 +3194,10 @@ sidecars, tests, and active TODOs.
     `libreevolve.mutation_operator_boundary_report.v1` and
     `validate_mutation_operator_boundary_report()`. The report distinguishes
     the current fixed edit payload grammar from higher-level mutation strategy,
-    records configured run-wide mutation mode, payload-surface counts, sample
+    records configured mode and per-candidate adaptive diff/full-format flags,
+    payload-surface counts, sample
     generated-candidate mutation records, and `claim_ready: false` for
-    LLM-constructed operator families, adaptive selection, operator-family
+    LLM-constructed operator families, adaptive operator-family selection, operator-family
     scoring, and benchmark telemetry.
     `libreevolve.alphaevolve_mutation_operator_boundary.v1` now preserves that
     fixed-edit-payload grammar boundary as a paper-manifest-required sidecar.

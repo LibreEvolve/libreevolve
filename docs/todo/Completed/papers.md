@@ -14420,3 +14420,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     exact task-union intersections before setting local overlap readiness,
     reject malformed pair/budget evidence, and keep full topology/readiness
     claims false.
+- [x] Promote adaptive mutation-mode evidence to local partial support.
+  - Paper evidence: AlphaEvolve Section 2.3 distinguishes larger-codebase diff
+    output from very-short-code or rewrite-appropriate full output.
+  - Status: the adaptive mutation boundary now credits per-candidate shape and
+    task policy, selected-mode failure switching, parser/critique fallback,
+    prompt and history metadata, runtime reason/mode counts, mixed-mode
+    telemetry, and executable short-full/large-diff examples.
+  - Remaining paper gap: local thresholds are not benchmark calibrated, rewrite
+    appropriateness is not semantically established, response quality does not
+    train the policy, and no equal-budget ablation proves an advantage.
+  - Verification: runtime and paper-boundary validators preserve the partial
+    status and reject full AlphaEvolve mutation-mode parity claims.

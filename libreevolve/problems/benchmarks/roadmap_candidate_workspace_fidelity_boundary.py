@@ -33,7 +33,7 @@ EXPECTED_MISSING_EVIDENCE = {
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",
-    "adaptive_mutation_mode_selection": "not_recorded_locally",
+    "benchmark_calibrated_adaptive_mutation_mode_policy": "not_recorded_locally",
     "mutation_operator_family_provenance": "not_recorded_locally",
     "semantic_prompt_example_copy_detection": "not_recorded_locally",
     "cross_file_consistency_benchmark_evidence": "not_recorded_locally",
@@ -154,8 +154,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "mutation_mode_operator_provenance",
         "search_surface": "diff/full/file/block/topology mutation modes and operator-family evidence",
-        "current_scope": "configured fixed parser surfaces and run-wide mutation mode reports",
-        "missing_readiness": "adaptive proposal-level mutation-mode selection and LLM-constructed operator-family provenance",
+        "current_scope": "per-candidate shape/task/failure diff-full selection plus fixed parser surfaces without calibrated policy or operator-family provenance",
+        "missing_readiness": "benchmark-calibrated adaptive mutation-mode policy and LLM-constructed operator-family provenance",
         "roadmap_required_phrase": "proposal-level operator-family provenance",
         "current_sidecars": (
             "papers/adaptive_mutation_mode_boundary.json",
@@ -164,15 +164,15 @@ CRITERION_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/code.md",
-                "required_phrase": "Add adaptive mutation-output mode selection",
+                "required_phrase": "Calibrate and evaluate the adaptive mutation-output policy",
             },
             {
                 "path": "docs/todo/papers.md",
                 "required_phrase": "proposal-level operator-family provenance",
             },
         ),
-        "validation_gate": "adaptive operator selection plus operator-family scoring/telemetry",
-        "readiness_status": "fixed_parser_surfaces_only",
+        "validation_gate": "calibrated adaptive mode policy plus operator-family scoring/telemetry",
+        "readiness_status": "adaptive_format_selection_without_calibration_or_operator_family_policy",
     },
     {
         "criterion_id": "prompt_example_copy_guard",
@@ -310,7 +310,7 @@ def roadmap_candidate_workspace_fidelity_boundary_record(
             "handling, and workspace resume integrity. It does not claim "
             "configured language/build runners, flexible solution abstraction "
             "APIs, candidate-embedded evaluator contracts, realistic codebase "
-            "fixtures, adaptive mutation-mode selection, mutation-operator "
+            "fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator "
             "family provenance, semantic prompt-example-copy detection, "
             "cross-file consistency benchmark evidence, initial-pool divergence "
             "benchmark evidence, static/binary replay policy, topology resume "

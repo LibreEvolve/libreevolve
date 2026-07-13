@@ -2487,26 +2487,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     reproduced supervised-learning example evidence from generic prompt,
     mutation, and evaluator support.
 
-- [ ] Track adaptive diff-versus-full mutation prompting.
+- [ ] Validate adaptive diff-versus-full policy quality against Section 2.3.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Section 2.3.
-  - Requirement: AlphaEvolve asks for SEARCH/REPLACE blocks for larger
-    codebases, but for very short code or cases where a complete rewrite is
-    more appropriate it can ask the model to output the full code block.
-  - Partial status: LibreEvolve supports canonical diff parsing and a
-    configured `full` mutation mode with full-file, file-section, and
-    full-block replacement semantics.
-    `papers/adaptive_mutation_mode_boundary.json` now records the paper-facing
-    boundary for run-wide configured-mode support versus adaptive
-    diff-versus-full selection.
-  - Current gap: `Config.mutation_mode` is still a run-wide enum. The prompt
-    and parser contract do not adapt per candidate, code size, workspace shape,
-    or observed failure mode, and paper-facing telemetry does not explain why a
-    given proposal was requested as a diff or a full rewrite.
-  - Required result: add paper-visible mutation-mode policy evidence for
-    candidate-shape or task-shape selection, per-candidate prompt/output mode
-    records, fallback/critique behavior, and benchmark examples proving the
-    diff/full choice follows documented AlphaEvolve-style conditions rather
-    than a fixed run configuration.
+  - Requirement: AlphaEvolve uses diff output for larger codebases and permits
+    full output for very short or rewrite-appropriate cases; paper-facing
+    parity therefore needs evidence that local choices are appropriate and
+    useful, not only that both response formats can be selected.
+  - Partial status: `papers/adaptive_mutation_mode_boundary.json` now credits
+    per-candidate shape/task/failure policy, parser and critique fallback,
+    selection metadata, mixed-mode telemetry, and executable short-full and
+    large-diff examples.
+  - Current gap: there is no benchmark-calibrated threshold evidence, semantic
+    rewrite-appropriateness evidence, response-quality-aware selection policy,
+    or equal-budget diff/full/adaptive result table.
+  - Required result: retain paper-visible benchmark identities, policy/version
+    and threshold rationale, per-mode prompt/parse/validity/outcome telemetry,
+    matched budgets and seeds, statistical comparisons, and independent review
+    before strengthening the Section 2.3 parity claim.
 
 - [ ] Extend LLM-constructed mutation-operator evidence beyond the current
       fixed-edit boundary report.
@@ -2519,13 +2516,14 @@ directory and using the AlphaEvolve paper as the primary specification.
     configured full replacement modes, workspace file sections, and bounded
     topology commands. Paper-facing docs now cite
     `runtime.history.mutation_operator_boundary_report`, which records
-    configured run-wide mutation mode, observed fixed parser payload surfaces,
+    configured mode, per-candidate adaptive diff/full-format flags, observed fixed parser payload surfaces,
     sample generated-candidate mutation records, and `claim_ready: false` for
-    LLM-constructed operator families and adaptive selection.
+    LLM-constructed operator families and adaptive operator-family selection.
     `papers/mutation_operator_boundary.json` now records this as a
     manifest-checked paper-facing boundary.
-  - Current gap: the report still shows those are fixed local edit surfaces
-    selected by configuration and parser grammar. The paper index has no
+  - Current gap: the report still shows those are fixed local edit surfaces;
+    selecting diff versus full format does not classify a higher-level mutation
+    strategy. The paper index has no
     evidence that LibreEvolve declares, generates, selects, scores, or reports
     higher-level LLM-constructed operator families such as decomposition,
     algorithmic reformulation, recombination, multi-component refactoring, or

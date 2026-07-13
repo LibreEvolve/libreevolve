@@ -3780,7 +3780,7 @@ def test_validate_paper_manifest_rejects_adaptive_mutation_mode_boundary_drift(
     record = paper_manifest.adaptive_mutation_mode_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "adaptive_mutation_mode_selection_ready"
-    record["missing_evidence"]["selection_reason_telemetry"] = "recorded"
+    record["missing_evidence"]["benchmark_calibrated_thresholds"] = "recorded"
     sidecar = tmp_path / paper_manifest.ADAPTIVE_MUTATION_MODE_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -3791,7 +3791,7 @@ def test_validate_paper_manifest_rejects_adaptive_mutation_mode_boundary_drift(
     assert "adaptive_mutation_mode_boundary_claim_ready_overclaim" in codes
     assert "adaptive_mutation_mode_boundary_invalid_boundary_status" in codes
     assert (
-        "adaptive_mutation_mode_boundary_invalid_missing_evidence_selection_reason_telemetry"
+        "adaptive_mutation_mode_boundary_invalid_missing_evidence_benchmark_calibrated_thresholds"
         in codes
     )
 

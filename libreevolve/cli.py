@@ -114,8 +114,8 @@ def cli() -> None:
               type=click.Choice(["mixed", "random", "selection", "metric", "frontier", "lineage", "novelty", "recency"]),
               default=None,
               help="Inspiration sampling policy. Default: mixed")
-@click.option("--mutation-mode", type=click.Choice(["diff", "full"]), default=None,
-              help="Mutation response mode: SEARCH/REPLACE diffs or full code/block replacement.")
+@click.option("--mutation-mode", type=click.Choice(["diff", "full", "adaptive"]), default=None,
+              help="Mutation response mode: SEARCH/REPLACE diffs, full replacement, or adaptive per-candidate selection.")
 @click.option("--run-name", type=str, default=None,
               help="Custom name for this run (default: problem directory name)")
 @click.option(

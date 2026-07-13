@@ -108,14 +108,17 @@ from libreevolve.core.loop import (
     validate_incorrect_suggestion_audit_report,
     validate_sample_efficiency_report,
     validate_repeated_sampling_baseline_report,
+    validate_adaptive_mutation_mode_report,
     validate_gemini_provider_parity_report,
     validate_hypothesis_branch_report,
     validate_controller_backtracking_report,
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
+    _apply_selected_workspace_mutation,
     _cross_generation_overlap_report,
     _cross_generation_pipeline_budget_compatible,
+    _select_mutation_mode,
     _META_PROMPT_CONTEXT_POLICY_CAPABILITIES,
     _meta_prompt_metrics,
     _meta_prompt_safe_value,
@@ -497,6 +500,378 @@ class _SequenceAsyncSamplerTelemetryLLM(_AsyncSamplerTelemetryLLM):
     def generate(self, prompt, role="mutation"):
         self.diff = next(self._diffs)
         return super().generate(prompt, role=role)
+
+
+def test_adaptive_mutation_mode_selects_short_full_then_large_diff(tmp_path):
+    large_full = "x=2\n# " + ("a" * 2200) + "\n"
+    diff = "<<<<<<< SEARCH\nx=2\n=======\nx=3\n>>>>>>> REPLACE"
+    llm = _SequenceTelemetryLLM([large_full, diff])
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    scope = {}\n"
+        "    exec(code, scope)\n"
+        "    return {'score': scope['x'] / 10, 'is_valid': True}\n"
+    )
+
+    with patch("libreevolve.core.loop.build_llm", return_value=llm):
+        evolve(
+            problem,
+            Config(
+                max_generations=2,
+                mutation_mode="adaptive",
+                parent_selection_strategy="exploit",
+                log_dir=str(tmp_path),
+                problem_name="adaptive_mixed",
+            ),
+        )
+
+    run_dir = tmp_path / "adaptive_mixed"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    generated = history[1:]
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"]["adaptive_mutation_mode_report"]
+    operator_report = manifest["runtime"]["history"][
+        "mutation_operator_boundary_report"
+    ]
+
+    assert [row["metadata"]["mutation_mode"] for row in generated] == [
+        "full",
+        "diff",
+    ]
+    assert [
+        row["metadata"]["mutation_mode_selection"]["selection_reason"]
+        for row in generated
+    ] == [
+        "short_single_workspace_full_rewrite",
+        "large_or_multi_file_workspace_search_replace",
+    ]
+    assert "Mutation mode: full" in llm.calls[0]["prompt"]
+    assert "Mutation mode: diff" in llm.calls[1]["prompt"]
+    assert report["validation"]["ok"] is True
+    assert validate_adaptive_mutation_mode_report(report)["ok"] is True
+    assert report["selected_mode_counts"] == {"diff": 1, "full": 1}
+    assert report["effective_mode_counts"] == {"diff": 1, "full": 1}
+    assert report["short_candidate_full_selection_count"] == 1
+    assert report["large_candidate_diff_selection_count"] == 1
+    assert report["mixed_mode_observed"] is True
+    assert {record["source_stream"] for record in report["sample_records"]} == {
+        "history.jsonl"
+    }
+    assert report["claim_readiness"]["adaptive_per_candidate_selection"] is True
+    assert operator_report["validation"]["ok"] is True
+    assert operator_report["configured_mutation_mode"] == "adaptive"
+    assert operator_report["edit_grammar_policy"]["run_wide_mutation_mode"] is False
+    assert operator_report["edit_grammar_policy"][
+        "adaptive_diff_full_selection"
+    ] is True
+    assert all(
+        record["adaptive_diff_full_selection"] is True
+        for record in operator_report["sample_records"]
+    )
+
+    overclaimed = copy.deepcopy(report)
+    overclaimed["claim_ready"] = True
+    overclaimed["effective_mode_counts"] = {"full": 2}
+    overclaimed["parser_fallback_use_count"] = 2
+    overclaimed["parser_fallback_attempt_count"] = 1
+    overclaimed["claim_readiness"]["benchmark_calibrated_thresholds"] = True
+    validation = validate_adaptive_mutation_mode_report(overclaimed)
+    assert validation["ok"] is False
+    assert {
+        "claim_ready_overclaim",
+        "invalid_mixed_mode_observed",
+        "fallback_use_overclaim",
+        "invalid_claim_readiness_benchmark_calibrated_thresholds",
+    }.issubset({issue["code"] for issue in validation["issues"]})
+
+    malformed = copy.deepcopy(report)
+    malformed["selected_mode_counts"] = {"full": "two"}
+    validation = validate_adaptive_mutation_mode_report(malformed)
+    assert validation["ok"] is False
+    assert "invalid_selected_mode_counts_count" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
+def test_adaptive_mutation_mode_switches_after_parent_mode_failures():
+    parent = Program(id="parent", code="x=1", fitness=0.1)
+    failures = [
+        {
+            "parent_id": "parent",
+            "mutation_mode": "diff",
+            "mutation_mode_selection": {"selected_mode": "full"},
+        },
+        {
+            "parent_id": "parent",
+            "mutation_mode": "full",
+            "mutation_mode_selection": {"selected_mode": "full"},
+        },
+        {
+            "parent_id": "parent",
+            "mutation_mode": "full",
+            "diff_error": "llm_mutation_failed",
+        },
+    ]
+
+    mode, selection = _select_mutation_mode(
+        Config(mutation_mode="adaptive"),
+        parent,
+        failures,
+    )
+
+    assert mode == "diff"
+    assert selection["selection_reason"] == "parent_mode_failure_threshold_switch"
+    assert selection["failure_history"] == {
+        "parent_failure_count": 3,
+        "initial_mode": "full",
+        "initial_mode_failure_count": 2,
+        "switch_threshold": 2,
+        "switched": True,
+    }
+
+
+def test_adaptive_mutation_mode_uses_workspace_shape_and_task_preference():
+    multi_file = Program(
+        id="multi",
+        files={"main.py": "x=1", "helper.py": "y=1"},
+        primary_file="main.py",
+        fitness=0.1,
+    )
+
+    mode, selection = _select_mutation_mode(
+        Config(mutation_mode="adaptive"),
+        multi_file,
+        [],
+    )
+
+    assert mode == "diff"
+    assert selection["candidate_shape"]["text_file_count"] == 2
+    assert selection["full_shape_eligible"] is False
+
+    large = Program(id="large-task", code="x=1\n# " + ("a" * 2200), fitness=0.1)
+    mode, selection = _select_mutation_mode(
+        Config(
+            mutation_mode="adaptive",
+            adaptive_mutation_task_preference="full",
+        ),
+        large,
+        [],
+    )
+
+    assert mode == "full"
+    assert selection["selection_reason"] == "explicit_task_preference"
+    assert selection["full_shape_eligible"] is False
+
+
+def test_adaptive_mutation_parser_fallback_accepts_opposite_response_format():
+    short_parent = Program(id="short", code="x=1", fitness=0.1)
+    _, full_selection = _select_mutation_mode(
+        Config(mutation_mode="adaptive"),
+        short_parent,
+        [],
+    )
+    diff = "<<<<<<< SEARCH\nx=1\n=======\nx=2\n>>>>>>> REPLACE"
+
+    child, error, applied = _apply_selected_workspace_mutation(
+        short_parent.workspace(),
+        diff,
+        full_selection,
+    )
+
+    assert error is None
+    assert child.code == "x=2"
+    assert applied["selected_mode"] == "full"
+    assert applied["effective_mode"] == "diff"
+    assert applied["parser_fallback"]["attempted"] is True
+    assert applied["parser_fallback"]["used"] is True
+
+    _, no_fallback_selection = _select_mutation_mode(
+        Config(
+            mutation_mode="adaptive",
+            adaptive_mutation_parser_fallback=False,
+        ),
+        short_parent,
+        [],
+    )
+    unchanged, error, applied = _apply_selected_workspace_mutation(
+        short_parent.workspace(),
+        diff,
+        no_fallback_selection,
+    )
+
+    assert unchanged.code == "x=1"
+    assert error == "response_format_mismatch:full_prompt_received_diff_payload"
+    assert applied["parser_fallback"]["attempted"] is False
+
+    large_parent = Program(id="large", code="x=1\n# " + ("a" * 2200), fitness=0.1)
+    _, diff_selection = _select_mutation_mode(
+        Config(mutation_mode="adaptive"),
+        large_parent,
+        [],
+    )
+    child, error, applied = _apply_selected_workspace_mutation(
+        large_parent.workspace(),
+        "x=3\n",
+        diff_selection,
+    )
+
+    assert error is None
+    assert child.code == "x=3\n"
+    assert applied["selected_mode"] == "diff"
+    assert applied["effective_mode"] == "full"
+    assert applied["parser_fallback"]["used"] is True
+
+    full_source_with_diff_fixture = (
+        'fixture = """<<<<<<< SEARCH\nold\n=======\nnew\n>>>>>>> REPLACE"""\n'
+    )
+    child, error, applied = _apply_selected_workspace_mutation(
+        short_parent.workspace(),
+        full_source_with_diff_fixture,
+        full_selection,
+    )
+
+    assert error is None
+    assert child.code == full_source_with_diff_fixture
+    assert applied["effective_mode"] == "full"
+    assert applied["parser_fallback"]["attempted"] is False
+
+    diff_with_preamble = (
+        "This keeps the change focused.\n\n"
+        "<<<<<<< SEARCH\nx=1\n=======\nx=5\n>>>>>>> REPLACE"
+    )
+    child, error, applied = _apply_selected_workspace_mutation(
+        short_parent.workspace(),
+        diff_with_preamble,
+        full_selection,
+    )
+
+    assert error is None
+    assert child.code == "x=5"
+    assert applied["effective_mode"] == "diff"
+    assert applied["parser_fallback"]["used"] is True
+
+    multi_file_parent = CandidateWorkspace(
+        files={"main.py": "x=1", "helper.py": "y=1"},
+        primary_file="main.py",
+    )
+    full_file_sections = (
+        "<<<FILE main.py\nx=4\n>>>FILE\n"
+        "<<<FILE helper.py\ny=2\n>>>FILE"
+    )
+    child, error, applied = _apply_selected_workspace_mutation(
+        multi_file_parent,
+        full_file_sections,
+        {
+            "selected_mode": "diff",
+            "parser_fallback": {"enabled": True, "strict_format": True},
+        },
+    )
+
+    assert error is None
+    assert child.files == {"main.py": "x=4\n", "helper.py": "y=2\n"}
+    assert applied["effective_mode"] == "full"
+    assert applied["parser_fallback"]["used"] is True
+
+
+def test_adaptive_critique_validation_uses_selected_mode_fallback():
+    workspace = CandidateWorkspace.from_code("x=1")
+    original = "x=2"
+    revised = "<<<<<<< SEARCH\nx=1\n=======\nx=3\n>>>>>>> REPLACE"
+
+    selected, status = _select_critique_mutation(
+        workspace,
+        original,
+        revised,
+        mutation_mode="full",
+        parser_fallback_enabled=True,
+    )
+
+    assert selected == revised
+    assert status["accepted_revision"] is True
+    assert status["revised_mutation_mode"] == "diff"
+    assert status["revised_parser_fallback"]["used"] is True
+
+
+def test_async_sampler_preserves_adaptive_mutation_mode_selection(tmp_path):
+    main_llm = _TelemetryLLM()
+    worker = _AsyncSamplerTelemetryLLM("x=2", 0.01)
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, worker],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                mutation_mode="adaptive",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=1,
+                async_llm_queue_capacity=1,
+                log_dir=str(tmp_path),
+                problem_name="adaptive_async",
+            ),
+        )
+
+    run_dir = tmp_path / "adaptive_async"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    selection = history[1]["metadata"]["mutation_mode_selection"]
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"]["adaptive_mutation_mode_report"]
+
+    assert history[1]["metadata"]["mutation_mode"] == "full"
+    assert selection["selected_mode"] == "full"
+    assert selection["effective_mode"] == "full"
+    assert report["selection_record_count"] == 1
+    assert report["selected_mode_counts"] == {"full": 1}
+
+
+def test_adaptive_mutation_report_includes_failure_only_sampler_attempt(tmp_path):
+    main_llm = _TelemetryLLM()
+    worker = _AsyncSamplerTelemetryLLM("", 0.01, error="provider unavailable")
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, worker],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                mutation_mode="adaptive",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=1,
+                async_llm_queue_capacity=1,
+                log_dir=str(tmp_path),
+                problem_name="adaptive_failure_only",
+            ),
+        )
+
+    run_dir = tmp_path / "adaptive_failure_only"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    failures = [
+        json.loads(line)
+        for line in (run_dir / "failure_history.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    report = manifest["runtime"]["history"]["adaptive_mutation_mode_report"]
+
+    assert len(history) == 1
+    assert len(failures) == 1
+    assert failures[0]["mutation_mode_selection"]["selected_mode"] == "full"
+    assert report["generated_candidate_count"] == 1
+    assert report["selection_record_count"] == 1
+    assert report["sample_records"][0]["source_stream"] == "failure_history.jsonl"
+    assert report["claim_readiness"]["adaptive_per_candidate_selection"] is True
 
 
 class _RewardLLM:

@@ -25,8 +25,9 @@ Runnable today:
   selected seed to be evaluator-valid before mutation; multi-seed,
   provider-startup, matrix, and constructive-math strict evidence remains
   open work.
-- SEARCH/REPLACE mutation diffs using canonical AlphaEvolve-style fences, plus
-  configurable full-code replacement mode.
+- SEARCH/REPLACE mutation diffs using canonical AlphaEvolve-style fences,
+  configurable full-code replacement, and opt-in per-candidate `adaptive`
+  selection between them.
 - OpenAI, Anthropic, Google Gemini, Ollama, experimental Codex CLI, and custom
   import-path backend support.
 - Heuristic UCB-style backend selection.
@@ -163,6 +164,11 @@ Important limits:
   stronger benchmark evidence.
 - The default initial-program policy is permissive; AlphaEvolve-style complete
   initial-solution parity requires explicit strict-mode evidence.
+- Adaptive mutation mode uses configured workspace character/file/evolve-block
+  thresholds, an optional task preference, recent same-parent selected-mode
+  failures, and opposite-format parser fallback. These are local heuristics,
+  not benchmark-calibrated rewrite judgments, learned response-quality policy,
+  or equal-budget AlphaEvolve reproduction evidence.
 - Human-seeded initial-program claims require exact prompt/context linkage,
   seed workspace hashes, replicate protocols, equal-budget seed-variant
   tables, and contribution review evidence; current reports are metadata

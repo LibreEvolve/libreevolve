@@ -1,349 +1,340 @@
 {
-  "active_todo_ref_count": 16,
+  "schema": "libreevolve.roadmap_candidate_workspace_readiness_boundary.v1",
   "boundary_status": "bounded_candidate_workspace_readiness_matrix_without_alphaevolve_workspace_gate",
+  "claim_ready": false,
+  "source_candidate_workspace_boundary_input": "papers/roadmap_candidate_workspace_fidelity_boundary.json",
+  "source_criterion_count": 10,
+  "source_active_todo_ref_count": 20,
+  "source_sidecar_ref_count": 15,
+  "source_missing_evidence_count": 12,
+  "readiness_criterion_count": 8,
+  "sidecar_ref_count": 16,
+  "active_todo_ref_count": 16,
+  "readiness_criteria": [
+    {
+      "criterion_id": "language_build_and_candidate_api",
+      "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
+      "current_scope": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
+      "missing_readiness": "configured language/build runners plus flexible solution abstraction API evidence",
+      "sidecar_refs": [
+        {
+          "path": "papers/candidate_language_runner_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "configured language/build runners",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "flexible solution abstraction API",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "language/build runner and candidate abstraction readiness gate",
+      "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate"
+    },
+    {
+      "criterion_id": "embedded_evaluator_and_codebase_scale",
+      "search_surface": "candidate-owned evaluator contracts and realistic codebase-scale fixtures",
+      "current_scope": "external validator contract, embedded-evaluator absence boundary, and smoke fixtures",
+      "missing_readiness": "candidate-embedded evaluator contracts with realistic codebase fixtures",
+      "sidecar_refs": [
+        {
+          "path": "papers/embedded_evaluator_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/codebase_scale_benchmark_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "candidate-embedded evaluator contracts",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "realistic codebase fixtures",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "embedded evaluator and codebase-scale fixture readiness gate",
+      "readiness_status": "external_validator_and_smoke_fixture_only"
+    },
+    {
+      "criterion_id": "materialization_marker_and_topology",
+      "search_surface": "marker materialization, workspace topology diagnostics, and source/workspace integrity",
+      "current_scope": "Python evolve-block handling, bounded topology diagnostics, and payload-shape integrity reports",
+      "missing_readiness": "topology diagnostics that prove candidate workspace materialization and resume fidelity",
+      "sidecar_refs": [
+        {
+          "path": "papers/workspace_materialization_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/whole_run_source_workspace_integrity_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "topology diagnostics",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "topology resume replay proof",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "workspace materialization and topology replay readiness gate",
+      "readiness_status": "bounded_topology_diagnostics_without_replay_proof"
+    },
+    {
+      "criterion_id": "mutation_mode_operator_provenance",
+      "search_surface": "adaptive mutation mode selection and operator-family provenance",
+      "current_scope": "per-candidate adaptive diff-full format selection plus fixed parser surfaces",
+      "missing_readiness": "benchmark-calibrated adaptive mutation-mode policy with proposal-level operator-family provenance",
+      "sidecar_refs": [
+        {
+          "path": "papers/adaptive_mutation_mode_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/mutation_operator_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "benchmark-calibrated adaptive mutation-mode policy",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "mutation-operator family provenance",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "calibrated adaptive mutation and operator provenance readiness gate",
+      "readiness_status": "adaptive_format_selection_without_calibrated_operator_policy"
+    },
+    {
+      "criterion_id": "prompt_copy_and_cross_file_consistency",
+      "search_surface": "prompt-example copy detection and cross-file mutation consistency",
+      "current_scope": "built-in copy diagnostics and best-effort Python AST symbol reports",
+      "missing_readiness": "semantic prompt-example-copy detection and benchmarked cross-file consistency evidence",
+      "sidecar_refs": [
+        {
+          "path": "papers/prompt_example_copy_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/mutation_consistency_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "semantic prompt-example-copy detection",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "cross-file consistency benchmark evidence",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "semantic copy and cross-file consistency readiness gate",
+      "readiness_status": "diagnostic_reports_without_semantic_or_benchmark_gate"
+    },
+    {
+      "criterion_id": "initial_pool_static_binary_policy",
+      "search_surface": "initial-pool divergence, program output discovery distance, and static/binary candidates",
+      "current_scope": "bounded syntactic/metric initial-pool telemetry and copy-only static asset handling",
+      "missing_readiness": "initial-pool divergence benchmark evidence plus static/binary replay policy",
+      "sidecar_refs": [
+        {
+          "path": "papers/initial_pool_divergence_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/program_output_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "initial-pool divergence benchmark evidence",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "static/binary replay policy",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "initial-pool and static/binary replay readiness gate",
+      "readiness_status": "syntactic_pool_distance_and_copy_only_assets"
+    },
+    {
+      "criterion_id": "resume_replay_and_manifest_policy",
+      "search_surface": "archive-event replay, pending-work resume, run manifests, and workspace docs",
+      "current_scope": "snapshot restore and audit-only archive-event reconciliation without full resume proof",
+      "missing_readiness": "run-manifest and workspace-doc checks that prove replayable candidate-workspace resume semantics",
+      "sidecar_refs": [
+        {
+          "path": "papers/archive_event_replay_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/controller_pending_work_resume_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "run manifests",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "workspace docs",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "resume replay, run-manifest, and workspace-doc readiness gate",
+      "readiness_status": "snapshot_restore_without_full_resume_replay_gate"
+    },
+    {
+      "criterion_id": "stale_readiness_and_owner_signoff",
+      "search_surface": "README, ROADMAP, papers, run manifests, workspace docs, and owner readiness claims",
+      "current_scope": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "missing_readiness": "stale-readiness detector and owner signoff before candidate-workspace fidelity claims",
+      "sidecar_refs": [
+        {
+          "path": "papers/documentation_claim_inventory.json",
+          "exists": true
+        },
+        {
+          "path": "papers/todo_ledger_ownership_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "stale-readiness detector",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner review signoff",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "validation_gate": "stale-readiness detector and owner signoff",
+      "readiness_status": "inventory_without_readiness_signoff"
+    }
+  ],
   "candidate_workspace_claim_guard": [
     {
-      "allowed_current_claim": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
       "criterion_id": "language_build_and_candidate_api",
-      "missing_before_parity_claim": "configured language/build runners plus flexible solution abstraction API evidence",
-      "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate",
       "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
-      "validation_gate": "language/build runner and candidate abstraction readiness gate"
+      "allowed_current_claim": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
+      "missing_before_parity_claim": "configured language/build runners plus flexible solution abstraction API evidence",
+      "validation_gate": "language/build runner and candidate abstraction readiness gate",
+      "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate"
     },
     {
-      "allowed_current_claim": "external validator contract, embedded-evaluator absence boundary, and smoke fixtures",
       "criterion_id": "embedded_evaluator_and_codebase_scale",
-      "missing_before_parity_claim": "candidate-embedded evaluator contracts with realistic codebase fixtures",
-      "readiness_status": "external_validator_and_smoke_fixture_only",
       "search_surface": "candidate-owned evaluator contracts and realistic codebase-scale fixtures",
-      "validation_gate": "embedded evaluator and codebase-scale fixture readiness gate"
+      "allowed_current_claim": "external validator contract, embedded-evaluator absence boundary, and smoke fixtures",
+      "missing_before_parity_claim": "candidate-embedded evaluator contracts with realistic codebase fixtures",
+      "validation_gate": "embedded evaluator and codebase-scale fixture readiness gate",
+      "readiness_status": "external_validator_and_smoke_fixture_only"
     },
     {
-      "allowed_current_claim": "Python evolve-block handling, bounded topology diagnostics, and payload-shape integrity reports",
       "criterion_id": "materialization_marker_and_topology",
-      "missing_before_parity_claim": "topology diagnostics that prove candidate workspace materialization and resume fidelity",
-      "readiness_status": "bounded_topology_diagnostics_without_replay_proof",
       "search_surface": "marker materialization, workspace topology diagnostics, and source/workspace integrity",
-      "validation_gate": "workspace materialization and topology replay readiness gate"
+      "allowed_current_claim": "Python evolve-block handling, bounded topology diagnostics, and payload-shape integrity reports",
+      "missing_before_parity_claim": "topology diagnostics that prove candidate workspace materialization and resume fidelity",
+      "validation_gate": "workspace materialization and topology replay readiness gate",
+      "readiness_status": "bounded_topology_diagnostics_without_replay_proof"
     },
     {
-      "allowed_current_claim": "fixed parser surfaces and run-wide mutation reports",
       "criterion_id": "mutation_mode_operator_provenance",
-      "missing_before_parity_claim": "adaptive mutation-mode selection with proposal-level operator-family provenance",
-      "readiness_status": "fixed_parser_surfaces_without_proposal_level_operator_policy",
       "search_surface": "adaptive mutation mode selection and operator-family provenance",
-      "validation_gate": "adaptive mutation and operator provenance readiness gate"
+      "allowed_current_claim": "per-candidate adaptive diff-full format selection plus fixed parser surfaces",
+      "missing_before_parity_claim": "benchmark-calibrated adaptive mutation-mode policy with proposal-level operator-family provenance",
+      "validation_gate": "calibrated adaptive mutation and operator provenance readiness gate",
+      "readiness_status": "adaptive_format_selection_without_calibrated_operator_policy"
     },
     {
-      "allowed_current_claim": "built-in copy diagnostics and best-effort Python AST symbol reports",
       "criterion_id": "prompt_copy_and_cross_file_consistency",
-      "missing_before_parity_claim": "semantic prompt-example-copy detection and benchmarked cross-file consistency evidence",
-      "readiness_status": "diagnostic_reports_without_semantic_or_benchmark_gate",
       "search_surface": "prompt-example copy detection and cross-file mutation consistency",
-      "validation_gate": "semantic copy and cross-file consistency readiness gate"
+      "allowed_current_claim": "built-in copy diagnostics and best-effort Python AST symbol reports",
+      "missing_before_parity_claim": "semantic prompt-example-copy detection and benchmarked cross-file consistency evidence",
+      "validation_gate": "semantic copy and cross-file consistency readiness gate",
+      "readiness_status": "diagnostic_reports_without_semantic_or_benchmark_gate"
     },
     {
-      "allowed_current_claim": "bounded syntactic/metric initial-pool telemetry and copy-only static asset handling",
       "criterion_id": "initial_pool_static_binary_policy",
-      "missing_before_parity_claim": "initial-pool divergence benchmark evidence plus static/binary replay policy",
-      "readiness_status": "syntactic_pool_distance_and_copy_only_assets",
       "search_surface": "initial-pool divergence, program output discovery distance, and static/binary candidates",
-      "validation_gate": "initial-pool and static/binary replay readiness gate"
+      "allowed_current_claim": "bounded syntactic/metric initial-pool telemetry and copy-only static asset handling",
+      "missing_before_parity_claim": "initial-pool divergence benchmark evidence plus static/binary replay policy",
+      "validation_gate": "initial-pool and static/binary replay readiness gate",
+      "readiness_status": "syntactic_pool_distance_and_copy_only_assets"
     },
     {
-      "allowed_current_claim": "snapshot restore and audit-only archive-event reconciliation without full resume proof",
       "criterion_id": "resume_replay_and_manifest_policy",
-      "missing_before_parity_claim": "run-manifest and workspace-doc checks that prove replayable candidate-workspace resume semantics",
-      "readiness_status": "snapshot_restore_without_full_resume_replay_gate",
       "search_surface": "archive-event replay, pending-work resume, run manifests, and workspace docs",
-      "validation_gate": "resume replay, run-manifest, and workspace-doc readiness gate"
+      "allowed_current_claim": "snapshot restore and audit-only archive-event reconciliation without full resume proof",
+      "missing_before_parity_claim": "run-manifest and workspace-doc checks that prove replayable candidate-workspace resume semantics",
+      "validation_gate": "resume replay, run-manifest, and workspace-doc readiness gate",
+      "readiness_status": "snapshot_restore_without_full_resume_replay_gate"
     },
     {
-      "allowed_current_claim": "bounded inventories and TODO ownership sidecars without owner signoff",
       "criterion_id": "stale_readiness_and_owner_signoff",
-      "missing_before_parity_claim": "stale-readiness detector and owner signoff before candidate-workspace fidelity claims",
-      "readiness_status": "inventory_without_readiness_signoff",
       "search_surface": "README, ROADMAP, papers, run manifests, workspace docs, and owner readiness claims",
-      "validation_gate": "stale-readiness detector and owner signoff"
+      "allowed_current_claim": "bounded inventories and TODO ownership sidecars without owner signoff",
+      "missing_before_parity_claim": "stale-readiness detector and owner signoff before candidate-workspace fidelity claims",
+      "validation_gate": "stale-readiness detector and owner signoff",
+      "readiness_status": "inventory_without_readiness_signoff"
     }
   ],
   "candidate_workspace_claim_guard_count": 8,
-  "claim_boundary": "This boundary records candidate-workspace readiness criteria tied to the bounded candidate-workspace fidelity matrix, plus a claim guard for each workspace surface. It does not claim configured language/build runners, flexible solution abstraction API, candidate-embedded evaluator contracts, realistic codebase fixtures, adaptive mutation-mode selection, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, stale-readiness detector, or owner review signoff.",
-  "claim_ready": false,
-  "missing_evidence": {
-    "adaptive_mutation_mode_selection": "not_recorded_locally",
-    "candidate_embedded_evaluator_contracts": "not_recorded_locally",
-    "configured_language_build_runners": "not_recorded_locally",
-    "cross_file_consistency_benchmark_evidence": "not_recorded_locally",
-    "flexible_solution_abstraction_api": "not_recorded_locally",
-    "initial_pool_divergence_benchmark_evidence": "not_recorded_locally",
-    "mutation_operator_family_provenance": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally",
-    "realistic_codebase_fixtures": "not_recorded_locally",
-    "semantic_prompt_example_copy_detection": "not_recorded_locally",
-    "stale_readiness_detector": "not_recorded_locally",
-    "static_binary_replay_policy": "not_recorded_locally",
-    "topology_resume_replay_proof": "not_recorded_locally"
-  },
-  "readiness_criteria": [
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "configured language/build runners",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "flexible solution abstraction API",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "language_build_and_candidate_api",
-      "current_scope": "manifest declarations and Python-primary code-file-set abstraction without executable non-Python/build runner parity",
-      "missing_readiness": "configured language/build runners plus flexible solution abstraction API evidence",
-      "readiness_status": "metadata_and_design_matrix_without_executable_runner_gate",
-      "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/candidate_language_runner_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/candidate_abstraction_boundary.json"
-        }
-      ],
-      "validation_gate": "language/build runner and candidate abstraction readiness gate"
-    },
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "candidate-embedded evaluator contracts",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "realistic codebase fixtures",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "embedded_evaluator_and_codebase_scale",
-      "current_scope": "external validator contract, embedded-evaluator absence boundary, and smoke fixtures",
-      "missing_readiness": "candidate-embedded evaluator contracts with realistic codebase fixtures",
-      "readiness_status": "external_validator_and_smoke_fixture_only",
-      "search_surface": "candidate-owned evaluator contracts and realistic codebase-scale fixtures",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/embedded_evaluator_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/codebase_scale_benchmark_boundary.json"
-        }
-      ],
-      "validation_gate": "embedded evaluator and codebase-scale fixture readiness gate"
-    },
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "topology diagnostics",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "topology resume replay proof",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "materialization_marker_and_topology",
-      "current_scope": "Python evolve-block handling, bounded topology diagnostics, and payload-shape integrity reports",
-      "missing_readiness": "topology diagnostics that prove candidate workspace materialization and resume fidelity",
-      "readiness_status": "bounded_topology_diagnostics_without_replay_proof",
-      "search_surface": "marker materialization, workspace topology diagnostics, and source/workspace integrity",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/workspace_materialization_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/whole_run_source_workspace_integrity_boundary.json"
-        }
-      ],
-      "validation_gate": "workspace materialization and topology replay readiness gate"
-    },
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "adaptive mutation-mode selection",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "mutation-operator family provenance",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "mutation_mode_operator_provenance",
-      "current_scope": "fixed parser surfaces and run-wide mutation reports",
-      "missing_readiness": "adaptive mutation-mode selection with proposal-level operator-family provenance",
-      "readiness_status": "fixed_parser_surfaces_without_proposal_level_operator_policy",
-      "search_surface": "adaptive mutation mode selection and operator-family provenance",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/adaptive_mutation_mode_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/mutation_operator_boundary.json"
-        }
-      ],
-      "validation_gate": "adaptive mutation and operator provenance readiness gate"
-    },
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "semantic prompt-example-copy detection",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "cross-file consistency benchmark evidence",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "prompt_copy_and_cross_file_consistency",
-      "current_scope": "built-in copy diagnostics and best-effort Python AST symbol reports",
-      "missing_readiness": "semantic prompt-example-copy detection and benchmarked cross-file consistency evidence",
-      "readiness_status": "diagnostic_reports_without_semantic_or_benchmark_gate",
-      "search_surface": "prompt-example copy detection and cross-file mutation consistency",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/prompt_example_copy_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/mutation_consistency_boundary.json"
-        }
-      ],
-      "validation_gate": "semantic copy and cross-file consistency readiness gate"
-    },
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "initial-pool divergence benchmark evidence",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "static/binary replay policy",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "initial_pool_static_binary_policy",
-      "current_scope": "bounded syntactic/metric initial-pool telemetry and copy-only static asset handling",
-      "missing_readiness": "initial-pool divergence benchmark evidence plus static/binary replay policy",
-      "readiness_status": "syntactic_pool_distance_and_copy_only_assets",
-      "search_surface": "initial-pool divergence, program output discovery distance, and static/binary candidates",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/initial_pool_divergence_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/program_output_boundary.json"
-        }
-      ],
-      "validation_gate": "initial-pool and static/binary replay readiness gate"
-    },
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "run manifests",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "workspace docs",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "resume_replay_and_manifest_policy",
-      "current_scope": "snapshot restore and audit-only archive-event reconciliation without full resume proof",
-      "missing_readiness": "run-manifest and workspace-doc checks that prove replayable candidate-workspace resume semantics",
-      "readiness_status": "snapshot_restore_without_full_resume_replay_gate",
-      "search_surface": "archive-event replay, pending-work resume, run manifests, and workspace docs",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/archive_event_replay_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/controller_pending_work_resume_boundary.json"
-        }
-      ],
-      "validation_gate": "resume replay, run-manifest, and workspace-doc readiness gate"
-    },
-    {
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "stale-readiness detector",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "owner review signoff",
-          "required_phrase_present": true
-        }
-      ],
-      "criterion_id": "stale_readiness_and_owner_signoff",
-      "current_scope": "bounded inventories and TODO ownership sidecars without owner signoff",
-      "missing_readiness": "stale-readiness detector and owner signoff before candidate-workspace fidelity claims",
-      "readiness_status": "inventory_without_readiness_signoff",
-      "search_surface": "README, ROADMAP, papers, run manifests, workspace docs, and owner readiness claims",
-      "sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/documentation_claim_inventory.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/todo_ledger_ownership_boundary.json"
-        }
-      ],
-      "validation_gate": "stale-readiness detector and owner signoff"
-    }
-  ],
-  "readiness_criterion_count": 8,
   "required_evidence_fields": [
     "language_build_and_candidate_api",
     "embedded_evaluator_and_codebase_scale",
@@ -354,11 +345,20 @@
     "resume_replay_and_manifest_policy",
     "stale_readiness_and_owner_signoff"
   ],
-  "schema": "libreevolve.roadmap_candidate_workspace_readiness_boundary.v1",
-  "sidecar_ref_count": 16,
-  "source_active_todo_ref_count": 20,
-  "source_candidate_workspace_boundary_input": "papers/roadmap_candidate_workspace_fidelity_boundary.json",
-  "source_criterion_count": 10,
-  "source_missing_evidence_count": 12,
-  "source_sidecar_ref_count": 15
+  "missing_evidence": {
+    "configured_language_build_runners": "not_recorded_locally",
+    "flexible_solution_abstraction_api": "not_recorded_locally",
+    "candidate_embedded_evaluator_contracts": "not_recorded_locally",
+    "realistic_codebase_fixtures": "not_recorded_locally",
+    "benchmark_calibrated_adaptive_mutation_mode_policy": "not_recorded_locally",
+    "mutation_operator_family_provenance": "not_recorded_locally",
+    "semantic_prompt_example_copy_detection": "not_recorded_locally",
+    "cross_file_consistency_benchmark_evidence": "not_recorded_locally",
+    "initial_pool_divergence_benchmark_evidence": "not_recorded_locally",
+    "static_binary_replay_policy": "not_recorded_locally",
+    "topology_resume_replay_proof": "not_recorded_locally",
+    "stale_readiness_detector": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records candidate-workspace readiness criteria tied to the bounded candidate-workspace fidelity matrix, plus a claim guard for each workspace surface. It does not claim configured language/build runners, flexible solution abstraction API, candidate-embedded evaluator contracts, realistic codebase fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, stale-readiness detector, or owner review signoff."
 }

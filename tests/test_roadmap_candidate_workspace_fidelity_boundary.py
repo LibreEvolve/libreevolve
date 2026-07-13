@@ -50,7 +50,7 @@ def test_roadmap_candidate_workspace_fidelity_accepts_bounded_criteria_map():
         "flexible_solution_abstraction_api": "not_recorded_locally",
         "candidate_embedded_evaluator_contracts": "not_recorded_locally",
         "realistic_codebase_fixtures": "not_recorded_locally",
-        "adaptive_mutation_mode_selection": "not_recorded_locally",
+        "benchmark_calibrated_adaptive_mutation_mode_policy": "not_recorded_locally",
         "mutation_operator_family_provenance": "not_recorded_locally",
         "semantic_prompt_example_copy_detection": "not_recorded_locally",
         "cross_file_consistency_benchmark_evidence": "not_recorded_locally",

@@ -232,6 +232,18 @@ def test_candidate_runner_declarations_reject_invalid_values(kwargs, message):
         Config(**kwargs)
 
 
+def test_config_accepts_adaptive_mutation_policy_defaults():
+    config = Config(mutation_mode="adaptive")
+
+    assert config.mutation_mode == "adaptive"
+    assert config.adaptive_mutation_full_max_chars == 2000
+    assert config.adaptive_mutation_full_max_files == 1
+    assert config.adaptive_mutation_full_max_evolve_blocks == 1
+    assert config.adaptive_mutation_task_preference == "auto"
+    assert config.adaptive_mutation_failure_switch_count == 2
+    assert config.adaptive_mutation_parser_fallback is True
+
+
 @pytest.mark.parametrize(
     ("kwargs", "message"),
     [
@@ -284,6 +296,28 @@ def test_candidate_runner_declarations_reject_invalid_values(kwargs, message):
         ({"parent_selection_strategy": "best-ish"}, "parent_selection_strategy"),
         ({"inspiration_strategy": "anything"}, "inspiration_strategy"),
         ({"mutation_mode": "rewrite"}, "mutation_mode"),
+        ({"adaptive_mutation_full_max_chars": 0}, "adaptive_mutation_full_max_chars"),
+        ({"adaptive_mutation_full_max_files": 0}, "adaptive_mutation_full_max_files"),
+        (
+            {"adaptive_mutation_full_max_evolve_blocks": -1},
+            "adaptive_mutation_full_max_evolve_blocks",
+        ),
+        (
+            {"adaptive_mutation_task_preference": "sometimes"},
+            "adaptive_mutation_task_preference",
+        ),
+        (
+            {"adaptive_mutation_failure_switch_count": 0},
+            "adaptive_mutation_failure_switch_count",
+        ),
+        (
+            {"adaptive_mutation_failure_switch_count": 6},
+            "adaptive_mutation_failure_switch_count",
+        ),
+        (
+            {"adaptive_mutation_parser_fallback": 1},
+            "adaptive_mutation_parser_fallback",
+        ),
         ({"max_candidate_workspace_files": 0}, "max_candidate_workspace_files"),
         ({"max_candidate_workspace_files": True}, "max_candidate_workspace_files"),
         ({"max_candidate_file_chars": -1}, "max_candidate_file_chars"),

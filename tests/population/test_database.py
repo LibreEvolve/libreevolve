@@ -3303,6 +3303,14 @@ def test_log_failure_writes_queryable_failure_record():
         primary_file="main.py",
         parent_id=parent.id,
         fitness=-0.4,
+        metadata={
+            "mutation_mode": "diff",
+            "mutation_mode_selection": {
+                "schema": "libreevolve.mutation_mode_selection.v1",
+                "selected_mode": "diff",
+                "effective_mode": "diff",
+            },
+        },
         evaluation={
             "is_valid": False,
             "error": "wrong",
@@ -3324,6 +3332,8 @@ def test_log_failure_writes_queryable_failure_record():
     assert record["failure_fingerprint"]["changed_files"] == ["helper.py"]
     assert len(record["failure_fingerprint"]["sha256"]) == 64
     assert record["repetition_count"] == 1
+    assert record["mutation_mode"] == "diff"
+    assert record["mutation_mode_selection"]["selected_mode"] == "diff"
     assert child.metadata["failure_record"]["program_id"] == child.id
     records = [
         json.loads(line)
@@ -4056,6 +4066,12 @@ def test_manifest_written():
         log_dir=tmpdir,
         problem_name="t",
         mutation_mode="full",
+        adaptive_mutation_full_max_chars=4321,
+        adaptive_mutation_full_max_files=2,
+        adaptive_mutation_full_max_evolve_blocks=3,
+        adaptive_mutation_task_preference="diff",
+        adaptive_mutation_failure_switch_count=4,
+        adaptive_mutation_parser_fallback=False,
         max_evaluations=12,
         max_evaluator_seconds=4.5,
         max_evaluator_subprocess_attempts=99,
@@ -4103,6 +4119,12 @@ def test_manifest_written():
     ))
     manifest = json.loads((Path(tmpdir)/"t"/"manifest.json").read_text())
     assert manifest["config"]["mutation_mode"] == "full"
+    assert manifest["config"]["adaptive_mutation_full_max_chars"] == 4321
+    assert manifest["config"]["adaptive_mutation_full_max_files"] == 2
+    assert manifest["config"]["adaptive_mutation_full_max_evolve_blocks"] == 3
+    assert manifest["config"]["adaptive_mutation_task_preference"] == "diff"
+    assert manifest["config"]["adaptive_mutation_failure_switch_count"] == 4
+    assert manifest["config"]["adaptive_mutation_parser_fallback"] is False
     assert manifest["config"]["max_evaluations"] == 12
     assert manifest["config"]["max_evaluator_seconds"] == 4.5
     assert manifest["config"]["max_evaluator_subprocess_attempts"] == 99

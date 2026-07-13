@@ -126,12 +126,16 @@ the pattern itself names the reserved component. Included reserved seed paths
 are persisted as `allowed_reserved_paths` in seed provenance and as
 `workspace_path_policy` on history rows.
 
-Two mutation modes are supported:
+Three configured mutation modes are supported:
 
 - `diff`: default SEARCH/REPLACE blocks, accepting both compact local fences
   and AlphaEvolve-style `<<<<<<< SEARCH` / `>>>>>>> REPLACE` fences
 - `full`: complete replacement of the whole unmarked program, the single marked
   block, or named multi-block replacements with `<<<BLOCK name ... >>>BLOCK`
+- `adaptive`: selects `full` for a short, threshold-eligible single-file
+  workspace and `diff` otherwise; explicit task preference and recent
+  same-parent failures of the initially selected prompt mode can override that
+  shape decision
 
 The default prompt template is mutation-mode aware. In `diff` mode it asks for
 compact or AlphaEvolve-style SEARCH/REPLACE fences. In `full` mode it asks for
@@ -139,6 +143,12 @@ full replacement content, including full-file `<<<FILE ... >>>FILE` sections
 for workspace candidates and named `<<<BLOCK ... >>>BLOCK` sections for
 multi-block replacements. Custom prompt templates remain supported and may
 ignore or render the `{mutation_mode}` and `{mutation_instructions}` fields.
+Adaptive selection resolves to `diff` or `full` before prompt rendering. When
+enabled, an opposite-format response can be retried through the other parser;
+the selected and effective modes, reason, shape, failure count, and fallback
+result remain distinct in candidate metadata. Critique revisions are validated
+against the same selected-mode contract. This is a deterministic local
+heuristic, not semantic proof that a full rewrite is appropriate.
 Direct prompt rendering treats `template=None` as the only sampler/default
 fallback signal; explicit blank template strings are rejected by prompt-template
 validation.
@@ -235,7 +245,8 @@ the loop:
 7. previews critique revisions, aggregates valid reviewer revisions by policy,
    and falls back to the original mutation if selected revisions are malformed
    but the original applies cleanly
-8. applies the configured mutation mode
+8. applies the selected diff/full mutation mode and records any adaptive parser
+   fallback
 9. evaluates the child synchronously, or dispatches it to the bounded local
    candidate-evaluation queue when async evaluation is enabled
 10. optionally applies LLM feedback graders with provenance and score

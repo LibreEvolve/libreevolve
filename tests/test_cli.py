@@ -5563,6 +5563,31 @@ def test_run_rejects_invalid_config_mutation_mode(tmp_path):
     assert "mutation_mode" in r.output
 
 
+def test_run_accepts_adaptive_mutation_mode_override(tmp_path):
+    _make_problem(tmp_path)
+    (tmp_path / "config.yaml").write_text(
+        yaml.dump({"log_dir": (tmp_path / "runs").as_posix()}),
+        encoding="utf-8",
+    )
+    mock_best = Program(code="x=1", fitness=1.0)
+
+    with patch("libreevolve.cli.evolve", return_value=mock_best) as mock:
+        result = CliRunner().invoke(
+            cli,
+            [
+                "run",
+                str(tmp_path),
+                "--max-generations",
+                "0",
+                "--mutation-mode",
+                "adaptive",
+            ],
+        )
+
+    assert result.exit_code == 0
+    assert mock.call_args.args[1].mutation_mode == "adaptive"
+
+
 def test_reasoning_effort_overrides_configured_openai_backend(tmp_path):
     _make_problem(tmp_path)
     (tmp_path / "config.yaml").write_text(

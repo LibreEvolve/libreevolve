@@ -1,355 +1,344 @@
 {
-  "active_todo_ref_count": 20,
+  "schema": "libreevolve.roadmap_candidate_workspace_fidelity_boundary.v1",
   "boundary_status": "bounded_candidate_workspace_fidelity_matrix_without_alphaevolve_workspace_readiness",
-  "claim_boundary": "This boundary records a ROADMAP-level candidate-workspace fidelity criteria map for language/build runners, candidate abstraction, marker and materialization policy, embedded evaluators, codebase scale, mutation-mode/operator provenance, prompt-example-copy guards, cross-file consistency, initial-pool/static-binary handling, and workspace resume integrity. It does not claim configured language/build runners, flexible solution abstraction APIs, candidate-embedded evaluator contracts, realistic codebase fixtures, adaptive mutation-mode selection, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, or owner review signoff.",
   "claim_ready": false,
+  "roadmap_heading": "### 1. Finish candidate workspace fidelity",
+  "roadmap_heading_present": true,
   "criterion_count": 10,
+  "active_todo_ref_count": 20,
+  "sidecar_ref_count": 15,
   "criterion_records": [
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "language_build_runner_support",
+      "search_surface": "candidate language/build/runner declarations and execution policy",
+      "current_scope": "manifest metadata and Python-primary runner contracts without executable non-Python/build runners",
+      "missing_readiness": "configured language runners, build-system execution contracts, and runner capability tests",
+      "roadmap_required_phrase": "actual non-Python language runners",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/candidate_language_runner_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "executable language and build runner contracts",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "executable configured language runners",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "language_build_runner_support",
-      "current_scope": "manifest metadata and Python-primary runner contracts without executable non-Python/build runners",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/candidate_language_runner_boundary.json"
-        }
-      ],
-      "missing_readiness": "configured language runners, build-system execution contracts, and runner capability tests",
-      "readiness_status": "metadata_only_language_build_contracts",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "actual non-Python language runners",
-      "search_surface": "candidate language/build/runner declarations and execution policy",
-      "validation_gate": "non-Python and build-runner contract tests with manifest evidence"
+      "active_todo_ref_count": 2,
+      "validation_gate": "non-Python and build-runner contract tests with manifest evidence",
+      "readiness_status": "metadata_only_language_build_contracts"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "candidate_abstraction_api",
+      "search_surface": "problem-defined solution abstraction choices",
+      "current_scope": "Python-primary code-file-set abstraction plus design/bias matrices",
+      "missing_readiness": "typed problem-defined abstraction APIs and equal-budget abstraction-choice evidence",
+      "roadmap_required_phrase": "problem-defined candidate abstraction hooks",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/candidate_abstraction_bias_matrix.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "problem-level abstraction rationale",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "benchmark metadata for candidate abstraction family",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "candidate_abstraction_api",
-      "current_scope": "Python-primary code-file-set abstraction plus design/bias matrices",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/candidate_abstraction_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/candidate_abstraction_bias_matrix.json"
-        }
-      ],
-      "missing_readiness": "typed problem-defined abstraction APIs and equal-budget abstraction-choice evidence",
-      "readiness_status": "code_file_set_abstraction_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "problem-defined candidate abstraction hooks",
-      "search_surface": "problem-defined solution abstraction choices",
-      "validation_gate": "problem-declared abstraction schema and benchmarked alternatives"
+      "active_todo_ref_count": 2,
+      "validation_gate": "problem-declared abstraction schema and benchmarked alternatives",
+      "readiness_status": "code_file_set_abstraction_only"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "marker_materialization_policy",
+      "search_surface": "evolve-block markers, workspace topology, and materialization diagnostics",
+      "current_scope": "Python evolve-block handling and bounded workspace topology diagnostics",
+      "missing_readiness": "language-aware marker grammars and materialization diagnostics across future workspace surfaces",
+      "roadmap_required_phrase": "language-aware evolve-block marker grammars",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/workspace_materialization_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "future topology surfaces",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "future topology surfaces",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "marker_materialization_policy",
-      "current_scope": "Python evolve-block handling and bounded workspace topology diagnostics",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/workspace_materialization_boundary.json"
-        }
-      ],
-      "missing_readiness": "language-aware marker grammars and materialization diagnostics across future workspace surfaces",
-      "readiness_status": "python_marker_and_bounded_topology_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "language-aware evolve-block marker grammars",
-      "search_surface": "evolve-block markers, workspace topology, and materialization diagnostics",
-      "validation_gate": "language-aware marker/materialization tests and topology diagnostics"
+      "active_todo_ref_count": 2,
+      "validation_gate": "language-aware marker/materialization tests and topology diagnostics",
+      "readiness_status": "python_marker_and_bounded_topology_only"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "embedded_evaluator_boundary",
+      "search_surface": "candidate-owned evaluator loading and Figure 3 parity",
+      "current_scope": "external validator contract with candidate-embedded evaluator absence boundary",
+      "missing_readiness": "default candidate-owned evaluator loading and sandboxed evaluator contract tests",
+      "roadmap_required_phrase": "evaluator-workload",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/embedded_evaluator_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "candidate-owned evaluation",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "default candidate-owned evaluator loading",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "embedded_evaluator_boundary",
-      "current_scope": "external validator contract with candidate-embedded evaluator absence boundary",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/embedded_evaluator_boundary.json"
-        }
-      ],
-      "missing_readiness": "default candidate-owned evaluator loading and sandboxed evaluator contract tests",
-      "readiness_status": "external_validator_contract_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "evaluator-workload",
-      "search_surface": "candidate-owned evaluator loading and Figure 3 parity",
-      "validation_gate": "candidate-embedded evaluator lifecycle and isolation evidence"
+      "active_todo_ref_count": 2,
+      "validation_gate": "candidate-embedded evaluator lifecycle and isolation evidence",
+      "readiness_status": "external_validator_contract_only"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "codebase_scale_fixtures",
+      "search_surface": "multi-component generated codebase fixtures and Table 1 capability claims",
+      "current_scope": "workspace_math smoke fixture and codebase-scale absence sidecar",
+      "missing_readiness": "realistic codebase-scale fixtures, dependencies, runners, artifacts, and sample-efficiency evidence",
+      "roadmap_required_phrase": "realistic codebase-scale fixtures",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/codebase_scale_benchmark_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/existing_codebase_integration_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Add codebase-scale benchmark evidence",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "paper-facing codebase-scale fixture",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "codebase_scale_fixtures",
-      "current_scope": "workspace_math smoke fixture and codebase-scale absence sidecar",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/codebase_scale_benchmark_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/existing_codebase_integration_boundary.json"
-        }
-      ],
-      "missing_readiness": "realistic codebase-scale fixtures, dependencies, runners, artifacts, and sample-efficiency evidence",
-      "readiness_status": "smoke_fixture_without_table1_parity",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "realistic codebase-scale fixtures",
-      "search_surface": "multi-component generated codebase fixtures and Table 1 capability claims",
-      "validation_gate": "external or realistic multi-component benchmark fixture with retained artifacts"
+      "active_todo_ref_count": 2,
+      "validation_gate": "external or realistic multi-component benchmark fixture with retained artifacts",
+      "readiness_status": "smoke_fixture_without_table1_parity"
     },
     {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
+      "criterion_id": "mutation_mode_operator_provenance",
+      "search_surface": "diff/full/file/block/topology mutation modes and operator-family evidence",
+      "current_scope": "per-candidate shape/task/failure diff-full selection plus fixed parser surfaces without calibrated policy or operator-family provenance",
+      "missing_readiness": "benchmark-calibrated adaptive mutation-mode policy and LLM-constructed operator-family provenance",
+      "roadmap_required_phrase": "proposal-level operator-family provenance",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
         {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Add adaptive mutation-output mode selection",
-          "required_phrase_present": true
+          "path": "papers/adaptive_mutation_mode_boundary.json",
+          "exists": true
         },
         {
-          "exists": true,
+          "path": "papers/mutation_operator_boundary.json",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Calibrate and evaluate the adaptive mutation-output policy",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
           "path": "docs/todo/papers.md",
           "required_phrase": "proposal-level operator-family provenance",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "mutation_mode_operator_provenance",
-      "current_scope": "configured fixed parser surfaces and run-wide mutation mode reports",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/adaptive_mutation_mode_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/mutation_operator_boundary.json"
-        }
-      ],
-      "missing_readiness": "adaptive proposal-level mutation-mode selection and LLM-constructed operator-family provenance",
-      "readiness_status": "fixed_parser_surfaces_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "proposal-level operator-family provenance",
-      "search_surface": "diff/full/file/block/topology mutation modes and operator-family evidence",
-      "validation_gate": "adaptive operator selection plus operator-family scoring/telemetry"
+      "active_todo_ref_count": 2,
+      "validation_gate": "calibrated adaptive mode policy plus operator-family scoring/telemetry",
+      "readiness_status": "adaptive_format_selection_without_calibration_or_operator_family_policy"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "prompt_example_copy_guard",
+      "search_surface": "prompt examples and generated-payload copy diagnostics",
+      "current_scope": "built-in exact/normalized/skeleton diagnostics without hard or semantic guard",
+      "missing_readiness": "configurable acceptance policy, custom example inventories, and semantic renamed-copy detection",
+      "roadmap_required_phrase": "concrete prompt examples",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/prompt_example_copy_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "extend prompt-example copy evidence",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "prompt-example compatibility",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "prompt_example_copy_guard",
-      "current_scope": "built-in exact/normalized/skeleton diagnostics without hard or semantic guard",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/prompt_example_copy_boundary.json"
-        }
-      ],
-      "missing_readiness": "configurable acceptance policy, custom example inventories, and semantic renamed-copy detection",
-      "readiness_status": "built_in_diagnostics_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "concrete prompt examples",
-      "search_surface": "prompt examples and generated-payload copy diagnostics",
-      "validation_gate": "configurable semantic example-copy guard with custom prompt-template coverage"
+      "active_todo_ref_count": 2,
+      "validation_gate": "configurable semantic example-copy guard with custom prompt-template coverage",
+      "readiness_status": "built_in_diagnostics_only"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "cross_file_mutation_consistency",
+      "search_surface": "multi-edit consistency and cross-file dependency evidence",
+      "current_scope": "best-effort Python AST symbol diagnostics and evaluator taxonomy",
+      "missing_readiness": "language-aware scope resolution, companion-edit inference, and benchmark-calibrated gating",
+      "roadmap_required_phrase": "cross-file dataflow/import resolution",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/mutation_consistency_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "cross-file dataflow/import resolution",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/roadmap.md",
           "required_phrase": "cross-file consistency benchmark evidence",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "cross_file_mutation_consistency",
-      "current_scope": "best-effort Python AST symbol diagnostics and evaluator taxonomy",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/mutation_consistency_boundary.json"
-        }
-      ],
-      "missing_readiness": "language-aware scope resolution, companion-edit inference, and benchmark-calibrated gating",
-      "readiness_status": "diagnostic_python_symbol_scan_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "cross-file dataflow/import resolution",
-      "search_surface": "multi-edit consistency and cross-file dependency evidence",
-      "validation_gate": "cross-file consistency benchmark with optional admission gate"
+      "active_todo_ref_count": 2,
+      "validation_gate": "cross-file consistency benchmark with optional admission gate",
+      "readiness_status": "diagnostic_python_symbol_scan_only"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "initial_pool_static_binary_handling",
+      "search_surface": "initial-pool divergence, program output, and static/binary candidate handling",
+      "current_scope": "bounded syntactic/metric initial-pool telemetry and copy-only static asset handling",
+      "missing_readiness": "functional/output discovery-distance evidence and richer binary mutation/replay policy",
+      "roadmap_required_phrase": "richer binary mutation/replay policy",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/initial_pool_divergence_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/program_output_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Extend initial-pool divergence reporting",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/roadmap.md",
           "required_phrase": "binary/static replay policy",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "initial_pool_static_binary_handling",
-      "current_scope": "bounded syntactic/metric initial-pool telemetry and copy-only static asset handling",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/initial_pool_divergence_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/program_output_boundary.json"
-        }
-      ],
-      "missing_readiness": "functional/output discovery-distance evidence and richer binary mutation/replay policy",
-      "readiness_status": "syntactic_metric_distance_and_copy_only_static_assets",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "richer binary mutation/replay policy",
-      "search_surface": "initial-pool divergence, program output, and static/binary candidate handling",
-      "validation_gate": "functional discovery-distance metrics plus static/binary replay policy"
+      "active_todo_ref_count": 2,
+      "validation_gate": "functional discovery-distance metrics plus static/binary replay policy",
+      "readiness_status": "syntactic_metric_distance_and_copy_only_static_assets"
     },
     {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "Replay archive event logs as an ordered migration restore engine",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "whole-run source/workspace integrity reports",
-          "required_phrase_present": true
-        }
-      ],
       "criterion_id": "workspace_source_integrity_resume",
+      "search_surface": "whole-run source/workspace integrity, archive restore, and migration replay",
       "current_scope": "source/workspace payload-shape reports and snapshot restore plus audit-only archive-event reconciliation",
+      "missing_readiness": "ordered migration-event replay, controller queue restore, and pending-work resume",
+      "roadmap_required_phrase": "ordered migration-event replay",
+      "roadmap_phrase_present": true,
       "current_sidecar_refs": [
         {
-          "exists": true,
-          "path": "papers/whole_run_source_workspace_integrity_boundary.json"
+          "path": "papers/whole_run_source_workspace_integrity_boundary.json",
+          "exists": true
         },
         {
-          "exists": true,
-          "path": "papers/archive_event_replay_boundary.json"
+          "path": "papers/archive_event_replay_boundary.json",
+          "exists": true
         }
       ],
-      "missing_readiness": "ordered migration-event replay, controller queue restore, and pending-work resume",
-      "readiness_status": "snapshot_restore_and_payload_shape_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "ordered migration-event replay",
-      "search_surface": "whole-run source/workspace integrity, archive restore, and migration replay",
-      "validation_gate": "ordered event-stream restore engine and full resume replay proof"
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Replay archive event logs as an ordered migration restore engine",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "whole-run source/workspace integrity reports",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "ordered event-stream restore engine and full resume replay proof",
+      "readiness_status": "snapshot_restore_and_payload_shape_only"
     }
   ],
-  "missing_evidence": {
-    "adaptive_mutation_mode_selection": "not_recorded_locally",
-    "candidate_embedded_evaluator_contracts": "not_recorded_locally",
-    "configured_language_build_runners": "not_recorded_locally",
-    "cross_file_consistency_benchmark_evidence": "not_recorded_locally",
-    "flexible_solution_abstraction_api": "not_recorded_locally",
-    "initial_pool_divergence_benchmark_evidence": "not_recorded_locally",
-    "mutation_operator_family_provenance": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally",
-    "realistic_codebase_fixtures": "not_recorded_locally",
-    "semantic_prompt_example_copy_detection": "not_recorded_locally",
-    "static_binary_replay_policy": "not_recorded_locally",
-    "topology_resume_replay_proof": "not_recorded_locally"
-  },
   "required_evidence_fields": [
     "criterion_records",
     "roadmap_section_presence",
@@ -365,8 +354,19 @@
     "workspace_resume_replay_policy",
     "stale_readiness_detector"
   ],
-  "roadmap_heading": "### 1. Finish candidate workspace fidelity",
-  "roadmap_heading_present": true,
-  "schema": "libreevolve.roadmap_candidate_workspace_fidelity_boundary.v1",
-  "sidecar_ref_count": 15
+  "missing_evidence": {
+    "configured_language_build_runners": "not_recorded_locally",
+    "flexible_solution_abstraction_api": "not_recorded_locally",
+    "candidate_embedded_evaluator_contracts": "not_recorded_locally",
+    "realistic_codebase_fixtures": "not_recorded_locally",
+    "benchmark_calibrated_adaptive_mutation_mode_policy": "not_recorded_locally",
+    "mutation_operator_family_provenance": "not_recorded_locally",
+    "semantic_prompt_example_copy_detection": "not_recorded_locally",
+    "cross_file_consistency_benchmark_evidence": "not_recorded_locally",
+    "initial_pool_divergence_benchmark_evidence": "not_recorded_locally",
+    "static_binary_replay_policy": "not_recorded_locally",
+    "topology_resume_replay_proof": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records a ROADMAP-level candidate-workspace fidelity criteria map for language/build runners, candidate abstraction, marker and materialization policy, embedded evaluators, codebase scale, mutation-mode/operator provenance, prompt-example-copy guards, cross-file consistency, initial-pool/static-binary handling, and workspace resume integrity. It does not claim configured language/build runners, flexible solution abstraction APIs, candidate-embedded evaluator contracts, realistic codebase fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, or owner review signoff."
 }

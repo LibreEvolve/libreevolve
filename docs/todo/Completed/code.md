@@ -19388,3 +19388,17 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     stale-parent, cache-coalescing, lifecycle-order, abort-accounting, exact-
     interval, and runtime overlap tests validate the bounded local contract and
     reject timing/topology overclaims.
+- [x] Add adaptive per-candidate diff/full mutation-output selection.
+  - Spec evidence: AlphaEvolve Section 2.3 uses diff output for larger
+    codebases and full output for very short or rewrite-appropriate cases.
+  - Status: `mutation_mode: adaptive` now resolves every prompt to diff or full
+    from workspace character/file/evolve-block shape, explicit task preference,
+    and recent same-parent selected-mode failures. Critique validation and
+    opposite-format parser fallback use that selected contract; startup config,
+    prompt diagnostics, candidate/failure metadata, and a validated bounded
+    runtime report preserve the decision and effective parser mode.
+  - Remaining code gap: benchmark calibration, semantic rewrite judgment,
+    response-quality-aware adaptation, and equal-budget ablation remain open.
+  - Verification: focused synchronous, async sampler, short-full/large-diff,
+    failure-switch, bidirectional parser-fallback, critique, config, CLI,
+    persistence, report-validator, and paper-boundary tests cover the contract.

@@ -11,7 +11,7 @@ ADAPTIVE_MUTATION_MODE_BOUNDARY_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.3",)
-EXPECTED_BOUNDARY_STATUS = "run_wide_mutation_mode_without_adaptive_selection"
+EXPECTED_BOUNDARY_STATUS = "adaptive_candidate_shape_selection_partial"
 EXPECTED_SUPPORTED_MODES = ("diff", "full")
 EXPECTED_SUPPORTING_SURFACES = (
     "config_mutation_mode",
@@ -20,6 +20,7 @@ EXPECTED_SUPPORTING_SURFACES = (
     "diff_parser",
     "full_replacement_parser",
     "mutation_mode_history_metadata",
+    "adaptive_mutation_mode_runtime_report",
 )
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "run_wide_configured_mode",
@@ -38,15 +39,25 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "paper_visible_selection_report",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "per_candidate_mode_selection": "not_recorded_locally",
-    "candidate_size_thresholds": "not_recorded_locally",
-    "workspace_shape_thresholds": "not_recorded_locally",
-    "task_shape_policy": "not_recorded_locally",
-    "parent_failure_history_policy": "not_recorded_locally",
-    "parser_fallback_policy": "not_recorded_locally",
-    "critique_fallback_policy": "not_recorded_locally",
-    "selection_reason_telemetry": "not_recorded_locally",
-    "mixed_mode_run_history": "not_recorded_locally",
+    "benchmark_calibrated_thresholds": "not_recorded_locally",
+    "semantic_complete_rewrite_appropriateness": "not_recorded_locally",
+    "response_quality_aware_mode_policy": "not_recorded_locally",
+    "equal_budget_diff_full_adaptive_ablation": "not_recorded_locally",
+}
+EXPECTED_IMPLEMENTED_EVIDENCE = {
+    "per_candidate_mode_selection": "recorded_in_candidate_history",
+    "candidate_size_thresholds": "configured_and_recorded",
+    "workspace_shape_thresholds": "file_char_and_evolve_block_counts_recorded",
+    "task_shape_policy": "explicit_auto_diff_or_full_preference",
+    "parent_failure_history_policy": "threshold_mode_switch_recorded",
+    "parser_fallback_policy": "opposite_mode_response_format_fallback_recorded",
+    "critique_fallback_policy": "selected_mode_validation_with_parser_fallback",
+    "prompt_metadata": "selected_mode_and_policy_recorded",
+    "selection_reason_telemetry": "runtime_report_counts_and_sample_records",
+    "large_codebase_diff_selection_test": "executable_regression",
+    "short_code_full_selection_test": "executable_regression",
+    "mixed_mode_run_history": "runtime_reported_when_observed",
+    "paper_visible_selection_report": "runtime_history_adaptive_mutation_mode_report",
 }
 
 
@@ -82,14 +93,18 @@ def adaptive_mutation_mode_boundary_record() -> dict[str, Any]:
         "supported_modes": list(EXPECTED_SUPPORTED_MODES),
         "supporting_surfaces": list(EXPECTED_SUPPORTING_SURFACES),
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
+        "implemented_evidence": dict(EXPECTED_IMPLEMENTED_EVIDENCE),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records that LibreEvolve supports configured "
-            "run-wide diff and full mutation modes with prompt fields, parsers, "
-            "and history metadata. It does not claim adaptive per-candidate "
-            "diff-versus-full selection, candidate-size or task-shape "
-            "thresholds, failure-aware fallback policy, mixed-mode run "
-            "telemetry, or AlphaEvolve-style selection tests."
+            "This boundary records configured run-wide diff/full modes plus an "
+            "adaptive per-candidate policy using workspace size, file and evolve-"
+            "block shape, explicit task preference, parent-mode failure history, "
+            "response-format parser fallback, selected-mode critique validation, "
+            "prompt/history metadata, mixed-mode telemetry, and executable short-"
+            "full/large-diff tests. It does not claim benchmark-calibrated "
+            "thresholds, semantic proof that a complete rewrite is appropriate, "
+            "response-quality-aware selection, or an equal-budget adaptive "
+            "ablation."
         ),
     }
 
@@ -117,7 +132,7 @@ def validate_adaptive_mutation_mode_boundary(
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))
     if data.get("claim_ready") is not False:
-        issues.append(_issue("claim_ready_overclaim", "adaptive mutation-mode boundary must not claim adaptive selection"))
+        issues.append(_issue("claim_ready_overclaim", "adaptive mutation-mode boundary must not claim full AlphaEvolve parity"))
     _validate_list_field(
         data.get("supported_modes"),
         set(EXPECTED_SUPPORTED_MODES),
@@ -131,10 +146,20 @@ def validate_adaptive_mutation_mode_boundary(
         issues,
     )
     required_count = _validate_required_fields(data.get("required_evidence_fields"), issues)
+    _validate_evidence_map(
+        data.get("implemented_evidence"),
+        EXPECTED_IMPLEMENTED_EVIDENCE,
+        "implemented_evidence",
+        issues,
+    )
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
-    if not isinstance(boundary_text, str) or "does not claim adaptive" not in boundary_text:
-        issues.append(_issue("missing_claim_boundary", "claim_boundary must state that adaptive selection is not claimed"))
+    if (
+        not isinstance(boundary_text, str)
+        or "adaptive per-candidate policy" not in boundary_text
+        or "does not claim benchmark-calibrated" not in boundary_text
+    ):
+        issues.append(_issue("missing_claim_boundary", "claim_boundary must scope local adaptive selection and remaining parity gaps"))
     return AdaptiveMutationModeBoundaryValidation(
         ok=not issues,
         boundary_status=status if isinstance(status, str) else None,
@@ -243,6 +268,19 @@ def _validate_missing_evidence(
         if value.get(key) != expected_value:
             issues.append(_issue(f"invalid_missing_evidence_{key}", f"missing_evidence.{key} must be {expected_value}"))
     return len(actual_keys)
+
+
+def _validate_evidence_map(
+    value: object,
+    expected: dict[str, str],
+    field: str,
+    issues: list[AdaptiveMutationModeBoundaryIssue],
+) -> None:
+    if not isinstance(value, dict):
+        issues.append(_issue(f"invalid_{field}", f"{field} must be an object"))
+        return
+    if value != expected:
+        issues.append(_issue(f"invalid_{field}", f"{field} must match implemented evidence"))
 
 
 def _issue(code: str, message: str) -> AdaptiveMutationModeBoundaryIssue:

@@ -1,0 +1,2611 @@
+{
+  "schema": "libreevolve.alphaevolve_kernel_claim_inventory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "boundary_status": "section_3_3_2_figure_7_claim_inventory_complete_without_pallas_fixture_or_result_reproduction",
+  "kernel_claim_inventory_ready": true,
+  "alphaevolve_kernel_result_reproduction_claim_ready": false,
+  "alphaevolve_parity_claim_ready": false,
+  "source_artifact": {
+    "path": "papers/2506.13131__AlphaEvolve.pdf",
+    "exists": true,
+    "expected_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "actual_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "expected_page_count": 44,
+    "page_count": 44,
+    "identity_ok": true,
+    "error": null
+  },
+  "source_inventory_schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+  "source_inventory_span_count": 55,
+  "source_span_ids": [
+    "section_3_3_2",
+    "figure_7"
+  ],
+  "inventory_scope": {
+    "included": [
+      "all substantive Figure 7 matrix-product, tile-size, accelerator-shape, memory, fused-operation, and compiler-context claims",
+      "all substantive Section 3.3.2 Gemini, JAX, Pallas, tiling-formulation, baseline-workflow, discovery, shape-corpus, evaluation, production-result, deployment, and self-optimization claims"
+    ],
+    "excluded": [
+      "Sections 3.3.3 through 5 and Figures 8 through 14",
+      "Table 3, detailed appendices, citations, and bibliography details",
+      "an executable JAX/Pallas benchmark, Gemini training workload, kernel-user shape corpus, real TPU runtime, expert heuristic, or production deployment",
+      "independent reproduction of Figure 7, the 23 percent kernel speedup, the 1 percent training-time reduction, or months-to-days turnaround",
+      "AlphaEvolve production scale or system parity"
+    ]
+  },
+  "claim_count": 59,
+  "expected_claim_count": 59,
+  "category_counts": {
+    "baseline_workflow": 12,
+    "figure_7_exhibit": 8,
+    "gemini_pallas_context": 6,
+    "kernel_deployment_and_self_optimization": 6,
+    "kernel_discovery_and_evaluation": 16,
+    "kernel_production_result": 7,
+    "tiling_problem_formulation": 4
+  },
+  "implementation_status_counts": {
+    "not_demonstrated": 16,
+    "not_implemented": 37,
+    "partially_implemented": 6
+  },
+  "implemented_local_count": 0,
+  "implementation_gap_count": 59,
+  "todo_owned_gap_count": 59,
+  "missing_anchor_count": 0,
+  "missing_reference_count": 0,
+  "claim_records": [
+    {
+      "claim_id": "figure7_matrix_product_tiling_problem",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "Visualization of the tiling heuristic problem for a matrix product A B = C",
+      "source_anchor_present": true,
+      "claim": "Reproduce Figure 7 as a matrix-product tiling problem for A B = C.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure7_choose_m_n_p_tile_size",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "automatically chooses the right tile size (M, N, P)",
+      "source_anchor_present": true,
+      "claim": "Define the heuristic output as the M, N, and P tile-size tuple.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure7_tile_selection_for_all_input_shapes",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "for all input shapes is difficult",
+      "source_anchor_present": true,
+      "claim": "Evaluate one tiling heuristic across the declared input-shape domain.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure7_matrix_unit_optimal_shape_context",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "matrix multiplication unit's optimal shapes",
+      "source_anchor_present": true,
+      "claim": "Record matrix-multiplication-unit optimal-shape context for tile selection.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure7_accelerator_memory_capacity_context",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "optimal shapes and memory capacity",
+      "source_anchor_present": true,
+      "claim": "Record accelerator memory-capacity constraints for tile selection.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure7_surrounding_operation_memory_context",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "memory requirements of surrounding operations",
+      "source_anchor_present": true,
+      "claim": "Record surrounding-operation memory requirements in the tiling context.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure7_fused_operation_context",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "extra operations that are fused into the kernel",
+      "source_anchor_present": true,
+      "claim": "Record fused-operation context affecting tile selection.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure7_compiler_intricacy_context",
+      "source_span_id": "figure_7",
+      "source_page": 15,
+      "source_anchor": "low-level compiler intricacies",
+      "source_anchor_present": true,
+      "claim": "Record low-level compiler constraints affecting tile selection.",
+      "category": "figure_7_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_gemini_training_compute_demand",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "Training large models like Gemini requires substantial computational resources",
+      "source_anchor_present": true,
+      "claim": "Demonstrate the computational-resource context for the target training workload.",
+      "category": "gemini_pallas_context",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_gemini_built_on_jax",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "Gemini is built on JAX",
+      "source_anchor_present": true,
+      "claim": "Preserve the source claim that the optimized Gemini training stack is based on JAX.",
+      "category": "gemini_pallas_context",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_pallas_extends_jax",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "Pallas is an extension to JAX",
+      "source_anchor_present": true,
+      "claim": "Provide an executable JAX/Pallas task surface rather than metadata-only attribution.",
+      "category": "gemini_pallas_context",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_custom_specialized_kernel_programs",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "writing custom, highly specialized programs (kernels)",
+      "source_anchor_present": true,
+      "claim": "Evolve custom specialized kernel code through a task-owned candidate surface.",
+      "category": "gemini_pallas_context",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_optimal_accelerator_execution",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "tailored for optimal execution on hardware accelerators",
+      "source_anchor_present": true,
+      "claim": "Execute and evaluate the specialized kernel on a declared accelerator target.",
+      "category": "gemini_pallas_context",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_pallas_kernel_training_importance",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "efficient Pallas kernels are crucial for optimizing Gemini's training performance",
+      "source_anchor_present": true,
+      "claim": "Demonstrate how the target Pallas kernel affects Gemini training performance.",
+      "category": "gemini_pallas_context",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_matmul_tiling_is_critical_optimization",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "critical aspect of kernel optimization is tuning the tiling strategy",
+      "source_anchor_present": true,
+      "claim": "Implement matrix-multiplication tiling as the benchmark's optimization surface.",
+      "category": "tiling_problem_formulation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_tiling_divides_large_matmul",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "dividing a large matrix multiplication computation into smaller subproblems",
+      "source_anchor_present": true,
+      "claim": "Define tiling as decomposition of a large matrix multiplication into smaller subproblems.",
+      "category": "tiling_problem_formulation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_balance_compute_and_data_movement",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "balance computation with data movement",
+      "source_anchor_present": true,
+      "claim": "Represent the computation-versus-data-movement tradeoff in tiling evidence.",
+      "category": "tiling_problem_formulation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure7_pallas_tiling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure7_pallas_tiling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "figure7",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 7 Pallas tiling-problem exhibit provenance and diagram",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_tiling_accelerates_overall_computation",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "key to accelerating the overall computation",
+      "source_anchor_present": true,
+      "claim": "Measure whether the selected tiling strategy accelerates the full computation.",
+      "category": "tiling_problem_formulation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_search_based_autotuning_baseline",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "search-based autotuning",
+      "source_anchor_present": true,
+      "claim": "Provide a search-based autotuning baseline for the tiling task.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_manual_heuristic_baseline",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "manually crafted heuristics",
+      "source_anchor_present": true,
+      "claim": "Provide a manually crafted expert heuristic baseline for the tiling task.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_near_optimal_configs_varied_shapes",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "near-optimal tiling configurations for various input shapes",
+      "source_anchor_present": true,
+      "claim": "Compare tiling configurations across varied input shapes against declared baselines.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_autotuning_interrupts_workflow",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "Search-based tuning interrupts the research workflow",
+      "source_anchor_present": true,
+      "claim": "Record workflow interruption caused by search-based autotuning.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_retune_every_shape_change",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "retuning for every input shape change",
+      "source_anchor_present": true,
+      "claim": "Record the autotuning retuning policy and burden for input-shape changes.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_manual_heuristic_bottleneck",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "manually crafting effective tiling heuristics is a major engineering bottleneck",
+      "source_anchor_present": true,
+      "claim": "Measure the manual-authoring bottleneck for effective tiling heuristics.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_deep_kernel_functionality_expertise",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "deep understanding of both kernel functionality",
+      "source_anchor_present": true,
+      "claim": "Record kernel-functionality expertise assumptions for manual heuristic design.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_deep_hardware_expertise",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "and hardware intricacies",
+      "source_anchor_present": true,
+      "claim": "Record hardware-expertise assumptions for manual heuristic design.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_high_performance_arbitrary_shapes",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "deliver high performance across arbitrary input shapes",
+      "source_anchor_present": true,
+      "claim": "Evaluate whether one heuristic maintains high performance across arbitrary declared shapes.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_expedite_emerging_hardware_kernels",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "expedite the design of performant kernels for emerging hardware",
+      "source_anchor_present": true,
+      "claim": "Measure whether generated heuristics shorten performant-kernel development for emerging hardware.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_simplify_model_developer_utilization",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "simplify their utilization by model developers",
+      "source_anchor_present": true,
+      "claim": "Record model-developer utilization and ergonomics effects.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_facilitate_heuristic_generation",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "facilitate the heuristic generation process",
+      "source_anchor_present": true,
+      "claim": "Provide an end-to-end generated-tiling-heuristic workflow.",
+      "category": "baseline_workflow",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_optimize_tiling_heuristics",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "employing AlphaEvolve to optimize tiling heuristics",
+      "source_anchor_present": true,
+      "claim": "Run LibreEvolve against an executable tiling-heuristic candidate surface.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_gemini_training_matmul_kernel",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "important matrix multiplication kernel used to train Gemini",
+      "source_anchor_present": true,
+      "claim": "Identify and retain the matrix-multiplication kernel and training workload under optimization.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_minimize_actual_kernel_runtime",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "objective is to minimize the kernel's actual runtime",
+      "source_anchor_present": true,
+      "claim": "Use measured kernel runtime as a minimized evaluator objective.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_iterative_tiling_refinement",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "iteratively explores and refines tiling heuristics",
+      "source_anchor_present": true,
+      "claim": "Apply the evolutionary loop to iterative tiling-heuristic refinement.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_candidate_code_proposals",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "by proposing candidate code",
+      "source_anchor_present": true,
+      "claim": "Use code proposals as the mutation surface for the tiling heuristic.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_runtime_across_various_shapes",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "minimize this runtime on various input shapes",
+      "source_anchor_present": true,
+      "claim": "Aggregate actual runtime over a varied input-shape set.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_real_tpu_accelerator_measurement",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "on real TPU accelerators",
+      "source_anchor_present": true,
+      "claim": "Measure kernel runtime on identified real TPU accelerators.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_correctness_by_construction",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "correctness is maintained by construction",
+      "source_anchor_present": true,
+      "claim": "Prove the bounded conditions supporting correctness by construction.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_tiling_strategy_only_candidate_scope",
+      "source_span_id": "section_3_3_2",
+      "source_page": 15,
+      "source_anchor": "optimizing the tiling strategy for this kernel",
+      "source_anchor_present": true,
+      "claim": "Restrict candidate edits to the kernel's tiling strategy.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_underlying_math_unchanged",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "its underlying mathematical operation",
+      "source_anchor_present": true,
+      "claim": "Verify that candidate edits leave the underlying matrix operation unchanged.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_automatic_realistic_shape_collection",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "automatically collect realistic kernel input shapes",
+      "source_anchor_present": true,
+      "claim": "Emit an automatically collected realistic kernel input-shape corpus.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_shape_corpus_from_kernel_users",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "from kernel users",
+      "source_anchor_present": true,
+      "claim": "Record kernel-user provenance for collected input shapes.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_half_training_shape_split",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "Half of these input shapes form the training set",
+      "source_anchor_present": true,
+      "claim": "Create a deterministic 50 percent training-shape split.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_training_shapes_are_optimization_targets",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "providing the optimization targets during the evolutionary process",
+      "source_anchor_present": true,
+      "claim": "Use the training-shape split as optimization targets during evolution.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_half_evaluation_shape_split",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "remaining input shapes form the evaluation set",
+      "source_anchor_present": true,
+      "claim": "Create a disjoint 50 percent held-out evaluation-shape split.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_evaluation_tests_general_applicability",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "used to test the general applicability of the resulting heuristic",
+      "source_anchor_present": true,
+      "claim": "Use held-out shapes to test heuristic generalization.",
+      "category": "kernel_discovery_and_evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "pallas_fixture",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add an executable JAX/Pallas matrix-tiling benchmark contract.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_average_twenty_three_percent_kernel_speedup",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "average 23% kernel speedup across all kernels",
+      "source_anchor_present": true,
+      "claim": "Reproduce the average 23 percent kernel-speedup result with its aggregation denominator.",
+      "category": "kernel_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_expert_designed_heuristic_comparator",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "over the existing expert-designed heuristic",
+      "source_anchor_present": true,
+      "claim": "Compare the evolved heuristic against the identified expert-designed incumbent.",
+      "category": "kernel_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "shape_corpus",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_one_percent_gemini_training_reduction",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "corresponding 1% reduction in Gemini's overall training time",
+      "source_anchor_present": true,
+      "claim": "Reproduce the corresponding one percent Gemini training-time reduction.",
+      "category": "kernel_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_optimization_months_to_days",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "reduced the kernel optimization time, from several months",
+      "source_anchor_present": true,
+      "claim": "Reproduce the reduction in kernel optimization turnaround from months to days.",
+      "category": "kernel_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_dedicated_effort_to_automated_experimentation",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "dedicated engineering effort to just days of automated experimentation",
+      "source_anchor_present": true,
+      "claim": "Calibrate dedicated engineering effort against automated-experimentation time.",
+      "category": "kernel_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_faster_optimized_kernel_deployment",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "This acceleration speeds up the deployment of optimized kernels",
+      "source_anchor_present": true,
+      "claim": "Demonstrate that shorter optimization turnaround accelerates kernel deployment.",
+      "category": "kernel_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_engineers_focus_higher_level_work",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "dedicate their expertise to more strategic, higher-level optimization problems",
+      "source_anchor_present": true,
+      "claim": "Demonstrate that automation shifts engineering effort to strategic higher-level work.",
+      "category": "kernel_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_path_to_automated_manual_tuning",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "path towards automating the manual tuning process",
+      "source_anchor_present": true,
+      "claim": "Demonstrate a path from manual tiling work to automated heuristic generation.",
+      "category": "kernel_deployment_and_self_optimization",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_improved_gemini_kernel_ergonomics",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "improving the ergonomics of Gemini kernel usage",
+      "source_anchor_present": true,
+      "claim": "Demonstrate improved ergonomics for Gemini kernel users.",
+      "category": "kernel_deployment_and_self_optimization",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/pallas_workflow_baseline_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.pallas_workflow_baseline_boundary.v1",
+          "boundary_status": "pallas_runtime_without_workflow_baseline_evidence",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/kernel_tiling_shape_corpus_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.kernel_tiling_shape_corpus_boundary.v1",
+          "boundary_status": "generic_kernel_gates_without_pallas_shape_corpus",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "workflow",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Pallas autotuning/manual-heuristic baseline workflow provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_tiling_heuristic_deployed_production",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "tiling heuristic discovered by AlphaEvolve has been deployed in production",
+      "source_anchor_present": true,
+      "claim": "Provide reviewed production-deployment evidence for the discovered tiling heuristic.",
+      "category": "kernel_deployment_and_self_optimization",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_deployment_enhanced_training_efficiency",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "directly enhancing Gemini's training efficiency",
+      "source_anchor_present": true,
+      "claim": "Link the production deployment to measured Gemini training-efficiency improvement.",
+      "category": "kernel_deployment_and_self_optimization",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_team_research_engineering_velocity",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "Gemini team's research and engineering velocity",
+      "source_anchor_present": true,
+      "claim": "Provide evidence that deployment improved the team's research and engineering velocity.",
+      "category": "kernel_deployment_and_self_optimization",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_2_gemini_optimizes_own_training",
+      "source_span_id": "section_3_3_2",
+      "source_page": 16,
+      "source_anchor": "Gemini, through the capabilities of AlphaEvolve, optimizes its own training process",
+      "source_anchor_present": true,
+      "claim": "Substantiate the claimed Gemini-through-AlphaEvolve self-training optimization loop.",
+      "category": "kernel_deployment_and_self_optimization",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_self_training_loop_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.gemini_self_training_loop_boundary.v1",
+          "boundary_status": "pallas_deployment_without_gemini_self_training_loop",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "self_training",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Gemini self-training optimization loop provenance for Pallas",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    }
+  ],
+  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 59 AlphaEvolve kernel-engineering claims from Section 3.3.2 and Figure 7. Status labels distinguish generic local evolutionary and systems-report support from absent JAX/Pallas behavior and undemonstrated published production outcomes. It does not claim a JAX/Pallas fixture, real TPU execution, Gemini workload or shape data, Figure 7 reproduction, the 23% or 1% results, production deployment, Gemini self-optimization, production scale, or AlphaEvolve system parity."
+}

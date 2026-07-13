@@ -35,14 +35,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_scheduling_claim_inventory_boundary.json` adds 45
     exact-page Section 3.3 opening, Section 3.3.1, and Figure 6 claims: none
     locally implemented, 19 partial, 14 not implemented, and 12 not
-    demonstrated, with live ownership for all 45 gaps. Combined coverage is
-    240 claims: 21 implemented, 82 partial, 27 not implemented, and 110 not
-    demonstrated. The
+    demonstrated, with live ownership for all 45 gaps. The
+    `papers/alphaevolve_kernel_claim_inventory_boundary.json` adds 59
+    exact-page Section 3.3.2 and Figure 7 claims: none locally implemented, 6
+    partial, 37 not implemented, and 16 not demonstrated, with live ownership
+    for all 59 gaps. Combined coverage is 299 claims: 21 implemented, 88
+    partial, 64 not implemented, and 126 not demonstrated. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 240-claim inventory deliberately excludes
-    Sections 3.3.2-5 claims, Figures 7-14, Table 3, detailed appendices,
+  - Current gap: the combined 299-claim inventory deliberately excludes
+    Sections 3.3.3-5 claims, Figures 8-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.
@@ -4890,6 +4893,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     plus rendered visual artifacts with hashes, rendering parameters, baseline
     heuristic relation, and documentation that separates reproduced Pallas
     figures from executed kernel-runtime evidence.
+
+- [ ] Track executable JAX/Pallas matrix-tiling benchmark evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.2 identifies
+    Gemini's JAX foundation, Pallas as the specialized accelerator-kernel
+    surface, and a matrix-multiplication tiling heuristic evolved as candidate
+    code against actual runtime over varied shapes on real TPU accelerators.
+    Correctness is by construction only because candidate changes are limited
+    to tiling rather than the mathematical operation.
+  - Current gap: paper-facing sidecars record required Figure 7, shape-corpus,
+    workflow-baseline, and self-training evidence, while systems reports can
+    express generic kernel gates. There is no executable JAX/Pallas benchmark,
+    retained Pallas source, matrix/tile schema, candidate-boundary proof,
+    accelerator runtime adapter, emitted shape split, or joined runtime and
+    correctness artifact set. Static absence contracts do not demonstrate the
+    paper's kernel-engineering workflow.
+  - Required result: publish the executable task contract and evidence bundle:
+    JAX/Pallas and accelerator identities, matrix and tile definitions,
+    candidate-edit boundary, source and build hashes, manual/autotuning
+    baselines, deterministic training/evaluation shape sets, actual-runtime
+    measurements, unchanged-math correctness artifacts, and a clear separation
+    between local smoke execution and real TPU result reproduction.
 
 - [ ] Record kernel-tiling shape-corpus evidence for Gemini/Pallas results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.2 says

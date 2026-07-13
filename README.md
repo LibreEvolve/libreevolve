@@ -104,9 +104,15 @@ Important limits:
   exact heuristic terms, heatmap axes, and legend semantics. Nineteen are
   partial, 14 are not implemented, and 12 are not demonstrated; all 45 gaps
   have live TODO ownership.
-- Together the five bounded inventories cover 240 claims: 21 locally
-  implemented, 82 partial, 27 not implemented, and 110 not demonstrated,
-  leaving 219 gaps. They still exclude Sections 3.3.2-5, Figures 7-14, Table 3,
+- `papers/alphaevolve_kernel_claim_inventory_boundary.json` audits 59 claims
+  from Section 3.3.2 and Figure 7, including JAX/Pallas context, tiling
+  semantics, manual and autotuning baselines, candidate/runtime evaluation,
+  shape-corpus splits, measured speedups, deployment, and Gemini
+  self-optimization. Six are partial, 37 are not implemented, and 16 are not
+  demonstrated; all 59 gaps have live TODO ownership.
+- Together the six bounded inventories cover 299 claims: 21 locally
+  implemented, 88 partial, 64 not implemented, and 126 not demonstrated,
+  leaving 278 gaps. They still exclude Sections 3.3.3-5, Figures 8-14, Table 3,
   detailed appendix claims, source-detail exhaustiveness, and independent
   result reproduction.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

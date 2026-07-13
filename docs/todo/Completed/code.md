@@ -19547,3 +19547,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused inventory, implementation-map, ROADMAP coverage, and
     paper-manifest tests validate anchors, status counts, references, TODO
     ownership, drift rejection, and result/parity disclaimers.
+- [x] Add a PDF-anchored AlphaEvolve Section 3.3.2/Figure 7 kernel claim inventory.
+  - Spec evidence: Section 3.3.2 and Figure 7 describe the JAX/Pallas kernel
+    context, matrix tiling semantics, manual and autotuning baselines,
+    candidate-code/runtime search, kernel-user shape splits, real TPU
+    evaluation, quantitative results, production deployment, and Gemini
+    self-optimization.
+  - Status: a new public boundary records 59 stable claim ids, exact PDF pages
+    and anchors, implementation status, ROADMAP phase/section, evidence links,
+    and live TODO ownership. It classifies 6 claims as partial, 37 as not
+    implemented, and 16 as not demonstrated; none is locally implemented.
+  - Remaining code gap: an executable JAX/Pallas fixture, matrix/tile contract,
+    shape corpus, manual/autotuning comparators, real TPU runtime, unchanged-
+    math proof, Figure 7 artifacts, production results, deployment, and self-
+    optimization evidence remain open.
+  - Verification: focused inventory, implementation-map, ROADMAP coverage, and
+    paper-manifest tests validate anchors, counts, references, TODO ownership,
+    drift rejection, and result/parity disclaimers.

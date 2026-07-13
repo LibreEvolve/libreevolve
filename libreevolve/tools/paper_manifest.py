@@ -547,6 +547,10 @@ from libreevolve.problems.benchmarks.alphaevolve_math_result_claim_inventory_bou
     alphaevolve_math_result_claim_inventory_boundary_record,
     validate_alphaevolve_math_result_claim_inventory_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_kernel_claim_inventory_boundary import (
+    alphaevolve_kernel_claim_inventory_boundary_record,
+    validate_alphaevolve_kernel_claim_inventory_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_scheduling_claim_inventory_boundary import (
     alphaevolve_scheduling_claim_inventory_boundary_record,
     validate_alphaevolve_scheduling_claim_inventory_boundary,
@@ -1245,6 +1249,9 @@ ALPHAEVOLVE_MATH_RESULT_CLAIM_INVENTORY_BOUNDARY_FILE = (
 )
 ALPHAEVOLVE_SCHEDULING_CLAIM_INVENTORY_BOUNDARY_FILE = (
     "papers/alphaevolve_scheduling_claim_inventory_boundary.json"
+)
+ALPHAEVOLVE_KERNEL_CLAIM_INVENTORY_BOUNDARY_FILE = (
+    "papers/alphaevolve_kernel_claim_inventory_boundary.json"
 )
 ALPHAEVOLVE_SOURCE_INVENTORY_BOUNDARY_FILE = "papers/alphaevolve_source_inventory_boundary.json"
 ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_FILE = (
@@ -2007,6 +2014,7 @@ def validate_paper_manifest(
     issues.extend(_validate_alphaevolve_matrix_result_claim_inventory_boundary(root_path))
     issues.extend(_validate_alphaevolve_math_result_claim_inventory_boundary(root_path))
     issues.extend(_validate_alphaevolve_scheduling_claim_inventory_boundary(root_path))
+    issues.extend(_validate_alphaevolve_kernel_claim_inventory_boundary(root_path))
     issues.extend(_validate_alphaevolve_source_inventory_boundary(root_path))
     issues.extend(_validate_alphaevolve_system_requirement_inventory_boundary(root_path))
     issues.extend(_validate_implementation_evidence_map_boundary(root_path))
@@ -7509,6 +7517,47 @@ def _validate_alphaevolve_scheduling_claim_inventory_boundary(
             f"alphaevolve_scheduling_claim_inventory_boundary_{issue.code}",
             issue.message,
             "alphaevolve_scheduling_claim_inventory",
+        )
+        for issue in report.issues
+    ]
+
+
+def _validate_alphaevolve_kernel_claim_inventory_boundary(
+    root_path: Path,
+) -> list[PaperManifestIssue]:
+    try:
+        is_repo_root = root_path.resolve() == _repo_root().resolve()
+    except OSError:
+        is_repo_root = False
+    sidecar_path = root_path / ALPHAEVOLVE_KERNEL_CLAIM_INVENTORY_BOUNDARY_FILE
+    validation_root = _repo_root()
+    if sidecar_path.exists():
+        recordset: object | str | Path = sidecar_path
+    else:
+        recordset = alphaevolve_kernel_claim_inventory_boundary_record(
+            validation_root
+        )
+        if is_repo_root:
+            return [
+                PaperManifestIssue(
+                    "alphaevolve_kernel_claim_inventory_boundary_manifest_missing",
+                    (
+                        f"{ALPHAEVOLVE_KERNEL_CLAIM_INVENTORY_BOUNDARY_FILE} "
+                        "must emit the PDF-anchored Section 3.3.2 and Figure 7 "
+                        "claim inventory"
+                    ),
+                    "alphaevolve_kernel_claim_inventory",
+                )
+            ]
+    report = validate_alphaevolve_kernel_claim_inventory_boundary(
+        recordset,
+        root=validation_root,
+    )
+    return [
+        PaperManifestIssue(
+            f"alphaevolve_kernel_claim_inventory_boundary_{issue.code}",
+            issue.message,
+            "alphaevolve_kernel_claim_inventory",
         )
         for issue in report.issues
     ]

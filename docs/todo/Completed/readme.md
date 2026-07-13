@@ -15984,3 +15984,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining boundary: README keeps Sections 3.3.2-5, Figures 7-14, Table 3,
     detailed appendices, source-detail exhaustiveness, and independent result
     reproduction outside the completed claim walk.
+- [x] Document the bounded AlphaEvolve Section 3.3.2/Figure 7 kernel inventory.
+  - Status: README now identifies the 59-claim kernel-engineering inventory,
+    its 6 partial, 37 absent, and 16 undemonstrated split, and active TODO
+    ownership for every gap.
+  - Combined boundary: README now reports 299 bounded paper claims across six
+    inventories: 21 local, 88 partial, 64 absent, and 126 undemonstrated,
+    leaving 278 gaps.
+  - Remaining boundary: README keeps Sections 3.3.3-5, Figures 8-14, Table 3,
+    detailed appendices, source-detail exhaustiveness, and independent result
+    reproduction outside the completed claim walk.

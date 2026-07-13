@@ -16190,3 +16190,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining boundary: Sections 3.3.2-5, Figures 7-14, Table 3, detailed
     appendices, result reproduction, whole-paper semantic exhaustiveness, and
     owner signoff remain open.
+- [x] Credit bounded Section 3.3.2 and Figure 7 kernel coverage in ROADMAP.
+  - Status: ROADMAP source disposition, coverage, exhaustiveness, and
+    implementation-evidence boundaries now include 59 kernel-engineering
+    claims with exact PDF anchors, implementation status, phase/section
+    routing, evidence links, and active ownership for every gap.
+  - Combined boundary: the ROADMAP surface now covers 299 bounded claims: 21
+    local, 88 partial, 64 absent, and 126 undemonstrated. The source walk now
+    advances to Section 3.3.3 and Figure 8.
+  - Remaining boundary: Sections 3.3.3-5, Figures 8-14, Table 3, detailed
+    appendices, result reproduction, whole-paper semantic exhaustiveness, and
+    owner signoff remain open.

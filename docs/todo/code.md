@@ -70,9 +70,13 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_scheduling_claim_inventory_boundary.json` adds 45
     Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling claims. It
     classifies 19 as partial, 14 as not implemented, and 12 as not
-    demonstrated, and resolves all 45 gaps to live TODO titles. The five
-    bounded inventories therefore cover 240 claims: 21 locally implemented,
-    82 partial, 27 not implemented, and 110 not demonstrated. This is not
+    demonstrated, and resolves all 45 gaps to live TODO titles. The committed
+    `papers/alphaevolve_kernel_claim_inventory_boundary.json` adds 59 Section
+    3.3.2 and Figure 7 kernel-engineering claims. It classifies 6 as partial,
+    37 as not implemented, and 16 as not demonstrated, and resolves all 59
+    gaps to live TODO titles. The six bounded inventories therefore cover 299
+    claims: 21 locally implemented, 88 partial, 64 not implemented, and 126
+    not demonstrated. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
@@ -90,11 +94,11 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 240 bounded system, context,
-    matrix-result, constructive-math, and scheduling claims are now machine-readable and
+  - Current gap: the named source structure and 299 bounded system, context,
+    matrix-result, constructive-math, scheduling, and kernel-engineering claims are now machine-readable and
     PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Sections 3.3.2-5,
+    equation, footnote, citation, or claim level across Sections 3.3.3-5,
     remaining exhibits, Table 3, appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
@@ -4838,6 +4842,31 @@ sidecars, tests, and active TODOs.
     hashes, rendering parameters, baseline heuristic relation, and docs that
     distinguish tiling-problem visualization from executed Pallas runtime
     evidence.
+
+- [ ] Add an executable JAX/Pallas matrix-tiling benchmark contract.
+  - Spec evidence: AlphaEvolve Section 3.3.2 says Gemini is built on JAX and
+    Pallas extends JAX with specialized accelerator kernels. The evolved
+    program is a tiling heuristic for matrix multiplication that proposes
+    candidate code, minimizes measured runtime across varied shapes on real
+    TPU accelerators, and changes tile selection without changing the
+    underlying mathematical operation.
+  - Current evidence: LibreEvolve has generic candidate runners, configurable
+    evaluators, kernel-domain report gates, and absence boundaries for Figure
+    7, shape corpora, workflow baselines, and Gemini self-training. It has no
+    JAX or Pallas dependency, no executable Pallas problem fixture, no declared
+    matrix/tile parameter contract, no Pallas candidate restriction, no TPU
+    runtime adapter, and no fixture-emitted kernel or shape artifacts. The
+    coarse boundary sidecars describe missing evidence but do not execute the
+    Section 3.3.2 task.
+  - Required result: add a benchmark-grade JAX/Pallas matrix-multiplication
+    tiling problem with explicit `A B = C` matrix dimensions and tile
+    parameters, a candidate surface restricted to tiling strategy, baseline
+    manual and search-autotuning heuristics, deterministic shape-corpus splits,
+    actual-runtime measurement records, correctness checks against unchanged
+    matrix semantics, and reproducible artifact inventories. Keep a CPU or
+    interpret-mode smoke lane distinct from real digest-pinned TPU execution,
+    and do not treat the generic candidate runner or metadata-only sidecars as
+    Pallas benchmark support.
 
 - [ ] Add kernel-tiling train/eval shape provenance for Pallas-style heuristics.
   - Spec evidence: AlphaEvolve Section 3.3.2 optimizes a Pallas tiling

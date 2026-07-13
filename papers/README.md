@@ -1571,15 +1571,21 @@ claims from the Section 3.3 opening, Section 3.3.1, and Figure 6. It classifies
 TODO ownership for all 45 gaps. The inventory includes the scheduling problem,
 vector-bin-packing formulation, ranking-only safety, simulator/held-out/
 deployment claims, incumbent and deep-RL comparisons, exact heuristic terms,
-heatmap axes, and legend semantics. Together the five bounded inventories
-disposition 240 claims: 21 locally implemented, 82 partial, 27 not implemented,
-and 110 not demonstrated. The corrected
+heatmap axes, and legend semantics.
+`papers/alphaevolve_kernel_claim_inventory_boundary.json` adds 59 exact-page
+Section 3.3.2 and Figure 7 claims. It classifies 6 as partial, 37 as not
+implemented, and 16 as not demonstrated, with live TODO ownership for all 59
+gaps. It covers the JAX/Pallas context, Figure 7 semantics, tiling formulation,
+baseline workflows, shape collection and splits, real-TPU evaluation claims,
+quantitative results, deployment, and Gemini self-optimization. Together the
+six bounded inventories disposition 299 claims: 21 locally implemented, 88
+partial, 64 not implemented, and 126 not demonstrated. The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
 whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-Sections 3.3.2-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
+Sections 3.3.3-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
 sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -3461,7 +3467,7 @@ Implemented:
   marker drift, raw checklist completion, and exact normalized-title duplicate
   groups. It now also records a bounded exact-title raw-count inflation
   estimate: 123 exact duplicate-title groups, 246 duplicate records, 123
-  inflated raw checklist rows, and a 5160 collapsed exact-title total
+  inflated raw checklist rows, and a 5166 collapsed exact-title total
   estimate. It also records an exact duplicate owner/status profile: all 123
   exact-title duplicate groups are completed-only, 122 groups are cross-owner,
   one group is same-owner, and zero groups involve active TODO rows. It also

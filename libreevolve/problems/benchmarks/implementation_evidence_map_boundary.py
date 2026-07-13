@@ -12,11 +12,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v7"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v8"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_anchors_plus_240_bounded_claims_without_whole_paper_exhaustiveness"
+    "verified_core_anchors_plus_299_bounded_claims_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
 EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
@@ -30,6 +30,9 @@ EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF = (
 )
 EXPECTED_SCHEDULING_CLAIM_INVENTORY_REF = (
     "papers/alphaevolve_scheduling_claim_inventory_boundary.json"
+)
+EXPECTED_KERNEL_CLAIM_INVENTORY_REF = (
+    "papers/alphaevolve_kernel_claim_inventory_boundary.json"
 )
 EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
@@ -49,13 +52,16 @@ EXPECTED_RECORDED_EVIDENCE = {
     "bounded_scheduling_claim_inventory": (
         "45_pdf_anchored_section_3_3_opening_section_3_3_1_and_figure_6_claims"
     ),
+    "bounded_kernel_claim_inventory": (
+        "59_pdf_anchored_section_3_3_2_and_figure_7_claims"
+    ),
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "sections_3_3_2_to_5_remaining_figures_tables_and_appendices_not_fully_recorded",
-    "claim_level_source_span_coverage_matrix": "240_bounded_claims_remaining_sections_3_3_2_to_5_and_remaining_exhibits_appendices_not_recorded",
+    "exhaustive_requirement_inventory": "sections_3_3_3_to_5_remaining_figures_tables_and_appendices_not_fully_recorded",
+    "claim_level_source_span_coverage_matrix": "299_bounded_claims_remaining_sections_3_3_3_to_5_and_remaining_exhibits_appendices_not_recorded",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -337,6 +343,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "matrix_result_claim_inventory_ref": EXPECTED_MATRIX_RESULT_CLAIM_INVENTORY_REF,
         "math_result_claim_inventory_ref": EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF,
         "scheduling_claim_inventory_ref": EXPECTED_SCHEDULING_CLAIM_INVENTORY_REF,
+        "kernel_claim_inventory_ref": EXPECTED_KERNEL_CLAIM_INVENTORY_REF,
         "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -353,7 +360,8 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "matrix-result inventory, and the bounded 63-claim Section 3.2 and "
             "Figure 5 constructive-math inventory, plus the bounded 45-claim "
             "Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling "
-            "inventory. It "
+            "inventory, plus the bounded 59-claim Section 3.3.2 and Figure 7 "
+            "kernel-engineering inventory. It "
             "does not claim a whole-paper "
             "exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
@@ -401,6 +409,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_scheduling_claim_inventory_ref", f"scheduling_claim_inventory_ref must be {EXPECTED_SCHEDULING_CLAIM_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SCHEDULING_CLAIM_INVENTORY_REF).is_file():
         issues.append(_issue("missing_scheduling_claim_inventory_ref", f"{EXPECTED_SCHEDULING_CLAIM_INVENTORY_REF} is missing"))
+    if data.get("kernel_claim_inventory_ref") != EXPECTED_KERNEL_CLAIM_INVENTORY_REF:
+        issues.append(_issue("invalid_kernel_claim_inventory_ref", f"kernel_claim_inventory_ref must be {EXPECTED_KERNEL_CLAIM_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_KERNEL_CLAIM_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_kernel_claim_inventory_ref", f"{EXPECTED_KERNEL_CLAIM_INVENTORY_REF} is missing"))
     if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
         issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():

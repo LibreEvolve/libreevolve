@@ -429,6 +429,19 @@ Important limits:
   workload/capacity evidence, fleet result, or Figure 6 reproduction; the
   checked sidecar is
   `papers/alphaevolve_scheduling_claim_inventory_boundary.json`.
+- The bounded Section 3.3.2/Figure 7 kernel-engineering inventory records 59
+  PDF-anchored claims: 6 partial, 37 not implemented, and 16 not demonstrated,
+  with active TODO ownership for all 59 gaps. It covers JAX/Pallas context,
+  Figure 7 tile semantics and constraints, baseline workflows, runtime and
+  shape-split evaluation, quantitative results, production deployment, and
+  Gemini self-optimization. It is an inventory boundary, not Pallas or TPU
+  execution, Figure 7 reproduction, or production-result proof; the checked
+  sidecar is `papers/alphaevolve_kernel_claim_inventory_boundary.json`.
+- There is no executable JAX/Pallas matrix-tiling benchmark in the current
+  dependency set or problem fixtures. Generic candidate runners and kernel
+  report gates do not establish Pallas support, a real TPU lane, a kernel-user
+  shape corpus, candidate tiling-only scope, or unchanged-math correctness
+  evidence; those remain active code and paper TODO work.
 - Figure 5 constructive-math exhibit provenance remains absent: README
   describes Appendix B family/status coverage, smoke-fixture boundaries, and
   constructive-math absence boundaries, not main-text Figure 5 exhibit ids,

@@ -594,6 +594,10 @@
           "exists": true
         },
         {
+          "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
           "path": "papers/hardware_rtl_eda_evidence_boundary.json",
           "exists": true
         },
@@ -642,6 +646,10 @@
         },
         {
           "path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
           "exists": true
         },
         {
@@ -696,6 +704,10 @@
           "exists": true
         },
         {
+          "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
           "path": "papers/hardware_rtl_eda_evidence_boundary.json",
           "exists": true
         },
@@ -747,6 +759,10 @@
           "exists": true
         },
         {
+          "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
           "path": "papers/hardware_rtl_eda_evidence_boundary.json",
           "exists": true
         },
@@ -795,6 +811,10 @@
         },
         {
           "path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
           "exists": true
         },
         {
@@ -1975,6 +1995,10 @@
           "exists": true
         },
         {
+          "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
           "path": "papers/hardware_rtl_eda_evidence_boundary.json",
           "exists": true
         },
@@ -2023,6 +2047,10 @@
         },
         {
           "path": "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
           "exists": true
         },
         {

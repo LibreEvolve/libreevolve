@@ -14523,6 +14523,20 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and independent semantic exhaustiveness review remain open.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
+- [x] Add Section 3.3.2 and Figure 7 kernel-engineering claim dispositions.
+  - Paper evidence: the pinned PDF describes Gemini/JAX/Pallas context, the
+    Figure 7 tiling problem, baseline workflow burdens, real-TPU candidate
+    evaluation, 50/50 shape splits, the 23% and 1% results, months-to-days
+    turnaround, production deployment, and Gemini self-optimization.
+  - Status: `papers/alphaevolve_kernel_claim_inventory_boundary.json` records
+    59 exact-page claims with 6 partial, 37 absent, and 16 undemonstrated
+    dispositions and active ownership for all 59 gaps.
+  - Remaining paper gap: executable Pallas and TPU artifacts, source/runtime
+    identities, corpus and split evidence, comparators, Figure 7 reproduction,
+    quantitative result certification, deployment evidence, Sections 3.3.3-5,
+    and AlphaEvolve parity remain unproven.
+  - Verification: the paper manifest requires the sidecar and rejects source,
+    count, status, reference, ownership, result-reproduction, and parity drift.
 - [x] Add Section 3.2 and Figure 5 constructive-math claim dispositions.
   - Paper evidence: the pinned PDF contains constructive-math breadth/rate
     claims, all nine Figure 5 result displays, heuristic-program methodology,

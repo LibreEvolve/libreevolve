@@ -14,9 +14,10 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "core_requirement_anchors_without_exhaustive_coverage"
+        == "verified_core_requirement_anchors_without_claim_level_exhaustiveness"
     )
     assert validation.requirement_count == 6
+    assert validation.reference_check_count == 81
     assert validation.missing_evidence_count == 9
     assert boundary["schema"] == IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -25,6 +26,22 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     }
     assert "alphaevolve_program_markers" in requirement_ids
     assert "alphaevolve_published_benchmarks" in requirement_ids
+    requirement_by_id = {
+        requirement["requirement_id"]: requirement
+        for requirement in boundary["requirements"]
+    }
+    assert requirement_by_id["alphaevolve_evaluator_cascade"]["source_refs"] == [
+        "2506.13131:Section 2.4"
+    ]
+    assert requirement_by_id["alphaevolve_llm_sampling_and_prompting"][
+        "source_span_ids"
+    ] == ["section_2_2", "section_2_3"]
+    assert requirement_by_id["alphaevolve_evolutionary_database"][
+        "source_refs"
+    ][0] == "2506.13131:Section 2.5"
+    assert requirement_by_id["alphaevolve_async_distributed_pipeline"][
+        "source_refs"
+    ][1] == "2506.13131:Section 2.6"
     assert (
         boundary["missing_evidence"]["status_cell_semantic_verifier"]
         == "not_recorded_locally"
@@ -34,6 +51,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
         == "not_recorded_locally"
     )
     assert "does not claim an exhaustive requirement inventory" in boundary["claim_boundary"]
+    assert "claim-level source-span coverage matrix" in boundary["claim_boundary"]
     assert "absence-sentence freshness matrix" in boundary["claim_boundary"]
 
 
@@ -65,6 +83,18 @@ def test_implementation_evidence_map_boundary_rejects_anchor_drift():
     assert "invalid_alphaevolve_program_markers_module_refs" in codes
 
 
+def test_implementation_evidence_map_boundary_rejects_missing_local_reference():
+    boundary = implementation_evidence_map_boundary_record()
+    boundary["requirements"][0]["test_refs"] = ["tests/does_not_exist.py"]
+
+    validation = validate_implementation_evidence_map_boundary(boundary)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_alphaevolve_program_markers_test_refs" in codes
+    assert "missing_test_ref" in codes
+
+
 def test_render_implementation_evidence_map_boundary_summary_reports_shape():
     summary = render_implementation_evidence_map_boundary_summary(
         implementation_evidence_map_boundary_record()
@@ -73,8 +103,9 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
     assert "Implementation evidence map boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | core_requirement_anchors_without_exhaustive_coverage |"
+        "| boundary_status | verified_core_requirement_anchors_without_claim_level_exhaustiveness |"
         in summary
     )
     assert "| requirement_count | 6 |" in summary
+    assert "| reference_check_count | 81 |" in summary
     assert "| missing_evidence_count | 9 |" in summary

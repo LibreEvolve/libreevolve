@@ -4,6 +4,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the AlphaEvolve named-source audit boundary in README.
+  - Status: README now reports the 55-span PDF-backed inventory and separates
+    source-audit completeness from sentence-level requirements, benchmark
+    reproduction, production-scale evidence, and AlphaEvolve parity.
+  - Evidence: `papers/alphaevolve_source_inventory_boundary.json` verifies 38
+    structural spans, 14 numbered figures, 3 numbered tables, and 57 page-local
+    anchors against the pinned 44-page PDF.
+  - Remaining guard: README continues to classify LibreEvolve as alpha-stage,
+    local, Python-first research software rather than a full reproduction.
+
 - [x] Add structural run-artifacts guide inventory to documentation claim
       evidence.
   - Status: `papers/documentation_claim_inventory.json` now records

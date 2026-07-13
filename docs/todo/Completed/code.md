@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add a PDF-backed named-source inventory and correct core paper anchors.
+  - Status: `papers/alphaevolve_source_inventory_boundary.json` now pins the
+    44-page AlphaEvolve PDF identity and verifies 55 named spans with 57
+    page-local anchors: 38 structural spans, 14 figures, and 3 tables.
+    `papers/implementation_evidence_map_boundary.json` now uses the actual
+    Section 2.2/2.3 prompting, 2.4 evaluation, 2.5 evolution, and 2.6
+    distributed-pipeline references and checks 81 local references.
+  - Remaining guard: the active code-audit TODO still requires claim-level
+    requirement extraction, semantic evidence sufficiency, module/test/runtime
+    coverage detection, generated audit output, and CI exhaustiveness proof.
+  - Verification: focused source-inventory, implementation-map, ROADMAP-span,
+    and paper-manifest tests cover source drift and parity-overclaim rejection.
+
 - [x] Complete follow-on notebook artifact flags on emitted per-page rows.
   - Spec evidence: the `google-deepmind/alphaevolve_repository_of_problems`
     README says the repository contains problem descriptions for 67

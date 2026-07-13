@@ -2,6 +2,16 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Add named AlphaEvolve source-span ROADMAP dispositions.
+  - Status: the source-inventory and ROADMAP disposition sidecars now map all
+    55 PDF-verified named sections, figures, tables, and appendices to local
+    status classes, ROADMAP sections, phase buckets, sidecars, and audit TODOs.
+  - Remaining guard: the active source-span TODO remains open for claim-level
+    requirements/results, domain-specific TODO ownership, all paper-status row
+    dispositions, non-goal decisions, CI exhaustiveness, and owner signoff.
+  - Verification: focused disposition, coverage, exhaustiveness, and manifest
+    tests reject missing spans, stale anchors, and AlphaEvolve parity overclaim.
+
 - [x] Add bounded ROADMAP phase CI freshness gate.
   - Status: `papers/roadmap_phase_ci_freshness_gate_boundary.json` now
     records the bounded CI freshness gate for the ROADMAP phase lifecycle,

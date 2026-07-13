@@ -68,6 +68,11 @@ Important limits:
 - Many AlphaEvolve-facing JSON sidecars are validators or absence-boundary
   records. They are evidence that a claim is tracked conservatively, not proof
   that the underlying feature or benchmark has been reproduced.
+- `papers/alphaevolve_source_inventory_boundary.json` verifies all 55 named
+  structural spans in the pinned 44-page AlphaEvolve PDF: 38 section/front-
+  matter/appendix spans, 14 numbered figures, and 3 numbered tables. This is a
+  source-audit completeness boundary, not sentence-level requirement coverage,
+  benchmark reproduction, production-scale evidence, or AlphaEvolve parity.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
 - `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve

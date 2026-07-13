@@ -14,7 +14,7 @@ ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_source_span_exhaustiveness_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_source_span_exhaustiveness_gate_without_pdf_span_walk"
+    "named_structure_exhaustiveness_gate_without_claim_level_walk"
 )
 SOURCE_COVERAGE_BOUNDARY_INPUT = "papers/roadmap_source_span_coverage_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -28,13 +28,13 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_exhaustiveness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_pdf_section_walk": "not_recorded_locally",
-    "figure_table_appendix_matrix": "not_recorded_locally",
+    "claim_level_requirement_inventory": "not_recorded_locally",
+    "claim_level_figure_table_appendix_matrix": "not_recorded_locally",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
-    "missing_partial_todo_proof": "not_recorded_locally",
+    "missing_partial_domain_todo_proof": "not_recorded_locally",
     "non_goal_decision_map": "not_recorded_locally",
-    "phase_priority_map": "not_recorded_locally",
+    "claim_level_phase_priority_map": "not_recorded_locally",
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally",
 }
@@ -44,24 +44,24 @@ CRITERION_SPECS = (
     {
         "criterion_id": "pdf_section_walk",
         "source_surface": "retained AlphaEvolve source PDF sections and requirement spans",
-        "current_scope": "six core anchors and bounded coverage surfaces",
-        "missing_exhaustiveness": "exhaustive PDF section walk for every relevant AlphaEvolve source span",
+        "current_scope": "all 38 named structural spans are page- and anchor-verified",
+        "missing_exhaustiveness": "sentence-, paragraph-, and claim-level requirement extraction",
         "sidecars": (
             "papers/roadmap_source_span_coverage_boundary.json",
             "papers/roadmap_source_span_disposition_boundary.json",
         ),
         "active_todos": (
-            {"path": "docs/todo/roadmap.md", "required_phrase": "exhaustive PDF section walk"},
+            {"path": "docs/todo/roadmap.md", "required_phrase": "claim-level requirement and figure/table/appendix"},
             {"path": "docs/todo/roadmap.md", "required_phrase": "every relevant AlphaEvolve source span"},
         ),
         "validation_gate": "retained PDF section-walk exhaustiveness gate",
-        "readiness_status": "bounded_surfaces_without_pdf_section_walk",
+        "readiness_status": "named_structure_walk_complete_without_claim_level_requirements",
     },
     {
         "criterion_id": "figure_table_appendix_matrix",
         "source_surface": "figures, tables, appendices, benchmark families, and appendix rows",
-        "current_scope": "selected figure/table/appendix sidecars without one joined matrix",
-        "missing_exhaustiveness": "figure/table/appendix matrix with source status and TODO/non-goal disposition",
+        "current_scope": "all 14 figures, 3 tables, 2 appendices, and 13 Appendix B subsections have named-span dispositions",
+        "missing_exhaustiveness": "claim- and result-row-level exhibit matrix with reproduction evidence",
         "sidecars": (
             "papers/roadmap_source_span_coverage_boundary.json",
             "papers/implementation_evidence_map_boundary.json",
@@ -71,7 +71,7 @@ CRITERION_SPECS = (
             {"path": "docs/todo/roadmap.md", "required_phrase": "benchmark family"},
         ),
         "validation_gate": "figure/table/appendix joined matrix gate",
-        "readiness_status": "selected_sidecars_without_joined_exhibit_matrix",
+        "readiness_status": "named_exhibit_matrix_complete_without_claim_level_rows",
     },
     {
         "criterion_id": "application_claim_matrix",
@@ -108,8 +108,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "span_status_classification",
         "source_surface": "source-span status labels across implementation, missing, partial, background-only, and non-goal states",
-        "current_scope": "separate boundary claims without one per-span classification registry",
-        "missing_exhaustiveness": "classification for each span as implemented, partial, missing, background-only, or non-goal",
+        "current_scope": "all 55 named spans have local status, ROADMAP section, and phase classifications",
+        "missing_exhaustiveness": "semantic claim-level status classification and explicit non-goal decisions",
         "sidecars": (
             "papers/documentation_claim_inventory.json",
             "papers/roadmap_non_goal_contradiction_boundary.json",
@@ -117,12 +117,12 @@ CRITERION_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "implemented, partially implemented, missing, background-only, or non-goal",
+                "required_phrase": "local status classes",
             },
             {"path": "docs/todo/roadmap.md", "required_phrase": "non-goal decision map"},
         ),
         "validation_gate": "per-span status classification gate",
-        "readiness_status": "no_joined_per_span_status_registry",
+        "readiness_status": "named_span_status_registry_complete_without_claim_level_semantics",
     },
     {
         "criterion_id": "missing_partial_todo_proof",
@@ -135,7 +135,7 @@ CRITERION_SPECS = (
         ),
         "active_todos": (
             {"path": "docs/todo/roadmap.md", "required_phrase": "missing/partial TODO proof"},
-            {"path": "docs/todo/roadmap.md", "required_phrase": "missing or partial span"},
+            {"path": "docs/todo/roadmap.md", "required_phrase": "domain-specific missing/partial TODO proof"},
         ),
         "validation_gate": "missing/partial span TODO proof gate",
         "readiness_status": "todo_ledgers_without_span_level_join",
@@ -143,8 +143,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "phase_priority_map",
         "source_surface": "phase priorities for missing, partial, and non-goal source spans",
-        "current_scope": "phase sequence boundary without span-level priority join",
-        "missing_exhaustiveness": "phase-priority map for source spans and application-result claims",
+        "current_scope": "all 55 named spans carry near-, mid-, or longer-term ROADMAP phases",
+        "missing_exhaustiveness": "claim-level priority and dependency mapping for application-result work",
         "sidecars": (
             "papers/roadmap_phase_sequence_boundary.json",
             "papers/roadmap_source_span_coverage_boundary.json",
@@ -154,7 +154,7 @@ CRITERION_SPECS = (
             {"path": "docs/todo/roadmap.md", "required_phrase": "phase-priority"},
         ),
         "validation_gate": "source-span phase-priority gate",
-        "readiness_status": "phase_boundary_without_span_priority_join",
+        "readiness_status": "named_span_phase_map_complete_without_claim_level_priorities",
     },
     {
         "criterion_id": "ci_exhaustiveness_and_owner_signoff",
@@ -204,7 +204,9 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
         "claim_ready": False,
         "source_coverage_boundary_input": SOURCE_COVERAGE_BOUNDARY_INPUT,
         "source_coverage_surface_count": source_boundary["coverage_surface_count"],
-        "source_core_anchor_disposition_count": source_boundary["core_anchor_disposition_count"],
+        "source_named_span_disposition_count": source_boundary[
+            "named_source_span_disposition_count"
+        ],
         "source_paper_status_row_count": source_boundary["paper_status_row_count"],
         "source_paper_status_row_dispositioned_count": source_boundary["paper_status_row_dispositioned_count"],
         "source_missing_evidence_count": len(source_boundary["missing_evidence"]),
@@ -212,12 +214,20 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
         "sidecar_ref_count": sum(len(record["sidecar_refs"]) for record in records),
         "active_todo_ref_count": sum(len(record["active_todo_refs"]) for record in records),
         "exhaustiveness_criteria": records,
+        "completed_evidence": {
+            "named_structure_span_count": source_boundary[
+                "named_source_span_disposition_count"
+            ],
+            "named_structure_inventory": "pdf_page_and_anchor_verified",
+            "named_span_status_and_phase_map": "recorded",
+        },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records a source-span exhaustiveness gate. It does "
-            "not claim exhaustive PDF section walk, figure/table/appendix "
-            "matrix, application-result claim matrix, status-row to ROADMAP "
+            "This boundary records a complete named-structure gate for all 55 "
+            "PDF-verified sections, figures, tables, and appendices. It does "
+            "not claim sentence- or claim-level requirement exhaustiveness, a "
+            "claim-level figure/table/appendix matrix, application-result claim matrix, status-row to ROADMAP "
             "disposition map, missing/partial TODO proof, non-goal decision "
             "map, phase-priority map, CI source-span exhaustiveness gate, or "
             "owner review signoff."
@@ -251,7 +261,7 @@ def validate_roadmap_source_span_exhaustiveness_boundary(
     for key in (
         "source_coverage_boundary_input",
         "source_coverage_surface_count",
-        "source_core_anchor_disposition_count",
+        "source_named_span_disposition_count",
         "source_paper_status_row_count",
         "source_paper_status_row_dispositioned_count",
         "source_missing_evidence_count",
@@ -259,6 +269,7 @@ def validate_roadmap_source_span_exhaustiveness_boundary(
         "sidecar_ref_count",
         "active_todo_ref_count",
         "exhaustiveness_criteria",
+        "completed_evidence",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current source-span coverage inputs"))
@@ -267,7 +278,8 @@ def validate_roadmap_source_span_exhaustiveness_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim exhaustive PDF section walk" not in boundary_text
+        or "complete named-structure gate for all 55" not in boundary_text
+        or "claim-level requirement exhaustiveness" not in boundary_text
         or "CI source-span exhaustiveness gate" not in boundary_text
         or "owner review signoff" not in boundary_text
     ):

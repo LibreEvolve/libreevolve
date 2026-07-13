@@ -1,21 +1,33 @@
 from __future__ import annotations
 
 import json
+from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary import (
+    EXPECTED_NAMED_SOURCE_SPAN_IDS,
+)
+
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v1"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v2"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "core_requirement_anchors_without_exhaustive_coverage"
+    "verified_core_requirement_anchors_without_claim_level_exhaustiveness"
 )
+EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
+EXPECTED_RECORDED_EVIDENCE = {
+    "named_source_structure_inventory": "55_pdf_verified_spans",
+    "reference_existence_checks": (
+        "module_test_sidecar_todo_paths_and_todo_phrases"
+    ),
+}
 EXPECTED_MISSING_EVIDENCE = {
     "exhaustive_requirement_inventory": "not_recorded_locally",
-    "source_span_coverage_matrix": "not_recorded_locally",
+    "claim_level_source_span_coverage_matrix": "not_recorded_locally",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -31,6 +43,7 @@ EXPECTED_REQUIREMENTS = (
             "2506.13131:Section 2.1",
             "2506.13131:Figure 3",
         ],
+        "source_span_ids": ["section_2_1", "figure_3"],
         "claim_status": "partially_implemented",
         "module_refs": [
             "libreevolve/core/candidate.py",
@@ -38,34 +51,46 @@ EXPECTED_REQUIREMENTS = (
             "libreevolve/problems/loader.py",
         ],
         "test_refs": [
-            "tests/test_candidate.py",
-            "tests/test_diff.py",
-            "tests/test_problem_loader.py",
+            "tests/core/test_candidate.py",
+            "tests/core/test_diff.py",
+            "tests/core/test_loader.py",
+            "tests/test_candidate_language_runner_boundary.py",
         ],
         "sidecar_refs": [
             "papers/existing_codebase_integration_boundary.json",
             "papers/candidate_language_runner_boundary.json",
         ],
         "todo_refs": [
-            "docs/todo/code.md#candidate-workspace-fidelity",
-            "docs/todo/papers.md#candidate-language-build-and-runner-contracts",
+            {
+                "path": "docs/todo/code.md",
+                "required_phrase": (
+                    "Extend the task-primary local candidate runner beyond host C smoke to"
+                ),
+            },
+            {
+                "path": "docs/todo/papers.md",
+                "required_phrase": (
+                    "Add AlphaEvolve-grade candidate language, build, and runner contracts."
+                ),
+            },
         ],
         "coverage_scope": "anchor_only",
     },
     {
         "requirement_id": "alphaevolve_evaluator_cascade",
         "source_refs": [
-            "2506.13131:Section 2.2",
-            "2506.13131:Section 2.3",
+            "2506.13131:Section 2.4",
         ],
+        "source_span_ids": ["section_2_4"],
         "claim_status": "partially_implemented",
         "module_refs": [
             "libreevolve/core/evaluator.py",
             "libreevolve/core/loop.py",
         ],
         "test_refs": [
-            "tests/test_evaluator.py",
-            "tests/test_evolution.py",
+            "tests/core/test_evaluator.py",
+            "tests/core/test_loop.py",
+            "tests/test_evaluation_cascade_boundary.py",
         ],
         "sidecar_refs": [
             "papers/evaluation_cascade_boundary.json",
@@ -73,17 +98,28 @@ EXPECTED_REQUIREMENTS = (
             "papers/cascade_hypothesis_test_boundary.json",
         ],
         "todo_refs": [
-            "docs/todo/code.md#evaluation-and-oracles",
-            "docs/todo/papers.md#evaluation-cascade-promotion-and-attrition-evidence",
+            {
+                "path": "docs/todo/code.md",
+                "required_phrase": (
+                    "Finish paper-facing evaluation-cascade promotion and attrition evidence."
+                ),
+            },
+            {
+                "path": "docs/todo/papers.md",
+                "required_phrase": (
+                    "Track evaluation-cascade promotion and attrition evidence."
+                ),
+            },
         ],
         "coverage_scope": "anchor_only",
     },
     {
         "requirement_id": "alphaevolve_llm_sampling_and_prompting",
         "source_refs": [
-            "2506.13131:Section 2.4",
-            "2506.13131:Section 2.5",
+            "2506.13131:Section 2.2",
+            "2506.13131:Section 2.3",
         ],
+        "source_span_ids": ["section_2_2", "section_2_3"],
         "claim_status": "partially_implemented",
         "module_refs": [
             "libreevolve/core/prompt.py",
@@ -93,8 +129,9 @@ EXPECTED_REQUIREMENTS = (
             "libreevolve/llm/ollama.py",
         ],
         "test_refs": [
-            "tests/test_prompt.py",
-            "tests/test_llm_ensemble.py",
+            "tests/core/test_prompt.py",
+            "tests/llm/test_ensemble.py",
+            "tests/llm/test_backends.py",
         ],
         "sidecar_refs": [
             "papers/fast_strong_model_mix_boundary.json",
@@ -103,17 +140,28 @@ EXPECTED_REQUIREMENTS = (
             "papers/gemini_provider_parity_boundary.json",
         ],
         "todo_refs": [
-            "docs/todo/code.md#llm-and-prompting",
-            "docs/todo/papers.md#independent-per-role-llm-scheduler-state-and-reward-policy",
+            {
+                "path": "docs/todo/code.md",
+                "required_phrase": (
+                    "Complete provider-token prompt section fitting beyond mutation prompts"
+                ),
+            },
+            {
+                "path": "docs/todo/papers.md",
+                "required_phrase": (
+                    "Independent per-role LLM scheduler state and reward policy."
+                ),
+            },
         ],
         "coverage_scope": "anchor_only",
     },
     {
         "requirement_id": "alphaevolve_evolutionary_database",
         "source_refs": [
-            "2506.13131:Section 2.6",
+            "2506.13131:Section 2.5",
             "2506.13131:Figure 2",
         ],
+        "source_span_ids": ["section_2_5", "figure_2"],
         "claim_status": "partially_implemented",
         "module_refs": [
             "libreevolve/core/database.py",
@@ -121,9 +169,9 @@ EXPECTED_REQUIREMENTS = (
             "libreevolve/population/map_elites.py",
         ],
         "test_refs": [
-            "tests/test_database.py",
-            "tests/test_islands.py",
-            "tests/test_map_elites.py",
+            "tests/population/test_database.py",
+            "tests/population/test_islands.py",
+            "tests/population/test_map_elites.py",
         ],
         "sidecar_refs": [
             "papers/sampling_balance_boundary.json",
@@ -131,8 +179,18 @@ EXPECTED_REQUIREMENTS = (
             "papers/objective_archive_boundary.json",
         ],
         "todo_refs": [
-            "docs/todo/code.md#archive-database-and-replay",
-            "docs/todo/papers.md#stable-behavior-descriptor-models-and-archive-rebin-semantics",
+            {
+                "path": "docs/todo/code.md",
+                "required_phrase": (
+                    "Promote multi-objective overlays to primary archive optimization."
+                ),
+            },
+            {
+                "path": "docs/todo/papers.md",
+                "required_phrase": (
+                    "Stable behavior descriptor models and archive rebin semantics."
+                ),
+            },
         ],
         "coverage_scope": "anchor_only",
     },
@@ -140,13 +198,18 @@ EXPECTED_REQUIREMENTS = (
         "requirement_id": "alphaevolve_async_distributed_pipeline",
         "source_refs": [
             "2506.13131:Figure 2",
-            "2506.13131:Section 4",
+            "2506.13131:Section 2.6",
         ],
-        "claim_status": "missing_alphaevolve_parity",
+        "source_span_ids": ["figure_2", "section_2_6"],
+        "claim_status": "partially_implemented_without_distributed_alphaevolve_parity",
         "module_refs": [
             "libreevolve/core/loop.py",
+            "libreevolve/core/async_evaluator.py",
+            "libreevolve/core/async_sampler.py",
         ],
         "test_refs": [
+            "tests/core/test_async_evaluator.py",
+            "tests/core/test_async_sampler.py",
             "tests/test_distributed_pipeline_topology_boundary.py",
             "tests/test_parallel_evaluation_readiness_boundary.py",
         ],
@@ -156,8 +219,18 @@ EXPECTED_REQUIREMENTS = (
             "papers/expensive_evaluation_budget_boundary.json",
         ],
         "todo_refs": [
-            "docs/todo/code.md#distributed-and-async-execution",
-            "docs/todo/papers.md#parallelized-evaluation-and-asynchronous-throughput",
+            {
+                "path": "docs/todo/code.md",
+                "required_phrase": (
+                    "Complete asynchronous worker and concurrent proposal control beyond the"
+                ),
+            },
+            {
+                "path": "docs/todo/papers.md",
+                "required_phrase": (
+                    "Parallelized evaluation and asynchronous throughput."
+                ),
+            },
         ],
         "coverage_scope": "anchor_only",
     },
@@ -168,6 +241,7 @@ EXPECTED_REQUIREMENTS = (
             "2506.13131:Appendix A",
             "2506.13131:Appendix B",
         ],
+        "source_span_ids": ["section_3", "appendix_a", "appendix_b"],
         "claim_status": "mostly_missing_alphaevolve_result_reproduction",
         "module_refs": [
             "libreevolve/problems/examples/",
@@ -180,12 +254,22 @@ EXPECTED_REQUIREMENTS = (
         ],
         "sidecar_refs": [
             "papers/matrix_suite_publication_artifacts.json",
-            "papers/appendix_b_registry.json",
+            "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
             "papers/benchmark_fixture_readiness_boundary.json",
         ],
         "todo_refs": [
-            "docs/todo/code.md#benchmarks-and-paper-artifacts",
-            "docs/todo/papers.md#benchmark-implementations",
+            {
+                "path": "docs/todo/code.md",
+                "required_phrase": (
+                    "Connect benchmark-grade fixtures to hardening and scope reports."
+                ),
+            },
+            {
+                "path": "docs/todo/papers.md",
+                "required_phrase": (
+                    "Harden benchmark implementations beyond smoke-example fidelity."
+                ),
+            },
         ],
         "coverage_scope": "anchor_only",
     },
@@ -203,6 +287,7 @@ class ImplementationEvidenceMapBoundaryValidation:
     ok: bool
     boundary_status: str | None
     requirement_count: int
+    reference_check_count: int
     missing_evidence_count: int
     issues: list[ImplementationEvidenceMapBoundaryIssue]
 
@@ -219,14 +304,17 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "sidecars, active TODOs, and every paper-index implementation "
             "status claim."
         ),
+        "source_inventory_ref": EXPECTED_SOURCE_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
-        "requirements": [dict(requirement) for requirement in EXPECTED_REQUIREMENTS],
+        "requirements": deepcopy(list(EXPECTED_REQUIREMENTS)),
+        "recorded_evidence": dict(EXPECTED_RECORDED_EVIDENCE),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records core AlphaEvolve requirement anchors with "
-            "module, test, sidecar, and TODO links. It does not claim an "
-            "exhaustive requirement inventory, source-span coverage matrix, "
+            "This boundary records corrected core AlphaEvolve requirement anchors "
+            "with verified module, test, sidecar, and TODO links and connects them "
+            "to the PDF-verified named source inventory. It does not claim an "
+            "exhaustive requirement inventory or claim-level source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
             "semantic verifier, implemented benchmark "
             "bullet semantic verifier, absence-sentence freshness matrix, module "
@@ -240,18 +328,22 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
 
 def validate_implementation_evidence_map_boundary(
     boundary: object | str | Path | None = None,
+    *,
+    root: str | Path = ".",
 ) -> ImplementationEvidenceMapBoundaryValidation:
     data, read_issues = _load_boundary(
         implementation_evidence_map_boundary_record() if boundary is None else boundary
     )
     if read_issues:
-        return ImplementationEvidenceMapBoundaryValidation(False, None, 0, 0, read_issues)
+        return ImplementationEvidenceMapBoundaryValidation(False, None, 0, 0, 0, read_issues)
     assert isinstance(data, dict)
     issues: list[ImplementationEvidenceMapBoundaryIssue] = []
     if data.get("schema") != IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA:
         issues.append(_issue("invalid_schema", "unsupported implementation evidence map boundary schema"))
     if data.get("source_paper_id") != EXPECTED_SOURCE_PAPER_ID:
         issues.append(_issue("invalid_source_paper_id", "source_paper_id must be 2506.13131"))
+    if data.get("source_inventory_ref") != EXPECTED_SOURCE_INVENTORY_REF:
+        issues.append(_issue("invalid_source_inventory_ref", f"source_inventory_ref must be {EXPECTED_SOURCE_INVENTORY_REF}"))
     source_claim = data.get("source_claim")
     if (
         not isinstance(source_claim, str)
@@ -265,11 +357,14 @@ def validate_implementation_evidence_map_boundary(
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "implementation evidence map must not claim exhaustive coverage"))
     requirement_count = _validate_requirements(data.get("requirements"), issues)
+    reference_check_count = _validate_references(data.get("requirements"), Path(root), issues)
+    _validate_recorded_evidence(data.get("recorded_evidence"), issues)
     missing_count = _validate_missing_evidence(data.get("missing_evidence"), issues)
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
         or "does not claim an exhaustive requirement inventory" not in boundary_text
+        or "claim-level source-span coverage matrix" not in boundary_text
         or "paper-index phrase evidence-link sufficiency" not in boundary_text
         or "implemented benchmark bullet semantic verifier" not in boundary_text
         or "absence-sentence freshness matrix" not in boundary_text
@@ -281,6 +376,7 @@ def validate_implementation_evidence_map_boundary(
         ok=not issues,
         boundary_status=status if isinstance(status, str) else None,
         requirement_count=requirement_count,
+        reference_check_count=reference_check_count,
         missing_evidence_count=missing_count,
         issues=issues,
     )
@@ -299,6 +395,7 @@ def render_implementation_evidence_map_boundary_summary(
         f"| schema_status | {status} |",
         f"| boundary_status | {validation.boundary_status or '<unknown>'} |",
         f"| requirement_count | {validation.requirement_count} |",
+        f"| reference_check_count | {validation.reference_check_count} |",
         f"| missing_evidence_count | {validation.missing_evidence_count} |",
     ]
     if validation.issues:
@@ -360,6 +457,103 @@ def _validate_requirements(
             if actual.get(key) != expected_value:
                 issues.append(_issue(f"invalid_{requirement_id}_{key}", f"{requirement_id}.{key} does not match the expected evidence anchor"))
     return len(requirements)
+
+
+def _validate_references(
+    value: object,
+    root: Path,
+    issues: list[ImplementationEvidenceMapBoundaryIssue],
+) -> int:
+    if not isinstance(value, list):
+        return 0
+    check_count = 0
+    source_span_ids = set(EXPECTED_NAMED_SOURCE_SPAN_IDS)
+    inventory_path = root / EXPECTED_SOURCE_INVENTORY_REF
+    check_count += 1
+    if not inventory_path.is_file():
+        issues.append(
+            _issue(
+                "missing_source_inventory_ref",
+                f"source inventory does not exist: {EXPECTED_SOURCE_INVENTORY_REF}",
+            )
+        )
+    for requirement in value:
+        if not isinstance(requirement, dict):
+            continue
+        requirement_id = requirement.get("requirement_id", "<unknown>")
+        for key in ("module_refs", "test_refs", "sidecar_refs"):
+            refs = requirement.get(key)
+            if not isinstance(refs, list):
+                continue
+            for ref in refs:
+                check_count += 1
+                if not isinstance(ref, str) or not (root / ref).exists():
+                    issues.append(
+                        _issue(
+                            f"missing_{key[:-1]}",
+                            f"{requirement_id}.{key} references a missing path: {ref}",
+                        )
+                    )
+        spans = requirement.get("source_span_ids")
+        if isinstance(spans, list):
+            for span_id in spans:
+                check_count += 1
+                if not isinstance(span_id, str) or span_id not in source_span_ids:
+                    issues.append(
+                        _issue(
+                            "unknown_source_span_id",
+                            f"{requirement_id} references an unknown named source span: {span_id}",
+                        )
+                    )
+        todos = requirement.get("todo_refs")
+        if not isinstance(todos, list):
+            continue
+        for todo in todos:
+            check_count += 1
+            if not isinstance(todo, dict):
+                issues.append(
+                    _issue(
+                        "invalid_todo_ref",
+                        f"{requirement_id}.todo_refs must contain path/phrase objects",
+                    )
+                )
+                continue
+            path_value = todo.get("path")
+            phrase = todo.get("required_phrase")
+            if not isinstance(path_value, str) or not isinstance(phrase, str):
+                issues.append(
+                    _issue(
+                        "invalid_todo_ref",
+                        f"{requirement_id}.todo_refs must contain string path and required_phrase fields",
+                    )
+                )
+                continue
+            path = root / path_value
+            try:
+                text = path.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError):
+                text = ""
+            if not path.is_file() or phrase not in text:
+                issues.append(
+                    _issue(
+                        "missing_todo_ref",
+                        f"{requirement_id} TODO reference is missing or stale: {path_value}",
+                    )
+                )
+    return check_count
+
+
+def _validate_recorded_evidence(
+    value: object,
+    issues: list[ImplementationEvidenceMapBoundaryIssue],
+) -> None:
+    if value != EXPECTED_RECORDED_EVIDENCE:
+        issues.append(
+            _issue(
+                "invalid_recorded_evidence",
+                "recorded_evidence must preserve named inventory and reference checks",
+            )
+        )
 
 
 def _validate_missing_evidence(

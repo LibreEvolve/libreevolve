@@ -14,7 +14,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "bounded_source_span_exhaustiveness_gate_without_pdf_span_walk"
+        == "named_structure_exhaustiveness_gate_without_claim_level_walk"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -23,10 +23,10 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
         == "papers/roadmap_source_span_coverage_boundary.json"
     )
     assert boundary["source_coverage_surface_count"] == 8
-    assert boundary["source_core_anchor_disposition_count"] == 6
+    assert boundary["source_named_span_disposition_count"] == 55
     assert boundary["source_paper_status_row_count"] == 53
     assert boundary["source_paper_status_row_dispositioned_count"] == 1
-    assert boundary["source_missing_evidence_count"] == 9
+    assert boundary["source_missing_evidence_count"] == 8
     assert boundary["exhaustiveness_criterion_count"] == 8
     assert boundary["sidecar_ref_count"] == 16
     assert boundary["active_todo_ref_count"] == 16
@@ -51,17 +51,18 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "exhaustive_pdf_section_walk": "not_recorded_locally",
-        "figure_table_appendix_matrix": "not_recorded_locally",
+        "claim_level_requirement_inventory": "not_recorded_locally",
+        "claim_level_figure_table_appendix_matrix": "not_recorded_locally",
         "application_result_claim_matrix": "not_recorded_locally",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
-        "missing_partial_todo_proof": "not_recorded_locally",
+        "missing_partial_domain_todo_proof": "not_recorded_locally",
         "non_goal_decision_map": "not_recorded_locally",
-        "phase_priority_map": "not_recorded_locally",
+        "claim_level_phase_priority_map": "not_recorded_locally",
         "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "does not claim exhaustive PDF section walk" in boundary["claim_boundary"]
+    assert "complete named-structure gate for all 55" in boundary["claim_boundary"]
+    assert "claim-level requirement exhaustiveness" in boundary["claim_boundary"]
     assert "CI source-span exhaustiveness gate" in boundary["claim_boundary"]
     assert "owner review signoff" in boundary["claim_boundary"]
 
@@ -76,7 +77,7 @@ def test_roadmap_source_span_exhaustiveness_rejects_overclaim_and_drift():
     boundary["exhaustiveness_criteria"][0]["active_todo_refs"][0][
         "required_phrase_present"
     ] = False
-    boundary["missing_evidence"]["exhaustive_pdf_section_walk"] = "recorded"
+    boundary["missing_evidence"]["claim_level_requirement_inventory"] = "recorded"
     boundary["required_evidence_fields"] = ["exhaustiveness_criteria"]
 
     validation = validate_roadmap_source_span_exhaustiveness_boundary(boundary)
@@ -88,7 +89,7 @@ def test_roadmap_source_span_exhaustiveness_rejects_overclaim_and_drift():
     assert "invalid_source_paper_status_row_dispositioned_count" in codes
     assert "invalid_exhaustiveness_criterion_count" in codes
     assert "invalid_exhaustiveness_criteria" in codes
-    assert "invalid_missing_evidence_exhaustive_pdf_section_walk" in codes
+    assert "invalid_missing_evidence_claim_level_requirement_inventory" in codes
     assert "missing_required_evidence_field" in codes
     assert "invalid_required_evidence_field_count" in codes
 
@@ -101,7 +102,7 @@ def test_render_roadmap_source_span_exhaustiveness_summary_reports_shape():
     assert "ROADMAP source-span exhaustiveness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | bounded_source_span_exhaustiveness_gate_without_pdf_span_walk |"
+        "| boundary_status | named_structure_exhaustiveness_gate_without_claim_level_walk |"
         in summary
     )
     assert "| exhaustiveness_criterion_count | 8 |" in summary

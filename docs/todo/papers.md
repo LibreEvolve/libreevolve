@@ -42,7 +42,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     unique local artifact paths, zero missing referenced local artifacts,
     source-token match file offsets for 3 manifest source IDs across 15
     records, limitation-signal term file offsets/counts, and contradiction flags.
-    The committed
+    The committed `papers/alphaevolve_source_inventory_boundary.json` now
+    verifies all 55 named spans and 57 page-local anchors in the pinned
+    44-page PDF, while
     `papers/implementation_evidence_map_boundary.json` now explicitly preserves
     missing evidence for status-cell semantic verifier, implemented-benchmark
     bullet semantic verifier, and absence-sentence freshness matrix.

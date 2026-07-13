@@ -1,8 +1,9 @@
 {
-  "schema": "libreevolve.alphaevolve_implementation_evidence_map_boundary.v1",
+  "schema": "libreevolve.alphaevolve_implementation_evidence_map_boundary.v2",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve alignment needs traceable evidence from paper requirements to implementation modules, tests, runtime artifacts, sidecars, active TODOs, and every paper-index implementation status claim.",
-  "boundary_status": "core_requirement_anchors_without_exhaustive_coverage",
+  "source_inventory_ref": "papers/alphaevolve_source_inventory_boundary.json",
+  "boundary_status": "verified_core_requirement_anchors_without_claim_level_exhaustiveness",
   "claim_ready": false,
   "requirements": [
     {
@@ -11,6 +12,10 @@
         "2506.13131:Section 2.1",
         "2506.13131:Figure 3"
       ],
+      "source_span_ids": [
+        "section_2_1",
+        "figure_3"
+      ],
       "claim_status": "partially_implemented",
       "module_refs": [
         "libreevolve/core/candidate.py",
@@ -18,25 +23,34 @@
         "libreevolve/problems/loader.py"
       ],
       "test_refs": [
-        "tests/test_candidate.py",
-        "tests/test_diff.py",
-        "tests/test_problem_loader.py"
+        "tests/core/test_candidate.py",
+        "tests/core/test_diff.py",
+        "tests/core/test_loader.py",
+        "tests/test_candidate_language_runner_boundary.py"
       ],
       "sidecar_refs": [
         "papers/existing_codebase_integration_boundary.json",
         "papers/candidate_language_runner_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#candidate-workspace-fidelity",
-        "docs/todo/papers.md#candidate-language-build-and-runner-contracts"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend the task-primary local candidate runner beyond host C smoke to"
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Add AlphaEvolve-grade candidate language, build, and runner contracts."
+        }
       ],
       "coverage_scope": "anchor_only"
     },
     {
       "requirement_id": "alphaevolve_evaluator_cascade",
       "source_refs": [
-        "2506.13131:Section 2.2",
-        "2506.13131:Section 2.3"
+        "2506.13131:Section 2.4"
+      ],
+      "source_span_ids": [
+        "section_2_4"
       ],
       "claim_status": "partially_implemented",
       "module_refs": [
@@ -44,8 +58,9 @@
         "libreevolve/core/loop.py"
       ],
       "test_refs": [
-        "tests/test_evaluator.py",
-        "tests/test_evolution.py"
+        "tests/core/test_evaluator.py",
+        "tests/core/test_loop.py",
+        "tests/test_evaluation_cascade_boundary.py"
       ],
       "sidecar_refs": [
         "papers/evaluation_cascade_boundary.json",
@@ -53,16 +68,26 @@
         "papers/cascade_hypothesis_test_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#evaluation-and-oracles",
-        "docs/todo/papers.md#evaluation-cascade-promotion-and-attrition-evidence"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Finish paper-facing evaluation-cascade promotion and attrition evidence."
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track evaluation-cascade promotion and attrition evidence."
+        }
       ],
       "coverage_scope": "anchor_only"
     },
     {
       "requirement_id": "alphaevolve_llm_sampling_and_prompting",
       "source_refs": [
-        "2506.13131:Section 2.4",
-        "2506.13131:Section 2.5"
+        "2506.13131:Section 2.2",
+        "2506.13131:Section 2.3"
+      ],
+      "source_span_ids": [
+        "section_2_2",
+        "section_2_3"
       ],
       "claim_status": "partially_implemented",
       "module_refs": [
@@ -73,8 +98,9 @@
         "libreevolve/llm/ollama.py"
       ],
       "test_refs": [
-        "tests/test_prompt.py",
-        "tests/test_llm_ensemble.py"
+        "tests/core/test_prompt.py",
+        "tests/llm/test_ensemble.py",
+        "tests/llm/test_backends.py"
       ],
       "sidecar_refs": [
         "papers/fast_strong_model_mix_boundary.json",
@@ -83,16 +109,26 @@
         "papers/gemini_provider_parity_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#llm-and-prompting",
-        "docs/todo/papers.md#independent-per-role-llm-scheduler-state-and-reward-policy"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete provider-token prompt section fitting beyond mutation prompts"
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Independent per-role LLM scheduler state and reward policy."
+        }
       ],
       "coverage_scope": "anchor_only"
     },
     {
       "requirement_id": "alphaevolve_evolutionary_database",
       "source_refs": [
-        "2506.13131:Section 2.6",
+        "2506.13131:Section 2.5",
         "2506.13131:Figure 2"
+      ],
+      "source_span_ids": [
+        "section_2_5",
+        "figure_2"
       ],
       "claim_status": "partially_implemented",
       "module_refs": [
@@ -101,9 +137,9 @@
         "libreevolve/population/map_elites.py"
       ],
       "test_refs": [
-        "tests/test_database.py",
-        "tests/test_islands.py",
-        "tests/test_map_elites.py"
+        "tests/population/test_database.py",
+        "tests/population/test_islands.py",
+        "tests/population/test_map_elites.py"
       ],
       "sidecar_refs": [
         "papers/sampling_balance_boundary.json",
@@ -111,8 +147,14 @@
         "papers/objective_archive_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#archive-database-and-replay",
-        "docs/todo/papers.md#stable-behavior-descriptor-models-and-archive-rebin-semantics"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote multi-objective overlays to primary archive optimization."
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Stable behavior descriptor models and archive rebin semantics."
+        }
       ],
       "coverage_scope": "anchor_only"
     },
@@ -120,13 +162,21 @@
       "requirement_id": "alphaevolve_async_distributed_pipeline",
       "source_refs": [
         "2506.13131:Figure 2",
-        "2506.13131:Section 4"
+        "2506.13131:Section 2.6"
       ],
-      "claim_status": "missing_alphaevolve_parity",
+      "source_span_ids": [
+        "figure_2",
+        "section_2_6"
+      ],
+      "claim_status": "partially_implemented_without_distributed_alphaevolve_parity",
       "module_refs": [
-        "libreevolve/core/loop.py"
+        "libreevolve/core/loop.py",
+        "libreevolve/core/async_evaluator.py",
+        "libreevolve/core/async_sampler.py"
       ],
       "test_refs": [
+        "tests/core/test_async_evaluator.py",
+        "tests/core/test_async_sampler.py",
         "tests/test_distributed_pipeline_topology_boundary.py",
         "tests/test_parallel_evaluation_readiness_boundary.py"
       ],
@@ -136,8 +186,14 @@
         "papers/expensive_evaluation_budget_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#distributed-and-async-execution",
-        "docs/todo/papers.md#parallelized-evaluation-and-asynchronous-throughput"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Complete asynchronous worker and concurrent proposal control beyond the"
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Parallelized evaluation and asynchronous throughput."
+        }
       ],
       "coverage_scope": "anchor_only"
     },
@@ -147,6 +203,11 @@
         "2506.13131:Section 3",
         "2506.13131:Appendix A",
         "2506.13131:Appendix B"
+      ],
+      "source_span_ids": [
+        "section_3",
+        "appendix_a",
+        "appendix_b"
       ],
       "claim_status": "mostly_missing_alphaevolve_result_reproduction",
       "module_refs": [
@@ -160,19 +221,29 @@
       ],
       "sidecar_refs": [
         "papers/matrix_suite_publication_artifacts.json",
-        "papers/appendix_b_registry.json",
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
         "papers/benchmark_fixture_readiness_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#benchmarks-and-paper-artifacts",
-        "docs/todo/papers.md#benchmark-implementations"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect benchmark-grade fixtures to hardening and scope reports."
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Harden benchmark implementations beyond smoke-example fidelity."
+        }
       ],
       "coverage_scope": "anchor_only"
     }
   ],
+  "recorded_evidence": {
+    "named_source_structure_inventory": "55_pdf_verified_spans",
+    "reference_existence_checks": "module_test_sidecar_todo_paths_and_todo_phrases"
+  },
   "missing_evidence": {
     "exhaustive_requirement_inventory": "not_recorded_locally",
-    "source_span_coverage_matrix": "not_recorded_locally",
+    "claim_level_source_span_coverage_matrix": "not_recorded_locally",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -181,5 +252,5 @@
     "generated_code_audit_report": "not_recorded_locally",
     "ci_exhaustiveness_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records core AlphaEvolve requirement anchors with module, test, sidecar, and TODO links. It does not claim an exhaustive requirement inventory, source-span coverage matrix, paper-index phrase evidence-link sufficiency, status-cell semantic verifier, implemented benchmark bullet semantic verifier, absence-sentence freshness matrix, module coverage detector, test/runtime-artifact coverage detector, generated code-audit report, CI exhaustiveness gate, or proof that every AlphaEvolve-facing implementation claim has been classified."
+  "claim_boundary": "This boundary records corrected core AlphaEvolve requirement anchors with verified module, test, sidecar, and TODO links and connects them to the PDF-verified named source inventory. It does not claim an exhaustive requirement inventory or claim-level source-span coverage matrix, paper-index phrase evidence-link sufficiency, status-cell semantic verifier, implemented benchmark bullet semantic verifier, absence-sentence freshness matrix, module coverage detector, test/runtime-artifact coverage detector, generated code-audit report, CI exhaustiveness gate, or proof that every AlphaEvolve-facing implementation claim has been classified."
 }

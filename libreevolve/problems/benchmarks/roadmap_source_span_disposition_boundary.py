@@ -5,8 +5,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from libreevolve.problems.benchmarks.implementation_evidence_map_boundary import (
-    implementation_evidence_map_boundary_record,
+from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary import (
+    alphaevolve_source_inventory_boundary_record,
 )
 
 
@@ -14,46 +14,29 @@ ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_source_span_disposition_boundary.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "core_anchor_dispositions_without_exhaustive_source_span_matrix"
+EXPECTED_BOUNDARY_STATUS = (
+    "named_source_span_dispositions_without_claim_level_exhaustiveness"
+)
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
+SOURCE_INVENTORY_PATH = "papers/alphaevolve_source_inventory_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
-    "core_requirement_anchor_dispositions",
+    "pdf_verified_named_source_span_dispositions",
     "roadmap_section_links",
     "active_todo_links",
     "paper_status_row_inventory_count",
-    "exhaustive_pdf_section_walk",
-    "figure_table_appendix_matrix",
+    "claim_level_requirement_inventory",
     "application_result_claim_matrix",
     "status_row_to_roadmap_disposition_map",
     "missing_partial_todo_proof",
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_pdf_section_walk": "not_recorded_locally",
-    "figure_table_appendix_matrix": "not_recorded_locally",
+    "claim_level_requirement_inventory": "not_recorded_locally",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
 }
-ROADMAP_SECTION_BY_REQUIREMENT = {
-    "alphaevolve_program_markers": "candidate_workspace_fidelity",
-    "alphaevolve_evaluator_cascade": "evaluation_cascade",
-    "alphaevolve_llm_sampling_and_prompting": "prompt_context_system",
-    "alphaevolve_evolutionary_database": "multi_objective_search",
-    "alphaevolve_async_distributed_pipeline": "async_resumable_runtime",
-    "alphaevolve_published_benchmarks": "representative_benchmarks",
-}
-ROADMAP_PHASE_BY_REQUIREMENT = {
-    "alphaevolve_program_markers": "near_term",
-    "alphaevolve_evaluator_cascade": "mid_term",
-    "alphaevolve_llm_sampling_and_prompting": "mid_term",
-    "alphaevolve_evolutionary_database": "mid_term",
-    "alphaevolve_async_distributed_pipeline": "mid_term",
-    "alphaevolve_published_benchmarks": "longer_term",
-}
-
-
 @dataclass(frozen=True)
 class RoadmapSourceSpanDispositionBoundaryIssue:
     code: str
@@ -75,10 +58,9 @@ def roadmap_source_span_disposition_boundary_record(
     """Return the ROADMAP source-span disposition boundary."""
 
     root_path = Path(root)
-    evidence_map = implementation_evidence_map_boundary_record()
+    source_inventory = alphaevolve_source_inventory_boundary_record(root_path)
     disposition_records = [
-        _disposition_record(requirement)
-        for requirement in evidence_map["requirements"]
+        _disposition_record(span) for span in source_inventory["span_records"]
     ]
     status_row_ids = _status_claim_row_ids(root_path)
     return {
@@ -86,7 +68,10 @@ def roadmap_source_span_disposition_boundary_record(
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
-        "source_boundary_input": "papers/implementation_evidence_map_boundary.json",
+        "source_boundary_input": SOURCE_INVENTORY_PATH,
+        "implementation_evidence_map_input": (
+            "papers/implementation_evidence_map_boundary.json"
+        ),
         "source_status_inventory_input": STATUS_CLAIM_INVENTORY_PATH,
         "disposition_record_count": len(disposition_records),
         "disposition_records": disposition_records,
@@ -99,15 +84,21 @@ def roadmap_source_span_disposition_boundary_record(
         "paper_status_row_disposition_status": (
             "paper_index_rows_not_exhaustively_roadmapped"
         ),
+        "completed_evidence": {
+            "pdf_named_structure_walk": "38_structure_spans",
+            "figure_table_matrix": "14_figures_and_3_tables",
+            "appendix_matrix": "appendix_a_appendix_b_and_13_appendix_b_subsections",
+            "named_application_sections": "section_3_3_and_4_named_subsections",
+        },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
-            "This boundary records ROADMAP dispositions for the six core "
-            "AlphaEvolve requirement anchors already present in the "
-            "implementation-evidence map, including source refs, local "
-            "status, roadmap section, phase bucket, sidecars, and TODO links. "
-            "It does not claim an exhaustive retained-PDF section walk, "
-            "figure/table/appendix/application-result matrix, complete "
+            "This boundary records ROADMAP dispositions for all 55 PDF-verified "
+            "named AlphaEvolve structural spans, including sections, figures, "
+            "tables, appendices, source pages, local status, roadmap section, "
+            "phase bucket, sidecars, and active audit TODO links. It does not "
+            "claim sentence-, paragraph-, equation-, footnote-, citation-, or "
+            "requirement-level exhaustiveness, a claim-level application-result matrix, complete "
             "paper-index row to ROADMAP disposition map, proof that every "
             "missing or partial source span has a live TODO, or a CI "
             "source-span exhaustiveness gate."
@@ -142,6 +133,7 @@ def validate_roadmap_source_span_disposition_boundary(
         issues.append(_issue("claim_ready_overclaim", "ROADMAP source-span disposition boundary must not claim exhaustive coverage"))
     for key in (
         "source_boundary_input",
+        "implementation_evidence_map_input",
         "source_status_inventory_input",
         "disposition_record_count",
         "disposition_records",
@@ -150,6 +142,7 @@ def validate_roadmap_source_span_disposition_boundary(
         "paper_status_row_ids",
         "paper_status_row_dispositioned_count",
         "paper_status_row_disposition_status",
+        "completed_evidence",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current source-span inputs"))
@@ -158,7 +151,8 @@ def validate_roadmap_source_span_disposition_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim an exhaustive retained-PDF section walk" not in boundary_text
+        or "all 55 PDF-verified named AlphaEvolve structural spans" not in boundary_text
+        or "requirement-level exhaustiveness" not in boundary_text
         or "complete paper-index row to ROADMAP disposition map" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must separate core anchor dispositions from exhaustive source-span coverage"))
@@ -194,19 +188,28 @@ def render_roadmap_source_span_disposition_boundary_summary(
     return "\n".join(lines)
 
 
-def _disposition_record(requirement: dict[str, Any]) -> dict[str, Any]:
-    requirement_id = requirement["requirement_id"]
+def _disposition_record(span: dict[str, Any]) -> dict[str, Any]:
+    page_start = span["page_start"]
+    page_end = span["page_end"]
+    page_ref = str(page_start) if page_start == page_end else f"{page_start}-{page_end}"
     return {
-        "requirement_id": requirement_id,
-        "source_refs": list(requirement["source_refs"]),
-        "source_ref_count": len(requirement["source_refs"]),
-        "local_claim_status": requirement["claim_status"],
-        "roadmap_section_id": ROADMAP_SECTION_BY_REQUIREMENT[requirement_id],
-        "roadmap_phase": ROADMAP_PHASE_BY_REQUIREMENT[requirement_id],
-        "coverage_scope": requirement["coverage_scope"],
-        "sidecar_refs": list(requirement["sidecar_refs"]),
-        "todo_refs": list(requirement["todo_refs"]),
-        "disposition_status": "core_anchor_only_not_exhaustive_source_span",
+        "span_id": span["span_id"],
+        "source_kind": span["source_kind"],
+        "source_label": span["source_label"],
+        "source_refs": [f"2506.13131:pages {page_ref}"],
+        "source_ref_count": 1,
+        "source_anchor_count": len(span["anchor_checks"]),
+        "source_anchors_verified": span["all_anchors_present"],
+        "local_claim_status": span["local_status"],
+        "roadmap_section_id": span["roadmap_section_id"],
+        "roadmap_phase": span["roadmap_phase"],
+        "coverage_scope": "named_structure_span",
+        "sidecar_refs": [ref["path"] for ref in span["sidecar_refs"]],
+        "todo_refs": [
+            {"path": ref["path"], "required_phrase": ref["required_phrase"]}
+            for ref in span["active_todo_refs"]
+        ],
+        "disposition_status": "named_structure_disposition_only",
     }
 
 

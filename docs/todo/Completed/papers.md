@@ -4,6 +4,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory the AlphaEvolve paper's complete named structure.
+  - Paper evidence: the pinned 44-page PDF contains 38 named structural spans,
+    14 numbered figures, and 3 numbered tables; Figure 9 parts a-c are one
+    numbered figure spanning pages 35-37.
+  - Status: `papers/alphaevolve_source_inventory_boundary.json` records all 55
+    spans, 57 page-local anchor checks, PDF SHA-256/page-count identity, local
+    status, ROADMAP phase, sidecar existence, and active audit-TODO checks.
+  - Remaining guard: named structure is not sentence-, paragraph-, equation-,
+    footnote-, citation-, claim-, or result-row-level semantic coverage.
+  - Verification: source inventory and paper-manifest tests reject source,
+    span, anchor, reference, and parity-claim drift.
+
 - [x] Track Appendix B.1-B.3 paper-heading and constant-label evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Appendix B names the three
     sections `B.1. First autocorrelation inequality`, `B.2. Second

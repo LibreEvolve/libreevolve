@@ -907,8 +907,13 @@ AlphaEvolve reproduction.
   documentation-claim verification, and full AlphaEvolve-facing claim proof
   open.
 - Keep the code-audit completeness boundary explicit:
-  `papers/implementation_evidence_map_boundary.json` records core
-  AlphaEvolve requirement anchors with module, test, sidecar, and TODO links,
+  `papers/alphaevolve_source_inventory_boundary.json` records all 55 named
+  spans in the pinned 44-page AlphaEvolve PDF: 38 structural spans, 14 numbered
+  figures, and 3 numbered tables. Its 57 page-local anchors and referenced
+  sidecar/TODO paths are checked by the paper manifest.
+  `papers/implementation_evidence_map_boundary.json` records six corrected core
+  AlphaEvolve requirement anchors with 81 existence-checked source-span,
+  module, test, sidecar, and TODO references,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
@@ -920,7 +925,8 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is not an exhaustive source-span coverage matrix,
+  This is complete named-structure coverage, not a sentence-, paragraph-,
+  equation-, footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,
   absence-sentence freshness matrix, coverage detector, generated code-audit

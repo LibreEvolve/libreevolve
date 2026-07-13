@@ -163,9 +163,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/implementation_evidence_map_boundary.json`, which records core
     AlphaEvolve anchors for markers, evaluator cascades, LLM prompting,
     evolutionary database behavior, async/distributed topology, and published
-    benchmarks. `papers/roadmap_source_span_disposition_boundary.json` now
-    maps those six core anchors to ROADMAP section ids, phase buckets, local
-    status, sidecars, and TODO links, and records that only the AlphaEvolve
+    benchmarks. `papers/alphaevolve_source_inventory_boundary.json` now
+    verifies the pinned 44-page PDF and all 55 named spans using 57 page-local
+    anchors: 38 structural spans, 14 numbered figures, and 3 numbered tables.
+    `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
+    named spans to ROADMAP section ids, phase buckets, local status, sidecars,
+    and audit TODO links, and records that only the AlphaEvolve
     source row is dispositioned while the broader paper-index rows are not.
     `papers/README.md` and the Appendix A/B registries provide many
     source-specific status rows, but those records are not an exhaustive
@@ -175,25 +178,24 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     tables, Appendix A, Appendix B, application-result claims, paper-status
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
-    bounded eight-criterion exhaustiveness gate for PDF section walk,
+    bounded eight-criterion exhaustiveness gate that credits the named PDF
+    structure walk and preserves remaining claim-level work for the
     figure/table/appendix matrix, application-result claim matrix,
     status-row disposition map, span status classification, missing/partial
     TODO proof, phase-priority map, and CI/owner signoff.
-  - Current gap: the coverage sidecar is a bounded readiness matrix, not an
-    exhaustive ROADMAP-level matrix, and the exhaustiveness sidecar is a
-    bounded gate rather than a retained-PDF walk. There is still no matrix
-    that walks the retained AlphaEvolve source PDF by section, figure, table,
-    appendix, benchmark family, and application-result claim. It does not
-    classify each span as implemented, partially implemented, missing,
-    background-only, or non-goal, and it does not prove that every missing or
-    partial span has a linked code/paper/README TODO or ROADMAP priority.
-    There is also no detector for AlphaEvolve source spans beyond the current
-    six core anchors, or for all paper/status sidecar rows, that have no
-    roadmap disposition.
+  - Current gap: the retained PDF's named sections, figures, tables, and
+    appendices now have verified dispositions, local status classes, ROADMAP
+    sections, and phases. The matrix is not exhaustive below that named level:
+    it does not extract every sentence-, paragraph-, equation-, footnote-,
+    citation-, capability-, or result-claim span; prove domain-specific TODO
+    ownership for every missing or partial claim; provide a complete
+    application-result claim matrix; or disposition all paper/status sidecar
+    rows.
   - Required result: implement the missing readiness fields recorded by the
-    exhaustiveness sidecar: exhaustive PDF section walk, figure/table/appendix matrix,
-    application-result claim matrix, status-row to ROADMAP disposition map,
-    missing/partial TODO proof, non-goal decision map, phase-priority map, CI
+    exhaustiveness sidecar: claim-level requirement and figure/table/appendix
+    matrices, application-result claim matrix, status-row to ROADMAP
+    disposition map, domain-specific missing/partial TODO proof, non-goal
+    decision map, claim-level phase-priority map, CI
     source-span exhaustiveness gate, and owner review signoff.
 
 ## Existing Items That Need Tightening

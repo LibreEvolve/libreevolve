@@ -10,8 +10,8 @@
       "active_path": "docs/todo/code.md",
       "completed_path": "docs/todo/Completed/code.md",
       "active_count": 214,
-      "completed_count": 1256,
-      "total_count": 1470,
+      "completed_count": 1257,
+      "total_count": 1471,
       "active_ledger_completed_marker_count": 0,
       "completed_ledger_active_marker_count": 0,
       "active_ledger_exists": true,
@@ -23,8 +23,8 @@
       "active_path": "docs/todo/papers.md",
       "completed_path": "docs/todo/Completed/papers.md",
       "active_count": 243,
-      "completed_count": 1073,
-      "total_count": 1316,
+      "completed_count": 1074,
+      "total_count": 1317,
       "active_ledger_completed_marker_count": 0,
       "completed_ledger_active_marker_count": 0,
       "active_ledger_exists": true,
@@ -36,8 +36,8 @@
       "active_path": "docs/todo/readme.md",
       "completed_path": "docs/todo/Completed/readme.md",
       "active_count": 32,
-      "completed_count": 1196,
-      "total_count": 1228,
+      "completed_count": 1197,
+      "total_count": 1229,
       "active_ledger_completed_marker_count": 0,
       "completed_ledger_active_marker_count": 0,
       "active_ledger_exists": true,
@@ -49,8 +49,8 @@
       "active_path": "docs/todo/roadmap.md",
       "completed_path": "docs/todo/Completed/roadmap.md",
       "active_count": 16,
-      "completed_count": 1222,
-      "total_count": 1238,
+      "completed_count": 1223,
+      "total_count": 1239,
       "active_ledger_completed_marker_count": 0,
       "completed_ledger_active_marker_count": 0,
       "active_ledger_exists": true,
@@ -58,9 +58,9 @@
     }
   ],
   "raw_todo_ledger_active_count": 505,
-  "raw_todo_ledger_completed_count": 4747,
-  "raw_todo_ledger_total_count": 5252,
-  "raw_todo_ledger_completion_percent": 90.385,
+  "raw_todo_ledger_completed_count": 4751,
+  "raw_todo_ledger_total_count": 5256,
+  "raw_todo_ledger_completion_percent": 90.392,
   "active_ledger_completed_marker_count": 0,
   "completed_ledger_active_marker_count": 0,
   "marker_policy_status": "active_ledgers_unchecked_completed_ledgers_checked",
@@ -80,7 +80,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1717,
+          "line_start": 1730,
           "status": "completed",
           "title": "Add a bounded resurfacing index over existing candidate evidence.",
           "normalized_title": "add a bounded resurfacing index over existing candidate evidence"
@@ -89,7 +89,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1590,
+          "line_start": 1602,
           "status": "completed",
           "title": "Add a bounded resurfacing index over existing candidate evidence.",
           "normalized_title": "add a bounded resurfacing index over existing candidate evidence"
@@ -109,7 +109,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1701,
+          "line_start": 1714,
           "status": "completed",
           "title": "Add a runtime failure index grouped by failure fingerprint.",
           "normalized_title": "add a runtime failure index grouped by failure fingerprint"
@@ -118,7 +118,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1574,
+          "line_start": 1586,
           "status": "completed",
           "title": "Add a runtime failure index grouped by failure fingerprint.",
           "normalized_title": "add a runtime failure index grouped by failure fingerprint"
@@ -138,7 +138,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1684,
+          "line_start": 1697,
           "status": "completed",
           "title": "Add a runtime hypothesis index for captured proposal metadata.",
           "normalized_title": "add a runtime hypothesis index for captured proposal metadata"
@@ -147,7 +147,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1558,
+          "line_start": 1570,
           "status": "completed",
           "title": "Add a runtime hypothesis index for captured proposal metadata.",
           "normalized_title": "add a runtime hypothesis index for captured proposal metadata"
@@ -167,7 +167,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1871,
+          "line_start": 1884,
           "status": "completed",
           "title": "Add a runtime Pareto frontier diagnostic for declared objective metrics.",
           "normalized_title": "add a runtime pareto frontier diagnostic for declared objective metrics"
@@ -176,7 +176,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1717,
+          "line_start": 1729,
           "status": "completed",
           "title": "Add a runtime Pareto frontier diagnostic for declared objective metrics.",
           "normalized_title": "add a runtime pareto frontier diagnostic for declared objective metrics"
@@ -196,7 +196,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7404,
+          "line_start": 7414,
           "status": "completed",
           "title": "Add abnormal-run finalization to runtime manifests.",
           "normalized_title": "add abnormal run finalization to runtime manifests"
@@ -205,7 +205,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7935,
+          "line_start": 7945,
           "status": "completed",
           "title": "Add abnormal-run finalization to runtime manifests.",
           "normalized_title": "add abnormal run finalization to runtime manifests"
@@ -225,7 +225,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4758,
+          "line_start": 4768,
           "status": "completed",
           "title": "Add aggregate workspace syntax diagnostics to evaluator feedback work.",
           "normalized_title": "add aggregate workspace syntax diagnostics to evaluator feedback work"
@@ -234,7 +234,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7659,
+          "line_start": 7669,
           "status": "completed",
           "title": "Add aggregate workspace syntax diagnostics to evaluator feedback work.",
           "normalized_title": "add aggregate workspace syntax diagnostics to evaluator feedback work"
@@ -254,7 +254,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4502,
+          "line_start": 4515,
           "status": "completed",
           "title": "Add AlphaEvolve-style evolve-block markers.",
           "normalized_title": "add alphaevolve style evolve block markers"
@@ -263,7 +263,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7787,
+          "line_start": 7797,
           "status": "completed",
           "title": "Add AlphaEvolve-style evolve-block markers.",
           "normalized_title": "add alphaevolve style evolve block markers"
@@ -283,7 +283,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7425,
+          "line_start": 7435,
           "status": "completed",
           "title": "Add atomic manifest-write durability to runtime hardening.",
           "normalized_title": "add atomic manifest write durability to runtime hardening"
@@ -292,7 +292,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7955,
+          "line_start": 7965,
           "status": "completed",
           "title": "Add atomic manifest-write durability to runtime hardening.",
           "normalized_title": "add atomic manifest write durability to runtime hardening"
@@ -312,7 +312,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1789,
+          "line_start": 1802,
           "status": "completed",
           "title": "Add bounded metric-specific objective archive views.",
           "normalized_title": "add bounded metric specific objective archive views"
@@ -321,7 +321,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1652,
+          "line_start": 1664,
           "status": "completed",
           "title": "Add bounded metric-specific objective archive views.",
           "normalized_title": "add bounded metric specific objective archive views"
@@ -341,7 +341,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1734,
+          "line_start": 1747,
           "status": "completed",
           "title": "Add bounded Pareto archive retention to MAP-Elites.",
           "normalized_title": "add bounded pareto archive retention to map elites"
@@ -350,7 +350,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1606,
+          "line_start": 1618,
           "status": "completed",
           "title": "Add bounded Pareto archive retention to MAP-Elites.",
           "normalized_title": "add bounded pareto archive retention to map elites"
@@ -370,7 +370,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 3346,
+          "line_start": 3359,
           "status": "completed",
           "title": "Add bounded prompt-visible evaluator artifact content excerpts.",
           "normalized_title": "add bounded prompt visible evaluator artifact content excerpts"
@@ -379,7 +379,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1935,
+          "line_start": 1947,
           "status": "completed",
           "title": "Add bounded prompt-visible evaluator artifact content excerpts.",
           "normalized_title": "add bounded prompt visible evaluator artifact content excerpts"
@@ -398,7 +398,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 15448,
+          "line_start": 15458,
           "status": "completed",
           "title": "Add bounded ROADMAP evaluation-cascade readiness matrix.",
           "normalized_title": "add bounded roadmap evaluation cascade readiness matrix"
@@ -407,7 +407,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 15766,
+          "line_start": 15776,
           "status": "completed",
           "title": "Add bounded ROADMAP evaluation-cascade readiness matrix.",
           "normalized_title": "add bounded roadmap evaluation cascade readiness matrix"
@@ -427,7 +427,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4708,
+          "line_start": 4718,
           "status": "completed",
           "title": "Add candidate path-collision handling to candidate fidelity.",
           "normalized_title": "add candidate path collision handling to candidate fidelity"
@@ -436,7 +436,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6676,
+          "line_start": 6686,
           "status": "completed",
           "title": "Add candidate path-collision handling to candidate fidelity.",
           "normalized_title": "add candidate path collision handling to candidate fidelity"
@@ -456,7 +456,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7190,
+          "line_start": 7200,
           "status": "completed",
           "title": "Add CLI/config precedence semantics to runtime hardening.",
           "normalized_title": "add cli config precedence semantics to runtime hardening"
@@ -465,7 +465,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6385,
+          "line_start": 6395,
           "status": "completed",
           "title": "Add CLI/config precedence semantics to runtime hardening.",
           "normalized_title": "add cli config precedence semantics to runtime hardening"
@@ -485,7 +485,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7170,
+          "line_start": 7180,
           "status": "completed",
           "title": "Add CLI problem-load error normalization to operational maturity.",
           "normalized_title": "add cli problem load error normalization to operational maturity"
@@ -494,7 +494,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6330,
+          "line_start": 6340,
           "status": "completed",
           "title": "Add CLI problem-load error normalization to operational maturity.",
           "normalized_title": "add cli problem load error normalization to operational maturity"
@@ -514,7 +514,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7461,
+          "line_start": 7471,
           "status": "completed",
           "title": "Add configuration/schema validation to runtime hardening.",
           "normalized_title": "add configuration schema validation to runtime hardening"
@@ -523,7 +523,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6214,
+          "line_start": 6224,
           "status": "completed",
           "title": "Add configuration/schema validation to runtime hardening.",
           "normalized_title": "add configuration schema validation to runtime hardening"
@@ -543,7 +543,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5431,
+          "line_start": 5444,
           "status": "completed",
           "title": "Add context-source manifests, recursive selection, and provenance.",
           "normalized_title": "add context source manifests recursive selection and provenance"
@@ -552,7 +552,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4807,
+          "line_start": 4817,
           "status": "completed",
           "title": "Add context-source manifests, recursive selection, and provenance.",
           "normalized_title": "add context source manifests recursive selection and provenance"
@@ -572,7 +572,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5052,
+          "line_start": 5065,
           "status": "completed",
           "title": "Add direct full-code/full-block replacement mode in addition to diffs.",
           "normalized_title": "add direct full code full block replacement mode in addition to diffs"
@@ -581,7 +581,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7163,
+          "line_start": 7173,
           "status": "completed",
           "title": "Add direct full-code/full-block replacement mode in addition to diffs.",
           "normalized_title": "add direct full code full block replacement mode in addition to diffs"
@@ -601,7 +601,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 5423,
+          "line_start": 5433,
           "status": "completed",
           "title": "Add evaluate-only/seed-baseline mode to runtime work.",
           "normalized_title": "add evaluate only seed baseline mode to runtime work"
@@ -610,7 +610,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7815,
+          "line_start": 7825,
           "status": "completed",
           "title": "Add evaluate-only/seed-baseline mode to runtime work.",
           "normalized_title": "add evaluate only seed baseline mode to runtime work"
@@ -630,7 +630,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4969,
+          "line_start": 4979,
           "status": "completed",
           "title": "Add file-section path grammar hardening to candidate fidelity.",
           "normalized_title": "add file section path grammar hardening to candidate fidelity"
@@ -639,7 +639,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6634,
+          "line_start": 6644,
           "status": "completed",
           "title": "Add file-section path grammar hardening to candidate fidelity.",
           "normalized_title": "add file section path grammar hardening to candidate fidelity"
@@ -659,7 +659,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5417,
+          "line_start": 5430,
           "status": "completed",
           "title": "Add first-class literature/context ingestion.",
           "normalized_title": "add first class literature context ingestion"
@@ -668,7 +668,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4792,
+          "line_start": 4802,
           "status": "completed",
           "title": "Add first-class literature/context ingestion.",
           "normalized_title": "add first class literature context ingestion"
@@ -688,7 +688,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 8926,
+          "line_start": 8939,
           "status": "completed",
           "title": "Add first run-level rendered prompt character budget.",
           "normalized_title": "add first run level rendered prompt character budget"
@@ -697,7 +697,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 9992,
+          "line_start": 10002,
           "status": "completed",
           "title": "Add first run-level rendered prompt character budget.",
           "normalized_title": "add first run level rendered prompt character budget"
@@ -717,7 +717,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5042,
+          "line_start": 5055,
           "status": "completed",
           "title": "Add language-agnostic candidate support or narrow the claim to Python.",
           "normalized_title": "add language agnostic candidate support or narrow the claim to python"
@@ -726,7 +726,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7152,
+          "line_start": 7162,
           "status": "completed",
           "title": "Add language-agnostic candidate support or narrow the claim to Python.",
           "normalized_title": "add language agnostic candidate support or narrow the claim to python"
@@ -746,7 +746,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 6962,
+          "line_start": 6972,
           "status": "completed",
           "title": "Add live retrieval provenance to prompt/plugin context work.",
           "normalized_title": "add live retrieval provenance to prompt plugin context work"
@@ -755,7 +755,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7222,
+          "line_start": 7232,
           "status": "completed",
           "title": "Add live retrieval provenance to prompt/plugin context work.",
           "normalized_title": "add live retrieval provenance to prompt plugin context work"
@@ -775,7 +775,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7467,
+          "line_start": 7477,
           "status": "completed",
           "title": "Add LLM backend preflight ordering to runtime/artifact safety.",
           "normalized_title": "add llm backend preflight ordering to runtime artifact safety"
@@ -784,7 +784,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7798,
+          "line_start": 7808,
           "status": "completed",
           "title": "Add LLM backend preflight ordering to runtime/artifact safety.",
           "normalized_title": "add llm backend preflight ordering to runtime artifact safety"
@@ -804,7 +804,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5975,
+          "line_start": 5988,
           "status": "completed",
           "title": "Add LLM-generated feedback as an optional evaluation signal.",
           "normalized_title": "add llm generated feedback as an optional evaluation signal"
@@ -813,7 +813,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7306,
+          "line_start": 7316,
           "status": "completed",
           "title": "Add LLM-generated feedback as an optional evaluation signal.",
           "normalized_title": "add llm generated feedback as an optional evaluation signal"
@@ -833,7 +833,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4729,
+          "line_start": 4739,
           "status": "completed",
           "title": "Add mutation-envelope diagnostics for partial parses.",
           "normalized_title": "add mutation envelope diagnostics for partial parses"
@@ -842,7 +842,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6689,
+          "line_start": 6699,
           "status": "completed",
           "title": "Add mutation-envelope diagnostics for partial parses.",
           "normalized_title": "add mutation envelope diagnostics for partial parses"
@@ -862,7 +862,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4981,
+          "line_start": 4991,
           "status": "completed",
           "title": "Add normalized LLM call telemetry to backend scheduling work.",
           "normalized_title": "add normalized llm call telemetry to backend scheduling work"
@@ -871,7 +871,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7515,
+          "line_start": 7525,
           "status": "completed",
           "title": "Add normalized LLM call telemetry to backend scheduling work.",
           "normalized_title": "add normalized llm call telemetry to backend scheduling work"
@@ -891,7 +891,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1807,
+          "line_start": 1820,
           "status": "completed",
           "title": "Add Pareto-frontier parent and inspiration sampling.",
           "normalized_title": "add pareto frontier parent and inspiration sampling"
@@ -900,7 +900,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1669,
+          "line_start": 1681,
           "status": "completed",
           "title": "Add Pareto-frontier parent and inspiration sampling.",
           "normalized_title": "add pareto frontier parent and inspiration sampling"
@@ -920,7 +920,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7340,
+          "line_start": 7350,
           "status": "completed",
           "title": "Add run-directory path confinement to runtime hardening.",
           "normalized_title": "add run directory path confinement to runtime hardening"
@@ -929,7 +929,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6525,
+          "line_start": 6535,
           "status": "completed",
           "title": "Add run-directory path confinement to runtime hardening.",
           "normalized_title": "add run directory path confinement to runtime hardening"
@@ -949,7 +949,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7037,
+          "line_start": 7047,
           "status": "completed",
           "title": "Add run-wide compute-budget accounting to runtime work.",
           "normalized_title": "add run wide compute budget accounting to runtime work"
@@ -958,7 +958,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7915,
+          "line_start": 7925,
           "status": "completed",
           "title": "Add run-wide compute-budget accounting to runtime work.",
           "normalized_title": "add run wide compute budget accounting to runtime work"
@@ -978,7 +978,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7657,
+          "line_start": 7667,
           "status": "completed",
           "title": "Add seed/proposal source markers to prompt-history traceability.",
           "normalized_title": "add seed proposal source markers to prompt history traceability"
@@ -987,7 +987,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7326,
+          "line_start": 7336,
           "status": "completed",
           "title": "Add seed/proposal source markers to prompt-history traceability.",
           "normalized_title": "add seed proposal source markers to prompt history traceability"
@@ -1007,7 +1007,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1850,
+          "line_start": 1863,
           "status": "completed",
           "title": "Add structured prompt-program context policy hooks.",
           "normalized_title": "add structured prompt program context policy hooks"
@@ -1016,7 +1016,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1701,
+          "line_start": 1713,
           "status": "completed",
           "title": "Add structured prompt-program context policy hooks.",
           "normalized_title": "add structured prompt program context policy hooks"
@@ -1036,7 +1036,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 6392,
+          "line_start": 6405,
           "status": "completed",
           "title": "Add structured run metadata.",
           "normalized_title": "add structured run metadata"
@@ -1045,7 +1045,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7387,
+          "line_start": 7397,
           "status": "completed",
           "title": "Add structured run metadata.",
           "normalized_title": "add structured run metadata"
@@ -1065,7 +1065,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7356,
+          "line_start": 7366,
           "status": "completed",
           "title": "Add validity/archive-aware run inspection to operational work.",
           "normalized_title": "add validity archive aware run inspection to operational work"
@@ -1074,7 +1074,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 7621,
+          "line_start": 7631,
           "status": "completed",
           "title": "Add validity/archive-aware run inspection to operational work.",
           "normalized_title": "add validity archive aware run inspection to operational work"
@@ -1094,7 +1094,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1752,
+          "line_start": 1765,
           "status": "completed",
           "title": "Allow declared final-fitness objective metrics.",
           "normalized_title": "allow declared final fitness objective metrics"
@@ -1103,7 +1103,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1621,
+          "line_start": 1633,
           "status": "completed",
           "title": "Allow declared final-fitness objective metrics.",
           "normalized_title": "allow declared final fitness objective metrics"
@@ -1123,7 +1123,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1771,
+          "line_start": 1784,
           "status": "completed",
           "title": "Allow declared plugin-sourced objective metrics.",
           "normalized_title": "allow declared plugin sourced objective metrics"
@@ -1132,7 +1132,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1637,
+          "line_start": 1649,
           "status": "completed",
           "title": "Allow declared plugin-sourced objective metrics.",
           "normalized_title": "allow declared plugin sourced objective metrics"
@@ -1152,7 +1152,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 6499,
+          "line_start": 6512,
           "status": "completed",
           "title": "Allow seed-only and evaluation-only runs without constructing LLM",
           "normalized_title": "allow seed only and evaluation only runs without constructing llm"
@@ -1161,7 +1161,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 5416,
+          "line_start": 5426,
           "status": "completed",
           "title": "Allow seed-only and evaluation-only runs without constructing LLM",
           "normalized_title": "allow seed only and evaluation only runs without constructing llm"
@@ -1181,7 +1181,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1889,
+          "line_start": 1902,
           "status": "completed",
           "title": "Apply restored runtime budget snapshots to live resumed runs.",
           "normalized_title": "apply restored runtime budget snapshots to live resumed runs"
@@ -1190,7 +1190,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1734,
+          "line_start": 1746,
           "status": "completed",
           "title": "Apply restored runtime budget snapshots to live resumed runs.",
           "normalized_title": "apply restored runtime budget snapshots to live resumed runs"
@@ -1210,7 +1210,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5843,
+          "line_start": 5856,
           "status": "completed",
           "title": "Capture validator-generated artifacts before temporary workspaces are",
           "normalized_title": "capture validator generated artifacts before temporary workspaces are"
@@ -1219,7 +1219,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 6977,
+          "line_start": 6987,
           "status": "completed",
           "title": "Capture validator-generated artifacts before temporary workspaces are",
           "normalized_title": "capture validator generated artifacts before temporary workspaces are"
@@ -1239,7 +1239,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 6297,
+          "line_start": 6310,
           "status": "completed",
           "title": "Constrain run artifact paths to the configured log root.",
           "normalized_title": "constrain run artifact paths to the configured log root"
@@ -1248,7 +1248,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7324,
+          "line_start": 7334,
           "status": "completed",
           "title": "Constrain run artifact paths to the configured log root.",
           "normalized_title": "constrain run artifact paths to the configured log root"
@@ -1268,7 +1268,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 4000,
+          "line_start": 4012,
           "status": "completed",
           "title": "Decide and document the paper corpus source of truth.",
           "normalized_title": "decide and document the paper corpus source of truth"
@@ -1277,7 +1277,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7485,
+          "line_start": 7495,
           "status": "completed",
           "title": "Decide and document the paper corpus source of truth.",
           "normalized_title": "decide and document the paper corpus source of truth"
@@ -1297,7 +1297,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5286,
+          "line_start": 5299,
           "status": "completed",
           "title": "Define prompt-program reward normalization and selection policy.",
           "normalized_title": "define prompt program reward normalization and selection policy"
@@ -1306,7 +1306,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4874,
+          "line_start": 4884,
           "status": "completed",
           "title": "Define prompt-program reward normalization and selection policy.",
           "normalized_title": "define prompt program reward normalization and selection policy"
@@ -1326,7 +1326,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 6325,
+          "line_start": 6338,
           "status": "completed",
           "title": "Define run-directory collision and append semantics.",
           "normalized_title": "define run directory collision and append semantics"
@@ -1335,7 +1335,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4772,
+          "line_start": 4782,
           "status": "completed",
           "title": "Define run-directory collision and append semantics.",
           "normalized_title": "define run directory collision and append semantics"
@@ -1355,7 +1355,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4789,
+          "line_start": 4802,
           "status": "completed",
           "title": "Detect normalized-path and host-filesystem path collisions.",
           "normalized_title": "detect normalized path and host filesystem path collisions"
@@ -1364,7 +1364,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4961,
+          "line_start": 4971,
           "status": "completed",
           "title": "Detect normalized-path and host-filesystem path collisions.",
           "normalized_title": "detect normalized path and host filesystem path collisions"
@@ -1384,7 +1384,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2080,
+          "line_start": 2090,
           "status": "completed",
           "title": "Document committed AlphaEvolve companion Colab source manifest.",
           "normalized_title": "document committed alphaevolve companion colab source manifest"
@@ -1393,7 +1393,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5087,
+          "line_start": 5097,
           "status": "completed",
           "title": "Document committed AlphaEvolve companion Colab source manifest.",
           "normalized_title": "document committed alphaevolve companion colab source manifest"
@@ -1413,7 +1413,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2044,
+          "line_start": 2054,
           "status": "completed",
           "title": "Document committed follow-on AlphaEvolve math-source manifest.",
           "normalized_title": "document committed follow on alphaevolve math source manifest"
@@ -1422,7 +1422,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5052,
+          "line_start": 5062,
           "status": "completed",
           "title": "Document committed follow-on AlphaEvolve math-source manifest.",
           "normalized_title": "document committed follow on alphaevolve math source manifest"
@@ -1442,7 +1442,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2069,
+          "line_start": 2079,
           "status": "completed",
           "title": "Document companion notebook selection-scope provenance.",
           "normalized_title": "document companion notebook selection scope provenance"
@@ -1451,7 +1451,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5077,
+          "line_start": 5087,
           "status": "completed",
           "title": "Document companion notebook selection-scope provenance.",
           "normalized_title": "document companion notebook selection scope provenance"
@@ -1471,7 +1471,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2058,
+          "line_start": 2068,
           "status": "completed",
           "title": "Document companion repository rights rows on generated artifacts.",
           "normalized_title": "document companion repository rights rows on generated artifacts"
@@ -1480,7 +1480,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5066,
+          "line_start": 5076,
           "status": "completed",
           "title": "Document companion repository rights rows on generated artifacts.",
           "normalized_title": "document companion repository rights rows on generated artifacts"
@@ -1500,7 +1500,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2160,
+          "line_start": 2170,
           "status": "completed",
           "title": "Document evolve-block inner span mapping in prompt-current binding",
           "normalized_title": "document evolve block inner span mapping in prompt current binding"
@@ -1509,7 +1509,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5166,
+          "line_start": 5176,
           "status": "completed",
           "title": "Document evolve-block inner span mapping in prompt-current binding",
           "normalized_title": "document evolve block inner span mapping in prompt current binding"
@@ -1529,7 +1529,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 12973,
+          "line_start": 12983,
           "status": "completed",
           "title": "Document Figure 3 marker source artifacts and final classification in",
           "normalized_title": "document figure 3 marker source artifacts and final classification in"
@@ -1538,7 +1538,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 13385,
+          "line_start": 13395,
           "status": "completed",
           "title": "Document Figure 3 marker source artifacts and final classification in",
           "normalized_title": "document figure 3 marker source artifacts and final classification in"
@@ -1558,7 +1558,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2136,
+          "line_start": 2146,
           "status": "completed",
           "title": "Document full-mode target span and block-id records in prompt-current",
           "normalized_title": "document full mode target span and block id records in prompt current"
@@ -1567,7 +1567,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5140,
+          "line_start": 5150,
           "status": "completed",
           "title": "Document full-mode target span and block-id records in prompt-current",
           "normalized_title": "document full mode target span and block id records in prompt current"
@@ -1587,7 +1587,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2144,
+          "line_start": 2154,
           "status": "completed",
           "title": "Document prompt-history row joins in prompt-current binding evidence.",
           "normalized_title": "document prompt history row joins in prompt current binding evidence"
@@ -1596,7 +1596,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5149,
+          "line_start": 5159,
           "status": "completed",
           "title": "Document prompt-history row joins in prompt-current binding evidence.",
           "normalized_title": "document prompt history row joins in prompt current binding evidence"
@@ -1616,7 +1616,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 12897,
+          "line_start": 12907,
           "status": "completed",
           "title": "Document the Appendix A matrix suite publication-artifact boundary in",
           "normalized_title": "document the appendix a matrix suite publication artifact boundary in"
@@ -1625,7 +1625,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 13312,
+          "line_start": 13322,
           "status": "completed",
           "title": "Document the Appendix A matrix suite publication-artifact boundary in",
           "normalized_title": "document the appendix a matrix suite publication artifact boundary in"
@@ -1645,7 +1645,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 12876,
+          "line_start": 12886,
           "status": "completed",
           "title": "Document the Figure 4 matrix-discovery artifact and lineage boundary in",
           "normalized_title": "document the figure 4 matrix discovery artifact and lineage boundary in"
@@ -1654,7 +1654,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 13291,
+          "line_start": 13301,
           "status": "completed",
           "title": "Document the Figure 4 matrix-discovery artifact and lineage boundary in",
           "normalized_title": "document the figure 4 matrix discovery artifact and lineage boundary in"
@@ -1674,7 +1674,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 12704,
+          "line_start": 12714,
           "status": "completed",
           "title": "Document the local Appendix A matrix resource-frontier absence boundary",
           "normalized_title": "document the local appendix a matrix resource frontier absence boundary"
@@ -1683,7 +1683,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 13149,
+          "line_start": 13159,
           "status": "completed",
           "title": "Document the local Appendix A matrix resource-frontier absence boundary",
           "normalized_title": "document the local appendix a matrix resource frontier absence boundary"
@@ -1703,7 +1703,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 4254,
+          "line_start": 4266,
           "status": "completed",
           "title": "Document the MAP-Elites boundary as fixed local quality-diversity search.",
           "normalized_title": "document the map elites boundary as fixed local quality diversity search"
@@ -1712,7 +1712,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4997,
+          "line_start": 5007,
           "status": "completed",
           "title": "Document the MAP-Elites boundary as fixed local quality-diversity search.",
           "normalized_title": "document the map elites boundary as fixed local quality diversity search"
@@ -1732,7 +1732,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 2151,
+          "line_start": 2161,
           "status": "completed",
           "title": "Document workspace file-section span records in prompt-current binding",
           "normalized_title": "document workspace file section span records in prompt current binding"
@@ -1741,7 +1741,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 5157,
+          "line_start": 5167,
           "status": "completed",
           "title": "Document workspace file-section span records in prompt-current binding",
           "normalized_title": "document workspace file section span records in prompt current binding"
@@ -1761,7 +1761,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 945,
+          "line_start": 958,
           "status": "completed",
           "title": "Emit Appendix A matrix baseline-citation sidecar.",
           "normalized_title": "emit appendix a matrix baseline citation sidecar"
@@ -1770,7 +1770,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 889,
+          "line_start": 901,
           "status": "completed",
           "title": "Emit Appendix A matrix baseline-citation sidecar.",
           "normalized_title": "emit appendix a matrix baseline citation sidecar"
@@ -1790,7 +1790,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 882,
+          "line_start": 895,
           "status": "completed",
           "title": "Emit Appendix A matrix resource-frontier sidecars.",
           "normalized_title": "emit appendix a matrix resource frontier sidecars"
@@ -1799,7 +1799,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 832,
+          "line_start": 844,
           "status": "completed",
           "title": "Emit Appendix A matrix resource-frontier sidecars.",
           "normalized_title": "emit appendix a matrix resource frontier sidecars"
@@ -1819,7 +1819,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1018,
+          "line_start": 1031,
           "status": "completed",
           "title": "Emit Appendix A matrix row-note caveat artifact sidecar.",
           "normalized_title": "emit appendix a matrix row note caveat artifact sidecar"
@@ -1828,7 +1828,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 958,
+          "line_start": 970,
           "status": "completed",
           "title": "Emit Appendix A matrix row-note caveat artifact sidecar.",
           "normalized_title": "emit appendix a matrix row note caveat artifact sidecar"
@@ -1848,7 +1848,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 1001,
+          "line_start": 1014,
           "status": "completed",
           "title": "Emit Appendix A matrix subset-scope artifact sidecar.",
           "normalized_title": "emit appendix a matrix subset scope artifact sidecar"
@@ -1857,7 +1857,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 941,
+          "line_start": 953,
           "status": "completed",
           "title": "Emit Appendix A matrix subset-scope artifact sidecar.",
           "normalized_title": "emit appendix a matrix subset scope artifact sidecar"
@@ -1877,7 +1877,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 904,
+          "line_start": 917,
           "status": "completed",
           "title": "Emit Appendix A matrix target-suite curation sidecars.",
           "normalized_title": "emit appendix a matrix target suite curation sidecars"
@@ -1886,7 +1886,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 852,
+          "line_start": 864,
           "status": "completed",
           "title": "Emit Appendix A matrix target-suite curation sidecars.",
           "normalized_title": "emit appendix a matrix target suite curation sidecars"
@@ -1906,7 +1906,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 599,
+          "line_start": 612,
           "status": "completed",
           "title": "Emit candidate-abstraction and bias-evidence boundary sidecar.",
           "normalized_title": "emit candidate abstraction and bias evidence boundary sidecar"
@@ -1915,7 +1915,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 581,
+          "line_start": 593,
           "status": "completed",
           "title": "Emit candidate-abstraction and bias-evidence boundary sidecar.",
           "normalized_title": "emit candidate abstraction and bias evidence boundary sidecar"
@@ -1935,7 +1935,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 482,
+          "line_start": 495,
           "status": "completed",
           "title": "Emit candidate language/build runner boundary sidecar.",
           "normalized_title": "emit candidate language build runner boundary sidecar"
@@ -1944,7 +1944,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 468,
+          "line_start": 480,
           "status": "completed",
           "title": "Emit candidate language/build runner boundary sidecar.",
           "normalized_title": "emit candidate language build runner boundary sidecar"
@@ -1964,7 +1964,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 540,
+          "line_start": 553,
           "status": "completed",
           "title": "Emit controller backtracking policy boundary sidecar.",
           "normalized_title": "emit controller backtracking policy boundary sidecar"
@@ -1973,7 +1973,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 526,
+          "line_start": 538,
           "status": "completed",
           "title": "Emit controller backtracking policy boundary sidecar.",
           "normalized_title": "emit controller backtracking policy boundary sidecar"
@@ -1993,7 +1993,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 463,
+          "line_start": 476,
           "status": "completed",
           "title": "Emit embedded evaluator Figure 3 boundary sidecar.",
           "normalized_title": "emit embedded evaluator figure 3 boundary sidecar"
@@ -2002,7 +2002,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 449,
+          "line_start": 461,
           "status": "completed",
           "title": "Emit embedded evaluator Figure 3 boundary sidecar.",
           "normalized_title": "emit embedded evaluator figure 3 boundary sidecar"
@@ -2022,7 +2022,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 559,
+          "line_start": 572,
           "status": "completed",
           "title": "Emit evaluation-cascade efficiency boundary sidecar.",
           "normalized_title": "emit evaluation cascade efficiency boundary sidecar"
@@ -2031,7 +2031,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 543,
+          "line_start": 555,
           "status": "completed",
           "title": "Emit evaluation-cascade efficiency boundary sidecar.",
           "normalized_title": "emit evaluation cascade efficiency boundary sidecar"
@@ -2051,7 +2051,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 620,
+          "line_start": 633,
           "status": "completed",
           "title": "Emit existing-codebase source-setup boundary sidecar.",
           "normalized_title": "emit existing codebase source setup boundary sidecar"
@@ -2060,7 +2060,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 600,
+          "line_start": 612,
           "status": "completed",
           "title": "Emit existing-codebase source-setup boundary sidecar.",
           "normalized_title": "emit existing codebase source setup boundary sidecar"
@@ -2080,7 +2080,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 442,
+          "line_start": 455,
           "status": "completed",
           "title": "Emit Figure 1/Figure 2 process-exhibit boundary sidecar.",
           "normalized_title": "emit figure 1 figure 2 process exhibit boundary sidecar"
@@ -2089,7 +2089,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 431,
+          "line_start": 443,
           "status": "completed",
           "title": "Emit Figure 1/Figure 2 process-exhibit boundary sidecar.",
           "normalized_title": "emit figure 1 figure 2 process exhibit boundary sidecar"
@@ -2109,7 +2109,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 718,
+          "line_start": 731,
           "status": "completed",
           "title": "Emit Figure 4 matrix-discovery artifact sidecar.",
           "normalized_title": "emit figure 4 matrix discovery artifact sidecar"
@@ -2118,7 +2118,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 692,
+          "line_start": 704,
           "status": "completed",
           "title": "Emit Figure 4 matrix-discovery artifact sidecar.",
           "normalized_title": "emit figure 4 matrix discovery artifact sidecar"
@@ -2138,7 +2138,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 641,
+          "line_start": 654,
           "status": "completed",
           "title": "Emit Figure 8 ablation-curve artifact sidecar.",
           "normalized_title": "emit figure 8 ablation curve artifact sidecar"
@@ -2147,7 +2147,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 619,
+          "line_start": 631,
           "status": "completed",
           "title": "Emit Figure 8 ablation-curve artifact sidecar.",
           "normalized_title": "emit figure 8 ablation curve artifact sidecar"
@@ -2167,7 +2167,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 738,
+          "line_start": 751,
           "status": "completed",
           "title": "Emit Figure 9 matrix-diff artifact sidecar.",
           "normalized_title": "emit figure 9 matrix diff artifact sidecar"
@@ -2176,7 +2176,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 710,
+          "line_start": 722,
           "status": "completed",
           "title": "Emit Figure 9 matrix-diff artifact sidecar.",
           "normalized_title": "emit figure 9 matrix diff artifact sidecar"
@@ -2196,7 +2196,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 504,
+          "line_start": 517,
           "status": "completed",
           "title": "Emit independent evaluator-oracle boundary sidecar.",
           "normalized_title": "emit independent evaluator oracle boundary sidecar"
@@ -2205,7 +2205,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 490,
+          "line_start": 502,
           "status": "completed",
           "title": "Emit independent evaluator-oracle boundary sidecar.",
           "normalized_title": "emit independent evaluator oracle boundary sidecar"
@@ -2225,7 +2225,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 861,
+          "line_start": 874,
           "status": "completed",
           "title": "Emit matrix baseline-component runtime boundary sidecar.",
           "normalized_title": "emit matrix baseline component runtime boundary sidecar"
@@ -2234,7 +2234,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 816,
+          "line_start": 828,
           "status": "completed",
           "title": "Emit matrix baseline-component runtime boundary sidecar.",
           "normalized_title": "emit matrix baseline component runtime boundary sidecar"
@@ -2254,7 +2254,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 841,
+          "line_start": 854,
           "status": "completed",
           "title": "Emit matrix cascade-run runtime boundary sidecar.",
           "normalized_title": "emit matrix cascade run runtime boundary sidecar"
@@ -2263,7 +2263,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 800,
+          "line_start": 812,
           "status": "completed",
           "title": "Emit matrix cascade-run runtime boundary sidecar.",
           "normalized_title": "emit matrix cascade run runtime boundary sidecar"
@@ -2283,7 +2283,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 963,
+          "line_start": 976,
           "status": "completed",
           "title": "Emit matrix headline historicity artifact sidecar.",
           "normalized_title": "emit matrix headline historicity artifact sidecar"
@@ -2292,7 +2292,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 905,
+          "line_start": 917,
           "status": "completed",
           "title": "Emit matrix headline historicity artifact sidecar.",
           "normalized_title": "emit matrix headline historicity artifact sidecar"
@@ -2312,7 +2312,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 820,
+          "line_start": 833,
           "status": "completed",
           "title": "Emit matrix near-integrality runtime boundary sidecar.",
           "normalized_title": "emit matrix near integrality runtime boundary sidecar"
@@ -2321,7 +2321,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 783,
+          "line_start": 795,
           "status": "completed",
           "title": "Emit matrix near-integrality runtime boundary sidecar.",
           "normalized_title": "emit matrix near integrality runtime boundary sidecar"
@@ -2341,7 +2341,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 801,
+          "line_start": 814,
           "status": "completed",
           "title": "Emit matrix scalar-field runtime boundary sidecar.",
           "normalized_title": "emit matrix scalar field runtime boundary sidecar"
@@ -2350,7 +2350,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 765,
+          "line_start": 777,
           "status": "completed",
           "title": "Emit matrix scalar-field runtime boundary sidecar.",
           "normalized_title": "emit matrix scalar field runtime boundary sidecar"
@@ -2370,7 +2370,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 698,
+          "line_start": 711,
           "status": "completed",
           "title": "Emit matrix suite publication-artifact sidecar.",
           "normalized_title": "emit matrix suite publication artifact sidecar"
@@ -2379,7 +2379,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 674,
+          "line_start": 686,
           "status": "completed",
           "title": "Emit matrix suite publication-artifact sidecar.",
           "normalized_title": "emit matrix suite publication artifact sidecar"
@@ -2399,7 +2399,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 780,
+          "line_start": 793,
           "status": "completed",
           "title": "Emit matrix sweep-space runtime boundary sidecar.",
           "normalized_title": "emit matrix sweep space runtime boundary sidecar"
@@ -2408,7 +2408,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 747,
+          "line_start": 759,
           "status": "completed",
           "title": "Emit matrix sweep-space runtime boundary sidecar.",
           "normalized_title": "emit matrix sweep space runtime boundary sidecar"
@@ -2428,7 +2428,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 759,
+          "line_start": 772,
           "status": "completed",
           "title": "Emit matrix tensor-rank runtime boundary sidecar.",
           "normalized_title": "emit matrix tensor rank runtime boundary sidecar"
@@ -2437,7 +2437,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 728,
+          "line_start": 740,
           "status": "completed",
           "title": "Emit matrix tensor-rank runtime boundary sidecar.",
           "normalized_title": "emit matrix tensor rank runtime boundary sidecar"
@@ -2457,7 +2457,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 927,
+          "line_start": 940,
           "status": "completed",
           "title": "Emit paper artifact-role/linkage sidecars.",
           "normalized_title": "emit paper artifact role linkage sidecars"
@@ -2466,7 +2466,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 871,
+          "line_start": 883,
           "status": "completed",
           "title": "Emit paper artifact-role/linkage sidecars.",
           "normalized_title": "emit paper artifact role linkage sidecars"
@@ -2486,7 +2486,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 579,
+          "line_start": 592,
           "status": "completed",
           "title": "Emit proposal lifecycle independent-audit boundary sidecar.",
           "normalized_title": "emit proposal lifecycle independent audit boundary sidecar"
@@ -2495,7 +2495,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 561,
+          "line_start": 573,
           "status": "completed",
           "title": "Emit proposal lifecycle independent-audit boundary sidecar.",
           "normalized_title": "emit proposal lifecycle independent audit boundary sidecar"
@@ -2515,7 +2515,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 659,
+          "line_start": 672,
           "status": "completed",
           "title": "Emit Section 3.2 constructive-math boundary sidecars.",
           "normalized_title": "emit section 3 2 constructive math boundary sidecars"
@@ -2524,7 +2524,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 636,
+          "line_start": 648,
           "status": "completed",
           "title": "Emit Section 3.2 constructive-math boundary sidecars.",
           "normalized_title": "emit section 3 2 constructive math boundary sidecars"
@@ -2544,7 +2544,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 681,
+          "line_start": 694,
           "status": "completed",
           "title": "Emit shipped-example benchmark scope sidecar.",
           "normalized_title": "emit shipped example benchmark scope sidecar"
@@ -2553,7 +2553,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 656,
+          "line_start": 668,
           "status": "completed",
           "title": "Emit shipped-example benchmark scope sidecar.",
           "normalized_title": "emit shipped example benchmark scope sidecar"
@@ -2573,7 +2573,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 981,
+          "line_start": 994,
           "status": "completed",
           "title": "Emit Table 2/Table 3 matrix-rank table artifact sidecar.",
           "normalized_title": "emit table 2 table 3 matrix rank table artifact sidecar"
@@ -2582,7 +2582,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 923,
+          "line_start": 935,
           "status": "completed",
           "title": "Emit Table 2/Table 3 matrix-rank table artifact sidecar.",
           "normalized_title": "emit table 2 table 3 matrix rank table artifact sidecar"
@@ -2602,7 +2602,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5656,
+          "line_start": 5669,
           "status": "completed",
           "title": "Enforce evaluator scalar outputs against declared metrics.",
           "normalized_title": "enforce evaluator scalar outputs against declared metrics"
@@ -2611,7 +2611,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7227,
+          "line_start": 7237,
           "status": "completed",
           "title": "Enforce evaluator scalar outputs against declared metrics.",
           "normalized_title": "enforce evaluator scalar outputs against declared metrics"
@@ -2631,7 +2631,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3581,
+          "line_start": 3593,
           "status": "completed",
           "title": "Enforce typed validity at the validated database-admission boundary.",
           "normalized_title": "enforce typed validity at the validated database admission boundary"
@@ -2640,7 +2640,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7257,
+          "line_start": 7267,
           "status": "completed",
           "title": "Enforce typed validity at the validated database-admission boundary.",
           "normalized_title": "enforce typed validity at the validated database admission boundary"
@@ -2660,7 +2660,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3683,
+          "line_start": 3695,
           "status": "completed",
           "title": "Failed-trial and rejected-mutation memory.",
           "normalized_title": "failed trial and rejected mutation memory"
@@ -2669,7 +2669,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4769,
+          "line_start": 4779,
           "status": "completed",
           "title": "Failed-trial and rejected-mutation memory.",
           "normalized_title": "failed trial and rejected mutation memory"
@@ -2689,7 +2689,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5251,
+          "line_start": 5264,
           "status": "completed",
           "title": "Implement meta-prompt evolution.",
           "normalized_title": "implement meta prompt evolution"
@@ -2698,7 +2698,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4858,
+          "line_start": 4868,
           "status": "completed",
           "title": "Implement meta-prompt evolution.",
           "normalized_title": "implement meta prompt evolution"
@@ -2718,7 +2718,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 3331,
+          "line_start": 3344,
           "status": "completed",
           "title": "Link provider cancellation policy rules to required artifact kinds.",
           "normalized_title": "link provider cancellation policy rules to required artifact kinds"
@@ -2727,7 +2727,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1922,
+          "line_start": 1934,
           "status": "completed",
           "title": "Link provider cancellation policy rules to required artifact kinds.",
           "normalized_title": "link provider cancellation policy rules to required artifact kinds"
@@ -2747,7 +2747,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4584,
+          "line_start": 4597,
           "status": "completed",
           "title": "Make evolve-block marker matching exact rather than prefix-based.",
           "normalized_title": "make evolve block marker matching exact rather than prefix based"
@@ -2756,7 +2756,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7843,
+          "line_start": 7853,
           "status": "completed",
           "title": "Make evolve-block marker matching exact rather than prefix-based.",
           "normalized_title": "make evolve block marker matching exact rather than prefix based"
@@ -2776,7 +2776,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3815,
+          "line_start": 3827,
           "status": "completed",
           "title": "Meta-prompt evolution.",
           "normalized_title": "meta prompt evolution"
@@ -2785,7 +2785,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4915,
+          "line_start": 4925,
           "status": "completed",
           "title": "Meta-prompt evolution.",
           "normalized_title": "meta prompt evolution"
@@ -2805,7 +2805,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4981,
+          "line_start": 4994,
           "status": "completed",
           "title": "Normalize CLI diagnostics for problem-load failures.",
           "normalized_title": "normalize cli diagnostics for problem load failures"
@@ -2814,7 +2814,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7018,
+          "line_start": 7028,
           "status": "completed",
           "title": "Normalize CLI diagnostics for problem-load failures.",
           "normalized_title": "normalize cli diagnostics for problem load failures"
@@ -2834,7 +2834,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 6124,
+          "line_start": 6137,
           "status": "completed",
           "title": "Persist archive admission outcomes per program.",
           "normalized_title": "persist archive admission outcomes per program"
@@ -2843,7 +2843,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7058,
+          "line_start": 7068,
           "status": "completed",
           "title": "Persist archive admission outcomes per program.",
           "normalized_title": "persist archive admission outcomes per program"
@@ -2863,7 +2863,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5602,
+          "line_start": 5615,
           "status": "completed",
           "title": "Persist live retrieval/plugin context provenance.",
           "normalized_title": "persist live retrieval plugin context provenance"
@@ -2872,7 +2872,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4828,
+          "line_start": 4838,
           "status": "completed",
           "title": "Persist live retrieval/plugin context provenance.",
           "normalized_title": "persist live retrieval plugin context provenance"
@@ -2892,7 +2892,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 2793,
+          "line_start": 2805,
           "status": "completed",
           "title": "Prevalidate malformed evolve-block seeds before evaluation.",
           "normalized_title": "prevalidate malformed evolve block seeds before evaluation"
@@ -2901,7 +2901,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7906,
+          "line_start": 7916,
           "status": "completed",
           "title": "Prevalidate malformed evolve-block seeds before evaluation.",
           "normalized_title": "prevalidate malformed evolve block seeds before evaluation"
@@ -2921,7 +2921,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4565,
+          "line_start": 4578,
           "status": "completed",
           "title": "Prevalidate seed evolve-block markers during problem loading.",
           "normalized_title": "prevalidate seed evolve block markers during problem loading"
@@ -2930,7 +2930,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7823,
+          "line_start": 7833,
           "status": "completed",
           "title": "Prevalidate seed evolve-block markers during problem loading.",
           "normalized_title": "prevalidate seed evolve block markers during problem loading"
@@ -2950,7 +2950,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 3316,
+          "line_start": 3329,
           "status": "completed",
           "title": "Record shared-versus-role-specific LLM scheduler policy per call.",
           "normalized_title": "record shared versus role specific llm scheduler policy per call"
@@ -2959,7 +2959,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1911,
+          "line_start": 1923,
           "status": "completed",
           "title": "Record shared-versus-role-specific LLM scheduler policy per call.",
           "normalized_title": "record shared versus role specific llm scheduler policy per call"
@@ -2979,7 +2979,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7447,
+          "line_start": 7457,
           "status": "completed",
           "title": "Reframe the roadmap from \"mostly tightening contracts\" to \"closing major",
           "normalized_title": "reframe the roadmap from mostly tightening contracts to closing major"
@@ -2988,7 +2988,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6199,
+          "line_start": 6209,
           "status": "completed",
           "title": "Reframe the roadmap from \"mostly tightening contracts\" to \"closing major",
           "normalized_title": "reframe the roadmap from mostly tightening contracts to closing major"
@@ -3008,7 +3008,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3893,
+          "line_start": 3905,
           "status": "completed",
           "title": "Refresh the local paper index after implementation passes.",
           "normalized_title": "refresh the local paper index after implementation passes"
@@ -3017,7 +3017,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4935,
+          "line_start": 4945,
           "status": "completed",
           "title": "Refresh the local paper index after implementation passes.",
           "normalized_title": "refresh the local paper index after implementation passes"
@@ -3037,7 +3037,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7439,
+          "line_start": 7449,
           "status": "completed",
           "title": "Refresh the roadmap date and status.",
           "normalized_title": "refresh the roadmap date and status"
@@ -3046,7 +3046,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 6180,
+          "line_start": 6190,
           "status": "completed",
           "title": "Refresh the roadmap date and status.",
           "normalized_title": "refresh the roadmap date and status"
@@ -3066,7 +3066,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4827,
+          "line_start": 4840,
           "status": "completed",
           "title": "Reject duplicate block sections in multi-block full replacement.",
           "normalized_title": "reject duplicate block sections in multi block full replacement"
@@ -3075,7 +3075,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 5009,
+          "line_start": 5019,
           "status": "completed",
           "title": "Reject duplicate block sections in multi-block full replacement.",
           "normalized_title": "reject duplicate block sections in multi block full replacement"
@@ -3095,7 +3095,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4516,
+          "line_start": 4529,
           "status": "completed",
           "title": "Reject malformed evolve-block marker structures during mutation.",
           "normalized_title": "reject malformed evolve block marker structures during mutation"
@@ -3104,7 +3104,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7802,
+          "line_start": 7812,
           "status": "completed",
           "title": "Reject malformed evolve-block marker structures during mutation.",
           "normalized_title": "reject malformed evolve block marker structures during mutation"
@@ -3124,7 +3124,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 2808,
+          "line_start": 2820,
           "status": "completed",
           "title": "Reject marker-prefix typos in evolve-block task specifications.",
           "normalized_title": "reject marker prefix typos in evolve block task specifications"
@@ -3133,7 +3133,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7922,
+          "line_start": 7932,
           "status": "completed",
           "title": "Reject marker-prefix typos in evolve-block task specifications.",
           "normalized_title": "reject marker prefix typos in evolve block task specifications"
@@ -3153,7 +3153,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5989,
+          "line_start": 6002,
           "status": "completed",
           "title": "Render full workspace context to LLM feedback graders.",
           "normalized_title": "render full workspace context to llm feedback graders"
@@ -3162,7 +3162,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7321,
+          "line_start": 7331,
           "status": "completed",
           "title": "Render full workspace context to LLM feedback graders.",
           "normalized_title": "render full workspace context to llm feedback graders"
@@ -3182,7 +3182,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 3246,
+          "line_start": 3259,
           "status": "completed",
           "title": "Require certification artifacts matching passed evidence kinds.",
           "normalized_title": "require certification artifacts matching passed evidence kinds"
@@ -3191,7 +3191,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1879,
+          "line_start": 1891,
           "status": "completed",
           "title": "Require certification artifacts matching passed evidence kinds.",
           "normalized_title": "require certification artifacts matching passed evidence kinds"
@@ -3211,7 +3211,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 3220,
+          "line_start": 3233,
           "status": "completed",
           "title": "Require consistent per-seed budget units for ablation curves.",
           "normalized_title": "require consistent per seed budget units for ablation curves"
@@ -3220,7 +3220,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1859,
+          "line_start": 1871,
           "status": "completed",
           "title": "Require consistent per-seed budget units for ablation curves.",
           "normalized_title": "require consistent per seed budget units for ablation curves"
@@ -3240,7 +3240,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 3232,
+          "line_start": 3245,
           "status": "completed",
           "title": "Require systems ready gates to have matching artifact kinds.",
           "normalized_title": "require systems ready gates to have matching artifact kinds"
@@ -3249,7 +3249,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1870,
+          "line_start": 1882,
           "status": "completed",
           "title": "Require systems ready gates to have matching artifact kinds.",
           "normalized_title": "require systems ready gates to have matching artifact kinds"
@@ -3269,7 +3269,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3003,
+          "line_start": 3015,
           "status": "completed",
           "title": "Rich prompt sampler.",
           "normalized_title": "rich prompt sampler"
@@ -3278,7 +3278,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7217,
+          "line_start": 7227,
           "status": "completed",
           "title": "Rich prompt sampler.",
           "normalized_title": "rich prompt sampler"
@@ -3298,7 +3298,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3708,
+          "line_start": 3720,
           "status": "completed",
           "title": "Robust history read/inspection path for long experiment stores.",
           "normalized_title": "robust history read inspection path for long experiment stores"
@@ -3307,7 +3307,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7372,
+          "line_start": 7382,
           "status": "completed",
           "title": "Robust history read/inspection path for long experiment stores.",
           "normalized_title": "robust history read inspection path for long experiment stores"
@@ -3327,7 +3327,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3137,
+          "line_start": 3149,
           "status": "completed",
           "title": "Strict scalar metric contract for evaluator outputs.",
           "normalized_title": "strict scalar metric contract for evaluator outputs"
@@ -3336,7 +3336,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7244,
+          "line_start": 7254,
           "status": "completed",
           "title": "Strict scalar metric contract for evaluator outputs.",
           "normalized_title": "strict scalar metric contract for evaluator outputs"
@@ -3356,7 +3356,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4842,
+          "line_start": 4855,
           "status": "completed",
           "title": "Support file deletion and rename/move operations in workspace mutations.",
           "normalized_title": "support file deletion and rename move operations in workspace mutations"
@@ -3365,7 +3365,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 5025,
+          "line_start": 5035,
           "status": "completed",
           "title": "Support file deletion and rename/move operations in workspace mutations.",
           "normalized_title": "support file deletion and rename move operations in workspace mutations"
@@ -3385,7 +3385,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4632,
+          "line_start": 4645,
           "status": "completed",
           "title": "Support multi-component and multi-file codebase evolution.",
           "normalized_title": "support multi component and multi file codebase evolution"
@@ -3394,7 +3394,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7866,
+          "line_start": 7876,
           "status": "completed",
           "title": "Support multi-component and multi-file codebase evolution.",
           "normalized_title": "support multi component and multi file codebase evolution"
@@ -3414,7 +3414,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 2783,
+          "line_start": 2795,
           "status": "completed",
           "title": "Task specification API with evolve-block markers.",
           "normalized_title": "task specification api with evolve block markers"
@@ -3423,7 +3423,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7895,
+          "line_start": 7905,
           "status": "completed",
           "title": "Task specification API with evolve-block markers.",
           "normalized_title": "task specification api with evolve block markers"
@@ -3443,7 +3443,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 3420,
+          "line_start": 3432,
           "status": "completed",
           "title": "Treat evaluator artifact pattern schemas as benchmark evidence.",
           "normalized_title": "treat evaluator artifact pattern schemas as benchmark evidence"
@@ -3452,7 +3452,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7505,
+          "line_start": 7515,
           "status": "completed",
           "title": "Treat evaluator artifact pattern schemas as benchmark evidence.",
           "normalized_title": "treat evaluator artifact pattern schemas as benchmark evidence"
@@ -3472,7 +3472,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4719,
+          "line_start": 4732,
           "status": "completed",
           "title": "Unify file-section path parsing with workspace path normalization.",
           "normalized_title": "unify file section path parsing with workspace path normalization"
@@ -3481,7 +3481,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4942,
+          "line_start": 4952,
           "status": "completed",
           "title": "Unify file-section path parsing with workspace path normalization.",
           "normalized_title": "unify file section path parsing with workspace path normalization"
@@ -3501,7 +3501,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5867,
+          "line_start": 5880,
           "status": "completed",
           "title": "Use artifact glob validation and diagnostics instead of environment-name",
           "normalized_title": "use artifact glob validation and diagnostics instead of environment name"
@@ -3510,7 +3510,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7276,
+          "line_start": 7286,
           "status": "completed",
           "title": "Use artifact glob validation and diagnostics instead of environment-name",
           "normalized_title": "use artifact glob validation and diagnostics instead of environment name"
@@ -3530,7 +3530,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5306,
+          "line_start": 5319,
           "status": "completed",
           "title": "Validate configured and mutated prompt templates before use.",
           "normalized_title": "validate configured and mutated prompt templates before use"
@@ -3539,7 +3539,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 4895,
+          "line_start": 4905,
           "status": "completed",
           "title": "Validate configured and mutated prompt templates before use.",
           "normalized_title": "validate configured and mutated prompt templates before use"
@@ -3559,7 +3559,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 5884,
+          "line_start": 5897,
           "status": "completed",
           "title": "Validate evaluator-stage numeric fields before running cascades.",
           "normalized_title": "validate evaluator stage numeric fields before running cascades"
@@ -3568,7 +3568,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7294,
+          "line_start": 7304,
           "status": "completed",
           "title": "Validate evaluator-stage numeric fields before running cascades.",
           "normalized_title": "validate evaluator stage numeric fields before running cascades"
@@ -3588,7 +3588,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 3257,
+          "line_start": 3270,
           "status": "completed",
           "title": "Validate matrix-result best-rank and hit-rate consistency against",
           "normalized_title": "validate matrix result best rank and hit rate consistency against"
@@ -3597,7 +3597,7 @@
           "owner_id": "papers",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/papers.md",
-          "line_start": 1890,
+          "line_start": 1902,
           "status": "completed",
           "title": "Validate matrix-result best-rank and hit-rate consistency against",
           "normalized_title": "validate matrix result best rank and hit rate consistency against"
@@ -3617,7 +3617,7 @@
           "owner_id": "code",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/code.md",
-          "line_start": 4924,
+          "line_start": 4937,
           "status": "completed",
           "title": "Validate task descriptions as non-empty problem contracts.",
           "normalized_title": "validate task descriptions as non empty problem contracts"
@@ -3626,7 +3626,7 @@
           "owner_id": "readme",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/readme.md",
-          "line_start": 7002,
+          "line_start": 7012,
           "status": "completed",
           "title": "Validate task descriptions as non-empty problem contracts.",
           "normalized_title": "validate task descriptions as non empty problem contracts"
@@ -3640,14 +3640,14 @@
     "duplicate_group_count": 123,
     "duplicate_record_count": 246,
     "inflation_count": 123,
-    "raw_total_count": 5252,
-    "collapsed_total_estimate": 5129,
-    "inflation_percent_of_raw_total": 2.342,
+    "raw_total_count": 5256,
+    "collapsed_total_estimate": 5133,
+    "inflation_percent_of_raw_total": 2.34,
     "canonical_gap_denominator_ready": false
   },
   "exact_duplicate_record_count": 246,
   "exact_duplicate_inflation_count": 123,
-  "exact_duplicate_collapsed_total_estimate": 5129,
+  "exact_duplicate_collapsed_total_estimate": 5133,
   "exact_duplicate_owner_status_report": {
     "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
     "duplicate_group_count": 123,
@@ -3732,7 +3732,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 15448,
+          "line_start": 15458,
           "status": "completed",
           "title": "Add bounded ROADMAP evaluation-cascade readiness matrix.",
           "normalized_title": "add bounded roadmap evaluation cascade readiness matrix"
@@ -3741,7 +3741,7 @@
           "owner_id": "roadmap",
           "ledger_kind": "completed",
           "path": "docs/todo/Completed/roadmap.md",
-          "line_start": 15766,
+          "line_start": 15776,
           "status": "completed",
           "title": "Add bounded ROADMAP evaluation-cascade readiness matrix.",
           "normalized_title": "add bounded roadmap evaluation cascade readiness matrix"

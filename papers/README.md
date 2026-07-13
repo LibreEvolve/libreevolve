@@ -1536,12 +1536,16 @@ with active TODO-owner links, while complete README/ROADMAP/papers index
 coverage, semantic documentation claim verification, complete implementation-
 evidence mapping, stale completed-entry detection, generated alignment reports,
 and full proof that every AlphaEvolve-facing claim is current remain absent.
-Core AlphaEvolve implementation-evidence mapping is now represented by
-`papers/implementation_evidence_map_boundary.json`, which records requirement
-anchors for markers, evaluator cascades, LLM prompting/sampling, the
-evolutionary database, async/distributed topology, and published benchmark
-coverage. It is not an exhaustive requirement inventory, source-span coverage
-matrix, per-phrase evidence-link sufficiency proof, coverage detector,
+Named AlphaEvolve source coverage is represented by
+`papers/alphaevolve_source_inventory_boundary.json`, which verifies the pinned
+44-page PDF hash and page count plus 55 named spans, 57 page-local anchors, 38
+structural spans, 14 numbered figures, and 3 numbered tables. The corrected
+`papers/implementation_evidence_map_boundary.json` records six broad requirement
+anchors for markers, prompt sampling/creative generation, evaluation,
+evolution, distributed execution, and published benchmark coverage with 81
+existence-checked source-span/module/test/sidecar/TODO references. This is not a
+sentence-, paragraph-, equation-, footnote-, citation-, or claim-level
+requirement inventory, per-phrase evidence-link sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
 status inventory with status text hashes, status classes, local artifact

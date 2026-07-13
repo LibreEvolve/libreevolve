@@ -38,10 +38,15 @@ sidecars, tests, and active TODOs.
     full proof that every AlphaEvolve-facing claim is current as absent.
     Focused tests and paper-manifest validation check many individual
     boundary records and TODO links. The committed
-    `papers/implementation_evidence_map_boundary.json` now records core
-    AlphaEvolve requirement anchors for markers, evaluator cascades, LLM
-    prompting/sampling, the evolutionary database, async/distributed topology,
-    and published benchmarks with module/test/sidecar/TODO references while
+    `papers/alphaevolve_source_inventory_boundary.json` now verifies the pinned
+    44-page AlphaEvolve PDF and inventories all 55 named structural spans using
+    57 page-local anchors: 38 structural spans, 14 numbered figures, and 3
+    numbered tables. The corrected
+    `papers/implementation_evidence_map_boundary.json` records six broad
+    AlphaEvolve requirement anchors for markers, Sections 2.2/2.3 prompting,
+    Section 2.4 evaluation, Section 2.5 evolution, Section 2.6 distributed
+    execution, and published benchmarks with 81 existence-checked source-span,
+    module, test, sidecar, and active-TODO references while
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -58,8 +63,10 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: there is no machine-readable AlphaEvolve requirement
-    inventory that is exhaustive across all code modules, tests, runtime report
+  - Current gap: the named source structure is now machine-readable and
+    PDF-verified, but there is no AlphaEvolve requirement inventory exhaustive
+    at sentence, paragraph, equation, footnote, citation, or claim level across
+    all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
     coverage; no per-phrase evidence-sufficiency check proves long status-cell

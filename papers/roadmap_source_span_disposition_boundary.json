@@ -1,147 +1,1603 @@
 {
   "schema": "libreevolve.roadmap_source_span_disposition_boundary.v1",
   "source_paper_id": "2506.13131",
-  "boundary_status": "core_anchor_dispositions_without_exhaustive_source_span_matrix",
+  "boundary_status": "named_source_span_dispositions_without_claim_level_exhaustiveness",
   "claim_ready": false,
-  "source_boundary_input": "papers/implementation_evidence_map_boundary.json",
+  "source_boundary_input": "papers/alphaevolve_source_inventory_boundary.json",
+  "implementation_evidence_map_input": "papers/implementation_evidence_map_boundary.json",
   "source_status_inventory_input": "papers/status_claim_inventory.json",
-  "disposition_record_count": 6,
+  "disposition_record_count": 55,
   "disposition_records": [
     {
-      "requirement_id": "alphaevolve_program_markers",
+      "span_id": "abstract",
+      "source_kind": "structure",
+      "source_label": "Abstract",
       "source_refs": [
-        "2506.13131:Section 2.1",
-        "2506.13131:Figure 3"
+        "2506.13131:pages 1"
       ],
-      "source_ref_count": 2,
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "background_only",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/documentation_truthfulness_boundary.json"
+      ],
+      "todo_refs": [],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_1",
+      "source_kind": "structure",
+      "source_label": "1. Introduction",
+      "source_refs": [
+        "2506.13131:pages 1-3"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "background_only",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/documentation_truthfulness_boundary.json"
+      ],
+      "todo_refs": [],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_2",
+      "source_kind": "structure",
+      "source_label": "2. AlphaEvolve",
+      "source_refs": [
+        "2506.13131:pages 3-4"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/process_exhibit_boundary.json",
+        "papers/table1_capability_exhibit_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_2_1",
+      "source_kind": "structure",
+      "source_label": "2.1. Task specification",
+      "source_refs": [
+        "2506.13131:pages 3-5"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
       "local_claim_status": "partially_implemented",
       "roadmap_section_id": "candidate_workspace_fidelity",
       "roadmap_phase": "near_term",
-      "coverage_scope": "anchor_only",
+      "coverage_scope": "named_structure_span",
       "sidecar_refs": [
-        "papers/existing_codebase_integration_boundary.json",
+        "papers/task_specification_boundary.json",
         "papers/candidate_language_runner_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#candidate-workspace-fidelity",
-        "docs/todo/papers.md#candidate-language-build-and-runner-contracts"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
       ],
-      "disposition_status": "core_anchor_only_not_exhaustive_source_span"
+      "disposition_status": "named_structure_disposition_only"
     },
     {
-      "requirement_id": "alphaevolve_evaluator_cascade",
+      "span_id": "section_2_2",
+      "source_kind": "structure",
+      "source_label": "2.2. Prompt sampling",
       "source_refs": [
-        "2506.13131:Section 2.2",
-        "2506.13131:Section 2.3"
+        "2506.13131:pages 5"
       ],
-      "source_ref_count": 2,
-      "local_claim_status": "partially_implemented",
-      "roadmap_section_id": "evaluation_cascade",
-      "roadmap_phase": "mid_term",
-      "coverage_scope": "anchor_only",
-      "sidecar_refs": [
-        "papers/evaluation_cascade_boundary.json",
-        "papers/evaluator_oracle_boundary.json",
-        "papers/cascade_hypothesis_test_boundary.json"
-      ],
-      "todo_refs": [
-        "docs/todo/code.md#evaluation-and-oracles",
-        "docs/todo/papers.md#evaluation-cascade-promotion-and-attrition-evidence"
-      ],
-      "disposition_status": "core_anchor_only_not_exhaustive_source_span"
-    },
-    {
-      "requirement_id": "alphaevolve_llm_sampling_and_prompting",
-      "source_refs": [
-        "2506.13131:Section 2.4",
-        "2506.13131:Section 2.5"
-      ],
-      "source_ref_count": 2,
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
       "local_claim_status": "partially_implemented",
       "roadmap_section_id": "prompt_context_system",
-      "roadmap_phase": "mid_term",
-      "coverage_scope": "anchor_only",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
       "sidecar_refs": [
-        "papers/fast_strong_model_mix_boundary.json",
-        "papers/llm_role_scheduler_boundary.json",
         "papers/prompt_section_packing_boundary.json",
-        "papers/gemini_provider_parity_boundary.json"
+        "papers/llm_role_scheduler_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#llm-and-prompting",
-        "docs/todo/papers.md#independent-per-role-llm-scheduler-state-and-reward-policy"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
       ],
-      "disposition_status": "core_anchor_only_not_exhaustive_source_span"
+      "disposition_status": "named_structure_disposition_only"
     },
     {
-      "requirement_id": "alphaevolve_evolutionary_database",
+      "span_id": "section_2_3",
+      "source_kind": "structure",
+      "source_label": "2.3. Creative generation",
       "source_refs": [
-        "2506.13131:Section 2.6",
-        "2506.13131:Figure 2"
+        "2506.13131:pages 5-7"
       ],
-      "source_ref_count": 2,
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/prompt_section_packing_boundary.json",
+        "papers/llm_role_scheduler_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_2_4",
+      "source_kind": "structure",
+      "source_label": "2.4. Evaluation",
+      "source_refs": [
+        "2506.13131:pages 7-8"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/evaluation_cascade_boundary.json",
+        "papers/evaluator_oracle_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_2_5",
+      "source_kind": "structure",
+      "source_label": "2.5. Evolution",
+      "source_refs": [
+        "2506.13131:pages 8"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
       "local_claim_status": "partially_implemented",
       "roadmap_section_id": "multi_objective_search",
-      "roadmap_phase": "mid_term",
-      "coverage_scope": "anchor_only",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
       "sidecar_refs": [
-        "papers/sampling_balance_boundary.json",
-        "papers/map_elites_descriptor_boundary.json",
-        "papers/objective_archive_boundary.json"
+        "papers/evolutionary_database_boundary.json",
+        "papers/map_elites_descriptor_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#archive-database-and-replay",
-        "docs/todo/papers.md#stable-behavior-descriptor-models-and-archive-rebin-semantics"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
       ],
-      "disposition_status": "core_anchor_only_not_exhaustive_source_span"
+      "disposition_status": "named_structure_disposition_only"
     },
     {
-      "requirement_id": "alphaevolve_async_distributed_pipeline",
+      "span_id": "section_2_6",
+      "source_kind": "structure",
+      "source_label": "2.6. Distributed pipeline",
       "source_refs": [
-        "2506.13131:Figure 2",
-        "2506.13131:Section 4"
+        "2506.13131:pages 8"
       ],
-      "source_ref_count": 2,
-      "local_claim_status": "missing_alphaevolve_parity",
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
       "roadmap_section_id": "async_resumable_runtime",
       "roadmap_phase": "mid_term",
-      "coverage_scope": "anchor_only",
+      "coverage_scope": "named_structure_span",
       "sidecar_refs": [
         "papers/distributed_pipeline_topology_boundary.json",
-        "papers/parallel_evaluation_readiness_boundary.json",
-        "papers/expensive_evaluation_budget_boundary.json"
+        "papers/parallel_evaluation_readiness_boundary.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#distributed-and-async-execution",
-        "docs/todo/papers.md#parallelized-evaluation-and-asynchronous-throughput"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
       ],
-      "disposition_status": "core_anchor_only_not_exhaustive_source_span"
+      "disposition_status": "named_structure_disposition_only"
     },
     {
-      "requirement_id": "alphaevolve_published_benchmarks",
+      "span_id": "section_3",
+      "source_kind": "structure",
+      "source_label": "3. Results",
       "source_refs": [
-        "2506.13131:Section 3",
-        "2506.13131:Appendix A",
-        "2506.13131:Appendix B"
+        "2506.13131:pages 9-17"
       ],
-      "source_ref_count": 3,
-      "local_claim_status": "mostly_missing_alphaevolve_result_reproduction",
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
       "roadmap_section_id": "representative_benchmarks",
       "roadmap_phase": "longer_term",
-      "coverage_scope": "anchor_only",
+      "coverage_scope": "named_structure_span",
       "sidecar_refs": [
         "papers/matrix_suite_publication_artifacts.json",
-        "papers/appendix_b_registry.json",
-        "papers/benchmark_fixture_readiness_boundary.json"
+        "papers/appendix_a_matrix_curation.json"
       ],
       "todo_refs": [
-        "docs/todo/code.md#benchmarks-and-paper-artifacts",
-        "docs/todo/papers.md#benchmark-implementations"
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
       ],
-      "disposition_status": "core_anchor_only_not_exhaustive_source_span"
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_3_1",
+      "source_kind": "structure",
+      "source_label": "3.1. Faster matrix multiplication via finding novel algorithms for tensor decomposition",
+      "source_refs": [
+        "2506.13131:pages 9-10"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/matrix_suite_publication_artifacts.json",
+        "papers/appendix_a_matrix_curation.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_3_2",
+      "source_kind": "structure",
+      "source_label": "3.2. Finding tailored search algorithms for a wide range of open mathematical problems",
+      "source_refs": [
+        "2506.13131:pages 10-13"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_3_3",
+      "source_kind": "structure",
+      "source_label": "3.3. Optimizing Google's computing ecosystem",
+      "source_refs": [
+        "2506.13131:pages 13-17"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/systems_result_readiness_boundary.json",
+        "papers/hardware_rtl_eda_evidence_boundary.json",
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_3_3_1",
+      "source_kind": "structure",
+      "source_label": "3.3.1. Improving data center scheduling",
+      "source_refs": [
+        "2506.13131:pages 13-15"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/systems_result_readiness_boundary.json",
+        "papers/hardware_rtl_eda_evidence_boundary.json",
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_3_3_2",
+      "source_kind": "structure",
+      "source_label": "3.3.2. Enhancing Gemini kernel engineering",
+      "source_refs": [
+        "2506.13131:pages 15-16"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/systems_result_readiness_boundary.json",
+        "papers/hardware_rtl_eda_evidence_boundary.json",
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_3_3_3",
+      "source_kind": "structure",
+      "source_label": "3.3.3. Assisting in hardware circuit design",
+      "source_refs": [
+        "2506.13131:pages 16-17"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/systems_result_readiness_boundary.json",
+        "papers/hardware_rtl_eda_evidence_boundary.json",
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_3_3_4",
+      "source_kind": "structure",
+      "source_label": "3.3.4. Directly optimizing compiler-generated code",
+      "source_refs": [
+        "2506.13131:pages 17"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/systems_result_readiness_boundary.json",
+        "papers/hardware_rtl_eda_evidence_boundary.json",
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_4",
+      "source_kind": "structure",
+      "source_label": "4. Ablations",
+      "source_refs": [
+        "2506.13131:pages 17-18"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/figure8_ablation_artifacts.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_5",
+      "source_kind": "structure",
+      "source_label": "5. Related work",
+      "source_refs": [
+        "2506.13131:pages 18-20"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "background_only",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/related_work_taxonomy_boundary.json"
+      ],
+      "todo_refs": [],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "section_6",
+      "source_kind": "structure",
+      "source_label": "6. Discussion",
+      "source_refs": [
+        "2506.13131:pages 21"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "background_only",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/self_improvement_distillation_boundary.json"
+      ],
+      "todo_refs": [],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "acknowledgements",
+      "source_kind": "structure",
+      "source_label": "Acknowledgements",
+      "source_refs": [
+        "2506.13131:pages 21-22"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "source_provenance_only",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/paper_author_metadata_boundary.json",
+        "papers/system_contribution_provenance_boundary.json"
+      ],
+      "todo_refs": [],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "author_information",
+      "source_kind": "structure",
+      "source_label": "Author information",
+      "source_refs": [
+        "2506.13131:pages 22-23"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "source_provenance_only",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/paper_author_metadata_boundary.json",
+        "papers/system_contribution_provenance_boundary.json"
+      ],
+      "todo_refs": [],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "references",
+      "source_kind": "structure",
+      "source_label": "References",
+      "source_refs": [
+        "2506.13131:pages 23-33"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "source_provenance_only",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/paper_author_metadata_boundary.json",
+        "papers/system_contribution_provenance_boundary.json"
+      ],
+      "todo_refs": [],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_a",
+      "source_kind": "structure",
+      "source_label": "A. Faster matrix multiplication: Full results",
+      "source_refs": [
+        "2506.13131:pages 34-37"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/matrix_suite_publication_artifacts.json",
+        "papers/appendix_a_matrix_curation.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b",
+      "source_kind": "structure",
+      "source_label": "B. Details of mathematical discoveries of AlphaEvolve",
+      "source_refs": [
+        "2506.13131:pages 38-44"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_1",
+      "source_kind": "structure",
+      "source_label": "B.1. First autocorrelation inequality",
+      "source_refs": [
+        "2506.13131:pages 38"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_2",
+      "source_kind": "structure",
+      "source_label": "B.2. Second autocorrelation inequality",
+      "source_refs": [
+        "2506.13131:pages 38"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_3",
+      "source_kind": "structure",
+      "source_label": "B.3. Third autocorrelation inequality",
+      "source_refs": [
+        "2506.13131:pages 38"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_4",
+      "source_kind": "structure",
+      "source_label": "B.4. An uncertainty inequality",
+      "source_refs": [
+        "2506.13131:pages 39"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_5",
+      "source_kind": "structure",
+      "source_label": "B.5. Erdos' minimum overlap problem",
+      "source_refs": [
+        "2506.13131:pages 40"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_6",
+      "source_kind": "structure",
+      "source_label": "B.6. Sums and differences of finite sets",
+      "source_refs": [
+        "2506.13131:pages 40-41"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_7",
+      "source_kind": "structure",
+      "source_label": "B.7. Packing unit regular hexagons inside a regular hexagon",
+      "source_refs": [
+        "2506.13131:pages 41"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_8",
+      "source_kind": "structure",
+      "source_label": "B.8. Minimizing the ratio of maximum to minimum distance",
+      "source_refs": [
+        "2506.13131:pages 41"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_9",
+      "source_kind": "structure",
+      "source_label": "B.9. The Heilbronn problem for triangles",
+      "source_refs": [
+        "2506.13131:pages 42"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_10",
+      "source_kind": "structure",
+      "source_label": "B.10. The Heilbronn problem for convex regions",
+      "source_refs": [
+        "2506.13131:pages 42"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_11",
+      "source_kind": "structure",
+      "source_label": "B.11. Kissing number in dimension 11",
+      "source_refs": [
+        "2506.13131:pages 42-43"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_12",
+      "source_kind": "structure",
+      "source_label": "B.12. Packing circles inside a unit square to maximize sum of radii",
+      "source_refs": [
+        "2506.13131:pages 43-44"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "appendix_b_13",
+      "source_kind": "structure",
+      "source_label": "B.13. Packing circles inside a rectangle of perimeter 4 to maximize sum of radii",
+      "source_refs": [
+        "2506.13131:pages 44"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_1",
+      "source_kind": "figure",
+      "source_label": "Figure 1",
+      "source_refs": [
+        "2506.13131:pages 3"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/process_exhibit_boundary.json",
+        "papers/table1_capability_exhibit_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_2",
+      "source_kind": "figure",
+      "source_label": "Figure 2",
+      "source_refs": [
+        "2506.13131:pages 4"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "mid_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/distributed_pipeline_topology_boundary.json",
+        "papers/parallel_evaluation_readiness_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_3",
+      "source_kind": "figure",
+      "source_label": "Figure 3",
+      "source_refs": [
+        "2506.13131:pages 6"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/task_specification_boundary.json",
+        "papers/candidate_language_runner_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_4",
+      "source_kind": "figure",
+      "source_label": "Figure 4",
+      "source_refs": [
+        "2506.13131:pages 11"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/matrix_suite_publication_artifacts.json",
+        "papers/appendix_a_matrix_curation.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_5",
+      "source_kind": "figure",
+      "source_label": "Figure 5",
+      "source_refs": [
+        "2506.13131:pages 12"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_6",
+      "source_kind": "figure",
+      "source_label": "Figure 6",
+      "source_refs": [
+        "2506.13131:pages 14"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/systems_result_readiness_boundary.json",
+        "papers/hardware_rtl_eda_evidence_boundary.json",
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_7",
+      "source_kind": "figure",
+      "source_label": "Figure 7",
+      "source_refs": [
+        "2506.13131:pages 15"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/systems_result_readiness_boundary.json",
+        "papers/hardware_rtl_eda_evidence_boundary.json",
+        "papers/compiler_adoption_path_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_8",
+      "source_kind": "figure",
+      "source_label": "Figure 8",
+      "source_refs": [
+        "2506.13131:pages 18"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/figure8_ablation_artifacts.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_9",
+      "source_kind": "figure",
+      "source_label": "Figure 9 (parts a-c)",
+      "source_refs": [
+        "2506.13131:pages 35-37"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 3,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/matrix_suite_publication_artifacts.json",
+        "papers/appendix_a_matrix_curation.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_10",
+      "source_kind": "figure",
+      "source_label": "Figure 10",
+      "source_refs": [
+        "2506.13131:pages 40"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_11",
+      "source_kind": "figure",
+      "source_label": "Figure 11",
+      "source_refs": [
+        "2506.13131:pages 41"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_12",
+      "source_kind": "figure",
+      "source_label": "Figure 12",
+      "source_refs": [
+        "2506.13131:pages 42"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_13",
+      "source_kind": "figure",
+      "source_label": "Figure 13",
+      "source_refs": [
+        "2506.13131:pages 43"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "figure_14",
+      "source_kind": "figure",
+      "source_label": "Figure 14",
+      "source_refs": [
+        "2506.13131:pages 44"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
+        "papers/math_outcome_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "table_1",
+      "source_kind": "table",
+      "source_label": "Table 1",
+      "source_refs": [
+        "2506.13131:pages 2"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "partially_implemented",
+      "roadmap_section_id": "documentation_truthfulness",
+      "roadmap_phase": "near_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/process_exhibit_boundary.json",
+        "papers/table1_capability_exhibit_boundary.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "table_2",
+      "source_kind": "table",
+      "source_label": "Table 2",
+      "source_refs": [
+        "2506.13131:pages 9"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/matrix_suite_publication_artifacts.json",
+        "papers/appendix_a_matrix_curation.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
+    },
+    {
+      "span_id": "table_3",
+      "source_kind": "table",
+      "source_label": "Table 3",
+      "source_refs": [
+        "2506.13131:pages 34"
+      ],
+      "source_ref_count": 1,
+      "source_anchor_count": 1,
+      "source_anchors_verified": true,
+      "local_claim_status": "missing_result_reproduction",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "coverage_scope": "named_structure_span",
+      "sidecar_refs": [
+        "papers/matrix_suite_publication_artifacts.json",
+        "papers/appendix_a_matrix_curation.json"
+      ],
+      "todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add exhaustive implementation-evidence mapping for AlphaEvolve"
+        },
+        {
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "Add ROADMAP AlphaEvolve source-span disposition coverage."
+        }
+      ],
+      "disposition_status": "named_structure_disposition_only"
     }
   ],
-  "disposition_source_ref_count": 13,
+  "disposition_source_ref_count": 55,
   "paper_status_row_count": 53,
   "paper_status_row_ids": [
     "2506.13131",
@@ -200,25 +1656,29 @@
   ],
   "paper_status_row_dispositioned_count": 1,
   "paper_status_row_disposition_status": "paper_index_rows_not_exhaustively_roadmapped",
+  "completed_evidence": {
+    "pdf_named_structure_walk": "38_structure_spans",
+    "figure_table_matrix": "14_figures_and_3_tables",
+    "appendix_matrix": "appendix_a_appendix_b_and_13_appendix_b_subsections",
+    "named_application_sections": "section_3_3_and_4_named_subsections"
+  },
   "required_evidence_fields": [
-    "core_requirement_anchor_dispositions",
+    "pdf_verified_named_source_span_dispositions",
     "roadmap_section_links",
     "active_todo_links",
     "paper_status_row_inventory_count",
-    "exhaustive_pdf_section_walk",
-    "figure_table_appendix_matrix",
+    "claim_level_requirement_inventory",
     "application_result_claim_matrix",
     "status_row_to_roadmap_disposition_map",
     "missing_partial_todo_proof",
     "ci_source_span_exhaustiveness_gate"
   ],
   "missing_evidence": {
-    "exhaustive_pdf_section_walk": "not_recorded_locally",
-    "figure_table_appendix_matrix": "not_recorded_locally",
+    "claim_level_requirement_inventory": "not_recorded_locally",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records ROADMAP dispositions for the six core AlphaEvolve requirement anchors already present in the implementation-evidence map, including source refs, local status, roadmap section, phase bucket, sidecars, and TODO links. It does not claim an exhaustive retained-PDF section walk, figure/table/appendix/application-result matrix, complete paper-index row to ROADMAP disposition map, proof that every missing or partial source span has a live TODO, or a CI source-span exhaustiveness gate."
+  "claim_boundary": "This boundary records ROADMAP dispositions for all 55 PDF-verified named AlphaEvolve structural spans, including sections, figures, tables, appendices, source pages, local status, roadmap section, phase bucket, sidecars, and active audit TODO links. It does not claim sentence-, paragraph-, equation-, footnote-, citation-, or requirement-level exhaustiveness, a claim-level application-result matrix, complete paper-index row to ROADMAP disposition map, proof that every missing or partial source span has a live TODO, or a CI source-span exhaustiveness gate."
 }

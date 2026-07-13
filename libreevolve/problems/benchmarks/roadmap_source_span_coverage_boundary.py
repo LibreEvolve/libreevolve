@@ -14,15 +14,15 @@ ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_SCHEMA = (
     "libreevolve.roadmap_source_span_coverage_boundary.v1"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "bounded_source_span_coverage_matrix_without_exhaustive_alphaevolve_walk"
+    "named_structure_coverage_without_claim_level_alphaevolve_walk"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "coverage_surface_records",
-    "core_anchor_disposition_input",
+    "named_source_inventory_input",
+    "named_source_span_disposition_input",
     "paper_status_row_count",
-    "exhaustive_pdf_section_walk",
-    "figure_table_appendix_matrix",
+    "claim_level_requirement_inventory",
     "application_result_claim_matrix",
     "status_row_to_roadmap_disposition_map",
     "missing_partial_todo_proof",
@@ -31,8 +31,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_pdf_section_walk": "not_recorded_locally",
-    "figure_table_appendix_matrix": "not_recorded_locally",
+    "claim_level_requirement_inventory": "not_recorded_locally",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -47,8 +46,8 @@ COVERAGE_SURFACE_SPECS = (
     {
         "surface_id": "main_text_section_walk",
         "source_surface": "AlphaEvolve main-text sections and requirement claims",
-        "current_scope": "six core requirement anchors mapped by the existing source-span disposition sidecar",
-        "missing_readiness": "retained-PDF section-by-section walk with status and TODO disposition for every relevant source span",
+        "current_scope": "PDF-verified named main-text sections mapped by the source inventory and disposition sidecars",
+        "missing_readiness": "sentence- and claim-level requirement extraction with semantic implementation and TODO disposition",
         "sidecars": (
             "papers/roadmap_source_span_disposition_boundary.json",
             "papers/implementation_evidence_map_boundary.json",
@@ -56,17 +55,17 @@ COVERAGE_SURFACE_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "retained AlphaEvolve source PDF by section",
+                "required_phrase": "named sections, figures, tables, and",
             },
         ),
         "validation_gate": "section-level source-span disposition matrix",
-        "readiness_status": "six_core_anchors_only",
+        "readiness_status": "named_sections_complete_without_claim_level_walk",
     },
     {
         "surface_id": "figure_exhibit_matrix",
         "source_surface": "AlphaEvolve figures and process/result exhibits",
-        "current_scope": "selected Figure 1/2/3/6/7/8 exhibit boundaries and matrix Figure 4/9 artifacts",
-        "missing_readiness": "complete figure matrix with source page, local status, evidence artifacts, and TODO proof",
+        "current_scope": "all 14 numbered figure spans, including Figure 9 parts a-c, are page- and anchor-verified; selected figures have specialized artifact boundaries",
+        "missing_readiness": "claim-level exhibit decomposition and reproduction evidence for every figure",
         "sidecars": (
             "papers/process_exhibit_boundary.json",
             "papers/figure3_supervised_exhibit_boundary.json",
@@ -87,13 +86,13 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "figure/table artifact disposition matrix",
-        "readiness_status": "selected_figure_sidecars_without_exhaustive_figure_walk",
+        "readiness_status": "named_figure_inventory_complete_without_claim_level_reproduction",
     },
     {
         "surface_id": "table_capability_matrix",
         "source_surface": "AlphaEvolve tables and capability/result comparison claims",
-        "current_scope": "Table 1 capability exhibit and selected matrix table artifacts",
-        "missing_readiness": "complete table matrix with row-level ROADMAP disposition and missing/partial TODO proof",
+        "current_scope": "all three numbered table spans are page- and anchor-verified; Table 1 and matrix result artifacts have bounded sidecars",
+        "missing_readiness": "row- and claim-level table disposition with reproduction evidence",
         "sidecars": (
             "papers/table1_capability_exhibit_boundary.json",
             "papers/matrix_rank_table_artifacts.json",
@@ -110,13 +109,13 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "table row to ROADMAP/TODO disposition matrix",
-        "readiness_status": "selected_table_sidecars_without_exhaustive_table_walk",
+        "readiness_status": "named_table_inventory_complete_without_row_level_reproduction",
     },
     {
         "surface_id": "appendix_a_matrix_targets",
         "source_surface": "Appendix A matrix-target registry and related artifacts",
-        "current_scope": "Appendix A target identities, curation/resource boundaries, and selected runtime artifacts",
-        "missing_readiness": "all Appendix A target rows linked to ROADMAP phases, implementation status, and TODO proof",
+        "current_scope": "Appendix A and its Figure 9/Table 3 spans are page- and anchor-verified alongside target identities and selected runtime artifacts",
+        "missing_readiness": "all Appendix A result rows linked to implementation evidence and claim-level TODO proof",
         "sidecars": (
             "papers/appendix_a_matrix_curation.json",
             "papers/appendix_a_matrix_resource_frontier.json",
@@ -135,13 +134,13 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "Appendix A row-to-roadmap disposition matrix",
-        "readiness_status": "appendix_a_artifacts_without_roadmap_exhaustiveness",
+        "readiness_status": "named_appendix_a_complete_without_result_row_exhaustiveness",
     },
     {
         "surface_id": "appendix_b_constructive_math",
         "source_surface": "Appendix B constructive-math families and result claims",
-        "current_scope": "math outcome, starting-construction, and heuristic-stage boundaries",
-        "missing_readiness": "Appendix B family/result rows linked to implementation status, evidence artifacts, TODOs, and non-goal decisions",
+        "current_scope": "Appendix B, all 13 named subsections, and Figures 10-14 are page- and anchor-verified alongside bounded math boundaries",
+        "missing_readiness": "Appendix B result claims linked to reproduction evidence, domain TODOs, and non-goal decisions",
         "sidecars": (
             "papers/math_outcome_boundary.json",
             "papers/math_starting_construction_boundary.json",
@@ -159,13 +158,13 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "Appendix B family/result disposition matrix",
-        "readiness_status": "math_boundaries_without_full_appendix_b_disposition",
+        "readiness_status": "named_appendix_b_complete_without_result_claim_exhaustiveness",
     },
     {
         "surface_id": "application_result_claims",
         "source_surface": "AlphaEvolve application-result claims for systems, kernels, hardware, and compiler work",
-        "current_scope": "systems, scheduling, Pallas, compiler, hardware, Magellan, and ArchAgent absence/readiness boundaries",
-        "missing_readiness": "application-result claim matrix with evidence artifacts, phase priority, and TODO/non-goal proof",
+        "current_scope": "all named Section 3.3 application subsections and Figures 6-7 are page- and anchor-verified alongside systems absence/readiness boundaries",
+        "missing_readiness": "application-result claim matrix with reproduction artifacts, phase priority, and domain TODO/non-goal proof",
         "sidecars": (
             "papers/systems_result_readiness_boundary.json",
             "papers/compiler_stack_context_boundary.json",
@@ -186,7 +185,7 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "application-result claim to ROADMAP/TODO disposition matrix",
-        "readiness_status": "application_sidecars_without_complete_claim_matrix",
+        "readiness_status": "named_application_sections_complete_without_claim_matrix",
     },
     {
         "surface_id": "paper_status_row_dispositions",
@@ -223,7 +222,7 @@ COVERAGE_SURFACE_SPECS = (
         "active_todos": (
             {
                 "path": "docs/todo/roadmap.md",
-                "required_phrase": "missing or partial span",
+                "required_phrase": "domain-specific missing/partial TODO proof",
             },
             {
                 "path": "docs/todo/roadmap.md",
@@ -265,8 +264,9 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
         "source_paper_id": EXPECTED_SOURCE_PAPER_ID,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
-        "core_anchor_disposition_input": "papers/roadmap_source_span_disposition_boundary.json",
-        "core_anchor_disposition_count": disposition["disposition_record_count"],
+        "named_source_inventory_input": "papers/alphaevolve_source_inventory_boundary.json",
+        "named_source_span_disposition_input": "papers/roadmap_source_span_disposition_boundary.json",
+        "named_source_span_disposition_count": disposition["disposition_record_count"],
         "paper_status_row_count": disposition["paper_status_row_count"],
         "paper_status_row_dispositioned_count": disposition[
             "paper_status_row_dispositioned_count"
@@ -275,15 +275,19 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
         "sidecar_ref_count": sidecar_ref_count,
         "active_todo_ref_count": active_todo_ref_count,
         "coverage_surface_records": records,
+        "completed_evidence": {
+            "named_structure_span_count": disposition["disposition_record_count"],
+            "named_structure_source_ref_count": disposition["disposition_source_ref_count"],
+            "named_structure_scope": "38_structure_14_figure_3_table_spans",
+        },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records a ROADMAP-level AlphaEvolve source-span "
-            "coverage readiness matrix for main-text sections, figures, "
-            "tables, Appendix A, Appendix B, application-result claims, "
-            "paper-status rows, and TODO/non-goal/phase proof. It does not "
-            "claim an exhaustive PDF section walk, complete figure/table/"
-            "appendix matrix, complete application-result claim matrix, "
+            "coverage matrix for all 55 PDF-verified named main-text sections, "
+            "figures, tables, Appendix A/B spans, and named application sections, "
+            "plus paper-status rows and TODO/non-goal/phase proof. It does not "
+            "claim sentence- or claim-level requirement exhaustiveness, a complete application-result claim matrix, "
             "status-row to ROADMAP disposition map, missing/partial TODO "
             "proof, non-goal decision map, phase-priority map, CI source-span "
             "exhaustiveness gate, or owner review signoff."
@@ -315,14 +319,16 @@ def validate_roadmap_source_span_coverage_boundary(
     if data.get("claim_ready") is not False:
         issues.append(_issue("claim_ready_overclaim", "ROADMAP source-span coverage boundary must not claim exhaustive readiness"))
     for key in (
-        "core_anchor_disposition_input",
-        "core_anchor_disposition_count",
+        "named_source_inventory_input",
+        "named_source_span_disposition_input",
+        "named_source_span_disposition_count",
         "paper_status_row_count",
         "paper_status_row_dispositioned_count",
         "coverage_surface_count",
         "sidecar_ref_count",
         "active_todo_ref_count",
         "coverage_surface_records",
+        "completed_evidence",
     ):
         if data.get(key) != expected[key]:
             issues.append(_issue(f"invalid_{key}", f"{key} drifted from current source-span coverage inputs"))
@@ -331,7 +337,8 @@ def validate_roadmap_source_span_coverage_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim an exhaustive PDF section walk" not in boundary_text
+        or "all 55 PDF-verified named" not in boundary_text
+        or "claim-level requirement exhaustiveness" not in boundary_text
         or "complete application-result claim matrix" not in boundary_text
         or "CI source-span exhaustiveness gate" not in boundary_text
     ):

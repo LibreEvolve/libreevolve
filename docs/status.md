@@ -644,13 +644,16 @@ Important limits:
   `papers/candidate_abstraction_bias_matrix.json`.
 - Candidate language runner reports record metadata-only or executable
   non-Python language/build declarations, stage bindings, workspace matches,
-  bounded process output and command hashes, executable-path hashes, generated
-  build artifacts, environment policy, host-network/unsandboxed scope, and
-  problem-owned score authority. The checked expression fixture executes that
-  local contract. It does not prove real compiler/package-manager toolchains,
-  dependency/toolchain replay, arbitrary-language validators, OS sandboxing,
-  codebase-scale artifacts, or language-aware marker grammars; that partial
-  boundary is tracked by `papers/candidate_language_runner_boundary.json`.
+  bounded process output and command hashes, executable path/content hashes,
+  toolchain version-output and lock hashes, generated build artifacts,
+  environment policy, host-network/unsandboxed scope, and problem-owned score
+  authority. The checked expression fixture executes the adapter contract; the
+  checked C11 fixture resolves a host compiler, compiles and runs a binary, and
+  records observed identity. This does not prove portable hermetic
+  compiler/package-manager provisioning, cross-host replay, arbitrary-language
+  validators, OS sandboxing, codebase-scale artifacts, or language-aware marker
+  grammars; that partial boundary is tracked by
+  `papers/candidate_language_runner_boundary.json`.
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by
   `papers/config_validation_boundary.json`.

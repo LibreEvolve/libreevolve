@@ -1016,6 +1016,12 @@ are:
 - `paper_artifacts/table1_capability_comparison/table_1.md`
 - `paper_artifacts/table1_capability_comparison/table_1_accessibility.txt`
 
+The three marker-spelling paths are conditionally required. When the ignored
+local AlphaEvolve PDF is unavailable or extraction fails, the marker report
+records typed `status: missing` evidence and lifecycle validation classifies
+those paths as conditionally unavailable rather than as run-bundle corruption.
+The process-exhibit and Table 1 paths remain required for completed reports.
+
 `libreevolve show` runs the same paper-artifact lifecycle validation for
 manifest-backed runs that include `artifact_schema.paper_artifact_subpaths`;
 drifted runtime report paths or drifted guide references fail inspection
@@ -1121,10 +1127,12 @@ Startup manifests include `policies.candidate_language` with schema
 task-primary bounded text-workspace representation, Python autodetection or
 explicit seed-policy primary selection, typed static-member support,
 fail-closed non-Python marker handling, Python subprocess scoring boundary, and
-partial stage-bound local language/build command support. It keeps
+partial stage-bound local language/build command support, host-toolchain
+resolution/version probes, optional exact identity pins, and candidate
+lock-file hash enforcement. It keeps
 problem-defined solution abstractions, language-aware non-Python markers,
-OS-sandboxed runner isolation, replayable toolchains, and real-language
-codebase-scale evidence unsupported.
+OS-sandboxed runner isolation, portable hermetic toolchain provisioning and
+cross-host replay, and real-language codebase-scale evidence unsupported.
 When `config.yaml` sets `candidate_language_runners` or
 `candidate_build_systems`, those entries are normalized as manifest-safe,
 declarations under `config` and
@@ -1142,17 +1150,23 @@ text runner/build contracts, metadata-only or executable declarations,
 and up to 100 deduplicated executed-runner records. Execution records retain
 configured/expanded command hashes rather than raw expanded commands,
 executable basenames and resolved-path hashes rather than absolute paths,
+selected toolchain executable content hashes, normalized version-output
+hashes, optional pin-match results, dependency-lock hashes, and an explicit
+same-host/preprovisioned-host replay scope,
 bounded/redacted stdout and stderr plus hashes, return/timeout/cleanup state,
 minimal-environment metadata, stdin metadata, generated build artifacts, the
 host-network/unsandboxed boundary, and problem-owned scoring authority.
-`execution_summary` reconciles record, success, build, artifact, language, and
-build-system counts. `runner_environment_provenance` links those records to the
-startup environment policy. The report keeps task candidate-abstraction hooks
-unsupported and lists the remaining real-toolchain, marker, sandbox, replay,
-and codebase-scale gaps before AlphaEvolve-style parity can be claimed.
+`execution_summary` reconciles record, success, build, artifact, language,
+build-system, toolchain, version-probe, replay-ready, and dependency-lock
+counts. `runner_environment_provenance` links those records to the startup
+environment policy but keeps global environment replay readiness false. The
+report keeps task candidate-abstraction hooks unsupported and lists the
+remaining portable-toolchain, marker, sandbox, and codebase-scale gaps before
+AlphaEvolve-style parity can be claimed.
 The committed `papers/candidate_language_runner_boundary.json` sidecar
-preserves the same partial local expression-runner boundary for paper-manifest
-validation. The checked fixture is not real-language or compiler evidence.
+preserves the same partial local runner boundary for paper-manifest validation.
+The checked C fixture is real host-compiler smoke evidence, not portable
+toolchain or compiler-optimization benchmark evidence.
 For runs that can perform mutation LLM calls, backend client construction is
 preflighted before overwrite cleanup in the core runtime. The CLI also checks
 OpenAI and Anthropic credentials as non-blank after trimming. Seed-only runs

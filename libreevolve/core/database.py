@@ -9897,7 +9897,7 @@ def _candidate_language_policy(config: Config) -> dict:
         "language_aware_evolve_block_marker_grammars",
         "problem_defined_candidate_abstraction_hooks",
         "os_sandboxed_arbitrary_language_runner_isolation",
-        "toolchain_version_and_dependency_replay_artifacts",
+        "portable_hermetic_toolchain_distribution_and_dependency_resolution",
         "real_language_codebase_benchmark_evidence",
     ]
     if not stage_bindings and (language_runner_declarations or build_system_declarations):
@@ -9930,6 +9930,11 @@ def _candidate_language_policy(config: Config) -> dict:
             "validator_entrypoints": "problem_local_python_files_or_packages",
             "task_declared_language_runners": "local_subprocess_without_shell_partial",
             "build_system_runners": "local_subprocess_without_shell_partial",
+            "toolchain_identity": (
+                "declared_candidate_resolution_version_probe_and_optional_sha256_pins"
+            ),
+            "dependency_lock_identity": "candidate_workspace_file_sha256_pins",
+            "toolchain_distribution": "host_resolved_not_provisioned",
             "metrics_authority": "problem_owned_python_validator",
             "network_policy": "host_only_for_candidate_runner",
             "problem_defined_solution_abstractions": "unsupported",
@@ -9947,8 +9952,9 @@ def _candidate_language_policy(config: Config) -> dict:
         "alphaevolve_divergence": (
             "LibreEvolve can execute task-declared local language/build commands "
             "for bounded text workspaces, but lacks language-aware marker grammars, "
-            "OS sandboxing, replayable toolchains, task-defined solution objects, "
-            "and real codebase-scale language benchmark evidence."
+            "OS sandboxing, portable hermetic toolchain distribution and dependency "
+            "resolution, task-defined solution objects, and real codebase-scale "
+            "language benchmark evidence."
         ),
         "language_runner_ready": bool(stage_bindings),
         "remaining_gap": remaining_gap,
@@ -10088,6 +10094,11 @@ def validate_candidate_language_policy(policy: object) -> dict:
             "validator_entrypoints": "problem_local_python_files_or_packages",
             "task_declared_language_runners": "local_subprocess_without_shell_partial",
             "build_system_runners": "local_subprocess_without_shell_partial",
+            "toolchain_identity": (
+                "declared_candidate_resolution_version_probe_and_optional_sha256_pins"
+            ),
+            "dependency_lock_identity": "candidate_workspace_file_sha256_pins",
+            "toolchain_distribution": "host_resolved_not_provisioned",
             "metrics_authority": "problem_owned_python_validator",
             "network_policy": "host_only_for_candidate_runner",
             "problem_defined_solution_abstractions": "unsupported",
@@ -10139,7 +10150,7 @@ def validate_candidate_language_policy(policy: object) -> dict:
         "language_aware_evolve_block_marker_grammars",
         "problem_defined_candidate_abstraction_hooks",
         "os_sandboxed_arbitrary_language_runner_isolation",
-        "toolchain_version_and_dependency_replay_artifacts",
+        "portable_hermetic_toolchain_distribution_and_dependency_resolution",
         "real_language_codebase_benchmark_evidence",
     }
     declaration_count = 0
@@ -10352,6 +10363,11 @@ def _validate_candidate_runner_declarations(
             "build_files",
             "build_command",
             "artifact_patterns",
+            "toolchain_candidates",
+            "toolchain_version_command",
+            "toolchain_executable_sha256",
+            "toolchain_version_output_sha256",
+            "dependency_lock_sha256",
             "execution_status",
             "notes",
         }
@@ -10376,6 +10392,94 @@ def _validate_candidate_runner_declarations(
                     "code": "build_system_declaration_execution_overclaim",
                     "message": (
                         "build system declaration execution status is unsupported"
+                    ),
+                }
+            )
+        candidates = record.get("toolchain_candidates")
+        version_command = record.get("toolchain_version_command")
+        executable_pin = record.get("toolchain_executable_sha256")
+        version_pin = record.get("toolchain_version_output_sha256")
+        dependency_locks = record.get("dependency_lock_sha256")
+        if not isinstance(candidates, list) or not all(
+            isinstance(item, str) and item for item in candidates
+        ):
+            issues.append(
+                {
+                    "code": "invalid_build_system_toolchain_candidates",
+                    "message": "build system toolchain_candidates must be a text list",
+                }
+            )
+            candidates = []
+        if not isinstance(version_command, list) or not all(
+            isinstance(item, str) and item for item in version_command
+        ):
+            issues.append(
+                {
+                    "code": "invalid_build_system_toolchain_version_command",
+                    "message": "build system toolchain version command must be a text list",
+                }
+            )
+            version_command = []
+        for field, value in (
+            ("toolchain_executable_sha256", executable_pin),
+            ("toolchain_version_output_sha256", version_pin),
+        ):
+            if value is not None and not _is_sha256_hex(value):
+                issues.append(
+                    {
+                        "code": f"invalid_build_system_{field}",
+                        "message": f"build system {field} must be a SHA-256 digest",
+                    }
+                )
+        if not isinstance(dependency_locks, Mapping) or not all(
+            isinstance(path, str)
+            and path
+            and isinstance(digest, str)
+            and _is_sha256_hex(digest)
+            for path, digest in (
+                dependency_locks.items()
+                if isinstance(dependency_locks, Mapping)
+                else []
+            )
+        ):
+            issues.append(
+                {
+                    "code": "invalid_build_system_dependency_lock_sha256",
+                    "message": (
+                        "build system dependency_lock_sha256 must map paths to "
+                        "SHA-256 digests"
+                    ),
+                }
+            )
+        build_command = record.get("build_command")
+        if candidates:
+            if not isinstance(build_command, list) or not build_command or (
+                build_command[0] != "{toolchain}"
+            ):
+                issues.append(
+                    {
+                        "code": "invalid_build_system_toolchain_build_command",
+                        "message": (
+                            "toolchain-backed build commands must begin with "
+                            "{toolchain}"
+                        ),
+                    }
+                )
+            if not version_command or version_command[0] != "{toolchain}":
+                issues.append(
+                    {
+                        "code": "invalid_build_system_toolchain_probe_command",
+                        "message": (
+                            "toolchain version commands must begin with {toolchain}"
+                        ),
+                    }
+                )
+        elif version_command or executable_pin is not None or version_pin is not None:
+            issues.append(
+                {
+                    "code": "build_system_toolchain_identity_without_candidates",
+                    "message": (
+                        "toolchain probes and pins require declared toolchain candidates"
                     ),
                 }
             )

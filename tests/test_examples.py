@@ -1,7 +1,9 @@
 import json
+import shutil
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
+import pytest
 import yaml
 
 from libreevolve.core.config import Config
@@ -71,6 +73,13 @@ CANDIDATE_RUNNER_EXAMPLE_DIR = (
     / "problems"
     / "examples"
     / "candidate_runner_expression"
+)
+CANDIDATE_RUNNER_C_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "candidate_runner_c"
 )
 EXAMPLE_RUNS_DIR = Path(__file__).resolve().parents[1] / "examples" / "runs"
 
@@ -751,6 +760,46 @@ def test_candidate_runner_expression_example_loads_builds_and_scores(tmp_path):
     assert execution["build"]["artifacts"]["files"][0]["path"] == (
         "build/program.expr"
     )
+
+
+def test_candidate_runner_c_example_loads_compiles_and_scores(tmp_path):
+    if not any(shutil.which(name) for name in ("clang", "gcc", "cc")):
+        pytest.skip("requires clang, gcc, or cc")
+    problem = load_problem(CANDIDATE_RUNNER_C_EXAMPLE_DIR)
+    raw_config = yaml.safe_load(
+        (CANDIDATE_RUNNER_C_EXAMPLE_DIR / "config.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    config = Config(**raw_config)
+
+    workspace = problem.initial_workspaces[0]
+    assert workspace.primary_file == "solution.c"
+    assert workspace.files["toolchain.lock"].endswith("external_dependencies=none\n")
+    result = CascadeEvaluator(
+        problem,
+        stages=config.eval_stages,
+        artifact_dir=tmp_path / "artifacts",
+        candidate_language_runners=config.candidate_language_runners,
+        candidate_build_systems=config.candidate_build_systems,
+    ).evaluate(workspace, None)
+
+    assert result.is_valid is True, result.error
+    assert result.metrics["score"] == 1.0 / 7.0
+    execution = result.metadata["candidate_runner"]
+    assert execution["language_runner"] == "c"
+    assert execution["build_system"] == "c_compiler"
+    assert execution["runner"]["stdout"].strip() == "36"
+    assert execution["build"]["artifacts"]["files"][0]["path"] == "program.exe"
+    toolchain = execution["toolchain"]
+    assert toolchain["identity_observed"] is True
+    assert toolchain["dependency_locks_match"] is True
+    assert toolchain["dependency_lock_count"] == 1
+    assert toolchain["replay_ready"] is False
+    assert toolchain["pin_enforcement_configured"] is False
+    assert len(toolchain["executable"]["content_sha256"]) == 64
+    assert len(toolchain["version_output_sha256"]) == 64
+    assert toolchain["absolute_paths_retained"] is False
 
 
 def _write_workspace_math_support_files(tmp_path: Path) -> None:

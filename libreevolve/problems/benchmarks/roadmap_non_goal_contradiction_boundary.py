@@ -57,16 +57,17 @@ NON_GOAL_SPECS = (
     {
         "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
         "roadmap_text": (
-            "Claiming arbitrary-language/codebase support before runners and "
-            "validators exist."
+            "Claiming arbitrary-language/codebase parity before portable "
+            "toolchains, language-aware mutation, and representative validators "
+            "exist."
         ),
         "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
         "constrained_surfaces": (
             {
                 "path": "ROADMAP.md",
                 "required_safe_phrase": (
-                    "Claiming arbitrary-language/codebase support before runners "
-                    "and validators"
+                    "Claiming arbitrary-language/codebase parity before portable "
+                    "toolchains"
                 ),
                 "forbidden_claim_phrases": (
                     "arbitrary-language runners are implemented",
@@ -77,7 +78,7 @@ NON_GOAL_SPECS = (
             {
                 "path": "README.md",
                 "required_safe_phrase": (
-                    "does not prove real-language toolchains"
+                    "prove portable hermetic toolchain provisioning"
                 ),
                 "forbidden_claim_phrases": (
                     "arbitrary-language runners are implemented",

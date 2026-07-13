@@ -11,9 +11,9 @@
     {
       "criterion_id": "language_build_runner_support",
       "search_surface": "candidate language/build/runner declarations and execution policy",
-      "current_scope": "task-primary local expression build/runner/scorer execution without real-language toolchain parity",
-      "missing_readiness": "real-language runners, replayable build-system contracts, isolation, and codebase-scale capability evidence",
-      "roadmap_required_phrase": "real language and toolchain fixtures",
+      "current_scope": "task-primary local expression and host C build/runner/scorer execution with toolchain identity but without portable replay parity",
+      "missing_readiness": "portable hermetic and broader language runners, replayable build-system contracts, isolation, and codebase-scale capability evidence",
+      "roadmap_required_phrase": "compiled and interpreted language/package-manager fixtures",
       "roadmap_phrase_present": true,
       "current_sidecar_refs": [
         {
@@ -24,20 +24,20 @@
       "active_todo_refs": [
         {
           "path": "docs/todo/code.md",
-          "required_phrase": "real compiler or package-manager toolchain",
+          "required_phrase": "portable hermetic compiler/package-manager",
           "required_phrase_present": true,
           "exists": true
         },
         {
           "path": "docs/todo/papers.md",
-          "required_phrase": "real-language and build-system contracts",
+          "required_phrase": "broader real-language and build-system contracts",
           "required_phrase_present": true,
           "exists": true
         }
       ],
       "active_todo_ref_count": 2,
-      "validation_gate": "real-language and replayable-build contract tests with manifest evidence",
-      "readiness_status": "local_expression_build_runner_partial_without_real_toolchain_gate"
+      "validation_gate": "portable hermetic replay and broader-language contract tests with manifest evidence",
+      "readiness_status": "local_expression_and_host_c_partial_without_portable_toolchain_gate"
     },
     {
       "criterion_id": "candidate_abstraction_api",
@@ -355,7 +355,7 @@
     "stale_readiness_detector"
   ],
   "missing_evidence": {
-    "real_language_replayable_build_runner_evidence": "not_recorded_locally",
+    "portable_hermetic_replayable_build_runner_evidence": "host_c_compiler_smoke_recorded_portable_replay_not_recorded",
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",
@@ -368,5 +368,5 @@
     "topology_resume_replay_proof": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a ROADMAP-level candidate-workspace fidelity criteria map for language/build runners, candidate abstraction, marker and materialization policy, embedded evaluators, codebase scale, mutation-mode/operator provenance, prompt-example-copy guards, cross-file consistency, initial-pool/static-binary handling, and workspace resume integrity. It does not claim real-language replayable build-runner evidence, flexible solution abstraction APIs, candidate-embedded evaluator contracts, realistic codebase fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, or owner review signoff."
+  "claim_boundary": "This boundary records a ROADMAP-level candidate-workspace fidelity criteria map for language/build runners, candidate abstraction, marker and materialization policy, embedded evaluators, codebase scale, mutation-mode/operator provenance, prompt-example-copy guards, cross-file consistency, initial-pool/static-binary handling, and workspace resume integrity. It does not claim portable hermetic replayable build-runner evidence, flexible solution abstraction APIs, candidate-embedded evaluator contracts, realistic codebase fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family provenance, semantic prompt-example-copy detection, cross-file consistency benchmark evidence, initial-pool divergence benchmark evidence, static/binary replay policy, topology resume replay proof, or owner review signoff."
 }

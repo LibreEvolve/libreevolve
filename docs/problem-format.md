@@ -516,25 +516,29 @@ declaration remains metadata-only until an `eval_stages` entry binds it with
 
 ```yaml
 candidate_language_runners:
-  - language: expression
+  - language: c
     candidate_role: task_primary_text
-    file_patterns: ["solution.expr"]
+    file_patterns: ["solution.c"]
     marker_grammar: whole_file_text_v1
-    runner_command: ["{python}", "-c", "<trusted local adapter>", "{primary}"]
+    runner_command: ["{workspace}/program.exe"]
     execution_status: executable_local_subprocess
 
 candidate_build_systems:
-  - name: expression_copy
-    build_files: ["solution.expr"]
-    build_command: ["{python}", "-c", "<trusted local build adapter>"]
-    artifact_patterns: ["build/**"]
+  - name: c_compiler
+    build_files: ["solution.c", "toolchain.lock"]
+    build_command: ["{toolchain}", "-O2", "-std=c11", "solution.c", "-o", "program.exe"]
+    artifact_patterns: ["program.exe"]
+    toolchain_candidates: ["clang", "gcc", "cc"]
+    toolchain_version_command: ["{toolchain}", "--version"]
+    dependency_lock_sha256:
+      toolchain.lock: "<sha256>"
     execution_status: executable_local_subprocess
 
 eval_stages:
-  - name: run_expression
+  - name: run_c
     mode: candidate_runner
-    language_runner: expression
-    build_system: expression_copy
+    language_runner: c
+    build_system: c_compiler
     timeout_sec: 10
 ```
 
@@ -543,10 +547,13 @@ executable declarations. The build reference is optional. Before execution,
 `file_patterns` and any `build_files` must match at least one materialized
 candidate path. Commands are token arrays executed without a shell from the
 candidate workspace. Supported token substitutions are `{workspace}` for the
-temporary workspace root, `{primary}` for the materialized primary file, and
-`{python}` for the current Python executable. A non-absolute tool such as
-`cargo` may require `PATH` in `validator_env_allowlist`; tool availability is
-not installed or managed by LibreEvolve.
+temporary workspace root, `{primary}` for the materialized primary file,
+`{python}` for the current Python executable, and `{toolchain}` for the first
+resolvable configured toolchain candidate. A toolchain build and its version
+probe must begin with `{toolchain}`. Optional executable and normalized
+version-output SHA-256 pins are enforced before the build, as are configured
+SHA-256 hashes for candidate dependency-lock files. Tool availability is not
+installed or managed by LibreEvolve.
 
 The optional build runs first. Files matching its `artifact_patterns` are
 copied through the normal bounded evaluator-artifact policy. The language
@@ -561,13 +568,14 @@ the normal three-argument call plus `stage["candidate_runner"]`, which contains
 the bounded process, environment, command-hash, artifact, and security records.
 The validator remains the metrics authority; candidate stdout is not parsed
 into fitness by the framework. See `candidate_runner_expression` for the
-checked provider-free contract fixture.
+provider-free adapter fixture and `candidate_runner_c` for the checked host C
+compiler fixture.
 
 Candidate commands require `validator_network_policy: host`. They inherit the
 host network and use the minimal validator environment plus the explicit
 allowlist. They are ordinary local subprocesses, not a security sandbox. The
-current fixture does not prove a real language/compiler/package-manager
-toolchain, pinned dependency replay, language-aware marker grammar, or
+current fixtures do not prove portable hermetic compiler/package-manager
+provisioning, exact cross-host replay, language-aware marker grammar, or
 codebase-scale arbitrary-language parity. Declarations with
 `declared_metadata_only` or `unsupported` status are still retained as
 manifest metadata but cannot be bound to a `candidate_runner` stage.

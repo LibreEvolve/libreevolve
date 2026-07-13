@@ -3,6 +3,7 @@ import json
 import os
 import shutil, tempfile
 import subprocess
+import sys
 import time
 from pathlib import Path
 import libreevolve.core.evaluator as evaluator
@@ -4685,6 +4686,221 @@ def test_candidate_runner_stage_builds_runs_and_uses_problem_owned_validator():
         accounting = evaluation_accounting(result)
         assert accounting["subprocess_attempts"] == 3
         assert accounting["configured_stage_samples"] == 1
+    finally:
+        shutil.rmtree(d)
+
+
+def test_candidate_runner_enforces_pinned_toolchain_and_dependency_identity():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    toolchain = stage['candidate_runner']['toolchain']\n"
+        "    output = stage['candidate_runner']['runner']['stdout'].strip()\n"
+        "    ok = output == '42' and toolchain['replay_ready'] is True\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    lock_text = "runtime=python-toolchain-fixture-v1\n"
+    executable_sha256 = hashlib.sha256(Path(sys.executable).read_bytes()).hexdigest()
+    version_output_sha256 = evaluator._candidate_version_output_sha256(
+        "toolchain-v1\n",
+        "",
+    )
+    workspace = CandidateWorkspace(
+        files={
+            "solution.expr": "40 + 2\n",
+            "toolchain.lock": lock_text,
+        },
+        primary_file="solution.expr",
+    )
+    language_runners = [
+        {
+            "language": "expression",
+            "file_patterns": ["solution.expr"],
+            "runner_command": [
+                "{python}",
+                "-c",
+                (
+                    "from pathlib import Path; "
+                    "print(eval(Path('build/program.expr').read_text(), {'__builtins__': {}}))"
+                ),
+            ],
+            "execution_status": "executable_local_subprocess",
+        }
+    ]
+    build_systems = [
+        {
+            "name": "pinned_copy",
+            "build_files": ["solution.expr", "toolchain.lock"],
+            "build_command": [
+                "{toolchain}",
+                "-c",
+                (
+                    "from pathlib import Path; Path('build').mkdir(exist_ok=True); "
+                    "Path('build/program.expr').write_text("
+                    "Path('solution.expr').read_text(), encoding='utf-8')"
+                ),
+            ],
+            "artifact_patterns": ["build/**"],
+            "toolchain_candidates": [sys.executable],
+            "toolchain_version_command": [
+                "{toolchain}",
+                "-c",
+                "print('toolchain-v1')",
+            ],
+            "toolchain_executable_sha256": executable_sha256,
+            "toolchain_version_output_sha256": version_output_sha256,
+            "dependency_lock_sha256": {
+                "toolchain.lock": hashlib.sha256(
+                    lock_text.encode("utf-8")
+                ).hexdigest(),
+            },
+            "execution_status": "executable_local_subprocess",
+        }
+    ]
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "run_expression",
+                    "mode": "candidate_runner",
+                    "language_runner": "expression",
+                    "build_system": "pinned_copy",
+                }
+            ],
+            artifact_dir=d / "artifacts",
+            candidate_language_runners=language_runners,
+            candidate_build_systems=build_systems,
+        ).evaluate(workspace, None)
+
+        assert result.is_valid is True
+        toolchain = result.metadata["candidate_runner"]["toolchain"]
+        assert toolchain["identity_observed"] is True
+        assert toolchain["executable_pin_match"] is True
+        assert toolchain["version_output_pin_match"] is True
+        assert toolchain["dependency_locks_match"] is True
+        assert toolchain["dependency_locks"][0]["path"] == "toolchain.lock"
+        assert toolchain["replay_ready"] is True
+        assert toolchain["absolute_paths_retained"] is False
+        assert evaluation_accounting(result)["subprocess_attempts"] == 4
+    finally:
+        shutil.rmtree(d)
+
+
+def test_candidate_toolchain_version_hash_normalizes_line_endings():
+    expected = evaluator._candidate_version_output_sha256("toolchain-v1\n", "warning\n")
+
+    assert (
+        evaluator._candidate_version_output_sha256(
+            "toolchain-v1\r\n",
+            "warning\r",
+        )
+        == expected
+    )
+
+
+def test_candidate_dependency_lock_read_error_is_recorded(mocker, tmp_path):
+    lock_path = tmp_path / "toolchain.lock"
+    lock_path.write_text("locked\n", encoding="utf-8")
+    mocker.patch.object(Path, "read_bytes", side_effect=OSError("denied"))
+
+    records = evaluator._candidate_dependency_lock_records(
+        tmp_path,
+        {"toolchain.lock": "0" * 64},
+    )
+
+    assert records == [
+        {
+            "path": "toolchain.lock",
+            "status": "read_error",
+            "bytes": None,
+            "expected_sha256": "0" * 64,
+            "actual_sha256": None,
+            "matches_expected": False,
+            "read_error": {
+                "exception_type": "OSError",
+                "message": "unable to read declared dependency lock",
+            },
+        }
+    ]
+
+
+def test_candidate_toolchain_executable_hash_error_fails_closed(mocker, tmp_path):
+    mocker.patch.object(
+        evaluator,
+        "_candidate_executable_record",
+        return_value={
+            "resolution_status": "resolved",
+            "content_hash_status": "read_error",
+            "content_sha256": None,
+        },
+    )
+
+    selected, record, error = evaluator._prepare_candidate_build_toolchain(
+        {
+            "toolchain_candidates": [sys.executable],
+            "toolchain_version_command": ["{toolchain}", "--version"],
+        },
+        workspace_root=tmp_path,
+        timeout_sec=1.0,
+        env={},
+        output_max_chars=1000,
+    )
+
+    assert selected == sys.executable
+    assert record["identity_observed"] is False
+    assert error == "candidate_toolchain_executable_hash_error"
+
+
+def test_candidate_runner_rejects_toolchain_version_pin_mismatch_before_build():
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    return {'score': 1.0, 'is_valid': True}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={"solution.expr": "42\n"},
+        primary_file="solution.expr",
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "run_expression",
+                    "mode": "candidate_runner",
+                    "language_runner": "expression",
+                    "build_system": "pinned_copy",
+                }
+            ],
+            candidate_language_runners=[
+                {
+                    "language": "expression",
+                    "runner_command": ["{python}", "-c", "print(42)"],
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+            candidate_build_systems=[
+                {
+                    "name": "pinned_copy",
+                    "build_command": ["{toolchain}", "-c", "print('build')"],
+                    "toolchain_candidates": [sys.executable],
+                    "toolchain_version_command": [
+                        "{toolchain}",
+                        "-c",
+                        "print('toolchain-v1')",
+                    ],
+                    "toolchain_version_output_sha256": "0" * 64,
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+        ).evaluate(workspace, None)
+
+        assert result.is_valid is False
+        assert result.error == "candidate_toolchain_version_pin_mismatch"
+        candidate = result.metadata["candidate_runner"]
+        assert candidate["build"] is None
+        assert candidate["runner"] is None
+        assert candidate["toolchain"]["version_output_pin_match"] is False
+        assert evaluation_accounting(result)["subprocess_attempts"] == 1
     finally:
         shutil.rmtree(d)
 

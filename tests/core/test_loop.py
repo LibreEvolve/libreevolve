@@ -8,6 +8,7 @@ import os
 import random
 import shutil
 import subprocess
+import sys
 import threading
 import time
 from datetime import datetime
@@ -9552,12 +9553,24 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert runners["non_python_text"]["runner_contract"] == (
         "task_declared_local_subprocess_without_shell"
     )
-    assert runners["arbitrary_language"]["status"] == "real_toolchain_fixture_not_proven"
+    assert runners["arbitrary_language"]["status"] == (
+        "task_declared_toolchain_execution_supported_partial"
+    )
 
     build_contracts = report["build_system_runner_contracts"]
     assert build_contracts["status"] == "capability_available_not_configured"
     assert build_contracts["declared_build_files"] == []
     assert build_contracts["build_runner"] == "task_declared_command_tokens_without_shell"
+    assert build_contracts["toolchain_resolution"] == (
+        "first_resolvable_declared_candidate"
+    )
+    assert build_contracts["toolchain_identity"] == (
+        "version_probe_and_optional_executable_output_pins"
+    )
+    assert build_contracts["dependency_lock_identity"] == (
+        "materialized_candidate_file_sha256_pins"
+    )
+    assert build_contracts["portable_toolchain_provisioning"] == "unsupported"
     assert build_contracts["compiled_artifact_capture"] == "bounded_declared_pattern_copyout"
     assert report["declared_language_runner_records"] == []
     assert report["declared_build_system_records"] == []
@@ -9599,6 +9612,11 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "successful_record_count": 0,
         "executed_build_count": 0,
         "generated_build_artifact_count": 0,
+        "toolchain_record_count": 0,
+        "toolchain_identity_record_count": 0,
+        "toolchain_probe_count": 0,
+        "toolchain_replay_ready_count": 0,
+        "dependency_lock_record_count": 0,
         "language_ids": [],
         "build_system_ids": [],
     }
@@ -9624,6 +9642,11 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "execution_record_count": 0,
         "resolved_runner_executable_count": 0,
         "resolved_build_executable_count": 0,
+        "resolved_toolchain_executable_count": 0,
+        "toolchain_identity_record_count": 0,
+        "toolchain_probe_count": 0,
+        "toolchain_replay_ready_count": 0,
+        "dependency_lock_record_count": 0,
         "absolute_paths_retained": False,
         "toolchain_versions_recorded": False,
         "dependency_manifests_recorded": False,
@@ -9645,6 +9668,12 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert report["claim_readiness"]["language_aware_marker_grammars_configured"] is False
     assert report["claim_readiness"]["build_system_runner_contracts_configured"] is False
     assert report["claim_readiness"]["generated_build_artifacts_recorded"] is False
+    assert report["claim_readiness"]["toolchain_identity_records_recorded"] is False
+    assert (
+        report["claim_readiness"]["pinned_toolchain_replay_records_recorded"]
+        is False
+    )
+    assert report["claim_readiness"]["dependency_lock_records_recorded"] is False
     assert report["claim_readiness"]["task_candidate_abstraction_hooks_configured"] is False
     assert report["claim_readiness"]["alphaevolve_language_runner_parity"] is False
     assert report["alphaevolve_contract_gap"]["required_before_parity_claim"] == (
@@ -9827,6 +9856,13 @@ def test_runtime_history_reports_declared_candidate_language_runner_metadata():
 
 def test_runtime_history_reports_executed_candidate_language_and_build_runner():
     tmpdir = tempfile.mkdtemp()
+    lock_text = "runtime=python-toolchain-report-fixture-v1\n"
+    executable_sha256 = hashlib.sha256(Path(sys.executable).read_bytes()).hexdigest()
+    version_output_sha256 = hashlib.sha256(
+        strict_json_dumps({"stderr": "", "stdout": "toolchain-v1\n"}).encode(
+            "utf-8"
+        )
+    ).hexdigest()
     problem = _problem(
         "def evaluate(code, workspace, stage):\n"
         "    output = stage['candidate_runner']['runner']['stdout'].strip()\n"
@@ -9836,7 +9872,10 @@ def test_runtime_history_reports_executed_candidate_language_and_build_runner():
     problem.initial_programs = []
     problem.initial_workspaces = [
         CandidateWorkspace(
-            files={"solution.expr": "40 + 2\n"},
+            files={
+                "solution.expr": "40 + 2\n",
+                "toolchain.lock": lock_text,
+            },
             primary_file="solution.expr",
         )
     ]
@@ -9869,9 +9908,9 @@ def test_runtime_history_reports_executed_candidate_language_and_build_runner():
             candidate_build_systems=[
                 {
                     "name": "expression_copy",
-                    "build_files": ["solution.expr"],
+                    "build_files": ["solution.expr", "toolchain.lock"],
                     "build_command": [
-                        "{python}",
+                        "{toolchain}",
                         "-c",
                         (
                             "from pathlib import Path; Path('build').mkdir(exist_ok=True); "
@@ -9881,6 +9920,19 @@ def test_runtime_history_reports_executed_candidate_language_and_build_runner():
                         ),
                     ],
                     "artifact_patterns": ["build/**"],
+                    "toolchain_candidates": [sys.executable],
+                    "toolchain_version_command": [
+                        "{toolchain}",
+                        "-c",
+                        "print('toolchain-v1')",
+                    ],
+                    "toolchain_executable_sha256": executable_sha256,
+                    "toolchain_version_output_sha256": version_output_sha256,
+                    "dependency_lock_sha256": {
+                        "toolchain.lock": hashlib.sha256(
+                            lock_text.encode("utf-8")
+                        ).hexdigest(),
+                    },
                     "execution_status": "executable_local_subprocess",
                 }
             ],
@@ -9910,25 +9962,73 @@ def test_runtime_history_reports_executed_candidate_language_and_build_runner():
     assert report["execution_summary"]["successful_record_count"] == 1
     assert report["execution_summary"]["executed_build_count"] == 1
     assert report["execution_summary"]["generated_build_artifact_count"] == 1
+    assert report["execution_summary"]["toolchain_record_count"] == 1
+    assert report["execution_summary"]["toolchain_identity_record_count"] == 1
+    assert report["execution_summary"]["toolchain_probe_count"] == 1
+    assert report["execution_summary"]["toolchain_replay_ready_count"] == 1
+    assert report["execution_summary"]["dependency_lock_record_count"] == 1
     execution = report["executed_runner_records"][0]
     assert execution["language_runner"] == "expression"
     assert execution["build_system"] == "expression_copy"
     assert execution["successful"] is True
     assert execution["runner"]["returncode"] == 0
     assert execution["build"]["returncode"] == 0
+    toolchain = execution["toolchain"]
+    assert toolchain["identity_observed"] is True
+    assert toolchain["replay_ready"] is True
+    assert toolchain["replay_scope"] == (
+        "same_host_or_preprovisioned_matching_toolchain_only"
+    )
+    assert toolchain["toolchain_provisioning"] == "not_performed"
+    assert toolchain["executable"]["content_sha256"] == executable_sha256
+    assert toolchain["version_output_sha256"] == version_output_sha256
+    assert toolchain["dependency_locks"][0]["matches_expected"] is True
+    assert toolchain["absolute_paths_retained"] is False
     assert execution["generated_build_artifacts"][0]["path"] == "build/program.expr"
     readiness = report["claim_readiness"]
     assert readiness["non_python_language_runners_configured"] is True
     assert readiness["candidate_runner_executions_recorded"] is True
     assert readiness["build_system_runner_contracts_configured"] is True
     assert readiness["generated_build_artifacts_recorded"] is True
+    assert readiness["toolchain_identity_records_recorded"] is True
+    assert readiness["pinned_toolchain_replay_records_recorded"] is True
+    assert readiness["dependency_lock_records_recorded"] is True
     assert readiness["alphaevolve_language_runner_parity"] is False
+    process_environment = report["runner_environment_provenance"][
+        "candidate_runner_process_environment"
+    ]
+    assert process_environment["resolved_toolchain_executable_count"] == 1
+    assert process_environment["toolchain_identity_record_count"] == 1
+    assert process_environment["toolchain_probe_count"] == 1
+    assert process_environment["toolchain_replay_ready_count"] == 1
+    assert process_environment["dependency_lock_record_count"] == 1
+    assert process_environment["toolchain_versions_recorded"] is True
+    assert process_environment["dependency_manifests_recorded"] is True
+    assert report["runner_environment_provenance"]["environment_replay_ready"] is False
 
     edited = copy.deepcopy(report)
     edited["executed_runner_records"][0]["metrics_authority"] = "candidate_process"
     validation = validate_candidate_language_runner_contract_report(edited)
     assert validation["ok"] is False
     assert "candidate_runner_metrics_authority_overclaim" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["executed_runner_records"][0]["toolchain"]["replay_scope"] = (
+        "portable_across_hosts"
+    )
+    validation = validate_candidate_language_runner_contract_report(edited)
+    assert "candidate_toolchain_portable_replay_overclaim" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+    edited = copy.deepcopy(report)
+    edited["executed_runner_records"][0]["toolchain"]["executable"][
+        "content_sha256"
+    ] = "0" * 64
+    validation = validate_candidate_language_runner_contract_report(edited)
+    assert "candidate_toolchain_executable_pin_match_mismatch" in {
         issue["code"] for issue in validation["issues"]
     }
 

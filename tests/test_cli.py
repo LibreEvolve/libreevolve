@@ -2359,6 +2359,33 @@ def test_show_reports_paper_artifact_lifecycle_summary(tmp_path):
     assert "docs_refs=" in r.output
 
 
+def test_show_accepts_conditionally_unavailable_marker_artifacts(tmp_path):
+    _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
+    manifest = _write_show_paper_artifact_manifest(tmp_path)
+    source_artifacts = manifest["runtime"]["history"][
+        "marker_spelling_provenance_report"
+    ]["source_artifacts"]
+    missing = {
+        "status": "missing",
+        "artifact_path": None,
+        "sha256": None,
+        "paper_path": "papers/2506.13131__AlphaEvolve.pdf",
+        "reason": "local_alphaevolve_pdf_missing",
+    }
+    source_artifacts["page_artifacts"] = {
+        "4": dict(missing),
+        "6": dict(missing),
+    }
+    source_artifacts["figure_3_marker_text_artifact"] = dict(missing)
+    (tmp_path / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+    r = CliRunner().invoke(cli, ["show", str(tmp_path)])
+
+    assert r.exit_code == 0, r.output
+    assert "paper_paths=8" in r.output
+    assert "Paper artifacts: checked_paths=8" in r.output
+
+
 def test_show_rejects_non_jsonl_artifact_policy_drift(tmp_path):
     _write_show_history(tmp_path, [_show_current_row("a", 0.9, 1, "x=2")])
     manifest = _write_show_paper_artifact_manifest(tmp_path)

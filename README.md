@@ -121,13 +121,15 @@ Important limits:
   `best.py`, `best_workspace/`, `plugin_artifacts/`, and `paper_artifacts/`.
 - Candidate execution is Python by default, with a partial task-declared local
   subprocess path for non-Python text primaries. A `candidate_runner` stage can
-  run validated command-token arrays without a shell, optionally run a build
-  command first, capture bounded declared build artifacts, and pass a
-  redacted/bounded process record to the problem-owned Python validator that
-  remains metrics authority. The checked expression fixture proves that local
-  contract only. It does not prove real-language toolchains, language-aware
-  marker grammars, dependency/toolchain replay, OS-sandboxed isolation, or
-  AlphaEvolve-scale arbitrary-codebase support.
+  run validated command-token arrays without a shell, optionally resolve and
+  probe a declared build toolchain, enforce optional executable/version-output
+  SHA-256 pins and candidate lock-file hashes, capture bounded build artifacts,
+  and pass a redacted/bounded process record to the problem-owned Python
+  validator that remains metrics authority. The checked expression and C11
+  fixtures prove local adapter and host-compiler execution only. They do not
+  prove portable hermetic toolchain provisioning, cross-host replay,
+  language-aware marker grammars, OS-sandboxed isolation, or AlphaEvolve-scale
+  arbitrary-codebase support.
 - Candidate abstractions are code-file/workspace based; problem-defined direct
   solution objects, constructor-function search, bespoke search-algorithm
   candidates, paired solution/search representations, abstraction-specific
@@ -246,6 +248,18 @@ problem-owned Python validator score the bounded process record. The commands
 inherit the host network and run as ordinary local subprocesses; this is a
 contract smoke test, not a security sandbox or real-language benchmark.
 
+Exercise the real C compiler path when `clang`, `gcc`, or `cc` is installed:
+
+```bash
+py -3.12 -m libreevolve run libreevolve/problems/examples/candidate_runner_c --run-name readme_smoke_candidate_runner_c --max-generations 0 --overwrite
+py -3.12 -m libreevolve show runs/readme_smoke_candidate_runner_c
+```
+
+This fixture compiles and runs a small C11 primary, records the selected
+compiler executable and version-output hashes, and verifies a checked build-
+contract lock. Exact compiler pins are intentionally unset, so the resulting
+run does not claim portable replay.
+
 Run a provider-backed evolution after choosing a model that is available in
 your account or local Ollama install:
 
@@ -289,6 +303,10 @@ The bundled examples are intentionally small:
   exercises an explicit non-Python primary, local build and runner commands,
   generated-artifact capture, and problem-owned scoring; it is not evidence
   for a real language, compiler, package manager, or codebase-scale benchmark.
+- `candidate_runner_c` is a non-comparable real-compiler contract smoke fixture.
+  It compiles one toy C11 program with a discovered host compiler, records
+  toolchain identity, verifies a lock hash, and runs the generated executable;
+  it is not hermetic replay or codebase-scale benchmark evidence.
 - `sorting_network_8` and `sorting_network_9` are bounded benchmark candidates
   with exhaustive zero-one validation and known comparator targets, but they
   are not paper-comparable evidence until repeated runs and certification are

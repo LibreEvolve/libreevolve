@@ -4438,6 +4438,11 @@ def test_manifest_written():
             "validator_entrypoints": "problem_local_python_files_or_packages",
             "task_declared_language_runners": "local_subprocess_without_shell_partial",
             "build_system_runners": "local_subprocess_without_shell_partial",
+            "toolchain_identity": (
+                "declared_candidate_resolution_version_probe_and_optional_sha256_pins"
+            ),
+            "dependency_lock_identity": "candidate_workspace_file_sha256_pins",
+            "toolchain_distribution": "host_resolved_not_provisioned",
             "metrics_authority": "problem_owned_python_validator",
             "network_policy": "host_only_for_candidate_runner",
             "problem_defined_solution_abstractions": "unsupported",
@@ -4453,8 +4458,9 @@ def test_manifest_written():
         "alphaevolve_divergence": (
             "LibreEvolve can execute task-declared local language/build commands "
             "for bounded text workspaces, but lacks language-aware marker grammars, "
-            "OS sandboxing, replayable toolchains, task-defined solution objects, "
-            "and real codebase-scale language benchmark evidence."
+            "OS sandboxing, portable hermetic toolchain distribution and dependency "
+            "resolution, task-defined solution objects, and real codebase-scale "
+            "language benchmark evidence."
         ),
         "language_runner_ready": False,
         "remaining_gap": [
@@ -4462,7 +4468,7 @@ def test_manifest_written():
             "language_aware_evolve_block_marker_grammars",
             "problem_defined_candidate_abstraction_hooks",
             "os_sandboxed_arbitrary_language_runner_isolation",
-            "toolchain_version_and_dependency_replay_artifacts",
+            "portable_hermetic_toolchain_distribution_and_dependency_resolution",
             "real_language_codebase_benchmark_evidence",
         ],
     }
@@ -4838,6 +4844,36 @@ def test_manifest_records_candidate_language_runner_declarations():
     assert "runner_execution_for_declared_candidate_language_or_build_system" in (
         policy["remaining_gap"]
     )
+
+
+def test_candidate_language_policy_rejects_malformed_toolchain_declaration():
+    tmpdir = tempfile.mkdtemp()
+    ProgramDatabase(
+        Config(
+            log_dir=tmpdir,
+            problem_name="t",
+            candidate_build_systems=[
+                {
+                    "name": "c_compiler",
+                    "build_command": ["{toolchain}", "solution.c"],
+                    "toolchain_candidates": ["clang"],
+                    "dependency_lock_sha256": {"toolchain.lock": "a" * 64},
+                }
+            ],
+        )
+    )
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    policy = manifest["policies"]["candidate_language"]
+    declaration = policy["runner_declarations"]["build_system_declarations"][0]
+    declaration["toolchain_version_command"] = ["clang", "--version"]
+    declaration["dependency_lock_sha256"]["toolchain.lock"] = "not-a-hash"
+
+    validation = validate_candidate_language_policy(policy)
+    codes = {issue["code"] for issue in validation["issues"]}
+
+    assert validation["ok"] is False
+    assert "invalid_build_system_toolchain_probe_command" in codes
+    assert "invalid_build_system_dependency_lock_sha256" in codes
 
 
 def test_manifest_records_validator_network_deny_policy():

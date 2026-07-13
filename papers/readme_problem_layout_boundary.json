@@ -378,7 +378,8 @@
       "missing_test_marker_records": [],
       "example_paths": [
         "libreevolve/problems/examples/embedded_evaluate_math/config.yaml",
-        "libreevolve/problems/examples/candidate_runner_expression/config.yaml"
+        "libreevolve/problems/examples/candidate_runner_expression/config.yaml",
+        "libreevolve/problems/examples/candidate_runner_c/config.yaml"
       ],
       "missing_example_paths": [],
       "item_status": "item_markers_and_examples_present"
@@ -447,13 +448,14 @@
       ],
       "missing_test_marker_records": [],
       "example_paths": [
-        "libreevolve/problems/examples/candidate_runner_expression/initial_programs/seed_policy.yaml"
+        "libreevolve/problems/examples/candidate_runner_expression/initial_programs/seed_policy.yaml",
+        "libreevolve/problems/examples/candidate_runner_c/initial_programs/seed_policy.yaml"
       ],
       "missing_example_paths": [],
       "item_status": "item_markers_and_examples_present"
     }
   ],
-  "contract_marker_count": 26,
+  "contract_marker_count": 30,
   "missing_contract_marker_count": 0,
   "missing_contract_marker_records": [],
   "contract_marker_records": [
@@ -500,6 +502,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "problem_format_candidate_toolchain",
+      "path": "docs/problem-format.md",
+      "required_marker": "toolchain_candidates: [\"clang\", \"gcc\", \"cc\"]",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "loader_context_manifest_names",
       "path": "libreevolve/problems/loader.py",
       "required_marker": "_CONTEXT_MANIFEST_NAMES = (\"context.yaml\", \"context.yml\")",
@@ -536,6 +544,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "config_candidate_toolchain_contract",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "def _validate_candidate_toolchain_contract",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "evaluator_cascade",
       "path": "libreevolve/core/evaluator.py",
       "required_marker": "class CascadeEvaluator",
@@ -548,6 +562,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "evaluator_candidate_toolchain",
+      "path": "libreevolve/core/evaluator.py",
+      "required_marker": "def _prepare_candidate_build_toolchain",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "loader_seed_primary_file",
       "path": "libreevolve/problems/loader.py",
       "required_marker": "def _seed_workspace_primary_file",
@@ -557,6 +577,12 @@
       "record_id": "examples_loader_smoke",
       "path": "tests/test_examples.py",
       "required_marker": "problem = load_problem(SORTING_NETWORK_8_EXAMPLE_DIR)",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "examples_c_toolchain_smoke",
+      "path": "tests/test_examples.py",
+      "required_marker": "def test_candidate_runner_c_example_loads_compiles_and_scores",
       "marker_status": "marker_present"
     },
     {

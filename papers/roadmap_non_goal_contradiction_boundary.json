@@ -37,13 +37,13 @@
     },
     {
       "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
-      "roadmap_text": "Claiming arbitrary-language/codebase support before runners and validators exist.",
+      "roadmap_text": "Claiming arbitrary-language/codebase parity before portable toolchains, language-aware mutation, and representative validators exist.",
       "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
       "constrained_surface_count": 3,
       "constrained_surfaces": [
         {
           "path": "ROADMAP.md",
-          "required_safe_phrase": "Claiming arbitrary-language/codebase support before runners and validators",
+          "required_safe_phrase": "Claiming arbitrary-language/codebase parity before portable toolchains",
           "required_safe_phrase_present": true,
           "forbidden_claim_phrases": [
             "arbitrary-language runners are implemented",
@@ -54,7 +54,7 @@
         },
         {
           "path": "README.md",
-          "required_safe_phrase": "does not prove real-language toolchains",
+          "required_safe_phrase": "prove portable hermetic toolchain provisioning",
           "required_safe_phrase_present": true,
           "forbidden_claim_phrases": [
             "arbitrary-language runners are implemented",

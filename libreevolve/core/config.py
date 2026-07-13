@@ -14,6 +14,7 @@ from libreevolve.core.candidate import (
     DEFAULT_MAX_CANDIDATE_TOTAL_STATIC_BYTES,
     DEFAULT_MAX_CANDIDATE_WORKSPACE_FILES,
     MUTATION_MODES,
+    normalize_candidate_path,
 )
 from libreevolve.core.redaction import redact_sensitive_text
 from libreevolve.llm.openai_compat import (
@@ -768,6 +769,11 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
             "build_files",
             "build_command",
             "artifact_patterns",
+            "toolchain_candidates",
+            "toolchain_version_command",
+            "toolchain_executable_sha256",
+            "toolchain_version_output_sha256",
+            "dependency_lock_sha256",
             "execution_status",
             "notes",
         }
@@ -802,6 +808,42 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
             f"{path}.build_command",
             item.get("build_command"),
         )
+        toolchain_candidates = _validate_candidate_toolchain_candidates(
+            f"{path}.toolchain_candidates",
+            item.get("toolchain_candidates", []),
+        )
+        raw_toolchain_version_command = item.get("toolchain_version_command")
+        toolchain_version_command = (
+            []
+            if raw_toolchain_version_command is None
+            or raw_toolchain_version_command == []
+            else _validate_candidate_runner_command(
+                f"{path}.toolchain_version_command",
+                raw_toolchain_version_command,
+            )
+        )
+        if toolchain_candidates and not toolchain_version_command:
+            toolchain_version_command = ["{toolchain}", "--version"]
+        toolchain_executable_sha256 = _validate_optional_sha256(
+            f"{path}.toolchain_executable_sha256",
+            item.get("toolchain_executable_sha256"),
+        )
+        toolchain_version_output_sha256 = _validate_optional_sha256(
+            f"{path}.toolchain_version_output_sha256",
+            item.get("toolchain_version_output_sha256"),
+        )
+        dependency_lock_sha256 = _validate_candidate_dependency_lock_sha256(
+            f"{path}.dependency_lock_sha256",
+            item.get("dependency_lock_sha256", {}),
+        )
+        _validate_candidate_toolchain_contract(
+            path,
+            build_command=build_command,
+            candidates=toolchain_candidates,
+            version_command=toolchain_version_command,
+            executable_sha256=toolchain_executable_sha256,
+            version_output_sha256=toolchain_version_output_sha256,
+        )
         if execution_status == CANDIDATE_RUNNER_EXECUTION_STATUS and not build_command:
             raise ConfigError(
                 f"{path}.build_command is required when execution_status="
@@ -813,6 +855,13 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
                 "build_files": build_files,
                 "build_command": build_command,
                 "artifact_patterns": artifact_patterns,
+                "toolchain_candidates": toolchain_candidates,
+                "toolchain_version_command": toolchain_version_command,
+                "toolchain_executable_sha256": toolchain_executable_sha256,
+                "toolchain_version_output_sha256": (
+                    toolchain_version_output_sha256
+                ),
+                "dependency_lock_sha256": dependency_lock_sha256,
                 "execution_status": execution_status,
                 "notes": _validate_candidate_declaration_text(
                     f"{path}.notes",
@@ -857,6 +906,91 @@ def _validate_candidate_runner_command(path: str, value: object) -> list[str]:
             _validate_candidate_declaration_text(f"{path}[{index}]", token)
         )
     return command
+
+
+def _validate_candidate_toolchain_candidates(path: str, value: object) -> list[str]:
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise ConfigError(f"{path} must be a list of executable names or paths")
+    candidates: list[str] = []
+    seen: set[str] = set()
+    for index, value_item in enumerate(value):
+        candidate = _validate_candidate_declaration_text(
+            f"{path}[{index}]",
+            value_item,
+        )
+        if candidate == "{toolchain}":
+            raise ConfigError(f"{path}[{index}] must name an executable")
+        key = candidate.casefold()
+        if key in seen:
+            raise ConfigError(f"{path} must not contain duplicate candidates")
+        seen.add(key)
+        candidates.append(candidate)
+    return candidates
+
+
+def _validate_candidate_dependency_lock_sha256(
+    path: str,
+    value: object,
+) -> dict[str, str]:
+    if value is None:
+        return {}
+    if not isinstance(value, dict) or not all(
+        isinstance(key, str) for key in value
+    ):
+        raise ConfigError(f"{path} must map candidate paths to sha256 digests")
+    normalized: dict[str, str] = {}
+    for raw_path, digest in value.items():
+        try:
+            candidate_path = normalize_candidate_path(raw_path)
+        except ValueError as exc:
+            raise ConfigError(f"{path} contains an unsafe candidate path") from exc
+        if candidate_path in normalized:
+            raise ConfigError(f"{path} contains duplicate normalized paths")
+        normalized[candidate_path] = _require_sha256(
+            f"{path}.{candidate_path}",
+            digest,
+        )
+    return {key: normalized[key] for key in sorted(normalized)}
+
+
+def _validate_optional_sha256(path: str, value: object) -> str | None:
+    if value is None:
+        return None
+    return _require_sha256(path, value)
+
+
+def _validate_candidate_toolchain_contract(
+    path: str,
+    *,
+    build_command: list[str],
+    candidates: list[str],
+    version_command: list[str],
+    executable_sha256: str | None,
+    version_output_sha256: str | None,
+) -> None:
+    if candidates:
+        if not build_command or build_command[0] != "{toolchain}":
+            raise ConfigError(
+                f"{path}.build_command must begin with '{{toolchain}}' when "
+                "toolchain_candidates are configured"
+            )
+        if not version_command or version_command[0] != "{toolchain}":
+            raise ConfigError(
+                f"{path}.toolchain_version_command must begin with "
+                "'{toolchain}'"
+            )
+        return
+    if build_command and build_command[0] == "{toolchain}":
+        raise ConfigError(
+            f"{path}.build_command requires toolchain_candidates for "
+            "'{toolchain}'"
+        )
+    if version_command or executable_sha256 or version_output_sha256:
+        raise ConfigError(
+            f"{path} toolchain commands and pins require toolchain_candidates"
+        )
 
 
 def _validate_candidate_runner_stage_bindings(

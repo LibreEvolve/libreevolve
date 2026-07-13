@@ -1102,6 +1102,15 @@ def test_workspace_allows_explicit_reserved_seed_paths(tmp_path):
     assert (tmp_path / "candidate" / "__pycache__" / "cached.py").read_text(encoding="utf-8") == "VALUE = 2\n"
 
 
+def test_workspace_materializes_text_as_exact_utf8_bytes(tmp_path):
+    content = "first\nsecond\r\nthird\r"
+    workspace = CandidateWorkspace(files={"main.txt": content}, primary_file="main.txt")
+
+    primary_path = workspace.materialize(tmp_path / "candidate")
+
+    assert primary_path.read_bytes() == content.encode("utf-8")
+
+
 def test_workspace_mutation_preserves_reserved_allowlist_without_broadening_it():
     workspace = CandidateWorkspace(
         files={".config.py": "VALUE = 1\n", "main.py": "VALUE = 0\n"},
@@ -2830,14 +2839,14 @@ def test_workspace_materialize_write_failure_preserves_existing_root(
         files={"a.py": "a = 1\n", "b.py": "b = 2\n"},
         primary_file="a.py",
     )
-    original_write_text = candidate_module.Path.write_text
+    original_write_bytes = candidate_module.Path.write_bytes
 
     def fail_second_file(self, data, *args, **kwargs):
         if self.name == "b.py":
             raise OSError("disk failed")
-        return original_write_text(self, data, *args, **kwargs)
+        return original_write_bytes(self, data, *args, **kwargs)
 
-    monkeypatch.setattr(candidate_module.Path, "write_text", fail_second_file)
+    monkeypatch.setattr(candidate_module.Path, "write_bytes", fail_second_file)
 
     try:
         workspace.materialize(tmp_path)

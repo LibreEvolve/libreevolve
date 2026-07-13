@@ -16101,3 +16101,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: candidate-workspace fidelity/readiness and
     candidate-language sidecars distinguish local partial capability from full
     AlphaEvolve arbitrary-language support.
+- [x] Credit real host C compilation in candidate-workspace roadmap status.
+  - Status: ROADMAP now credits ordered toolchain resolution, version probes,
+    optional exact pins, lock verification, the checked C11 compile/run fixture,
+    generated-binary capture, and explicit same-host replay scope.
+  - Remaining roadmap gap: portable hermetic provisioning, deterministic
+    cross-host replay, broader compiler/interpreter/package-manager coverage,
+    sandboxing, language-aware markers, task-defined abstractions, and
+    codebase-scale benchmark evidence remain active readiness criteria.
+  - Verification: candidate-language, candidate-workspace, example-scope, and
+    runtime-report boundaries distinguish host compiler smoke from parity.

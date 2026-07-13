@@ -1,2 +1,2 @@
-recursive-include libreevolve/problems/examples *.bin *.expr *.json *.md *.txt *.yaml
+recursive-include libreevolve/problems/examples *.bin *.c *.expr *.json *.lock *.md *.txt *.yaml
 recursive-include libreevolve/problems/benchmarks *.ipynb *.json

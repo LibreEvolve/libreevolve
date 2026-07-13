@@ -257,10 +257,13 @@ from `validate.py` unless explicitly allowlisted.
   and permits a `candidate_runner` stage to bind the declaration. The other
   statuses, `declared_metadata_only` and `unsupported`, remain non-executable.
 - `candidate_build_systems` (`[]`): optional build declarations with `name`,
-  `build_files`, `build_command`, `artifact_patterns`, `execution_status`, and
-  optional `notes`. Executable build declarations require a command and may be
-  bound by a candidate-runner stage; build output capture remains subject to
-  evaluator artifact count/byte/redaction limits.
+  `build_files`, `build_command`, `artifact_patterns`, ordered
+  `toolchain_candidates`, a `toolchain_version_command`, optional executable and
+  normalized-version-output SHA-256 pins, candidate dependency-lock path
+  hashes, `execution_status`, and optional `notes`. Executable build
+  declarations require a command and may be bound by a candidate-runner stage;
+  build output capture remains subject to evaluator artifact
+  count/byte/redaction limits.
 - `eval_stages` (`[]`): optional configured evaluator stages with
   `external_validator` (default), `embedded_evaluate`, or `candidate_runner`
   mode, stage validator entrypoints, thresholds, samples, validator-managed
@@ -1019,40 +1022,51 @@ SHA-256, not the raw object. Embedded stages currently still require the problem
 to include the normal `validate.py` file for problem loading, but they do not
 run that validator for the embedded stage.
 
-For a trusted local non-Python adapter, bind executable declarations from the
+For a trusted local non-Python compiler, bind executable declarations from the
 same config:
 
 ```yaml
 validator_network_policy: host
 candidate_language_runners:
-  - language: expression
+  - language: c
     candidate_role: task_primary_text
-    file_patterns: ["solution.expr"]
+    file_patterns: ["solution.c"]
     marker_grammar: whole_file_text_v1
-    runner_command: ["{python}", "-c", "<adapter>", "{primary}"]
+    runner_command: ["{workspace}/program.exe"]
     execution_status: executable_local_subprocess
 candidate_build_systems:
-  - name: expression_copy
-    build_files: ["solution.expr"]
-    build_command: ["{python}", "-c", "<build adapter>"]
-    artifact_patterns: ["build/**"]
+  - name: c_compiler
+    build_files: ["solution.c", "toolchain.lock"]
+    build_command: ["{toolchain}", "-O2", "-std=c11", "solution.c", "-o", "program.exe"]
+    artifact_patterns: ["program.exe"]
+    toolchain_candidates: ["clang", "gcc", "cc"]
+    toolchain_version_command: ["{toolchain}", "--version"]
+    toolchain_executable_sha256: "<optional-exact-compiler-sha256>"
+    toolchain_version_output_sha256: "<optional-normalized-version-output-sha256>"
+    dependency_lock_sha256:
+      toolchain.lock: "<required-lock-file-sha256>"
     execution_status: executable_local_subprocess
 eval_stages:
-  - name: run_expression
+  - name: run_c
     mode: candidate_runner
-    language_runner: expression
-    build_system: expression_copy
+    language_runner: c
+    build_system: c_compiler
     timeout_sec: 10
 ```
 
 Commands are arrays, not shell strings. `{workspace}`, `{primary}`, and
-`{python}` are expanded in each token. The optional build, language runner, and
-problem-owned Python scorer share the stage timeout. The scorer receives a
-bounded/redacted candidate process record and remains metrics authority.
-Candidate commands inherit the host network, use the minimal validator
-environment plus `validator_env_allowlist`, and are not sandboxed. The checked
-`candidate_runner_expression` fixture is a local contract smoke test rather
-than real-toolchain or arbitrary-language parity evidence.
+`{python}` are expanded in each token. A toolchain-backed build must begin with
+`{toolchain}`; the first resolvable declared candidate is substituted into the
+build and version-probe commands. Version-output hashes normalize only newline
+sequences before hashing. Configured executable/version pins and candidate lock
+hashes fail the stage before the build when they do not match. The optional
+probe/build, language runner, and problem-owned Python scorer share the stage
+timeout. The scorer receives a bounded/redacted candidate process record and
+remains metrics authority. Candidate commands inherit the host network, use the
+minimal validator environment plus `validator_env_allowlist`, and are not
+sandboxed. `candidate_runner_expression` checks the adapter path;
+`candidate_runner_c` checks one host C compiler path. Neither is
+arbitrary-language, hermetic, or codebase-scale parity evidence.
 
 When stage provenance is enabled, every configured stage must define both
 `difficulty_or_scale` and `test_set`. Difficulty records require a manifest-

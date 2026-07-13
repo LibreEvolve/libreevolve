@@ -148,6 +148,7 @@ EXPECTED_LAYOUT_ITEMS = (
         "example_paths": (
             "libreevolve/problems/examples/embedded_evaluate_math/config.yaml",
             "libreevolve/problems/examples/candidate_runner_expression/config.yaml",
+            "libreevolve/problems/examples/candidate_runner_c/config.yaml",
         ),
         "test_markers": (
             "test_allows_missing_validate_py_for_embedded_only_problem_config",
@@ -171,6 +172,7 @@ EXPECTED_LAYOUT_ITEMS = (
         ),
         "example_paths": (
             "libreevolve/problems/examples/candidate_runner_expression/initial_programs/seed_policy.yaml",
+            "libreevolve/problems/examples/candidate_runner_c/initial_programs/seed_policy.yaml",
         ),
         "test_markers": (
             "test_seed_policy_selects_non_python_primary_file_for_workspace",
@@ -187,16 +189,20 @@ EXPECTED_CONTRACT_MARKERS = (
     ("problem_format_codebase_integration", PROBLEM_FORMAT_PATH, "codebase_integration.yaml"),
     ("problem_format_seed_policy", PROBLEM_FORMAT_PATH, "initial_programs/seed_policy.yaml"),
     ("problem_format_candidate_runner", PROBLEM_FORMAT_PATH, "## Candidate Runner Declarations"),
+    ("problem_format_candidate_toolchain", PROBLEM_FORMAT_PATH, "toolchain_candidates: [\"clang\", \"gcc\", \"cc\"]"),
     ("loader_context_manifest_names", LOADER_PATH, "_CONTEXT_MANIFEST_NAMES = (\"context.yaml\", \"context.yml\")"),
     ("loader_seed_policy_names", LOADER_PATH, "_SEED_POLICY_MANIFEST_NAMES = (\"seed_policy.yaml\", \"seed_policy.yml\")"),
     ("loader_codebase_integration_names", LOADER_PATH, "_CODEBASE_INTEGRATION_METADATA_NAMES"),
     ("config_eval_stages", CONFIG_PATH, "eval_stages:            list[dict] = field(default_factory=list)"),
     ("config_candidate_language_runners", CONFIG_PATH, "candidate_language_runners: list[dict] = field(default_factory=list)"),
     ("config_candidate_runner_stage_bindings", CONFIG_PATH, "def _validate_candidate_runner_stage_bindings"),
+    ("config_candidate_toolchain_contract", CONFIG_PATH, "def _validate_candidate_toolchain_contract"),
     ("evaluator_cascade", EVALUATOR_PATH, "class CascadeEvaluator"),
     ("evaluator_candidate_runner", EVALUATOR_PATH, "def _run_candidate_runner_subprocess"),
+    ("evaluator_candidate_toolchain", EVALUATOR_PATH, "def _prepare_candidate_build_toolchain"),
     ("loader_seed_primary_file", LOADER_PATH, "def _seed_workspace_primary_file"),
     ("examples_loader_smoke", TEST_EXAMPLES_PATH, "problem = load_problem(SORTING_NETWORK_8_EXAMPLE_DIR)"),
+    ("examples_c_toolchain_smoke", TEST_EXAMPLES_PATH, "def test_candidate_runner_c_example_loads_compiles_and_scores"),
     ("readme_todo_owner", README_TODO_PATH, "Add README problem-layout contract drift evidence."),
     ("code_todo_candidate_workspace", CODE_TODO_PATH, "Candidate Workspace Fidelity"),
     ("papers_todo_evaluator_contract", PAPERS_TODO_PATH, "validator"),

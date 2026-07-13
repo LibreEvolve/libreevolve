@@ -115,8 +115,8 @@ sidecars, tests, and active TODOs.
 
 ## Candidate Workspace Fidelity
 
-- [ ] Extend the task-primary local candidate runner to real language and
-  replayable toolchain evidence.
+- [ ] Extend the task-primary local candidate runner beyond host C smoke to
+  portable replayable toolchain evidence.
   - Spec evidence: AlphaEvolve describes evolving code in existing codebases
     with task-defined evaluators; a faithful implementation needs explicit
     candidate language/build/runner boundaries rather than assuming one Python
@@ -140,8 +140,9 @@ sidecars, tests, and active TODOs.
     bounded retained-workspace path-match records under
     `runner_declaration_workspace_evidence`, current-Python-runner
     environment linkage under `runner_environment_provenance`, bounded executed
-    build/runner records, command and executable-path hashes, generated build
-    artifacts, the host-network/unsandboxed boundary, unsupported task
+    build/runner records, command and executable path/content hashes, generated
+    build artifacts, toolchain version-output and dependency-lock hashes,
+    same-host replay scope, the host-network/unsandboxed boundary, unsupported task
     candidate-abstraction hooks, and the exact remaining gaps before
     AlphaEvolve-style language/build parity.
     The committed
@@ -151,15 +152,20 @@ sidecars, tests, and active TODOs.
     task primary, executes a local copy-build and expression adapter without a
     shell, captures a generated build artifact, delegates metrics to
     `validate.py`, survives `libreevolve show` boundary validation, and has
-    focused loader/config/evaluator/loop/CLI coverage.
-  - Required result: extend these executable language and build runner
-    contracts to at least one real compiler or package-manager toolchain with
-    pinned versions/dependencies, deterministic replay, stronger OS/container
-    isolation, language-aware evolve-block grammars, and codebase-scale
-    generated-artifact benchmark evidence. Add problem-defined candidate
-    abstraction hooks separately before claiming arbitrary-codebase
-    AlphaEvolve fidelity. The remaining gap is real-toolchain breadth and
-    evidence, not local command dispatch.
+    focused loader/config/evaluator/loop/CLI coverage. The checked
+    `candidate_runner_c` fixture resolves and probes `clang`, `gcc`, or `cc`,
+    verifies a build-contract lock hash, compiles and runs one C11 primary, and
+    captures the generated executable. Unit and runtime-report tests also prove
+    optional exact executable/version pin enforcement and explicitly scope
+    replay to hosts where the matching toolchain is already provisioned.
+  - Required result: add portable hermetic compiler/package-manager
+    provisioning, exact cross-host toolchain and dependency replay, broader
+    compiled/interpreted language fixtures, stronger OS/container isolation,
+    language-aware evolve-block grammars, and codebase-scale generated-artifact
+    benchmark evidence. Add problem-defined candidate abstraction hooks
+    separately before claiming arbitrary-codebase AlphaEvolve fidelity. The
+    remaining gap is portable breadth and benchmark evidence, not local compiler
+    command dispatch.
 
 - [ ] Extend existing-codebase minimal-marker integration provenance beyond
       runtime workspace evidence.

@@ -1046,8 +1046,12 @@ def validate_paper_artifact_lifecycle_manifest(
         history = {}
     expected_paths = paper_artifact_subpath_paths()
     emitted_paths = _paper_artifact_paths_from_runtime_history(history)
+    conditionally_unavailable_paths = (
+        _conditionally_unavailable_paper_artifact_paths(history)
+    )
+    required_runtime_paths = expected_paths - conditionally_unavailable_paths
     unknown_paths = sorted(emitted_paths - expected_paths)
-    missing_paths = sorted(expected_paths - emitted_paths)
+    missing_paths = sorted(required_runtime_paths - emitted_paths)
     documented_refs: list[str] = []
     missing_doc_paths: list[str] = []
     unknown_doc_refs: list[str] = []
@@ -1097,8 +1101,13 @@ def validate_paper_artifact_lifecycle_manifest(
         "ok": not issues,
         "issues": issues,
         "expected_path_count": len(expected_paths),
+        "required_runtime_path_count": len(required_runtime_paths),
         "emitted_path_count": len(emitted_paths),
         "expected_paths": sorted(expected_paths),
+        "required_runtime_paths": sorted(required_runtime_paths),
+        "conditionally_unavailable_paths": sorted(
+            conditionally_unavailable_paths
+        ),
         "emitted_paths": sorted(emitted_paths),
         "unknown_paths": unknown_paths,
         "missing_paths": missing_paths,
@@ -1787,6 +1796,46 @@ def _paper_artifact_paths_from_runtime_history(history: Mapping) -> set[str]:
         paths,
     )
     return paths
+
+
+def _conditionally_unavailable_paper_artifact_paths(
+    history: Mapping,
+) -> set[str]:
+    report = history.get("marker_spelling_provenance_report")
+    if not isinstance(report, Mapping):
+        return set()
+    source_artifacts = report.get("source_artifacts")
+    if not isinstance(source_artifacts, Mapping):
+        return set()
+    page_artifacts = source_artifacts.get("page_artifacts")
+    page_artifacts = page_artifacts if isinstance(page_artifacts, Mapping) else {}
+    records_by_filename = {
+        "alphaevolve_page_4_text.txt": page_artifacts.get("4"),
+        "alphaevolve_page_6_text.txt": page_artifacts.get("6"),
+        "alphaevolve_figure_3a_marker_text.txt": source_artifacts.get(
+            "figure_3_marker_text_artifact"
+        ),
+    }
+    marker_paths = {
+        Path(record["path"]).name: record["path"]
+        for record in _PAPER_ARTIFACT_SUBPATH_SCHEMA["families"][
+            "marker_spelling"
+        ]["path_records"]
+    }
+    allowed_reasons = {
+        "local_alphaevolve_pdf_missing",
+        "source_artifact_generation_failed",
+    }
+    return {
+        marker_paths[filename]
+        for filename, record in records_by_filename.items()
+        if filename in marker_paths
+        and isinstance(record, Mapping)
+        and record.get("status") == "missing"
+        and record.get("artifact_path") is None
+        and record.get("sha256") is None
+        and record.get("reason") in allowed_reasons
+    }
 
 
 def _collect_paper_artifact_paths(value: object, paths: set[str]) -> None:

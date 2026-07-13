@@ -441,10 +441,12 @@ LibreEvolve has:
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current task-primary bounded text-workspace boundary, Python
   primary autodetection by default, explicit seed-policy primary selection,
-  and partial stage-bound local language/build subprocess execution while
-  keeping language-aware markers, OS sandboxing, replayable real toolchains,
-  problem-defined candidate abstractions, and codebase-scale language evidence
-  unsupported
+  and partial stage-bound local language/build subprocess execution, including
+  ordered host-toolchain resolution, version probes, optional executable and
+  version-output pins, and candidate lock-file hash enforcement, while keeping
+  language-aware markers, OS sandboxing, portable hermetic toolchain
+  provisioning, problem-defined candidate abstractions, and codebase-scale
+  language evidence unsupported
 - local workspace materialization diagnostics with typed
   `CandidateMaterializationError` reasons, bounded paths, casefold collision
   checks, recursive link preflight, and static source-copy hash checks, with
@@ -460,15 +462,18 @@ LibreEvolve has:
   `runner_declaration_evidence` counts, bounded
   `runner_declaration_workspace_evidence` path-match records against retained
   candidate workspaces, bounded executed-process and generated-build-artifact
-  records, executable path hashes and environment linkage under
+  records, executable path/content hashes, toolchain version-output and lock
+  hashes, same-host replay scope, and environment linkage under
   `runner_environment_provenance`, unsupported task-abstraction hooks, and exact
   remaining gaps before
   AlphaEvolve-grade executable language/build parity, with
   `papers/candidate_language_runner_boundary.json` now carrying the
   paper-manifest-validated partial-capability boundary: the checked expression
-  smoke fixture executes one non-Python primary and copy-build contract, while
-  real-language toolchains, language-aware marker grammars, sandboxed/replayable
-  builds, full environment artifacts, and codebase-scale evidence remain open
+  fixture executes one non-Python adapter contract and the checked C fixture
+  compiles and runs one C11 primary with observed compiler identity and a
+  verified lock hash, while language/toolchain breadth, language-aware marker
+  grammars, sandboxed and portable hermetic builds, full environment artifacts,
+  and codebase-scale evidence remain open
 - runtime candidate-abstraction choice reports under
   `runtime.history.candidate_abstraction_choice_report`, recording the current
   code-file-set selection, policy/runner linkage, runtime workspace shape,
@@ -489,7 +494,7 @@ LibreEvolve has:
   snapshots that direct callers and CLI runs can restore before startup
 - example problems including `hello_world`, `sorting`, `circle_packing`,
   `matrix_multiplication`, `workspace_math`, and the non-comparable
-  `candidate_runner_expression` contract fixture
+  `candidate_runner_expression` and `candidate_runner_c` contract fixtures
 
 The project is still a Python-hosted, local-workspace research prototype. Its
 task-declared runner path is partial and unsandboxed, and it is not yet an
@@ -499,10 +504,11 @@ AlphaEvolve reproduction.
 
 ### 1. Finish candidate workspace fidelity
 
-- Extend the checked local expression runner/build smoke contract into real
-  language and toolchain fixtures with pinned dependency/toolchain identity,
-  replayable builds, stronger isolation, generated-artifact evidence, and
-  codebase-scale benchmark runs. The current command-token execution path is
+- Extend the checked expression and C runner/build smoke contracts into broader
+  compiled and interpreted language/package-manager fixtures with portable
+  hermetic toolchain provisioning, enforced exact identities, deterministic
+  cross-host replay, stronger isolation, generated-artifact evidence, and
+  codebase-scale benchmark runs. The current host-resolved command-token path is
   usable for trusted local tasks but is not arbitrary-language parity.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
@@ -2688,8 +2694,8 @@ by `papers/lineage_replay_boundary.json`.
 ## Non-Goals For Now
 
 - Requiring a service database for normal local use.
-- Claiming arbitrary-language/codebase support before runners and validators
-  exist.
+- Claiming arbitrary-language/codebase parity before portable toolchains,
+  language-aware mutation, and representative validators exist.
 - Advertising paper-inspired plugins as faithful implementations.
 
 ## Good First Follow-Ups

@@ -105,6 +105,19 @@ _EXAMPLE_BENCHMARK_SCOPE_RECORDS: tuple[dict[str, Any], ...] = (
     },
     {
         "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
+        "problem_id": "candidate_runner_c",
+        "path": "libreevolve/problems/examples/candidate_runner_c",
+        "level": "smoke",
+        "alphaevolve_comparable": False,
+        "current_role": "real_c_compiler_runner_contract_fixture",
+        "reason": "Compiles and runs one toy C program with observed host-toolchain identity and a checked build-contract lock; it is not a codebase-scale or paper benchmark.",
+        "required_upgrades": [
+            "Provision a portable hermetic compiler image and enforce exact compiler/dependency pins across hosts.",
+            "Replace the scalar target with a codebase-scale workload and repeated-seed benchmark evidence.",
+        ],
+    },
+    {
+        "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
         "problem_id": "matrix_multiplication",
         "path": "libreevolve/problems/examples/matrix_multiplication",
         "level": "smoke",

@@ -15903,3 +15903,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     and AlphaEvolve arbitrary-language parity.
   - Verification: structural docs boundaries, example-scope records, focused
     runtime tests, and the CLI/show regression guard the updated contract.
+- [x] Document the checked C compiler runner without claiming portable replay.
+  - Status: README and linked architecture, configuration, problem-format,
+    run-artifact, status, ROADMAP, paper-index, and agent docs now describe host
+    compiler discovery, version/content hashing, optional exact pins, lock-file
+    verification, the provider-free C smoke command, and the generated binary.
+  - Remaining README gap: the docs explicitly retain portable hermetic
+    provisioning, cross-host replay, sandboxing, language-aware markers,
+    task-defined abstractions, and codebase-scale evidence as open work.
+  - Verification: documentation, agent-doc, example-scope, candidate-language,
+    installed-wheel CLI/show, and paper-manifest tests guard the updated claim
+    boundary.

@@ -1171,11 +1171,12 @@ queued/running pending-work restore.
   assignment and provider-token shapes. Candidate-runner stages require the
   host network policy because arbitrary child commands cannot be denied network
   access by the Python socket hook. This is not a network sandbox.
-- The checked expression runner/build fixture proves command dispatch,
-  generated-artifact capture, and problem-owned scoring only. Real compiler or
-  package-manager fixtures, toolchain/dependency version capture and replay,
-  language-aware evolve-block grammars, OS sandboxing, and codebase-scale
-  benchmark evidence remain open.
+- The checked expression fixture proves adapter dispatch, and the checked C11
+  fixture proves host compiler resolution, version probing, lock verification,
+  compilation, generated-binary capture, execution, and problem-owned scoring.
+  Portable hermetic compiler/package-manager provisioning, cross-host replay,
+  broader language/toolchain fixtures, language-aware evolve-block grammars,
+  OS sandboxing, and codebase-scale benchmark evidence remain open.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - Proposal generation can overlap on opt-in, worker-owned local asyncio sampler

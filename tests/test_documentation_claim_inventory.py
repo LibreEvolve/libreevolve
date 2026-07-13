@@ -76,7 +76,7 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         "important_limits": 242,
     }
     assert inventory["status_ledger_signal_term_count"] == 11
-    assert inventory["status_ledger_signal_record_count"] == 616
+    assert inventory["status_ledger_signal_record_count"] == 617
     assert inventory["status_ledger_unique_local_path_ref_count"] == 215
     assert inventory["status_ledger_local_path_ref_count"] == 270
     assert inventory["status_ledger_missing_local_path_refs"] == []
@@ -120,8 +120,8 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     }
     assert {
         "path": "ROADMAP.md",
-        "line_start": 883,
-        "line_end": 883,
+        "line_start": 889,
+        "line_end": 889,
         "level": 3,
         "heading_text": "5. Documentation truthfulness",
         "heading_slug": "5-documentation-truthfulness",

@@ -67,7 +67,9 @@ def test_roadmap_candidate_workspace_readiness_accepts_bounded_matrix():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "real_language_replayable_build_runner_evidence": "not_recorded_locally",
+        "portable_hermetic_replayable_build_runner_evidence": (
+            "host_c_compiler_smoke_recorded_portable_replay_not_recorded"
+        ),
         "flexible_solution_abstraction_api": "not_recorded_locally",
         "candidate_embedded_evaluator_contracts": "not_recorded_locally",
         "realistic_codebase_fixtures": "not_recorded_locally",
@@ -81,7 +83,7 @@ def test_roadmap_candidate_workspace_readiness_accepts_bounded_matrix():
         "stale_readiness_detector": "not_recorded_locally",
         "owner_review_signoff": "not_recorded_locally",
     }
-    assert "does not claim real-language replayable build-runner evidence" in boundary["claim_boundary"]
+    assert "does not claim portable hermetic replayable build-runner evidence" in boundary["claim_boundary"]
     assert "claim guard for each workspace surface" in boundary["claim_boundary"]
     assert "topology resume replay proof" in boundary["claim_boundary"]
     assert "stale-readiness detector" in boundary["claim_boundary"]
@@ -98,7 +100,7 @@ def test_roadmap_candidate_workspace_readiness_rejects_overclaim_and_drift():
     boundary["readiness_criteria"][0]["active_todo_refs"][0][
         "required_phrase_present"
     ] = False
-    boundary["missing_evidence"]["real_language_replayable_build_runner_evidence"] = "recorded"
+    boundary["missing_evidence"]["portable_hermetic_replayable_build_runner_evidence"] = "recorded"
     boundary["required_evidence_fields"] = ["readiness_criteria"]
 
     validation = validate_roadmap_candidate_workspace_readiness_boundary(boundary)
@@ -111,7 +113,7 @@ def test_roadmap_candidate_workspace_readiness_rejects_overclaim_and_drift():
     assert "invalid_readiness_criterion_count" in codes
     assert "invalid_readiness_criteria" in codes
     assert "invalid_candidate_workspace_claim_guard_count" in codes
-    assert "invalid_missing_evidence_real_language_replayable_build_runner_evidence" in codes
+    assert "invalid_missing_evidence_portable_hermetic_replayable_build_runner_evidence" in codes
     assert "missing_required_evidence_field" in codes
     assert "invalid_required_evidence_field_count" in codes
 

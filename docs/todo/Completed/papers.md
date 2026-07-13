@@ -14447,3 +14447,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Verification: boundary, paper-manifest, runtime-report, example, and CLI
     regressions keep `claim_ready: false` while rejecting metadata-only stale
     classifications and unsupported parity claims.
+- [x] Promote candidate-language evidence to checked host C compiler partial support.
+  - Paper evidence: AlphaEvolve Sections 2.1-2.2 treat the task's program,
+    build, runner, and evaluator interfaces as first-class inputs.
+  - Status: the candidate-language boundary now credits one checked C11
+    compile/run path, observed toolchain executable/version identity, optional
+    exact-pin enforcement, dependency-lock verification, generated-binary
+    capture, and explicit same-host/preprovisioned-host replay scope.
+  - Remaining paper gap: portable hermetic provisioning, cross-host replay,
+    broader language and codebase coverage, OS sandboxing, language-aware
+    markers, and task-defined abstraction APIs still block parity claims.
+  - Verification: boundary, paper-manifest, runtime-report, real-compiler
+    example, and overclaim tests keep `claim_ready: false`.

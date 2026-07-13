@@ -21,7 +21,8 @@ libreevolve/
   population/ program.py, map_elites.py (3D TF-IDF), islands.py (ring migration, explore/exploit)
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
   problems/   loader.py, examples/{hello_world,circle_packing,sorting,
-              matrix_multiplication,workspace_math,candidate_runner_expression}/
+              matrix_multiplication,workspace_math,candidate_runner_expression,
+              candidate_runner_c}/
   cli.py      Click CLI with run/show commands
 ```
 
@@ -41,6 +42,11 @@ libreevolve/
   network, use the minimal validator environment plus the allowlist, and are
   not security sandboxes. The problem-owned Python validator remains metrics
   authority and receives only the bounded/redacted runner record.
+- Candidate build declarations may name ordered `toolchain_candidates`, a
+  `{toolchain}` version probe, optional executable/version-output SHA-256 pins,
+  and candidate lock-file hashes. Matching identity is same-host or
+  preprovisioned-host evidence only; LibreEvolve does not provision hermetic
+  toolchains.
 - `initial_programs/seed_policy.yaml` may set `primary_file` for every seed
   workspace. Without it, seed-workspace primary selection remains `main.py`,
   then `seed.py`, then the first Python path.

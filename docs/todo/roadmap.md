@@ -201,7 +201,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
 - [ ] Add ROADMAP non-goal contradiction checks.
   - Spec evidence: ROADMAP non-goals are overclaim guardrails. If the project
     says it is not requiring a service database, not claiming arbitrary-
-    language/codebase support before runners and validators exist, and not
+    language/codebase parity before portable toolchains, language-aware
+    mutation, and representative validators exist, and not
     advertising paper-inspired plugins as faithful implementations, those
     claims should be protected against drift across README, papers, plugin
     docs, and implementation metadata.
@@ -796,8 +797,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     AlphaEvolve-alignment claims rather than only Python-local workspace
     experiments.
   - Current evidence: ROADMAP records metadata-only or executable
-    candidate-language/build declarations, a checked task-primary local
-    expression build/runner/scorer fixture, code-file-set divergence from
+    candidate-language/build declarations, checked task-primary local expression
+    and C compiler build/runner/scorer fixtures, code-file-set divergence from
     AlphaEvolve's flexible
     solution-abstraction API, candidate-abstraction design matrices,
     Python-only evolve-block marker handling, `workspace_math` smoke fixtures,
@@ -806,7 +807,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     mutation-consistency reports, initial-pool divergence reports,
     binary/static candidate handling, topology materialization diagnostics, and
     archive-content restore boundaries. Active code and paper TODOs already
-    track real language/build runners, candidate-embedded evaluators,
+    track portable and broader language/build runners, candidate-embedded evaluators,
     abstraction-choice benchmark evidence, topology diagnostics, adaptive
     mutation modes, mutation-operator provenance, validator boundary checks,
     source/workspace integrity, binary/static replay policy, codebase-scale
@@ -827,12 +828,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Current gap: the per-surface candidate-workspace claim guard is a bounded
     allowed-scope map, not evidence that the missing candidate-workspace
     capabilities are implemented. A passing Python workspace or local
-    expression-runner fixture, fixed diff parser, snapshot restore, or
+    expression/C-runner fixture, fixed diff parser, snapshot restore, or
     materialization diagnostic still must
     not be mistaken for complete AlphaEvolve-style workspace support.
   - Required result: implement the missing readiness fields recorded by the
-    readiness sidecar: real-language/replayable build runners beyond the local
-    expression smoke, flexible solution
+    readiness sidecar: portable hermetic and broader language/build runners
+    beyond the local expression and host C smoke fixtures, flexible solution
     abstraction API, candidate-embedded evaluator contracts, realistic codebase
     fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family
     provenance, semantic prompt-example-copy detection, cross-file consistency

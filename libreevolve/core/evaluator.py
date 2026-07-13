@@ -1769,11 +1769,64 @@ class CascadeEvaluator:
             )
             build_record = None
             build_artifacts = None
+            toolchain_record = None
+            toolchain_executable = None
             if build is not None:
+                (
+                    toolchain_executable,
+                    toolchain_record,
+                    toolchain_error,
+                ) = _prepare_candidate_build_toolchain(
+                    build,
+                    workspace_root=cand_root,
+                    timeout_sec=_candidate_runner_remaining_timeout(
+                        timeout_sec,
+                        started,
+                    ),
+                    env=runner_env,
+                    output_max_chars=self._output_max_chars,
+                )
+                if toolchain_error is not None:
+                    candidate_record = _candidate_runner_execution_record(
+                        language,
+                        build,
+                        build_record,
+                        None,
+                        env_metadata,
+                        stdin_metadata,
+                        workspace,
+                        toolchain_record=toolchain_record,
+                    )
+                    metadata = _eval_metadata(
+                        workspace,
+                        validate_path,
+                        self._problem.problem_dir,
+                        stage_context,
+                        env_metadata,
+                        network_policy=self._validator_network_policy,
+                        stdin_metadata=stdin_metadata,
+                    )
+                    metadata["candidate_runner"] = candidate_record
+                    process_record = (
+                        toolchain_record.get("version_probe")
+                        if isinstance(toolchain_record, dict)
+                        and isinstance(toolchain_record.get("version_probe"), dict)
+                        else None
+                    )
+                    return _candidate_runner_failure_result(
+                        self._problem,
+                        workspace,
+                        stage_name,
+                        toolchain_error,
+                        time.perf_counter() - started,
+                        metadata,
+                        process_record=process_record,
+                    )
                 build_command = _expand_candidate_runner_command(
                     build["build_command"],
                     cand_root,
                     primary,
+                    toolchain_executable=toolchain_executable,
                 )
                 build_result, launch_error, build_elapsed = _run_candidate_command(
                     build_command,
@@ -1824,6 +1877,7 @@ class CascadeEvaluator:
                         env_metadata,
                         stdin_metadata,
                         workspace,
+                        toolchain_record=toolchain_record,
                     )
                     metadata = _eval_metadata(
                         workspace,
@@ -1879,6 +1933,7 @@ class CascadeEvaluator:
                 env_metadata,
                 stdin_metadata,
                 workspace,
+                toolchain_record=toolchain_record,
             )
             if runner_error is not None:
                 metadata = _eval_metadata(
@@ -2040,16 +2095,257 @@ def _candidate_runner_remaining_timeout(timeout_sec: float, started: float) -> f
     return max(0.001, float(timeout_sec) - (time.perf_counter() - started))
 
 
+def _prepare_candidate_build_toolchain(
+    build: dict,
+    *,
+    workspace_root: Path,
+    timeout_sec: float,
+    env: dict[str, str],
+    output_max_chars: int,
+) -> tuple[str | None, dict | None, str | None]:
+    candidates = list(build.get("toolchain_candidates", []))
+    dependency_locks = _candidate_dependency_lock_records(
+        workspace_root,
+        build.get("dependency_lock_sha256", {}),
+    )
+    if not candidates and not dependency_locks:
+        return None, None, None
+    record = {
+        "schema": "libreevolve.candidate_toolchain_identity.v1",
+        "selection_policy": "first_resolvable_declared_candidate",
+        "candidate_count": len(candidates),
+        "candidate_basenames": [
+            _candidate_executable_basename(candidate) for candidate in candidates
+        ],
+        "selection_status": "not_configured" if not candidates else "unresolved",
+        "selected_candidate_index": None,
+        "selected_candidate_basename": None,
+        "executable": None,
+        "version_probe_process_started": False,
+        "version_probe": None,
+        "version_output_normalization": "decoded_text_newlines_lf_then_strict_json_v1",
+        "version_output_sha256": None,
+        "expected_executable_sha256": build.get("toolchain_executable_sha256"),
+        "executable_pin_match": None,
+        "expected_version_output_sha256": build.get(
+            "toolchain_version_output_sha256"
+        ),
+        "version_output_pin_match": None,
+        "dependency_lock_count": len(dependency_locks),
+        "dependency_lock_hash_scope": "materialized_candidate_file_bytes",
+        "dependency_locks": dependency_locks,
+        "dependency_locks_match": all(
+            item.get("matches_expected") is True for item in dependency_locks
+        ),
+        "identity_observed": False,
+        "pin_enforcement_configured": bool(
+            build.get("toolchain_executable_sha256")
+            and build.get("toolchain_version_output_sha256")
+        ),
+        "replay_ready": False,
+        "replay_scope": "same_host_or_preprovisioned_matching_toolchain_only",
+        "toolchain_provisioning": "not_performed",
+        "absolute_paths_retained": False,
+    }
+    lock_error = next(
+        (
+            "candidate_dependency_lock_missing"
+            if item.get("status") == "missing"
+            else "candidate_dependency_lock_read_error"
+            if item.get("status") == "read_error"
+            else "candidate_dependency_lock_mismatch"
+            for item in dependency_locks
+            if item.get("matches_expected") is not True
+        ),
+        None,
+    )
+    if lock_error is not None:
+        return None, record, lock_error
+    if not candidates:
+        return None, record, None
+
+    selected_index = None
+    selected_executable = None
+    for index, candidate in enumerate(candidates):
+        resolved = _resolve_candidate_executable(candidate)
+        if resolved is not None:
+            selected_index = index
+            selected_executable = resolved
+            break
+    if selected_executable is None or selected_index is None:
+        return None, record, "candidate_toolchain_unavailable"
+
+    record["selection_status"] = "resolved"
+    record["selected_candidate_index"] = selected_index
+    record["selected_candidate_basename"] = _candidate_executable_basename(
+        candidates[selected_index]
+    )
+    executable_record = _candidate_executable_record(
+        selected_executable,
+        include_content_hash=True,
+    )
+    record["executable"] = executable_record
+    if executable_record.get("content_hash_status") != "recorded":
+        return (
+            selected_executable,
+            record,
+            "candidate_toolchain_executable_hash_error",
+        )
+    expected_executable_sha256 = build.get("toolchain_executable_sha256")
+    if expected_executable_sha256 is not None:
+        record["executable_pin_match"] = (
+            executable_record.get("content_sha256") == expected_executable_sha256
+        )
+        if record["executable_pin_match"] is not True:
+            return (
+                selected_executable,
+                record,
+                "candidate_toolchain_executable_pin_mismatch",
+            )
+
+    configured_version_command = list(build.get("toolchain_version_command", []))
+    version_command = _expand_candidate_runner_command(
+        configured_version_command,
+        workspace_root,
+        workspace_root,
+        toolchain_executable=selected_executable,
+    )
+    record["version_probe_process_started"] = True
+    version_result, launch_error, version_elapsed = _run_candidate_command(
+        version_command,
+        cwd=workspace_root,
+        timeout_sec=timeout_sec,
+        env=env,
+        stdin_text=None,
+    )
+    version_record = _candidate_process_record(
+        "toolchain_probe",
+        configured_version_command,
+        version_command,
+        version_result,
+        launch_error,
+        version_elapsed,
+        output_max_chars,
+    )
+    record["version_probe"] = version_record
+    probe_error = _candidate_process_error(
+        "candidate_toolchain_probe",
+        version_result,
+        launch_error,
+    )
+    if probe_error is not None:
+        return selected_executable, record, probe_error
+
+    assert version_result is not None
+    version_output_sha256 = _candidate_version_output_sha256(
+        version_result.stdout,
+        version_result.stderr,
+    )
+    record["version_output_sha256"] = version_output_sha256
+    expected_version_sha256 = build.get("toolchain_version_output_sha256")
+    if expected_version_sha256 is not None:
+        record["version_output_pin_match"] = (
+            version_output_sha256 == expected_version_sha256
+        )
+        if record["version_output_pin_match"] is not True:
+            return (
+                selected_executable,
+                record,
+                "candidate_toolchain_version_pin_mismatch",
+            )
+    record["identity_observed"] = True
+    record["replay_ready"] = bool(
+        record["pin_enforcement_configured"]
+        and record["executable_pin_match"] is True
+        and record["version_output_pin_match"] is True
+        and record["dependency_locks_match"] is True
+    )
+    return selected_executable, record, None
+
+
+def _candidate_dependency_lock_records(
+    workspace_root: Path,
+    configured: object,
+) -> list[dict]:
+    if not isinstance(configured, dict):
+        return []
+    records: list[dict] = []
+    for rel_path, expected in sorted(configured.items()):
+        if not isinstance(rel_path, str) or not isinstance(expected, str):
+            continue
+        path = workspace_root.joinpath(*rel_path.split("/"))
+        if not path.is_file():
+            records.append(
+                {
+                    "path": rel_path,
+                    "status": "missing",
+                    "bytes": None,
+                    "expected_sha256": expected,
+                    "actual_sha256": None,
+                    "matches_expected": False,
+                }
+            )
+            continue
+        try:
+            payload = path.read_bytes()
+        except OSError as exc:
+            records.append(
+                {
+                    "path": rel_path,
+                    "status": "read_error",
+                    "bytes": None,
+                    "expected_sha256": expected,
+                    "actual_sha256": None,
+                    "matches_expected": False,
+                    "read_error": {
+                        "exception_type": exc.__class__.__name__,
+                        "message": "unable to read declared dependency lock",
+                    },
+                }
+            )
+            continue
+        actual = hashlib.sha256(payload).hexdigest()
+        records.append(
+            {
+                "path": rel_path,
+                "status": "recorded",
+                "bytes": len(payload),
+                "expected_sha256": expected,
+                "actual_sha256": actual,
+                "matches_expected": actual == expected,
+            }
+        )
+    return records
+
+
+def _candidate_version_output_sha256(stdout: str, stderr: str) -> str:
+    payload = strict_json_dumps(
+        {
+            "stderr": _normalize_candidate_version_output(stderr),
+            "stdout": _normalize_candidate_version_output(stdout),
+        }
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _normalize_candidate_version_output(value: str) -> str:
+    return value.replace("\r\n", "\n").replace("\r", "\n")
+
+
 def _expand_candidate_runner_command(
     configured: list[str],
     workspace_root: Path,
     primary_path: Path,
+    *,
+    toolchain_executable: str | None = None,
 ) -> list[str]:
     replacements = {
         "{workspace}": str(workspace_root),
         "{primary}": str(primary_path),
         "{python}": sys.executable,
     }
+    if toolchain_executable is not None:
+        replacements["{toolchain}"] = toolchain_executable
     return [
         _replace_candidate_command_placeholders(token, replacements)
         for token in configured
@@ -2162,13 +2458,27 @@ def _candidate_process_record(
     return record
 
 
-def _candidate_executable_record(executable: str) -> dict:
+def _resolve_candidate_executable(executable: str) -> str | None:
     resolved = shutil.which(executable)
     path = Path(executable)
-    if resolved is None and path.is_absolute() and path.exists():
+    if resolved is None and path.is_absolute() and path.is_file():
         resolved = str(path)
+    return resolved
+
+
+def _candidate_executable_basename(executable: str) -> str:
+    return redact_sensitive_text(_escape_diagnostic_controls(Path(executable).name))
+
+
+def _candidate_executable_record(
+    executable: str,
+    *,
+    include_content_hash: bool = False,
+) -> dict:
+    resolved = _resolve_candidate_executable(executable)
+    path = Path(executable)
     display = redact_sensitive_text(_escape_diagnostic_controls(path.name))
-    return {
+    record = {
         "requested_basename": display,
         "resolution_status": "resolved" if resolved is not None else "unresolved",
         "resolved_path_sha256": (
@@ -2178,6 +2488,30 @@ def _candidate_executable_record(executable: str) -> dict:
         ),
         "absolute_path_retained": False,
     }
+    if include_content_hash and resolved is not None:
+        try:
+            digest = hashlib.sha256()
+            size = 0
+            with Path(resolved).open("rb") as handle:
+                while chunk := handle.read(1024 * 1024):
+                    size += len(chunk)
+                    digest.update(chunk)
+            record["content_hash_status"] = "recorded"
+            record["content_bytes"] = size
+            record["content_sha256"] = digest.hexdigest()
+        except OSError as exc:
+            record["content_hash_status"] = "read_error"
+            record["content_bytes"] = None
+            record["content_sha256"] = None
+            record["content_hash_error"] = {
+                "exception_type": exc.__class__.__name__,
+                "message": "unable to hash resolved executable",
+            }
+    else:
+        record["content_hash_status"] = "not_requested"
+        record["content_bytes"] = None
+        record["content_sha256"] = None
+    return record
 
 
 def _empty_candidate_process_diagnostics(max_chars: int) -> dict:
@@ -2223,6 +2557,8 @@ def _candidate_runner_execution_record(
     env_metadata: dict,
     stdin_metadata: dict,
     workspace: CandidateWorkspace,
+    *,
+    toolchain_record: dict | None = None,
 ) -> dict:
     return {
         "schema": "libreevolve.candidate_runner_execution.v1",
@@ -2236,6 +2572,7 @@ def _candidate_runner_execution_record(
         "build_file_patterns": (
             list(build.get("build_files", [])) if build is not None else []
         ),
+        "toolchain": copy.deepcopy(toolchain_record),
         "build": copy.deepcopy(build_record),
         "runner": copy.deepcopy(runner_record),
         "validator_contract": "problem_owned_python_evaluate_receives_candidate_runner_record",
@@ -2671,11 +3008,19 @@ def _candidate_runner_process_attempt_count(metadata: dict) -> int:
     candidate_runner = metadata.get("candidate_runner")
     if not isinstance(candidate_runner, dict):
         return 0
-    return sum(
+    process_count = sum(
         1
         for phase in ("build", "runner")
         if isinstance(candidate_runner.get(phase), dict)
     )
+    toolchain = candidate_runner.get("toolchain")
+    if (
+        isinstance(toolchain, dict)
+        and toolchain.get("version_probe_process_started") is True
+        and isinstance(toolchain.get("version_probe"), dict)
+    ):
+        process_count += 1
+    return process_count
 
 
 def _candidate_runner_scorer_attempt_count(metadata: dict) -> int:
@@ -2698,7 +3043,12 @@ def _is_candidate_runner_attempt_record(value: object) -> bool:
 def _add_accounting_error(accounting: dict, error: object) -> None:
     if error == "timeout" or (
         isinstance(error, str)
-        and error in {"candidate_build_timeout", "candidate_runner_timeout"}
+        and error
+        in {
+            "candidate_build_timeout",
+            "candidate_runner_timeout",
+            "candidate_toolchain_probe_timeout",
+        }
     ):
         accounting["timeout_count"] += 1
     elif error == "sample_budget_exhausted":

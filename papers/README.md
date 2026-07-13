@@ -985,15 +985,20 @@ the task-primary candidate policy, metadata-only or executable language/build
 declarations, candidate-runner stage bindings, problem-owned scoring authority,
 declaration counts/status under `runner_declaration_evidence`, bounded retained-
 workspace path matches, and deduplicated executed build/runner records with
-command hashes, executable basenames/path hashes, bounded/redacted process
-output, timeout/return state, generated build artifacts, minimal-environment
-metadata, and the host-network/unsandboxed boundary. `execution_summary`
-reconciles executed/successful/build/artifact/language/build-system counts, and
+command hashes, executable basenames/path and toolchain-content hashes,
+normalized version-output hashes, optional pin results, checked dependency-
+lock hashes, bounded/redacted process output, timeout/return state, generated
+build artifacts, minimal-environment metadata, explicit same-host replay
+scope, and the host-network/unsandboxed boundary. `execution_summary`
+reconciles executed/successful/build/artifact/language/build-system/toolchain
+counts, and
 `runner_environment_provenance` links execution to startup environment
-evidence. The checked `candidate_runner_expression` fixture executes that local
-non-Python primary/build/run/scorer contract. Unsupported task candidate-
-abstraction hooks and the remaining real-toolchain, dependency replay,
-language-aware marker, OS-sandbox, and codebase-scale gaps remain explicit. The committed
+evidence. The checked `candidate_runner_expression` fixture executes the
+adapter path; `candidate_runner_c` compiles and runs one C11 primary with
+observed compiler identity and a verified lock hash. Unsupported task
+candidate-abstraction hooks and the remaining portable hermetic toolchain,
+cross-host replay, language-aware marker, OS-sandbox, and codebase-scale gaps
+remain explicit. The committed
 `papers/candidate_language_runner_boundary.json` sidecar now emits that
 `local_candidate_runner_execution_partial` boundary, and
 `validate_paper_manifest()` requires and validates it at the real repo root.
@@ -1967,9 +1972,14 @@ Implemented:
   executes a local copy-build and expression adapter, captures the generated
   build artifact, and delegates metrics to the problem-owned Python validator.
   It is not a real-language/compiler/package-manager benchmark.
+- `libreevolve/problems/examples/candidate_runner_c`: non-comparable host C
+  compiler contract fixture. It resolves and probes `clang`, `gcc`, or `cc`,
+  verifies a checked build-contract lock, compiles and executes one C11 seed,
+  and retains toolchain/build provenance. It is not a compiler-optimization,
+  hermetic-replay, or codebase-scale benchmark.
 - `libreevolve/problems/benchmarks/example_scope.py`: shipped-example scope
   registry that keeps `hello_world`, `sorting`, `workspace_math`,
-  `embedded_evaluate_math`, `candidate_runner_expression`,
+  `embedded_evaluate_math`, `candidate_runner_expression`, `candidate_runner_c`,
   `matrix_multiplication`, and `circle_packing` smoke-only, while
   `sorting_network_8` and `sorting_network_9` remain non-comparable benchmark
   candidates. The standard paper-manifest validator checks these

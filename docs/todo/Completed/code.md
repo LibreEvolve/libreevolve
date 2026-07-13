@@ -19420,3 +19420,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     isolation, task-defined abstraction APIs, and codebase-scale benchmarks.
   - Verification: focused config, loader, evaluator, database, loop, example,
     boundary, and end-to-end CLI/show tests cover the trusted-local contract.
+- [x] Add host-resolved compiler identity, pin enforcement, and a real C runner fixture.
+  - Spec evidence: AlphaEvolve Sections 2.1-2.2 require task-defined program,
+    build, execution, and evaluator boundaries rather than Python-only dispatch.
+  - Status: build declarations now support ordered toolchain candidates,
+    version probes, optional executable/version-output SHA-256 pins, and checked
+    candidate lock-file hashes. Runtime and report records retain content and
+    version hashes, pin results, dependency-lock evidence, and an explicit
+    same-host/preprovisioned-host replay scope. `candidate_runner_c` compiles and
+    executes a C11 seed with `clang`, `gcc`, or `cc` and captures the binary.
+  - Remaining code gap: portable hermetic provisioning, cross-host replay,
+    package-manager and broader language fixtures, OS/container isolation,
+    language-aware markers, task-defined abstractions, and codebase-scale runs.
+  - Verification: focused config, candidate materialization, evaluator,
+    database, runtime-report, real-compiler example, installed-wheel CLI/show,
+    and scope tests cover the contract and reject identity, lock, and portable-
+    replay overclaims.

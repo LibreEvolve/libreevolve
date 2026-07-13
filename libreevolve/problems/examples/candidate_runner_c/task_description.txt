@@ -1,0 +1,3 @@
+Evolve solution.c so the compiled program prints an integer as close as possible to 42.
+
+Only solution.c is intended to change. The task-declared build command compiles it with a locally available C11 compiler, and the task-declared runner executes the resulting program. The problem-owned Python validator remains the only authority that converts process output into metrics.

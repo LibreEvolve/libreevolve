@@ -248,7 +248,7 @@ class CandidateWorkspace:
             )
             try:
                 target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_text(content, encoding="utf-8")
+                target.write_bytes(content.encode("utf-8"))
             except OSError as exc:
                 _remove_materialization_tree(temp_root, root.parent)
                 raise CandidateMaterializationError(

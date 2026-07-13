@@ -13622,6 +13622,25 @@ def _candidate_language_runner_contract_report(
         else []
     )
     execution_records = _candidate_runner_execution_records(programs)
+    toolchain_records = [
+        record["toolchain"]
+        for record in execution_records
+        if isinstance(record.get("toolchain"), Mapping)
+    ]
+    toolchain_identity_record_count = sum(
+        1 for record in toolchain_records if record.get("identity_observed") is True
+    )
+    toolchain_probe_count = sum(
+        1 for record in toolchain_records if isinstance(record.get("version_probe"), Mapping)
+    )
+    toolchain_replay_ready_count = sum(
+        1 for record in toolchain_records if record.get("replay_ready") is True
+    )
+    dependency_lock_record_count = sum(
+        len(record.get("dependency_locks", []))
+        for record in toolchain_records
+        if isinstance(record.get("dependency_locks"), list)
+    )
     executed_build_count = sum(
         1 for record in execution_records if isinstance(record.get("build"), Mapping)
     )
@@ -13643,7 +13662,7 @@ def _candidate_language_runner_contract_report(
         "language_aware_evolve_block_marker_grammars",
         "task_defined_candidate_abstraction_hooks",
         "os_sandboxed_arbitrary_language_runner_isolation",
-        "toolchain_version_and_dependency_replay_artifacts",
+        "portable_hermetic_toolchain_distribution_and_dependency_resolution",
         "real_language_codebase_benchmark_evidence",
     ]
     if not stage_bindings:
@@ -13688,11 +13707,13 @@ def _candidate_language_runner_contract_report(
             },
             {
                 "language": "arbitrary_language",
-                "status": "real_toolchain_fixture_not_proven",
+                "status": "task_declared_toolchain_execution_supported_partial",
                 "candidate_role": "task_declared_text_workspace_partial",
                 "marker_grammar": "unsupported",
-                "runner_contract": "local_command_capability_without_real_language_fixture",
-                "build_contract": "local_command_capability_without_replayable_toolchain",
+                "runner_contract": "task_declared_local_command_with_optional_build",
+                "build_contract": (
+                    "host_resolved_toolchain_probe_and_optional_sha256_pins"
+                ),
                 "artifact_boundary": "bounded_declared_patterns_when_configured",
             },
         ],
@@ -13716,6 +13737,10 @@ def _candidate_language_runner_contract_report(
                 }
             ),
             "build_runner": "task_declared_command_tokens_without_shell",
+            "toolchain_resolution": "first_resolvable_declared_candidate",
+            "toolchain_identity": "version_probe_and_optional_executable_output_pins",
+            "dependency_lock_identity": "materialized_candidate_file_sha256_pins",
+            "portable_toolchain_provisioning": "unsupported",
             "package_install_runner": "not_special_cased_or_network_isolated",
             "compiled_artifact_capture": "bounded_declared_pattern_copyout",
             "accelerator_or_hardware_contract": "unsupported",
@@ -13746,6 +13771,11 @@ def _candidate_language_runner_contract_report(
             ),
             "executed_build_count": executed_build_count,
             "generated_build_artifact_count": generated_build_artifact_count,
+            "toolchain_record_count": len(toolchain_records),
+            "toolchain_identity_record_count": toolchain_identity_record_count,
+            "toolchain_probe_count": toolchain_probe_count,
+            "toolchain_replay_ready_count": toolchain_replay_ready_count,
+            "dependency_lock_record_count": dependency_lock_record_count,
             "language_ids": sorted(
                 {
                     record["language_runner"]
@@ -13792,6 +13822,13 @@ def _candidate_language_runner_contract_report(
                 if isinstance(binding, Mapping)
             ),
             "generated_build_artifacts_recorded": generated_build_artifact_count > 0,
+            "toolchain_identity_records_recorded": (
+                toolchain_identity_record_count > 0
+            ),
+            "pinned_toolchain_replay_records_recorded": (
+                toolchain_replay_ready_count > 0
+            ),
+            "dependency_lock_records_recorded": dependency_lock_record_count > 0,
             "task_candidate_abstraction_hooks_configured": False,
             "alphaevolve_language_runner_parity": False,
             "remaining_gap": list(remaining_runner_gaps),
@@ -13861,6 +13898,11 @@ def _candidate_runner_execution_summary_record(
 ) -> dict:
     build = execution.get("build") if isinstance(execution.get("build"), Mapping) else None
     runner = execution.get("runner") if isinstance(execution.get("runner"), Mapping) else None
+    toolchain = (
+        execution.get("toolchain")
+        if isinstance(execution.get("toolchain"), Mapping)
+        else None
+    )
     artifacts = (
         build.get("artifacts")
         if isinstance(build, Mapping) and isinstance(build.get("artifacts"), Mapping)
@@ -13885,6 +13927,7 @@ def _candidate_runner_execution_summary_record(
             and build.get("launch_error") is None
         )
     )
+    toolchain_success = _candidate_toolchain_report_success(toolchain)
     return {
         "program_id": program.id,
         "generation": program.generation,
@@ -13893,7 +13936,8 @@ def _candidate_runner_execution_summary_record(
         "language_runner": execution.get("language_runner"),
         "build_system": execution.get("build_system"),
         "primary_file": execution.get("primary_file"),
-        "successful": bool(runner_success and build_success),
+        "successful": bool(runner_success and build_success and toolchain_success),
+        "toolchain": _candidate_toolchain_report_record(toolchain),
         "build": _candidate_process_report_record(build),
         "runner": _candidate_process_report_record(runner),
         "generated_build_artifact_count": len(artifact_files),
@@ -13931,6 +13975,81 @@ def _candidate_process_report_record(value: object) -> dict | None:
     }
 
 
+def _candidate_toolchain_report_success(value: object) -> bool:
+    if value is None:
+        return True
+    if not isinstance(value, Mapping):
+        return False
+    if value.get("dependency_locks_match") is not True:
+        return False
+    candidate_count = value.get("candidate_count")
+    if not isinstance(candidate_count, int) or isinstance(candidate_count, bool):
+        return False
+    if candidate_count == 0:
+        return True
+    probe = value.get("version_probe")
+    executable = value.get("executable")
+    return bool(
+        value.get("identity_observed") is True
+        and isinstance(executable, Mapping)
+        and executable.get("content_hash_status") == "recorded"
+        and isinstance(executable.get("content_sha256"), str)
+        and re.fullmatch(r"[0-9a-f]{64}", executable["content_sha256"])
+        is not None
+        and isinstance(probe, Mapping)
+        and probe.get("returncode") == 0
+        and probe.get("timed_out") is False
+        and probe.get("launch_error") is None
+    )
+
+
+def _candidate_toolchain_report_record(value: object) -> dict | None:
+    if not isinstance(value, Mapping):
+        return None
+    dependency_locks = (
+        value.get("dependency_locks")
+        if isinstance(value.get("dependency_locks"), list)
+        else []
+    )
+    executable = value.get("executable")
+    return {
+        "schema": value.get("schema"),
+        "selection_policy": value.get("selection_policy"),
+        "candidate_count": value.get("candidate_count"),
+        "candidate_basenames": copy.deepcopy(value.get("candidate_basenames")),
+        "selection_status": value.get("selection_status"),
+        "selected_candidate_index": value.get("selected_candidate_index"),
+        "selected_candidate_basename": value.get("selected_candidate_basename"),
+        "executable": (
+            copy.deepcopy(executable) if isinstance(executable, Mapping) else None
+        ),
+        "version_probe_process_started": value.get("version_probe_process_started"),
+        "version_probe": _candidate_process_report_record(value.get("version_probe")),
+        "version_output_normalization": value.get("version_output_normalization"),
+        "version_output_sha256": value.get("version_output_sha256"),
+        "expected_executable_sha256": value.get("expected_executable_sha256"),
+        "executable_pin_match": value.get("executable_pin_match"),
+        "expected_version_output_sha256": value.get(
+            "expected_version_output_sha256"
+        ),
+        "version_output_pin_match": value.get("version_output_pin_match"),
+        "dependency_lock_count": value.get("dependency_lock_count"),
+        "dependency_lock_hash_scope": value.get("dependency_lock_hash_scope"),
+        "dependency_locks": [
+            copy.deepcopy(record)
+            for record in dependency_locks[:100]
+            if isinstance(record, Mapping)
+        ],
+        "dependency_locks_match": value.get("dependency_locks_match"),
+        "identity_observed": value.get("identity_observed"),
+        "pin_enforcement_configured": value.get("pin_enforcement_configured"),
+        "replay_ready": value.get("replay_ready"),
+        "replay_scope": value.get("replay_scope"),
+        "toolchain_provisioning": value.get("toolchain_provisioning"),
+        "absolute_paths_retained": value.get("absolute_paths_retained"),
+    }
+
+
 def _candidate_runner_environment_provenance(
     environment: Mapping[str, object],
     execution_records: list[dict],
@@ -13946,6 +14065,25 @@ def _candidate_runner_environment_provenance(
         else {}
     )
     recorded = bool(python and platform)
+    toolchains = [
+        record["toolchain"]
+        for record in execution_records
+        if isinstance(record.get("toolchain"), Mapping)
+    ]
+    toolchain_identity_count = sum(
+        1 for record in toolchains if record.get("identity_observed") is True
+    )
+    toolchain_probe_count = sum(
+        1 for record in toolchains if isinstance(record.get("version_probe"), Mapping)
+    )
+    toolchain_replay_ready_count = sum(
+        1 for record in toolchains if record.get("replay_ready") is True
+    )
+    dependency_lock_count = sum(
+        len(record.get("dependency_locks", []))
+        for record in toolchains
+        if isinstance(record.get("dependency_locks"), list)
+    )
     return {
         "schema": "libreevolve.candidate_runner_environment_provenance.v1",
         "source_manifest_path": "provenance.environment",
@@ -13983,17 +14121,31 @@ def _candidate_runner_environment_provenance(
                 and isinstance(record["build"].get("executable"), Mapping)
                 and record["build"]["executable"].get("resolution_status") == "resolved"
             ),
+            "resolved_toolchain_executable_count": sum(
+                1
+                for record in toolchains
+                if isinstance(record.get("executable"), Mapping)
+                and record["executable"].get("resolution_status") == "resolved"
+            ),
+            "toolchain_identity_record_count": toolchain_identity_count,
+            "toolchain_probe_count": toolchain_probe_count,
+            "toolchain_replay_ready_count": toolchain_replay_ready_count,
+            "dependency_lock_record_count": dependency_lock_count,
             "absolute_paths_retained": False,
-            "toolchain_versions_recorded": False,
-            "dependency_manifests_recorded": False,
+            "toolchain_versions_recorded": toolchain_identity_count > 0,
+            "dependency_manifests_recorded": dependency_lock_count > 0,
         },
         "arbitrary_language_runner_environment_artifacts": (
-            "executable_path_hashes_without_toolchain_versions"
+            "toolchain_identity_and_executable_hashes_recorded"
+            if toolchain_identity_count
+            else "executable_path_hashes_without_toolchain_versions"
             if execution_records
             else "not_recorded"
         ),
         "build_runner_environment_artifacts": (
-            "executable_path_hashes_without_toolchain_versions"
+            "toolchain_identity_and_dependency_lock_hashes_recorded"
+            if toolchain_identity_count or dependency_lock_count
+            else "executable_path_hashes_without_toolchain_versions"
             if any(isinstance(record.get("build"), Mapping) for record in execution_records)
             else "not_recorded"
         ),
@@ -14339,11 +14491,17 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                 }
             )
         arbitrary = by_language.get("arbitrary_language", {})
-        if arbitrary.get("status") != "real_toolchain_fixture_not_proven":
+        if (
+            arbitrary.get("status")
+            != "task_declared_toolchain_execution_supported_partial"
+        ):
             issues.append(
                 {
                     "code": "arbitrary_language_fixture_overclaim",
-                    "message": "arbitrary-language status must retain the missing real-toolchain fixture boundary",
+                    "message": (
+                        "arbitrary-language status must retain the partial task-declared "
+                        "toolchain boundary"
+                    ),
                 }
             )
     build_contracts = report.get("build_system_runner_contracts")
@@ -14372,6 +14530,22 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                     "message": "build runner must use task-declared command tokens without a shell",
                 }
             )
+        expected_toolchain_contract = {
+            "toolchain_resolution": "first_resolvable_declared_candidate",
+            "toolchain_identity": (
+                "version_probe_and_optional_executable_output_pins"
+            ),
+            "dependency_lock_identity": "materialized_candidate_file_sha256_pins",
+            "portable_toolchain_provisioning": "unsupported",
+        }
+        for field, expected_value in expected_toolchain_contract.items():
+            if build_contracts.get(field) != expected_value:
+                issues.append(
+                    {
+                        "code": f"invalid_build_runner_{field}",
+                        "message": f"build runner {field} must retain its declared boundary",
+                    }
+                )
         if build_contracts.get("accelerator_or_hardware_contract") != "unsupported":
             issues.append(
                 {
@@ -14530,6 +14704,7 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
     else:
         _validate_candidate_runner_environment_provenance(
             environment_provenance,
+            executed_records,
             issues,
         )
     hooks = report.get("task_candidate_abstraction_hooks")
@@ -14575,6 +14750,9 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             "candidate_runner_executions_recorded",
             "build_system_runner_contracts_configured",
             "generated_build_artifacts_recorded",
+            "toolchain_identity_records_recorded",
+            "pinned_toolchain_replay_records_recorded",
+            "dependency_lock_records_recorded",
         ):
             if readiness.get(field) not in {True, False}:
                 issues.append(
@@ -14606,6 +14784,38 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                     "message": "generated build artifact readiness must match records",
                 }
             )
+        toolchain_records = [
+            record["toolchain"]
+            for record in executed_records
+            if isinstance(record, Mapping)
+            and isinstance(record.get("toolchain"), Mapping)
+        ]
+        expected_toolchain_identity = any(
+            record.get("identity_observed") is True for record in toolchain_records
+        )
+        expected_toolchain_replay = any(
+            record.get("replay_ready") is True for record in toolchain_records
+        )
+        expected_dependency_locks = any(
+            isinstance(record.get("dependency_locks"), list)
+            and bool(record.get("dependency_locks"))
+            for record in toolchain_records
+        )
+        for field, expected_value in (
+            ("toolchain_identity_records_recorded", expected_toolchain_identity),
+            (
+                "pinned_toolchain_replay_records_recorded",
+                expected_toolchain_replay,
+            ),
+            ("dependency_lock_records_recorded", expected_dependency_locks),
+        ):
+            if readiness.get(field) is not expected_value:
+                issues.append(
+                    {
+                        "code": f"{field}_mismatch",
+                        "message": f"{field} must match retained toolchain records",
+                    }
+                )
         remaining_gap = readiness.get("remaining_gap")
         if not isinstance(remaining_gap, list) or not remaining_gap:
             issues.append(
@@ -14714,7 +14924,13 @@ def _validate_candidate_runner_execution_records(
                 "build",
                 issues,
             )
-        if record.get("successful") is not bool(runner_ok and build_ok):
+        toolchain_ok = _validate_candidate_toolchain_report_record(
+            record.get("toolchain"),
+            issues,
+        )
+        if record.get("successful") is not bool(
+            runner_ok and build_ok and toolchain_ok
+        ):
             issues.append(
                 {
                     "code": "candidate_runner_success_mismatch",
@@ -14797,6 +15013,284 @@ def _validate_candidate_process_report_record(
     )
 
 
+def _validate_candidate_toolchain_report_record(
+    record: object,
+    issues: list[dict],
+) -> bool:
+    if record is None:
+        return True
+    if not isinstance(record, Mapping):
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_record",
+                "message": "candidate toolchain record must be an object or null",
+            }
+        )
+        return False
+    if record.get("schema") != "libreevolve.candidate_toolchain_identity.v1":
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_schema",
+                "message": "candidate toolchain schema is unsupported",
+            }
+        )
+    candidate_count = record.get("candidate_count")
+    count_valid = (
+        isinstance(candidate_count, int)
+        and not isinstance(candidate_count, bool)
+        and candidate_count >= 0
+    )
+    if not count_valid:
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_candidate_count",
+                "message": "candidate toolchain candidate_count must be non-negative",
+            }
+        )
+        candidate_count = 0
+    basenames = record.get("candidate_basenames")
+    if not isinstance(basenames, list) or not all(
+        isinstance(value, str) and value for value in basenames
+    ) or (count_valid and len(basenames) != candidate_count):
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_basenames",
+                "message": "candidate toolchain basenames must match candidate_count",
+            }
+        )
+    if record.get("version_output_normalization") != (
+        "decoded_text_newlines_lf_then_strict_json_v1"
+    ):
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_version_normalization",
+                "message": "candidate toolchain version hashing must normalize newlines",
+            }
+        )
+    if record.get("dependency_lock_hash_scope") != (
+        "materialized_candidate_file_bytes"
+    ):
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_dependency_hash_scope",
+                "message": "dependency lock hashes must cover materialized file bytes",
+            }
+        )
+    if record.get("replay_scope") != (
+        "same_host_or_preprovisioned_matching_toolchain_only"
+    ) or record.get("toolchain_provisioning") != "not_performed":
+        issues.append(
+            {
+                "code": "candidate_toolchain_portable_replay_overclaim",
+                "message": "toolchain replay must remain scoped to preprovisioned hosts",
+            }
+        )
+    if record.get("absolute_paths_retained") is not False:
+        issues.append(
+            {
+                "code": "candidate_toolchain_absolute_path_overclaim",
+                "message": "candidate toolchain records must not retain absolute paths",
+            }
+        )
+    dependency_locks = record.get("dependency_locks")
+    if not isinstance(dependency_locks, list):
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_dependency_locks",
+                "message": "candidate toolchain dependency locks must be a list",
+            }
+        )
+        dependency_locks = []
+    lock_records_valid = True
+    for item in dependency_locks:
+        if not isinstance(item, Mapping) or any(
+            not isinstance(item.get(field), str)
+            or re.fullmatch(r"[0-9a-f]{64}", item[field]) is None
+            for field in ("expected_sha256", "actual_sha256")
+        ) or item.get("matches_expected") is not True:
+            lock_records_valid = False
+            issues.append(
+                {
+                    "code": "invalid_candidate_toolchain_dependency_lock_record",
+                    "message": "dependency lock records must retain matching SHA-256 evidence",
+                }
+            )
+            break
+    if record.get("dependency_lock_count") != len(dependency_locks):
+        issues.append(
+            {
+                "code": "candidate_toolchain_dependency_lock_count_mismatch",
+                "message": "dependency lock count must match retained records",
+            }
+        )
+    expected_locks_match = lock_records_valid and all(
+        isinstance(item, Mapping) and item.get("matches_expected") is True
+        for item in dependency_locks
+    )
+    if record.get("dependency_locks_match") is not expected_locks_match:
+        issues.append(
+            {
+                "code": "candidate_toolchain_dependency_lock_match_mismatch",
+                "message": "dependency lock match status must match retained records",
+            }
+        )
+    expected_executable = record.get("expected_executable_sha256")
+    expected_version = record.get("expected_version_output_sha256")
+    version_output = record.get("version_output_sha256")
+    for field, value in (
+        ("expected_executable_sha256", expected_executable),
+        ("expected_version_output_sha256", expected_version),
+        ("version_output_sha256", version_output),
+    ):
+        if value is not None and (
+            not isinstance(value, str)
+            or re.fullmatch(r"[0-9a-f]{64}", value) is None
+        ):
+            issues.append(
+                {
+                    "code": f"invalid_candidate_toolchain_{field}",
+                    "message": f"candidate toolchain {field} must be SHA-256 evidence",
+                }
+            )
+    pin_configured = expected_executable is not None and expected_version is not None
+    if record.get("pin_enforcement_configured") is not pin_configured:
+        issues.append(
+            {
+                "code": "candidate_toolchain_pin_configuration_mismatch",
+                "message": "toolchain pin status must match configured identity pins",
+            }
+        )
+    probe_ok = True
+    executable_hash = None
+    executable_valid = candidate_count == 0
+    if candidate_count:
+        executable = record.get("executable")
+        if (
+            isinstance(executable, Mapping)
+            and executable.get("resolution_status") == "resolved"
+            and executable.get("content_hash_status") == "recorded"
+            and isinstance(executable.get("content_sha256"), str)
+            and re.fullmatch(r"[0-9a-f]{64}", executable["content_sha256"])
+            is not None
+            and executable.get("absolute_path_retained") is False
+        ):
+            executable_hash = executable["content_sha256"]
+            executable_valid = True
+        else:
+            issues.append(
+                {
+                    "code": "invalid_candidate_toolchain_executable_identity",
+                    "message": (
+                        "resolved toolchains must retain a path-safe executable "
+                        "content hash"
+                    ),
+                }
+            )
+        selected_index = record.get("selected_candidate_index")
+        if (
+            not isinstance(selected_index, int)
+            or isinstance(selected_index, bool)
+            or selected_index < 0
+            or selected_index >= candidate_count
+            or not isinstance(basenames, list)
+            or record.get("selected_candidate_basename") != basenames[selected_index]
+            or record.get("selection_status") != "resolved"
+        ):
+            issues.append(
+                {
+                    "code": "invalid_candidate_toolchain_selection",
+                    "message": "selected toolchain identity must match its candidate list",
+                }
+            )
+        if record.get("version_probe_process_started") is not True:
+            issues.append(
+                {
+                    "code": "candidate_toolchain_probe_start_mismatch",
+                    "message": "resolved toolchains must record a started version probe",
+                }
+            )
+        probe_ok = _validate_candidate_process_report_record(
+            record.get("version_probe"),
+            "toolchain_probe",
+            issues,
+        )
+        identity_expected = bool(
+            executable_valid
+            and probe_ok
+            and isinstance(version_output, str)
+            and re.fullmatch(r"[0-9a-f]{64}", version_output) is not None
+        )
+        if record.get("identity_observed") is not identity_expected:
+            issues.append(
+                {
+                    "code": "candidate_toolchain_identity_observation_mismatch",
+                    "message": (
+                        "toolchain identity status must match retained executable "
+                        "and version evidence"
+                    ),
+                }
+            )
+    elif (
+        record.get("selection_status") != "not_configured"
+        or record.get("selected_candidate_index") is not None
+        or record.get("selected_candidate_basename") is not None
+        or record.get("executable") is not None
+        or record.get("version_probe_process_started") is not False
+        or record.get("version_probe") is not None
+        or record.get("identity_observed") is not False
+    ):
+        issues.append(
+            {
+                "code": "candidate_toolchain_unconfigured_probe_overclaim",
+                "message": "lock-only toolchain records must not claim a version probe",
+            }
+        )
+    executable_match = record.get("executable_pin_match")
+    version_match = record.get("version_output_pin_match")
+    expected_executable_match = (
+        executable_hash == expected_executable
+        if isinstance(expected_executable, str)
+        and re.fullmatch(r"[0-9a-f]{64}", expected_executable) is not None
+        else None
+    )
+    expected_version_match = (
+        version_output == expected_version
+        if isinstance(expected_version, str)
+        and re.fullmatch(r"[0-9a-f]{64}", expected_version) is not None
+        else None
+    )
+    if executable_match is not expected_executable_match:
+        issues.append(
+            {
+                "code": "candidate_toolchain_executable_pin_match_mismatch",
+                "message": "executable pin status must match retained SHA-256 evidence",
+            }
+        )
+    if version_match is not expected_version_match:
+        issues.append(
+            {
+                "code": "candidate_toolchain_version_pin_match_mismatch",
+                "message": "version pin status must match retained SHA-256 evidence",
+            }
+        )
+    expected_replay = bool(
+        candidate_count
+        and pin_configured
+        and expected_executable_match is True
+        and expected_version_match is True
+        and expected_locks_match
+        and record.get("identity_observed") is True
+    )
+    if record.get("replay_ready") is not expected_replay:
+        issues.append(
+            {
+                "code": "candidate_toolchain_replay_readiness_mismatch",
+                "message": "toolchain replay readiness must match enforced identity pins",
+            }
+        )
+    return bool(probe_ok and expected_locks_match)
+
+
 def _validate_candidate_runner_execution_summary(
     summary: Mapping[str, object],
     records: list[object],
@@ -14821,6 +15315,33 @@ def _validate_candidate_runner_execution_summary(
         "generated_build_artifact_count": sum(
             int(record.get("generated_build_artifact_count", 0))
             for record in valid_records
+        ),
+        "toolchain_record_count": sum(
+            1 for record in valid_records if isinstance(record.get("toolchain"), Mapping)
+        ),
+        "toolchain_identity_record_count": sum(
+            1
+            for record in valid_records
+            if isinstance(record.get("toolchain"), Mapping)
+            and record["toolchain"].get("identity_observed") is True
+        ),
+        "toolchain_probe_count": sum(
+            1
+            for record in valid_records
+            if isinstance(record.get("toolchain"), Mapping)
+            and isinstance(record["toolchain"].get("version_probe"), Mapping)
+        ),
+        "toolchain_replay_ready_count": sum(
+            1
+            for record in valid_records
+            if isinstance(record.get("toolchain"), Mapping)
+            and record["toolchain"].get("replay_ready") is True
+        ),
+        "dependency_lock_record_count": sum(
+            len(record["toolchain"].get("dependency_locks", []))
+            for record in valid_records
+            if isinstance(record.get("toolchain"), Mapping)
+            and isinstance(record["toolchain"].get("dependency_locks"), list)
         ),
         "language_ids": sorted(
             {
@@ -15268,6 +15789,7 @@ def _validate_candidate_runner_workspace_match_records(
 
 def _validate_candidate_runner_environment_provenance(
     provenance: Mapping[str, object],
+    execution_records: list[object],
     issues: list[dict],
 ) -> None:
     if (
@@ -15351,6 +15873,11 @@ def _validate_candidate_runner_environment_provenance(
             "execution_record_count",
             "resolved_runner_executable_count",
             "resolved_build_executable_count",
+            "resolved_toolchain_executable_count",
+            "toolchain_identity_record_count",
+            "toolchain_probe_count",
+            "toolchain_replay_ready_count",
+            "dependency_lock_record_count",
         ):
             value = process_environment.get(field)
             if not isinstance(value, int) or isinstance(value, bool) or value < 0:
@@ -15360,21 +15887,87 @@ def _validate_candidate_runner_environment_provenance(
                         "message": f"candidate runner environment {field} must be non-negative",
                     }
                 )
-        for field in (
-            "absolute_paths_retained",
-            "toolchain_versions_recorded",
-            "dependency_manifests_recorded",
-        ):
-            if process_environment.get(field) is not False:
+        if process_environment.get("absolute_paths_retained") is not False:
+            issues.append(
+                {
+                    "code": "candidate_runner_environment_absolute_paths_retained_overclaim",
+                    "message": "candidate runner environment must not retain absolute paths",
+                }
+            )
+        valid_records = [
+            record for record in execution_records if isinstance(record, Mapping)
+        ]
+        toolchains = [
+            record["toolchain"]
+            for record in valid_records
+            if isinstance(record.get("toolchain"), Mapping)
+        ]
+        expected = {
+            "execution_record_count": len(execution_records),
+            "resolved_runner_executable_count": sum(
+                1
+                for record in valid_records
+                if isinstance(record.get("runner"), Mapping)
+                and isinstance(record["runner"].get("executable"), Mapping)
+                and record["runner"]["executable"].get("resolution_status")
+                == "resolved"
+            ),
+            "resolved_build_executable_count": sum(
+                1
+                for record in valid_records
+                if isinstance(record.get("build"), Mapping)
+                and isinstance(record["build"].get("executable"), Mapping)
+                and record["build"]["executable"].get("resolution_status")
+                == "resolved"
+            ),
+            "resolved_toolchain_executable_count": sum(
+                1
+                for record in toolchains
+                if isinstance(record.get("executable"), Mapping)
+                and record["executable"].get("resolution_status") == "resolved"
+            ),
+            "toolchain_identity_record_count": sum(
+                1 for record in toolchains if record.get("identity_observed") is True
+            ),
+            "toolchain_probe_count": sum(
+                1
+                for record in toolchains
+                if isinstance(record.get("version_probe"), Mapping)
+            ),
+            "toolchain_replay_ready_count": sum(
+                1 for record in toolchains if record.get("replay_ready") is True
+            ),
+            "dependency_lock_record_count": sum(
+                len(record.get("dependency_locks", []))
+                for record in toolchains
+                if isinstance(record.get("dependency_locks"), list)
+            ),
+        }
+        for field, expected_value in expected.items():
+            if process_environment.get(field) != expected_value:
                 issues.append(
                     {
-                        "code": f"candidate_runner_environment_{field}_overclaim",
-                        "message": f"candidate runner environment {field} must remain false",
+                        "code": f"candidate_runner_environment_{field}_mismatch",
+                        "message": f"candidate runner environment {field} must match records",
+                    }
+                )
+        versions_recorded = expected["toolchain_identity_record_count"] > 0
+        dependencies_recorded = expected["dependency_lock_record_count"] > 0
+        for field, expected_value in (
+            ("toolchain_versions_recorded", versions_recorded),
+            ("dependency_manifests_recorded", dependencies_recorded),
+        ):
+            if process_environment.get(field) is not expected_value:
+                issues.append(
+                    {
+                        "code": f"candidate_runner_environment_{field}_mismatch",
+                        "message": f"candidate runner environment {field} must match records",
                     }
                 )
     if provenance.get("arbitrary_language_runner_environment_artifacts") not in {
         "not_recorded",
         "executable_path_hashes_without_toolchain_versions",
+        "toolchain_identity_and_executable_hashes_recorded",
     }:
         issues.append(
             {
@@ -15385,6 +15978,7 @@ def _validate_candidate_runner_environment_provenance(
     if provenance.get("build_runner_environment_artifacts") not in {
         "not_recorded",
         "executable_path_hashes_without_toolchain_versions",
+        "toolchain_identity_and_dependency_lock_hashes_recorded",
     }:
         issues.append(
             {

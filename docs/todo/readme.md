@@ -625,7 +625,8 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     path checks, focused loader/example test anchors, AlphaEvolve
     problem-surface sidecars, and active TODO ownership. The README now also
     names `seed_policy.yaml` primary selection and provides a provider-free
-    `candidate_runner_expression` run/show smoke command.
+    `candidate_runner_expression` run/show smoke command and a compiler-gated
+    `candidate_runner_c` run/show command with explicit replay limits.
   - Current gap: the committed sidecar is structural evidence only. It does not
     prove every loader branch or problem-format claim semantically, does not
     add a dedicated minimal-problem smoke fixture, does not validate the full
@@ -662,7 +663,7 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     candidate-language/build execution can therefore still require manual
     interpretation beyond the structural marker checks. The checked expression
     fixture covers one local build/run/scorer path, not every declared command,
-    platform, or toolchain.
+    platform, or toolchain beyond the checked host C compiler path.
   - Required result: add a semantic problem-format claim verifier,
     per-manifest-key executable traces, docs CI drift gating, new
     problem-surface detection, and owner review signoff that require
@@ -681,10 +682,11 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     README section markers, the shipped-example scope registry, the committed
     `papers/example_benchmark_scope.json` sidecar, example path existence,
     smoke and benchmark-candidate classifications, the non-comparable
-    `candidate_runner_expression` contract fixture, sorting-network boundary
+    `candidate_runner_expression` and `candidate_runner_c` contract fixtures,
+    sorting-network boundary
     anchors, benchmark fixture-readiness anchors, hardening and validator test
     anchors, status/papers index anchors, and active TODO ownership. It
-    preserves the current split between six smoke fixtures and two
+    preserves the current split between eight smoke fixtures and two
     non-comparable benchmark candidates, with zero shipped examples marked as
     paper-comparable.
   - Current gap: the new boundary is structural evidence only. It does not

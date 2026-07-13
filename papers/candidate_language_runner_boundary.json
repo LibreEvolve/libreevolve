@@ -21,6 +21,12 @@
     "build_command",
     "runtime_command",
     "dependency_manifest",
+    "toolchain_candidates",
+    "toolchain_version_probe",
+    "toolchain_executable_sha256",
+    "toolchain_version_output_sha256",
+    "dependency_lock_sha256",
+    "toolchain_replay_scope",
     "declared_workspace_path_match",
     "generated_artifact_path",
     "generated_artifact_hash",
@@ -30,13 +36,16 @@
     "runner_environment_provenance"
   ],
   "missing_evidence": {
-    "configured_non_python_language_runners": "local_expression_smoke_execution_recorded_real_language_toolchains_not_recorded",
-    "build_system_runner_contracts": "local_expression_copy_build_recorded_replayable_real_toolchain_not_recorded",
+    "configured_non_python_language_runners": "expression_and_real_c_smoke_execution_recorded_language_and_codebase_breadth_not_recorded",
+    "build_system_runner_contracts": "host_c_compiler_build_and_identity_recorded_portable_hermetic_toolchain_not_recorded",
     "language_aware_marker_grammars": "not_recorded_locally",
-    "arbitrary_language_validator_contracts": "problem_owned_python_scoring_adapter_recorded_real_language_contract_not_recorded",
+    "arbitrary_language_validator_contracts": "problem_owned_python_scoring_for_expression_and_c_recorded_arbitrary_language_contract_not_recorded",
     "task_defined_candidate_abstraction_hooks": "not_recorded_locally",
-    "runner_environment_artifacts": "executable_path_hashes_recorded_toolchain_versions_and_dependencies_not_recorded",
-    "generated_build_artifact_records": "bounded_expression_build_artifact_recorded_codebase_scale_not_recorded"
+    "runner_environment_artifacts": "toolchain_executable_version_and_lock_hashes_recorded_portable_environment_replay_not_recorded",
+    "generated_build_artifact_records": "bounded_expression_and_c_binary_build_artifacts_recorded_codebase_scale_not_recorded",
+    "portable_hermetic_toolchain_provisioning": "not_recorded_locally",
+    "exact_cross_host_toolchain_replay": "exact_pin_enforcement_recorded_portable_replay_not_recorded",
+    "os_sandboxed_runner_isolation": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a validated task-primary candidate-language policy, stage-bound local build and runner commands, problem-owned scoring, bounded generated-artifact capture, and an executed non-Python expression smoke fixture, but does not claim AlphaEvolve-style arbitrary language or build-system parity with language-aware marker grammars, sandboxed replayable real-language build contracts, task-defined abstraction hooks, arbitrary-runner environment artifacts, or codebase-scale generated build-artifact evidence."
+  "claim_boundary": "This boundary records that LibreEvolve has a validated task-primary candidate-language policy, stage-bound local build and runner commands, problem-owned scoring, bounded generated-artifact capture, and an executed non-Python expression fixture, one checked host C compiler fixture with toolchain/lock identity, and optional exact-pin enforcement, but does not claim AlphaEvolve-style arbitrary language or build-system parity with language-aware marker grammars, OS-sandboxed execution, portable hermetic toolchain provisioning, cross-host replay, task-defined abstraction hooks, arbitrary-runner environment artifacts, or codebase-scale generated build-artifact evidence."
 }

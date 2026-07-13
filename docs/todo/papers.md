@@ -818,25 +818,30 @@ directory and using the AlphaEvolve paper as the primary specification.
     bounded retained-workspace path-match records under
     `runner_declaration_workspace_evidence`, current-Python-runner
     environment linkage under `runner_environment_provenance`, bounded executed
-    process records and generated build artifacts, host-network/unsandboxed
+    process records and generated build artifacts, toolchain executable/version
+    and dependency-lock hashes, same-host replay scope, host-network/unsandboxed
     scope, unsupported task candidate-abstraction hooks, and the remaining
-    real-toolchain contract gaps for AlphaEvolve-style language/build parity.
+    portable-toolchain contract gaps for AlphaEvolve-style language/build parity.
     The checked `candidate_runner_expression` fixture executes an explicit
     `.expr` primary, local copy-build, local expression adapter, generated
     artifact capture, problem-owned scoring, and CLI/show validation. The committed
     `papers/candidate_language_runner_boundary.json` sidecar now preserves the
     paper-manifest-validated partial local candidate-runner boundary.
   - Current gap: this is trusted-local command execution and smoke evidence,
-    not arbitrary-language or arbitrary-codebase parity. There is no real
-    compiler/package-manager fixture, pinned toolchain/dependency replay,
-    OS/container sandbox, arbitrary-language validator contract, language-aware
-    marker grammar, codebase-scale generated-artifact evidence, or task-defined
+    not arbitrary-language or arbitrary-codebase parity. The checked
+    `candidate_runner_c` fixture now compiles and runs one C11 seed with observed
+    host-compiler identity and a verified build-contract lock, and focused tests
+    prove optional exact pin rejection. There is still no portable hermetic
+    compiler/package-manager provisioning, cross-host replay, OS/container
+    sandbox, arbitrary-language validator contract, language-aware marker
+    grammar, codebase-scale generated-artifact evidence, or task-defined
     candidate abstraction hook.
-  - Required result: add real-language and build-system contracts with pinned
-    versions and dependencies, deterministic replay, stronger isolation,
-    language-aware marker grammars, and codebase-scale benchmark evidence. Add
-    task-defined candidate abstraction hooks separately before treating the
-    task-primary local runner as AlphaEvolve-grade arbitrary-codebase support.
+  - Required result: add broader real-language and build-system contracts with
+    portable provisioned toolchains, deterministic cross-host replay, stronger
+    isolation, language-aware marker grammars, and codebase-scale benchmark
+    evidence. Add task-defined candidate abstraction hooks separately before
+    treating the task-primary local runner as AlphaEvolve-grade arbitrary-
+    codebase support.
 
 - [ ] Extend existing-codebase minimal-marker integration evidence beyond
       runtime workspace inventory.

@@ -29,7 +29,9 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "stale_readiness_detector",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "real_language_replayable_build_runner_evidence": "not_recorded_locally",
+    "portable_hermetic_replayable_build_runner_evidence": (
+        "host_c_compiler_smoke_recorded_portable_replay_not_recorded"
+    ),
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",
@@ -48,22 +50,22 @@ CRITERION_SPECS = (
     {
         "criterion_id": "language_build_runner_support",
         "search_surface": "candidate language/build/runner declarations and execution policy",
-        "current_scope": "task-primary local expression build/runner/scorer execution without real-language toolchain parity",
-        "missing_readiness": "real-language runners, replayable build-system contracts, isolation, and codebase-scale capability evidence",
-        "roadmap_required_phrase": "real language and toolchain fixtures",
+        "current_scope": "task-primary local expression and host C build/runner/scorer execution with toolchain identity but without portable replay parity",
+        "missing_readiness": "portable hermetic and broader language runners, replayable build-system contracts, isolation, and codebase-scale capability evidence",
+        "roadmap_required_phrase": "compiled and interpreted language/package-manager fixtures",
         "current_sidecars": ("papers/candidate_language_runner_boundary.json",),
         "active_todos": (
             {
                 "path": "docs/todo/code.md",
-                "required_phrase": "real compiler or package-manager toolchain",
+                "required_phrase": "portable hermetic compiler/package-manager",
             },
             {
                 "path": "docs/todo/papers.md",
-                "required_phrase": "real-language and build-system contracts",
+                "required_phrase": "broader real-language and build-system contracts",
             },
         ),
-        "validation_gate": "real-language and replayable-build contract tests with manifest evidence",
-        "readiness_status": "local_expression_build_runner_partial_without_real_toolchain_gate",
+        "validation_gate": "portable hermetic replay and broader-language contract tests with manifest evidence",
+        "readiness_status": "local_expression_and_host_c_partial_without_portable_toolchain_gate",
     },
     {
         "criterion_id": "candidate_abstraction_api",
@@ -308,7 +310,7 @@ def roadmap_candidate_workspace_fidelity_boundary_record(
             "scale, mutation-mode/operator provenance, prompt-example-copy "
             "guards, cross-file consistency, initial-pool/static-binary "
             "handling, and workspace resume integrity. It does not claim "
-            "real-language replayable build-runner evidence, flexible solution abstraction "
+            "portable hermetic replayable build-runner evidence, flexible solution abstraction "
             "APIs, candidate-embedded evaluator contracts, realistic codebase "
             "fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator "
             "family provenance, semantic prompt-example-copy detection, "
@@ -367,7 +369,7 @@ def validate_roadmap_candidate_workspace_fidelity_boundary(
     boundary_text = data.get("claim_boundary")
     if (
         not isinstance(boundary_text, str)
-        or "does not claim real-language replayable build-runner evidence" not in boundary_text
+        or "does not claim portable hermetic replayable build-runner evidence" not in boundary_text
         or "candidate-embedded evaluator contracts" not in boundary_text
         or "topology resume replay proof" not in boundary_text
     ):

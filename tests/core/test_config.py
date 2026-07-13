@@ -194,6 +194,11 @@ def test_candidate_language_runner_declarations_are_normalized():
             "build_files": ["Cargo.toml"],
             "build_command": ["cargo", "build"],
             "artifact_patterns": ["target/debug/*"],
+            "toolchain_candidates": [],
+            "toolchain_version_command": [],
+            "toolchain_executable_sha256": None,
+            "toolchain_version_output_sha256": None,
+            "dependency_lock_sha256": {},
             "execution_status": "declared_metadata_only",
             "notes": "",
         }
@@ -224,6 +229,68 @@ def test_candidate_language_runner_declarations_are_normalized():
         (
             {"candidate_build_systems": [{"name": "cargo", "build_command": "cargo build"}]},
             "candidate_build_systems\\[0\\]\\.build_command",
+        ),
+        (
+            {
+                "candidate_build_systems": [
+                    {
+                        "name": "c",
+                        "build_command": ["clang", "solution.c"],
+                        "toolchain_candidates": ["clang", "gcc"],
+                    }
+                ]
+            },
+            "build_command must begin",
+        ),
+        (
+            {
+                "candidate_build_systems": [
+                    {
+                        "name": "c",
+                        "build_command": ["{toolchain}", "solution.c"],
+                    }
+                ]
+            },
+            "requires toolchain_candidates",
+        ),
+        (
+            {
+                "candidate_build_systems": [
+                    {
+                        "name": "c",
+                        "build_command": ["{toolchain}", "solution.c"],
+                        "toolchain_candidates": ["clang"],
+                        "toolchain_version_command": ["clang", "--version"],
+                    }
+                ]
+            },
+            "toolchain_version_command must begin",
+        ),
+        (
+            {
+                "candidate_build_systems": [
+                    {
+                        "name": "c",
+                        "build_command": ["{toolchain}", "solution.c"],
+                        "toolchain_candidates": ["clang"],
+                        "toolchain_executable_sha256": "not-a-hash",
+                    }
+                ]
+            },
+            "lowercase sha256 hex digest",
+        ),
+        (
+            {
+                "candidate_build_systems": [
+                    {
+                        "name": "c",
+                        "build_command": ["{toolchain}", "solution.c"],
+                        "toolchain_candidates": ["clang"],
+                        "dependency_lock_sha256": {"../lock": "0" * 64},
+                    }
+                ]
+            },
+            "unsafe candidate path",
         ),
     ],
 )
@@ -262,6 +329,29 @@ def test_candidate_runner_stage_binds_executable_language_and_build_declarations
 
     assert config.eval_stages[0]["language_runner"] == "expression"
     assert config.eval_stages[0]["build_system"] == "expressionbuild"
+
+
+def test_candidate_build_toolchain_contract_is_normalized():
+    config = Config(
+        candidate_build_systems=[
+            {
+                "name": "CCompiler",
+                "build_command": ["{toolchain}", "solution.c"],
+                "toolchain_candidates": ["clang", "gcc"],
+                "toolchain_executable_sha256": "a" * 64,
+                "toolchain_version_output_sha256": "b" * 64,
+                "dependency_lock_sha256": {"toolchain.lock": "c" * 64},
+            }
+        ]
+    )
+
+    build = config.candidate_build_systems[0]
+    assert build["name"] == "ccompiler"
+    assert build["toolchain_candidates"] == ["clang", "gcc"]
+    assert build["toolchain_version_command"] == ["{toolchain}", "--version"]
+    assert build["toolchain_executable_sha256"] == "a" * 64
+    assert build["toolchain_version_output_sha256"] == "b" * 64
+    assert build["dependency_lock_sha256"] == {"toolchain.lock": "c" * 64}
 
 
 @pytest.mark.parametrize(

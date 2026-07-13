@@ -18,8 +18,8 @@ def test_readme_agents_operational_boundary_accepts_current_drift_record():
     )
     assert boundary["schema"] == README_AGENTS_OPERATIONAL_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
-    assert validation.actual_example_count == 9
-    assert validation.listed_example_count == 6
+    assert validation.actual_example_count == 10
+    assert validation.listed_example_count == 7
     assert validation.missing_example_count == 3
     assert boundary["missing_examples"] == [
         "embedded_evaluate_math",
@@ -110,8 +110,8 @@ def test_render_readme_agents_operational_boundary_summary_reports_shape():
         "| boundary_status | agents_operational_static_drift_record_without_complete_instruction_map |"
         in summary
     )
-    assert "| actual_example_count | 9 |" in summary
-    assert "| listed_example_count | 6 |" in summary
+    assert "| actual_example_count | 10 |" in summary
+    assert "| listed_example_count | 7 |" in summary
     assert "| missing_example_count | 3 |" in summary
     assert "| run_artifact_record_count | 15 |" in summary
     assert "| missing_run_artifact_count | 5 |" in summary

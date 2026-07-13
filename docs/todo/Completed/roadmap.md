@@ -16060,3 +16060,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     explicit current-model substitution equivalence remain active gates.
   - Verification: Gemini parity and backend control-plane boundaries now
     distinguish first-class plumbing from live AlphaEvolve model-mix parity.
+- [x] Keep ROADMAP current with local concurrent sampler workers.
+  - Status: the async/resumable section now records bounded worker-owned LLM
+    sampler queues, deterministic proposal-order merge, global call-stream
+    sequencing, owner-serialized rewards, and composition with candidate async
+    evaluation.
+  - Remaining roadmap gap: distributed/cross-generation orchestration,
+    dependency waits, pending-work resume, provider replay, worker leases, and
+    compute-hour/cadence evidence remain active criteria.
+  - Verification: roadmap async-readiness sidecars and topology/parallel
+    boundaries distinguish local terminal evidence from full Section 2.6 parity.

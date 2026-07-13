@@ -73,20 +73,42 @@ from `validate.py` unless explicitly allowlisted.
   adapter attempts, provider-reported total tokens, and configured estimated
   micro-USD cost. Role-specific caps override the matching run-wide cap for
   their role in budget-report rows and are checked before calls for that role.
-- `proposals_per_generation` (`1`): number of sequential mutation proposals to
-  generate inside each generation. By default each proposal is evaluated,
-  rewarded, and logged before the next proposal. With
-  `async_candidate_evaluation: true`, sibling proposals are still generated
-  sequentially but their uncached evaluations can overlap; results are merged,
-  rewarded, logged, and admitted in proposal submission order. Generation start
-  hooks, generation completion accounting, and migration remain once per
-  generation; each generated history row records its batch position under
-  `metadata.proposal_batch`.
+- `proposals_per_generation` (`1`): number of mutation proposals in each
+  generation. By default proposals run sequentially. With `async_llm_sampling:
+  true`, all sibling parents, inspirations, prompt programs, and prompts are
+  selected from pre-batch search state before provider dispatch; LLM results can
+  finish out of order but are processed in proposal order. With
+  `async_candidate_evaluation: true`, uncached sibling evaluations can overlap
+  and are also committed in proposal order. Generation hooks, completion
+  accounting, and migration remain once per generation; each generated history
+  row records its batch position under `metadata.proposal_batch`.
+- `async_llm_sampling` (`false`): opt into bounded local concurrent mutation
+  generation. Each named sampler worker owns a distinct backend ensemble and
+  runs provider calls through `asyncio.to_thread()`. The main controller
+  persists worker call records, accounts budgets, applies mutations, and commits
+  shared state in deterministic proposal order. Critique, feedback, meta-prompt,
+  plugin, prompt-database, archive, and migration work remain serialized. A
+  single-ensemble `runtime_llm_scheduler_state_snapshot` cannot be restored in
+  this mode because per-worker scheduler and pending-task state is not yet a
+  checkpointed contract. A finite `max_llm_calls` reserves batch dispatch slots
+  and limits each mutation job to one ensemble attempt; provider-attempt, token,
+  cost, seconds, and wall-clock limits remain cooperative for work already
+  dispatched, so an in-flight batch can consume or overshoot them before the
+  next batch stops. Terminal close drains provider threads rather than claiming
+  hard remote cancellation.
+- `async_llm_sampler_workers` (`2`): number of worker-owned LLM ensembles used
+  when `async_llm_sampling` is enabled. Valid range: `1` through `64`. Backend
+  call ids are namespaced per worker, and configured logical role-call limits
+  are enforced globally by the sampler controller.
+- `async_llm_queue_capacity` (`4`): global queued mutation-job capacity before
+  the producer waits. Valid range: `1` through `4096`. The terminal sampler
+  report records queue pressure, worker lifecycle, completion/merge order,
+  scheduler summaries, reward ownership, and zero pending work.
 - `async_candidate_evaluation` (`false`): opt into a local candidate-evaluation
-  controller backed by a bounded Python `asyncio` queue. This overlaps only
-  candidate validator work inside the current proposal batch. LLM proposal,
-  critique, feedback, plugin, prompt-database, archive, reward, and migration
-  mutations remain serialized, and batches drain before the generation ends.
+  controller backed by a separate bounded Python `asyncio` queue. It overlaps
+  candidate validator work inside the current proposal batch. Feedback, plugin,
+  prompt-database, archive, and migration mutations remain serialized, and
+  batches drain before the generation ends.
 - `async_evaluator_workers` (`2`): number of named local evaluator tasks used
   when `async_candidate_evaluation` is enabled. Valid range: `1` through `64`.
   Each task runs `CascadeEvaluator.evaluate()` through `asyncio.to_thread()`;

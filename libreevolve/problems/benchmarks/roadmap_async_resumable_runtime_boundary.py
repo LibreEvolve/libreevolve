@@ -50,8 +50,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "distributed_pipeline_topology",
         "runtime_surface": "controller, LLM sampler, evaluation-node topology",
-        "current_scope": "local candidate-evaluation asyncio queue with named workers and deterministic admission",
-        "missing_readiness": "concurrent sampler tasks, distributed evaluators, full wait telemetry, cross-generation overlap, and pending-work checkpoints",
+        "current_scope": "local sampler and candidate-evaluation asyncio queues with named workers and deterministic merge/admission",
+        "missing_readiness": "distributed evaluators, full wait telemetry, cross-generation overlap, and pending-work checkpoints",
         "roadmap_required_phrase": "runtime.history.distributed_pipeline_topology_report",
         "current_sidecars": ("papers/distributed_pipeline_topology_boundary.json",),
         "active_todos": (
@@ -65,13 +65,13 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "real async topology artifacts and queue/backpressure validation",
-        "readiness_status": "local_candidate_async_topology_partial",
+        "readiness_status": "local_sampler_evaluator_async_topology_partial",
     },
     {
         "criterion_id": "parallel_evaluation_throughput",
         "runtime_surface": "local stage-sample workers and candidate-evaluation workers",
-        "current_scope": "configured-stage sample fan-out plus bounded local candidate-level async evaluation",
-        "missing_readiness": "compute-hour budgets, concurrent samplers, distributed nodes, cross-generation overlap, and pending-work resume",
+        "current_scope": "configured-stage sample fan-out plus bounded local async sampling and candidate evaluation",
+        "missing_readiness": "compute-hour budgets, distributed nodes, cross-generation overlap, and pending-work resume",
         "roadmap_required_phrase": "runtime.history.parallel_evaluation_readiness_report",
         "current_sidecars": ("papers/parallel_evaluation_readiness_boundary.json",),
         "active_todos": (
@@ -85,12 +85,12 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "paper-visible worker fan-out, queue state, and cadence reports",
-        "readiness_status": "local_candidate_async_evaluation_partial",
+        "readiness_status": "local_sampler_evaluator_async_partial",
     },
     {
         "criterion_id": "controller_pending_work_resume",
         "runtime_surface": "controller queues and pending work",
-        "current_scope": "terminal drained synchronous or local candidate-async controller snapshot",
+        "current_scope": "terminal drained synchronous or local sampler/evaluator-async controller snapshot",
         "missing_readiness": "queued/running proposals, in-flight LLM calls, evaluator state, and mid-generation resume",
         "roadmap_required_phrase": "controller and pending-evaluation checkpoint state",
         "current_sidecars": ("papers/controller_pending_work_resume_boundary.json",),
@@ -177,7 +177,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "budget_resume_accounting",
         "runtime_surface": "runtime, evaluator, LLM, controller, and worker budgets",
-        "current_scope": "terminal cooperative counters and serialized async-candidate evaluation accounting",
+        "current_scope": "terminal cooperative counters and ordered local async sampler/evaluator accounting",
         "missing_readiness": "async queue budgets, worker/accelerator leases, pending-work budget restore, and equal-budget runs",
         "roadmap_required_phrase": "synchronous controller-budget event replay",
         "current_sidecars": (

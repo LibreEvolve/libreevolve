@@ -93,7 +93,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "controller_sampler_task_checkpoints",
         "runtime_surface": "controller queues and LLM sampler task state",
-        "current_scope": "terminal drained synchronous or local candidate-async controller snapshot with inline sampler calls",
+        "current_scope": "terminal drained synchronous or local sampler/evaluator-async controller snapshot with worker-owned sampler calls",
         "missing_readiness": "controller queue checkpoints and in-flight LLM sampler task state",
         "sidecars": (
             "papers/controller_pending_work_resume_boundary.json",
@@ -181,7 +181,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "async_budget_environment_replay",
         "runtime_surface": "async budgets, worker leases, validators, and external environments",
-        "current_scope": "serialized candidate-async budget counters, controller budget-event replay, and local subprocess provenance",
+        "current_scope": "ordered local async sampler/evaluator budget counters, controller budget-event replay, and local subprocess provenance",
         "missing_readiness": "async budget accounting and external environment replay",
         "sidecars": (
             "papers/llm_budget_policy_boundary.json",

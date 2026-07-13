@@ -27,6 +27,7 @@ STOP_REASONS = {
     "max_llm_tokens",
     "max_llm_cost_microusd",
     "max_llm_seconds",
+    "llm_role_call_limits",
     "llm_role_provider_attempt_limits",
     "llm_role_token_limits",
     "llm_role_cost_microusd_limits",

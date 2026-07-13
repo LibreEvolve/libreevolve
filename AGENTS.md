@@ -15,7 +15,8 @@ LibreEvolve is a Python research platform for LLM-guided evolutionary program di
 
 ```
 libreevolve/
-  core/       loop.py (evolve orchestration), prompt.py (PromptSampler), evaluator.py, diff.py, database.py, config.py
+  core/       loop.py (evolve orchestration), async_sampler.py, async_evaluator.py,
+              prompt.py (PromptSampler), evaluator.py, diff.py, database.py, config.py
   llm/        ensemble.py (UCB-style heuristic), anthropic.py, gemini.py (GenerateContent), openai.py (Responses API when configured), ollama.py
   population/ program.py, map_elites.py (3D TF-IDF), islands.py (ring migration, explore/exploit)
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
@@ -45,12 +46,13 @@ libreevolve/
   sampling_eligible.
 - Default `mixed` parent sampling uses 30% explore / 70% exploit; explicit
   parent-selection strategies bypass that ratio
-- `async_candidate_evaluation` is opt-in local candidate-level concurrency:
-  sibling evaluations use a bounded Python `asyncio` queue, then feedback,
-  plugins, budgets, prompt rewards, history, and archive admission commit in
-  submission order before the generation ends. It is not concurrent LLM
-  sampling, cross-generation overlap, distributed evaluation, or pending-work
-  resume.
+- `async_llm_sampling` is opt-in local proposal concurrency: sibling prompts are
+  prepared from pre-batch archive state, worker-owned LLM ensembles run through
+  a bounded Python `asyncio` queue, results merge in proposal order, and rewards
+  are serialized through the owning worker. `async_candidate_evaluation` is the
+  separate bounded local evaluation queue. Either or both can be enabled;
+  shared archive/history/budget mutations remain main-thread ordered. This is
+  not cross-generation overlap, distributed execution, or pending-work resume.
 - The checked matrix cascade fixture executes four pinned seeds over known
   rank-7/rank-8 2x2 controls and emits per-seed traces; it is deterministic
   calibration, not Strassen rediscovery or AlphaEvolve-scale search evidence

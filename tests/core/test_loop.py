@@ -8,6 +8,7 @@ import os
 import random
 import shutil
 import subprocess
+import threading
 import time
 from datetime import datetime
 from pathlib import Path
@@ -426,6 +427,63 @@ class _SequenceTelemetryLLM(_TelemetryLLM):
         if role == "mutation":
             self.diff = next(self._diffs)
         return super().generate(prompt, role=role)
+
+
+class _AsyncSamplerTelemetryLLM:
+    def __init__(self, diff, delay, *, error=None):
+        self.diff = diff
+        self.delay = delay
+        self.error = error
+        self.namespace = None
+        self.last_call = None
+        self.call_history = []
+        self.rewards = []
+
+    @property
+    def call_history_retention(self):
+        return {
+            "total_records": len(self.call_history),
+            "dropped_records": 0,
+        }
+
+    def set_call_id_namespace(self, namespace):
+        self.namespace = namespace
+
+    def generate(self, prompt, role="mutation"):
+        time.sleep(self.delay)
+        if self.error is not None:
+            raise RuntimeError(self.error)
+        before = len(self.call_history)
+        call = {
+            "id": f"{self.namespace}-call-{before}",
+            "sequence_id": before + 1,
+            "role": role,
+            "backend_idx": 0,
+            "backend_name": "fake/async-worker",
+            "prompt_chars": len(prompt),
+            "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(),
+            "status": "ok",
+            "output_chars": len(self.diff),
+            "output_sha256": hashlib.sha256(self.diff.encode()).hexdigest(),
+            "counts_before": [before],
+            "counts_after": [before + 1],
+            "will_retry": False,
+            "will_fallback": False,
+        }
+        self.last_call = call
+        self.call_history.append(call)
+        return self.diff, 0
+
+    def record_reward(self, idx, reward, call_id=None):
+        self.rewards.append((idx, reward, call_id, threading.current_thread().name))
+        return {
+            "record_type": "reward",
+            "call_id": call_id,
+            "backend_idx": idx,
+            "reward": reward,
+            "reward_raw": reward,
+            "rewarded": True,
+        }
 
 
 class _RewardLLM:
@@ -1102,6 +1160,277 @@ def test_loop_async_candidate_evaluations_overlap_and_admit_in_submission_order(
     )
     assert controller_state["pending_work"]["queued_evaluations"] == 0
     assert controller_state["pending_work"]["running_evaluations"] == 0
+
+
+def test_loop_async_llm_samplers_overlap_merge_and_reward_in_submission_order(
+    tmp_path,
+):
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    scores = {'x=1': 0.1, 'x=2': 0.2, 'x=3': 0.3, 'x=4': 0.4}\n"
+        "    return {'score': scores[code.strip()], 'is_valid': True}\n"
+    )
+    main_llm = _TelemetryLLM()
+    workers = [
+        _AsyncSamplerTelemetryLLM("x=2", 0.20),
+        _AsyncSamplerTelemetryLLM("x=3", 0.06),
+        _AsyncSamplerTelemetryLLM("x=4", 0.01),
+    ]
+
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, *workers],
+    ):
+        evolve(
+            problem,
+            Config(
+                max_generations=1,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=3,
+                async_llm_queue_capacity=3,
+                async_candidate_evaluation=True,
+                async_evaluator_workers=2,
+                async_evaluation_queue_capacity=3,
+                log_dir=str(tmp_path),
+                problem_name="async_sampler_batch",
+            ),
+        )
+
+    run_dir = tmp_path / "async_sampler_batch"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    generated = history[1:]
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    runtime_history = manifest["runtime"]["history"]
+    sampler = runtime_history["async_llm_sampler_controller"]
+    call_rows = [
+        json.loads(line)
+        for line in (run_dir / "llm_calls.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    calls = [row for row in call_rows if row["record_type"] == "call"]
+    rewards = [row for row in call_rows if row["record_type"] == "reward"]
+
+    assert [row["code"].strip() for row in generated] == ["x=2", "x=3", "x=4"]
+    assert [row["metadata"]["proposal_batch"]["proposal_index"] for row in generated] == [
+        0,
+        1,
+        2,
+    ]
+    assert len({row["parent_id"] for row in generated}) == 1
+    assert [row["metadata"]["async_llm_sampler"]["merge_order"] for row in generated] == [
+        0,
+        1,
+        2,
+    ]
+    assert sampler["validation"]["ok"] is True
+    assert sampler["submitted_count"] == 3
+    assert sampler["finished_count"] == 3
+    assert sampler["merge_count"] == 3
+    assert sampler["reward_count"] == 3
+    assert sampler["max_running_count"] >= 2
+    assert sampler["completion_out_of_order_count"] > 0
+    assert [row["submission_order"] for row in sampler["merge_records"]] == [0, 1, 2]
+    assert [row["sequence_id"] for row in calls] == [1, 1, 1]
+    assert [row["stream_sequence_id"] for row in calls] == [1, 2, 3]
+    assert [row["producer_sequence_id"] for row in calls] == [1, 1, 1]
+    assert len(rewards) == 3
+    assert main_llm.calls == []
+    assert [len(worker.rewards) for worker in workers] == [1, 1, 1]
+
+    topology = runtime_history["distributed_pipeline_topology_report"]
+    assert topology["validation"]["ok"] is True
+    assert topology["queue_count"] == 2
+    assert {queue["queue_id"] for queue in topology["queues"]} == {
+        "llm_proposal_queue:local",
+        "candidate_evaluation_queue:local",
+    }
+    assert topology["dispatch_policy"]["asyncio_scope"] == (
+        "candidate_generation_and_evaluation"
+    )
+    assert topology["dispatch_policy"]["deterministic_merge_order"] == (
+        "llm_and_candidate_submission_order"
+    )
+    assert any(
+        node["role"] == "llm_sampler" and node["async_worker"] is True
+        for node in topology["nodes"]
+    )
+    readiness = runtime_history["parallel_evaluation_readiness_report"]
+    assert readiness["validation"]["ok"] is True
+    assert readiness["claim_readiness"]["candidate_level_async_llm_sampling"] is True
+    assert readiness["claim_readiness"]["candidate_level_async_evaluation"] is True
+    assert readiness["observed_async_llm_sampler_count"] == 3
+    controller_state = runtime_history["controller_state"]
+    assert controller_state["validation"]["ok"] is True
+    assert controller_state["status"] == (
+        "terminal_async_pipeline_controller_drained"
+    )
+    assert controller_state["pending_work"]["in_flight_llm_calls"] == 0
+
+
+def test_loop_async_llm_sampler_reserves_finite_evaluation_budget(tmp_path):
+    main_llm = _TelemetryLLM()
+    workers = [
+        _AsyncSamplerTelemetryLLM("x=2", 0.01),
+        _AsyncSamplerTelemetryLLM("x=3", 0.01),
+    ]
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, *workers],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                max_evaluations=3,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=2,
+                async_llm_queue_capacity=2,
+                log_dir=str(tmp_path),
+                problem_name="async_sampler_eval_budget",
+            ),
+        )
+
+    run_dir = tmp_path / "async_sampler_eval_budget"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    sampler = manifest["runtime"]["history"]["async_llm_sampler_controller"]
+    history = (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+
+    assert manifest["runtime"]["stop_reason"] == "max_evaluations"
+    assert manifest["runtime"]["consumed"]["generations_started"] == 1
+    assert manifest["runtime"]["consumed"]["generations_completed"] == 0
+    assert manifest["runtime"]["consumed"]["candidate_evaluations"] == 2
+    assert sampler["submitted_count"] == 2
+    assert len(history) == 3
+
+
+def test_loop_async_llm_sampler_reserves_finite_llm_call_budget(tmp_path):
+    main_llm = _TelemetryLLM()
+    workers = [
+        _AsyncSamplerTelemetryLLM("x=2", 0.01),
+        _AsyncSamplerTelemetryLLM("x=3", 0.01),
+    ]
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, *workers],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                max_llm_calls=2,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=2,
+                async_llm_queue_capacity=2,
+                log_dir=str(tmp_path),
+                problem_name="async_sampler_llm_budget",
+            ),
+        )
+
+    run_dir = tmp_path / "async_sampler_llm_budget"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    sampler = manifest["runtime"]["history"]["async_llm_sampler_controller"]
+
+    assert manifest["runtime"]["stop_reason"] == "max_llm_calls"
+    assert manifest["runtime"]["consumed"]["llm_calls"] == 2
+    assert manifest["runtime"]["consumed"]["generations_completed"] == 0
+    assert sampler["submitted_count"] == 2
+
+
+def test_loop_async_llm_sampler_enforces_global_mutation_role_limit(tmp_path):
+    main_llm = _TelemetryLLM()
+    workers = [
+        _AsyncSamplerTelemetryLLM("x=2", 0.01),
+        _AsyncSamplerTelemetryLLM("x=3", 0.01),
+    ]
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, *workers],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                proposals_per_generation=3,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=2,
+                async_llm_queue_capacity=2,
+                llm_role_call_limits={"mutation": 2},
+                log_dir=str(tmp_path),
+                problem_name="async_sampler_role_budget",
+            ),
+        )
+
+    run_dir = tmp_path / "async_sampler_role_budget"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    sampler = manifest["runtime"]["history"]["async_llm_sampler_controller"]
+
+    assert manifest["runtime"]["stop_reason"] == "llm_role_call_limits"
+    assert manifest["runtime"]["consumed"]["generations_completed"] == 0
+    assert sampler["submitted_count"] == 2
+    assert sampler["role_call_limits"]["logical_calls_by_role"] == {
+        "mutation": 2
+    }
+
+
+def test_loop_async_llm_sampler_persists_failure_and_drains_other_work(tmp_path):
+    main_llm = _TelemetryLLM()
+    workers = [
+        _AsyncSamplerTelemetryLLM("x=2", 0.02, error="provider down"),
+        _AsyncSamplerTelemetryLLM("x=3", 0.01),
+    ]
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, *workers],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                proposals_per_generation=2,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=2,
+                async_llm_queue_capacity=2,
+                log_dir=str(tmp_path),
+                problem_name="async_sampler_failure",
+            ),
+        )
+
+    run_dir = tmp_path / "async_sampler_failure"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    sampler = manifest["runtime"]["history"]["async_llm_sampler_controller"]
+    failures = [
+        json.loads(line)
+        for line in (run_dir / "failure_history.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+
+    assert sampler["validation"]["ok"] is True
+    assert sampler["submitted_count"] == 2
+    assert sampler["failed_count"] == 1
+    assert sampler["succeeded_count"] == 1
+    assert sampler["merge_count"] == 2
+    assert sampler["reward_count"] == 1
+    assert failures[0]["diff_error"] == "llm_mutation_failed"
+    assert failures[0]["error"] == "llm_mutation_failed"
+    assert sampler["task_records"][0]["status"] == "failed"
+    assert sampler["merge_records"][0]["submission_order"] == 0
+    assert "llm_sampler_call:00000000" in failures[0]["mutation_text"]
+    assert [row["code"].strip() for row in history] == ["x=1", "x=3"]
 
 
 def test_loop_async_candidate_evaluations_coalesce_inflight_duplicates(tmp_path):
@@ -2271,6 +2600,7 @@ def test_runtime_history_records_parallel_evaluation_readiness_boundary(tmp_path
         "observed_wall_clock_elapsed_sec_sum": report["observed_wall_clock_elapsed_sec_sum"],
     }
     assert report["async_pipeline_state"] == {
+        "candidate_level_llm_sampler_queue": False,
         "candidate_level_evaluation_queue": False,
         "distributed_evaluator_nodes": False,
         "pending_work_resume": False,
@@ -2279,6 +2609,7 @@ def test_runtime_history_records_parallel_evaluation_readiness_boundary(tmp_path
     assert report["claim_ready"] is False
     assert report["claim_readiness"]["local_stage_sample_worker_fanout"] is True
     assert report["claim_readiness"]["wall_clock_compression_observed"] is True
+    assert report["claim_readiness"]["candidate_level_async_llm_sampling"] is False
     assert report["claim_readiness"]["candidate_level_async_evaluation"] is False
     assert report["candidate_records"][0]["sample_execution_records"][0]["mode"] == (
         "thread_pool"
@@ -3785,6 +4116,36 @@ def test_evolve_can_restore_llm_scheduler_snapshot_into_new_run(tmp_path):
     assert sum(scheduler["state"]["counts"]) == 6
     assert scheduler["state"]["wins"][0] == 1.5
     assert scheduler["state"]["wins"][1] == 0.5
+
+
+def test_evolve_rejects_scheduler_restore_with_async_llm_sampling(tmp_path):
+    snapshot = {
+        "status": "snapshot",
+        "schema": "libreevolve.llm_scheduler_state.v1",
+        "state": {"counts": [1], "wins": [0.0], "total": 1},
+        "restore_entrypoint": "LLMEnsemble.restore_scheduler_state",
+        "resume_status": "snapshot_persisted_restore_supported",
+    }
+    backend = MagicMock()
+    backend.name = "scheduler/model"
+    llm = LLMEnsemble([backend])
+
+    with (
+        patch("libreevolve.core.loop.build_llm", return_value=llm),
+        pytest.raises(ValueError, match="worker scheduler state is not checkpointed"),
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=1,
+                async_llm_sampling=True,
+                log_dir=str(tmp_path),
+                problem_name="t",
+            ),
+            runtime_llm_scheduler_state_snapshot=snapshot,
+        )
+
+    assert not (tmp_path / "t" / "manifest.json").exists()
 
 
 def test_evolve_rejects_llm_scheduler_snapshot_backend_count_mismatch(tmp_path):

@@ -1340,17 +1340,34 @@ retrieval/summarization, learned ranking, and semantic context-selection
 surfaces.
 Completed runtime history also records
 `runtime.history.controller_state`, a terminal drained-state snapshot for the
-synchronous controller or the opt-in local asyncio candidate-evaluation
-controller, with zero queued/running proposals, evaluations, in-flight LLM
+synchronous controller or the opt-in local asyncio sampler/evaluation
+controllers, with zero queued/running proposals, evaluations, in-flight LLM
 calls, and pending archive admissions plus a compact
 `controller_budget_events.jsonl` summary. Async-enabled snapshots embed the
-validated drained candidate-evaluation controller report. Its embedded
+validated drained sampler and/or candidate-evaluation controller reports. Its embedded
 `libreevolve.controller_state_validation.v1` record verifies the terminal
 drained boundary and reports pending work, malformed fields, or full-replay
 overclaims as validation failures. Queued/running worker checkpoint state,
 provider-output replay, and end-to-end lineage replay proof remain separate
 resume work; `papers/controller_pending_work_resume_boundary.json` keeps that
 terminal-snapshot scope machine-validated.
+
+When `config.async_llm_sampling` is true, completed runtime history records
+`runtime.history.async_llm_sampler_controller` with schema
+`libreevolve.async_llm_sampler_controller.v1`. It contains bounded proposal-
+queue capacity and backpressure, named worker/task ownership, lifecycle and
+scheduler summaries, submitted/finished/succeeded/failed counts, out-of-order
+completion telemetry, deterministic merge records, reward-routing counts,
+wall-clock compression, configured/global logical role-call accounting, and
+terminal zero pending work. Generated history rows retain task, worker,
+completion, and merge linkage under `metadata.async_llm_sampler`. Worker call
+rows preserve producer-local `sequence_id`, add `producer_id` and
+`producer_sequence_id`, and receive a database-global `stream_sequence_id` in
+`llm_calls.jsonl`; reward rows link back to the owning sampler task.
+Terminal worker scheduler summaries are evidence only: async sampler worker
+scheduler state, queued calls, and provider outputs cannot be restored, and
+`evolve()` rejects single-ensemble scheduler snapshot restore when
+`async_llm_sampling` is enabled.
 
 When `config.async_candidate_evaluation` is true, completed runtime history also
 records `runtime.history.async_candidate_evaluation_controller` with schema
@@ -1373,7 +1390,10 @@ configured `llm_sampler:backend_*` nodes, configured or default
 generation, evaluation, and archive admission. Its
 `throughput_budget_linkage` points at consumed runtime and controller-budget
 events. In the default mode, the report has zero queues and blocking candidate
-evaluation dispatch. With async candidate evaluation enabled, it adds the
+generation/evaluation dispatch. With async LLM sampling enabled, it adds the
+bounded `llm_proposal_queue:local`, named worker-owned sampler nodes, a
+nonblocking controller-to-sampler edge with producer backpressure, and
+proposal-order result merge. With async candidate evaluation enabled, it adds the
 bounded `candidate_evaluation_queue:local`, named local evaluator worker nodes,
 a nonblocking controller-to-evaluator edge with producer backpressure, queued-
 work accounting, and submission-order merge/admission policy. When a configured
@@ -1389,17 +1409,18 @@ process-exhibit evaluator-pool record summarizes that metadata under
 for observed local sample-worker compression. Runs without configured sample
 workers keep `evaluation_dispatch: inline_blocking_local_subprocess` and
 `worker_fanout_accounted: false`.
-`validate_distributed_pipeline_topology_report()` validates either the default
-synchronous topology or the complete local candidate-async contract, while
+`validate_distributed_pipeline_topology_report()` validates the default
+synchronous topology plus sampler-only, evaluator-only, or combined local async
+contracts, while
 keeping `claim_ready: false` and rejecting pending-checkpoint or full
 AlphaEvolve async-topology overclaims. The committed
 `papers/distributed_pipeline_topology_boundary.json` sidecar preserves the
-local candidate-async partial boundary for paper-manifest validation. It records
-the implemented event loop, queue, worker, completion/admission, lifecycle, and
-dispatch telemetry while retaining missing concurrent LLM sampler workers,
-distributed evaluator workers, full dependency-wait telemetry, scheduler-state
-snapshots, cross-generation overlap, cross-process coordination, and pending-
-work checkpoints.
+local sampler/evaluator-async partial boundary for paper-manifest validation. It
+records both bounded queues, worker-owned sampler ensembles, worker/task
+lifecycles, completion/merge/admission ordering, and dispatch telemetry while
+retaining missing distributed evaluator workers, full dependency-wait telemetry,
+scheduler checkpoints, cross-generation overlap, provider-output replay, cross-
+process coordination, and pending-work checkpoints.
 Completed runtime history also records
 `runtime.history.parallel_evaluation_readiness_report` with schema
 `libreevolve.parallel_evaluation_readiness_report.v1`. It aggregates the
@@ -1410,14 +1431,15 @@ observed wall-clock seconds, wall-clock compression records, and a link back to
 
 This report is a scoped readiness boundary for AlphaEvolve Sections 2.4 and 2.6
 parallel evaluation. It records local configured-stage sample fan-out and, when
-enabled, candidate-level async queue/execution/admission evidence. `claim_ready`
+enabled, candidate-level sampler and evaluator queue/execution/merge/admission
+evidence. `claim_ready`
 remains false until the runtime records per-candidate compute-hour budgets,
-concurrent LLM sampler queues, distributed evaluator worker nodes, randomized-
-initialization shard identity, cross-generation proposal/evaluation overlap,
+distributed evaluator worker nodes, randomized-initialization shard identity,
+cross-generation proposal/evaluation overlap,
 mutation-chain-depth impact under slow feedback, pending-work resume state, and
 equal-budget parallelism reports. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
-same local candidate-async partial boundary for paper-manifest validation.
+same local sampler/evaluator-async partial boundary for paper-manifest validation.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
 is rejected before local evaluation counters mutate. The current
 `max_evaluations` limit is still a seed/candidate evaluation cap rather than a
@@ -2069,7 +2091,7 @@ archive bundle from a prior manifest plus sibling `history.jsonl` with
 for future resume use, including schema/status, cursor bounds, manifest-safe
 program ids in `archive_sequence_by_program_id`, and per-island count records.
 `runtime.history.controller_state` records the terminal default-synchronous or
-opt-in local candidate-async controller boundary beside this archive state, but
+opt-in local sampler/evaluator-async controller boundary beside this archive state, but
 does not reconstruct queued/running worker state or partially completed
 generation work. Its embedded
 `libreevolve.controller_state_validation.v1` record keeps that claim bounded to
@@ -2101,9 +2123,9 @@ boundary linked to
 `runtime.history.distributed_pipeline_topology_report` and a validated
 current inline evaluator-pool parallelism boundary before linking open process
 components back to the active TODO ledgers. It is a manifest-level
-process-exhibit map for the current local loop, including candidate-async
+process-exhibit map for the current local loop, including sampler/evaluator-async
 topology when configured, not an exact AlphaEvolve diagram reproduction, full
-controller/sampler/evaluator pipeline, or independent evaluator-pool
+distributed/cross-generation controller/sampler/evaluator pipeline, or independent evaluator-pool
 implementation: exact source-diagram layout,
 exact source caption/text identity, source diagram text identity, diagram
 node-label source alignment, source figure image/crop hashes, visual node

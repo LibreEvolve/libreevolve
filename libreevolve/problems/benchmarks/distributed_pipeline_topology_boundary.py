@@ -14,7 +14,7 @@ DISTRIBUTED_PIPELINE_RUNTIME_REPORT_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.6",)
-EXPECTED_BOUNDARY_STATUS = "local_candidate_async_evaluation_partial"
+EXPECTED_BOUNDARY_STATUS = "local_async_sampler_and_candidate_evaluation_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "asyncio_runtime_identity",
     "controller_node_identity",
@@ -36,8 +36,15 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_IMPLEMENTED_EVIDENCE = {
     "python_asyncio_runtime": "local_background_event_loop",
+    "bounded_llm_proposal_queue": "recorded_in_runtime_report",
     "bounded_candidate_evaluation_queue": "recorded_in_runtime_report",
     "queue_capacity_backpressure_policy": "recorded_in_runtime_report",
+    "llm_sampler_task_worker_identity": "recorded_in_controller_report",
+    "llm_sampler_worker_ownership": "one_ensemble_per_worker",
+    "llm_sampler_worker_lifecycle": "terminal_records_available",
+    "llm_sampler_completion_order": "recorded_per_task",
+    "deterministic_llm_result_merge": "submission_order_merge_recorded",
+    "worker_scheduler_summaries": "recorded_in_controller_report",
     "candidate_evaluator_task_worker_identity": "recorded_in_controller_report",
     "candidate_evaluator_worker_lifecycle": "terminal_records_available",
     "candidate_completion_order": "recorded_per_task",
@@ -46,13 +53,13 @@ EXPECTED_IMPLEMENTED_EVIDENCE = {
 }
 EXPECTED_MISSING_EVIDENCE = {
     "dependency_wait_event_telemetry": "not_recorded_locally",
-    "concurrent_llm_sampler_worker_nodes": "not_recorded_locally",
     "distributed_evaluator_worker_nodes": "not_recorded_locally",
-    "full_nonblocking_dependency_graph": "not_recorded_locally",
+    "full_cross_generation_dependency_graph": "not_recorded_locally",
     "async_scheduler_state_snapshot": "not_recorded_locally",
     "pending_work_checkpoint_state": "not_recorded_locally",
     "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
     "cross_process_shared_state_coordination": "not_recorded_locally",
+    "provider_output_replay": "not_recorded_locally",
 }
 
 
@@ -93,16 +100,16 @@ def distributed_pipeline_topology_boundary_record() -> dict[str, Any]:
         "claim_boundary": (
             "This boundary records that LibreEvolve has a runtime topology "
             "report for the local controller, program database, configured "
-            "LLM sampler nodes, and evaluator nodes. Opt-in candidate "
-            "evaluation uses a bounded queue on a Python asyncio event loop, "
-            "named local evaluator tasks, queue backpressure, worker lifecycle "
-            "records, out-of-order completion telemetry, and deterministic "
-            "submission-order archive admission. It does not claim concurrent "
-            "LLM sampler workers, distributed evaluator workers, a full "
-            "nonblocking dependency graph, dependency wait-event telemetry, "
-            "async scheduler snapshots, cross-generation proposal/evaluation "
-            "overlap, cross-process shared-state coordination, or pending-work "
-            "checkpoint state."
+            "LLM sampler nodes, and evaluator nodes. Opt-in candidate generation "
+            "and evaluation use bounded queues on local Python asyncio event "
+            "loops. Sampler tasks own distinct LLM ensembles, can complete out "
+            "of order, and merge in proposal order before serial shared-state "
+            "commit; evaluator tasks retain the same ordered-admission policy. "
+            "It does not claim distributed evaluator workers, a full cross-"
+            "generation dependency graph, dependency wait-event telemetry, "
+            "async scheduler checkpoints, cross-generation proposal/evaluation "
+            "overlap, provider-output replay, cross-process shared-state "
+            "coordination, or pending-work checkpoint state."
         ),
     }
 
@@ -147,8 +154,9 @@ def validate_distributed_pipeline_topology_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim" not in boundary_text
-        or "bounded queue on a Python asyncio event loop" not in boundary_text
-        or "deterministic submission-order archive admission" not in boundary_text
+        or "bounded queues on local Python asyncio event loops" not in boundary_text
+        or "Sampler tasks own distinct LLM ensembles" not in boundary_text
+        or "merge in proposal order" not in boundary_text
         or "dependency wait-event telemetry" not in boundary_text
         or "cross-generation proposal/evaluation overlap" not in boundary_text
         or "pending-work checkpoint state" not in boundary_text

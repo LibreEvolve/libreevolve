@@ -219,8 +219,11 @@ primary file requires an explicit replacement primary:
 
 The core loop lives in [`libreevolve/core/loop.py`](../libreevolve/core/loop.py).
 For each generation it records one generation-start event, then runs
-`proposals_per_generation` sequential proposal passes. For each proposal pass
-it:
+`proposals_per_generation` proposal passes. They are sequential by default. With
+`async_llm_sampling`, parent/inspiration/prompt state for all siblings is fixed
+before a bounded set of worker-owned LLM ensembles runs concurrently; mutation
+results rejoin the following ordered path in proposal order. For each proposal
+the loop:
 
 1. samples a parent from the island model
 2. runs plugin start hooks
@@ -243,23 +246,26 @@ it:
 14. rewards the selected backend with non-negative fitness improvement
 15. records prompt reward for the selected prompt program
 
-After the final proposal in the generation, the default loop migrates elites at
-the configured interval, runs generation-end hooks, and records one completed
-generation. With `async_candidate_evaluation: true`, uncached sibling
-evaluations can finish out of order on named `asyncio` workers; the controller
-drains the batch and commits feedback, plugin scoring, prompt rewards, history,
-and archive admission in proposal submission order before migration and the
-generation-end hook. Exact duplicate work already in flight is coalesced into
-one evaluation and later proposals reuse its result without consuming another
-candidate-evaluation budget unit.
+After the final proposal, the loop migrates elites at the configured interval,
+runs generation-end hooks, and records one completed generation. With
+`async_llm_sampling: true`, named local sampler tasks own distinct ensembles;
+provider calls may finish out of order, while call persistence, mutation
+application, evaluation dispatch, and shared-state updates follow proposal
+order. Rewards are queued back through the owning worker so scheduler state is
+never mutated concurrently with that worker's next generation call. With
+`async_candidate_evaluation: true`, uncached sibling evaluations can also finish
+out of order; feedback, plugin scoring, prompt rewards, history, and archive
+admission still commit in proposal order. Exact duplicate evaluations already
+in flight are coalesced without consuming a second evaluation budget unit.
 
-This is local candidate-evaluation overlap, not full asynchronous evolution.
-LLM mutation and critique calls remain inline, proposals do not cross generation
-boundaries, and pending queue/running-task state is not checkpointed or resumed.
-The queue controller and its report validator live in
+This is a local, batch-scoped asynchronous pipeline, not full asynchronous or
+distributed AlphaEvolve parity. Critique and feedback remain serial, proposals
+do not cross generation boundaries, and queued/running state is not checkpointed
+or resumed. The queue controllers and report validators live in
+[`libreevolve/core/async_sampler.py`](../libreevolve/core/async_sampler.py) and
 [`libreevolve/core/async_evaluator.py`](../libreevolve/core/async_evaluator.py);
-`loop.py` owns dispatch, exact-cache coalescing, budget accounting, deterministic
-commit, and runtime-history integration.
+`loop.py` owns prompt-batch preparation, ordered merge, cache coalescing, budget
+accounting, deterministic commit, and runtime-history integration.
 
 `on_generation_start()` is therefore a pre-prompt hook, not a pre-parent hook:
 it can update state before inspiration sampling and prompt construction, but it
@@ -1133,10 +1139,10 @@ queued/running pending-work restore.
   assignment and provider-token shapes. This is not a network sandbox.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
-- Proposal generation and LLM work remain sequential. Candidate evaluations
-  can overlap on opt-in local asyncio workers inside one batch, but there are no
-  concurrent LLM samplers, distributed evaluators, cross-generation overlap, or
-  resumable queued/running tasks.
+- Proposal generation can overlap on opt-in, worker-owned local asyncio sampler
+  tasks, and candidate evaluations can overlap on a separate opt-in local queue.
+  Critique/feedback remain serial, and there are no distributed evaluators,
+  cross-generation dependency scheduling, or resumable queued/running tasks.
 - Runtime budget accounting covers local generation count, total evaluator
   calls, cumulative evaluator seconds, evaluator subprocess attempts,
   configured-stage samples, retry attempts, evaluator timeouts, sample/stage
@@ -1149,7 +1155,7 @@ queued/running pending-work restore.
 - Archive cell/island state is persisted in manifests with full cell/elite
   restore support from accepted history; migration-event replay, pending async
   evaluations, and broader resumed experiment traces remain open. Terminal
-  synchronous or local candidate-async controller state is manifest-visible
+  synchronous or local sampler/evaluator-async controller state is manifest-visible
   under `runtime.history.controller_state` with an embedded validation record
   for the drained boundary.
 - LLM critique and feedback are synchronous optional passes; there are no

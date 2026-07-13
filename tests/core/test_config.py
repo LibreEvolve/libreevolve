@@ -87,6 +87,9 @@ def test_override_fields():
         async_candidate_evaluation=True,
         async_evaluator_workers=3,
         async_evaluation_queue_capacity=6,
+        async_llm_sampling=True,
+        async_llm_sampler_workers=4,
+        async_llm_queue_capacity=8,
         seed=99,
     )
     assert c.max_generations == 50 and c.seed == 99
@@ -114,6 +117,9 @@ def test_override_fields():
     assert c.async_candidate_evaluation is True
     assert c.async_evaluator_workers == 3
     assert c.async_evaluation_queue_capacity == 6
+    assert c.async_llm_sampling is True
+    assert c.async_llm_sampler_workers == 4
+    assert c.async_llm_queue_capacity == 8
 
 
 def test_default_async_candidate_evaluation_is_disabled():
@@ -122,6 +128,9 @@ def test_default_async_candidate_evaluation_is_disabled():
     assert config.async_candidate_evaluation is False
     assert config.async_evaluator_workers == 2
     assert config.async_evaluation_queue_capacity == 4
+    assert config.async_llm_sampling is False
+    assert config.async_llm_sampler_workers == 2
+    assert config.async_llm_queue_capacity == 4
 
 def test_default_backend_is_anthropic():
     assert Config().backends[0]["type"] == "anthropic"
@@ -258,6 +267,11 @@ def test_candidate_runner_declarations_reject_invalid_values(kwargs, message):
         ({"async_evaluator_workers": 65}, "async_evaluator_workers"),
         ({"async_evaluation_queue_capacity": 0}, "async_evaluation_queue_capacity"),
         ({"async_evaluation_queue_capacity": 4097}, "async_evaluation_queue_capacity"),
+        ({"async_llm_sampling": 1}, "async_llm_sampling"),
+        ({"async_llm_sampler_workers": 0}, "async_llm_sampler_workers"),
+        ({"async_llm_sampler_workers": 65}, "async_llm_sampler_workers"),
+        ({"async_llm_queue_capacity": 0}, "async_llm_queue_capacity"),
+        ({"async_llm_queue_capacity": 4097}, "async_llm_queue_capacity"),
         ({"num_inspirations": -1}, "num_inspirations"),
         ({"eval_timeout_sec": 0}, "eval_timeout_sec"),
         ({"explore_ratio": 1.5}, "explore_ratio"),

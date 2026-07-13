@@ -19352,3 +19352,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     scheduling, and substitution-equivalence evidence remain open.
   - Verification: focused provider, config, CLI, registry, runtime-report, and
     boundary tests validate the implemented contract and false parity claim.
+- [x] Add bounded local concurrent LLM sampler workers.
+  - Spec evidence: AlphaEvolve Section 2.6 describes a Python `asyncio`
+    controller with concurrent LLM samplers and evaluation nodes optimized for
+    throughput.
+  - Status: `async_llm_sampling` now prepares deterministic sibling prompts,
+    dispatches them through a bounded queue to worker-owned ensembles, records
+    out-of-order completion and proposal-order merge, persists producer-local
+    plus global stream call order, enforces global logical role limits, and
+    serializes rewards through the owning worker queue. It composes with the
+    existing async candidate-evaluation controller and serial archive commit.
+  - Remaining code gap: distributed workers, cross-generation dependency
+    scheduling, pending-work checkpoint/resume, provider-output replay, worker
+    leases, compute-hour budgets, and cadence/depth evidence remain open.
+  - Verification: controller, ensemble, database, finite-budget, failure,
+    sampler-only/evaluator-only/combined topology, and end-to-end overlap tests
+    validate the bounded local contract and reject full-parity overclaims.

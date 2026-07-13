@@ -1098,22 +1098,27 @@ is not yet an AlphaEvolve reproduction.
 ### 6. Async and resumable runtime
 
 - Extend the first local async controller slice into the complete AlphaEvolve
-  pipeline. `async_candidate_evaluation: true` now sends uncached sibling
-  candidate evaluations through a bounded Python `asyncio` queue with named
-  local workers, producer backpressure, worker lifecycle records, out-of-order
-  completion telemetry, deterministic submission-order merge/admission, exact
-  in-flight duplicate coalescing, and serial shared-state commit. Proposal and
-  critique LLM calls remain inline, batches drain before generation completion,
-  and no queued/running state is resumable. Completed manifests expose this
-  evidence under `runtime.history.async_candidate_evaluation_controller`,
+  pipeline. `async_llm_sampling: true` now prepares deterministic sibling
+  prompts from pre-batch state and sends mutation calls through a bounded Python
+  `asyncio` queue to named workers that each own an LLM ensemble. Calls can
+  finish out of order; the controller persists them with global stream order,
+  merges responses in proposal order, and serializes rewards through the owning
+  worker. `async_candidate_evaluation: true` separately sends uncached sibling
+  evaluations through a bounded queue with producer backpressure, worker
+  lifecycle records, out-of-order completion telemetry, deterministic merge/
+  admission, and exact in-flight duplicate coalescing. Shared state commits
+  serially, batches drain before generation completion, and no queued/running
+  state is resumable. Completed manifests expose this evidence under
+  `runtime.history.async_llm_sampler_controller`,
+  `runtime.history.async_candidate_evaluation_controller`,
   `runtime.history.controller_state`,
   `runtime.history.distributed_pipeline_topology_report`, and
   `runtime.history.parallel_evaluation_readiness_report`.
   `papers/distributed_pipeline_topology_boundary.json` and
   `papers/parallel_evaluation_readiness_boundary.json` now preserve the local
-  candidate-async partial boundary. Remaining Section 2.6 work includes
-  concurrent LLM sampler queues, cross-generation proposal/evaluation overlap,
-  full dependency wait telemetry, distributed evaluator nodes, scheduler and
+  local sampler/evaluator-async partial boundary. Remaining Section 2.6 work
+  includes cross-generation proposal/evaluation overlap, full dependency wait
+  telemetry, distributed evaluator nodes, scheduler and
   pending-work checkpoints, cross-process coordination, order-of-100-compute-
   hours budgets, mutation-depth/cadence evidence under slow feedback, and
   equal-budget parallelism reports. Opt-in
@@ -1124,7 +1129,7 @@ is not yet an AlphaEvolve reproduction.
   long runs can resume from more than a terminal drained boundary. The committed
   `papers/controller_pending_work_resume_boundary.json` sidecar preserves the
   current terminal controller-state evidence for both default synchronous and
-  opt-in local candidate-async runs while keeping queue checkpoint, running-work
+  opt-in local sampler/evaluator-async runs while keeping queue checkpoint, running-work
   resume, provider handoff replay, and end-to-end resumed-trace proof open. The
   committed `papers/restore_certification_boundary.json`
   sidecar records the current compatible restore-certification surface and

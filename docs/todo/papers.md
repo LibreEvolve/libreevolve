@@ -339,24 +339,28 @@ directory and using the AlphaEvolve paper as the primary specification.
     than stalling evolutionary depth behind slow evaluator wall-clock time.
   - Partial status: `proposals_per_generation` can create multiple sibling
     candidates with per-proposal metadata and deterministic ids. With
-    `async_candidate_evaluation: true`, uncached sibling evaluations overlap on
+    `async_llm_sampling: true`, sibling prompts are fixed from pre-batch state,
+    worker-owned LLM ensembles run on a bounded local `asyncio` queue, responses
+    can finish out of order but merge in proposal order, call rows retain global
+    stream ordering, and reward updates serialize through the owning worker.
+    With `async_candidate_evaluation: true`, uncached sibling evaluations overlap on
     a bounded local Python `asyncio` queue with named workers, producer
     backpressure, lifecycle/task telemetry, out-of-order completion records,
     deterministic submission-order merge/admission, exact in-flight duplicate
     coalescing, and serial shared-state commit. Configured evaluator stages can
     separately use `sample_workers` for local stage-sample thread-pool fan-out.
-    Completed manifests retain the async controller report, candidate execution
-    and admission linkage, topology, parallel-readiness evidence, and terminal
-    drained controller state. The parallel-evaluation paper boundary now
-    classifies this as local candidate-async partial support.
-  - Current gap: proposal and critique LLM work remains sequential, each batch
-    drains before generation completion, and there is no concurrent sampler
-    queue, distributed evaluator pool, cross-generation overlap, dependency
+    Completed manifests retain sampler/evaluator controller reports, candidate
+    execution and admission linkage, topology, parallel-readiness evidence, and
+    terminal drained controller state. The parallel-evaluation paper boundary
+    now classifies this as local sampler/evaluator-async partial support.
+  - Current gap: critique, feedback, and meta-prompt LLM work remains sequential,
+    each batch drains before generation completion, and there is no distributed
+    evaluator pool, cross-generation overlap, dependency
     wait-event graph, randomized shard scheduler, pending-work resume, explicit
     order-of-100-compute-hours budget, or mutation-chain-depth policy for slow
     feedback.
   - Required result: retain per-candidate compute-hour and worker-lease budgets,
-    randomized shard identities, concurrent sampler state, distributed worker
+    randomized shard identities, resumable sampler state, distributed worker
     ownership, dependency waits, cross-generation overlap, cadence/depth impact,
     and resumed pending-work evidence before treating the local async slice as
     full AlphaEvolve-style parallelized evaluation.
@@ -369,15 +373,16 @@ directory and using the AlphaEvolve paper as the primary specification.
     optimized for throughput rather than individual-operation latency.
   - Partial status: LibreEvolve persists terminal controller and budget-event
     summaries. Default runs retain the synchronous model; async-enabled runs
-    retain a drained local candidate-evaluation controller with queue, worker/
-    task, lifecycle, completion, admission, backpressure, and throughput
-    telemetry. The distributed-topology report adds the bounded candidate
-    queue, nonblocking controller dispatch, named local workers, serial archive
-    commit, and deterministic submission-order merge. Its validator rejects
-    incomplete forged async topology and full-parity overclaims. The paper
-    boundary now records local candidate-async partial support.
-  - Current gap: this is not Section 2.6 parity. It lacks concurrent sampler
-    workers, a full dependency wait-event graph, distributed evaluator nodes,
+    retain drained local sampler and/or candidate-evaluation controllers with
+    queue, worker/task, lifecycle, completion, merge/admission, backpressure,
+    scheduler-summary, and throughput telemetry. The distributed-topology report
+    adds bounded proposal/evaluation queues, nonblocking controller dispatch,
+    named local workers, serial shared-state commit, and deterministic submission-
+    order merges. Its validator rejects incomplete forged async topology and
+    full-parity overclaims. The paper boundary now records local sampler/
+    evaluator-async partial support.
+  - Current gap: this is not Section 2.6 parity. It lacks a full dependency
+    wait-event graph, distributed evaluator nodes,
     cross-generation overlap, cross-process coordination, async scheduler state
     snapshots, and resumable pending-work checkpoints.
   - Required result: extend the local candidate-evaluation topology into a full

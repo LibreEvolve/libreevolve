@@ -43,6 +43,11 @@ from libreevolve.core.async_evaluator import (
     AsyncEvaluationJob,
     AsyncEvaluationOutcome,
 )
+from libreevolve.core.async_sampler import (
+    AsyncLLMSamplerController,
+    AsyncLLMSamplerJob,
+    AsyncLLMSamplerOutcome,
+)
 from libreevolve.core.best_artifacts import (
     attach_best_artifact_export,
     export_best_artifacts,
@@ -217,6 +222,31 @@ class _PreparedCandidate:
     prompt_program: PromptProgram
     mutation_llm_call: dict | None
     proposal_llm_calls: list[dict]
+    async_llm_sampler: dict | None = None
+
+
+@dataclass(frozen=True)
+class _PreparedMutationRequest:
+    submission_order: int
+    loop_generation_index: int
+    proposal_index: int
+    proposals_per_generation: int
+    candidate_generation: int
+    parent: Program
+    parent_selection_metadata: dict
+    prompt_program: PromptProgram
+    proposal_metadata_enabled: bool
+    prompt: str
+    prompt_diagnostics: dict
+    prompt_context_text: str
+    inspiration_selection_metadata: dict
+    plugin_context: list[dict]
+
+
+@dataclass(frozen=True)
+class _PendingAsyncMutation:
+    request: _PreparedMutationRequest
+    future: Future[AsyncLLMSamplerOutcome]
 
 
 @dataclass(frozen=True)
@@ -857,6 +887,11 @@ def evolve(
         run_provenance["dotenv"] = dotenv_source
     llm_scheduler_resume_status = _LLM_SCHEDULER_RESUME_STATUS_RESTORE_SUPPORTED
     if runtime_llm_scheduler_state_snapshot is not None:
+        if config.async_llm_sampling:
+            raise ValueError(
+                "runtime LLM scheduler snapshot restore is not supported with "
+                "async_llm_sampling because worker scheduler state is not checkpointed"
+            )
         if preflighted_llm is None:
             raise ValueError(
                 "runtime LLM scheduler snapshot restore requires a mutation-capable run"
@@ -897,6 +932,8 @@ def evolve(
     phase = "initializing_evaluator"
     async_controller: AsyncCandidateEvaluationController | None = None
     async_controller_report: dict | None = None
+    async_sampler_controller: AsyncLLMSamplerController | None = None
+    async_sampler_controller_report: dict | None = None
 
     try:
         evaluator = CascadeEvaluator(
@@ -1041,6 +1078,18 @@ def evolve(
                 queue_capacity=config.async_evaluation_queue_capacity,
             )
             async_controller.start()
+        if config.async_llm_sampling:
+            phase = "initializing_async_llm_sampler_controller"
+            sampler_llms = [
+                build_llm(config)
+                for _ in range(config.async_llm_sampler_workers)
+            ]
+            async_sampler_controller = AsyncLLMSamplerController(
+                sampler_llms,
+                queue_capacity=config.async_llm_queue_capacity,
+                max_calls_by_role=config.llm_role_call_limits,
+            )
+            async_sampler_controller.start()
         if (
             config.initial_program_validity_policy == "alphaevolve_strict"
             and strict_seed_invalid_count > 0
@@ -1052,6 +1101,8 @@ def evolve(
             gen = proposal_loop_index // proposal_count
             proposal_index = proposal_loop_index % proposal_count
             candidate_generation = gen + 1
+            if async_sampler_controller is not None and proposal_index != 0:
+                continue
             if (
                 async_controller is not None
                 and proposal_index == 0
@@ -1091,6 +1142,44 @@ def evolve(
                 break
             if budget.check_before_llm_call(role="mutation"):
                 break
+            if async_sampler_controller is not None:
+                phase = f"generation:{gen}:async_llm_sampler_batch"
+                recent_failures, generation_completed = _run_async_sampler_generation(
+                    generation=gen,
+                    candidate_generation=candidate_generation,
+                    proposal_count=proposal_count,
+                    problem=problem,
+                    config=config,
+                    db=db,
+                    budget=budget,
+                    llm=llm,
+                    sampler_controller=async_sampler_controller,
+                    evaluator=evaluator,
+                    evaluation_controller=async_controller,
+                    evaluation_cache=evaluation_cache,
+                    evaluation_cache_contract_sha256=(
+                        evaluation_cache_contract_sha256
+                    ),
+                    in_flight_evaluation_cache=in_flight_evaluation_cache,
+                    plugins=plugins,
+                    prompt_db=prompt_db,
+                    prompt_sampler=prompt_sampler,
+                    prompt_token_counter_capability=(
+                        prompt_token_counter_capability
+                    ),
+                    recent_failures=recent_failures,
+                    max_recent_failures=_MAX_FAILURES,
+                    run_rng=run_rng,
+                )
+                if generation_completed:
+                    phase = f"generation:{gen}:generation_finalize"
+                    _finish_generation(
+                        generation=candidate_generation,
+                        db=db,
+                        budget=budget,
+                        plugins=plugins,
+                    )
+                continue
             phase = f"generation:{gen}:parent_selection"
             if config.parent_selection_strategy == "mixed":
                 strategy = "explore" if run_rng.random() < config.explore_ratio else "exploit"
@@ -1563,7 +1652,12 @@ def evolve(
                               metadata={"candidate_type": "generated",
                                         "loop_generation_index": gen,
                                         "proposal_batch": {
-                                            "policy": "sequential",
+                                            "policy": (
+                                                "async_llm_sampler_submission_order"
+                                                if prepared.async_llm_sampler
+                                                is not None
+                                                else "sequential"
+                                            ),
                                             "proposal_index": proposal_index,
                                             "proposal_number": proposal_index + 1,
                                             "proposals_per_generation": proposal_count,
@@ -1601,6 +1695,10 @@ def evolve(
                                         "budget": budget.snapshot()},
                               metrics=result.metrics,
                               evaluation=result.to_dict())
+            if prepared.async_llm_sampler is not None:
+                program.metadata["async_llm_sampler"] = copy.deepcopy(
+                    prepared.async_llm_sampler
+                )
 
             _annotate_metric_policy(program, problem)
             phase = f"generation:{gen}:plugin_on_evaluated"
@@ -1623,10 +1721,12 @@ def evolve(
             backend_reward = _backend_reward(program, parent, backend_idx)
             program.metadata["backend_reward"] = backend_reward
             phase = f"generation:{gen}:backend_reward"
-            llm.record_reward(
-                backend_idx,
+            _record_mutation_backend_reward(
+                prepared,
                 backend_reward["reward"],
-                call_id=mutation_llm_call.get("id") if mutation_llm_call else None,
+                llm=llm,
+                db=db,
+                sampler_controller=async_sampler_controller,
             )
             program.metadata["llm_calls"] = _program_llm_calls(
                 _llm_call_span(llm, candidate_llm_call_start),
@@ -1775,6 +1875,9 @@ def evolve(
         if async_controller is not None:
             phase = "closing_async_candidate_evaluation_controller"
             async_controller_report = async_controller.close()
+        if async_sampler_controller is not None:
+            phase = "closing_async_llm_sampler_controller"
+            async_sampler_controller_report = async_sampler_controller.close()
         best = db.best()
         phase = "normal_finalization"
         _write_completed_runtime(
@@ -1791,6 +1894,7 @@ def evolve(
             runtime_restore_certification=runtime_restore_certification,
             core_resolves_config_plugins=core_resolved_config_plugins,
             async_controller_report=async_controller_report,
+            async_sampler_controller_report=async_sampler_controller_report,
         )
         return best
     except BaseException as exc:
@@ -1800,6 +1904,17 @@ def evolve(
             except Exception as shutdown_exc:
                 async_controller_report = async_controller.snapshot()
                 async_controller_report["shutdown_error_type"] = type(
+                    shutdown_exc
+                ).__name__
+        if (
+            async_sampler_controller is not None
+            and async_sampler_controller_report is None
+        ):
+            try:
+                async_sampler_controller_report = async_sampler_controller.close()
+            except Exception as shutdown_exc:
+                async_sampler_controller_report = async_sampler_controller.snapshot()
+                async_sampler_controller_report["shutdown_error_type"] = type(
                     shutdown_exc
                 ).__name__
         _write_aborted_runtime(
@@ -1817,8 +1932,722 @@ def evolve(
             runtime_restore_certification=runtime_restore_certification,
             core_resolves_config_plugins=core_resolved_config_plugins,
             async_controller_report=async_controller_report,
+            async_sampler_controller_report=async_sampler_controller_report,
         )
         raise
+
+
+def _run_async_sampler_generation(
+    *,
+    generation: int,
+    candidate_generation: int,
+    proposal_count: int,
+    problem: Problem,
+    config: Config,
+    db: ProgramDatabase,
+    budget: RunBudget,
+    llm: LLMEnsemble,
+    sampler_controller: AsyncLLMSamplerController,
+    evaluator: CascadeEvaluator,
+    evaluation_controller: AsyncCandidateEvaluationController | None,
+    evaluation_cache: dict[str, dict],
+    evaluation_cache_contract_sha256: str,
+    in_flight_evaluation_cache: dict[
+        str,
+        tuple[int, Future[AsyncEvaluationOutcome]],
+    ],
+    plugins: list[PluginBase],
+    prompt_db: PromptDatabase,
+    prompt_sampler: PromptSampler,
+    prompt_token_counter_capability: Mapping[str, object],
+    recent_failures: list[dict],
+    max_recent_failures: int,
+    run_rng: random.Random,
+) -> tuple[list[dict], bool]:
+    batch_size = _async_sampler_batch_capacity(
+        proposal_count,
+        budget=budget,
+        sampler_controller=sampler_controller,
+    )
+    if batch_size <= 0:
+        if sampler_controller.remaining_role_call_capacity("mutation") == 0:
+            budget.stop_reason = "llm_role_call_limits"
+        return recent_failures, False
+
+    requests: list[_PreparedMutationRequest] = []
+    for proposal_index in range(batch_size):
+        request = _prepare_async_mutation_request(
+            generation=generation,
+            proposal_index=proposal_index,
+            proposal_count=proposal_count,
+            candidate_generation=candidate_generation,
+            problem=problem,
+            config=config,
+            db=db,
+            budget=budget,
+            plugins=plugins,
+            prompt_db=prompt_db,
+            prompt_sampler=prompt_sampler,
+            prompt_token_counter_capability=prompt_token_counter_capability,
+            recent_failures=recent_failures,
+            run_rng=run_rng,
+        )
+        if request is None:
+            break
+        requests.append(request)
+
+    pending_mutations = [
+        _PendingAsyncMutation(
+            request=request,
+            future=sampler_controller.submit(
+                AsyncLLMSamplerJob(
+                    sequence=request.submission_order,
+                    request_id=(
+                        f"mutation-request:{request.submission_order:08d}"
+                    ),
+                    prompt=request.prompt,
+                    role="mutation",
+                    max_call_attempts=(
+                        1 if budget.max_llm_calls is not None else None
+                    ),
+                    runtime_deadline_sec=budget.remaining_runtime_seconds(),
+                )
+            ),
+        )
+        for request in requests
+    ]
+
+    pending_evaluations: list[_PendingCandidateEvaluation] = []
+    for pending in pending_mutations:
+        request = pending.request
+        outcome = pending.future.result()
+        task_id = outcome.execution["task_id"]
+        merge_order = sampler_controller.record_merge(
+            sequence=request.submission_order,
+            task_id=task_id,
+        )
+        proposal_llm_calls, mutation_llm_call = _persist_async_sampler_outcome(
+            outcome,
+            merge_order=merge_order,
+            db=db,
+            budget=budget,
+        )
+        sampler_execution = {
+            **copy.deepcopy(outcome.execution),
+            "merge_order": merge_order,
+            "deterministic_merge_submission_order": request.submission_order,
+        }
+        if outcome.error is not None:
+            failure = _log_async_mutation_failure(
+                request,
+                outcome.error,
+                mutation_llm_call=mutation_llm_call,
+                proposal_llm_calls=proposal_llm_calls,
+                sampler_execution=sampler_execution,
+                config=config,
+                db=db,
+                budget=budget,
+            )
+            recent_failures.append(failure)
+            recent_failures = recent_failures[-max_recent_failures:]
+            continue
+        prepared = _prepare_candidate_from_async_mutation(
+            request,
+            outcome,
+            proposal_llm_calls=proposal_llm_calls,
+            mutation_llm_call=mutation_llm_call,
+            sampler_execution=sampler_execution,
+            config=config,
+            db=db,
+            budget=budget,
+            llm=llm,
+        )
+        if evaluation_controller is not None:
+            pending_evaluations.append(
+                _dispatch_async_candidate_evaluation(
+                    prepared,
+                    controller=evaluation_controller,
+                    evaluation_cache=evaluation_cache,
+                    evaluation_cache_contract_sha256=(
+                        evaluation_cache_contract_sha256
+                    ),
+                    in_flight_cache=in_flight_evaluation_cache,
+                )
+            )
+            continue
+        result = _evaluate_prepared_candidate_synchronously(
+            prepared,
+            evaluator=evaluator,
+            evaluation_cache=evaluation_cache,
+            evaluation_cache_contract_sha256=evaluation_cache_contract_sha256,
+            budget=budget,
+            db=db,
+        )
+        _, recent_failures = _commit_evaluated_candidate(
+            prepared,
+            result,
+            problem=problem,
+            config=config,
+            db=db,
+            budget=budget,
+            llm=llm,
+            plugins=plugins,
+            prompt_db=prompt_db,
+            recent_failures=recent_failures,
+            max_recent_failures=max_recent_failures,
+            async_sampler_controller=sampler_controller,
+        )
+
+    if evaluation_controller is not None and pending_evaluations:
+        recent_failures = _drain_async_candidate_evaluations(
+            pending_evaluations,
+            controller=evaluation_controller,
+            in_flight_cache=in_flight_evaluation_cache,
+            evaluation_cache=evaluation_cache,
+            evaluation_cache_contract_sha256=evaluation_cache_contract_sha256,
+            problem=problem,
+            config=config,
+            db=db,
+            budget=budget,
+            llm=llm,
+            plugins=plugins,
+            prompt_db=prompt_db,
+            recent_failures=recent_failures,
+            max_recent_failures=max_recent_failures,
+            async_sampler_controller=sampler_controller,
+        )
+    if (
+        len(requests) < proposal_count
+        and budget.stop_reason is None
+        and sampler_controller.remaining_role_call_capacity("mutation") == 0
+    ):
+        budget.stop_reason = "llm_role_call_limits"
+    return recent_failures, len(requests) == proposal_count
+
+
+def _async_sampler_batch_capacity(
+    proposal_count: int,
+    *,
+    budget: RunBudget,
+    sampler_controller: AsyncLLMSamplerController,
+) -> int:
+    capacity = proposal_count
+    if budget.max_evaluations is not None:
+        capacity = min(
+            capacity,
+            max(0, budget.max_evaluations - budget.evaluations),
+        )
+    if budget.max_llm_calls is not None:
+        capacity = min(
+            capacity,
+            max(0, budget.max_llm_calls - budget.llm_calls),
+        )
+    role_capacity = sampler_controller.remaining_role_call_capacity("mutation")
+    if role_capacity is not None:
+        capacity = min(capacity, role_capacity)
+    return capacity
+
+
+def _prepare_async_mutation_request(
+    *,
+    generation: int,
+    proposal_index: int,
+    proposal_count: int,
+    candidate_generation: int,
+    problem: Problem,
+    config: Config,
+    db: ProgramDatabase,
+    budget: RunBudget,
+    plugins: list[PluginBase],
+    prompt_db: PromptDatabase,
+    prompt_sampler: PromptSampler,
+    prompt_token_counter_capability: Mapping[str, object],
+    recent_failures: list[dict],
+    run_rng: random.Random,
+) -> _PreparedMutationRequest | None:
+    if config.parent_selection_strategy == "mixed":
+        strategy = (
+            "explore" if run_rng.random() < config.explore_ratio else "exploit"
+        )
+    else:
+        strategy = config.parent_selection_strategy
+    parent = db.sample(strategy=strategy)
+    if parent is None:
+        budget.stop_reason = (
+            "no_valid_programs" if db.best() is None else "no_parent"
+        )
+        return None
+    parent_selection_metadata = db.last_sample_metadata()
+    if proposal_index == 0:
+        budget.record_generation_start()
+        db.log_controller_budget_event({"kind": "generation_started"})
+        for index, plugin in enumerate(plugins):
+            _call_plugin_hook(
+                plugin,
+                index,
+                "on_generation_start",
+                candidate_generation,
+                db,
+                generation=candidate_generation,
+                phase=f"generation:{generation}:plugin_on_generation_start",
+                hook_policy="fatal_run_abort",
+                parent_id=parent.id,
+            )
+
+    prompt_program = prompt_db.select()
+    prompt_context_policy = validate_prompt_context_policy(
+        prompt_program.context_policy
+    )
+    proposal_metadata_enabled = (
+        prompt_context_policy["proposal_metadata_enabled"]
+        if prompt_context_policy["proposal_metadata_enabled"] is not None
+        else config.capture_proposal_metadata
+    )
+    inspiration_strategy = (
+        prompt_context_policy["inspiration_strategy"]
+        or config.inspiration_strategy
+    )
+    inspiration_sample_count = (
+        prompt_context_policy["inspiration_sample_count"]
+        if prompt_context_policy["inspiration_sample_count"] is not None
+        else config.num_inspirations
+    )
+    required_metric = prompt_context_policy["inspiration_required_metric"]
+    excluded_metrics = prompt_context_policy["inspiration_excluded_metrics"]
+    fitness_threshold = prompt_context_policy["inspiration_fitness_threshold"]
+    metric_thresholds = prompt_context_policy["inspiration_metric_thresholds"]
+    metric_ranking = prompt_context_policy["inspiration_metric_ranking"]
+    policy_filtering = bool(
+        required_metric is not None
+        or excluded_metrics
+        or fitness_threshold is not None
+        or metric_thresholds
+        or metric_ranking is not None
+    )
+    inspiration_pool_count = inspiration_sample_count
+    if policy_filtering and inspiration_sample_count > 0:
+        inspiration_pool_count = max(inspiration_sample_count * 5, 20)
+    inspirations = db.sample_diverse(
+        k=inspiration_pool_count,
+        exclude_ids={parent.id},
+        strategy=inspiration_strategy,
+    )
+    inspiration_selection_metadata = db.last_sample_metadata()
+    if policy_filtering:
+        inspirations, inspiration_selection_metadata = (
+            _filter_inspirations_by_policy(
+                inspirations,
+                inspiration_selection_metadata,
+                required_metric=required_metric,
+                excluded_metrics=excluded_metrics,
+                fitness_threshold=fitness_threshold,
+                metric_thresholds=metric_thresholds,
+                metric_ranking=metric_ranking,
+                requested_count=inspiration_sample_count,
+                pool_requested_count=inspiration_pool_count,
+            )
+        )
+    inspiration_selection_metadata.update(
+        {
+            "strategy_source": (
+                "prompt_context_policy"
+                if prompt_context_policy["inspiration_strategy"] is not None
+                else "config"
+            ),
+            "configured_strategy": config.inspiration_strategy,
+            "requested_count_source": (
+                "prompt_context_policy"
+                if prompt_context_policy["inspiration_sample_count"] is not None
+                else "config"
+            ),
+            "configured_count": config.num_inspirations,
+            "required_metric_source": (
+                "prompt_context_policy" if required_metric is not None else "none"
+            ),
+            "excluded_metrics_source": (
+                "prompt_context_policy" if excluded_metrics else "none"
+            ),
+            "fitness_threshold_source": (
+                "prompt_context_policy" if fitness_threshold is not None else "none"
+            ),
+            "metric_thresholds_source": (
+                "prompt_context_policy" if metric_thresholds else "none"
+            ),
+            "metric_ranking_source": (
+                "prompt_context_policy" if metric_ranking is not None else "none"
+            ),
+        }
+    )
+    context, plugin_context = _build_plugin_context(
+        plugins,
+        parent,
+        inspirations,
+        config=config,
+        generation=candidate_generation,
+        phase=f"generation:{generation}:plugin_context",
+        context_policy=prompt_context_policy,
+    )
+    prompt = prompt_sampler.build(
+        parent,
+        inspirations,
+        problem,
+        context,
+        recent_failures=recent_failures or None,
+        template=prompt_program.template,
+        mutation_mode=config.mutation_mode,
+        capture_proposal_metadata=proposal_metadata_enabled,
+        context_policy=prompt_program.context_policy,
+    )
+    prompt_sampler.last_metadata["prompt_token_counter_capability"] = dict(
+        prompt_token_counter_capability
+    )
+    metric_diversity = _metric_diverse_inspiration_record(
+        inspirations,
+        inspiration_selection_metadata,
+        prompt_sampler.last_metadata,
+        db.objective_schema_snapshot(),
+    )
+    inspiration_selection_metadata["metric_diversity"] = metric_diversity
+    prompt_sampler.last_metadata["metric_diverse_inspiration"] = metric_diversity
+    submission_order = generation * proposal_count + proposal_index
+    return _PreparedMutationRequest(
+        submission_order=submission_order,
+        loop_generation_index=generation,
+        proposal_index=proposal_index,
+        proposals_per_generation=proposal_count,
+        candidate_generation=candidate_generation,
+        parent=parent,
+        parent_selection_metadata=copy.deepcopy(parent_selection_metadata),
+        prompt_program=copy.deepcopy(prompt_program),
+        proposal_metadata_enabled=proposal_metadata_enabled,
+        prompt=prompt,
+        prompt_diagnostics=copy.deepcopy(prompt_sampler.last_metadata),
+        prompt_context_text=prompt_sampler.last_context_text,
+        inspiration_selection_metadata=copy.deepcopy(
+            inspiration_selection_metadata
+        ),
+        plugin_context=copy.deepcopy(plugin_context),
+    )
+
+
+def _persist_async_sampler_outcome(
+    outcome: AsyncLLMSamplerOutcome,
+    *,
+    merge_order: int,
+    db: ProgramDatabase,
+    budget: RunBudget,
+) -> tuple[list[dict], dict | None]:
+    execution = outcome.execution
+    producer_id = execution.get("worker_id")
+    task_id = execution.get("task_id")
+    persisted: list[dict] = []
+    for raw_record in outcome.call_records:
+        record = copy.deepcopy(raw_record)
+        record["producer_id"] = producer_id
+        record["async_llm_sampler_task_id"] = task_id
+        record["async_llm_sampler_merge_order"] = merge_order
+        persisted.append(db.log_llm_call(record))
+    call_delta = max(1, len(outcome.call_records))
+    for _ in range(call_delta):
+        budget.record_llm_call()
+    budget.record_llm_provider_attempts(
+        _llm_provider_attempt_delta(outcome.call_records),
+        role="mutation",
+    )
+    budget.record_llm_tokens(
+        _llm_token_delta(outcome.call_records),
+        role="mutation",
+    )
+    budget.record_llm_cost_microusd(
+        _llm_cost_microusd_delta(outcome.call_records),
+        role="mutation",
+    )
+    budget.record_llm_seconds(
+        _llm_seconds_delta(outcome.call_records),
+        role="mutation",
+    )
+    _emit_llm_budget_events(
+        outcome.call_records,
+        role="mutation",
+        fallback_call_count=call_delta,
+        sink=db.log_controller_budget_event,
+    )
+    budget.check_before_llm_call(role="mutation")
+    mutation_id = (
+        outcome.mutation_call.get("id")
+        if isinstance(outcome.mutation_call, Mapping)
+        else None
+    )
+    mutation_call = next(
+        (record for record in reversed(persisted) if record.get("id") == mutation_id),
+        None,
+    )
+    if mutation_call is None and isinstance(outcome.mutation_call, Mapping):
+        mutation_call = copy.deepcopy(dict(outcome.mutation_call))
+    return persisted, mutation_call
+
+
+def _prepare_candidate_from_async_mutation(
+    request: _PreparedMutationRequest,
+    outcome: AsyncLLMSamplerOutcome,
+    *,
+    proposal_llm_calls: list[dict],
+    mutation_llm_call: dict | None,
+    sampler_execution: dict,
+    config: Config,
+    db: ProgramDatabase,
+    budget: RunBudget,
+    llm: LLMEnsemble,
+) -> _PreparedCandidate:
+    if outcome.response is None or outcome.backend_idx is None:
+        raise RuntimeError("successful async LLM sampler outcome is incomplete")
+    diff = outcome.response
+    original_proposal_metadata = (
+        extract_proposal_metadata(diff)
+        if request.proposal_metadata_enabled
+        else {}
+    )
+    proposal_metadata = original_proposal_metadata
+    explanatory_preamble_metadata = extract_explanatory_preamble(diff)
+    critique_metadata = None
+    critique_call_start = _llm_call_count(llm)
+    if config.critique_enabled:
+        (
+            diff,
+            critique_metadata,
+            selected_revised_proposal_metadata,
+        ) = _run_critique_reviewers(
+            llm=llm,
+            budget=budget,
+            workspace=request.parent.workspace(),
+            base_prompt=request.prompt,
+            original_diff=diff,
+            original_proposal_metadata=original_proposal_metadata,
+            config=config,
+            capture_proposal_metadata=request.proposal_metadata_enabled,
+            budget_event_sink=db.log_controller_budget_event,
+        )
+        if request.proposal_metadata_enabled:
+            proposal_source = (
+                critique_metadata.get("proposal_source")
+                if isinstance(critique_metadata, dict)
+                else None
+            )
+            proposal_metadata = (
+                selected_revised_proposal_metadata
+                if proposal_source == "revised"
+                else original_proposal_metadata
+            )
+        explanatory_preamble_metadata = extract_explanatory_preamble(diff)
+    mutation_payload = (
+        strip_proposal_metadata(diff)
+        if request.proposal_metadata_enabled
+        else diff
+    )
+    proposal_metadata_error = (
+        validate_proposal_metadata_preamble(diff)
+        if request.proposal_metadata_enabled
+        else None
+    )
+    if proposal_metadata_error is not None:
+        child_workspace = request.parent.workspace()
+        diff_error = proposal_metadata_error
+    else:
+        child_workspace, diff_error = apply_workspace_mutation(
+            request.parent.workspace(),
+            mutation_payload,
+            mutation_mode=config.mutation_mode,
+        )
+    _validate_workspace_size_for_config(child_workspace, config)
+    candidate_id = _deterministic_generated_candidate_id(
+        generation=request.candidate_generation,
+        loop_generation_index=request.loop_generation_index,
+        proposal_index=request.proposal_index,
+        parent_id=request.parent.id,
+        prompt_program_id=request.prompt_program.id,
+        mutation_text=diff,
+        workspace=child_workspace,
+    )
+    retained_prompt = _retained_prompt_text(
+        request.prompt,
+        mode=config.mutation_prompt_retention_mode,
+    )
+    retained_prompt = _apply_explicit_context_retention_to_prompt(
+        retained_prompt,
+        context_text=request.prompt_context_text,
+        mode=config.explicit_context_retention_mode,
+    )
+    return _PreparedCandidate(
+        submission_order=request.submission_order,
+        loop_generation_index=request.loop_generation_index,
+        proposal_index=request.proposal_index,
+        proposals_per_generation=request.proposals_per_generation,
+        candidate_generation=request.candidate_generation,
+        parent=request.parent,
+        child_workspace=child_workspace,
+        diff_error=diff_error,
+        candidate_id=candidate_id,
+        retained_prompt=copy.deepcopy(retained_prompt),
+        diff=diff,
+        prompt_diagnostics=copy.deepcopy(request.prompt_diagnostics),
+        proposal_metadata=copy.deepcopy(proposal_metadata),
+        explanatory_preamble=copy.deepcopy(explanatory_preamble_metadata),
+        backend_idx=outcome.backend_idx,
+        critique_metadata=copy.deepcopy(critique_metadata),
+        parent_selection_metadata=copy.deepcopy(
+            request.parent_selection_metadata
+        ),
+        inspiration_selection_metadata=copy.deepcopy(
+            request.inspiration_selection_metadata
+        ),
+        plugin_context=copy.deepcopy(request.plugin_context),
+        prompt_program=copy.deepcopy(request.prompt_program),
+        mutation_llm_call=copy.deepcopy(mutation_llm_call),
+        proposal_llm_calls=(
+            copy.deepcopy(proposal_llm_calls)
+            + copy.deepcopy(_llm_call_span(llm, critique_call_start))
+        ),
+        async_llm_sampler=copy.deepcopy(sampler_execution),
+    )
+
+
+def _log_async_mutation_failure(
+    request: _PreparedMutationRequest,
+    exc: BaseException,
+    *,
+    mutation_llm_call: dict | None,
+    proposal_llm_calls: list[dict],
+    sampler_execution: dict,
+    config: Config,
+    db: ProgramDatabase,
+    budget: RunBudget,
+) -> dict:
+    failure = _bounded_llm_failure_record("mutation", exc, None)
+    failure["llm_call"] = copy.deepcopy(mutation_llm_call)
+    failure["llm_calls"] = copy.deepcopy(proposal_llm_calls)
+    failure["async_llm_sampler"] = copy.deepcopy(sampler_execution)
+    failure_workspace = request.parent.workspace()
+    retained_prompt = _retained_prompt_text(
+        request.prompt,
+        mode=config.mutation_prompt_retention_mode,
+    )
+    retained_prompt = _apply_explicit_context_retention_to_prompt(
+        retained_prompt,
+        context_text=request.prompt_context_text,
+        mode=config.explicit_context_retention_mode,
+    )
+    failure_payload = _llm_failure_payload_text(failure)
+    candidate_id = _deterministic_generated_candidate_id(
+        generation=request.candidate_generation,
+        loop_generation_index=request.loop_generation_index,
+        proposal_index=request.proposal_index,
+        parent_id=request.parent.id,
+        prompt_program_id=request.prompt_program.id,
+        mutation_text=failure_payload,
+        workspace=failure_workspace,
+    )
+    program = Program(
+        code=failure_workspace.code,
+        fitness=0.0,
+        id=candidate_id,
+        files=dict(failure_workspace.files),
+        primary_file=failure_workspace.primary_file,
+        allowed_reserved_paths=failure_workspace.allowed_reserved_paths,
+        static_files=failure_workspace.static_files,
+        parent_id=request.parent.id,
+        generation=request.candidate_generation,
+        lineage=request.parent.lineage + [request.parent.id],
+        metadata={
+            "candidate_type": "generated",
+            "candidate_status": "llm_mutation_failed",
+            "loop_generation_index": request.loop_generation_index,
+            "proposal_batch": {
+                "policy": "async_llm_sampler_submission_order",
+                "proposal_index": request.proposal_index,
+                "proposal_number": request.proposal_index + 1,
+                "proposals_per_generation": request.proposals_per_generation,
+                "loop_proposal_index": request.submission_order,
+            },
+            "prompt": retained_prompt["text"],
+            "prompt_retention": {
+                key: value
+                for key, value in retained_prompt.items()
+                if key != "text"
+            },
+            "diff": failure_payload,
+            "diff_error": "llm_mutation_failed",
+            "prompt_diagnostics": copy.deepcopy(request.prompt_diagnostics),
+            "proposal": {},
+            "backend_idx": None,
+            "mutation_mode": config.mutation_mode,
+            "parent_selection": copy.deepcopy(
+                request.parent_selection_metadata
+            ),
+            "inspiration_selection": copy.deepcopy(
+                request.inspiration_selection_metadata
+            ),
+            "plugin_context": copy.deepcopy(request.plugin_context),
+            "prompt_program_id": request.prompt_program.id,
+            "llm_failure": failure,
+            "llm_calls": copy.deepcopy(proposal_llm_calls),
+            "async_llm_sampler": copy.deepcopy(sampler_execution),
+            "budget": budget.snapshot(),
+        },
+        metrics={"score": 0.0},
+        evaluation={
+            "fitness": 0.0,
+            "is_valid": False,
+            "error": "llm_mutation_failed",
+            "stdout": "",
+            "stderr": "",
+            "metadata": {
+                "llm_failure": failure,
+                "async_llm_sampler": copy.deepcopy(sampler_execution),
+            },
+        },
+    )
+    return db.log_failure(
+        program,
+        request.parent,
+        failure_payload,
+        "llm_mutation_failed",
+        None,
+    )
+
+
+def _record_mutation_backend_reward(
+    prepared: _PreparedCandidate,
+    reward: float,
+    *,
+    llm: LLMEnsemble,
+    db: ProgramDatabase,
+    sampler_controller: AsyncLLMSamplerController | None,
+) -> None:
+    sampler_execution = prepared.async_llm_sampler
+    if sampler_execution is None:
+        llm.record_reward(
+            prepared.backend_idx,
+            reward,
+            call_id=(
+                prepared.mutation_llm_call.get("id")
+                if prepared.mutation_llm_call
+                else None
+            ),
+        )
+        return
+    if sampler_controller is None:
+        raise RuntimeError("async LLM sampler reward controller is missing")
+    task_id = sampler_execution.get("task_id")
+    if not isinstance(task_id, str) or not task_id:
+        raise RuntimeError("async LLM sampler reward task id is missing")
+    event = sampler_controller.record_reward(task_id=task_id, reward=reward)
+    if isinstance(event, Mapping):
+        db.log_llm_call(
+            {
+                **copy.deepcopy(dict(event)),
+                "async_llm_sampler_task_id": task_id,
+            }
+        )
 
 
 def _commit_evaluated_candidate(
@@ -1837,6 +2666,7 @@ def _commit_evaluated_candidate(
     async_controller: AsyncCandidateEvaluationController | None = None,
     async_admission_source: str | None = None,
     async_task_id: str | None = None,
+    async_sampler_controller: AsyncLLMSamplerController | None = None,
 ) -> tuple[Program, list[dict]]:
     result = apply_llm_feedback(
         result,
@@ -1870,7 +2700,12 @@ def _commit_evaluated_candidate(
             "loop_generation_index": prepared.loop_generation_index,
             "proposal_batch": {
                 "policy": (
-                    "async_evaluation_submission_order"
+                    "async_llm_and_evaluation_submission_order"
+                    if prepared.async_llm_sampler is not None
+                    and config.async_candidate_evaluation
+                    else "async_llm_sampler_submission_order"
+                    if prepared.async_llm_sampler is not None
+                    else "async_evaluation_submission_order"
                     if config.async_candidate_evaluation
                     else "sequential"
                 ),
@@ -1917,6 +2752,10 @@ def _commit_evaluated_candidate(
     if isinstance(async_execution, Mapping):
         program.metadata["async_candidate_evaluation"] = copy.deepcopy(
             dict(async_execution)
+        )
+    if prepared.async_llm_sampler is not None:
+        program.metadata["async_llm_sampler"] = copy.deepcopy(
+            prepared.async_llm_sampler
         )
 
     _annotate_metric_policy(program, problem)
@@ -1968,14 +2807,12 @@ def _commit_evaluated_candidate(
         prepared.backend_idx,
     )
     program.metadata["backend_reward"] = backend_reward
-    llm.record_reward(
-        prepared.backend_idx,
+    _record_mutation_backend_reward(
+        prepared,
         backend_reward["reward"],
-        call_id=(
-            prepared.mutation_llm_call.get("id")
-            if prepared.mutation_llm_call
-            else None
-        ),
+        llm=llm,
+        db=db,
+        sampler_controller=async_sampler_controller,
     )
     program.metadata["llm_calls"] = _program_llm_calls(
         prepared.proposal_llm_calls,
@@ -2211,6 +3048,7 @@ def _drain_async_candidate_evaluations(
     prompt_db: PromptDatabase,
     recent_failures: list[dict],
     max_recent_failures: int,
+    async_sampler_controller: AsyncLLMSamplerController | None = None,
 ) -> list[dict]:
     ordered = sorted(pending, key=lambda row: row.prepared.submission_order)
     resolved: list[tuple[_PendingCandidateEvaluation, EvaluationResult, str | None]] = []
@@ -2251,6 +3089,7 @@ def _drain_async_candidate_evaluations(
             async_controller=controller,
             async_admission_source=item.source,
             async_task_id=task_id,
+            async_sampler_controller=async_sampler_controller,
         )
     return recent_failures
 
@@ -2438,6 +3277,7 @@ def _write_completed_runtime(
     runtime_restore_certification: Mapping[str, object] | None = None,
     core_resolves_config_plugins: bool = False,
     async_controller_report: Mapping[str, object] | None = None,
+    async_sampler_controller_report: Mapping[str, object] | None = None,
 ) -> None:
     runtime = budget.finish(best_found=best is not None)
     runtime["status"] = "completed"
@@ -2456,6 +3296,7 @@ def _write_completed_runtime(
         run_dir,
         budget,
         async_controller_report=async_controller_report,
+        async_sampler_controller_report=async_sampler_controller_report,
     )
     _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
@@ -2495,6 +3336,7 @@ def _write_aborted_runtime(
     runtime_restore_certification: Mapping[str, object] | None = None,
     core_resolves_config_plugins: bool = False,
     async_controller_report: Mapping[str, object] | None = None,
+    async_sampler_controller_report: Mapping[str, object] | None = None,
 ) -> None:
     budget.stop_reason = "aborted"
     db.log_controller_budget_event({"kind": "stop", "stop_reason": "aborted"})
@@ -2522,6 +3364,7 @@ def _write_aborted_runtime(
         run_dir,
         budget,
         async_controller_report=async_controller_report,
+        async_sampler_controller_report=async_sampler_controller_report,
     )
     _attach_runtime_benchmark_goal_prompt(runtime, db)
     runtime["artifacts"] = _runtime_artifact_pointers(run_dir)
@@ -5056,20 +5899,30 @@ def _controller_state_validation_record(controller_state: object) -> dict:
     if controller_state.get("schema") != "libreevolve.controller_state.v1":
         issues.append("controller_state_schema_mismatch")
     controller_status = controller_state.get("status")
-    async_mode = (
-        controller_status == "terminal_async_evaluation_controller_drained"
-    )
-    if controller_status not in {
-        "terminal_synchronous_controller_drained",
+    status_models = {
+        "terminal_synchronous_controller_drained": "single_process_serial_loop",
+        "terminal_async_evaluation_controller_drained": (
+            "single_process_asyncio_candidate_evaluation"
+        ),
+        "terminal_async_llm_sampler_controller_drained": (
+            "single_process_asyncio_llm_sampling"
+        ),
+        "terminal_async_pipeline_controller_drained": (
+            "single_process_asyncio_llm_sampling_and_candidate_evaluation"
+        ),
+    }
+    async_evaluation_mode = controller_status in {
         "terminal_async_evaluation_controller_drained",
-    }:
+        "terminal_async_pipeline_controller_drained",
+    }
+    async_sampler_mode = controller_status in {
+        "terminal_async_llm_sampler_controller_drained",
+        "terminal_async_pipeline_controller_drained",
+    }
+    if controller_status not in status_models:
         issues.append("controller_state_status_not_terminal_drained")
     controller_model = controller_state.get("controller_model")
-    expected_controller_model = (
-        "single_process_asyncio_candidate_evaluation"
-        if async_mode
-        else "single_process_serial_loop"
-    )
+    expected_controller_model = status_models.get(controller_status)
     if controller_model != expected_controller_model:
         issues.append("controller_model_status_mismatch")
     resume_scope = controller_state.get("resume_scope")
@@ -5128,12 +5981,28 @@ def _controller_state_validation_record(controller_state: object) -> dict:
     else:
         required = (
             {
+                "local_async_sampler_and_evaluator_not_distributed",
+                "batch_scoped_sampler_dependencies_not_cross_generation",
+                "no_mid_generation_resume_boundary",
+                "provider_outputs_not_replayed",
+            }
+            if async_sampler_mode and async_evaluation_mode
+            else {
+                "candidate_generation_async_only_not_full_pipeline",
+                "no_async_candidate_evaluation_queue",
+                "batch_scoped_sampler_dependencies_not_cross_generation",
+                "no_mid_generation_resume_boundary",
+                "provider_outputs_not_replayed",
+            }
+            if async_sampler_mode
+            else
+            {
                 "candidate_evaluation_async_only_not_full_pipeline",
                 "no_concurrent_llm_sampler_queue",
                 "no_mid_generation_resume_boundary",
                 "provider_outputs_not_replayed",
             }
-            if async_mode
+            if async_evaluation_mode
             else {
                 "synchronous_terminal_snapshot_not_async_queue_checkpoint",
                 "no_mid_generation_resume_boundary",
@@ -5142,7 +6011,7 @@ def _controller_state_validation_record(controller_state: object) -> dict:
         )
         missing = sorted(required - set(limitations))
         issues.extend(f"missing_limitation_{item}" for item in missing)
-    if async_mode:
+    if async_evaluation_mode:
         async_report = controller_state.get("async_candidate_evaluation")
         if not isinstance(async_report, Mapping):
             issues.append("missing_async_candidate_evaluation_report")
@@ -5150,6 +6019,14 @@ def _controller_state_validation_record(controller_state: object) -> dict:
             validation = async_report.get("validation")
             if not isinstance(validation, Mapping) or validation.get("ok") is not True:
                 issues.append("invalid_async_candidate_evaluation_report")
+    if async_sampler_mode:
+        sampler_report = controller_state.get("async_llm_sampler")
+        if not isinstance(sampler_report, Mapping):
+            issues.append("missing_async_llm_sampler_report")
+        else:
+            validation = sampler_report.get("validation")
+            if not isinstance(validation, Mapping) or validation.get("ok") is not True:
+                issues.append("invalid_async_llm_sampler_report")
     overclaim_codes = {
         "resume_scope_overclaimed",
         "event_stream_replay_scope_overclaimed",
@@ -6789,6 +7666,7 @@ def _runtime_history_summary(
     budget: RunBudget,
     *,
     async_controller_report: Mapping[str, object] | None = None,
+    async_sampler_controller_report: Mapping[str, object] | None = None,
 ) -> dict:
     history_exists = (run_dir / "history.jsonl").exists()
     programs = db.all_programs()
@@ -6810,6 +7688,7 @@ def _runtime_history_summary(
         startup_manifest,
         budget,
         async_controller_report=async_controller_report,
+        async_sampler_controller_report=async_sampler_controller_report,
     )
     summary = {
         "programs_logged": programs_logged,
@@ -7070,10 +7949,16 @@ def _runtime_history_summary(
             if isinstance(async_controller_report, Mapping)
             else None
         ),
+        "async_llm_sampler_controller": (
+            copy.deepcopy(dict(async_sampler_controller_report))
+            if isinstance(async_sampler_controller_report, Mapping)
+            else None
+        ),
         "controller_state": _runtime_controller_state(
             run_dir,
             budget,
             async_controller_report=async_controller_report,
+            async_sampler_controller_report=async_sampler_controller_report,
         ),
     }
     if summary["no_candidates_evaluated"]:
@@ -34187,12 +35072,28 @@ def _parallel_evaluation_readiness_report(
     candidate_async_evaluation = (
         isinstance(topology_dispatch, Mapping)
         and topology_dispatch.get("asyncio_pipeline") is True
-        and topology_dispatch.get("asyncio_scope") == "candidate_evaluation_only"
+        and topology_dispatch.get("asyncio_scope") in {
+            "candidate_evaluation_only",
+            "candidate_generation_and_evaluation",
+        }
+    )
+    candidate_async_sampling = (
+        isinstance(topology_dispatch, Mapping)
+        and topology_dispatch.get("asyncio_pipeline") is True
+        and topology_dispatch.get("asyncio_scope") in {
+            "candidate_generation_only",
+            "candidate_generation_and_evaluation",
+        }
     )
     async_candidate_records = [
         copy.deepcopy(program.metadata["async_candidate_evaluation"])
         for program in programs
         if isinstance(program.metadata.get("async_candidate_evaluation"), Mapping)
+    ]
+    async_sampler_records = [
+        copy.deepcopy(program.metadata["async_llm_sampler"])
+        for program in programs
+        if isinstance(program.metadata.get("async_llm_sampler"), Mapping)
     ]
     report = {
         "schema": "libreevolve.parallel_evaluation_readiness_report.v1",
@@ -34224,6 +35125,9 @@ def _parallel_evaluation_readiness_report(
         "observed_async_candidate_evaluation_count": len(async_candidate_records),
         "async_candidate_records": async_candidate_records[:50],
         "async_candidate_records_truncated": len(async_candidate_records) > 50,
+        "observed_async_llm_sampler_count": len(async_sampler_records),
+        "async_llm_sampler_records": async_sampler_records[:50],
+        "async_llm_sampler_records_truncated": len(async_sampler_records) > 50,
         "topology_linkage": {
             "source_report_ref": "runtime.history.distributed_pipeline_topology_report",
             "source_report_schema": topology_report.get("schema"),
@@ -34235,6 +35139,13 @@ def _parallel_evaluation_readiness_report(
             "controller_model": topology_report.get("controller_model"),
             "evaluation_dispatch": (
                 topology_report.get("dispatch_policy", {}).get("evaluation_dispatch")
+                if isinstance(topology_report.get("dispatch_policy"), Mapping)
+                else None
+            ),
+            "llm_sampler_dispatch": (
+                topology_report.get("dispatch_policy", {}).get(
+                    "llm_sampler_dispatch"
+                )
                 if isinstance(topology_report.get("dispatch_policy"), Mapping)
                 else None
             ),
@@ -34274,6 +35185,7 @@ def _parallel_evaluation_readiness_report(
             "observed_wall_clock_elapsed_sec_sum": wall_clock_total,
         },
         "async_pipeline_state": {
+            "candidate_level_llm_sampler_queue": candidate_async_sampling,
             "candidate_level_evaluation_queue": candidate_async_evaluation,
             "distributed_evaluator_nodes": False,
             "pending_work_resume": False,
@@ -34285,6 +35197,7 @@ def _parallel_evaluation_readiness_report(
             or any(record.get("fanout_configured") is True for record in stage_configs),
             "wall_clock_compression_observed": len(compression_records) > 0,
             "per_candidate_compute_hour_budget": False,
+            "candidate_level_async_llm_sampling": candidate_async_sampling,
             "candidate_level_async_evaluation": candidate_async_evaluation,
             "distributed_evaluator_worker_nodes": False,
             "randomized_initialization_shards": False,
@@ -34298,7 +35211,11 @@ def _parallel_evaluation_readiness_report(
                     if candidate_async_evaluation
                     else ["candidate_level_async_evaluation_queue"]
                 ),
-                "concurrent_llm_sampler_queue",
+                *(
+                    []
+                    if candidate_async_sampling
+                    else ["concurrent_llm_sampler_queue"]
+                ),
                 "cross_generation_async_overlap",
                 "distributed_evaluator_worker_nodes",
                 "randomized_initialization_shard_identity",
@@ -39068,8 +39985,40 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
                 "message": "observed async count must match retained records",
             }
         )
+    async_sampler_records = report.get("async_llm_sampler_records")
+    if not isinstance(async_sampler_records, list) or not all(
+        isinstance(record, Mapping) for record in async_sampler_records
+    ):
+        issues.append(
+            {
+                "code": "invalid_async_llm_sampler_records",
+                "message": "async_llm_sampler_records must be a list of mappings",
+            }
+        )
+        async_sampler_records = []
+    observed_sampler_count = _parallel_eval_non_negative_int(
+        report.get("observed_async_llm_sampler_count")
+    )
+    if report.get("async_llm_sampler_records_truncated") is True:
+        if observed_sampler_count is None or observed_sampler_count < len(
+            async_sampler_records
+        ):
+            issues.append(
+                {
+                    "code": "invalid_observed_async_llm_sampler_count",
+                    "message": "observed sampler count must cover retained records",
+                }
+            )
+    elif observed_sampler_count != len(async_sampler_records):
+        issues.append(
+            {
+                "code": "invalid_observed_async_llm_sampler_count",
+                "message": "observed sampler count must match retained records",
+            }
+        )
     topology = report.get("topology_linkage")
     candidate_async_evaluation = False
+    candidate_async_sampling = False
     if not isinstance(topology, Mapping):
         issues.append(
             {
@@ -39098,7 +40047,17 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
             )
         candidate_async_evaluation = (
             topology.get("asyncio_pipeline") is True
-            and topology.get("asyncio_scope") == "candidate_evaluation_only"
+            and topology.get("asyncio_scope") in {
+                "candidate_evaluation_only",
+                "candidate_generation_and_evaluation",
+            }
+        )
+        candidate_async_sampling = (
+            topology.get("asyncio_pipeline") is True
+            and topology.get("asyncio_scope") in {
+                "candidate_generation_only",
+                "candidate_generation_and_evaluation",
+            }
         )
     compute_budget = report.get("compute_hour_budget")
     if not isinstance(compute_budget, Mapping):
@@ -39134,6 +40093,15 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
             }
         )
     else:
+        if async_state.get("candidate_level_llm_sampler_queue") is not (
+            candidate_async_sampling
+        ):
+            issues.append(
+                {
+                    "code": "candidate_level_llm_sampler_queue_mismatch",
+                    "message": "sampler queue state must match topology evidence",
+                }
+            )
         if async_state.get("candidate_level_evaluation_queue") is not (
             candidate_async_evaluation
         ):
@@ -39171,6 +40139,15 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
             }
         )
     else:
+        if readiness.get("candidate_level_async_llm_sampling") is not (
+            candidate_async_sampling
+        ):
+            issues.append(
+                {
+                    "code": "candidate_level_async_llm_sampling_mismatch",
+                    "message": "sampler async readiness must match topology evidence",
+                }
+            )
         if readiness.get("candidate_level_async_evaluation") is not (
             candidate_async_evaluation
         ):
@@ -40123,6 +41100,7 @@ def _distributed_pipeline_topology_report(
     budget: RunBudget,
     *,
     async_controller_report: Mapping[str, object] | None = None,
+    async_sampler_controller_report: Mapping[str, object] | None = None,
 ) -> dict:
     config = (
         startup_manifest.get("config")
@@ -40147,21 +41125,38 @@ def _distributed_pipeline_topology_report(
     ]
     evaluator_sample_workers = _pipeline_evaluator_sample_worker_summary(eval_stages)
     evaluator_nodes = _pipeline_evaluation_nodes(eval_stages)
-    async_pipeline = (
+    async_evaluation_pipeline = (
         isinstance(async_controller_report, Mapping)
         and async_controller_report.get("schema")
         == "libreevolve.async_candidate_evaluation_controller.v1"
         and isinstance(async_controller_report.get("validation"), Mapping)
         and async_controller_report["validation"].get("ok") is True
     )
-    async_worker_nodes = (
+    async_sampler_pipeline = (
+        isinstance(async_sampler_controller_report, Mapping)
+        and async_sampler_controller_report.get("schema")
+        == "libreevolve.async_llm_sampler_controller.v1"
+        and isinstance(async_sampler_controller_report.get("validation"), Mapping)
+        and async_sampler_controller_report["validation"].get("ok") is True
+    )
+    async_pipeline = async_evaluation_pipeline or async_sampler_pipeline
+    async_evaluator_worker_nodes = (
         _pipeline_async_candidate_evaluator_nodes(async_controller_report)
-        if async_pipeline
+        if async_evaluation_pipeline
+        else []
+    )
+    async_sampler_worker_nodes = (
+        _pipeline_async_llm_sampler_nodes(async_sampler_controller_report)
+        if async_sampler_pipeline
         else []
     )
     controller_implementation = (
-        "single_process_asyncio_candidate_evaluation"
-        if async_pipeline
+        "single_process_asyncio_llm_sampling_and_candidate_evaluation"
+        if async_sampler_pipeline and async_evaluation_pipeline
+        else "single_process_asyncio_llm_sampling"
+        if async_sampler_pipeline
+        else "single_process_asyncio_candidate_evaluation"
+        if async_evaluation_pipeline
         else "single_process_serial_loop"
     )
     nodes = [
@@ -40186,14 +41181,22 @@ def _distributed_pipeline_topology_report(
             "state_source": "history_and_archive_jsonl_artifacts",
         },
         *llm_nodes,
+        *async_sampler_worker_nodes,
         *evaluator_nodes,
-        *async_worker_nodes,
+        *async_evaluator_worker_nodes,
     ]
-    queue_records = (
-        [_pipeline_async_evaluation_queue(async_controller_report)]
-        if async_pipeline
-        else []
-    )
+    queue_records = [
+        *(
+            [_pipeline_async_llm_sampler_queue(async_sampler_controller_report)]
+            if async_sampler_pipeline
+            else []
+        ),
+        *(
+            [_pipeline_async_evaluation_queue(async_controller_report)]
+            if async_evaluation_pipeline
+            else []
+        ),
+    ]
     blocking_edges = [
         {
             "edge_id": "database_sample_to_controller",
@@ -40208,21 +41211,25 @@ def _distributed_pipeline_topology_report(
             "from": "controller:local",
             "to": "llm_sampler:*",
             "dependency": "mutation_generation_call",
-            "blocking": True,
-            "queue": None,
+            "blocking": not async_sampler_pipeline,
+            "queue": (
+                "llm_proposal_queue:local" if async_sampler_pipeline else None
+            ),
         },
         {
             "edge_id": "controller_to_evaluation_node",
             "from": "controller:local",
             "to": (
                 "candidate_evaluator:local:*"
-                if async_pipeline
+                if async_evaluation_pipeline
                 else "evaluation_node:*"
             ),
             "dependency": "candidate_validation_and_scoring",
-            "blocking": not async_pipeline,
+            "blocking": not async_evaluation_pipeline,
             "queue": (
-                "candidate_evaluation_queue:local" if async_pipeline else None
+                "candidate_evaluation_queue:local"
+                if async_evaluation_pipeline
+                else None
             ),
         },
         {
@@ -40246,10 +41253,14 @@ def _distributed_pipeline_topology_report(
         "dispatch_policy": {
             "schema": "libreevolve.pipeline_dispatch_policy.v1",
             "controller": controller_implementation,
-            "llm_sampler_dispatch": "inline_blocking_call",
+            "llm_sampler_dispatch": (
+                "bounded_asyncio_llm_proposal_queue_to_worker_owned_ensemble"
+                if async_sampler_pipeline
+                else "inline_blocking_call"
+            ),
             "evaluation_dispatch": (
                 "bounded_asyncio_candidate_evaluation_queue_to_thread"
-                if async_pipeline
+                if async_evaluation_pipeline
                 else "blocking_stage_sample_thread_pool_local_subprocess"
                 if evaluator_sample_workers["max_effective_workers"] > 1
                 else "inline_blocking_local_subprocess"
@@ -40260,13 +41271,23 @@ def _distributed_pipeline_topology_report(
                 else "synchronous_after_candidate_evaluation"
             ),
             "deterministic_merge_order": (
-                "candidate_submission_order"
-                if async_pipeline
+                "llm_and_candidate_submission_order"
+                if async_sampler_pipeline and async_evaluation_pipeline
+                else "llm_submission_order"
+                if async_sampler_pipeline
+                else "candidate_submission_order"
+                if async_evaluation_pipeline
                 else "loop_order"
             ),
             "asyncio_pipeline": async_pipeline,
             "asyncio_scope": (
-                "candidate_evaluation_only" if async_pipeline else "none"
+                "candidate_generation_and_evaluation"
+                if async_sampler_pipeline and async_evaluation_pipeline
+                else "candidate_generation_only"
+                if async_sampler_pipeline
+                else "candidate_evaluation_only"
+                if async_evaluation_pipeline
+                else "none"
             ),
             "evaluator_sample_workers": evaluator_sample_workers,
         },
@@ -40282,8 +41303,12 @@ def _distributed_pipeline_topology_report(
                 or evaluator_sample_workers["max_effective_workers"] > 1
             ),
             "worker_fanout_accounting_scope": (
-                "candidate_evaluator_controller_telemetry"
-                if async_pipeline
+                "sampler_and_candidate_evaluator_controller_telemetry"
+                if async_sampler_pipeline and async_evaluation_pipeline
+                else "llm_sampler_controller_telemetry"
+                if async_sampler_pipeline
+                else "candidate_evaluator_controller_telemetry"
+                if async_evaluation_pipeline
                 else "configured_stage_sample_workers"
                 if evaluator_sample_workers["max_effective_workers"] > 1
                 else "none"
@@ -40302,7 +41327,8 @@ def _distributed_pipeline_topology_report(
         "claim_readiness": {
             "alphaevolve_async_pipeline_topology": False,
             "controller_sampler_evaluator_roles_named": True,
-            "candidate_evaluation_asyncio_pipeline": async_pipeline,
+            "candidate_generation_asyncio_pipeline": async_sampler_pipeline,
+            "candidate_evaluation_asyncio_pipeline": async_evaluation_pipeline,
             "queue_dependency_graph": async_pipeline,
             "worker_identity_and_fanout": (
                 async_pipeline
@@ -40310,11 +41336,19 @@ def _distributed_pipeline_topology_report(
             ),
             "pending_work_checkpoint": False,
             "remaining_gap": [
-                *([] if async_pipeline else ["async_candidate_evaluation_queue"]),
-                "concurrent_llm_sampler_queue_and_worker_identities",
                 *(
                     []
-                    if async_pipeline
+                    if async_evaluation_pipeline
+                    else ["async_candidate_evaluation_queue"]
+                ),
+                *(
+                    []
+                    if async_sampler_pipeline
+                    else ["concurrent_llm_sampler_queue_and_worker_identities"]
+                ),
+                *(
+                    []
+                    if async_evaluation_pipeline
                     or evaluator_sample_workers["max_effective_workers"] > 1
                     else ["evaluation_node_worker_identities"]
                 ),
@@ -40508,6 +41542,55 @@ def _pipeline_async_candidate_evaluator_nodes(
     return nodes
 
 
+def _pipeline_async_llm_sampler_nodes(
+    controller_report: Mapping[str, object],
+) -> list[dict]:
+    worker_records = controller_report.get("worker_records")
+    if not isinstance(worker_records, list):
+        return []
+    nodes: list[dict] = []
+    for record in worker_records:
+        if not isinstance(record, Mapping):
+            continue
+        worker_id = record.get("worker_id")
+        if not isinstance(worker_id, str) or not worker_id:
+            continue
+        nodes.append(
+            {
+                "node_id": worker_id,
+                "role": "llm_sampler",
+                "implementation": record.get("runtime"),
+                "worker_identity": record.get("task_name"),
+                "ownership": record.get("ownership"),
+                "async_worker": True,
+                "queue": "llm_proposal_queue:local",
+                "lifecycle_status": record.get("lifecycle_status"),
+                "completed_count": record.get("completed_count"),
+                "failed_count": record.get("failed_count"),
+                "rewarded_count": record.get("rewarded_count"),
+            }
+        )
+    return nodes
+
+
+def _pipeline_async_llm_sampler_queue(
+    controller_report: Mapping[str, object],
+) -> dict:
+    queue = controller_report.get("queue")
+    queue_record = queue if isinstance(queue, Mapping) else {}
+    return {
+        "queue_id": "llm_proposal_queue:local",
+        "role": "llm_mutation_dispatch",
+        "capacity": queue_record.get("capacity"),
+        "backpressure_policy": queue_record.get("backpressure_policy"),
+        "max_observed_depth": queue_record.get("max_observed_depth"),
+        "terminal_depth": queue_record.get("terminal_depth"),
+        "producer": "controller:local",
+        "consumers": "llm_sampler:local:*",
+        "state_source": "runtime.history.async_llm_sampler_controller",
+    }
+
+
 def _pipeline_async_evaluation_queue(
     controller_report: Mapping[str, object],
 ) -> dict:
@@ -40571,6 +41654,16 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
         isinstance(dispatch, Mapping)
         and dispatch.get("asyncio_pipeline") is True
     )
+    async_sampler_pipeline = (
+        isinstance(dispatch, Mapping)
+        and dispatch.get("llm_sampler_dispatch")
+        == "bounded_asyncio_llm_proposal_queue_to_worker_owned_ensemble"
+    )
+    async_evaluation_pipeline = (
+        isinstance(dispatch, Mapping)
+        and dispatch.get("evaluation_dispatch")
+        == "bounded_asyncio_candidate_evaluation_queue_to_thread"
+    )
     nodes = report.get("nodes")
     if not isinstance(nodes, list):
         issues.append({"code": "invalid_nodes", "message": "nodes must be a list"})
@@ -40589,11 +41682,15 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
                 issues.append({"code": "invalid_async_worker", "message": f"node {index} async_worker must be boolean"})
             elif async_worker and not async_pipeline:
                 issues.append({"code": "async_worker_overclaim", "message": f"node {index} lacks async pipeline evidence"})
-            elif async_worker and node.get("role") not in {"controller", "evaluation_node"}:
+            elif async_worker and node.get("role") not in {
+                "controller",
+                "evaluation_node",
+                "llm_sampler",
+            }:
                 issues.append({"code": "invalid_async_worker_role", "message": f"node {index} async role is unsupported"})
     _validate_report_count(report, "node_count", len(nodes), issues)
     if async_pipeline:
-        if not any(
+        if async_evaluation_pipeline and not any(
             isinstance(node, Mapping)
             and node.get("role") == "controller"
             and node.get("async_worker") is True
@@ -40607,6 +41704,14 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
             for node in nodes
         ):
             issues.append({"code": "missing_async_evaluator_node", "message": "async evaluator node is required"})
+        if async_sampler_pipeline and not any(
+            isinstance(node, Mapping)
+            and node.get("role") == "llm_sampler"
+            and node.get("async_worker") is True
+            and node.get("queue") == "llm_proposal_queue:local"
+            for node in nodes
+        ):
+            issues.append({"code": "missing_async_sampler_node", "message": "async sampler node is required"})
     queues = report.get("queues")
     if not isinstance(queues, list):
         issues.append({"code": "invalid_queues", "message": "queues must be a list"})
@@ -40622,8 +41727,17 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
             if queue.get("terminal_depth") != 0:
                 issues.append({"code": "queue_not_drained", "message": f"queue {index} must be terminally drained"})
     _validate_report_count(report, "queue_count", len(queues), issues)
-    if async_pipeline and len(queues) != 1:
-        issues.append({"code": "missing_async_queue", "message": "async pipeline requires one candidate queue"})
+    expected_queue_ids = {
+        *(["llm_proposal_queue:local"] if async_sampler_pipeline else []),
+        *(["candidate_evaluation_queue:local"] if async_evaluation_pipeline else []),
+    }
+    observed_queue_ids = {
+        queue.get("queue_id")
+        for queue in queues
+        if isinstance(queue, Mapping)
+    }
+    if async_pipeline and observed_queue_ids != expected_queue_ids:
+        issues.append({"code": "missing_async_queue", "message": "async queues must match enabled sampler and evaluator pipelines"})
     if not async_pipeline and queues:
         issues.append({"code": "queue_overclaim", "message": "synchronous pipeline must not report queues"})
     edges = report.get("blocking_edges")
@@ -40635,15 +41749,24 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
             if not isinstance(edge, dict):
                 issues.append({"code": "invalid_edge", "message": f"edge {index} must be an object"})
                 continue
+            edge_id = edge.get("edge_id")
             queued_async_dispatch = (
-                async_pipeline
-                and edge.get("edge_id") == "controller_to_evaluation_node"
+                async_evaluation_pipeline
+                and edge_id == "controller_to_evaluation_node"
+            ) or (
+                async_sampler_pipeline
+                and edge_id == "controller_to_llm_sampler"
             )
             if queued_async_dispatch:
                 if edge.get("blocking") is not False:
                     issues.append({"code": "invalid_async_dispatch_edge", "message": "async dispatch edge must be nonblocking except for backpressure"})
-                if edge.get("queue") != "candidate_evaluation_queue:local":
-                    issues.append({"code": "invalid_async_queue_edge", "message": "async dispatch edge must name candidate queue"})
+                expected_queue = (
+                    "llm_proposal_queue:local"
+                    if edge_id == "controller_to_llm_sampler"
+                    else "candidate_evaluation_queue:local"
+                )
+                if edge.get("queue") != expected_queue:
+                    issues.append({"code": "invalid_async_queue_edge", "message": "async dispatch edge must name its bounded queue"})
             else:
                 if edge.get("blocking") is not True:
                     issues.append({"code": "nonblocking_edge_overclaim", "message": f"edge {index} must remain blocking"})
@@ -40653,53 +41776,93 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
     if not isinstance(dispatch, dict):
         issues.append({"code": "invalid_dispatch_policy", "message": "dispatch_policy must be an object"})
     elif async_pipeline:
-        if dispatch.get("asyncio_scope") != "candidate_evaluation_only":
-            issues.append({"code": "invalid_asyncio_scope", "message": "async scope must remain candidate evaluation only"})
-        if dispatch.get("deterministic_merge_order") != "candidate_submission_order":
-            issues.append({"code": "invalid_async_merge_order", "message": "async merge order must be candidate submission order"})
+        expected_scope = (
+            "candidate_generation_and_evaluation"
+            if async_sampler_pipeline and async_evaluation_pipeline
+            else "candidate_generation_only"
+            if async_sampler_pipeline
+            else "candidate_evaluation_only"
+        )
+        expected_merge = (
+            "llm_and_candidate_submission_order"
+            if async_sampler_pipeline and async_evaluation_pipeline
+            else "llm_submission_order"
+            if async_sampler_pipeline
+            else "candidate_submission_order"
+        )
+        if dispatch.get("asyncio_scope") != expected_scope:
+            issues.append({"code": "invalid_asyncio_scope", "message": "async scope does not match enabled queues"})
+        if dispatch.get("deterministic_merge_order") != expected_merge:
+            issues.append({"code": "invalid_async_merge_order", "message": "async merge order does not match enabled queues"})
     elif dispatch.get("asyncio_pipeline") is not False:
         issues.append({"code": "invalid_asyncio_pipeline", "message": "asyncio_pipeline must be boolean"})
     if async_pipeline:
+        expected_controller = (
+            "single_process_asyncio_llm_sampling_and_candidate_evaluation"
+            if async_sampler_pipeline and async_evaluation_pipeline
+            else "single_process_asyncio_llm_sampling"
+            if async_sampler_pipeline
+            else "single_process_asyncio_candidate_evaluation"
+        )
         async_contract_valid = (
             isinstance(dispatch, Mapping)
-            and dispatch.get("controller")
-            == "single_process_asyncio_candidate_evaluation"
-            and dispatch.get("evaluation_dispatch")
-            == "bounded_asyncio_candidate_evaluation_queue_to_thread"
+            and dispatch.get("controller") == expected_controller
             and dispatch.get("database_admission")
             == "serial_controller_commit_after_submission_order_merge"
-            and dispatch.get("asyncio_scope") == "candidate_evaluation_only"
-            and dispatch.get("deterministic_merge_order")
-            == "candidate_submission_order"
-            and len(queues) == 1
+            and observed_queue_ids == expected_queue_ids
             and any(
                 isinstance(node, Mapping)
                 and node.get("role") == "controller"
-                and node.get("implementation")
-                == "single_process_asyncio_candidate_evaluation"
+                and node.get("implementation") == expected_controller
                 and node.get("async_worker") is True
                 for node in nodes
             )
-            and any(
-                isinstance(node, Mapping)
-                and node.get("role") == "evaluation_node"
-                and node.get("async_worker") is True
-                and node.get("queue") == "candidate_evaluation_queue:local"
-                for node in nodes
+            and (
+                not async_evaluation_pipeline
+                or any(
+                    isinstance(node, Mapping)
+                    and node.get("role") == "evaluation_node"
+                    and node.get("async_worker") is True
+                    and node.get("queue") == "candidate_evaluation_queue:local"
+                    for node in nodes
+                )
             )
-            and any(
-                isinstance(edge, Mapping)
-                and edge.get("edge_id") == "controller_to_evaluation_node"
-                and edge.get("blocking") is False
-                and edge.get("queue") == "candidate_evaluation_queue:local"
-                for edge in edges
+            and (
+                not async_sampler_pipeline
+                or any(
+                    isinstance(node, Mapping)
+                    and node.get("role") == "llm_sampler"
+                    and node.get("async_worker") is True
+                    and node.get("queue") == "llm_proposal_queue:local"
+                    for node in nodes
+                )
+            )
+            and (
+                not async_evaluation_pipeline
+                or any(
+                    isinstance(edge, Mapping)
+                    and edge.get("edge_id") == "controller_to_evaluation_node"
+                    and edge.get("blocking") is False
+                    and edge.get("queue") == "candidate_evaluation_queue:local"
+                    for edge in edges
+                )
+            )
+            and (
+                not async_sampler_pipeline
+                or any(
+                    isinstance(edge, Mapping)
+                    and edge.get("edge_id") == "controller_to_llm_sampler"
+                    and edge.get("blocking") is False
+                    and edge.get("queue") == "llm_proposal_queue:local"
+                    for edge in edges
+                )
             )
         )
         if not async_contract_valid:
             issues.append(
                 {
                     "code": "async_pipeline_overclaim",
-                    "message": "async pipeline lacks the complete candidate-evaluation topology contract",
+                    "message": "async pipeline lacks its complete sampler/evaluator topology contract",
                 }
             )
             if any(
@@ -40725,7 +41888,9 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
     else:
         if readiness.get("alphaevolve_async_pipeline_topology") is not False:
             issues.append({"code": "async_topology_overclaim", "message": "claim_readiness must not claim async topology parity"})
-        if readiness.get("candidate_evaluation_asyncio_pipeline") is not async_pipeline:
+        if readiness.get("candidate_generation_asyncio_pipeline") is not async_sampler_pipeline:
+            issues.append({"code": "async_sampler_readiness_mismatch", "message": "candidate generation async readiness must match topology evidence"})
+        if readiness.get("candidate_evaluation_asyncio_pipeline") is not async_evaluation_pipeline:
             issues.append({"code": "async_pipeline_readiness_mismatch", "message": "candidate async readiness must match topology evidence"})
     return {
         "schema": "libreevolve.distributed_pipeline_topology_report.v1",
@@ -40739,27 +41904,45 @@ def _runtime_controller_state(
     budget: RunBudget,
     *,
     async_controller_report: Mapping[str, object] | None = None,
+    async_sampler_controller_report: Mapping[str, object] | None = None,
 ) -> dict:
     event_stream = _controller_budget_event_stream_summary(
         run_dir / "controller_budget_events.jsonl"
     )
-    async_mode = (
+    async_evaluation_mode = (
         isinstance(async_controller_report, Mapping)
         and async_controller_report.get("schema")
         == "libreevolve.async_candidate_evaluation_controller.v1"
         and isinstance(async_controller_report.get("validation"), Mapping)
         and async_controller_report["validation"].get("ok") is True
     )
+    async_sampler_mode = (
+        isinstance(async_sampler_controller_report, Mapping)
+        and async_sampler_controller_report.get("schema")
+        == "libreevolve.async_llm_sampler_controller.v1"
+        and isinstance(async_sampler_controller_report.get("validation"), Mapping)
+        and async_sampler_controller_report["validation"].get("ok") is True
+    )
     state = {
         "schema": "libreevolve.controller_state.v1",
         "status": (
+            "terminal_async_pipeline_controller_drained"
+            if async_sampler_mode and async_evaluation_mode
+            else "terminal_async_llm_sampler_controller_drained"
+            if async_sampler_mode
+            else
             "terminal_async_evaluation_controller_drained"
-            if async_mode
+            if async_evaluation_mode
             else "terminal_synchronous_controller_drained"
         ),
         "controller_model": (
+            "single_process_asyncio_llm_sampling_and_candidate_evaluation"
+            if async_sampler_mode and async_evaluation_mode
+            else "single_process_asyncio_llm_sampling"
+            if async_sampler_mode
+            else
             "single_process_asyncio_candidate_evaluation"
-            if async_mode
+            if async_evaluation_mode
             else "single_process_serial_loop"
         ),
         "resume_scope": "terminal_drained_state_only",
@@ -40780,13 +41963,31 @@ def _runtime_controller_state(
         "event_stream": event_stream,
         "limitations": (
             [
+                "local_async_sampler_and_evaluator_not_distributed",
+                "batch_scoped_sampler_dependencies_not_cross_generation",
+                "no_mid_generation_resume_boundary",
+                "provider_outputs_not_replayed",
+                "plugin_internal_pending_work_reported_separately",
+            ]
+            if async_sampler_mode and async_evaluation_mode
+            else [
+                "candidate_generation_async_only_not_full_pipeline",
+                "no_async_candidate_evaluation_queue",
+                "batch_scoped_sampler_dependencies_not_cross_generation",
+                "no_mid_generation_resume_boundary",
+                "provider_outputs_not_replayed",
+                "plugin_internal_pending_work_reported_separately",
+            ]
+            if async_sampler_mode
+            else
+            [
                 "candidate_evaluation_async_only_not_full_pipeline",
                 "no_concurrent_llm_sampler_queue",
                 "no_mid_generation_resume_boundary",
                 "provider_outputs_not_replayed",
                 "plugin_internal_pending_work_reported_separately",
             ]
-            if async_mode
+            if async_evaluation_mode
             else [
                 "synchronous_terminal_snapshot_not_async_queue_checkpoint",
                 "no_mid_generation_resume_boundary",
@@ -40795,9 +41996,13 @@ def _runtime_controller_state(
             ]
         ),
     }
-    if async_mode:
+    if async_evaluation_mode:
         state["async_candidate_evaluation"] = copy.deepcopy(
             dict(async_controller_report)
+        )
+    if isinstance(async_sampler_controller_report, Mapping):
+        state["async_llm_sampler"] = copy.deepcopy(
+            dict(async_sampler_controller_report)
         )
     state["validation"] = validate_controller_state_snapshot(state)
     return state

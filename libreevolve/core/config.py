@@ -44,6 +44,8 @@ MAX_EVALUATOR_STDIN_CHARS = 100_000
 MAX_LLM_FEEDBACK_FAILURE_RETRIES = 3
 MAX_ASYNC_EVALUATOR_WORKERS = 64
 MAX_ASYNC_EVALUATION_QUEUE_CAPACITY = 4096
+MAX_ASYNC_LLM_SAMPLER_WORKERS = 64
+MAX_ASYNC_LLM_QUEUE_CAPACITY = 4096
 _CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
     r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
 )
@@ -70,6 +72,9 @@ class Config:
     async_candidate_evaluation: bool = False
     async_evaluator_workers: int = 2
     async_evaluation_queue_capacity: int = 4
+    async_llm_sampling: bool = False
+    async_llm_sampler_workers: int = 2
+    async_llm_queue_capacity: int = 4
     num_inspirations:       int   = 3
     eval_timeout_sec:       float = 60.0
     validator_env_allowlist: list[str] = field(default_factory=list)
@@ -230,6 +235,27 @@ class Config:
             raise ConfigError(
                 "async_evaluation_queue_capacity must be an integer between 1 and "
                 f"{MAX_ASYNC_EVALUATION_QUEUE_CAPACITY}"
+            )
+        _require_bool("async_llm_sampling", self.async_llm_sampling)
+        _require_int(
+            "async_llm_sampler_workers",
+            self.async_llm_sampler_workers,
+            minimum=1,
+        )
+        if self.async_llm_sampler_workers > MAX_ASYNC_LLM_SAMPLER_WORKERS:
+            raise ConfigError(
+                "async_llm_sampler_workers must be an integer between 1 and "
+                f"{MAX_ASYNC_LLM_SAMPLER_WORKERS}"
+            )
+        _require_int(
+            "async_llm_queue_capacity",
+            self.async_llm_queue_capacity,
+            minimum=1,
+        )
+        if self.async_llm_queue_capacity > MAX_ASYNC_LLM_QUEUE_CAPACITY:
+            raise ConfigError(
+                "async_llm_queue_capacity must be an integer between 1 and "
+                f"{MAX_ASYNC_LLM_QUEUE_CAPACITY}"
             )
         _require_int("num_inspirations", self.num_inspirations, minimum=0)
         _require_positive_number("eval_timeout_sec", self.eval_timeout_sec)

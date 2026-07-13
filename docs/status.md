@@ -35,19 +35,19 @@ Implemented today:
 Important limits:
 
 - Evaluators run in local subprocesses, not hardened security sandboxes.
-- The controller, archive, migration, and evaluator flow are local and
-  synchronous, not a distributed asynchronous AlphaEvolve-style service.
+- The controller, archive, migration, sampler workers, and evaluator workers are
+  local, not a distributed AlphaEvolve-style service. Proposal generation and
+  candidate evaluation are independently opt-in local asyncio pipelines; shared
+  search-state commit remains serial and generation-scoped.
   Runtime histories record
   `runtime.history.distributed_pipeline_topology_report`, naming the current
-  single-process controller, in-process database, configured LLM sampler
-  backends, local evaluator nodes, zero queues, blocking dependency edges, and
-  runtime-budget linkage. It keeps AlphaEvolve Section 2.6 Python `asyncio`
-  pipeline parity false; `papers/distributed_pipeline_topology_boundary.json`
-  preserves the same single-process synchronous-topology absence boundary,
-  including the missing asyncio runtime identity, async task/coroutine
-  identities, dependency wait-event telemetry, worker lifecycle/liveness
-  records, scheduler-state snapshots, deterministic async completion/admission
-  order, queue backpressure, and pending-work checkpoints.
+  single-process controller, in-process database, configured backend nodes,
+  local sampler/evaluator workers and queues when enabled, dependency edges, and
+  runtime-budget linkage. Sampler workers own distinct ensembles and merge
+  out-of-order results deterministically; evaluator workers retain ordered
+  admission. It keeps full AlphaEvolve Section 2.6 parity false because there is
+  no distributed execution, cross-generation dependency graph, pending-work
+  checkpoint/resume, provider-output replay, or scheduler checkpoint.
 - Built-in provider adapters are OpenAI, Anthropic, Google Gemini, and Ollama.
   The Gemini Developer API adapter validates environment credentials, maps
   GenerateContent request parameters and role instructions, records API-
@@ -682,14 +682,14 @@ Important limits:
   `papers/controller_pending_work_resume_boundary.json`.
 - Parallel-evaluation readiness is limited to configured local
   `eval_stages[].sample_workers` fan-out, observed sample wall-clock
-  compression, topology linkage, and opt-in local candidate-level asyncio
-  evaluation with a bounded queue, named workers, backpressure telemetry,
-  deterministic submission-order merge/admission, in-flight duplicate
-  coalescing, and serial shared-state commit. It is not AlphaEvolve-style per-
-  candidate compute-hour budgeting, concurrent LLM sampler queues, distributed
-  evaluator nodes, cross-generation proposal/evaluation overlap, randomized-
-  initialization sharding, mutation-depth impact evidence, or pending-work
-  resume; that boundary is tracked by
+  compression, topology linkage, opt-in bounded local LLM sampler workers, and
+  opt-in local candidate-level asyncio evaluation. Both queues record named
+  workers, backpressure, out-of-order completion, and deterministic merge;
+  evaluations also coalesce in-flight duplicates. Shared state commits serially.
+  This is not AlphaEvolve-style per-candidate compute-hour budgeting,
+  distributed evaluator nodes, cross-generation proposal/evaluation overlap,
+  randomized-initialization sharding, mutation-depth impact evidence, or
+  pending-work resume; that boundary is tracked by
   `runtime.history.parallel_evaluation_readiness_report` and
   `papers/parallel_evaluation_readiness_boundary.json`.
 - AlphaEvolve Figure 8 ablation support is a validated registry, equal-budget
@@ -1405,7 +1405,7 @@ Important limits:
 - Docs-architecture runtime-flow evidence now records ten
   `docs/architecture.md` sections, runtime-flow markers, source path checks,
   README/docs-index route markers, the active TODO owner anchor, known-gap
-  markers, the local candidate-async runtime boundary, and the AlphaEvolve provider-
+  markers, the local sampler/evaluator-async runtime boundary, and the AlphaEvolve provider-
   parity boundary. This is not semantic flow-order verification, source-
   function semantic verification, runtime manifest field verification,
   architecture limitation freshness, or owner review signoff.

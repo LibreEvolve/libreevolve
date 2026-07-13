@@ -32,13 +32,15 @@ Runnable today:
 - Heuristic UCB-style backend selection.
 - Local MAP-Elites and island archives, with five islands by default.
 - Local subprocess evaluation with optional staged validators.
+- Opt-in bounded local asyncio workers for sibling LLM mutations and candidate
+  evaluations, with deterministic proposal-order shared-state commit.
 - Optional critique, feedback, and plugin hooks.
 - Gitignored run artifacts under `runs/`.
 
 Important limits:
 
 - No checked-in run reproduces AlphaEvolve's published benchmark results,
-  scale, model mix, asynchronous topology, or systems/compiler/hardware
+  scale, model mix, distributed asynchronous topology, or systems/compiler/hardware
   application evidence.
 - LibreEvolve is not the Google Cloud AlphaEvolve Service API, not a Gemini
   Enterprise managed agent, and not evidence of access to AlphaEvolve private
@@ -86,14 +88,17 @@ Important limits:
   scripted Strassen mutation control. This is deterministic local pipeline
   evidence, not stochastic LLM discovery, empirical error-rate,
   cost-efficiency, target-suite, or AlphaEvolve-scale proof.
-- The controller, archive, migration, and evaluator flow remain local. Opt-in
-  `async_candidate_evaluation` dispatches sibling candidate evaluations through
-  a bounded Python `asyncio` queue with named local workers, queue backpressure,
-  out-of-order completion telemetry, exact in-flight duplicate coalescing, and
-  deterministic submission-order archive admission. LLM proposal generation,
-  feedback, archive mutation, and generation boundaries remain serialized; this
-  is not a distributed AlphaEvolve controller/sampler/evaluator service and it
-  does not support pending-work resume or cross-generation evaluation overlap.
+- The controller, archive, migration, LLM samplers, and evaluators remain local.
+  Opt-in `async_llm_sampling` prepares sibling prompts from pre-batch archive
+  state and dispatches them through a bounded Python `asyncio` queue to named,
+  worker-owned LLM ensembles. Calls can finish out of order but merge in proposal
+  order; rewards return through the owning worker queue. Separately,
+  `async_candidate_evaluation` overlaps sibling evaluations with bounded queue
+  backpressure, exact in-flight duplicate coalescing, and deterministic
+  submission-order archive admission. Shared feedback, budget, history, prompt-
+  database, archive, and generation-boundary mutations remain serialized. This
+  is not a distributed AlphaEvolve service and does not provide cross-generation
+  overlap, pending-work resume, provider-output replay, or worker leases.
 - Runtime restore certification is compatible-surface evidence only;
   `papers/restore_certification_boundary.json` records accepted/quarantine
   separation and overclaim rejection, but not provider raw-payload replay,

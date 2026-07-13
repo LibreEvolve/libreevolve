@@ -100,7 +100,7 @@
         }
       ],
       "criterion_id": "controller_sampler_task_checkpoints",
-      "current_scope": "terminal drained synchronous or local candidate-async controller snapshot with inline sampler calls",
+      "current_scope": "terminal drained synchronous or local sampler/evaluator-async controller snapshot with worker-owned sampler calls",
       "missing_readiness": "controller queue checkpoints and in-flight LLM sampler task state",
       "readiness_status": "terminal_snapshot_without_inflight_task_state",
       "runtime_surface": "controller queues and LLM sampler task state",
@@ -228,7 +228,7 @@
         }
       ],
       "criterion_id": "async_budget_environment_replay",
-      "current_scope": "serialized candidate-async budget counters, controller budget-event replay, and local subprocess provenance",
+      "current_scope": "ordered local async sampler/evaluator budget counters, controller budget-event replay, and local subprocess provenance",
       "missing_readiness": "async budget accounting and external environment replay",
       "readiness_status": "serialized_async_budget_and_local_environment_only",
       "runtime_surface": "async budgets, worker leases, validators, and external environments",

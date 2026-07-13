@@ -30,7 +30,7 @@ def test_docs_architecture_runtime_flow_boundary_accepts_current_guide():
     assert boundary["missing_route_records"] == []
     assert boundary["known_gap_section_status"] == "section_markers_and_sources_present"
     assert boundary["sync_runtime_boundary_status"] == (
-        "local_candidate_async_runtime_boundary_present"
+        "local_sampler_evaluator_async_runtime_boundary_present"
     )
     assert (
         boundary["alphaevolve_parity_boundary_status"]
@@ -59,7 +59,7 @@ def test_docs_architecture_runtime_flow_boundary_rejects_overclaim_and_drift():
     boundary["missing_route_record_count"] = 1
     boundary["missing_route_records"] = [boundary["route_records"][0]]
     boundary["sync_runtime_boundary_status"] = (
-        "local_candidate_async_runtime_boundary_missing"
+        "local_sampler_evaluator_async_runtime_boundary_missing"
     )
     boundary["alphaevolve_parity_boundary_status"] = "alphaevolve_parity_boundary_missing"
     boundary["missing_evidence"]["owner_review_signoff"] = "recorded"

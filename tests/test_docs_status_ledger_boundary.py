@@ -25,7 +25,7 @@ def test_docs_status_ledger_boundary_accepts_current_status_inventory():
         "implemented_today": 9,
         "important_limits": 242,
     }
-    assert validation.status_ledger_local_path_ref_count == 271
+    assert validation.status_ledger_local_path_ref_count == 270
     assert boundary["status_ledger_missing_local_path_refs"] == []
     assert (
         boundary["status_ledger_local_path_ref_status"]
@@ -92,6 +92,6 @@ def test_render_docs_status_ledger_boundary_summary_reports_shape():
         in summary
     )
     assert "| status_ledger_bullet_count | 251 |" in summary
-    assert "| status_ledger_local_path_ref_count | 271 |" in summary
+    assert "| status_ledger_local_path_ref_count | 270 |" in summary
     assert "| missing_route_marker_count | 0 |" in summary
     assert "| missing_evidence_count | 4 |" in summary

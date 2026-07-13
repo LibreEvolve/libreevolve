@@ -3031,6 +3031,49 @@ def test_run_artifacts_include_current_schema_markers():
     assert llm_reward["record_schema"] == LLM_REWARD_RECORD_SCHEMA
 
 
+def test_log_llm_call_assigns_global_stream_sequence_across_worker_producers():
+    tmpdir = tempfile.mkdtemp()
+    db = ProgramDatabase(Config(log_dir=tmpdir, problem_name="t"))
+
+    def record(call_id, producer):
+        return {
+            "id": call_id,
+            "sequence_id": 1,
+            "producer_id": producer,
+            "role": "mutation",
+            "backend_idx": 0,
+            "backend_name": "backend",
+            "prompt_chars": 1,
+            "prompt_sha256": "0" * 64,
+            "status": "ok",
+            "output_chars": 1,
+            "output_sha256": "1" * 64,
+            "counts_before": [0],
+            "counts_after": [1],
+            "will_retry": False,
+            "will_fallback": False,
+        }
+
+    first = db.log_llm_call(record("call-a", "llm_sampler:local:000"))
+    second = db.log_llm_call(record("call-b", "llm_sampler:local:001"))
+
+    rows = [
+        json.loads(line)
+        for line in (Path(tmpdir) / "t" / "llm_calls.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+    assert first["sequence_id"] == 1
+    assert first["producer_sequence_id"] == 1
+    assert first["stream_sequence_id"] == 1
+    assert second["sequence_id"] == 1
+    assert second["producer_sequence_id"] == 1
+    assert second["stream_sequence_id"] == 2
+    assert [row["sequence_id"] for row in rows] == [1, 1]
+    assert [row["stream_sequence_id"] for row in rows] == [1, 2]
+    assert rows[1]["producer_sequence_id"] == 1
+
+
 def test_generated_run_artifact_inventory_covers_cleanup_and_schema_surfaces():
     inventory = generated_run_artifact_inventory()
     manifest_schema = run_artifact_schema()

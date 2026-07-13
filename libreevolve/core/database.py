@@ -586,6 +586,7 @@ class ProgramDatabase:
         self._archive_ids: set[str] = set()
         self._failure_counts: dict[str, int] = {}
         self._controller_budget_event_sequence: int = 0
+        self._llm_call_sequence: int = 0
         self._archive_admission_event_sequence: int = 0
         self._workspace_limits = _candidate_workspace_limits_from_config(config)
         self._write_manifest(startup_manifest)
@@ -599,9 +600,15 @@ class ProgramDatabase:
     def startup_manifest_snapshot(self) -> dict:
         return copy.deepcopy(self._startup_manifest)
 
-    def log_llm_call(self, record: dict) -> None:
+    def log_llm_call(self, record: dict) -> dict:
         normalized = {"record_type": "call", **record}
         record_type = normalized.get("record_type")
+        if record_type != "reward":
+            producer_sequence = normalized.get("sequence_id")
+            next_sequence = self._llm_call_sequence + 1
+            normalized["stream_sequence_id"] = next_sequence
+            if normalized.get("producer_id") is not None:
+                normalized.setdefault("producer_sequence_id", producer_sequence)
         record_schema = (
             LLM_REWARD_RECORD_SCHEMA
             if record_type == "reward"
@@ -613,6 +620,9 @@ class ProgramDatabase:
             quarantine_path=self._llm_call_quarantine,
             quarantine_snapshot_retention_mode=self._quarantine_snapshot_retention_mode,
         )
+        if record_type != "reward":
+            self._llm_call_sequence += 1
+        return copy.deepcopy(normalized)
 
     def log_controller_budget_event(self, event: dict) -> dict:
         normalized = {

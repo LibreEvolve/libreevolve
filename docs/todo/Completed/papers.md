@@ -14395,3 +14395,14 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     or equal-budget throughput/quality comparison has been retained.
   - Verification: focused Gemini and paper-boundary tests preserve
     `claim_ready: false` until those live evidence gates are met.
+- [x] Promote Section 2.6 sampler evidence from missing to local partial support.
+  - Paper evidence: AlphaEvolve Section 2.6 names concurrent LLM samplers,
+    evaluation nodes, a controller, and Python `asyncio` throughput.
+  - Status: the distributed-topology and parallel-readiness sidecars now credit
+    bounded local sampler workers, worker-owned ensembles, deterministic merge,
+    owner-serialized rewards, and composition with bounded candidate evaluation.
+  - Remaining paper gap: distributed nodes, cross-generation overlap, complete
+    dependency waits, scheduler/pending-work checkpoints, provider replay,
+    compute-hour budgets, and equal-budget throughput evidence remain absent.
+  - Verification: executable boundary validators and paper-manifest tests keep
+    `claim_ready: false` while rejecting stale missing-sampler classifications.

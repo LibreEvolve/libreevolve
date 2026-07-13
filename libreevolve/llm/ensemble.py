@@ -179,6 +179,7 @@ class LLMEnsemble:
         self._role_scheduler_state: dict[str, dict] = {}
         self._logical_role_calls: dict[str, int] = {}
         self._provider_failure_state: dict[str, dict[int, dict]] = {}
+        self._call_id_namespace: str | None = None
 
     def generate(self, prompt: str, role: str = "mutation") -> tuple[str, int]:
         """Returns (diff_text, backend_index)."""
@@ -512,7 +513,12 @@ class LLMEnsemble:
             raise ValueError("LLM call record sink must be callable or None")
         self._call_record_sink = sink
 
-    def record_reward(self, idx: int, reward: float, call_id: str | None = None) -> None:
+    def set_call_id_namespace(self, namespace: str | None) -> None:
+        if self._call_history_total_records:
+            raise ValueError("LLM call id namespace must be set before generation")
+        self._call_id_namespace = _validate_call_id_namespace(namespace)
+
+    def record_reward(self, idx: int, reward: float, call_id: str | None = None) -> dict:
         """Record a finite non-negative reward, capped to the scheduler range."""
         _validate_scheduler_state(self.scheduler_state, len(self.backends))
         if isinstance(idx, bool) or not isinstance(idx, int) or idx < 0 or idx >= len(self.backends):
@@ -538,17 +544,17 @@ class LLMEnsemble:
                 if self._last_call is not None and self._last_call.get("id") == reward_call_id:
                     self._last_call = deepcopy(record)
                 break
+        event = {
+            "record_type": "reward",
+            "call_id": reward_call_id,
+            "backend_idx": idx,
+            "reward": applied,
+            "reward_raw": numeric,
+            "rewarded": True,
+        }
         if self._call_record_sink is not None:
-            self._call_record_sink(
-                {
-                    "record_type": "reward",
-                    "call_id": reward_call_id,
-                    "backend_idx": idx,
-                    "reward": applied,
-                    "reward_raw": numeric,
-                    "rewarded": True,
-                }
-            )
+            self._call_record_sink(deepcopy(event))
+        return event
 
     def _append_call_record(self, record: dict) -> None:
         record = dict(record)
@@ -921,6 +927,7 @@ class LLMEnsemble:
                 retry_attempt=retry_attempt,
                 fallback_attempt=fallback_attempt,
                 attempt_index=attempt_index,
+                namespace=self._call_id_namespace,
             ),
             "role": role,
             "backend_idx": backend_idx,
@@ -1596,6 +1603,7 @@ def _deterministic_call_id(
     retry_attempt: int,
     fallback_attempt: int,
     attempt_index: int,
+    namespace: str | None = None,
 ) -> str:
     payload = {
         "sequence_id": sequence_id,
@@ -1606,8 +1614,25 @@ def _deterministic_call_id(
         "fallback_attempt": fallback_attempt,
         "attempt_index": attempt_index,
     }
+    if namespace is not None:
+        payload["namespace"] = namespace
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return f"llm-call-{hashlib.sha256(encoded).hexdigest()}"
+
+
+def _validate_call_id_namespace(value: object) -> str | None:
+    if value is None:
+        return None
+    if (
+        not isinstance(value, str)
+        or not value
+        or len(value) > 128
+        or re.fullmatch(r"[A-Za-z0-9_.:-]+", value) is None
+    ):
+        raise ValueError(
+            "LLM call id namespace must match [A-Za-z0-9_.:-]+ and be at most 128 characters"
+        )
+    return value
 
 
 def _validate_ledger_backend_idx(

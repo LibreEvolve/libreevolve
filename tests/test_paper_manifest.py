@@ -7015,7 +7015,7 @@ def test_validate_paper_manifest_rejects_parallel_evaluation_readiness_boundary_
     record = paper_manifest.parallel_evaluation_readiness_boundary_record()
     record["claim_ready"] = True
     record["boundary_status"] = "async_parallel_evaluation_ready"
-    record["missing_evidence"]["concurrent_llm_sampler_queue"] = "recorded"
+    record["missing_evidence"]["distributed_evaluator_worker_nodes"] = "recorded"
     sidecar = tmp_path / paper_manifest.PARALLEL_EVALUATION_READINESS_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -7026,7 +7026,7 @@ def test_validate_paper_manifest_rejects_parallel_evaluation_readiness_boundary_
     assert "parallel_evaluation_readiness_boundary_claim_ready_overclaim" in codes
     assert "parallel_evaluation_readiness_boundary_invalid_boundary_status" in codes
     assert (
-        "parallel_evaluation_readiness_boundary_invalid_missing_evidence_concurrent_llm_sampler_queue"
+        "parallel_evaluation_readiness_boundary_invalid_missing_evidence_distributed_evaluator_worker_nodes"
         in codes
     )
 
@@ -7126,7 +7126,7 @@ def test_validate_paper_manifest_rejects_distributed_pipeline_topology_boundary_
     record["claim_ready"] = True
     record["boundary_status"] = "async_distributed_topology_ready"
     record["source_section_ids"] = ["2.4"]
-    record["missing_evidence"]["concurrent_llm_sampler_worker_nodes"] = "recorded"
+    record["missing_evidence"]["distributed_evaluator_worker_nodes"] = "recorded"
     sidecar = tmp_path / paper_manifest.DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_FILE
     sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
 
@@ -7138,7 +7138,7 @@ def test_validate_paper_manifest_rejects_distributed_pipeline_topology_boundary_
     assert "distributed_pipeline_topology_boundary_invalid_boundary_status" in codes
     assert "distributed_pipeline_topology_boundary_invalid_source_section_ids" in codes
     assert (
-        "distributed_pipeline_topology_boundary_invalid_missing_evidence_concurrent_llm_sampler_worker_nodes"
+        "distributed_pipeline_topology_boundary_invalid_missing_evidence_distributed_evaluator_worker_nodes"
         in codes
     )
 

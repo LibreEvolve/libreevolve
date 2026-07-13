@@ -15863,3 +15863,12 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     calibrated scheduler evidence are not claimed.
   - Verification: provider-example, provider-auth, development-guide,
     backend-guide, and claim-boundary tests guard the updated wording.
+- [x] Document local concurrent LLM sampling without claiming AlphaEvolve parity.
+  - Status: README now lists bounded local sampler and evaluator workers as
+    runnable features and explains deterministic merge, worker-owned ensembles,
+    reward ownership, and serial shared-state commit.
+  - Remaining README gap: distributed execution, cross-generation overlap,
+    pending-work resume, provider replay, compute-hour budgets, and published
+    benchmark reproduction remain explicitly absent.
+  - Verification: README/docs/sidecar claim checks preserve the scoped local
+    capability and the non-reproduction boundary.

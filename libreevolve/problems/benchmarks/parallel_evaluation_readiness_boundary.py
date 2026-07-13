@@ -13,7 +13,7 @@ PARALLEL_EVALUATION_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.parallel_evaluation_readiness_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "local_candidate_async_evaluation_partial"
+EXPECTED_BOUNDARY_STATUS = "local_async_sampler_and_candidate_evaluation_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "local_stage_sample_worker_fanout",
     "observed_wall_clock_compression",
@@ -34,6 +34,11 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_IMPLEMENTED_EVIDENCE = {
     "local_stage_sample_worker_fanout": "recorded_when_configured",
+    "concurrent_llm_sampler_queue": "bounded_local_asyncio_queue",
+    "local_llm_sampler_worker_nodes": "named_worker_owned_ensembles",
+    "out_of_order_llm_completion_telemetry": "recorded_per_mutation_task",
+    "deterministic_llm_result_merge_order": "submission_order",
+    "worker_owned_reward_routing": "serialized_on_owning_worker_queue",
     "candidate_level_async_evaluation_queue": "bounded_local_asyncio_queue",
     "queue_capacity_backpressure_policy": "recorded_in_controller_report",
     "local_candidate_evaluator_worker_nodes": "named_asyncio_workers",
@@ -45,13 +50,13 @@ EXPECTED_MISSING_EVIDENCE = {
     "hundred_compute_hour_candidate_budget_records": "not_recorded_locally",
     "generation_cadence_under_slow_feedback_report": "not_recorded_locally",
     "per_candidate_compute_hour_budget_records": "not_recorded_locally",
-    "concurrent_llm_sampler_queue": "not_recorded_locally",
     "distributed_evaluator_worker_nodes": "not_recorded_locally",
     "randomized_initialization_shard_identity": "not_recorded_locally",
     "mutation_chain_depth_impact_under_slow_feedback": "not_recorded_locally",
     "pending_evaluation_resume_state": "not_recorded_locally",
     "equal_budget_parallelism_report_links": "not_recorded_locally",
     "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
+    "provider_output_replay": "not_recorded_locally",
 }
 
 
@@ -95,14 +100,16 @@ def parallel_evaluation_readiness_boundary_record() -> dict[str, Any]:
             "This boundary records that LibreEvolve has runtime reporting for "
             "configured local stage sample-worker fan-out, observed wall-clock "
             "compression, and distributed-pipeline topology linkage. Opt-in "
-            "candidate evaluation now uses a bounded local asyncio queue, named "
-            "workers, queue backpressure telemetry, out-of-order completion "
-            "records, deterministic submission-order result merge and archive "
-            "admission, exact in-flight duplicate coalescing, and serial shared-"
-            "state commit. It does not claim AlphaEvolve-style 100-compute-hour "
+            "candidate generation uses a bounded local asyncio LLM proposal "
+            "queue with worker-owned ensembles, out-of-order completion "
+            "telemetry, deterministic proposal-order merge, and owner-serialized "
+            "reward updates. Candidate evaluation uses a separate bounded local "
+            "asyncio queue with deterministic result merge and archive admission, "
+            "exact in-flight duplicate coalescing, and serial shared-state commit. "
+            "It does not claim AlphaEvolve-style 100-compute-hour "
             "candidate budgets, generation-cadence preservation under slow "
-            "feedback, per-candidate compute-hour budgets, concurrent LLM "
-            "sampler queues, distributed evaluator nodes, randomized "
+            "feedback, per-candidate compute-hour budgets, distributed evaluator "
+            "nodes, randomized "
             "initialization shards, cross-generation proposal/evaluation "
             "overlap, mutation-chain depth impact under slow feedback, pending-"
             "work resume, or equal-budget parallelism reports."
@@ -152,9 +159,10 @@ def validate_parallel_evaluation_readiness_boundary(
     if (
         not isinstance(boundary_text, str)
         or "does not claim" not in boundary_text
-        or "bounded local asyncio queue" not in boundary_text
-        or "deterministic submission-order result merge" not in boundary_text
-        or "concurrent LLM sampler queues" not in boundary_text
+        or "bounded local asyncio LLM proposal queue" not in boundary_text
+        or "worker-owned ensembles" not in boundary_text
+        or "deterministic proposal-order merge" not in boundary_text
+        or "separate bounded local asyncio queue" not in boundary_text
         or "cross-generation proposal/evaluation overlap" not in boundary_text
         or "pending-work resume" not in boundary_text
     ):

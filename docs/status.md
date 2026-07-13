@@ -398,16 +398,27 @@ Important limits:
 - Constructive-math Section 3.2 aggregate-outcome records preserve the
   AlphaEvolve source claim of over 50 mathematical problems across more than
   five branches, about 75% best-known rediscovery, about 20% SOTA improvement,
-  and definition-based verification, not local per-problem rows, branch
-  taxonomy rows, prior-best references, construction/verifier artifacts,
-  aggregate counts, or percentage recomputation; that boundary is tracked by
-  `papers/math_outcome_boundary.json`.
+  and the fact that no blanket result-verification sentence appears in the
+  pinned Section 3.2 text. A prior local attribution of such a sentence was
+  incorrect: the source's "In all these cases" clause instead describes the
+  simple-or-random starting point. Local per-problem rows, branch taxonomy
+  rows, prior-best references, construction/verifier artifacts, aggregate
+  counts, and percentage recomputation remain absent; that boundary is tracked
+  by `papers/math_outcome_boundary.json`.
 - Constructive-math Section 3.2 starting-construction records preserve the
   AlphaEvolve source claim that the initial starting point was a simple or
   random construction, not local per-instance starting construction payloads,
   generator or random-seed records, baseline metric rows, prior-best visibility
   policy, or prior-best seeding policy evidence; that boundary is tracked by
   `papers/math_starting_construction_boundary.json`.
+- The bounded Section 3.2/Figure 5 claim inventory records 63 PDF-anchored
+  claims: 2 locally implemented, 16 partial, 4 not implemented, and 41 not
+  demonstrated, with active TODO ownership for all 61 gaps. It includes all
+  nine Figure 5 before/after displays, the constructive-math heuristic method,
+  named domain outcomes, companion-artifact claims, and external-mathematician
+  formulation provenance. It is an inventory boundary, not Figure 5, Appendix
+  B, or mathematical-result reproduction; the checked sidecar is
+  `papers/alphaevolve_math_result_claim_inventory_boundary.json`.
 - Figure 5 constructive-math exhibit provenance remains absent: README
   describes Appendix B family/status coverage, smoke-fixture boundaries, and
   constructive-math absence boundaries, not main-text Figure 5 exhibit ids,

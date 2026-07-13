@@ -2279,10 +2279,12 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     `docs/status.md`, `docs/todo/code.md`, and `docs/todo/papers.md` now
     distinguish Appendix B family/status registry coverage from AlphaEvolve
     Section 3.2 aggregate mathematical breadth and outcome-rate evidence.
-  - Current evidence: `libreevolve.alphaevolve_math_outcome_boundary.v1`
+  - Current evidence: `libreevolve.alphaevolve_math_outcome_boundary.v2`
     preserves the source facts for over 50 mathematical problems, more than
     five branches, roughly 75% best-known rediscovery, roughly 20% SOTA
-    improvement, and definition-based verification.
+    improvement, and the source-fidelity correction that Section 3.2 contains
+    no blanket result-verification sentence. Its "In all these cases" clause
+    describes simple/random starts.
   - Boundary artifact: `papers/math_outcome_boundary.json` records the current
     `not_recorded_locally` state and the required future per-instance and
     aggregate fields for problem ids, branch labels, parameter settings,
@@ -16162,3 +16164,18 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Verification: focused source, disposition, coverage, and exhaustiveness
     tests validate the combined 132-claim counts, expanded sidecar references,
     and retained non-overclaim boundary.
+- [x] Credit bounded Section 3.2 and Figure 5 claim coverage in ROADMAP.
+  - Status: ROADMAP source disposition, coverage, exhaustiveness, and
+    implementation-evidence boundaries now include 63 constructive-math claims
+    with exact PDF anchors, implementation status, phase/section routing,
+    evidence links, and active ownership for all 61 gaps.
+  - Combined boundary: the ROADMAP surface now covers 195 bounded claims: 21
+    local, 63 partial, 13 absent, and 98 undemonstrated. The source walk now
+    advances to Sections 3.3-5 and Figures 6-14 rather than leaving Section 3.2
+    and Figure 5 unclassified.
+  - Source correction: the roadmap math-outcome boundary now records that the
+    pinned Section 3.2 text contains no blanket verification sentence and that
+    the actual "In all these cases" clause concerns simple/random starts.
+  - Remaining boundary: Sections 3.3-5, Figures 6-14, Table 3, detailed
+    appendices, result reproduction, whole-paper semantic exhaustiveness, and
+    owner signoff remain open.

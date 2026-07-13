@@ -15963,3 +15963,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     AlphaEvolve parity.
   - Verification: documentation and paper-manifest tests guard the path,
     counts, classifications, TODO ownership, and non-overclaim boundary.
+- [x] Document the bounded AlphaEvolve Section 3.2/Figure 5 claim inventory.
+  - Status: README now identifies the 63-claim constructive-math inventory,
+    its 2 local, 16 partial, 4 absent, and 41 undemonstrated split, active TODO
+    ownership for all 61 gaps, and the correction of a false blanket-
+    verification attribution.
+  - Combined boundary: README now reports 195 bounded paper claims across the
+    four inventories: 21 local, 63 partial, 13 absent, and 98 undemonstrated,
+    leaving 174 gaps.
+  - Remaining boundary: README keeps Sections 3.3-5, Figures 6-14, Table 3,
+    detailed appendices, source-detail exhaustiveness, and independent result
+    reproduction outside the completed claim walk.

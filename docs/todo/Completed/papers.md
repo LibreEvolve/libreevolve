@@ -14523,3 +14523,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and independent semantic exhaustiveness review remain open.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
+- [x] Add Section 3.2 and Figure 5 constructive-math claim dispositions.
+  - Paper evidence: the pinned PDF contains constructive-math breadth/rate
+    claims, all nine Figure 5 result displays, heuristic-program methodology,
+    named domain outcomes, companion Colab and follow-on-paper statements, and
+    mathematician-collaboration provenance.
+  - Status: `papers/alphaevolve_math_result_claim_inventory_boundary.json`
+    records 63 exact-page claims with 2 local, 16 partial, 4 absent, and 41
+    undemonstrated dispositions and active ownership for all 61 gaps. The
+    inventory also proves that the old blanket-verification attribution is not
+    in the pinned source and that "In all these cases" instead introduces the
+    simple/random starting-point statement.
+  - Remaining paper gap: Appendix B detail exhaustiveness, Figure 5 artifacts,
+    companion Colab retrieval, mathematical witnesses/certificates,
+    independent result verification, and AlphaEvolve parity remain unproven.

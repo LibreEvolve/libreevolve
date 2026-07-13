@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any
 
 
-MATH_OUTCOME_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_outcome_boundary.v1"
+MATH_OUTCOME_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_outcome_boundary.v2"
 MATH_STARTING_CONSTRUCTION_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_starting_construction_boundary.v1"
 MATH_HEURISTIC_HANDOFF_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_heuristic_handoff_boundary.v1"
 MATH_HEURISTIC_STAGE_SEQUENCE_BOUNDARY_SCHEMA = "libreevolve.alphaevolve_math_heuristic_stage_sequence_boundary.v1"
@@ -93,7 +93,12 @@ EXPECTED_SOURCE_SUMMARY = {
     "branch_text": "more than five different branches of mathematics",
     "rediscovered_best_known_percent_approx": 75.0,
     "improved_sota_percent_approx": 20.0,
-    "verification_claim": "In all these cases, results were verified according to their provided mathematical definitions.",
+    "section_3_2_blanket_verification_claim_status": "not_present_in_pinned_source",
+    "source_fidelity_note": (
+        "Section 3.2's 'In all these cases' sentence states that the initial "
+        "starting point was a simple or random construction; it does not make "
+        "a blanket result-verification claim."
+    ),
 }
 EXPECTED_STARTING_CONSTRUCTION_SUMMARY = {
     "source_paper_id": "2506.13131",
@@ -133,7 +138,7 @@ EXPECTED_MATH_OUTCOME_BOUNDARY = {
     "schema": MATH_OUTCOME_BOUNDARY_SCHEMA,
     **EXPECTED_SOURCE_SUMMARY,
     "status": "not_recorded_locally",
-    "scope_boundary": "This boundary records the paper's Section 3.2 aggregate claim, but does not claim local per-problem outcome rows, construction artifacts, verifier artifacts, or reproduced aggregate percentages.",
+    "scope_boundary": "This boundary records the paper's Section 3.2 aggregate claim and explicitly rejects a previously misattributed blanket verification sentence. It does not claim local per-problem outcome rows, construction artifacts, verifier artifacts, or reproduced aggregate percentages.",
     "required_instance_fields": list(EXPECTED_REQUIRED_INSTANCE_FIELDS),
     "required_aggregate_fields": list(EXPECTED_REQUIRED_AGGREGATE_FIELDS),
     "missing_evidence": {

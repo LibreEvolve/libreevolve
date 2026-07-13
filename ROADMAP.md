@@ -926,9 +926,14 @@ AlphaEvolve reproduction.
   `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` dispositions
   41 Section 3.1, Table 2, Figure 4, and footnote 3 claims: 6 are partial, 3
   not implemented, and 32 not demonstrated, with no locally implemented result
-  claims and live TODO ownership for all 41 gaps. The three bounded inventories
-  now disposition 132 claims in total: 19 locally implemented, 47 partial, 9
-  not implemented, and 57 not demonstrated,
+  claims and live TODO ownership for all 41 gaps. The additional
+  `papers/alphaevolve_math_result_claim_inventory_boundary.json` dispositions
+  63 Section 3.2 and Figure 5 claims: 2 are locally implemented, 16 partial, 4
+  not implemented, and 41 not demonstrated, with live TODO ownership for all
+  61 gaps. It also verifies the correction of a locally misattributed blanket
+  verification sentence absent from the pinned source. The four bounded
+  inventories now disposition 195 claims in total: 21 locally implemented, 63
+  partial, 13 not implemented, and 98 not demonstrated,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
@@ -940,7 +945,7 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus bounded 132-claim coverage,
+  This is complete named-structure coverage plus bounded 195-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
@@ -1434,9 +1439,12 @@ by `papers/lineage_replay_boundary.json`.
   absence boundary until per-instance rows land:
   `libreevolve.problems.benchmarks.math_outcomes` now validates the paper's
   over-50-problem, more-than-five-branch, roughly 75% best-known rediscovery,
-  roughly 20% SOTA-improvement, and verification-claim source facts plus the
-  required future per-instance and aggregate fields. Per-problem/per-parameter
-  rows, mathematical branch labels, prior-best references,
+  and roughly 20% SOTA-improvement source facts plus the required future per-
+  instance and aggregate fields. It also corrects a prior local
+  misattribution: pinned Section 3.2 contains no blanket result-verification
+  sentence; its "In all these cases" clause instead states that starts were
+  simple or random. Per-problem/per-parameter rows, mathematical branch labels,
+  prior-best references,
   matched/improved/fell-behind status, construction/verifier artifacts, and
   recomputed aggregate percentages remain open.
 - Keep constructive-math starting-point claims scoped to the Section 3.2

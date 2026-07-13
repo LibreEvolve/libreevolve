@@ -56,6 +56,12 @@ def test_alphaevolve_math_outcome_boundary_preserves_section_3_2_claim():
     assert boundary["required_instance_fields"] == list(EXPECTED_REQUIRED_INSTANCE_FIELDS)
     assert boundary["required_aggregate_fields"] == list(EXPECTED_REQUIRED_AGGREGATE_FIELDS)
     assert set(boundary["missing_evidence"].values()) == {"not_recorded_locally"}
+    assert boundary["section_3_2_blanket_verification_claim_status"] == (
+        "not_present_in_pinned_source"
+    )
+    assert "verification_claim" not in boundary
+    assert "simple or random construction" in boundary["source_fidelity_note"]
+    assert "misattributed blanket verification sentence" in boundary["scope_boundary"]
     assert "does not claim local per-problem outcome rows" in boundary["scope_boundary"]
 
 

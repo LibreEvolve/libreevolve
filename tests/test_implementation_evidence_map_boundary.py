@@ -14,7 +14,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "verified_core_anchors_plus_132_bounded_claims_without_whole_paper_exhaustiveness"
+        == "verified_core_anchors_plus_195_bounded_claims_without_whole_paper_exhaustiveness"
     )
     assert validation.requirement_count == 6
     assert validation.reference_check_count == 81
@@ -26,6 +26,9 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     )
     assert boundary["matrix_result_claim_inventory_ref"] == (
         "papers/alphaevolve_matrix_result_claim_inventory_boundary.json"
+    )
+    assert boundary["math_result_claim_inventory_ref"] == (
+        "papers/alphaevolve_math_result_claim_inventory_boundary.json"
     )
     requirement_ids = {
         requirement["requirement_id"] for requirement in boundary["requirements"]
@@ -109,7 +112,7 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
     assert "Implementation evidence map boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | verified_core_anchors_plus_132_bounded_claims_without_whole_paper_exhaustiveness |"
+        "| boundary_status | verified_core_anchors_plus_195_bounded_claims_without_whole_paper_exhaustiveness |"
         in summary
     )
     assert "| requirement_count | 6 |" in summary

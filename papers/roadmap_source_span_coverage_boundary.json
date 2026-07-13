@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.roadmap_source_span_coverage_boundary.v2",
+  "schema": "libreevolve.roadmap_source_span_coverage_boundary.v3",
   "source_paper_id": "2506.13131",
-  "boundary_status": "named_structure_plus_132_bounded_claims_without_whole_paper_claim_walk",
+  "boundary_status": "named_structure_plus_195_bounded_claims_without_whole_paper_claim_walk",
   "claim_ready": false,
   "named_source_inventory_input": "papers/alphaevolve_source_inventory_boundary.json",
   "named_source_span_disposition_input": "papers/roadmap_source_span_disposition_boundary.json",
@@ -9,14 +9,14 @@
   "paper_status_row_count": 53,
   "paper_status_row_dispositioned_count": 1,
   "coverage_surface_count": 8,
-  "sidecar_ref_count": 38,
+  "sidecar_ref_count": 41,
   "active_todo_ref_count": 15,
   "coverage_surface_records": [
     {
       "surface_id": "main_text_section_walk",
       "source_surface": "AlphaEvolve main-text sections and requirement claims",
-      "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, and 41 Section 3.1/Table 2/Figure 4 matrix-result claims with implementation and TODO disposition",
-      "missing_readiness": "claim-level extraction for Sections 3.2-5, remaining exhibits, appendices, and source details with semantic implementation and TODO disposition",
+      "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, 41 Section 3.1/Table 2/Figure 4 matrix-result claims, and 63 Section 3.2/Figure 5 constructive-math claims with implementation and TODO disposition",
+      "missing_readiness": "claim-level extraction for Sections 3.3-5, remaining exhibits, appendices, and source details with semantic implementation and TODO disposition",
       "sidecar_refs": [
         {
           "path": "papers/roadmap_source_span_disposition_boundary.json",
@@ -37,6 +37,10 @@
         {
           "path": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "exists": true
         }
       ],
       "active_todo_refs": [
@@ -48,13 +52,13 @@
         }
       ],
       "validation_gate": "section-level source-span disposition matrix",
-      "readiness_status": "132_bounded_claims_complete_remaining_sections_3_2_to_5_and_exhibits_appendices_unmapped"
+      "readiness_status": "195_bounded_claims_complete_remaining_sections_3_3_to_5_and_exhibits_appendices_unmapped"
     },
     {
       "surface_id": "figure_exhibit_matrix",
       "source_surface": "AlphaEvolve figures and process/result exhibits",
-      "current_scope": "all 14 numbered figure spans are page- and anchor-verified; Figures 1-3 have claim-level system requirements, Figure 4 has claim-level matrix dispositions, and selected figures have specialized artifact boundaries",
-      "missing_readiness": "Figure 4 reproduction evidence plus claim-level exhibit decomposition and reproduction evidence for Figures 5-14",
+      "current_scope": "all 14 numbered figure spans are page- and anchor-verified; Figures 1-3 have claim-level system requirements, Figure 4 has claim-level matrix dispositions, Figure 5 has claim-level constructive-math dispositions, and selected figures have specialized artifact boundaries",
+      "missing_readiness": "Figure 4-5 reproduction evidence plus claim-level exhibit decomposition and reproduction evidence for Figures 6-14",
       "sidecar_refs": [
         {
           "path": "papers/alphaevolve_system_requirement_inventory_boundary.json",
@@ -87,6 +91,10 @@
         {
           "path": "papers/figure9_matrix_diff_artifacts.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
+          "exists": true
         }
       ],
       "active_todo_refs": [
@@ -104,7 +112,7 @@
         }
       ],
       "validation_gate": "figure/table artifact disposition matrix",
-      "readiness_status": "figures_1_3_claim_inventory_complete_without_remaining_figure_reproduction"
+      "readiness_status": "figures_1_5_bounded_claim_inventory_without_remaining_figure_reproduction"
     },
     {
       "surface_id": "table_capability_matrix",
@@ -193,7 +201,7 @@
     {
       "surface_id": "appendix_b_constructive_math",
       "source_surface": "Appendix B constructive-math families and result claims",
-      "current_scope": "Appendix B, all 13 named subsections, and Figures 10-14 are page- and anchor-verified alongside bounded math boundaries",
+      "current_scope": "Section 3.2 and Figure 5 have 63 claim-level dispositions; Appendix B, all 13 named subsections, and Figures 10-14 are page- and anchor-verified alongside bounded math boundaries",
       "missing_readiness": "Appendix B result claims linked to reproduction evidence, domain TODOs, and non-goal decisions",
       "sidecar_refs": [
         {
@@ -210,6 +218,10 @@
         },
         {
           "path": "papers/math_heuristic_stage_sequence_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
           "exists": true
         }
       ],
@@ -360,7 +372,9 @@
     "context_claim_count": 41,
     "context_claim_scope": "abstract_introduction_discussion_and_collaborator_context",
     "matrix_result_claim_count": 41,
-    "matrix_result_claim_scope": "section_3_1_table_2_figure_4_and_footnote_3"
+    "matrix_result_claim_scope": "section_3_1_table_2_figure_4_and_footnote_3",
+    "math_result_claim_count": 63,
+    "math_result_claim_scope": "section_3_2_and_figure_5"
   },
   "required_evidence_fields": [
     "coverage_surface_records",
@@ -376,7 +390,7 @@
     "ci_source_span_exhaustiveness_gate"
   ],
   "missing_evidence": {
-    "claim_level_requirement_inventory": "132_bounded_claims_remaining_sections_3_2_to_5_and_remaining_exhibits_appendices_not_recorded",
+    "claim_level_requirement_inventory": "195_bounded_claims_remaining_sections_3_3_to_5_and_remaining_exhibits_appendices_not_recorded",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -385,5 +399,5 @@
     "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
     "owner_review_signoff": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records a ROADMAP-level AlphaEvolve source-span coverage matrix for all 55 PDF-verified named main-text sections, figures, tables, Appendix A/B spans, and named application sections, plus 132 bounded claim-level records across Table 1, Section 2, the Abstract, Introduction, Discussion, collaborator context, Section 3.1, Table 2, Figure 4, and footnote 3, paper-status rows, and TODO/non-goal/phase proof. It does not claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
+  "claim_boundary": "This boundary records a ROADMAP-level AlphaEvolve source-span coverage matrix for all 55 PDF-verified named main-text sections, figures, tables, Appendix A/B spans, and named application sections, plus 195 bounded claim-level records across Table 1, Section 2, the Abstract, Introduction, Discussion, collaborator context, Section 3.1, Table 2, Figure 4, footnote 3, Section 3.2, and Figure 5, paper-status rows, and TODO/non-goal/phase proof. It does not claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, status-row to ROADMAP disposition map, missing/partial TODO proof, non-goal decision map, phase-priority map, CI source-span exhaustiveness gate, or owner review signoff."
 }

@@ -89,9 +89,17 @@ Important limits:
   claims from Section 3.1, every selected Table 2 rank row, Figure 4, and
   footnote 3. None is classified as locally implemented: 6 are partial, 3 are
   not implemented, and 32 are not demonstrated; all 41 gaps have live TODO
-  ownership. Together the three bounded inventories cover 132 claims: 19
-  locally implemented, 47 partial, 9 not implemented, and 57 not demonstrated,
-  leaving 113 gaps. They still exclude Sections 3.2-5, Figures 5-14, Table 3,
+  ownership.
+- `papers/alphaevolve_math_result_claim_inventory_boundary.json` audits 63
+  claims from Section 3.2 and Figure 5, including all nine displayed result
+  pairs, constructive-math search behavior, named outcomes, artifact claims,
+  and mathematician-collaboration provenance. Two are locally implemented, 16
+  are partial, 4 are not implemented, and 41 are not demonstrated; all 61 gaps
+  have live TODO ownership. It also corrects a false local attribution of a
+  blanket verification sentence that is absent from the pinned PDF.
+- Together the four bounded inventories cover 195 claims: 21 locally
+  implemented, 63 partial, 13 not implemented, and 98 not demonstrated,
+  leaving 174 gaps. They still exclude Sections 3.3-5, Figures 6-14, Table 3,
   detailed appendix claims, source-detail exhaustiveness, and independent
   result reproduction.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

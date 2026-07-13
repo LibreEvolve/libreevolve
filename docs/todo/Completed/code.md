@@ -19510,3 +19510,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused boundary, paper-manifest, source-inventory,
     implementation-map, and ROADMAP coverage tests validate counts, anchors,
     references, TODO ownership, drift rejection, and result/parity disclaimers.
+- [x] Add a PDF-anchored AlphaEvolve Section 3.2/Figure 5 claim inventory.
+  - Spec evidence: Section 3.2 and Figure 5 state constructive-math research
+    scope, aggregate outcome rates, nine displayed result pairs, heuristic-
+    search behavior, named mathematical outcomes, artifact availability, and
+    external-mathematician collaboration claims.
+  - Status: a new public boundary records 63 stable claim ids, exact PDF pages
+    and anchors, implementation status, ROADMAP phase/section, evidence links,
+    and live TODO ownership. It classifies 2 claims as locally implemented, 16
+    as partial, 4 as not implemented, and 41 as not demonstrated; all 61 gaps
+    have active owners. It also verifies that a previously attributed blanket
+    verification sentence is absent from the pinned PDF and corrects the math
+    outcome boundary to preserve the actual simple/random-start sentence.
+  - Remaining code gap: Figure 5 and Appendix B construction artifacts,
+    verifier evidence, aggregate outcome reproduction, heuristic handoff and
+    staged-search execution, deployment/tailoring measurements, and result
+    reproduction remain open.
+  - Verification: focused inventory, math-outcome, implementation-map, ROADMAP
+    coverage, and paper-manifest tests validate anchors, status counts,
+    references, TODO ownership, source fidelity, drift rejection, and result/
+    parity disclaimers.

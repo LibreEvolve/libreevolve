@@ -147,6 +147,7 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
         "sidecars": (
             "libreevolve/problems/benchmarks/alphaevolve_appendix_b.json",
             "papers/math_outcome_boundary.json",
+            "papers/alphaevolve_math_result_claim_inventory_boundary.json",
         ),
         "todos": _AUDIT_TODOS,
     },

@@ -26,13 +26,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 41
     exact-page Section 3.1, Table 2, Figure 4, and footnote 3 claims: none
     locally implemented, 6 partial, 3 not implemented, and 32 not demonstrated,
-    with live ownership for all 41 gaps. Combined coverage is 132 claims: 19
-    implemented, 47 partial, 9 not implemented, and 57 not demonstrated. The
+    with live ownership for all 41 gaps. The
+    `papers/alphaevolve_math_result_claim_inventory_boundary.json` adds 63
+    exact-page Section 3.2 and Figure 5 claims: 2 locally implemented, 16
+    partial, 4 not implemented, and 41 not demonstrated, with live ownership
+    for all 61 gaps and an explicit correction of a false local verification-
+    sentence attribution. Combined coverage is 195 claims: 21 implemented, 63
+    partial, 13 not implemented, and 98 not demonstrated. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 132-claim inventory deliberately excludes
-    Sections 3.2-5 claims, Figures 5-14, Table 3, detailed appendices,
+  - Current gap: the combined 195-claim inventory deliberately excludes
+    Sections 3.3-5 claims, Figures 6-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.
@@ -3376,6 +3381,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     documentation that separates reproduced paper exhibits from broader
     Appendix B family coverage.
 
+- [ ] Track Figure 5-to-Appendix B result mapping and precision evidence.
+  - Paper evidence: Figure 5 gives nine compact before/after displays. Its
+    `0.8892`, `0.380926`, `1.1446`, `12.889`, and `2.6358` strings differ in
+    precision or value from the corresponding Appendix B.2, B.5, B.6, B.8,
+    and B.12 records (`0.88922`, `0.380927`, `1.14465`, `12.889266112`, and
+    `2.635`).
+  - Current evidence: the Appendix B registry preserves family/result metadata
+    and the B.12-specific mismatch, and the Section 3.2/Figure 5 inventory
+    preserves every main-text display string. It does not provide a complete
+    panel-to-result map, extraction evidence, normalized values, or a policy
+    explaining every precision/value difference.
+  - Required result: publish source-located Figure 5 panel rows linked to
+    Appendix B result IDs, extraction-certificate hashes, raw/displayed and
+    normalized values, rounding/truncation/revision classifications, canonical
+    reporting policy, mismatch certificates, and verifier/companion-artifact
+    links. Keep unresolved differences visible rather than normalizing them
+    silently.
+
 - [ ] Track Figure 5 versus Appendix B.12 sum-of-radii precision evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 5 displays the
     sum-of-radii improvement as `2.6340 -> 2.6358`. Appendix B.12 and
@@ -3830,8 +3853,11 @@ directory and using the AlphaEvolve paper as the primary specification.
     aggregate-outcome absence boundary in
     `libreevolve.problems.benchmarks.math_outcomes`. It preserves the
     over-50-problem, more-than-five-branch, roughly 75% best-known
-    rediscovery, roughly 20% SOTA-improvement, and verification-claim source
-    facts plus the required future per-instance and aggregate fields. It does
+    rediscovery, and roughly 20% SOTA-improvement source facts plus the required
+    future per-instance and aggregate fields. It also records the source-
+    fidelity correction that pinned Section 3.2 has no blanket result-
+    verification sentence; its "In all these cases" clause describes
+    simple/random starts. It does
     not yet provide the per-problem/per-parameter outcome ledger whose branch
     labels and matched/improved/failed counts reproduce the aggregate claims.
     The committed `papers/math_outcome_boundary.json` sidecar now emits this
@@ -3843,6 +3869,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     AlphaEvolve/LibreEvolve result status, construction/verifier links, and
     validated aggregate percentages before claiming Section 3.2-style
     mathematical breadth or SOTA-improvement rates.
+
+- [ ] Track Section 3.2 deployment-speed, tailoring, and strategy-discovery
+      evidence.
+  - Paper evidence: Section 3.2 says the heuristic-program approach was rapidly
+    deployable across diverse construction problems and conjectures, often
+    needed less initial expert tailoring than bespoke approaches, autonomously
+    found effective patterns by identifying subtle structures, and enabled
+    efficient large-scale exploration.
+  - Current evidence: paper-facing boundaries describe reusable local search,
+    formulation metadata, aggregate outcome gaps, and missing handoff/stage
+    artifacts. No paper-facing run set measures deployment speed, setup effort,
+    expert interventions, objective-evaluation cost, autonomous strategy
+    discovery, subtle-structure attribution, or comparison with bespoke
+    methods.
+  - Required result: add source-linked, expert-reviewed deployment records for
+    multiple constructive-math families, including setup/tailoring effort,
+    evaluator speed and budget, intervention logs, comparable bespoke
+    baselines, accepted-program/strategy lineage, result deltas, reviewer
+    signoff, and aggregate analysis before repeating the paper's versatility,
+    speed, reduced-tailoring, or autonomous-discovery claims for LibreEvolve.
 
 - [ ] Track simple/random starting-construction evidence for constructive math.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.2 says that in

@@ -12,11 +12,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v5"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v6"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_anchors_plus_132_bounded_claims_without_whole_paper_exhaustiveness"
+    "verified_core_anchors_plus_195_bounded_claims_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
 EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
@@ -24,6 +24,9 @@ EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
 )
 EXPECTED_MATRIX_RESULT_CLAIM_INVENTORY_REF = (
     "papers/alphaevolve_matrix_result_claim_inventory_boundary.json"
+)
+EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF = (
+    "papers/alphaevolve_math_result_claim_inventory_boundary.json"
 )
 EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
@@ -37,13 +40,16 @@ EXPECTED_RECORDED_EVIDENCE = {
     "bounded_matrix_result_claim_inventory": (
         "41_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_claims"
     ),
+    "bounded_math_result_claim_inventory": (
+        "63_pdf_anchored_section_3_2_and_figure_5_claims"
+    ),
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "sections_3_2_to_5_remaining_figures_tables_and_appendices_not_fully_recorded",
-    "claim_level_source_span_coverage_matrix": "132_bounded_claims_remaining_sections_3_2_to_5_and_remaining_exhibits_appendices_not_recorded",
+    "exhaustive_requirement_inventory": "sections_3_3_to_5_remaining_figures_tables_and_appendices_not_fully_recorded",
+    "claim_level_source_span_coverage_matrix": "195_bounded_claims_remaining_sections_3_3_to_5_and_remaining_exhibits_appendices_not_recorded",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -323,6 +329,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "source_inventory_ref": EXPECTED_SOURCE_INVENTORY_REF,
         "context_claim_inventory_ref": EXPECTED_CONTEXT_CLAIM_INVENTORY_REF,
         "matrix_result_claim_inventory_ref": EXPECTED_MATRIX_RESULT_CLAIM_INVENTORY_REF,
+        "math_result_claim_inventory_ref": EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF,
         "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -336,7 +343,8 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "Table 1/Section 2 inventory, and bounded 41-claim Abstract, "
             "Introduction, Discussion, and collaborator-context inventory, plus "
             "the bounded 41-claim Section 3.1, Table 2, Figure 4, and footnote 3 "
-            "matrix-result inventory. It "
+            "matrix-result inventory, and the bounded 63-claim Section 3.2 and "
+            "Figure 5 constructive-math inventory. It "
             "does not claim a whole-paper "
             "exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, "
             "paper-index phrase evidence-link sufficiency, status-cell "
@@ -376,6 +384,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_matrix_result_claim_inventory_ref", f"matrix_result_claim_inventory_ref must be {EXPECTED_MATRIX_RESULT_CLAIM_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_MATRIX_RESULT_CLAIM_INVENTORY_REF).is_file():
         issues.append(_issue("missing_matrix_result_claim_inventory_ref", f"{EXPECTED_MATRIX_RESULT_CLAIM_INVENTORY_REF} is missing"))
+    if data.get("math_result_claim_inventory_ref") != EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF:
+        issues.append(_issue("invalid_math_result_claim_inventory_ref", f"math_result_claim_inventory_ref must be {EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_math_result_claim_inventory_ref", f"{EXPECTED_MATH_RESULT_CLAIM_INVENTORY_REF} is missing"))
     if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
         issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():

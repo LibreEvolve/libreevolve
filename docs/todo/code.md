@@ -60,9 +60,15 @@ sidecars, tests, and active TODOs.
     `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 41
     Section 3.1, Table 2, Figure 4, and footnote 3 claims. It classifies 6 as
     partial, 3 as not implemented, and 32 as not demonstrated, and resolves all
-    41 gaps to live domain TODO titles. The three bounded inventories therefore
-    cover 132 claims: 19 locally implemented, 47 partial, 9 not implemented,
-    and 57 not demonstrated. This is not whole-paper completeness. Meanwhile,
+    41 gaps to live domain TODO titles. The committed
+    `papers/alphaevolve_math_result_claim_inventory_boundary.json` adds 63
+    Section 3.2 and Figure 5 claims, including every displayed result pair. It
+    classifies 2 as locally implemented, 16 partial, 4 not implemented, and 41
+    not demonstrated, resolves all 61 gaps to live TODO titles, and verifies a
+    source-fidelity correction for a blanket verification sentence absent from
+    the pinned PDF. The four bounded inventories therefore cover 195 claims:
+    21 locally implemented, 63 partial, 13 not implemented, and 98 not
+    demonstrated. This is not whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -79,10 +85,11 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 132 bounded system, context,
-    and matrix-result claims are now machine-readable and PDF-verified, but there
+  - Current gap: the named source structure and 195 bounded system, context,
+    matrix-result, and constructive-math claims are now machine-readable and
+    PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Sections 3.2-5,
+    equation, footnote, citation, or claim level across Sections 3.3-5,
     remaining exhibits, Table 3, appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
@@ -3493,6 +3500,26 @@ sidecars, tests, and active TODOs.
     verifier/certificate links, and docs that distinguish exhibit
     reproduction from broader Appendix B family coverage.
 
+- [ ] Add Figure 5-to-Appendix B result mapping and precision reconciliation.
+  - Spec evidence: AlphaEvolve Figure 5 displays nine compact before/after
+    values. Several use different precision from the corresponding Appendix B
+    text: Figure 5 shows `0.8892` where B.2 records `0.88922`, `0.380926`
+    where B.5 records `0.380927`, `1.1446` where B.6 records `1.14465`,
+    `12.889` where B.8 records `12.889266112`, and `2.6358` where B.12 records
+    `2.635`.
+  - Current evidence: the Appendix B registry preserves family-level result
+    metadata and a dedicated B.12 precision boundary, while the bounded
+    Section 3.2/Figure 5 claim inventory preserves all nine Figure 5 display
+    strings. There is no complete panel-to-result map or cross-source numeric
+    reconciliation for the other displays, and the B.5 values differ rather
+    than merely using fewer displayed digits.
+  - Required result: add stable Figure 5 panel IDs, links to all corresponding
+    Appendix B result IDs, source locators, extraction certificates, raw and
+    normalized values, explicit rounding/truncation or revision policies,
+    mismatch classifications, selected canonical report values, and verifier
+    links. Reject silent conflation of Figure 5 displays with Appendix B
+    constants.
+
 - [ ] Add Figure 5 versus Appendix B.12 sum-of-radii precision provenance.
   - Spec evidence: AlphaEvolve Figure 5's sum-of-radii panel displays
     `2.6340 -> 2.6358`, while Appendix B.12 text and Figure 14 describe the
@@ -3809,8 +3836,11 @@ sidecars, tests, and active TODOs.
   - Current evidence: `libreevolve.problems.benchmarks.math_outcomes` now
     records a Section 3.2 absence boundary with source facts for over 50
     mathematical problems, more than five branches, roughly 75% best-known
-    rediscovery, roughly 20% SOTA improvement, and the paper's verification
-    claim. It validates required future per-instance and aggregate fields while
+    rediscovery, and roughly 20% SOTA improvement. The boundary now explicitly
+    records that pinned Section 3.2 contains no blanket result-verification
+    sentence and corrects the earlier local misattribution of the source's "In
+    all these cases" clause, which actually describes simple/random starts. It
+    validates required future per-instance and aggregate fields while
     keeping per-problem rows, branch taxonomy, prior-best references,
     construction/verifier artifacts, aggregate counts, and percentage
     recomputation `not_recorded_locally`. The committed
@@ -3823,6 +3853,27 @@ sidecars, tests, and active TODOs.
     construction links, matched/improved/failed status, and validated aggregate
     counts/percentages before claiming AlphaEvolve-style breadth across dozens
     of mathematical problems.
+
+- [ ] Add constructive-math deployment, tailoring, and strategy-discovery
+      evidence.
+  - Spec evidence: AlphaEvolve Section 3.2 attributes an advantage to rapid
+    deployment across diverse mathematical constructions and conjectures,
+    reduced initial problem-specific expert tailoring, autonomous discovery of
+    effective search patterns through subtle problem structure, and efficient
+    large-scale exploration.
+  - Current evidence: LibreEvolve has a reusable program-evolution loop,
+    configurable evaluators, optional problem-formulation metadata, and
+    absence boundaries for aggregate math outcomes, heuristic handoff, and
+    heuristic stage sequences. It has no executed cross-problem deployment
+    study, tailoring-effort baseline, strategy-discovery trace, subtle-
+    structure evidence, or expert-reviewed comparison against bespoke search.
+  - Required result: emit benchmark-family deployment records with setup time,
+    problem-specific code/config/prompt changes, evaluator cost, objective
+    speed, expert interventions, equal-budget bespoke baselines, discovered
+    strategy descriptions linked to accepted program diffs and result gains,
+    independent mathematical review, and aggregate breadth/efficiency reports
+    before claiming Section 3.2 versatility, speed, reduced tailoring, or
+    autonomous strategy discovery.
 
 - [ ] Add simple/random starting-construction provenance for constructive-math
       benchmarks.

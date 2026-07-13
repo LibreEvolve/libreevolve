@@ -1,12 +1,13 @@
 {
-  "schema": "libreevolve.alphaevolve_implementation_evidence_map_boundary.v5",
+  "schema": "libreevolve.alphaevolve_implementation_evidence_map_boundary.v6",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve alignment needs traceable evidence from paper requirements to implementation modules, tests, runtime artifacts, sidecars, active TODOs, and every paper-index implementation status claim.",
   "source_inventory_ref": "papers/alphaevolve_source_inventory_boundary.json",
   "context_claim_inventory_ref": "papers/alphaevolve_context_claim_inventory_boundary.json",
   "matrix_result_claim_inventory_ref": "papers/alphaevolve_matrix_result_claim_inventory_boundary.json",
+  "math_result_claim_inventory_ref": "papers/alphaevolve_math_result_claim_inventory_boundary.json",
   "system_requirement_inventory_ref": "papers/alphaevolve_system_requirement_inventory_boundary.json",
-  "boundary_status": "verified_core_anchors_plus_132_bounded_claims_without_whole_paper_exhaustiveness",
+  "boundary_status": "verified_core_anchors_plus_195_bounded_claims_without_whole_paper_exhaustiveness",
   "claim_ready": false,
   "requirements": [
     {
@@ -245,11 +246,12 @@
     "bounded_system_requirement_inventory": "50_pdf_anchored_table_1_and_section_2_requirements",
     "bounded_context_claim_inventory": "41_pdf_anchored_abstract_introduction_discussion_and_collaborator_claims",
     "bounded_matrix_result_claim_inventory": "41_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_claims",
+    "bounded_math_result_claim_inventory": "63_pdf_anchored_section_3_2_and_figure_5_claims",
     "reference_existence_checks": "module_test_sidecar_todo_paths_and_todo_phrases"
   },
   "missing_evidence": {
-    "exhaustive_requirement_inventory": "sections_3_2_to_5_remaining_figures_tables_and_appendices_not_fully_recorded",
-    "claim_level_source_span_coverage_matrix": "132_bounded_claims_remaining_sections_3_2_to_5_and_remaining_exhibits_appendices_not_recorded",
+    "exhaustive_requirement_inventory": "sections_3_3_to_5_remaining_figures_tables_and_appendices_not_fully_recorded",
+    "claim_level_source_span_coverage_matrix": "195_bounded_claims_remaining_sections_3_3_to_5_and_remaining_exhibits_appendices_not_recorded",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
     "absence_sentence_freshness_matrix": "not_recorded_locally",
@@ -258,5 +260,5 @@
     "generated_code_audit_report": "not_recorded_locally",
     "ci_exhaustiveness_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records corrected core AlphaEvolve requirement anchors with verified module, test, sidecar, and TODO links and connects them to the PDF-verified named source inventory, bounded 50-requirement Table 1/Section 2 inventory, and bounded 41-claim Abstract, Introduction, Discussion, and collaborator-context inventory, plus the bounded 41-claim Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result inventory. It does not claim a whole-paper exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, paper-index phrase evidence-link sufficiency, status-cell semantic verifier, implemented benchmark bullet semantic verifier, absence-sentence freshness matrix, module coverage detector, test/runtime-artifact coverage detector, generated code-audit report, CI exhaustiveness gate, or proof that every AlphaEvolve-facing implementation claim has been classified."
+  "claim_boundary": "This boundary records corrected core AlphaEvolve requirement anchors with verified module, test, sidecar, and TODO links and connects them to the PDF-verified named source inventory, bounded 50-requirement Table 1/Section 2 inventory, and bounded 41-claim Abstract, Introduction, Discussion, and collaborator-context inventory, plus the bounded 41-claim Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result inventory, and the bounded 63-claim Section 3.2 and Figure 5 constructive-math inventory. It does not claim a whole-paper exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, paper-index phrase evidence-link sufficiency, status-cell semantic verifier, implemented benchmark bullet semantic verifier, absence-sentence freshness matrix, module coverage detector, test/runtime-artifact coverage detector, generated code-audit report, CI exhaustiveness gate, or proof that every AlphaEvolve-facing implementation claim has been classified."
 }

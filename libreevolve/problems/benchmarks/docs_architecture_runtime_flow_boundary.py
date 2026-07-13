@@ -92,7 +92,7 @@ EXPECTED_SECTIONS = (
             "runs plugin start hooks",
             "calls the LLM ensemble",
             "archives valid programs",
-            "This is a local, batch-scoped asynchronous pipeline",
+            "This is a bounded local asynchronous pipeline",
         ),
         "source_paths": (
             "libreevolve/core/loop.py",

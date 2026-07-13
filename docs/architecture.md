@@ -3,7 +3,7 @@
 LibreEvolve is a Python research framework for LLM-guided program mutation. It
 is AlphaEvolve-inspired, but intentionally smaller: the current runtime is
 local, Python-only, and filesystem-backed, with opt-in candidate-level asyncio
-evaluation inside a proposal batch.
+sampling/evaluation and a bounded cross-generation evaluation lookahead.
 
 ## Top-level flow
 
@@ -246,8 +246,8 @@ the loop:
 14. rewards the selected backend with non-negative fitness improvement
 15. records prompt reward for the selected prompt program
 
-After the final proposal, the loop migrates elites at the configured interval,
-runs generation-end hooks, and records one completed generation. With
+After the final proposal, the loop normally migrates elites at the configured
+interval, runs generation-end hooks, and records one completed generation. With
 `async_llm_sampling: true`, named local sampler tasks own distinct ensembles;
 provider calls may finish out of order, while call persistence, mutation
 application, evaluation dispatch, and shared-state updates follow proposal
@@ -257,11 +257,27 @@ never mutated concurrently with that worker's next generation call. With
 out of order; feedback, plugin scoring, prompt rewards, history, and archive
 admission still commit in proposal order. Exact duplicate evaluations already
 in flight are coalesced without consuming a second evaluation budget unit.
+When both async queues are enabled and `async_generation_window > 1`, completed
+proposal batches remain pending for a bounded number of generations. Later
+parents, inspirations, prompt programs, prompts, prompt rewards, and sampler
+rewards use intentionally stale pre-drain search state while earlier
+evaluations continue. The grouped drain then
+commits each generation's candidates before its migration and generation-end
+hooks, preserving global submission and lifecycle order. Consequently, hook
+order for a two-generation window is `start(1), start(2), end(1), end(2)`.
+Process-local monotonic task intervals in both controller reports are merged
+per generation before exact intersections provide observed overlap evidence;
+an idle gap inside a broad generation envelope is not overlap. Finite
+cumulative evaluator limits other than `max_evaluations` retain the ordinary
+per-generation drain because pending detailed accounting cannot be reserved
+exactly. If a worker failure aborts a grouped drain, later completed work is
+still resolved into evaluator budget/cache evidence before the first error is
+re-raised, but no post-error candidates are admitted.
 
-This is a local, batch-scoped asynchronous pipeline, not full asynchronous or
-distributed AlphaEvolve parity. Critique and feedback remain serial, proposals
-do not cross generation boundaries, and queued/running state is not checkpointed
-or resumed. The queue controllers and report validators live in
+This is a bounded local asynchronous pipeline, not full distributed
+AlphaEvolve parity. Critique and feedback remain serial, later-generation
+sampling uses stale pre-drain state rather than a dependency-aware scheduler,
+and queued/running state is not checkpointed or resumed. The queue controllers and report validators live in
 [`libreevolve/core/async_sampler.py`](../libreevolve/core/async_sampler.py) and
 [`libreevolve/core/async_evaluator.py`](../libreevolve/core/async_evaluator.py);
 `loop.py` owns prompt-batch preparation, ordered merge, cache coalescing, budget

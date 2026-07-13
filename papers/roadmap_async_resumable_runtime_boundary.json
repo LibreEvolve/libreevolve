@@ -1,333 +1,321 @@
 {
-  "active_todo_ref_count": 18,
+  "schema": "libreevolve.roadmap_async_resumable_runtime_boundary.v1",
   "boundary_status": "bounded_async_resumable_runtime_matrix_without_full_replay_readiness",
-  "claim_boundary": "This boundary records a ROADMAP-level async/resumable-runtime criteria map for topology, parallel evaluation, controller pending work, archive-event replay, RNG/lineage replay, provider and plugin nondeterminism, budget resume, environment replay, and resumed-trace proof. It does not claim an async-state inventory, replay/resume acceptance checklist, controller queue checkpoints, LLM sampler task state, evaluator pending state, deterministic async merge/admission replay, ordered migration restore engine, provider-output replay, plugin RNG replay, async budget accounting, external environment replay, end-to-end resumed trace proof, or owner review signoff.",
   "claim_ready": false,
+  "roadmap_heading": "### 6. Async and resumable runtime",
+  "roadmap_heading_present": true,
   "criterion_count": 9,
+  "active_todo_ref_count": 18,
+  "sidecar_ref_count": 16,
   "criterion_records": [
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "distributed_pipeline_topology",
+      "runtime_surface": "controller, LLM sampler, evaluation-node topology",
+      "current_scope": "local sampler and candidate-evaluation asyncio queues with named workers, deterministic merge/admission, bounded stale-search-state lookahead, and observed cross-generation overlap",
+      "missing_readiness": "distributed evaluators, full wait telemetry and dependency scheduling, and pending-work checkpoints",
+      "roadmap_required_phrase": "runtime.history.distributed_pipeline_topology_report",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/distributed_pipeline_topology_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "Track distributed-pipeline topology evidence.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/roadmap.md",
           "required_phrase": "controller queues, LLM sampler tasks, evaluator workers",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "distributed_pipeline_topology",
-      "current_scope": "local sampler and candidate-evaluation asyncio queues with named workers and deterministic merge/admission",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/distributed_pipeline_topology_boundary.json"
-        }
-      ],
-      "missing_readiness": "distributed evaluators, full wait telemetry, cross-generation overlap, and pending-work checkpoints",
-      "readiness_status": "local_sampler_evaluator_async_topology_partial",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "runtime.history.distributed_pipeline_topology_report",
-      "runtime_surface": "controller, LLM sampler, evaluation-node topology",
-      "validation_gate": "real async topology artifacts and queue/backpressure validation"
+      "active_todo_ref_count": 2,
+      "validation_gate": "real async topology artifacts and queue/backpressure validation",
+      "readiness_status": "local_cross_generation_async_topology_partial"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "parallel_evaluation_throughput",
+      "runtime_surface": "local stage-sample workers and candidate-evaluation workers",
+      "current_scope": "configured-stage sample fan-out plus bounded local async sampling, candidate evaluation, and timing-proven cross-generation overlap",
+      "missing_readiness": "compute-hour budgets, distributed nodes, mutation-depth/cadence evidence, and pending-work resume",
+      "roadmap_required_phrase": "runtime.history.parallel_evaluation_readiness_report",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/parallel_evaluation_readiness_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "Parallelized evaluation and asynchronous throughput.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Add unified expensive-evaluation compute budgets and resumable state.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "parallel_evaluation_throughput",
-      "current_scope": "configured-stage sample fan-out plus bounded local async sampling and candidate evaluation",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/parallel_evaluation_readiness_boundary.json"
-        }
-      ],
-      "missing_readiness": "compute-hour budgets, distributed nodes, cross-generation overlap, and pending-work resume",
-      "readiness_status": "local_sampler_evaluator_async_partial",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "runtime.history.parallel_evaluation_readiness_report",
-      "runtime_surface": "local stage-sample workers and candidate-evaluation workers",
-      "validation_gate": "paper-visible worker fan-out, queue state, and cadence reports"
+      "active_todo_ref_count": 2,
+      "validation_gate": "paper-visible worker fan-out, queue state, and cadence reports",
+      "readiness_status": "local_cross_generation_async_partial"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "controller_pending_work_resume",
+      "runtime_surface": "controller queues and pending work",
+      "current_scope": "terminal drained synchronous or local sampler/evaluator-async controller snapshot",
+      "missing_readiness": "queued/running proposals, in-flight LLM calls, evaluator state, and mid-generation resume",
+      "roadmap_required_phrase": "controller and pending-evaluation checkpoint state",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/controller_pending_work_resume_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Add async/pending-work controller resume state for archive restores.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "Model migration replay and async/pending-work controller resume",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "controller_pending_work_resume",
-      "current_scope": "terminal drained synchronous or local sampler/evaluator-async controller snapshot",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/controller_pending_work_resume_boundary.json"
-        }
-      ],
-      "missing_readiness": "queued/running proposals, in-flight LLM calls, evaluator state, and mid-generation resume",
-      "readiness_status": "terminal_drained_snapshot_only",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "controller and pending-evaluation checkpoint state",
-      "runtime_surface": "controller queues and pending work",
-      "validation_gate": "controller queue and pending-evaluation checkpoint restore"
+      "active_todo_ref_count": 2,
+      "validation_gate": "controller queue and pending-evaluation checkpoint restore",
+      "readiness_status": "terminal_drained_snapshot_only"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "archive_event_replay",
+      "runtime_surface": "MAP-Elites archive and island migration events",
+      "current_scope": "cursor/full archive snapshot restore plus audit-only migration reconciliation",
+      "missing_readiness": "ordered archive_events replay as a restore engine",
+      "roadmap_required_phrase": "archive_event_replay_boundary.json",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/archive_event_replay_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Replay archive event logs as an ordered migration restore engine.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "apply or explicitly model migration-event replay",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "archive_event_replay",
-      "current_scope": "cursor/full archive snapshot restore plus audit-only migration reconciliation",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/archive_event_replay_boundary.json"
-        }
-      ],
-      "missing_readiness": "ordered archive_events replay as a restore engine",
-      "readiness_status": "snapshot_restore_with_audit_only_events",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "archive_event_replay_boundary.json",
-      "runtime_surface": "MAP-Elites archive and island migration events",
-      "validation_gate": "ordered migration replay or explicit modeled non-replay branch"
+      "active_todo_ref_count": 2,
+      "validation_gate": "ordered migration replay or explicit modeled non-replay branch",
+      "readiness_status": "snapshot_restore_with_audit_only_events"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "rng_lineage_replay",
+      "runtime_surface": "framework RNG, deterministic ids, and lineage policy",
+      "current_scope": "validated RNG snapshot and deterministic lineage-id boundary",
+      "missing_readiness": "end-to-end parent/inspiration/prompt/island/MAP-Elites replay proof",
+      "roadmap_required_phrase": "framework RNG snapshot can already be restored",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/runtime_rng_replay_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/lineage_replay_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Compose framework RNG restore with resumed-trace replay.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Define lineage replay contract for direct UUIDs and provider boundaries.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "rng_lineage_replay",
-      "current_scope": "validated RNG snapshot and deterministic lineage-id boundary",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/runtime_rng_replay_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/lineage_replay_boundary.json"
-        }
-      ],
-      "missing_readiness": "end-to-end parent/inspiration/prompt/island/MAP-Elites replay proof",
-      "readiness_status": "component_restore_without_resumed_trace",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "framework RNG snapshot can already be restored",
-      "runtime_surface": "framework RNG, deterministic ids, and lineage policy",
-      "validation_gate": "end-to-end resumed sampling and lineage trace"
+      "active_todo_ref_count": 2,
+      "validation_gate": "end-to-end resumed sampling and lineage trace",
+      "readiness_status": "component_restore_without_resumed_trace"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "provider_plugin_nondeterminism",
+      "runtime_surface": "provider outputs, plugin RNG/state, and direct custom plugins",
+      "current_scope": "explicit provider-output non-replay and direct-plugin provenance boundaries",
+      "missing_readiness": "provider output replay/capture, plugin-owned RNG policy, and direct constructor-value schema policy",
+      "roadmap_required_phrase": "provider/plugin output replay",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/provider_diagnostics_replay_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/roadmap_plugin_extensibility_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/lineage_replay_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "Add remaining full-run replay, lineage, provider, and custom-plugin",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "provider-output replay",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "provider_plugin_nondeterminism",
-      "current_scope": "explicit provider-output non-replay and direct-plugin provenance boundaries",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/provider_diagnostics_replay_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/roadmap_plugin_extensibility_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/lineage_replay_boundary.json"
-        }
-      ],
-      "missing_readiness": "provider output replay/capture, plugin-owned RNG policy, and direct constructor-value schema policy",
-      "readiness_status": "nondeterminism_boundaries_without_replay",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "provider/plugin output replay",
-      "runtime_surface": "provider outputs, plugin RNG/state, and direct custom plugins",
-      "validation_gate": "provider-output replay or explicit resumed-trace non-replay proof"
+      "active_todo_ref_count": 2,
+      "validation_gate": "provider-output replay or explicit resumed-trace non-replay proof",
+      "readiness_status": "nondeterminism_boundaries_without_replay"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "budget_resume_accounting",
+      "runtime_surface": "runtime, evaluator, LLM, controller, and worker budgets",
+      "current_scope": "terminal cooperative counters and ordered local async sampler/evaluator accounting",
+      "missing_readiness": "async queue budgets, worker/accelerator leases, pending-work budget restore, and equal-budget runs",
+      "roadmap_required_phrase": "synchronous controller-budget event replay",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/llm_budget_policy_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "Add accelerator and worker budget stops plus budget resume state.",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "Connect LLM budget reports to async/pending-work resume and",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "budget_resume_accounting",
-      "current_scope": "terminal cooperative counters and ordered local async sampler/evaluator accounting",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/llm_budget_policy_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/expensive_evaluation_budget_boundary.json"
-        }
-      ],
-      "missing_readiness": "async queue budgets, worker/accelerator leases, pending-work budget restore, and equal-budget runs",
-      "readiness_status": "terminal_budget_replay_without_worker_lease_state",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "synchronous controller-budget event replay",
-      "runtime_surface": "runtime, evaluator, LLM, controller, and worker budgets",
-      "validation_gate": "async worker budget accounting and pending-work budget resume"
+      "active_todo_ref_count": 2,
+      "validation_gate": "async worker budget accounting and pending-work budget resume",
+      "readiness_status": "terminal_budget_replay_without_worker_lease_state"
     },
     {
-      "active_todo_ref_count": 2,
+      "criterion_id": "environment_replay",
+      "runtime_surface": "validator, evaluator, worker, and external environment state",
+      "current_scope": "local subprocess and artifact provenance boundaries",
+      "missing_readiness": "external environment snapshots, accelerator/worker lease replay, and long-evaluation checkpoint restore",
+      "roadmap_required_phrase": "compute-hour accounting",
+      "roadmap_phrase_present": true,
+      "current_sidecar_refs": [
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true
+        },
+        {
+          "path": "papers/release_artifact_reproducibility_boundary.json",
+          "exists": true
+        }
+      ],
       "active_todo_refs": [
         {
-          "exists": true,
           "path": "docs/todo/code.md",
           "required_phrase": "account for per-candidate compute-hours",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         },
         {
-          "exists": true,
           "path": "docs/todo/papers.md",
           "required_phrase": "validator subprocess boundaries",
-          "required_phrase_present": true
+          "required_phrase_present": true,
+          "exists": true
         }
       ],
-      "criterion_id": "environment_replay",
-      "current_scope": "local subprocess and artifact provenance boundaries",
-      "current_sidecar_refs": [
-        {
-          "exists": true,
-          "path": "papers/expensive_evaluation_budget_boundary.json"
-        },
-        {
-          "exists": true,
-          "path": "papers/release_artifact_reproducibility_boundary.json"
-        }
-      ],
-      "missing_readiness": "external environment snapshots, accelerator/worker lease replay, and long-evaluation checkpoint restore",
-      "readiness_status": "local_environment_provenance_without_replay",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "compute-hour accounting",
-      "runtime_surface": "validator, evaluator, worker, and external environment state",
-      "validation_gate": "environment snapshot and worker/accelerator replay policy"
+      "active_todo_ref_count": 2,
+      "validation_gate": "environment snapshot and worker/accelerator replay policy",
+      "readiness_status": "local_environment_provenance_without_replay"
     },
     {
-      "active_todo_ref_count": 2,
-      "active_todo_refs": [
-        {
-          "exists": true,
-          "path": "docs/todo/code.md",
-          "required_phrase": "no end-to-end resumed trace proving parent/inspiration",
-          "required_phrase_present": true
-        },
-        {
-          "exists": true,
-          "path": "docs/todo/papers.md",
-          "required_phrase": "resumed-trace proof marked unavailable",
-          "required_phrase_present": true
-        }
-      ],
       "criterion_id": "resumed_trace_proof",
+      "runtime_surface": "composed full-runtime resume bundle",
       "current_scope": "validated compatible bundle with full_replay_ready false",
+      "missing_readiness": "end-to-end resumed trace proving prompt/archive/controller/provider continuity",
+      "roadmap_required_phrase": "resumed-trace proof",
+      "roadmap_phrase_present": true,
       "current_sidecar_refs": [
         {
-          "exists": true,
-          "path": "papers/controller_pending_work_resume_boundary.json"
+          "path": "papers/controller_pending_work_resume_boundary.json",
+          "exists": true
         },
         {
-          "exists": true,
-          "path": "papers/runtime_rng_replay_boundary.json"
+          "path": "papers/runtime_rng_replay_boundary.json",
+          "exists": true
         },
         {
-          "exists": true,
-          "path": "papers/lineage_replay_boundary.json"
+          "path": "papers/lineage_replay_boundary.json",
+          "exists": true
         }
       ],
-      "missing_readiness": "end-to-end resumed trace proving prompt/archive/controller/provider continuity",
-      "readiness_status": "compatible_bundle_without_full_replay",
-      "roadmap_phrase_present": true,
-      "roadmap_required_phrase": "resumed-trace proof",
-      "runtime_surface": "composed full-runtime resume bundle",
-      "validation_gate": "direct and CLI resumed trace proof across all compatible surfaces"
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "no end-to-end resumed trace proving parent/inspiration",
+          "required_phrase_present": true,
+          "exists": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "resumed-trace proof marked unavailable",
+          "required_phrase_present": true,
+          "exists": true
+        }
+      ],
+      "active_todo_ref_count": 2,
+      "validation_gate": "direct and CLI resumed trace proof across all compatible surfaces",
+      "readiness_status": "compatible_bundle_without_full_replay"
     }
   ],
-  "missing_evidence": {
-    "async_budget_accounting": "not_recorded_locally",
-    "async_state_inventory": "not_recorded_locally",
-    "controller_queue_checkpoints": "not_recorded_locally",
-    "deterministic_async_merge_admission_replay": "not_recorded_locally",
-    "end_to_end_resumed_trace_proof": "not_recorded_locally",
-    "evaluator_worker_pending_state": "not_recorded_locally",
-    "external_environment_replay": "not_recorded_locally",
-    "llm_sampler_task_state": "not_recorded_locally",
-    "ordered_migration_restore_engine": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally",
-    "plugin_rng_replay": "not_recorded_locally",
-    "provider_output_replay": "not_recorded_locally",
-    "replay_resume_acceptance_checklist": "not_recorded_locally"
-  },
   "required_evidence_fields": [
     "criterion_records",
     "roadmap_section_presence",
@@ -344,8 +332,20 @@
     "resumed_trace_proof",
     "stale_readiness_detector"
   ],
-  "roadmap_heading": "### 6. Async and resumable runtime",
-  "roadmap_heading_present": true,
-  "schema": "libreevolve.roadmap_async_resumable_runtime_boundary.v1",
-  "sidecar_ref_count": 16
+  "missing_evidence": {
+    "async_state_inventory": "not_recorded_locally",
+    "replay_resume_acceptance_checklist": "not_recorded_locally",
+    "controller_queue_checkpoints": "not_recorded_locally",
+    "llm_sampler_task_state": "not_recorded_locally",
+    "evaluator_worker_pending_state": "not_recorded_locally",
+    "deterministic_async_merge_admission_replay": "not_recorded_locally",
+    "ordered_migration_restore_engine": "not_recorded_locally",
+    "provider_output_replay": "not_recorded_locally",
+    "plugin_rng_replay": "not_recorded_locally",
+    "async_budget_accounting": "not_recorded_locally",
+    "external_environment_replay": "not_recorded_locally",
+    "end_to_end_resumed_trace_proof": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records a ROADMAP-level async/resumable-runtime criteria map for topology, parallel evaluation, controller pending work, archive-event replay, RNG/lineage replay, provider and plugin nondeterminism, budget resume, environment replay, and resumed-trace proof. It does not claim an async-state inventory, replay/resume acceptance checklist, controller queue checkpoints, LLM sampler task state, evaluator pending state, deterministic async merge/admission replay, ordered migration restore engine, provider-output replay, plugin RNG replay, async budget accounting, external environment replay, end-to-end resumed trace proof, or owner review signoff."
 }

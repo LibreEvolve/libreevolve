@@ -13,10 +13,10 @@ def test_parallel_evaluation_readiness_boundary_accepts_local_async_partial_reco
 
     assert validation.ok is True
     assert validation.boundary_status == (
-        "local_async_sampler_and_candidate_evaluation_partial"
+        "local_cross_generation_async_pipeline_partial"
     )
-    assert validation.required_evidence_field_count == 16
-    assert validation.missing_evidence_count == 10
+    assert validation.required_evidence_field_count == 17
+    assert validation.missing_evidence_count == 9
     assert boundary["schema"] == PARALLEL_EVALUATION_READINESS_BOUNDARY_SCHEMA
     assert "hundred_compute_hour_candidate_budget" in boundary["required_evidence_fields"]
     assert "concurrent_llm_sampler_queue" in boundary["required_evidence_fields"]
@@ -38,6 +38,13 @@ def test_parallel_evaluation_readiness_boundary_accepts_local_async_partial_reco
     )
     assert "bounded local asyncio LLM proposal queue" in boundary["claim_boundary"]
     assert "does not claim AlphaEvolve-style" in boundary["claim_boundary"]
+    assert (
+        boundary["implemented_evidence"]["cross_generation_overlap_telemetry"]
+        == "process_local_exact_merged_sampler_evaluator_task_interval_union_intersection"
+    )
+    assert boundary["implemented_evidence"][
+        "cross_generation_detailed_evaluator_budget_guard"
+    ] == "finite_non_evaluation_count_evaluator_limits_retain_generation_barrier"
 
 
 def test_parallel_evaluation_readiness_boundary_rejects_premature_readiness_claim():
@@ -68,8 +75,8 @@ def test_render_parallel_evaluation_readiness_boundary_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert (
         "| boundary_status | "
-        "local_async_sampler_and_candidate_evaluation_partial |"
+        "local_cross_generation_async_pipeline_partial |"
         in summary
     )
-    assert "| required_evidence_field_count | 16 |" in summary
-    assert "| missing_evidence_count | 10 |" in summary
+    assert "| required_evidence_field_count | 17 |" in summary
+    assert "| missing_evidence_count | 9 |" in summary

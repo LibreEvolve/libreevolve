@@ -13,10 +13,10 @@ def test_distributed_pipeline_topology_boundary_accepts_local_async_partial_reco
 
     assert validation.ok is True
     assert validation.boundary_status == (
-        "local_async_sampler_and_candidate_evaluation_partial"
+        "local_cross_generation_async_pipeline_partial"
     )
-    assert validation.required_evidence_field_count == 17
-    assert validation.missing_evidence_count == 8
+    assert validation.required_evidence_field_count == 18
+    assert validation.missing_evidence_count == 7
     assert boundary["schema"] == DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA
     assert boundary["source_section_ids"] == ["2.6"]
     assert "async_task_coroutine_identity" in boundary["required_evidence_fields"]
@@ -27,6 +27,15 @@ def test_distributed_pipeline_topology_boundary_accepts_local_async_partial_reco
     )
     assert "bounded queues on local Python asyncio event loops" in boundary["claim_boundary"]
     assert "Sampler tasks own distinct LLM ensembles" in boundary["claim_boundary"]
+    assert (
+        boundary["implemented_evidence"][
+            "cross_generation_proposal_evaluation_overlap"
+        ]
+        == "derived_from_exact_merged_task_interval_union_intersection"
+    )
+    assert boundary["implemented_evidence"][
+        "cross_generation_detailed_evaluator_budget_guard"
+    ] == "finite_non_evaluation_count_evaluator_limits_retain_generation_barrier"
 
 
 def test_distributed_pipeline_topology_boundary_rejects_premature_topology_claim():
@@ -59,8 +68,8 @@ def test_render_distributed_pipeline_topology_boundary_summary_reports_shape():
     assert "| schema_status | ok |" in summary
     assert (
         "| boundary_status | "
-        "local_async_sampler_and_candidate_evaluation_partial |"
+        "local_cross_generation_async_pipeline_partial |"
         in summary
     )
-    assert "| required_evidence_field_count | 17 |" in summary
-    assert "| missing_evidence_count | 8 |" in summary
+    assert "| required_evidence_field_count | 18 |" in summary
+    assert "| missing_evidence_count | 7 |" in summary

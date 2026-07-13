@@ -1107,8 +1107,16 @@ is not yet an AlphaEvolve reproduction.
   evaluations through a bounded queue with producer backpressure, worker
   lifecycle records, out-of-order completion telemetry, deterministic merge/
   admission, and exact in-flight duplicate coalescing. Shared state commits
-  serially, batches drain before generation completion, and no queued/running
-  state is resumable. Completed manifests expose this evidence under
+  serially. `async_generation_window` defaults to `1`; when both async queues
+  are enabled, values above `1` let later-generation sampler tasks run from the
+  pre-drain archive, prompt-program/reward, and sampler-reward state while
+  prior-generation evaluation is in flight.
+  Process-local merged task intervals prove observed generation-pair overlap.
+  Finite detailed evaluator budgets retain the generation barrier because
+  pending subprocess/sample/retry/timeout/seconds consumption cannot be
+  reserved exactly. Grouped drains preserve global admission, migration, and
+  plugin lifecycle order. No queued/running state is resumable. Completed
+  manifests expose this evidence under
   `runtime.history.async_llm_sampler_controller`,
   `runtime.history.async_candidate_evaluation_controller`,
   `runtime.history.controller_state`,
@@ -1116,9 +1124,8 @@ is not yet an AlphaEvolve reproduction.
   `runtime.history.parallel_evaluation_readiness_report`.
   `papers/distributed_pipeline_topology_boundary.json` and
   `papers/parallel_evaluation_readiness_boundary.json` now preserve the local
-  local sampler/evaluator-async partial boundary. Remaining Section 2.6 work
-  includes cross-generation proposal/evaluation overlap, full dependency wait
-  telemetry, distributed evaluator nodes, scheduler and
+  bounded local cross-generation async partial boundary. Remaining Section 2.6 work
+  includes a full dependency wait scheduler/telemetry, distributed evaluator nodes, scheduler and
   pending-work checkpoints, cross-process coordination, order-of-100-compute-
   hours budgets, mutation-depth/cadence evidence under slow feedback, and
   equal-budget parallelism reports. Opt-in

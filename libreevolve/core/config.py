@@ -46,6 +46,7 @@ MAX_ASYNC_EVALUATOR_WORKERS = 64
 MAX_ASYNC_EVALUATION_QUEUE_CAPACITY = 4096
 MAX_ASYNC_LLM_SAMPLER_WORKERS = 64
 MAX_ASYNC_LLM_QUEUE_CAPACITY = 4096
+MAX_ASYNC_GENERATION_WINDOW = 64
 _CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
     r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
 )
@@ -75,6 +76,7 @@ class Config:
     async_llm_sampling: bool = False
     async_llm_sampler_workers: int = 2
     async_llm_queue_capacity: int = 4
+    async_generation_window: int = 1
     num_inspirations:       int   = 3
     eval_timeout_sec:       float = 60.0
     validator_env_allowlist: list[str] = field(default_factory=list)
@@ -256,6 +258,16 @@ class Config:
             raise ConfigError(
                 "async_llm_queue_capacity must be an integer between 1 and "
                 f"{MAX_ASYNC_LLM_QUEUE_CAPACITY}"
+            )
+        _require_int(
+            "async_generation_window",
+            self.async_generation_window,
+            minimum=1,
+        )
+        if self.async_generation_window > MAX_ASYNC_GENERATION_WINDOW:
+            raise ConfigError(
+                "async_generation_window must be an integer between 1 and "
+                f"{MAX_ASYNC_GENERATION_WINDOW}"
             )
         _require_int("num_inspirations", self.num_inspirations, minimum=0)
         _require_positive_number("eval_timeout_sec", self.eval_timeout_sec)

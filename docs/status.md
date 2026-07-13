@@ -45,9 +45,16 @@ Important limits:
   local sampler/evaluator workers and queues when enabled, dependency edges, and
   runtime-budget linkage. Sampler workers own distinct ensembles and merge
   out-of-order results deterministically; evaluator workers retain ordered
-  admission. It keeps full AlphaEvolve Section 2.6 parity false because there is
-  no distributed execution, cross-generation dependency graph, pending-work
-  checkpoint/resume, provider-output replay, or scheduler checkpoint.
+  admission. An opt-in `async_generation_window` above `1` can overlap later-
+  generation sampler tasks with prior-generation evaluator tasks from an
+  explicitly stale pre-drain archive, prompt-program/reward, and sampler-reward
+  snapshot; process-local merged task intervals prove observed overlap and
+  grouped drains preserve generation order. Finite cumulative evaluator limits
+  other than `max_evaluations` retain the generation barrier because pending
+  detailed cost cannot be reserved exactly. It keeps
+  full AlphaEvolve Section 2.6 parity false because there is no distributed
+  execution, full dependency graph/scheduler, pending-work checkpoint/resume,
+  provider-output replay, or scheduler checkpoint.
 - Built-in provider adapters are OpenAI, Anthropic, Google Gemini, and Ollama.
   The Gemini Developer API adapter validates environment credentials, maps
   GenerateContent request parameters and role instructions, records API-
@@ -686,10 +693,16 @@ Important limits:
   opt-in local candidate-level asyncio evaluation. Both queues record named
   workers, backpressure, out-of-order completion, and deterministic merge;
   evaluations also coalesce in-flight duplicates. Shared state commits serially.
+  With both queues enabled, `async_generation_window > 1` supports bounded
+  local cross-generation proposal/evaluation overlap and the runtime report
+  requires intersecting merged sampler/evaluator task-interval unions before marking it
+  observed. Later-generation sampling intentionally uses pre-drain archive
+  state, and admissions plus lifecycle hooks finalize in order. Finite detailed
+  evaluator limits conservatively retain the per-generation barrier.
   This is not AlphaEvolve-style per-candidate compute-hour budgeting,
-  distributed evaluator nodes, cross-generation proposal/evaluation overlap,
-  randomized-initialization sharding, mutation-depth impact evidence, or
-  pending-work resume; that boundary is tracked by
+  distributed evaluator nodes or dependency scheduling, randomized-
+  initialization sharding, mutation-depth/cadence evidence, or pending-work
+  resume; that boundary is tracked by
   `runtime.history.parallel_evaluation_readiness_report` and
   `papers/parallel_evaluation_readiness_boundary.json`.
 - AlphaEvolve Figure 8 ablation support is a validated registry, equal-budget

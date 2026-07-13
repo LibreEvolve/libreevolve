@@ -48,6 +48,8 @@ EXCLUDED_MARKDOWN_DIR_PARTS = {
     ".ruff_cache",
     ".venv",
     "__pycache__",
+    "build",
+    "dist",
     "runs",
     "venv",
 }
@@ -221,7 +223,10 @@ def _markdown_corpus_files(root_path: Path) -> list[Path]:
             relative = path.relative_to(root_path)
         except ValueError:
             continue
-        if any(part in EXCLUDED_MARKDOWN_DIR_PARTS for part in relative.parts):
+        if any(
+            part in EXCLUDED_MARKDOWN_DIR_PARTS or part.endswith(".egg-info")
+            for part in relative.parts
+        ):
             continue
         files.append(relative)
     return sorted(files, key=lambda item: item.as_posix())

@@ -96,9 +96,17 @@ Important limits:
   `async_candidate_evaluation` overlaps sibling evaluations with bounded queue
   backpressure, exact in-flight duplicate coalescing, and deterministic
   submission-order archive admission. Shared feedback, budget, history, prompt-
-  database, archive, and generation-boundary mutations remain serialized. This
-  is not a distributed AlphaEvolve service and does not provide cross-generation
-  overlap, pending-work resume, provider-output replay, or worker leases.
+  database, archive, and generation-boundary mutations remain serialized.
+  `async_generation_window` defaults to `1`; values above `1` allow bounded
+  later-generation sampler work to overlap prior-generation evaluator work
+  using explicitly stale pre-drain archive, prompt-program/reward, and sampler-
+  reward state. Process-local merged task intervals
+  record observed generation-pair overlap, while admissions and generation-end
+  hooks remain ordered. Finite cumulative evaluator limits other than the
+  exactly reservable `max_evaluations` count retain a generation barrier. This
+  is not a distributed AlphaEvolve service and does
+  not provide a full dependency scheduler, pending-work resume, provider-output
+  replay, or worker leases.
 - Runtime restore certification is compatible-surface evidence only;
   `papers/restore_certification_boundary.json` records accepted/quarantine
   separation and overclaim rejection, but not provider raw-payload replay,

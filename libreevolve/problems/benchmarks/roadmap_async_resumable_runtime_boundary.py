@@ -50,8 +50,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "distributed_pipeline_topology",
         "runtime_surface": "controller, LLM sampler, evaluation-node topology",
-        "current_scope": "local sampler and candidate-evaluation asyncio queues with named workers and deterministic merge/admission",
-        "missing_readiness": "distributed evaluators, full wait telemetry, cross-generation overlap, and pending-work checkpoints",
+        "current_scope": "local sampler and candidate-evaluation asyncio queues with named workers, deterministic merge/admission, bounded stale-search-state lookahead, and observed cross-generation overlap",
+        "missing_readiness": "distributed evaluators, full wait telemetry and dependency scheduling, and pending-work checkpoints",
         "roadmap_required_phrase": "runtime.history.distributed_pipeline_topology_report",
         "current_sidecars": ("papers/distributed_pipeline_topology_boundary.json",),
         "active_todos": (
@@ -65,13 +65,13 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "real async topology artifacts and queue/backpressure validation",
-        "readiness_status": "local_sampler_evaluator_async_topology_partial",
+        "readiness_status": "local_cross_generation_async_topology_partial",
     },
     {
         "criterion_id": "parallel_evaluation_throughput",
         "runtime_surface": "local stage-sample workers and candidate-evaluation workers",
-        "current_scope": "configured-stage sample fan-out plus bounded local async sampling and candidate evaluation",
-        "missing_readiness": "compute-hour budgets, distributed nodes, cross-generation overlap, and pending-work resume",
+        "current_scope": "configured-stage sample fan-out plus bounded local async sampling, candidate evaluation, and timing-proven cross-generation overlap",
+        "missing_readiness": "compute-hour budgets, distributed nodes, mutation-depth/cadence evidence, and pending-work resume",
         "roadmap_required_phrase": "runtime.history.parallel_evaluation_readiness_report",
         "current_sidecars": ("papers/parallel_evaluation_readiness_boundary.json",),
         "active_todos": (
@@ -85,7 +85,7 @@ CRITERION_SPECS = (
             },
         ),
         "validation_gate": "paper-visible worker fan-out, queue state, and cadence reports",
-        "readiness_status": "local_sampler_evaluator_async_partial",
+        "readiness_status": "local_cross_generation_async_partial",
     },
     {
         "criterion_id": "controller_pending_work_resume",

@@ -1,11 +1,14 @@
 {
+  "schema": "libreevolve.roadmap_non_goal_markdown_scan_boundary.v1",
   "boundary_status": "markdown_corpus_scan_without_runtime_or_promotion_gate",
-  "claim_boundary": "This boundary scans every Markdown file in the repository corpus for exact forbidden ROADMAP non-goal support-claim phrases and retains line-level hit records. It does not claim runtime metadata scanning, plugin docstring scanning, CI promotion enforcement, an intentional promotion workflow, joined runtime/plugin/docs/paper scope proof, or owner-reviewed remediation readiness.",
   "claim_ready": false,
-  "contradiction_count": 0,
-  "forbidden_phrase_count": 17,
+  "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",
+  "source_non_goal_count": 3,
+  "source_constrained_surface_count": 9,
   "markdown_corpus_status": "all_repo_markdown_files_scanned",
   "markdown_file_count": 27,
+  "readable_markdown_file_count": 27,
+  "unreadable_markdown_file_count": 0,
   "markdown_files": [
     "AGENTS.md",
     "README.md",
@@ -36,33 +39,26 @@
     "papers/README.md"
   ],
   "markdown_read_error_records": [],
-  "missing_evidence": {
-    "ci_non_goal_promotion_gate": "not_recorded_locally",
-    "claim_surface_remediation": "not_recorded_locally",
-    "intentional_promotion_workflow": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally",
-    "plugin_docstring_scan": "not_recorded_locally",
-    "runtime_metadata_scan": "not_recorded_locally",
-    "runtime_plugin_scope_join": "not_recorded_locally"
-  },
   "non_goal_count": 3,
+  "forbidden_phrase_count": 17,
+  "contradiction_count": 0,
   "non_goal_records": [
     {
-      "detected_forbidden_claim_count": 0,
-      "detected_forbidden_claim_records": [],
+      "non_goal_id": "normal_local_use_no_service_database_required",
+      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
       "forbidden_claim_phrases": [
         "normal local use requires a service database",
         "requires a service database",
         "requires a service database for normal local use",
         "service database is required"
       ],
-      "non_goal_id": "normal_local_use_no_service_database_required",
-      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
+      "detected_forbidden_claim_records": [],
+      "detected_forbidden_claim_count": 0,
       "scan_status": "no_forbidden_markdown_claims_detected"
     },
     {
-      "detected_forbidden_claim_count": 0,
-      "detected_forbidden_claim_records": [],
+      "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
+      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
       "forbidden_claim_phrases": [
         "arbitrary-language runners are implemented",
         "arbitrary-language/build runners are implemented",
@@ -72,13 +68,13 @@
         "build-system runners are implemented",
         "supports arbitrary-language runners"
       ],
-      "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
-      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
+      "detected_forbidden_claim_records": [],
+      "detected_forbidden_claim_count": 0,
       "scan_status": "no_forbidden_markdown_claims_detected"
     },
     {
-      "detected_forbidden_claim_count": 0,
-      "detected_forbidden_claim_records": [],
+      "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
+      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
       "forbidden_claim_phrases": [
         "built-in paper-inspired plugins are faithful",
         "built-in paper-inspired plugins faithfully implement",
@@ -87,12 +83,11 @@
         "plugin names are faithful implementations",
         "plugins faithfully implement the papers"
       ],
-      "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
-      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
+      "detected_forbidden_claim_records": [],
+      "detected_forbidden_claim_count": 0,
       "scan_status": "no_forbidden_markdown_claims_detected"
     }
   ],
-  "readable_markdown_file_count": 27,
   "required_evidence_fields": [
     "stable_non_goal_ids",
     "markdown_corpus_file_inventory",
@@ -107,9 +102,14 @@
     "runtime_plugin_scope_join",
     "owner_review_signoff"
   ],
-  "schema": "libreevolve.roadmap_non_goal_markdown_scan_boundary.v1",
-  "source_constrained_surface_count": 9,
-  "source_non_goal_boundary_input": "papers/roadmap_non_goal_contradiction_boundary.json",
-  "source_non_goal_count": 3,
-  "unreadable_markdown_file_count": 0
+  "missing_evidence": {
+    "runtime_metadata_scan": "not_recorded_locally",
+    "plugin_docstring_scan": "not_recorded_locally",
+    "ci_non_goal_promotion_gate": "not_recorded_locally",
+    "intentional_promotion_workflow": "not_recorded_locally",
+    "claim_surface_remediation": "not_recorded_locally",
+    "runtime_plugin_scope_join": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary scans every Markdown file in the repository corpus for exact forbidden ROADMAP non-goal support-claim phrases and retains line-level hit records. It does not claim runtime metadata scanning, plugin docstring scanning, CI promotion enforcement, an intentional promotion workflow, joined runtime/plugin/docs/paper scope proof, or owner-reviewed remediation readiness."
 }

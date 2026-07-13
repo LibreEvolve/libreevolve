@@ -90,6 +90,7 @@ def test_override_fields():
         async_llm_sampling=True,
         async_llm_sampler_workers=4,
         async_llm_queue_capacity=8,
+        async_generation_window=3,
         seed=99,
     )
     assert c.max_generations == 50 and c.seed == 99
@@ -120,6 +121,7 @@ def test_override_fields():
     assert c.async_llm_sampling is True
     assert c.async_llm_sampler_workers == 4
     assert c.async_llm_queue_capacity == 8
+    assert c.async_generation_window == 3
 
 
 def test_default_async_candidate_evaluation_is_disabled():
@@ -131,6 +133,7 @@ def test_default_async_candidate_evaluation_is_disabled():
     assert config.async_llm_sampling is False
     assert config.async_llm_sampler_workers == 2
     assert config.async_llm_queue_capacity == 4
+    assert config.async_generation_window == 1
 
 def test_default_backend_is_anthropic():
     assert Config().backends[0]["type"] == "anthropic"
@@ -272,6 +275,9 @@ def test_candidate_runner_declarations_reject_invalid_values(kwargs, message):
         ({"async_llm_sampler_workers": 65}, "async_llm_sampler_workers"),
         ({"async_llm_queue_capacity": 0}, "async_llm_queue_capacity"),
         ({"async_llm_queue_capacity": 4097}, "async_llm_queue_capacity"),
+        ({"async_generation_window": 0}, "async_generation_window"),
+        ({"async_generation_window": 65}, "async_generation_window"),
+        ({"async_generation_window": True}, "async_generation_window"),
         ({"num_inspirations": -1}, "num_inspirations"),
         ({"eval_timeout_sec": 0}, "eval_timeout_sec"),
         ({"explore_ratio": 1.5}, "explore_ratio"),

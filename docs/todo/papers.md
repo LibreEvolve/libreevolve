@@ -349,19 +349,24 @@ directory and using the AlphaEvolve paper as the primary specification.
     deterministic submission-order merge/admission, exact in-flight duplicate
     coalescing, and serial shared-state commit. Configured evaluator stages can
     separately use `sample_workers` for local stage-sample thread-pool fan-out.
+    With both queues enabled, `async_generation_window > 1` defers drains across
+    a bounded number of generations: later sampler work uses pre-drain archive,
+    prompt-program/reward, and sampler-reward state while prior evaluator tasks
+    remain in flight, process-local task
+    intervals prove observed overlap, and generation-grouped drains preserve
+    admission, migration, and hook order.
     Completed manifests retain sampler/evaluator controller reports, candidate
     execution and admission linkage, topology, parallel-readiness evidence, and
     terminal drained controller state. The parallel-evaluation paper boundary
-    now classifies this as local sampler/evaluator-async partial support.
+    now classifies this as bounded local cross-generation async partial support.
   - Current gap: critique, feedback, and meta-prompt LLM work remains sequential,
-    each batch drains before generation completion, and there is no distributed
-    evaluator pool, cross-generation overlap, dependency
+    and there is no distributed evaluator pool or full dependency
     wait-event graph, randomized shard scheduler, pending-work resume, explicit
     order-of-100-compute-hours budget, or mutation-chain-depth policy for slow
     feedback.
   - Required result: retain per-candidate compute-hour and worker-lease budgets,
     randomized shard identities, resumable sampler state, distributed worker
-    ownership, dependency waits, cross-generation overlap, cadence/depth impact,
+    ownership, dependency waits/scheduling, cadence/depth impact,
     and resumed pending-work evidence before treating the local async slice as
     full AlphaEvolve-style parallelized evaluation.
 
@@ -378,12 +383,15 @@ directory and using the AlphaEvolve paper as the primary specification.
     scheduler-summary, and throughput telemetry. The distributed-topology report
     adds bounded proposal/evaluation queues, nonblocking controller dispatch,
     named local workers, serial shared-state commit, and deterministic submission-
-    order merges. Its validator rejects incomplete forged async topology and
+    order merges. Combined runs can also record a bounded generation window,
+    pre-drain archive sampling, process-local sampler/evaluator task intervals,
+    observed generation-pair overlap, and ordered grouped finalization. Its
+    validator rejects incomplete forged async topology and
     full-parity overclaims. The paper boundary now records local sampler/
-    evaluator-async partial support.
+    bounded local cross-generation async partial support.
   - Current gap: this is not Section 2.6 parity. It lacks a full dependency
     wait-event graph, distributed evaluator nodes,
-    cross-generation overlap, cross-process coordination, async scheduler state
+    distributed cross-generation scheduling, cross-process coordination, async scheduler state
     snapshots, and resumable pending-work checkpoints.
   - Required result: extend the local candidate-evaluation topology into a full
     controller/sampler/evaluator pipeline with dependency events, distributed

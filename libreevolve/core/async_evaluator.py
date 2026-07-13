@@ -5,6 +5,7 @@ from collections import deque
 from collections.abc import Callable, Mapping
 from concurrent.futures import Future
 from dataclasses import dataclass
+import math
 import platform
 import threading
 import time
@@ -381,7 +382,8 @@ class AsyncCandidateEvaluationController:
                 error_type = type(exc).__name__
                 result = None
                 failure = exc
-            evaluation_wall_sec = max(0.0, time.perf_counter() - started)
+            finished = time.perf_counter()
+            evaluation_wall_sec = max(0.0, finished - started)
             with self._lock:
                 completion_order = self._completion_counter
                 self._completion_counter += 1
@@ -406,6 +408,8 @@ class AsyncCandidateEvaluationController:
                     "status": status,
                     "queue_wait_sec": item.queue_wait_sec,
                     "queue_depth_after_submit": item.queue_depth_after_submit,
+                    "started_monotonic_sec": started,
+                    "finished_monotonic_sec": finished,
                     "evaluation_wall_sec": evaluation_wall_sec,
                     "error_type": error_type,
                 }
@@ -522,6 +526,7 @@ def validate_async_evaluation_controller_report(report: object) -> dict[str, Any
         issues.append({"code": "invalid_counts", "message": "controller counts are invalid"})
     elif submitted != finished or finished != succeeded + failed:
         issues.append({"code": "count_mismatch", "message": "controller counts do not reconcile"})
+    _validate_task_timings(report.get("task_records"), issues)
     pending = report.get("pending_work")
     if not isinstance(pending, Mapping) or any(
         pending.get(field) != 0
@@ -591,3 +596,40 @@ def _report_non_negative_int(value: object) -> int | None:
     if isinstance(value, bool) or not isinstance(value, int) or value < 0:
         return None
     return value
+
+
+def _validate_task_timings(
+    records: object,
+    issues: list[dict[str, str]],
+) -> None:
+    if not isinstance(records, list):
+        issues.append(
+            {"code": "invalid_task_records", "message": "task records are invalid"}
+        )
+        return
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            issues.append(
+                {
+                    "code": "invalid_task_record",
+                    "message": f"task record {index} is invalid",
+                }
+            )
+            continue
+        started = record.get("started_monotonic_sec")
+        finished = record.get("finished_monotonic_sec")
+        if (
+            isinstance(started, bool)
+            or not isinstance(started, (int, float))
+            or not math.isfinite(float(started))
+            or isinstance(finished, bool)
+            or not isinstance(finished, (int, float))
+            or not math.isfinite(float(finished))
+            or float(finished) < float(started)
+        ):
+            issues.append(
+                {
+                    "code": "invalid_task_timing",
+                    "message": f"task record {index} timing is invalid",
+                }
+            )

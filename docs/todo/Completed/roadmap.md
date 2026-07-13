@@ -16070,3 +16070,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     compute-hour/cadence evidence remain active criteria.
   - Verification: roadmap async-readiness sidecars and topology/parallel
     boundaries distinguish local terminal evidence from full Section 2.6 parity.
+- [x] Keep ROADMAP current with bounded cross-generation overlap.
+  - Status: the async/resumable section now records the configurable generation
+    window, pre-drain search-state sampling policy, exact merged task-interval
+    overlap proof, conservative detailed-budget barriers, and deterministic
+    grouped admission/migration/plugin finalization.
+  - Remaining roadmap gap: distributed dependency scheduling, pending-work
+    checkpoint/resume, provider replay, worker/accelerator budgets, external
+    environment replay, and resumed-trace proof remain active criteria.
+  - Verification: roadmap async/resumable and runtime-readiness sidecars retain
+    those missing criteria while crediting the narrower local overlap surface.

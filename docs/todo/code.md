@@ -2181,7 +2181,7 @@ sidecars, tests, and active TODOs.
     hardened benchmark isolation until this policy is implemented.
 
 - [ ] Complete asynchronous worker and concurrent proposal control beyond the
-      local batch-scoped pipeline.
+      bounded local cross-generation pipeline.
   - Spec evidence: AlphaEvolve parallelizes evaluation, often distributing
     work across many randomized initializations or accelerators, and its
     pipeline is optimized for throughput. Section 2.4 also ties parallel
@@ -2206,9 +2206,18 @@ sidecars, tests, and active TODOs.
     prompt rewards, history, and archive admission are committed serially in
     proposal submission order. Exact duplicate work already in flight is
     coalesced and later candidates reuse the cached result without another
-    candidate-evaluation budget unit. End-to-end tests prove overlapping
-    candidate work, out-of-order completion, ordered admission, queue drain,
-    and duplicate coalescing. `eval_stages[].sample_workers` remains a separate
+    candidate-evaluation budget unit. `async_generation_window` defaults to
+    `1`; values above `1` with both queues enabled defer evaluator drains across
+    a bounded number of generations, so later sampler work uses pre-drain
+    archive, prompt-program/reward, and sampler-reward state while prior
+    evaluation remains in flight. Both controllers
+    retain process-local monotonic task intervals; the topology report marks
+    cross-generation overlap observed only when those intervals intersect.
+    Drains then commit each generation in global submission order before its
+    migration and plugin-end hooks. End-to-end tests prove sibling and cross-
+    generation overlap, stale parent snapshots, out-of-order completion,
+    ordered admission/lifecycle, queue drain, budget reservation, and duplicate
+    coalescing. `eval_stages[].sample_workers` remains a separate
     local stage-sample thread-pool path.
     Completed manifests now retain
     `libreevolve.async_llm_sampler_controller.v1`, sampler execution metadata on
@@ -2217,11 +2226,11 @@ sidecars, tests, and active TODOs.
     `libreevolve.async_candidate_evaluation_controller.v1`, async execution and
     admission metadata on candidate rows, a local sampler/evaluator-async topology,
     parallel-evaluation readiness evidence, and a terminal drained controller
-    state. The two paper boundaries now classify this as local sampler/evaluator-
-    async partial support rather than a fully synchronous absence.
+    state. The two paper boundaries now classify this as bounded local cross-
+    generation async partial support rather than a fully synchronous absence.
   - Current gap: critique, feedback, and meta-prompt LLM calls remain sequential;
-    a batch drains before generation completion; there is no cross-generation overlap,
-    distributed evaluator process/host pool, dependency wait-event graph,
+    there is no distributed evaluator process/host pool, full dependency wait-
+    event graph/scheduler,
     async scheduler/pending-work checkpoint, running-work resume, cross-process
     database coordination, randomized-initialization shard scheduler, explicit
     order-of-100-compute-hours budget, or mutation-depth/cadence report under
@@ -2249,16 +2258,19 @@ sidecars, tests, and active TODOs.
     name bounded proposal/evaluation queues, worker-owned sampler ensembles,
     local evaluator workers, nonblocking controller dispatch with backpressure,
     serial shared-state edges, worker fan-out accounting, and submission-order
-    merges. The validator accepts only complete local sampler-only, evaluator-
+    merges. Combined runs with an async generation window above one additionally
+    record timing-proven local cross-generation overlap, pre-drain archive
+    sampling policy, maximum observed generation depth, and grouped ordered
+    finalization. The validator accepts only complete local sampler-only, evaluator-
     only, or combined contracts and rejects forged partial
     topology, pending-checkpoint, claim-ready, and full AlphaEvolve topology
     overclaims.
     `papers/distributed_pipeline_topology_boundary.json` now preserves the
-    same local sampler/evaluator-async partial boundary for paper-manifest validation.
+    same bounded local cross-generation async partial boundary for paper-manifest validation.
   - Remaining gap: the topology report is still current-boundary evidence, not
     Section 2.6 parity. It does not implement a full dependency wait-event graph,
-    distributed evaluator nodes, cross-
-    generation overlap, cross-process shared-state coordination, async
+    distributed evaluator nodes, a full cross-generation dependency scheduler,
+    cross-process shared-state coordination, async
     scheduler-state snapshots, or resumable pending-work checkpoints.
   - Required result: extend the validated local candidate topology into the
     full controller/sampler/evaluator runtime with dependency events,

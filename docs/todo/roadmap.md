@@ -584,13 +584,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
   - Spec evidence: the `6. Async and resumable runtime` section is the main
     roadmap boundary for AlphaEvolve Section 2.6-style concurrent proposal and
     evaluation work. It should define what proves LibreEvolve has a real async
-    and resumable runtime, not only local batch-scoped sampler/evaluation overlap,
+    and resumable runtime, not only bounded local sampler/evaluation overlap,
     sample-worker fan-out, terminal snapshots, and partial-boundary metadata.
   - Current evidence: ROADMAP now records opt-in bounded local Python `asyncio`
     queues for worker-owned LLM samplers and candidate evaluation, named workers,
     backpressure, out-of-order completion, deterministic proposal-result and
     candidate-admission ordering, owner-serialized reward updates, serial shared-
-    state commit, and exact in-flight evaluation duplicate coalescing. It also
+    state commit, and exact in-flight evaluation duplicate coalescing. It now
+    also records `async_generation_window`: values above one allow bounded
+    later-generation sampling from pre-drain archive, prompt-program/reward,
+    and sampler-reward state while prior
+    evaluation is in flight; process-local task intervals prove observed
+    overlap, and generation-grouped drains preserve admission and lifecycle
+    order. It also
     records parallel-evaluation readiness
     reports, terminal controller-state evidence, MAP-Elites archive snapshots,
     cursor/full archive restore surfaces, run manifest hardening, framework RNG
@@ -614,8 +620,8 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     signoff.
   - Current gap: there is no complete async-state inventory, replay-resume
     acceptance checklist, controller queue checkpoint, resumable LLM sampler
-    task state, evaluator pending-work restore, cross-generation overlap,
-    distributed worker ownership, ordered migration restore engine, provider-output
+    task state, evaluator pending-work restore, distributed dependency scheduler
+    or worker ownership, ordered migration restore engine, provider-output
     replay, plugin RNG replay, async worker/compute-hour budget
     accounting, external environment replay, end-to-end resumed trace proof,
     stale-readiness detector, or owner signoff. Local deterministic merge and

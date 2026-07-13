@@ -1,64 +1,90 @@
 {
+  "schema": "libreevolve.roadmap_non_goal_scope_join_boundary.v1",
   "boundary_status": "runtime_plugin_docs_paper_scope_join_without_owner_signoff",
-  "claim_boundary": "This boundary joins the three stable ROADMAP non-goal ids across bounded documentation surfaces, the full Markdown corpus scan, runtime metadata source scans, built-in plugin docstring and registry scans, paper sidecar records, docs/status.md path references, and remediation-route ownership. It proves the current joined scope map has zero unresolved contradictions. It does not claim owner review signoff or a complete future-proof non-goal lifecycle gate.",
   "claim_ready": false,
-  "contradiction_count": 0,
+  "source_sidecars": [
+    "papers/roadmap_non_goal_contradiction_boundary.json",
+    "papers/roadmap_non_goal_markdown_scan_boundary.json",
+    "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+    "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+    "papers/roadmap_non_goal_remediation_boundary.json",
+    "papers/documentation_claim_inventory.json"
+  ],
+  "source_sidecar_records": [
+    {
+      "path": "papers/roadmap_non_goal_contradiction_boundary.json",
+      "exists": true
+    },
+    {
+      "path": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+      "exists": true
+    },
+    {
+      "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+      "exists": true
+    },
+    {
+      "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+      "exists": true
+    },
+    {
+      "path": "papers/roadmap_non_goal_remediation_boundary.json",
+      "exists": true
+    },
+    {
+      "path": "papers/documentation_claim_inventory.json",
+      "exists": true
+    }
+  ],
+  "non_goal_join_count": 3,
   "joined_scope_count": 21,
-  "missing_evidence": {
-    "owner_review_signoff": "not_recorded_locally"
-  },
   "missing_join_count": 0,
   "missing_join_records": [],
-  "non_goal_join_count": 3,
+  "contradiction_count": 0,
   "non_goal_join_records": [
     {
-      "join_status": "joined_without_owner_signoff",
-      "joined_contradiction_count": 0,
+      "non_goal_id": "normal_local_use_no_service_database_required",
+      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
       "joined_scopes": {
         "documentation_surfaces": {
-          "contradiction_count": 0,
           "join_status": "joined",
-          "missing_safe_phrase_records": [],
           "source": "papers/roadmap_non_goal_contradiction_boundary.json",
-          "surface_count": 2,
           "surface_paths": [
             "ROADMAP.md",
             "README.md"
-          ]
+          ],
+          "surface_count": 2,
+          "missing_safe_phrase_records": [],
+          "contradiction_count": 0
         },
         "markdown_corpus": {
-          "contradiction_count": 0,
-          "forbidden_phrase_count": 4,
           "join_status": "joined",
+          "source": "papers/roadmap_non_goal_markdown_scan_boundary.json",
           "markdown_file_count": 27,
-          "source": "papers/roadmap_non_goal_markdown_scan_boundary.json"
+          "forbidden_phrase_count": 4,
+          "contradiction_count": 0
+        },
+        "runtime_metadata": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+          "runtime_surface_count": 4,
+          "runtime_metadata_path_count": 13,
+          "builtin_plugin_registry_count": 4,
+          "contradiction_count": 0
+        },
+        "plugin_docstrings": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+          "relevance": "global_plugin_overclaim_guard",
+          "plugin_source_file_count": 7,
+          "builtin_plugin_count": 4,
+          "paper_inspired_builtin_plugin_count": 4,
+          "contradiction_count": 0
         },
         "paper_sidecars": {
           "join_status": "joined",
+          "source": "papers/README.md",
           "non_goal_id": "normal_local_use_no_service_database_required",
-          "paper_readme_refs_present": true,
-          "required_sidecar_ref_records": [
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_contradiction_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_markdown_scan_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_remediation_boundary.json"
-            }
-          ],
           "required_sidecar_refs": [
             "papers/roadmap_non_goal_contradiction_boundary.json",
             "papers/roadmap_non_goal_markdown_scan_boundary.json",
@@ -66,39 +92,33 @@
             "papers/roadmap_non_goal_runtime_metadata_boundary.json",
             "papers/roadmap_non_goal_remediation_boundary.json"
           ],
-          "source": "papers/README.md"
-        },
-        "plugin_docstrings": {
-          "builtin_plugin_count": 4,
-          "contradiction_count": 0,
-          "join_status": "joined",
-          "paper_inspired_builtin_plugin_count": 4,
-          "plugin_source_file_count": 7,
-          "relevance": "global_plugin_overclaim_guard",
-          "source": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
-        },
-        "remediation_routes": {
-          "claim_update_surfaces": [
-            "ROADMAP.md",
-            "README.md",
-            "docs/status.md"
+          "required_sidecar_ref_records": [
+            {
+              "path": "papers/roadmap_non_goal_contradiction_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_remediation_boundary.json",
+              "exists": true
+            }
           ],
-          "contradiction_count": 0,
-          "join_status": "joined",
-          "owner_todo_path": "docs/todo/roadmap.md",
-          "source": "papers/roadmap_non_goal_remediation_boundary.json"
-        },
-        "runtime_metadata": {
-          "builtin_plugin_registry_count": 4,
-          "contradiction_count": 0,
-          "join_status": "joined",
-          "runtime_metadata_path_count": 13,
-          "runtime_surface_count": 4,
-          "source": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
+          "paper_readme_refs_present": true
         },
         "status_ledger": {
           "join_status": "joined",
-          "missing_status_refs": [],
+          "source": "docs/status.md",
           "non_goal_id": "normal_local_use_no_service_database_required",
           "required_status_refs": [
             "papers/documentation_claim_inventory.json",
@@ -108,62 +128,68 @@
             "papers/roadmap_non_goal_remediation_boundary.json",
             "papers/roadmap_non_goal_runtime_metadata_boundary.json"
           ],
-          "source": "docs/status.md"
+          "missing_status_refs": []
+        },
+        "remediation_routes": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_remediation_boundary.json",
+          "owner_todo_path": "docs/todo/roadmap.md",
+          "claim_update_surfaces": [
+            "ROADMAP.md",
+            "README.md",
+            "docs/status.md"
+          ],
+          "contradiction_count": 0
         }
       },
+      "join_status": "joined_without_owner_signoff",
       "missing_join_records": [],
-      "non_goal_id": "normal_local_use_no_service_database_required",
-      "roadmap_anchor": "ROADMAP.md#non-goals-for-now"
+      "joined_contradiction_count": 0
     },
     {
-      "join_status": "joined_without_owner_signoff",
-      "joined_contradiction_count": 0,
+      "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
+      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
       "joined_scopes": {
         "documentation_surfaces": {
-          "contradiction_count": 0,
           "join_status": "joined",
-          "missing_safe_phrase_records": [],
           "source": "papers/roadmap_non_goal_contradiction_boundary.json",
-          "surface_count": 3,
           "surface_paths": [
             "ROADMAP.md",
             "README.md",
             "docs/run-artifacts.md"
-          ]
+          ],
+          "surface_count": 3,
+          "missing_safe_phrase_records": [],
+          "contradiction_count": 0
         },
         "markdown_corpus": {
-          "contradiction_count": 0,
-          "forbidden_phrase_count": 7,
           "join_status": "joined",
+          "source": "papers/roadmap_non_goal_markdown_scan_boundary.json",
           "markdown_file_count": 27,
-          "source": "papers/roadmap_non_goal_markdown_scan_boundary.json"
+          "forbidden_phrase_count": 7,
+          "contradiction_count": 0
+        },
+        "runtime_metadata": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+          "runtime_surface_count": 4,
+          "runtime_metadata_path_count": 13,
+          "builtin_plugin_registry_count": 4,
+          "contradiction_count": 0
+        },
+        "plugin_docstrings": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+          "relevance": "global_plugin_overclaim_guard",
+          "plugin_source_file_count": 7,
+          "builtin_plugin_count": 4,
+          "paper_inspired_builtin_plugin_count": 4,
+          "contradiction_count": 0
         },
         "paper_sidecars": {
           "join_status": "joined",
+          "source": "papers/README.md",
           "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
-          "paper_readme_refs_present": true,
-          "required_sidecar_ref_records": [
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_contradiction_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_markdown_scan_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_remediation_boundary.json"
-            }
-          ],
           "required_sidecar_refs": [
             "papers/roadmap_non_goal_contradiction_boundary.json",
             "papers/roadmap_non_goal_markdown_scan_boundary.json",
@@ -171,40 +197,140 @@
             "papers/roadmap_non_goal_runtime_metadata_boundary.json",
             "papers/roadmap_non_goal_remediation_boundary.json"
           ],
-          "source": "papers/README.md"
+          "required_sidecar_ref_records": [
+            {
+              "path": "papers/roadmap_non_goal_contradiction_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_remediation_boundary.json",
+              "exists": true
+            }
+          ],
+          "paper_readme_refs_present": true
         },
-        "plugin_docstrings": {
-          "builtin_plugin_count": 4,
-          "contradiction_count": 0,
+        "status_ledger": {
           "join_status": "joined",
-          "paper_inspired_builtin_plugin_count": 4,
-          "plugin_source_file_count": 7,
-          "relevance": "global_plugin_overclaim_guard",
-          "source": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
+          "source": "docs/status.md",
+          "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
+          "required_status_refs": [
+            "papers/documentation_claim_inventory.json",
+            "papers/roadmap_non_goal_contradiction_boundary.json",
+            "papers/roadmap_non_goal_markdown_scan_boundary.json",
+            "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+            "papers/roadmap_non_goal_remediation_boundary.json",
+            "papers/roadmap_non_goal_runtime_metadata_boundary.json"
+          ],
+          "missing_status_refs": []
         },
         "remediation_routes": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_remediation_boundary.json",
+          "owner_todo_path": "docs/todo/readme.md",
           "claim_update_surfaces": [
             "README.md",
             "docs/run-artifacts.md",
             "docs/status.md"
           ],
-          "contradiction_count": 0,
+          "contradiction_count": 0
+        }
+      },
+      "join_status": "joined_without_owner_signoff",
+      "missing_join_records": [],
+      "joined_contradiction_count": 0
+    },
+    {
+      "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
+      "roadmap_anchor": "ROADMAP.md#non-goals-for-now",
+      "joined_scopes": {
+        "documentation_surfaces": {
           "join_status": "joined",
-          "owner_todo_path": "docs/todo/readme.md",
-          "source": "papers/roadmap_non_goal_remediation_boundary.json"
+          "source": "papers/roadmap_non_goal_contradiction_boundary.json",
+          "surface_paths": [
+            "ROADMAP.md",
+            "README.md",
+            "docs/architecture.md",
+            "docs/status.md"
+          ],
+          "surface_count": 4,
+          "missing_safe_phrase_records": [],
+          "contradiction_count": 0
+        },
+        "markdown_corpus": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+          "markdown_file_count": 27,
+          "forbidden_phrase_count": 6,
+          "contradiction_count": 0
         },
         "runtime_metadata": {
-          "builtin_plugin_registry_count": 4,
-          "contradiction_count": 0,
           "join_status": "joined",
-          "runtime_metadata_path_count": 13,
+          "source": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
           "runtime_surface_count": 4,
-          "source": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
+          "runtime_metadata_path_count": 13,
+          "builtin_plugin_registry_count": 4,
+          "contradiction_count": 0
+        },
+        "plugin_docstrings": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+          "relevance": "direct_paper_inspired_plugin_guard",
+          "plugin_source_file_count": 7,
+          "builtin_plugin_count": 4,
+          "paper_inspired_builtin_plugin_count": 4,
+          "contradiction_count": 0
+        },
+        "paper_sidecars": {
+          "join_status": "joined",
+          "source": "papers/README.md",
+          "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
+          "required_sidecar_refs": [
+            "papers/roadmap_non_goal_contradiction_boundary.json",
+            "papers/roadmap_non_goal_markdown_scan_boundary.json",
+            "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+            "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+            "papers/roadmap_non_goal_remediation_boundary.json"
+          ],
+          "required_sidecar_ref_records": [
+            {
+              "path": "papers/roadmap_non_goal_contradiction_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_markdown_scan_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json",
+              "exists": true
+            },
+            {
+              "path": "papers/roadmap_non_goal_remediation_boundary.json",
+              "exists": true
+            }
+          ],
+          "paper_readme_refs_present": true
         },
         "status_ledger": {
           "join_status": "joined",
-          "missing_status_refs": [],
-          "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
+          "source": "docs/status.md",
+          "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
           "required_status_refs": [
             "papers/documentation_claim_inventory.json",
             "papers/roadmap_non_goal_contradiction_boundary.json",
@@ -213,119 +339,24 @@
             "papers/roadmap_non_goal_remediation_boundary.json",
             "papers/roadmap_non_goal_runtime_metadata_boundary.json"
           ],
-          "source": "docs/status.md"
-        }
-      },
-      "missing_join_records": [],
-      "non_goal_id": "no_arbitrary_language_codebase_support_before_runners",
-      "roadmap_anchor": "ROADMAP.md#non-goals-for-now"
-    },
-    {
-      "join_status": "joined_without_owner_signoff",
-      "joined_contradiction_count": 0,
-      "joined_scopes": {
-        "documentation_surfaces": {
-          "contradiction_count": 0,
-          "join_status": "joined",
-          "missing_safe_phrase_records": [],
-          "source": "papers/roadmap_non_goal_contradiction_boundary.json",
-          "surface_count": 4,
-          "surface_paths": [
-            "ROADMAP.md",
-            "README.md",
-            "docs/architecture.md",
-            "docs/status.md"
-          ]
-        },
-        "markdown_corpus": {
-          "contradiction_count": 0,
-          "forbidden_phrase_count": 6,
-          "join_status": "joined",
-          "markdown_file_count": 27,
-          "source": "papers/roadmap_non_goal_markdown_scan_boundary.json"
-        },
-        "paper_sidecars": {
-          "join_status": "joined",
-          "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
-          "paper_readme_refs_present": true,
-          "required_sidecar_ref_records": [
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_contradiction_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_markdown_scan_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
-            },
-            {
-              "exists": true,
-              "path": "papers/roadmap_non_goal_remediation_boundary.json"
-            }
-          ],
-          "required_sidecar_refs": [
-            "papers/roadmap_non_goal_contradiction_boundary.json",
-            "papers/roadmap_non_goal_markdown_scan_boundary.json",
-            "papers/roadmap_non_goal_plugin_docstring_boundary.json",
-            "papers/roadmap_non_goal_runtime_metadata_boundary.json",
-            "papers/roadmap_non_goal_remediation_boundary.json"
-          ],
-          "source": "papers/README.md"
-        },
-        "plugin_docstrings": {
-          "builtin_plugin_count": 4,
-          "contradiction_count": 0,
-          "join_status": "joined",
-          "paper_inspired_builtin_plugin_count": 4,
-          "plugin_source_file_count": 7,
-          "relevance": "direct_paper_inspired_plugin_guard",
-          "source": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
+          "missing_status_refs": []
         },
         "remediation_routes": {
+          "join_status": "joined",
+          "source": "papers/roadmap_non_goal_remediation_boundary.json",
+          "owner_todo_path": "docs/todo/papers.md",
           "claim_update_surfaces": [
             "README.md",
             "docs/architecture.md",
             "docs/status.md",
             "papers/README.md"
           ],
-          "contradiction_count": 0,
-          "join_status": "joined",
-          "owner_todo_path": "docs/todo/papers.md",
-          "source": "papers/roadmap_non_goal_remediation_boundary.json"
-        },
-        "runtime_metadata": {
-          "builtin_plugin_registry_count": 4,
-          "contradiction_count": 0,
-          "join_status": "joined",
-          "runtime_metadata_path_count": 13,
-          "runtime_surface_count": 4,
-          "source": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
-        },
-        "status_ledger": {
-          "join_status": "joined",
-          "missing_status_refs": [],
-          "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
-          "required_status_refs": [
-            "papers/documentation_claim_inventory.json",
-            "papers/roadmap_non_goal_contradiction_boundary.json",
-            "papers/roadmap_non_goal_markdown_scan_boundary.json",
-            "papers/roadmap_non_goal_plugin_docstring_boundary.json",
-            "papers/roadmap_non_goal_remediation_boundary.json",
-            "papers/roadmap_non_goal_runtime_metadata_boundary.json"
-          ],
-          "source": "docs/status.md"
+          "contradiction_count": 0
         }
       },
+      "join_status": "joined_without_owner_signoff",
       "missing_join_records": [],
-      "non_goal_id": "paper_inspired_plugins_not_faithful_implementations",
-      "roadmap_anchor": "ROADMAP.md#non-goals-for-now"
+      "joined_contradiction_count": 0
     }
   ],
   "required_evidence_fields": [
@@ -339,39 +370,8 @@
     "remediation_route_join",
     "owner_review_signoff"
   ],
-  "schema": "libreevolve.roadmap_non_goal_scope_join_boundary.v1",
-  "source_sidecar_records": [
-    {
-      "exists": true,
-      "path": "papers/roadmap_non_goal_contradiction_boundary.json"
-    },
-    {
-      "exists": true,
-      "path": "papers/roadmap_non_goal_markdown_scan_boundary.json"
-    },
-    {
-      "exists": true,
-      "path": "papers/roadmap_non_goal_plugin_docstring_boundary.json"
-    },
-    {
-      "exists": true,
-      "path": "papers/roadmap_non_goal_runtime_metadata_boundary.json"
-    },
-    {
-      "exists": true,
-      "path": "papers/roadmap_non_goal_remediation_boundary.json"
-    },
-    {
-      "exists": true,
-      "path": "papers/documentation_claim_inventory.json"
-    }
-  ],
-  "source_sidecars": [
-    "papers/roadmap_non_goal_contradiction_boundary.json",
-    "papers/roadmap_non_goal_markdown_scan_boundary.json",
-    "papers/roadmap_non_goal_plugin_docstring_boundary.json",
-    "papers/roadmap_non_goal_runtime_metadata_boundary.json",
-    "papers/roadmap_non_goal_remediation_boundary.json",
-    "papers/documentation_claim_inventory.json"
-  ]
+  "missing_evidence": {
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary joins the three stable ROADMAP non-goal ids across bounded documentation surfaces, the full Markdown corpus scan, runtime metadata source scans, built-in plugin docstring and registry scans, paper sidecar records, docs/status.md path references, and remediation-route ownership. It proves the current joined scope map has zero unresolved contradictions. It does not claim owner review signoff or a complete future-proof non-goal lifecycle gate."
 }

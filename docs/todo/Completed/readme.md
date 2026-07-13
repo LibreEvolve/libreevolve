@@ -15867,8 +15867,18 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Status: README now lists bounded local sampler and evaluator workers as
     runnable features and explains deterministic merge, worker-owned ensembles,
     reward ownership, and serial shared-state commit.
-  - Remaining README gap: distributed execution, cross-generation overlap,
-    pending-work resume, provider replay, compute-hour budgets, and published
+  - Remaining README gap: distributed execution and cross-generation dependency
+    scheduling, pending-work resume, provider replay, compute-hour budgets, and published
     benchmark reproduction remain explicitly absent.
   - Verification: README/docs/sidecar claim checks preserve the scoped local
     capability and the non-reproduction boundary.
+- [x] Document bounded local cross-generation overlap without claiming a distributed scheduler.
+  - Status: README and linked operational docs now describe
+    `async_generation_window`, stale pre-drain search-state selection, exact
+    task-interval overlap, conservative detailed-budget barriers, and ordered
+    generation-group finalization.
+  - Remaining README gap: distributed dependency scheduling, pending-work
+    resume, provider replay, worker leases, compute-hour budgets, and benchmark
+    reproduction remain explicitly absent.
+  - Verification: documentation claims are linked to the runtime topology and
+    parallel-readiness reports plus executable paper boundaries.

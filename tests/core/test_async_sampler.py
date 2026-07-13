@@ -203,11 +203,20 @@ def test_async_sampler_rejects_invalid_configuration(llms, capacity, message):
 
 def test_async_sampler_report_validator_rejects_overclaim_and_drift():
     controller = AsyncLLMSamplerController([_ensemble()], queue_capacity=1)
-    controller.start()
+    controller.submit(
+        AsyncLLMSamplerJob(
+            sequence=0,
+            request_id="request-0",
+            prompt="fast",
+        )
+    ).result(timeout=2.0)
     report = controller.close()
     report["claim_ready"] = True
     report["queue"]["terminal_depth"] = 1
     report["claim_readiness"]["distributed_sampler_nodes"] = True
+    report["task_records"][0]["finished_monotonic_sec"] = (
+        report["task_records"][0]["started_monotonic_sec"] - 1.0
+    )
 
     validation = validate_async_llm_sampler_controller_report(report)
     codes = {issue["code"] for issue in validation["issues"]}
@@ -216,6 +225,7 @@ def test_async_sampler_report_validator_rejects_overclaim_and_drift():
     assert "queue_not_drained" in codes
     assert "claim_ready_overclaim" in codes
     assert "distributed_sampler_nodes_overclaim" in codes
+    assert "invalid_task_timing" in codes
 
 
 def test_async_sampler_enforces_global_role_limit_across_workers():

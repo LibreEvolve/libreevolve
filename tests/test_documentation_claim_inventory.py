@@ -76,7 +76,7 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         "important_limits": 242,
     }
     assert inventory["status_ledger_signal_term_count"] == 11
-    assert inventory["status_ledger_signal_record_count"] == 616
+    assert inventory["status_ledger_signal_record_count"] == 617
     assert inventory["status_ledger_unique_local_path_ref_count"] == 215
     assert inventory["status_ledger_local_path_ref_count"] == 270
     assert inventory["status_ledger_missing_local_path_refs"] == []

@@ -517,10 +517,14 @@ qualifier, or source-specific absence sentence against code and paper evidence.
 | 2505.16105 | Sums and Differences | Constructive math benchmark candidate | Not implemented; potential future benchmark; missing explicit U-set construction schema, W(m,L,B) inclusion-exclusion checker, base-(2B+1) injective encoding checks, sumset/difference-set cardinality verifiers, max-element/q-value verifier, theta recomputation, GMP exact-arithmetic records, floating-point search records, small and large parameter exact rows, exact-value artifact snapshot, AlphaEvolve 54265-integer baseline, huge-set compression policy, lineage comparison rows, tolerance policy, and independent checker outputs. `papers/sums_differences_boundary.json` records this source-specific absence boundary. |
 | 2506.01896 | Sums and Differences II | Constructive math benchmark candidate | Not implemented; potential future benchmark; missing sequence-of-U construction schema, large-deviation I(c,B) checker, asymptotic W(m,floor(rm),B) checker, Lemma 1/Lemma 2 verification, q/s/d bound derivation records, theta0 variational-formula recomputation, MATLAB 2024b code provenance, B=3..10 tolerance-sweep reproduction, finite-prefix artifact policy, AlphaEvolve and Gerbicz baseline rows, lineage comparison rows, convergence/tail-bound checks, and independent checker outputs. `papers/sums_differences_sequence_boundary.json` records this source-specific absence boundary. |
 
-In the AlphaEvolve row, the remaining `async workers` shorthand means concurrent
-LLM sampler workers, distributed evaluator workers, cross-generation overlap,
-and resumable pending work. Local candidate evaluator workers are implemented
-behind `async_candidate_evaluation` with the narrower boundary described below.
+In the AlphaEvolve row, the remaining `async workers` shorthand means
+distributed evaluator/sampler workers, a full cross-generation dependency
+scheduler, and resumable pending work. Local candidate evaluator workers and a
+bounded timing-proven cross-generation window are implemented behind
+`async_candidate_evaluation`, `async_llm_sampling`, and
+`async_generation_window` with the narrower boundary described below. Finite
+detailed evaluator limits retain the generation barrier because their pending
+consumption cannot be reserved exactly.
 The FlashEvolve row's asynchronous-worker absence refers to its stage-
 dependency orchestration runtime, which this candidate queue does not provide.
 
@@ -772,24 +776,32 @@ producer backpressure, nonblocking evaluator dispatch, worker lifecycle and
 completion telemetry, deterministic submission-order merge/admission, and
 serial shared-state commit. Exact duplicate work already in flight is
 coalesced into one evaluator task. When
+`async_generation_window` is above `1`, combined runs may prepare later-
+generation sampler work from pre-drain archive, prompt-program/reward, and
+sampler-reward state while prior-generation
+evaluation remains in flight. Sampler and evaluator task records retain
+process-local monotonic intervals; the topology merges task intervals and
+reports overlap only for exact union intersections. Finite detailed evaluator
+limits retain the conservative generation barrier. Eligible runs drain and
+commit generations in global submission/lifecycle order. When
 configured stages set `eval_stages[].sample_workers`, it also records local
 configured-stage sample-worker fan-out and deterministic sample-order merge
 scope. Candidate evaluations retain summed sample elapsed time, observed
 wall-clock time, and compression ratio; process-exhibit evaluator-pool records
 summarize that as local sample-worker wall-clock compression when observed. It
-is `claim_ready: false` because this is local batch-scoped sampler/evaluation
-overlap, not the full AlphaEvolve pipeline. Distributed evaluator fan-out, full
-dependency wait-event telemetry, cross-generation
-proposal/evaluation overlap, cross-process coordination, async scheduler-state
+is `claim_ready: false` because this is a bounded local sampler/evaluation
+pipeline, not the full AlphaEvolve pipeline. Distributed evaluator fan-out,
+full dependency wait-event scheduling/telemetry, distributed cross-generation
+coordination, cross-process shared state, async scheduler-state
 snapshots, and pending-work checkpoints remain open before Section 2.6 topology
 parity. The committed
 `papers/distributed_pipeline_topology_boundary.json` sidecar preserves this
-local sampler/evaluator-async partial boundary for paper-manifest validation. The committed
+bounded local cross-generation async partial boundary for paper-manifest validation. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
-parallel-evaluation local sampler/evaluator-async partial boundary for validation,
+parallel-evaluation bounded local cross-generation async partial boundary for validation,
 including the still-missing order-of-100-compute-hours candidate budget and
 generation-cadence evidence under slow evaluator feedback, distributed evaluator workers, randomized-initialization shard
-identity, cross-generation overlap, mutation-depth evidence, and pending-work
+identity, distributed dependency scheduling, mutation-depth evidence, and pending-work
 resume.
 
 AlphaEvolve evaluator-metric note: LibreEvolve now reserves boolean `is_valid`

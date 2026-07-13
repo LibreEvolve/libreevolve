@@ -13,7 +13,7 @@ PARALLEL_EVALUATION_RUNTIME_REPORT_SCHEMA = (
     "libreevolve.parallel_evaluation_readiness_report.v1"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
-EXPECTED_BOUNDARY_STATUS = "local_async_sampler_and_candidate_evaluation_partial"
+EXPECTED_BOUNDARY_STATUS = "local_cross_generation_async_pipeline_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "local_stage_sample_worker_fanout",
     "observed_wall_clock_compression",
@@ -23,6 +23,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "per_candidate_compute_hour_budget",
     "concurrent_llm_sampler_queue",
     "candidate_level_async_evaluation_queue",
+    "cross_generation_proposal_evaluation_overlap",
     "queue_capacity_backpressure_policy",
     "distributed_evaluator_worker_nodes",
     "deterministic_async_result_merge_order",
@@ -45,6 +46,10 @@ EXPECTED_IMPLEMENTED_EVIDENCE = {
     "out_of_order_completion_telemetry": "recorded_per_candidate_task",
     "deterministic_async_result_merge_order": "submission_order",
     "shared_state_mutation_policy": "serial_controller_commit_after_merge",
+    "async_generation_window": "bounded_opt_in_one_through_sixty_four",
+    "cross_generation_overlap_telemetry": "process_local_exact_merged_sampler_evaluator_task_interval_union_intersection",
+    "cross_generation_admission_policy": "generation_grouped_global_submission_order",
+    "cross_generation_detailed_evaluator_budget_guard": "finite_non_evaluation_count_evaluator_limits_retain_generation_barrier",
 }
 EXPECTED_MISSING_EVIDENCE = {
     "hundred_compute_hour_candidate_budget_records": "not_recorded_locally",
@@ -55,7 +60,6 @@ EXPECTED_MISSING_EVIDENCE = {
     "mutation_chain_depth_impact_under_slow_feedback": "not_recorded_locally",
     "pending_evaluation_resume_state": "not_recorded_locally",
     "equal_budget_parallelism_report_links": "not_recorded_locally",
-    "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
     "provider_output_replay": "not_recorded_locally",
 }
 
@@ -106,12 +110,18 @@ def parallel_evaluation_readiness_boundary_record() -> dict[str, Any]:
             "reward updates. Candidate evaluation uses a separate bounded local "
             "asyncio queue with deterministic result merge and archive admission, "
             "exact in-flight duplicate coalescing, and serial shared-state commit. "
+            "An opt-in bounded generation window can prepare later-generation "
+            "sampler work from pre-drain archive, prompt-program/reward, and "
+            "sampler-reward state while prior-generation "
+            "evaluation remains in flight; merged runtime task-interval unions "
+            "record exact observed cross-generation overlap, finite detailed "
+            "evaluator budgets retain the generation barrier, and generation-"
+            "grouped drains preserve global admission and lifecycle order. "
             "It does not claim AlphaEvolve-style 100-compute-hour "
             "candidate budgets, generation-cadence preservation under slow "
             "feedback, per-candidate compute-hour budgets, distributed evaluator "
             "nodes, randomized "
-            "initialization shards, cross-generation proposal/evaluation "
-            "overlap, mutation-chain depth impact under slow feedback, pending-"
+            "initialization shards, mutation-chain depth impact under slow feedback, pending-"
             "work resume, or equal-budget parallelism reports."
         ),
     }
@@ -163,7 +173,8 @@ def validate_parallel_evaluation_readiness_boundary(
         or "worker-owned ensembles" not in boundary_text
         or "deterministic proposal-order merge" not in boundary_text
         or "separate bounded local asyncio queue" not in boundary_text
-        or "cross-generation proposal/evaluation overlap" not in boundary_text
+        or "observed cross-generation overlap" not in boundary_text
+        or "finite detailed evaluator budgets retain" not in boundary_text
         or "pending-work resume" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim AlphaEvolve parallel-evaluation parity"))

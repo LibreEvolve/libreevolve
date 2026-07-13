@@ -14401,8 +14401,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Status: the distributed-topology and parallel-readiness sidecars now credit
     bounded local sampler workers, worker-owned ensembles, deterministic merge,
     owner-serialized rewards, and composition with bounded candidate evaluation.
-  - Remaining paper gap: distributed nodes, cross-generation overlap, complete
-    dependency waits, scheduler/pending-work checkpoints, provider replay,
+  - Remaining paper gap: distributed nodes and cross-generation dependency
+    scheduling, complete dependency waits, scheduler/pending-work checkpoints, provider replay,
     compute-hour budgets, and equal-budget throughput evidence remain absent.
   - Verification: executable boundary validators and paper-manifest tests keep
     `claim_ready: false` while rejecting stale missing-sampler classifications.
+- [x] Promote cross-generation async evidence from missing to bounded local partial support.
+  - Paper evidence: AlphaEvolve Sections 2.4 and 2.6 describe asynchronous
+    proposal/evaluation throughput and concurrent pipeline roles.
+  - Status: distributed-topology and parallel-readiness boundaries now credit
+    the bounded generation window, pre-drain search-state policy, exact merged
+    process-local task intervals, observed generation-pair overlap, conservative
+    detailed-budget barriers, and ordered grouped drains.
+  - Remaining paper gap: this is not distributed dependency scheduling,
+    pending-work replay, compute-hour/cadence evidence, provider replay, or an
+    equal-budget AlphaEvolve throughput reproduction.
+  - Verification: executable boundary and runtime validators require observed
+    exact task-union intersections before setting local overlap readiness,
+    reject malformed pair/budget evidence, and keep full topology/readiness
+    claims false.

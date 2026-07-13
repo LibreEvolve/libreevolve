@@ -203,10 +203,22 @@ def test_async_controller_report_validator_rejects_overclaim_and_drift():
         queue_capacity=1,
     )
     controller.start()
+    future = controller.submit(
+        AsyncEvaluationJob(
+            sequence=0,
+            candidate_id="candidate-0",
+            workspace=CandidateWorkspace.from_code("x = 1"),
+            diff_error=None,
+        )
+    )
+    future.result(timeout=2.0)
     report = controller.close()
     report["claim_ready"] = True
     report["queue"]["terminal_depth"] = 1
     report["claim_readiness"]["distributed_evaluator_nodes"] = True
+    report["task_records"][0]["finished_monotonic_sec"] = (
+        report["task_records"][0]["started_monotonic_sec"] - 1.0
+    )
 
     validation = validate_async_evaluation_controller_report(report)
     codes = {issue["code"] for issue in validation["issues"]}
@@ -215,3 +227,4 @@ def test_async_controller_report_validator_rejects_overclaim_and_drift():
     assert "queue_not_drained" in codes
     assert "claim_ready_overclaim" in codes
     assert "distributed_evaluator_nodes_overclaim" in codes
+    assert "invalid_task_timing" in codes

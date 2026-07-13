@@ -51,8 +51,15 @@ libreevolve/
   a bounded Python `asyncio` queue, results merge in proposal order, and rewards
   are serialized through the owning worker. `async_candidate_evaluation` is the
   separate bounded local evaluation queue. Either or both can be enabled;
-  shared archive/history/budget mutations remain main-thread ordered. This is
-  not cross-generation overlap, distributed execution, or pending-work resume.
+  shared archive/history/budget mutations remain main-thread ordered.
+  `async_generation_window > 1` additionally permits bounded later-generation
+  sampling from pre-drain archive, prompt-program/reward, and sampler-reward
+  state while prior-generation evaluation is in flight; merged task intervals
+  prove observed overlap and generation-grouped drains preserve admission/hook
+  order. Finite cumulative evaluator limits other than `max_evaluations` retain
+  the generation barrier because their pending cost cannot be reserved exactly.
+  This is not distributed execution, a full dependency scheduler, or pending-
+  work resume.
 - The checked matrix cascade fixture executes four pinned seeds over known
   rank-7/rank-8 2x2 controls and emits per-seed traces; it is deterministic
   calibration, not Strassen rediscovery or AlphaEvolve-scale search evidence

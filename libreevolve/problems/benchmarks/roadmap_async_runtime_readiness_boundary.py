@@ -93,7 +93,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "controller_sampler_task_checkpoints",
         "runtime_surface": "controller queues and LLM sampler task state",
-        "current_scope": "terminal drained synchronous or local sampler/evaluator-async controller snapshot with worker-owned sampler calls",
+        "current_scope": "terminal drained synchronous or local sampler/evaluator-async controller snapshot with worker-owned sampler calls and optional bounded cross-generation overlap evidence",
         "missing_readiness": "controller queue checkpoints and in-flight LLM sampler task state",
         "sidecars": (
             "papers/controller_pending_work_resume_boundary.json",
@@ -115,7 +115,7 @@ CRITERION_SPECS = (
     {
         "criterion_id": "evaluator_pending_work_and_merge_order",
         "runtime_surface": "evaluator workers, pending work, and admission order",
-        "current_scope": "bounded local candidate-evaluation queue with deterministic submission-order merge/admission",
+        "current_scope": "bounded local candidate-evaluation queue with deterministic submission-order merge/admission and optional timing-proven cross-generation overlap",
         "missing_readiness": "evaluator pending-work checkpoint/restore and deterministic merge/admission replay",
         "sidecars": (
             "papers/parallel_evaluation_readiness_boundary.json",

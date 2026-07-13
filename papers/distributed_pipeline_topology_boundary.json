@@ -6,7 +6,7 @@
     "2.6"
   ],
   "source_claim": "AlphaEvolve Section 2.6 describes a Python asyncio asynchronous controller, LLM-sampler, and evaluator-node pipeline optimized for throughput with computations that can block on unfinished dependencies",
-  "boundary_status": "local_async_sampler_and_candidate_evaluation_partial",
+  "boundary_status": "local_cross_generation_async_pipeline_partial",
   "runtime_report_status": "distributed_pipeline_topology_report_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -24,6 +24,7 @@
     "scheduler_state_snapshot",
     "worker_lifecycle_liveness",
     "deterministic_async_completion_admission_order",
+    "bounded_cross_generation_proposal_evaluation_overlap",
     "throughput_budget_linkage",
     "pending_work_checkpoint",
     "async_topology_claim_readiness"
@@ -43,7 +44,12 @@
     "candidate_evaluator_worker_lifecycle": "terminal_records_available",
     "candidate_completion_order": "recorded_per_task",
     "deterministic_candidate_admission_order": "submission_order_merge_recorded",
-    "candidate_dispatch_throughput_telemetry": "recorded_in_controller_report"
+    "candidate_dispatch_throughput_telemetry": "recorded_in_controller_report",
+    "async_generation_window": "bounded_opt_in_one_through_sixty_four",
+    "process_local_task_interval_telemetry": "recorded_in_both_controller_reports",
+    "cross_generation_proposal_evaluation_overlap": "derived_from_exact_merged_task_interval_union_intersection",
+    "cross_generation_search_state_policy": "later_parent_inspiration_prompt_program_prompt_reward_and_sampler_reward_state_is_pre_window_drain",
+    "cross_generation_detailed_evaluator_budget_guard": "finite_non_evaluation_count_evaluator_limits_retain_generation_barrier"
   },
   "missing_evidence": {
     "dependency_wait_event_telemetry": "not_recorded_locally",
@@ -51,9 +57,8 @@
     "full_cross_generation_dependency_graph": "not_recorded_locally",
     "async_scheduler_state_snapshot": "not_recorded_locally",
     "pending_work_checkpoint_state": "not_recorded_locally",
-    "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
     "cross_process_shared_state_coordination": "not_recorded_locally",
     "provider_output_replay": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a runtime topology report for the local controller, program database, configured LLM sampler nodes, and evaluator nodes. Opt-in candidate generation and evaluation use bounded queues on local Python asyncio event loops. Sampler tasks own distinct LLM ensembles, can complete out of order, and merge in proposal order before serial shared-state commit; evaluator tasks retain the same ordered-admission policy. It does not claim distributed evaluator workers, a full cross-generation dependency graph, dependency wait-event telemetry, async scheduler checkpoints, cross-generation proposal/evaluation overlap, provider-output replay, cross-process shared-state coordination, or pending-work checkpoint state."
+  "claim_boundary": "This boundary records that LibreEvolve has a runtime topology report for the local controller, program database, configured LLM sampler nodes, and evaluator nodes. Opt-in candidate generation and evaluation use bounded queues on local Python asyncio event loops. Sampler tasks own distinct LLM ensembles, can complete out of order, and merge in proposal order before serial shared-state commit; evaluator tasks retain the same ordered-admission policy. With an async generation window above one, later-generation sampler work can overlap prior-generation evaluator work while using explicitly stale pre-drain archive, prompt-program/reward, and sampler-reward state; process-local monotonic task-interval unions prove exact observed generation-pair overlap, finite detailed evaluator budgets retain the generation barrier, and admissions plus generation finalization remain ordered. It does not claim distributed evaluator workers, a full cross-generation dependency graph, dependency wait-event telemetry, async scheduler checkpoints, provider-output replay, cross-process shared-state coordination, or pending-work checkpoint state."
 }

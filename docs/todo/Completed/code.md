@@ -19368,3 +19368,23 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: controller, ensemble, database, finite-budget, failure,
     sampler-only/evaluator-only/combined topology, and end-to-end overlap tests
     validate the bounded local contract and reject full-parity overclaims.
+- [x] Add bounded local cross-generation sampler/evaluator overlap.
+  - Spec evidence: AlphaEvolve Sections 2.4 and 2.6 connect asynchronous
+    sampler/evaluator execution to preserving proposal throughput while
+    expensive evaluation remains in flight.
+  - Status: `async_generation_window` now provides an opt-in bounded lookahead
+    when both async queues are enabled. Later generations sample from explicit
+    pre-drain archive, prompt-program/reward, and sampler-reward state;
+    merged sampler/evaluator task intervals prove observed overlap; evaluator
+    results, admissions, migration, and plugin lifecycle finalize generation by
+    generation in global submission order. Finite detailed evaluator budgets
+    retain the generation barrier, and abort drains account/cache later
+    completed work before re-raising without admitting post-error candidates.
+    Startup manifests retain the complete async controller/window configuration.
+  - Remaining code gap: distributed workers and dependency scheduling,
+    pending-work checkpoint/resume, provider replay, worker leases, compute-
+    hour budgets, and mutation-depth/cadence evidence remain open.
+  - Verification: focused config, manifest, controller, topology, finite-budget,
+    stale-parent, cache-coalescing, lifecycle-order, abort-accounting, exact-
+    interval, and runtime overlap tests validate the bounded local contract and
+    reject timing/topology overclaims.

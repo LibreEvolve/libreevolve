@@ -4065,6 +4065,13 @@ def test_manifest_written():
         max_evaluator_sample_budget_exhaustions=5,
         max_evaluator_stage_budget_exhaustions=3,
         max_runtime_seconds=30.0,
+        async_candidate_evaluation=True,
+        async_evaluator_workers=3,
+        async_evaluation_queue_capacity=7,
+        async_llm_sampling=True,
+        async_llm_sampler_workers=4,
+        async_llm_queue_capacity=8,
+        async_generation_window=3,
         run_id="run-123",
         validator_env_allowlist=[" benchmark_data_dir ", "BENCHMARK_DATA_DIR"],
         evaluator_artifact_include=["*.json"],
@@ -4105,6 +4112,13 @@ def test_manifest_written():
     assert manifest["config"]["max_evaluator_sample_budget_exhaustions"] == 5
     assert manifest["config"]["max_evaluator_stage_budget_exhaustions"] == 3
     assert manifest["config"]["max_runtime_seconds"] == 30.0
+    assert manifest["config"]["async_candidate_evaluation"] is True
+    assert manifest["config"]["async_evaluator_workers"] == 3
+    assert manifest["config"]["async_evaluation_queue_capacity"] == 7
+    assert manifest["config"]["async_llm_sampling"] is True
+    assert manifest["config"]["async_llm_sampler_workers"] == 4
+    assert manifest["config"]["async_llm_queue_capacity"] == 8
+    assert manifest["config"]["async_generation_window"] == 3
     assert manifest["config"]["parent_selection_strategy"] == "mixed"
     assert manifest["config"]["inspiration_strategy"] == "mixed"
     assert manifest["config"]["run_id"] == "run-123"

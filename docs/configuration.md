@@ -79,9 +79,12 @@ from `validate.py` unless explicitly allowlisted.
   selected from pre-batch search state before provider dispatch; LLM results can
   finish out of order but are processed in proposal order. With
   `async_candidate_evaluation: true`, uncached sibling evaluations can overlap
-  and are also committed in proposal order. Generation hooks, completion
-  accounting, and migration remain once per generation; each generated history
-  row records its batch position under `metadata.proposal_batch`.
+  and are also committed in proposal order. `async_generation_window` can defer
+  evaluator drains across multiple generations when both async modes are on;
+  later prompts then use pre-drain archive state. Generation hooks, completion
+  accounting, and migration remain once per generation and finalize in order;
+  each generated history row records its batch position under
+  `metadata.proposal_batch`.
 - `async_llm_sampling` (`false`): opt into bounded local concurrent mutation
   generation. Each named sampler worker owns a distinct backend ensemble and
   runs provider calls through `asyncio.to_thread()`. The main controller
@@ -104,11 +107,26 @@ from `validate.py` unless explicitly allowlisted.
   the producer waits. Valid range: `1` through `4096`. The terminal sampler
   report records queue pressure, worker lifecycle, completion/merge order,
   scheduler summaries, reward ownership, and zero pending work.
+- `async_generation_window` (`1`): maximum number of fully dispatched
+  generations whose candidate evaluations may remain pending before a grouped
+  deterministic drain. Valid range: `1` through `64`. Values above `1` take
+  effect only when both `async_llm_sampling` and
+  `async_candidate_evaluation` are true. Later-generation parents,
+  inspirations, prompt programs, prompts, prompt rewards, and sampler rewards
+  use pre-drain search state;
+  evaluator results, archive admissions, migration, and generation-end hooks
+  are then committed generation by generation in global submission order.
+  Controller task intervals use the process-local `time.perf_counter` clock;
+  merged task-interval unions must intersect to prove overlap rather than
+  inferring it from configuration or broad generation envelopes. If any finite
+  cumulative evaluator limit other than `max_evaluations` is configured, the
+  runtime keeps the per-generation barrier because pending detailed evaluator
+  consumption cannot be reserved exactly.
 - `async_candidate_evaluation` (`false`): opt into a local candidate-evaluation
   controller backed by a separate bounded Python `asyncio` queue. It overlaps
-  candidate validator work inside the current proposal batch. Feedback, plugin,
-  prompt-database, archive, and migration mutations remain serialized, and
-  batches drain before the generation ends.
+  candidate validator work inside the current proposal batch and, when the
+  generation window is above `1`, with later-generation sampling. Feedback,
+  plugin, prompt-database, archive, and migration mutations remain serialized.
 - `async_evaluator_workers` (`2`): number of named local evaluator tasks used
   when `async_candidate_evaluation` is enabled. Valid range: `1` through `64`.
   Each task runs `CascadeEvaluator.evaluate()` through `asyncio.to_thread()`;

@@ -9227,6 +9227,15 @@ def _startup_manifest_payload(
             ),
             "max_runtime_seconds": config.max_runtime_seconds,
             "proposals_per_generation": config.proposals_per_generation,
+            "async_candidate_evaluation": config.async_candidate_evaluation,
+            "async_evaluator_workers": config.async_evaluator_workers,
+            "async_evaluation_queue_capacity": (
+                config.async_evaluation_queue_capacity
+            ),
+            "async_llm_sampling": config.async_llm_sampling,
+            "async_llm_sampler_workers": config.async_llm_sampler_workers,
+            "async_llm_queue_capacity": config.async_llm_queue_capacity,
+            "async_generation_window": config.async_generation_window,
             "num_inspirations": config.num_inspirations,
             "eval_timeout_sec": config.eval_timeout_sec,
             "validator_env_allowlist": config.validator_env_allowlist,

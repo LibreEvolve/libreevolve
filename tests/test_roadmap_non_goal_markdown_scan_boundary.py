@@ -1,9 +1,22 @@
+from pathlib import Path
+
 from libreevolve.problems.benchmarks.roadmap_non_goal_markdown_scan_boundary import (
     ROADMAP_NON_GOAL_MARKDOWN_SCAN_BOUNDARY_SCHEMA,
+    _markdown_corpus_files,
     render_roadmap_non_goal_markdown_scan_boundary_summary,
     roadmap_non_goal_markdown_scan_boundary_record,
     validate_roadmap_non_goal_markdown_scan_boundary,
 )
+
+
+def test_roadmap_non_goal_markdown_scan_excludes_packaging_outputs(tmp_path):
+    (tmp_path / "README.md").write_text("tracked\n", encoding="utf-8")
+    for directory in ("build", "dist", "libreevolve.egg-info"):
+        path = tmp_path / directory / "generated.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("generated\n", encoding="utf-8")
+
+    assert _markdown_corpus_files(tmp_path) == [Path("README.md")]
 
 
 def test_roadmap_non_goal_markdown_scan_accepts_current_corpus():

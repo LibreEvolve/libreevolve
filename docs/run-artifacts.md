@@ -1368,6 +1368,8 @@ Terminal worker scheduler summaries are evidence only: async sampler worker
 scheduler state, queued calls, and provider outputs cannot be restored, and
 `evolve()` rejects single-ensemble scheduler snapshot restore when
 `async_llm_sampling` is enabled.
+Sampler task records also retain `started_monotonic_sec` and
+`finished_monotonic_sec` from the process-local `time.perf_counter` clock.
 
 When `config.async_candidate_evaluation` is true, completed runtime history also
 records `runtime.history.async_candidate_evaluation_controller` with schema
@@ -1381,6 +1383,8 @@ under `metadata.async_candidate_evaluation`. Cache hits and exact duplicate work
 already in flight retain synthetic execution records and are admitted in the
 same proposal order without consuming a second candidate-evaluation budget
 unit.
+Worker-result task records retain the same process-local monotonic interval
+fields as sampler tasks.
 Completed runtime history also records
 `runtime.history.distributed_pipeline_topology_report` with schema
 `libreevolve.distributed_pipeline_topology_report.v1`. The report always names
@@ -1397,6 +1401,22 @@ proposal-order result merge. With async candidate evaluation enabled, it adds th
 bounded `candidate_evaluation_queue:local`, named local evaluator worker nodes,
 a nonblocking controller-to-evaluator edge with producer backpressure, queued-
 work accounting, and submission-order merge/admission policy. When a configured
+`async_generation_window` is above `1` and both candidate queues are enabled,
+the report additionally embeds
+`cross_generation_overlap` with schema
+`libreevolve.cross_generation_overlap_report.v1`. It records the configured
+window, budget compatibility and incompatible finite detailed evaluator-limit
+fields, pre-drain archive/prompt/sampler-reward search-state policy, per-
+generation sampler/evaluator task interval counts, observed exact intersections
+between merged task-interval unions, maximum
+observed in-flight generation depth, and deterministic admission status. The
+dispatch/readiness flags become true only when task intervals prove overlap;
+configuration or overlapping generation envelopes alone are insufficient.
+Finite cumulative evaluator limits other than `max_evaluations` retain a
+generation barrier because pending detailed consumption cannot be reserved
+exactly. Generation-grouped drains preserve global
+submission-order admission, migration, and plugin generation-end order.
+When a configured
 stage sets `eval_stages[].sample_workers` above `1`, the topology records
 `dispatch_policy.evaluator_sample_workers`, changes evaluation dispatch to
 `blocking_stage_sample_thread_pool_local_subprocess`, exposes the local
@@ -1415,12 +1435,13 @@ contracts, while
 keeping `claim_ready: false` and rejecting pending-checkpoint or full
 AlphaEvolve async-topology overclaims. The committed
 `papers/distributed_pipeline_topology_boundary.json` sidecar preserves the
-local sampler/evaluator-async partial boundary for paper-manifest validation. It
+bounded local cross-generation async partial boundary for paper-manifest validation. It
 records both bounded queues, worker-owned sampler ensembles, worker/task
 lifecycles, completion/merge/admission ordering, and dispatch telemetry while
 retaining missing distributed evaluator workers, full dependency-wait telemetry,
-scheduler checkpoints, cross-generation overlap, provider-output replay, cross-
-process coordination, and pending-work checkpoints.
+scheduler checkpoints, a distributed cross-generation dependency scheduler,
+provider-output replay, cross-process coordination, and pending-work
+checkpoints.
 Completed runtime history also records
 `runtime.history.parallel_evaluation_readiness_report` with schema
 `libreevolve.parallel_evaluation_readiness_report.v1`. It aggregates the
@@ -1432,14 +1453,14 @@ observed wall-clock seconds, wall-clock compression records, and a link back to
 This report is a scoped readiness boundary for AlphaEvolve Sections 2.4 and 2.6
 parallel evaluation. It records local configured-stage sample fan-out and, when
 enabled, candidate-level sampler and evaluator queue/execution/merge/admission
-evidence. `claim_ready`
+evidence plus timing-proven bounded local cross-generation overlap when
+observed. `claim_ready`
 remains false until the runtime records per-candidate compute-hour budgets,
 distributed evaluator worker nodes, randomized-initialization shard identity,
-cross-generation proposal/evaluation overlap,
 mutation-chain-depth impact under slow feedback, pending-work resume state, and
 equal-budget parallelism reports. The committed
 `papers/parallel_evaluation_readiness_boundary.json` sidecar preserves the
-same local sampler/evaluator-async partial boundary for paper-manifest validation.
+same bounded local cross-generation async partial boundary for paper-manifest validation.
 Malformed evaluator accounting passed directly to `RunBudget.record_evaluation()`
 is rejected before local evaluation counters mutate. The current
 `max_evaluations` limit is still a seed/candidate evaluation cap rather than a
@@ -1490,11 +1511,16 @@ subprocess-attempt, configured-stage sample, retry, timeout, sample/stage
 budget-exhaustion, logical LLM-call, provider-attempt, token, and configured
 cost counters are reported and can be capped by independent run-stop policies.
 The runtime can write multiple generated child candidates per generation when
-`proposals_per_generation` is greater than `1`. Proposal generation and LLM
-work remain sequential. Async mode overlaps only sibling candidate evaluations,
-then drains and commits them in submission order before the generation ends;
-concurrent LLM samplers, cross-generation overlap, distributed workers, and
-pending-work resume remain future runtime work.
+`proposals_per_generation` is greater than `1`. Proposal generation is
+sequential by default; `async_llm_sampling` enables bounded worker-owned local
+samplers, and `async_candidate_evaluation` enables bounded local evaluator
+workers. With the default `async_generation_window: 1`, each generation drains
+before finalization. A larger window permits timing-proven later-generation
+sampling during prior evaluation, followed by ordered generation-group drains,
+unless a finite detailed evaluator limit requires the conservative generation
+barrier.
+Distributed workers, a full dependency scheduler, and pending-work resume
+remain future runtime work.
 When `max_generations` is `0` or local budgets stop before the first mutation,
 LibreEvolve evaluates seeds and writes normal history/manifest/best artifacts
 without constructing configured LLM provider clients.

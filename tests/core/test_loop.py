@@ -31,6 +31,7 @@ from libreevolve.core.artifact_schema import (
     validate_quarantine_artifact_policy_manifest,
 )
 from libreevolve.core.database import validate_task_specification_bundle
+from libreevolve.core.evaluator import CascadeEvaluator
 from libreevolve.core.jsonl import StrictJsonlError, strict_json_dumps
 from libreevolve.core.loop import (
     CONTROLLER_STATE_ARTIFACT_INVENTORY_SCHEMA,
@@ -113,6 +114,8 @@ from libreevolve.core.loop import (
     VALID_THRESHOLD,
     META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA,
     _build_meta_prompt_mutation_request,
+    _cross_generation_overlap_report,
+    _cross_generation_pipeline_budget_compatible,
     _META_PROMPT_CONTEXT_POLICY_CAPABILITIES,
     _meta_prompt_metrics,
     _meta_prompt_safe_value,
@@ -484,6 +487,16 @@ class _AsyncSamplerTelemetryLLM:
             "reward_raw": reward,
             "rewarded": True,
         }
+
+
+class _SequenceAsyncSamplerTelemetryLLM(_AsyncSamplerTelemetryLLM):
+    def __init__(self, diffs, delay):
+        super().__init__("", delay)
+        self._diffs = iter(diffs)
+
+    def generate(self, prompt, role="mutation"):
+        self.diff = next(self._diffs)
+        return super().generate(prompt, role=role)
 
 
 class _RewardLLM:
@@ -1271,6 +1284,334 @@ def test_loop_async_llm_samplers_overlap_merge_and_reward_in_submission_order(
     assert controller_state["pending_work"]["in_flight_llm_calls"] == 0
 
 
+def test_loop_cross_generation_window_overlaps_sampling_with_prior_evaluation(
+    tmp_path,
+):
+    lifecycle_calls = []
+
+    class LifecyclePlugin(PluginBase):
+        def on_generation_start(self, generation, db):
+            lifecycle_calls.append(("start", generation))
+
+        def on_generation_end(self, generation, best):
+            lifecycle_calls.append(("end", generation))
+
+    problem = _problem(
+        "def evaluate(code):\n"
+        "    import time\n"
+        "    key = code.strip()\n"
+        "    if key != 'x=1':\n"
+        "        time.sleep(0.30)\n"
+        "    scores = {'x=1': 0.1, 'x=2': 0.2, 'x=3': 0.3}\n"
+        "    return {'score': scores[key], 'is_valid': True}\n"
+    )
+    main_llm = _TelemetryLLM()
+    workers = [
+        _AsyncSamplerTelemetryLLM("x=2", 0.02),
+        _AsyncSamplerTelemetryLLM("x=3", 0.02),
+    ]
+
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, *workers],
+    ):
+        evolve(
+            problem,
+            Config(
+                max_generations=2,
+                proposals_per_generation=2,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=2,
+                async_llm_queue_capacity=2,
+                async_candidate_evaluation=True,
+                async_evaluator_workers=2,
+                async_evaluation_queue_capacity=2,
+                async_generation_window=2,
+                eval_timeout_sec=2.0,
+                log_dir=str(tmp_path),
+                problem_name="cross_generation_window",
+            ),
+            plugins=[LifecyclePlugin()],
+        )
+
+    run_dir = tmp_path / "cross_generation_window"
+    history = [
+        json.loads(line)
+        for line in (run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    generated = history[1:]
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    runtime_history = manifest["runtime"]["history"]
+    topology = runtime_history["distributed_pipeline_topology_report"]
+    overlap = topology["cross_generation_overlap"]
+    evaluator = runtime_history["async_candidate_evaluation_controller"]
+    budget_events = [
+        json.loads(line)
+        for line in (run_dir / "controller_budget_events.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+
+    assert [row["generation"] for row in generated] == [1, 1, 2, 2]
+    assert [
+        row["metadata"]["proposal_batch"]["loop_proposal_index"]
+        for row in generated
+    ] == [0, 1, 2, 3]
+    assert {
+        row["metadata"]["proposal_batch"]["policy"] for row in generated
+    } == {"cross_generation_async_pipeline_submission_order"}
+    assert len({row["parent_id"] for row in generated}) == 1
+    assert evaluator["submitted_count"] == 2
+    assert evaluator["admission_count"] == 4
+    assert [
+        row["submission_order"] for row in evaluator["admission_records"]
+    ] == [0, 1, 2, 3]
+    assert overlap["schema"] == "libreevolve.cross_generation_overlap_report.v1"
+    assert overlap["configured_generation_window"] == 2
+    assert overlap["overlap_observed"] is True
+    assert overlap["observed_generation_pair_count"] >= 1
+    assert overlap["observed_max_inflight_generations"] == 2
+    assert overlap["deterministic_admission_order"] is True
+    assert overlap["generation_pair_records"][0]["evaluation_generation"] == 1
+    assert overlap["generation_pair_records"][0]["sampler_generation"] == 2
+    assert overlap["generation_pair_records"][0]["overlap_sec"] > 0.0
+    assert topology["validation"]["ok"] is True
+    malformed_topology = copy.deepcopy(topology)
+    malformed_overlap = malformed_topology["cross_generation_overlap"]
+    malformed_overlap["configured"] = False
+    malformed_overlap["active"] = False
+    malformed_overlap["budget_compatible"] = False
+    malformed_overlap["generation_pair_records"][0].update(
+        {
+            "generation_distance": 2,
+            "evaluation_task_count": 0,
+        }
+    )
+    malformed_validation = validate_distributed_pipeline_topology_report(
+        malformed_topology
+    )
+    assert {
+        "invalid_cross_generation_configured",
+        "invalid_cross_generation_budget_compatibility",
+        "invalid_cross_generation_pair",
+        "invalid_cross_generation_task_count",
+        "cross_generation_overlap_overclaim",
+    }.issubset({issue["code"] for issue in malformed_validation["issues"]})
+    assert topology["dispatch_policy"][
+        "cross_generation_evaluation_overlap"
+    ] is True
+    assert topology["claim_readiness"]["local_cross_generation_overlap"] is True
+    readiness = runtime_history["parallel_evaluation_readiness_report"]
+    assert readiness["validation"]["ok"] is True
+    assert readiness["claim_readiness"]["cross_generation_async_overlap"] is True
+    controller_state = runtime_history["controller_state"]
+    assert controller_state["validation"]["ok"] is True
+    assert (
+        "bounded_local_cross_generation_window_not_distributed_scheduler"
+        in controller_state["limitations"]
+    )
+    assert (
+        "batch_scoped_sampler_dependencies_not_cross_generation"
+        not in controller_state["limitations"]
+    )
+    assert manifest["runtime"]["consumed"]["generations_completed"] == 2
+    assert lifecycle_calls == [
+        ("start", 1),
+        ("start", 2),
+        ("end", 1),
+        ("end", 2),
+    ]
+    assert [
+        event["kind"]
+        for event in budget_events
+        if event["kind"] == "generation_completed"
+    ] == ["generation_completed", "generation_completed"]
+
+
+def test_loop_cross_generation_window_reserves_pending_evaluation_budget(tmp_path):
+    main_llm = _TelemetryLLM()
+    workers = [
+        _AsyncSamplerTelemetryLLM("x=2", 0.01),
+        _AsyncSamplerTelemetryLLM("x=3", 0.01),
+    ]
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, *workers],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=3,
+                max_evaluations=3,
+                proposals_per_generation=2,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=2,
+                async_llm_queue_capacity=2,
+                async_candidate_evaluation=True,
+                async_evaluator_workers=2,
+                async_evaluation_queue_capacity=2,
+                async_generation_window=3,
+                log_dir=str(tmp_path),
+                problem_name="cross_generation_eval_budget",
+            ),
+        )
+
+    manifest = json.loads(
+        (tmp_path / "cross_generation_eval_budget" / "manifest.json")
+        .read_text(encoding="utf-8")
+    )
+    consumed = manifest["runtime"]["consumed"]
+    sampler = manifest["runtime"]["history"]["async_llm_sampler_controller"]
+
+    assert manifest["runtime"]["stop_reason"] == "max_evaluations"
+    assert consumed["candidate_evaluations"] == 2
+    assert consumed["generations_started"] == 1
+    assert consumed["generations_completed"] == 1
+    assert sampler["submitted_count"] == 2
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("max_evaluator_seconds", 1.0),
+        ("max_evaluator_subprocess_attempts", 1),
+        ("max_evaluator_stage_samples", 1),
+        ("max_evaluator_retry_attempts", 1),
+        ("max_evaluator_timeouts", 1),
+        ("max_evaluator_sample_budget_exhaustions", 1),
+        ("max_evaluator_stage_budget_exhaustions", 1),
+    ],
+)
+def test_cross_generation_window_rejects_unreservable_evaluator_budgets(
+    field,
+    value,
+):
+    config = Config(**{field: value})
+
+    assert _cross_generation_pipeline_budget_compatible(config) is False
+
+
+def test_loop_cross_generation_window_keeps_barrier_for_detailed_evaluator_budget(
+    tmp_path,
+):
+    lifecycle_calls = []
+
+    class LifecyclePlugin(PluginBase):
+        def on_generation_start(self, generation, db):
+            lifecycle_calls.append(("start", generation))
+
+        def on_generation_end(self, generation, best):
+            lifecycle_calls.append(("end", generation))
+
+    main_llm = _TelemetryLLM()
+    worker = _AsyncSamplerTelemetryLLM("x=2", 0.01)
+    with patch(
+        "libreevolve.core.loop.build_llm",
+        side_effect=[main_llm, worker],
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=2,
+                proposals_per_generation=1,
+                mutation_mode="full",
+                parent_selection_strategy="exploit",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=1,
+                async_llm_queue_capacity=1,
+                async_candidate_evaluation=True,
+                async_evaluator_workers=1,
+                async_evaluation_queue_capacity=1,
+                async_generation_window=2,
+                max_evaluator_timeouts=1,
+                log_dir=str(tmp_path),
+                problem_name="cross_generation_detailed_budget",
+            ),
+            plugins=[LifecyclePlugin()],
+        )
+
+    manifest = json.loads(
+        (tmp_path / "cross_generation_detailed_budget" / "manifest.json")
+        .read_text(encoding="utf-8")
+    )
+    overlap = manifest["runtime"]["history"][
+        "distributed_pipeline_topology_report"
+    ]["cross_generation_overlap"]
+
+    assert lifecycle_calls == [
+        ("start", 1),
+        ("end", 1),
+        ("start", 2),
+        ("end", 2),
+    ]
+    assert overlap["configured"] is True
+    assert overlap["budget_compatible"] is False
+    assert overlap["budget_incompatibility_fields"] == ["max_evaluator_timeouts"]
+    assert overlap["active"] is False
+    assert overlap["overlap_observed"] is False
+    assert overlap["parent_archive_snapshot_policy"] == (
+        "generation_barrier_before_later_generation_sampling"
+    )
+
+
+def test_cross_generation_overlap_uses_exact_task_intervals_not_envelopes():
+    config = {
+        "async_generation_window": 2,
+        "proposals_per_generation": 1,
+    }
+    evaluator = {
+        "task_records": [
+            {
+                "submission_order": 0,
+                "started_monotonic_sec": 0.0,
+                "finished_monotonic_sec": 1.0,
+            },
+            {
+                "submission_order": 0,
+                "started_monotonic_sec": 3.0,
+                "finished_monotonic_sec": 4.0,
+            },
+        ],
+        "admission_records": [],
+    }
+    sampler = {
+        "task_records": [
+            {
+                "submission_order": 1,
+                "started_monotonic_sec": 1.5,
+                "finished_monotonic_sec": 2.5,
+            }
+        ]
+    }
+
+    report = _cross_generation_overlap_report(
+        config,
+        async_controller_report=evaluator,
+        async_sampler_controller_report=sampler,
+    )
+
+    assert report["active"] is True
+    assert report["overlap_observed"] is False
+    assert report["generation_pair_records"] == []
+
+    sampler["task_records"][0].update(
+        {
+            "started_monotonic_sec": 0.5,
+            "finished_monotonic_sec": 1.5,
+        }
+    )
+    report = _cross_generation_overlap_report(
+        config,
+        async_controller_report=evaluator,
+        async_sampler_controller_report=sampler,
+    )
+
+    assert report["overlap_observed"] is True
+    assert report["generation_pair_records"][0]["overlap_sec"] == 0.5
+
+
 def test_loop_async_llm_sampler_reserves_finite_evaluation_budget(tmp_path):
     main_llm = _TelemetryLLM()
     workers = [
@@ -1497,8 +1838,6 @@ def test_loop_async_candidate_evaluations_coalesce_inflight_duplicates(tmp_path)
 def test_loop_async_drain_accounts_later_success_before_worker_failure_abort(
     tmp_path,
 ):
-    from libreevolve.core.evaluator import CascadeEvaluator
-
     original_evaluate = CascadeEvaluator.evaluate
 
     def evaluate_with_one_failure(self, code, diff_error):
@@ -1549,6 +1888,77 @@ def test_loop_async_drain_accounts_later_success_before_worker_failure_abort(
     assert controller["admission_count"] == 0
     assert manifest["runtime"]["consumed"]["candidate_evaluations"] == 1
     assert len(history) == 1
+
+
+def test_cross_generation_abort_accounts_later_successful_evaluations(tmp_path):
+    original_evaluate = CascadeEvaluator.evaluate
+
+    def evaluate_with_one_failure(self, code, diff_error):
+        workspace = (
+            code
+            if isinstance(code, CandidateWorkspace)
+            else CandidateWorkspace.from_code(code)
+        )
+        if workspace.code.strip() == "x=2":
+            time.sleep(0.05)
+            raise RuntimeError("cross-generation evaluator failed")
+        time.sleep(0.05)
+        return original_evaluate(self, workspace, diff_error)
+
+    main_llm = _TelemetryLLM()
+    workers = [
+        _SequenceAsyncSamplerTelemetryLLM(["x=2", "x=4"], 0.01),
+        _SequenceAsyncSamplerTelemetryLLM(["x=3", "x=5"], 0.01),
+    ]
+    with (
+        patch(
+            "libreevolve.core.loop.build_llm",
+            side_effect=[main_llm, *workers],
+        ),
+        patch(
+            "libreevolve.core.loop.CascadeEvaluator.evaluate",
+            new=evaluate_with_one_failure,
+        ),
+        pytest.raises(RuntimeError, match="cross-generation evaluator failed"),
+    ):
+        evolve(
+            _problem(),
+            Config(
+                max_generations=2,
+                proposals_per_generation=2,
+                mutation_mode="full",
+                async_llm_sampling=True,
+                async_llm_sampler_workers=2,
+                async_llm_queue_capacity=2,
+                async_candidate_evaluation=True,
+                async_evaluator_workers=2,
+                async_evaluation_queue_capacity=2,
+                async_generation_window=2,
+                log_dir=str(tmp_path),
+                problem_name="cross_generation_failure",
+            ),
+        )
+
+    run_dir = tmp_path / "cross_generation_failure"
+    manifest = json.loads((run_dir / "manifest.json").read_text(encoding="utf-8"))
+    runtime = manifest["runtime"]
+    controller = runtime["history"]["async_candidate_evaluation_controller"]
+    budget_events = [
+        json.loads(line)
+        for line in (run_dir / "controller_budget_events.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+    ]
+
+    assert runtime["status"] == "aborted"
+    assert runtime["consumed"]["candidate_evaluations"] == 3
+    assert controller["submitted_count"] == 4
+    assert controller["succeeded_count"] == 3
+    assert controller["failed_count"] == 1
+    assert [event["kind"] for event in budget_events].count(
+        "candidate_evaluation"
+    ) == 3
+    assert len((run_dir / "history.jsonl").read_text(encoding="utf-8").splitlines()) == 1
 
 
 def test_loop_async_dispatch_reserves_max_evaluation_budget(tmp_path):
@@ -2475,6 +2885,39 @@ def test_completed_runtime_persists_archive_state_cursor_snapshot():
         "async_topology_overclaim",
     }.issubset({issue["code"] for issue in topology_validation["issues"]})
 
+    overlap_overclaim = copy.deepcopy(topology)
+    overlap_overclaim["cross_generation_overlap"].update(
+        {
+            "configured_generation_window": 2,
+            "overlap_observed": True,
+            "observed_generation_pair_count": 1,
+            "deterministic_admission_order": True,
+            "generation_pair_records": [
+                {
+                    "evaluation_generation": 1,
+                    "sampler_generation": 2,
+                    "generation_distance": 1,
+                    "overlap_sec": 0.1,
+                    "evaluation_task_count": 1,
+                    "sampler_task_count": 1,
+                }
+            ],
+        }
+    )
+    overlap_overclaim["dispatch_policy"][
+        "cross_generation_evaluation_overlap"
+    ] = True
+    overlap_overclaim["claim_readiness"][
+        "local_cross_generation_overlap"
+    ] = True
+    overlap_validation = validate_distributed_pipeline_topology_report(
+        overlap_overclaim
+    )
+    assert overlap_validation["ok"] is False
+    assert "cross_generation_overlap_overclaim" in {
+        issue["code"] for issue in overlap_validation["issues"]
+    }
+
 
 def test_pipeline_topology_records_configured_evaluator_sample_workers(tmp_path):
     problem = _problem(
@@ -2602,6 +3045,7 @@ def test_runtime_history_records_parallel_evaluation_readiness_boundary(tmp_path
     assert report["async_pipeline_state"] == {
         "candidate_level_llm_sampler_queue": False,
         "candidate_level_evaluation_queue": False,
+        "cross_generation_evaluation_overlap": False,
         "distributed_evaluator_nodes": False,
         "pending_work_resume": False,
         "mutation_chain_depth_preserved_under_slow_feedback": False,

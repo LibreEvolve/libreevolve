@@ -262,6 +262,15 @@ _MAX_CRITIQUE_RETAINED_PROMPT_CHARS = 6000
 _MAX_CRITIQUE_RETAINED_MUTATION_CHARS = 4000
 _PROMPT_EXECUTION_OUTPUT_FIELDS = ("stdout", "stderr", "error")
 _PROMPT_EXECUTION_OUTPUT_DEFAULT_FIELD_CHARS = 400
+_CROSS_GENERATION_UNRESERVABLE_EVALUATOR_BUDGET_FIELDS = (
+    "max_evaluator_seconds",
+    "max_evaluator_subprocess_attempts",
+    "max_evaluator_stage_samples",
+    "max_evaluator_retry_attempts",
+    "max_evaluator_timeouts",
+    "max_evaluator_sample_budget_exhaustions",
+    "max_evaluator_stage_budget_exhaustions",
+)
 _PROMPT_STAGE_SUMMARY_FIELDS = ("name", "status", "score", "error", "io", "checks")
 _PROMPT_STAGE_SUMMARY_MAX_ITEMS = 3
 META_PROMPT_CONTEXT_POLICY_CAPABILITIES_SCHEMA = (
@@ -998,6 +1007,7 @@ def evolve(
         _MAX_FAILURES = 5
         strict_seed_invalid_count = 0
         pending_async_evaluations: list[_PendingCandidateEvaluation] = []
+        pending_async_generation_finalizations: list[int] = []
         in_flight_evaluation_cache: dict[
             str,
             tuple[int, Future[AsyncEvaluationOutcome]],
@@ -1090,6 +1100,12 @@ def evolve(
                 max_calls_by_role=config.llm_role_call_limits,
             )
             async_sampler_controller.start()
+        cross_generation_pipeline = (
+            async_controller is not None
+            and async_sampler_controller is not None
+            and config.async_generation_window > 1
+            and _cross_generation_pipeline_budget_compatible(config)
+        )
         if (
             config.initial_program_validity_policy == "alphaevolve_strict"
             and strict_seed_invalid_count > 0
@@ -1107,6 +1123,7 @@ def evolve(
                 async_controller is not None
                 and proposal_index == 0
                 and pending_async_evaluations
+                and not cross_generation_pipeline
             ):
                 phase = f"generation:{gen}:prior_async_evaluation_drain"
                 recent_failures = _drain_async_candidate_evaluations(
@@ -1170,15 +1187,53 @@ def evolve(
                     recent_failures=recent_failures,
                     max_recent_failures=_MAX_FAILURES,
                     run_rng=run_rng,
+                    pending_evaluations=pending_async_evaluations,
+                    defer_evaluation_drain=cross_generation_pipeline,
                 )
                 if generation_completed:
-                    phase = f"generation:{gen}:generation_finalize"
-                    _finish_generation(
-                        generation=candidate_generation,
-                        db=db,
-                        budget=budget,
-                        plugins=plugins,
-                    )
+                    if cross_generation_pipeline:
+                        pending_async_generation_finalizations.append(
+                            candidate_generation
+                        )
+                        if (
+                            len(pending_async_generation_finalizations)
+                            >= config.async_generation_window
+                        ):
+                            phase = (
+                                f"generation:{gen}:cross_generation_window_drain"
+                            )
+                            recent_failures = (
+                                _drain_async_generation_window(
+                                    pending_async_evaluations,
+                                    pending_async_generation_finalizations,
+                                    controller=async_controller,
+                                    in_flight_cache=in_flight_evaluation_cache,
+                                    evaluation_cache=evaluation_cache,
+                                    evaluation_cache_contract_sha256=(
+                                        evaluation_cache_contract_sha256
+                                    ),
+                                    problem=problem,
+                                    config=config,
+                                    db=db,
+                                    budget=budget,
+                                    llm=llm,
+                                    plugins=plugins,
+                                    prompt_db=prompt_db,
+                                    recent_failures=recent_failures,
+                                    max_recent_failures=_MAX_FAILURES,
+                                    async_sampler_controller=(
+                                        async_sampler_controller
+                                    ),
+                                )
+                            )
+                    else:
+                        phase = f"generation:{gen}:generation_finalize"
+                        _finish_generation(
+                            generation=candidate_generation,
+                            db=db,
+                            budget=budget,
+                            plugins=plugins,
+                        )
                 continue
             phase = f"generation:{gen}:parent_selection"
             if config.parent_selection_strategy == "mixed":
@@ -1852,6 +1907,31 @@ def evolve(
                 budget.record_generation_complete()
                 db.log_controller_budget_event({"kind": "generation_completed"})
 
+        if (
+            async_controller is not None
+            and pending_async_generation_finalizations
+        ):
+            phase = "final_cross_generation_window_drain"
+            recent_failures = _drain_async_generation_window(
+                pending_async_evaluations,
+                pending_async_generation_finalizations,
+                controller=async_controller,
+                in_flight_cache=in_flight_evaluation_cache,
+                evaluation_cache=evaluation_cache,
+                evaluation_cache_contract_sha256=(
+                    evaluation_cache_contract_sha256
+                ),
+                problem=problem,
+                config=config,
+                db=db,
+                budget=budget,
+                llm=llm,
+                plugins=plugins,
+                prompt_db=prompt_db,
+                recent_failures=recent_failures,
+                max_recent_failures=_MAX_FAILURES,
+                async_sampler_controller=async_sampler_controller,
+            )
         if async_controller is not None and pending_async_evaluations:
             phase = "partial_generation_async_evaluation_drain"
             recent_failures = _drain_async_candidate_evaluations(
@@ -1963,11 +2043,14 @@ def _run_async_sampler_generation(
     recent_failures: list[dict],
     max_recent_failures: int,
     run_rng: random.Random,
+    pending_evaluations: list[_PendingCandidateEvaluation],
+    defer_evaluation_drain: bool,
 ) -> tuple[list[dict], bool]:
     batch_size = _async_sampler_batch_capacity(
         proposal_count,
         budget=budget,
         sampler_controller=sampler_controller,
+        pending_evaluations=pending_evaluations,
     )
     if batch_size <= 0:
         if sampler_controller.remaining_role_call_capacity("mutation") == 0:
@@ -2017,7 +2100,6 @@ def _run_async_sampler_generation(
         for request in requests
     ]
 
-    pending_evaluations: list[_PendingCandidateEvaluation] = []
     for pending in pending_mutations:
         request = pending.request
         outcome = pending.future.result()
@@ -2036,6 +2118,11 @@ def _run_async_sampler_generation(
             **copy.deepcopy(outcome.execution),
             "merge_order": merge_order,
             "deterministic_merge_submission_order": request.submission_order,
+            "generation_window": (
+                config.async_generation_window
+                if evaluation_controller is not None
+                else 1
+            ),
         }
         if outcome.error is not None:
             failure = _log_async_mutation_failure(
@@ -2098,7 +2185,11 @@ def _run_async_sampler_generation(
             async_sampler_controller=sampler_controller,
         )
 
-    if evaluation_controller is not None and pending_evaluations:
+    if (
+        evaluation_controller is not None
+        and pending_evaluations
+        and not defer_evaluation_drain
+    ):
         recent_failures = _drain_async_candidate_evaluations(
             pending_evaluations,
             controller=evaluation_controller,
@@ -2130,12 +2221,23 @@ def _async_sampler_batch_capacity(
     *,
     budget: RunBudget,
     sampler_controller: AsyncLLMSamplerController,
+    pending_evaluations: list[_PendingCandidateEvaluation],
 ) -> int:
     capacity = proposal_count
     if budget.max_evaluations is not None:
+        reserved_evaluations = sum(
+            1
+            for item in pending_evaluations
+            if item.source == "worker_result"
+        )
         capacity = min(
             capacity,
-            max(0, budget.max_evaluations - budget.evaluations),
+            max(
+                0,
+                budget.max_evaluations
+                - budget.evaluations
+                - reserved_evaluations,
+            ),
         )
     if budget.max_llm_calls is not None:
         capacity = min(
@@ -2146,6 +2248,27 @@ def _async_sampler_batch_capacity(
     if role_capacity is not None:
         capacity = min(capacity, role_capacity)
     return capacity
+
+
+def _cross_generation_pipeline_budget_compatible(
+    config: Config | Mapping[str, object],
+) -> bool:
+    return not _cross_generation_pipeline_budget_incompatibility_fields(config)
+
+
+def _cross_generation_pipeline_budget_incompatibility_fields(
+    config: Config | Mapping[str, object],
+) -> list[str]:
+    def value(field: str) -> object:
+        if isinstance(config, Mapping):
+            return config.get(field)
+        return getattr(config, field)
+
+    return [
+        field
+        for field in _CROSS_GENERATION_UNRESERVABLE_EVALUATOR_BUDGET_FIELDS
+        if value(field) is not None
+    ]
 
 
 def _prepare_async_mutation_request(
@@ -2562,7 +2685,12 @@ def _log_async_mutation_failure(
             "candidate_status": "llm_mutation_failed",
             "loop_generation_index": request.loop_generation_index,
             "proposal_batch": {
-                "policy": "async_llm_sampler_submission_order",
+                "policy": (
+                    "cross_generation_async_pipeline_submission_order"
+                    if config.async_candidate_evaluation
+                    and config.async_generation_window > 1
+                    else "async_llm_sampler_submission_order"
+                ),
                 "proposal_index": request.proposal_index,
                 "proposal_number": request.proposal_index + 1,
                 "proposals_per_generation": request.proposals_per_generation,
@@ -2700,7 +2828,11 @@ def _commit_evaluated_candidate(
             "loop_generation_index": prepared.loop_generation_index,
             "proposal_batch": {
                 "policy": (
-                    "async_llm_and_evaluation_submission_order"
+                    "cross_generation_async_pipeline_submission_order"
+                    if prepared.async_llm_sampler is not None
+                    and config.async_candidate_evaluation
+                    and config.async_generation_window > 1
+                    else "async_llm_and_evaluation_submission_order"
                     if prepared.async_llm_sampler is not None
                     and config.async_candidate_evaluation
                     else "async_llm_sampler_submission_order"
@@ -3032,6 +3164,80 @@ def _dispatch_async_candidate_evaluation(
     )
 
 
+def _drain_async_generation_window(
+    pending: list[_PendingCandidateEvaluation],
+    generations: list[int],
+    *,
+    controller: AsyncCandidateEvaluationController,
+    in_flight_cache: dict[str, tuple[int, Future[AsyncEvaluationOutcome]]],
+    evaluation_cache: dict[str, dict],
+    evaluation_cache_contract_sha256: str,
+    problem: Problem,
+    config: Config,
+    db: ProgramDatabase,
+    budget: RunBudget,
+    llm: LLMEnsemble,
+    plugins: list[PluginBase],
+    prompt_db: PromptDatabase,
+    recent_failures: list[dict],
+    max_recent_failures: int,
+    async_sampler_controller: AsyncLLMSamplerController,
+) -> list[dict]:
+    if generations != sorted(set(generations)):
+        raise RuntimeError(
+            "async generation finalizations must be unique and increasing"
+        )
+    first_error: BaseException | None = None
+    for generation in list(generations):
+        generation_pending = [
+            item
+            for item in pending
+            if item.prepared.candidate_generation == generation
+        ]
+        try:
+            if generation_pending:
+                recent_failures = _drain_async_candidate_evaluations(
+                    generation_pending,
+                    controller=controller,
+                    in_flight_cache=in_flight_cache,
+                    evaluation_cache=evaluation_cache,
+                    evaluation_cache_contract_sha256=(
+                        evaluation_cache_contract_sha256
+                    ),
+                    problem=problem,
+                    config=config,
+                    db=db,
+                    budget=budget,
+                    llm=llm,
+                    plugins=plugins,
+                    prompt_db=prompt_db,
+                    recent_failures=recent_failures,
+                    max_recent_failures=max_recent_failures,
+                    async_sampler_controller=async_sampler_controller,
+                    commit_results=first_error is None,
+                )
+        except BaseException as exc:
+            if first_error is None:
+                first_error = exc
+        finally:
+            pending[:] = [
+                item
+                for item in pending
+                if item.prepared.candidate_generation != generation
+            ]
+            generations.remove(generation)
+        if first_error is None:
+            _finish_generation(
+                generation=generation,
+                db=db,
+                budget=budget,
+                plugins=plugins,
+            )
+    if first_error is not None:
+        raise first_error
+    return recent_failures
+
+
 def _drain_async_candidate_evaluations(
     pending: list[_PendingCandidateEvaluation],
     *,
@@ -3049,6 +3255,7 @@ def _drain_async_candidate_evaluations(
     recent_failures: list[dict],
     max_recent_failures: int,
     async_sampler_controller: AsyncLLMSamplerController | None = None,
+    commit_results: bool = True,
 ) -> list[dict]:
     ordered = sorted(pending, key=lambda row: row.prepared.submission_order)
     resolved: list[tuple[_PendingCandidateEvaluation, EvaluationResult, str | None]] = []
@@ -3073,6 +3280,8 @@ def _drain_async_candidate_evaluations(
     pending.clear()
     if first_error is not None:
         raise first_error
+    if not commit_results:
+        return recent_failures
     for item, result, task_id in resolved:
         _, recent_failures = _commit_evaluated_candidate(
             item.prepared,
@@ -3134,7 +3343,11 @@ def _resolve_async_candidate_evaluation(
         return result, None
     if pending.future is None:
         raise RuntimeError("async worker result future is missing")
-    outcome = pending.future.result()
+    try:
+        outcome = pending.future.result()
+    finally:
+        if pending.cache_key_sha256 is not None:
+            in_flight_cache.pop(pending.cache_key_sha256, None)
     execution = {
         **outcome.execution,
         "deterministic_merge_submission_order": prepared.submission_order,
@@ -3148,8 +3361,6 @@ def _resolve_async_candidate_evaluation(
         db=db,
         async_execution=execution,
     )
-    if pending.cache_key_sha256 is not None:
-        in_flight_cache.pop(pending.cache_key_sha256, None)
     return result, outcome.execution.get("task_id")
 
 
@@ -5919,6 +6130,17 @@ def _controller_state_validation_record(controller_state: object) -> dict:
         "terminal_async_llm_sampler_controller_drained",
         "terminal_async_pipeline_controller_drained",
     }
+    cross_generation_report = controller_state.get("cross_generation_overlap")
+    cross_generation_overlap = (
+        isinstance(cross_generation_report, Mapping)
+        and cross_generation_report.get("schema")
+        == "libreevolve.cross_generation_overlap_report.v1"
+        and cross_generation_report.get("overlap_observed") is True
+    )
+    if cross_generation_overlap and not (
+        async_evaluation_mode and async_sampler_mode
+    ):
+        issues.append("cross_generation_overlap_without_combined_async_pipeline")
     if controller_status not in status_models:
         issues.append("controller_state_status_not_terminal_drained")
     controller_model = controller_state.get("controller_model")
@@ -5982,7 +6204,13 @@ def _controller_state_validation_record(controller_state: object) -> dict:
         required = (
             {
                 "local_async_sampler_and_evaluator_not_distributed",
-                "batch_scoped_sampler_dependencies_not_cross_generation",
+                *(
+                    {
+                        "bounded_local_cross_generation_window_not_distributed_scheduler"
+                    }
+                    if cross_generation_overlap
+                    else {"batch_scoped_sampler_dependencies_not_cross_generation"}
+                ),
                 "no_mid_generation_resume_boundary",
                 "provider_outputs_not_replayed",
             }
@@ -7959,6 +8187,16 @@ def _runtime_history_summary(
             budget,
             async_controller_report=async_controller_report,
             async_sampler_controller_report=async_sampler_controller_report,
+            cross_generation_overlap_report=(
+                distributed_pipeline_topology.get("cross_generation_overlap")
+                if isinstance(
+                    distributed_pipeline_topology.get(
+                        "cross_generation_overlap"
+                    ),
+                    Mapping,
+                )
+                else None
+            ),
         ),
     }
     if summary["no_candidates_evaluated"]:
@@ -35085,6 +35323,10 @@ def _parallel_evaluation_readiness_report(
             "candidate_generation_and_evaluation",
         }
     )
+    cross_generation_overlap = (
+        isinstance(topology_dispatch, Mapping)
+        and topology_dispatch.get("cross_generation_evaluation_overlap") is True
+    )
     async_candidate_records = [
         copy.deepcopy(program.metadata["async_candidate_evaluation"])
         for program in programs
@@ -35159,6 +35401,11 @@ def _parallel_evaluation_readiness_report(
                 if isinstance(topology_report.get("dispatch_policy"), Mapping)
                 else None
             ),
+            "cross_generation_evaluation_overlap": (
+                topology_dispatch.get("cross_generation_evaluation_overlap")
+                if isinstance(topology_dispatch, Mapping)
+                else None
+            ),
             "worker_fanout_accounted": (
                 topology_report.get("throughput_budget_linkage", {}).get(
                     "worker_fanout_accounted"
@@ -35187,6 +35434,7 @@ def _parallel_evaluation_readiness_report(
         "async_pipeline_state": {
             "candidate_level_llm_sampler_queue": candidate_async_sampling,
             "candidate_level_evaluation_queue": candidate_async_evaluation,
+            "cross_generation_evaluation_overlap": cross_generation_overlap,
             "distributed_evaluator_nodes": False,
             "pending_work_resume": False,
             "mutation_chain_depth_preserved_under_slow_feedback": False,
@@ -35199,6 +35447,7 @@ def _parallel_evaluation_readiness_report(
             "per_candidate_compute_hour_budget": False,
             "candidate_level_async_llm_sampling": candidate_async_sampling,
             "candidate_level_async_evaluation": candidate_async_evaluation,
+            "cross_generation_async_overlap": cross_generation_overlap,
             "distributed_evaluator_worker_nodes": False,
             "randomized_initialization_shards": False,
             "mutation_chain_depth_impact": False,
@@ -35216,7 +35465,11 @@ def _parallel_evaluation_readiness_report(
                     if candidate_async_sampling
                     else ["concurrent_llm_sampler_queue"]
                 ),
-                "cross_generation_async_overlap",
+                *(
+                    []
+                    if cross_generation_overlap
+                    else ["cross_generation_async_overlap"]
+                ),
                 "distributed_evaluator_worker_nodes",
                 "randomized_initialization_shard_identity",
                 "mutation_chain_depth_impact_under_slow_feedback",
@@ -40019,6 +40272,7 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
     topology = report.get("topology_linkage")
     candidate_async_evaluation = False
     candidate_async_sampling = False
+    cross_generation_overlap = False
     if not isinstance(topology, Mapping):
         issues.append(
             {
@@ -40058,6 +40312,9 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
                 "candidate_generation_only",
                 "candidate_generation_and_evaluation",
             }
+        )
+        cross_generation_overlap = (
+            topology.get("cross_generation_evaluation_overlap") is True
         )
     compute_budget = report.get("compute_hour_budget")
     if not isinstance(compute_budget, Mapping):
@@ -40111,6 +40368,15 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
                     "message": "candidate queue state must match topology evidence",
                 }
             )
+        if async_state.get("cross_generation_evaluation_overlap") is not (
+            cross_generation_overlap
+        ):
+            issues.append(
+                {
+                    "code": "cross_generation_evaluation_overlap_mismatch",
+                    "message": "cross-generation state must match topology evidence",
+                }
+            )
         for field in (
             "distributed_evaluator_nodes",
             "pending_work_resume",
@@ -40155,6 +40421,15 @@ def validate_parallel_evaluation_readiness_report(report: object) -> dict:
                 {
                     "code": "candidate_level_async_evaluation_mismatch",
                     "message": "candidate async readiness must match topology evidence",
+                }
+            )
+        if readiness.get("cross_generation_async_overlap") is not (
+            cross_generation_overlap
+        ):
+            issues.append(
+                {
+                    "code": "cross_generation_async_overlap_mismatch",
+                    "message": "cross-generation readiness must match topology evidence",
                 }
             )
         for field in (
@@ -41150,6 +41425,11 @@ def _distributed_pipeline_topology_report(
         if async_sampler_pipeline
         else []
     )
+    cross_generation_overlap = _cross_generation_overlap_report(
+        config,
+        async_controller_report=async_controller_report,
+        async_sampler_controller_report=async_sampler_controller_report,
+    )
     controller_implementation = (
         "single_process_asyncio_llm_sampling_and_candidate_evaluation"
         if async_sampler_pipeline and async_evaluation_pipeline
@@ -41243,7 +41523,7 @@ def _distributed_pipeline_topology_report(
     ]
     report = {
         "schema": "libreevolve.distributed_pipeline_topology_report.v1",
-        "source": "startup_manifest_config_and_runtime_budget",
+        "source": "startup_manifest_config_runtime_budget_and_controller_reports",
         "node_count": len(nodes),
         "nodes": nodes,
         "queue_count": len(queue_records),
@@ -41280,6 +41560,9 @@ def _distributed_pipeline_topology_report(
                 else "loop_order"
             ),
             "asyncio_pipeline": async_pipeline,
+            "cross_generation_evaluation_overlap": (
+                cross_generation_overlap["overlap_observed"]
+            ),
             "asyncio_scope": (
                 "candidate_generation_and_evaluation"
                 if async_sampler_pipeline and async_evaluation_pipeline
@@ -41323,6 +41606,7 @@ def _distributed_pipeline_topology_report(
             "in_flight_llm_calls": 0,
             "state_source": "terminal_controller_state_only",
         },
+        "cross_generation_overlap": cross_generation_overlap,
         "claim_ready": False,
         "claim_readiness": {
             "alphaevolve_async_pipeline_topology": False,
@@ -41333,6 +41617,9 @@ def _distributed_pipeline_topology_report(
             "worker_identity_and_fanout": (
                 async_pipeline
                 or evaluator_sample_workers["max_effective_workers"] > 1
+            ),
+            "local_cross_generation_overlap": (
+                cross_generation_overlap["overlap_observed"]
             ),
             "pending_work_checkpoint": False,
             "remaining_gap": [
@@ -41353,13 +41640,273 @@ def _distributed_pipeline_topology_report(
                     else ["evaluation_node_worker_identities"]
                 ),
                 "distributed_evaluator_nodes",
-                "proposal_queue_and_cross_generation_overlap",
+                *(
+                    ["distributed_cross_generation_scheduler"]
+                    if cross_generation_overlap["overlap_observed"]
+                    else ["proposal_queue_and_cross_generation_overlap"]
+                ),
                 "pending_work_checkpoint_state",
             ],
         },
     }
     report["validation"] = validate_distributed_pipeline_topology_report(report)
     return report
+
+
+def _cross_generation_overlap_report(
+    config: Mapping[str, object],
+    *,
+    async_controller_report: Mapping[str, object] | None,
+    async_sampler_controller_report: Mapping[str, object] | None,
+) -> dict:
+    raw_window = config.get("async_generation_window", 1)
+    generation_window = (
+        raw_window
+        if isinstance(raw_window, int)
+        and not isinstance(raw_window, bool)
+        and raw_window >= 1
+        else 1
+    )
+    raw_proposal_count = config.get("proposals_per_generation", 1)
+    proposal_count = (
+        raw_proposal_count
+        if isinstance(raw_proposal_count, int)
+        and not isinstance(raw_proposal_count, bool)
+        and raw_proposal_count >= 1
+        else 1
+    )
+    budget_incompatibility_fields = (
+        _cross_generation_pipeline_budget_incompatibility_fields(config)
+    )
+    budget_compatible = not budget_incompatibility_fields
+    sampler_intervals = _pipeline_generation_task_intervals(
+        async_sampler_controller_report,
+        proposal_count=proposal_count,
+    )
+    evaluation_intervals = _pipeline_generation_task_intervals(
+        async_controller_report,
+        proposal_count=proposal_count,
+    )
+    configured = (
+        generation_window > 1
+        and budget_compatible
+        and bool(sampler_intervals)
+        and bool(evaluation_intervals)
+    )
+    records: list[dict] = []
+    if configured:
+        for evaluation_generation, evaluation in sorted(
+            evaluation_intervals.items()
+        ):
+            for sampler_generation, sampler in sorted(
+                sampler_intervals.items()
+            ):
+                generation_distance = sampler_generation - evaluation_generation
+                if not 0 < generation_distance < generation_window:
+                    continue
+                overlap_sec = _task_interval_overlap_sec(
+                    evaluation["task_intervals"],
+                    sampler["task_intervals"],
+                )
+                if overlap_sec <= 0.0:
+                    continue
+                records.append(
+                    {
+                        "evaluation_generation": evaluation_generation,
+                        "sampler_generation": sampler_generation,
+                        "generation_distance": generation_distance,
+                        "overlap_sec": round(overlap_sec, 9),
+                        "evaluation_task_count": evaluation["task_count"],
+                        "sampler_task_count": sampler["task_count"],
+                    }
+                )
+    admission_records = (
+        async_controller_report.get("admission_records")
+        if isinstance(async_controller_report, Mapping)
+        and isinstance(async_controller_report.get("admission_records"), list)
+        else []
+    )
+    admission_sequences = [
+        record.get("submission_order")
+        for record in admission_records
+        if isinstance(record, Mapping)
+        and isinstance(record.get("submission_order"), int)
+        and not isinstance(record.get("submission_order"), bool)
+    ]
+    deterministic_admission_order = (
+        admission_sequences == sorted(admission_sequences)
+        and len(admission_sequences) == len(set(admission_sequences))
+    )
+    observed = bool(records)
+    report = {
+        "schema": "libreevolve.cross_generation_overlap_report.v1",
+        "source": "process_local_sampler_and_evaluator_task_intervals",
+        "configured_generation_window": generation_window,
+        "configured": generation_window > 1,
+        "budget_compatible": budget_compatible,
+        "budget_incompatibility_fields": budget_incompatibility_fields,
+        "active": configured,
+        "parent_archive_snapshot_policy": (
+            "later_generation_prompts_use_pre_window_drain_archive_state"
+            if generation_window > 1 and budget_compatible
+            else "generation_barrier_before_later_generation_sampling"
+        ),
+        "search_state_snapshot_policy": (
+            "later_generation_parent_inspiration_prompt_program_prompt_reward_"
+            "and_sampler_reward_state_pre_window_drain"
+            if generation_window > 1 and budget_compatible
+            else "generation_barrier_before_later_generation_search_state_sampling"
+        ),
+        "generation_finalization_policy": (
+            "generation_grouped_global_submission_order_before_migration_and_end_hooks"
+            if generation_window > 1 and budget_compatible
+            else "generation_barrier_before_migration_and_end_hooks"
+        ),
+        "timing_clock": "time.perf_counter_process_local",
+        "sampler_generation_interval_count": len(sampler_intervals),
+        "evaluation_generation_interval_count": len(evaluation_intervals),
+        "overlap_observed": observed,
+        "observed_generation_pair_count": len(records),
+        "observed_max_inflight_generations": (
+            max(
+                record["generation_distance"] + 1
+                for record in records
+            )
+            if records
+            else 1
+        ),
+        "deterministic_admission_order": deterministic_admission_order,
+        "generation_pair_records": records[:100],
+        "generation_pair_records_truncated": len(records) > 100,
+        "claim_ready": False,
+        "claim_readiness": {
+            "bounded_local_cross_generation_overlap": observed,
+            "distributed_cross_generation_scheduler": False,
+            "pending_work_checkpoint_and_resume": False,
+            "remaining_gap": [
+                *(
+                    []
+                    if observed
+                    else ["observed_cross_generation_sampler_evaluator_overlap"]
+                ),
+                *(
+                    []
+                    if budget_compatible
+                    else [
+                        "finite_detailed_evaluator_budget_requires_generation_barrier"
+                    ]
+                ),
+                "distributed_cross_generation_scheduler",
+                "pending_work_checkpoint_and_resume",
+                "provider_output_replay",
+            ],
+        },
+    }
+    return report
+
+
+def _pipeline_generation_task_intervals(
+    controller_report: Mapping[str, object] | None,
+    *,
+    proposal_count: int,
+) -> dict[int, dict[str, object]]:
+    task_records = (
+        controller_report.get("task_records")
+        if isinstance(controller_report, Mapping)
+        and isinstance(controller_report.get("task_records"), list)
+        else []
+    )
+    intervals: dict[int, dict[str, object]] = {}
+    for record in task_records:
+        if not isinstance(record, Mapping):
+            continue
+        sequence = record.get("submission_order")
+        started = record.get("started_monotonic_sec")
+        finished = record.get("finished_monotonic_sec")
+        if (
+            isinstance(sequence, bool)
+            or not isinstance(sequence, int)
+            or sequence < 0
+            or isinstance(started, bool)
+            or not isinstance(started, (int, float))
+            or not math.isfinite(float(started))
+            or isinstance(finished, bool)
+            or not isinstance(finished, (int, float))
+            or not math.isfinite(float(finished))
+            or float(finished) < float(started)
+        ):
+            continue
+        generation = sequence // proposal_count + 1
+        interval = intervals.setdefault(
+            generation,
+            {
+                "started_monotonic_sec": float(started),
+                "finished_monotonic_sec": float(finished),
+                "task_count": 0,
+                "task_intervals": [],
+            },
+        )
+        interval["started_monotonic_sec"] = min(
+            float(interval["started_monotonic_sec"]),
+            float(started),
+        )
+        interval["finished_monotonic_sec"] = max(
+            float(interval["finished_monotonic_sec"]),
+            float(finished),
+        )
+        interval["task_count"] = int(interval["task_count"]) + 1
+        task_intervals = interval["task_intervals"]
+        assert isinstance(task_intervals, list)
+        task_intervals.append((float(started), float(finished)))
+    return intervals
+
+
+def _task_interval_overlap_sec(
+    left: object,
+    right: object,
+) -> float:
+    left_intervals = _merge_task_intervals(left)
+    right_intervals = _merge_task_intervals(right)
+    left_index = 0
+    right_index = 0
+    overlap = 0.0
+    while left_index < len(left_intervals) and right_index < len(right_intervals):
+        left_start, left_finish = left_intervals[left_index]
+        right_start, right_finish = right_intervals[right_index]
+        overlap += max(
+            0.0,
+            min(left_finish, right_finish) - max(left_start, right_start),
+        )
+        if left_finish <= right_finish:
+            left_index += 1
+        else:
+            right_index += 1
+    return overlap
+
+
+def _merge_task_intervals(value: object) -> list[tuple[float, float]]:
+    if not isinstance(value, list):
+        return []
+    normalized = sorted(
+        (float(item[0]), float(item[1]))
+        for item in value
+        if isinstance(item, (tuple, list))
+        and len(item) == 2
+        and isinstance(item[0], (int, float))
+        and not isinstance(item[0], bool)
+        and math.isfinite(float(item[0]))
+        and isinstance(item[1], (int, float))
+        and not isinstance(item[1], bool)
+        and math.isfinite(float(item[1]))
+        and float(item[1]) >= float(item[0])
+    )
+    merged: list[tuple[float, float]] = []
+    for started, finished in normalized:
+        if not merged or started > merged[-1][1]:
+            merged.append((started, finished))
+            continue
+        merged[-1] = (merged[-1][0], max(merged[-1][1], finished))
+    return merged
 
 
 def _pipeline_llm_sampler_node(
@@ -41634,6 +42181,7 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
         "dispatch_policy",
         "throughput_budget_linkage",
         "pending_work_checkpoint",
+        "cross_generation_overlap",
         "claim_ready",
         "claim_readiness",
     }
@@ -41647,7 +42195,9 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
         )
     if report.get("schema") != "libreevolve.distributed_pipeline_topology_report.v1":
         issues.append({"code": "invalid_schema", "message": "pipeline topology schema is unsupported"})
-    if report.get("source") != "startup_manifest_config_and_runtime_budget":
+    if report.get("source") != (
+        "startup_manifest_config_runtime_budget_and_controller_reports"
+    ):
         issues.append({"code": "invalid_source", "message": "pipeline topology source is unsupported"})
     dispatch = report.get("dispatch_policy")
     async_pipeline = (
@@ -41796,6 +42346,306 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
             issues.append({"code": "invalid_async_merge_order", "message": "async merge order does not match enabled queues"})
     elif dispatch.get("asyncio_pipeline") is not False:
         issues.append({"code": "invalid_asyncio_pipeline", "message": "asyncio_pipeline must be boolean"})
+    cross_generation = report.get("cross_generation_overlap")
+    cross_generation_observed = False
+    if not isinstance(cross_generation, Mapping):
+        issues.append(
+            {
+                "code": "invalid_cross_generation_overlap",
+                "message": "cross_generation_overlap must be an object",
+            }
+        )
+    else:
+        if cross_generation.get("schema") != (
+            "libreevolve.cross_generation_overlap_report.v1"
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_overlap_schema",
+                    "message": "cross-generation overlap schema is unsupported",
+                }
+            )
+        window = cross_generation.get("configured_generation_window")
+        if (
+            isinstance(window, bool)
+            or not isinstance(window, int)
+            or window < 1
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_window",
+                    "message": "configured generation window is invalid",
+                }
+            )
+            window = 1
+        configured_value = cross_generation.get("configured")
+        if (
+            not isinstance(configured_value, bool)
+            or configured_value is not (window > 1)
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_configured",
+                    "message": "configured must match the generation window",
+                }
+            )
+        budget_compatible = cross_generation.get("budget_compatible")
+        budget_incompatibility_fields = cross_generation.get(
+            "budget_incompatibility_fields"
+        )
+        valid_budget_fields = set(
+            _CROSS_GENERATION_UNRESERVABLE_EVALUATOR_BUDGET_FIELDS
+        )
+        if (
+            not isinstance(budget_incompatibility_fields, list)
+            or any(
+                not isinstance(field, str) or field not in valid_budget_fields
+                for field in budget_incompatibility_fields
+            )
+            or len(budget_incompatibility_fields)
+            != len(set(budget_incompatibility_fields))
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_budget_fields",
+                    "message": "budget incompatibility fields are invalid",
+                }
+            )
+            budget_incompatibility_fields = []
+        expected_budget_compatible = not budget_incompatibility_fields
+        if (
+            not isinstance(budget_compatible, bool)
+            or budget_compatible is not expected_budget_compatible
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_budget_compatibility",
+                    "message": "budget compatibility does not match its fields",
+                }
+            )
+        active = cross_generation.get("active")
+        if not isinstance(active, bool):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_active",
+                    "message": "active must be boolean",
+                }
+            )
+            active = False
+        interval_counts: dict[str, int] = {}
+        for field in (
+            "sampler_generation_interval_count",
+            "evaluation_generation_interval_count",
+        ):
+            count = cross_generation.get(field)
+            if isinstance(count, bool) or not isinstance(count, int) or count < 0:
+                issues.append(
+                    {
+                        "code": "invalid_cross_generation_interval_count",
+                        "message": f"{field} is invalid",
+                    }
+                )
+                count = 0
+            interval_counts[field] = count
+        if active and (
+            window <= 1
+            or budget_compatible is not True
+            or not async_sampler_pipeline
+            or not async_evaluation_pipeline
+            or interval_counts["sampler_generation_interval_count"] == 0
+            or interval_counts["evaluation_generation_interval_count"] == 0
+        ):
+            issues.append(
+                {
+                    "code": "cross_generation_active_overclaim",
+                    "message": "active overlap lacks compatible pipeline evidence",
+                }
+            )
+        observed_value = cross_generation.get("overlap_observed")
+        if not isinstance(observed_value, bool):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_observed",
+                    "message": "overlap_observed must be boolean",
+                }
+            )
+        else:
+            cross_generation_observed = observed_value
+        records = cross_generation.get("generation_pair_records")
+        if not isinstance(records, list):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_records",
+                    "message": "generation_pair_records must be a list",
+                }
+            )
+            records = []
+        pair_count = cross_generation.get("observed_generation_pair_count")
+        if (
+            isinstance(pair_count, bool)
+            or not isinstance(pair_count, int)
+            or pair_count < len(records)
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_pair_count",
+                    "message": "observed pair count cannot be smaller than retained records",
+                }
+            )
+            pair_count = 0
+        records_truncated = cross_generation.get("generation_pair_records_truncated")
+        if not isinstance(records_truncated, bool):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_truncation",
+                    "message": "generation_pair_records_truncated must be boolean",
+                }
+            )
+            records_truncated = False
+        if (
+            (records_truncated and pair_count <= len(records))
+            or (not records_truncated and pair_count != len(records))
+        ):
+            issues.append(
+                {
+                    "code": "cross_generation_pair_count_mismatch",
+                    "message": "pair count and truncation metadata do not reconcile",
+                }
+            )
+        retained_pairs: set[tuple[int, int]] = set()
+        retained_max_inflight = 1
+        invalid_pair_record = False
+        for index, record in enumerate(records):
+            if not isinstance(record, Mapping):
+                invalid_pair_record = True
+                issues.append(
+                    {
+                        "code": "invalid_cross_generation_record",
+                        "message": f"generation-pair record {index} is invalid",
+                    }
+                )
+                continue
+            evaluation_generation = record.get("evaluation_generation")
+            sampler_generation = record.get("sampler_generation")
+            generation_distance = record.get("generation_distance")
+            pair_valid = (
+                isinstance(evaluation_generation, int)
+                and not isinstance(evaluation_generation, bool)
+                and evaluation_generation >= 1
+                and isinstance(sampler_generation, int)
+                and not isinstance(sampler_generation, bool)
+                and sampler_generation >= 1
+                and isinstance(generation_distance, int)
+                and not isinstance(generation_distance, bool)
+                and generation_distance
+                == sampler_generation - evaluation_generation
+                and 0 < generation_distance < window
+            )
+            if not pair_valid:
+                invalid_pair_record = True
+                issues.append(
+                    {
+                        "code": "invalid_cross_generation_pair",
+                        "message": f"generation-pair record {index} identity is invalid",
+                    }
+                )
+            else:
+                pair = (evaluation_generation, sampler_generation)
+                if pair in retained_pairs:
+                    invalid_pair_record = True
+                    issues.append(
+                        {
+                            "code": "duplicate_cross_generation_pair",
+                            "message": f"generation-pair record {index} is duplicated",
+                        }
+                    )
+                retained_pairs.add(pair)
+                retained_max_inflight = max(
+                    retained_max_inflight,
+                    generation_distance + 1,
+                )
+            for field in ("evaluation_task_count", "sampler_task_count"):
+                task_count = record.get(field)
+                if (
+                    isinstance(task_count, bool)
+                    or not isinstance(task_count, int)
+                    or task_count < 1
+                ):
+                    invalid_pair_record = True
+                    issues.append(
+                        {
+                            "code": "invalid_cross_generation_task_count",
+                            "message": f"generation-pair record {index} {field} is invalid",
+                        }
+                    )
+            overlap_sec = record.get("overlap_sec")
+            if (
+                isinstance(overlap_sec, bool)
+                or not isinstance(overlap_sec, (int, float))
+                or not math.isfinite(float(overlap_sec))
+                or float(overlap_sec) <= 0.0
+            ):
+                invalid_pair_record = True
+                issues.append(
+                    {
+                        "code": "invalid_cross_generation_overlap_seconds",
+                        "message": f"generation-pair record {index} overlap is invalid",
+                    }
+                )
+        if cross_generation_observed is not (pair_count > 0):
+            issues.append(
+                {
+                    "code": "cross_generation_observed_count_mismatch",
+                    "message": "observed flag must match the generation-pair count",
+                }
+            )
+        observed_max_inflight = cross_generation.get(
+            "observed_max_inflight_generations"
+        )
+        if (
+            isinstance(observed_max_inflight, bool)
+            or not isinstance(observed_max_inflight, int)
+            or observed_max_inflight < retained_max_inflight
+            or (pair_count == 0 and observed_max_inflight != 1)
+        ):
+            issues.append(
+                {
+                    "code": "invalid_cross_generation_max_inflight",
+                    "message": "observed max in-flight generations is invalid",
+                }
+            )
+        if cross_generation_observed and (
+            window <= 1
+            or active is not True
+            or budget_compatible is not True
+            or not async_sampler_pipeline
+            or not async_evaluation_pipeline
+            or not records
+            or invalid_pair_record
+            or cross_generation.get("deterministic_admission_order") is not True
+        ):
+            issues.append(
+                {
+                    "code": "cross_generation_overlap_overclaim",
+                    "message": "observed overlap lacks bounded sampler/evaluator evidence",
+                }
+            )
+        if cross_generation.get("claim_ready") is not False:
+            issues.append(
+                {
+                    "code": "cross_generation_claim_ready_overclaim",
+                    "message": "local overlap must not claim full readiness",
+                }
+            )
+    if isinstance(dispatch, Mapping) and dispatch.get(
+        "cross_generation_evaluation_overlap"
+    ) is not cross_generation_observed:
+        issues.append(
+            {
+                "code": "cross_generation_dispatch_mismatch",
+                "message": "dispatch overlap flag must match observed evidence",
+            }
+        )
     if async_pipeline:
         expected_controller = (
             "single_process_asyncio_llm_sampling_and_candidate_evaluation"
@@ -41892,6 +42742,15 @@ def validate_distributed_pipeline_topology_report(report: object) -> dict:
             issues.append({"code": "async_sampler_readiness_mismatch", "message": "candidate generation async readiness must match topology evidence"})
         if readiness.get("candidate_evaluation_asyncio_pipeline") is not async_evaluation_pipeline:
             issues.append({"code": "async_pipeline_readiness_mismatch", "message": "candidate async readiness must match topology evidence"})
+        if readiness.get("local_cross_generation_overlap") is not (
+            cross_generation_observed
+        ):
+            issues.append(
+                {
+                    "code": "cross_generation_readiness_mismatch",
+                    "message": "cross-generation readiness must match observed evidence",
+                }
+            )
     return {
         "schema": "libreevolve.distributed_pipeline_topology_report.v1",
         "ok": not issues,
@@ -41905,6 +42764,7 @@ def _runtime_controller_state(
     *,
     async_controller_report: Mapping[str, object] | None = None,
     async_sampler_controller_report: Mapping[str, object] | None = None,
+    cross_generation_overlap_report: Mapping[str, object] | None = None,
 ) -> dict:
     event_stream = _controller_budget_event_stream_summary(
         run_dir / "controller_budget_events.jsonl"
@@ -41922,6 +42782,12 @@ def _runtime_controller_state(
         == "libreevolve.async_llm_sampler_controller.v1"
         and isinstance(async_sampler_controller_report.get("validation"), Mapping)
         and async_sampler_controller_report["validation"].get("ok") is True
+    )
+    cross_generation_overlap = (
+        async_sampler_mode
+        and async_evaluation_mode
+        and isinstance(cross_generation_overlap_report, Mapping)
+        and cross_generation_overlap_report.get("overlap_observed") is True
     )
     state = {
         "schema": "libreevolve.controller_state.v1",
@@ -41964,7 +42830,11 @@ def _runtime_controller_state(
         "limitations": (
             [
                 "local_async_sampler_and_evaluator_not_distributed",
-                "batch_scoped_sampler_dependencies_not_cross_generation",
+                *(
+                    ["bounded_local_cross_generation_window_not_distributed_scheduler"]
+                    if cross_generation_overlap
+                    else ["batch_scoped_sampler_dependencies_not_cross_generation"]
+                ),
                 "no_mid_generation_resume_boundary",
                 "provider_outputs_not_replayed",
                 "plugin_internal_pending_work_reported_separately",
@@ -42004,6 +42874,11 @@ def _runtime_controller_state(
         state["async_llm_sampler"] = copy.deepcopy(
             dict(async_sampler_controller_report)
         )
+    state["cross_generation_overlap"] = (
+        copy.deepcopy(dict(cross_generation_overlap_report))
+        if isinstance(cross_generation_overlap_report, Mapping)
+        else None
+    )
     state["validation"] = validate_controller_state_snapshot(state)
     return state
 

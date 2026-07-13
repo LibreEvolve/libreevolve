@@ -14,7 +14,7 @@ DISTRIBUTED_PIPELINE_RUNTIME_REPORT_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.6",)
-EXPECTED_BOUNDARY_STATUS = "local_async_sampler_and_candidate_evaluation_partial"
+EXPECTED_BOUNDARY_STATUS = "local_cross_generation_async_pipeline_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "asyncio_runtime_identity",
     "controller_node_identity",
@@ -30,6 +30,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "scheduler_state_snapshot",
     "worker_lifecycle_liveness",
     "deterministic_async_completion_admission_order",
+    "bounded_cross_generation_proposal_evaluation_overlap",
     "throughput_budget_linkage",
     "pending_work_checkpoint",
     "async_topology_claim_readiness",
@@ -50,6 +51,11 @@ EXPECTED_IMPLEMENTED_EVIDENCE = {
     "candidate_completion_order": "recorded_per_task",
     "deterministic_candidate_admission_order": "submission_order_merge_recorded",
     "candidate_dispatch_throughput_telemetry": "recorded_in_controller_report",
+    "async_generation_window": "bounded_opt_in_one_through_sixty_four",
+    "process_local_task_interval_telemetry": "recorded_in_both_controller_reports",
+    "cross_generation_proposal_evaluation_overlap": "derived_from_exact_merged_task_interval_union_intersection",
+    "cross_generation_search_state_policy": "later_parent_inspiration_prompt_program_prompt_reward_and_sampler_reward_state_is_pre_window_drain",
+    "cross_generation_detailed_evaluator_budget_guard": "finite_non_evaluation_count_evaluator_limits_retain_generation_barrier",
 }
 EXPECTED_MISSING_EVIDENCE = {
     "dependency_wait_event_telemetry": "not_recorded_locally",
@@ -57,7 +63,6 @@ EXPECTED_MISSING_EVIDENCE = {
     "full_cross_generation_dependency_graph": "not_recorded_locally",
     "async_scheduler_state_snapshot": "not_recorded_locally",
     "pending_work_checkpoint_state": "not_recorded_locally",
-    "cross_generation_proposal_evaluation_overlap": "not_recorded_locally",
     "cross_process_shared_state_coordination": "not_recorded_locally",
     "provider_output_replay": "not_recorded_locally",
 }
@@ -105,10 +110,17 @@ def distributed_pipeline_topology_boundary_record() -> dict[str, Any]:
             "loops. Sampler tasks own distinct LLM ensembles, can complete out "
             "of order, and merge in proposal order before serial shared-state "
             "commit; evaluator tasks retain the same ordered-admission policy. "
+            "With an async generation window above one, later-generation "
+            "sampler work can overlap prior-generation evaluator work while "
+            "using explicitly stale pre-drain archive, prompt-program/reward, "
+            "and sampler-reward state; process-"
+            "local monotonic task-interval unions prove exact observed "
+            "generation-pair overlap, finite detailed evaluator budgets retain "
+            "the generation barrier, and admissions plus generation "
+            "finalization remain ordered. "
             "It does not claim distributed evaluator workers, a full cross-"
             "generation dependency graph, dependency wait-event telemetry, "
-            "async scheduler checkpoints, cross-generation proposal/evaluation "
-            "overlap, provider-output replay, cross-process shared-state "
+            "async scheduler checkpoints, provider-output replay, cross-process shared-state "
             "coordination, or pending-work checkpoint state."
         ),
     }
@@ -157,8 +169,10 @@ def validate_distributed_pipeline_topology_boundary(
         or "bounded queues on local Python asyncio event loops" not in boundary_text
         or "Sampler tasks own distinct LLM ensembles" not in boundary_text
         or "merge in proposal order" not in boundary_text
+        or "later-generation sampler work can overlap" not in boundary_text
+        or "task-interval unions prove exact observed" not in boundary_text
+        or "finite detailed evaluator budgets retain" not in boundary_text
         or "dependency wait-event telemetry" not in boundary_text
-        or "cross-generation proposal/evaluation overlap" not in boundary_text
         or "pending-work checkpoint state" not in boundary_text
     ):
         issues.append(_issue("missing_claim_boundary", "claim_boundary must state that this does not claim AlphaEvolve topology parity"))

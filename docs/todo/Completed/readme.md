@@ -15974,3 +15974,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining boundary: README keeps Sections 3.3-5, Figures 6-14, Table 3,
     detailed appendices, source-detail exhaustiveness, and independent result
     reproduction outside the completed claim walk.
+- [x] Document the bounded AlphaEvolve Section 3.3.1/Figure 6 scheduling inventory.
+  - Status: README now identifies the 45-claim scheduling inventory, its 19
+    partial, 14 absent, and 12 undemonstrated split, and active TODO ownership
+    for every gap.
+  - Combined boundary: README now reports 240 bounded paper claims across five
+    inventories: 21 local, 82 partial, 27 absent, and 110 undemonstrated,
+    leaving 219 gaps.
+  - Remaining boundary: README keeps Sections 3.3.2-5, Figures 7-14, Table 3,
+    detailed appendices, source-detail exhaustiveness, and independent result
+    reproduction outside the completed claim walk.

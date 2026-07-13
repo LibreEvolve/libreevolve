@@ -18,13 +18,13 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     )
     assert boundary["schema"] == TODO_CANONICAL_GAP_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
-    assert boundary["raw_todo_ledger_active_count"] == 510
-    assert boundary["raw_todo_ledger_completed_count"] == 4767
-    assert boundary["raw_todo_ledger_total_count"] == 5277
+    assert boundary["raw_todo_ledger_active_count"] == 512
+    assert boundary["raw_todo_ledger_completed_count"] == 4771
+    assert boundary["raw_todo_ledger_total_count"] == 5283
     assert boundary["exact_duplicate_group_count"] == 123
     assert boundary["exact_duplicate_record_count"] == 246
     assert boundary["exact_duplicate_inflation_count"] == 123
-    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5154
+    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5160
     assert boundary["exact_duplicate_cross_owner_group_count"] == 122
     assert boundary["exact_duplicate_completed_only_group_count"] == 123
     assert boundary["exact_duplicate_active_involved_group_count"] == 0
@@ -35,7 +35,7 @@ def test_todo_canonical_gap_boundary_accepts_bounded_matrix():
     )
     assert boundary["exact_duplicate_raw_count_inflation_report"][
         "inflation_percent_of_raw_total"
-    ] == 2.331
+    ] == 2.328
     assert boundary["exact_duplicate_owner_status_report"][
         "canonical_owner_assignments_ready"
     ] is False

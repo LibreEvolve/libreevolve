@@ -419,6 +419,16 @@ Important limits:
   formulation provenance. It is an inventory boundary, not Figure 5, Appendix
   B, or mathematical-result reproduction; the checked sidecar is
   `papers/alphaevolve_math_result_claim_inventory_boundary.json`.
+- The bounded Section 3.3 opening/Section 3.3.1/Figure 6 scheduling inventory
+  records 45 PDF-anchored claims: 19 partial, 14 not implemented, and 12 not
+  demonstrated, with active TODO ownership for all 45 gaps. It covers the
+  Borg problem context, vector-bin-packing formulation, ranking-only safety,
+  simulator/held-out/deployment claims, incumbent and deep-RL comparisons,
+  exact Figure 6 code terms, 0%-100% residual axes, and yellow-high/purple-low
+  legend semantics. It is an inventory boundary, not a Borg fixture, Google
+  workload/capacity evidence, fleet result, or Figure 6 reproduction; the
+  checked sidecar is
+  `papers/alphaevolve_scheduling_claim_inventory_boundary.json`.
 - Figure 5 constructive-math exhibit provenance remains absent: README
   describes Appendix B family/status coverage, smoke-fixture boundaries, and
   constructive-math absence boundaries, not main-text Figure 5 exhibit ids,

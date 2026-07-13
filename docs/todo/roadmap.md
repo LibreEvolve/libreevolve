@@ -101,7 +101,7 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     raw checklist completion, an exact normalized-title duplicate scan, and a
     bounded exact-title raw-count inflation report. That report records 123
     exact-title duplicate groups, 246 duplicate records, 123 inflated raw
-    checklist rows, and a 5154 collapsed exact-title total estimate. It also
+    checklist rows, and a 5160 collapsed exact-title total estimate. It also
     records an exact owner/status profile: all 123 exact-title duplicate
     groups are completed-only, 122 groups are cross-owner duplicates, one
     group is same-owner, and zero exact-title duplicate groups involve active
@@ -183,8 +183,12 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     exact-page Section 3.2 and Figure 5 dispositions: 2 locally implemented,
     16 partial, 4 not implemented, and 41 not demonstrated, with live TODO
     ownership for all 61 gaps and a checked source-fidelity correction. The
-    bounded claim-level ROADMAP surface therefore covers 195 claims: 21 locally
-    implemented, 63 partial, 13 not implemented, and 98 not demonstrated.
+    `papers/alphaevolve_scheduling_claim_inventory_boundary.json` now adds 45
+    exact-page Section 3.3 opening, Section 3.3.1, and Figure 6 dispositions:
+    none locally implemented, 19 partial, 14 not implemented, and 12 not
+    demonstrated, with live TODO ownership for all 45 gaps. The bounded
+    claim-level ROADMAP surface therefore covers 240 claims: 21 locally
+    implemented, 82 partial, 27 not implemented, and 110 not demonstrated.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -198,15 +202,15 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
     bounded eight-criterion exhaustiveness gate that credits the named PDF
-    structure walk and all four bounded claim inventories while preserving
+    structure walk and all five bounded claim inventories while preserving
     remaining claim-level work for the figure/table/appendix matrix,
-    Sections 3.3-5 and the application-result claim matrix,
+    Sections 3.3.2-5 and the remaining application-result claim matrix,
     status-row disposition map, span status classification, missing/partial
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 195 bounded system/context/matrix-result/
-    constructive-math claims have claim-level mappings. The matrix is not
+    sections, and phases, and 240 bounded system/context/matrix-result/
+    constructive-math/scheduling claims have claim-level mappings. The matrix is not
     exhaustive across the rest of
     the paper: it
     does not extract every remaining

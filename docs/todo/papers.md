@@ -31,13 +31,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact-page Section 3.2 and Figure 5 claims: 2 locally implemented, 16
     partial, 4 not implemented, and 41 not demonstrated, with live ownership
     for all 61 gaps and an explicit correction of a false local verification-
-    sentence attribution. Combined coverage is 195 claims: 21 implemented, 63
-    partial, 13 not implemented, and 98 not demonstrated. The
+    sentence attribution. The
+    `papers/alphaevolve_scheduling_claim_inventory_boundary.json` adds 45
+    exact-page Section 3.3 opening, Section 3.3.1, and Figure 6 claims: none
+    locally implemented, 19 partial, 14 not implemented, and 12 not
+    demonstrated, with live ownership for all 45 gaps. Combined coverage is
+    240 claims: 21 implemented, 82 partial, 27 not implemented, and 110 not
+    demonstrated. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 195-claim inventory deliberately excludes
-    Sections 3.3-5 claims, Figures 6-14, Table 3, detailed appendices,
+  - Current gap: the combined 240-claim inventory deliberately excludes
+    Sections 3.3.2-5 claims, Figures 7-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.
@@ -4808,6 +4813,26 @@ directory and using the AlphaEvolve paper as the primary specification.
     and black-box-baseline comparison before claiming AlphaEvolve-comparable
     mission-critical scheduling readiness.
 
+- [ ] Track Borg incumbent-evolution and learned-policy comparator evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.1 says the
+    discovered heuristic evolved from the production incumbent and that its
+    code solution was chosen over deep reinforcement learning because it
+    performed better while offering interpretability, debuggability,
+    predictability, and ease of deployment.
+  - Current gap: the Figure 6 boundary asks for production-baseline identity,
+    and scheduling deployment-readiness metadata asks for a learned-policy
+    comparison, but no paper-facing record joins the production incumbent,
+    evolved candidate, and learned policy under matched workload/capacity
+    snapshots, simulator identity, metric definitions, denominators, and
+    comparison windows. There is also no reviewed operational-quality rubric
+    or selection-decision artifact.
+  - Required result: publish a comparator record and artifact inventory with
+    stable identities and hashes for all three alternatives, matched simulator
+    and held-out inputs, calibrated performance results, operational-quality
+    criteria, reviewer provenance, and the deployment-selection decision.
+    Keep this evidence distinct from a generic baseline label or an unpopulated
+    learned-policy-comparison field.
+
 - [ ] Track Figure 6 scheduling-heuristic exhibit provenance as paper
       evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 6 shows the concrete
@@ -4823,16 +4848,21 @@ directory and using the AlphaEvolve paper as the primary specification.
     deployment links are required evidence.
     `papers/figure6_scheduling_exhibit_boundary.json` now keeps the
     exhibit-specific contract machine-checked. The paper-facing record still
-    lacks real Figure 6 exhibit rows mapping exact heuristic code, residual-
-    feature definitions and units, heatmap data, rendering parameters, visual
-    artifact paths/hashes, baseline production heuristic identity, simulator/
-    held-out/deployment reports, or a Section 3.3 claim-calibration record.
+    lacks real Figure 6 exhibit rows mapping exact heuristic code and executable
+    equivalence for its two residual definitions, negative sum, and two
+    cross-ratio terms; residual-feature definitions and units; 0%-100% CPU and
+    memory axes; yellow-high/purple-low legend semantics; heatmap data;
+    rendering parameters; visual artifact paths/hashes; baseline production
+    heuristic identity; simulator/held-out/deployment reports; or a Section 3.3
+    claim-calibration record.
   - Required result: add Figure 6-style exhibit metadata with a stable exhibit
     ID, scheduling benchmark/candidate link, exact heuristic source artifact
-    and hash, residual grid/units, baseline heuristic provenance, heatmap data
-    and rendered visual artifacts with hashes, rendering parameters,
-    simulator/held-out/deployment report links, and documentation that
-    separates reproduced systems figures from generic scheduling readiness.
+    and hash, executable formula-equivalence evidence, residual grid/units,
+    0%-100% axis definitions, yellow-high/purple-low legend mapping, baseline
+    heuristic provenance, heatmap data and rendered visual artifacts with
+    hashes, rendering parameters, simulator/held-out/deployment report links,
+    and documentation that separates reproduced systems figures from generic
+    scheduling readiness.
 
 - [ ] Track Figure 7 Pallas tiling-problem exhibit provenance as paper
       evidence.

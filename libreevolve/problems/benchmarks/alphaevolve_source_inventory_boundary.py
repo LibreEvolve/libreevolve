@@ -158,6 +158,7 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
         "roadmap_phase": "longer_term",
         "sidecars": (
             "papers/systems_result_readiness_boundary.json",
+            "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
             "papers/hardware_rtl_eda_evidence_boundary.json",
             "papers/compiler_adoption_path_boundary.json",
         ),

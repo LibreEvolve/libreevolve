@@ -931,9 +931,13 @@ AlphaEvolve reproduction.
   63 Section 3.2 and Figure 5 claims: 2 are locally implemented, 16 partial, 4
   not implemented, and 41 not demonstrated, with live TODO ownership for all
   61 gaps. It also verifies the correction of a locally misattributed blanket
-  verification sentence absent from the pinned source. The four bounded
-  inventories now disposition 195 claims in total: 21 locally implemented, 63
-  partial, 13 not implemented, and 98 not demonstrated,
+  verification sentence absent from the pinned source. The additional
+  `papers/alphaevolve_scheduling_claim_inventory_boundary.json` dispositions
+  45 Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling claims: 19 are
+  partial, 14 not implemented, and 12 not demonstrated, with live TODO
+  ownership for all 45 gaps. The five bounded inventories now disposition 240
+  claims in total: 21 locally implemented, 82 partial, 27 not implemented,
+  and 110 not demonstrated,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
@@ -945,7 +949,7 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus bounded 195-claim coverage,
+  This is complete named-structure coverage plus bounded 240-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,

@@ -14537,3 +14537,16 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: Appendix B detail exhaustiveness, Figure 5 artifacts,
     companion Colab retrieval, mathematical witnesses/certificates,
     independent result verification, and AlphaEvolve parity remain unproven.
+- [x] Add Section 3.3.1 and Figure 6 scheduling claim dispositions.
+  - Paper evidence: the pinned PDF describes the Borg scheduling problem,
+    vector-bin-packing formulation, ranking-only safety, historical simulator,
+    unseen recent workloads, production rollout, 0.7% recovery, deep-RL
+    comparison, and the exact Figure 6 function and heatmap semantics.
+  - Status: `papers/alphaevolve_scheduling_claim_inventory_boundary.json`
+    records 45 exact-page claims with 19 partial, 14 absent, and 12
+    undemonstrated dispositions and active ownership for all 45 gaps.
+  - Remaining paper gap: Borg data/simulator/deployment artifacts, matched
+    comparator evidence, Figure 6 code/heatmap reproduction, independent result
+    verification, Sections 3.3.2-5, and AlphaEvolve parity remain unproven.
+  - Verification: the paper manifest requires the sidecar and rejects source,
+    count, status, reference, ownership, result-reproduction, and parity drift.

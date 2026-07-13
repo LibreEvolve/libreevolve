@@ -14,7 +14,7 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_span_dispositions_plus_195_bounded_claims_without_whole_paper_exhaustiveness"
+        == "named_span_dispositions_plus_240_bounded_claims_without_whole_paper_exhaustiveness"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA
     assert boundary["source_paper_id"] == "2506.13131"
@@ -23,6 +23,9 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
     assert boundary["disposition_source_ref_count"] == 55
     assert boundary["paper_status_row_count"] == 53
     assert boundary["paper_status_row_dispositioned_count"] == 1
+    assert boundary["scheduling_claim_inventory_input"] == (
+        "papers/alphaevolve_scheduling_claim_inventory_boundary.json"
+    )
     assert (
         boundary["paper_status_row_disposition_status"]
         == "paper_index_rows_not_exhaustively_roadmapped"
@@ -56,7 +59,7 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
         "disposition_status": "named_structure_disposition_only",
     }
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "195_bounded_claims_remaining_sections_3_3_to_5_and_remaining_exhibits_appendices_not_recorded",
+        "claim_level_requirement_inventory": "240_bounded_claims_remaining_sections_3_3_2_to_5_and_remaining_exhibits_appendices_not_recorded",
         "application_result_claim_matrix": "not_recorded_locally",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
         "missing_partial_todo_proof": "not_recorded_locally",
@@ -95,7 +98,7 @@ def test_render_roadmap_source_span_disposition_summary_reports_shape():
     assert "ROADMAP source-span disposition boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_span_dispositions_plus_195_bounded_claims_without_whole_paper_exhaustiveness |"
+        "| boundary_status | named_span_dispositions_plus_240_bounded_claims_without_whole_paper_exhaustiveness |"
         in summary
     )
     assert "| disposition_record_count | 55 |" in summary

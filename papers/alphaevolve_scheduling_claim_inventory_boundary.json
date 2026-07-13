@@ -1,0 +1,1843 @@
+{
+  "schema": "libreevolve.alphaevolve_scheduling_claim_inventory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "boundary_status": "section_3_3_1_figure_6_claim_inventory_complete_without_borg_fixture_or_result_reproduction",
+  "scheduling_claim_inventory_ready": true,
+  "alphaevolve_scheduling_result_reproduction_claim_ready": false,
+  "alphaevolve_parity_claim_ready": false,
+  "source_artifact": {
+    "path": "papers/2506.13131__AlphaEvolve.pdf",
+    "exists": true,
+    "expected_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "actual_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "expected_page_count": 44,
+    "page_count": 44,
+    "identity_ok": true,
+    "error": null
+  },
+  "source_inventory_schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+  "source_inventory_span_count": 55,
+  "source_span_ids": [
+    "section_3_3",
+    "section_3_3_1",
+    "figure_6"
+  ],
+  "inventory_scope": {
+    "included": [
+      "the Section 3.3 opening mission-critical-infrastructure claim",
+      "all substantive Section 3.3.1 scheduling context, formulation, safety, discovery, evaluation, production-result, comparator, and deployment claims",
+      "Figure 6 function signature, two residual definitions, negative score sum, both cross-ratio terms, workload/capacity tailoring, visualization, axis ranges, and legend semantics"
+    ],
+    "excluded": [
+      "Sections 3.3.2 through 3.3.4 and Figure 7",
+      "Sections 4 through 6, Figures 8 through 14, Table 3, appendices, citations, and bibliography details",
+      "a real Borg-compatible scheduler, Google workload/capacity data, simulator, production incumbent, deep-reinforcement-learning comparator, or fleet deployment",
+      "independent reproduction of Figure 6, the 0.7% result, or any production claim",
+      "AlphaEvolve production scale or system parity"
+    ]
+  },
+  "claim_count": 45,
+  "expected_claim_count": 45,
+  "category_counts": {
+    "figure_6_code": 6,
+    "figure_6_exhibit": 6,
+    "scheduling_comparator_and_deployment": 7,
+    "scheduling_discovery_and_evaluation": 5,
+    "scheduling_formulation": 6,
+    "scheduling_problem_context": 7,
+    "scheduling_production_result": 5,
+    "scheduling_safety": 2,
+    "systems_application_scope": 1
+  },
+  "implementation_status_counts": {
+    "not_demonstrated": 12,
+    "not_implemented": 14,
+    "partially_implemented": 19
+  },
+  "implemented_local_count": 0,
+  "implementation_gap_count": 45,
+  "todo_owned_gap_count": 45,
+  "missing_anchor_count": 0,
+  "missing_reference_count": 0,
+  "claim_records": [
+    {
+      "claim_id": "section3_3_mission_critical_infrastructure_real_world_impact",
+      "source_span_id": "section_3_3",
+      "source_page": 13,
+      "source_anchor": "improve performance of mission-critical infrastructure and deliver real-world impact",
+      "source_anchor_present": true,
+      "claim": "Demonstrate performance improvements to mission-critical infrastructure with real-world impact.",
+      "category": "systems_application_scope",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_google_scale_borg_scheduling_problem",
+      "source_span_id": "section_3_3_1",
+      "source_page": 13,
+      "source_anchor": "Efficiently scheduling compute jobs onto a cluster of machines is a critical optimization problem",
+      "source_anchor_present": true,
+      "claim": "Provide a Google-scale Borg-style compute-job scheduling problem.",
+      "category": "scheduling_problem_context",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_assign_jobs_from_requirements_and_capacity",
+      "source_span_id": "section_3_3_1",
+      "source_page": 13,
+      "source_anchor": "assigning jobs to available machines based on job resource requirements and machine capacity",
+      "source_anchor_present": true,
+      "claim": "Implement scheduling over available machines using job requirements and machine capacity.",
+      "category": "scheduling_problem_context",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_inefficient_assignments_strand_resources",
+      "source_span_id": "section_3_3_1",
+      "source_page": 13,
+      "source_anchor": "Inefficient assignments can result in stranded resources",
+      "source_anchor_present": true,
+      "claim": "Represent stranded resources as the scheduling optimization motivation.",
+      "category": "scheduling_problem_context",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_one_resource_exhausted_other_resource_free",
+      "source_span_id": "section_3_3_1",
+      "source_page": 13,
+      "source_anchor": "when a machine can no longer accept jobs because it has run out of one kind of resource",
+      "source_anchor_present": true,
+      "claim": "Model machines that cannot accept jobs after one resource is exhausted while another remains free.",
+      "category": "scheduling_problem_context",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_more_jobs_same_compute_footprint",
+      "source_span_id": "section_3_3_1",
+      "source_page": 13,
+      "source_anchor": "allowing more jobs to be completed on the same amount",
+      "source_anchor_present": true,
+      "claim": "Measure whether recovered stranded resources complete more jobs within the same compute footprint.",
+      "category": "scheduling_problem_context",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_growth_without_proportional_resource_increase",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "accommodate growing compute needs without a proportional increase in resource consumption",
+      "source_anchor_present": true,
+      "claim": "Calibrate scheduling efficiency against growth without proportional resource consumption.",
+      "category": "scheduling_problem_context",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_debuggability_scale_and_bin_packing_challenge",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "debuggability and scale, on top of the classically difficult bin-packing problem",
+      "source_anchor_present": true,
+      "claim": "Preserve debuggability, scale, and bin-packing difficulty in scheduling evidence.",
+      "category": "scheduling_problem_context",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_online_two_variable_vector_bin_packing",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "framing the online job scheduling problem as a vector bin-packing problem with two variables",
+      "source_anchor_present": true,
+      "claim": "Require an online two-variable vector-bin-packing formulation.",
+      "category": "scheduling_formulation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_machines_bins_cpu_memory_capacity",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "machines represent bins with defined capacities for CPU and memory",
+      "source_anchor_present": true,
+      "claim": "Represent machines as bins with CPU and memory capacities.",
+      "category": "scheduling_formulation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_jobs_items_resource_demands",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "incoming jobs are items with specific resource demands",
+      "source_anchor_present": true,
+      "claim": "Represent incoming jobs as items with CPU and memory demands.",
+      "category": "scheduling_formulation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_heuristic_required_and_free_inputs",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "takes as input a pending job's CPU and memory requirements and a potential machine's CPU and memory availability",
+      "source_anchor_present": true,
+      "claim": "Define heuristic inputs for pending-job requirements and candidate-machine availability.",
+      "category": "scheduling_formulation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_heuristic_outputs_machine_priority",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "outputs a priority score for the machine",
+      "source_anchor_present": true,
+      "claim": "Constrain the evolved heuristic to output a machine-priority score.",
+      "category": "scheduling_formulation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "safety",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling ranking-only safety provenance for Borg-style",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_borg_uses_highest_priority_among_other_objectives",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "assigns the pending job to the machine with the highest priority score as determined by the heuristic function, among other objectives",
+      "source_anchor_present": true,
+      "claim": "Record that Borg combines the heuristic's highest-priority ranking with other scheduler objectives.",
+      "category": "scheduling_formulation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "safety",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling ranking-only safety provenance for Borg-style",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_rank_only_borg_feasible_machines",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "only influences the ranking of machines already determined by Borg to be available and capable of running each pending job",
+      "source_anchor_present": true,
+      "claim": "Limit the heuristic to ranking machines already declared feasible by the scheduler.",
+      "category": "scheduling_safety",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "safety",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling ranking-only safety provenance for Borg-style",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_effectively_correct_by_construction",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "scheduling decisions are effectively correct by construction",
+      "source_anchor_present": true,
+      "claim": "Support correctness-by-construction claims with ranking-only and feasibility-boundary evidence.",
+      "category": "scheduling_safety",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "safety",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling ranking-only safety provenance for Borg-style",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_early_alphaevolve_version",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "An early version of AlphaEvolve was used",
+      "source_anchor_present": true,
+      "claim": "Record the AlphaEvolve version and run identity used for scheduling discovery.",
+      "category": "scheduling_discovery_and_evaluation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_simple_effective_heuristic_discovery",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "discover a remarkably simple yet effective heuristic function",
+      "source_anchor_present": true,
+      "claim": "Demonstrate discovery of a simple and effective scheduling heuristic.",
+      "category": "scheduling_discovery_and_evaluation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_evolved_from_production_incumbent",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "evolving from the existing one in production",
+      "source_anchor_present": true,
+      "claim": "Prove that the discovered heuristic evolved from the identified production incumbent.",
+      "category": "scheduling_discovery_and_evaluation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_historical_fleet_snapshot_simulator_feedback",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "historical snapshots of workloads and capacity across Google's fleet",
+      "source_anchor_present": true,
+      "claim": "Implement simulator feedback from historical fleet workload and capacity snapshots.",
+      "category": "scheduling_discovery_and_evaluation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_unseen_recent_workload_capacity_generalization",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "unseen test dataset of recent workloads and capacity to ensure generalization",
+      "source_anchor_present": true,
+      "claim": "Require an unseen recent workload/capacity test set for scheduling generalization.",
+      "category": "scheduling_discovery_and_evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_outperforms_production_heuristic",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "outperforms the one in production",
+      "source_anchor_present": true,
+      "claim": "Demonstrate that the evolved heuristic outperforms the production incumbent.",
+      "category": "scheduling_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_entire_fleet_rollout",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "rolled out AlphaEvolve's heuristic function to the entire fleet",
+      "source_anchor_present": true,
+      "claim": "Provide reviewed evidence for fleet-wide deployment of the evolved heuristic.",
+      "category": "scheduling_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_post_deployment_confirms_simulator",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "Post-deployment measurements across Google's fleet confirmed the simulator results",
+      "source_anchor_present": true,
+      "claim": "Join post-deployment fleet measurements to simulator predictions and confirm agreement.",
+      "category": "scheduling_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "systems_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect real systems fixtures to held-out and reference-correctness",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_continuous_average_point_7_percent_recovery",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "continuously recovers on average 0.7% of Google's fleet-wide compute resources",
+      "source_anchor_present": true,
+      "claim": "Reproduce the continuous average 0.7% fleet-wide compute-resource recovery claim.",
+      "category": "scheduling_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_recovered_resources_otherwise_stranded",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "which would otherwise be stranded",
+      "source_anchor_present": true,
+      "claim": "Tie the recovered-resource metric to resources that would otherwise remain stranded.",
+      "category": "scheduling_production_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_chosen_over_deep_reinforcement_learning",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "AlphaEvolve was chosen over a deep reinforcement learning approach",
+      "source_anchor_present": true,
+      "claim": "Record a matched selection decision between the code heuristic and deep reinforcement learning.",
+      "category": "scheduling_comparator_and_deployment",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_code_solution_better_performance",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "code solution not only leads to better performance",
+      "source_anchor_present": true,
+      "claim": "Demonstrate the code solution's performance advantage over the learned-policy comparator.",
+      "category": "scheduling_comparator_and_deployment",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "calibration",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Section 3.3 result-claim calibration fields for systems reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_interpretability_advantage",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "advantages in interpretability",
+      "source_anchor_present": true,
+      "claim": "Require reviewed interpretability evidence for mission-critical scheduling.",
+      "category": "scheduling_comparator_and_deployment",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_debuggability_advantage",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "debuggability",
+      "source_anchor_present": true,
+      "claim": "Require reviewed debuggability evidence for mission-critical scheduling.",
+      "category": "scheduling_comparator_and_deployment",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_predictability_advantage",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "predictability",
+      "source_anchor_present": true,
+      "claim": "Require predictable-behavior checks for mission-critical scheduling.",
+      "category": "scheduling_comparator_and_deployment",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_ease_of_deployment_advantage",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "ease of deployment",
+      "source_anchor_present": true,
+      "claim": "Require deployment-ergonomics evidence for mission-critical scheduling.",
+      "category": "scheduling_comparator_and_deployment",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "comparator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Borg incumbent-evolution and learned-policy comparator provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section3_3_1_mission_critical_operational_qualities",
+      "source_span_id": "section_3_3_1",
+      "source_page": 14,
+      "source_anchor": "essential qualities for a mission-critical system",
+      "source_anchor_present": true,
+      "claim": "Tie interpretability, debuggability, predictability, and deployment evidence to mission-critical readiness.",
+      "category": "scheduling_comparator_and_deployment",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/systems_results.py",
+          "exists": true
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "deployment",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate scheduling interpretability and deployment-readiness evidence",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "application",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate application-owner and domain-review provenance for practical",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_function_signature",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "def alpha_evolve_score(required, free):",
+      "source_anchor_present": true,
+      "claim": "Reproduce the Figure 6 alpha_evolve_score(required, free) function identity.",
+      "category": "figure_6_code",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_cpu_residual_definition",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "cpu_residual = required.cpu / free.cpu",
+      "source_anchor_present": true,
+      "claim": "Reproduce the required.cpu/free.cpu residual definition.",
+      "category": "figure_6_code",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_memory_residual_definition",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "mem_residual = required.mem / free.mem",
+      "source_anchor_present": true,
+      "claim": "Reproduce the required.mem/free.mem residual definition.",
+      "category": "figure_6_code",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_negative_residual_sum",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "return -1.0 * (cpu_residual + mem_residual +",
+      "source_anchor_present": true,
+      "claim": "Reproduce the negative sum over CPU residual, memory residual, and cross-ratio terms.",
+      "category": "figure_6_code",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_memory_over_cpu_cross_ratio",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "mem_residual / cpu_residual",
+      "source_anchor_present": true,
+      "claim": "Reproduce the memory-residual over CPU-residual cross-ratio term.",
+      "category": "figure_6_code",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_cpu_over_memory_cross_ratio",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "cpu_residual / mem_residual",
+      "source_anchor_present": true,
+      "claim": "Reproduce the CPU-residual over memory-residual cross-ratio term.",
+      "category": "figure_6_code",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_tailored_google_workloads_and_capacity",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "tailored to Google's workloads and capacity",
+      "source_anchor_present": true,
+      "claim": "Demonstrate that the displayed heuristic is tailored to the declared workloads and capacity.",
+      "category": "figure_6_exhibit",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate Borg scheduling problem-formulation provenance.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_scoring_function_visualization",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "Visualization of the heuristic scoring function",
+      "source_anchor_present": true,
+      "claim": "Generate the Figure 6 scoring-function visualization from retained data and rendering parameters.",
+      "category": "figure_6_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_yellow_regions_high_scores",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "Yellow regions represent high scores",
+      "source_anchor_present": true,
+      "claim": "Preserve the yellow-is-high legend semantics in the reproduced heatmap.",
+      "category": "figure_6_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_purple_regions_low_scores",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "purple regions represent low scores",
+      "source_anchor_present": true,
+      "claim": "Preserve the purple-is-low legend semantics in the reproduced heatmap.",
+      "category": "figure_6_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_cpu_residual_axis_zero_to_one_hundred_percent",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "0% 25% 50% 75% 100% CPU residual",
+      "source_anchor_present": true,
+      "claim": "Preserve the Figure 6 CPU-residual axis and its 0%-100% range.",
+      "category": "figure_6_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure6_memory_residual_axis_zero_to_one_hundred_percent",
+      "source_span_id": "figure_6",
+      "source_page": 14,
+      "source_anchor": "0% 25% 50% 75% 100% Memory residual",
+      "source_anchor_present": true,
+      "claim": "Preserve the Figure 6 memory-residual axis and its 0%-100% range.",
+      "category": "figure_6_exhibit",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/figure6_scheduling_exhibit_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.figure6_scheduling_exhibit_boundary.v1",
+          "boundary_status": "required_exhibit_contract_without_artifacts",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/systems_result_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_systems_result_readiness_boundary.v1",
+          "boundary_status": "report_contract_without_real_systems_fixtures",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "figure6",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add Figure 6 scheduling-heuristic exhibit provenance and heatmap",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    }
+  ],
+  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 45 AlphaEvolve scheduling claims from the Section 3.3 opening, Section 3.3.1, and Figure 6. Status labels distinguish local report/exhibit schema support from absent scheduling runtime behavior and undemonstrated published production outcomes. It does not claim a Borg fixture, workload/capacity data, simulator, production or learned-policy comparator artifacts, fleet deployment, Figure 6 reproduction, the 0.7% result, production scale, or AlphaEvolve system parity."
+}

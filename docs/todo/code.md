@@ -66,9 +66,14 @@ sidecars, tests, and active TODOs.
     classifies 2 as locally implemented, 16 partial, 4 not implemented, and 41
     not demonstrated, resolves all 61 gaps to live TODO titles, and verifies a
     source-fidelity correction for a blanket verification sentence absent from
-    the pinned PDF. The four bounded inventories therefore cover 195 claims:
-    21 locally implemented, 63 partial, 13 not implemented, and 98 not
-    demonstrated. This is not whole-paper completeness. Meanwhile,
+    the pinned PDF. The committed
+    `papers/alphaevolve_scheduling_claim_inventory_boundary.json` adds 45
+    Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling claims. It
+    classifies 19 as partial, 14 as not implemented, and 12 as not
+    demonstrated, and resolves all 45 gaps to live TODO titles. The five
+    bounded inventories therefore cover 240 claims: 21 locally implemented,
+    82 partial, 27 not implemented, and 110 not demonstrated. This is not
+    whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -85,11 +90,11 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 195 bounded system, context,
-    matrix-result, and constructive-math claims are now machine-readable and
+  - Current gap: the named source structure and 240 bounded system, context,
+    matrix-result, constructive-math, and scheduling claims are now machine-readable and
     PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Sections 3.3-5,
+    equation, footnote, citation, or claim level across Sections 3.3.2-5,
     remaining exhibits, Table 3, appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
@@ -4752,6 +4757,27 @@ sidecars, tests, and active TODOs.
     interpretable approaches before treating those fixtures as mission-critical
     AlphaEvolve-ready evidence.
 
+- [ ] Add Borg incumbent-evolution and learned-policy comparator provenance.
+  - Spec evidence: AlphaEvolve Section 3.3.1 says the Figure 6 heuristic
+    evolved from the existing production heuristic and that the code solution
+    was selected over a deep-reinforcement-learning approach because it both
+    performed better and was easier to interpret, debug, predict, and deploy.
+  - Current evidence: `papers/figure6_scheduling_exhibit_boundary.json`
+    requires baseline production-heuristic identity, while
+    `libreevolve.systems_result_report.v1` requires a learned-policy comparison
+    inside scheduling deployment-readiness records. Neither contract requires
+    one matched comparator artifact that identifies the incumbent, evolved
+    candidate, and learned policy; proves equal workload/capacity snapshots,
+    simulator version, metric definitions, and comparison windows; and links
+    the performance result to the operational-quality selection rubric.
+  - Required result: emit a reviewed scheduling-comparator record with stable
+    identities and hashes for all three alternatives, matched simulator and
+    held-out inputs, metric/denominator/window provenance, performance results,
+    interpretability/debuggability/predictability/deployment criteria, reviewer
+    signoff, and the final selection decision. Do not infer incumbent evolution
+    or superiority to a learned policy from separate baseline and deployment
+    metadata.
+
 - [ ] Add Figure 6 scheduling-heuristic exhibit provenance and heatmap
       artifacts.
   - Spec evidence: AlphaEvolve Figure 6 presents the concrete Borg scheduling
@@ -4768,14 +4794,19 @@ sidecars, tests, and active TODOs.
     `papers/figure6_scheduling_exhibit_boundary.json` now keeps the exact
     exhibit contract machine-checked. Real emitted report records are still
     absent for the Figure 6 exhibit ID, exact heuristic source artifact/hash,
-    residual input definitions and units, heatmap grid/rendering parameters,
-    visual artifact paths/hashes, baseline production heuristic identity, and
-    links from the displayed exhibit to simulator, held-out, deployment, and
-    claim-calibration records.
+    code-equivalence proof for both residual definitions and all four score
+    terms, residual input definitions and units, the 0%-100% CPU and memory
+    axes, yellow-high/purple-low legend semantics, heatmap grid/rendering
+    parameters, visual artifact paths/hashes, baseline production heuristic
+    identity, and links from the displayed exhibit to simulator, held-out,
+    deployment, and claim-calibration records.
   - Required result: add report/inventory metadata for Figure 6-style systems
     exhibits: stable exhibit ID, scheduling benchmark/candidate link, exact
-    heuristic code artifact and hash, residual-feature definitions, baseline
-    heuristic provenance, heatmap/JSON data plus rendered visual artifacts with
+    heuristic code artifact and hash, executable equivalence checks for
+    `required.cpu/free.cpu`, `required.mem/free.mem`, the negative residual sum,
+    and both cross-ratio terms, residual-feature definitions, baseline
+    heuristic provenance, 0%-100% axis definitions, yellow-high/purple-low
+    legend mapping, heatmap/JSON data plus rendered visual artifacts with
     hashes, rendering parameters, held-out/deployment report links, and docs
     that distinguish exhibit reproduction from generic scheduling readiness.
 

@@ -97,9 +97,16 @@ Important limits:
   are partial, 4 are not implemented, and 41 are not demonstrated; all 61 gaps
   have live TODO ownership. It also corrects a false local attribution of a
   blanket verification sentence that is absent from the pinned PDF.
-- Together the four bounded inventories cover 195 claims: 21 locally
-  implemented, 63 partial, 13 not implemented, and 98 not demonstrated,
-  leaving 174 gaps. They still exclude Sections 3.3-5, Figures 6-14, Table 3,
+- `papers/alphaevolve_scheduling_claim_inventory_boundary.json` audits 45
+  claims from the Section 3.3 opening, Section 3.3.1, and Figure 6, including
+  the scheduling problem, vector-bin-packing formulation, ranking-only safety,
+  simulator/held-out/deployment claims, production and deep-RL comparisons,
+  exact heuristic terms, heatmap axes, and legend semantics. Nineteen are
+  partial, 14 are not implemented, and 12 are not demonstrated; all 45 gaps
+  have live TODO ownership.
+- Together the five bounded inventories cover 240 claims: 21 locally
+  implemented, 82 partial, 27 not implemented, and 110 not demonstrated,
+  leaving 219 gaps. They still exclude Sections 3.3.2-5, Figures 7-14, Table 3,
   detailed appendix claims, source-detail exhaustiveness, and independent
   result reproduction.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

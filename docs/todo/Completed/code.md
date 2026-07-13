@@ -19530,3 +19530,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     coverage, and paper-manifest tests validate anchors, status counts,
     references, TODO ownership, source fidelity, drift rejection, and result/
     parity disclaimers.
+- [x] Add a PDF-anchored AlphaEvolve Section 3.3.1/Figure 6 scheduling claim inventory.
+  - Spec evidence: the Section 3.3 opening, Section 3.3.1, and Figure 6 state
+    mission-critical application scope, Borg problem formulation, ranking-only
+    safety, simulator and held-out evaluation, fleet deployment/results,
+    incumbent and deep-RL comparison, exact heuristic code, heatmap axes, and
+    legend semantics.
+  - Status: a new public boundary records 45 stable claim ids, exact PDF pages
+    and anchors, implementation status, ROADMAP phase/section, evidence links,
+    and live TODO ownership. It classifies 19 claims as partial, 14 as not
+    implemented, and 12 as not demonstrated; none is locally implemented.
+  - Remaining code gap: a real scheduling fixture, workload/capacity data,
+    simulator, held-out and deployment artifacts, matched incumbent/evolved/
+    learned-policy comparison, Figure 6 reproduction, and 0.7% result evidence
+    remain open.
+  - Verification: focused inventory, implementation-map, ROADMAP coverage, and
+    paper-manifest tests validate anchors, status counts, references, TODO
+    ownership, drift rejection, and result/parity disclaimers.

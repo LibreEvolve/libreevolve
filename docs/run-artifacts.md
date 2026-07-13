@@ -1127,12 +1127,14 @@ Startup manifests include `policies.candidate_language` with schema
 task-primary bounded text-workspace representation, Python autodetection or
 explicit seed-policy primary selection, typed static-member support,
 fail-closed non-Python marker handling, Python subprocess scoring boundary, and
-partial stage-bound local language/build command support, host-toolchain
-resolution/version probes, optional exact identity pins, and candidate
-lock-file hash enforcement. It keeps
+partial stage-bound host or digest-pinned OCI language/build command support,
+host-toolchain resolution/version probes, optional exact identity pins,
+candidate lock-file hash enforcement, and OCI runtime/image/provisioning/
+isolation records. It keeps
 problem-defined solution abstractions, language-aware non-Python markers,
-OS-sandboxed runner isolation, portable hermetic toolchain provisioning and
-cross-host replay, and real-language codebase-scale evidence unsupported.
+hostile-code sandbox certification, broad package-manager restoration,
+deterministic cross-platform/remote-daemon replay, and real-language codebase-
+scale evidence unsupported.
 When `config.yaml` sets `candidate_language_runners` or
 `candidate_build_systems`, those entries are normalized as manifest-safe,
 declarations under `config` and
@@ -1151,11 +1153,16 @@ and up to 100 deduplicated executed-runner records. Execution records retain
 configured/expanded command hashes rather than raw expanded commands,
 executable basenames and resolved-path hashes rather than absolute paths,
 selected toolchain executable content hashes, normalized version-output
-hashes, optional pin-match results, dependency-lock hashes, and an explicit
-same-host/preprovisioned-host replay scope,
+hashes, ordered probe-attempt records, optional pin-match results, dependency-
+lock hashes, and explicit same-host or digest-pinned OCI replay scope. OCI
+records also retain runtime CLI identity, approved host environment key names
+with values redacted, immutable image digest/ID observations, missing-image
+pull status, candidate versus provisioning network policy, rootfs/mount/
+capability/resource settings, and environment/toolchain identity linkage,
 bounded/redacted stdout and stderr plus hashes, return/timeout/cleanup state,
 minimal-environment metadata, stdin metadata, generated build artifacts, the
-host-network/unsandboxed boundary, and problem-owned scoring authority.
+host-unsandboxed or OCI-process-isolation boundary, and problem-owned scoring
+authority.
 `execution_summary` reconciles record, success, build, artifact, language,
 build-system, toolchain, version-probe, replay-ready, and dependency-lock
 counts. `runner_environment_provenance` links those records to the startup
@@ -1165,8 +1172,10 @@ remaining portable-toolchain, marker, sandbox, and codebase-scale gaps before
 AlphaEvolve-style parity can be claimed.
 The committed `papers/candidate_language_runner_boundary.json` sidecar
 preserves the same partial local runner boundary for paper-manifest validation.
-The checked C fixture is real host-compiler smoke evidence, not portable
-toolchain or compiler-optimization benchmark evidence.
+The checked C fixture is real host-compiler smoke evidence. The checked OCI
+Python fixture is an immutable-image contract with an opt-in live integration
+test; a skipped daemon-dependent run and mocked runtime tests are not cross-host
+certification or compiler-optimization benchmark evidence.
 For runs that can perform mutation LLM calls, backend client construction is
 preflighted before overwrite cleanup in the core runtime. The CLI also checks
 OpenAI and Anthropic credentials as non-blank after trimming. Seed-only runs

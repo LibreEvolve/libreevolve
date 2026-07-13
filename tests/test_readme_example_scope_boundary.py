@@ -20,11 +20,11 @@ def test_readme_example_scope_boundary_accepts_current_map():
     assert boundary["claim_ready"] is False
     assert boundary["readme_path"] == "README.md"
     assert boundary["example_scope_sidecar_path"] == "papers/example_benchmark_scope.json"
-    assert validation.readme_marker_count == 15
+    assert validation.readme_marker_count == 16
     assert validation.missing_readme_marker_count == 0
-    assert validation.evidence_anchor_count == 25
+    assert validation.evidence_anchor_count == 27
     assert validation.missing_evidence_anchor_count == 0
-    assert validation.scope_record_count == 10
+    assert validation.scope_record_count == 11
     assert validation.comparable_problem_count == 0
     assert boundary["smoke_problem_ids"] == [
         "hello_world",
@@ -33,6 +33,7 @@ def test_readme_example_scope_boundary_accepts_current_map():
         "embedded_evaluate_math",
         "candidate_runner_expression",
         "candidate_runner_c",
+        "candidate_runner_python_oci",
         "matrix_multiplication",
         "circle_packing",
     ]
@@ -119,10 +120,10 @@ def test_render_readme_example_scope_boundary_summary_reports_shape():
         "| boundary_status | readme_example_scope_structural_map_without_benchmark_certification |"
         in summary
     )
-    assert "| readme_marker_count | 15 |" in summary
+    assert "| readme_marker_count | 16 |" in summary
     assert "| missing_readme_marker_count | 0 |" in summary
-    assert "| evidence_anchor_count | 25 |" in summary
+    assert "| evidence_anchor_count | 27 |" in summary
     assert "| missing_evidence_anchor_count | 0 |" in summary
-    assert "| scope_record_count | 10 |" in summary
+    assert "| scope_record_count | 11 |" in summary
     assert "| comparable_problem_count | 0 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

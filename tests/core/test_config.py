@@ -194,6 +194,7 @@ def test_candidate_language_runner_declarations_are_normalized():
             "build_files": ["Cargo.toml"],
             "build_command": ["cargo", "build"],
             "artifact_patterns": ["target/debug/*"],
+            "execution_environment": {"type": "host_subprocess_v1"},
             "toolchain_candidates": [],
             "toolchain_version_command": [],
             "toolchain_executable_sha256": None,
@@ -352,6 +353,152 @@ def test_candidate_build_toolchain_contract_is_normalized():
     assert build["toolchain_executable_sha256"] == "a" * 64
     assert build["toolchain_version_output_sha256"] == "b" * 64
     assert build["dependency_lock_sha256"] == {"toolchain.lock": "c" * 64}
+
+
+def test_candidate_build_oci_execution_environment_is_normalized():
+    image = f"registry.example/lib/compiler:stable@sha256:{'d' * 64}"
+    config = Config(
+        candidate_build_systems=[
+            {
+                "name": "ContainerCompiler",
+                "build_command": ["{toolchain}", "solution.c"],
+                "toolchain_candidates": ["clang", "gcc"],
+                "toolchain_version_output_sha256": "e" * 64,
+                "execution_environment": {
+                    "type": "oci_container_v1",
+                    "runtime_candidates": ["docker", "podman"],
+                    "runtime_version_output_sha256": "f" * 64,
+                    "image": image,
+                    "pull_policy": "if_missing",
+                    "network": "none",
+                    "read_only_rootfs": True,
+                    "tmpfs_mb": 128,
+                    "memory_mb": 1024,
+                    "cpus": 2,
+                    "pids_limit": 256,
+                },
+            }
+        ]
+    )
+
+    environment = config.candidate_build_systems[0]["execution_environment"]
+    assert environment == {
+        "type": "oci_container_v1",
+        "runtime_candidates": ["docker", "podman"],
+        "runtime_version_command": ["{runtime}", "--version"],
+        "runtime_executable_sha256": None,
+        "runtime_version_output_sha256": "f" * 64,
+        "image": image,
+        "pull_policy": "if_missing",
+        "network": "none",
+        "read_only_rootfs": True,
+        "tmpfs_mb": 128,
+        "memory_mb": 1024,
+        "cpus": 2.0,
+        "pids_limit": 256,
+    }
+
+
+@pytest.mark.parametrize(
+    ("environment", "message"),
+    [
+        ("docker", "execution_environment must be a mapping"),
+        (
+            {
+                "type": "oci_container_v1",
+                "runtime_candidates": [],
+                "image": f"example/compiler@sha256:{'a' * 64}",
+            },
+            "runtime_candidates must not be empty",
+        ),
+        (
+            {
+                "type": "oci_container_v1",
+                "runtime_candidates": ["python"],
+                "image": f"example/compiler@sha256:{'a' * 64}",
+            },
+            "must name docker or podman",
+        ),
+        (
+            {
+                "type": "oci_container_v1",
+                "runtime_candidates": ["docker"],
+                "image": "example/compiler:latest",
+            },
+            "immutable OCI image reference",
+        ),
+        (
+            {
+                "type": "oci_container_v1",
+                "runtime_candidates": ["docker"],
+                "runtime_version_command": ["docker", "--version"],
+                "image": f"example/compiler@sha256:{'a' * 64}",
+            },
+            "runtime_version_command must begin",
+        ),
+        (
+            {
+                "type": "oci_container_v1",
+                "runtime_candidates": ["docker"],
+                "image": f"example/compiler@sha256:{'a' * 64}",
+                "network": "host",
+            },
+            "execution_environment.network",
+        ),
+        (
+            {
+                "type": "oci_container_v1",
+                "runtime_candidates": ["docker"],
+                "image": f"example/compiler@sha256:{'a' * 64}",
+                "read_only_rootfs": False,
+            },
+            "read_only_rootfs must be true",
+        ),
+        (
+            {
+                "type": "oci_container_v1",
+                "runtime_candidates": ["docker"],
+                "image": f"example/compiler@sha256:{'a' * 64}",
+                "pids_limit": 8,
+            },
+            "pids_limit must be an integer >= 16",
+        ),
+    ],
+)
+def test_candidate_build_oci_execution_environment_rejects_unsafe_values(
+    environment,
+    message,
+):
+    with pytest.raises(ConfigError, match=message):
+        Config(
+            candidate_build_systems=[
+                {
+                    "name": "container",
+                    "build_command": ["{toolchain}", "solution.c"],
+                    "toolchain_candidates": ["clang"],
+                    "execution_environment": environment,
+                }
+            ]
+        )
+
+
+def test_candidate_build_oci_rejects_host_toolchain_executable_pin():
+    with pytest.raises(ConfigError, match="unsupported for OCI execution"):
+        Config(
+            candidate_build_systems=[
+                {
+                    "name": "container",
+                    "build_command": ["{toolchain}", "solution.c"],
+                    "toolchain_candidates": ["clang"],
+                    "toolchain_executable_sha256": "a" * 64,
+                    "execution_environment": {
+                        "type": "oci_container_v1",
+                        "runtime_candidates": ["docker"],
+                        "image": f"example/compiler@sha256:{'b' * 64}",
+                    },
+                }
+            ]
+        )
 
 
 @pytest.mark.parametrize(

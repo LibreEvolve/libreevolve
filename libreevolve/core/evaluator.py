@@ -13,7 +13,7 @@ import unicodedata
 from statistics import NormalDist
 from ctypes import wintypes
 from dataclasses import dataclass, field
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import fnmatch
 import shutil
 from uuid import uuid4
@@ -22,6 +22,9 @@ from libreevolve.core.candidate import (
     CandidateWorkspace,
 )
 from libreevolve.core.config import (
+    CANDIDATE_CONTAINER_RUNTIME_HOST_ENV_NAMES,
+    CANDIDATE_HOST_EXECUTION_ENVIRONMENT,
+    CANDIDATE_OCI_EXECUTION_ENVIRONMENT,
     CANDIDATE_RUNNER_EXECUTION_STATUS,
     MAX_EVALUATOR_STDIN_CHARS,
     _require_bool,
@@ -1771,7 +1774,64 @@ class CascadeEvaluator:
             build_artifacts = None
             toolchain_record = None
             toolchain_executable = None
+            container_context = None
+            execution_environment_record = None
             if build is not None:
+                execution_environment = build.get("execution_environment", {})
+                if (
+                    isinstance(execution_environment, dict)
+                    and execution_environment.get("type")
+                    == CANDIDATE_OCI_EXECUTION_ENVIRONMENT
+                ):
+                    (
+                        container_context,
+                        execution_environment_record,
+                        container_error,
+                    ) = _prepare_candidate_container_environment(
+                        execution_environment,
+                        workspace_root=cand_root,
+                        timeout_sec=_candidate_runner_remaining_timeout(
+                            timeout_sec,
+                            started,
+                        ),
+                        env=runner_env,
+                        output_max_chars=self._output_max_chars,
+                    )
+                    if container_error is not None:
+                        candidate_record = _candidate_runner_execution_record(
+                            language,
+                            build,
+                            build_record,
+                            None,
+                            env_metadata,
+                            stdin_metadata,
+                            workspace,
+                            toolchain_record=toolchain_record,
+                            execution_environment_record=(
+                                execution_environment_record
+                            ),
+                        )
+                        metadata = _eval_metadata(
+                            workspace,
+                            validate_path,
+                            self._problem.problem_dir,
+                            stage_context,
+                            env_metadata,
+                            network_policy=self._validator_network_policy,
+                            stdin_metadata=stdin_metadata,
+                        )
+                        metadata["candidate_runner"] = candidate_record
+                        return _candidate_runner_failure_result(
+                            self._problem,
+                            workspace,
+                            stage_name,
+                            container_error,
+                            time.perf_counter() - started,
+                            metadata,
+                            process_record=_candidate_container_last_process_record(
+                                execution_environment_record
+                            ),
+                        )
                 (
                     toolchain_executable,
                     toolchain_record,
@@ -1783,8 +1843,14 @@ class CascadeEvaluator:
                         timeout_sec,
                         started,
                     ),
-                    env=runner_env,
+                    env=(
+                        container_context.runtime_env
+                        if container_context is not None
+                        else runner_env
+                    ),
                     output_max_chars=self._output_max_chars,
+                    container_context=container_context,
+                    container_record=execution_environment_record,
                 )
                 if toolchain_error is not None:
                     candidate_record = _candidate_runner_execution_record(
@@ -1796,6 +1862,7 @@ class CascadeEvaluator:
                         stdin_metadata,
                         workspace,
                         toolchain_record=toolchain_record,
+                        execution_environment_record=execution_environment_record,
                     )
                     metadata = _eval_metadata(
                         workspace,
@@ -1822,12 +1889,29 @@ class CascadeEvaluator:
                         metadata,
                         process_record=process_record,
                     )
+                command_workspace = (
+                    PurePosixPath("/workspace")
+                    if container_context is not None
+                    else cand_root
+                )
+                command_primary = command_workspace.joinpath(
+                    *primary.relative_to(cand_root).parts
+                )
                 build_command = _expand_candidate_runner_command(
                     build["build_command"],
-                    cand_root,
-                    primary,
+                    command_workspace,
+                    command_primary,
                     toolchain_executable=toolchain_executable,
+                    python_executable=(
+                        "python" if container_context is not None else None
+                    ),
                 )
+                if container_context is not None:
+                    build_command = _candidate_container_run_command(
+                        container_context,
+                        build_command,
+                        attach_stdin=False,
+                    )
                 build_result, launch_error, build_elapsed = _run_candidate_command(
                     build_command,
                     cwd=cand_root,
@@ -1835,7 +1919,11 @@ class CascadeEvaluator:
                         timeout_sec,
                         started,
                     ),
-                    env=runner_env,
+                    env=(
+                        container_context.runtime_env
+                        if container_context is not None
+                        else runner_env
+                    ),
                     stdin_text=None,
                 )
                 build_record = _candidate_process_record(
@@ -1846,6 +1934,11 @@ class CascadeEvaluator:
                     launch_error,
                     build_elapsed,
                     self._output_max_chars,
+                    execution=(
+                        "oci_container_subprocess_without_shell"
+                        if container_context is not None
+                        else "local_subprocess_without_shell"
+                    ),
                 )
                 if (
                     build_result is not None
@@ -1878,6 +1971,7 @@ class CascadeEvaluator:
                         stdin_metadata,
                         workspace,
                         toolchain_record=toolchain_record,
+                        execution_environment_record=execution_environment_record,
                     )
                     metadata = _eval_metadata(
                         workspace,
@@ -1899,16 +1993,36 @@ class CascadeEvaluator:
                         process_record=build_record,
                     )
 
+            command_workspace = (
+                PurePosixPath("/workspace")
+                if container_context is not None
+                else cand_root
+            )
+            command_primary = command_workspace.joinpath(
+                *primary.relative_to(cand_root).parts
+            )
             runner_command = _expand_candidate_runner_command(
                 language["runner_command"],
-                cand_root,
-                primary,
+                command_workspace,
+                command_primary,
+                toolchain_executable=toolchain_executable,
+                python_executable=("python" if container_context is not None else None),
             )
+            if container_context is not None:
+                runner_command = _candidate_container_run_command(
+                    container_context,
+                    runner_command,
+                    attach_stdin=stdin_payload is not None,
+                )
             runner_result, launch_error, runner_elapsed = _run_candidate_command(
                 runner_command,
                 cwd=cand_root,
                 timeout_sec=_candidate_runner_remaining_timeout(timeout_sec, started),
-                env=runner_env,
+                env=(
+                    container_context.runtime_env
+                    if container_context is not None
+                    else runner_env
+                ),
                 stdin_text=stdin_payload,
             )
             runner_record = _candidate_process_record(
@@ -1919,6 +2033,11 @@ class CascadeEvaluator:
                 launch_error,
                 runner_elapsed,
                 self._output_max_chars,
+                execution=(
+                    "oci_container_subprocess_without_shell"
+                    if container_context is not None
+                    else "local_subprocess_without_shell"
+                ),
             )
             runner_error = _candidate_process_error(
                 "candidate_runner",
@@ -1934,6 +2053,7 @@ class CascadeEvaluator:
                 stdin_metadata,
                 workspace,
                 toolchain_record=toolchain_record,
+                execution_environment_record=execution_environment_record,
             )
             if runner_error is not None:
                 metadata = _eval_metadata(
@@ -2095,6 +2215,455 @@ def _candidate_runner_remaining_timeout(timeout_sec: float, started: float) -> f
     return max(0.001, float(timeout_sec) - (time.perf_counter() - started))
 
 
+@dataclass(frozen=True)
+class _CandidateContainerContext:
+    runtime_executable: str
+    image: str
+    workspace_root: Path
+    environment: dict
+    runtime_env: dict[str, str]
+
+
+def _prepare_candidate_container_environment(
+    configured: dict,
+    *,
+    workspace_root: Path,
+    timeout_sec: float,
+    env: dict[str, str],
+    output_max_chars: int,
+) -> tuple[_CandidateContainerContext | None, dict, str | None]:
+    started = time.perf_counter()
+    runtime_env = _candidate_container_runtime_env(env)
+    candidates = list(configured.get("runtime_candidates", []))
+    image = str(configured.get("image", ""))
+    expected_manifest_digest = image.rsplit("@sha256:", 1)[-1]
+    record = {
+        "schema": "libreevolve.candidate_execution_environment.v1",
+        "type": CANDIDATE_OCI_EXECUTION_ENVIRONMENT,
+        "runtime_selection_policy": "first_resolvable_declared_candidate",
+        "runtime_candidate_count": len(candidates),
+        "runtime_candidate_basenames": [
+            _candidate_executable_basename(candidate) for candidate in candidates
+        ],
+        "runtime_selection_status": "unresolved",
+        "selected_runtime_candidate_index": None,
+        "selected_runtime_candidate_basename": None,
+        "runtime_executable": None,
+        "runtime_version_probe_process_started": False,
+        "runtime_version_probe": None,
+        "runtime_version_output_normalization": (
+            "decoded_text_newlines_lf_then_strict_json_v1"
+        ),
+        "runtime_version_output_sha256": None,
+        "expected_runtime_executable_sha256": configured.get(
+            "runtime_executable_sha256"
+        ),
+        "runtime_executable_pin_match": None,
+        "expected_runtime_version_output_sha256": configured.get(
+            "runtime_version_output_sha256"
+        ),
+        "runtime_version_output_pin_match": None,
+        "image_reference_sha256": hashlib.sha256(image.encode("utf-8")).hexdigest(),
+        "expected_manifest_digest": expected_manifest_digest,
+        "image_inspect_process_started": False,
+        "initial_image_inspect": None,
+        "initial_image_inspect_status": "not_started",
+        "image_pull_process_started": False,
+        "image_pull": None,
+        "final_image_inspect": None,
+        "observed_image_id": None,
+        "observed_repo_manifest_digests": [],
+        "manifest_digest_match": False,
+        "pull_policy": configured.get("pull_policy"),
+        "provisioning_status": "not_attempted",
+        "provisioning_network_policy": (
+            "host_runtime_registry_access_only_for_digest_pinned_missing_image"
+            if configured.get("pull_policy") == "if_missing"
+            else "none"
+        ),
+        "network_policy": "none",
+        "read_only_rootfs": True,
+        "workspace_mount": "read_write_candidate_workspace_only",
+        "container_user_policy": (
+            "host_uid_gid_on_posix_container_default_on_windows"
+        ),
+        "tmpfs_mb": configured.get("tmpfs_mb"),
+        "memory_mb": configured.get("memory_mb"),
+        "cpus": configured.get("cpus"),
+        "pids_limit": configured.get("pids_limit"),
+        "capability_policy": "drop_all_capabilities_and_no_new_privileges",
+        "runtime_host_environment_policy": (
+            "container_runtime_connectivity_keys_values_not_retained"
+        ),
+        "runtime_host_environment_keys": sorted(runtime_env),
+        "runtime_host_environment_values_redacted": True,
+        "runtime_identity_observed": False,
+        "image_identity_observed": False,
+        "identity_observed": False,
+        "replay_ready": False,
+        "replay_scope": "digest_pinned_oci_image_on_compatible_container_runtime",
+        "security_boundary": (
+            "oci_process_isolation_not_untrusted_code_security_sandbox"
+        ),
+        "absolute_paths_retained": False,
+    }
+    selected_index = None
+    selected_runtime = None
+    for index, candidate in enumerate(candidates):
+        resolved = _resolve_candidate_executable(candidate)
+        if resolved is not None:
+            selected_index = index
+            selected_runtime = resolved
+            break
+    if selected_index is None or selected_runtime is None:
+        return None, record, "candidate_container_runtime_unavailable"
+    record["runtime_selection_status"] = "resolved"
+    record["selected_runtime_candidate_index"] = selected_index
+    record["selected_runtime_candidate_basename"] = (
+        record["runtime_candidate_basenames"][selected_index]
+    )
+    executable_record = _candidate_executable_record(
+        selected_runtime,
+        include_content_hash=True,
+    )
+    record["runtime_executable"] = executable_record
+    if executable_record.get("content_hash_status") != "recorded":
+        return None, record, "candidate_container_runtime_hash_error"
+    expected_executable = configured.get("runtime_executable_sha256")
+    if expected_executable is not None:
+        record["runtime_executable_pin_match"] = (
+            executable_record.get("content_sha256") == expected_executable
+        )
+        if record["runtime_executable_pin_match"] is not True:
+            return None, record, "candidate_container_runtime_pin_mismatch"
+
+    configured_version_command = list(configured.get("runtime_version_command", []))
+    version_command = _expand_candidate_runtime_command(
+        configured_version_command,
+        selected_runtime,
+    )
+    record["runtime_version_probe_process_started"] = True
+    version_result, launch_error, version_elapsed = _run_candidate_command(
+        version_command,
+        cwd=workspace_root,
+        timeout_sec=_candidate_runner_remaining_timeout(timeout_sec, started),
+        env=runtime_env,
+        stdin_text=None,
+    )
+    version_record = _candidate_process_record(
+        "container_runtime_probe",
+        configured_version_command,
+        version_command,
+        version_result,
+        launch_error,
+        version_elapsed,
+        output_max_chars,
+        execution="host_container_runtime_subprocess_without_shell",
+    )
+    record["runtime_version_probe"] = version_record
+    version_error = _candidate_process_error(
+        "candidate_container_runtime_probe",
+        version_result,
+        launch_error,
+    )
+    if version_error is not None:
+        return None, record, version_error
+    assert version_result is not None
+    runtime_version_sha256 = _candidate_version_output_sha256(
+        version_result.stdout,
+        version_result.stderr,
+    )
+    record["runtime_version_output_sha256"] = runtime_version_sha256
+    expected_version = configured.get("runtime_version_output_sha256")
+    if expected_version is not None:
+        record["runtime_version_output_pin_match"] = (
+            runtime_version_sha256 == expected_version
+        )
+        if record["runtime_version_output_pin_match"] is not True:
+            return None, record, "candidate_container_runtime_version_pin_mismatch"
+    record["runtime_identity_observed"] = True
+
+    context = _CandidateContainerContext(
+        runtime_executable=selected_runtime,
+        image=image,
+        workspace_root=workspace_root,
+        environment=copy.deepcopy(configured),
+        runtime_env=runtime_env,
+    )
+    inspect_record, image_identity, inspect_error = _inspect_candidate_container_image(
+        context,
+        timeout_sec=_candidate_runner_remaining_timeout(timeout_sec, started),
+        env=runtime_env,
+        output_max_chars=output_max_chars,
+    )
+    record["image_inspect_process_started"] = True
+    record["initial_image_inspect"] = inspect_record
+    record["initial_image_inspect_status"] = (
+        "available"
+        if inspect_error is None
+        else "missing"
+        if inspect_error == "candidate_container_image_missing"
+        else "error"
+    )
+    if (
+        inspect_error == "candidate_container_image_missing"
+        and configured.get("pull_policy") == "if_missing"
+    ):
+        pull_configured = ["{runtime}", "pull", "{image}"]
+        pull_command = _expand_candidate_container_control_command(
+            pull_configured,
+            context,
+        )
+        record["image_pull_process_started"] = True
+        pull_result, pull_launch_error, pull_elapsed = _run_candidate_command(
+            pull_command,
+            cwd=workspace_root,
+            timeout_sec=_candidate_runner_remaining_timeout(timeout_sec, started),
+            env=runtime_env,
+            stdin_text=None,
+        )
+        pull_record = _candidate_process_record(
+            "container_image_pull",
+            pull_configured,
+            pull_command,
+            pull_result,
+            pull_launch_error,
+            pull_elapsed,
+            output_max_chars,
+            execution="host_container_runtime_subprocess_without_shell",
+        )
+        record["image_pull"] = pull_record
+        pull_error = _candidate_process_error(
+            "candidate_container_image_pull",
+            pull_result,
+            pull_launch_error,
+        )
+        if pull_error is not None:
+            record["provisioning_status"] = "pull_failed"
+            return None, record, pull_error
+        record["provisioning_status"] = "pulled_by_immutable_reference"
+        inspect_record, image_identity, inspect_error = (
+            _inspect_candidate_container_image(
+                context,
+                timeout_sec=_candidate_runner_remaining_timeout(
+                    timeout_sec,
+                    started,
+                ),
+                env=runtime_env,
+                output_max_chars=output_max_chars,
+            )
+        )
+        record["final_image_inspect"] = inspect_record
+    elif inspect_error is None:
+        record["provisioning_status"] = "preprovisioned_local_image"
+    if inspect_error is not None or image_identity is None:
+        return None, record, "candidate_container_image_unavailable"
+
+    record["observed_image_id"] = image_identity["image_id"]
+    record["observed_repo_manifest_digests"] = image_identity[
+        "repo_manifest_digests"
+    ]
+    record["manifest_digest_match"] = expected_manifest_digest in image_identity[
+        "repo_manifest_digests"
+    ]
+    if record["manifest_digest_match"] is not True:
+        return None, record, "candidate_container_image_digest_mismatch"
+    record["image_identity_observed"] = True
+    record["identity_observed"] = True
+    record["replay_ready"] = True
+    identity_payload = {
+        "expected_manifest_digest": expected_manifest_digest,
+        "observed_image_id": record["observed_image_id"],
+        "runtime_version_output_sha256": runtime_version_sha256,
+        "runtime_executable_sha256": executable_record.get("content_sha256"),
+    }
+    record["identity_sha256"] = hashlib.sha256(
+        strict_json_dumps(identity_payload).encode("utf-8")
+    ).hexdigest()
+    return context, record, None
+
+
+def _candidate_container_runtime_env(base_env: dict[str, str]) -> dict[str, str]:
+    runtime_env: dict[str, str] = {}
+    for name in CANDIDATE_CONTAINER_RUNTIME_HOST_ENV_NAMES:
+        found = _find_env(name)
+        if found is None:
+            upper = name.upper()
+            found = next(
+                (
+                    (key, value)
+                    for key, value in base_env.items()
+                    if key.upper() == upper
+                ),
+                None,
+            )
+        if found is not None:
+            key, value = found
+            runtime_env[key] = value
+    return runtime_env
+
+
+def _inspect_candidate_container_image(
+    context: _CandidateContainerContext,
+    *,
+    timeout_sec: float,
+    env: dict[str, str],
+    output_max_chars: int,
+) -> tuple[dict, dict | None, str | None]:
+    configured = [
+        "{runtime}",
+        "image",
+        "inspect",
+        "--format",
+        "{{json .Id}} {{json .RepoDigests}}",
+        "{image}",
+    ]
+    command = _expand_candidate_container_control_command(configured, context)
+    result, launch_error, elapsed = _run_candidate_command(
+        command,
+        cwd=context.workspace_root,
+        timeout_sec=timeout_sec,
+        env=env,
+        stdin_text=None,
+    )
+    process_record = _candidate_process_record(
+        "container_image_inspect",
+        configured,
+        command,
+        result,
+        launch_error,
+        elapsed,
+        output_max_chars,
+        execution="host_container_runtime_subprocess_without_shell",
+    )
+    process_error = _candidate_process_error(
+        "candidate_container_image_inspect",
+        result,
+        launch_error,
+    )
+    if process_error is not None or result is None:
+        if (
+            result is not None
+            and not result.timed_out
+            and result.returncode != 0
+            and _candidate_container_image_is_missing_output(
+                result.stdout,
+                result.stderr,
+            )
+        ):
+            return process_record, None, "candidate_container_image_missing"
+        return process_record, None, process_error
+    try:
+        identity = _parse_candidate_container_image_identity(result.stdout)
+    except ValueError:
+        return process_record, None, "candidate_container_image_inspect_malformed"
+    return process_record, identity, None
+
+
+def _candidate_container_image_is_missing_output(stdout: str, stderr: str) -> bool:
+    normalized = f"{stdout}\n{stderr}".casefold()
+    return any(
+        marker in normalized
+        for marker in (
+            "no such image",
+            "image not known",
+            "image does not exist in local storage",
+        )
+    )
+
+
+def _parse_candidate_container_image_identity(output: str) -> dict:
+    decoder = json.JSONDecoder()
+    text = output.strip()
+    try:
+        image_id, offset = decoder.raw_decode(text)
+        while offset < len(text) and text[offset].isspace():
+            offset += 1
+        repo_digests, offset = decoder.raw_decode(text, offset)
+    except (json.JSONDecodeError, TypeError) as exc:
+        raise ValueError("container image identity is not strict JSON") from exc
+    if text[offset:].strip():
+        raise ValueError("container image identity has trailing content")
+    if not isinstance(image_id, str) or re.fullmatch(r"sha256:[0-9a-f]{64}", image_id) is None:
+        raise ValueError("container image id is invalid")
+    if not isinstance(repo_digests, list) or not all(
+        isinstance(item, str) for item in repo_digests
+    ):
+        raise ValueError("container repository digests are invalid")
+    manifest_digests = sorted(
+        {
+            digest
+            for item in repo_digests
+            for digest in [item.rsplit("@sha256:", 1)[-1]]
+            if "@sha256:" in item and re.fullmatch(r"[0-9a-f]{64}", digest)
+        }
+    )
+    return {
+        "image_id": image_id,
+        "repo_manifest_digests": manifest_digests,
+    }
+
+
+def _expand_candidate_runtime_command(configured: list[str], runtime: str) -> list[str]:
+    return [token.replace("{runtime}", runtime) for token in configured]
+
+
+def _expand_candidate_container_control_command(
+    configured: list[str],
+    context: _CandidateContainerContext,
+) -> list[str]:
+    replacements = {
+        "{runtime}": context.runtime_executable,
+        "{image}": context.image,
+    }
+    return [
+        _replace_candidate_command_placeholders(token, replacements)
+        for token in configured
+    ]
+
+
+def _candidate_container_run_command(
+    context: _CandidateContainerContext,
+    candidate_command: list[str],
+    *,
+    attach_stdin: bool,
+) -> list[str]:
+    environment = context.environment
+    command = [
+        context.runtime_executable,
+        "run",
+        "--rm",
+        "--pull",
+        "never",
+        "--network",
+        "none",
+        "--read-only",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges=true",
+        "--pids-limit",
+        str(environment["pids_limit"]),
+        "--memory",
+        f"{environment['memory_mb']}m",
+        "--cpus",
+        f"{environment['cpus']:g}",
+        "--tmpfs",
+        f"/tmp:rw,noexec,nosuid,size={environment['tmpfs_mb']}m",
+        "--mount",
+        f"type=bind,source={context.workspace_root},target=/workspace",
+        "--workdir",
+        "/workspace",
+    ]
+    if os.name != "nt" and hasattr(os, "getuid") and hasattr(os, "getgid"):
+        command.extend(["--user", f"{os.getuid()}:{os.getgid()}"])
+    if attach_stdin:
+        command.append("--interactive")
+    command.append(context.image)
+    command.extend(candidate_command)
+    return command
+
+
 def _prepare_candidate_build_toolchain(
     build: dict,
     *,
@@ -2102,8 +2671,11 @@ def _prepare_candidate_build_toolchain(
     timeout_sec: float,
     env: dict[str, str],
     output_max_chars: int,
+    container_context: _CandidateContainerContext | None = None,
+    container_record: dict | None = None,
 ) -> tuple[str | None, dict | None, str | None]:
     candidates = list(build.get("toolchain_candidates", []))
+    container_execution = container_context is not None
     dependency_locks = _candidate_dependency_lock_records(
         workspace_root,
         build.get("dependency_lock_sha256", {}),
@@ -2112,6 +2684,11 @@ def _prepare_candidate_build_toolchain(
         return None, None, None
     record = {
         "schema": "libreevolve.candidate_toolchain_identity.v1",
+        "execution_backend": (
+            CANDIDATE_OCI_EXECUTION_ENVIRONMENT
+            if container_execution
+            else CANDIDATE_HOST_EXECUTION_ENVIRONMENT
+        ),
         "selection_policy": "first_resolvable_declared_candidate",
         "candidate_count": len(candidates),
         "candidate_basenames": [
@@ -2122,6 +2699,8 @@ def _prepare_candidate_build_toolchain(
         "selected_candidate_basename": None,
         "executable": None,
         "version_probe_process_started": False,
+        "version_probe_attempt_count": 0,
+        "version_probe_attempts": [],
         "version_probe": None,
         "version_output_normalization": "decoded_text_newlines_lf_then_strict_json_v1",
         "version_output_sha256": None,
@@ -2139,12 +2718,38 @@ def _prepare_candidate_build_toolchain(
         ),
         "identity_observed": False,
         "pin_enforcement_configured": bool(
-            build.get("toolchain_executable_sha256")
-            and build.get("toolchain_version_output_sha256")
+            container_execution
+            or (
+                build.get("toolchain_executable_sha256")
+                and build.get("toolchain_version_output_sha256")
+            )
         ),
         "replay_ready": False,
-        "replay_scope": "same_host_or_preprovisioned_matching_toolchain_only",
-        "toolchain_provisioning": "not_performed",
+        "replay_scope": (
+            "digest_pinned_oci_image_and_candidate_dependency_locks"
+            if container_execution
+            else "same_host_or_preprovisioned_matching_toolchain_only"
+        ),
+        "toolchain_provisioning": (
+            container_record.get("provisioning_status")
+            if isinstance(container_record, dict)
+            else "not_performed"
+        ),
+        "container_environment_identity_sha256": (
+            container_record.get("identity_sha256")
+            if isinstance(container_record, dict)
+            else None
+        ),
+        "container_manifest_digest": (
+            container_record.get("expected_manifest_digest")
+            if isinstance(container_record, dict)
+            else None
+        ),
+        "container_manifest_digest_match": (
+            container_record.get("manifest_digest_match")
+            if isinstance(container_record, dict)
+            else None
+        ),
         "absolute_paths_retained": False,
     }
     lock_error = next(
@@ -2164,28 +2769,108 @@ def _prepare_candidate_build_toolchain(
     if not candidates:
         return None, record, None
 
+    configured_version_command = list(build.get("toolchain_version_command", []))
     selected_index = None
     selected_executable = None
-    for index, candidate in enumerate(candidates):
-        resolved = _resolve_candidate_executable(candidate)
-        if resolved is not None:
-            selected_index = index
-            selected_executable = resolved
-            break
-    if selected_executable is None or selected_index is None:
-        return None, record, "candidate_toolchain_unavailable"
+    version_result = None
+    launch_error = None
+    version_elapsed = 0.0
+    version_command: list[str] = []
+    version_record = None
+    if container_context is not None:
+        probe_started = time.perf_counter()
+        for index, candidate in enumerate(candidates):
+            inner_command = _expand_candidate_runner_command(
+                configured_version_command,
+                PurePosixPath("/workspace"),
+                PurePosixPath("/workspace"),
+                toolchain_executable=candidate,
+                python_executable="python",
+            )
+            version_command = _candidate_container_run_command(
+                container_context,
+                inner_command,
+                attach_stdin=False,
+            )
+            version_result, launch_error, version_elapsed = _run_candidate_command(
+                version_command,
+                cwd=workspace_root,
+                timeout_sec=_candidate_runner_remaining_timeout(
+                    timeout_sec,
+                    probe_started,
+                ),
+                env=env,
+                stdin_text=None,
+            )
+            version_record = _candidate_process_record(
+                "toolchain_probe",
+                configured_version_command,
+                version_command,
+                version_result,
+                launch_error,
+                version_elapsed,
+                output_max_chars,
+                execution="oci_container_subprocess_without_shell",
+            )
+            record["version_probe_attempts"].append(
+                {
+                    "candidate_index": index,
+                    "candidate_basename": record["candidate_basenames"][index],
+                    "process": version_record,
+                }
+            )
+            record["version_probe_attempt_count"] = len(
+                record["version_probe_attempts"]
+            )
+            if _candidate_process_error(
+                "candidate_toolchain_probe",
+                version_result,
+                launch_error,
+            ) is None:
+                selected_index = index
+                selected_executable = candidate
+                break
+        record["version_probe_process_started"] = bool(
+            record["version_probe_attempt_count"]
+        )
+        record["version_probe"] = version_record
+        if selected_executable is None or selected_index is None:
+            return None, record, "candidate_toolchain_unavailable_in_container"
+    else:
+        for index, candidate in enumerate(candidates):
+            resolved = _resolve_candidate_executable(candidate)
+            if resolved is not None:
+                selected_index = index
+                selected_executable = resolved
+                break
+        if selected_executable is None or selected_index is None:
+            return None, record, "candidate_toolchain_unavailable"
 
     record["selection_status"] = "resolved"
     record["selected_candidate_index"] = selected_index
     record["selected_candidate_basename"] = _candidate_executable_basename(
         candidates[selected_index]
     )
-    executable_record = _candidate_executable_record(
-        selected_executable,
-        include_content_hash=True,
+    executable_record = (
+        {
+            "requested_basename": _candidate_executable_basename(
+                selected_executable
+            ),
+            "resolution_status": "resolved_by_container_version_probe",
+            "resolved_path_sha256": None,
+            "absolute_path_retained": False,
+            "content_hash_status": "covered_by_pinned_oci_image",
+            "content_bytes": None,
+            "content_sha256": None,
+        }
+        if container_execution
+        else _candidate_executable_record(
+            selected_executable,
+            include_content_hash=True,
+        )
     )
     record["executable"] = executable_record
-    if executable_record.get("content_hash_status") != "recorded":
+    if not container_execution and executable_record.get("content_hash_status") != "recorded":
         return (
             selected_executable,
             record,
@@ -2203,31 +2888,39 @@ def _prepare_candidate_build_toolchain(
                 "candidate_toolchain_executable_pin_mismatch",
             )
 
-    configured_version_command = list(build.get("toolchain_version_command", []))
-    version_command = _expand_candidate_runner_command(
-        configured_version_command,
-        workspace_root,
-        workspace_root,
-        toolchain_executable=selected_executable,
-    )
-    record["version_probe_process_started"] = True
-    version_result, launch_error, version_elapsed = _run_candidate_command(
-        version_command,
-        cwd=workspace_root,
-        timeout_sec=timeout_sec,
-        env=env,
-        stdin_text=None,
-    )
-    version_record = _candidate_process_record(
-        "toolchain_probe",
-        configured_version_command,
-        version_command,
-        version_result,
-        launch_error,
-        version_elapsed,
-        output_max_chars,
-    )
-    record["version_probe"] = version_record
+    if not container_execution:
+        version_command = _expand_candidate_runner_command(
+            configured_version_command,
+            workspace_root,
+            workspace_root,
+            toolchain_executable=selected_executable,
+        )
+        record["version_probe_process_started"] = True
+        version_result, launch_error, version_elapsed = _run_candidate_command(
+            version_command,
+            cwd=workspace_root,
+            timeout_sec=timeout_sec,
+            env=env,
+            stdin_text=None,
+        )
+        version_record = _candidate_process_record(
+            "toolchain_probe",
+            configured_version_command,
+            version_command,
+            version_result,
+            launch_error,
+            version_elapsed,
+            output_max_chars,
+        )
+        record["version_probe"] = version_record
+        record["version_probe_attempts"] = [
+            {
+                "candidate_index": selected_index,
+                "candidate_basename": record["candidate_basenames"][selected_index],
+                "process": version_record,
+            }
+        ]
+        record["version_probe_attempt_count"] = 1
     probe_error = _candidate_process_error(
         "candidate_toolchain_probe",
         version_result,
@@ -2254,12 +2947,23 @@ def _prepare_candidate_build_toolchain(
                 "candidate_toolchain_version_pin_mismatch",
             )
     record["identity_observed"] = True
-    record["replay_ready"] = bool(
-        record["pin_enforcement_configured"]
-        and record["executable_pin_match"] is True
-        and record["version_output_pin_match"] is True
-        and record["dependency_locks_match"] is True
-    )
+    if container_execution:
+        record["replay_ready"] = bool(
+            isinstance(container_record, dict)
+            and container_record.get("replay_ready") is True
+            and (
+                expected_version_sha256 is None
+                or record["version_output_pin_match"] is True
+            )
+            and record["dependency_locks_match"] is True
+        )
+    else:
+        record["replay_ready"] = bool(
+            record["pin_enforcement_configured"]
+            and record["executable_pin_match"] is True
+            and record["version_output_pin_match"] is True
+            and record["dependency_locks_match"] is True
+        )
     return selected_executable, record, None
 
 
@@ -2334,15 +3038,16 @@ def _normalize_candidate_version_output(value: str) -> str:
 
 def _expand_candidate_runner_command(
     configured: list[str],
-    workspace_root: Path,
-    primary_path: Path,
+    workspace_root: Path | PurePosixPath,
+    primary_path: Path | PurePosixPath,
     *,
     toolchain_executable: str | None = None,
+    python_executable: str | None = None,
 ) -> list[str]:
     replacements = {
         "{workspace}": str(workspace_root),
         "{primary}": str(primary_path),
-        "{python}": sys.executable,
+        "{python}": python_executable or sys.executable,
     }
     if toolchain_executable is not None:
         replacements["{toolchain}"] = toolchain_executable
@@ -2401,13 +3106,15 @@ def _candidate_process_record(
     launch_error: dict | None,
     elapsed_sec: float,
     output_max_chars: int,
+    *,
+    execution: str = "local_subprocess_without_shell",
 ) -> dict:
     configured_payload = strict_json_dumps(configured_command)
     expanded_payload = strict_json_dumps(expanded_command)
     record = {
         "schema": "libreevolve.candidate_runner_process.v1",
         "phase": phase,
-        "execution": "local_subprocess_without_shell",
+        "execution": execution,
         "configured_command_token_count": len(configured_command),
         "configured_command_sha256": hashlib.sha256(
             configured_payload.encode("utf-8")
@@ -2559,10 +3266,20 @@ def _candidate_runner_execution_record(
     workspace: CandidateWorkspace,
     *,
     toolchain_record: dict | None = None,
+    execution_environment_record: dict | None = None,
 ) -> dict:
+    container_execution = (
+        isinstance(execution_environment_record, dict)
+        and execution_environment_record.get("type")
+        == CANDIDATE_OCI_EXECUTION_ENVIRONMENT
+    )
     return {
         "schema": "libreevolve.candidate_runner_execution.v1",
-        "policy": "task_declared_local_build_run_then_problem_validator_v1",
+        "policy": (
+            "task_declared_oci_build_run_then_problem_validator_v1"
+            if container_execution
+            else "task_declared_local_build_run_then_problem_validator_v1"
+        ),
         "language_runner": language["language"],
         "build_system": build["name"] if build is not None else None,
         "primary_file": workspace.primary_file,
@@ -2572,6 +3289,7 @@ def _candidate_runner_execution_record(
         "build_file_patterns": (
             list(build.get("build_files", [])) if build is not None else []
         ),
+        "execution_environment": copy.deepcopy(execution_environment_record),
         "toolchain": copy.deepcopy(toolchain_record),
         "build": copy.deepcopy(build_record),
         "runner": copy.deepcopy(runner_record),
@@ -2580,9 +3298,28 @@ def _candidate_runner_execution_record(
         "scorer_process_started": False,
         "environment": copy.deepcopy(env_metadata),
         "stdin": copy.deepcopy(stdin_metadata),
-        "network_policy": "host",
-        "security_boundary": "local_subprocess_not_security_sandbox",
+        "network_policy": "none" if container_execution else "host",
+        "security_boundary": (
+            "oci_process_isolation_not_untrusted_code_security_sandbox"
+            if container_execution
+            else "local_subprocess_not_security_sandbox"
+        ),
     }
+
+
+def _candidate_container_last_process_record(record: object) -> dict | None:
+    if not isinstance(record, dict):
+        return None
+    for field in (
+        "final_image_inspect",
+        "image_pull",
+        "initial_image_inspect",
+        "runtime_version_probe",
+    ):
+        value = record.get(field)
+        if isinstance(value, dict):
+            return value
+    return None
 
 
 def _candidate_runner_workspace_match_error(
@@ -3019,7 +3756,26 @@ def _candidate_runner_process_attempt_count(metadata: dict) -> int:
         and toolchain.get("version_probe_process_started") is True
         and isinstance(toolchain.get("version_probe"), dict)
     ):
-        process_count += 1
+        attempt_count = toolchain.get("version_probe_attempt_count", 1)
+        process_count += (
+            attempt_count
+            if isinstance(attempt_count, int)
+            and not isinstance(attempt_count, bool)
+            and attempt_count > 0
+            else 1
+        )
+    execution_environment = candidate_runner.get("execution_environment")
+    if isinstance(execution_environment, dict):
+        process_count += sum(
+            1
+            for field in (
+                "runtime_version_probe",
+                "initial_image_inspect",
+                "image_pull",
+                "final_image_inspect",
+            )
+            if isinstance(execution_environment.get(field), dict)
+        )
     return process_count
 
 

@@ -68,7 +68,7 @@ def test_roadmap_candidate_workspace_readiness_accepts_bounded_matrix():
     )
     assert boundary["missing_evidence"] == {
         "portable_hermetic_replayable_build_runner_evidence": (
-            "host_c_compiler_smoke_recorded_portable_replay_not_recorded"
+            "host_c_and_single_digest_pinned_oci_smoke_recorded_broad_portable_replay_not_recorded"
         ),
         "flexible_solution_abstraction_api": "not_recorded_locally",
         "candidate_embedded_evaluator_contracts": "not_recorded_locally",

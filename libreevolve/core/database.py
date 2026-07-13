@@ -28,8 +28,12 @@ from libreevolve.core.budget import (
     validate_controller_budget_event,
 )
 from libreevolve.core.config import (
+    CANDIDATE_HOST_EXECUTION_ENVIRONMENT,
+    CANDIDATE_OCI_EXECUTION_ENVIRONMENT,
     Config,
+    ConfigError,
     MAX_EVALUATOR_STDIN_CHARS,
+    _validate_candidate_execution_environment,
     _validate_validator_network_policy,
 )
 from libreevolve.core.candidate import (
@@ -9893,6 +9897,13 @@ def _candidate_language_policy(config: Config) -> dict:
         declaration_status = "metadata_only_no_execution"
     else:
         declaration_status = "not_configured"
+    oci_execution_declared = any(
+        isinstance(record, Mapping)
+        and isinstance(record.get("execution_environment"), Mapping)
+        and record["execution_environment"].get("type")
+        == CANDIDATE_OCI_EXECUTION_ENVIRONMENT
+        for record in build_system_declarations
+    )
     remaining_gap = [
         "language_aware_evolve_block_marker_grammars",
         "problem_defined_candidate_abstraction_hooks",
@@ -9928,15 +9939,21 @@ def _candidate_language_policy(config: Config) -> dict:
         "runner_policy": {
             "validator_runner": "python_subprocess_entrypoint",
             "validator_entrypoints": "problem_local_python_files_or_packages",
-            "task_declared_language_runners": "local_subprocess_without_shell_partial",
-            "build_system_runners": "local_subprocess_without_shell_partial",
+            "task_declared_language_runners": (
+                "host_or_digest_pinned_oci_subprocess_without_shell_partial"
+            ),
+            "build_system_runners": (
+                "host_or_digest_pinned_oci_subprocess_without_shell_partial"
+            ),
             "toolchain_identity": (
-                "declared_candidate_resolution_version_probe_and_optional_sha256_pins"
+                "host_executable_or_oci_image_digest_and_version_probe"
             ),
             "dependency_lock_identity": "candidate_workspace_file_sha256_pins",
-            "toolchain_distribution": "host_resolved_not_provisioned",
+            "toolchain_distribution": (
+                "optional_digest_pinned_oci_pull_or_host_resolution_partial"
+            ),
             "metrics_authority": "problem_owned_python_validator",
-            "network_policy": "host_only_for_candidate_runner",
+            "network_policy": "host_for_host_runner_none_for_oci_runner",
             "problem_defined_solution_abstractions": "unsupported",
         },
         "runner_declarations": {
@@ -9945,16 +9962,21 @@ def _candidate_language_policy(config: Config) -> dict:
             "build_system_declarations": build_system_declarations,
             "stage_bindings": stage_bindings,
             "execution_status": (
-                "local_subprocess_supported" if stage_bindings else "unsupported"
+                "host_or_oci_subprocess_supported_partial"
+                if stage_bindings
+                else "unsupported"
             ),
-            "declaration_scope": "stage_bound_local_subprocess_or_metadata_only",
+            "declaration_scope": (
+                "stage_bound_host_or_digest_pinned_oci_subprocess_or_metadata_only"
+            ),
+            "oci_execution_declared": oci_execution_declared,
         },
         "alphaevolve_divergence": (
-            "LibreEvolve can execute task-declared local language/build commands "
-            "for bounded text workspaces, but lacks language-aware marker grammars, "
-            "OS sandboxing, portable hermetic toolchain distribution and dependency "
-            "resolution, task-defined solution objects, and real codebase-scale "
-            "language benchmark evidence."
+            "LibreEvolve can execute task-declared host commands or digest-pinned, "
+            "network-disabled OCI build/run commands for bounded text workspaces, "
+            "but lacks language-aware marker grammars, hostile-code sandboxing, "
+            "portable package-manager resolution across platforms, task-defined "
+            "solution objects, and real codebase-scale language benchmark evidence."
         ),
         "language_runner_ready": bool(stage_bindings),
         "remaining_gap": remaining_gap,
@@ -10089,7 +10111,7 @@ def validate_candidate_language_policy(policy: object) -> dict:
             }
         )
     else:
-        expected_runner = {
+        legacy_runner = {
             "validator_runner": "python_subprocess_entrypoint",
             "validator_entrypoints": "problem_local_python_files_or_packages",
             "task_declared_language_runners": "local_subprocess_without_shell_partial",
@@ -10103,6 +10125,32 @@ def validate_candidate_language_policy(policy: object) -> dict:
             "network_policy": "host_only_for_candidate_runner",
             "problem_defined_solution_abstractions": "unsupported",
         }
+        current_runner = {
+            "validator_runner": "python_subprocess_entrypoint",
+            "validator_entrypoints": "problem_local_python_files_or_packages",
+            "task_declared_language_runners": (
+                "host_or_digest_pinned_oci_subprocess_without_shell_partial"
+            ),
+            "build_system_runners": (
+                "host_or_digest_pinned_oci_subprocess_without_shell_partial"
+            ),
+            "toolchain_identity": (
+                "host_executable_or_oci_image_digest_and_version_probe"
+            ),
+            "dependency_lock_identity": "candidate_workspace_file_sha256_pins",
+            "toolchain_distribution": (
+                "optional_digest_pinned_oci_pull_or_host_resolution_partial"
+            ),
+            "metrics_authority": "problem_owned_python_validator",
+            "network_policy": "host_for_host_runner_none_for_oci_runner",
+            "problem_defined_solution_abstractions": "unsupported",
+        }
+        expected_runner = (
+            legacy_runner
+            if runner_policy.get("toolchain_distribution")
+            == "host_resolved_not_provisioned"
+            else current_runner
+        )
         _candidate_policy_expected_mapping(
             issues,
             runner_policy,
@@ -10223,7 +10271,8 @@ def _validate_candidate_runner_declarations(
                 "message": f"runner_declarations missing fields: {sorted(missing)}",
             }
         )
-    unsupported = set(declarations) - expected
+    allowed = expected | {"oci_execution_declared"}
+    unsupported = set(declarations) - allowed
     if unsupported:
         issues.append(
             {
@@ -10274,10 +10323,15 @@ def _validate_candidate_runner_declarations(
                 "message": f"runner declaration status must be {expected_status}",
             }
         )
-    expected_execution = (
-        "local_subprocess_supported" if stage_bindings else "unsupported"
+    expected_executions = (
+        {
+            "local_subprocess_supported",
+            "host_or_oci_subprocess_supported_partial",
+        }
+        if stage_bindings
+        else {"unsupported"}
     )
-    if declarations.get("execution_status") != expected_execution:
+    if declarations.get("execution_status") not in expected_executions:
         issues.append(
             {
                 "code": "runner_declaration_execution_status_mismatch",
@@ -10287,10 +10341,10 @@ def _validate_candidate_runner_declarations(
                 ),
             }
         )
-    if (
-        declarations.get("declaration_scope")
-        != "stage_bound_local_subprocess_or_metadata_only"
-    ):
+    if declarations.get("declaration_scope") not in {
+        "stage_bound_local_subprocess_or_metadata_only",
+        "stage_bound_host_or_digest_pinned_oci_subprocess_or_metadata_only",
+    }:
         issues.append(
             {
                 "code": "invalid_runner_declaration_scope",
@@ -10371,6 +10425,8 @@ def _validate_candidate_runner_declarations(
             "execution_status",
             "notes",
         }
+        if "oci_execution_declared" in declarations:
+            required.add("execution_environment")
         missing = required - set(record)
         if missing:
             issues.append(
@@ -10400,6 +10456,31 @@ def _validate_candidate_runner_declarations(
         executable_pin = record.get("toolchain_executable_sha256")
         version_pin = record.get("toolchain_version_output_sha256")
         dependency_locks = record.get("dependency_lock_sha256")
+        execution_environment = record.get("execution_environment")
+        if execution_environment is not None:
+            try:
+                normalized_environment = _validate_candidate_execution_environment(
+                    f"build_system_declarations[{index}].execution_environment",
+                    execution_environment,
+                )
+            except ConfigError as exc:
+                issues.append(
+                    {
+                        "code": "invalid_build_system_execution_environment",
+                        "message": str(exc),
+                    }
+                )
+            else:
+                if dict(execution_environment) != normalized_environment:
+                    issues.append(
+                        {
+                            "code": "unnormalized_build_system_execution_environment",
+                            "message": (
+                                "build system execution_environment must match its "
+                                "normalized declaration"
+                            ),
+                        }
+                    )
         if not isinstance(candidates, list) or not all(
             isinstance(item, str) and item for item in candidates
         ):
@@ -10483,6 +10564,25 @@ def _validate_candidate_runner_declarations(
                     ),
                 }
             )
+    expected_oci_declared = any(
+        isinstance(record, Mapping)
+        and isinstance(record.get("execution_environment"), Mapping)
+        and record["execution_environment"].get("type")
+        == CANDIDATE_OCI_EXECUTION_ENVIRONMENT
+        for record in build_declarations
+    )
+    if (
+        "oci_execution_declared" in declarations
+        and declarations.get("oci_execution_declared") is not expected_oci_declared
+    ):
+        issues.append(
+            {
+                "code": "runner_declaration_oci_status_mismatch",
+                "message": (
+                    "oci_execution_declared must match build-system environments"
+                ),
+            }
+        )
     seen_stage_indices: set[int] = set()
     for index, binding in enumerate(stage_bindings):
         if not isinstance(binding, Mapping):

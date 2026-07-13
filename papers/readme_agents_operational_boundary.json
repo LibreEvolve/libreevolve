@@ -18,10 +18,11 @@
   "todo_paths": [
     "docs/todo/readme.md"
   ],
-  "actual_example_count": 10,
+  "actual_example_count": 11,
   "actual_examples": [
     "candidate_runner_c",
     "candidate_runner_expression",
+    "candidate_runner_python_oci",
     "circle_packing",
     "embedded_evaluate_math",
     "hello_world",
@@ -31,7 +32,7 @@
     "sorting_network_9",
     "workspace_math"
   ],
-  "listed_example_count": 7,
+  "listed_example_count": 8,
   "listed_examples": [
     "hello_world",
     "circle_packing",
@@ -39,7 +40,8 @@
     "matrix_multiplication",
     "workspace_math",
     "candidate_runner_expression",
-    "candidate_runner_c"
+    "candidate_runner_c",
+    "candidate_runner_python_oci"
   ],
   "missing_example_count": 3,
   "missing_examples": [

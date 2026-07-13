@@ -441,12 +441,15 @@ LibreEvolve has:
 - manifest-visible `libreevolve.candidate_language_policy.v1` records that
   declare the current task-primary bounded text-workspace boundary, Python
   primary autodetection by default, explicit seed-policy primary selection,
-  and partial stage-bound local language/build subprocess execution, including
+  and partial stage-bound host/OCI language/build subprocess execution, including
   ordered host-toolchain resolution, version probes, optional executable and
-  version-output pins, and candidate lock-file hash enforcement, while keeping
-  language-aware markers, OS sandboxing, portable hermetic toolchain
-  provisioning, problem-defined candidate abstractions, and codebase-scale
-  language evidence unsupported
+  version-output pins, candidate lock-file hash enforcement, and an optional
+  digest-pinned OCI build/run environment with bounded resource flags,
+  network-disabled candidate processes, read-only image rootfs, immutable-image
+  pull/inspect evidence, and ordered in-image toolchain probes, while keeping
+  language-aware markers, hostile-code sandbox certification, broad portable
+  package restoration, problem-defined candidate abstractions, and codebase-
+  scale language evidence unsupported
 - local workspace materialization diagnostics with typed
   `CandidateMaterializationError` reasons, bounded paths, casefold collision
   checks, recursive link preflight, and static source-copy hash checks, with
@@ -463,17 +466,20 @@ LibreEvolve has:
   `runner_declaration_workspace_evidence` path-match records against retained
   candidate workspaces, bounded executed-process and generated-build-artifact
   records, executable path/content hashes, toolchain version-output and lock
-  hashes, same-host replay scope, and environment linkage under
+  hashes, same-host or digest-pinned OCI replay scope, OCI runtime/image/
+  provisioning/isolation evidence, and environment linkage under
   `runner_environment_provenance`, unsupported task-abstraction hooks, and exact
   remaining gaps before
   AlphaEvolve-grade executable language/build parity, with
   `papers/candidate_language_runner_boundary.json` now carrying the
   paper-manifest-validated partial-capability boundary: the checked expression
-  fixture executes one non-Python adapter contract and the checked C fixture
+  fixture executes one non-Python adapter contract, the checked C fixture
   compiles and runs one C11 primary with observed compiler identity and a
-  verified lock hash, while language/toolchain breadth, language-aware marker
-  grammars, sandboxed and portable hermetic builds, full environment artifacts,
-  and codebase-scale evidence remain open
+  verified lock hash, and the OCI Python fixture declares one immutable-image
+  interpreted build/run path whose live integration test remains opt-in. Broad
+  language/toolchain and package-manager coverage, language-aware marker
+  grammars, hostile-code security certification, cross-platform/daemon replay,
+  full environment artifacts, and codebase-scale evidence remain open
 - runtime candidate-abstraction choice reports under
   `runtime.history.candidate_abstraction_choice_report`, recording the current
   code-file-set selection, policy/runner linkage, runtime workspace shape,
@@ -504,12 +510,13 @@ AlphaEvolve reproduction.
 
 ### 1. Finish candidate workspace fidelity
 
-- Extend the checked expression and C runner/build smoke contracts into broader
-  compiled and interpreted language/package-manager fixtures with portable
-  hermetic toolchain provisioning, enforced exact identities, deterministic
-  cross-host replay, stronger isolation, generated-artifact evidence, and
-  codebase-scale benchmark runs. The current host-resolved command-token path is
-  usable for trusted local tasks but is not arbitrary-language parity.
+- Extend the checked expression, host C, and digest-pinned OCI Python runner/
+  build smoke contracts into broader compiled and interpreted language/package-manager fixtures.
+  Add lock restoration, multi-platform runtime and local-
+  daemon certification, deterministic repeated cross-host replay, stronger
+  hostile-code isolation review, generated-artifact evidence, and codebase-
+  scale benchmark runs. The current host and single-image command-token paths
+  are useful contract evidence but are not arbitrary-language parity.
 - Add problem-defined candidate abstraction hooks if LibreEvolve should move
   beyond the documented code-file-set divergence from AlphaEvolve's flexible
   solution-abstraction API.

@@ -22,7 +22,8 @@ Runnable today:
 
 - Task-primary bounded UTF-8 text workspaces. Python seed primaries are
   autodetected by default; `initial_programs/seed_policy.yaml` can select a
-  non-Python primary for a stage-bound local language/build runner.
+  non-Python primary for a stage-bound host or digest-pinned OCI language/build
+  runner.
 - Opt-in strict initial-program validity reports for runs that require every
   selected seed to be evaluator-valid before mutation; multi-seed,
   provider-startup, matrix, and constructive-math strict evidence remains
@@ -119,16 +120,21 @@ Important limits:
   `papers/non_jsonl_artifact_boundary.json` records current manifest schema,
   hash policies, docs anchors, and show/restore checks for artifacts such as
   `best.py`, `best_workspace/`, `plugin_artifacts/`, and `paper_artifacts/`.
-- Candidate execution is Python by default, with a partial task-declared local
-  subprocess path for non-Python text primaries. A `candidate_runner` stage can
-  run validated command-token arrays without a shell, optionally resolve and
-  probe a declared build toolchain, enforce optional executable/version-output
-  SHA-256 pins and candidate lock-file hashes, capture bounded build artifacts,
-  and pass a redacted/bounded process record to the problem-owned Python
-  validator that remains metrics authority. The checked expression and C11
-  fixtures prove local adapter and host-compiler execution only. They do not
-  prove portable hermetic toolchain provisioning, cross-host replay,
-  language-aware marker grammars, OS-sandboxed isolation, or AlphaEvolve-scale
+- Candidate execution is Python by default, with partial task-declared host or
+  digest-pinned OCI subprocess paths for text primaries. A `candidate_runner`
+  stage runs validated command-token arrays without a shell, can probe an
+  ordered build toolchain, enforce candidate lock-file hashes and optional
+  host executable/version-output pins, capture bounded build artifacts, and
+  pass a redacted process record to the problem-owned Python validator that
+  remains metrics authority. OCI builds declare Docker/Podman candidates and
+  an immutable `@sha256:` image; build and runner processes use the same
+  verified image with network disabled, a read-only root filesystem, dropped
+  capabilities, bounded CPU/memory/PIDs/tmpfs, and only the candidate workspace
+  writable. An `if_missing` pull may use the host runtime's registry access,
+  but candidate processes cannot. This is process isolation, not a hostile-code
+  security sandbox. The expression, host C11, and OCI Python fixtures are smoke
+  contracts; they do not prove broad package restoration, cross-platform or
+  remote-daemon replay, language-aware marker grammars, or AlphaEvolve-scale
   arbitrary-codebase support.
 - Candidate abstractions are code-file/workspace based; problem-defined direct
   solution objects, constructor-function search, bespoke search-algorithm
@@ -307,6 +313,13 @@ The bundled examples are intentionally small:
   It compiles one toy C11 program with a discovered host compiler, records
   toolchain identity, verifies a lock hash, and runs the generated executable;
   it is not hermetic replay or codebase-scale benchmark evidence.
+- `candidate_runner_python_oci` is a non-comparable interpreted-language OCI
+  contract fixture. It compiles and runs one toy Python file in an official
+  digest-pinned image, verifies an in-workspace lock hash, and requires
+  network-disabled/read-only-rootfs/resource-bounded execution evidence. Its
+  real Docker/Podman integration test is opt-in with
+  `LIBREEVOLVE_RUN_OCI_FIXTURE=1` and skips when no local daemon is healthy; the
+  default mocked contract tests are not live cross-host certification.
 - `sorting_network_8` and `sorting_network_9` are bounded benchmark candidates
   with exhaustive zero-one validation and known comparator targets, but they
   are not paper-comparable evidence until repeated runs and certification are

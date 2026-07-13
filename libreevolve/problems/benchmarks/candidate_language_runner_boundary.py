@@ -15,7 +15,7 @@ CANDIDATE_LANGUAGE_RUNNER_CONTRACT_REPORT_SCHEMA = (
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_SOURCE_SECTION_IDS = ("2.1", "2.2")
-EXPECTED_BOUNDARY_STATUS = "local_candidate_runner_execution_partial"
+EXPECTED_BOUNDARY_STATUS = "digest_pinned_oci_candidate_execution_partial"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "candidate_language",
     "runner_id",
@@ -32,6 +32,12 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "toolchain_version_output_sha256",
     "dependency_lock_sha256",
     "toolchain_replay_scope",
+    "execution_environment_type",
+    "oci_image_manifest_digest",
+    "container_runtime_identity",
+    "container_provisioning_status",
+    "candidate_network_policy",
+    "container_resource_policy",
     "declared_workspace_path_match",
     "generated_artifact_path",
     "generated_artifact_hash",
@@ -42,10 +48,10 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "configured_non_python_language_runners": (
-        "expression_and_real_c_smoke_execution_recorded_language_and_codebase_breadth_not_recorded"
+        "expression_host_c_and_digest_pinned_oci_python_smoke_contracts_recorded_language_and_codebase_breadth_not_recorded"
     ),
     "build_system_runner_contracts": (
-        "host_c_compiler_build_and_identity_recorded_portable_hermetic_toolchain_not_recorded"
+        "host_c_compiler_and_single_digest_pinned_oci_python_build_contract_recorded_broader_toolchain_parity_not_recorded"
     ),
     "language_aware_marker_grammars": "not_recorded_locally",
     "arbitrary_language_validator_contracts": (
@@ -53,16 +59,20 @@ EXPECTED_MISSING_EVIDENCE = {
     ),
     "task_defined_candidate_abstraction_hooks": "not_recorded_locally",
     "runner_environment_artifacts": (
-        "toolchain_executable_version_and_lock_hashes_recorded_portable_environment_replay_not_recorded"
+        "host_toolchain_hashes_and_oci_runtime_image_provisioning_isolation_records_available_full_environment_replay_not_recorded"
     ),
     "generated_build_artifact_records": (
         "bounded_expression_and_c_binary_build_artifacts_recorded_codebase_scale_not_recorded"
     ),
-    "portable_hermetic_toolchain_provisioning": "not_recorded_locally",
-    "exact_cross_host_toolchain_replay": (
-        "exact_pin_enforcement_recorded_portable_replay_not_recorded"
+    "portable_hermetic_toolchain_provisioning": (
+        "single_digest_pinned_oci_image_pull_contract_recorded_package_manager_and_multi_platform_restore_not_recorded"
     ),
-    "os_sandboxed_runner_isolation": "not_recorded_locally",
+    "exact_cross_host_toolchain_replay": (
+        "digest_pinned_oci_replay_scope_recorded_daemon_platform_and_cross_host_certification_not_recorded"
+    ),
+    "os_sandboxed_runner_isolation": (
+        "candidate_oci_process_network_rootfs_capability_and_resource_controls_recorded_hostile_code_security_not_certified"
+    ),
 }
 
 
@@ -107,10 +117,16 @@ def candidate_language_runner_boundary_record() -> dict[str, Any]:
             "problem-owned scoring, bounded generated-artifact capture, and an "
             "executed non-Python expression fixture, one checked host C compiler "
             "fixture with toolchain/lock identity, and optional exact-pin "
-            "enforcement, but does not claim "
+            "enforcement. It also records one digest-pinned OCI Python fixture "
+            "contract with immutable image identity, optional pull-if-missing, "
+            "network-disabled read-only-rootfs candidate build/run processes, "
+            "bounded resources, ordered in-image toolchain probes, and values-"
+            "redacted runtime connectivity metadata. The live OCI integration "
+            "test remains opt-in and is not a committed cross-host certification. "
+            "This does not claim "
             "AlphaEvolve-style arbitrary language or build-system parity with "
-            "language-aware marker grammars, OS-sandboxed execution, portable "
-            "hermetic toolchain provisioning, cross-host replay, "
+            "language-aware marker grammars, hostile-code sandboxing, broad "
+            "package-manager provisioning, deterministic cross-platform replay, "
             "task-defined abstraction hooks, arbitrary-runner environment "
             "artifacts, or codebase-scale generated build-artifact evidence."
         ),

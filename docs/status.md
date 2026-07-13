@@ -17,7 +17,7 @@ Implemented today:
 
 - Task-primary bounded text workspaces and seed programs. Python primaries are
   autodetected by default; seed policy can select a non-Python primary for a
-  configured local candidate-runner stage.
+  configured host or digest-pinned OCI candidate-runner stage.
 - SEARCH/REPLACE diff mutations using the AlphaEvolve fence format.
 - Full-code replacement mode when configured.
 - OpenAI, Anthropic, Google Gemini, Ollama, and configured custom import-path
@@ -120,12 +120,13 @@ Important limits:
 - Workspace topology and materialization diagnostics cover local file-workspace
   path/case-folding/source-copy preflights, topology-command validation, and
   prompt-visible `materialization_error` summaries. Language and build runner
-  declarations can remain metadata-only or bind a local `candidate_runner`
+  declarations can remain metadata-only or bind a host/OCI `candidate_runner`
   stage; the checked expression fixture records one non-Python primary,
-  copy-build, generated artifact, runner process, and problem-owned score.
+  copy-build, generated artifact, runner process, and problem-owned score, and
+  the OCI Python fixture declares one digest-pinned interpreted build/run path.
   Real-language/build-toolchain artifacts, dependency-graph validation, bulk
   directory or external-path operations, portable static source-copy identity,
-  remote/container workspaces, paper-facing invalid-workspace fixture rows, or
+  remote or container-native workspaces, paper-facing invalid-workspace fixture rows, or
   codebase-scale workspace parity are still not implemented; that boundary is
   tracked by `papers/workspace_materialization_boundary.json`.
 - Codebase-scale reports are current-run workspace telemetry for retained
@@ -646,13 +647,18 @@ Important limits:
   non-Python language/build declarations, stage bindings, workspace matches,
   bounded process output and command hashes, executable path/content hashes,
   toolchain version-output and lock hashes, generated build artifacts,
-  environment policy, host-network/unsandboxed scope, and problem-owned score
-  authority. The checked expression fixture executes the adapter contract; the
-  checked C11 fixture resolves a host compiler, compiles and runs a binary, and
-  records observed identity. This does not prove portable hermetic
-  compiler/package-manager provisioning, cross-host replay, arbitrary-language
-  validators, OS sandboxing, codebase-scale artifacts, or language-aware marker
-  grammars; that partial boundary is tracked by
+  environment policy, and problem-owned score authority. Host records retain
+  the host-network/unsandboxed scope. OCI records retain runtime CLI and image
+  identity, pull/inspect status, candidate-network denial, read-only-rootfs/
+  mount/capability/resource policy, values-redacted runtime connectivity key
+  names, ordered in-image toolchain probes, and environment/toolchain identity
+  linkage. The checked expression fixture executes the adapter contract; the
+  checked C11 fixture runs a host compiler; and the OCI Python fixture declares
+  one immutable-image interpreted build/run path whose live daemon test is
+  opt-in. This does not prove broad compiler/package-manager restoration,
+  deterministic cross-platform or remote-daemon replay, arbitrary-language
+  validators, hostile-code sandboxing, codebase-scale artifacts, or language-
+  aware marker grammars; that partial boundary is tracked by
   `papers/candidate_language_runner_boundary.json`.
 - Configuration validation is local effective-config validation; live
   provider/model API compatibility is tracked by

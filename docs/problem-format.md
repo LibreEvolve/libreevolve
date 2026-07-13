@@ -553,7 +553,12 @@ resolvable configured toolchain candidate. A toolchain build and its version
 probe must begin with `{toolchain}`. Optional executable and normalized
 version-output SHA-256 pins are enforced before the build, as are configured
 SHA-256 hashes for candidate dependency-lock files. Tool availability is not
-installed or managed by LibreEvolve.
+installed or managed by LibreEvolve for the default host environment. A build
+declaration may instead set `execution_environment.type: oci_container_v1`,
+name Docker/Podman candidates, and provide an immutable image reference such as
+`registry.example/toolchain@sha256:<digest>`. In that mode `{workspace}` and
+`{primary}` expand to `/workspace` paths, ordered toolchain candidates are
+probed inside the image, and both build and runner execute in that same image.
 
 The optional build runs first. Files matching its `artifact_patterns` are
 copied through the normal bounded evaluator-artifact policy. The language
@@ -569,14 +574,19 @@ the bounded process, environment, command-hash, artifact, and security records.
 The validator remains the metrics authority; candidate stdout is not parsed
 into fitness by the framework. See `candidate_runner_expression` for the
 provider-free adapter fixture and `candidate_runner_c` for the checked host C
-compiler fixture.
+compiler fixture. `candidate_runner_python_oci` is the digest-pinned interpreted
+fixture; its live Docker/Podman integration test is opt-in.
 
 Candidate commands require `validator_network_policy: host`. They inherit the
 host network and use the minimal validator environment plus the explicit
-allowlist. They are ordinary local subprocesses, not a security sandbox. The
-current fixtures do not prove portable hermetic compiler/package-manager
-provisioning, exact cross-host replay, language-aware marker grammar, or
-codebase-scale arbitrary-language parity. Declarations with
+allowlist under `host_subprocess_v1`. OCI candidate build/run processes instead
+use a verified digest-pinned image with network disabled, read-only image
+rootfs, dropped capabilities/no-new-privileges, bounded CPU/memory/PIDs/tmpfs,
+and only the candidate workspace writable. A configured pull-if-missing may use
+host registry access before candidate execution. This is process isolation,
+not hostile-code security certification; daemon locality, platform parity,
+package restoration, exact cross-host replay, language-aware marker grammar,
+and codebase-scale arbitrary-language parity remain unproven. Declarations with
 `declared_metadata_only` or `unsupported` status are still retained as
 manifest metadata but cannot be bound to a `candidate_runner` stage.
 

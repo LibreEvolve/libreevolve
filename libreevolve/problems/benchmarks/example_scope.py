@@ -118,6 +118,19 @@ _EXAMPLE_BENCHMARK_SCOPE_RECORDS: tuple[dict[str, Any], ...] = (
     },
     {
         "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
+        "problem_id": "candidate_runner_python_oci",
+        "path": "libreevolve/problems/examples/candidate_runner_python_oci",
+        "level": "smoke",
+        "alphaevolve_comparable": False,
+        "current_role": "digest_pinned_oci_interpreted_runner_contract_fixture",
+        "reason": "Builds and runs one toy Python program in a digest-pinned, network-disabled OCI image with bounded resources; it is not a hostile-code sandbox, cross-platform certification, or paper benchmark.",
+        "required_upgrades": [
+            "Certify multiple runtimes, host platforms, language images, and package-manager lock restoration under repeated runs.",
+            "Add codebase-scale workloads, hostile-code isolation review, and equal-budget benchmark evidence.",
+        ],
+    },
+    {
+        "schema": EXAMPLE_BENCHMARK_SCOPE_SCHEMA,
         "problem_id": "matrix_multiplication",
         "path": "libreevolve/problems/examples/matrix_multiplication",
         "level": "smoke",

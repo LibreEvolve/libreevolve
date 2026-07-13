@@ -14459,3 +14459,17 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     markers, and task-defined abstraction APIs still block parity claims.
   - Verification: boundary, paper-manifest, runtime-report, real-compiler
     example, and overclaim tests keep `claim_ready: false`.
+- [x] Promote candidate-language evidence to digest-pinned OCI partial support.
+  - Paper evidence: AlphaEvolve Sections 2.1-2.2 describe task-defined program
+    artifacts and evaluator interfaces spanning existing codebases and build
+    environments.
+  - Status: the candidate-language boundary now credits one immutable-image
+    Python build/run contract, runtime/image/provisioning identity, candidate
+    network denial, bounded isolation/resource policy, ordered toolchain probes,
+    lock verification, and explicit digest-scoped replay evidence.
+  - Remaining paper gap: no committed live multi-host result, package-manager
+    restoration study, platform/daemon matrix, hostile-code review, broad
+    language suite, or AlphaEvolve-scale benchmark supports parity claims.
+  - Verification: source boundary, runtime report, example-scope, paper-manifest,
+    and overclaim tests retain `claim_ready: false`; the live OCI fixture remains
+    opt-in.

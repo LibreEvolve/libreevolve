@@ -31,7 +31,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
 )
 EXPECTED_MISSING_EVIDENCE = {
     "portable_hermetic_replayable_build_runner_evidence": (
-        "host_c_compiler_smoke_recorded_portable_replay_not_recorded"
+        "host_c_and_single_digest_pinned_oci_smoke_recorded_broad_portable_replay_not_recorded"
     ),
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
@@ -52,8 +52,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "language_build_and_candidate_api",
         "search_surface": "language/build runner contracts and problem-defined candidate abstraction APIs",
-        "current_scope": "task-primary local expression and host C build/runner execution plus code-file-set abstraction without portable toolchain parity",
-        "missing_readiness": "portable hermetic replayable build-runner evidence plus flexible solution abstraction API evidence",
+        "current_scope": "task-primary local expression, host C, and single digest-pinned OCI Python build/runner execution plus code-file-set abstraction without broad portable toolchain parity",
+        "missing_readiness": "multi-platform package-restoring deterministic replay plus flexible solution abstraction API evidence",
         "sidecars": (
             "papers/candidate_language_runner_boundary.json",
             "papers/candidate_abstraction_boundary.json",
@@ -68,8 +68,8 @@ CRITERION_SPECS = (
                 "required_phrase": "flexible solution abstraction API",
             },
         ),
-        "validation_gate": "portable-toolchain runner and candidate abstraction readiness gate",
-        "readiness_status": "local_expression_and_host_c_runner_without_portable_toolchain_gate",
+        "validation_gate": "broad portable-toolchain runner and candidate abstraction readiness gate",
+        "readiness_status": "host_and_single_digest_pinned_oci_runner_without_broad_portable_toolchain_gate",
     },
     {
         "criterion_id": "embedded_evaluator_and_codebase_scale",

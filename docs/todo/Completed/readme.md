@@ -15914,3 +15914,15 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Verification: documentation, agent-doc, example-scope, candidate-language,
     installed-wheel CLI/show, and paper-manifest tests guard the updated claim
     boundary.
+- [x] Document digest-pinned OCI execution without claiming sandbox or replay parity.
+  - Status: README, architecture, configuration, problem-format, run-artifact,
+    status, ROADMAP, paper-index, TODO, and agent docs now distinguish host
+    execution, candidate OCI network isolation, registry provisioning access,
+    immutable image identity, resource controls, and the problem-owned host
+    scorer.
+  - Remaining README gap: daemon locality, multi-platform replay, package
+    restoration, hostile-code security, broader language coverage, and
+    codebase-scale evidence remain explicit.
+  - Verification: documentation boundaries, example-scope registry, candidate-
+    language sidecar, runtime-report validation, and focused tests guard the
+    scoped wording.

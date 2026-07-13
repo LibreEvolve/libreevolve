@@ -16,7 +16,9 @@
   "example_paths": [
     "libreevolve/problems/examples/workspace_math",
     "libreevolve/problems/examples/embedded_evaluate_math",
-    "libreevolve/problems/examples/candidate_runner_expression"
+    "libreevolve/problems/examples/candidate_runner_expression",
+    "libreevolve/problems/examples/candidate_runner_c",
+    "libreevolve/problems/examples/candidate_runner_python_oci"
   ],
   "sidecar_paths": [
     "papers/readme_problem_layout_boundary.json",
@@ -32,7 +34,7 @@
     "docs/todo/code.md",
     "docs/todo/papers.md"
   ],
-  "guide_marker_count": 24,
+  "guide_marker_count": 25,
   "missing_guide_marker_count": 0,
   "missing_guide_marker_records": [],
   "guide_marker_records": [
@@ -163,6 +165,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "candidate_oci_execution",
+      "path": "docs/problem-format.md",
+      "required_marker": "`execution_environment.type: oci_container_v1`",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "evaluation_validity_gate",
       "path": "docs/problem-format.md",
       "required_marker": "The evaluator treats `is_valid` as a required boolean validity gate",
@@ -181,7 +189,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "evidence_anchor_count": 52,
+  "evidence_anchor_count": 57,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -318,6 +326,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "config_candidate_execution_environment",
+      "path": "libreevolve/core/config.py",
+      "required_marker": "def _validate_candidate_execution_environment",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "evaluator_cascade",
       "path": "libreevolve/core/evaluator.py",
       "required_marker": "class CascadeEvaluator:",
@@ -333,6 +347,12 @@
       "record_id": "evaluator_candidate_toolchain",
       "path": "libreevolve/core/evaluator.py",
       "required_marker": "def _prepare_candidate_build_toolchain",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "evaluator_candidate_container",
+      "path": "libreevolve/core/evaluator.py",
+      "required_marker": "def _prepare_candidate_container_environment",
       "marker_status": "marker_present"
     },
     {
@@ -390,6 +410,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "evaluator_tests_candidate_container",
+      "path": "tests/core/test_evaluator.py",
+      "required_marker": "test_candidate_runner_executes_build_and_runner_in_digest_pinned_oci_image",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "examples_workspace_math",
       "path": "tests/test_examples.py",
       "required_marker": "test_workspace_math_loader_records_nested_static_seed_workspace",
@@ -414,6 +440,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "examples_candidate_runner_oci",
+      "path": "tests/test_examples.py",
+      "required_marker": "test_candidate_runner_python_oci_example_loads_with_immutable_contract",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "workspace_math_example",
       "path": "libreevolve/problems/examples/workspace_math",
       "required_marker": "codebase_integration.yaml",
@@ -434,6 +466,12 @@
     {
       "record_id": "candidate_runner_c_example",
       "path": "libreevolve/problems/examples/candidate_runner_c",
+      "required_marker": "config.yaml",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_runner_oci_example",
+      "path": "libreevolve/problems/examples/candidate_runner_python_oci",
       "required_marker": "config.yaml",
       "marker_status": "marker_present"
     },

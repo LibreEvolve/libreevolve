@@ -827,13 +827,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     guard.
   - Current gap: the per-surface candidate-workspace claim guard is a bounded
     allowed-scope map, not evidence that the missing candidate-workspace
-    capabilities are implemented. A passing Python workspace or local
-    expression/C-runner fixture, fixed diff parser, snapshot restore, or
+    capabilities are implemented. A passing Python workspace, local expression/
+    C runner, or single digest-pinned OCI Python fixture, fixed diff parser,
+    snapshot restore, or
     materialization diagnostic still must
     not be mistaken for complete AlphaEvolve-style workspace support.
   - Required result: implement the missing readiness fields recorded by the
     readiness sidecar: portable hermetic and broader language/build runners
-    beyond the local expression and host C smoke fixtures, flexible solution
+    beyond the local expression, host C, and single-image OCI Python smoke
+    fixtures, package lock restoration plus deterministic platform/daemon
+    replay, flexible solution
     abstraction API, candidate-embedded evaluator contracts, realistic codebase
     fixtures, benchmark-calibrated adaptive mutation-mode policy, mutation-operator family
     provenance, semantic prompt-example-copy detection, cross-file consistency

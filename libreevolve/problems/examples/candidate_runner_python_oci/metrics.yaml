@@ -1,0 +1,4 @@
+metrics:
+  - name: score
+    primary: true
+    bounds: [0.0, 1.0]

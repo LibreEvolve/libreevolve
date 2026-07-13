@@ -1,4 +1,5 @@
 from fractions import Fraction
+import copy
 import hashlib
 import json, math, os, subprocess, sys, tempfile
 import random
@@ -4436,15 +4437,21 @@ def test_manifest_written():
         "runner_policy": {
             "validator_runner": "python_subprocess_entrypoint",
             "validator_entrypoints": "problem_local_python_files_or_packages",
-            "task_declared_language_runners": "local_subprocess_without_shell_partial",
-            "build_system_runners": "local_subprocess_without_shell_partial",
+            "task_declared_language_runners": (
+                "host_or_digest_pinned_oci_subprocess_without_shell_partial"
+            ),
+            "build_system_runners": (
+                "host_or_digest_pinned_oci_subprocess_without_shell_partial"
+            ),
             "toolchain_identity": (
-                "declared_candidate_resolution_version_probe_and_optional_sha256_pins"
+                "host_executable_or_oci_image_digest_and_version_probe"
             ),
             "dependency_lock_identity": "candidate_workspace_file_sha256_pins",
-            "toolchain_distribution": "host_resolved_not_provisioned",
+            "toolchain_distribution": (
+                "optional_digest_pinned_oci_pull_or_host_resolution_partial"
+            ),
             "metrics_authority": "problem_owned_python_validator",
-            "network_policy": "host_only_for_candidate_runner",
+            "network_policy": "host_for_host_runner_none_for_oci_runner",
             "problem_defined_solution_abstractions": "unsupported",
         },
         "runner_declarations": {
@@ -4453,14 +4460,17 @@ def test_manifest_written():
             "build_system_declarations": [],
             "stage_bindings": [],
             "execution_status": "unsupported",
-            "declaration_scope": "stage_bound_local_subprocess_or_metadata_only",
+            "declaration_scope": (
+                "stage_bound_host_or_digest_pinned_oci_subprocess_or_metadata_only"
+            ),
+            "oci_execution_declared": False,
         },
         "alphaevolve_divergence": (
-            "LibreEvolve can execute task-declared local language/build commands "
-            "for bounded text workspaces, but lacks language-aware marker grammars, "
-            "OS sandboxing, portable hermetic toolchain distribution and dependency "
-            "resolution, task-defined solution objects, and real codebase-scale "
-            "language benchmark evidence."
+            "LibreEvolve can execute task-declared host commands or digest-pinned, "
+            "network-disabled OCI build/run commands for bounded text workspaces, "
+            "but lacks language-aware marker grammars, hostile-code sandboxing, "
+            "portable package-manager resolution across platforms, task-defined "
+            "solution objects, and real codebase-scale language benchmark evidence."
         ),
         "language_runner_ready": False,
         "remaining_gap": [
@@ -4874,6 +4884,56 @@ def test_candidate_language_policy_rejects_malformed_toolchain_declaration():
     assert validation["ok"] is False
     assert "invalid_build_system_toolchain_probe_command" in codes
     assert "invalid_build_system_dependency_lock_sha256" in codes
+
+
+def test_candidate_language_policy_records_and_validates_oci_execution_environment():
+    tmpdir = tempfile.mkdtemp()
+    ProgramDatabase(
+        Config(
+            log_dir=tmpdir,
+            problem_name="t",
+            candidate_build_systems=[
+                {
+                    "name": "python_oci",
+                    "build_command": ["{toolchain}", "-m", "py_compile", "main.py"],
+                    "toolchain_candidates": ["python"],
+                    "execution_environment": {
+                        "type": "oci_container_v1",
+                        "runtime_candidates": ["docker", "podman"],
+                        "image": f"example/python@sha256:{'a' * 64}",
+                        "pull_policy": "if_missing",
+                    },
+                }
+            ],
+        )
+    )
+    manifest = json.loads((Path(tmpdir) / "t" / "manifest.json").read_text())
+    policy = manifest["policies"]["candidate_language"]
+    declarations = policy["runner_declarations"]
+    environment = declarations["build_system_declarations"][0][
+        "execution_environment"
+    ]
+
+    assert declarations["oci_execution_declared"] is True
+    assert environment["type"] == "oci_container_v1"
+    assert environment["network"] == "none"
+    assert environment["read_only_rootfs"] is True
+    assert validate_candidate_language_policy(policy)["ok"] is True
+
+    edited = copy.deepcopy(policy)
+    edited_declarations = edited["runner_declarations"]
+    edited_declarations["oci_execution_declared"] = False
+    edited_environment = edited_declarations["build_system_declarations"][0][
+        "execution_environment"
+    ]
+    edited_environment["image"] = "example/python:latest"
+    edited_environment["network"] = "host"
+
+    validation = validate_candidate_language_policy(edited)
+    codes = {issue["code"] for issue in validation["issues"]}
+    assert validation["ok"] is False
+    assert "invalid_build_system_execution_environment" in codes
+    assert "runner_declaration_oci_status_mismatch" in codes
 
 
 def test_manifest_records_validator_network_deny_policy():

@@ -8,7 +8,7 @@
     "2.2"
   ],
   "source_claim": "tasks define the program artifact and evaluator interface, and AlphaEvolve can operate on existing codebases and task-specific program representations rather than only one Python-primary workspace shape",
-  "boundary_status": "local_candidate_runner_execution_partial",
+  "boundary_status": "digest_pinned_oci_candidate_execution_partial",
   "runtime_report_status": "candidate_language_runner_contract_report_available",
   "claim_ready": false,
   "required_evidence_fields": [
@@ -27,6 +27,12 @@
     "toolchain_version_output_sha256",
     "dependency_lock_sha256",
     "toolchain_replay_scope",
+    "execution_environment_type",
+    "oci_image_manifest_digest",
+    "container_runtime_identity",
+    "container_provisioning_status",
+    "candidate_network_policy",
+    "container_resource_policy",
     "declared_workspace_path_match",
     "generated_artifact_path",
     "generated_artifact_hash",
@@ -36,16 +42,16 @@
     "runner_environment_provenance"
   ],
   "missing_evidence": {
-    "configured_non_python_language_runners": "expression_and_real_c_smoke_execution_recorded_language_and_codebase_breadth_not_recorded",
-    "build_system_runner_contracts": "host_c_compiler_build_and_identity_recorded_portable_hermetic_toolchain_not_recorded",
+    "configured_non_python_language_runners": "expression_host_c_and_digest_pinned_oci_python_smoke_contracts_recorded_language_and_codebase_breadth_not_recorded",
+    "build_system_runner_contracts": "host_c_compiler_and_single_digest_pinned_oci_python_build_contract_recorded_broader_toolchain_parity_not_recorded",
     "language_aware_marker_grammars": "not_recorded_locally",
     "arbitrary_language_validator_contracts": "problem_owned_python_scoring_for_expression_and_c_recorded_arbitrary_language_contract_not_recorded",
     "task_defined_candidate_abstraction_hooks": "not_recorded_locally",
-    "runner_environment_artifacts": "toolchain_executable_version_and_lock_hashes_recorded_portable_environment_replay_not_recorded",
+    "runner_environment_artifacts": "host_toolchain_hashes_and_oci_runtime_image_provisioning_isolation_records_available_full_environment_replay_not_recorded",
     "generated_build_artifact_records": "bounded_expression_and_c_binary_build_artifacts_recorded_codebase_scale_not_recorded",
-    "portable_hermetic_toolchain_provisioning": "not_recorded_locally",
-    "exact_cross_host_toolchain_replay": "exact_pin_enforcement_recorded_portable_replay_not_recorded",
-    "os_sandboxed_runner_isolation": "not_recorded_locally"
+    "portable_hermetic_toolchain_provisioning": "single_digest_pinned_oci_image_pull_contract_recorded_package_manager_and_multi_platform_restore_not_recorded",
+    "exact_cross_host_toolchain_replay": "digest_pinned_oci_replay_scope_recorded_daemon_platform_and_cross_host_certification_not_recorded",
+    "os_sandboxed_runner_isolation": "candidate_oci_process_network_rootfs_capability_and_resource_controls_recorded_hostile_code_security_not_certified"
   },
-  "claim_boundary": "This boundary records that LibreEvolve has a validated task-primary candidate-language policy, stage-bound local build and runner commands, problem-owned scoring, bounded generated-artifact capture, and an executed non-Python expression fixture, one checked host C compiler fixture with toolchain/lock identity, and optional exact-pin enforcement, but does not claim AlphaEvolve-style arbitrary language or build-system parity with language-aware marker grammars, OS-sandboxed execution, portable hermetic toolchain provisioning, cross-host replay, task-defined abstraction hooks, arbitrary-runner environment artifacts, or codebase-scale generated build-artifact evidence."
+  "claim_boundary": "This boundary records that LibreEvolve has a validated task-primary candidate-language policy, stage-bound local build and runner commands, problem-owned scoring, bounded generated-artifact capture, and an executed non-Python expression fixture, one checked host C compiler fixture with toolchain/lock identity, and optional exact-pin enforcement. It also records one digest-pinned OCI Python fixture contract with immutable image identity, optional pull-if-missing, network-disabled read-only-rootfs candidate build/run processes, bounded resources, ordered in-image toolchain probes, and values-redacted runtime connectivity metadata. The live OCI integration test remains opt-in and is not a committed cross-host certification. This does not claim AlphaEvolve-style arbitrary language or build-system parity with language-aware marker grammars, hostile-code sandboxing, broad package-manager provisioning, deterministic cross-platform replay, task-defined abstraction hooks, arbitrary-runner environment artifacts, or codebase-scale generated build-artifact evidence."
 }

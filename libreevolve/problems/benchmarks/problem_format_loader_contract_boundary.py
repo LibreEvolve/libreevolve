@@ -28,6 +28,9 @@ CANDIDATE_RUNNER_EXAMPLE_PATH = (
     "libreevolve/problems/examples/candidate_runner_expression"
 )
 CANDIDATE_RUNNER_C_EXAMPLE_PATH = "libreevolve/problems/examples/candidate_runner_c"
+CANDIDATE_RUNNER_OCI_EXAMPLE_PATH = (
+    "libreevolve/problems/examples/candidate_runner_python_oci"
+)
 README_PROBLEM_LAYOUT_PATH = "papers/readme_problem_layout_boundary.json"
 VALIDATOR_EXECUTION_PATH = "papers/validator_execution_boundary.json"
 EMBEDDED_EVALUATOR_PATH = "papers/embedded_evaluator_boundary.json"
@@ -58,6 +61,7 @@ EXPECTED_GUIDE_MARKERS = (
     ("candidate_runner_declarations", "`config.yaml` can declare candidate-language and build-system records."),
     ("candidate_runner_execution", "Candidate commands require `validator_network_policy: host`."),
     ("candidate_toolchain_identity", "`{toolchain}` for the first\nresolvable configured toolchain candidate"),
+    ("candidate_oci_execution", "`execution_environment.type: oci_container_v1`"),
     ("evaluation_validity_gate", "The evaluator treats `is_valid` as a required boolean validity gate"),
     ("seed_policy", "add `initial_programs/seed_policy.yaml`"),
     ("seed_primary_file", "When `seed_policy.yaml` sets `primary_file`"),
@@ -85,9 +89,11 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("config_candidate_runner_validation", CONFIG_PATH, "def _validate_candidate_language_runners"),
     ("config_candidate_runner_stage_bindings", CONFIG_PATH, "def _validate_candidate_runner_stage_bindings"),
     ("config_candidate_toolchain_contract", CONFIG_PATH, "def _validate_candidate_toolchain_contract"),
+    ("config_candidate_execution_environment", CONFIG_PATH, "def _validate_candidate_execution_environment"),
     ("evaluator_cascade", EVALUATOR_PATH, "class CascadeEvaluator:"),
     ("evaluator_candidate_runner", EVALUATOR_PATH, "def _run_candidate_runner_subprocess"),
     ("evaluator_candidate_toolchain", EVALUATOR_PATH, "def _prepare_candidate_build_toolchain"),
+    ("evaluator_candidate_container", EVALUATOR_PATH, "def _prepare_candidate_container_environment"),
     ("evaluator_stage_preflight", EVALUATOR_PATH, "preflight_evaluator_contracts"),
     ("evaluator_validate_path_metadata", EVALUATOR_PATH, "\"validate_path\""),
     ("loader_tests_minimal", TEST_LOADER_PATH, "assert isinstance(load_problem(_make(t)), Problem)"),
@@ -97,14 +103,17 @@ EXPECTED_EVIDENCE_ANCHORS = (
     ("loader_tests_embedded_only", TEST_LOADER_PATH, "test_allows_missing_validate_py_for_embedded_only_problem_config"),
     ("evaluator_tests_stage_validate", TEST_EVALUATOR_PATH, "stage_validate.py"),
     ("evaluator_tests_candidate_runner", TEST_EVALUATOR_PATH, "test_candidate_runner_stage_builds_runs_and_uses_problem_owned_validator"),
+    ("evaluator_tests_candidate_container", TEST_EVALUATOR_PATH, "test_candidate_runner_executes_build_and_runner_in_digest_pinned_oci_image"),
     ("examples_workspace_math", TEST_EXAMPLES_PATH, "test_workspace_math_loader_records_nested_static_seed_workspace"),
     ("examples_embedded_evaluate", TEST_EXAMPLES_PATH, "test_embedded_evaluate_example_loads_without_external_validate_py"),
     ("examples_candidate_runner", TEST_EXAMPLES_PATH, "test_candidate_runner_expression_example_loads_builds_and_scores"),
     ("examples_candidate_runner_c", TEST_EXAMPLES_PATH, "test_candidate_runner_c_example_loads_compiles_and_scores"),
+    ("examples_candidate_runner_oci", TEST_EXAMPLES_PATH, "test_candidate_runner_python_oci_example_loads_with_immutable_contract"),
     ("workspace_math_example", WORKSPACE_MATH_PATH, "codebase_integration.yaml"),
     ("embedded_evaluate_example", EMBEDDED_EVALUATE_PATH, "config.yaml"),
     ("candidate_runner_example", CANDIDATE_RUNNER_EXAMPLE_PATH, "config.yaml"),
     ("candidate_runner_c_example", CANDIDATE_RUNNER_C_EXAMPLE_PATH, "config.yaml"),
+    ("candidate_runner_oci_example", CANDIDATE_RUNNER_OCI_EXAMPLE_PATH, "config.yaml"),
     ("readme_problem_layout_sidecar", README_PROBLEM_LAYOUT_PATH, "readme_problem_layout"),
     ("validator_execution_sidecar", VALIDATOR_EXECUTION_PATH, "validator_execution_boundary"),
     ("embedded_evaluator_sidecar", EMBEDDED_EVALUATOR_PATH, "embedded_entrypoint_without_full_figure3_parity"),
@@ -187,6 +196,7 @@ def problem_format_loader_contract_boundary_record(root: str | Path = ".") -> di
         EMBEDDED_EVALUATE_PATH,
         CANDIDATE_RUNNER_EXAMPLE_PATH,
         CANDIDATE_RUNNER_C_EXAMPLE_PATH,
+        CANDIDATE_RUNNER_OCI_EXAMPLE_PATH,
         README_PROBLEM_LAYOUT_PATH,
         VALIDATOR_EXECUTION_PATH,
         EMBEDDED_EVALUATOR_PATH,
@@ -221,6 +231,8 @@ def problem_format_loader_contract_boundary_record(root: str | Path = ".") -> di
             WORKSPACE_MATH_PATH,
             EMBEDDED_EVALUATE_PATH,
             CANDIDATE_RUNNER_EXAMPLE_PATH,
+            CANDIDATE_RUNNER_C_EXAMPLE_PATH,
+            CANDIDATE_RUNNER_OCI_EXAMPLE_PATH,
         ],
         "sidecar_paths": [
             README_PROBLEM_LAYOUT_PATH,

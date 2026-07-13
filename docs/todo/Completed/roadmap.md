@@ -16111,3 +16111,15 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
     codebase-scale benchmark evidence remain active readiness criteria.
   - Verification: candidate-language, candidate-workspace, example-scope, and
     runtime-report boundaries distinguish host compiler smoke from parity.
+- [x] Credit digest-pinned OCI candidate execution in workspace readiness.
+  - Status: ROADMAP now credits one immutable-image interpreted build/run
+    contract with runtime/image/provisioning identity, missing-image-only pull,
+    candidate network denial, bounded isolation/resource policy, lock evidence,
+    and ordered in-image toolchain probes.
+  - Remaining roadmap gap: broad package-manager and language coverage,
+    deterministic multi-platform/cross-host replay, daemon-locality policy,
+    hostile-code review, language-aware markers, flexible abstractions, and
+    codebase-scale benchmark evidence remain active readiness criteria.
+  - Verification: candidate-workspace fidelity/readiness, candidate-language,
+    example-scope, and runtime-report boundaries retain those gates while
+    crediting the narrower OCI contract.

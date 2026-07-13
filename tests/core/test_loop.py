@@ -16,6 +16,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 import pytest
 import yaml
+import libreevolve.core.evaluator as evaluator_module
 from libreevolve.core.candidate import CandidateWorkspace
 from libreevolve.core.budget import (
     RunBudget,
@@ -9562,15 +9563,17 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
     assert build_contracts["declared_build_files"] == []
     assert build_contracts["build_runner"] == "task_declared_command_tokens_without_shell"
     assert build_contracts["toolchain_resolution"] == (
-        "first_resolvable_declared_candidate"
+        "first_resolvable_host_or_first_successful_in_image_candidate"
     )
     assert build_contracts["toolchain_identity"] == (
-        "version_probe_and_optional_executable_output_pins"
+        "host_executable_hash_or_pinned_oci_image_plus_version_probe"
     )
     assert build_contracts["dependency_lock_identity"] == (
         "materialized_candidate_file_sha256_pins"
     )
-    assert build_contracts["portable_toolchain_provisioning"] == "unsupported"
+    assert build_contracts["portable_toolchain_provisioning"] == (
+        "digest_pinned_oci_pull_if_missing_supported_partial"
+    )
     assert build_contracts["compiled_artifact_capture"] == "bounded_declared_pattern_copyout"
     assert report["declared_language_runner_records"] == []
     assert report["declared_build_system_records"] == []
@@ -9617,6 +9620,11 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "toolchain_probe_count": 0,
         "toolchain_replay_ready_count": 0,
         "dependency_lock_record_count": 0,
+        "container_environment_record_count": 0,
+        "container_identity_record_count": 0,
+        "container_replay_ready_count": 0,
+        "container_pull_count": 0,
+        "network_disabled_container_record_count": 0,
         "language_ids": [],
         "build_system_ids": [],
     }
@@ -9647,9 +9655,15 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         "toolchain_probe_count": 0,
         "toolchain_replay_ready_count": 0,
         "dependency_lock_record_count": 0,
+        "container_environment_record_count": 0,
+        "container_identity_record_count": 0,
+        "container_replay_ready_count": 0,
+        "container_pull_count": 0,
+        "network_disabled_container_record_count": 0,
         "absolute_paths_retained": False,
         "toolchain_versions_recorded": False,
         "dependency_manifests_recorded": False,
+        "candidate_oci_environment_replay_ready": False,
     }
     assert environment_provenance["environment_replay_ready"] is False
 
@@ -9674,6 +9688,17 @@ def test_runtime_history_reports_candidate_language_runner_contracts():
         is False
     )
     assert report["claim_readiness"]["dependency_lock_records_recorded"] is False
+    assert (
+        report["claim_readiness"][
+            "digest_pinned_oci_execution_records_recorded"
+        ]
+        is False
+    )
+    assert (
+        report["claim_readiness"]["oci_image_provisioning_records_recorded"]
+        is False
+    )
+    assert report["claim_readiness"]["oci_replay_ready_records_recorded"] is False
     assert report["claim_readiness"]["task_candidate_abstraction_hooks_configured"] is False
     assert report["claim_readiness"]["alphaevolve_language_runner_parity"] is False
     assert report["alphaevolve_contract_gap"]["required_before_parity_claim"] == (
@@ -10029,6 +10054,148 @@ def test_runtime_history_reports_executed_candidate_language_and_build_runner():
     ] = "0" * 64
     validation = validate_candidate_language_runner_contract_report(edited)
     assert "candidate_toolchain_executable_pin_match_mismatch" in {
+        issue["code"] for issue in validation["issues"]
+    }
+
+
+def test_runtime_history_reports_digest_pinned_oci_candidate_execution(mocker):
+    tmpdir = tempfile.mkdtemp()
+    manifest_digest = "a" * 64
+    image_id = "b" * 64
+    image = f"example/python@sha256:{manifest_digest}"
+    mocker.patch.object(
+        evaluator_module,
+        "_resolve_candidate_executable",
+        return_value=sys.executable,
+    )
+    problem = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    runner = stage['candidate_runner']['runner']\n"
+        "    return {'score': 1.0 if runner['stdout'].strip() == '42' else 0.0, "
+        "'is_valid': runner['stdout'].strip() == '42'}\n"
+    )
+    problem.initial_programs = []
+    problem.initial_workspaces = [
+        CandidateWorkspace(
+            files={"solution.py": "print(42)\n"},
+            primary_file="solution.py",
+        )
+    ]
+    process_results = [
+        evaluator_module._ValidatorProcessResult(0, "runtime-v1\n", ""),
+        evaluator_module._ValidatorProcessResult(
+            0,
+            f'"sha256:{image_id}" ["example/python@sha256:{manifest_digest}"]\n',
+            "",
+        ),
+        evaluator_module._ValidatorProcessResult(0, "Python 3.12.10\n", ""),
+        evaluator_module._ValidatorProcessResult(0, "", ""),
+        evaluator_module._ValidatorProcessResult(0, "42\n", ""),
+    ]
+    run_command = mocker.patch.object(
+        evaluator_module,
+        "_run_candidate_command",
+        side_effect=[(result, None, 0.01) for result in process_results],
+    )
+
+    evolve(
+        problem,
+        Config(
+            max_generations=0,
+            log_dir=tmpdir,
+            problem_name="oci_runner",
+            candidate_language_runners=[
+                {
+                    "language": "python_oci",
+                    "file_patterns": ["solution.py"],
+                    "runner_command": ["python", "{primary}"],
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+            candidate_build_systems=[
+                {
+                    "name": "python_compile_oci",
+                    "build_files": ["solution.py"],
+                    "build_command": [
+                        "{toolchain}",
+                        "-m",
+                        "py_compile",
+                        "solution.py",
+                    ],
+                    "toolchain_candidates": ["python"],
+                    "execution_environment": {
+                        "type": "oci_container_v1",
+                        "runtime_candidates": ["docker"],
+                        "image": image,
+                    },
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+            eval_stages=[
+                {
+                    "name": "run_python",
+                    "mode": "candidate_runner",
+                    "language_runner": "python_oci",
+                    "build_system": "python_compile_oci",
+                }
+            ],
+        ),
+    )
+
+    manifest = json.loads(
+        (Path(tmpdir) / "oci_runner" / "manifest.json").read_text()
+    )
+    policy = manifest["policies"]["candidate_language"]
+    report = manifest["runtime"]["history"][
+        "candidate_language_runner_contract_report"
+    ]
+    assert run_command.call_count == 5
+    assert policy["runner_declarations"]["oci_execution_declared"] is True
+    assert policy["runner_policy"]["toolchain_distribution"] == (
+        "optional_digest_pinned_oci_pull_or_host_resolution_partial"
+    )
+    assert report["validation"]["ok"] is True
+    assert validate_candidate_language_runner_contract_report(report)["ok"] is True
+    summary = report["execution_summary"]
+    assert summary["record_count"] == 1
+    assert summary["successful_record_count"] == 1
+    assert summary["container_environment_record_count"] == 1
+    assert summary["container_identity_record_count"] == 1
+    assert summary["container_replay_ready_count"] == 1
+    assert summary["network_disabled_container_record_count"] == 1
+    execution = report["executed_runner_records"][0]
+    environment = execution["execution_environment"]
+    assert execution["network_policy"] == "none"
+    assert execution["security_boundary"] == (
+        "oci_process_isolation_not_untrusted_code_security_sandbox"
+    )
+    assert environment["expected_manifest_digest"] == manifest_digest
+    assert environment["manifest_digest_match"] is True
+    assert environment["replay_ready"] is True
+    assert environment["runtime_host_environment_values_redacted"] is True
+    assert environment["provisioning_network_policy"] == "none"
+    assert execution["toolchain"]["execution_backend"] == "oci_container_v1"
+    assert execution["toolchain"]["replay_ready"] is True
+    assert execution["toolchain"]["version_probe_attempt_count"] == 1
+    assert len(execution["toolchain"]["version_probe_attempts"]) == 1
+    readiness = report["claim_readiness"]
+    assert readiness["digest_pinned_oci_execution_records_recorded"] is True
+    assert readiness["oci_replay_ready_records_recorded"] is True
+    assert readiness["oci_image_provisioning_records_recorded"] is False
+    process_environment = report["runner_environment_provenance"][
+        "candidate_runner_process_environment"
+    ]
+    assert process_environment["container_environment_record_count"] == 1
+    assert process_environment["container_replay_ready_count"] == 1
+    assert process_environment["candidate_oci_environment_replay_ready"] is True
+    assert report["runner_environment_provenance"]["environment_replay_ready"] is False
+
+    edited = copy.deepcopy(report)
+    edited["executed_runner_records"][0]["execution_environment"][
+        "expected_manifest_digest"
+    ] = "0" * 64
+    validation = validate_candidate_language_runner_contract_report(edited)
+    assert "candidate_container_manifest_digest_match_mismatch" in {
         issue["code"] for issue in validation["issues"]
     }
 

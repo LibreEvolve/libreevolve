@@ -78,7 +78,7 @@ NON_GOAL_SPECS = (
             {
                 "path": "README.md",
                 "required_safe_phrase": (
-                    "prove portable hermetic toolchain provisioning"
+                    "do not prove broad package restoration"
                 ),
                 "forbidden_claim_phrases": (
                     "arbitrary-language runners are implemented",
@@ -89,7 +89,7 @@ NON_GOAL_SPECS = (
             {
                 "path": "docs/run-artifacts.md",
                 "required_safe_phrase": (
-                    "real-language codebase-scale evidence unsupported"
+                    "deterministic cross-platform/remote-daemon replay"
                 ),
                 "forbidden_claim_phrases": (
                     "arbitrary-language/build-runner execution is supported",

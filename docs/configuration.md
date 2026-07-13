@@ -260,7 +260,11 @@ from `validate.py` unless explicitly allowlisted.
   `build_files`, `build_command`, `artifact_patterns`, ordered
   `toolchain_candidates`, a `toolchain_version_command`, optional executable and
   normalized-version-output SHA-256 pins, candidate dependency-lock path
-  hashes, `execution_status`, and optional `notes`. Executable build
+  hashes, an optional `execution_environment`, `execution_status`, and optional
+  `notes`. The default environment is `host_subprocess_v1`. An
+  `oci_container_v1` environment requires Docker/Podman runtime candidates and
+  an immutable `@sha256:` image and accepts bounded pull, runtime-identity,
+  network, rootfs, tmpfs, memory, CPU, and PID settings. Executable build
   declarations require a command and may be bound by a candidate-runner stage;
   build output capture remains subject to evaluator artifact
   count/byte/redaction limits.
@@ -1062,11 +1066,58 @@ sequences before hashing. Configured executable/version pins and candidate lock
 hashes fail the stage before the build when they do not match. The optional
 probe/build, language runner, and problem-owned Python scorer share the stage
 timeout. The scorer receives a bounded/redacted candidate process record and
-remains metrics authority. Candidate commands inherit the host network, use the
-minimal validator environment plus `validator_env_allowlist`, and are not
-sandboxed. `candidate_runner_expression` checks the adapter path;
-`candidate_runner_c` checks one host C compiler path. Neither is
-arbitrary-language, hermetic, or codebase-scale parity evidence.
+remains metrics authority. Under `host_subprocess_v1`, candidate commands
+inherit the host network, use the minimal validator environment plus
+`validator_env_allowlist`, and are not sandboxed.
+`candidate_runner_expression` checks the adapter path and `candidate_runner_c`
+checks one host C compiler path.
+
+For digest-pinned OCI execution, attach an environment to the build declaration:
+
+```yaml
+candidate_language_runners:
+  - language: python_oci
+    file_patterns: ["solution.py"]
+    runner_command: ["python", "{primary}"]
+    execution_status: executable_local_subprocess
+candidate_build_systems:
+  - name: python_bytecode_oci
+    build_files: ["solution.py", "toolchain.lock"]
+    build_command: ["{toolchain}", "-m", "py_compile", "solution.py"]
+    artifact_patterns: ["__pycache__/*.pyc"]
+    toolchain_candidates: ["python"]
+    dependency_lock_sha256:
+      toolchain.lock: "<required-lock-file-sha256>"
+    execution_environment:
+      type: oci_container_v1
+      runtime_candidates: ["docker", "podman"]
+      image: "registry.example/python@sha256:<64-lowercase-hex>"
+      pull_policy: if_missing
+      network: none
+      read_only_rootfs: true
+      tmpfs_mb: 64
+      memory_mb: 256
+      cpus: 1
+      pids_limit: 64
+    execution_status: executable_local_subprocess
+```
+
+`runtime_version_command` defaults to `["{runtime}", "--version"]`; optional
+runtime executable and normalized-version hashes can pin the host CLI. OCI
+toolchain executable content is covered by the image digest, so a host-style
+`toolchain_executable_sha256` is rejected for OCI; an optional normalized
+toolchain version hash and candidate lock hashes remain enforceable. With
+`pull_policy: if_missing`, only a specifically diagnosed missing image triggers
+a pull by its immutable reference. Image inspection must then report the
+configured manifest digest. Build and runner use that image with pull disabled,
+network disabled, read-only rootfs, dropped capabilities/no-new-privileges,
+bounded resources, a no-exec tmpfs, and only `/workspace` writable. Runtime
+connectivity/config values are passed only to the host container CLI and are
+not retained. The bind requires compatible local-daemon semantics; daemon
+locality, host architecture, package restoration, hostile-code security, and
+cross-platform replay are not certified. `candidate_runner_python_oci` is the
+smoke fixture, and its live test requires `LIBREEVOLVE_RUN_OCI_FIXTURE=1` plus a
+healthy local runtime.
 
 When stage provenance is enabled, every configured stage must define both
 `difficulty_or_scale` and `test_set`. Difficulty records require a manifest-
@@ -1107,8 +1158,10 @@ later retries or samples stop after exhaustion; and the result records
 `sample_budget_exhausted` or `stage_budget_exhausted` plus
 `evaluation.metadata.sample_budget` / `evaluation.metadata.stage_budget`.
 For `candidate_runner`, one attempt can contain build, runner, and scorer
-subprocesses; those phases share the stage attempt timeout and each launched
-process contributes to evaluator subprocess-attempt accounting.
+subprocesses; OCI execution can additionally contain runtime/version, image
+inspect/pull, and one or more in-image toolchain probes. All phases share the
+stage attempt timeout, and each launched process contributes to evaluator
+subprocess-attempt accounting.
 Set `eval_stages[].sample_workers` above `1` to run planned samples for that
 configured stage through a local thread pool. Results are merged in
 sample-index order and recorded under `evaluation.metadata.sample_execution`,
@@ -1489,11 +1542,12 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   `runtime.rng.replay_boundary` records the current framework-owned RNG
   boundary and explicit external exclusions; the paper-facing boundary is
   tracked by `papers/runtime_rng_replay_boundary.json`.
-- `eval_stages` is still local subprocess execution. Candidate evaluations can
-  be queued across local asyncio workers, configured stage samples can use
-  local thread-pool fan-out, and `candidate_runner` can launch a task-declared
-  build and language command without a shell, but none of these modes is a
-  distributed evaluator-worker scheduler or security sandbox.
+- `eval_stages` remains host-orchestrated process execution. Candidate
+  evaluations can be queued across local asyncio workers, configured stage
+  samples can use local thread-pool fan-out, and `candidate_runner` can launch
+  a task-declared host or digest-pinned OCI build/language command without a
+  shell. None of these modes is a distributed evaluator-worker scheduler or a
+  hostile-code security sandbox.
 - Validator entrypoints are loaded from a temporary runner as either direct
   Python files or package `__init__.py` files. The validator directory is added
   to `sys.path`; package validators also add the problem root so package
@@ -1503,15 +1557,18 @@ runs also write the durable `llm_calls.jsonl` call/reward stream.
   container sandbox. `validator_network_policy: deny` blocks Python socket APIs
   during preflight/evaluation and records the boundary, but LibreEvolve still
   does not provide OS/container-level network isolation for validator code.
-  Candidate-runner stages reject `deny` and require `host`, because arbitrary
-  child-process network denial would require an OS-level sandbox.
+  Candidate-runner stages reject top-level `deny` and require `host` because
+  the problem-owned scorer is a host process. Host candidate commands inherit
+  that network. OCI candidate build/run commands separately enforce network
+  `none`; this does not containerize the scorer or validator.
 - Validator boundary metadata and startup `policies.validator_execution` include
   `filesystem_capabilities` and `resource_limit_policy` records. These declare
   the temporary candidate-root workspace, declared-problem-file provenance
   checks, bounded artifact copy-out, unsupported host-filesystem sandboxing,
   wall-clock timeout cleanup, and unsupported CPU/memory/GPU/disk/process-count
-  quotas. They are audit evidence for the local runner, not enforcement of a
-  configurable container or OS resource sandbox; the paper-facing boundary is
+  quotas. They are audit evidence for the host validator, not enforcement of a
+  configurable validator container or OS resource sandbox. Candidate OCI
+  resource flags are a separate, narrower execution contract; the paper-facing boundary is
   tracked by `papers/validator_execution_boundary.json`.
   `validate_validator_boundary_consistency.v1` compares the startup policy to
   attempt-level `evaluation.metadata.validator_boundary` records for the shared

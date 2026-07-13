@@ -1,5 +1,8 @@
 import json
+import hashlib
+import os
 import shutil
+import subprocess
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
@@ -80,6 +83,13 @@ CANDIDATE_RUNNER_C_EXAMPLE_DIR = (
     / "problems"
     / "examples"
     / "candidate_runner_c"
+)
+CANDIDATE_RUNNER_PYTHON_OCI_EXAMPLE_DIR = (
+    Path(__file__).resolve().parents[1]
+    / "libreevolve"
+    / "problems"
+    / "examples"
+    / "candidate_runner_python_oci"
 )
 EXAMPLE_RUNS_DIR = Path(__file__).resolve().parents[1] / "examples" / "runs"
 
@@ -800,6 +810,84 @@ def test_candidate_runner_c_example_loads_compiles_and_scores(tmp_path):
     assert len(toolchain["executable"]["content_sha256"]) == 64
     assert len(toolchain["version_output_sha256"]) == 64
     assert toolchain["absolute_paths_retained"] is False
+
+
+def test_candidate_runner_python_oci_example_loads_with_immutable_contract():
+    problem = load_problem(CANDIDATE_RUNNER_PYTHON_OCI_EXAMPLE_DIR)
+    raw_config = yaml.safe_load(
+        (CANDIDATE_RUNNER_PYTHON_OCI_EXAMPLE_DIR / "config.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    config = Config(**raw_config)
+
+    workspace = problem.initial_workspaces[0]
+    build = config.candidate_build_systems[0]
+    environment = build["execution_environment"]
+    lock_payload = workspace.files["toolchain.lock"].encode("utf-8")
+    assert workspace.primary_file == "solution.py"
+    assert workspace.files["solution.py"] == "print(36)\n"
+    assert environment["type"] == "oci_container_v1"
+    assert environment["image"] == (
+        "docker.io/library/python@sha256:"
+        "6d43704baacd1bfbe7c295d7f13079d5d8104ed33568873133f8fc69980419df"
+    )
+    assert environment["network"] == "none"
+    assert environment["read_only_rootfs"] is True
+    assert environment["pull_policy"] == "if_missing"
+    assert build["dependency_lock_sha256"]["toolchain.lock"] == (
+        hashlib.sha256(lock_payload).hexdigest()
+    )
+
+
+@pytest.mark.integration
+def test_candidate_runner_python_oci_example_builds_runs_and_scores(tmp_path):
+    if os.environ.get("LIBREEVOLVE_RUN_OCI_FIXTURE") != "1":
+        pytest.skip("set LIBREEVOLVE_RUN_OCI_FIXTURE=1 to permit image pull/run")
+    runtime = next(
+        (name for name in ("docker", "podman") if shutil.which(name)),
+        None,
+    )
+    if runtime is None:
+        pytest.skip("requires docker or podman")
+    health = subprocess.run(
+        [runtime, "info"],
+        capture_output=True,
+        text=True,
+        timeout=20,
+        check=False,
+    )
+    if health.returncode != 0:
+        pytest.skip("container runtime daemon is unavailable")
+    problem = load_problem(CANDIDATE_RUNNER_PYTHON_OCI_EXAMPLE_DIR)
+    raw_config = yaml.safe_load(
+        (CANDIDATE_RUNNER_PYTHON_OCI_EXAMPLE_DIR / "config.yaml").read_text(
+            encoding="utf-8"
+        )
+    )
+    raw_config["candidate_build_systems"][0]["execution_environment"][
+        "runtime_candidates"
+    ] = [runtime]
+    config = Config(**raw_config)
+
+    result = CascadeEvaluator(
+        problem,
+        stages=config.eval_stages,
+        artifact_dir=tmp_path / "artifacts",
+        candidate_language_runners=config.candidate_language_runners,
+        candidate_build_systems=config.candidate_build_systems,
+    ).evaluate(problem.initial_workspaces[0], None)
+
+    assert result.is_valid is True, result.error
+    assert result.metrics["score"] == 1.0 / 7.0
+    execution = result.metadata["candidate_runner"]
+    assert execution["runner"]["stdout"].strip() == "36"
+    assert execution["execution_environment"]["manifest_digest_match"] is True
+    assert execution["execution_environment"]["replay_ready"] is True
+    assert execution["toolchain"]["replay_ready"] is True
+    assert execution["build"]["artifacts"]["files"][0]["path"].startswith(
+        "__pycache__/solution."
+    )
 
 
 def _write_workspace_math_support_files(tmp_path: Path) -> None:

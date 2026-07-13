@@ -22,7 +22,7 @@ libreevolve/
   plugins/    base.py (ABC), causal.py, deep_research.py, modular.py, ttt_rl.py
   problems/   loader.py, examples/{hello_world,circle_packing,sorting,
               matrix_multiplication,workspace_math,candidate_runner_expression,
-              candidate_runner_c}/
+              candidate_runner_c,candidate_runner_python_oci}/
   cli.py      Click CLI with run/show commands
 ```
 
@@ -37,16 +37,24 @@ libreevolve/
   subprocesses, not security sandboxes; validator modules are not imported in
   the parent CLI/runtime process during preflight
 - `eval_stages[].mode: candidate_runner` can execute a task-declared language
-  command and optional build command as local subprocesses without a shell.
-  It requires `validator_network_policy: host`; commands inherit the host
-  network, use the minimal validator environment plus the allowlist, and are
-  not security sandboxes. The problem-owned Python validator remains metrics
-  authority and receives only the bounded/redacted runner record.
+  command and optional build command without a shell. Host execution inherits
+  host network and is not sandboxed. An OCI build execution environment uses a
+  digest-pinned image, disables candidate build/run network, makes the image
+  root filesystem read-only, drops capabilities, and applies bounded resource
+  flags; an optional missing-image pull still uses host registry access. This
+  is process isolation, not a hostile-code security sandbox. The problem-owned
+  Python validator remains metrics authority and receives only the bounded/
+  redacted runner record.
 - Candidate build declarations may name ordered `toolchain_candidates`, a
   `{toolchain}` version probe, optional executable/version-output SHA-256 pins,
-  and candidate lock-file hashes. Matching identity is same-host or
-  preprovisioned-host evidence only; LibreEvolve does not provision hermetic
-  toolchains.
+  candidate lock-file hashes, and an `execution_environment`. The default
+  `host_subprocess_v1` identity is same-host evidence. The optional
+  `oci_container_v1` path accepts Docker/Podman, requires an immutable image
+  digest, verifies observed image/runtime identity, and retains ordered
+  in-image probe and provisioning evidence; it does not certify daemon
+  locality, platform parity, package restoration, or cross-host replay.
+  `candidate_runner_python_oci` is the smoke fixture; its live daemon test is
+  opt-in with `LIBREEVOLVE_RUN_OCI_FIXTURE=1`.
 - `initial_programs/seed_policy.yaml` may set `primary_file` for every seed
   workspace. Without it, seed-workspace primary selection remains `main.py`,
   then `seed.py`, then the first Python path.

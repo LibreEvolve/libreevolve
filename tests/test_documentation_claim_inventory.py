@@ -103,8 +103,8 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
         "line_start": 18,
         "line_end": 20,
         "file_text_char_start": 589,
-        "file_text_char_end": 787,
-        "text_sha256": "fa6f9161ead26df7fa58e7a17da4ec588aa478ad1508a5cbdc7c044b0a2c1eea",
+        "file_text_char_end": 807,
+        "text_sha256": "ff38d60542dac4d95410c861090c3a1930688265ffd6ba3a62401ab8dee1969c",
         "signal_terms": [],
         "signal_term_count": 0,
         "local_path_refs": [],
@@ -120,8 +120,8 @@ def test_documentation_claim_inventory_accepts_top_level_readme_roadmap_claims()
     }
     assert {
         "path": "ROADMAP.md",
-        "line_start": 889,
-        "line_end": 889,
+        "line_start": 896,
+        "line_end": 896,
         "level": 3,
         "heading_text": "5. Documentation truthfulness",
         "heading_slug": "5-documentation-truthfulness",

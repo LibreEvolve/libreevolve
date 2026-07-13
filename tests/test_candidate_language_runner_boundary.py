@@ -14,9 +14,9 @@ def test_candidate_language_runner_boundary_accepts_partial_record():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "local_candidate_runner_execution_partial"
+        == "digest_pinned_oci_candidate_execution_partial"
     )
-    assert validation.required_evidence_field_count == 22
+    assert validation.required_evidence_field_count == 28
     assert validation.missing_evidence_count == 10
     assert boundary["schema"] == CANDIDATE_LANGUAGE_RUNNER_BOUNDARY_SCHEMA
     assert "does not claim AlphaEvolve-style arbitrary language" in (
@@ -49,8 +49,8 @@ def test_render_candidate_language_runner_boundary_summary_reports_shape():
     assert "AlphaEvolve candidate language runner boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | local_candidate_runner_execution_partial |"
+        "| boundary_status | digest_pinned_oci_candidate_execution_partial |"
         in summary
     )
-    assert "| required_evidence_field_count | 22 |" in summary
+    assert "| required_evidence_field_count | 28 |" in summary
     assert "| missing_evidence_count | 10 |" in summary

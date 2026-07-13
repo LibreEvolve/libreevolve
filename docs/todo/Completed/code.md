@@ -19436,3 +19436,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     database, runtime-report, real-compiler example, installed-wheel CLI/show,
     and scope tests cover the contract and reject identity, lock, and portable-
     replay overclaims.
+- [x] Add digest-pinned OCI candidate build/run execution.
+  - Spec evidence: AlphaEvolve Sections 2.1-2.2 require task-defined program,
+    build, runner, and evaluator boundaries that can operate beyond one host
+    Python environment.
+  - Status: build declarations now support strict Docker/Podman OCI execution
+    environments with immutable image digests, missing-image-only pulls,
+    runtime/image identity, ordered in-image toolchain probes, lock hashes,
+    network-disabled/read-only-rootfs/capability/resource controls, bounded
+    evidence, and environment/toolchain cross-links. The new OCI Python fixture
+    packages one interpreted smoke contract.
+  - Remaining code gap: live multi-platform and cross-host certification,
+    package-manager restoration, remote-daemon policy, hostile-code security,
+    broader languages, and codebase-scale workloads remain open.
+  - Verification: focused config/evaluator/database/loop/example/report tests
+    cover command construction, digest and pull gates, accounting, probe
+    fallback, tamper rejection, and fixture loading. The live runtime test is
+    opt-in and skipped when no local daemon is healthy.

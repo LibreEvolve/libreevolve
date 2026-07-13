@@ -23,6 +23,7 @@ def test_example_scope_records_keep_shipped_examples_non_comparable():
         "embedded_evaluate_math",
         "candidate_runner_expression",
         "candidate_runner_c",
+        "candidate_runner_python_oci",
         "matrix_multiplication",
         "circle_packing",
     }
@@ -95,4 +96,8 @@ def test_example_scope_summary_renders_scope_table():
     assert "| embedded_evaluate_math | smoke | no | embedded_entrypoint_fixture |" in summary
     assert "| candidate_runner_expression | smoke | no | non_python_build_runner_contract_fixture |" in summary
     assert "| candidate_runner_c | smoke | no | real_c_compiler_runner_contract_fixture |" in summary
+    assert (
+        "| candidate_runner_python_oci | smoke | no | "
+        "digest_pinned_oci_interpreted_runner_contract_fixture |"
+    ) in summary
     assert "| matrix_multiplication | smoke | no | operation_counter_smoke_fixture |" in summary

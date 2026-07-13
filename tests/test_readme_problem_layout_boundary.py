@@ -23,7 +23,7 @@ def test_readme_problem_layout_boundary_accepts_current_map():
     assert boundary["problem_layout_block_status"] == "problem_layout_block_present"
     assert validation.layout_item_count == 6
     assert validation.missing_layout_item_count == 0
-    assert validation.contract_marker_count == 30
+    assert validation.contract_marker_count == 33
     assert validation.missing_contract_marker_count == 0
     assert validation.missing_example_path_count == 0
     assert boundary["missing_layout_item_records"] == []
@@ -111,7 +111,7 @@ def test_render_readme_problem_layout_boundary_summary_reports_shape():
     )
     assert "| layout_item_count | 6 |" in summary
     assert "| missing_layout_item_count | 0 |" in summary
-    assert "| contract_marker_count | 30 |" in summary
+    assert "| contract_marker_count | 33 |" in summary
     assert "| missing_contract_marker_count | 0 |" in summary
     assert "| missing_example_path_count | 0 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

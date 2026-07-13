@@ -805,7 +805,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     `task_primary_text_workspace_v2` boundary, bounded UTF-8 workspaces plus
     typed static members, Python primary autodetection or explicit seed-policy
     primary selection, fail-closed non-Python marker handling, problem-owned
-    Python scoring, and partial task-declared local language/build execution.
+    Python scoring, and partial task-declared host/OCI language/build execution.
     Problem-defined solution abstractions remain unsupported.
     `validate_candidate_language_policy()` requires executable declarations and
     stage bindings before language-runner readiness is true. Completed
@@ -819,23 +819,29 @@ directory and using the AlphaEvolve paper as the primary specification.
     `runner_declaration_workspace_evidence`, current-Python-runner
     environment linkage under `runner_environment_provenance`, bounded executed
     process records and generated build artifacts, toolchain executable/version
-    and dependency-lock hashes, same-host replay scope, host-network/unsandboxed
-    scope, unsupported task candidate-abstraction hooks, and the remaining
-    portable-toolchain contract gaps for AlphaEvolve-style language/build parity.
+    and dependency-lock hashes, same-host or digest-pinned OCI replay scope,
+    host-network/unsandboxed or OCI-process-isolation scope, unsupported task
+    candidate-abstraction hooks, and the remaining portable-toolchain contract
+    gaps for AlphaEvolve-style language/build parity.
     The checked `candidate_runner_expression` fixture executes an explicit
     `.expr` primary, local copy-build, local expression adapter, generated
     artifact capture, problem-owned scoring, and CLI/show validation. The committed
     `papers/candidate_language_runner_boundary.json` sidecar now preserves the
-    paper-manifest-validated partial local candidate-runner boundary.
-  - Current gap: this is trusted-local command execution and smoke evidence,
+    paper-manifest-validated partial host/OCI candidate-runner boundary.
+  - Current gap: these are bounded host/OCI command contracts and smoke evidence,
     not arbitrary-language or arbitrary-codebase parity. The checked
     `candidate_runner_c` fixture now compiles and runs one C11 seed with observed
     host-compiler identity and a verified build-contract lock, and focused tests
-    prove optional exact pin rejection. There is still no portable hermetic
-    compiler/package-manager provisioning, cross-host replay, OS/container
-    sandbox, arbitrary-language validator contract, language-aware marker
-    grammar, codebase-scale generated-artifact evidence, or task-defined
-    candidate abstraction hook.
+    prove optional exact pin rejection. The new OCI Python fixture and runtime
+    contract add one immutable-image interpreted build/run path with digest and
+    runtime identity, missing-image-only pull evidence, candidate network
+    denial, read-only rootfs/capability/resource policy, ordered toolchain probe
+    attempts, and report tamper checks. Its live daemon test is opt-in and was
+    skipped in the current validation because Docker is stopped. There is still
+    no broad package-manager restoration, deterministic multi-platform or
+    remote-daemon replay, hostile-code certification, arbitrary-language
+    validator contract, language-aware marker grammar, codebase-scale generated-
+    artifact evidence, or task-defined candidate abstraction hook.
   - Required result: add broader real-language and build-system contracts with
     portable provisioned toolchains, deterministic cross-host replay, stronger
     isolation, language-aware marker grammars, and codebase-scale benchmark

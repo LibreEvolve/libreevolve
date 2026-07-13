@@ -22,7 +22,7 @@
   "todo_paths": [
     "docs/todo/readme.md"
   ],
-  "readme_marker_count": 15,
+  "readme_marker_count": 16,
   "missing_readme_marker_count": 0,
   "missing_readme_marker_records": [],
   "readme_marker_records": [
@@ -60,6 +60,12 @@
       "record_id": "candidate_runner_c_scope",
       "path": "README.md",
       "required_marker": "`candidate_runner_c` is a non-comparable real-compiler contract smoke fixture.",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "candidate_runner_oci_scope",
+      "path": "README.md",
+      "required_marker": "`candidate_runner_python_oci` is a non-comparable interpreted-language OCI",
       "marker_status": "marker_present"
     },
     {
@@ -117,7 +123,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "evidence_anchor_count": 25,
+  "evidence_anchor_count": 27,
   "missing_evidence_anchor_count": 0,
   "missing_evidence_anchor_records": [],
   "evidence_anchor_records": [
@@ -173,6 +179,12 @@
       "record_id": "scope_json_candidate_runner_c",
       "path": "papers/example_benchmark_scope.json",
       "required_marker": "\"problem_id\": \"candidate_runner_c\"",
+      "marker_status": "marker_present"
+    },
+    {
+      "record_id": "scope_json_candidate_runner_oci",
+      "path": "papers/example_benchmark_scope.json",
+      "required_marker": "\"problem_id\": \"candidate_runner_python_oci\"",
       "marker_status": "marker_present"
     },
     {
@@ -236,6 +248,12 @@
       "marker_status": "marker_present"
     },
     {
+      "record_id": "examples_test_candidate_runner_oci",
+      "path": "tests/test_examples.py",
+      "required_marker": "test_candidate_runner_python_oci_example_loads_with_immutable_contract",
+      "marker_status": "marker_present"
+    },
+    {
       "record_id": "sorting_boundary",
       "path": "papers/sorting_network_rediscovery_boundary.json",
       "required_marker": "bounded_sorting_network_fixtures_available",
@@ -272,7 +290,7 @@
       "marker_status": "marker_present"
     }
   ],
-  "scope_record_count": 10,
+  "scope_record_count": 11,
   "scope_registry_validation_status": "scope_registry_valid",
   "smoke_problem_ids": [
     "hello_world",
@@ -281,6 +299,7 @@
     "embedded_evaluate_math",
     "candidate_runner_expression",
     "candidate_runner_c",
+    "candidate_runner_python_oci",
     "matrix_multiplication",
     "circle_packing"
   ],
@@ -343,6 +362,13 @@
     {
       "problem_id": "candidate_runner_c",
       "path": "libreevolve/problems/examples/candidate_runner_c",
+      "level": "smoke",
+      "alphaevolve_comparable": false,
+      "path_status": "path_present"
+    },
+    {
+      "problem_id": "candidate_runner_python_oci",
+      "path": "libreevolve/problems/examples/candidate_runner_python_oci",
       "level": "smoke",
       "alphaevolve_comparable": false,
       "path_status": "path_present"

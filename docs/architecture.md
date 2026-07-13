@@ -1154,29 +1154,38 @@ queued/running pending-work restore.
   select a non-Python text primary and bind local build/runner command arrays,
   but this is not a typed arbitrary-language solution API, external repository
   workspace, or codebase-scale build system.
-- Materialized workspace execution uses the candidate root as subprocess `cwd`.
-  External validators and scoring adapters remain Python. A
-  `candidate_runner` stage can execute one task-declared language command and
-  optional build command without a shell, then pass a bounded/redacted process
-  record to the problem-owned Python scorer. Startup manifests record this
-  partial local-subprocess contract under `policies.validator_execution` and
+- Host candidate execution uses the materialized candidate root as subprocess
+  `cwd`. An optional OCI build environment mounts that root read/write at
+  `/workspace` and executes both build and runner in one verified digest-pinned
+  image. External validators and scoring adapters remain host Python. A
+  `candidate_runner` stage passes bounded/redacted process and environment
+  records to the problem-owned scorer. Startup manifests record this partial
+  execution contract under `policies.validator_execution` and
   `policies.candidate_language`.
 - Evaluator timeouts attempt best-effort process-tree cleanup and record cleanup
   metadata, but this remains local subprocess management rather than a
   deterministic descendant-process guarantee, container, network sandbox, or
   general resource-limit system.
-- Validator subprocesses use a minimal environment plus
+- Validator and host candidate subprocesses use a minimal environment plus
   `validator_env_allowlist`; provider keys loaded through `.env` are hidden by
-  default and persisted evaluator stdout/stderr is secret-redacted for common
-  assignment and provider-token shapes. Candidate-runner stages require the
-  host network policy because arbitrary child commands cannot be denied network
-  access by the Python socket hook. This is not a network sandbox.
-- The checked expression fixture proves adapter dispatch, and the checked C11
-  fixture proves host compiler resolution, version probing, lock verification,
-  compilation, generated-binary capture, execution, and problem-owned scoring.
-  Portable hermetic compiler/package-manager provisioning, cross-host replay,
-  broader language/toolchain fixtures, language-aware evolve-block grammars,
-  OS sandboxing, and codebase-scale benchmark evidence remain open.
+  default and persisted evaluator stdout/stderr is secret-redacted. Candidate-
+  runner stages require the top-level host validator policy because the scorer
+  is a host process. Host candidate commands inherit host network. OCI candidate
+  build/run commands use runtime-enforced `--network none`, a read-only image
+  rootfs, dropped capabilities/no-new-privileges, bounded CPU/memory/PIDs/tmpfs,
+  and only the candidate workspace as a writable bind. A configured missing-
+  image pull may access a registry through approved host runtime connectivity
+  variables whose values are not persisted. This is not a hostile-code
+  security sandbox, and local-daemon/platform identity is not certified.
+- The checked expression fixture proves adapter dispatch, the checked C11
+  fixture proves host compiler execution and identity capture, and the OCI
+  Python fixture declares an immutable-image build/run contract with digest,
+  runtime, provisioning, isolation, resource, lock, and ordered toolchain-probe
+  evidence. Its live integration test is opt-in and skips without a healthy
+  local Docker/Podman daemon. Broad compiler/package-manager restoration,
+  deterministic cross-platform and remote-daemon replay, language-aware evolve-
+  block grammars, hostile-code certification, and codebase-scale benchmark
+  evidence remain open.
 - Candidate abstractions are code file sets with a primary file, not
   problem-defined non-code solution objects or paired solution/search artifacts.
 - Proposal generation can overlap on opt-in, worker-owned local asyncio sampler

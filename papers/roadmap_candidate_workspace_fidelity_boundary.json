@@ -11,8 +11,8 @@
     {
       "criterion_id": "language_build_runner_support",
       "search_surface": "candidate language/build/runner declarations and execution policy",
-      "current_scope": "task-primary local expression and host C build/runner/scorer execution with toolchain identity but without portable replay parity",
-      "missing_readiness": "portable hermetic and broader language runners, replayable build-system contracts, isolation, and codebase-scale capability evidence",
+      "current_scope": "task-primary local expression, host C, and single digest-pinned OCI Python build/runner/scorer execution with identity and bounded isolation evidence but without broad portable replay parity",
+      "missing_readiness": "package-restoring multi-platform language runners, deterministic daemon/cross-host replay, hostile-code isolation review, and codebase-scale capability evidence",
       "roadmap_required_phrase": "compiled and interpreted language/package-manager fixtures",
       "roadmap_phrase_present": true,
       "current_sidecar_refs": [
@@ -36,8 +36,8 @@
         }
       ],
       "active_todo_ref_count": 2,
-      "validation_gate": "portable hermetic replay and broader-language contract tests with manifest evidence",
-      "readiness_status": "local_expression_and_host_c_partial_without_portable_toolchain_gate"
+      "validation_gate": "multi-platform package-restoring replay and broader-language contract tests with live manifest evidence",
+      "readiness_status": "host_and_single_digest_pinned_oci_partial_without_broad_portable_toolchain_gate"
     },
     {
       "criterion_id": "candidate_abstraction_api",
@@ -355,7 +355,7 @@
     "stale_readiness_detector"
   ],
   "missing_evidence": {
-    "portable_hermetic_replayable_build_runner_evidence": "host_c_compiler_smoke_recorded_portable_replay_not_recorded",
+    "portable_hermetic_replayable_build_runner_evidence": "host_c_and_single_digest_pinned_oci_smoke_recorded_broad_portable_replay_not_recorded",
     "flexible_solution_abstraction_api": "not_recorded_locally",
     "candidate_embedded_evaluator_contracts": "not_recorded_locally",
     "realistic_codebase_fixtures": "not_recorded_locally",

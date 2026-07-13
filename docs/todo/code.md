@@ -142,12 +142,13 @@ sidecars, tests, and active TODOs.
     environment linkage under `runner_environment_provenance`, bounded executed
     build/runner records, command and executable path/content hashes, generated
     build artifacts, toolchain version-output and dependency-lock hashes,
-    same-host replay scope, the host-network/unsandboxed boundary, unsupported task
-    candidate-abstraction hooks, and the exact remaining gaps before
+    same-host or digest-pinned OCI replay scope, the host-network/unsandboxed or
+    OCI-process-isolation boundary, unsupported task candidate-abstraction hooks,
+    and the exact remaining gaps before
     AlphaEvolve-style language/build parity.
     The committed
     `papers/candidate_language_runner_boundary.json` sidecar now records the
-    paper-manifest-validated partial local candidate-runner boundary. The
+    paper-manifest-validated partial host/OCI candidate-runner boundary. The
     checked `candidate_runner_expression` fixture selects `solution.expr` as
     task primary, executes a local copy-build and expression adapter without a
     shell, captures a generated build artifact, delegates metrics to
@@ -157,10 +158,22 @@ sidecars, tests, and active TODOs.
     verifies a build-contract lock hash, compiles and runs one C11 primary, and
     captures the generated executable. Unit and runtime-report tests also prove
     optional exact executable/version pin enforcement and explicitly scope
-    replay to hosts where the matching toolchain is already provisioned.
-  - Required result: add portable hermetic compiler/package-manager
-    provisioning, exact cross-host toolchain and dependency replay, broader
-    compiled/interpreted language fixtures, stronger OS/container isolation,
+    replay to hosts where the matching toolchain is already provisioned. The
+    new `candidate_runner_python_oci` fixture declares one immutable Python
+    image and checked lock. Runtime preparation hashes the Docker/Podman CLI,
+    verifies the observed image digest/ID, pulls only a specifically missing
+    immutable image, and records values-redacted runtime connectivity key names.
+    Build/run use that same image with pull and network disabled, read-only
+    rootfs, dropped capabilities/no-new-privileges, bounded CPU/memory/PIDs/
+    tmpfs, and only the candidate workspace writable. Ordered failed/successful
+    in-image toolchain probes, provisioning status, process accounting, and
+    environment/toolchain identity links survive runtime report validation and
+    tamper checks. The real fixture test is opt-in and skipped in the current
+    validation because the local Docker daemon is stopped.
+  - Required result: extend this single-image contract into portable hermetic compiler/package-manager
+    provisioning with package lock restoration, exact
+    repeated cross-host and multi-platform toolchain/dependency replay, broader
+    compiled/interpreted language fixtures, stronger hostile-code isolation,
     language-aware evolve-block grammars, and codebase-scale generated-artifact
     benchmark evidence. Add problem-defined candidate abstraction hooks
     separately before claiming arbitrary-codebase AlphaEvolve fidelity. The

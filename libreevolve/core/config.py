@@ -52,6 +52,36 @@ CONFIGURED_MUTATION_MODES = frozenset({*MUTATION_MODES, "adaptive"})
 ADAPTIVE_MUTATION_TASK_PREFERENCES = frozenset({"auto", "diff", "full"})
 MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT = 5
 CANDIDATE_RUNNER_EXECUTION_STATUS = "executable_local_subprocess"
+CANDIDATE_HOST_EXECUTION_ENVIRONMENT = "host_subprocess_v1"
+CANDIDATE_OCI_EXECUTION_ENVIRONMENT = "oci_container_v1"
+CANDIDATE_CONTAINER_RUNTIME_HOST_ENV_NAMES = (
+    "SYSTEMROOT",
+    "WINDIR",
+    "TEMP",
+    "TMP",
+    "PATH",
+    "HOME",
+    "USERPROFILE",
+    "APPDATA",
+    "LOCALAPPDATA",
+    "DOCKER_CONFIG",
+    "DOCKER_CONTEXT",
+    "DOCKER_HOST",
+    "DOCKER_TLS_VERIFY",
+    "DOCKER_CERT_PATH",
+    "CONTAINERS_CONF",
+    "CONTAINERS_STORAGE_CONF",
+    "REGISTRY_AUTH_FILE",
+    "XDG_CONFIG_HOME",
+    "XDG_RUNTIME_DIR",
+)
+MAX_CANDIDATE_CONTAINER_TMPFS_MB = 1024
+MAX_CANDIDATE_CONTAINER_MEMORY_MB = 65_536
+MAX_CANDIDATE_CONTAINER_CPUS = 64.0
+MAX_CANDIDATE_CONTAINER_PIDS = 4096
+_OCI_IMAGE_REFERENCE_RE = re.compile(
+    r"[A-Za-z0-9][A-Za-z0-9._:/-]{0,446}@sha256:[0-9a-f]{64}"
+)
 _CUSTOM_BACKEND_CLASS_PATH_RE = re.compile(
     r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+:[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*"
 )
@@ -769,6 +799,7 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
             "build_files",
             "build_command",
             "artifact_patterns",
+            "execution_environment",
             "toolchain_candidates",
             "toolchain_version_command",
             "toolchain_executable_sha256",
@@ -836,6 +867,10 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
             f"{path}.dependency_lock_sha256",
             item.get("dependency_lock_sha256", {}),
         )
+        execution_environment = _validate_candidate_execution_environment(
+            f"{path}.execution_environment",
+            item.get("execution_environment"),
+        )
         _validate_candidate_toolchain_contract(
             path,
             build_command=build_command,
@@ -843,6 +878,7 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
             version_command=toolchain_version_command,
             executable_sha256=toolchain_executable_sha256,
             version_output_sha256=toolchain_version_output_sha256,
+            execution_environment=execution_environment,
         )
         if execution_status == CANDIDATE_RUNNER_EXECUTION_STATUS and not build_command:
             raise ConfigError(
@@ -855,6 +891,7 @@ def _validate_candidate_build_systems(value: object) -> list[dict]:
                 "build_files": build_files,
                 "build_command": build_command,
                 "artifact_patterns": artifact_patterns,
+                "execution_environment": execution_environment,
                 "toolchain_candidates": toolchain_candidates,
                 "toolchain_version_command": toolchain_version_command,
                 "toolchain_executable_sha256": toolchain_executable_sha256,
@@ -961,6 +998,141 @@ def _validate_optional_sha256(path: str, value: object) -> str | None:
     return _require_sha256(path, value)
 
 
+def _validate_candidate_execution_environment(path: str, value: object) -> dict:
+    if value in (None, {}):
+        return {"type": CANDIDATE_HOST_EXECUTION_ENVIRONMENT}
+    if not isinstance(value, dict):
+        raise ConfigError(f"{path} must be a mapping")
+    allowed = {
+        "type",
+        "runtime_candidates",
+        "runtime_version_command",
+        "runtime_executable_sha256",
+        "runtime_version_output_sha256",
+        "image",
+        "pull_policy",
+        "network",
+        "read_only_rootfs",
+        "tmpfs_mb",
+        "memory_mb",
+        "cpus",
+        "pids_limit",
+    }
+    unknown = sorted(str(key) for key in value if key not in allowed)
+    if unknown:
+        raise ConfigError(f"{path} has unknown key(s): {unknown}")
+    environment_type = value.get("type", CANDIDATE_HOST_EXECUTION_ENVIRONMENT)
+    _require_enum(
+        f"{path}.type",
+        environment_type,
+        {
+            CANDIDATE_HOST_EXECUTION_ENVIRONMENT,
+            CANDIDATE_OCI_EXECUTION_ENVIRONMENT,
+        },
+    )
+    if environment_type == CANDIDATE_HOST_EXECUTION_ENVIRONMENT:
+        if set(value) - {"type"}:
+            raise ConfigError(
+                f"{path} host execution environment only accepts the type field"
+            )
+        return {"type": CANDIDATE_HOST_EXECUTION_ENVIRONMENT}
+
+    runtime_candidates = _validate_candidate_toolchain_candidates(
+        f"{path}.runtime_candidates",
+        value.get("runtime_candidates", []),
+    )
+    if not runtime_candidates:
+        raise ConfigError(f"{path}.runtime_candidates must not be empty")
+    for index, candidate in enumerate(runtime_candidates):
+        basename = Path(candidate).name.casefold()
+        if basename.endswith(".exe"):
+            basename = basename[:-4]
+        if basename not in {"docker", "podman"}:
+            raise ConfigError(
+                f"{path}.runtime_candidates[{index}] must name docker or podman"
+            )
+    raw_version_command = value.get("runtime_version_command")
+    runtime_version_command = (
+        ["{runtime}", "--version"]
+        if raw_version_command in (None, [])
+        else _validate_candidate_runner_command(
+            f"{path}.runtime_version_command",
+            raw_version_command,
+        )
+    )
+    if not runtime_version_command or runtime_version_command[0] != "{runtime}":
+        raise ConfigError(
+            f"{path}.runtime_version_command must begin with '{{runtime}}'"
+        )
+    runtime_executable_sha256 = _validate_optional_sha256(
+        f"{path}.runtime_executable_sha256",
+        value.get("runtime_executable_sha256"),
+    )
+    runtime_version_output_sha256 = _validate_optional_sha256(
+        f"{path}.runtime_version_output_sha256",
+        value.get("runtime_version_output_sha256"),
+    )
+    image = _validate_candidate_oci_image_reference(
+        f"{path}.image",
+        value.get("image"),
+    )
+    pull_policy = value.get("pull_policy", "never")
+    _require_enum(f"{path}.pull_policy", pull_policy, {"never", "if_missing"})
+    network = value.get("network", "none")
+    _require_enum(f"{path}.network", network, {"none"})
+    read_only_rootfs = value.get("read_only_rootfs", True)
+    if read_only_rootfs is not True:
+        raise ConfigError(f"{path}.read_only_rootfs must be true")
+    tmpfs_mb = value.get("tmpfs_mb", 64)
+    _require_int(f"{path}.tmpfs_mb", tmpfs_mb, minimum=1)
+    if tmpfs_mb > MAX_CANDIDATE_CONTAINER_TMPFS_MB:
+        raise ConfigError(
+            f"{path}.tmpfs_mb must be <= {MAX_CANDIDATE_CONTAINER_TMPFS_MB}"
+        )
+    memory_mb = value.get("memory_mb", 512)
+    _require_int(f"{path}.memory_mb", memory_mb, minimum=64)
+    if memory_mb > MAX_CANDIDATE_CONTAINER_MEMORY_MB:
+        raise ConfigError(
+            f"{path}.memory_mb must be <= {MAX_CANDIDATE_CONTAINER_MEMORY_MB}"
+        )
+    cpus = _require_number(f"{path}.cpus", value.get("cpus", 1.0))
+    if cpus <= 0 or cpus > MAX_CANDIDATE_CONTAINER_CPUS:
+        raise ConfigError(
+            f"{path}.cpus must be > 0 and <= {MAX_CANDIDATE_CONTAINER_CPUS:g}"
+        )
+    pids_limit = value.get("pids_limit", 128)
+    _require_int(f"{path}.pids_limit", pids_limit, minimum=16)
+    if pids_limit > MAX_CANDIDATE_CONTAINER_PIDS:
+        raise ConfigError(
+            f"{path}.pids_limit must be <= {MAX_CANDIDATE_CONTAINER_PIDS}"
+        )
+    return {
+        "type": CANDIDATE_OCI_EXECUTION_ENVIRONMENT,
+        "runtime_candidates": runtime_candidates,
+        "runtime_version_command": runtime_version_command,
+        "runtime_executable_sha256": runtime_executable_sha256,
+        "runtime_version_output_sha256": runtime_version_output_sha256,
+        "image": image,
+        "pull_policy": pull_policy,
+        "network": network,
+        "read_only_rootfs": True,
+        "tmpfs_mb": tmpfs_mb,
+        "memory_mb": memory_mb,
+        "cpus": cpus,
+        "pids_limit": pids_limit,
+    }
+
+
+def _validate_candidate_oci_image_reference(path: str, value: object) -> str:
+    image = _validate_candidate_declaration_text(path, value)
+    if _OCI_IMAGE_REFERENCE_RE.fullmatch(image) is None:
+        raise ConfigError(
+            f"{path} must be an immutable OCI image reference ending in "
+            "@sha256:<64 lowercase hex characters>"
+        )
+    return image
+
+
 def _validate_candidate_toolchain_contract(
     path: str,
     *,
@@ -969,7 +1141,9 @@ def _validate_candidate_toolchain_contract(
     version_command: list[str],
     executable_sha256: str | None,
     version_output_sha256: str | None,
+    execution_environment: dict,
 ) -> None:
+    environment_type = execution_environment.get("type")
     if candidates:
         if not build_command or build_command[0] != "{toolchain}":
             raise ConfigError(
@@ -981,7 +1155,19 @@ def _validate_candidate_toolchain_contract(
                 f"{path}.toolchain_version_command must begin with "
                 "'{toolchain}'"
             )
+        if (
+            environment_type == CANDIDATE_OCI_EXECUTION_ENVIRONMENT
+            and executable_sha256 is not None
+        ):
+            raise ConfigError(
+                f"{path}.toolchain_executable_sha256 is unsupported for OCI "
+                "execution; pin the immutable image and optional version output"
+            )
         return
+    if environment_type == CANDIDATE_OCI_EXECUTION_ENVIRONMENT:
+        raise ConfigError(
+            f"{path}.toolchain_candidates are required for OCI execution"
+        )
     if build_command and build_command[0] == "{toolchain}":
         raise ConfigError(
             f"{path}.build_command requires toolchain_candidates for "

@@ -8,7 +8,7 @@ import time
 from pathlib import Path
 import libreevolve.core.evaluator as evaluator
 from libreevolve.core.candidate import CandidateWorkspace
-from libreevolve.core.config import ConfigError
+from libreevolve.core.config import Config, ConfigError
 import pytest
 from libreevolve.core.evaluator import (
     CascadeEvaluator,
@@ -4784,6 +4784,322 @@ def test_candidate_runner_enforces_pinned_toolchain_and_dependency_identity():
         assert evaluation_accounting(result)["subprocess_attempts"] == 4
     finally:
         shutil.rmtree(d)
+
+
+def test_candidate_runner_executes_build_and_runner_in_digest_pinned_oci_image(
+    mocker,
+):
+    manifest_digest = "a" * 64
+    image_id = "b" * 64
+    image = f"example/compiler@sha256:{manifest_digest}"
+    mocker.patch.object(
+        evaluator,
+        "_resolve_candidate_executable",
+        return_value=sys.executable,
+    )
+    p, d = _problem(
+        "def evaluate(code, workspace, stage):\n"
+        "    execution = stage['candidate_runner']\n"
+        "    environment = execution['execution_environment']\n"
+        "    toolchain = execution['toolchain']\n"
+        "    ok = (execution['runner']['stdout'].strip() == '42' and \n"
+        "          environment['manifest_digest_match'] is True and \n"
+        "          environment['replay_ready'] is True and \n"
+        "          toolchain['replay_ready'] is True and \n"
+        "          execution['network_policy'] == 'none')\n"
+        "    return {'score': 1.0 if ok else 0.0, 'is_valid': ok}\n"
+    )
+    workspace = CandidateWorkspace(
+        files={"solution.py": "print(42)\n"},
+        primary_file="solution.py",
+    )
+    process_results = [
+        evaluator._ValidatorProcessResult(0, "runtime-v1\n", ""),
+        evaluator._ValidatorProcessResult(
+            0,
+            f'"sha256:{image_id}" ["example/compiler@sha256:{manifest_digest}"]\n',
+            "",
+        ),
+        evaluator._ValidatorProcessResult(127, "", "tool not found\n"),
+        evaluator._ValidatorProcessResult(0, "Python 3.12.10\n", ""),
+        evaluator._ValidatorProcessResult(0, "", ""),
+        evaluator._ValidatorProcessResult(0, "42\n", ""),
+    ]
+    run_command = mocker.patch.object(
+        evaluator,
+        "_run_candidate_command",
+        side_effect=[(result, None, 0.01) for result in process_results],
+    )
+    try:
+        result = CascadeEvaluator(
+            p,
+            stages=[
+                {
+                    "name": "run_python",
+                    "mode": "candidate_runner",
+                    "language_runner": "python_oci",
+                    "build_system": "python_compile_oci",
+                }
+            ],
+            candidate_language_runners=[
+                {
+                    "language": "python_oci",
+                    "file_patterns": ["solution.py"],
+                    "runner_command": ["python", "{primary}"],
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+            candidate_build_systems=[
+                {
+                    "name": "python_compile_oci",
+                    "build_files": ["solution.py"],
+                    "build_command": [
+                        "{toolchain}",
+                        "-m",
+                        "py_compile",
+                        "solution.py",
+                    ],
+                    "toolchain_candidates": ["missing-python", "python"],
+                    "execution_environment": {
+                        "type": "oci_container_v1",
+                        "runtime_candidates": ["docker"],
+                        "image": image,
+                        "pull_policy": "never",
+                    },
+                    "execution_status": "executable_local_subprocess",
+                }
+            ],
+        ).evaluate(workspace, None)
+
+        assert result.is_valid is True
+        execution = result.metadata["candidate_runner"]
+        environment = execution["execution_environment"]
+        assert execution["policy"] == (
+            "task_declared_oci_build_run_then_problem_validator_v1"
+        )
+        assert execution["network_policy"] == "none"
+        assert execution["security_boundary"] == (
+            "oci_process_isolation_not_untrusted_code_security_sandbox"
+        )
+        assert environment["expected_manifest_digest"] == manifest_digest
+        assert environment["observed_image_id"] == f"sha256:{image_id}"
+        assert environment["manifest_digest_match"] is True
+        assert environment["provisioning_status"] == "preprovisioned_local_image"
+        assert environment["provisioning_network_policy"] == "none"
+        assert environment["runtime_host_environment_values_redacted"] is True
+        assert environment["absolute_paths_retained"] is False
+        assert execution["toolchain"]["execution_backend"] == "oci_container_v1"
+        assert execution["toolchain"]["replay_ready"] is True
+        assert execution["toolchain"]["version_probe_attempt_count"] == 2
+        assert [
+            attempt["candidate_index"]
+            for attempt in execution["toolchain"]["version_probe_attempts"]
+        ] == [0, 1]
+        assert execution["build"]["execution"] == (
+            "oci_container_subprocess_without_shell"
+        )
+        assert execution["runner"]["execution"] == (
+            "oci_container_subprocess_without_shell"
+        )
+        assert run_command.call_count == 6
+        assert evaluation_accounting(result)["subprocess_attempts"] == 7
+        build_command = run_command.call_args_list[4].args[0]
+        runner_command = run_command.call_args_list[5].args[0]
+        for command in (build_command, runner_command):
+            assert command[command.index("--network") + 1] == "none"
+            assert "--read-only" in command
+            assert command[command.index("--cap-drop") + 1] == "ALL"
+            assert "no-new-privileges=true" in command
+            assert image in command
+        assert "/workspace/solution.py" in runner_command
+    finally:
+        shutil.rmtree(d)
+
+
+def test_candidate_container_environment_pulls_missing_digest_pinned_image(
+    mocker,
+    tmp_path,
+):
+    manifest_digest = "c" * 64
+    image_id = "d" * 64
+    image = f"example/runtime@sha256:{manifest_digest}"
+    mocker.patch.object(
+        evaluator,
+        "_resolve_candidate_executable",
+        return_value=sys.executable,
+    )
+    configured = Config(
+        candidate_build_systems=[
+            {
+                "name": "container",
+                "build_command": ["{toolchain}", "--help"],
+                "toolchain_candidates": ["tool"],
+                "execution_environment": {
+                    "type": "oci_container_v1",
+                    "runtime_candidates": ["docker"],
+                    "image": image,
+                    "pull_policy": "if_missing",
+                },
+            }
+        ]
+    ).candidate_build_systems[0]["execution_environment"]
+    results = [
+        evaluator._ValidatorProcessResult(0, "runtime-v1\n", ""),
+        evaluator._ValidatorProcessResult(
+            1,
+            "",
+            "Error response from daemon: No such image: example/runtime\n",
+        ),
+        evaluator._ValidatorProcessResult(0, "pulled\n", ""),
+        evaluator._ValidatorProcessResult(
+            0,
+            f'"sha256:{image_id}" ["example/runtime@sha256:{manifest_digest}"]\n',
+            "",
+        ),
+    ]
+    run_command = mocker.patch.object(
+        evaluator,
+        "_run_candidate_command",
+        side_effect=[(result, None, 0.01) for result in results],
+    )
+
+    context, record, error = evaluator._prepare_candidate_container_environment(
+        configured,
+        workspace_root=tmp_path,
+        timeout_sec=5.0,
+        env={},
+        output_max_chars=1000,
+    )
+
+    assert error is None
+    assert context is not None
+    assert record["image_pull_process_started"] is True
+    assert record["initial_image_inspect_status"] == "missing"
+    assert record["provisioning_status"] == "pulled_by_immutable_reference"
+    assert record["provisioning_network_policy"] == (
+        "host_runtime_registry_access_only_for_digest_pinned_missing_image"
+    )
+    assert record["manifest_digest_match"] is True
+    assert record["replay_ready"] is True
+    assert run_command.call_count == 4
+    assert "pull" in run_command.call_args_list[2].args[0]
+    timeouts = [call.kwargs["timeout_sec"] for call in run_command.call_args_list]
+    assert all(later <= earlier for earlier, later in zip(timeouts, timeouts[1:]))
+    assert timeouts[-1] < 5.0
+
+
+def test_candidate_container_environment_does_not_pull_after_malformed_inspect(
+    mocker,
+    tmp_path,
+):
+    mocker.patch.object(
+        evaluator,
+        "_resolve_candidate_executable",
+        return_value=sys.executable,
+    )
+    configured = Config(
+        candidate_build_systems=[
+            {
+                "name": "container",
+                "build_command": ["{toolchain}", "--help"],
+                "toolchain_candidates": ["tool"],
+                "execution_environment": {
+                    "type": "oci_container_v1",
+                    "runtime_candidates": ["docker"],
+                    "image": f"example/runtime@sha256:{'c' * 64}",
+                    "pull_policy": "if_missing",
+                },
+            }
+        ]
+    ).candidate_build_systems[0]["execution_environment"]
+    run_command = mocker.patch.object(
+        evaluator,
+        "_run_candidate_command",
+        side_effect=[
+            (
+                evaluator._ValidatorProcessResult(0, "runtime-v1\n", ""),
+                None,
+                0.01,
+            ),
+            (
+                evaluator._ValidatorProcessResult(0, "not-json\n", ""),
+                None,
+                0.01,
+            ),
+        ],
+    )
+
+    context, record, error = evaluator._prepare_candidate_container_environment(
+        configured,
+        workspace_root=tmp_path,
+        timeout_sec=5.0,
+        env={},
+        output_max_chars=1000,
+    )
+
+    assert context is None
+    assert error == "candidate_container_image_unavailable"
+    assert record["initial_image_inspect_status"] == "error"
+    assert record["image_pull_process_started"] is False
+    assert run_command.call_count == 2
+
+
+def test_candidate_container_environment_rejects_observed_digest_mismatch(
+    mocker,
+    tmp_path,
+):
+    expected_digest = "e" * 64
+    observed_digest = "f" * 64
+    mocker.patch.object(
+        evaluator,
+        "_resolve_candidate_executable",
+        return_value=sys.executable,
+    )
+    configured = Config(
+        candidate_build_systems=[
+            {
+                "name": "container",
+                "build_command": ["{toolchain}", "--help"],
+                "toolchain_candidates": ["tool"],
+                "execution_environment": {
+                    "type": "oci_container_v1",
+                    "runtime_candidates": ["docker"],
+                    "image": f"example/runtime@sha256:{expected_digest}",
+                },
+            }
+        ]
+    ).candidate_build_systems[0]["execution_environment"]
+    mocker.patch.object(
+        evaluator,
+        "_run_candidate_command",
+        side_effect=[
+            (evaluator._ValidatorProcessResult(0, "runtime-v1\n", ""), None, 0.01),
+            (
+                evaluator._ValidatorProcessResult(
+                    0,
+                    f'"sha256:{"0" * 64}" '
+                    f'["example/runtime@sha256:{observed_digest}"]\n',
+                    "",
+                ),
+                None,
+                0.01,
+            ),
+        ],
+    )
+
+    context, record, error = evaluator._prepare_candidate_container_environment(
+        configured,
+        workspace_root=tmp_path,
+        timeout_sec=5.0,
+        env={},
+        output_max_chars=1000,
+    )
+
+    assert context is None
+    assert error == "candidate_container_image_digest_mismatch"
+    assert record["manifest_digest_match"] is False
+    assert record["identity_observed"] is False
+    assert record["replay_ready"] is False
 
 
 def test_candidate_toolchain_version_hash_normalizes_line_endings():

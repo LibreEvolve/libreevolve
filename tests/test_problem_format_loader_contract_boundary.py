@@ -19,9 +19,9 @@ def test_problem_format_loader_contract_boundary_accepts_current_map():
     assert boundary["schema"] == PROBLEM_FORMAT_LOADER_CONTRACT_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
     assert boundary["problem_format_path"] == "docs/problem-format.md"
-    assert validation.guide_marker_count == 24
+    assert validation.guide_marker_count == 25
     assert validation.missing_guide_marker_count == 0
-    assert validation.evidence_anchor_count == 52
+    assert validation.evidence_anchor_count == 57
     assert validation.missing_evidence_anchor_count == 0
     assert boundary["missing_guide_marker_records"] == []
     assert boundary["missing_evidence_anchor_records"] == []
@@ -94,8 +94,8 @@ def test_render_problem_format_loader_contract_boundary_summary_reports_shape():
         "| boundary_status | problem_format_structural_map_without_semantic_loader_contract_proof |"
         in summary
     )
-    assert "| guide_marker_count | 24 |" in summary
+    assert "| guide_marker_count | 25 |" in summary
     assert "| missing_guide_marker_count | 0 |" in summary
-    assert "| evidence_anchor_count | 52 |" in summary
+    assert "| evidence_anchor_count | 57 |" in summary
     assert "| missing_evidence_anchor_count | 0 |" in summary
     assert "| missing_evidence_count | 5 |" in summary

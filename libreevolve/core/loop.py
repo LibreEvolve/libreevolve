@@ -62,6 +62,7 @@ from libreevolve.core.budget import (
     validate_restored_budget_snapshot,
 )
 from libreevolve.core.config import (
+    CANDIDATE_CONTAINER_RUNTIME_HOST_ENV_NAMES,
     Config,
     MAX_ADAPTIVE_MUTATION_FAILURE_SWITCH_COUNT,
 )
@@ -13622,6 +13623,26 @@ def _candidate_language_runner_contract_report(
         else []
     )
     execution_records = _candidate_runner_execution_records(programs)
+    container_environment_records = [
+        record["execution_environment"]
+        for record in execution_records
+        if isinstance(record.get("execution_environment"), Mapping)
+    ]
+    container_identity_record_count = sum(
+        1
+        for record in container_environment_records
+        if record.get("identity_observed") is True
+    )
+    container_replay_ready_count = sum(
+        1
+        for record in container_environment_records
+        if record.get("replay_ready") is True
+    )
+    container_pull_count = sum(
+        1
+        for record in container_environment_records
+        if isinstance(record.get("image_pull"), Mapping)
+    )
     toolchain_records = [
         record["toolchain"]
         for record in execution_records
@@ -13702,7 +13723,9 @@ def _candidate_language_runner_contract_report(
                 "candidate_role": "task_primary_or_workspace_member",
                 "marker_grammar": "unsupported_fail_closed_marker_like_declarations",
                 "runner_contract": "task_declared_local_subprocess_without_shell",
-                "build_contract": "optional_task_declared_local_subprocess",
+                "build_contract": (
+                    "optional_task_declared_host_or_digest_pinned_oci_subprocess"
+                ),
                 "artifact_boundary": "bounded_declared_build_artifact_copyout",
             },
             {
@@ -13710,16 +13733,18 @@ def _candidate_language_runner_contract_report(
                 "status": "task_declared_toolchain_execution_supported_partial",
                 "candidate_role": "task_declared_text_workspace_partial",
                 "marker_grammar": "unsupported",
-                "runner_contract": "task_declared_local_command_with_optional_build",
+                "runner_contract": (
+                    "task_declared_host_or_digest_pinned_oci_command_with_optional_build"
+                ),
                 "build_contract": (
-                    "host_resolved_toolchain_probe_and_optional_sha256_pins"
+                    "host_toolchain_hashes_or_digest_pinned_oci_image_identity"
                 ),
                 "artifact_boundary": "bounded_declared_patterns_when_configured",
             },
         ],
         "build_system_runner_contracts": {
             "status": (
-                "stage_bound_local_subprocess_partial"
+                "stage_bound_host_or_oci_subprocess_partial"
                 if any(
                     binding.get("build_system")
                     for binding in stage_bindings
@@ -13737,11 +13762,19 @@ def _candidate_language_runner_contract_report(
                 }
             ),
             "build_runner": "task_declared_command_tokens_without_shell",
-            "toolchain_resolution": "first_resolvable_declared_candidate",
-            "toolchain_identity": "version_probe_and_optional_executable_output_pins",
+            "toolchain_resolution": (
+                "first_resolvable_host_or_first_successful_in_image_candidate"
+            ),
+            "toolchain_identity": (
+                "host_executable_hash_or_pinned_oci_image_plus_version_probe"
+            ),
             "dependency_lock_identity": "materialized_candidate_file_sha256_pins",
-            "portable_toolchain_provisioning": "unsupported",
-            "package_install_runner": "not_special_cased_or_network_isolated",
+            "portable_toolchain_provisioning": (
+                "digest_pinned_oci_pull_if_missing_supported_partial"
+            ),
+            "package_install_runner": (
+                "image_preprovisioned_only_candidate_network_disabled"
+            ),
             "compiled_artifact_capture": "bounded_declared_pattern_copyout",
             "accelerator_or_hardware_contract": "unsupported",
         },
@@ -13776,6 +13809,17 @@ def _candidate_language_runner_contract_report(
             "toolchain_probe_count": toolchain_probe_count,
             "toolchain_replay_ready_count": toolchain_replay_ready_count,
             "dependency_lock_record_count": dependency_lock_record_count,
+            "container_environment_record_count": len(
+                container_environment_records
+            ),
+            "container_identity_record_count": container_identity_record_count,
+            "container_replay_ready_count": container_replay_ready_count,
+            "container_pull_count": container_pull_count,
+            "network_disabled_container_record_count": sum(
+                1
+                for record in container_environment_records
+                if record.get("network_policy") == "none"
+            ),
             "language_ids": sorted(
                 {
                     record["language_runner"]
@@ -13829,6 +13873,11 @@ def _candidate_language_runner_contract_report(
                 toolchain_replay_ready_count > 0
             ),
             "dependency_lock_records_recorded": dependency_lock_record_count > 0,
+            "digest_pinned_oci_execution_records_recorded": (
+                container_identity_record_count > 0
+            ),
+            "oci_image_provisioning_records_recorded": container_pull_count > 0,
+            "oci_replay_ready_records_recorded": container_replay_ready_count > 0,
             "task_candidate_abstraction_hooks_configured": False,
             "alphaevolve_language_runner_parity": False,
             "remaining_gap": list(remaining_runner_gaps),
@@ -13903,6 +13952,11 @@ def _candidate_runner_execution_summary_record(
         if isinstance(execution.get("toolchain"), Mapping)
         else None
     )
+    execution_environment = (
+        execution.get("execution_environment")
+        if isinstance(execution.get("execution_environment"), Mapping)
+        else None
+    )
     artifacts = (
         build.get("artifacts")
         if isinstance(build, Mapping) and isinstance(build.get("artifacts"), Mapping)
@@ -13928,6 +13982,9 @@ def _candidate_runner_execution_summary_record(
         )
     )
     toolchain_success = _candidate_toolchain_report_success(toolchain)
+    execution_environment_success = _candidate_execution_environment_report_success(
+        execution_environment
+    )
     return {
         "program_id": program.id,
         "generation": program.generation,
@@ -13936,7 +13993,15 @@ def _candidate_runner_execution_summary_record(
         "language_runner": execution.get("language_runner"),
         "build_system": execution.get("build_system"),
         "primary_file": execution.get("primary_file"),
-        "successful": bool(runner_success and build_success and toolchain_success),
+        "successful": bool(
+            runner_success
+            and build_success
+            and toolchain_success
+            and execution_environment_success
+        ),
+        "execution_environment": _candidate_execution_environment_report_record(
+            execution_environment
+        ),
         "toolchain": _candidate_toolchain_report_record(toolchain),
         "build": _candidate_process_report_record(build),
         "runner": _candidate_process_report_record(runner),
@@ -13963,6 +14028,7 @@ def _candidate_process_report_record(value: object) -> dict | None:
     executable = value.get("executable")
     return {
         "phase": value.get("phase"),
+        "execution": value.get("execution"),
         "configured_command_sha256": value.get("configured_command_sha256"),
         "expanded_command_sha256": value.get("expanded_command_sha256"),
         "returncode": value.get("returncode"),
@@ -13972,6 +14038,128 @@ def _candidate_process_report_record(value: object) -> dict | None:
         "stderr_sha256": value.get("stderr_sha256"),
         "launch_error": copy.deepcopy(value.get("launch_error")),
         "executable": copy.deepcopy(executable) if isinstance(executable, Mapping) else None,
+    }
+
+
+def _candidate_execution_environment_report_success(value: object) -> bool:
+    if value is None:
+        return True
+    if not isinstance(value, Mapping):
+        return False
+    return bool(
+        value.get("schema") == "libreevolve.candidate_execution_environment.v1"
+        and value.get("type") == "oci_container_v1"
+        and value.get("identity_observed") is True
+        and value.get("replay_ready") is True
+        and value.get("manifest_digest_match") is True
+        and value.get("network_policy") == "none"
+        and value.get("read_only_rootfs") is True
+        and value.get("runtime_host_environment_values_redacted") is True
+        and value.get("absolute_paths_retained") is False
+    )
+
+
+def _candidate_execution_environment_report_record(value: object) -> dict | None:
+    if not isinstance(value, Mapping):
+        return None
+    runtime_executable = value.get("runtime_executable")
+    repo_digests = (
+        value.get("observed_repo_manifest_digests")
+        if isinstance(value.get("observed_repo_manifest_digests"), list)
+        else []
+    )
+    return {
+        "schema": value.get("schema"),
+        "type": value.get("type"),
+        "runtime_selection_policy": value.get("runtime_selection_policy"),
+        "runtime_candidate_count": value.get("runtime_candidate_count"),
+        "runtime_candidate_basenames": copy.deepcopy(
+            value.get("runtime_candidate_basenames")
+        ),
+        "runtime_selection_status": value.get("runtime_selection_status"),
+        "selected_runtime_candidate_index": value.get(
+            "selected_runtime_candidate_index"
+        ),
+        "selected_runtime_candidate_basename": value.get(
+            "selected_runtime_candidate_basename"
+        ),
+        "runtime_executable": (
+            copy.deepcopy(runtime_executable)
+            if isinstance(runtime_executable, Mapping)
+            else None
+        ),
+        "runtime_version_probe_process_started": value.get(
+            "runtime_version_probe_process_started"
+        ),
+        "runtime_version_probe": _candidate_process_report_record(
+            value.get("runtime_version_probe")
+        ),
+        "runtime_version_output_normalization": value.get(
+            "runtime_version_output_normalization"
+        ),
+        "runtime_version_output_sha256": value.get(
+            "runtime_version_output_sha256"
+        ),
+        "expected_runtime_executable_sha256": value.get(
+            "expected_runtime_executable_sha256"
+        ),
+        "runtime_executable_pin_match": value.get(
+            "runtime_executable_pin_match"
+        ),
+        "expected_runtime_version_output_sha256": value.get(
+            "expected_runtime_version_output_sha256"
+        ),
+        "runtime_version_output_pin_match": value.get(
+            "runtime_version_output_pin_match"
+        ),
+        "image_reference_sha256": value.get("image_reference_sha256"),
+        "expected_manifest_digest": value.get("expected_manifest_digest"),
+        "initial_image_inspect": _candidate_process_report_record(
+            value.get("initial_image_inspect")
+        ),
+        "initial_image_inspect_status": value.get(
+            "initial_image_inspect_status"
+        ),
+        "image_pull": _candidate_process_report_record(value.get("image_pull")),
+        "final_image_inspect": _candidate_process_report_record(
+            value.get("final_image_inspect")
+        ),
+        "observed_image_id": value.get("observed_image_id"),
+        "observed_repo_manifest_digests": [
+            digest for digest in repo_digests[:100] if isinstance(digest, str)
+        ],
+        "manifest_digest_match": value.get("manifest_digest_match"),
+        "pull_policy": value.get("pull_policy"),
+        "provisioning_status": value.get("provisioning_status"),
+        "provisioning_network_policy": value.get(
+            "provisioning_network_policy"
+        ),
+        "network_policy": value.get("network_policy"),
+        "read_only_rootfs": value.get("read_only_rootfs"),
+        "workspace_mount": value.get("workspace_mount"),
+        "container_user_policy": value.get("container_user_policy"),
+        "tmpfs_mb": value.get("tmpfs_mb"),
+        "memory_mb": value.get("memory_mb"),
+        "cpus": value.get("cpus"),
+        "pids_limit": value.get("pids_limit"),
+        "capability_policy": value.get("capability_policy"),
+        "runtime_host_environment_policy": value.get(
+            "runtime_host_environment_policy"
+        ),
+        "runtime_host_environment_keys": copy.deepcopy(
+            value.get("runtime_host_environment_keys")
+        ),
+        "runtime_host_environment_values_redacted": value.get(
+            "runtime_host_environment_values_redacted"
+        ),
+        "runtime_identity_observed": value.get("runtime_identity_observed"),
+        "image_identity_observed": value.get("image_identity_observed"),
+        "identity_observed": value.get("identity_observed"),
+        "identity_sha256": value.get("identity_sha256"),
+        "replay_ready": value.get("replay_ready"),
+        "replay_scope": value.get("replay_scope"),
+        "security_boundary": value.get("security_boundary"),
+        "absolute_paths_retained": value.get("absolute_paths_retained"),
     }
 
 
@@ -13989,13 +14177,33 @@ def _candidate_toolchain_report_success(value: object) -> bool:
         return True
     probe = value.get("version_probe")
     executable = value.get("executable")
+    container_execution = value.get("execution_backend") == "oci_container_v1"
     return bool(
         value.get("identity_observed") is True
         and isinstance(executable, Mapping)
-        and executable.get("content_hash_status") == "recorded"
-        and isinstance(executable.get("content_sha256"), str)
-        and re.fullmatch(r"[0-9a-f]{64}", executable["content_sha256"])
-        is not None
+        and (
+            (
+                container_execution
+                and executable.get("resolution_status")
+                == "resolved_by_container_version_probe"
+                and executable.get("content_hash_status")
+                == "covered_by_pinned_oci_image"
+                and value.get("container_manifest_digest_match") is True
+                and isinstance(value.get("container_environment_identity_sha256"), str)
+                and re.fullmatch(
+                    r"[0-9a-f]{64}",
+                    value["container_environment_identity_sha256"],
+                )
+                is not None
+            )
+            or (
+                not container_execution
+                and executable.get("content_hash_status") == "recorded"
+                and isinstance(executable.get("content_sha256"), str)
+                and re.fullmatch(r"[0-9a-f]{64}", executable["content_sha256"])
+                is not None
+            )
+        )
         and isinstance(probe, Mapping)
         and probe.get("returncode") == 0
         and probe.get("timed_out") is False
@@ -14012,8 +14220,14 @@ def _candidate_toolchain_report_record(value: object) -> dict | None:
         else []
     )
     executable = value.get("executable")
+    version_probe_attempts = (
+        value.get("version_probe_attempts")
+        if isinstance(value.get("version_probe_attempts"), list)
+        else []
+    )
     return {
         "schema": value.get("schema"),
+        "execution_backend": value.get("execution_backend"),
         "selection_policy": value.get("selection_policy"),
         "candidate_count": value.get("candidate_count"),
         "candidate_basenames": copy.deepcopy(value.get("candidate_basenames")),
@@ -14024,6 +14238,18 @@ def _candidate_toolchain_report_record(value: object) -> dict | None:
             copy.deepcopy(executable) if isinstance(executable, Mapping) else None
         ),
         "version_probe_process_started": value.get("version_probe_process_started"),
+        "version_probe_attempt_count": value.get("version_probe_attempt_count"),
+        "version_probe_attempts": [
+            {
+                "candidate_index": attempt.get("candidate_index"),
+                "candidate_basename": attempt.get("candidate_basename"),
+                "process": _candidate_process_report_record(
+                    attempt.get("process")
+                ),
+            }
+            for attempt in version_probe_attempts[:100]
+            if isinstance(attempt, Mapping)
+        ],
         "version_probe": _candidate_process_report_record(value.get("version_probe")),
         "version_output_normalization": value.get("version_output_normalization"),
         "version_output_sha256": value.get("version_output_sha256"),
@@ -14046,6 +14272,13 @@ def _candidate_toolchain_report_record(value: object) -> dict | None:
         "replay_ready": value.get("replay_ready"),
         "replay_scope": value.get("replay_scope"),
         "toolchain_provisioning": value.get("toolchain_provisioning"),
+        "container_environment_identity_sha256": value.get(
+            "container_environment_identity_sha256"
+        ),
+        "container_manifest_digest": value.get("container_manifest_digest"),
+        "container_manifest_digest_match": value.get(
+            "container_manifest_digest_match"
+        ),
         "absolute_paths_retained": value.get("absolute_paths_retained"),
     }
 
@@ -14070,6 +14303,26 @@ def _candidate_runner_environment_provenance(
         for record in execution_records
         if isinstance(record.get("toolchain"), Mapping)
     ]
+    container_environments = [
+        record["execution_environment"]
+        for record in execution_records
+        if isinstance(record.get("execution_environment"), Mapping)
+    ]
+    container_identity_count = sum(
+        1
+        for record in container_environments
+        if record.get("identity_observed") is True
+    )
+    container_replay_ready_count = sum(
+        1
+        for record in container_environments
+        if record.get("replay_ready") is True
+    )
+    container_pull_count = sum(
+        1
+        for record in container_environments
+        if isinstance(record.get("image_pull"), Mapping)
+    )
     toolchain_identity_count = sum(
         1 for record in toolchains if record.get("identity_observed") is True
     )
@@ -14131,19 +14384,35 @@ def _candidate_runner_environment_provenance(
             "toolchain_probe_count": toolchain_probe_count,
             "toolchain_replay_ready_count": toolchain_replay_ready_count,
             "dependency_lock_record_count": dependency_lock_count,
+            "container_environment_record_count": len(container_environments),
+            "container_identity_record_count": container_identity_count,
+            "container_replay_ready_count": container_replay_ready_count,
+            "container_pull_count": container_pull_count,
+            "network_disabled_container_record_count": sum(
+                1
+                for record in container_environments
+                if record.get("network_policy") == "none"
+            ),
             "absolute_paths_retained": False,
             "toolchain_versions_recorded": toolchain_identity_count > 0,
             "dependency_manifests_recorded": dependency_lock_count > 0,
+            "candidate_oci_environment_replay_ready": (
+                container_replay_ready_count > 0
+            ),
         },
         "arbitrary_language_runner_environment_artifacts": (
-            "toolchain_identity_and_executable_hashes_recorded"
+            "digest_pinned_oci_image_and_toolchain_versions_recorded"
+            if container_identity_count
+            else "toolchain_identity_and_executable_hashes_recorded"
             if toolchain_identity_count
             else "executable_path_hashes_without_toolchain_versions"
             if execution_records
             else "not_recorded"
         ),
         "build_runner_environment_artifacts": (
-            "toolchain_identity_and_dependency_lock_hashes_recorded"
+            "digest_pinned_oci_image_toolchain_and_dependency_hashes_recorded"
+            if container_identity_count
+            else "toolchain_identity_and_dependency_lock_hashes_recorded"
             if toolchain_identity_count or dependency_lock_count
             else "executable_path_hashes_without_toolchain_versions"
             if any(isinstance(record.get("build"), Mapping) for record in execution_records)
@@ -14515,6 +14784,7 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
     else:
         if build_contracts.get("status") not in {
             "stage_bound_local_subprocess_partial",
+            "stage_bound_host_or_oci_subprocess_partial",
             "capability_available_not_configured",
         }:
             issues.append(
@@ -14530,7 +14800,7 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                     "message": "build runner must use task-declared command tokens without a shell",
                 }
             )
-        expected_toolchain_contract = {
+        legacy_toolchain_contract = {
             "toolchain_resolution": "first_resolvable_declared_candidate",
             "toolchain_identity": (
                 "version_probe_and_optional_executable_output_pins"
@@ -14538,6 +14808,24 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             "dependency_lock_identity": "materialized_candidate_file_sha256_pins",
             "portable_toolchain_provisioning": "unsupported",
         }
+        current_toolchain_contract = {
+            "toolchain_resolution": (
+                "first_resolvable_host_or_first_successful_in_image_candidate"
+            ),
+            "toolchain_identity": (
+                "host_executable_hash_or_pinned_oci_image_plus_version_probe"
+            ),
+            "dependency_lock_identity": "materialized_candidate_file_sha256_pins",
+            "portable_toolchain_provisioning": (
+                "digest_pinned_oci_pull_if_missing_supported_partial"
+            ),
+        }
+        expected_toolchain_contract = (
+            legacy_toolchain_contract
+            if build_contracts.get("portable_toolchain_provisioning")
+            == "unsupported"
+            else current_toolchain_contract
+        )
         for field, expected_value in expected_toolchain_contract.items():
             if build_contracts.get(field) != expected_value:
                 issues.append(
@@ -14753,8 +15041,11 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             "toolchain_identity_records_recorded",
             "pinned_toolchain_replay_records_recorded",
             "dependency_lock_records_recorded",
+            "digest_pinned_oci_execution_records_recorded",
+            "oci_image_provisioning_records_recorded",
+            "oci_replay_ready_records_recorded",
         ):
-            if readiness.get(field) not in {True, False}:
+            if field in readiness and readiness.get(field) not in {True, False}:
                 issues.append(
                     {
                         "code": f"invalid_{field}",
@@ -14801,6 +15092,22 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
             and bool(record.get("dependency_locks"))
             for record in toolchain_records
         )
+        container_records = [
+            record["execution_environment"]
+            for record in executed_records
+            if isinstance(record, Mapping)
+            and isinstance(record.get("execution_environment"), Mapping)
+        ]
+        expected_container_identity = any(
+            record.get("identity_observed") is True for record in container_records
+        )
+        expected_container_pull = any(
+            isinstance(record.get("image_pull"), Mapping)
+            for record in container_records
+        )
+        expected_container_replay = any(
+            record.get("replay_ready") is True for record in container_records
+        )
         for field, expected_value in (
             ("toolchain_identity_records_recorded", expected_toolchain_identity),
             (
@@ -14808,8 +15115,17 @@ def validate_candidate_language_runner_contract_report(report: object) -> dict:
                 expected_toolchain_replay,
             ),
             ("dependency_lock_records_recorded", expected_dependency_locks),
+            (
+                "digest_pinned_oci_execution_records_recorded",
+                expected_container_identity,
+            ),
+            (
+                "oci_image_provisioning_records_recorded",
+                expected_container_pull,
+            ),
+            ("oci_replay_ready_records_recorded", expected_container_replay),
         ):
-            if readiness.get(field) is not expected_value:
+            if field in readiness and readiness.get(field) is not expected_value:
                 issues.append(
                     {
                         "code": f"{field}_mismatch",
@@ -14928,8 +15244,44 @@ def _validate_candidate_runner_execution_records(
             record.get("toolchain"),
             issues,
         )
+        execution_environment = record.get("execution_environment")
+        execution_environment_ok = (
+            _validate_candidate_execution_environment_report_record(
+                execution_environment,
+                issues,
+            )
+        )
+        environment_toolchain_link_ok = True
+        if isinstance(execution_environment, Mapping):
+            toolchain = record.get("toolchain")
+            environment_toolchain_link_ok = bool(
+                isinstance(toolchain, Mapping)
+                and toolchain.get("execution_backend") == "oci_container_v1"
+                and toolchain.get("container_environment_identity_sha256")
+                == execution_environment.get("identity_sha256")
+                and toolchain.get("container_manifest_digest")
+                == execution_environment.get("expected_manifest_digest")
+                and toolchain.get("container_manifest_digest_match")
+                is execution_environment.get("manifest_digest_match")
+                and toolchain.get("toolchain_provisioning")
+                == execution_environment.get("provisioning_status")
+            )
+            if not environment_toolchain_link_ok:
+                issues.append(
+                    {
+                        "code": "candidate_container_toolchain_identity_link_mismatch",
+                        "message": (
+                            "container environment and toolchain identity records must "
+                            "refer to the same image/provisioning evidence"
+                        ),
+                    }
+                )
         if record.get("successful") is not bool(
-            runner_ok and build_ok and toolchain_ok
+            runner_ok
+            and build_ok
+            and toolchain_ok
+            and execution_environment_ok
+            and environment_toolchain_link_ok
         ):
             issues.append(
                 {
@@ -14961,20 +15313,380 @@ def _validate_candidate_runner_execution_records(
                     "message": "problem-owned validator must remain metrics authority",
                 }
             )
-        if record.get("network_policy") != "host":
+        container_execution = isinstance(execution_environment, Mapping)
+        expected_network = "none" if container_execution else "host"
+        expected_security = (
+            "oci_process_isolation_not_untrusted_code_security_sandbox"
+            if container_execution
+            else "local_subprocess_not_security_sandbox"
+        )
+        if record.get("network_policy") != expected_network:
             issues.append(
                 {
                     "code": "candidate_runner_network_policy_overclaim",
-                    "message": "candidate runner records must retain host network policy",
+                    "message": (
+                        "candidate runner network policy must match its execution "
+                        "environment"
+                    ),
                 }
             )
-        if record.get("security_boundary") != "local_subprocess_not_security_sandbox":
+        if record.get("security_boundary") != expected_security:
             issues.append(
                 {
                     "code": "candidate_runner_security_boundary_overclaim",
-                    "message": "candidate runners must not claim a security sandbox",
+                    "message": (
+                        "candidate runner security boundary must match its execution "
+                        "environment"
+                    ),
                 }
             )
+
+
+def _validate_candidate_execution_environment_report_record(
+    record: object,
+    issues: list[dict],
+) -> bool:
+    if record is None:
+        return True
+    if not isinstance(record, Mapping):
+        issues.append(
+            {
+                "code": "invalid_candidate_execution_environment_record",
+                "message": "candidate execution environment must be an object or null",
+            }
+        )
+        return False
+    if (
+        record.get("schema")
+        != "libreevolve.candidate_execution_environment.v1"
+        or record.get("type") != "oci_container_v1"
+    ):
+        issues.append(
+            {
+                "code": "invalid_candidate_execution_environment_schema",
+                "message": "candidate execution environment schema/type is unsupported",
+            }
+        )
+    count = record.get("runtime_candidate_count")
+    basenames = record.get("runtime_candidate_basenames")
+    count_valid = (
+        isinstance(count, int)
+        and not isinstance(count, bool)
+        and count > 0
+        and isinstance(basenames, list)
+        and len(basenames) == count
+        and all(isinstance(value, str) and value for value in basenames)
+    )
+    if not count_valid:
+        issues.append(
+            {
+                "code": "invalid_candidate_container_runtime_candidates",
+                "message": "container runtime candidates must be a non-empty bounded list",
+            }
+        )
+    selected_index = record.get("selected_runtime_candidate_index")
+    if (
+        not count_valid
+        or not isinstance(selected_index, int)
+        or isinstance(selected_index, bool)
+        or selected_index < 0
+        or selected_index >= count
+        or record.get("selected_runtime_candidate_basename")
+        != basenames[selected_index]
+        or record.get("runtime_selection_status") != "resolved"
+    ):
+        issues.append(
+            {
+                "code": "invalid_candidate_container_runtime_selection",
+                "message": "selected container runtime must match its candidate list",
+            }
+        )
+    runtime_environment_keys = record.get("runtime_host_environment_keys")
+    allowed_runtime_environment_keys = {
+        name.casefold() for name in CANDIDATE_CONTAINER_RUNTIME_HOST_ENV_NAMES
+    }
+    runtime_environment_keys_valid = bool(
+        isinstance(runtime_environment_keys, list)
+        and runtime_environment_keys == sorted(runtime_environment_keys)
+        and len(runtime_environment_keys) == len(set(runtime_environment_keys))
+        and all(
+            isinstance(value, str)
+            and value
+            and value.casefold() in allowed_runtime_environment_keys
+            for value in runtime_environment_keys
+        )
+    )
+    if not runtime_environment_keys_valid:
+        issues.append(
+            {
+                "code": "invalid_candidate_container_runtime_environment_keys",
+                "message": (
+                    "container runtime host environment keys must be a sorted "
+                    "approved values-redacted list"
+                ),
+            }
+        )
+    executable = record.get("runtime_executable")
+    executable_sha256 = None
+    executable_valid = False
+    if (
+        isinstance(executable, Mapping)
+        and executable.get("resolution_status") == "resolved"
+        and executable.get("content_hash_status") == "recorded"
+        and isinstance(executable.get("content_sha256"), str)
+        and re.fullmatch(r"[0-9a-f]{64}", executable["content_sha256"])
+        is not None
+        and executable.get("absolute_path_retained") is False
+    ):
+        executable_sha256 = executable["content_sha256"]
+        executable_valid = True
+    else:
+        issues.append(
+            {
+                "code": "invalid_candidate_container_runtime_identity",
+                "message": "container runtime must retain a path-safe executable hash",
+            }
+        )
+    runtime_probe_ok = _validate_candidate_process_report_record(
+        record.get("runtime_version_probe"),
+        "container_runtime_probe",
+        issues,
+    )
+    inspect_ok = _validate_candidate_process_report_record(
+        record.get("initial_image_inspect"),
+        "container_image_inspect",
+        issues,
+    )
+    pull = record.get("image_pull")
+    pull_ok = True
+    if pull is not None:
+        pull_ok = _validate_candidate_process_report_record(
+            pull,
+            "container_image_pull",
+            issues,
+        )
+    final_inspect = record.get("final_image_inspect")
+    final_inspect_ok = True
+    if final_inspect is not None:
+        final_inspect_ok = _validate_candidate_process_report_record(
+            final_inspect,
+            "container_image_inspect",
+            issues,
+        )
+    expected_digest = record.get("expected_manifest_digest")
+    observed_digests = record.get("observed_repo_manifest_digests")
+    digest_evidence_valid = bool(
+        isinstance(expected_digest, str)
+        and re.fullmatch(r"[0-9a-f]{64}", expected_digest) is not None
+        and isinstance(observed_digests, list)
+        and all(
+            isinstance(value, str)
+            and re.fullmatch(r"[0-9a-f]{64}", value) is not None
+            for value in observed_digests
+        )
+    )
+    expected_digest_match = bool(
+        digest_evidence_valid and expected_digest in observed_digests
+    )
+    if record.get("manifest_digest_match") is not expected_digest_match:
+        issues.append(
+            {
+                "code": "candidate_container_manifest_digest_match_mismatch",
+                "message": "container digest status must match retained identities",
+            }
+        )
+    for field in (
+        "runtime_version_output_sha256",
+        "image_reference_sha256",
+        "identity_sha256",
+    ):
+        value = record.get(field)
+        if not isinstance(value, str) or re.fullmatch(r"[0-9a-f]{64}", value) is None:
+            issues.append(
+                {
+                    "code": f"invalid_candidate_container_{field}",
+                    "message": f"container {field} must be SHA-256 evidence",
+                }
+            )
+    observed_image_id = record.get("observed_image_id")
+    if not isinstance(observed_image_id, str) or re.fullmatch(
+        r"sha256:[0-9a-f]{64}", observed_image_id
+    ) is None:
+        issues.append(
+            {
+                "code": "invalid_candidate_container_image_id",
+                "message": "container image id must be SHA-256 evidence",
+            }
+        )
+    identity_payload = {
+        "expected_manifest_digest": expected_digest,
+        "observed_image_id": observed_image_id,
+        "runtime_version_output_sha256": record.get(
+            "runtime_version_output_sha256"
+        ),
+        "runtime_executable_sha256": executable_sha256,
+    }
+    expected_identity_sha256 = hashlib.sha256(
+        strict_json_dumps(identity_payload).encode("utf-8")
+    ).hexdigest()
+    if record.get("identity_sha256") != expected_identity_sha256:
+        issues.append(
+            {
+                "code": "candidate_container_identity_sha256_mismatch",
+                "message": "container identity hash must match retained identity fields",
+            }
+        )
+    expected_executable = record.get("expected_runtime_executable_sha256")
+    expected_version = record.get("expected_runtime_version_output_sha256")
+    version_sha256 = record.get("runtime_version_output_sha256")
+    expected_executable_match = (
+        executable_sha256 == expected_executable
+        if isinstance(expected_executable, str)
+        else None
+    )
+    expected_version_match = (
+        version_sha256 == expected_version
+        if isinstance(expected_version, str)
+        else None
+    )
+    if record.get("runtime_executable_pin_match") is not expected_executable_match:
+        issues.append(
+            {
+                "code": "candidate_container_runtime_executable_pin_mismatch",
+                "message": "runtime executable pin status must match retained hashes",
+            }
+        )
+    if record.get("runtime_version_output_pin_match") is not expected_version_match:
+        issues.append(
+            {
+                "code": "candidate_container_runtime_version_pin_mismatch",
+                "message": "runtime version pin status must match retained hashes",
+            }
+        )
+    fixed_contract = {
+        "network_policy": "none",
+        "read_only_rootfs": True,
+        "workspace_mount": "read_write_candidate_workspace_only",
+        "container_user_policy": (
+            "host_uid_gid_on_posix_container_default_on_windows"
+        ),
+        "capability_policy": "drop_all_capabilities_and_no_new_privileges",
+        "runtime_host_environment_policy": (
+            "container_runtime_connectivity_keys_values_not_retained"
+        ),
+        "runtime_host_environment_values_redacted": True,
+        "replay_scope": "digest_pinned_oci_image_on_compatible_container_runtime",
+        "security_boundary": (
+            "oci_process_isolation_not_untrusted_code_security_sandbox"
+        ),
+        "absolute_paths_retained": False,
+    }
+    for field, expected in fixed_contract.items():
+        if record.get(field) != expected:
+            issues.append(
+                {
+                    "code": f"invalid_candidate_container_{field}",
+                    "message": f"container {field} must retain its bounded contract",
+                }
+            )
+    for field in ("tmpfs_mb", "memory_mb", "pids_limit"):
+        value = record.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value <= 0:
+            issues.append(
+                {
+                    "code": f"invalid_candidate_container_{field}",
+                    "message": f"container {field} must be a positive integer",
+                }
+            )
+    cpus = record.get("cpus")
+    if (
+        isinstance(cpus, bool)
+        or not isinstance(cpus, (int, float))
+        or not math.isfinite(float(cpus))
+        or float(cpus) <= 0
+    ):
+        issues.append(
+            {
+                "code": "invalid_candidate_container_cpus",
+                "message": "container cpus must be a positive finite number",
+            }
+        )
+    pull_policy = record.get("pull_policy")
+    expected_provisioning_network_policy = (
+        "host_runtime_registry_access_only_for_digest_pinned_missing_image"
+        if pull_policy == "if_missing"
+        else "none"
+        if pull_policy == "never"
+        else None
+    )
+    if (
+        expected_provisioning_network_policy is None
+        or record.get("provisioning_network_policy")
+        != expected_provisioning_network_policy
+    ):
+        issues.append(
+            {
+                "code": "invalid_candidate_container_provisioning_network_policy",
+                "message": (
+                    "container provisioning network policy must match the bounded "
+                    "digest-pinned pull policy"
+                ),
+            }
+        )
+    provisioning = record.get("provisioning_status")
+    if provisioning == "preprovisioned_local_image":
+        provisioning_valid = bool(
+            record.get("initial_image_inspect_status") == "available"
+            and pull is None
+            and final_inspect is None
+            and inspect_ok
+        )
+        effective_inspect_ok = inspect_ok
+    elif provisioning == "pulled_by_immutable_reference":
+        provisioning_valid = bool(
+            pull_policy == "if_missing"
+            and record.get("initial_image_inspect_status") == "missing"
+            and not inspect_ok
+            and pull_ok
+            and final_inspect_ok
+            and pull is not None
+            and final_inspect is not None
+        )
+        effective_inspect_ok = final_inspect_ok
+    else:
+        provisioning_valid = False
+        effective_inspect_ok = False
+    if not provisioning_valid:
+        issues.append(
+            {
+                "code": "invalid_candidate_container_provisioning_status",
+                "message": "container provisioning status must match process evidence",
+            }
+        )
+    identity_expected = bool(
+        executable_valid
+        and runtime_environment_keys_valid
+        and runtime_probe_ok
+        and effective_inspect_ok
+        and pull_ok
+        and final_inspect_ok
+        and expected_digest_match
+        and provisioning_valid
+    )
+    for field in (
+        "runtime_identity_observed",
+        "image_identity_observed",
+        "identity_observed",
+        "replay_ready",
+    ):
+        if record.get(field) is not identity_expected:
+            issues.append(
+                {
+                    "code": f"candidate_container_{field}_mismatch",
+                    "message": f"container {field} must match retained evidence",
+                }
+            )
+    return identity_expected
 
 
 def _validate_candidate_process_report_record(
@@ -14995,6 +15707,17 @@ def _validate_candidate_process_report_record(
             {
                 "code": f"invalid_candidate_{phase}_phase",
                 "message": f"candidate {phase} process phase is invalid",
+            }
+        )
+    if "execution" in record and record.get("execution") not in {
+        "local_subprocess_without_shell",
+        "oci_container_subprocess_without_shell",
+        "host_container_runtime_subprocess_without_shell",
+    }:
+        issues.append(
+            {
+                "code": f"invalid_candidate_{phase}_execution",
+                "message": f"candidate {phase} execution boundary is unsupported",
             }
         )
     for field in ("configured_command_sha256", "expanded_command_sha256"):
@@ -15034,6 +15757,18 @@ def _validate_candidate_toolchain_report_record(
                 "message": "candidate toolchain schema is unsupported",
             }
         )
+    execution_backend = record.get(
+        "execution_backend",
+        "host_subprocess_v1",
+    )
+    if execution_backend not in {"host_subprocess_v1", "oci_container_v1"}:
+        issues.append(
+            {
+                "code": "invalid_candidate_toolchain_execution_backend",
+                "message": "candidate toolchain execution backend is unsupported",
+            }
+        )
+    container_execution = execution_backend == "oci_container_v1"
     candidate_count = record.get("candidate_count")
     count_valid = (
         isinstance(candidate_count, int)
@@ -15076,13 +15811,27 @@ def _validate_candidate_toolchain_report_record(
                 "message": "dependency lock hashes must cover materialized file bytes",
             }
         )
-    if record.get("replay_scope") != (
-        "same_host_or_preprovisioned_matching_toolchain_only"
-    ) or record.get("toolchain_provisioning") != "not_performed":
+    replay_contract_valid = (
+        record.get("replay_scope")
+        == "digest_pinned_oci_image_and_candidate_dependency_locks"
+        and record.get("toolchain_provisioning")
+        in {
+            "preprovisioned_local_image",
+            "pulled_by_immutable_reference",
+        }
+        if container_execution
+        else record.get("replay_scope")
+        == "same_host_or_preprovisioned_matching_toolchain_only"
+        and record.get("toolchain_provisioning") == "not_performed"
+    )
+    if not replay_contract_valid:
         issues.append(
             {
                 "code": "candidate_toolchain_portable_replay_overclaim",
-                "message": "toolchain replay must remain scoped to preprovisioned hosts",
+                "message": (
+                    "toolchain replay scope and provisioning must match its execution "
+                    "backend"
+                ),
             }
         )
     if record.get("absolute_paths_retained") is not False:
@@ -15152,7 +15901,11 @@ def _validate_candidate_toolchain_report_record(
                     "message": f"candidate toolchain {field} must be SHA-256 evidence",
                 }
             )
-    pin_configured = expected_executable is not None and expected_version is not None
+    pin_configured = (
+        True
+        if container_execution
+        else expected_executable is not None and expected_version is not None
+    )
     if record.get("pin_enforcement_configured") is not pin_configured:
         issues.append(
             {
@@ -15161,11 +15914,24 @@ def _validate_candidate_toolchain_report_record(
             }
         )
     probe_ok = True
+    probe_attempts_ok = True
     executable_hash = None
     executable_valid = candidate_count == 0
     if candidate_count:
         executable = record.get("executable")
-        if (
+        if container_execution and (
+            isinstance(executable, Mapping)
+            and executable.get("resolution_status")
+            == "resolved_by_container_version_probe"
+            and executable.get("content_hash_status")
+            == "covered_by_pinned_oci_image"
+            and executable.get("content_sha256") is None
+            and executable.get("absolute_path_retained") is False
+        ):
+            executable_valid = True
+        elif (
+            not container_execution
+            and
             isinstance(executable, Mapping)
             and executable.get("resolution_status") == "resolved"
             and executable.get("content_hash_status") == "recorded"
@@ -15181,8 +15947,8 @@ def _validate_candidate_toolchain_report_record(
                 {
                     "code": "invalid_candidate_toolchain_executable_identity",
                     "message": (
-                        "resolved toolchains must retain a path-safe executable "
-                        "content hash"
+                        "resolved host toolchains must retain an executable hash; "
+                        "container toolchains must be covered by a pinned image"
                     ),
                 }
             )
@@ -15209,6 +15975,68 @@ def _validate_candidate_toolchain_report_record(
                     "message": "resolved toolchains must record a started version probe",
                 }
             )
+        attempt_count = record.get("version_probe_attempt_count")
+        attempts = record.get("version_probe_attempts")
+        probe_attempts_ok = bool(
+            isinstance(attempt_count, int)
+            and not isinstance(attempt_count, bool)
+            and 0 < attempt_count <= candidate_count
+            and isinstance(attempts, list)
+            and len(attempts) == attempt_count
+        )
+        attempt_success: list[bool] = []
+        if probe_attempts_ok:
+            for position, attempt in enumerate(attempts):
+                expected_index = position if container_execution else selected_index
+                if (
+                    not isinstance(attempt, Mapping)
+                    or attempt.get("candidate_index") != expected_index
+                    or not isinstance(basenames, list)
+                    or not isinstance(expected_index, int)
+                    or expected_index < 0
+                    or expected_index >= len(basenames)
+                    or attempt.get("candidate_basename")
+                    != basenames[expected_index]
+                    or not isinstance(attempt.get("process"), Mapping)
+                ):
+                    probe_attempts_ok = False
+                    break
+                attempt_success.append(
+                    _validate_candidate_process_report_record(
+                        attempt["process"],
+                        "toolchain_probe",
+                        issues,
+                    )
+                )
+            if probe_attempts_ok:
+                probe_attempts_ok = bool(
+                    isinstance(selected_index, int)
+                    and (
+                        (
+                            container_execution
+                            and attempt_count == selected_index + 1
+                            and all(not value for value in attempt_success[:-1])
+                            and attempt_success[-1] is True
+                        )
+                        or (
+                            not container_execution
+                            and attempt_count == 1
+                            and attempt_success == [True]
+                        )
+                    )
+                    and attempts[-1].get("process")
+                    == record.get("version_probe")
+                )
+        if not probe_attempts_ok:
+            issues.append(
+                {
+                    "code": "invalid_candidate_toolchain_probe_attempts",
+                    "message": (
+                        "toolchain probe attempts must retain ordered candidate "
+                        "selection evidence"
+                    ),
+                }
+            )
         probe_ok = _validate_candidate_process_report_record(
             record.get("version_probe"),
             "toolchain_probe",
@@ -15216,6 +16044,7 @@ def _validate_candidate_toolchain_report_record(
         )
         identity_expected = bool(
             executable_valid
+            and probe_attempts_ok
             and probe_ok
             and isinstance(version_output, str)
             and re.fullmatch(r"[0-9a-f]{64}", version_output) is not None
@@ -15236,6 +16065,8 @@ def _validate_candidate_toolchain_report_record(
         or record.get("selected_candidate_basename") is not None
         or record.get("executable") is not None
         or record.get("version_probe_process_started") is not False
+        or record.get("version_probe_attempt_count") != 0
+        or record.get("version_probe_attempts") != []
         or record.get("version_probe") is not None
         or record.get("identity_observed") is not False
     ):
@@ -15249,7 +16080,8 @@ def _validate_candidate_toolchain_report_record(
     version_match = record.get("version_output_pin_match")
     expected_executable_match = (
         executable_hash == expected_executable
-        if isinstance(expected_executable, str)
+        if not container_execution
+        and isinstance(expected_executable, str)
         and re.fullmatch(r"[0-9a-f]{64}", expected_executable) is not None
         else None
     )
@@ -15273,14 +16105,42 @@ def _validate_candidate_toolchain_report_record(
                 "message": "version pin status must match retained SHA-256 evidence",
             }
         )
-    expected_replay = bool(
-        candidate_count
-        and pin_configured
-        and expected_executable_match is True
-        and expected_version_match is True
-        and expected_locks_match
-        and record.get("identity_observed") is True
-    )
+    if container_execution:
+        container_identity = record.get("container_environment_identity_sha256")
+        container_digest = record.get("container_manifest_digest")
+        container_evidence_valid = bool(
+            isinstance(container_identity, str)
+            and re.fullmatch(r"[0-9a-f]{64}", container_identity) is not None
+            and isinstance(container_digest, str)
+            and re.fullmatch(r"[0-9a-f]{64}", container_digest) is not None
+            and record.get("container_manifest_digest_match") is True
+        )
+        if not container_evidence_valid:
+            issues.append(
+                {
+                    "code": "invalid_candidate_toolchain_container_identity",
+                    "message": "container toolchains require matching image identity",
+                }
+            )
+        expected_replay = bool(
+            candidate_count
+            and container_evidence_valid
+            and (
+                expected_version is None
+                or expected_version_match is True
+            )
+            and expected_locks_match
+            and record.get("identity_observed") is True
+        )
+    else:
+        expected_replay = bool(
+            candidate_count
+            and pin_configured
+            and expected_executable_match is True
+            and expected_version_match is True
+            and expected_locks_match
+            and record.get("identity_observed") is True
+        )
     if record.get("replay_ready") is not expected_replay:
         issues.append(
             {
@@ -15288,7 +16148,7 @@ def _validate_candidate_toolchain_report_record(
                 "message": "toolchain replay readiness must match enforced identity pins",
             }
         )
-    return bool(probe_ok and expected_locks_match)
+    return bool(probe_attempts_ok and probe_ok and expected_locks_match)
 
 
 def _validate_candidate_runner_execution_summary(
@@ -15304,6 +16164,11 @@ def _validate_candidate_runner_execution_summary(
             }
         )
     valid_records = [record for record in records if isinstance(record, Mapping)]
+    container_records = [
+        record["execution_environment"]
+        for record in valid_records
+        if isinstance(record.get("execution_environment"), Mapping)
+    ]
     expected = {
         "record_count": len(records),
         "successful_record_count": sum(
@@ -15358,6 +16223,36 @@ def _validate_candidate_runner_execution_summary(
             }
         ),
     }
+    optional_container_expected = {
+        "container_environment_record_count": len(container_records),
+        "container_identity_record_count": sum(
+            1
+            for record in container_records
+            if record.get("identity_observed") is True
+        ),
+        "container_replay_ready_count": sum(
+            1
+            for record in container_records
+            if record.get("replay_ready") is True
+        ),
+        "container_pull_count": sum(
+            1
+            for record in container_records
+            if isinstance(record.get("image_pull"), Mapping)
+        ),
+        "network_disabled_container_record_count": sum(
+            1
+            for record in container_records
+            if record.get("network_policy") == "none"
+        ),
+    }
+    expected.update(
+        {
+            field: value
+            for field, value in optional_container_expected.items()
+            if field in summary or container_records
+        }
+    )
     for field, expected_value in expected.items():
         if summary.get(field) != expected_value:
             issues.append(
@@ -15878,7 +16773,14 @@ def _validate_candidate_runner_environment_provenance(
             "toolchain_probe_count",
             "toolchain_replay_ready_count",
             "dependency_lock_record_count",
+            "container_environment_record_count",
+            "container_identity_record_count",
+            "container_replay_ready_count",
+            "container_pull_count",
+            "network_disabled_container_record_count",
         ):
+            if field not in process_environment:
+                continue
             value = process_environment.get(field)
             if not isinstance(value, int) or isinstance(value, bool) or value < 0:
                 issues.append(
@@ -15901,6 +16803,11 @@ def _validate_candidate_runner_environment_provenance(
             record["toolchain"]
             for record in valid_records
             if isinstance(record.get("toolchain"), Mapping)
+        ]
+        container_environments = [
+            record["execution_environment"]
+            for record in valid_records
+            if isinstance(record.get("execution_environment"), Mapping)
         ]
         expected = {
             "execution_record_count": len(execution_records),
@@ -15943,6 +16850,36 @@ def _validate_candidate_runner_environment_provenance(
                 if isinstance(record.get("dependency_locks"), list)
             ),
         }
+        optional_container_expected = {
+            "container_environment_record_count": len(container_environments),
+            "container_identity_record_count": sum(
+                1
+                for record in container_environments
+                if record.get("identity_observed") is True
+            ),
+            "container_replay_ready_count": sum(
+                1
+                for record in container_environments
+                if record.get("replay_ready") is True
+            ),
+            "container_pull_count": sum(
+                1
+                for record in container_environments
+                if isinstance(record.get("image_pull"), Mapping)
+            ),
+            "network_disabled_container_record_count": sum(
+                1
+                for record in container_environments
+                if record.get("network_policy") == "none"
+            ),
+        }
+        expected.update(
+            {
+                field: value
+                for field, value in optional_container_expected.items()
+                if field in process_environment or container_environments
+            }
+        )
         for field, expected_value in expected.items():
             if process_environment.get(field) != expected_value:
                 issues.append(
@@ -15956,8 +16893,12 @@ def _validate_candidate_runner_environment_provenance(
         for field, expected_value in (
             ("toolchain_versions_recorded", versions_recorded),
             ("dependency_manifests_recorded", dependencies_recorded),
+            (
+                "candidate_oci_environment_replay_ready",
+                optional_container_expected["container_replay_ready_count"] > 0,
+            ),
         ):
-            if process_environment.get(field) is not expected_value:
+            if field in process_environment and process_environment.get(field) is not expected_value:
                 issues.append(
                     {
                         "code": f"candidate_runner_environment_{field}_mismatch",
@@ -15968,6 +16909,7 @@ def _validate_candidate_runner_environment_provenance(
         "not_recorded",
         "executable_path_hashes_without_toolchain_versions",
         "toolchain_identity_and_executable_hashes_recorded",
+        "digest_pinned_oci_image_and_toolchain_versions_recorded",
     }:
         issues.append(
             {
@@ -15979,6 +16921,7 @@ def _validate_candidate_runner_environment_provenance(
         "not_recorded",
         "executable_path_hashes_without_toolchain_versions",
         "toolchain_identity_and_dependency_lock_hashes_recorded",
+        "digest_pinned_oci_image_toolchain_and_dependency_hashes_recorded",
     }:
         issues.append(
             {

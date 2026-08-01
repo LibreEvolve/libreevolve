@@ -949,8 +949,13 @@ AlphaEvolve reproduction.
   Section 3.3.4 compiler-generated-code claims: 22 are partial, 6 not
   implemented, and 16 not demonstrated, with live TODO ownership for all 44
   gaps and source-faithful FlashAttention/optimization-category wording. The
-  eight bounded inventories now disposition 378 claims in total: 21 locally
-  implemented, 122 partial, 74 not implemented, and 161
+  additional `papers/alphaevolve_ablation_claim_inventory_boundary.json`
+  dispositions 51 Section 4 and Figure 8 claims: 2 are locally implemented,
+  36 partial, 6 not implemented, and 7 not demonstrated, with live TODO
+  ownership for all 49 gaps. It preserves the source's six matrix series and
+  three kissing-number series rather than requiring all six variants on both
+  panels. The nine bounded inventories now disposition 429 claims in total: 23
+  locally implemented, 158 partial, 80 not implemented, and 168
   not demonstrated,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
@@ -963,7 +968,7 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus bounded 378-claim coverage,
+  This is complete named-structure coverage plus bounded 429-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
@@ -2599,11 +2604,13 @@ by `papers/lineage_replay_boundary.json`.
   validated `paper_scope_boundary` marked not equivalent until a
   tensor-decomposition harness proves only the loss function was mutable.
 - Generate benchmark scripts that emit the validated Figure 8 target-family
-  ablation reports and rendered curve exhibits; the report schema now requires
-  comparable compute-budget fractions, target-metric identity, direction,
-  normalization, and per-target mean/std aggregation, while the Figure 8
-  exhibit schema validates panel ids, exact paper legend labels, axis/style
-  metadata, rendered artifact hashes, and report/raw-trace links.
+  ablation reports and rendered curve exhibits. The report schema now requires
+  the six paper-shown matrix variants but only `Full method`, `No context in
+  the prompt`, and `No evolution` for kissing-number targets, plus comparable
+  compute-budget fractions, target-metric identity, direction, normalization,
+  and per-target mean/std aggregation. The Figure 8 exhibit schema validates
+  that 6-series/3-series panel shape, exact paper legend labels and order,
+  axis/style metadata, rendered artifact hashes, and report/raw-trace links.
   `figure8_exhibit_from_ablation_report()` can derive the two-panel exhibit
   from a validated equal-budget report plus declared artifacts. No real runner
   produces those reports or rendered exhibit artifacts yet. The committed

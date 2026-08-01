@@ -1,7 +1,10 @@
 import json
 import math
 
-from libreevolve.problems.benchmarks.ablation_registry import EXPECTED_VARIANT_IDS
+from libreevolve.problems.benchmarks.ablation_registry import (
+    EXPECTED_FIGURE8_SERIES_COUNT,
+    EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY,
+)
 from libreevolve.problems.benchmarks.ablation_exhibits import (
     EXPECTED_LEGEND_LABELS,
     FIGURE8_ARTIFACT_BOUNDARY_SCHEMA,
@@ -27,7 +30,7 @@ def _artifact(path: str, sha: str = "a") -> dict:
     }
 
 
-def _series() -> list[dict]:
+def _series(panel_id: str) -> list[dict]:
     return [
         {
             "variant_id": variant_id,
@@ -39,7 +42,10 @@ def _series() -> list[dict]:
                 "std_band": True,
             },
         }
-        for index, (variant_id, legend_label) in enumerate(EXPECTED_LEGEND_LABELS.items())
+        for index, variant_id in enumerate(
+            EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY[panel_id]
+        )
+        for legend_label in (EXPECTED_LEGEND_LABELS[variant_id],)
     ]
 
 
@@ -57,7 +63,7 @@ def _panel(panel_id: str, target_family: str) -> dict:
             "direction": "higher_is_better",
             "normalization": "per_target_family_mean",
         },
-        "series": _series(),
+        "series": _series(panel_id),
     }
 
 
@@ -106,7 +112,8 @@ def _valid_report() -> dict:
     curve_summaries = []
     for target in targets:
         target_id = target["target_id"]
-        for variant_id in EXPECTED_VARIANT_IDS:
+        target_family = target["target_family"]
+        for variant_id in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY[target_family]:
             for seed in (101, 102, 103):
                 for fraction in REQUIRED_BUDGET_FRACTIONS:
                     records.append(_record(variant_id, target_id, seed, fraction))
@@ -168,7 +175,7 @@ def test_validate_figure8_exhibit_accepts_paper_visual_metadata():
 
     assert validation.ok is True
     assert validation.panel_count == 2
-    assert validation.series_count == 12
+    assert validation.series_count == EXPECTED_FIGURE8_SERIES_COUNT == 9
     assert validation.issues == []
 
 
@@ -179,9 +186,14 @@ def test_validate_figure8_artifact_boundary_accepts_absence_record():
     assert validation.ok is True
     assert validation.artifact_status == "not_emitted_by_local_report_export"
     assert validation.emitted_artifact_count == 0
-    assert validation.required_field_count == 12
+    assert validation.required_field_count == 13
     assert boundary["schema"] == FIGURE8_ARTIFACT_BOUNDARY_SCHEMA
     assert boundary["source_figure_ids"] == ["Figure 8"]
+    assert boundary["panel_variant_ids"]["kissing_number_sphere_packing"] == [
+        "full_system",
+        "no_context_in_prompt",
+        "no_evolution",
+    ]
     assert "does not claim local report/export code emits" in boundary["claim_boundary"]
 
 
@@ -206,7 +218,7 @@ def test_figure8_exhibit_builder_links_valid_ablation_report_artifacts():
         _valid_report(),
         rendered_artifact=_artifact("figures/figure8_ablation_curves.png", "c"),
         ablation_report_artifact=_artifact("reports/figure8_ablation_report.json", "d"),
-        source_caption_ref="AlphaEvolve Figure 8 caption, page 15",
+        source_caption_ref="AlphaEvolve Figure 8 caption, page 18",
         rendering_parameters={"renderer": "matplotlib", "std_band": "filled"},
         run_links=[{"run_id": "figure8-fixture"}],
     )
@@ -220,6 +232,11 @@ def test_figure8_exhibit_builder_links_valid_ablation_report_artifacts():
     assert exhibit["panels"][0]["target_ids"] == ["matrix_mm_2x2"]
     assert exhibit["panels"][1]["target_ids"] == ["kissing_n8"]
     assert exhibit["panels"][0]["series"][0]["curve_summary_ref"] == "curve_summary:matrix_tensor_decomposition:full_system"
+    assert [series["variant_id"] for series in exhibit["panels"][1]["series"]] == [
+        "full_system",
+        "no_context_in_prompt",
+        "no_evolution",
+    ]
     assert exhibit["rendering_parameters"]["renderer"] == "matplotlib"
     assert exhibit["run_links"] == [{"run_id": "figure8-fixture"}]
 
@@ -284,6 +301,20 @@ def test_validate_figure8_exhibit_rejects_missing_panel_and_wrong_legend():
     assert "missing_std_band" in codes
 
 
+def test_validate_figure8_exhibit_rejects_matrix_only_kissing_series():
+    exhibit = _valid_exhibit()
+    exhibit["panels"][1]["series"].append(
+        exhibit["panels"][0]["series"][1]
+    )
+
+    validation = validate_figure8_exhibit(exhibit)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "unexpected_panel_series_variant" in codes
+    assert "invalid_panel_series_order" in codes
+
+
 def test_validate_figure8_exhibit_rejects_unsafe_artifact_and_axis_metadata():
     exhibit = _valid_exhibit()
     exhibit["rendered_artifact"] = _artifact("../escape.png", "nothex")
@@ -308,7 +339,7 @@ def test_render_figure8_exhibit_summary_reports_shape():
     assert "AlphaEvolve Figure 8 exhibit" in summary
     assert "| schema_status | ok |" in summary
     assert "| panel_count | 2 |" in summary
-    assert "| series_count | 12 |" in summary
+    assert "| series_count | 9 |" in summary
 
 
 def test_render_figure8_artifact_boundary_summary_reports_absence_shape():

@@ -7,8 +7,13 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from .ablation_registry import EXPECTED_VARIANT_IDS
-from .ablation_results import FIGURE8_TARGET_FAMILIES, validate_ablation_result_report
+from .ablation_registry import (
+    EXPECTED_FIGURE8_SERIES_COUNT,
+    EXPECTED_VARIANT_IDS,
+    EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY,
+    FIGURE8_TARGET_FAMILIES,
+)
+from .ablation_results import validate_ablation_result_report
 
 
 FIGURE8_EXHIBIT_SCHEMA = "libreevolve.alphaevolve_figure8_exhibit.v1"
@@ -46,6 +51,7 @@ FIGURE8_ARTIFACT_REQUIRED_FIELDS = (
     "rendering_parameters",
     "run_links",
     "panels",
+    "panel_variant_ids",
     "artifact_paths",
     "artifact_sha256",
 )
@@ -86,13 +92,18 @@ def figure8_artifact_boundary_record() -> dict[str, Any]:
         "source_figure_ids": list(EXPECTED_SOURCE_FIGURE_IDS),
         "artifact_status": "not_emitted_by_local_report_export",
         "local_export_scope": "figure8_ablation_curve_report_export",
+        "panel_variant_ids": {
+            panel_id: list(variant_ids)
+            for panel_id, variant_ids in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.items()
+        },
         "required_artifact_fields": list(FIGURE8_ARTIFACT_REQUIRED_FIELDS),
         "emitted_artifacts": [],
         "claim_boundary": (
             "This is a Figure 8 ablation-curve artifact availability boundary. "
             "It does not claim local report/export code emits rendered Figure 8 "
             "curve images, source report links, raw seed traces, or run-link "
-            "metadata for executed equal-budget ablations."
+            "metadata for executed equal-budget ablations. The source-faithful "
+            "shape is six matrix series and three kissing-number series."
         ),
     }
 
@@ -202,6 +213,16 @@ def validate_figure8_artifact_boundary(
         issues.append(Figure8ExhibitIssue("invalid_source_figure", "source_figure must be Figure 8"))
     if data.get("source_figure_ids") != list(EXPECTED_SOURCE_FIGURE_IDS):
         issues.append(Figure8ExhibitIssue("invalid_source_figure_ids", "source_figure_ids must be ['Figure 8']"))
+    if data.get("panel_variant_ids") != {
+        panel_id: list(variant_ids)
+        for panel_id, variant_ids in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.items()
+    }:
+        issues.append(
+            Figure8ExhibitIssue(
+                "invalid_panel_variant_ids",
+                "panel_variant_ids must preserve six matrix and three kissing-number Figure 8 series",
+            )
+        )
     status = data.get("artifact_status")
     if status not in FIGURE8_ARTIFACT_STATUSES:
         issues.append(Figure8ExhibitIssue("invalid_artifact_status", "artifact_status must be a known Figure 8 artifact status"))
@@ -334,9 +355,19 @@ def _validate_figure8_artifact_record(
         issues.append(Figure8ExhibitIssue("invalid_artifact_rendering_parameters", "artifact rendering_parameters must be an object"))
     if not isinstance(value.get("run_links"), list):
         issues.append(Figure8ExhibitIssue("invalid_artifact_run_links", "artifact run_links must be a list"))
+    if value.get("panel_variant_ids") != {
+        panel_id: list(variant_ids)
+        for panel_id, variant_ids in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.items()
+    }:
+        issues.append(
+            Figure8ExhibitIssue(
+                "invalid_artifact_panel_variant_ids",
+                "artifact panel_variant_ids must preserve the source Figure 8 series",
+            )
+        )
     panel_count, series_count = _validate_panels(value.get("panels"), issues)
-    if panel_count != len(EXPECTED_PANEL_IDS) or series_count != len(EXPECTED_PANEL_IDS) * len(EXPECTED_VARIANT_IDS):
-        issues.append(Figure8ExhibitIssue("invalid_artifact_panel_shape", "artifact panels must preserve both Figure 8 panels and all series"))
+    if panel_count != len(EXPECTED_PANEL_IDS) or series_count != EXPECTED_FIGURE8_SERIES_COUNT:
+        issues.append(Figure8ExhibitIssue("invalid_artifact_panel_shape", "artifact panels must preserve both Figure 8 panels and their paper-specific series"))
     artifact_paths = value.get("artifact_paths")
     if not isinstance(artifact_paths, list) or not artifact_paths:
         issues.append(Figure8ExhibitIssue("invalid_artifact_paths", "artifact_paths must be a non-empty list"))
@@ -413,7 +444,7 @@ def _panel_from_report(report: dict[str, Any], panel_id: str) -> dict[str, Any]:
                     "std_band": True,
                 },
             }
-            for variant_id in EXPECTED_VARIANT_IDS
+            for variant_id in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY[panel_id]
         ],
     }
 
@@ -438,7 +469,7 @@ def _validate_panels(value: object, issues: list[Figure8ExhibitIssue]) -> tuple[
         _validate_axis(panel.get("x_axis"), axis="x", issues=issues)
         _validate_axis(panel.get("y_axis"), axis="y", issues=issues)
         panel_series = panel.get("series")
-        series_count += _validate_series(panel_series, issues)
+        series_count += _validate_series(panel_series, panel_id, issues)
     for panel_id in EXPECTED_PANEL_IDS:
         if panel_id not in seen_panels:
             issues.append(Figure8ExhibitIssue("missing_panel", "Figure 8 exhibit must include both panels"))
@@ -465,11 +496,17 @@ def _validate_axis(value: object, *, axis: str, issues: list[Figure8ExhibitIssue
             issues.append(Figure8ExhibitIssue("missing_y_axis_normalization", "y-axis normalization is required"))
 
 
-def _validate_series(value: object, issues: list[Figure8ExhibitIssue]) -> int:
+def _validate_series(
+    value: object,
+    panel_id: object,
+    issues: list[Figure8ExhibitIssue],
+) -> int:
     if not isinstance(value, list):
         issues.append(Figure8ExhibitIssue("invalid_series", "series must be a list"))
         return 0
+    expected_variant_ids = EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.get(panel_id, ())
     seen: set[str] = set()
+    ordered_variant_ids: list[str] = []
     for series in value:
         if not isinstance(series, dict):
             issues.append(Figure8ExhibitIssue("invalid_series_entry", "series entry must be an object"))
@@ -479,6 +516,7 @@ def _validate_series(value: object, issues: list[Figure8ExhibitIssue]) -> int:
             issues.append(Figure8ExhibitIssue("invalid_series_variant", "series variant_id must match Figure 8 registry"))
         elif isinstance(variant_id, str):
             seen.add(variant_id)
+            ordered_variant_ids.append(variant_id)
             if series.get("legend_label") != EXPECTED_LEGEND_LABELS[variant_id]:
                 issues.append(Figure8ExhibitIssue("invalid_legend_label", "legend_label must match the paper legend"))
         if not isinstance(series.get("curve_summary_ref"), str) or not series["curve_summary_ref"].strip():
@@ -490,9 +528,24 @@ def _validate_series(value: object, issues: list[Figure8ExhibitIssue]) -> int:
             issues.append(Figure8ExhibitIssue("missing_series_style", "series style color is required"))
         if not isinstance(style, dict) or style.get("std_band") is not True:
             issues.append(Figure8ExhibitIssue("missing_std_band", "series must declare std_band true"))
-    for variant_id in EXPECTED_VARIANT_IDS:
+    for variant_id in expected_variant_ids:
         if variant_id not in seen:
-            issues.append(Figure8ExhibitIssue("missing_series_variant", "each panel must include every Figure 8 variant"))
+            issues.append(Figure8ExhibitIssue("missing_series_variant", "panel is missing a Figure 8 variant shown in the source"))
+    unexpected = sorted(seen - set(expected_variant_ids))
+    if unexpected:
+        issues.append(
+            Figure8ExhibitIssue(
+                "unexpected_panel_series_variant",
+                "panel includes a variant not shown in the source Figure 8 panel",
+            )
+        )
+    if tuple(ordered_variant_ids) != expected_variant_ids:
+        issues.append(
+            Figure8ExhibitIssue(
+                "invalid_panel_series_order",
+                "panel series must follow the source Figure 8 legend order",
+            )
+        )
     return len(value)
 
 

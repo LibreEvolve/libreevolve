@@ -3852,6 +3852,66 @@ def test_validate_paper_manifest_requires_alphaevolve_compiler_claim_inventory_a
     assert "alphaevolve_compiler_claim_inventory_boundary_manifest_missing" in codes
 
 
+def test_validate_paper_manifest_accepts_alphaevolve_ablation_claim_inventory(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = (
+        tmp_path / paper_manifest.ALPHAEVOLVE_ABLATION_CLAIM_INVENTORY_BOUNDARY_FILE
+    )
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_ablation_claim_inventory_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_ablation_claim_inventory_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_ablation_claim_inventory_boundary_record()
+    record["alphaevolve_ablation_result_reproduction_claim_ready"] = True
+    record["claim_count"] = 50
+    sidecar = (
+        tmp_path / paper_manifest.ALPHAEVOLVE_ABLATION_CLAIM_INVENTORY_BOUNDARY_FILE
+    )
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert (
+        "alphaevolve_ablation_claim_inventory_boundary_result_reproduction_overclaim"
+        in codes
+    )
+    assert "alphaevolve_ablation_claim_inventory_boundary_invalid_claim_count" in codes
+
+
+def test_validate_paper_manifest_requires_alphaevolve_ablation_claim_inventory_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "alphaevolve_ablation_claim_inventory_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_alphaevolve_source_inventory_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

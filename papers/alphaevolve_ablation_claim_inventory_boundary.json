@@ -1,0 +1,3332 @@
+{
+  "schema": "libreevolve.alphaevolve_ablation_claim_inventory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "boundary_status": "section_4_and_figure_8_claim_inventory_complete_without_executed_equal_budget_ablation_or_result_reproduction",
+  "ablation_claim_inventory_ready": true,
+  "alphaevolve_ablation_result_reproduction_claim_ready": false,
+  "alphaevolve_parity_claim_ready": false,
+  "source_artifact": {
+    "path": "papers/2506.13131__AlphaEvolve.pdf",
+    "exists": true,
+    "expected_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "actual_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "expected_page_count": 44,
+    "page_count": 44,
+    "identity_ok": true,
+    "error": null
+  },
+  "source_inventory_schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+  "source_inventory_span_count": 55,
+  "source_span_ids": [
+    "section_4",
+    "figure_8"
+  ],
+  "figure8_source_shape": {
+    "expected_panel_variant_ids": {
+      "matrix_tensor_decomposition": [
+        "full_system",
+        "no_meta_prompt_evolution",
+        "small_base_llm_only",
+        "no_context_in_prompt",
+        "no_full_file_evolution",
+        "no_evolution"
+      ],
+      "kissing_number_sphere_packing": [
+        "full_system",
+        "no_context_in_prompt",
+        "no_evolution"
+      ]
+    },
+    "registry_panel_variant_ids": {
+      "matrix_tensor_decomposition": [
+        "full_system",
+        "no_meta_prompt_evolution",
+        "small_base_llm_only",
+        "no_context_in_prompt",
+        "no_full_file_evolution",
+        "no_evolution"
+      ],
+      "kissing_number_sphere_packing": [
+        "full_system",
+        "no_context_in_prompt",
+        "no_evolution"
+      ]
+    },
+    "expected_series_count": 9,
+    "registry_series_count": 9,
+    "matches_source": true
+  },
+  "inventory_scope": {
+    "included": [
+      "all substantive Section 4 experiment-setup, component-definition, target-scope, and result claims",
+      "Figure 8 caption, axes, aggregation, direction, seed, uncertainty-band, panel, and panel-specific series claims",
+      "source-fidelity correction from an all-six-variants-on-both-panels Cartesian contract to six matrix series and three kissing-number series"
+    ],
+    "excluded": [
+      "Section 5 related-work claim exhaustiveness and Figures 9 through 14",
+      "Table 3, detailed appendices, citations, equations, and bibliography details",
+      "executed equal-budget matrix or kissing-number ablation runs, cross-target aggregate curves, or rendered Figure 8 artifacts",
+      "independent reproduction of the paper's significant-improvement conclusion",
+      "AlphaEvolve production scale or system parity"
+    ]
+  },
+  "claim_count": 51,
+  "expected_claim_count": 51,
+  "category_counts": {
+    "ablation_result": 2,
+    "ablation_setup": 6,
+    "evolution_ablation": 5,
+    "figure8_exhibit": 18,
+    "full_file_ablation": 6,
+    "meta_prompt_ablation": 5,
+    "model_mix_ablation": 4,
+    "prompt_context_ablation": 5
+  },
+  "implementation_status_counts": {
+    "implemented_local": 2,
+    "not_demonstrated": 7,
+    "not_implemented": 6,
+    "partially_implemented": 36
+  },
+  "implemented_local_count": 2,
+  "implementation_gap_count": 49,
+  "todo_owned_gap_count": 49,
+  "missing_anchor_count": 0,
+  "missing_reference_count": 0,
+  "claim_records": [
+    {
+      "claim_id": "section4_ablation_experiments_reported",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "We carried out ablations on two tasks",
+      "source_anchor_present": true,
+      "claim": "Independently execute rather than merely declare the paper's ablation experiments.",
+      "category": "ablation_setup",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section4_two_task_families",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "ablations on two tasks",
+      "source_anchor_present": true,
+      "claim": "Preserve the two-task-family experiment scope.",
+      "category": "ablation_setup",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section4_matrix_tensor_decomposition_task",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "finding tensor decompositions for faster matrix multiplication",
+      "source_anchor_present": true,
+      "claim": "Bind the matrix panel to tensor-decomposition targets.",
+      "category": "ablation_setup",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section4_matrix_faster_multiplication_goal",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "for faster matrix multiplication",
+      "source_anchor_present": true,
+      "claim": "Retain faster matrix multiplication as the tensor-decomposition task motivation.",
+      "category": "ablation_setup",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section4_kissing_lower_bound_task",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "computing lower bounds on kissing numbers",
+      "source_anchor_present": true,
+      "claim": "Bind the kissing panel to lower-bound construction targets.",
+      "category": "ablation_setup",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "section4_component_efficacy_goal",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "aiming to understand the efficacy of the following components",
+      "source_anchor_present": true,
+      "claim": "Keep component efficacy as the ablation purpose rather than treating variants as labels only.",
+      "category": "ablation_setup",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "evolutionary_approach_used",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "AlphaEvolve utilizes an evolutionary approach",
+      "source_anchor_present": true,
+      "claim": "Use an evolutionary search process.",
+      "category": "evolution_ablation",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/map_elites.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/islands.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "previous_programs_stored_in_database",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "previously generated programs are stored in a database",
+      "source_anchor_present": true,
+      "claim": "Persist generated programs in the evolutionary database.",
+      "category": "evolution_ablation",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/map_elites.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/islands.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "previous_programs_drive_subsequent_improvement",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "used to obtain better programs in subsequent iterations",
+      "source_anchor_present": true,
+      "claim": "Demonstrate that database-selected programs improve subsequent candidates under controlled budgets.",
+      "category": "evolution_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/map_elites.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/islands.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_evolution_repeats_same_initial_program",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "repeatedly feeds the same initial program to the language model",
+      "source_anchor_present": true,
+      "claim": "Make every no-evolution proposal use the same initial program without evolutionary feedback.",
+      "category": "evolution_ablation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/database.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/map_elites.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/population/islands.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_evolution_variant_name",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "We refer to this approach as No evolution",
+      "source_anchor_present": true,
+      "claim": "Preserve the `No evolution` source label and semantics.",
+      "category": "evolution_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "powerful_models_large_context_windows",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "powerful language models with large context windows",
+      "source_anchor_present": true,
+      "claim": "Record model capability and context-window evidence for the full comparator.",
+      "category": "prompt_context_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/config.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/llm/ensemble.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "context_significantly_improves_output",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "output can be improved significantly",
+      "source_anchor_present": true,
+      "claim": "Measure the claimed significant context contribution rather than infer it from prompt support.",
+      "category": "prompt_context_ablation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/config.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "problem_specific_prompt_context",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "providing problem-specific context in the prompt",
+      "source_anchor_present": true,
+      "claim": "Provide and classify problem-specific prompt context in the full comparator.",
+      "category": "prompt_context_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/config.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_context_removes_explicit_context",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "where no explicit context is added to the prompt",
+      "source_anchor_present": true,
+      "claim": "Remove explicit problem-specific context without conflating the variant with no evolution.",
+      "category": "prompt_context_ablation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/config.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_context_variant_name",
+      "source_span_id": "section_4",
+      "source_page": 17,
+      "source_anchor": "We refer to this approach as No context in the prompt",
+      "source_anchor_present": true,
+      "claim": "Preserve the `No context in the prompt` source label and explicit-context boundary.",
+      "category": "prompt_context_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/config.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_left_matrix_panel",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "low-rank tensor decomposition for faster matrix multiplication",
+      "source_anchor_present": true,
+      "claim": "Preserve the left matrix tensor-decomposition panel identity.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_right_kissing_panel",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "sphere packings for improving kissing numbers",
+      "source_anchor_present": true,
+      "claim": "Preserve the right sphere-packing/kissing-number panel identity.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_curve_per_setting",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "Each curve shows the performance of an individual setting",
+      "source_anchor_present": true,
+      "claim": "Link each rendered curve to one concrete full or ablated setting.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_increasing_compute_budget",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "with increasing compute budget",
+      "source_anchor_present": true,
+      "claim": "Report curves over increasing comparable compute-budget fractions.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_average_over_targets",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "averaged over all considered targets",
+      "source_anchor_present": true,
+      "claim": "Compute and retain cross-target curve aggregation from per-target records.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_higher_metric_is_better",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "higher values on the target metric are better",
+      "source_anchor_present": true,
+      "claim": "Require higher-is-better target metric direction.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_intra_target_standard_deviation",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "The shades indicate intra-target standard deviation",
+      "source_anchor_present": true,
+      "claim": "Derive and render intra-target standard-deviation bands.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_three_independent_runs",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "averaged over three independent runs of AlphaEvolve",
+      "source_anchor_present": true,
+      "claim": "Back every setting/target curve with exactly three independent runs.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_different_random_seeds",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "initialized with different random seeds",
+      "source_anchor_present": true,
+      "claim": "Retain distinct seed identities and initialization provenance.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_matrix_full_method_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "Full method",
+      "source_anchor_present": true,
+      "claim": "Include `Full method` in the matrix panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_matrix_no_meta_prompt_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "No meta prompt evolution",
+      "source_anchor_present": true,
+      "claim": "Include `No meta prompt evolution` only in the matrix panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_matrix_small_base_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "Small base LLM only",
+      "source_anchor_present": true,
+      "claim": "Include `Small base LLM only` only in the matrix panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_matrix_no_context_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "No context in the prompt",
+      "source_anchor_present": true,
+      "claim": "Include `No context in the prompt` in the matrix panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_matrix_no_full_file_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "No full-file evolution",
+      "source_anchor_present": true,
+      "claim": "Include `No full-file evolution` only in the matrix panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_matrix_no_evolution_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "No evolution",
+      "source_anchor_present": true,
+      "claim": "Include `No evolution` in the matrix panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_kissing_full_method_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "Full method",
+      "source_anchor_present": true,
+      "claim": "Include `Full method` in the kissing-number panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_kissing_no_context_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "No context in the prompt",
+      "source_anchor_present": true,
+      "claim": "Include `No context in the prompt` in the kissing-number panel.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_kissing_no_evolution_series",
+      "source_span_id": "figure_8",
+      "source_page": 18,
+      "source_anchor": "No evolution",
+      "source_anchor_present": true,
+      "claim": "Include `No evolution` in the kissing-number panel and no matrix-only variants.",
+      "category": "figure8_exhibit",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "meta_prompts_used",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "AlphaEvolve also uses meta prompts",
+      "source_anchor_present": true,
+      "claim": "Provide an enabled meta-prompt comparator with retained call and lineage evidence.",
+      "category": "meta_prompt_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/meta_prompt_scoring_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.meta_prompt_scoring_boundary.v1",
+          "boundary_status": "child_score_prompt_rewards_without_calibrated_lineage_attribution",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "meta_prompts_improve_llm_prompts",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "improve the prompts that are provided to the language model",
+      "source_anchor_present": true,
+      "claim": "Measure prompt-policy improvement attributable to meta prompts.",
+      "category": "meta_prompt_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/meta_prompt_scoring_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.meta_prompt_scoring_boundary.v1",
+          "boundary_status": "child_score_prompt_rewards_without_calibrated_lineage_attribution",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "meta_prompts_can_surpass_human_prompter",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "potentially surpass the performance one can obtain using a human prompter",
+      "source_anchor_present": true,
+      "claim": "Provide a controlled human-prompter comparator before claiming uplift.",
+      "category": "meta_prompt_ablation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/meta_prompt_scoring_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.meta_prompt_scoring_boundary.v1",
+          "boundary_status": "child_score_prompt_rewards_without_calibrated_lineage_attribution",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "meta_prompt_disabled_for_tensor_task",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "we disable it for the task of tensor decomposition",
+      "source_anchor_present": true,
+      "claim": "Execute the no-meta-prompt variant on tensor decomposition only.",
+      "category": "meta_prompt_ablation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/meta_prompt_scoring_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.meta_prompt_scoring_boundary.v1",
+          "boundary_status": "child_score_prompt_rewards_without_calibrated_lineage_attribution",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_meta_prompt_variant_name",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "We refer to this approach as No meta prompt evolution",
+      "source_anchor_present": true,
+      "claim": "Preserve the `No meta prompt evolution` label and target scope.",
+      "category": "meta_prompt_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/prompt.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/meta_prompt_scoring_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.meta_prompt_scoring_boundary.v1",
+          "boundary_status": "child_score_prompt_rewards_without_calibrated_lineage_attribution",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "full_file_contrast_with_funsearch",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "Unlike previous approaches such as FunSearch",
+      "source_anchor_present": true,
+      "claim": "Retain the source comparison without treating local metadata as a reproduced FunSearch comparator.",
+      "category": "full_file_ablation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "full_file",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bind the `No full-file evolution` ablation to loss-function-only",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "entire_codebase_evolution",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "AlphaEvolve can evolve an entire codebase",
+      "source_anchor_present": true,
+      "claim": "Support and demonstrate full-codebase mutation beyond bounded local workspace edits.",
+      "category": "full_file_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "full_file",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bind the `No full-file evolution` ablation to loss-function-only",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "single_function_contrast",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "instead of focusing on a single function",
+      "source_anchor_present": true,
+      "claim": "Preserve the full-codebase versus single-function comparison in executable edit-surface evidence.",
+      "category": "full_file_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "full_file",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bind the `No full-file evolution` ablation to loss-function-only",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "full_file_ablation_tensor_context",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "alternative in the context of tensor decomposition",
+      "source_anchor_present": true,
+      "claim": "Execute the full-file edit-surface ablation on tensor decomposition.",
+      "category": "full_file_ablation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "full_file",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bind the `No full-file evolution` ablation to loss-function-only",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_full_file_only_loss_function_evolved",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "where only the loss function is evolved",
+      "source_anchor_present": true,
+      "claim": "Restrict the matrix ablation to the loss function rather than generic diff or single-file edits.",
+      "category": "full_file_ablation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "full_file",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bind the `No full-file evolution` ablation to loss-function-only",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_full_file_variant_name",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "We refer to this approach as No full-file evolution",
+      "source_anchor_present": true,
+      "claim": "Preserve the `No full-file evolution` label and loss-function-only boundary.",
+      "category": "full_file_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/candidate.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/diff.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "full_file",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Bind the `No full-file evolution` ablation to loss-function-only",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "small_large_model_mixture",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "AlphaEvolve relies on a mixture of small and large language models",
+      "source_anchor_present": true,
+      "claim": "Bind the full comparator to auditable small/large model capability tiers and routing.",
+      "category": "model_mix_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/llm/ensemble.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "model_mix_high_sample_diversity",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "in order to obtain highly diverse samples",
+      "source_anchor_present": true,
+      "claim": "Measure sample diversity attributable to the small/large model mixture.",
+      "category": "model_mix_ablation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/llm/ensemble.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "small_base_only_alternative",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "only a single small base model is used",
+      "source_anchor_present": true,
+      "claim": "Execute mutation generation with one verified small base model and no larger-model routing or fallback.",
+      "category": "model_mix_ablation",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/llm/ensemble.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "small_base_only_variant_name",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "We refer to this approach as Small base LLM only",
+      "source_anchor_present": true,
+      "claim": "Preserve the `Small base LLM only` label and matrix-only target scope.",
+      "category": "model_mix_ablation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/llm/ensemble.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "papers/fast_strong_model_mix_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.fast_strong_model_mix_boundary.v1",
+          "boundary_status": "throughput_depth_metadata_without_experiment_report",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "figure8_reports_full_and_alternative_results",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "Figure 8 shows the results of the all-inclusive AlphaEvolve approach",
+      "source_anchor_present": true,
+      "claim": "Emit independently executed full-system and applicable alternative result curves.",
+      "category": "ablation_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "each_component_significant_improvement",
+      "source_span_id": "section_4",
+      "source_page": 18,
+      "source_anchor": "each of the components is responsible for a significant improvement in the results",
+      "source_anchor_present": true,
+      "claim": "Do not claim significant component contributions without reproduced measurements and an explicit significance interpretation.",
+      "category": "ablation_result",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/benchmarks/alphaevolve_ablations.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_ablation_registry.v1"
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_registry.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_results.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/problems/benchmarks/ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "tests/test_ablation_exhibits.py",
+          "exists": true
+        },
+        {
+          "path": "papers/figure8_ablation_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_figure8_artifact_boundary.v1",
+          "artifact_status": "not_emitted_by_local_report_export"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "execution",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Execute the source-faithful AlphaEvolve Section 4 ablation suite.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track source-faithful AlphaEvolve Section 4 ablation evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "exhibit",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track Figure 8 ablation-curve exhibit provenance as paper evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    }
+  ],
+  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 51 AlphaEvolve Section 4 and Figure 8 ablation claims. It preserves the source's six matrix series and three kissing-number series, rather than an incorrect full Cartesian product. Registry, result-schema, and exhibit metadata are partial implementation evidence, not actual runs. It does not claim executed equal-budget ablations, component isolation, three-seed measurements, aggregate curves, rendered Figure 8 evidence, significant improvement, result reproduction, production scale, or AlphaEvolve system parity."
+}

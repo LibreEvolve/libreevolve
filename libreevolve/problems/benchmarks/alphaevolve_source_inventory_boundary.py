@@ -172,7 +172,10 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
         "local_status": "missing_result_reproduction",
         "roadmap_section_id": "representative_benchmarks",
         "roadmap_phase": "longer_term",
-        "sidecars": ("papers/figure8_ablation_artifacts.json",),
+        "sidecars": (
+            "papers/figure8_ablation_artifacts.json",
+            "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+        ),
         "todos": _AUDIT_TODOS,
     },
     "related_work": {

@@ -12,7 +12,23 @@
     },
     "target_policy": {
       "target_set": "declared_benchmark_targets",
-      "aggregation": "mean_over_targets"
+      "aggregation": "mean_over_targets",
+      "variant_coverage": "paper_panel_specific",
+      "variant_ids_by_target_family": {
+        "matrix_tensor_decomposition": [
+          "full_system",
+          "no_meta_prompt_evolution",
+          "small_base_llm_only",
+          "no_context_in_prompt",
+          "no_full_file_evolution",
+          "no_evolution"
+        ],
+        "kissing_number_sphere_packing": [
+          "full_system",
+          "no_context_in_prompt",
+          "no_evolution"
+        ]
+      }
     },
     "required_result_fields": [
       "variant_id",
@@ -30,6 +46,10 @@
       "name": "Full system",
       "status": "definition_only",
       "variant_role": "baseline",
+      "target_families": [
+        "matrix_tensor_decomposition",
+        "kissing_number_sphere_packing"
+      ],
       "disable_components": [],
       "required_config_assertions": [
         {"field": "max_generations", "operator": "gt", "value": 0},
@@ -46,6 +66,10 @@
       "name": "No evolution",
       "status": "definition_only",
       "variant_role": "ablation",
+      "target_families": [
+        "matrix_tensor_decomposition",
+        "kissing_number_sphere_packing"
+      ],
       "disable_components": ["evolutionary_database", "parent_selection", "archive_feedback"],
       "required_config_assertions": [
         {"field": "max_generations", "operator": "equals", "value": 0},
@@ -73,6 +97,10 @@
       "name": "No context in the prompt",
       "status": "definition_only",
       "variant_role": "ablation",
+      "target_families": [
+        "matrix_tensor_decomposition",
+        "kissing_number_sphere_packing"
+      ],
       "disable_components": ["parent_context", "inspiration_context", "failure_feedback_context", "plugin_context"],
       "required_config_assertions": [
         {"field": "num_inspirations", "operator": "equals", "value": 0},
@@ -100,6 +128,7 @@
       "name": "No meta prompt evolution",
       "status": "definition_only",
       "variant_role": "ablation",
+      "target_families": ["matrix_tensor_decomposition"],
       "disable_components": ["meta_prompt_evolution"],
       "required_config_assertions": [
         {"field": "meta_prompt_evolution", "operator": "equals", "value": false},
@@ -126,6 +155,7 @@
       "name": "No full-file evolution",
       "status": "definition_only",
       "variant_role": "ablation",
+      "target_families": ["matrix_tensor_decomposition"],
       "disable_components": ["full_file_evolution", "workspace_topology_mutation"],
       "required_config_assertions": [
         {"field": "mutation_mode", "operator": "equals", "value": "diff"},
@@ -152,6 +182,7 @@
       "name": "Small base LLM only",
       "status": "definition_only",
       "variant_role": "ablation",
+      "target_families": ["matrix_tensor_decomposition"],
       "disable_components": ["large_model_backends", "llm_ensemble_routing"],
       "required_config_assertions": [
         {"field": "ensemble_strategy", "operator": "equals", "value": "single_backend"},

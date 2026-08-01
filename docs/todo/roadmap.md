@@ -101,14 +101,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     raw checklist completion, an exact normalized-title duplicate scan, and a
     bounded exact-title raw-count inflation report. That report records 123
     exact-title duplicate groups, 246 duplicate records, 123 inflated raw
-    checklist rows, and a 5180 collapsed exact-title total estimate. It also
+    checklist rows, and a 5186 collapsed exact-title total estimate. It also
     records an exact owner/status profile: all 123 exact-title duplicate
     groups are completed-only, 122 groups are cross-owner duplicates, one
     group is same-owner, and zero exact-title duplicate groups involve active
     TODO rows. It also records an exact same-owner completed duplicate report
     identifying the duplicate "Add bounded ROADMAP evaluation-cascade
     readiness matrix." entries in `docs/todo/Completed/roadmap.md` at lines
-    15460 and 15778. It also records a bounded exact stale-completed duplicate
+    15471 and 15789. It also records a bounded exact stale-completed duplicate
     detector with zero active/completed title twins.
     `papers/roadmap_readiness_boundary.json` separately records the weighted
     TODO-ledger readiness model. The current raw and weighted percentages are
@@ -198,9 +198,14 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     `papers/alphaevolve_compiler_claim_inventory_boundary.json` now adds 44
     exact-page Section 3.3.4 dispositions: none locally implemented, 22
     partial, 6 not implemented, and 16 not demonstrated, with live TODO
-    ownership for all 44 gaps. The bounded claim-level ROADMAP surface
-    therefore covers 378 claims: 21 locally implemented, 122 partial, 74 not
-    implemented, and 161 not demonstrated.
+    ownership for all 44 gaps. The
+    `papers/alphaevolve_ablation_claim_inventory_boundary.json` now adds 51
+    exact-page Section 4 and Figure 8 dispositions: 2 locally implemented, 36
+    partial, 6 not implemented, and 7 not demonstrated, with live TODO
+    ownership for all 49 gaps and source-faithful 6-series/3-series panel
+    coverage. The bounded claim-level ROADMAP surface therefore covers 429
+    claims: 23 locally implemented, 158 partial, 80 not implemented, and 168
+    not demonstrated.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -214,16 +219,16 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
     bounded eight-criterion exhaustiveness gate that credits the named PDF
-    structure walk and all eight bounded claim inventories while preserving
+    structure walk and all nine bounded claim inventories while preserving
     remaining claim-level work for the figure/table/appendix matrix,
-    Sections 4-5 and application-result reproduction/non-goal proof beyond the
-    bounded Section 3.3 application-result claim matrix,
+    Section 5 and application-result reproduction/non-goal proof beyond the
+    bounded Section 3.3/Section 4 claim matrices,
     status-row disposition map, span status classification, missing/partial
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 378 bounded system/context/matrix-result/
-    constructive-math/scheduling/kernel-engineering/hardware/compiler claims have
+    sections, and phases, and 429 bounded system/context/matrix-result/
+    constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation claims have
     claim-level mappings. The matrix is not
     exhaustive across the rest of
     the paper: it

@@ -1,22 +1,153 @@
 {
-  "active_blocking_todo_ref_count": 10,
+  "schema": "libreevolve.roadmap_phase_sequence_boundary.v1",
   "boundary_status": "bounded_phase_sequence_map_with_ci_freshness_gate",
-  "claim_boundary": "This boundary records the current ROADMAP Near Term, Mid Term, and Longer Term section sequence with active blocker TODO refs, validation gate labels, and promotion criteria. It does not claim owner review signoff. The bounded dependency graph, stale-phase detector, phase promotion/demotion workflow, and CI phase freshness gate are recorded separately.",
   "claim_ready": false,
-  "missing_evidence": {
-    "owner_review_signoff": "not_recorded_locally"
-  },
-  "phase_count": 3,
   "phase_order": [
     "near_term",
     "mid_term",
     "longer_term"
   ],
+  "phase_count": 3,
   "phase_section_counts": {
-    "longer_term": 2,
+    "near_term": 5,
     "mid_term": 3,
-    "near_term": 5
+    "longer_term": 2
   },
+  "section_count": 10,
+  "section_records": [
+    {
+      "section_id": "candidate_workspace_fidelity",
+      "phase": "near_term",
+      "ordinal": 1,
+      "roadmap_heading": "### 1. Finish candidate workspace fidelity",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 511,
+      "blocking_todo_phrase": "Add ROADMAP candidate-workspace fidelity readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "candidate workspace fidelity readiness criteria",
+      "promotion_criterion": "language/build/workspace fidelity blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "multi_objective_search",
+      "phase": "near_term",
+      "ordinal": 2,
+      "roadmap_heading": "### 2. Strengthen multi-objective search",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 593,
+      "blocking_todo_phrase": "Add ROADMAP multi-objective search readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "multi-objective archive/search readiness criteria",
+      "promotion_criterion": "archive objective policy blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "evaluation_cascades",
+      "phase": "near_term",
+      "ordinal": 3,
+      "roadmap_heading": "### 3. Expand evaluation cascades",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 681,
+      "blocking_todo_phrase": "Add ROADMAP evaluation-cascade readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "evaluation cascade readiness criteria",
+      "promotion_criterion": "cascade/oracle/statistical gate blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "prompt_context",
+      "phase": "near_term",
+      "ordinal": 4,
+      "roadmap_heading": "### 4. Prompt and context work",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 789,
+      "blocking_todo_phrase": "Add ROADMAP prompt/context-system readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "prompt/context readiness criteria",
+      "promotion_criterion": "prompt packing, retrieval, and context blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "documentation_truthfulness",
+      "phase": "near_term",
+      "ordinal": 5,
+      "roadmap_heading": "### 5. Documentation truthfulness",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 896,
+      "blocking_todo_phrase": "Add semantic evidence mapping for ROADMAP current-state and priority",
+      "blocking_todo_present": true,
+      "validation_gate": "semantic documentation claim evidence map",
+      "promotion_criterion": "README/ROADMAP/papers semantic verification gaps are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "async_resumable_runtime",
+      "phase": "mid_term",
+      "ordinal": 6,
+      "roadmap_heading": "### 6. Async and resumable runtime",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 1168,
+      "blocking_todo_phrase": "Add ROADMAP async/resumable-runtime readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "async/resumable runtime readiness criteria",
+      "promotion_criterion": "async queue and pending-work restore blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "backend_scheduling_and_critique",
+      "phase": "mid_term",
+      "ordinal": 7,
+      "roadmap_heading": "### 7. Backend scheduling and critique",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 1264,
+      "blocking_todo_phrase": "Add ROADMAP backend-scheduling and critique readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "backend scheduling and critique readiness criteria",
+      "promotion_criterion": "role scheduler and critique calibration blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "plugin_extensibility",
+      "phase": "mid_term",
+      "ordinal": 8,
+      "roadmap_heading": "### 8. Plugin extensibility",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 1371,
+      "blocking_todo_phrase": "Add ROADMAP plugin-extensibility readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "plugin extensibility readiness criteria",
+      "promotion_criterion": "plugin package/schema/provenance blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "representative_benchmarks",
+      "phase": "longer_term",
+      "ordinal": 9,
+      "roadmap_heading": "### 9. Representative benchmarks",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 1391,
+      "blocking_todo_phrase": "Add ROADMAP representative-benchmark portfolio readiness criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "representative benchmark portfolio readiness criteria",
+      "promotion_criterion": "benchmark portfolio and certification blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    },
+    {
+      "section_id": "operational_maturity",
+      "phase": "longer_term",
+      "ordinal": 10,
+      "roadmap_heading": "### 10. Operational maturity",
+      "roadmap_heading_present": true,
+      "roadmap_heading_line": 2726,
+      "blocking_todo_phrase": "Add ROADMAP operational-maturity acceptance criteria.",
+      "blocking_todo_present": true,
+      "validation_gate": "operational maturity acceptance criteria",
+      "promotion_criterion": "release, CI, run-artifact, and observability blockers are evidence-mapped",
+      "sequencing_status": "bounded_static_phase_assignment"
+    }
+  ],
+  "section_sequence_status": "roadmap_major_sections_in_expected_order",
+  "active_blocking_todo_ref_count": 10,
   "required_evidence_fields": [
     "phase_headings",
     "major_section_sequence",
@@ -28,139 +159,8 @@
     "promotion_demotion_workflow",
     "ci_phase_freshness_gate"
   ],
-  "schema": "libreevolve.roadmap_phase_sequence_boundary.v1",
-  "section_count": 10,
-  "section_records": [
-    {
-      "blocking_todo_phrase": "Add ROADMAP candidate-workspace fidelity readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 1,
-      "phase": "near_term",
-      "promotion_criterion": "language/build/workspace fidelity blockers are evidence-mapped",
-      "roadmap_heading": "### 1. Finish candidate workspace fidelity",
-      "roadmap_heading_line": 511,
-      "roadmap_heading_present": true,
-      "section_id": "candidate_workspace_fidelity",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "candidate workspace fidelity readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP multi-objective search readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 2,
-      "phase": "near_term",
-      "promotion_criterion": "archive objective policy blockers are evidence-mapped",
-      "roadmap_heading": "### 2. Strengthen multi-objective search",
-      "roadmap_heading_line": 593,
-      "roadmap_heading_present": true,
-      "section_id": "multi_objective_search",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "multi-objective archive/search readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP evaluation-cascade readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 3,
-      "phase": "near_term",
-      "promotion_criterion": "cascade/oracle/statistical gate blockers are evidence-mapped",
-      "roadmap_heading": "### 3. Expand evaluation cascades",
-      "roadmap_heading_line": 681,
-      "roadmap_heading_present": true,
-      "section_id": "evaluation_cascades",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "evaluation cascade readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP prompt/context-system readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 4,
-      "phase": "near_term",
-      "promotion_criterion": "prompt packing, retrieval, and context blockers are evidence-mapped",
-      "roadmap_heading": "### 4. Prompt and context work",
-      "roadmap_heading_line": 789,
-      "roadmap_heading_present": true,
-      "section_id": "prompt_context",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "prompt/context readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add semantic evidence mapping for ROADMAP current-state and priority",
-      "blocking_todo_present": true,
-      "ordinal": 5,
-      "phase": "near_term",
-      "promotion_criterion": "README/ROADMAP/papers semantic verification gaps are evidence-mapped",
-      "roadmap_heading": "### 5. Documentation truthfulness",
-      "roadmap_heading_line": 896,
-      "roadmap_heading_present": true,
-      "section_id": "documentation_truthfulness",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "semantic documentation claim evidence map"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP async/resumable-runtime readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 6,
-      "phase": "mid_term",
-      "promotion_criterion": "async queue and pending-work restore blockers are evidence-mapped",
-      "roadmap_heading": "### 6. Async and resumable runtime",
-      "roadmap_heading_line": 1163,
-      "roadmap_heading_present": true,
-      "section_id": "async_resumable_runtime",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "async/resumable runtime readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP backend-scheduling and critique readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 7,
-      "phase": "mid_term",
-      "promotion_criterion": "role scheduler and critique calibration blockers are evidence-mapped",
-      "roadmap_heading": "### 7. Backend scheduling and critique",
-      "roadmap_heading_line": 1259,
-      "roadmap_heading_present": true,
-      "section_id": "backend_scheduling_and_critique",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "backend scheduling and critique readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP plugin-extensibility readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 8,
-      "phase": "mid_term",
-      "promotion_criterion": "plugin package/schema/provenance blockers are evidence-mapped",
-      "roadmap_heading": "### 8. Plugin extensibility",
-      "roadmap_heading_line": 1366,
-      "roadmap_heading_present": true,
-      "section_id": "plugin_extensibility",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "plugin extensibility readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP representative-benchmark portfolio readiness criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 9,
-      "phase": "longer_term",
-      "promotion_criterion": "benchmark portfolio and certification blockers are evidence-mapped",
-      "roadmap_heading": "### 9. Representative benchmarks",
-      "roadmap_heading_line": 1386,
-      "roadmap_heading_present": true,
-      "section_id": "representative_benchmarks",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "representative benchmark portfolio readiness criteria"
-    },
-    {
-      "blocking_todo_phrase": "Add ROADMAP operational-maturity acceptance criteria.",
-      "blocking_todo_present": true,
-      "ordinal": 10,
-      "phase": "longer_term",
-      "promotion_criterion": "release, CI, run-artifact, and observability blockers are evidence-mapped",
-      "roadmap_heading": "### 10. Operational maturity",
-      "roadmap_heading_line": 2719,
-      "roadmap_heading_present": true,
-      "section_id": "operational_maturity",
-      "sequencing_status": "bounded_static_phase_assignment",
-      "validation_gate": "operational maturity acceptance criteria"
-    }
-  ],
-  "section_sequence_status": "roadmap_major_sections_in_expected_order"
+  "missing_evidence": {
+    "owner_review_signoff": "not_recorded_locally"
+  },
+  "claim_boundary": "This boundary records the current ROADMAP Near Term, Mid Term, and Longer Term section sequence with active blocker TODO refs, validation gate labels, and promotion criteria. It does not claim owner review signoff. The bounded dependency graph, stale-phase detector, phase promotion/demotion workflow, and CI phase freshness gate are recorded separately."
 }

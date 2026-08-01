@@ -47,14 +47,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_compiler_claim_inventory_boundary.json` adds 44
     exact-page Section 3.3.4 claims: none locally implemented, 22 partial, 6
     not implemented, and 16 not demonstrated, with live ownership for all 44
-    gaps and checked source-fidelity corrections. Combined coverage is 378
-    claims: 21 implemented, 122 partial, 74 not implemented, and 161 not
+    gaps and checked source-fidelity corrections. The
+    `papers/alphaevolve_ablation_claim_inventory_boundary.json` adds 51
+    exact-page Section 4 and Figure 8 claims: 2 locally implemented, 36
+    partial, 6 not implemented, and 7 not demonstrated, with live ownership
+    for all 49 gaps and a checked correction to six matrix series and three
+    kissing-number series. Combined coverage is 429 claims: 23 implemented,
+    158 partial, 80 not implemented, and 168 not
     demonstrated. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 378-claim inventory deliberately excludes
-    Sections 4-5 claims, Figures 8-14, Table 3, detailed appendices,
+  - Current gap: the combined 429-claim inventory deliberately excludes
+    Section 5 claims, Figures 9-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.
@@ -1402,7 +1407,8 @@ directory and using the AlphaEvolve paper as the primary specification.
     ablations, declared targets, exactly three seeds, required equal-budget
     fractions, finite scores,
     consumed-budget/fraction consistency, consistent budget unit/limit per seed
-    curve and across all variants/seeds for each target, passed component
+    curve and across all paper-applicable variants/seeds for each target,
+    passed component
     assertions, and hashed curve artifacts.
     That report contract now requires the two Figure 8 task families, low-rank
     matrix tensor decomposition and kissing-number sphere packing, and
@@ -1573,6 +1579,23 @@ directory and using the AlphaEvolve paper as the primary specification.
     cross-run quarantine/resume behavior, and richer runtime artifact
     generation, not configured in-run role/backend quarantine observations or
     verifying declared cancellation evidence files once a policy names them.
+
+- [ ] Track source-faithful AlphaEvolve Section 4 ablation evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 4 and Figure 8 define
+    a six-series matrix panel and a three-series kissing-number panel, equal
+    compute-budget progress, aggregation over considered targets, three
+    independently seeded runs, intra-target standard-deviation shading, and a
+    reported significant contribution from each studied component.
+  - Current evidence: the local registry, result validator, and exhibit
+    validator now encode the exact panel-specific variant sets rather than the
+    earlier incorrect six-variants-on-both-panels Cartesian product. They are
+    report contracts and absence boundaries, not executed result evidence.
+  - Required result: retain source page/caption anchors, exact variant and
+    target applicability, runnable component assertions, equal-budget raw
+    records, seed identities, per-target and cross-target summaries, linked run
+    artifacts, rendered curves, and independent interpretation. Keep the
+    paper's significant-improvement result classified as not demonstrated
+    until local evidence reproduces it.
 
 - [ ] Track Figure 8 ablation-curve exhibit provenance as paper evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Figure 8 shows two ablation

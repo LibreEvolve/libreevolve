@@ -4,6 +4,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory AlphaEvolve Section 4 and Figure 8 claims.
+  - Paper evidence: source pages 17-18 define two ablation task families, five
+    component ablations, equal-budget and three-seed curve semantics, an
+    asymmetric six-series/three-series panel layout, and a reported significant
+    contribution from each component.
+  - Status: `papers/alphaevolve_ablation_claim_inventory_boundary.json`
+    records 51 PDF-anchored claims: 2 locally implemented, 36 partial, 6 not
+    implemented, and 7 not demonstrated. All 49 gaps resolve to active TODOs.
+  - Remaining gap: actual equal-budget runs, component-isolation proof,
+    aggregate curves, rendered artifacts, and result reproduction remain open.
+  - Verification: focused inventory and paper-manifest tests validate source
+    anchors, TODO ownership, panel shape, and result/parity-overclaim rejection.
+
 - [x] Inventory the AlphaEvolve paper's complete named structure.
   - Paper evidence: the pinned 44-page PDF contains 38 named structural spans,
     14 numbered figures, and 3 numbered tables; Figure 9 parts a-c are one
@@ -9565,8 +9578,9 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     named ablations as curves over equal compute-budget fractions and repeated
     seeds.
   - Status: `libreevolve.alphaevolve_ablation_report.v1` now validates
-    executed ablation result records for all six Figure 8 variants, declared
-    targets, exactly three seeds, required equal-budget fractions, finite
+    executed ablation result records for all source-applicable Figure 8
+    variant/target pairs: six matrix settings and three kissing-number
+    settings, exactly three seeds, required equal-budget fractions, finite
     scores, consumed-budget/fraction consistency, passed component assertions,
     hashed artifacts, and summary rendering. The paper index can count the
     report contract while keeping actual ablation runs open.
@@ -9582,8 +9596,8 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     of a shared compute budget, so variant curves for a target should not mix
     different budget units or limits.
   - Status: `libreevolve.alphaevolve_ablation_report.v1` now enforces
-    target-level budget consistency across all variants and seeds, in addition
-    to the existing per-seed fraction-curve consistency.
+    target-level budget consistency across all source-applicable variants and
+    seeds, in addition to the existing per-seed fraction-curve consistency.
   - Remaining paper gap: no real benchmark script executes the ablation
     variants or emits validated reports.
   - Verification: focused ablation-result tests cover a variant/seed curve

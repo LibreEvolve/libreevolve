@@ -1,7 +1,9 @@
 import json
 
 from libreevolve.problems.benchmarks.ablation_registry import (
+    EXPECTED_FIGURE8_SERIES_COUNT,
     EXPECTED_VARIANT_IDS,
+    EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY,
     REGISTRY_PATH,
     validate_ablation_registry,
 )
@@ -19,21 +21,52 @@ def test_ablation_registry_enumerates_alphaevolve_figure8_variants():
     assert tuple(variant_ids) == EXPECTED_VARIANT_IDS
     assert data["report_contract"]["seed_policy"]["independent_seed_count"] == 3
     assert data["report_contract"]["budget_axis"] == "fraction_of_equal_compute_budget"
+    assert EXPECTED_FIGURE8_SERIES_COUNT == 9
+    assert data["report_contract"]["target_policy"]["variant_ids_by_target_family"] == {
+        family: list(variant_ids)
+        for family, variant_ids in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.items()
+    }
     no_evolution = next(variant for variant in data["variants"] if variant["id"] == "no_evolution")
     assert no_evolution["paper_scope_boundary"]["alphaevolve_setup"] == "same_initial_program_repeated_sampling_no_evolutionary_feedback"
     assert no_evolution["paper_scope_boundary"]["paper_match_status"] == "prompt_history_unproven"
+    assert no_evolution["target_families"] == [
+        "matrix_tensor_decomposition",
+        "kissing_number_sphere_packing",
+    ]
     no_context = next(variant for variant in data["variants"] if variant["id"] == "no_context_in_prompt")
     assert no_context["paper_scope_boundary"]["alphaevolve_setup"] == "explicit_problem_specific_context_removed"
     assert no_context["paper_scope_boundary"]["paper_match_status"] == "over_broad_not_equivalent"
     no_meta_prompt = next(variant for variant in data["variants"] if variant["id"] == "no_meta_prompt_evolution")
     assert no_meta_prompt["paper_scope_boundary"]["alphaevolve_setup"] == "meta_prompt_evolution_disabled_only_for_ablation"
     assert no_meta_prompt["paper_scope_boundary"]["paper_match_status"] == "lineage_unproven"
+    assert no_meta_prompt["target_families"] == ["matrix_tensor_decomposition"]
     no_full_file = next(variant for variant in data["variants"] if variant["id"] == "no_full_file_evolution")
     assert no_full_file["paper_scope_boundary"]["alphaevolve_setup"] == "tensor_decomposition_loss_function_only"
     assert no_full_file["paper_scope_boundary"]["paper_match_status"] == "not_equivalent"
     small_base = next(variant for variant in data["variants"] if variant["id"] == "small_base_llm_only")
     assert small_base["paper_scope_boundary"]["alphaevolve_setup"] == "single_small_base_model_generation_only"
     assert small_base["paper_scope_boundary"]["paper_match_status"] == "telemetry_unproven"
+    assert small_base["target_families"] == ["matrix_tensor_decomposition"]
+
+
+def test_ablation_registry_rejects_non_source_target_coverage(tmp_path):
+    data = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
+    data["report_contract"]["target_policy"]["variant_ids_by_target_family"][
+        "kissing_number_sphere_packing"
+    ].append("small_base_llm_only")
+    for variant in data["variants"]:
+        if variant["id"] == "small_base_llm_only":
+            variant["target_families"].append("kissing_number_sphere_packing")
+            break
+    registry = tmp_path / "registry.json"
+    registry.write_text(json.dumps(data), encoding="utf-8")
+
+    report = validate_ablation_registry(registry)
+    issue_codes = {issue.code for issue in report.issues}
+
+    assert report.ok is False
+    assert "invalid_target_variant_policy" in issue_codes
+    assert "invalid_variant_target_families" in issue_codes
 
 
 def test_ablation_registry_requires_each_named_variant(tmp_path):

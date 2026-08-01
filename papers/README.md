@@ -239,7 +239,10 @@ system, `No evolution`, `No context in the prompt`, `No meta prompt evolution`,
 `No full-file evolution`, and `Small base LLM only`. The registry requires
 component-disable assertions, three independent seeds, target aggregation,
 equal-budget fractions, required result fields, and AlphaEvolve citation
-metadata, but it does not claim those reports have been run. Its
+metadata, but it does not claim those reports have been run. Target
+applicability is source-specific: all six settings belong to the matrix panel,
+while the kissing-number panel contains only `Full method`, `No context in the
+prompt`, and `No evolution`. Its
 `No full-file evolution` row now carries a validated `paper_scope_boundary`
 that records AlphaEvolve's tensor-decomposition loss-function-only setup and
 marks the current localized single-file diff/no-topology scope as
@@ -278,7 +281,9 @@ calls and prompt-template mutations were disabled only in the ablated run. The
 report contract now requires Figure 8's matrix tensor-decomposition and
 kissing-number sphere-packing target families, target-metric identity,
 higher-is-better direction, normalization policy, and mean/standard-deviation
-curve summaries checked against the three independent seed traces.
+curve summaries checked against the three independent seed traces. It rejects
+matrix-only `No meta prompt evolution`, `No full-file evolution`, and `Small
+base LLM only` records on kissing-number targets.
 For AlphaEvolve context-ingestion status, "deterministic selection provenance"
 means path-segment-aware local context globs: `*` stays within one path
 component and `**` recursively matches zero or more components.
@@ -1595,14 +1600,24 @@ direct IR optimization and correctness checks, expert confirmation, the 32%
 kernel and 15% pre/postprocessing speedups, and both compiler-adoption paths.
 It preserves the paper's "most commonly implemented" qualification and does
 not attribute every reported edit to memory-access orchestration or scheduling.
-Together the eight bounded inventories disposition 378 claims: 21 locally
-implemented, 122 partial, 74 not implemented, and 161 not demonstrated. The corrected
+`papers/alphaevolve_ablation_claim_inventory_boundary.json` adds 51 exact-page
+Section 4 and Figure 8 claims. It classifies 2 as locally implemented, 36 as
+partial, 6 as not implemented, and 7 as not demonstrated, with live TODO
+ownership for all 49 gaps. It covers experiment targets, component
+definitions, prompt/model/edit-surface variants, equal-budget and seed
+semantics, target aggregation, uncertainty bands, panel-specific legends, and
+the reported significant-improvement conclusion. It also corrects the earlier
+all-six-variants-on-both-panels contract: Figure 8 has six matrix series but
+only `Full method`, `No context in the prompt`, and `No evolution` on the
+kissing-number panel.
+Together the nine bounded inventories disposition 429 claims: 23 locally
+implemented, 158 partial, 80 not implemented, and 168 not demonstrated. The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
 whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-Sections 4-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
+Section 5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
 sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -2429,7 +2444,8 @@ Implemented:
   full-system baseline plus the five component ablations, declared targets,
   exactly three seeds, required equal-budget fractions,
   finite scores, consumed-budget consistency, consistent budget unit/limit per
-  seed curve and across all variants/seeds for each target, passed component
+  seed curve and across all paper-applicable variants/seeds for each target,
+  passed component
   assertions, hashed curve artifacts, Figure 8 target-family coverage for
   `matrix_tensor_decomposition` and `kissing_number_sphere_packing`,
   target-metric identity/direction/normalization, and per-target/variant/
@@ -2449,9 +2465,10 @@ Implemented:
 - `libreevolve/problems/benchmarks/ablation_exhibits.py`: AlphaEvolve Figure 8
   visual-exhibit metadata contract. It validates the stable exhibit id, the
   matrix and kissing-number panel ids, target-family mappings, exact paper
-  legend labels including `Full method`, axis metadata, standard-deviation band
-  style declarations, rendered artifact hashes, and links to ablation report,
-  curve-summary, and raw-seed-trace artifacts.
+  legend labels and order including `Full method`, all six matrix series, only
+  the three source-shown kissing-number series, axis metadata, standard-
+  deviation band style declarations, rendered artifact hashes, and links to
+  ablation report, curve-summary, and raw-seed-trace artifacts.
   `figure8_exhibit_from_ablation_report()` builds that two-panel exhibit from
   a validated equal-budget ablation report plus declared rendered/source
   artifacts. It does not render plots or prove that benchmark scripts emitted
@@ -3496,13 +3513,13 @@ Implemented:
   marker drift, raw checklist completion, and exact normalized-title duplicate
   groups. It now also records a bounded exact-title raw-count inflation
   estimate: 123 exact duplicate-title groups, 246 duplicate records, 123
-  inflated raw checklist rows, and a 5180 collapsed exact-title total
+  inflated raw checklist rows, and a 5186 collapsed exact-title total
   estimate. It also records an exact duplicate owner/status profile: all 123
   exact-title duplicate groups are completed-only, 122 groups are cross-owner,
   one group is same-owner, and zero groups involve active TODO rows. It also
   records one exact same-owner completed duplicate in
   `docs/todo/Completed/roadmap.md`, for "Add bounded ROADMAP
-  evaluation-cascade readiness matrix." at lines 15460 and 15778. It also
+  evaluation-cascade readiness matrix." at lines 15471 and 15789. It also
   records a bounded exact stale-completed duplicate detector with zero
   active/completed title twins. It is not evidence of canonical underlying-gap
   ids,

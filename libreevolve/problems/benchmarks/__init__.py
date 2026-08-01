@@ -330,6 +330,12 @@ from libreevolve.problems.benchmarks.alphaevolve_context_claim_inventory_boundar
     render_alphaevolve_context_claim_inventory_boundary_summary,
     validate_alphaevolve_context_claim_inventory_boundary,
 )
+from libreevolve.problems.benchmarks.alphaevolve_ablation_claim_inventory_boundary import (
+    ALPHAEVOLVE_ABLATION_CLAIM_INVENTORY_BOUNDARY_SCHEMA,
+    alphaevolve_ablation_claim_inventory_boundary_record,
+    render_alphaevolve_ablation_claim_inventory_boundary_summary,
+    validate_alphaevolve_ablation_claim_inventory_boundary,
+)
 from libreevolve.problems.benchmarks.alphaevolve_compiler_claim_inventory_boundary import (
     ALPHAEVOLVE_COMPILER_CLAIM_INVENTORY_BOUNDARY_SCHEMA,
     alphaevolve_compiler_claim_inventory_boundary_record,
@@ -1232,6 +1238,7 @@ __all__ = [
     "DOCUMENTATION_TRUTHFULNESS_BOUNDARY_SCHEMA",
     "DISTRIBUTED_PIPELINE_TOPOLOGY_BOUNDARY_SCHEMA",
     "WORKSPACE_MATERIALIZATION_BOUNDARY_SCHEMA",
+    "ALPHAEVOLVE_ABLATION_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_COMPILER_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_CONTEXT_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
     "ALPHAEVOLVE_HARDWARE_CLAIM_INVENTORY_BOUNDARY_SCHEMA",
@@ -1468,6 +1475,7 @@ __all__ = [
     "failure_memory_boundary_record",
     "gigaevo_framework_boundary_record",
     "kernel_tiling_shape_corpus_boundary_record",
+    "alphaevolve_ablation_claim_inventory_boundary_record",
     "alphaevolve_compiler_claim_inventory_boundary_record",
     "alphaevolve_context_claim_inventory_boundary_record",
     "alphaevolve_hardware_claim_inventory_boundary_record",
@@ -1658,6 +1666,7 @@ __all__ = [
     "render_hardware_rtl_eda_evidence_boundary_summary",
     "render_hardware_rewrite_artifact_boundary_summary",
     "render_kernel_tiling_shape_corpus_boundary_summary",
+    "render_alphaevolve_ablation_claim_inventory_boundary_summary",
     "render_alphaevolve_compiler_claim_inventory_boundary_summary",
     "render_alphaevolve_context_claim_inventory_boundary_summary",
     "render_alphaevolve_hardware_claim_inventory_boundary_summary",
@@ -1868,6 +1877,7 @@ __all__ = [
     "validate_gemini_self_training_loop_boundary",
     "validate_gigaevo_framework_boundary",
     "validate_kernel_tiling_shape_corpus_boundary",
+    "validate_alphaevolve_ablation_claim_inventory_boundary",
     "validate_alphaevolve_compiler_claim_inventory_boundary",
     "validate_alphaevolve_context_claim_inventory_boundary",
     "validate_alphaevolve_hardware_claim_inventory_boundary",

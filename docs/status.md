@@ -33,6 +33,9 @@ Implemented today:
   `paper_artifacts/...` evidence, but active TODOs still track unified
   artifact-hash, schema, restore, and `show` inspection proof for those
   paper-facing outputs.
+- Figure 8 registry, result, and exhibit validators preserve the source's
+  panel-specific shape: six matrix tensor-decomposition series and three
+  kissing-number series. Matrix-only ablations are rejected on kissing targets.
 
 Important limits:
 
@@ -797,7 +800,10 @@ Important limits:
   report contract, scope-boundary records, and optional
   `libreevolve.alphaevolve_figure8_exhibit.v1` exhibit metadata; the committed
   `papers/figure8_ablation_artifacts.json` sidecar records the current
-  rendered-artifact absence boundary. This is not executed equal-budget
+  rendered-artifact absence boundary. The separate 51-claim Section 4/Figure 8
+  inventory classifies 2 claims as locally implemented, 36 as partial, 6 as
+  not implemented, and 7 as not demonstrated, with all 49 gaps linked to live
+  TODOs. This is not executed equal-budget
   matrix/kissing benchmark runs, proven component-isolated ablation setups,
   rendered paper-quality curves, or accelerator/async-worker budget evidence.
 - Provider cost evidence is configured token-cost estimates from retained

@@ -2,7 +2,9 @@ import hashlib
 import json
 import math
 
-from libreevolve.problems.benchmarks.ablation_registry import EXPECTED_VARIANT_IDS
+from libreevolve.problems.benchmarks.ablation_registry import (
+    EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY,
+)
 from libreevolve.problems.benchmarks.ablation_results import (
     ABLATION_ARTIFACT_INVENTORY_SCHEMA,
     ABLATION_RESULT_SCHEMA,
@@ -58,7 +60,8 @@ def _valid_report() -> dict:
     curve_summaries = []
     for target in targets:
         target_id = target["target_id"]
-        for variant_id in EXPECTED_VARIANT_IDS:
+        target_family = target["target_family"]
+        for variant_id in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY[target_family]:
             for seed in (101, 102, 103):
                 for fraction in REQUIRED_BUDGET_FRACTIONS:
                     records.append(_record(variant_id, target_id, seed, fraction))
@@ -99,7 +102,7 @@ def test_ablation_result_report_validates_equal_budget_curve_contract():
     assert validation.ok is True
     assert validation.equal_budget_ready is True
     assert validation.target_count == 2
-    assert validation.record_count == 6 * 2 * 3 * 5
+    assert validation.record_count == (6 + 3) * 3 * 5
     assert validation.issues == []
 
 
@@ -207,6 +210,30 @@ def test_ablation_result_report_requires_all_variants_seeds_and_fractions():
     assert validation.ok is False
     assert validation.equal_budget_ready is False
     assert "invalid_budget_fraction_coverage" in codes
+
+
+def test_ablation_result_report_rejects_matrix_only_variant_for_kissing_panel():
+    report = _valid_report()
+    report["records"].append(
+        _record("no_meta_prompt_evolution", "kissing_n8", 101, 0.0)
+    )
+    report["curve_summaries"].append(
+        {
+            "variant_id": "no_meta_prompt_evolution",
+            "target_id": "kissing_n8",
+            "budget_fraction": 0.0,
+            "mean_score": 101.0,
+            "std_score": 0.0,
+            "seed_count": 3,
+        }
+    )
+
+    validation = validate_ablation_result_report(report)
+    codes = {issue.code for issue in validation.issues}
+
+    assert validation.ok is False
+    assert "invalid_figure8_variant_target_pair" in codes
+    assert "invalid_figure8_curve_variant_target_pair" in codes
 
 
 def test_ablation_result_report_requires_figure8_target_metadata():
@@ -327,4 +354,4 @@ def test_ablation_result_summary_renders_equal_budget_readiness():
     assert "| schema_status | ok |" in summary
     assert "| equal_budget_ready | yes |" in summary
     assert "| target_count | 2 |" in summary
-    assert "| record_count | 180 |" in summary
+    assert "| record_count | 135 |" in summary

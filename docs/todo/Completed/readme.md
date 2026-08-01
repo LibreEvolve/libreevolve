@@ -4,6 +4,16 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the bounded Section 4 and Figure 8 audit in README.
+  - Status: README now reports the 51-claim ablation inventory, its 2/36/6/7
+    implementation-status split, live ownership for all 49 gaps, and the
+    corrected six-series matrix versus three-series kissing-number shape.
+  - Boundary: the text keeps registry/report/exhibit validation separate from
+    executed equal-budget runs, rendered curves, significant-improvement
+    reproduction, and AlphaEvolve parity.
+  - Verification: focused inventory, documentation, and paper-manifest tests
+    cover the documented counts and overclaim boundary.
+
 - [x] Document the AlphaEvolve named-source audit boundary in README.
   - Status: README now reports the 55-span PDF-backed inventory and separates
     source-audit completeness from sentence-level requirements, benchmark
@@ -12315,7 +12325,8 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Evidence: README documented the AlphaEvolve ablation registry definition
     but not the executed-result report shape for equal-budget curves.
   - Status: papers/README.md now names `libreevolve.alphaevolve_ablation_report.v1`,
-    describes all six Figure 8 variants, target/seed/fraction coverage,
+    describes the six matrix settings and three source-applicable kissing-
+    number settings, target/seed/fraction coverage,
     finite scores, consumed-budget consistency, passed component assertions,
     hashed curve artifacts, and the boundary that the contract does not run
     ablations or implement token/cost/accelerator budget stops.

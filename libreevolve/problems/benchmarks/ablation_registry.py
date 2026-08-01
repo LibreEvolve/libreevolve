@@ -18,6 +18,37 @@ EXPECTED_VARIANT_IDS = (
     "no_full_file_evolution",
     "small_base_llm_only",
 )
+FIGURE8_TARGET_FAMILIES = frozenset({
+    "matrix_tensor_decomposition",
+    "kissing_number_sphere_packing",
+})
+EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY = {
+    "matrix_tensor_decomposition": (
+        "full_system",
+        "no_meta_prompt_evolution",
+        "small_base_llm_only",
+        "no_context_in_prompt",
+        "no_full_file_evolution",
+        "no_evolution",
+    ),
+    "kissing_number_sphere_packing": (
+        "full_system",
+        "no_context_in_prompt",
+        "no_evolution",
+    ),
+}
+EXPECTED_VARIANT_TARGET_FAMILIES = {
+    variant_id: tuple(
+        target_family
+        for target_family, variant_ids in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.items()
+        if variant_id in variant_ids
+    )
+    for variant_id in EXPECTED_VARIANT_IDS
+}
+EXPECTED_FIGURE8_SERIES_COUNT = sum(
+    len(variant_ids)
+    for variant_ids in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.values()
+)
 STATUSES = frozenset({"definition_only", "implemented", "reported"})
 VARIANT_ROLES = frozenset({"baseline", "ablation"})
 ASSERTION_OPERATORS = frozenset({"equals", "not_equals", "in", "gt", "gte", "lt", "lte"})
@@ -194,6 +225,20 @@ def _validate_report_contract(value: object, issues: list[AblationRegistryIssue]
     target_policy = value.get("target_policy")
     if not isinstance(target_policy, dict) or not isinstance(target_policy.get("target_set"), str):
         issues.append(AblationRegistryIssue("invalid_target_policy", "target_policy.target_set is required"))
+    elif (
+        target_policy.get("variant_coverage") != "paper_panel_specific"
+        or target_policy.get("variant_ids_by_target_family")
+        != {
+            family: list(variant_ids)
+            for family, variant_ids in EXPECTED_VARIANT_IDS_BY_TARGET_FAMILY.items()
+        }
+    ):
+        issues.append(
+            AblationRegistryIssue(
+                "invalid_target_variant_policy",
+                "target policy must preserve Figure 8's six matrix series and three kissing-number series",
+            )
+        )
     fields = value.get("required_result_fields")
     if not isinstance(fields, list) or set(fields) != REQUIRED_REPORT_FIELDS:
         issues.append(AblationRegistryIssue("invalid_required_result_fields", "required_result_fields must match the ablation report contract"))
@@ -230,6 +275,19 @@ def _validate_variant(
     citations = variant.get("paper_citations")
     if not isinstance(citations, list) or "2506.13131" not in citations:
         issues.append(AblationRegistryIssue("missing_alphaevolve_citation", "paper_citations must include 2506.13131", variant_id))
+    target_families = variant.get("target_families")
+    expected_target_families = EXPECTED_VARIANT_TARGET_FAMILIES.get(variant_id)
+    if (
+        expected_target_families is None
+        or target_families != list(expected_target_families)
+    ):
+        issues.append(
+            AblationRegistryIssue(
+                "invalid_variant_target_families",
+                "target_families must match the variant's Figure 8 panel coverage",
+                variant_id,
+            )
+        )
     if variant_id == "no_evolution":
         _validate_variant_scope_boundary(
             variant.get("paper_scope_boundary"),

@@ -4,6 +4,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Correct Figure 8 panel-specific variant coverage.
+  - Spec evidence: the AlphaEvolve Figure 8 matrix panel contains the full
+    method and five ablations, while the kissing-number panel contains only the
+    full method, `No context in the prompt`, and `No evolution`.
+  - Status: the registry now records exact target-family applicability;
+    ablation result validation rejects matrix-only variants on kissing targets;
+    and exhibit validation requires six matrix series, three kissing series,
+    and source legend order.
+  - Remaining gap: the contracts remain definition/validation support. No
+    runner executes the equal-budget ablations or emits reproduced curves.
+  - Verification: focused registry, result, exhibit, and Section 4 claim-
+    inventory tests cover valid 6/3 reports and invalid cross-panel pairings.
+
 - [x] Add a PDF-backed named-source inventory and correct core paper anchors.
   - Status: `papers/alphaevolve_source_inventory_boundary.json` now pins the
     44-page AlphaEvolve PDF identity and verifies 55 named spans with 57
@@ -12771,9 +12784,10 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Spec evidence: AlphaEvolve Figure 8 compares named component ablations as a
     function of consumed compute-budget fraction with repeated seeds.
   - Status: `libreevolve.problems.benchmarks.ablation_results` now validates
-    `libreevolve.alphaevolve_ablation_report.v1` records with all six
-    AlphaEvolve variant ids, declared targets, exactly three seeds per
-    variant/target, required budget fractions, finite scores, consumed-budget
+    `libreevolve.alphaevolve_ablation_report.v1` records for every source-
+    applicable variant/target pair: six matrix settings and three kissing-
+    number settings, with exactly three seeds per pair, required budget
+    fractions, finite scores, consumed-budget
     consistency, passed component assertions, safe artifact paths, SHA-256
     hashes, positive byte counts, and deterministic summary rendering.
   - Remaining gap: no benchmark runner currently executes the ablations or
@@ -12789,8 +12803,9 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     against the same compute-budget fraction, so each target comparison must
     use one budget axis and limit across variants and seeds.
   - Status: `libreevolve.alphaevolve_ablation_report.v1` now rejects reports
-    where any record for the same target uses a different budget unit or limit,
-    even if each individual seed curve is internally consistent.
+    where any source-applicable record for the same target uses a different
+    budget unit or limit, even if each individual seed curve is internally
+    consistent.
   - Remaining gap: no benchmark runner currently executes the ablations or
     emits validated reports for real targets.
   - Verification: focused ablation-result tests cover target-level budget

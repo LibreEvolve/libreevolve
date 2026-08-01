@@ -8,6 +8,21 @@
   ],
   "artifact_status": "not_emitted_by_local_report_export",
   "local_export_scope": "figure8_ablation_curve_report_export",
+  "panel_variant_ids": {
+    "matrix_tensor_decomposition": [
+      "full_system",
+      "no_meta_prompt_evolution",
+      "small_base_llm_only",
+      "no_context_in_prompt",
+      "no_full_file_evolution",
+      "no_evolution"
+    ],
+    "kissing_number_sphere_packing": [
+      "full_system",
+      "no_context_in_prompt",
+      "no_evolution"
+    ]
+  },
   "required_artifact_fields": [
     "exhibit_id",
     "source_figure",
@@ -19,9 +34,10 @@
     "rendering_parameters",
     "run_links",
     "panels",
+    "panel_variant_ids",
     "artifact_paths",
     "artifact_sha256"
   ],
   "emitted_artifacts": [],
-  "claim_boundary": "This is a Figure 8 ablation-curve artifact availability boundary. It does not claim local report/export code emits rendered Figure 8 curve images, source report links, raw seed traces, or run-link metadata for executed equal-budget ablations."
+  "claim_boundary": "This is a Figure 8 ablation-curve artifact availability boundary. It does not claim local report/export code emits rendered Figure 8 curve images, source report links, raw seed traces, or run-link metadata for executed equal-budget ablations. The source-faithful shape is six matrix series and three kissing-number series."
 }

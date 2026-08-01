@@ -84,9 +84,14 @@ sidecars, tests, and active TODOs.
     Section 3.3.4 compiler-generated-code claims. It classifies 22 as partial,
     6 as not implemented, and 16 as not demonstrated, resolves all 44 gaps to
     live TODO titles, and checks source-faithful FlashAttention and
-    optimization-category wording. The eight bounded inventories therefore
-    cover 378 claims: 21 locally implemented, 122 partial, 74 not implemented,
-    and 161
+    optimization-category wording. The committed
+    `papers/alphaevolve_ablation_claim_inventory_boundary.json` adds 51
+    Section 4 and Figure 8 claims. It classifies 2 as locally implemented, 36
+    as partial, 6 as not implemented, and 7 as not demonstrated, resolves all
+    49 gaps to live TODO titles, and checks the source's six-series matrix and
+    three-series kissing-number panel shape. The nine bounded inventories
+    therefore cover 429 claims: 23 locally implemented, 158 partial, 80 not
+    implemented, and 168
     not demonstrated. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
@@ -105,13 +110,14 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 378 bounded system, context,
+  - Current gap: the named source structure and 429 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
-    hardware-circuit-design/compiler-generated-code claims are now machine-readable and
+    hardware-circuit-design, compiler-generated-code, and Section 4/Figure 8
+    ablation claims are now machine-readable and
     PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Sections 4-5,
-    remaining exhibits, Table 3, appendices, and the other paper
+    equation, footnote, citation, or claim level across Section 5, remaining
+    exhibits, Table 3, appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
@@ -5605,6 +5611,26 @@ sidecars, tests, and active TODOs.
     so disabling meta-prompt evolution is not conflated with an unspecified
     default prompt.
 
+- [ ] Execute the source-faithful AlphaEvolve Section 4 ablation suite.
+  - Spec evidence: AlphaEvolve Section 4 and Figure 8 compare six settings on
+    matrix tensor decomposition (`Full method` plus five ablations), but only
+    three settings on kissing-number sphere packing (`Full method`, `No context
+    in the prompt`, and `No evolution`). Curves advance through equal compute-
+    budget fractions, aggregate over considered targets, and show intra-target
+    standard deviation from three independently seeded runs.
+  - Current evidence: `alphaevolve_ablations.json`, `ablation_results.py`, and
+    `ablation_exhibits.py` now preserve that asymmetric 6-series/3-series
+    source shape and reject matrix-only variants on kissing targets. The
+    registry remains `definition_only`; no local runner binds every component
+    assertion to executable runtime policy or emits a source-linked report.
+  - Required result: run the full method and all five matrix ablations plus the
+    three paper-shown kissing settings under equal target-local budget units and
+    limits, three independent seeds, executable component-isolation checks,
+    raw prompt/run lineage, per-target curves, cross-target aggregation, and
+    rendered Figure 8 artifacts. Do not claim the paper's significant-
+    improvement conclusion unless the local measurements independently support
+    it.
+
 - [ ] Bind the `No full-file evolution` ablation to loss-function-only
       tensor-decomposition controls.
   - Spec evidence: AlphaEvolve Figure 8 defines `No full-file evolution` in the
@@ -5639,7 +5665,8 @@ sidecars, tests, and active TODOs.
     intra-target standard deviation over three independent runs initialized
     with different random seeds.
   - Current evidence: `libreevolve.alphaevolve_ablation_report.v1` validates
-    declared targets, six variant ids, three seeds, required budget fractions,
+    declared targets, the six matrix-panel variants and three kissing-panel
+    variants shown by the paper, three seeds, required budget fractions,
     finite scores, consumed-budget consistency, component assertions, hashed
     curve artifacts, Figure 8 target-family coverage for
     `matrix_tensor_decomposition` and `kissing_number_sphere_packing`,

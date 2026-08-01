@@ -127,9 +127,17 @@ Important limits:
   preserves "most commonly" FlashAttention wording and treats memory-access
   and scheduling decisions as potential optimization categories rather than
   attributed descriptions of every reported edit.
-- Together the eight bounded inventories cover 378 claims: 21 locally
-  implemented, 122 partial, 74 not implemented, and 161 not demonstrated,
-  leaving 357 gaps. They still exclude Sections 4-5, Figures 8-14, Table 3,
+- `papers/alphaevolve_ablation_claim_inventory_boundary.json` audits 51 claims
+  from Section 4 and Figure 8, including experiment targets, component
+  definitions, equal-budget curves, target aggregation, seed and uncertainty
+  semantics, exact panel membership, and the reported component-contribution
+  conclusion. Two are locally implemented, 36 are partial, 6 are not
+  implemented, and 7 are not demonstrated; all 49 gaps have live TODO
+  ownership. It also corrects the report/exhibit contract to six matrix-panel
+  series but only three kissing-number-panel series.
+- Together the nine bounded inventories cover 429 claims: 23 locally
+  implemented, 158 partial, 80 not implemented, and 168 not demonstrated,
+  leaving 406 gaps. They still exclude Section 5, Figures 9-14, Table 3,
   detailed appendix claims, source-detail exhaustiveness, and independent
   result reproduction.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

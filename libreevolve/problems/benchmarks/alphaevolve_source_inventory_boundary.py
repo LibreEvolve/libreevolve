@@ -40,6 +40,21 @@ _AUDIT_TODOS = (
     },
 )
 
+_RELATED_WORK_TODOS = (
+    {
+        "path": "docs/todo/code.md",
+        "required_phrase": (
+            "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence."
+        ),
+    },
+    {
+        "path": "docs/todo/papers.md",
+        "required_phrase": (
+            "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence."
+        ),
+    },
+)
+
 _DISPOSITIONS: dict[str, dict[str, Any]] = {
     "background": {
         "audit_surface": "paper_context",
@@ -179,12 +194,17 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
         "todos": _AUDIT_TODOS,
     },
     "related_work": {
-        "audit_surface": "related_work",
-        "local_status": "background_only",
-        "roadmap_section_id": "documentation_truthfulness",
+        "audit_surface": "related_work_context_and_positioning",
+        "local_status": (
+            "mixed_implemented_partial_missing_undemonstrated_and_background_context"
+        ),
+        "roadmap_section_id": "related_work_positioning",
         "roadmap_phase": "near_term",
-        "sidecars": ("papers/related_work_taxonomy_boundary.json",),
-        "todos": (),
+        "sidecars": (
+            "papers/related_work_taxonomy_boundary.json",
+            "papers/alphaevolve_related_work_claim_inventory_boundary.json",
+        ),
+        "todos": _RELATED_WORK_TODOS,
     },
     "discussion": {
         "audit_surface": "capability_self_improvement_and_limitations",

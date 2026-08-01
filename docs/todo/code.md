@@ -89,10 +89,13 @@ sidecars, tests, and active TODOs.
     Section 4 and Figure 8 claims. It classifies 2 as locally implemented, 36
     as partial, 6 as not implemented, and 7 as not demonstrated, resolves all
     49 gaps to live TODO titles, and checks the source's six-series matrix and
-    three-series kissing-number panel shape. The nine bounded inventories
-    therefore cover 429 claims: 23 locally implemented, 158 partial, 80 not
-    implemented, and 168
-    not demonstrated. This is not
+    three-series kissing-number panel shape. The committed
+    `papers/alphaevolve_related_work_claim_inventory_boundary.json` adds 85
+    Section 5 claims: 6 locally implemented, 9 partial, 4 not implemented, 7
+    not demonstrated, and 59 source-context-only, with live ownership for all
+    20 implementation gaps. The ten bounded inventories therefore cover 514
+    claims: 29 locally implemented, 167 partial, 84 not implemented, 175 not
+    demonstrated, and 59 source-context-only. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
@@ -110,14 +113,14 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 429 bounded system, context,
+  - Current gap: the named source structure and 514 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
-    hardware-circuit-design, compiler-generated-code, and Section 4/Figure 8
-    ablation claims are now machine-readable and
+    hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
+    ablation, and Section 5 Related Work claims are now machine-readable and
     PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Section 5, remaining
-    exhibits, Table 3, appendices, and the other paper
+    equation, footnote, citation, or claim level across remaining exhibits,
+    Table 3, detailed appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
     detector flags source modules or paper claims that lack mapped audit
@@ -3133,12 +3136,18 @@ sidecars, tests, and active TODOs.
     method families, candidate-representation modes, feedback/evidence modes,
     task stages, comparison axes, source locations, complementary-mechanism
     status, proof/witness status, local implementation status, and
-    README/ROADMAP/paper-index claim gates.
-  - Required result: extend this into exhaustive reference-level coverage,
-    independent positioning review, benchmark reproduction evidence, and
-    stronger README/ROADMAP/paper-index semantics before using the taxonomy as
-    release-ready AlphaEvolve Related Work positioning or implementation-parity
-    evidence.
+    README/ROADMAP/paper-index claim gates. The companion
+    `papers/alphaevolve_related_work_claim_inventory_boundary.json` now
+    records 85 exact-page claims: 6 locally implemented, 9 partial, 4 not
+    implemented, 7 not demonstrated, and 59 source-context-only. All 20
+    implementation gaps resolve to active code or papers TODOs.
+  - Required result: add evidence for LLM-constructed mutation policies,
+    codebase and language scale, first-class multi-objective search, frontier
+    models and richer context, continuous reinforcement-learning fine-tuning,
+    concept learning, and an AI-Co-Scientist/AlphaEvolve hybrid; measure
+    hallucination risk and long-horizon behavior; independently reproduce the
+    claimed FunSearch distinction and harder Section 3 results; then complete
+    reference-level review and release-facing positioning validation.
 
 - [ ] Extend explanatory-preamble support beyond bounded leading capture.
   - Spec evidence: AlphaEvolve Figure 3(c) shows an LLM response that starts

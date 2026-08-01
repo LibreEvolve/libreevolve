@@ -37,6 +37,15 @@ def test_related_work_taxonomy_boundary_accepts_bounded_taxonomy_boundary():
         "bounded Section 5 Related Work taxonomy records"
         in boundary["claim_boundary"]
     )
+    records = {record["source_id"]: record for record in boundary["taxonomy_records"]}
+    assert records["alphaevolve"]["source_location"].endswith("PDF pages 18-20")
+    assert records["ai_coscientist"]["source_location"].endswith("PDF page 19")
+    assert records["continuous_llm_finetuning"]["source_location"].endswith(
+        "PDF page 19"
+    )
+    assert records["llm_directed_concept_learning"]["source_location"].endswith(
+        "PDF page 19"
+    )
 
 
 def test_related_work_taxonomy_boundary_rejects_positioning_overclaim():

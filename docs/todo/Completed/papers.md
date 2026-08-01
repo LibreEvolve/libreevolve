@@ -4,6 +4,15 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
 
 ## Papers Todo: Reference and Specification Gaps
 
+- [x] Inventory AlphaEvolve Section 5 Related Work claims.
+  - Paper evidence: source pages 18-20 cover evolutionary methods, FunSearch,
+    adjacent LLM-evolution work, AI Co-Scientist, superoptimization,
+    AI-for-science, and mathematical witness/proof positioning.
+  - Status: the committed inventory records 85 PDF-anchored claims, including
+    59 source-context-only rows and 26 implementation-relevant rows.
+  - Remaining gap: 20 capability or result claims remain active TODO work;
+    independent positioning review and comparison reproduction remain open.
+
 - [x] Inventory AlphaEvolve Section 4 and Figure 8 claims.
   - Paper evidence: source pages 17-18 define two ablation task families, five
     component ablations, equal-budget and three-seed curve semantics, an

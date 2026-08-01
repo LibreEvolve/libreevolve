@@ -954,9 +954,14 @@ AlphaEvolve reproduction.
   36 partial, 6 not implemented, and 7 not demonstrated, with live TODO
   ownership for all 49 gaps. It preserves the source's six matrix series and
   three kissing-number series rather than requiring all six variants on both
-  panels. The nine bounded inventories now disposition 429 claims in total: 23
-  locally implemented, 158 partial, 80 not implemented, and 168
-  not demonstrated,
+  panels. The additional
+  `papers/alphaevolve_related_work_claim_inventory_boundary.json` dispositions
+  85 Section 5 claims: 6 are locally implemented, 9 partial, 4 not
+  implemented, 7 not demonstrated, and 59 source-context-only. All 20
+  implementation gaps have live TODO ownership, while cited-work context is
+  excluded from implementation debt. The ten bounded inventories now
+  disposition 514 claims in total: 29 locally implemented, 167 partial, 84
+  not implemented, 175 not demonstrated, and 59 source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
   artifact mention source offsets, and candidate evidence-link lists plus
@@ -968,7 +973,7 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus bounded 429-claim coverage,
+  This is complete named-structure coverage plus bounded 514-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
@@ -991,9 +996,13 @@ AlphaEvolve reproduction.
   The committed `papers/related_work_taxonomy_boundary.json` sidecar now
   records Section 5 method-family, representation, evidence-mode, task-stage,
   comparison-axis, proof/witness, complementary-mechanism, and local-status
-  taxonomy rows. It still does not prove exhaustive reference-level coverage,
-  independent positioning review, local implementation parity, benchmark
-  reproduction, or release-ready AlphaEvolve positioning claims.
+  taxonomy rows. The companion
+  `papers/alphaevolve_related_work_claim_inventory_boundary.json` records 85
+  exact-page claims and separates 59 source-context-only literature statements
+  from 26 implementation-relevant claims. It still does not prove exhaustive
+  reference-level coverage, independent positioning review, local
+  implementation parity, benchmark reproduction, or release-ready
+  AlphaEvolve positioning claims.
 - Persisted validator-boundary consistency now has a CLI artifact gate:
   `validate_run_artifact_validator_boundary_consistency()` loads manifest-backed
   run directories, validates `policies.validator_execution`, scans

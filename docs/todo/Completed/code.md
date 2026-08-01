@@ -4,6 +4,15 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
 
 ## Code Todo: AlphaEvolve Specification Gaps
 
+- [x] Add the bounded Section 5 code claim inventory.
+  - Status: the new claim boundary records 85 exact-page claims with 6 locally
+    implemented, 9 partial, 4 not implemented, 7 not demonstrated, and 59
+    source-context-only. All 20 implementation gaps resolve to live TODOs.
+  - Boundary: historical descriptions of cited systems remain source context,
+    not implied LibreEvolve implementation requirements.
+  - Verification: focused inventory, taxonomy, aggregate ROADMAP, and manifest
+    tests reject source drift, unowned gaps, and positioning/parity overclaims.
+
 - [x] Correct Figure 8 panel-specific variant coverage.
   - Spec evidence: the AlphaEvolve Figure 8 matrix panel contains the full
     method and five ablations, while the kissing-number panel contains only the

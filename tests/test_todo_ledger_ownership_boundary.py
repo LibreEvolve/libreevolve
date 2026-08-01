@@ -20,8 +20,8 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
     assert boundary["claim_ready"] is False
     assert boundary["owner_record_count"] == 4
     assert boundary["raw_todo_ledger_active_count"] == 522
-    assert boundary["raw_todo_ledger_completed_count"] == 4787
-    assert boundary["raw_todo_ledger_total_count"] == 5309
+    assert boundary["raw_todo_ledger_completed_count"] == 4791
+    assert boundary["raw_todo_ledger_total_count"] == 5313
     assert boundary["active_ledger_completed_marker_count"] == 0
     assert boundary["completed_ledger_active_marker_count"] == 0
     assert (
@@ -39,14 +39,14 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
         "duplicate_group_count": 123,
         "duplicate_record_count": 246,
         "inflation_count": 123,
-        "raw_total_count": 5309,
-        "collapsed_total_estimate": 5186,
-        "inflation_percent_of_raw_total": 2.317,
+        "raw_total_count": 5313,
+        "collapsed_total_estimate": 5190,
+        "inflation_percent_of_raw_total": 2.315,
         "canonical_gap_denominator_ready": False,
     }
     assert boundary["exact_duplicate_record_count"] == 246
     assert boundary["exact_duplicate_inflation_count"] == 123
-    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5186
+    assert boundary["exact_duplicate_collapsed_total_estimate"] == 5190
     assert boundary["exact_duplicate_owner_status_report"] == {
         "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
         "duplicate_group_count": 123,
@@ -95,7 +95,7 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
                     "owner_id": "roadmap",
                     "ledger_kind": "completed",
                     "path": "docs/todo/Completed/roadmap.md",
-                    "line_start": 15471,
+                    "line_start": 15479,
                     "status": "completed",
                     "title": (
                         "Add bounded ROADMAP evaluation-cascade readiness matrix."
@@ -108,7 +108,7 @@ def test_todo_ledger_ownership_boundary_accepts_current_ledger_inventory():
                     "owner_id": "roadmap",
                     "ledger_kind": "completed",
                     "path": "docs/todo/Completed/roadmap.md",
-                    "line_start": 15789,
+                    "line_start": 15797,
                     "status": "completed",
                     "title": (
                         "Add bounded ROADMAP evaluation-cascade readiness matrix."

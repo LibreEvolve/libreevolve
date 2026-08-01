@@ -147,7 +147,10 @@ strong after comparing the current code, `papers/`, and AlphaEvolve sources.
     implementation status, and benchmark coverage decisions, while
     `papers/related_work_taxonomy_boundary.json` now records bounded
     AlphaEvolve Section 5 Related Work taxonomy rows and scoped README/ROADMAP
-    claim gates. `papers/readme_paper_cache_topic_boundary.json` now records
+    claim gates, while
+    `papers/alphaevolve_related_work_claim_inventory_boundary.json` records 85
+    exact-page Section 5 claims and separates 59 source-context-only rows from
+    26 implementation-relevant rows. `papers/readme_paper_cache_topic_boundary.json` now records
     the README paper-cache topic sentence, download-manifest row count, papers-
     index implementation-status row count, papers-index role inventory, and
     bounded heuristic topic-family signals for LLM-guided evolution, program

@@ -11,10 +11,10 @@ from libreevolve.problems.benchmarks.roadmap_source_span_disposition_boundary im
 
 
 ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_coverage_boundary.v8"
+    "libreevolve.roadmap_source_span_coverage_boundary.v9"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "named_structure_plus_429_bounded_claims_without_whole_paper_claim_walk"
+    "named_structure_plus_514_bounded_claims_without_whole_paper_claim_walk"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -31,7 +31,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "429_bounded_claims_remaining_section_5_and_remaining_exhibits_appendices_not_recorded",
+    "claim_level_requirement_inventory": "514_bounded_claims_remaining_figures_9_14_table_3_and_detailed_appendices_not_recorded",
     "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -46,8 +46,8 @@ COVERAGE_SURFACE_SPECS = (
     {
         "surface_id": "main_text_section_walk",
         "source_surface": "AlphaEvolve main-text sections and requirement claims",
-        "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, 41 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, 59 Section 3.3.2/Figure 7 kernel-engineering claims, 35 Section 3.3.3 hardware-circuit-design claims, 44 Section 3.3.4 compiler-generated-code claims, and 51 Section 4/Figure 8 ablation claims with implementation and TODO disposition",
-        "missing_readiness": "claim-level extraction for Section 5, remaining exhibits, appendices, and source details with semantic implementation and TODO disposition",
+        "current_scope": "PDF-verified named main-text sections plus 50 Table 1/Section 2 system requirements, 41 Abstract/Introduction/Discussion/collaborator claims, 41 Section 3.1/Table 2/Figure 4 matrix-result claims, 63 Section 3.2/Figure 5 constructive-math claims, 45 Section 3.3 opening/Section 3.3.1/Figure 6 scheduling claims, 59 Section 3.3.2/Figure 7 kernel-engineering claims, 35 Section 3.3.3 hardware-circuit-design claims, 44 Section 3.3.4 compiler-generated-code claims, 51 Section 4/Figure 8 ablation claims, and 85 Section 5 Related Work claims with implementation, context-only, and TODO disposition",
+        "missing_readiness": "claim-level extraction for Figures 9-14, Table 3, detailed appendices, and remaining source details with semantic implementation and TODO disposition",
         "sidecars": (
             "papers/roadmap_source_span_disposition_boundary.json",
             "papers/implementation_evidence_map_boundary.json",
@@ -60,6 +60,7 @@ COVERAGE_SURFACE_SPECS = (
             "papers/alphaevolve_hardware_claim_inventory_boundary.json",
             "papers/alphaevolve_compiler_claim_inventory_boundary.json",
             "papers/alphaevolve_ablation_claim_inventory_boundary.json",
+            "papers/alphaevolve_related_work_claim_inventory_boundary.json",
         ),
         "active_todos": (
             {
@@ -68,7 +69,7 @@ COVERAGE_SURFACE_SPECS = (
             },
         ),
         "validation_gate": "section-level source-span disposition matrix",
-        "readiness_status": "429_bounded_claims_complete_remaining_section_5_and_exhibits_appendices_unmapped",
+        "readiness_status": "514_bounded_claims_complete_remaining_figures_table_and_appendices_unmapped",
     },
     {
         "surface_id": "figure_exhibit_matrix",
@@ -317,6 +318,10 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
             "compiler_claim_scope": "section_3_3_4",
             "ablation_claim_count": 51,
             "ablation_claim_scope": "section_4_and_figure_8",
+            "related_work_claim_count": 85,
+            "related_work_claim_scope": "section_5_related_work",
+            "related_work_source_context_only_count": 59,
+            "related_work_implementation_relevant_count": 26,
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -324,11 +329,13 @@ def roadmap_source_span_coverage_boundary_record(root: str | Path = ".") -> dict
             "This boundary records a ROADMAP-level AlphaEvolve source-span "
             "coverage matrix for all 55 PDF-verified named main-text sections, "
             "figures, tables, Appendix A/B spans, and named application sections, "
-            "plus 429 bounded claim-level records across Table 1, Section 2, "
+            "plus 514 bounded claim-level records across Table 1, Section 2, "
             "the Abstract, Introduction, Discussion, collaborator context, "
             "Section 3.1, Table 2, Figure 4, footnote 3, Section 3.2, Figure 5, "
             "the Section 3.3 opening, Section 3.3.1, Figure 6, Section 3.3.2, "
-            "Figure 7, Section 3.3.3, Section 3.3.4, Section 4, and Figure 8, "
+            "Figure 7, Section 3.3.3, Section 3.3.4, Section 4, Figure 8, and "
+            "Section 5 Related Work. The Section 5 inventory separates 59 "
+            "source-context-only literature claims from 26 implementation-relevant claims. It also records "
             "paper-status rows, and TODO/non-goal/phase proof. It does not "
             "claim whole-paper claim-level requirement exhaustiveness, a complete application-result claim matrix, "
             "status-row to ROADMAP disposition map, missing/partial TODO "

@@ -203,9 +203,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     exact-page Section 4 and Figure 8 dispositions: 2 locally implemented, 36
     partial, 6 not implemented, and 7 not demonstrated, with live TODO
     ownership for all 49 gaps and source-faithful 6-series/3-series panel
-    coverage. The bounded claim-level ROADMAP surface therefore covers 429
-    claims: 23 locally implemented, 158 partial, 80 not implemented, and 168
-    not demonstrated.
+    coverage. The
+    `papers/alphaevolve_related_work_claim_inventory_boundary.json` adds 85
+    exact-page Section 5 claims: 6 locally implemented, 9 partial, 4 not
+    implemented, 7 not demonstrated, and 59 source-context-only, with active
+    ownership for all 20 implementation gaps. The bounded claim-level ROADMAP
+    surface therefore covers 514 claims: 29 locally implemented, 167 partial,
+    84 not implemented, 175 not demonstrated, and 59 source-context-only.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -219,16 +223,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     rows, and TODO/non-goal/phase proof.
     `papers/roadmap_source_span_exhaustiveness_boundary.json` now records a
     bounded eight-criterion exhaustiveness gate that credits the named PDF
-    structure walk and all nine bounded claim inventories while preserving
+    structure walk and all ten bounded claim inventories while preserving
     remaining claim-level work for the figure/table/appendix matrix,
-    Section 5 and application-result reproduction/non-goal proof beyond the
-    bounded Section 3.3/Section 4 claim matrices,
+    application-result reproduction/non-goal proof beyond the bounded Section
+    3.3/Section 4/Section 5 claim matrices,
     status-row disposition map, span status classification, missing/partial
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 429 bounded system/context/matrix-result/
-    constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation claims have
+    sections, and phases, and 514 bounded system/context/matrix-result/
+    constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
+    related-work claims have
     claim-level mappings. The matrix is not
     exhaustive across the rest of
     the paper: it

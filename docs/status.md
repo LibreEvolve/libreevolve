@@ -694,11 +694,14 @@ Important limits:
   avoidance, replayable failed-mutation payloads, failure-aware sampling
   policy, or cross-run failure-index migrations; that boundary is tracked by
   `papers/failure_memory_boundary.json`.
-- Section 5 Related Work positioning is not inferred from the bundled paper
-  list. Bounded method-family, representation, feedback/evidence, task-stage,
-  proof/witness, complementary-mechanism, and local-status taxonomy rows are
-  tracked by `papers/related_work_taxonomy_boundary.json`, while exhaustive
-  coverage, independent review, local parity, and benchmark reproduction
+- Section 5 Related Work now has 85 exact-page claim records in
+  `papers/alphaevolve_related_work_claim_inventory_boundary.json`: 6 locally
+  implemented, 9 partial, 4 not implemented, 7 not demonstrated, and 59
+  source-context-only. The 20 implementation gaps have live TODO ownership;
+  cited-work context is retained without treating it as parity debt. The
+  coarser method-family and comparison taxonomy remains in
+  `papers/related_work_taxonomy_boundary.json`. Exhaustive reference coverage,
+  independent positioning review, local parity, and benchmark reproduction
   remain unproven.
 - Candidate execution uses a task-primary bounded text-workspace abstraction,
   with Python autodetection as the default and an optional stage-bound local
@@ -1796,7 +1799,8 @@ Important limits:
   A matrix targets, Appendix B constructive math, application-result claims,
   paper-status row dispositions, and TODO/non-goal/phase proof. It links the
   existing core source-span disposition input, paper-status row counts, sidecar
-  refs, active TODO refs, validation-gate labels, and readiness labels. This
+  refs, active TODO refs, validation-gate labels, readiness labels, and 514
+  bounded claims through Section 5. This
   is not an exhaustive PDF section walk, complete figure/table/appendix
   matrix, complete application-result claim matrix, status-row to ROADMAP
   disposition map, missing/partial TODO proof, non-goal decision map,

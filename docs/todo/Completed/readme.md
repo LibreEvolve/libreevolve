@@ -4,6 +4,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
 
 ## Recovered Completed Items
 
+- [x] Document the bounded Section 5 Related Work claim audit in README.
+  - Status: README now reports the 85-claim inventory, its 6/9/4/7/59 status
+    split, the 20 implementation gaps, and the ten-inventory 514-claim total.
+  - Boundary: source-context-only literature statements are excluded from the
+    capability denominator, and the text retains the independent-review and
+    result-reproduction limits.
+
 - [x] Document the bounded Section 4 and Figure 8 audit in README.
   - Status: README now reports the 51-claim ablation inventory, its 2/36/6/7
     implementation-status split, live ownership for all 49 gaps, and the

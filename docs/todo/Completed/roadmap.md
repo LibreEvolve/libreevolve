@@ -2,6 +2,14 @@
 
 Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed backlog items from that source; leave open items in `docs/todo/roadmap.md`.
 
+- [x] Advance bounded AlphaEvolve ROADMAP coverage through Section 5.
+  - Status: ROADMAP disposition, coverage, and exhaustiveness boundaries now
+    include 85 Section 5 claims and report 514 bounded claims in total.
+  - Accounting: 59 cited-work descriptions are source-context-only; the other
+    26 claims include 6 implemented claims and 20 active implementation gaps.
+  - Remaining boundary: Figures 9-14, Table 3, detailed appendices, semantic
+    exhaustiveness, result reproduction, and owner/CI proof remain open.
+
 - [x] Advance bounded AlphaEvolve ROADMAP coverage through Section 4.
   - Status: ROADMAP disposition, coverage, and exhaustiveness boundaries now
     include 51 Section 4/Figure 8 claims and report 429 bounded claims in total.

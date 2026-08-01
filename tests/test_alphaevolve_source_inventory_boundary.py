@@ -36,6 +36,16 @@ def test_alphaevolve_source_inventory_accepts_pdf_verified_named_structure():
         record for record in boundary["span_records"] if record["span_id"] == "figure_9"
     )
     assert [anchor["page"] for anchor in figure_9["anchor_checks"]] == [35, 36, 37]
+    section_5 = next(
+        record for record in boundary["span_records"] if record["span_id"] == "section_5"
+    )
+    assert section_5["local_status"] == (
+        "mixed_implemented_partial_missing_undemonstrated_and_background_context"
+    )
+    assert "papers/alphaevolve_related_work_claim_inventory_boundary.json" in {
+        ref["path"] for ref in section_5["sidecar_refs"]
+    }
+    assert len(section_5["active_todo_refs"]) == 2
     assert "requirement-level exhaustiveness" in boundary["claim_boundary"]
 
 

@@ -36,9 +36,9 @@
     "table": 3
   },
   "local_status_counts": {
-    "background_only": 1,
     "missing_result_reproduction": 37,
     "mixed_implemented_partial_missing_and_undemonstrated": 3,
+    "mixed_implemented_partial_missing_undemonstrated_and_background_context": 1,
     "partially_implemented": 11,
     "source_provenance_only": 3
   },
@@ -938,17 +938,34 @@
         }
       ],
       "all_anchors_present": true,
-      "audit_surface": "related_work",
-      "local_status": "background_only",
-      "roadmap_section_id": "documentation_truthfulness",
+      "audit_surface": "related_work_context_and_positioning",
+      "local_status": "mixed_implemented_partial_missing_undemonstrated_and_background_context",
+      "roadmap_section_id": "related_work_positioning",
       "roadmap_phase": "near_term",
       "sidecar_refs": [
         {
           "path": "papers/related_work_taxonomy_boundary.json",
           "exists": true
+        },
+        {
+          "path": "papers/alphaevolve_related_work_claim_inventory_boundary.json",
+          "exists": true
         }
       ],
-      "active_todo_refs": []
+      "active_todo_refs": [
+        {
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
     },
     {
       "span_id": "section_6",

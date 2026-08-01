@@ -62,7 +62,7 @@ def _related_work_taxonomy_records() -> list[dict[str, str]]:
     return [
         {
             "source_id": "alphaevolve",
-            "source_location": "AlphaEvolve Section 5 Related Work, PDF pages 19-20",
+            "source_location": "AlphaEvolve Section 5 Related Work, PDF pages 18-20",
             "method_family": "execution_feedback_code_superoptimization",
             "candidate_representation": "executable_code_programs",
             "feedback_or_evidence_mode": "code_execution_and_programmatic_evaluation",
@@ -157,7 +157,7 @@ def _related_work_taxonomy_records() -> list[dict[str, str]]:
         },
         {
             "source_id": "ai_coscientist",
-            "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+            "source_location": "AlphaEvolve Section 5 Related Work, PDF page 19",
             "method_family": "ai_for_science_hypothesis_generation",
             "candidate_representation": "natural_language_hypotheses",
             "feedback_or_evidence_mode": "natural_language_or_literature_evidence",
@@ -205,7 +205,7 @@ def _related_work_taxonomy_records() -> list[dict[str, str]]:
         },
         {
             "source_id": "continuous_llm_finetuning",
-            "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+            "source_location": "AlphaEvolve Section 5 Related Work, PDF page 19",
             "method_family": "llm_finetuning",
             "candidate_representation": "model_policy_updates",
             "feedback_or_evidence_mode": "reinforcement_learning_signal",
@@ -221,7 +221,7 @@ def _related_work_taxonomy_records() -> list[dict[str, str]]:
         },
         {
             "source_id": "llm_directed_concept_learning",
-            "source_location": "AlphaEvolve Section 5 Related Work, PDF page 20",
+            "source_location": "AlphaEvolve Section 5 Related Work, PDF page 19",
             "method_family": "concept_learning",
             "candidate_representation": "concepts_over_high_performing_programs",
             "feedback_or_evidence_mode": "program_population_analysis",

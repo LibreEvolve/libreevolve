@@ -52,14 +52,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact-page Section 4 and Figure 8 claims: 2 locally implemented, 36
     partial, 6 not implemented, and 7 not demonstrated, with live ownership
     for all 49 gaps and a checked correction to six matrix series and three
-    kissing-number series. Combined coverage is 429 claims: 23 implemented,
-    158 partial, 80 not implemented, and 168 not
-    demonstrated. The
+    kissing-number series. The
+    `papers/alphaevolve_related_work_claim_inventory_boundary.json` adds 85
+    exact-page Section 5 claims: 6 implemented, 9 partial, 4 not implemented,
+    7 not demonstrated, and 59 source-context-only, with live ownership for
+    all 20 implementation gaps. Combined coverage is 514 claims: 29
+    implemented, 167 partial, 84 not implemented, 175 not demonstrated, and
+    59 source-context-only. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 429-claim inventory deliberately excludes
-    Section 5 claims, Figures 9-14, Table 3, detailed appendices,
+  - Current gap: the combined 514-claim inventory deliberately excludes
+    claim-level coverage for Figures 9-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.
@@ -2407,12 +2411,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     method family, task stage, candidate representation, evaluator/evidence
     mode, proof-versus-witness status, comparison claim,
     complementary-mechanism status, local status, source page/section, and
-    README/ROADMAP/paper-index claim gates.
-  - Required result: extend this into exhaustive reference-level coverage,
-    independent positioning review, local implementation-parity evidence,
-    benchmark reproduction evidence, and stronger README/ROADMAP claim
-    semantics before treating the papers index as release-ready AlphaEvolve
-    positioning evidence.
+    README/ROADMAP/paper-index claim gates. The companion
+    `papers/alphaevolve_related_work_claim_inventory_boundary.json` now
+    preserves 85 exact-page claims with a 6 implemented, 9 partial, 4 not
+    implemented, 7 not demonstrated, and 59 source-context-only split. All 20
+    implementation gaps have active TODO ownership.
+  - Required result: independently review the positioning, reproduce the
+    direct FunSearch and harder-problem comparisons, add evidence for scale,
+    language breadth, multi-objective behavior, frontier-model/context use,
+    continuous RL fine-tuning, concept learning, AI-Co-Scientist integration,
+    hallucination reduction, and long-horizon search, then strengthen
+    README/ROADMAP claim semantics before release-facing use.
 
 - [ ] Track statistical hypothesis-testing semantics for evaluation cascades.
   - Paper: `2506.13131__AlphaEvolve.pdf`, Sections 2.4 and 3.1.

@@ -1,0 +1,2227 @@
+{
+  "schema": "libreevolve.alphaevolve_related_work_claim_inventory_boundary.v1",
+  "source_paper_id": "2506.13131",
+  "boundary_status": "section_5_claim_inventory_complete_without_independent_positioning_review_or_comparison_result_reproduction",
+  "related_work_claim_inventory_ready": true,
+  "alphaevolve_related_work_positioning_claim_ready": false,
+  "alphaevolve_parity_claim_ready": false,
+  "source_artifact": {
+    "path": "papers/2506.13131__AlphaEvolve.pdf",
+    "exists": true,
+    "expected_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "actual_sha256": "f092c8cbd65da89951ee6496374da9a54963f9035758c25ac6e4625f506df9ad",
+    "expected_page_count": 44,
+    "page_count": 44,
+    "identity_ok": true,
+    "error": null
+  },
+  "source_inventory_schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+  "source_inventory_span_count": 55,
+  "source_span_ids": [
+    "section_5"
+  ],
+  "inventory_scope": {
+    "included": [
+      "all prose claims in Section 5 Related Work on PDF pages 18 through 20",
+      "evolutionary-method, FunSearch, LLM-evolution, AI-Co-Scientist, superoptimization, AI-for-science, and mathematical-discovery comparisons",
+      "implementation relevance separated from source-context-only literature claims",
+      "exact PDF-page anchors and active TODO ownership for every implementation gap"
+    ],
+    "excluded": [
+      "reference-list bibliographic metadata and independent verification of cited-paper claims",
+      "independent positioning-review signoff",
+      "reproduction of AlphaEvolve or cited-system comparison results",
+      "Figures 9 through 14, Table 3, and detailed appendix claims",
+      "AlphaEvolve production-scale or system-parity proof"
+    ]
+  },
+  "claim_count": 85,
+  "expected_claim_count": 85,
+  "category_counts": {
+    "ai_coscientist_comparison": 10,
+    "ai_for_science": 11,
+    "evolutionary_methods": 10,
+    "funsearch_comparison": 18,
+    "llm_guided_evolution": 13,
+    "mathematical_discovery": 4,
+    "superoptimization": 19
+  },
+  "implementation_status_counts": {
+    "implemented_local": 6,
+    "not_demonstrated": 7,
+    "not_implemented": 4,
+    "partially_implemented": 9,
+    "source_context_only": 59
+  },
+  "implementation_relevant_claim_count": 26,
+  "source_context_claim_count": 59,
+  "implemented_local_count": 6,
+  "implementation_gap_count": 20,
+  "todo_owned_gap_count": 20,
+  "missing_anchor_count": 0,
+  "missing_reference_count": 0,
+  "claim_records": [
+    {
+      "claim_id": "evolutionary_programming_lineage",
+      "source_span_id": "section_5",
+      "source_page": 18,
+      "source_anchor": "AlphaEvolve extends a long tradition of research on evolutionary or genetic programming",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve is positioned as extending evolutionary or genetic programming.",
+      "category": "evolutionary_methods",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "mutation_crossover_pool_pattern",
+      "source_span_id": "section_5",
+      "source_page": 18,
+      "source_anchor": "one repeatedly uses a set of mutation and crossover operators to evolve a pool of programs",
+      "source_anchor_present": true,
+      "claim": "Classical evolutionary programming repeatedly applies mutation and crossover operators to a program pool.",
+      "category": "evolutionary_methods",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "classical_symbolic_regression_success",
+      "source_span_id": "section_5",
+      "source_page": 18,
+      "source_anchor": "classical evolutionary techniques have succeeded in symbolic regression applications",
+      "source_anchor_present": true,
+      "claim": "Classical evolutionary techniques have succeeded in symbolic regression.",
+      "category": "evolutionary_methods",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "classical_scientific_algorithmic_discovery_success",
+      "source_span_id": "section_5",
+      "source_page": 18,
+      "source_anchor": "automated scientific",
+      "source_anchor_present": true,
+      "claim": "Classical evolutionary techniques have been used for automated scientific and algorithmic discovery.",
+      "category": "evolutionary_methods",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "classical_scheduling_success",
+      "source_span_id": "section_5",
+      "source_page": 18,
+      "source_anchor": "and scheduling",
+      "source_anchor_present": true,
+      "claim": "Classical evolutionary techniques have been used for scheduling problems.",
+      "category": "evolutionary_methods",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "handwritten_operators_hard_to_design",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "handwritten evolution operators, which can be hard to design",
+      "source_anchor_present": true,
+      "claim": "Handwritten evolution operators can be hard to design.",
+      "category": "evolutionary_methods",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "handwritten_operators_miss_domain_properties",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "may fail to capture important properties of the domain",
+      "source_anchor_present": true,
+      "claim": "Handwritten evolution operators may miss important domain properties.",
+      "category": "evolutionary_methods",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_constructed_mutation_operators",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "uses LLMs to automate the construction of these operators",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve uses LLMs to automate mutation-operator construction.",
+      "category": "evolutionary_methods",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/mutation_operator_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_mutation_operator_boundary.v1",
+          "boundary_status": "fixed_edit_payload_grammar_without_operator_family_evidence",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "operator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend mutation-operator policy beyond the current fixed-edit boundary",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "llm_world_knowledge_mutation",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "leverages the LLM's world knowledge to mutate programs",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve uses LLM world knowledge to construct program mutations.",
+      "category": "evolutionary_methods",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/mutation_operator_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_mutation_operator_boundary.v1",
+          "boundary_status": "fixed_edit_payload_grammar_without_operator_family_evidence",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "operator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend mutation-operator policy beyond the current fixed-edit boundary",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "no_predefined_allowed_mutation_set",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "without the need to pre-define a set of allowed mutation operations",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve does not require a predefined set of allowed mutation operations.",
+      "category": "evolutionary_methods",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/mutation_operator_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_mutation_operator_boundary.v1",
+          "boundary_status": "fixed_edit_payload_grammar_without_operator_family_evidence",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "operator",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend mutation-operator policy beyond the current fixed-edit boundary",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "recent_llm_evolution_predecessors",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "preceded by a body of recent efforts that combine LLMs and evolution",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve follows recent work combining LLMs and evolution.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "extends_funsearch",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "it extends the FunSearch system",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve directly extends FunSearch.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_mathematical_discovery",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "as an approach to mathematical discovery",
+      "source_anchor_present": true,
+      "claim": "FunSearch was introduced as an approach to mathematical discovery.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_bayesian_acquisition_functions",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "learning acquisition functions for Bayesian optimization",
+      "source_anchor_present": true,
+      "claim": "FunSearch was used to learn Bayesian-optimization acquisition functions.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_cognitive_models",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "discovering cognitive models",
+      "source_anchor_present": true,
+      "claim": "FunSearch was used to discover cognitive models.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_graph_distances",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "computing distances between graphs",
+      "source_anchor_present": true,
+      "claim": "FunSearch was used to compute distances between graphs.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_competitive_programming",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "combinatorial competitive programming",
+      "source_anchor_present": true,
+      "claim": "FunSearch was used for combinatorial competitive programming.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "three_funsearch_extensions",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "AlphaEvolve goes beyond FunSearch and its recent reimplementation",
+      "source_anchor_present": true,
+      "claim": "The paper identifies three direct extensions beyond FunSearch and its reimplementation.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_single_python_function",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "FunSearch only allowed the evolution of a single Python function",
+      "source_anchor_present": true,
+      "claim": "FunSearch was limited to evolving one Python function.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_entire_codebases",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "AlphaEvolve allows evolution over entire codebases",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve evolves entire codebases.",
+      "category": "funsearch_comparison",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/codebase_scale_benchmark_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_codebase_scale_benchmark_boundary.v1",
+          "boundary_status": "runtime_scale_telemetry_only",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "codebase",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add codebase-scale benchmark evidence for multi-component generated",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "alphaevolve_wide_programming_languages",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "written in a wide range of programming languages",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve evolves codebases across a wide range of programming languages.",
+      "category": "funsearch_comparison",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_language_runner_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_language_runner_boundary.v1",
+          "boundary_status": "digest_pinned_oci_candidate_execution_partial",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "codebase",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add codebase-scale benchmark evidence for multi-component generated",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "funsearch_single_objective",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "FunSearch optimized a single objective function",
+      "source_anchor_present": true,
+      "claim": "FunSearch optimized one objective function.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_multiobjective_optimization",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "AlphaEvolve provides the ability to perform multiobjective optimization",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve supports multiobjective optimization.",
+      "category": "funsearch_comparison",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/objective_archive_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.objective_archive_boundary.v1",
+          "boundary_status": "bounded_retained_overlays_not_primary_pareto_archive",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/roadmap_multi_objective_search_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.roadmap_multi_objective_search_boundary.v1",
+          "boundary_status": "bounded_multi_objective_search_matrix_without_primary_archive_readiness",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "multiobjective",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote multi-objective overlays to primary archive optimization.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "funsearch_relatively_small_llms",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "LLMs in FunSearch were relatively small",
+      "source_anchor_present": true,
+      "claim": "FunSearch used relatively small LLMs.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_code_only_llms",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "solely trained on code",
+      "source_anchor_present": true,
+      "claim": "FunSearch used LLMs trained solely on code.",
+      "category": "funsearch_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_frontier_llms",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "AlphaEvolve uses frontier LLMs",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve uses frontier LLMs.",
+      "category": "funsearch_comparison",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "provider_and_model_parity",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/gemini_provider_parity_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_gemini_provider_parity_boundary.v1",
+          "boundary_status": "first_class_adapter_without_live_alphaevolve_model_parity",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "alphaevolve_rich_natural_language_context_feedback",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "rich forms of natural-language context and feedback",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve gives frontier LLMs rich natural-language context and feedback.",
+      "category": "funsearch_comparison",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "prompt_context_system",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/prompt_database_parity_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.prompt_database_parity_boundary.v1",
+          "boundary_status": "local_prompt_arm_history_without_solution_database_equivalent_archive",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/primary_prompt_role_telemetry_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.primary_prompt_role_telemetry_boundary.v1",
+          "boundary_status": "hash_only_prompt_role_policy_join_without_provider_payload_parity",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "funsearch_extensions_enable_harder_problems",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "these extensions allow AlphaEvolve to address important challenging problems that were not amenable to FunSearch",
+      "source_anchor_present": true,
+      "claim": "The three FunSearch extensions are reported to enable important problems that FunSearch could not address.",
+      "category": "funsearch_comparison",
+      "implementation_status": "not_demonstrated",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/benchmark_fixture_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_benchmark_fixture_readiness_boundary.v1",
+          "boundary_status": "smoke_scope_with_deterministic_matrix_calibration_only",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "llm_evolution_robot_policies",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "discover programmatic policies for a set of simulated robots",
+      "source_anchor_present": true,
+      "claim": "Prior LLM-guided evolution discovered programmatic robot policies.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_evolution_code_synthesis",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "for code synthesis",
+      "source_anchor_present": true,
+      "claim": "Prior LLM-guided evolution was applied to code synthesis.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_evolution_symbolic_regression",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "scientific and mathematical tasks, including symbolic regression",
+      "source_anchor_present": true,
+      "claim": "Prior LLM-guided evolution was applied to symbolic regression.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_evolution_combinatorial_heuristics",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "discovering heuristics for combinatorial optimization",
+      "source_anchor_present": true,
+      "claim": "Prior LLM-guided evolution discovered combinatorial-optimization heuristics.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_evolution_molecular_structures",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "synthesizing molecular structures",
+      "source_anchor_present": true,
+      "claim": "Prior LLM-guided evolution synthesized molecular structures.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_evolution_prompt_enhancement",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "enhancing LLM prompts",
+      "source_anchor_present": true,
+      "claim": "LLM-guided evolution has improved AI systems by enhancing prompts.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_evolution_neural_architectures",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "searching over neural architectures",
+      "source_anchor_present": true,
+      "claim": "LLM-guided evolution has improved AI systems through neural-architecture search.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_scale_distinction",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "differs from these approaches in its scale",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve is reported to differ from adjacent LLM-evolution methods in scale.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "not_demonstrated",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/codebase_scale_benchmark_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_codebase_scale_benchmark_boundary.v1",
+          "boundary_status": "runtime_scale_telemetry_only",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "codebase",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add codebase-scale benchmark evidence for multi-component generated",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "alphaevolve_flexibility_distinction",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "flexibility",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve is reported to differ from adjacent LLM-evolution methods in flexibility.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "not_demonstrated",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/related_work_taxonomy_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.related_work_taxonomy_boundary.v1",
+          "boundary_status": "related_work_taxonomy_records_without_positioning_readiness",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "alphaevolve_generality_distinction",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "general applicability to a broad range of domains",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve is reported to differ in general applicability across broad domains.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "not_demonstrated",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/benchmark_fixture_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_benchmark_fixture_readiness_boundary.v1",
+          "boundary_status": "smoke_scope_with_deterministic_matrix_calibration_only",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "continuous_llm_finetuning_rl",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "continuously finetuning the LLM through reinforcement learning",
+      "source_anchor_present": true,
+      "claim": "Continuous LLM fine-tuning through reinforcement learning is identified as a complementary extension.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "not_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/plugins/ttt_rl.py",
+          "exists": true
+        },
+        {
+          "path": "papers/related_work_taxonomy_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.related_work_taxonomy_boundary.v1",
+          "boundary_status": "related_work_taxonomy_records_without_positioning_readiness",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "llm_directed_concept_learning",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "LLM-directed concept learning step that summarizes high-performing programs in the pool into natural language",
+      "source_anchor_present": true,
+      "claim": "LLM-directed concept learning can summarize high-performing programs into natural language.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "not_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/related_work_taxonomy_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.related_work_taxonomy_boundary.v1",
+          "boundary_status": "related_work_taxonomy_records_without_positioning_readiness",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "complementary_ideas_need_scale_study",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "More investigation is required to understand the benefits of these ideas at the scale at which AlphaEvolve operates",
+      "source_anchor_present": true,
+      "claim": "The benefits of fine-tuning and concept learning at AlphaEvolve scale remain an open research question.",
+      "category": "llm_guided_evolution",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "ai_coscientist_evolutionary_use",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "Evolutionary methods have also found use in the recent AI Co-Scientist work",
+      "source_anchor_present": true,
+      "claim": "AI Co-Scientist also uses evolutionary methods.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "ai_coscientist_distinct_agent_tasks",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "distinct agents for tasks like hypothesis discovery, ranking of hypotheses, and literature review",
+      "source_anchor_present": true,
+      "claim": "AI Co-Scientist uses distinct agents for hypothesis discovery, hypothesis ranking, and literature review.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "ai_coscientist_natural_language_hypotheses",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "represents scientific hypotheses",
+      "source_anchor_present": true,
+      "claim": "AI Co-Scientist represents scientific hypotheses in natural language.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "ai_coscientist_natural_language_evaluation_criteria",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "evaluation criteria in natural language",
+      "source_anchor_present": true,
+      "claim": "AI Co-Scientist represents evaluation criteria in natural language.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_code_representation",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "AlphaEvolve focuses on evolving code",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve represents its evolving hypotheses as code.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "implemented_local",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "implemented_surface",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_programmatic_evaluation_functions",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "directs evolution using programmatic evaluation functions",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve directs evolution through programmatic evaluation functions.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "implemented_local",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "implemented_surface",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "programmatic_choice_sidesteps_hallucinations",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "This choice enables us to substantially sidestep LLM hallucinations",
+      "source_anchor_present": true,
+      "claim": "Programmatic code and evaluation are reported to substantially sidestep LLM hallucinations.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "not_demonstrated",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "programmatic",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend AI-Co-Scientist representation-boundary evidence beyond the",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "programmatic_choice_enables_many_timesteps",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "allows AlphaEvolve to carry on the evolution process for a large number of time steps",
+      "source_anchor_present": true,
+      "claim": "The programmatic representation and evaluation choice is reported to enable long evolutionary runs.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "not_demonstrated",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "programmatic",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend AI-Co-Scientist representation-boundary evidence beyond the",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "natural_language_programmatic_combination_possible",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "it is possible in principle to combine the two approaches",
+      "source_anchor_present": true,
+      "claim": "The paper identifies a possible hybrid of AI Co-Scientist and AlphaEvolve.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "not_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "programmatic",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend AI-Co-Scientist representation-boundary evidence beyond the",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "natural_language_programmatic_hybrid_idioms",
+      "source_span_id": "section_5",
+      "source_page": 19,
+      "source_anchor": "flexible combination of natural-language and programmatic idioms",
+      "source_anchor_present": true,
+      "claim": "A hybrid system could combine natural-language and programmatic idioms flexibly.",
+      "category": "ai_coscientist_comparison",
+      "implementation_status": "not_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "programmatic",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend AI-Co-Scientist representation-boundary evidence beyond the",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "alphaevolve_code_superoptimization_view",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "AlphaEvolve can be viewed as a method for code superoptimization",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve can be viewed as code superoptimization.",
+      "category": "superoptimization",
+      "implementation_status": "implemented_local",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evolution_loop",
+      "roadmap_phase": "implemented_surface",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_iteratively_improves_initial_program",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "iteratively improves an initial program",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve iteratively improves an initial program.",
+      "category": "superoptimization",
+      "implementation_status": "implemented_local",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evolution_loop",
+      "roadmap_phase": "implemented_surface",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_uses_execution_feedback",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "using execution feedback",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve uses execution feedback to drive program improvement.",
+      "category": "superoptimization",
+      "implementation_status": "implemented_local",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "implemented_surface",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/core/loop.py",
+          "exists": true
+        },
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "superoptimization_1980s_origin",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "goes back to the 1980s",
+      "source_anchor_present": true,
+      "claim": "Code superoptimization dates to the 1980s.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "pre_llm_systematic_enumeration",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "systematic enumeration",
+      "source_anchor_present": true,
+      "claim": "Pre-LLM superoptimization used systematic enumeration.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "pre_llm_genetic_search",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "genetic search",
+      "source_anchor_present": true,
+      "claim": "Pre-LLM superoptimization used genetic search.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "pre_llm_monte_carlo_sampling",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "Monte Carlo sampling",
+      "source_anchor_present": true,
+      "claim": "Pre-LLM superoptimization used Monte Carlo sampling.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "pre_llm_deep_reinforcement_learning",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "deep reinforcement learning",
+      "source_anchor_present": true,
+      "claim": "Pre-LLM superoptimization used deep reinforcement learning.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphatensor_limited_matrix_setting",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "limited settings that focus on a single problem such as matrix multiplication",
+      "source_anchor_present": true,
+      "claim": "AlphaTensor is presented as a system for a limited matrix-multiplication setting.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphatensor_provably_correct_algorithms",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "discover provably correct algorithms",
+      "source_anchor_present": true,
+      "claim": "AlphaTensor discovered provably correct algorithms.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_superoptimization_literature",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "body of LLM-based approaches to superoptimization and algorithm discovery have emerged",
+      "source_anchor_present": true,
+      "claim": "Recent work applies LLMs to superoptimization and algorithm discovery.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphacode_programming_competitions",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "success in simulated programming competitions as in the case of AlphaCode",
+      "source_anchor_present": true,
+      "claim": "AlphaCode is cited as evidence of LLM success in simulated programming competitions.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_attention_kernel_optimization",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "optimize certain operations in GPU kernels, such as the attention operation",
+      "source_anchor_present": true,
+      "claim": "LLM agents have optimized attention operations in GPU kernels.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_user_specified_kernel_operations",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "more general user-specified operations",
+      "source_anchor_present": true,
+      "claim": "LLM agents have optimized general user-specified kernel operations.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_discovered_evolutionary_algorithms",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "using LLMs to discover novel evolutionary algorithms",
+      "source_anchor_present": true,
+      "claim": "Prior work used LLMs to discover evolutionary algorithms.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_trained_language_models",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "train language models",
+      "source_anchor_present": true,
+      "claim": "Prior work used LLM-guided methods to train language models.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_optimized_warehouse_scale_computers",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "optimize warehouse-scale computers",
+      "source_anchor_present": true,
+      "claim": "Prior work used LLMs to optimize warehouse-scale computers.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "multi_agent_llm_math_coding",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "multiple LLM agents that converse with each other to accomplish mathematical and coding tasks",
+      "source_anchor_present": true,
+      "claim": "Prior work used conversing LLM agents for mathematical and coding tasks.",
+      "category": "superoptimization",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "evolutionary_llm_approach_enables_harder_problems",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "allows us to address significantly more challenging problems, as demonstrated in Section 3",
+      "source_anchor_present": true,
+      "claim": "The paper attributes more challenging Section 3 results to its LLM evolutionary approach.",
+      "category": "superoptimization",
+      "implementation_status": "not_demonstrated",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/benchmark_fixture_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_benchmark_fixture_readiness_boundary.v1",
+          "boundary_status": "smoke_scope_with_deterministic_matrix_calibration_only",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "related_work_paper",
+          "path": "docs/todo/papers.md",
+          "required_phrase": "Track AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "ai_for_science_broad_domains",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "applied to a wide range of scientific disciplines and tasks, from protein structure prediction",
+      "source_anchor_present": true,
+      "claim": "AI systems have been applied across protein structure, quantum physics, climate science, and other scientific tasks.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_science_multiple_disciplines",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "recent LLM-based methods that target scientific problems in multiple disciplines",
+      "source_anchor_present": true,
+      "claim": "Recent LLM methods target scientific problems across multiple disciplines.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llms_automate_scientific_stages",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "automate several distinct stages of the scientific discovery process",
+      "source_anchor_present": true,
+      "claim": "LLMs have been used to automate distinct scientific-discovery stages.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llms_generate_rank_hypotheses",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "generating and ranking hypotheses and ideas",
+      "source_anchor_present": true,
+      "claim": "LLMs have been used to generate and rank hypotheses and ideas.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_guided_tree_search_science",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "LLM-guided tree search-based algorithms",
+      "source_anchor_present": true,
+      "claim": "LLM-guided tree-search methods are especially related scientific-discovery work.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llm_guided_evolutionary_science",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "LLM-guided evolutionary algorithms",
+      "source_anchor_present": true,
+      "claim": "LLM-guided evolutionary methods are especially related scientific-discovery work.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llms_experimental_planning_design",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "optimize experimental planning and design",
+      "source_anchor_present": true,
+      "claim": "LLMs have been used to optimize experimental planning and design.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llms_experiment_execution_workflow",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "experiment execution and workflow",
+      "source_anchor_present": true,
+      "claim": "LLMs have been used for experiment execution and workflow.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "llms_data_analysis_stage",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "focusing on the data analysis stage",
+      "source_anchor_present": true,
+      "claim": "LLM scientific-discovery work also targets data analysis.",
+      "category": "ai_for_science",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "alphaevolve_programmatic_hypothesis_representation",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "differs from most of these methods in its use of programmatic hypothesis representations",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve differs from most AI-for-science methods by using programmatic hypothesis representations.",
+      "category": "ai_for_science",
+      "implementation_status": "partially_implemented",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "programmatic",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend AI-Co-Scientist representation-boundary evidence beyond the",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "related_work_code",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add AlphaEvolve Section 5 Related Work taxonomy and positioning evidence.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "alphaevolve_programmatic_evaluation_metrics",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "programmatic hypothesis representations and evaluation metrics",
+      "source_anchor_present": true,
+      "claim": "AlphaEvolve differs from most AI-for-science methods by using programmatic evaluation metrics.",
+      "category": "ai_for_science",
+      "implementation_status": "implemented_local",
+      "implementation_relevance": "implementation_relevant",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "implemented_surface",
+      "evidence_refs": [
+        {
+          "path": "papers/programmatic_representation_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.programmatic_representation_boundary.v1",
+          "boundary_status": "executable_code_representation_with_measured_claim_gap_matrix",
+          "claim_ready": false
+        },
+        {
+          "path": "libreevolve/core/evaluator.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "ai_advances_pure_mathematics",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "AI systems have also contributed to advances in pure mathematics",
+      "source_anchor_present": true,
+      "claim": "AI systems have contributed to advances in pure mathematics.",
+      "category": "mathematical_discovery",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_mathematical_witnesses",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "discovering witnesses for",
+      "source_anchor_present": true,
+      "claim": "FunSearch established LLM-guided evolution for discovering mathematical witnesses.",
+      "category": "mathematical_discovery",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "funsearch_mathematical_counterexamples",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "counterexamples to mathematical statements",
+      "source_anchor_present": true,
+      "claim": "FunSearch established LLM-guided evolution for discovering counterexamples.",
+      "category": "mathematical_discovery",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
+      "claim_id": "witness_counterexample_complements_proof_search",
+      "source_span_id": "section_5",
+      "source_page": 20,
+      "source_anchor": "complementary to that of finding formal and informal proofs of mathematical statements",
+      "source_anchor_present": true,
+      "claim": "Witness and counterexample discovery is complementary to formal and informal proof search.",
+      "category": "mathematical_discovery",
+      "implementation_status": "source_context_only",
+      "implementation_relevance": "source_context_only",
+      "roadmap_section_id": "related_work_positioning",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/alphaevolve_source_inventory_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_source_inventory_boundary.v1",
+          "boundary_status": "complete_named_structure_inventory_without_claim_level_exhaustiveness"
+        }
+      ],
+      "active_todo_refs": []
+    }
+  ],
+  "claim_boundary": "This sidecar certifies a bounded claim-level inventory of 85 AlphaEvolve Section 5 Related Work prose claims. It separates 59 source-context-only literature claims from 26 implementation-relevant AlphaEvolve claims so background citations are not miscounted as local implementation gaps. It does not claim bibliography exhaustiveness, independent cited-paper fact verification, independent positioning review, comparison-result reproduction, later figure/table/appendix exhaustiveness, production-scale evidence, or AlphaEvolve system parity."
+}

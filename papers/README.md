@@ -1610,14 +1610,20 @@ the reported significant-improvement conclusion. It also corrects the earlier
 all-six-variants-on-both-panels contract: Figure 8 has six matrix series but
 only `Full method`, `No context in the prompt`, and `No evolution` on the
 kissing-number panel.
-Together the nine bounded inventories disposition 429 claims: 23 locally
-implemented, 158 partial, 80 not implemented, and 168 not demonstrated. The corrected
+`papers/alphaevolve_related_work_claim_inventory_boundary.json` adds 85
+exact-page Section 5 claims. It classifies 6 as locally implemented, 9 as
+partial, 4 as not implemented, 7 as not demonstrated, and 59 as
+source-context-only descriptions of cited systems and research. All 20
+implementation gaps have live TODO ownership; source context does not create
+implementation debt. Together the ten bounded inventories disposition 514
+claims: 29 locally implemented, 167 partial, 84 not implemented, 175 not
+demonstrated, and 59 source-context-only. The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
 whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-Section 5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
+remaining-exhibit/appendix claim inventory, per-phrase evidence-link
 sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -1967,6 +1973,10 @@ axis, proof/witness status, complementary-mechanism status, and local
 implementation status. This remains non-ready for exhaustive reference-level
 coverage, independent positioning review, local implementation parity,
 benchmark reproduction, or release-ready AlphaEvolve positioning claims.
+The companion `papers/alphaevolve_related_work_claim_inventory_boundary.json`
+records 85 PDF-anchored Section 5 claims and explicitly separates 59
+source-context-only literature statements from 26 implementation-relevant
+claims, including 20 gaps with active TODO ownership.
 Source-specific active gaps now appear across
 `docs/todo/code.md`, `docs/todo/papers.md`, `docs/todo/roadmap.md`, and
 `docs/todo/readme.md`; completed evidence remains split by the completed-ledger

@@ -161,6 +161,7 @@ _DISPOSITIONS: dict[str, dict[str, Any]] = {
             "papers/alphaevolve_scheduling_claim_inventory_boundary.json",
             "papers/alphaevolve_kernel_claim_inventory_boundary.json",
             "papers/alphaevolve_hardware_claim_inventory_boundary.json",
+            "papers/alphaevolve_compiler_claim_inventory_boundary.json",
             "papers/hardware_rtl_eda_evidence_boundary.json",
             "papers/compiler_adoption_path_boundary.json",
         ),

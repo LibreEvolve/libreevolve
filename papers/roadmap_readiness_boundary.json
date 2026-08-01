@@ -1,137 +1,143 @@
 {
-  "schema": "libreevolve.roadmap_readiness_boundary.v1",
-  "source_document_path": "ROADMAP.md",
   "boundary_status": "weighted_todo_ledger_without_semantic_alphaevolve_readiness",
-  "claim_ready": false,
-  "category_count": 4,
-  "category_weight_total": 100,
   "categories": [
     {
+      "active_count": 221,
       "category_id": "technical_implementation_parity",
-      "weight": 50,
-      "scope": "Code-level AlphaEvolve architecture, runtime, search, evaluator, archive, provider, benchmark, and operational-maturity implementation gaps.",
+      "completed_count": 1265,
+      "ledger_counts": [
+        {
+          "active_count": 221,
+          "completed_count": 0,
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "total_count": 221
+        },
+        {
+          "active_count": 0,
+          "completed_count": 1265,
+          "exists": true,
+          "path": "docs/todo/Completed/code.md",
+          "total_count": 1265
+        }
+      ],
       "ledger_paths": [
         "docs/todo/code.md",
         "docs/todo/Completed/code.md"
       ],
-      "ledger_counts": [
-        {
-          "path": "docs/todo/code.md",
-          "exists": true,
-          "active_count": 220,
-          "completed_count": 0,
-          "total_count": 220
-        },
-        {
-          "path": "docs/todo/Completed/code.md",
-          "exists": true,
-          "active_count": 0,
-          "completed_count": 1264,
-          "total_count": 1264
-        }
-      ],
-      "active_count": 220,
-      "completed_count": 1264,
-      "total_count": 1484,
-      "raw_todo_completion_percent": 85.175,
-      "weighted_todo_completion_points": 42.587
+      "raw_todo_completion_percent": 85.128,
+      "scope": "Code-level AlphaEvolve architecture, runtime, search, evaluator, archive, provider, benchmark, and operational-maturity implementation gaps.",
+      "total_count": 1486,
+      "weight": 50,
+      "weighted_todo_completion_points": 42.564
     },
     {
+      "active_count": 251,
       "category_id": "paper_source_and_benchmark_evidence",
-      "weight": 25,
-      "scope": "Paper-source rows, benchmark reproduction, figure/table provenance, and publication-facing evidence gaps.",
+      "completed_count": 1082,
+      "ledger_counts": [
+        {
+          "active_count": 251,
+          "completed_count": 0,
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "total_count": 251
+        },
+        {
+          "active_count": 0,
+          "completed_count": 1082,
+          "exists": true,
+          "path": "docs/todo/Completed/papers.md",
+          "total_count": 1082
+        }
+      ],
       "ledger_paths": [
         "docs/todo/papers.md",
         "docs/todo/Completed/papers.md"
       ],
-      "ledger_counts": [
-        {
-          "path": "docs/todo/papers.md",
-          "exists": true,
-          "active_count": 250,
-          "completed_count": 0,
-          "total_count": 250
-        },
-        {
-          "path": "docs/todo/Completed/papers.md",
-          "exists": true,
-          "active_count": 0,
-          "completed_count": 1081,
-          "total_count": 1081
-        }
-      ],
-      "active_count": 250,
-      "completed_count": 1081,
-      "total_count": 1331,
-      "raw_todo_completion_percent": 81.217,
-      "weighted_todo_completion_points": 20.304
+      "raw_todo_completion_percent": 81.17,
+      "scope": "Paper-source rows, benchmark reproduction, figure/table provenance, and publication-facing evidence gaps.",
+      "total_count": 1333,
+      "weight": 25,
+      "weighted_todo_completion_points": 20.293
     },
     {
+      "active_count": 32,
       "category_id": "documentation_truthfulness_and_user_scope",
-      "weight": 15,
-      "scope": "README/user-facing truthfulness, runnable-scope claims, setup guidance, and documentation drift gaps.",
+      "completed_count": 1205,
+      "ledger_counts": [
+        {
+          "active_count": 32,
+          "completed_count": 0,
+          "exists": true,
+          "path": "docs/todo/readme.md",
+          "total_count": 32
+        },
+        {
+          "active_count": 0,
+          "completed_count": 1205,
+          "exists": true,
+          "path": "docs/todo/Completed/readme.md",
+          "total_count": 1205
+        }
+      ],
       "ledger_paths": [
         "docs/todo/readme.md",
         "docs/todo/Completed/readme.md"
       ],
-      "ledger_counts": [
-        {
-          "path": "docs/todo/readme.md",
-          "exists": true,
-          "active_count": 32,
-          "completed_count": 0,
-          "total_count": 32
-        },
-        {
-          "path": "docs/todo/Completed/readme.md",
-          "exists": true,
-          "active_count": 0,
-          "completed_count": 1204,
-          "total_count": 1204
-        }
-      ],
-      "active_count": 32,
-      "completed_count": 1204,
-      "total_count": 1236,
-      "raw_todo_completion_percent": 97.411,
+      "raw_todo_completion_percent": 97.413,
+      "scope": "README/user-facing truthfulness, runnable-scope claims, setup guidance, and documentation drift gaps.",
+      "total_count": 1237,
+      "weight": 15,
       "weighted_todo_completion_points": 14.612
     },
     {
+      "active_count": 16,
       "category_id": "roadmap_priority_and_phase_evidence",
-      "weight": 10,
-      "scope": "ROADMAP readiness taxonomy, priority freshness, source-span disposition, and phase-boundary evidence gaps.",
+      "completed_count": 1231,
+      "ledger_counts": [
+        {
+          "active_count": 16,
+          "completed_count": 0,
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "total_count": 16
+        },
+        {
+          "active_count": 0,
+          "completed_count": 1231,
+          "exists": true,
+          "path": "docs/todo/Completed/roadmap.md",
+          "total_count": 1231
+        }
+      ],
       "ledger_paths": [
         "docs/todo/roadmap.md",
         "docs/todo/Completed/roadmap.md"
       ],
-      "ledger_counts": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "exists": true,
-          "active_count": 16,
-          "completed_count": 0,
-          "total_count": 16
-        },
-        {
-          "path": "docs/todo/Completed/roadmap.md",
-          "exists": true,
-          "active_count": 0,
-          "completed_count": 1230,
-          "total_count": 1230
-        }
-      ],
-      "active_count": 16,
-      "completed_count": 1230,
-      "total_count": 1246,
-      "raw_todo_completion_percent": 98.716,
+      "raw_todo_completion_percent": 98.717,
+      "scope": "ROADMAP readiness taxonomy, priority freshness, source-span disposition, and phase-boundary evidence gaps.",
+      "total_count": 1247,
+      "weight": 10,
       "weighted_todo_completion_points": 9.872
     }
   ],
-  "raw_todo_ledger_active_count": 518,
-  "raw_todo_ledger_completed_count": 4779,
-  "raw_todo_ledger_total_count": 5297,
-  "raw_todo_ledger_completion_percent": 90.221,
-  "weighted_todo_ledger_completion_percent": 87.375,
+  "category_count": 4,
+  "category_weight_total": 100,
+  "claim_boundary": "This boundary records stable ROADMAP readiness categories, weights, per-category TODO-ledger counts, raw TODO-ledger completion, and weighted TODO-ledger completion. It does not claim semantic AlphaEvolve implementation readiness, canonical underlying-gap deduplication, source-span disposition completeness, per-category test-gate coverage, benchmark reproduction certification, or operational release readiness.",
+  "claim_ready": false,
+  "missing_evidence": {
+    "benchmark_reproduction_certification": "not_recorded_locally",
+    "canonical_gap_deduplication": "not_recorded_locally",
+    "category_test_gate_mapping": "not_recorded_locally",
+    "operational_release_readiness_gate": "not_recorded_locally",
+    "semantic_requirement_mapping": "not_recorded_locally",
+    "source_span_disposition_matrix": "not_recorded_locally"
+  },
+  "raw_todo_ledger_active_count": 520,
+  "raw_todo_ledger_completed_count": 4783,
+  "raw_todo_ledger_completion_percent": 90.194,
+  "raw_todo_ledger_total_count": 5303,
   "readiness_percent_status": "todo_ledger_only_not_semantic_alphaevolve_readiness",
   "required_evidence_fields": [
     "stable_readiness_categories",
@@ -146,13 +152,7 @@
     "benchmark_reproduction_certification",
     "operational_release_readiness_gate"
   ],
-  "missing_evidence": {
-    "semantic_requirement_mapping": "not_recorded_locally",
-    "canonical_gap_deduplication": "not_recorded_locally",
-    "source_span_disposition_matrix": "not_recorded_locally",
-    "category_test_gate_mapping": "not_recorded_locally",
-    "benchmark_reproduction_certification": "not_recorded_locally",
-    "operational_release_readiness_gate": "not_recorded_locally"
-  },
-  "claim_boundary": "This boundary records stable ROADMAP readiness categories, weights, per-category TODO-ledger counts, raw TODO-ledger completion, and weighted TODO-ledger completion. It does not claim semantic AlphaEvolve implementation readiness, canonical underlying-gap deduplication, source-span disposition completeness, per-category test-gate coverage, benchmark reproduction certification, or operational release readiness."
+  "schema": "libreevolve.roadmap_readiness_boundary.v1",
+  "source_document_path": "ROADMAP.md",
+  "weighted_todo_ledger_completion_percent": 87.341
 }

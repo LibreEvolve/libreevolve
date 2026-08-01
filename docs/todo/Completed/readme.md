@@ -16005,3 +16005,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining boundary: README keeps Sections 3.3.3-5, Figures 8-14, Table 3,
     detailed appendices, source-detail exhaustiveness, and independent result
     reproduction outside the completed claim walk.
+- [x] Document the bounded AlphaEvolve Section 3.3.4 compiler inventory.
+  - Status: README now identifies the 44-claim compiler-generated-code
+    inventory, its 22 partial, 6 absent, and 16 undemonstrated split, active
+    TODO ownership for every gap, and the FlashAttention/optimization-category
+    source-fidelity corrections.
+  - Combined boundary: README now reports 378 bounded paper claims across eight
+    inventories: 21 local, 122 partial, 74 absent, and 161 undemonstrated,
+    leaving 357 gaps.
+  - Remaining boundary: README keeps Sections 4-5, Figures 8-14, Table 3,
+    detailed appendices, source-detail exhaustiveness, and independent result
+    reproduction outside the completed claim walk.

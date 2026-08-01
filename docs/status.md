@@ -458,6 +458,22 @@ Important limits:
   artifact set, or matched manual-workflow baseline. Generic non-Python
   workspaces, candidate runners, and hardware metadata schemas do not
   establish AlphaEvolve Section 3.3.3 behavior or result reproduction.
+- The bounded Section 3.3.4 compiler-generated-code inventory records 44
+  PDF-anchored claims: 22 partial, 6 not implemented, and 16 not demonstrated,
+  with active TODO ownership for all 44 gaps. It covers transformer/attention
+  context, FlashAttention/Pallas/JAX/XLA stack details, direct IR optimization,
+  randomized per-edit reference checks, expert confirmation, the reported 32%
+  kernel and 15% pre/postprocessing speedups, and both compiler-adoption paths.
+  It also corrects earlier universal FlashAttention wording and unsupported
+  attribution of the final edits to memory-access or scheduling categories;
+  the checked sidecar is
+  `papers/alphaevolve_compiler_claim_inventory_boundary.json`.
+- There is no executable XLA, MLIR, StableHLO, Pallas, or JAX compiler-IR
+  optimization problem in the current dependency set or problem fixtures. The
+  repository has generic candidate execution and compiler provenance metadata,
+  not lowered-IR generation, parsing or verification, GPU measurements,
+  deterministic randomized tensor checks, before/after IR artifacts, expert
+  all-input confirmation, or reproduction of the 32% and 15% results.
 - Figure 5 constructive-math exhibit provenance remains absent: README
   describes Appendix B family/status coverage, smoke-fixture boundaries, and
   constructive-math absence boundaries, not main-text Figure 5 exhibit ids,

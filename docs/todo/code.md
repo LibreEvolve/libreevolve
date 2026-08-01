@@ -79,8 +79,14 @@ sidecars, tests, and active TODOs.
     Section 3.3.3 hardware-circuit-design claims. It classifies 12 as partial,
     4 as not implemented, and 19 as not demonstrated, resolves all 35 gaps to
     live TODO titles, and checks source-faithful objective and verification
-    wording. The seven bounded inventories therefore cover 334 claims: 21
-    locally implemented, 100 partial, 68 not implemented, and 145
+    wording. The committed
+    `papers/alphaevolve_compiler_claim_inventory_boundary.json` adds 44
+    Section 3.3.4 compiler-generated-code claims. It classifies 22 as partial,
+    6 as not implemented, and 16 as not demonstrated, resolves all 44 gaps to
+    live TODO titles, and checks source-faithful FlashAttention and
+    optimization-category wording. The eight bounded inventories therefore
+    cover 378 claims: 21 locally implemented, 122 partial, 74 not implemented,
+    and 161
     not demonstrated. This is not
     whole-paper completeness. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
@@ -99,12 +105,12 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 334 bounded system, context,
+  - Current gap: the named source structure and 378 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
-    hardware-circuit-design claims are now machine-readable and
+    hardware-circuit-design/compiler-generated-code claims are now machine-readable and
     PDF-verified, but there
     is no AlphaEvolve requirement inventory exhaustive at sentence, paragraph,
-    equation, footnote, citation, or claim level across Sections 3.3.4-5,
+    equation, footnote, citation, or claim level across Sections 4-5,
     remaining exhibits, Table 3, appendices, and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
@@ -5063,6 +5069,29 @@ sidecars, tests, and active TODOs.
     claim that Gemini directly contributed to TPU arithmetic circuits through
     AlphaEvolve.
 
+- [ ] Add an executable XLA/MLIR compiler-IR optimization benchmark contract.
+  - Spec evidence: AlphaEvolve Section 3.3.4 directly edits XLA-generated IR
+    that encapsulates a Pallas FlashAttention kernel plus JAX input preparation
+    and output postprocessing for a high-impact GPU inference configuration.
+    Every modification is compared with unmodified reference code on
+    randomized inputs, and the reported result separates kernel and
+    pre/postprocessing runtime improvements.
+  - Current evidence: LibreEvolve can mutate multi-file and non-Python text
+    workspaces, execute task-declared build and run commands, retain toolchain
+    identity, and validate compiler-domain provenance metadata. It has no
+    checked XLA, MLIR, StableHLO, or comparable compiler-IR problem; no IR
+    parser, verifier, lowering, or optimizer command; no deterministic tensor
+    corpus; and no emitted before/after IR, exact-reference, or runtime bundle.
+  - Required result: add a reproducible open compiler-IR analogue using
+    textual MLIR/StableHLO or another documented open IR, with a deliberately
+    improvable seed, task-owned parser/verifier and build/run commands,
+    deterministic randomized inputs, exact or tolerance-bounded reference
+    checks for every candidate, before/after IR artifacts, runtime or
+    defensible performance-proxy measurements, and pinned toolchain identity.
+    Keep the host smoke lane separate from a digest-pinned OCI lane, and do not
+    present the analogue as Google's proprietary FlashAttention workload or as
+    reproduction of the reported XLA result.
+
 - [ ] Add per-edit reference-check provenance for compiler-generated IR tasks.
   - Spec evidence: AlphaEvolve Section 3.3.4 directly optimizes
     XLA-generated IR for FlashAttention plus surrounding input/output
@@ -5089,13 +5118,13 @@ sidecars, tests, and active TODOs.
 
 - [ ] Add FlashAttention compiler-stack context provenance.
   - Spec evidence: AlphaEvolve Section 3.3.4 places the optimized
-    compiler-generated code inside a specific stack: Transformer attention is
-    implemented using FlashAttention, FlashAttention is an accelerator kernel
-    in Pallas, higher-level JAX code handles input preparation and output
-    postprocessing, XLA lowers that implementation through a sequence of IRs
-    for particular hardware, and the optimization targets memory-access
-    orchestration or computation scheduling for a high-impact inference
-    configuration on GPUs.
+    compiler-generated code inside a specific stack: attention is most
+    commonly implemented using FlashAttention, FlashAttention is an
+    accelerator kernel in Pallas, higher-level JAX code handles input
+    preparation and output postprocessing, and XLA lowers that implementation
+    through a sequence of IRs for particular hardware. The paper says improved
+    memory-access orchestration or computation scheduling can reduce runtime;
+    it does not attribute every reported edit to one of those categories.
   - Current evidence: the compiler-IR TODO above requires edit-by-edit
     randomized reference checks, IR-origin/editability metadata, baseline
     provenance, and kernel-versus-pre/postprocessing attribution. Ready

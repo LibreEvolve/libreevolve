@@ -14,7 +14,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_structure_plus_334_bounded_claims_without_whole_paper_claim_walk"
+        == "named_structure_plus_378_bounded_claims_without_whole_paper_claim_walk"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA
     assert boundary["claim_ready"] is False
@@ -28,7 +28,7 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
     assert boundary["source_paper_status_row_dispositioned_count"] == 1
     assert boundary["source_missing_evidence_count"] == 8
     assert boundary["exhaustiveness_criterion_count"] == 8
-    assert boundary["sidecar_ref_count"] == 30
+    assert boundary["sidecar_ref_count"] == 32
     assert boundary["active_todo_ref_count"] == 16
     assert [record["criterion_id"] for record in boundary["exhaustiveness_criteria"]] == [
         "pdf_section_walk",
@@ -51,9 +51,9 @@ def test_roadmap_source_span_exhaustiveness_accepts_bounded_gate():
         for ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "334_bounded_claims_remaining_sections_3_3_4_to_5_and_remaining_exhibits_appendices_not_recorded",
+        "claim_level_requirement_inventory": "378_bounded_claims_remaining_sections_4_to_5_and_remaining_exhibits_appendices_not_recorded",
         "claim_level_figure_table_appendix_matrix": "not_recorded_locally",
-        "application_result_claim_matrix": "not_recorded_locally",
+        "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
         "missing_partial_domain_todo_proof": "not_recorded_locally",
         "non_goal_decision_map": "not_recorded_locally",
@@ -102,10 +102,10 @@ def test_render_roadmap_source_span_exhaustiveness_summary_reports_shape():
     assert "ROADMAP source-span exhaustiveness boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_structure_plus_334_bounded_claims_without_whole_paper_claim_walk |"
+        "| boundary_status | named_structure_plus_378_bounded_claims_without_whole_paper_claim_walk |"
         in summary
     )
     assert "| exhaustiveness_criterion_count | 8 |" in summary
-    assert "| sidecar_ref_count | 30 |" in summary
+    assert "| sidecar_ref_count | 32 |" in summary
     assert "| active_todo_ref_count | 16 |" in summary
     assert "| missing_evidence_count | 9 |" in summary

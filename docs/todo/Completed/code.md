@@ -19586,3 +19586,24 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused inventory, implementation-map, ROADMAP coverage, and
     paper-manifest tests validate anchors, counts, references, TODO ownership,
     source wording, drift rejection, and result/parity disclaimers.
+- [x] Add a PDF-anchored AlphaEvolve Section 3.3.4 compiler claim inventory.
+  - Spec evidence: Section 3.3.4 describes transformer and attention context,
+    a FlashAttention/Pallas/JAX/XLA stack, direct compiler-generated IR edits,
+    randomized per-edit reference checks, expert all-input confirmation,
+    separate 32% kernel and 15% pre/postprocessing speedups, and two potential
+    compiler-adoption paths.
+  - Status: a new public boundary records 44 stable claim ids, exact PDF page
+    and anchors, implementation status, ROADMAP phase/section, evidence links,
+    and live TODO ownership. It classifies 22 claims as partial, 6 as not
+    implemented, and 16 as not demonstrated; none is locally implemented.
+  - Source correction: compiler-stack evidence now preserves the paper's
+    "most commonly implemented" FlashAttention qualification and treats
+    memory-access orchestration and scheduling as possible runtime-improvement
+    categories rather than attributed descriptions of every final edit.
+  - Remaining code gap: an executable XLA/MLIR/StableHLO analogue, Pallas/JAX
+    stack, IR parser/verifier and lowering toolchain, deterministic randomized
+    tensor corpus, GPU measurements, per-edit artifacts, expert signoff,
+    result reproduction, and compiler integration remain open.
+  - Verification: focused inventory, implementation-map, ROADMAP coverage, and
+    paper-manifest tests validate anchors, counts, references, TODO ownership,
+    source wording, drift rejection, and result/parity disclaimers.

@@ -43,14 +43,18 @@ directory and using the AlphaEvolve paper as the primary specification.
     `papers/alphaevolve_hardware_claim_inventory_boundary.json` adds 35
     exact-page Section 3.3.3 claims: none locally implemented, 12 partial, 4
     not implemented, and 19 not demonstrated, with live ownership for all 35
-    gaps and checked source-fidelity corrections. Combined coverage is 334
-    claims: 21 implemented, 100 partial, 68 not implemented, and 145 not
+    gaps and checked source-fidelity corrections. The
+    `papers/alphaevolve_compiler_claim_inventory_boundary.json` adds 44
+    exact-page Section 3.3.4 claims: none locally implemented, 22 partial, 6
+    not implemented, and 16 not demonstrated, with live ownership for all 44
+    gaps and checked source-fidelity corrections. Combined coverage is 378
+    claims: 21 implemented, 122 partial, 74 not implemented, and 161 not
     demonstrated. The
     paper manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 334-claim inventory deliberately excludes
-    Sections 3.3.4-5 claims, Figures 8-14, Table 3, detailed appendices,
+  - Current gap: the combined 378-claim inventory deliberately excludes
+    Sections 4-5 claims, Figures 8-14, Table 3, detailed appendices,
     equation/footnote/citation-level requirements, result reproduction, and
     independent reviewer proof that any bounded inventory is
     semantically exhaustive.
@@ -5099,6 +5103,27 @@ directory and using the AlphaEvolve paper as the primary specification.
     separates RTL optimization evidence from the broader claim that Gemini
     directly contributed to TPU arithmetic circuits through AlphaEvolve.
 
+- [ ] Track executable XLA/MLIR compiler-IR optimization benchmark evidence.
+  - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 describes
+    direct optimization of XLA-generated IR containing a Pallas
+    FlashAttention kernel and surrounding JAX pre/postprocessing for a
+    high-impact GPU inference configuration, with per-modification randomized
+    reference checks and separately reported kernel and wrapper speedups.
+  - Current gap: generic workspace mutation, `candidate_runner`, and compiler
+    metadata validators do not constitute an executable compiler-IR task.
+    There is no committed XLA/MLIR/StableHLO seed, IR parser or verifier,
+    lowering/optimization tool invocation, deterministic input corpus,
+    before/after IR pair, per-candidate reference output, or measured runtime
+    artifact set.
+  - Required result: publish a source-linked evidence bundle for a reproducible
+    open compiler-IR analogue: problem and seed identities, before/after IR,
+    exact edit, parser/verifier and toolchain versions, deterministic randomized
+    inputs, reference-check outputs and tolerance policy, baseline/candidate
+    runtime or defensible proxy metrics, run links, and artifact hashes. Label
+    the fixture as an open analogue unless the proprietary workload and expert
+    evidence become available; do not claim the AlphaEvolve XLA result from a
+    substitute task.
+
 - [ ] Record per-edit reference checks for compiler-generated IR results.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 says
     AlphaEvolve optimized XLA-generated IR for FlashAttention and surrounding
@@ -5126,12 +5151,12 @@ directory and using the AlphaEvolve paper as the primary specification.
 
 - [ ] Record FlashAttention compiler-stack context evidence.
   - Paper evidence: `2506.13131__AlphaEvolve.pdf` Section 3.3.4 explains that
-    Transformer attention is implemented using FlashAttention; FlashAttention
-    is an accelerator kernel in Pallas; higher-level JAX code handles input
-    preparation and output postprocessing; XLA translates the implementation
-    through multiple IR stages for particular hardware; and AlphaEvolve
-    optimizes memory access orchestration or computation scheduling for a
-    high-impact inference configuration on GPUs.
+    attention is most commonly implemented using FlashAttention;
+    FlashAttention is an accelerator kernel in Pallas; higher-level JAX code
+    handles input preparation and output postprocessing; and XLA translates
+    the implementation through multiple IR stages for particular hardware.
+    It says improved memory-access orchestration or computation scheduling can
+    reduce runtime, not that every reported edit is attributed to one category.
   - Current gap: paper-facing compiler TODOs require per-edit randomized
     reference checks, IR-origin/editability metadata, expert signoff, and
     kernel-versus-pre/postprocessing speedup attribution. Paper-facing TODOs

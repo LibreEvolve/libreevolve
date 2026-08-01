@@ -1,480 +1,493 @@
 {
-  "schema": "libreevolve.todo_canonical_gap_boundary.v1",
+  "active_todo_ref_count": 14,
   "boundary_status": "bounded_todo_canonical_gap_matrix_with_exact_same_owner_duplicate_report",
+  "canonical_gap_completion_status": "not_available_without_gap_ids",
+  "claim_boundary": "This boundary records a TODO-ledger canonical-gap readiness matrix over the current raw owner-ledger counts and exact duplicate-title groups, an exact-title raw-count inflation estimate, a bounded exact duplicate owner/status profile, a bounded exact same-owner completed duplicate report, and a bounded exact stale-completed duplicate detector from the ownership sidecar. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source or paper anchor mappings, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact title matches, orphaned derivative detection, canonical raw-count inflation reporting beyond exact title matches, canonical gap completion percentages, or owner review signoff. It records active TODO coverage for each missing evidence key without claiming those missing fields are implemented.",
   "claim_ready": false,
-  "raw_todo_ledger_active_count": 518,
-  "raw_todo_ledger_completed_count": 4779,
-  "raw_todo_ledger_total_count": 5297,
-  "raw_todo_ledger_completion_percent": 90.221,
+  "criterion_count": 9,
+  "criterion_records": [
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "canonical underlying-gap id",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "canonical_gap_ids",
+      "current_scope": "raw checklist items plus exact normalized-title duplicate groups",
+      "ledger_surface": "active and completed TODO titles across owner ledgers",
+      "missing_readiness": "stable canonical underlying-gap ids shared across code, ROADMAP, README, and papers ledgers",
+      "readiness_status": "raw_titles_without_gap_ids",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "canonical gap-id registry with stable ids and owner ledgers"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "canonical owner assignments",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "owner review signoff",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "canonical_owner_ledgers",
+      "current_scope": "four owner ledgers with owner scopes and active/completed counts",
+      "ledger_surface": "code, ROADMAP, README, and papers TODO owner files",
+      "missing_readiness": "one canonical owner ledger per underlying gap plus allowed derivative ledgers",
+      "readiness_status": "owner_file_inventory_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "canonical owner assignment and derivative-owner policy"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "derivative documentation relationships",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "derivative_relationships",
+      "current_scope": "exact normalized duplicate-title groups without semantic relationship labels",
+      "ledger_surface": "cross-document TODOs that represent one AlphaEvolve gap",
+      "missing_readiness": "derivative/documentation relationship records and orphaned-derivative detection",
+      "readiness_status": "exact_duplicate_groups_without_relationships",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/documentation_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "derivative relationship registry and orphan detector"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "source/paper anchor mapping",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/papers.md",
+          "required_phrase": "semantic evidence mapping for every paper-index status row",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "source_paper_anchor_mapping",
+      "current_scope": "selected source-span and paper-status evidence sidecars",
+      "ledger_surface": "TODO rows linked to AlphaEvolve source spans and paper-index rows",
+      "missing_readiness": "source/paper anchor mapping for every canonical gap",
+      "readiness_status": "selected_source_and_status_rows_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/roadmap_source_span_disposition_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/status_claim_inventory.json"
+        }
+      ],
+      "validation_gate": "canonical gap to source span and paper row mapping"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/code.md",
+          "required_phrase": "exhaustive implementation-evidence mapping",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "implementation evidence links",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "implementation_evidence_links",
+      "current_scope": "selected implementation evidence anchors plus structural docs inventories",
+      "ledger_surface": "implementation, test, runtime-artifact, and sidecar links",
+      "missing_readiness": "implementation evidence links for every canonical gap",
+      "readiness_status": "selected_anchor_map_without_gap_sufficiency",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/implementation_evidence_map_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_claim_evidence_boundary.json"
+        }
+      ],
+      "validation_gate": "canonical gap to implementation evidence sufficiency map"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "cross-document rollup rules",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "cross_document_rollup_rules",
+      "current_scope": "raw TODO-ledger and weighted readiness percentages",
+      "ledger_surface": "raw checklist completion versus canonical gap completion",
+      "missing_readiness": "cross-document completion rollup rules for canonical gaps",
+      "readiness_status": "raw_and_weighted_checklist_counts_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        }
+      ],
+      "validation_gate": "canonical gap completion rollup report"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "semantic duplicate detector",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "semantic_duplicate_detection",
+      "current_scope": "exact normalized-title duplicate scan only",
+      "ledger_surface": "near-duplicate TODOs with different wording",
+      "missing_readiness": "semantic duplicate detector across active and completed ledgers",
+      "readiness_status": "exact_title_duplicates_only",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "semantic duplicate scan with reviewable groups"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "stale completed duplicate detection",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "orphaned derivative detection",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "stale_duplicate_and_orphan_detection",
+      "current_scope": "no stale duplicate or orphan derivative detector",
+      "ledger_surface": "completed duplicates and derivative TODOs after implementation changes",
+      "missing_readiness": "stale completed duplicate detector and orphaned derivative detector",
+      "readiness_status": "no_stale_or_orphan_detector",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        }
+      ],
+      "validation_gate": "stale duplicate and orphan derivative report"
+    },
+    {
+      "active_todo_refs": [
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "inflate the denominator",
+          "required_phrase_present": true
+        },
+        {
+          "exists": true,
+          "path": "docs/todo/roadmap.md",
+          "required_phrase": "canonical underlying-gap completion",
+          "required_phrase_present": true
+        }
+      ],
+      "criterion_id": "raw_count_inflation_reporting",
+      "current_scope": "raw and weighted checklist percentages plus an exact-title raw-count inflation estimate without canonical underlying-gap denominator",
+      "ledger_surface": "project completion percentage reporting",
+      "missing_readiness": "canonical raw-count inflation report and canonical underlying-gap completion percentage beyond exact-title duplicates",
+      "readiness_status": "exact_title_inflation_without_canonical_denominator",
+      "sidecar_refs": [
+        {
+          "exists": true,
+          "path": "papers/todo_ledger_ownership_boundary.json"
+        },
+        {
+          "exists": true,
+          "path": "papers/roadmap_readiness_boundary.json"
+        }
+      ],
+      "validation_gate": "published raw checklist versus canonical gap completion report"
+    }
+  ],
+  "duplicate_detection_policy": "exact_normalized_title_only",
+  "exact_duplicate_active_involved_group_count": 0,
+  "exact_duplicate_collapsed_total_estimate": 5180,
+  "exact_duplicate_completed_only_group_count": 123,
+  "exact_duplicate_cross_owner_group_count": 122,
   "exact_duplicate_group_count": 123,
-  "exact_duplicate_raw_count_inflation_report": {
-    "policy": "exact_normalized_title_duplicate_groups_only",
-    "scope": "bounded_raw_checklist_inflation_estimate_without_semantic_canonical_gap_ids",
-    "duplicate_group_count": 123,
-    "duplicate_record_count": 246,
-    "inflation_count": 123,
-    "raw_total_count": 5297,
-    "collapsed_total_estimate": 5174,
-    "inflation_percent_of_raw_total": 2.322,
-    "canonical_gap_denominator_ready": false
-  },
-  "exact_duplicate_record_count": 246,
   "exact_duplicate_inflation_count": 123,
-  "exact_duplicate_collapsed_total_estimate": 5174,
   "exact_duplicate_owner_status_report": {
-    "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
-    "duplicate_group_count": 123,
-    "duplicate_record_count": 246,
+    "active_involved_group_count": 0,
+    "active_only_group_count": 0,
+    "canonical_owner_assignments_ready": false,
+    "completed_only_group_count": 123,
     "cross_owner_group_count": 122,
     "cross_owner_record_count": 244,
-    "same_owner_group_count": 1,
-    "same_owner_record_count": 2,
-    "completed_only_group_count": 123,
-    "active_only_group_count": 0,
+    "duplicate_group_count": 123,
+    "duplicate_record_count": 246,
     "mixed_status_group_count": 0,
-    "active_involved_group_count": 0,
     "owner_shape_counts": [
       {
+        "group_count": 47,
         "owner_ids": [
           "code",
           "papers"
-        ],
-        "group_count": 47
+        ]
       },
       {
+        "group_count": 31,
         "owner_ids": [
           "readme",
           "roadmap"
-        ],
-        "group_count": 31
+        ]
       },
       {
+        "group_count": 30,
         "owner_ids": [
           "code",
           "readme"
-        ],
-        "group_count": 30
+        ]
       },
       {
+        "group_count": 13,
         "owner_ids": [
           "papers",
           "readme"
-        ],
-        "group_count": 13
+        ]
       },
       {
+        "group_count": 1,
         "owner_ids": [
           "code",
           "roadmap"
-        ],
-        "group_count": 1
+        ]
       },
       {
+        "group_count": 1,
         "owner_ids": [
           "roadmap"
-        ],
-        "group_count": 1
+        ]
       }
     ],
+    "policy": "exact_normalized_title_duplicate_groups_by_owner_and_status",
+    "same_owner_group_count": 1,
+    "same_owner_record_count": 2,
     "status_shape_counts": [
       {
+        "group_count": 123,
         "statuses": [
           {
-            "status": "completed",
-            "count": 2
+            "count": 2,
+            "status": "completed"
           }
-        ],
-        "group_count": 123
+        ]
       }
-    ],
-    "canonical_owner_assignments_ready": false
+    ]
   },
-  "exact_duplicate_cross_owner_group_count": 122,
-  "exact_duplicate_completed_only_group_count": 123,
-  "exact_duplicate_active_involved_group_count": 0,
+  "exact_duplicate_raw_count_inflation_report": {
+    "canonical_gap_denominator_ready": false,
+    "collapsed_total_estimate": 5180,
+    "duplicate_group_count": 123,
+    "duplicate_record_count": 246,
+    "inflation_count": 123,
+    "inflation_percent_of_raw_total": 2.319,
+    "policy": "exact_normalized_title_duplicate_groups_only",
+    "raw_total_count": 5303,
+    "scope": "bounded_raw_checklist_inflation_estimate_without_semantic_canonical_gap_ids"
+  },
+  "exact_duplicate_record_count": 246,
   "exact_same_owner_completed_duplicate_group_count": 1,
   "exact_same_owner_completed_duplicate_status": "exact_same_owner_completed_duplicates_detected",
-  "duplicate_detection_policy": "exact_normalized_title_only",
   "exact_stale_completed_duplicate_group_count": 0,
   "exact_stale_completed_duplicate_status": "no_exact_stale_completed_duplicates_detected",
-  "canonical_gap_completion_status": "not_available_without_gap_ids",
-  "criterion_count": 9,
-  "active_todo_ref_count": 14,
-  "sidecar_ref_count": 14,
-  "criterion_records": [
-    {
-      "criterion_id": "canonical_gap_ids",
-      "ledger_surface": "active and completed TODO titles across owner ledgers",
-      "current_scope": "raw checklist items plus exact normalized-title duplicate groups",
-      "missing_readiness": "stable canonical underlying-gap ids shared across code, ROADMAP, README, and papers ledgers",
-      "sidecar_refs": [
-        {
-          "path": "papers/todo_ledger_ownership_boundary.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "canonical underlying-gap id",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "canonical gap-id registry with stable ids and owner ledgers",
-      "readiness_status": "raw_titles_without_gap_ids"
-    },
-    {
-      "criterion_id": "canonical_owner_ledgers",
-      "ledger_surface": "code, ROADMAP, README, and papers TODO owner files",
-      "current_scope": "four owner ledgers with owner scopes and active/completed counts",
-      "missing_readiness": "one canonical owner ledger per underlying gap plus allowed derivative ledgers",
-      "sidecar_refs": [
-        {
-          "path": "papers/todo_ledger_ownership_boundary.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "canonical owner assignments",
-          "required_phrase_present": true,
-          "exists": true
-        },
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "owner review signoff",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "canonical owner assignment and derivative-owner policy",
-      "readiness_status": "owner_file_inventory_only"
-    },
-    {
-      "criterion_id": "derivative_relationships",
-      "ledger_surface": "cross-document TODOs that represent one AlphaEvolve gap",
-      "current_scope": "exact normalized duplicate-title groups without semantic relationship labels",
-      "missing_readiness": "derivative/documentation relationship records and orphaned-derivative detection",
-      "sidecar_refs": [
-        {
-          "path": "papers/todo_ledger_ownership_boundary.json",
-          "exists": true
-        },
-        {
-          "path": "papers/documentation_claim_inventory.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "derivative documentation relationships",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "derivative relationship registry and orphan detector",
-      "readiness_status": "exact_duplicate_groups_without_relationships"
-    },
-    {
-      "criterion_id": "source_paper_anchor_mapping",
-      "ledger_surface": "TODO rows linked to AlphaEvolve source spans and paper-index rows",
-      "current_scope": "selected source-span and paper-status evidence sidecars",
-      "missing_readiness": "source/paper anchor mapping for every canonical gap",
-      "sidecar_refs": [
-        {
-          "path": "papers/roadmap_source_span_disposition_boundary.json",
-          "exists": true
-        },
-        {
-          "path": "papers/status_claim_inventory.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "source/paper anchor mapping",
-          "required_phrase_present": true,
-          "exists": true
-        },
-        {
-          "path": "docs/todo/papers.md",
-          "required_phrase": "semantic evidence mapping for every paper-index status row",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "canonical gap to source span and paper row mapping",
-      "readiness_status": "selected_source_and_status_rows_only"
-    },
-    {
-      "criterion_id": "implementation_evidence_links",
-      "ledger_surface": "implementation, test, runtime-artifact, and sidecar links",
-      "current_scope": "selected implementation evidence anchors plus structural docs inventories",
-      "missing_readiness": "implementation evidence links for every canonical gap",
-      "sidecar_refs": [
-        {
-          "path": "papers/implementation_evidence_map_boundary.json",
-          "exists": true
-        },
-        {
-          "path": "papers/roadmap_claim_evidence_boundary.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/code.md",
-          "required_phrase": "exhaustive implementation-evidence mapping",
-          "required_phrase_present": true,
-          "exists": true
-        },
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "implementation evidence links",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "canonical gap to implementation evidence sufficiency map",
-      "readiness_status": "selected_anchor_map_without_gap_sufficiency"
-    },
-    {
-      "criterion_id": "cross_document_rollup_rules",
-      "ledger_surface": "raw checklist completion versus canonical gap completion",
-      "current_scope": "raw TODO-ledger and weighted readiness percentages",
-      "missing_readiness": "cross-document completion rollup rules for canonical gaps",
-      "sidecar_refs": [
-        {
-          "path": "papers/todo_ledger_ownership_boundary.json",
-          "exists": true
-        },
-        {
-          "path": "papers/roadmap_readiness_boundary.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "cross-document rollup rules",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "canonical gap completion rollup report",
-      "readiness_status": "raw_and_weighted_checklist_counts_only"
-    },
-    {
-      "criterion_id": "semantic_duplicate_detection",
-      "ledger_surface": "near-duplicate TODOs with different wording",
-      "current_scope": "exact normalized-title duplicate scan only",
-      "missing_readiness": "semantic duplicate detector across active and completed ledgers",
-      "sidecar_refs": [
-        {
-          "path": "papers/todo_ledger_ownership_boundary.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "semantic duplicate detector",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "semantic duplicate scan with reviewable groups",
-      "readiness_status": "exact_title_duplicates_only"
-    },
-    {
-      "criterion_id": "stale_duplicate_and_orphan_detection",
-      "ledger_surface": "completed duplicates and derivative TODOs after implementation changes",
-      "current_scope": "no stale duplicate or orphan derivative detector",
-      "missing_readiness": "stale completed duplicate detector and orphaned derivative detector",
-      "sidecar_refs": [
-        {
-          "path": "papers/todo_ledger_ownership_boundary.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "stale completed duplicate detection",
-          "required_phrase_present": true,
-          "exists": true
-        },
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "orphaned derivative detection",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "stale duplicate and orphan derivative report",
-      "readiness_status": "no_stale_or_orphan_detector"
-    },
-    {
-      "criterion_id": "raw_count_inflation_reporting",
-      "ledger_surface": "project completion percentage reporting",
-      "current_scope": "raw and weighted checklist percentages plus an exact-title raw-count inflation estimate without canonical underlying-gap denominator",
-      "missing_readiness": "canonical raw-count inflation report and canonical underlying-gap completion percentage beyond exact-title duplicates",
-      "sidecar_refs": [
-        {
-          "path": "papers/todo_ledger_ownership_boundary.json",
-          "exists": true
-        },
-        {
-          "path": "papers/roadmap_readiness_boundary.json",
-          "exists": true
-        }
-      ],
-      "active_todo_refs": [
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "inflate the denominator",
-          "required_phrase_present": true,
-          "exists": true
-        },
-        {
-          "path": "docs/todo/roadmap.md",
-          "required_phrase": "canonical underlying-gap completion",
-          "required_phrase_present": true,
-          "exists": true
-        }
-      ],
-      "validation_gate": "published raw checklist versus canonical gap completion report",
-      "readiness_status": "exact_title_inflation_without_canonical_denominator"
-    }
-  ],
-  "missing_evidence_todo_coverage_status": "all_missing_evidence_keys_have_active_todo_coverage",
+  "missing_evidence": {
+    "canonical_gap_completion_percent": "not_recorded_locally",
+    "canonical_gap_ids": "not_recorded_locally",
+    "canonical_owner_assignments": "not_recorded_locally",
+    "canonical_raw_count_inflation_report": "not_recorded_locally",
+    "cross_document_rollup_rules": "not_recorded_locally",
+    "derivative_documentation_relationships": "not_recorded_locally",
+    "implementation_evidence_links": "not_recorded_locally",
+    "orphaned_derivative_detector": "not_recorded_locally",
+    "owner_review_signoff": "not_recorded_locally",
+    "semantic_duplicate_detector": "not_recorded_locally",
+    "source_or_paper_anchor_mapping": "not_recorded_locally",
+    "stale_completed_duplicate_detector": "not_recorded_locally"
+  },
   "missing_evidence_todo_coverage_count": 12,
   "missing_evidence_todo_coverage_records": [
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_gap_ids",
       "evidence_key": "canonical_gap_ids",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "canonical_gap_ids",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "canonical underlying-gap id",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_owner_ledgers",
       "evidence_key": "canonical_owner_assignments",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "canonical_owner_ledgers",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "canonical owner assignments",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "derivative_relationships",
       "evidence_key": "derivative_documentation_relationships",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "derivative_relationships",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "derivative documentation relationships",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "source_paper_anchor_mapping",
       "evidence_key": "source_or_paper_anchor_mapping",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "source_paper_anchor_mapping",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "source/paper anchor mapping",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "implementation_evidence_links",
       "evidence_key": "implementation_evidence_links",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "implementation_evidence_links",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "implementation evidence links",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "cross_document_rollup_rules",
       "evidence_key": "cross_document_rollup_rules",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "cross_document_rollup_rules",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "cross-document rollup rules",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "semantic_duplicate_detection",
       "evidence_key": "semantic_duplicate_detector",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "semantic_duplicate_detection",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "semantic duplicate detector",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "stale_duplicate_and_orphan_detection",
       "evidence_key": "stale_completed_duplicate_detector",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "stale_duplicate_and_orphan_detection",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "stale completed duplicate detection",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "stale_duplicate_and_orphan_detection",
       "evidence_key": "orphaned_derivative_detector",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "stale_duplicate_and_orphan_detection",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "orphaned derivative detection",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "raw_count_inflation_reporting",
       "evidence_key": "canonical_gap_completion_percent",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "raw_count_inflation_reporting",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "canonical underlying-gap completion",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "raw_count_inflation_reporting",
       "evidence_key": "canonical_raw_count_inflation_report",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "raw_count_inflation_reporting",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "inflate the denominator",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     },
     {
+      "coverage_claim": "active_todo_ref_only",
+      "criterion_id": "canonical_owner_ledgers",
       "evidence_key": "owner_review_signoff",
       "missing_evidence_status": "not_recorded_locally",
-      "criterion_id": "canonical_owner_ledgers",
-      "todo_path": "docs/todo/roadmap.md",
       "required_phrase": "owner review signoff",
-      "todo_exists": true,
       "required_phrase_present": true,
-      "coverage_claim": "active_todo_ref_only"
+      "todo_exists": true,
+      "todo_path": "docs/todo/roadmap.md"
     }
   ],
+  "missing_evidence_todo_coverage_status": "all_missing_evidence_keys_have_active_todo_coverage",
+  "raw_todo_ledger_active_count": 520,
+  "raw_todo_ledger_completed_count": 4783,
+  "raw_todo_ledger_completion_percent": 90.194,
+  "raw_todo_ledger_total_count": 5303,
   "required_evidence_fields": [
     "canonical_gap_criteria",
     "raw_ledger_counts",
@@ -492,19 +505,6 @@
     "stale_duplicate_detector",
     "canonical_gap_completion_percent"
   ],
-  "missing_evidence": {
-    "canonical_gap_ids": "not_recorded_locally",
-    "canonical_owner_assignments": "not_recorded_locally",
-    "derivative_documentation_relationships": "not_recorded_locally",
-    "source_or_paper_anchor_mapping": "not_recorded_locally",
-    "implementation_evidence_links": "not_recorded_locally",
-    "cross_document_rollup_rules": "not_recorded_locally",
-    "semantic_duplicate_detector": "not_recorded_locally",
-    "stale_completed_duplicate_detector": "not_recorded_locally",
-    "orphaned_derivative_detector": "not_recorded_locally",
-    "canonical_gap_completion_percent": "not_recorded_locally",
-    "canonical_raw_count_inflation_report": "not_recorded_locally",
-    "owner_review_signoff": "not_recorded_locally"
-  },
-  "claim_boundary": "This boundary records a TODO-ledger canonical-gap readiness matrix over the current raw owner-ledger counts and exact duplicate-title groups, an exact-title raw-count inflation estimate, a bounded exact duplicate owner/status profile, a bounded exact same-owner completed duplicate report, and a bounded exact stale-completed duplicate detector from the ownership sidecar. It does not claim canonical gap ids, canonical owner assignments, derivative documentation relationships, source or paper anchor mappings, implementation evidence links, cross-document rollup rules, semantic duplicate detection, stale completed duplicate detection beyond exact title matches, orphaned derivative detection, canonical raw-count inflation reporting beyond exact title matches, canonical gap completion percentages, or owner review signoff. It records active TODO coverage for each missing evidence key without claiming those missing fields are implemented."
+  "schema": "libreevolve.todo_canonical_gap_boundary.v1",
+  "sidecar_ref_count": 14
 }

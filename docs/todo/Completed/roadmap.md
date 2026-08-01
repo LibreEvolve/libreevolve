@@ -16213,3 +16213,14 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining boundary: Sections 3.3.3-5, Figures 8-14, Table 3, detailed
     appendices, result reproduction, whole-paper semantic exhaustiveness, and
     owner signoff remain open.
+- [x] Credit bounded Section 3.3.4 compiler coverage in ROADMAP.
+  - Status: ROADMAP source disposition, coverage, exhaustiveness, and
+    implementation-evidence boundaries now include 44 compiler-generated-code
+    claims with exact PDF anchors, implementation status, phase/section
+    routing, evidence links, and active ownership for every gap.
+  - Combined boundary: the ROADMAP surface now covers 378 bounded claims: 21
+    local, 122 partial, 74 absent, and 161 undemonstrated. The source walk now
+    advances to Section 4 and Figure 8.
+  - Remaining boundary: Sections 4-5, Figures 8-14, Table 3, detailed
+    appendices, result reproduction, whole-paper semantic exhaustiveness, and
+    owner signoff remain open.

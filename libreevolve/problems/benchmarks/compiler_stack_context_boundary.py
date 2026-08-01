@@ -70,9 +70,10 @@ def compiler_stack_context_boundary_record() -> dict[str, Any]:
         "source_claim": (
             "AlphaEvolve Section 3.3.4 places the optimized "
             "compiler-generated FlashAttention code inside a Pallas/JAX/XLA "
-            "stack for a high-impact GPU inference configuration, with "
-            "optimization targeting memory-access orchestration or computation "
-            "scheduling."
+            "stack for a high-impact GPU inference configuration. The paper "
+            "explains that improved memory-access orchestration or computation "
+            "scheduling can reduce runtime on particular hardware without "
+            "attributing every reported edit to one of those categories."
         ),
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "systems_result_schema": "libreevolve.systems_result_report.v1",
@@ -117,9 +118,10 @@ def validate_compiler_stack_context_boundary(
         not isinstance(source_claim, str)
         or "FlashAttention" not in source_claim
         or "Pallas/JAX/XLA" not in source_claim
-        or "memory-access orchestration or computation scheduling" not in source_claim
+        or "can reduce runtime on particular hardware" not in source_claim
+        or "without attributing every reported edit" not in source_claim
     ):
-        issues.append(_issue("invalid_source_claim", "source_claim must identify FlashAttention stack and decision-category claims"))
+        issues.append(_issue("invalid_source_claim", "source_claim must identify the FlashAttention stack and preserve the decision-category source boundary"))
     status = data.get("boundary_status")
     if status != EXPECTED_BOUNDARY_STATUS:
         issues.append(_issue("invalid_boundary_status", f"boundary_status must be {EXPECTED_BOUNDARY_STATUS}"))

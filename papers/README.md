@@ -1586,15 +1586,23 @@ requirements, the unnecessary-bit rewrite, downstream synthesis, early RTL
 flow value, TPU integration, Gemini attribution, adoption, and time-to-market
 wording. It also checks that area/power are represented as optimization
 objectives and robust verification as a proposal requirement, not stronger
-results than the pinned source states. Together the seven bounded inventories
-disposition 334 claims: 21 locally implemented, 100 partial, 68 not
-implemented, and 145 not demonstrated. The corrected
+results than the pinned source states.
+`papers/alphaevolve_compiler_claim_inventory_boundary.json` adds 44 exact-page
+Section 3.3.4 claims. It classifies 22 as partial, 6 as not implemented, and 16
+as not demonstrated, with live TODO ownership for all 44 gaps. It covers
+transformer and attention context, the FlashAttention/Pallas/JAX/XLA stack,
+direct IR optimization and correctness checks, expert confirmation, the 32%
+kernel and 15% pre/postprocessing speedups, and both compiler-adoption paths.
+It preserves the paper's "most commonly implemented" qualification and does
+not attribute every reported edit to memory-access orchestration or scheduling.
+Together the eight bounded inventories disposition 378 claims: 21 locally
+implemented, 122 partial, 74 not implemented, and 161 not demonstrated. The corrected
 `papers/implementation_evidence_map_boundary.json` records six broad requirement
 anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. This is not a
 whole-paper sentence-, paragraph-, equation-, footnote-, citation-, or detailed
-Sections 3.3.4-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
+Sections 4-5/remaining-exhibit/appendix claim inventory, per-phrase evidence-link
 sufficiency proof, coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -3078,6 +3086,12 @@ Implemented:
   every hardware-design, RTL-workflow, task, verification, rewrite-result,
   design-flow, deployment, attribution, adoption, and impact claim. It is not
   an executable HDL benchmark or evidence of the proprietary TPU result.
+- `papers/alphaevolve_compiler_claim_inventory_boundary.json`: PDF-anchored
+  44-claim Section 3.3.4 inventory. It records source anchors, implementation
+  statuses, code/sidecar evidence, ROADMAP phase, and active TODO ownership for
+  transformer/attention context, compiler-stack, optimization-task,
+  correctness, result, and adoption claims. It is not an executable compiler-
+  IR benchmark or evidence of the proprietary FlashAttention/XLA result.
 - `papers/hardware_rtl_eda_evidence_boundary.json`: hardware RTL/EDA evidence
   sidecar for AlphaEvolve Section 3.3.3. It records that hardware-domain
   report metadata is not evidence of exact RTL/circuit identity, source and
@@ -3482,7 +3496,7 @@ Implemented:
   marker drift, raw checklist completion, and exact normalized-title duplicate
   groups. It now also records a bounded exact-title raw-count inflation
   estimate: 123 exact duplicate-title groups, 246 duplicate records, 123
-  inflated raw checklist rows, and a 5174 collapsed exact-title total
+  inflated raw checklist rows, and a 5180 collapsed exact-title total
   estimate. It also records an exact duplicate owner/status profile: all 123
   exact-title duplicate groups are completed-only, 122 groups are cross-owner,
   one group is same-owner, and zero groups involve active TODO rows. It also

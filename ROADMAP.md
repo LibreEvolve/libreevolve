@@ -944,8 +944,13 @@ AlphaEvolve reproduction.
   implemented, and 19 not demonstrated, with live TODO ownership for all 35
   gaps. It preserves the paper's area/power statements as objectives and its
   robust-verification wording as a requirement rather than an independently
-  reproduced result. The seven bounded inventories now disposition 334 claims
-  in total: 21 locally implemented, 100 partial, 68 not implemented, and 145
+  reproduced result. The additional
+  `papers/alphaevolve_compiler_claim_inventory_boundary.json` dispositions 44
+  Section 3.3.4 compiler-generated-code claims: 22 are partial, 6 not
+  implemented, and 16 not demonstrated, with live TODO ownership for all 44
+  gaps and source-faithful FlashAttention/optimization-category wording. The
+  eight bounded inventories now disposition 378 claims in total: 21 locally
+  implemented, 122 partial, 74 not implemented, and 161
   not demonstrated,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
@@ -958,7 +963,7 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  This is complete named-structure coverage plus bounded 334-claim coverage,
+  This is complete named-structure coverage plus bounded 378-claim coverage,
   not a whole-paper sentence-, paragraph-, equation-,
   footnote-, citation-, or claim-level requirement inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,

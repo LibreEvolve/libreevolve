@@ -14523,6 +14523,23 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and independent semantic exhaustiveness review remain open.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
+- [x] Add Section 3.3.4 compiler-generated-code claim dispositions.
+  - Paper evidence: the pinned PDF describes the transformer/attention and
+    FlashAttention/Pallas/JAX/XLA context, the compiler-IR optimization task,
+    randomized reference checks, expert confirmation, 32% and 15% speedups,
+    and existing-compiler versus longer-term compiler-workflow adoption paths.
+  - Status: `papers/alphaevolve_compiler_claim_inventory_boundary.json`
+    records 44 exact-page claims with 22 partial, 6 absent, and 16
+    undemonstrated dispositions and active ownership for all 44 gaps.
+  - Source correction: the paper-facing inventory preserves "most commonly"
+    rather than universal FlashAttention use and does not infer that every
+    reported edit was a memory-access or scheduling change.
+  - Remaining paper gap: executable compiler-stack artifacts, workload and
+    hardware identity, randomized reference outputs, expert signoff, measured
+    result reproduction, adoption evidence, Sections 4-5, and AlphaEvolve
+    parity remain unproven.
+  - Verification: the paper manifest requires the sidecar and rejects source,
+    count, status, reference, ownership, result-reproduction, and parity drift.
 - [x] Add Section 3.3.3 hardware-circuit-design claim dispositions.
   - Paper evidence: the pinned PDF gives hardware-design and RTL-workflow
     context, Verilog task/objective and verification requirements, rewrite and

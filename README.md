@@ -118,9 +118,18 @@ Important limits:
   implemented, and 19 are not demonstrated; all 35 gaps have live TODO
   ownership. It also corrects objective-versus-result and required-versus-
   passed-verification overstatements in earlier hardware sidecars.
-- Together the seven bounded inventories cover 334 claims: 21 locally
-  implemented, 100 partial, 68 not implemented, and 145 not demonstrated,
-  leaving 313 gaps. They still exclude Sections 3.3.4-5, Figures 8-14, Table 3,
+- `papers/alphaevolve_compiler_claim_inventory_boundary.json` audits 44 claims
+  from Section 3.3.4, including transformer/attention context, the
+  FlashAttention/Pallas/JAX/XLA stack, direct compiler-IR editing, randomized
+  per-edit reference checks, expert confirmation, kernel and wrapper speedups,
+  and compiler-adoption paths. Twenty-two are partial, 6 are not implemented,
+  and 16 are not demonstrated; all 44 gaps have live TODO ownership. It also
+  preserves "most commonly" FlashAttention wording and treats memory-access
+  and scheduling decisions as potential optimization categories rather than
+  attributed descriptions of every reported edit.
+- Together the eight bounded inventories cover 378 claims: 21 locally
+  implemented, 122 partial, 74 not implemented, and 161 not demonstrated,
+  leaving 357 gaps. They still exclude Sections 4-5, Figures 8-14, Table 3,
   detailed appendix claims, source-detail exhaustiveness, and independent
   result reproduction.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

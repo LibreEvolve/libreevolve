@@ -25,7 +25,7 @@ EXPECTED_BOUNDARY_STATUS = (
     "abstract_introduction_discussion_claim_inventory_complete_without_"
     "results_sections_or_appendix_exhaustiveness"
 )
-EXPECTED_CLAIM_COUNT = 41
+EXPECTED_CLAIM_COUNT = 44
 IMPLEMENTED_STATUS = "implemented_local"
 INCOMPLETE_STATUSES = frozenset(
     {"partially_implemented", "not_implemented", "not_demonstrated"}
@@ -491,11 +491,37 @@ CONTEXT_CLAIM_SPECS = (
         ("matrix_suite", "matrix_historicity"),
     ),
     _claim(
+        "introduction_complex_4x4_matrix_48_multiplications",
+        "section_1",
+        3,
+        "for 4 × 4 matrices, AlphaEvolve improves Strassen (1969)’s algorithm by discovering an algorithm using 48 multiplications",
+        "Reproduce and certify the Introduction result for multiplying 4x4 complex-valued matrices with 48 multiplications.",
+        "introduction_results",
+        "not_demonstrated",
+        "representative_benchmarks",
+        "longer_term",
+        ("papers/matrix_suite_publication_artifacts.json",),
+        ("matrix_suite", "matrix_historicity"),
+    ),
+    _claim(
         "introduction_over_fifty_math_problems_best_known",
         "section_1",
         3,
         "large number (over 50) of such problems and match the best known constructions",
         "Run over 50 mathematical problems and reproduce the reported best-known matches.",
+        "introduction_results",
+        "not_demonstrated",
+        "representative_benchmarks",
+        "longer_term",
+        ("papers/math_outcome_boundary.json",),
+        ("math_outcomes", "benchmark_fixtures"),
+    ),
+    _claim(
+        "introduction_seventy_five_percent_math_best_known",
+        "section_1",
+        3,
+        "match the best known constructions on ∼75% of them",
+        "Reproduce the reported roughly 75 percent best-known match rate across the mathematical problem portfolio.",
         "introduction_results",
         "not_demonstrated",
         "representative_benchmarks",
@@ -522,6 +548,19 @@ CONTEXT_CLAIM_SPECS = (
         3,
         "improvement on the Minimum Overlap Problem set by Erdős",
         "Reproduce and independently verify the Minimum Overlap Problem improvement.",
+        "introduction_results",
+        "not_demonstrated",
+        "representative_benchmarks",
+        "longer_term",
+        ("papers/math_outcome_boundary.json",),
+        ("math_outcomes", "problem_formulation"),
+    ),
+    _claim(
+        "introduction_kissing_number_d11_improvement",
+        "section_1",
+        3,
+        "improved construction on the Kissing Numbers problem in 11 dimensions",
+        "Reproduce and independently verify the reported Kissing Numbers improvement in dimension 11.",
         "introduction_results",
         "not_demonstrated",
         "representative_benchmarks",

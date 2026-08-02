@@ -24,14 +24,14 @@ def test_matrix_result_claim_inventory_accepts_pdf_anchored_scope():
     assert boundary["matrix_result_claim_inventory_ready"] is True
     assert boundary["alphaevolve_result_reproduction_claim_ready"] is False
     assert boundary["alphaevolve_parity_claim_ready"] is False
-    assert validation.claim_count == 41
+    assert validation.claim_count == 42
     assert validation.implemented_local_count == 0
-    assert validation.implementation_gap_count == 41
+    assert validation.implementation_gap_count == 42
     assert validation.missing_anchor_count == 0
     assert validation.missing_reference_count == 0
-    assert boundary["todo_owned_gap_count"] == 41
+    assert boundary["todo_owned_gap_count"] == 42
     assert boundary["implementation_status_counts"] == {
-        "not_demonstrated": 32,
+        "not_demonstrated": 33,
         "not_implemented": 3,
         "partially_implemented": 6,
     }
@@ -40,6 +40,7 @@ def test_matrix_result_claim_inventory_accepts_pdf_anchored_scope():
         "matrix_headline_result": 6,
         "matrix_initialization_and_collaboration": 5,
         "matrix_method": 7,
+        "matrix_problem_context": 1,
         "table_2_row_result": 16,
         "table_2_scope_result": 3,
         "table_2_structure": 1,
@@ -63,7 +64,7 @@ def test_matrix_result_claim_inventory_gives_every_gap_todo_ownership():
         if record["implementation_status"] != "implemented_local"
     ]
 
-    assert len(incomplete) == 41
+    assert len(incomplete) == 42
     assert all(record["active_todo_refs"] for record in incomplete)
     assert all(
         ref["exists"] and ref["required_phrase_present"]
@@ -75,7 +76,7 @@ def test_matrix_result_claim_inventory_gives_every_gap_todo_ownership():
 def test_matrix_result_claim_inventory_rejects_record_and_overclaim_drift():
     boundary = deepcopy(alphaevolve_matrix_result_claim_inventory_boundary_record())
     boundary["claim_records"][0]["implementation_status"] = "implemented_local"
-    boundary["claim_count"] = 40
+    boundary["claim_count"] = 41
     boundary["alphaevolve_result_reproduction_claim_ready"] = True
     boundary["alphaevolve_parity_claim_ready"] = True
 
@@ -114,7 +115,7 @@ def test_render_matrix_result_claim_inventory_summary_reports_shape():
 
     assert "AlphaEvolve matrix result claim inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| claim_count | 41 |" in summary
+    assert "| claim_count | 42 |" in summary
     assert "| implemented_local_count | 0 |" in summary
-    assert "| implementation_gap_count | 41 |" in summary
+    assert "| implementation_gap_count | 42 |" in summary
     assert "| missing_anchor_count | 0 |" in summary

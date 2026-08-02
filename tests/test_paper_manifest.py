@@ -4382,6 +4382,64 @@ def test_validate_paper_manifest_requires_alphaevolve_tex_code_listing_inventory
     )
 
 
+def test_validate_paper_manifest_accepts_alphaevolve_tex_math_inventory(tmp_path):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_TEX_MATH_INVENTORY_BOUNDARY_FILE
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    sidecar.write_text(
+        json.dumps(
+            paper_manifest.alphaevolve_tex_math_inventory_boundary_record(),
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    report = validate_paper_manifest(tmp_path)
+
+    assert report.ok is True
+    assert report.issues == []
+
+
+def test_validate_paper_manifest_rejects_alphaevolve_tex_math_inventory_drift(
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    record = paper_manifest.alphaevolve_tex_math_inventory_boundary_record()
+    record["mathematical_correctness_claim_ready"] = True
+    record["math_construct_count"] = 308
+    sidecar = tmp_path / paper_manifest.ALPHAEVOLVE_TEX_MATH_INVENTORY_BOUNDARY_FILE
+    sidecar.parent.mkdir(parents=True, exist_ok=True)
+    sidecar.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert (
+        "alphaevolve_tex_math_inventory_boundary_mathematical_correctness_claim_ready_overclaim"
+        in codes
+    )
+    assert (
+        "alphaevolve_tex_math_inventory_boundary_invalid_math_construct_count"
+        in codes
+    )
+
+
+def test_validate_paper_manifest_requires_alphaevolve_tex_math_inventory_at_repo_root(
+    monkeypatch,
+    tmp_path,
+):
+    row = _row(tmp_path)
+    _write_manifest(tmp_path, [row])
+    monkeypatch.setattr(paper_manifest, "_repo_root", lambda: tmp_path)
+
+    report = validate_paper_manifest(tmp_path)
+    codes = {issue.code for issue in report.issues}
+
+    assert "alphaevolve_tex_math_inventory_boundary_manifest_missing" in codes
+
+
 def test_validate_paper_manifest_accepts_alphaevolve_source_inventory_boundary(tmp_path):
     row = _row(tmp_path)
     _write_manifest(tmp_path, [row])

@@ -14,7 +14,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_exhaustiveness"
+        == "verified_core_anchors_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_exhaustiveness"
     )
     assert validation.requirement_count == 6
     assert validation.reference_check_count == 81
@@ -66,6 +66,9 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert boundary["tex_code_listing_inventory_ref"] == (
         "papers/alphaevolve_tex_code_listing_inventory_boundary.json"
     )
+    assert boundary["tex_math_inventory_ref"] == (
+        "papers/alphaevolve_tex_math_inventory_boundary.json"
+    )
     assert boundary["recorded_evidence"]["lexical_citation_use_inventory"] == (
         "195_tex_citation_uses_240_key_links_and_120_compiled_references"
     )
@@ -77,6 +80,9 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     )
     assert boundary["recorded_evidence"]["tex_code_listing_line_disposition_inventory"] == (
         "8_environments_305_lines_60_existing_claims_214_claim_components"
+    )
+    assert boundary["recorded_evidence"]["tex_math_construct_disposition_inventory"] == (
+        "309_explicit_math_constructs_291_inline_18_display_zero_unmapped"
     )
     assert boundary["missing_evidence"]["citation_semantic_mapping"] == (
         "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification"
@@ -117,6 +123,7 @@ def test_implementation_evidence_map_boundary_accepts_core_requirement_anchors()
     assert "all 30 retained-source captions" in boundary["claim_boundary"]
     assert "all 83 rows and 240 cells" in boundary["claim_boundary"]
     assert "all 8 retained TeX code listing environments" in boundary["claim_boundary"]
+    assert "all 309 explicit TeX math constructs" in boundary["claim_boundary"]
 
 
 def test_implementation_evidence_map_boundary_rejects_exhaustive_overclaim():
@@ -167,7 +174,7 @@ def test_render_implementation_evidence_map_boundary_summary_reports_shape():
     assert "Implementation evidence map boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_exhaustiveness |"
+        "| boundary_status | verified_core_anchors_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_exhaustiveness |"
         in summary
     )
     assert "| requirement_count | 6 |" in summary

@@ -498,8 +498,8 @@
       ],
       "source_label": "fig:alphaevolve_heuristic",
       "tex_environment": null,
-      "command_text": "\\caption{Left: The heuristic function discovered by \\method, tailored to Google\u2019s workloads and capacity. Right: Visualization of the heuristic scoring function. Yellow regions represent high scores, while purple regions represent low scores.}",
-      "normalized_text": "Left: The heuristic function discovered by \\method, tailored to Google\u2019s workloads and capacity. Right: Visualization of the heuristic scoring function. Yellow regions represent high scores, while purple regions represent low scores.",
+      "command_text": "\\caption{Left: The heuristic function discovered by \\method, tailored to Google’s workloads and capacity. Right: Visualization of the heuristic scoring function. Yellow regions represent high scores, while purple regions represent low scores.}",
+      "normalized_text": "Left: The heuristic function discovered by \\method, tailored to Google’s workloads and capacity. Right: Visualization of the heuristic scoring function. Yellow regions represent high scores, while purple regions represent low scores.",
       "command_sha256": "129978747ee9d2cffefb571774aaf3380973a5388e60b0aaa4e38ee17cc3024e",
       "source_line_sha256": "129978747ee9d2cffefb571774aaf3380973a5388e60b0aaa4e38ee17cc3024e",
       "construct_id": "caption_figure_6",
@@ -544,8 +544,8 @@
       ],
       "source_label": "fig:tiling_heuristic",
       "tex_environment": null,
-      "command_text": "\\caption{Visualization of the tiling heuristic problem for a matrix  product $AB = C$. Creating a heuristic that automatically chooses the right tile size ($M$, $N$, $P$) for all input shapes is difficult because one has to know the matrix multiplication unit\u2019s optimal shapes and memory capacity, the memory requirements of surrounding operations, extra operations that are fused into the kernel, and low-level compiler intricacies, among other details.}",
-      "normalized_text": "Visualization of the tiling heuristic problem for a matrix product $AB = C$. Creating a heuristic that automatically chooses the right tile size ($M$, $N$, $P$) for all input shapes is difficult because one has to know the matrix multiplication unit\u2019s optimal shapes and memory capacity, the memory requirements of surrounding operations, extra operations that are fused into the kernel, and low-level compiler intricacies, among other details.",
+      "command_text": "\\caption{Visualization of the tiling heuristic problem for a matrix  product $AB = C$. Creating a heuristic that automatically chooses the right tile size ($M$, $N$, $P$) for all input shapes is difficult because one has to know the matrix multiplication unit’s optimal shapes and memory capacity, the memory requirements of surrounding operations, extra operations that are fused into the kernel, and low-level compiler intricacies, among other details.}",
+      "normalized_text": "Visualization of the tiling heuristic problem for a matrix product $AB = C$. Creating a heuristic that automatically chooses the right tile size ($M$, $N$, $P$) for all input shapes is difficult because one has to know the matrix multiplication unit’s optimal shapes and memory capacity, the memory requirements of surrounding operations, extra operations that are fused into the kernel, and low-level compiler intricacies, among other details.",
       "command_sha256": "672fe7d2394a13a702f649d403cee7a89d9b7d8ed28d18a6f31f1ed061750d25",
       "source_line_sha256": "2020000d020ded97b68944c763fab5eb288408921f96213e23a2fbce1ce33c77",
       "construct_id": "caption_figure_7",
@@ -1277,7 +1277,7 @@
   "inventory_scope": {
     "included": [
       "all 22 caption commands in the recursive main.tex closure",
-      "all five displayed equation and equation-star environments in the closure",
+      "all five equation and equation-star environments in the closure",
       "all three semantic footnote uses in the closure",
       "the excluded preamble footnote macro template as a non-use audit record",
       "construct-level mapping to existing bounded claim IDs, publication metadata boundaries, named spans, or decorative-marker disposition"
@@ -1292,5 +1292,5 @@
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This sidecar certifies construct-level disposition for all 30 retained-source captions, displayed equations, and semantic footnotes: 24 map to existing bounded claim IDs, one maps to reviewed publication metadata, two are non-additive named-span locators, and three are decorative markers. It adds zero bounded claims and does not establish proposition-level semantic exhaustiveness, citation sufficiency, independent result reproduction, or AlphaEvolve system parity."
+  "claim_boundary": "This sidecar certifies construct-level disposition for all 30 retained-source captions, equation-environment constructs, and semantic footnotes: 24 map to existing bounded claim IDs, one maps to reviewed publication metadata, two are non-additive named-span locators, and three are decorative markers. It adds zero bounded claims and does not establish proposition-level semantic exhaustiveness, citation sufficiency, independent result reproduction, or AlphaEvolve system parity."
 }

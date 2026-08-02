@@ -20,10 +20,10 @@ def test_docs_status_ledger_boundary_accepts_current_status_inventory():
     assert boundary["claim_ready"] is False
     assert boundary["status_ledger_path"] == "docs/status.md"
     assert boundary["status_ledger_heading_status"] == "heading_present"
-    assert validation.status_ledger_bullet_count == 266
+    assert validation.status_ledger_bullet_count == 267
     assert boundary["status_ledger_section_counts"] == {
         "implemented_today": 10,
-        "important_limits": 256,
+        "important_limits": 257,
     }
     assert validation.status_ledger_local_path_ref_count == 278
     assert boundary["status_ledger_missing_local_path_refs"] == []
@@ -91,7 +91,7 @@ def test_render_docs_status_ledger_boundary_summary_reports_shape():
         "| boundary_status | docs_status_structural_freshness_inventory_without_semantic_map |"
         in summary
     )
-    assert "| status_ledger_bullet_count | 266 |" in summary
+    assert "| status_ledger_bullet_count | 267 |" in summary
     assert "| status_ledger_local_path_ref_count | 278 |" in summary
     assert "| missing_route_marker_count | 0 |" in summary
     assert "| missing_evidence_count | 4 |" in summary

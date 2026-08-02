@@ -25,7 +25,7 @@ EXPECTED_BOUNDARY_STATUS = (
     "section_3_1_table_2_figure_4_claim_inventory_complete_without_"
     "appendix_a_or_result_reproduction"
 )
-EXPECTED_CLAIM_COUNT = 41
+EXPECTED_CLAIM_COUNT = 42
 IMPLEMENTED_STATUS = "implemented_local"
 INCOMPLETE_STATUSES = frozenset(
     {"partially_implemented", "not_implemented", "not_demonstrated"}
@@ -224,6 +224,17 @@ MATRIX_RESULT_CLAIM_SPECS = (
         "Treat tensor-decomposition rank as the scalar-multiplication count for comparable algorithms.",
         "matrix_method",
         "partially_implemented",
+        ("papers/matrix_tensor_rank_runtime_boundary.json",),
+        ("tensor_rank",),
+    ),
+    _claim(
+        "section3_1_3x3_minimum_rank_unknown",
+        "section_3_1",
+        9,
+        "even for the simple case of multiplying two 3 × 3 matrices, the minimum achievable rank is not known",
+        "Preserve and independently substantiate the paper's statement that the minimum achievable rank for 3x3 matrix multiplication is unknown.",
+        "matrix_problem_context",
+        "not_demonstrated",
         ("papers/matrix_tensor_rank_runtime_boundary.json",),
         ("tensor_rank",),
     ),

@@ -37,8 +37,8 @@
       "AlphaEvolve production scale, result reproduction, or system parity"
     ]
   },
-  "claim_count": 41,
-  "expected_claim_count": 41,
+  "claim_count": 44,
+  "expected_claim_count": 44,
   "category_counts": {
     "abstract_platform": 4,
     "abstract_results": 6,
@@ -47,17 +47,17 @@
     "discussion_limitation": 3,
     "discussion_self_improvement": 4,
     "introduction_method": 13,
-    "introduction_results": 5
+    "introduction_results": 8
   },
   "implementation_status_counts": {
     "implemented_local": 6,
-    "not_demonstrated": 20,
+    "not_demonstrated": 23,
     "not_implemented": 4,
     "partially_implemented": 11
   },
   "implemented_local_count": 6,
-  "implementation_gap_count": 35,
-  "todo_owned_gap_count": 35,
+  "implementation_gap_count": 38,
+  "todo_owned_gap_count": 38,
   "missing_anchor_count": 0,
   "missing_reference_count": 0,
   "claim_records": [
@@ -353,7 +353,7 @@
       "claim_id": "abstract_complex_4x4_matrix_48_multiplications",
       "source_span_id": "abstract",
       "source_page": 1,
-      "source_anchor": "multiply two 4 \u00d7 4 complex-valued matrices using 48 scalar multiplications",
+      "source_anchor": "multiply two 4 × 4 complex-valued matrices using 48 scalar multiplications",
       "source_anchor_present": true,
       "claim": "Reproduce and certify the 48-multiplication complex 4x4 matrix algorithm.",
       "category": "abstract_results",
@@ -848,6 +848,41 @@
       ]
     },
     {
+      "claim_id": "introduction_complex_4x4_matrix_48_multiplications",
+      "source_span_id": "section_1",
+      "source_page": 3,
+      "source_anchor": "for 4 × 4 matrices, AlphaEvolve improves Strassen (1969)’s algorithm by discovering an algorithm using 48 multiplications",
+      "source_anchor_present": true,
+      "claim": "Reproduce and certify the Introduction result for multiplying 4x4 complex-valued matrices with 48 multiplications.",
+      "category": "introduction_results",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/matrix_suite_publication_artifacts.json",
+          "exists": true,
+          "schema": "libreevolve.matrix_suite_publication_artifact_boundary.v1"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "matrix_suite",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Generate suite matrix tensor artifacts and per-seed hit-rate reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "matrix_historicity",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Wire matrix headline historicity artifacts into runner/export outputs.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
       "claim_id": "introduction_over_fifty_math_problems_best_known",
       "source_span_id": "section_1",
       "source_page": 3,
@@ -883,10 +918,45 @@
       ]
     },
     {
+      "claim_id": "introduction_seventy_five_percent_math_best_known",
+      "source_span_id": "section_1",
+      "source_page": 3,
+      "source_anchor": "match the best known constructions on ∼75% of them",
+      "source_anchor_present": true,
+      "claim": "Reproduce the reported roughly 75 percent best-known match rate across the mathematical problem portfolio.",
+      "category": "introduction_results",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/math_outcome_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_math_outcome_boundary.v2"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "math_outcomes",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add aggregate constructive-math outcome coverage reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "benchmark_fixtures",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Connect benchmark-grade fixtures to hardening and scope reports.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
       "claim_id": "introduction_twenty_percent_math_sota_uplift",
       "source_span_id": "section_1",
       "source_page": 3,
-      "source_anchor": "On \u223c20% of the problems, AlphaEvolve surpasses the SOTA",
+      "source_anchor": "On ∼20% of the problems, AlphaEvolve surpasses the SOTA",
       "source_anchor_present": true,
       "claim": "Reproduce the reported roughly 20 percent mathematical state-of-the-art uplift rate.",
       "category": "introduction_results",
@@ -914,9 +984,44 @@
       "claim_id": "introduction_erdos_minimum_overlap_result",
       "source_span_id": "section_1",
       "source_page": 3,
-      "source_anchor": "improvement on the Minimum Overlap Problem set by Erd\u0151s",
+      "source_anchor": "improvement on the Minimum Overlap Problem set by Erdős",
       "source_anchor_present": true,
       "claim": "Reproduce and independently verify the Minimum Overlap Problem improvement.",
+      "category": "introduction_results",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "representative_benchmarks",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/math_outcome_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_math_outcome_boundary.v2"
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "math_outcomes",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add aggregate constructive-math outcome coverage reports.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "problem_formulation",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Populate expert-reviewed problem-formulation metadata for benchmark definitions.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "claim_id": "introduction_kissing_number_d11_improvement",
+      "source_span_id": "section_1",
+      "source_page": 3,
+      "source_anchor": "improved construction on the Kissing Numbers problem in 11 dimensions",
+      "source_anchor_present": true,
+      "claim": "Reproduce and independently verify the reported Kissing Numbers improvement in dimension 11.",
       "category": "introduction_results",
       "implementation_status": "not_demonstrated",
       "roadmap_section_id": "representative_benchmarks",

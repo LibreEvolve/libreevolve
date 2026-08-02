@@ -160,10 +160,11 @@ Important limits:
   `main.bbl`, and `papers/references.json`; 52 unused BibTeX entries are listed.
   Citation semantics and implementation relevance remain unclassified.
 - `papers/alphaevolve_tex_source_detail_inventory_boundary.json` inventories
-  all 30 retained-source caption, displayed-equation, and semantic-footnote
-  constructs: 22 captions, 5 equations, and 3 real footnotes, plus one excluded
-  preamble macro template. Twenty-four constructs map to 80 references into the
-  existing bounded claim inventories, one maps to reviewed publication
+  all 30 retained-source caption, equation-environment, and semantic-footnote
+  constructs: 22 captions, 5 equation environments, and 3 real footnotes, plus
+  one excluded preamble macro template. Twenty-four constructs map to 80
+  references into the existing bounded claim inventories, one maps to reviewed
+  publication
   metadata, two are named-span locators, and three are decorative markers.
   Nothing is unmapped, no reference is unresolved, and the inventory adds no
   claims or implementation-parity credit.
@@ -182,18 +183,27 @@ Important limits:
   structural lines. Nothing is unmapped or unresolved, and no claims or parity
   credit are added. Listing execution, compilation, omitted-code recovery, and
   result reproduction remain open.
-- Together the twelve bounded inventories cover 833 claims: 29 locally
-  implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
-  source-context-only, leaving 745 implementation gaps. Across the 774
+- `papers/alphaevolve_tex_math_inventory_boundary.json` inventories all 309
+  explicit math constructs in the retained TeX closure: 291 render inline and
+  18 render as displays. Thirty-four inherit source-detail dispositions, 75
+  inherit table-cell dispositions, and 200 map directly to existing bounded
+  claims. Nothing is unmapped or unresolved, and the inventory adds no claims
+  or parity credit. Formula correctness, proof validity, and result
+  reproduction remain open.
+- Together the twelve bounded inventories cover 837 claims: 29 locally
+  implemented, 275 partial, 108 not implemented, 366 not demonstrated, and 59
+  source-context-only, leaving 749 implementation gaps. Across the 778
   implementation-relevant claims, strict implemented parity is 3.7%; counting
-  partial claims at half credit gives 21.5%. The weighted value rises because
+  partial claims at half credit gives 21.4%. The weighted value rises because
   Appendix B registry metadata is partial, not because its results were
   reproduced. Citation linkage is lexically complete and every retained-source
-  caption, displayed equation, and semantic footnote has a construct-level
-  disposition; all 83 table rows and 240 cells have row/cell dispositions; and
+  caption, equation-environment construct, and semantic footnote has a
+  construct-level disposition; all 83 table rows and 240 cells have row/cell
+  dispositions; and
   all 8 retained code listings and 305 physical source lines have line-level
+  dispositions; all 309 explicit TeX math constructs have delimiter-level
   dispositions. Coverage still excludes whole-paper sentence/paragraph,
-  inline-math, image-pixel, citation-semantic, and
+  mathematical-correctness, image-pixel, citation-semantic, and
   proposition-level exhaustiveness, independent result reproduction, and
   AlphaEvolve-scale execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`

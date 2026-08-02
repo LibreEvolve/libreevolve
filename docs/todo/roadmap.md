@@ -171,14 +171,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     all eight Table 1 rows, Sections 2.1-2.6, and Figures 1-3. It records 13
     locally implemented, 30 partial, 2 not-implemented, and 5 undemonstrated
     requirements, with live domain TODO ownership for all 37 incomplete rows.
-    `papers/alphaevolve_context_claim_inventory_boundary.json` now adds 41
+    `papers/alphaevolve_context_claim_inventory_boundary.json` now adds 44
     exact-page Abstract, Introduction, Discussion, and collaborator-context
-    dispositions: 6 locally implemented, 11 partial, 4 not implemented, and 20
-    not demonstrated, with live TODO ownership for all 35 gaps.
+    dispositions: 6 locally implemented, 11 partial, 4 not implemented, and 23
+    not demonstrated, with live TODO ownership for all 38 gaps.
     `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` now adds
-    41 exact-page Section 3.1, Table 2, Figure 4, and footnote 3 dispositions:
-    none locally implemented, 6 partial, 3 not implemented, and 32 not
-    demonstrated, with live TODO ownership for all 41 gaps. The
+    42 exact-page Section 3.1, Table 2, Figure 4, and footnote 3 dispositions:
+    none locally implemented, 6 partial, 3 not implemented, and 33 not
+    demonstrated, with live TODO ownership for all 42 gaps. These inventories
+    include the Introduction's 4x4 complex rank-48, roughly 75-percent best-
+    known-match, and dimension-11 Kissing Numbers statements plus Section
+    3.1's unknown minimum rank for 3x3 multiplication. The
     `papers/alphaevolve_math_result_claim_inventory_boundary.json` now adds 63
     exact-page Section 3.2 and Figure 5 dispositions: 2 locally implemented,
     16 partial, 4 not implemented, and 41 not demonstrated, with live TODO
@@ -215,17 +218,17 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     exact-page and visible-panel Appendix B/Figures 10-14 dispositions: 95
     partial, 24 not implemented, and 69 not demonstrated, with code and paper
     TODO ownership for all 188 gaps. The bounded claim-level ROADMAP surface
-    therefore covers 833 claims: 29 locally implemented, 275 partial, 108 not
-    implemented, 362 not demonstrated, and 59
+    therefore covers 837 claims: 29 locally implemented, 275 partial, 108 not
+    implemented, 366 not demonstrated, and 59
     source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` adds lexical
     coverage for all 195 retained-TeX citation uses, 240 key links, all 120
     compiled references, and 52 unused BibTeX entries. It does not add claims
-    to the 833-row implementation aggregate because citation semantics and
+    to the 837-row implementation aggregate because citation semantics and
     implementation relevance remain unclassified under active TODO ownership.
     `papers/alphaevolve_tex_source_detail_inventory_boundary.json` separately
-    dispositions all 30 retained-source constructs: 22 captions, 5 displayed
-    equations, and 3 semantic footnotes. Twenty-four map through 80 resolved
+    dispositions all 30 retained-source constructs: 22 captions, 5 equation
+    environments, and 3 semantic footnotes. Twenty-four map through 80 resolved
     references to existing bounded claim ids, one maps to publication metadata,
     two are named-span locators, and three are decorative markers; this adds no
     claims or parity credit. The supplemental
@@ -241,6 +244,11 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     existing claims and dispositions the remaining baseline, abbreviation,
     diff-marker, and structural lines, with no unmapped or unresolved units and
     no new claims or parity credit.
+    `papers/alphaevolve_tex_math_inventory_boundary.json` dispositions all 309
+    explicit TeX math constructs: 291 inline and 18 display constructs. It
+    inherits 34 source-detail and 75 table-cell dispositions and maps the
+    remaining 200 constructs directly to existing bounded claim ids, with no
+    unmapped or unresolved references and no new claims or parity credit.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -262,18 +270,19 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     TODO proof, phase-priority map, and CI/owner signoff.
   - Current gap: the retained PDF's named sections, figures, tables, and
     appendices now have verified dispositions, local status classes, ROADMAP
-    sections, and phases, and 833 bounded system/context/matrix-result/
+    sections, and phases, and 837 bounded system/context/matrix-result/
     constructive-math/scheduling/kernel-engineering/hardware/compiler/ablation/
     related-work/Appendix-A/Table-3/Figure-9/Appendix-B/Figures-10-14 claims have
     claim-level mappings, citation syntax plus bibliography-key linkage is
-    exhaustive for the retained TeX, and all caption/equation/footnote
-    constructs have dispositions, all 83 table rows and 240 cells have
-    row/cell dispositions, and all 8 code listings and 305 source lines have
-    line-level dispositions. The matrix is not
+    exhaustive for the retained TeX, and all caption/equation-environment/
+    footnote constructs have dispositions, all 83 table rows and 240 cells have
+    row/cell dispositions, all 8 code listings and 305 source lines have
+    line-level dispositions, and all 309 explicit TeX math constructs have
+    delimiter-level dispositions. The matrix is not
     exhaustive across the rest of
     the paper: it
     does not extract every remaining
-    sentence-, paragraph-, inline-math-, image-pixel-,
+    sentence-, paragraph-, mathematical-correctness-, image-pixel-,
     citation-semantic, capability-, or result-claim proposition; prove domain-specific TODO
     ownership for every missing or partial claim; provide a complete
     application-result claim matrix; or disposition all paper/status sidecar

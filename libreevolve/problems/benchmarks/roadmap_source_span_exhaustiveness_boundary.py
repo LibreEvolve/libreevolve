@@ -11,10 +11,10 @@ from libreevolve.problems.benchmarks.roadmap_source_span_coverage_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_EXHAUSTIVENESS_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_exhaustiveness_boundary.v15"
+    "libreevolve.roadmap_source_span_exhaustiveness_boundary.v16"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "named_structure_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_claim_walk"
+    "named_structure_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_claim_walk"
 )
 SOURCE_COVERAGE_BOUNDARY_INPUT = "papers/roadmap_source_span_coverage_boundary.json"
 EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
@@ -28,7 +28,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_exhaustiveness_and_owner_signoff",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_and_305_listing_lines_have_line_dispositions_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "837_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_and_309_explicit_math_constructs_have_delimiter_dispositions_without_whole_paper_sentence_paragraph_image_pixel_citation_semantic_mathematical_correctness_or_reproduction_exhaustiveness",
     "claim_level_figure_table_appendix_matrix": "bounded_named_matrix_recorded_without_result_reproduction_or_whole_paper_semantic_exhaustiveness",
     "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
@@ -44,8 +44,8 @@ CRITERION_SPECS = (
     {
         "criterion_id": "pdf_section_walk",
         "source_surface": "retained AlphaEvolve source PDF sections and requirement spans",
-        "current_scope": "all 38 named structural spans are page- and anchor-verified; 833 bounded Table 1/Section 2, context, Section 3.1/Table 2/Figure 4 matrix-result, Section 3.2/Figure 5 constructive-math, Section 3.3 opening/Section 3.3.1/Figure 6 scheduling, Section 3.3.2/Figure 7 kernel-engineering, Section 3.3.3 hardware-circuit-design, Section 3.3.4 compiler-generated-code, Section 4/Figure 8 ablation, Section 5 Related Work, Appendix A/Table 3/Figure 9, and Appendix B/Figures 10-14 claims have dispositions; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, displayed equations, and semantic footnotes have construct-level dispositions; all 83 table rows and 240 cells have row/cell dispositions; and all 8 retained TeX code listing environments and 305 physical source lines have environment/line dispositions",
-        "missing_exhaustiveness": "remaining whole-paper sentence, paragraph, inline-math, image-pixel, citation-semantic, implementation-semantic, and result-reproduction evidence",
+        "current_scope": "all 38 named structural spans are page- and anchor-verified; 837 bounded Table 1/Section 2, context, Section 3.1/Table 2/Figure 4 matrix-result, Section 3.2/Figure 5 constructive-math, Section 3.3 opening/Section 3.3.1/Figure 6 scheduling, Section 3.3.2/Figure 7 kernel-engineering, Section 3.3.3 hardware-circuit-design, Section 3.3.4 compiler-generated-code, Section 4/Figure 8 ablation, Section 5 Related Work, Appendix A/Table 3/Figure 9, and Appendix B/Figures 10-14 claims have dispositions; all 195 retained-TeX citation uses have lexical key linkage; all 30 retained-source captions, five equation-environment constructs, and semantic footnotes have construct-level dispositions; all 83 table rows and 240 cells have row/cell dispositions; all 8 retained TeX code listing environments and 305 physical source lines have environment/line dispositions; and all 309 explicit TeX math constructs have delimiter-level dispositions",
+        "missing_exhaustiveness": "remaining whole-paper sentence, paragraph, image-pixel, citation-semantic, implementation-semantic, mathematical-correctness, and result-reproduction evidence",
         "sidecars": (
             "papers/alphaevolve_system_requirement_inventory_boundary.json",
             "papers/alphaevolve_context_claim_inventory_boundary.json",
@@ -62,6 +62,7 @@ CRITERION_SPECS = (
             "papers/alphaevolve_citation_use_inventory_boundary.json",
             "papers/alphaevolve_tex_source_detail_inventory_boundary.json",
             "papers/alphaevolve_tex_code_listing_inventory_boundary.json",
+            "papers/alphaevolve_tex_math_inventory_boundary.json",
             "papers/roadmap_source_span_coverage_boundary.json",
             "papers/roadmap_source_span_disposition_boundary.json",
         ),
@@ -70,7 +71,7 @@ CRITERION_SPECS = (
             {"path": "docs/todo/roadmap.md", "required_phrase": "every relevant AlphaEvolve source span"},
         ),
         "validation_gate": "retained PDF section-walk exhaustiveness gate",
-        "readiness_status": "833_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_and_305_dispositioned_listing_lines_without_whole_paper_proposition_semantic_requirements",
+        "readiness_status": "837_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_and_309_dispositioned_tex_math_constructs_without_whole_paper_proposition_semantic_requirements",
     },
     {
         "criterion_id": "figure_table_appendix_matrix",
@@ -249,9 +250,9 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             "named_span_status_and_phase_map": "recorded",
             "section_2_system_requirement_count": 50,
             "section_2_system_requirement_inventory": "pdf_anchor_and_todo_owner_verified",
-            "context_claim_count": 41,
+            "context_claim_count": 44,
             "context_claim_inventory": "pdf_anchor_and_todo_owner_verified",
-            "matrix_result_claim_count": 41,
+            "matrix_result_claim_count": 42,
             "matrix_result_claim_inventory": "pdf_anchor_and_todo_owner_verified",
             "math_result_claim_count": 63,
             "math_result_claim_inventory": "pdf_anchor_and_todo_owner_verified",
@@ -298,13 +299,17 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             "tex_code_listing_bounded_claim_component_line_count": 214,
             "tex_code_listing_existing_claim_count": 60,
             "tex_code_listing_inventory": "environment_line_disposition_verified_without_listing_execution_or_result_reproduction",
+            "tex_math_construct_count": 309,
+            "tex_math_inline_construct_count": 291,
+            "tex_math_display_construct_count": 18,
+            "tex_math_inventory": "explicit_delimiter_disposition_verified_without_mathematical_correctness_or_result_reproduction",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
         "claim_boundary": (
             "This boundary records a complete named-structure gate for all 55 "
             "PDF-verified sections, figures, tables, and appendices plus a "
-            "bounded inventory of 833 Table 1, Section 2, Abstract, Introduction, "
+            "bounded inventory of 837 Table 1, Section 2, Abstract, Introduction, "
             "Discussion, collaborator-context, Section 3.1, Table 2, Figure 4, "
             "footnote 3, Section 3.2, Figure 5, the Section 3.3 opening, "
             "Section 3.3.1, Figure 6, Section 3.3.2, Figure 7, and Section "
@@ -316,12 +321,14 @@ def roadmap_source_span_exhaustiveness_boundary_record(root: str | Path = ".") -
             "citation uses, 240 key links, and 120 compiled references without "
             "classifying supported propositions, source sufficiency, or "
             "implementation relevance. It also records construct-level "
-            "dispositions for all 30 retained-source captions, displayed "
-            "equations, and semantic footnotes, plus row- and cell-level "
+            "dispositions for all 30 retained-source captions, five equation-"
+            "environment constructs, and semantic footnotes, plus row- and cell-level "
             "dispositions for all 83 rows and 240 cells in Tables 1-3, plus "
             "environment- and line-level dispositions for all 8 retained TeX "
-            "code listing environments and all 305 physical source lines, without "
-            "claiming sentence-, paragraph-, inline-math-, image-pixel-, "
+            "code listing environments and all 305 physical source lines, plus "
+            "delimiter-level dispositions for all 309 explicit TeX math constructs, "
+            "split into 291 inline and 18 display constructs, without claiming "
+            "sentence-, paragraph-, mathematical-correctness-, image-pixel-, "
             "or citation-level proposition exhaustiveness. "
             "It does not claim whole-paper claim-level requirement exhaustiveness, a "
             "claim-level figure/table/appendix matrix, application-result claim matrix, status-row to ROADMAP "
@@ -379,6 +386,7 @@ def validate_roadmap_source_span_exhaustiveness_boundary(
         or "all 30 retained-source captions" not in boundary_text
         or "all 83 rows and 240 cells" not in boundary_text
         or "all 8 retained TeX code listing environments and all 305 physical source lines" not in boundary_text
+        or "all 309 explicit TeX math constructs" not in boundary_text
         or "citation-level proposition exhaustiveness" not in boundary_text
         or "claim-level requirement exhaustiveness" not in boundary_text
         or "CI source-span exhaustiveness gate" not in boundary_text

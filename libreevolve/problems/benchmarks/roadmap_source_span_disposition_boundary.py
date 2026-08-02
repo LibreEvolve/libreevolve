@@ -11,11 +11,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA = (
-    "libreevolve.roadmap_source_span_disposition_boundary.v15"
+    "libreevolve.roadmap_source_span_disposition_boundary.v16"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "named_span_dispositions_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_exhaustiveness"
+    "named_span_dispositions_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_exhaustiveness"
 )
 STATUS_CLAIM_INVENTORY_PATH = "papers/status_claim_inventory.json"
 SOURCE_INVENTORY_PATH = "papers/alphaevolve_source_inventory_boundary.json"
@@ -64,6 +64,9 @@ TEX_TABLE_CELL_INVENTORY_PATH = (
 TEX_CODE_LISTING_INVENTORY_PATH = (
     "papers/alphaevolve_tex_code_listing_inventory_boundary.json"
 )
+TEX_MATH_INVENTORY_PATH = (
+    "papers/alphaevolve_tex_math_inventory_boundary.json"
+)
 SYSTEM_REQUIREMENT_INVENTORY_PATH = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
@@ -79,7 +82,7 @@ EXPECTED_REQUIRED_EVIDENCE_FIELDS = (
     "ci_source_span_exhaustiveness_gate",
 )
 EXPECTED_MISSING_EVIDENCE = {
-    "claim_level_requirement_inventory": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_and_305_listing_lines_have_line_dispositions_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "claim_level_requirement_inventory": "837_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_and_309_explicit_math_constructs_have_delimiter_dispositions_without_whole_paper_sentence_paragraph_image_pixel_citation_semantic_mathematical_correctness_or_reproduction_exhaustiveness",
     "application_result_claim_matrix": "not_recorded_locally",
     "status_row_to_roadmap_disposition_map": "not_recorded_locally",
     "missing_partial_todo_proof": "not_recorded_locally",
@@ -135,6 +138,7 @@ def roadmap_source_span_disposition_boundary_record(
         "tex_source_detail_inventory_input": TEX_SOURCE_DETAIL_INVENTORY_PATH,
         "tex_table_cell_inventory_input": TEX_TABLE_CELL_INVENTORY_PATH,
         "tex_code_listing_inventory_input": TEX_CODE_LISTING_INVENTORY_PATH,
+        "tex_math_inventory_input": TEX_MATH_INVENTORY_PATH,
         "system_requirement_inventory_input": SYSTEM_REQUIREMENT_INVENTORY_PATH,
         "source_status_inventory_input": STATUS_CLAIM_INVENTORY_PATH,
         "disposition_record_count": len(disposition_records),
@@ -154,8 +158,8 @@ def roadmap_source_span_disposition_boundary_record(
             "appendix_matrix": "appendix_a_appendix_b_and_13_appendix_b_subsections",
             "named_application_sections": "section_3_3_and_4_named_subsections",
             "section_2_system_requirements": "50_pdf_anchored_requirement_dispositions",
-            "context_claims": "41_pdf_anchored_abstract_introduction_discussion_and_collaborator_dispositions",
-            "matrix_result_claims": "41_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_dispositions",
+            "context_claims": "44_pdf_anchored_abstract_introduction_discussion_and_collaborator_dispositions",
+            "matrix_result_claims": "42_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_dispositions",
             "math_result_claims": "63_pdf_anchored_section_3_2_and_figure_5_dispositions",
             "scheduling_claims": "45_pdf_anchored_section_3_3_opening_section_3_3_1_and_figure_6_dispositions",
             "kernel_claims": "59_pdf_anchored_section_3_3_2_and_figure_7_dispositions",
@@ -166,9 +170,10 @@ def roadmap_source_span_disposition_boundary_record(
             "appendix_a_claims": "131_pdf_anchored_appendix_a_table_3_and_figure_9_dispositions",
             "appendix_b_claims": "188_pdf_and_visual_anchored_appendix_b_and_figures_10_14_dispositions",
             "citation_uses": "195_tex_source_anchored_uses_with_240_key_links_and_120_compiled_references_without_semantic_classification",
-            "tex_source_details": "30_construct_level_dispositions_for_22_captions_5_displayed_equations_and_3_semantic_footnotes",
+            "tex_source_details": "30_construct_level_dispositions_for_22_captions_5_equation_environment_constructs_and_3_semantic_footnotes",
             "tex_table_cells": "83_rows_240_cells_78_existing_claims_and_zero_unmapped_units",
             "tex_code_listing_lines": "8_environments_305_lines_60_existing_claims_and_zero_unmapped_lines",
+            "tex_math_constructs": "309_explicit_math_constructs_291_inline_18_display_and_zero_unmapped_constructs",
         },
         "required_evidence_fields": list(EXPECTED_REQUIRED_EVIDENCE_FIELDS),
         "missing_evidence": dict(EXPECTED_MISSING_EVIDENCE),
@@ -176,10 +181,10 @@ def roadmap_source_span_disposition_boundary_record(
             "This boundary records ROADMAP dispositions for all 55 PDF-verified "
             "named AlphaEvolve structural spans, including sections, figures, "
             "tables, appendices, source pages, local status, roadmap section, "
-            "phase bucket, sidecars, and active audit TODO links, plus 833 "
+            "phase bucket, sidecars, and active audit TODO links, plus 837 "
             "bounded claim-level records: 50 Table 1/Section 2 system "
-            "requirements and 41 Abstract, Introduction, Discussion, and "
-            "collaborator-context claims, plus 41 Section 3.1, Table 2, "
+            "requirements and 44 Abstract, Introduction, Discussion, and "
+            "collaborator-context claims, plus 42 Section 3.1, Table 2, "
             "Figure 4, and footnote 3 matrix-result claims, plus 63 Section "
             "3.2 and Figure 5 constructive-math claims, plus 45 Section 3.3 "
             "opening, Section 3.3.1, and Figure 6 scheduling claims, plus 59 "
@@ -193,13 +198,15 @@ def roadmap_source_span_disposition_boundary_record(
             "13 subsections, plus lexical source and bibliography linkage for "
             "all 195 TeX citation uses, 240 key links, and 120 compiled "
             "references, plus construct-level disposition for all 30 "
-            "retained-source captions, displayed equations, and semantic "
+            "retained-source captions, five equation-environment constructs, and semantic "
             "footnotes, plus row- and cell-level dispositions for all 83 rows "
             "and 240 cells in Tables 1-3, plus environment- and line-level "
             "dispositions for all 8 retained TeX code listing environments and "
-            "all 305 physical source lines. It does not classify citation semantics, source "
+            "all 305 physical source lines, plus delimiter-level dispositions "
+            "for all 309 explicit TeX math constructs, split into 291 inline and "
+            "18 display constructs. It does not classify citation semantics, source "
             "sufficiency, or implementation relevance, and does not "
-            "claim whole-paper sentence-, paragraph-, inline-math-, "
+            "claim whole-paper sentence-, paragraph-, mathematical-correctness-, "
             "image-pixel-, citation-semantic, or requirement-level "
             "proposition exhaustiveness, a claim-level application-result matrix, complete "
             "paper-index row to ROADMAP disposition map, proof that every "
@@ -252,6 +259,7 @@ def validate_roadmap_source_span_disposition_boundary(
         "tex_source_detail_inventory_input",
         "tex_table_cell_inventory_input",
         "tex_code_listing_inventory_input",
+        "tex_math_inventory_input",
         "system_requirement_inventory_input",
         "source_status_inventory_input",
         "disposition_record_count",
@@ -274,6 +282,7 @@ def validate_roadmap_source_span_disposition_boundary(
         or "all 30 retained-source captions" not in boundary_text
         or "all 83 rows and 240 cells" not in boundary_text
         or "all 8 retained TeX code listing environments" not in boundary_text
+        or "all 309 explicit TeX math constructs" not in boundary_text
         or "requirement-level proposition exhaustiveness" not in boundary_text
         or "complete paper-index row to ROADMAP disposition map" not in boundary_text
     ):

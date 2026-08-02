@@ -24,20 +24,22 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     bounded-claim component cells, 8 FunSearch baseline-context cells, and 14
     structural-header cells, with no unmapped unit or unresolved reference.
   - Remaining gap: citation semantics, baseline correctness, Table 2/3 result
-    reproduction, sentence/paragraph/inline-math/image-pixel semantic
-    exhaustiveness, independent review, and AlphaEvolve parity remain open.
+    reproduction, sentence/paragraph/image-pixel semantic exhaustiveness,
+    mathematical correctness, independent review, and AlphaEvolve parity remain
+    open.
 
-- [x] Inventory retained AlphaEvolve captions, displayed equations, and footnotes.
+- [x] Inventory retained AlphaEvolve captions, equation environments, and
+  footnotes.
   - Paper evidence: the pinned `2506.13131v1` recursive TeX closure contains 22
-    caption commands, 5 displayed equation environments, 3 semantic footnote
+    caption commands, 5 equation-environment constructs, 3 semantic footnote
     uses, and one non-semantic preamble footnote macro template.
   - Status: `papers/alphaevolve_tex_source_detail_inventory_boundary.json`
     dispositions all 30 relevant constructs. Twenty-four map through 80
     resolved references to existing bounded claim ids, one maps to reviewed
     publication metadata, two are named-span locators, and three are decorative
     markers, with no unmapped construct or new claim.
-  - Remaining gap: proposition-level sentence/paragraph/inline-math/image-pixel/
-    citation semantics, source sufficiency, independent
+  - Remaining gap: proposition-level sentence/paragraph/image-pixel/citation
+    semantics, mathematical correctness, source sufficiency, independent
     result reproduction, reviewer proof, and AlphaEvolve parity remain open.
 
 - [x] Inventory retained AlphaEvolve TeX citation uses and bibliography keys.
@@ -14616,6 +14618,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and independent semantic exhaustiveness review remain open.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
+- [x] Add retained-TeX explicit math dispositions and four omitted source claims.
+  - Paper evidence: the recursive `main.tex` closure contains 309 explicit math
+    constructs, including 18 display constructs beyond the five previously
+    inventoried `equation`/`equation*` environments.
+  - Status: `papers/alphaevolve_tex_math_inventory_boundary.json` dispositions
+    all 309 constructs with zero unmapped or unresolved references. Context and
+    matrix inventories add four PDF-anchored claims, bringing the bounded total
+    to 837 without changing the implemented numerator.
+  - Remaining paper gap: delimiter coverage does not prove mathematical
+    correctness, citation sufficiency, result reproduction, or whole-paper
+    proposition exhaustiveness.
+  - Verification: the paper manifest requires the new sidecar and focused tests
+    reject source, count, mapping, correctness, reproduction, and parity drift.
 - [x] Add Section 3.3.4 compiler-generated-code claim dispositions.
   - Paper evidence: the pinned PDF describes the transformer/attention and
     FlashAttention/Pallas/JAX/XLA context, the compiler-IR optimization task,

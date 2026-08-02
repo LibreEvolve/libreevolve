@@ -1,5 +1,5 @@
 {
-  "schema": "libreevolve.alphaevolve_implementation_evidence_map_boundary.v18",
+  "schema": "libreevolve.alphaevolve_implementation_evidence_map_boundary.v19",
   "source_paper_id": "2506.13131",
   "source_claim": "AlphaEvolve alignment needs traceable evidence from paper requirements to implementation modules, tests, runtime artifacts, sidecars, active TODOs, and every paper-index implementation status claim.",
   "source_inventory_ref": "papers/alphaevolve_source_inventory_boundary.json",
@@ -18,8 +18,9 @@
   "tex_source_detail_inventory_ref": "papers/alphaevolve_tex_source_detail_inventory_boundary.json",
   "tex_table_cell_inventory_ref": "papers/alphaevolve_tex_table_cell_inventory_boundary.json",
   "tex_code_listing_inventory_ref": "papers/alphaevolve_tex_code_listing_inventory_boundary.json",
+  "tex_math_inventory_ref": "papers/alphaevolve_tex_math_inventory_boundary.json",
   "system_requirement_inventory_ref": "papers/alphaevolve_system_requirement_inventory_boundary.json",
-  "boundary_status": "verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_exhaustiveness",
+  "boundary_status": "verified_core_anchors_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_exhaustiveness",
   "claim_ready": false,
   "requirements": [
     {
@@ -256,8 +257,8 @@
   "recorded_evidence": {
     "named_source_structure_inventory": "55_pdf_verified_spans",
     "bounded_system_requirement_inventory": "50_pdf_anchored_table_1_and_section_2_requirements",
-    "bounded_context_claim_inventory": "41_pdf_anchored_abstract_introduction_discussion_and_collaborator_claims",
-    "bounded_matrix_result_claim_inventory": "41_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_claims",
+    "bounded_context_claim_inventory": "44_pdf_anchored_abstract_introduction_discussion_and_collaborator_claims",
+    "bounded_matrix_result_claim_inventory": "42_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_claims",
     "bounded_math_result_claim_inventory": "63_pdf_anchored_section_3_2_and_figure_5_claims",
     "bounded_scheduling_claim_inventory": "45_pdf_anchored_section_3_3_opening_section_3_3_1_and_figure_6_claims",
     "bounded_kernel_claim_inventory": "59_pdf_anchored_section_3_3_2_and_figure_7_claims",
@@ -271,11 +272,12 @@
     "tex_source_detail_disposition_inventory": "30_tex_constructs_22_captions_5_equations_3_footnotes",
     "tex_table_cell_disposition_inventory": "83_rows_240_cells_78_existing_claims_218_claim_components",
     "tex_code_listing_line_disposition_inventory": "8_environments_305_lines_60_existing_claims_214_claim_components",
+    "tex_math_construct_disposition_inventory": "309_explicit_math_constructs_291_inline_18_display_zero_unmapped",
     "reference_existence_checks": "module_test_sidecar_todo_paths_and_todo_phrases"
   },
   "missing_evidence": {
-    "exhaustive_requirement_inventory": "833_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_and_305_dispositioned_listing_lines_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
-    "claim_level_source_span_coverage_matrix": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_and_305_listing_lines_have_line_dispositions_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "exhaustive_requirement_inventory": "837_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_and_309_dispositioned_explicit_math_constructs_without_whole_paper_sentence_paragraph_image_pixel_citation_semantic_mathematical_correctness_or_reproduction_exhaustiveness",
+    "claim_level_source_span_coverage_matrix": "837_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_and_309_explicit_math_constructs_have_delimiter_dispositions_without_whole_paper_sentence_paragraph_image_pixel_citation_semantic_mathematical_correctness_or_reproduction_exhaustiveness",
     "citation_semantic_mapping": "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -285,5 +287,5 @@
     "generated_code_audit_report": "not_recorded_locally",
     "ci_exhaustiveness_gate": "not_recorded_locally"
   },
-  "claim_boundary": "This boundary records corrected core AlphaEvolve requirement anchors with verified module, test, sidecar, and TODO links and connects them to the PDF-verified named source inventory, bounded 50-requirement Table 1/Section 2 inventory, and bounded 41-claim Abstract, Introduction, Discussion, and collaborator-context inventory, plus the bounded 41-claim Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result inventory, and the bounded 63-claim Section 3.2 and Figure 5 constructive-math inventory, plus the bounded 45-claim Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling inventory, plus the bounded 59-claim Section 3.3.2 and Figure 7 kernel-engineering inventory, plus the bounded 35-claim Section 3.3.3 hardware-circuit-design inventory, plus the bounded 44-claim Section 3.3.4 compiler-generated-code inventory, plus the bounded 51-claim Section 4 and Figure 8 ablation inventory, plus the bounded 85-claim Section 5 Related Work inventory, which separates 59 source-context-only claims from 26 implementation-relevant claims, plus the bounded 131-claim Appendix A, Table 3, and Figure 9 inventory, plus the bounded 188-claim Appendix B and Figures 10-14 inventory across all 13 subsections, plus lexical linkage for 195 TeX citation uses, 240 citation-key links, and all 120 compiled references, plus construct-level disposition for all 30 retained-source captions, displayed equations, and semantic footnotes, plus row- and cell-level disposition for all 83 rows and 240 cells in Tables 1-3, with all 78 data rows mapped to 78 existing bounded claims and zero new claims, plus environment- and line-level disposition for all 8 retained TeX code listing environments and all 305 physical source lines, with 214 bounded-claim-component lines mapped to 60 existing claims and zero new or unmapped lines. It does not establish whole-paper proposition-level semantic exhaustiveness and does not classify citation semantics, source sufficiency, or implementation relevance. It does not claim a whole-paper exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, paper-index phrase evidence-link sufficiency, status-cell semantic verifier, implemented benchmark bullet semantic verifier, absence-sentence freshness matrix, module coverage detector, test/runtime-artifact coverage detector, generated code-audit report, CI exhaustiveness gate, or proof that every AlphaEvolve-facing implementation claim has been classified."
+  "claim_boundary": "This boundary records corrected core AlphaEvolve requirement anchors with verified module, test, sidecar, and TODO links and connects them to the PDF-verified named source inventory, bounded 50-requirement Table 1/Section 2 inventory, and bounded 44-claim Abstract, Introduction, Discussion, and collaborator-context inventory, plus the bounded 42-claim Section 3.1, Table 2, Figure 4, and footnote 3 matrix-result inventory, and the bounded 63-claim Section 3.2 and Figure 5 constructive-math inventory, plus the bounded 45-claim Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling inventory, plus the bounded 59-claim Section 3.3.2 and Figure 7 kernel-engineering inventory, plus the bounded 35-claim Section 3.3.3 hardware-circuit-design inventory, plus the bounded 44-claim Section 3.3.4 compiler-generated-code inventory, plus the bounded 51-claim Section 4 and Figure 8 ablation inventory, plus the bounded 85-claim Section 5 Related Work inventory, which separates 59 source-context-only claims from 26 implementation-relevant claims, plus the bounded 131-claim Appendix A, Table 3, and Figure 9 inventory, plus the bounded 188-claim Appendix B and Figures 10-14 inventory across all 13 subsections, plus lexical linkage for 195 TeX citation uses, 240 citation-key links, and all 120 compiled references, plus construct-level disposition for all 30 retained-source captions, displayed equations, and semantic footnotes, plus row- and cell-level disposition for all 83 rows and 240 cells in Tables 1-3, with all 78 data rows mapped to 78 existing bounded claims and zero new claims, plus environment- and line-level disposition for all 8 retained TeX code listing environments and all 305 physical source lines, with 214 bounded-claim-component lines mapped to 60 existing claims and zero new or unmapped lines, plus delimiter-level disposition for all 309 explicit TeX math constructs, split into 291 inline and 18 display constructs, with zero new or unmapped constructs. It does not establish whole-paper proposition-level semantic exhaustiveness and does not classify citation semantics, source sufficiency, or implementation relevance. It does not claim a whole-paper exhaustive requirement inventory or whole-paper claim-level source-span coverage matrix, paper-index phrase evidence-link sufficiency, status-cell semantic verifier, implemented benchmark bullet semantic verifier, absence-sentence freshness matrix, module coverage detector, test/runtime-artifact coverage detector, generated code-audit report, CI exhaustiveness gate, or proof that every AlphaEvolve-facing implementation claim has been classified."
 }

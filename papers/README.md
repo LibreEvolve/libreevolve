@@ -1561,15 +1561,15 @@ PDF-anchored implementation requirements covering all eight Table 1 rows,
 Sections 2.1-2.6, and Figures 1-3. It classifies 13 requirements as locally
 implemented, 30 as partial, 2 as not implemented, and 5 as not demonstrated,
 and verifies live domain TODO ownership for all 37 incomplete rows. The committed
-`papers/alphaevolve_context_claim_inventory_boundary.json` adds 41 exact-page
+`papers/alphaevolve_context_claim_inventory_boundary.json` adds 44 exact-page
 claims from the Abstract, Introduction, Discussion, and one Acknowledgements
 sentence. It classifies 6 as locally implemented, 11 as partial, 4 as not
-implemented, and 20 as not demonstrated, with live TODO ownership for all 35
-gaps. `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 41
+implemented, and 23 as not demonstrated, with live TODO ownership for all 38
+gaps. `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 42
 exact-page claims from Section 3.1, all sixteen selected Table 2 rank rows,
 Figure 4, and footnote 3. It classifies none as locally implemented, 6 as
-partial, 3 as not implemented, and 32 as not demonstrated, with live TODO
-ownership for all 41 gaps. The committed
+partial, 3 as not implemented, and 33 as not demonstrated, with live TODO
+ownership for all 42 gaps. The committed
 `papers/alphaevolve_math_result_claim_inventory_boundary.json` adds 63 exact-
 page claims from Section 3.2 and Figure 5, including all nine displayed result
 pairs, constructive-math method claims, named outcomes, artifact availability,
@@ -1639,9 +1639,10 @@ bibliography are listed. This is lexical source linkage, while every citation's
 supported proposition and implementation relevance remain unclassified with
 active code/paper TODO ownership. The separate
 `papers/alphaevolve_tex_source_detail_inventory_boundary.json` inventories all
-30 retained-source caption, displayed-equation, and semantic-footnote
-constructs: 22 captions, 5 equations, and 3 real footnotes, with the preamble
-macro template excluded. Twenty-four constructs map through 80 references to
+30 retained-source caption, equation-environment, and semantic-footnote
+constructs: 22 captions, 5 equation environments, and 3 real footnotes, with
+the preamble macro template excluded. Twenty-four constructs map through 80
+references to
 existing bounded claim ids, one maps to reviewed publication metadata, two are
 non-additive named-span locators, and three are decorative Figure 3 markers.
 All constructs and references resolve, and this inventory adds zero claims or
@@ -1661,11 +1662,17 @@ component lines mapped through 344 line-level references to 60 existing claims,
 21 unchanged baseline-context lines, 10 abbreviation lines, 4 diff-hunk lines,
 and 56 structural blank/diff lines. Nothing is unmapped or unresolved, and no
 claim or parity credit is added. This does not recover omitted code, execute or
-compile a listing, or reproduce a result. Together the twelve bounded claim
-inventories still disposition 833 claims: 29 locally
-implemented, 275 partial, 108 not implemented, 362 not demonstrated, and 59
-source-context-only. Across 774 implementation-relevant claims this is 3.7%
-strict implemented parity, or 21.5% when partial claims receive half credit.
+compile a listing, or reproduce a result. The separate
+`papers/alphaevolve_tex_math_inventory_boundary.json` inventories all 309
+explicit TeX math constructs: 291 inline and 18 display constructs. It inherits
+34 source-detail and 75 table-cell dispositions and maps the remaining 200
+constructs directly to existing bounded claims, with zero unmapped or unresolved
+references and no new claim or parity credit. It does not establish formula
+correctness, proof validity, or result reproduction. Together the twelve bounded
+claim inventories still disposition 837 claims: 29 locally implemented, 275
+partial, 108 not implemented, 366 not demonstrated, and 59 source-context-only.
+Across 778 implementation-relevant claims this is 3.7% strict implemented
+parity, or 21.4% when partial claims receive half credit.
 The weighted value rises because Appendix B registry metadata receives partial
 credit, not because any Appendix B result was reproduced.
 The corrected
@@ -1674,11 +1681,13 @@ anchors for markers, prompt sampling/creative generation, evaluation,
 evolution, distributed execution, and published benchmark coverage with 81
 existence-checked source-span/module/test/sidecar/TODO references. Citation
 syntax and key linkage are exhaustive for the retained TeX source, and all
-retained-source captions, displayed equations, and semantic footnotes have
-construct-level dispositions; all 83 table rows and 240 cells have row/cell
+retained-source captions, equation-environment constructs, and semantic
+footnotes have construct-level dispositions; all 83 table rows and 240 cells
+have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
-have line-level dispositions. This is not a whole-paper sentence-, paragraph-,
-inline-math-, image-pixel-, citation-semantic, or
+have line-level dispositions; all 309 explicit TeX math constructs have
+delimiter-level dispositions. This is not a whole-paper sentence-, paragraph-,
+mathematical-correctness-, image-pixel-, citation-semantic, or
 proposition-level exhaustive inventory, per-phrase evidence-link sufficiency proof,
 coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
@@ -4045,13 +4054,13 @@ Implemented:
   verify cited sources, inventory equations or footnotes, reproduce results,
   or establish AlphaEvolve parity.
 - `papers/alphaevolve_tex_source_detail_inventory_boundary.json`: retained-TeX
-  source-detail sidecar for all 22 captions, 5 displayed equations, and 3
+  source-detail sidecar for all 22 captions, 5 equation environments, and 3
   semantic footnotes in the recursive 14-file `main.tex` closure. It records
   source anchors and hashes, excludes one preamble macro template, and maps 24
   constructs through 80 references to existing bounded claim ids, one to
   publication metadata boundaries, two to named-span locators, and three to
   decorative-marker dispositions. It adds no bounded claims and does not prove
-  sentence/paragraph/inline-math/listing/image-pixel/citation
+  sentence/paragraph/mathematical-correctness/listing/image-pixel/citation
   semantics, result reproduction, independent review, or AlphaEvolve parity.
 - `papers/alphaevolve_tex_table_cell_inventory_boundary.json`: retained-TeX
   table-row and top-level-cell disposition sidecar for all 3 table
@@ -4070,6 +4079,15 @@ Implemented:
   references. It adds no claims and does not execute or compile snippets,
   recover omitted code, reproduce results, establish whole-paper proposition
   exhaustiveness, or demonstrate AlphaEvolve parity.
+- `papers/alphaevolve_tex_math_inventory_boundary.json`: retained-TeX explicit
+  math-delimiter inventory for all 309 constructs in the recursive `main.tex`
+  closure: 291 inline and 18 display constructs across single-dollar,
+  double-dollar, bracket, parenthesis, `equation`, and `equation*` forms. It
+  inherits 34 source-detail and 75 table-cell dispositions and maps 200
+  remaining constructs directly to existing bounded claims with zero unmapped
+  or unresolved references. It adds no claims and does not prove formula
+  correctness, proof validity, result reproduction, whole-paper proposition
+  exhaustiveness, or AlphaEvolve parity.
 - `papers/alphaevolve_current_version_boundary.json`: AlphaEvolve
   current-version/floating-PDF sidecar with pinned current abstract URL,
   retrieval date, status, content type, byte count, SHA-256 digest, title,

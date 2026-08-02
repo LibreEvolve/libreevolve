@@ -12,11 +12,11 @@ from libreevolve.problems.benchmarks.alphaevolve_source_inventory_boundary impor
 
 
 IMPLEMENTATION_EVIDENCE_MAP_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v18"
+    "libreevolve.alphaevolve_implementation_evidence_map_boundary.v19"
 )
 EXPECTED_SOURCE_PAPER_ID = "2506.13131"
 EXPECTED_BOUNDARY_STATUS = (
-    "verified_core_anchors_plus_833_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_and_305_listing_lines_without_whole_paper_exhaustiveness"
+    "verified_core_anchors_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_exhaustiveness"
 )
 EXPECTED_SOURCE_INVENTORY_REF = "papers/alphaevolve_source_inventory_boundary.json"
 EXPECTED_CONTEXT_CLAIM_INVENTORY_REF = (
@@ -64,6 +64,9 @@ EXPECTED_TEX_TABLE_CELL_INVENTORY_REF = (
 EXPECTED_TEX_CODE_LISTING_INVENTORY_REF = (
     "papers/alphaevolve_tex_code_listing_inventory_boundary.json"
 )
+EXPECTED_TEX_MATH_INVENTORY_REF = (
+    "papers/alphaevolve_tex_math_inventory_boundary.json"
+)
 EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF = (
     "papers/alphaevolve_system_requirement_inventory_boundary.json"
 )
@@ -71,10 +74,10 @@ EXPECTED_RECORDED_EVIDENCE = {
     "named_source_structure_inventory": "55_pdf_verified_spans",
     "bounded_system_requirement_inventory": "50_pdf_anchored_table_1_and_section_2_requirements",
     "bounded_context_claim_inventory": (
-        "41_pdf_anchored_abstract_introduction_discussion_and_collaborator_claims"
+        "44_pdf_anchored_abstract_introduction_discussion_and_collaborator_claims"
     ),
     "bounded_matrix_result_claim_inventory": (
-        "41_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_claims"
+        "42_pdf_anchored_section_3_1_table_2_figure_4_and_footnote_3_claims"
     ),
     "bounded_math_result_claim_inventory": (
         "63_pdf_anchored_section_3_2_and_figure_5_claims"
@@ -115,13 +118,16 @@ EXPECTED_RECORDED_EVIDENCE = {
     "tex_code_listing_line_disposition_inventory": (
         "8_environments_305_lines_60_existing_claims_214_claim_components"
     ),
+    "tex_math_construct_disposition_inventory": (
+        "309_explicit_math_constructs_291_inline_18_display_zero_unmapped"
+    ),
     "reference_existence_checks": (
         "module_test_sidecar_todo_paths_and_todo_phrases"
     ),
 }
 EXPECTED_MISSING_EVIDENCE = {
-    "exhaustive_requirement_inventory": "833_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_and_305_dispositioned_listing_lines_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
-    "claim_level_source_span_coverage_matrix": "833_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_and_305_listing_lines_have_line_dispositions_without_whole_paper_sentence_paragraph_inline_math_image_pixel_citation_semantic_or_reproduction_exhaustiveness",
+    "exhaustive_requirement_inventory": "837_bounded_claims_plus_195_lexical_citation_uses_30_dispositioned_tex_source_details_240_dispositioned_table_cells_305_dispositioned_listing_lines_and_309_dispositioned_explicit_math_constructs_without_whole_paper_sentence_paragraph_image_pixel_citation_semantic_mathematical_correctness_or_reproduction_exhaustiveness",
+    "claim_level_source_span_coverage_matrix": "837_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_and_309_explicit_math_constructs_have_delimiter_dispositions_without_whole_paper_sentence_paragraph_image_pixel_citation_semantic_mathematical_correctness_or_reproduction_exhaustiveness",
     "citation_semantic_mapping": "195_citation_uses_lexically_linked_without_supported_proposition_source_sufficiency_or_implementation_relevance_classification",
     "status_cell_semantic_verifier": "not_recorded_locally",
     "implemented_benchmark_bullet_semantic_verifier": "not_recorded_locally",
@@ -415,6 +421,7 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
         "tex_source_detail_inventory_ref": EXPECTED_TEX_SOURCE_DETAIL_INVENTORY_REF,
         "tex_table_cell_inventory_ref": EXPECTED_TEX_TABLE_CELL_INVENTORY_REF,
         "tex_code_listing_inventory_ref": EXPECTED_TEX_CODE_LISTING_INVENTORY_REF,
+        "tex_math_inventory_ref": EXPECTED_TEX_MATH_INVENTORY_REF,
         "system_requirement_inventory_ref": EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF,
         "boundary_status": EXPECTED_BOUNDARY_STATUS,
         "claim_ready": False,
@@ -425,9 +432,9 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "This boundary records corrected core AlphaEvolve requirement anchors "
             "with verified module, test, sidecar, and TODO links and connects them "
             "to the PDF-verified named source inventory, bounded 50-requirement "
-            "Table 1/Section 2 inventory, and bounded 41-claim Abstract, "
+            "Table 1/Section 2 inventory, and bounded 44-claim Abstract, "
             "Introduction, Discussion, and collaborator-context inventory, plus "
-            "the bounded 41-claim Section 3.1, Table 2, Figure 4, and footnote 3 "
+            "the bounded 42-claim Section 3.1, Table 2, Figure 4, and footnote 3 "
             "matrix-result inventory, and the bounded 63-claim Section 3.2 and "
             "Figure 5 constructive-math inventory, plus the bounded 45-claim "
             "Section 3.3 opening, Section 3.3.1, and Figure 6 scheduling "
@@ -450,7 +457,10 @@ def implementation_evidence_map_boundary_record() -> dict[str, Any]:
             "new claims, plus environment- and line-level disposition for all "
             "8 retained TeX code listing environments and all 305 physical "
             "source lines, with 214 bounded-claim-component lines mapped to "
-            "60 existing claims and zero new or unmapped lines. It does not "
+            "60 existing claims and zero new or unmapped lines, plus delimiter-"
+            "level disposition for all 309 explicit TeX math constructs, split "
+            "into 291 inline and 18 display constructs, with zero new or unmapped "
+            "constructs. It does not "
             "establish "
             "whole-paper proposition-level semantic exhaustiveness and does "
             "not classify "
@@ -547,6 +557,10 @@ def validate_implementation_evidence_map_boundary(
         issues.append(_issue("invalid_tex_code_listing_inventory_ref", f"tex_code_listing_inventory_ref must be {EXPECTED_TEX_CODE_LISTING_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_TEX_CODE_LISTING_INVENTORY_REF).is_file():
         issues.append(_issue("missing_tex_code_listing_inventory_ref", f"{EXPECTED_TEX_CODE_LISTING_INVENTORY_REF} is missing"))
+    if data.get("tex_math_inventory_ref") != EXPECTED_TEX_MATH_INVENTORY_REF:
+        issues.append(_issue("invalid_tex_math_inventory_ref", f"tex_math_inventory_ref must be {EXPECTED_TEX_MATH_INVENTORY_REF}"))
+    if not (Path(root) / EXPECTED_TEX_MATH_INVENTORY_REF).is_file():
+        issues.append(_issue("missing_tex_math_inventory_ref", f"{EXPECTED_TEX_MATH_INVENTORY_REF} is missing"))
     if data.get("system_requirement_inventory_ref") != EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF:
         issues.append(_issue("invalid_system_requirement_inventory_ref", f"system_requirement_inventory_ref must be {EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF}"))
     if not (Path(root) / EXPECTED_SYSTEM_REQUIREMENT_INVENTORY_REF).is_file():
@@ -576,6 +590,7 @@ def validate_implementation_evidence_map_boundary(
         or "30 retained-source captions" not in boundary_text
         or "all 83 rows and 240 cells" not in boundary_text
         or "all 8 retained TeX code listing environments and all 305 physical source lines" not in boundary_text
+        or "all 309 explicit TeX math constructs" not in boundary_text
         or "whole-paper proposition-level semantic exhaustiveness" not in boundary_text
         or "paper-index phrase evidence-link sufficiency" not in boundary_text
         or "implemented benchmark bullet semantic verifier" not in boundary_text

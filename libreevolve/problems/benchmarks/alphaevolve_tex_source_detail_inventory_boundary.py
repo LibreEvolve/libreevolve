@@ -448,7 +448,7 @@ class AlphaEvolveTexSourceDetailInventoryBoundaryValidation:
 def alphaevolve_tex_source_detail_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Disposition retained TeX captions, displayed equations, and footnotes."""
+    """Disposition retained TeX captions, equation environments, and footnotes."""
 
     root_path = Path(root)
     source_artifact, archive_texts, source_errors = _read_source_archive(root_path)
@@ -567,7 +567,7 @@ def alphaevolve_tex_source_detail_inventory_boundary_record(
         "inventory_scope": {
             "included": [
                 "all 22 caption commands in the recursive main.tex closure",
-                "all five displayed equation and equation-star environments in the closure",
+                "all five equation and equation-star environments in the closure",
                 "all three semantic footnote uses in the closure",
                 "the excluded preamble footnote macro template as a non-use audit record",
                 "construct-level mapping to existing bounded claim IDs, publication metadata boundaries, named spans, or decorative-marker disposition",
@@ -584,7 +584,7 @@ def alphaevolve_tex_source_detail_inventory_boundary_record(
         },
         "claim_boundary": (
             "This sidecar certifies construct-level disposition for all 30 "
-            "retained-source captions, displayed equations, and semantic "
+            "retained-source captions, equation-environment constructs, and semantic "
             "footnotes: 24 map to existing bounded claim IDs, one maps to "
             "reviewed publication metadata, two are non-additive named-span "
             "locators, and three are decorative markers. It adds zero bounded "

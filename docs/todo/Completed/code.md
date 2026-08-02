@@ -26,24 +26,26 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
     cells are bounded-claim components, 8 are FunSearch baseline context, and
     14 are structural headers. Nothing is unmapped or unresolved, and the
     inventory adds zero claims or parity credit.
-  - Remaining code gap: sentence/paragraph/inline-math/image-pixel and
-    citation semantics, source sufficiency, table-result reproduction,
+  - Remaining code gap: sentence/paragraph/image-pixel and citation semantics,
+    source sufficiency, mathematical correctness, table-result reproduction,
     independent review, and whole-paper CI exhaustiveness remain active.
   - Verification: focused boundary and paper-manifest tests reject source,
     row/cell count, mapping, reference, sidecar, semantic-overclaim,
     reproduction-overclaim, and parity drift.
 
-- [x] Add the retained-TeX caption, equation, and footnote construct inventory.
+- [x] Add the retained-TeX caption, equation-environment, and footnote
+  construct inventory.
   - Status: the public boundary parses the recursive 14-file `main.tex` closure
     and records source file, line, column, section path, command text, hashes,
     page, span, semantic role, and disposition for all 30 relevant constructs.
-  - Accounting: the inventory contains 22 captions, 5 displayed equations, and
-    3 semantic footnotes, excludes one preamble macro template, maps 24
-    constructs through 80 resolved references to existing claim ids, maps one
-    to publication metadata, classifies two as named-span locators and three as
+  - Accounting: the inventory contains 22 captions, 5 equation-environment
+    constructs, and 3 semantic footnotes, excludes one preamble macro template,
+    maps 24 constructs through 80 resolved references to existing claim ids,
+    maps one to publication metadata, classifies two as named-span locators and
+    three as
     decorative markers, and adds zero claims or parity credit.
-  - Remaining code gap: sentence/paragraph/inline-math/image-
-    pixel/citation proposition semantics, source sufficiency, result
+  - Remaining code gap: sentence/paragraph/image-pixel/citation proposition
+    semantics, mathematical correctness, source sufficiency, result
     reproduction, independent review, and whole-paper CI exhaustiveness remain
     owned by active TODOs.
   - Verification: focused boundary and paper-manifest tests reject source,
@@ -19703,6 +19705,21 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused inventory, implementation-map, ROADMAP coverage, and
     paper-manifest tests validate anchors, counts, references, TODO ownership,
     source wording, drift rejection, and result/parity disclaimers.
+- [x] Inventory every explicit AlphaEvolve TeX math construct and repair claim omissions.
+  - Status: `alphaevolve_tex_math_inventory_boundary.py` parses all 309
+    explicit constructs in the retained 14-file TeX closure: 291 inline and 18
+    display constructs across five delimiter/environment forms. It inherits 34
+    source-detail and 75 table-cell dispositions and directly maps the other
+    200 constructs with no unmapped or unresolved references.
+  - Claim correction: the context inventory now includes the Introduction's
+    complex `4x4` rank-48, roughly 75-percent best-known-match, and dimension-11
+    Kissing Numbers statements; the matrix inventory now includes the unknown
+    minimum rank for `3x3` multiplication. Aggregate coverage is 837 claims.
+  - Remaining code gap: formula correctness, proof validity, result
+    reproduction, and whole-paper sentence/paragraph semantics remain open.
+  - Verification: focused parser, claim-inventory, aggregate-boundary, and
+    paper-manifest tests validate counts, PDF anchors, references, drift
+    rejection, and non-parity boundaries.
 - [x] Add a PDF-anchored AlphaEvolve Section 3.3.4 compiler claim inventory.
   - Spec evidence: Section 3.3.4 describes transformer and attention context,
     a FlashAttention/Pallas/JAX/XLA stack, direct compiler-generated IR edits,

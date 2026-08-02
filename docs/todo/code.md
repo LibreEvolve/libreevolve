@@ -53,14 +53,17 @@ sidecars, tests, and active TODOs.
     implemented, 30 as partial, 2 as not implemented, and 5 as not demonstrated;
     all 37 incomplete requirements resolve to live domain TODO titles. The
     committed `papers/alphaevolve_context_claim_inventory_boundary.json` adds
-    41 anchored Abstract, Introduction, Discussion, and collaborator-context
+    44 anchored Abstract, Introduction, Discussion, and collaborator-context
     claims. It classifies 6 as locally implemented, 11 partial, 4 not
-    implemented, and 20 not demonstrated, and resolves all 35 gaps to live
+    implemented, and 23 not demonstrated, and resolves all 38 gaps to live
     domain TODO titles. The committed
-    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 41
+    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 42
     Section 3.1, Table 2, Figure 4, and footnote 3 claims. It classifies 6 as
-    partial, 3 as not implemented, and 32 as not demonstrated, and resolves all
-    41 gaps to live domain TODO titles. The committed
+    partial, 3 as not implemented, and 33 as not demonstrated, and resolves all
+    42 gaps to live domain TODO titles. These inventories now include the
+    Introduction's 4x4 complex rank-48, roughly 75-percent best-known-match,
+    and dimension-11 Kissing Numbers statements plus Section 3.1's unknown
+    minimum rank for 3x3 multiplication. The committed
     `papers/alphaevolve_math_result_claim_inventory_boundary.json` adds 63
     Section 3.2 and Figure 5 claims, including every displayed result pair. It
     classifies 2 as locally implemented, 16 partial, 4 not implemented, and 41
@@ -102,8 +105,8 @@ sidecars, tests, and active TODOs.
     exact-page and visible-panel claims across all 13 Appendix B subsections and
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with both code and paper TODO ownership for every gap. The twelve bounded
-    inventories therefore cover 833 claims: 29 locally implemented, 275
-    partial, 108 not implemented, 362 not demonstrated, and 59
+    inventories therefore cover 837 claims: 29 locally implemented, 275
+    partial, 108 not implemented, 366 not demonstrated, and 59
     source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` now scans the
     retained 14-file TeX closure and records all 195 logical citation uses, 240
@@ -113,7 +116,7 @@ sidecars, tests, and active TODOs.
     citation semantics and implementation-relevance decisions unclassified
     under this code/paper TODO. The supplemental
     `papers/alphaevolve_tex_source_detail_inventory_boundary.json` now parses
-    all 22 captions, 5 displayed equations, and 3 real footnotes in the same
+    all 22 captions, 5 equation environments, and 3 real footnotes in the same
     closure, excludes one preamble macro template, and assigns all 30
     constructs a stable disposition. Twenty-four constructs map through 80
     resolved references to existing bounded claim ids, one maps to reviewed
@@ -133,7 +136,14 @@ sidecars, tests, and active TODOs.
     existing claims and dispositions baseline, abbreviation, diff-marker, and
     structural lines with no unmapped or unresolved units. It adds no claims or
     parity credit; snippet execution/compilation, omitted-code recovery, and
-    result reproduction remain owned by this TODO. Meanwhile,
+    result reproduction remain owned by this TODO. The supplemental
+    `papers/alphaevolve_tex_math_inventory_boundary.json` inventories all 309
+    explicit TeX math constructs: 291 inline and 18 display constructs. It
+    inherits 34 source-detail and 75 table-cell dispositions and maps the
+    remaining 200 constructs directly to existing bounded claim ids. Nothing
+    is unmapped or unresolved, and it adds no claims or parity credit. Formula
+    correctness, proof validity, and result reproduction remain owned by this
+    TODO. Meanwhile,
     `papers/status_claim_inventory.json` now records checked row-level paper
     status inventory plus status-cell phrase hashes, source offsets, local
     artifact mention source offsets, and candidate evidence-link lists with
@@ -150,19 +160,21 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 833 bounded system, context,
+  - Current gap: the named source structure and 837 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
     hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
     ablation, Section 5 Related Work, Appendix A, Table 3, Figure 9, Appendix B,
     and Figures 10-14 claims are now machine-readable and PDF-verified, and
     citation commands plus bibliography-key linkage are lexically exhaustive
-    for the retained TeX, and all caption/equation/footnote constructs have
-    dispositions, all 83 table rows and 240 cells have row/cell dispositions,
-    and all 8 code listings and 305 source lines have line-level dispositions.
+    for the retained TeX, and all caption/equation-environment/footnote
+    constructs have dispositions, all 83 table rows and 240 cells have
+    row/cell dispositions,
+    all 8 code listings and 305 source lines have line-level dispositions, and
+    all 309 explicit TeX math constructs have delimiter-level dispositions.
     However, citation proposition/role/sufficiency and
     implementation relevance remain unclassified, and there is no AlphaEvolve
-    requirement inventory exhaustive at sentence, paragraph, inline-math,
-    image-pixel, citation-semantic, or proposition level
+    requirement inventory exhaustive at sentence, paragraph, mathematical-
+    correctness, image-pixel, citation-semantic, or proposition level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no
@@ -4633,6 +4645,8 @@ sidecars, tests, and active TODOs.
   - Spec evidence: AlphaEvolve Section 3.1 frames matrix multiplication results
     as low-rank tensor decompositions, contrasts the characteristic-0 rank-48
     `4x4` tensor-decomposition result with finite-field-only prior work, and
+    states that even for `3x3` multiplication the minimum achievable rank is
+    unknown. It also distinguishes known upper bounds from proved minima, while
     footnote 3 says some algorithms use fewer than 49 multiplications but do
     not correspond to matrix-multiplication tensor decompositions and cannot be
     applied recursively to larger matrix multiplication.
@@ -4655,12 +4669,14 @@ sidecars, tests, and active TODOs.
     builds a runtime row from validated tensor-rank evidence and validation
     checks linkage to nested target, rank claim, recursive-applicability,
     tensor-identity, target-tensor, and certificate evidence. Local matrix
-    runners do not emit target-tensor/certificate artifacts or footnote-level
+    runners do not emit target-tensor/certificate artifacts, source-preserving
+    evidence for the unknown `3x3` minimum-rank statement, or footnote-level
     non-tensor caveat records.
   - Required result: emit or commit matrix report companion artifacts with
     algorithm kind, tensor-decomposition certificate scope, recursive
     applicability, target tensor identity evidence, field/characteristic
-    caveats, and source-note provenance so Appendix A rank claims remain
+    caveats, explicit known-bound-versus-proved-minimum status, and source-note
+    provenance so Appendix A rank claims remain
     faithful to the paper's distinction between tensor-rank improvements and
     non-recursive multiplication algorithms.
 

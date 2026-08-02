@@ -22,9 +22,9 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
     exhaustiveness, and AlphaEvolve parity; parity percentages remain unchanged.
 
 - [x] Document the retained-TeX source-detail construct audit in README.
-  - Status: README now reports all 22 captions, 5 displayed equations, 3
-    semantic footnotes, the excluded preamble macro template, 30 stable
-    dispositions, 80 resolved claim-id references, and zero new claims.
+  - Status: README now reports all 22 captions, 5 equation-environment
+    constructs, 3 semantic footnotes, the excluded preamble macro template, 30
+    stable dispositions, 80 resolved claim-id references, and zero new claims.
   - Boundary: README distinguishes construct-level disposition from
     proposition-level semantic exhaustiveness, source sufficiency, independent
     result reproduction, and AlphaEvolve parity; parity percentages remain
@@ -16087,3 +16087,13 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining boundary: README keeps Sections 4-5, Figures 8-14, Table 3,
     detailed appendices, source-detail exhaustiveness, and independent result
     reproduction outside the completed claim walk.
+- [x] Document complete retained-TeX math-delimiter coverage.
+  - Status: README now reports all 309 explicit TeX math constructs, the
+    291-inline/18-display split, inherited and direct dispositions, and zero
+    unmapped or unresolved references.
+  - Aggregate correction: README reports 837 bounded claims, 778
+    implementation-relevant claims, 749 implementation gaps, 3.7% strict
+    parity, and 21.4% half-credit parity.
+  - Remaining boundary: formula correctness, proof validity, result
+    reproduction, whole-paper proposition semantics, and AlphaEvolve-scale
+    execution remain explicitly unproven.

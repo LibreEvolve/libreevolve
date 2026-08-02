@@ -1807,7 +1807,7 @@ Important limits:
   coverage only, not implementation of those missing readiness fields.
 - ROADMAP source-span disposition evidence maps all 55 PDF-verified named
   AlphaEvolve spans to ROADMAP section ids, phase buckets, sidecars, and TODO
-  links and connects twelve bounded inventories containing 833 claims. It also
+  links and connects twelve bounded inventories containing 837 claims. It also
   records 53 paper-index rows with only the AlphaEvolve source row
   dispositioned by this matrix. This is not a whole-paper source-detail,
   semantic-evidence, or result-reproduction proof.
@@ -1818,9 +1818,10 @@ Important limits:
   This is complete lexical linkage for the retained source, not citation-
   semantic classification, source-sufficiency proof, implementation relevance,
   external-reference verification, or additional functional parity credit.
-- Retained-TeX source-detail evidence inventories all 30 caption, displayed-
-  equation, and semantic-footnote constructs in the same closure: 22 captions,
-  5 equations, and 3 real footnotes, with one preamble macro template excluded.
+- Retained-TeX source-detail evidence inventories all 30 caption, equation-
+  environment, and semantic-footnote constructs in the same closure: 22
+  captions, 5 equation environments, and 3 real footnotes, with one preamble
+  macro template excluded.
   Twenty-four constructs map through 80 references to existing bounded claim
   ids, one maps to reviewed publication metadata, two are named-span locators,
   and three are decorative markers. There are no unmapped constructs or
@@ -1842,22 +1843,29 @@ Important limits:
   references, new claims, or functional parity credit. This closes listing-line
   disposition only, not snippet execution/compilation, omitted-code recovery,
   or result reproduction.
+- Retained-TeX math evidence inventories all 309 explicit delimiter constructs:
+  291 inline and 18 display constructs. It inherits 34 source-detail and 75
+  table-cell dispositions and maps the remaining 200 constructs directly to
+  existing bounded claims, with zero unmapped or unresolved references and no
+  new claim or parity credit. This closes explicit-delimiter disposition, not
+  formula correctness, proof validity, or result reproduction.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
   for main-text section walk, figure exhibits, table/capability rows, Appendix
   A matrix targets, Appendix B constructive math, application-result claims,
   paper-status row dispositions, and TODO/non-goal/phase proof. It links the
   existing core source-span disposition input, paper-status row counts, sidecar
-  refs, active TODO refs, validation-gate labels, readiness labels, 833 bounded
+  refs, active TODO refs, validation-gate labels, readiness labels, 837 bounded
   claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
   source-detail dispositions, plus all 83 table rows, 240 table cells, 8 code
-  listings, and 305 listing source lines. The 774
-  implementation-relevant claims currently yield 3.7% strict implemented
-  parity or 21.5% with partial claims counted at half credit. The weighted
+  listings, 305 listing source lines, and 309 explicit TeX math constructs.
+  The 778 implementation-relevant claims currently yield 3.7% strict implemented
+  parity or 21.4% with partial claims counted at half credit. The weighted
   value rises because Appendix B registry metadata is partial, not because its
   results were reproduced. Citation syntax and key linkage are exhaustive for
-  the retained TeX, and caption/equation/footnote construct dispositions are
-  complete, and all table rows/cells and listing lines have dispositions, but
-  this is not a whole-paper sentence/paragraph/inline-math/image-pixel/
+  the retained TeX, and caption/equation-environment/footnote construct
+  dispositions are complete, and all table rows/cells, listing lines, and
+  explicit math delimiters have dispositions, but this is not a whole-paper
+  sentence/paragraph/mathematical-correctness/image-pixel/
   citation-semantic proposition audit, joined
   figure/table/appendix reproduction matrix, complete
   application-result claim matrix, status-row to ROADMAP

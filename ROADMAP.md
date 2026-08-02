@@ -919,14 +919,17 @@ AlphaEvolve reproduction.
   Sections 2.1-2.6, and Figures 1-3, classifies 13 as locally implemented and
   37 as incomplete, and verifies live domain TODO ownership for every
   incomplete requirement. The separate
-  `papers/alphaevolve_context_claim_inventory_boundary.json` adds 41 anchored
+  `papers/alphaevolve_context_claim_inventory_boundary.json` adds 44 anchored
   Abstract, Introduction, Discussion, and collaborator-context claims: 6 are
-  locally implemented, 11 partial, 4 not implemented, and 20 not demonstrated,
-  with live TODO ownership for all 35 gaps. The additional
+  locally implemented, 11 partial, 4 not implemented, and 23 not demonstrated,
+  with live TODO ownership for all 38 gaps. The additional
   `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` dispositions
-  41 Section 3.1, Table 2, Figure 4, and footnote 3 claims: 6 are partial, 3
-  not implemented, and 32 not demonstrated, with no locally implemented result
-  claims and live TODO ownership for all 41 gaps. The additional
+  42 Section 3.1, Table 2, Figure 4, and footnote 3 claims: 6 are partial, 3
+  not implemented, and 33 not demonstrated, with no locally implemented result
+  claims and live TODO ownership for all 42 gaps. These inventories now include
+  the Introduction's complex `4x4` rank-48, roughly 75-percent best-known-match,
+  and dimension-11 Kissing Numbers statements plus Section 3.1's unknown
+  minimum rank for `3x3` multiplication. The additional
   `papers/alphaevolve_math_result_claim_inventory_boundary.json` dispositions
   63 Section 3.2 and Figure 5 claims: 2 are locally implemented, 16 partial, 4
   not implemented, and 41 not demonstrated, with live TODO ownership for all
@@ -982,9 +985,10 @@ AlphaEvolve reproduction.
   citation uses still have unclassified semantics and active code/paper TODO
   ownership. The supplemental
   `papers/alphaevolve_tex_source_detail_inventory_boundary.json` separately
-  inventories all 30 retained-source caption, displayed-equation, and semantic-
-  footnote constructs: 22 captions, 5 equations, and 3 real footnotes, while
-  excluding the preamble's `\footnote{#1}` macro template. Twenty-four
+  inventories all 30 retained-source caption, equation-environment, and semantic-
+  footnote constructs: 22 captions, 5 equation environments, and 3 real
+  footnotes, while excluding the preamble's `\footnote{#1}` macro template.
+  Twenty-four
   constructs map to 80 references into existing bounded claim inventories, one
   maps to reviewed publication metadata, two are non-additive named-span
   locators, and three are decorative Figure 3 icon markers. There are no
@@ -1008,9 +1012,15 @@ AlphaEvolve reproduction.
   are diff-hunk markers, and the remaining 56 are structural blank/diff lines.
   Nothing is unmapped or unresolved, and no claim or parity credit is added.
   This line audit does not recover omitted code, execute or compile a listing,
-  or reproduce any reported result. The twelve bounded claim inventories
-  still disposition 833 claims in total: 29 locally implemented, 275 partial,
-  108 not implemented, 362 not demonstrated, and 59
+  or reproduce any reported result. The supplemental
+  `papers/alphaevolve_tex_math_inventory_boundary.json` inventories all 309
+  explicit TeX math constructs: 291 inline and 18 display constructs. It
+  inherits 34 source-detail and 75 table-cell dispositions and maps the other
+  200 constructs directly to existing bounded claims, with zero unmapped or
+  unresolved references and no new claim or parity credit. Formula correctness,
+  proof validity, and result reproduction remain open. The twelve bounded claim
+  inventories still disposition 837 claims in total: 29 locally implemented, 275 partial,
+  108 not implemented, 366 not demonstrated, and 59
   source-context-only,
   and `papers/status_claim_inventory.json` records checked row-level paper
   status inventory plus status-cell phrase hashes, source offsets, local
@@ -1023,16 +1033,17 @@ AlphaEvolve reproduction.
   benchmark coverage bullets plus file character offsets, source-token match
   file offsets, referenced local artifact mention file offsets/existence checks, and limitation-signal term/source-offset
   classification.
-  Across 774 implementation-relevant claims, strict implemented parity is
-  3.7%, while a half-credit weighting for partial claims is 21.5%. The weighted
+  Across 778 implementation-relevant claims, strict implemented parity is
+  3.7%, while a half-credit weighting for partial claims is 21.4%. The weighted
   value rises only because Appendix B registry metadata receives partial
   credit; no Appendix B result was reproduced. This is complete named-structure
-  coverage, bounded 833-claim coverage, complete lexical citation linkage, and
-  construct-level disposition of all retained-source captions, displayed
-  equations, and semantic footnotes, plus row/cell disposition for all 83 rows
-  and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
-  code listings and 305 physical source lines, not a whole-paper sentence-,
-  paragraph-, inline-math-, image-pixel-, citation-semantic, or
+  coverage, bounded 837-claim coverage, complete lexical citation linkage, and
+  construct-level disposition of all retained-source captions, equation-
+  environment constructs, and semantic footnotes, plus row/cell disposition
+  for all 83 rows and 240 cells in Tables 1-3, plus line-level disposition for all 8 retained
+  code listings and 305 physical source lines, plus delimiter-level disposition
+  for all 309 explicit TeX math constructs, not a whole-paper sentence-,
+  paragraph-, mathematical-correctness-, image-pixel-, citation-semantic, or
   claim-level proposition inventory,
   per-phrase evidence-link sufficiency proof, status-cell semantic verifier,
   implemented-benchmark bullet semantic verifier,

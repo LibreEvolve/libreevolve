@@ -27,8 +27,8 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
 - [x] Add retained-TeX source-detail dispositions to the AlphaEvolve ROADMAP audit.
   - Status: ROADMAP and its implementation-evidence, disposition, coverage, and
     exhaustiveness boundaries now include all 30 retained-source captions,
-    displayed equations, and semantic footnotes, plus the excluded preamble
-    macro template record.
+    five equation-environment constructs, and semantic footnotes, plus the
+    excluded preamble macro template record.
   - Accounting: 24 constructs map through 80 references to existing bounded
     claim ids, one maps to publication metadata, two are named-span locators,
     and three are decorative markers. No claim count or parity estimate changes.
@@ -16311,3 +16311,13 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining boundary: Sections 4-5, Figures 8-14, Table 3, detailed
     appendices, result reproduction, whole-paper semantic exhaustiveness, and
     owner signoff remain open.
+- [x] Credit explicit TeX math dispositions in ROADMAP coverage.
+  - Status: ROADMAP disposition, coverage, exhaustiveness, and implementation-
+    evidence boundaries now link all 309 explicit TeX math constructs and the
+    four newly anchored context/matrix claims.
+  - Combined boundary: the source walk now dispositions 837 bounded claims,
+    195 citation uses, 30 source-detail constructs, 240 table cells, 305 code-
+    listing lines, and 309 explicit math constructs.
+  - Remaining boundary: mathematical correctness, result reproduction,
+    sentence/paragraph exhaustiveness, joined application evidence, CI gates,
+    and owner signoff remain open.

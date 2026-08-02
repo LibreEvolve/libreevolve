@@ -1856,14 +1856,14 @@ Important limits:
   sentences. The walk contributed seven new bounded claims; it does not prove
   sentence-internal clause/proposition exhaustiveness, independent semantic
   review, mathematical correctness, or result reproduction.
-- Retained-TeX proposition evidence decomposes all 206 sentences from the
-  Abstract through Section 3.3.3 hardware circuit design into 673 atomic
-  propositions. Six hundred nineteen map through 643 references to 286 bounded
+- Retained-TeX proposition evidence decomposes all 220 sentences from the
+  Abstract through Section 3.3.4 compiler optimization into 744 atomic
+  propositions. Six hundred ninety map through 720 references to 329 bounded
   claims, 41 are source context, 2 are author outlook, and 11 are qualified
-  interpretations. The hardware slice adds no bounded claim or parity credit,
-  but repairs sentence mappings for Gemini's first direct TPU-circuit
-  contribution, direct Verilog fostering trust, and direct Verilog simplifying
-  adoption. The remaining 196 prose sentences, independent
+  interpretations. The compiler slice adds no bounded claim or parity credit,
+  but repairs sentence mappings for JAX output postprocessing and the reported
+  15% pre/postprocessing speedup. Existing active TODOs own all 44 compiler
+  gaps. The remaining 182 prose sentences, independent
   semantic review, mathematical correctness, and result reproduction remain
   open.
 - ROADMAP source-span coverage evidence now records eight coverage surfaces
@@ -1875,9 +1875,9 @@ Important limits:
   claims through Appendix B and Figures 10-14, and the 30 construct-level TeX
   source-detail dispositions, plus all 83 table rows, 240 table cells, 8 code
   listings, 305 listing source lines, 309 explicit TeX math constructs, 128
-  retained prose paragraphs, 402 grammatical sentences, and 673 proposition
-  dispositions across all 206 sentences from the Abstract through Section 3.3.3
-  hardware circuit design. The 787 implementation-relevant
+  retained prose paragraphs, 402 grammatical sentences, and 744 proposition
+  dispositions across all 220 sentences from the Abstract through Section 3.3.4
+  compiler optimization. The 787 implementation-relevant
   claims currently
   yield 3.8% strict implemented
   parity or 21.5% with partial claims counted at half credit. The weighted
@@ -1886,7 +1886,7 @@ Important limits:
   the retained TeX, and caption/equation-environment/footnote construct
   dispositions are complete, and all table rows/cells, listing lines, and
   explicit math delimiters and retained prose sentences have dispositions, but
-  this is not proposition review for the remaining 196 prose sentences,
+  this is not proposition review for the remaining 182 prose sentences,
   mathematical-correctness, image-pixel, citation-semantic, or independent-
   review audit, joined
   figure/table/appendix reproduction matrix, complete

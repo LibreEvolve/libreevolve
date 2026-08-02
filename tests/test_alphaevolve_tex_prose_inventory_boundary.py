@@ -116,6 +116,8 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "direct_verilog_fosters_trust",
         "direct_verilog_simplifies_adoption",
         "gemini_first_direct_tpu_arithmetic_contribution",
+        "jax_output_postprocessing",
+        "pre_postprocessing_speedup_15_percent",
     } <= mapped_ids
     assert {
         ref["claim_id"] for ref in records[("main.tex", 34, 0)]["claim_refs"]
@@ -261,6 +263,21 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "direct_verilog_fosters_trust",
         "direct_verilog_simplifies_adoption",
         "verilog_standard_hardware_engineering_language",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 177, 0)]["claim_refs"]
+    } == {
+        "flashattention_accelerator_kernel_in_stack",
+        "higher_level_jax_wrapper",
+        "jax_input_preparation",
+        "jax_output_postprocessing",
+        "pallas_flashattention_implementation",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 182, 2)]["claim_refs"]
+    } == {
+        "pre_postprocessing_improvements_found",
+        "pre_postprocessing_speedup_15_percent",
     }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]

@@ -145,13 +145,13 @@ sidecars, tests, and active TODOs.
     correctness, proof validity, and result reproduction remain owned by this
     TODO. The supplemental
     `papers/alphaevolve_tex_proposition_inventory_boundary.json` now reviews all
-    206 sentences from the Abstract through Section 3.3.3 hardware circuit
-    design as 673 atomic propositions. It maps 619 propositions through 643
-    references to 286 bounded claims and classifies 54 as context, outlook, or
-    interpretation. The hardware slice adds no new bounded claim or parity
-    credit, but repairs sentence mappings for Gemini's first direct TPU-circuit
-    contribution, direct Verilog fostering trust, and direct Verilog simplifying
-    adoption.
+    220 sentences from the Abstract through Section 3.3.4 compiler optimization
+    as 744 atomic propositions. It maps 690 propositions through 720 references
+    to 329 bounded claims and classifies 54 as context, outlook, or
+    interpretation. The compiler slice adds no new bounded claim or parity
+    credit, but repairs sentence mappings for JAX output postprocessing and the
+    reported 15% pre/postprocessing speedup. Existing active TODOs own all 44
+    compiler gaps.
     Remaining proposition coverage and independent semantic
     review stay open.
     Meanwhile,
@@ -181,11 +181,11 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 TeX math constructs and 402 prose sentences have dispositions; 673
-    propositions across all 206 sentences through Section 3.3.3 hardware
-    circuit design are reviewed.
+    all 309 TeX math constructs and 402 prose sentences have dispositions; 744
+    propositions across all 220 sentences through Section 3.3.4 compiler
+    optimization are reviewed.
     Citation roles/sufficiency and implementation relevance remain unclassified,
-    and 196 prose sentences lack proposition review;
+    and 182 prose sentences lack proposition review;
     mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report

@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v8",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v9",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_through_section3_3_3_hardware_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_through_section3_3_4_compiler_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,9 +15,9 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 206,
-  "remaining_sentence_count": 196,
-  "reviewed_sentence_fraction": 0.5124378109452736,
+  "reviewed_sentence_count": 220,
+  "remaining_sentence_count": 182,
+  "reviewed_sentence_fraction": 0.5472636815920398,
   "reviewed_source_files": [
     "introduction.tex",
     "main.tex",
@@ -31,16 +31,16 @@
     "discussion.tex",
     "related_work.tex"
   ],
-  "proposition_count": 673,
+  "proposition_count": 744,
   "disposition_counts": {
     "author_interpretation": 11,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 619,
+    "existing_bounded_claim_mapping": 690,
     "source_context_only": 41
   },
-  "claim_reference_count": 643,
-  "unique_claim_reference_count": 286,
-  "implementation_relevant_proposition_count": 609,
+  "claim_reference_count": 720,
+  "unique_claim_reference_count": 329,
+  "implementation_relevant_proposition_count": 680,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -75,6 +75,8 @@
     "direct_verilog_fosters_trust",
     "direct_verilog_simplifies_adoption",
     "gemini_first_direct_tpu_arithmetic_contribution",
+    "jax_output_postprocessing",
+    "pre_postprocessing_speedup_15_percent",
     "task_problem_specific_abstraction_choice"
   ],
   "reviewed_sentence_records": [
@@ -3014,6 +3016,231 @@
         "tex_proposition_0671",
         "tex_proposition_0672",
         "tex_proposition_0673"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0207",
+      "source_file": "results.tex",
+      "source_line": 175,
+      "source_text_sha256": "69a972ff412ae8a320766c4f80c3633c514b027564c257056b0a4af6c7be5ec7",
+      "rendered_text_sha256": "171e42e7d15b66b78be37bba0ab211e096479daaeec72fb0ab788cc9ec4b3925",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0674",
+        "tex_proposition_0675",
+        "tex_proposition_0676"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0208",
+      "source_file": "results.tex",
+      "source_line": 176,
+      "source_text_sha256": "94c49d8c8d7e406f9dff212524e0e6b8456c2423080d6440b449a192d2cc0417",
+      "rendered_text_sha256": "d2377afeb3a2219104e8aeab92dac5d96a290de4a817fd03077fb75e8b4d8df5",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0677",
+        "tex_proposition_0678"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0209",
+      "source_file": "results.tex",
+      "source_line": 177,
+      "source_text_sha256": "7c7a8ceb620bcc65ee0ea16ea34736b19a7d5f37a73625acd02e59dd533caa13",
+      "rendered_text_sha256": "7c7a8ceb620bcc65ee0ea16ea34736b19a7d5f37a73625acd02e59dd533caa13",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0679",
+        "tex_proposition_0680",
+        "tex_proposition_0681",
+        "tex_proposition_0682",
+        "tex_proposition_0683",
+        "tex_proposition_0684"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0210",
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_text_sha256": "1b90b6d79e4b497613119641d00a4105addd4a166d3779dd5930adfdb31012a7",
+      "rendered_text_sha256": "837b0a9d2ba3213e96fa1f5386d195bfdbf024e0da4e0f136894393aae2d83e8",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0685",
+        "tex_proposition_0686",
+        "tex_proposition_0687",
+        "tex_proposition_0688",
+        "tex_proposition_0689"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0211",
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_text_sha256": "d925c38e4e642007a9c9533c58f62b6b4466d64005f140221b10e391bca4fd96",
+      "rendered_text_sha256": "d925c38e4e642007a9c9533c58f62b6b4466d64005f140221b10e391bca4fd96",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0690",
+        "tex_proposition_0691",
+        "tex_proposition_0692",
+        "tex_proposition_0693",
+        "tex_proposition_0694"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0212",
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_text_sha256": "3f97ef55f82064038a7c69a00fe531f80af973540da13dba41796e069aff9406",
+      "rendered_text_sha256": "8b6521d4732b0d668654d34d0de9f177fc19bab9bc891e126133e7a995374ecf",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0695",
+        "tex_proposition_0696",
+        "tex_proposition_0697",
+        "tex_proposition_0698",
+        "tex_proposition_0699"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0213",
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_text_sha256": "84389a09483229c1b774565518a88997183ad0ef96d21496d961937f57f17037",
+      "rendered_text_sha256": "84389a09483229c1b774565518a88997183ad0ef96d21496d961937f57f17037",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0700",
+        "tex_proposition_0701",
+        "tex_proposition_0702",
+        "tex_proposition_0703",
+        "tex_proposition_0704",
+        "tex_proposition_0705"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0214",
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_text_sha256": "f13416c24b90d4212c3c794b340a4c1baad4589cc64eafb1ccb0e7bd5e77e91c",
+      "rendered_text_sha256": "f13416c24b90d4212c3c794b340a4c1baad4589cc64eafb1ccb0e7bd5e77e91c",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0706",
+        "tex_proposition_0707",
+        "tex_proposition_0708",
+        "tex_proposition_0709",
+        "tex_proposition_0710",
+        "tex_proposition_0711"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0215",
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_text_sha256": "449e68fd696007e873589baca22df66391e105de544de7a45279b3a08abb6b74",
+      "rendered_text_sha256": "47e84527cb134195c307a73a37faffd1b5198719441d2ec24a5898a3528f4723",
+      "proposition_count": 7,
+      "proposition_ids": [
+        "tex_proposition_0712",
+        "tex_proposition_0713",
+        "tex_proposition_0714",
+        "tex_proposition_0715",
+        "tex_proposition_0716",
+        "tex_proposition_0717",
+        "tex_proposition_0718"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0216",
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_text_sha256": "474c3d95288bf13387a27771ddcb76672339015bfa1ff19430ebbe625410419d",
+      "rendered_text_sha256": "474c3d95288bf13387a27771ddcb76672339015bfa1ff19430ebbe625410419d",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0719",
+        "tex_proposition_0720",
+        "tex_proposition_0721",
+        "tex_proposition_0722",
+        "tex_proposition_0723"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0217",
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_text_sha256": "6b84899f25a692bd580c288c2b872cf6db9d13980c0f8d938e9b3ed738004680",
+      "rendered_text_sha256": "4e0809076a4caebe0b4e8345359adc25ce21483be225b8b866fb1dc42b46ca37",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0724",
+        "tex_proposition_0725",
+        "tex_proposition_0726",
+        "tex_proposition_0727"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0218",
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_text_sha256": "1feaa91951420a1fd4672477bbc5241bf63bedd4419f8be866c50a784dcf5a34",
+      "rendered_text_sha256": "47c8d16f2ee2470f2237115697099c6c0734f1a18e062006069a605943bd9841",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0728",
+        "tex_proposition_0729",
+        "tex_proposition_0730",
+        "tex_proposition_0731"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0219",
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_text_sha256": "bde5d9c6aaea7a49185f784dd205f1b378ab3544034a8e086babbb28e687db49",
+      "rendered_text_sha256": "fa6d65b6ebca11c392ec9a5c7111e7284627b43faa7ac8ac73657061a5bbf1e7",
+      "proposition_count": 7,
+      "proposition_ids": [
+        "tex_proposition_0732",
+        "tex_proposition_0733",
+        "tex_proposition_0734",
+        "tex_proposition_0735",
+        "tex_proposition_0736",
+        "tex_proposition_0737",
+        "tex_proposition_0738"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0220",
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_text_sha256": "a16833c8d50919e988ecffdc885bc1b72a3f6f375d1c51a20f316e70020217b7",
+      "rendered_text_sha256": "165fb46523052c8a7986084ecc75cb808c18c2d84f36295316953f0c3bf3146a",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0739",
+        "tex_proposition_0740",
+        "tex_proposition_0741",
+        "tex_proposition_0742",
+        "tex_proposition_0743",
+        "tex_proposition_0744"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -18936,6 +19163,1746 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0674",
+      "sentence_id": "tex_prose_sentence_0207",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 175,
+      "source_end_line": 175,
+      "source_quote": "used in the majority of modern neural networks",
+      "source_quote_start": 43,
+      "source_quote_end": 89,
+      "source_quote_sha256": "844aa39bcf1d66f00d51fce0d1f0a5fbc42beb9f877046b6f39c9eccc662c021",
+      "statement": "The transformer architecture is reported to be used in most modern neural networks.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "transformer_majority_modern_neural_networks",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0675",
+      "sentence_id": "tex_prose_sentence_0207",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 175,
+      "source_end_line": 175,
+      "source_quote": "ranging from LLMs",
+      "source_quote_start": 91,
+      "source_quote_end": 108,
+      "source_quote_sha256": "5012d6929a399bb10a17cb66270b89087734a118ac973cf7b02edac4b156974b",
+      "statement": "The reported range of transformer use includes LLMs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "transformer_range_llms_to_alphafold",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0676",
+      "sentence_id": "tex_prose_sentence_0207",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 175,
+      "source_end_line": 175,
+      "source_quote": "to AlphaFold",
+      "source_quote_start": 109,
+      "source_quote_end": 121,
+      "source_quote_sha256": "40c1e5cc7ee9624e66902338ecbf790ec744b06990091d396208206d3b55c9b0",
+      "statement": "The reported range of transformer use extends through AlphaFold.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "transformer_range_llms_to_alphafold",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0677",
+      "sentence_id": "tex_prose_sentence_0208",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 176,
+      "source_end_line": 176,
+      "source_quote": "The core computation of transformers is the attention mechanism",
+      "source_quote_start": 0,
+      "source_quote_end": 63,
+      "source_quote_sha256": "1218af579244488f10fcbfc24bad3af27a3860593c45733862786f35e43809d5",
+      "statement": "The attention mechanism is identified as the core transformer computation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "attention_core_transformer_computation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0678",
+      "sentence_id": "tex_prose_sentence_0208",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 176,
+      "source_end_line": 176,
+      "source_quote": "most commonly implemented using FlashAttention",
+      "source_quote_start": 86,
+      "source_quote_end": 132,
+      "source_quote_sha256": "f0e19c14d03510b05c1d2566d72a0152c4f3b8cedb22ceadda825a39ff7dad68",
+      "statement": "Attention is qualified as most commonly implemented with FlashAttention.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "attention_most_commonly_flashattention",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0679",
+      "sentence_id": "tex_prose_sentence_0209",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 177,
+      "source_end_line": 177,
+      "source_quote": "In our stack, FlashAttention is implemented as an accelerator kernel",
+      "source_quote_start": 0,
+      "source_quote_end": 68,
+      "source_quote_sha256": "5db2a4a52f72ad28f438c1d81e169c28b6daf113293935437d73ab9db4c09b7f",
+      "statement": "The authors' stack implements FlashAttention as an accelerator kernel.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "flashattention_accelerator_kernel_in_stack",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0680",
+      "sentence_id": "tex_prose_sentence_0209",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 177,
+      "source_end_line": 177,
+      "source_quote": "accelerator kernel in Pallas",
+      "source_quote_start": 50,
+      "source_quote_end": 78,
+      "source_quote_sha256": "c3100b9f8814e8d3c8570aa24bb476cad6480685aa3ae36ed7b6b6a32666b94f",
+      "statement": "The FlashAttention accelerator kernel is implemented in Pallas.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pallas_flashattention_implementation",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0681",
+      "sentence_id": "tex_prose_sentence_0209",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 177,
+      "source_end_line": 177,
+      "source_quote": "wrapped by higher-level code",
+      "source_quote_start": 80,
+      "source_quote_end": 108,
+      "source_quote_sha256": "5c555878d5e0eabe244ccdaa8847921ce9af50131a40e92093395597e9b0fadf",
+      "statement": "Higher-level code wraps the FlashAttention kernel.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "higher_level_jax_wrapper",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0682",
+      "sentence_id": "tex_prose_sentence_0209",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 177,
+      "source_end_line": 177,
+      "source_quote": "higher-level code in JAX",
+      "source_quote_start": 91,
+      "source_quote_end": 115,
+      "source_quote_sha256": "8831158343b88c4431908ff5a507623d3d826eaf488d8bed76c773f83e48cf05",
+      "statement": "The higher-level wrapper is implemented in JAX.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "higher_level_jax_wrapper",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0683",
+      "sentence_id": "tex_prose_sentence_0209",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 177,
+      "source_end_line": 177,
+      "source_quote": "handles input preparation",
+      "source_quote_start": 121,
+      "source_quote_end": 146,
+      "source_quote_sha256": "aa35a66a5be526c3ebbb046186881442c35f852f4afe7a19708805b250ed4211",
+      "statement": "The JAX wrapper handles input preparation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "jax_input_preparation",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0684",
+      "sentence_id": "tex_prose_sentence_0209",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 177,
+      "source_end_line": 177,
+      "source_quote": "output postprocessing",
+      "source_quote_start": 151,
+      "source_quote_end": 172,
+      "source_quote_sha256": "eb764305d70311b2e4508774d846a183751f818379fbf49a1e792c9d0876b519",
+      "statement": "The JAX wrapper handles output postprocessing.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "jax_output_postprocessing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0685",
+      "sentence_id": "tex_prose_sentence_0210",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "The machine learning compiler (XLA",
+      "source_quote_start": 0,
+      "source_quote_end": 34,
+      "source_quote_sha256": "b429508c88ae95feba379a9fa99dd2c61a21ba2a9aa177e586f66cd873bd6838",
+      "statement": "XLA is identified as the machine-learning compiler in the stack.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "xla_machine_learning_compiler",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0686",
+      "sentence_id": "tex_prose_sentence_0210",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "translates this implementation",
+      "source_quote_start": 53,
+      "source_quote_end": 83,
+      "source_quote_sha256": "4ee9c926fad4043404bef63ecec969a5407feecf4651a74b8f4035a16aca6932",
+      "statement": "XLA translates the described Pallas and JAX implementation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "xla_sequence_of_intermediate_representations",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0687",
+      "sentence_id": "tex_prose_sentence_0210",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "into a sequence of intermediate representations",
+      "source_quote_start": 84,
+      "source_quote_end": 131,
+      "source_quote_sha256": "c222ccaa5776c4e1f8f589c9aaa942a4320b06db6bc2716939b6c302f2599d57",
+      "statement": "XLA translation produces a sequence of intermediate representations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "xla_sequence_of_intermediate_representations",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0688",
+      "sentence_id": "tex_prose_sentence_0210",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "each adding more detail",
+      "source_quote_start": 139,
+      "source_quote_end": 162,
+      "source_quote_sha256": "0738870292f7c04f21f8ae2d7e8e1887bca7bbe58dba3b55bdcbc738f6773f98",
+      "statement": "Each intermediate representation adds execution detail.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_adds_hardware_execution_detail",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0689",
+      "sentence_id": "tex_prose_sentence_0210",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "execution on particular hardware",
+      "source_quote_start": 167,
+      "source_quote_end": 199,
+      "source_quote_sha256": "293d08e46ab89aebe3d780409edc16f37343f82615ce6dd0da0469068febc724",
+      "statement": "The added IR detail targets execution on particular hardware.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "particular_hardware_target",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0690",
+      "sentence_id": "tex_prose_sentence_0211",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "At these stages",
+      "source_quote_start": 0,
+      "source_quote_end": 15,
+      "source_quote_sha256": "624a39b2adbf7ec9723951e8989f48eedcdf6c0dc89d7fdb81dc75bb4afa1dc2",
+      "statement": "The optimization opportunity occurs at the intermediate-representation stages.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "xla_sequence_of_intermediate_representations",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0691",
+      "sentence_id": "tex_prose_sentence_0211",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "improved decisions on memory access orchestration",
+      "source_quote_start": 17,
+      "source_quote_end": 66,
+      "source_quote_sha256": "c4d4742ca1d32f6595850d3d6d19291b83a70a7b732f60dcffc4e97ad47c5949",
+      "statement": "Improved memory-access orchestration decisions can reduce runtime.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "memory_access_decisions_can_reduce_runtime",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0692",
+      "sentence_id": "tex_prose_sentence_0211",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "computation scheduling",
+      "source_quote_start": 70,
+      "source_quote_end": 92,
+      "source_quote_sha256": "e8b320ce54016bfe4def75189ac88e1064d9a1dbe047e6cb95ad3124b505a862",
+      "statement": "Improved computation-scheduling decisions can reduce runtime.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "scheduling_decisions_can_reduce_runtime",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0693",
+      "sentence_id": "tex_prose_sentence_0211",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "can significantly reduce runtime",
+      "source_quote_start": 93,
+      "source_quote_end": 125,
+      "source_quote_sha256": "14d20cf81fd7e86897d31778758910e6de32de98a4198d963825aeca16126e15",
+      "statement": "The possible runtime reduction is characterized as significant.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "memory_access_decisions_can_reduce_runtime",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "scheduling_decisions_can_reduce_runtime",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "specific_hardware_runtime_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0694",
+      "sentence_id": "tex_prose_sentence_0211",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 178,
+      "source_end_line": 178,
+      "source_quote": "on specific hardware",
+      "source_quote_start": 126,
+      "source_quote_end": 146,
+      "source_quote_sha256": "91dab9e39f2179c0f99bff4b47aed145dcefcef942e4f8a2ad727b7c9ca4170e",
+      "statement": "The runtime-reduction claim is scoped to specific hardware.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "specific_hardware_runtime_context",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0695",
+      "sentence_id": "tex_prose_sentence_0212",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "We challenged AlphaEvolve to directly optimize",
+      "source_quote_start": 0,
+      "source_quote_end": 46,
+      "source_quote_sha256": "77d5e5616921207fd49c3e0aa8951f553344d6a7845a490001b292bc75409463",
+      "statement": "The authors assigned AlphaEvolve a direct compiler-IR optimization challenge.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "direct_optimize_xla_generated_irs",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0696",
+      "sentence_id": "tex_prose_sentence_0212",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "directly optimize the XLA-generated IRs",
+      "source_quote_start": 29,
+      "source_quote_end": 68,
+      "source_quote_sha256": "673107c5a1f18331fe474a636598863baa9b541052fdedce41cca76b00fab110",
+      "statement": "AlphaEvolve directly optimized XLA-generated intermediate representations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "direct_optimize_xla_generated_irs",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0697",
+      "sentence_id": "tex_prose_sentence_0212",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "IRs encapsulating the FlashAttention kernel",
+      "source_quote_start": 65,
+      "source_quote_end": 108,
+      "source_quote_sha256": "d36830490c1874c13a42ea846e24ca0934ecdbe654d6578e51a51c12a8f9417f",
+      "statement": "The candidate IRs encapsulated the FlashAttention kernel.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_encapsulates_flashattention_kernel",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0698",
+      "sentence_id": "tex_prose_sentence_0212",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "along with pre-",
+      "source_quote_start": 109,
+      "source_quote_end": 124,
+      "source_quote_sha256": "2705a5417f0fc680ba63ab4f58f2408a1f1a46e40869aa1adedc58de6b447513",
+      "statement": "The candidate IR scope included preprocessing code.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_includes_pre_and_postprocessing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0699",
+      "sentence_id": "tex_prose_sentence_0212",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "postprocessing code",
+      "source_quote_start": 129,
+      "source_quote_end": 148,
+      "source_quote_sha256": "616b8701913e7c43a686c9619d7520e1c79778f683ad1b1e8cb85a7653f2672d",
+      "statement": "The candidate IR scope included postprocessing code.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_includes_pre_and_postprocessing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0700",
+      "sentence_id": "tex_prose_sentence_0213",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "We optimized a configuration",
+      "source_quote_start": 0,
+      "source_quote_end": 28,
+      "source_quote_sha256": "cf33638d11d7f6798044a4f12a93c03a63f828f32ef394aa2d4ecc9cc3f23ee3",
+      "statement": "The reported optimization targeted a particular configuration.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "highly_impactful_transformer_configuration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0701",
+      "sentence_id": "tex_prose_sentence_0213",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "corresponding to a highly impactful transformer model",
+      "source_quote_start": 29,
+      "source_quote_end": 82,
+      "source_quote_sha256": "2dacc7b8e841823180460e682956b7b9ec04ceece9e1835d7d585f88c497f58c",
+      "statement": "The configuration corresponds to a transformer model characterized as highly impactful.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "highly_impactful_transformer_configuration",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0702",
+      "sentence_id": "tex_prose_sentence_0213",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "used for inference",
+      "source_quote_start": 83,
+      "source_quote_end": 101,
+      "source_quote_sha256": "3ec7a3c265e5794728048db1eee2ad70f39c12a3be9449a0a1d8198e3d577e40",
+      "statement": "The transformer model is used for inference.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "inference_at_scale",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0703",
+      "sentence_id": "tex_prose_sentence_0213",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "inference at scale",
+      "source_quote_start": 92,
+      "source_quote_end": 110,
+      "source_quote_sha256": "3032b5856669ca805d627795b877c558123b35b46fb0345637490c4811a748a6",
+      "statement": "The inference workload operates at scale.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "inference_at_scale",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0704",
+      "sentence_id": "tex_prose_sentence_0213",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "on GPUs",
+      "source_quote_start": 111,
+      "source_quote_end": 118,
+      "source_quote_sha256": "bf49266d89b251b03c39ff78af19bbbd9db0aa4d470fd351dd84e04bb7480a3d",
+      "statement": "The reported inference workload targets GPUs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "gpu_execution_target",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0705",
+      "sentence_id": "tex_prose_sentence_0213",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "goal of minimizing the module's overall execution time",
+      "source_quote_start": 129,
+      "source_quote_end": 183,
+      "source_quote_sha256": "0624ea458058a96565c7902a2c367358d66caed6a38f4fd98354bfea44a2438d",
+      "statement": "The optimization objective is minimum overall module execution time.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "minimize_overall_module_execution_time",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0706",
+      "sentence_id": "tex_prose_sentence_0214",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "particularly challenging task",
+      "source_quote_start": 11,
+      "source_quote_end": 40,
+      "source_quote_sha256": "1e65eac1b2ee7ed846bf7b8b9cd3918f939648863001474219404767261da044",
+      "statement": "The compiler-IR optimization task is characterized as particularly challenging.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "compiler_ir_task_particularly_challenging",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0707",
+      "sentence_id": "tex_prose_sentence_0214",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "because (1) the IR is designed for debugging purposes rather than for direct editing by developers, and (2) it is compiler-generated and already highly optimized",
+      "source_quote_start": 42,
+      "source_quote_end": 203,
+      "source_quote_sha256": "509558ebef118e67fedd265c3c0a3e8837e2cffcdad5acce958dcc4d9b1e553d",
+      "statement": "The paper attributes the difficulty to the IR's debug-oriented form and its compiler-generated, optimized baseline.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "compiler_ir_task_particularly_challenging",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_designed_for_debugging",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_not_for_direct_developer_editing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "compiler_generated_baseline",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "already_highly_optimized_baseline",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0708",
+      "sentence_id": "tex_prose_sentence_0214",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "IR is designed for debugging purposes",
+      "source_quote_start": 58,
+      "source_quote_end": 95,
+      "source_quote_sha256": "b90a1e9eee24b4533d77bbbba7e3e59f20ec98167993e6a938572ed8abe6e2c3",
+      "statement": "The intermediate representation is designed for debugging.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_designed_for_debugging",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0709",
+      "sentence_id": "tex_prose_sentence_0214",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "rather than for direct editing by developers",
+      "source_quote_start": 96,
+      "source_quote_end": 140,
+      "source_quote_sha256": "2f5dfa21c63143aa71c967b29304e38ed73341ca6a3446a7f9c93b14334665c5",
+      "statement": "The intermediate representation is not designed for direct developer editing.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "ir_not_for_direct_developer_editing",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0710",
+      "sentence_id": "tex_prose_sentence_0214",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "it is compiler-generated",
+      "source_quote_start": 150,
+      "source_quote_end": 174,
+      "source_quote_sha256": "cf46f306ad9f88083bcd323264016caf02acb668de80ad9f07cca558d1129c8d",
+      "statement": "The baseline intermediate representation is compiler-generated.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "compiler_generated_baseline",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0711",
+      "sentence_id": "tex_prose_sentence_0214",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "already highly optimized",
+      "source_quote_start": 179,
+      "source_quote_end": 203,
+      "source_quote_sha256": "d5613f352ef8d53657cedf962b1576f1c00c4ffa313bc44a656affc794861877",
+      "statement": "The compiler-generated baseline is characterized as already highly optimized.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "already_highly_optimized_baseline",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0712",
+      "sentence_id": "tex_prose_sentence_0215",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "Each modification proposed by AlphaEvolve",
+      "source_quote_start": 0,
+      "source_quote_end": 41,
+      "source_quote_sha256": "fc45d56da761d97683dc6925549d1512f912e8a4482e1b59c3e1108346f24b3a",
+      "statement": "AlphaEvolve proposed the modifications under evaluation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "each_modification_reference_checked",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0713",
+      "sentence_id": "tex_prose_sentence_0215",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "Each modification proposed by AlphaEvolve was checked",
+      "source_quote_start": 0,
+      "source_quote_end": 53,
+      "source_quote_sha256": "d18518e1b32ba1c912c59962baa715d3d6d82bc8dd2114689da69678b2ca91a4",
+      "statement": "Every AlphaEvolve modification was checked.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "each_modification_reference_checked",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0714",
+      "sentence_id": "tex_prose_sentence_0215",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "checked against the reference",
+      "source_quote_start": 46,
+      "source_quote_end": 75,
+      "source_quote_sha256": "26448948c724cc034137a92ffba5690404a3b8997c477a7631a1f1687e00cdda",
+      "statement": "Each modification was compared with reference code.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "unmodified_reference_code",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0715",
+      "sentence_id": "tex_prose_sentence_0215",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "reference (unmodified) code",
+      "source_quote_start": 66,
+      "source_quote_end": 93,
+      "source_quote_sha256": "4d3f0f95644cb7e87913c8374e44e4759c3b928867073f6a339728f5141f9ffc",
+      "statement": "The reference code remained unmodified.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "unmodified_reference_code",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0716",
+      "sentence_id": "tex_prose_sentence_0215",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "on randomized inputs",
+      "source_quote_start": 94,
+      "source_quote_end": 114,
+      "source_quote_sha256": "a37ae08e735fec1f54736fbcbac80a65989585aca8ea0135fc7ea79039328c40",
+      "statement": "The per-modification checks used randomized inputs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "randomized_input_reference_checks",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0717",
+      "sentence_id": "tex_prose_sentence_0215",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "in order to ensure numerical correctness",
+      "source_quote_start": 115,
+      "source_quote_end": 155,
+      "source_quote_sha256": "bbdaf65ae690adcddd27f24c38407dcee3b41bd9f5772a715bd4dc4963f01897",
+      "statement": "The reference checks were intended to ensure numerical correctness.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "numerical_correctness_throughout_optimization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0718",
+      "sentence_id": "tex_prose_sentence_0215",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "throughout optimization",
+      "source_quote_start": 156,
+      "source_quote_end": 179,
+      "source_quote_sha256": "196743a1a8c5d2a956e2469680a4b96f7a3e4517e76e7119526ff1a0df204aab",
+      "statement": "The numerical-correctness requirement applied throughout optimization.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "numerical_correctness_throughout_optimization",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0719",
+      "sentence_id": "tex_prose_sentence_0216",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "The final version of the code",
+      "source_quote_start": 0,
+      "source_quote_end": 29,
+      "source_quote_sha256": "755e1ee7e7260c3ecd7faa501ca7aad9f9f46290c387a6f7e26fc652d03fd121",
+      "statement": "The expert-confirmation claim applies to the final code version.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "final_human_expert_confirmation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0720",
+      "sentence_id": "tex_prose_sentence_0216",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "was rigorously confirmed",
+      "source_quote_start": 30,
+      "source_quote_end": 54,
+      "source_quote_sha256": "7a987d4a8926bcd93aa72940c870d162b71c8837311188e05f9618f49c9df796",
+      "statement": "The final confirmation is characterized as rigorous.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "final_human_expert_confirmation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0721",
+      "sentence_id": "tex_prose_sentence_0216",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "by human experts",
+      "source_quote_start": 55,
+      "source_quote_end": 71,
+      "source_quote_sha256": "9c7c5bec82ce1658af3cbcf52e6931cd0e91ecb2f21ab5e0b2df3ddbd90e7eb9",
+      "statement": "Human experts performed the final confirmation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "final_human_expert_confirmation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0722",
+      "sentence_id": "tex_prose_sentence_0216",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "to be correct",
+      "source_quote_start": 72,
+      "source_quote_end": 85,
+      "source_quote_sha256": "751d4a0e4f90ed5b25ee87bfd043538d6e6b811105df01d3e204479498bc22ec",
+      "statement": "The final confirmation addressed code correctness.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "final_human_expert_confirmation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0723",
+      "sentence_id": "tex_prose_sentence_0216",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 180,
+      "source_end_line": 180,
+      "source_quote": "for all possible inputs",
+      "source_quote_start": 86,
+      "source_quote_end": 109,
+      "source_quote_sha256": "b0834e18ed5890d702b8aae4c8dbc995e47db36bb4b3c1a2d5685be8cd2bdfe0",
+      "statement": "The asserted correctness scope covers all possible inputs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "correct_for_all_possible_inputs",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0724",
+      "sentence_id": "tex_prose_sentence_0217",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "AlphaEvolve was able to provide",
+      "source_quote_start": 0,
+      "source_quote_end": 31,
+      "source_quote_sha256": "7191f129c32544068166ef3ee43879e69bcca27bb4707e191f6fa6f93209d2cd",
+      "statement": "AlphaEvolve is reported to have produced the optimizations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "meaningful_optimizations_both_abstraction_levels",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0725",
+      "sentence_id": "tex_prose_sentence_0217",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "meaningful optimizations",
+      "source_quote_start": 32,
+      "source_quote_end": 56,
+      "source_quote_sha256": "1e5d6592043b28131be6ef7732332129cd389346ecbd44edc5effe582d831c31",
+      "statement": "The reported optimizations are characterized as meaningful.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "meaningful_optimizations_both_abstraction_levels",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0726",
+      "sentence_id": "tex_prose_sentence_0217",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "for both levels of abstraction",
+      "source_quote_start": 57,
+      "source_quote_end": 87,
+      "source_quote_sha256": "865737b87e76b72c14c64faabb16e5e75b259719a507ff2c83be519ff3e579e0",
+      "statement": "The optimizations apply at both reported abstraction levels.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "meaningful_optimizations_both_abstraction_levels",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0727",
+      "sentence_id": "tex_prose_sentence_0217",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "exposed by the IR",
+      "source_quote_start": 88,
+      "source_quote_end": 105,
+      "source_quote_sha256": "80189582d19daefa9e089848fec43effc87ed03191257953b08504bb40f594d8",
+      "statement": "The intermediate representation exposes the two abstraction levels.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "meaningful_optimizations_both_abstraction_levels",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0728",
+      "sentence_id": "tex_prose_sentence_0218",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "the FlashAttention kernel",
+      "source_quote_start": 9,
+      "source_quote_end": 34,
+      "source_quote_sha256": "8bcd0c6b71d707c51c0eb25348c92023d8392d1c2f787010ecda480eb7bfb7f0",
+      "statement": "The first reported result applies to the FlashAttention kernel.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "flashattention_kernel_optimization_result",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0729",
+      "sentence_id": "tex_prose_sentence_0218",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "for the configuration of interest",
+      "source_quote_start": 35,
+      "source_quote_end": 68,
+      "source_quote_sha256": "8be3d6da98d7ee12c7d8fe3ff57edb4c46376fd3e98b9762af74028530eb55cb",
+      "statement": "The kernel result is scoped to the configuration of interest.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "kernel_configuration_of_interest_scope",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0730",
+      "sentence_id": "tex_prose_sentence_0218",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "was sped up",
+      "source_quote_start": 69,
+      "source_quote_end": 80,
+      "source_quote_sha256": "1e756a8dde56b3bd69fdc28713930944949743fe53821b94f819760ea9e98d97",
+      "statement": "The reported kernel result is a runtime speedup.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "kernel_speedup_32_percent",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0731",
+      "sentence_id": "tex_prose_sentence_0218",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "by 32 percent",
+      "source_quote_start": 81,
+      "source_quote_end": 94,
+      "source_quote_sha256": "666a6adc54807753d65b4cb70ea02a66d3f1a030b3a915bf26500bdcb44ca008",
+      "statement": "The reported FlashAttention kernel speedup is 32 percent.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "kernel_speedup_32_percent",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0732",
+      "sentence_id": "tex_prose_sentence_0219",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "AlphaEvolve found improvements",
+      "source_quote_start": 10,
+      "source_quote_end": 40,
+      "source_quote_sha256": "122fea9282ca08a071f33b09e93931b48949d058d3f23341162d736da2f175fe",
+      "statement": "AlphaEvolve is reported to have found the wrapper-code improvements.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_improvements_found",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0733",
+      "sentence_id": "tex_prose_sentence_0219",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "in pre-",
+      "source_quote_start": 41,
+      "source_quote_end": 48,
+      "source_quote_sha256": "b46252624377ad22f9459193148b359cce12d05da851686ee09c566fb6467c20",
+      "statement": "The reported improvements include preprocessing.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_improvements_found",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0734",
+      "sentence_id": "tex_prose_sentence_0219",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "postprocessing",
+      "source_quote_start": 53,
+      "source_quote_end": 67,
+      "source_quote_sha256": "901258e47684b2dd330d4a1f28ac2bb3900d19d93c0e5c2d72695ca5a8ac783f",
+      "statement": "The reported improvements include postprocessing.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_improvements_found",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0735",
+      "sentence_id": "tex_prose_sentence_0219",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "kernel inputs",
+      "source_quote_start": 71,
+      "source_quote_end": 84,
+      "source_quote_sha256": "fdcf5fdc81e6ae643dd1c6e251873772caebe069fa8a111550f712bf6951e41d",
+      "statement": "The wrapper-code improvements concern kernel inputs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_improvements_found",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0736",
+      "sentence_id": "tex_prose_sentence_0219",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "outputs",
+      "source_quote_start": 89,
+      "source_quote_end": 96,
+      "source_quote_sha256": "7b8c56be0a5f71be141f0cfaa9195e2ff8d1ef89e380560b579a82fd841429c1",
+      "statement": "The wrapper-code improvements concern kernel outputs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_improvements_found",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0737",
+      "sentence_id": "tex_prose_sentence_0219",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "resulting in a 15 percent speed up",
+      "source_quote_start": 98,
+      "source_quote_end": 132,
+      "source_quote_sha256": "08fc6d298b3d07b1c8679ed9d1236d8d65bdc71adf98fb899125006f48be684a",
+      "statement": "The wrapper-code improvements reportedly produced a 15 percent speedup.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_speedup_15_percent",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0738",
+      "sentence_id": "tex_prose_sentence_0219",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "in this part",
+      "source_quote_start": 133,
+      "source_quote_end": 145,
+      "source_quote_sha256": "8181e43915abf4b5af19efa3556308b0a25bfcbceaa2e471f07d5de7083e602b",
+      "statement": "The 15 percent result is scoped to the pre- and postprocessing portion.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_speedup_15_percent",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0739",
+      "sentence_id": "tex_prose_sentence_0220",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "These results demonstrate",
+      "source_quote_start": 0,
+      "source_quote_end": 25,
+      "source_quote_sha256": "16a288538bf40c90b97389e4338700701e81b3bfa6f2edf83e96b5024f982ff5",
+      "statement": "The authors present the preceding results as demonstration evidence.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "compiler_generated_code_optimization_demonstrated",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0740",
+      "sentence_id": "tex_prose_sentence_0220",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "ability of AlphaEvolve to optimize compiler-generated code",
+      "source_quote_start": 30,
+      "source_quote_end": 88,
+      "source_quote_sha256": "f885417d67c55ed83fba40daab0a9fb4d38fff9d77f95222376f16dee5ba5131",
+      "statement": "The results are claimed to demonstrate AlphaEvolve's ability to optimize compiler-generated code.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "compiler_generated_code_optimization_demonstrated",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0741",
+      "sentence_id": "tex_prose_sentence_0220",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "potential of incorporating discovered optimizations into existing compilers",
+      "source_quote_start": 103,
+      "source_quote_end": 178,
+      "source_quote_sha256": "e74345628e35392a6a5cea2acffc3639fdd8cfaf05c3efe861694868f7d38add",
+      "statement": "The authors identify potential incorporation of discovered optimizations into existing compilers.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "existing_compiler_incorporation_potential",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0742",
+      "sentence_id": "tex_prose_sentence_0220",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "for specific use cases",
+      "source_quote_start": 179,
+      "source_quote_end": 201,
+      "source_quote_sha256": "5636e47ee8935ccd45613b329d8c64b89c0ae61ec3cfdc35bc8fe0ecfb149745",
+      "statement": "The potential existing-compiler path is scoped to specific use cases.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "existing_compiler_specific_use_cases",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0743",
+      "sentence_id": "tex_prose_sentence_0220",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "in the longer term",
+      "source_quote_start": 207,
+      "source_quote_end": 225,
+      "source_quote_sha256": "a63ab8298dd12d517062165a35ba6ac95d6629ae408a8644b3b6e8234b56c49d",
+      "statement": "A second compiler-workflow adoption path is explicitly longer term.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "alphaevolve_in_compiler_workflow_longer_term",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0744",
+      "sentence_id": "tex_prose_sentence_0220",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 182,
+      "source_end_line": 182,
+      "source_quote": "incorporating AlphaEvolve into the compiler workflow itself",
+      "source_quote_start": 227,
+      "source_quote_end": 286,
+      "source_quote_sha256": "754cc42e0ff088ef33bab964a05cd8664f54fd1970dc8adc7a2ad11b5b330fd3",
+      "statement": "The longer-term path would incorporate AlphaEvolve into the compiler workflow.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "alphaevolve_in_compiler_workflow_longer_term",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -18948,16 +20915,17 @@
       "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
       "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
       "all 11 retained Section 3.3.3 hardware-circuit-design sentences in results.tex",
+      "all 14 retained Section 3.3.4 compiler-optimization sentences in results.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 196 retained prose sentences",
+      "the remaining 182 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.3 hardware circuit design. Complete disposition inside this 206-sentence scope does not cover the remaining 196 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.4 compiler optimization. Complete disposition inside this 220-sentence scope does not cover the remaining 182 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

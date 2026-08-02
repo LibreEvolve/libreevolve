@@ -198,16 +198,16 @@ Important limits:
   the prose walk, but complete sentence disposition is not sentence-internal
   clause/proposition exhaustiveness or independent semantic review.
 - `papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all
-  206 retained sentences from the Abstract through Section 3.3.3 hardware
-  circuit design into 673 atomic propositions. Six hundred nineteen map through
-  643 references to 286 bounded claims; 41 are source context, 2 are author
+  220 retained sentences from the Abstract through Section 3.3.4 compiler
+  optimization into 744 atomic propositions. Six hundred ninety map through
+  720 references to 329 bounded claims; 41 are source context, 2 are author
   outlook, and 11 are qualified author interpretations.
   The cumulative review
   adds the previously unbounded direct-versus-instrumental-search and expensive-
-  evaluation sample-efficiency claims. The hardware slice adds no new claim or
-  parity credit, but repairs sentence mappings for Gemini's first direct TPU-
-  circuit contribution, direct Verilog fostering trust, and direct Verilog
-  simplifying adoption. The remaining 196
+  evaluation sample-efficiency claims. The compiler slice adds no new claim or
+  parity credit, but repairs sentence mappings for JAX output postprocessing
+  and the reported 15% pre/postprocessing speedup; active TODOs already own all
+  44 compiler gaps. The remaining 182
   prose sentences and independent semantic review remain open.
 - Together the twelve bounded inventories cover 846 claims: 30 locally
   implemented, 278 partial, 110 not implemented, 369 not demonstrated, and 59
@@ -222,10 +222,10 @@ Important limits:
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
   dispositions; and all 128 retained prose paragraphs and 402 grammatical
-  sentences have dispositions; all 206 sentences from the Abstract through
-  Section 3.3.3 hardware circuit design also have 673 atomic-proposition
+  sentences have dispositions; all 220 sentences from the Abstract through
+  Section 3.3.4 compiler optimization also have 744 atomic-proposition
   dispositions. Coverage still excludes proposition review for the remaining
-  196 sentences,
+  182 sentences,
   mathematical correctness,
   image-pixel and citation-semantic review, independent result reproduction,
   independent proof of semantic completeness, and AlphaEvolve-scale execution.

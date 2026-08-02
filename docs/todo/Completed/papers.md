@@ -14842,3 +14842,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: 196 sentence propositions, independent semantic
     agreement, mathematical/image/citation correctness, result reproduction,
     and AlphaEvolve parity remain unproven.
+
+- [x] Review AlphaEvolve Section 3.3.4 compiler propositions.
+  - Paper evidence: 14 retained sentences cover transformer/attention context,
+    the FlashAttention/Pallas/JAX/XLA stack, direct compiler-IR optimization,
+    randomized per-edit reference checks, expert confirmation, the reported
+    32% kernel and 15% pre/postprocessing speedups, and two adoption paths.
+  - Status: the slice adds 71 propositions, bringing cumulative coverage to 220
+    sentences and 744 propositions; 690 map through 720 references to 329
+    bounded claims and 54 are context, outlook, or interpretation.
+  - Mapping correction: two existing compiler claims omitted by broad prose
+    matching are now linked. No new claim, active TODO, or parity credit is
+    added.
+  - Remaining paper gap: 182 sentence propositions, independent semantic
+    agreement, mathematical/image/citation correctness, result reproduction,
+    and AlphaEvolve parity remain unproven.

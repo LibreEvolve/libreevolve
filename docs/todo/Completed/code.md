@@ -19891,3 +19891,20 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused prose, proposition, hardware-claim, aggregate, TODO,
     phase, and manifest checks validate source quotes, references, counts,
     ownership, drift rejection, and non-parity boundaries.
+
+- [x] Extend retained-TeX proposition evidence through Section 3.3.4 compiler
+  optimization.
+  - Status: the boundary reviews 14 compiler-optimization sentences as 71
+    propositions, bringing cumulative scope to 220 sentences and 744
+    propositions. Of those, 690 map through 720 references to 329 bounded
+    claims and 54 are context, outlook, or interpretation.
+  - Mapping correction: sentence-level evidence now includes JAX output
+    postprocessing and the reported 15% pre/postprocessing speedup. Existing
+    compiler claims and active TODOs own both gaps; no new claim, TODO, or
+    parity credit is added.
+  - Remaining code gap: proposition review for 182 prose sentences, independent
+    semantic review, mathematical/image/citation correctness, result
+    reproduction, and AlphaEvolve-scale execution remain open.
+  - Verification: focused prose, proposition, compiler-claim, aggregate, TODO,
+    and manifest checks validate source quotes, references, counts, ownership,
+    drift rejection, and non-parity boundaries.

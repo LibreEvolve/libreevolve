@@ -418,6 +418,19 @@ _DIRECT_CLAIM_MAP: dict[
         "direct_verilog_fosters_trust",
         "direct_verilog_simplifies_adoption",
     ),
+    ("results.tex", 177, 0): _claim_refs(
+        "compiler",
+        "flashattention_accelerator_kernel_in_stack",
+        "pallas_flashattention_implementation",
+        "higher_level_jax_wrapper",
+        "jax_input_preparation",
+        "jax_output_postprocessing",
+    ),
+    ("results.tex", 182, 2): _claim_refs(
+        "compiler",
+        "pre_postprocessing_improvements_found",
+        "pre_postprocessing_speedup_15_percent",
+    ),
     ("ablations.tex", 8, 3): _claim_refs(
         "ablation", "no_context_variant_name"
     ),

@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v8"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v9"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_through_section3_3_3_hardware_proposition_review_complete_without_"
+    "abstract_through_section3_3_4_compiler_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 206
-EXPECTED_PROPOSITION_COUNT = 673
+EXPECTED_REVIEWED_SENTENCE_COUNT = 220
+EXPECTED_PROPOSITION_COUNT = 744
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 207)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 221)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -63,6 +63,8 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "direct_verilog_fosters_trust",
     "direct_verilog_simplifies_adoption",
     "gemini_first_direct_tpu_arithmetic_contribution",
+    "jax_output_postprocessing",
+    "pre_postprocessing_speedup_15_percent",
     "task_problem_specific_abstraction_choice",
 )
 
@@ -1237,6 +1239,401 @@ _PROPOSITION_SPECS.update(
                 "potentially reducing time to market",
                 "The authors present reduced time to market as a potential outcome.",
                 _ref("hardware", "potential_time_to_market_reduction"),
+            ),
+        ),
+    }
+)
+
+
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0207": (
+            _mapped(
+                "used in the majority of modern neural networks",
+                "The transformer architecture is reported to be used in most modern neural networks.",
+                _ref("compiler", "transformer_majority_modern_neural_networks"),
+            ),
+            _mapped(
+                "ranging from LLMs",
+                "The reported range of transformer use includes LLMs.",
+                _ref("compiler", "transformer_range_llms_to_alphafold"),
+            ),
+            _mapped(
+                "to AlphaFold",
+                "The reported range of transformer use extends through AlphaFold.",
+                _ref("compiler", "transformer_range_llms_to_alphafold"),
+            ),
+        ),
+        "tex_prose_sentence_0208": (
+            _mapped(
+                "The core computation of transformers is the attention mechanism",
+                "The attention mechanism is identified as the core transformer computation.",
+                _ref("compiler", "attention_core_transformer_computation"),
+            ),
+            _mapped(
+                "most commonly implemented using FlashAttention",
+                "Attention is qualified as most commonly implemented with FlashAttention.",
+                _ref("compiler", "attention_most_commonly_flashattention"),
+            ),
+        ),
+        "tex_prose_sentence_0209": (
+            _mapped(
+                "In our stack, FlashAttention is implemented as an accelerator kernel",
+                "The authors' stack implements FlashAttention as an accelerator kernel.",
+                _ref("compiler", "flashattention_accelerator_kernel_in_stack"),
+            ),
+            _mapped(
+                "accelerator kernel in Pallas",
+                "The FlashAttention accelerator kernel is implemented in Pallas.",
+                _ref("compiler", "pallas_flashattention_implementation"),
+            ),
+            _mapped(
+                "wrapped by higher-level code",
+                "Higher-level code wraps the FlashAttention kernel.",
+                _ref("compiler", "higher_level_jax_wrapper"),
+            ),
+            _mapped(
+                "higher-level code in JAX",
+                "The higher-level wrapper is implemented in JAX.",
+                _ref("compiler", "higher_level_jax_wrapper"),
+            ),
+            _mapped(
+                "handles input preparation",
+                "The JAX wrapper handles input preparation.",
+                _ref("compiler", "jax_input_preparation"),
+            ),
+            _mapped(
+                "output postprocessing",
+                "The JAX wrapper handles output postprocessing.",
+                _ref("compiler", "jax_output_postprocessing"),
+            ),
+        ),
+        "tex_prose_sentence_0210": (
+            _mapped(
+                "The machine learning compiler (XLA",
+                "XLA is identified as the machine-learning compiler in the stack.",
+                _ref("compiler", "xla_machine_learning_compiler"),
+            ),
+            _mapped(
+                "translates this implementation",
+                "XLA translates the described Pallas and JAX implementation.",
+                _ref("compiler", "xla_sequence_of_intermediate_representations"),
+            ),
+            _mapped(
+                "into a sequence of intermediate representations",
+                "XLA translation produces a sequence of intermediate representations.",
+                _ref("compiler", "xla_sequence_of_intermediate_representations"),
+            ),
+            _mapped(
+                "each adding more detail",
+                "Each intermediate representation adds execution detail.",
+                _ref("compiler", "ir_adds_hardware_execution_detail"),
+            ),
+            _mapped(
+                "execution on particular hardware",
+                "The added IR detail targets execution on particular hardware.",
+                _ref("compiler", "particular_hardware_target"),
+            ),
+        ),
+        "tex_prose_sentence_0211": (
+            _mapped(
+                "At these stages",
+                "The optimization opportunity occurs at the intermediate-representation stages.",
+                _ref("compiler", "xla_sequence_of_intermediate_representations"),
+            ),
+            _mapped(
+                "improved decisions on memory access orchestration",
+                "Improved memory-access orchestration decisions can reduce runtime.",
+                _ref("compiler", "memory_access_decisions_can_reduce_runtime"),
+            ),
+            _mapped(
+                "computation scheduling",
+                "Improved computation-scheduling decisions can reduce runtime.",
+                _ref("compiler", "scheduling_decisions_can_reduce_runtime"),
+            ),
+            _mapped(
+                "can significantly reduce runtime",
+                "The possible runtime reduction is characterized as significant.",
+                _ref("compiler", "memory_access_decisions_can_reduce_runtime"),
+                _ref("compiler", "scheduling_decisions_can_reduce_runtime"),
+                _ref("compiler", "specific_hardware_runtime_context"),
+            ),
+            _mapped(
+                "on specific hardware",
+                "The runtime-reduction claim is scoped to specific hardware.",
+                _ref("compiler", "specific_hardware_runtime_context"),
+            ),
+        ),
+        "tex_prose_sentence_0212": (
+            _mapped(
+                "We challenged AlphaEvolve to directly optimize",
+                "The authors assigned AlphaEvolve a direct compiler-IR optimization challenge.",
+                _ref("compiler", "direct_optimize_xla_generated_irs"),
+            ),
+            _mapped(
+                "directly optimize the XLA-generated IRs",
+                "AlphaEvolve directly optimized XLA-generated intermediate representations.",
+                _ref("compiler", "direct_optimize_xla_generated_irs"),
+            ),
+            _mapped(
+                "IRs encapsulating the FlashAttention kernel",
+                "The candidate IRs encapsulated the FlashAttention kernel.",
+                _ref("compiler", "ir_encapsulates_flashattention_kernel"),
+            ),
+            _mapped(
+                "along with pre-",
+                "The candidate IR scope included preprocessing code.",
+                _ref("compiler", "ir_includes_pre_and_postprocessing"),
+            ),
+            _mapped(
+                "postprocessing code",
+                "The candidate IR scope included postprocessing code.",
+                _ref("compiler", "ir_includes_pre_and_postprocessing"),
+            ),
+        ),
+        "tex_prose_sentence_0213": (
+            _mapped(
+                "We optimized a configuration",
+                "The reported optimization targeted a particular configuration.",
+                _ref("compiler", "highly_impactful_transformer_configuration"),
+            ),
+            _mapped(
+                "corresponding to a highly impactful transformer model",
+                "The configuration corresponds to a transformer model characterized as highly impactful.",
+                _ref("compiler", "highly_impactful_transformer_configuration"),
+            ),
+            _mapped(
+                "used for inference",
+                "The transformer model is used for inference.",
+                _ref("compiler", "inference_at_scale"),
+            ),
+            _mapped(
+                "inference at scale",
+                "The inference workload operates at scale.",
+                _ref("compiler", "inference_at_scale"),
+            ),
+            _mapped(
+                "on GPUs",
+                "The reported inference workload targets GPUs.",
+                _ref("compiler", "gpu_execution_target"),
+            ),
+            _mapped(
+                "goal of minimizing the module's overall execution time",
+                "The optimization objective is minimum overall module execution time.",
+                _ref("compiler", "minimize_overall_module_execution_time"),
+            ),
+        ),
+        "tex_prose_sentence_0214": (
+            _mapped(
+                "particularly challenging task",
+                "The compiler-IR optimization task is characterized as particularly challenging.",
+                _ref("compiler", "compiler_ir_task_particularly_challenging"),
+            ),
+            _mapped(
+                "because (1) the IR is designed for debugging purposes rather than for direct editing by developers, and (2) it is compiler-generated and already highly optimized",
+                "The paper attributes the difficulty to the IR's debug-oriented form and its compiler-generated, optimized baseline.",
+                _ref("compiler", "compiler_ir_task_particularly_challenging"),
+                _ref("compiler", "ir_designed_for_debugging"),
+                _ref("compiler", "ir_not_for_direct_developer_editing"),
+                _ref("compiler", "compiler_generated_baseline"),
+                _ref("compiler", "already_highly_optimized_baseline"),
+            ),
+            _mapped(
+                "IR is designed for debugging purposes",
+                "The intermediate representation is designed for debugging.",
+                _ref("compiler", "ir_designed_for_debugging"),
+            ),
+            _mapped(
+                "rather than for direct editing by developers",
+                "The intermediate representation is not designed for direct developer editing.",
+                _ref("compiler", "ir_not_for_direct_developer_editing"),
+            ),
+            _mapped(
+                "it is compiler-generated",
+                "The baseline intermediate representation is compiler-generated.",
+                _ref("compiler", "compiler_generated_baseline"),
+            ),
+            _mapped(
+                "already highly optimized",
+                "The compiler-generated baseline is characterized as already highly optimized.",
+                _ref("compiler", "already_highly_optimized_baseline"),
+            ),
+        ),
+        "tex_prose_sentence_0215": (
+            _mapped(
+                "Each modification proposed by AlphaEvolve",
+                "AlphaEvolve proposed the modifications under evaluation.",
+                _ref("compiler", "each_modification_reference_checked"),
+            ),
+            _mapped(
+                "Each modification proposed by AlphaEvolve was checked",
+                "Every AlphaEvolve modification was checked.",
+                _ref("compiler", "each_modification_reference_checked"),
+            ),
+            _mapped(
+                "checked against the reference",
+                "Each modification was compared with reference code.",
+                _ref("compiler", "unmodified_reference_code"),
+            ),
+            _mapped(
+                "reference (unmodified) code",
+                "The reference code remained unmodified.",
+                _ref("compiler", "unmodified_reference_code"),
+            ),
+            _mapped(
+                "on randomized inputs",
+                "The per-modification checks used randomized inputs.",
+                _ref("compiler", "randomized_input_reference_checks"),
+            ),
+            _mapped(
+                "in order to ensure numerical correctness",
+                "The reference checks were intended to ensure numerical correctness.",
+                _ref("compiler", "numerical_correctness_throughout_optimization"),
+            ),
+            _mapped(
+                "throughout optimization",
+                "The numerical-correctness requirement applied throughout optimization.",
+                _ref("compiler", "numerical_correctness_throughout_optimization"),
+            ),
+        ),
+        "tex_prose_sentence_0216": (
+            _mapped(
+                "The final version of the code",
+                "The expert-confirmation claim applies to the final code version.",
+                _ref("compiler", "final_human_expert_confirmation"),
+            ),
+            _mapped(
+                "was rigorously confirmed",
+                "The final confirmation is characterized as rigorous.",
+                _ref("compiler", "final_human_expert_confirmation"),
+            ),
+            _mapped(
+                "by human experts",
+                "Human experts performed the final confirmation.",
+                _ref("compiler", "final_human_expert_confirmation"),
+            ),
+            _mapped(
+                "to be correct",
+                "The final confirmation addressed code correctness.",
+                _ref("compiler", "final_human_expert_confirmation"),
+            ),
+            _mapped(
+                "for all possible inputs",
+                "The asserted correctness scope covers all possible inputs.",
+                _ref("compiler", "correct_for_all_possible_inputs"),
+            ),
+        ),
+        "tex_prose_sentence_0217": (
+            _mapped(
+                "AlphaEvolve was able to provide",
+                "AlphaEvolve is reported to have produced the optimizations.",
+                _ref("compiler", "meaningful_optimizations_both_abstraction_levels"),
+            ),
+            _mapped(
+                "meaningful optimizations",
+                "The reported optimizations are characterized as meaningful.",
+                _ref("compiler", "meaningful_optimizations_both_abstraction_levels"),
+            ),
+            _mapped(
+                "for both levels of abstraction",
+                "The optimizations apply at both reported abstraction levels.",
+                _ref("compiler", "meaningful_optimizations_both_abstraction_levels"),
+            ),
+            _mapped(
+                "exposed by the IR",
+                "The intermediate representation exposes the two abstraction levels.",
+                _ref("compiler", "meaningful_optimizations_both_abstraction_levels"),
+            ),
+        ),
+        "tex_prose_sentence_0218": (
+            _mapped(
+                "the FlashAttention kernel",
+                "The first reported result applies to the FlashAttention kernel.",
+                _ref("compiler", "flashattention_kernel_optimization_result"),
+            ),
+            _mapped(
+                "for the configuration of interest",
+                "The kernel result is scoped to the configuration of interest.",
+                _ref("compiler", "kernel_configuration_of_interest_scope"),
+            ),
+            _mapped(
+                "was sped up",
+                "The reported kernel result is a runtime speedup.",
+                _ref("compiler", "kernel_speedup_32_percent"),
+            ),
+            _mapped(
+                "by 32 percent",
+                "The reported FlashAttention kernel speedup is 32 percent.",
+                _ref("compiler", "kernel_speedup_32_percent"),
+            ),
+        ),
+        "tex_prose_sentence_0219": (
+            _mapped(
+                "AlphaEvolve found improvements",
+                "AlphaEvolve is reported to have found the wrapper-code improvements.",
+                _ref("compiler", "pre_postprocessing_improvements_found"),
+            ),
+            _mapped(
+                "in pre-",
+                "The reported improvements include preprocessing.",
+                _ref("compiler", "pre_postprocessing_improvements_found"),
+            ),
+            _mapped(
+                "postprocessing",
+                "The reported improvements include postprocessing.",
+                _ref("compiler", "pre_postprocessing_improvements_found"),
+            ),
+            _mapped(
+                "kernel inputs",
+                "The wrapper-code improvements concern kernel inputs.",
+                _ref("compiler", "pre_postprocessing_improvements_found"),
+            ),
+            _mapped(
+                "outputs",
+                "The wrapper-code improvements concern kernel outputs.",
+                _ref("compiler", "pre_postprocessing_improvements_found"),
+            ),
+            _mapped(
+                "resulting in a 15 percent speed up",
+                "The wrapper-code improvements reportedly produced a 15 percent speedup.",
+                _ref("compiler", "pre_postprocessing_speedup_15_percent"),
+            ),
+            _mapped(
+                "in this part",
+                "The 15 percent result is scoped to the pre- and postprocessing portion.",
+                _ref("compiler", "pre_postprocessing_speedup_15_percent"),
+            ),
+        ),
+        "tex_prose_sentence_0220": (
+            _mapped(
+                "These results demonstrate",
+                "The authors present the preceding results as demonstration evidence.",
+                _ref("compiler", "compiler_generated_code_optimization_demonstrated"),
+            ),
+            _mapped(
+                "ability of AlphaEvolve to optimize compiler-generated code",
+                "The results are claimed to demonstrate AlphaEvolve's ability to optimize compiler-generated code.",
+                _ref("compiler", "compiler_generated_code_optimization_demonstrated"),
+            ),
+            _mapped(
+                "potential of incorporating discovered optimizations into existing compilers",
+                "The authors identify potential incorporation of discovered optimizations into existing compilers.",
+                _ref("compiler", "existing_compiler_incorporation_potential"),
+            ),
+            _mapped(
+                "for specific use cases",
+                "The potential existing-compiler path is scoped to specific use cases.",
+                _ref("compiler", "existing_compiler_specific_use_cases"),
+            ),
+            _mapped(
+                "in the longer term",
+                "A second compiler-workflow adoption path is explicitly longer term.",
+                _ref("compiler", "alphaevolve_in_compiler_workflow_longer_term"),
+            ),
+            _mapped(
+                "incorporating AlphaEvolve into the compiler workflow itself",
+                "The longer-term path would incorporate AlphaEvolve into the compiler workflow.",
+                _ref("compiler", "alphaevolve_in_compiler_workflow_longer_term"),
             ),
         ),
     }
@@ -4393,7 +4790,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through retained Section 3.3.3 hardware."""
+    """Review atomic propositions through retained Section 3.3.4 compiler work."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -4602,11 +4999,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
                 "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
                 "all 11 retained Section 3.3.3 hardware-circuit-design sentences in results.tex",
+                "all 14 retained Section 3.3.4 compiler-optimization sentences in results.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 196 retained prose sentences",
+                "the remaining 182 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -4615,9 +5013,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained sentence from the Abstract through Section 3.3.3 "
-            "hardware circuit design. Complete disposition inside this 206-sentence "
-            "scope does not cover the remaining 196 prose "
+            "for every retained sentence from the Abstract through Section 3.3.4 "
+            "compiler optimization. Complete disposition inside this 220-sentence "
+            "scope does not cover the remaining 182 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),
@@ -4662,7 +5060,7 @@ def validate_alphaevolve_tex_proposition_inventory_boundary(
         issues.append(
             _issue(
                 "review_scope_incomplete",
-                "Abstract through Section 3.2 methodology review scope is incomplete",
+                "Abstract through Section 3.3.4 compiler review scope is incomplete",
             )
         )
     for field in (

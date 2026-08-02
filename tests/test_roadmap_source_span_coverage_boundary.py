@@ -14,7 +14,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_structure_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_673_propositions_across_206_abstract_through_section3_3_3_hardware_sentences_without_whole_paper_semantic_exhaustiveness"
+        == "named_structure_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_744_propositions_across_220_abstract_through_section3_3_4_compiler_sentences_without_whole_paper_semantic_exhaustiveness"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_COVERAGE_BOUNDARY_SCHEMA
     assert boundary["source_paper_id"] == "2506.13131"
@@ -46,7 +46,7 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
         for todo_ref in record["active_todo_refs"]
     )
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_206_abstract_through_section3_3_3_hardware_sentences_have_673_proposition_dispositions_without_remaining_196_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
+        "claim_level_requirement_inventory": "846_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_128_paragraphs_402_sentences_have_prose_dispositions_and_220_abstract_through_section3_3_4_compiler_sentences_have_744_proposition_dispositions_without_remaining_182_sentence_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
         "application_result_claim_matrix": "section_3_3_claim_dispositions_recorded_without_reproduction_phase_priority_or_non_goal_proof",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
         "missing_partial_todo_proof": "not_recorded_locally",
@@ -77,11 +77,11 @@ def test_roadmap_source_span_coverage_accepts_bounded_matrix():
     assert boundary["completed_evidence"]["tex_prose_claim_mapped_sentence_count"] == 372
     assert boundary["completed_evidence"]["tex_prose_reviewed_nonclaim_sentence_count"] == 30
     assert boundary["completed_evidence"]["tex_prose_unmapped_sentence_count"] == 0
-    assert boundary["completed_evidence"]["tex_proposition_reviewed_sentence_count"] == 206
-    assert boundary["completed_evidence"]["tex_proposition_count"] == 673
-    assert boundary["completed_evidence"]["tex_proposition_claim_mapped_count"] == 619
+    assert boundary["completed_evidence"]["tex_proposition_reviewed_sentence_count"] == 220
+    assert boundary["completed_evidence"]["tex_proposition_count"] == 744
+    assert boundary["completed_evidence"]["tex_proposition_claim_mapped_count"] == 690
     assert boundary["completed_evidence"]["tex_proposition_context_outlook_interpretation_count"] == 54
-    assert boundary["completed_evidence"]["tex_proposition_remaining_sentence_count"] == 196
+    assert boundary["completed_evidence"]["tex_proposition_remaining_sentence_count"] == 182
     assert "all 83 rows and 240 cells" in boundary["claim_boundary"]
     assert "all 8 retained TeX code listing environments" in boundary["claim_boundary"]
     assert "all 128 retained TeX prose paragraphs" in boundary["claim_boundary"]
@@ -116,7 +116,7 @@ def test_render_roadmap_source_span_coverage_summary_reports_shape():
     assert "ROADMAP source-span coverage boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_structure_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_673_propositions_across_206_abstract_through_section3_3_3_hardware_sentences_without_whole_paper_semantic_exhaustiveness |"
+        "| boundary_status | named_structure_plus_846_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_402_tex_prose_sentences_and_744_propositions_across_220_abstract_through_section3_3_4_compiler_sentences_without_whole_paper_semantic_exhaustiveness |"
         in summary
     )
     assert "| coverage_surface_count | 8 |" in summary

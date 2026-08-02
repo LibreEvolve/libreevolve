@@ -9495,25 +9495,31 @@
           "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
           "claim_id": "flashattention_accelerator_kernel_in_stack",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
-        },
-        {
-          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
-          "claim_id": "higher_level_jax_wrapper",
-          "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
-        },
-        {
-          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
-          "claim_id": "jax_input_preparation",
-          "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
           "claim_id": "pallas_flashattention_implementation",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "higher_level_jax_wrapper",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "jax_input_preparation",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "jax_output_postprocessing",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -9913,7 +9919,13 @@
           "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
           "claim_id": "pre_postprocessing_improvements_found",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_compiler_claim_inventory_boundary.json",
+          "claim_id": "pre_postprocessing_speedup_15_percent",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

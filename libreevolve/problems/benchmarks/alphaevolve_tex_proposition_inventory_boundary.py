@@ -20,16 +20,16 @@ from libreevolve.problems.benchmarks.paper_bibliography import (
 
 
 ALPHAEVOLVE_TEX_PROPOSITION_INVENTORY_BOUNDARY_SCHEMA = (
-    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v6"
+    "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v7"
 )
 EXPECTED_BOUNDARY_STATUS = (
-    "abstract_through_section3_3_1_scheduling_proposition_review_complete_without_"
+    "abstract_through_section3_3_2_kernel_proposition_review_complete_without_"
     "remaining_paper_or_independent_semantic_exhaustiveness"
 )
-EXPECTED_REVIEWED_SENTENCE_COUNT = 172
-EXPECTED_PROPOSITION_COUNT = 523
+EXPECTED_REVIEWED_SENTENCE_COUNT = 195
+EXPECTED_PROPOSITION_COUNT = 621
 EXPECTED_REVIEWED_SENTENCE_IDS = tuple(
-    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 173)
+    f"tex_prose_sentence_{ordinal:04d}" for ordinal in range(1, 196)
 )
 EXPECTED_NEW_BOUNDED_CLAIM_IDS = (
     "introduction_algorithm_search_outperforms_direct_solution_search",
@@ -57,6 +57,9 @@ EXPECTED_REPAIRED_SENTENCE_CLAIM_IDS = (
     "section3_3_1_mission_critical_operational_qualities",
     "section3_3_1_post_deployment_confirms_simulator",
     "section3_3_1_predictability_advantage",
+    "section3_3_2_average_twenty_three_percent_kernel_speedup",
+    "section3_3_2_one_percent_gemini_training_reduction",
+    "section3_3_2_team_research_engineering_velocity",
     "task_problem_specific_abstraction_choice",
 )
 
@@ -939,6 +942,549 @@ _PROPOSITION_SPECS.update(
                 "for problems with non-symmetric solutions it works better to evolve customized search algorithms",
                 "The authors hypothesize that non-symmetric problems favor customized search algorithms.",
                 _ref("system", "task_symmetry_guided_abstraction_bias"),
+            ),
+        ),
+    }
+)
+
+
+_PROPOSITION_SPECS.update(
+    {
+        "tex_prose_sentence_0173": (
+            _mapped(
+                "Training large models like Gemini",
+                "Gemini is included in the large-model training workload under discussion.",
+                _ref("kernel", "section3_3_2_gemini_training_compute_demand"),
+            ),
+            _mapped(
+                "requires substantial computational resources",
+                "The Gemini training workload is reported to require substantial compute.",
+                _ref("kernel", "section3_3_2_gemini_training_compute_demand"),
+            ),
+        ),
+        "tex_prose_sentence_0174": (
+            _mapped(
+                "Gemini is built on JAX",
+                "The reported Gemini implementation is based on JAX.",
+                _ref("kernel", "section3_3_2_gemini_built_on_jax"),
+            ),
+            _mapped(
+                "Pallas is an extension to JAX",
+                "Pallas is described as a JAX extension.",
+                _ref("kernel", "section3_3_2_pallas_extends_jax"),
+            ),
+            _mapped(
+                "enables writing",
+                "Pallas enables authors to write specialized programs.",
+                _ref("kernel", "section3_3_2_custom_specialized_kernel_programs"),
+            ),
+            _mapped(
+                "custom",
+                "The Pallas programs can be customized.",
+                _ref("kernel", "section3_3_2_custom_specialized_kernel_programs"),
+            ),
+            _mapped(
+                "highly specialized programs",
+                "The Pallas programs can be highly specialized.",
+                _ref("kernel", "section3_3_2_custom_specialized_kernel_programs"),
+            ),
+            _mapped(
+                "(kernels)",
+                "The specialized programs are kernels.",
+                _ref("kernel", "section3_3_2_custom_specialized_kernel_programs"),
+            ),
+            _mapped(
+                "tailored for optimal execution",
+                "The kernels are tailored for optimal execution.",
+                _ref("kernel", "section3_3_2_optimal_accelerator_execution"),
+            ),
+            _mapped(
+                "on hardware accelerators",
+                "The execution target is hardware accelerators.",
+                _ref("kernel", "section3_3_2_optimal_accelerator_execution"),
+            ),
+        ),
+        "tex_prose_sentence_0175": (
+            _mapped(
+                "efficient Pallas kernels",
+                "The reported optimization depends on efficient Pallas kernels.",
+                _ref("kernel", "section3_3_2_pallas_kernel_training_importance"),
+            ),
+            _mapped(
+                "training performance",
+                "The affected target is Gemini training performance.",
+                _ref("kernel", "section3_3_2_pallas_kernel_training_importance"),
+            ),
+        ),
+        "tex_prose_sentence_0176": (
+            _mapped(
+                "critical aspect of kernel optimization",
+                "Tiling is characterized as a critical kernel-optimization concern.",
+                _ref("kernel", "section3_3_2_matmul_tiling_is_critical_optimization"),
+            ),
+            _mapped(
+                "tuning the tiling strategy",
+                "The optimization surface is the tiling strategy.",
+                _ref("kernel", "section3_3_2_matmul_tiling_is_critical_optimization"),
+            ),
+            _mapped(
+                "for matrix multiplication operations",
+                "The tiling strategy applies to matrix multiplication.",
+                _ref("kernel", "section3_3_2_matmul_tiling_is_critical_optimization"),
+            ),
+            _reviewed_context(
+                "see [citation]",
+                "The prose points to Figure 7 for the matrix-multiplication tiling problem.",
+                "This is a figure locator; Figure 7 and its visual semantics are dispositioned separately.",
+            ),
+        ),
+        "tex_prose_sentence_0177": (
+            _mapped(
+                "dividing a large matrix multiplication computation",
+                "Tiling divides a large matrix-multiplication computation.",
+                _ref("kernel", "section3_3_2_tiling_divides_large_matmul"),
+            ),
+            _mapped(
+                "into smaller subproblems",
+                "The division produces smaller subproblems.",
+                _ref("kernel", "section3_3_2_tiling_divides_large_matmul"),
+            ),
+            _mapped(
+                "balance computation",
+                "Tiling is intended to balance computation.",
+                _ref("kernel", "section3_3_2_balance_compute_and_data_movement"),
+            ),
+            _mapped(
+                "with data movement",
+                "The balancing counterpart is data movement.",
+                _ref("kernel", "section3_3_2_balance_compute_and_data_movement"),
+            ),
+            _mapped(
+                "key to accelerating the overall computation",
+                "The compute/data-movement balance is reported to accelerate the overall computation.",
+                _ref("kernel", "section3_3_2_tiling_accelerates_overall_computation"),
+            ),
+        ),
+        "tex_prose_sentence_0178": (
+            _mapped(
+                "kernel engineers rely on",
+                "Kernel engineers are described as relying on baseline tuning workflows.",
+                _ref("kernel", "section3_3_2_search_based_autotuning_baseline"),
+            ),
+            _mapped(
+                "search-based autotuning",
+                "One baseline workflow is search-based autotuning.",
+                _ref("kernel", "section3_3_2_search_based_autotuning_baseline"),
+            ),
+            _mapped(
+                "manually crafted heuristics",
+                "Another baseline workflow uses manually crafted heuristics.",
+                _ref("kernel", "section3_3_2_manual_heuristic_baseline"),
+            ),
+            _mapped(
+                "near-optimal tiling configurations",
+                "The baseline workflows seek near-optimal tiling configurations.",
+                _ref("kernel", "section3_3_2_near_optimal_configs_varied_shapes"),
+            ),
+            _mapped(
+                "various input shapes",
+                "The tiling configurations must cover varied input shapes.",
+                _ref("kernel", "section3_3_2_near_optimal_configs_varied_shapes"),
+            ),
+        ),
+        "tex_prose_sentence_0179": (
+            _mapped(
+                "Search-based tuning interrupts the research workflow",
+                "Search-based tuning is reported to interrupt the research workflow.",
+                _ref("kernel", "section3_3_2_autotuning_interrupts_workflow"),
+            ),
+            _mapped(
+                "necessitating retuning",
+                "The workflow requires repeated retuning.",
+                _ref("kernel", "section3_3_2_retune_every_shape_change"),
+            ),
+            _mapped(
+                "every input shape change",
+                "Retuning is reported for every input-shape change.",
+                _ref("kernel", "section3_3_2_retune_every_shape_change"),
+            ),
+        ),
+        "tex_prose_sentence_0180": (
+            _mapped(
+                "manually crafting effective tiling heuristics",
+                "The manual workflow crafts effective tiling heuristics.",
+                _ref("kernel", "section3_3_2_manual_heuristic_bottleneck"),
+            ),
+            _mapped(
+                "major engineering bottleneck",
+                "Manual heuristic authoring is reported as a major engineering bottleneck.",
+                _ref("kernel", "section3_3_2_manual_heuristic_bottleneck"),
+            ),
+            _mapped(
+                "due to its complexity",
+                "The bottleneck is attributed to the workflow's complexity.",
+                _ref("kernel", "section3_3_2_manual_heuristic_bottleneck"),
+            ),
+            _mapped(
+                "deep understanding of both kernel functionality",
+                "Manual heuristic design requires deep kernel-functionality expertise.",
+                _ref("kernel", "section3_3_2_deep_kernel_functionality_expertise"),
+            ),
+            _mapped(
+                "hardware intricacies",
+                "Manual heuristic design requires deep hardware expertise.",
+                _ref("kernel", "section3_3_2_deep_hardware_expertise"),
+            ),
+        ),
+        "tex_prose_sentence_0181": (
+            _mapped(
+                "key advantage of a performant heuristic",
+                "Shape-general performance is characterized as a key heuristic advantage.",
+                _ref("kernel", "section3_3_2_high_performance_arbitrary_shapes"),
+            ),
+            _mapped(
+                "deliver high performance",
+                "A performant heuristic should deliver high performance.",
+                _ref("kernel", "section3_3_2_high_performance_arbitrary_shapes"),
+            ),
+            _mapped(
+                "across arbitrary input shapes",
+                "The high-performance requirement spans arbitrary input shapes.",
+                _ref("kernel", "section3_3_2_high_performance_arbitrary_shapes"),
+            ),
+        ),
+        "tex_prose_sentence_0182": (
+            _mapped(
+                "expedite the design of performant kernels",
+                "The proposed workflow aims to accelerate performant-kernel design.",
+                _ref("kernel", "section3_3_2_expedite_emerging_hardware_kernels"),
+            ),
+            _mapped(
+                "for emerging hardware",
+                "The accelerated kernel-design target includes emerging hardware.",
+                _ref("kernel", "section3_3_2_expedite_emerging_hardware_kernels"),
+            ),
+            _mapped(
+                "simplify their utilization",
+                "The proposed workflow aims to simplify kernel utilization.",
+                _ref("kernel", "section3_3_2_simplify_model_developer_utilization"),
+            ),
+            _mapped(
+                "by model developers",
+                "The intended kernel users include model developers.",
+                _ref("kernel", "section3_3_2_simplify_model_developer_utilization"),
+            ),
+            _mapped(
+                "facilitate the heuristic generation process",
+                "The stated goal is to facilitate heuristic generation.",
+                _ref("kernel", "section3_3_2_facilitate_heuristic_generation"),
+            ),
+        ),
+        "tex_prose_sentence_0183": (
+            _mapped(
+                "employing AlphaEvolve",
+                "AlphaEvolve is the proposed optimization system.",
+                _ref("kernel", "section3_3_2_optimize_tiling_heuristics"),
+            ),
+            _mapped(
+                "optimize tiling heuristics",
+                "AlphaEvolve optimizes tiling heuristics.",
+                _ref("kernel", "section3_3_2_optimize_tiling_heuristics"),
+            ),
+            _mapped(
+                "important matrix multiplication kernel",
+                "The optimization target is a material matrix-multiplication kernel.",
+                _ref("kernel", "section3_3_2_gemini_training_matmul_kernel"),
+            ),
+            _mapped(
+                "used to train Gemini",
+                "The target kernel is used in Gemini training.",
+                _ref("kernel", "section3_3_2_gemini_training_matmul_kernel"),
+            ),
+        ),
+        "tex_prose_sentence_0184": (
+            _mapped(
+                "minimize the kernel's actual runtime",
+                "The optimization objective minimizes measured kernel runtime.",
+                _ref("kernel", "section3_3_2_minimize_actual_kernel_runtime"),
+            ),
+        ),
+        "tex_prose_sentence_0185": (
+            _mapped(
+                "AlphaEvolve iteratively explores",
+                "AlphaEvolve iteratively explores the heuristic search space.",
+                _ref("kernel", "section3_3_2_iterative_tiling_refinement"),
+            ),
+            _mapped(
+                "refines tiling heuristics",
+                "The iteration refines tiling heuristics.",
+                _ref("kernel", "section3_3_2_iterative_tiling_refinement"),
+            ),
+            _mapped(
+                "proposing candidate code",
+                "The proposal surface is candidate code.",
+                _ref("kernel", "section3_3_2_candidate_code_proposals"),
+            ),
+            _mapped(
+                "minimize this runtime",
+                "Candidate proposals seek to minimize runtime.",
+                _ref("kernel", "section3_3_2_runtime_across_various_shapes"),
+            ),
+            _mapped(
+                "various input shapes",
+                "Runtime is evaluated over varied input shapes.",
+                _ref("kernel", "section3_3_2_runtime_across_various_shapes"),
+            ),
+            _mapped(
+                "real TPU accelerators",
+                "Runtime is measured on real TPU accelerators.",
+                _ref("kernel", "section3_3_2_real_tpu_accelerator_measurement"),
+            ),
+        ),
+        "tex_prose_sentence_0186": (
+            _mapped(
+                "correctness is maintained by construction",
+                "Kernel correctness is claimed to be maintained by construction.",
+                _ref("kernel", "section3_3_2_correctness_by_construction"),
+            ),
+            _mapped(
+                "optimizing the tiling strategy",
+                "Candidate optimization is restricted to the tiling strategy.",
+                _ref("kernel", "section3_3_2_tiling_strategy_only_candidate_scope"),
+            ),
+            _mapped(
+                "rather than altering its underlying mathematical operation",
+                "The underlying mathematical operation is not altered.",
+                _ref("kernel", "section3_3_2_underlying_math_unchanged"),
+            ),
+        ),
+        "tex_prose_sentence_0187": (
+            _mapped(
+                "training",
+                "The collected shape corpus includes a training split.",
+                _ref("kernel", "section3_3_2_automatic_realistic_shape_collection"),
+            ),
+            _mapped(
+                "evaluation datasets",
+                "The collected shape corpus includes an evaluation split.",
+                _ref("kernel", "section3_3_2_automatic_realistic_shape_collection"),
+            ),
+            _mapped(
+                "automatically collect",
+                "The shape corpus is collected automatically.",
+                _ref("kernel", "section3_3_2_automatic_realistic_shape_collection"),
+            ),
+            _mapped(
+                "realistic kernel input shapes",
+                "The collected inputs are realistic kernel shapes.",
+                _ref("kernel", "section3_3_2_automatic_realistic_shape_collection"),
+            ),
+            _mapped(
+                "from kernel users",
+                "The shape corpus is sourced from kernel users.",
+                _ref("kernel", "section3_3_2_shape_corpus_from_kernel_users"),
+            ),
+        ),
+        "tex_prose_sentence_0188": (
+            _mapped(
+                "Half of these input shapes",
+                "Half of the collected input shapes are allocated to training.",
+                _ref("kernel", "section3_3_2_half_training_shape_split"),
+            ),
+            _mapped(
+                "form the training set",
+                "The first half forms the training set.",
+                _ref("kernel", "section3_3_2_half_training_shape_split"),
+            ),
+            _mapped(
+                "optimization targets",
+                "Training shapes provide optimization targets.",
+                _ref("kernel", "section3_3_2_training_shapes_are_optimization_targets"),
+            ),
+            _mapped(
+                "during the evolutionary process",
+                "The optimization targets are used during evolution.",
+                _ref("kernel", "section3_3_2_training_shapes_are_optimization_targets"),
+            ),
+        ),
+        "tex_prose_sentence_0189": (
+            _mapped(
+                "remaining input shapes",
+                "The remaining half of the shape corpus is reserved for evaluation.",
+                _ref("kernel", "section3_3_2_half_evaluation_shape_split"),
+            ),
+            _mapped(
+                "form the evaluation set",
+                "The reserved shapes form the evaluation set.",
+                _ref("kernel", "section3_3_2_half_evaluation_shape_split"),
+            ),
+            _mapped(
+                "test the general applicability",
+                "The evaluation split tests general applicability.",
+                _ref("kernel", "section3_3_2_evaluation_tests_general_applicability"),
+            ),
+            _mapped(
+                "resulting heuristic",
+                "General applicability is tested for the evolved heuristic.",
+                _ref("kernel", "section3_3_2_evaluation_tests_general_applicability"),
+            ),
+        ),
+        "tex_prose_sentence_0190": (
+            _mapped(
+                "automated approach enables AlphaEvolve",
+                "The heuristic-discovery workflow is automated through AlphaEvolve.",
+                _ref("kernel", "section3_3_2_optimize_tiling_heuristics"),
+            ),
+            _mapped(
+                "discover a heuristic",
+                "AlphaEvolve discovers a tiling heuristic.",
+                _ref("kernel", "section3_3_2_optimize_tiling_heuristics"),
+            ),
+            _mapped(
+                "average 23 percent kernel speedup",
+                "The discovered heuristic is reported to yield a 23-percent average kernel speedup.",
+                _ref("kernel", "section3_3_2_average_twenty_three_percent_kernel_speedup"),
+            ),
+            _mapped(
+                "across all kernels",
+                "The reported average speedup spans all evaluated kernels.",
+                _ref("kernel", "section3_3_2_average_twenty_three_percent_kernel_speedup"),
+            ),
+            _mapped(
+                "existing expert-designed heuristic",
+                "The kernel-speed comparator is the existing expert-designed heuristic.",
+                _ref("kernel", "section3_3_2_expert_designed_heuristic_comparator"),
+            ),
+            _mapped(
+                "corresponding 1 percent reduction",
+                "The kernel speedup is reported to correspond to a 1-percent training-time reduction.",
+                _ref("kernel", "section3_3_2_one_percent_gemini_training_reduction"),
+            ),
+            _mapped(
+                "overall training time",
+                "The 1-percent reduction applies to Gemini's overall training time.",
+                _ref("kernel", "section3_3_2_one_percent_gemini_training_reduction"),
+            ),
+        ),
+        "tex_prose_sentence_0191": (
+            _mapped(
+                "use of AlphaEvolve significantly reduced",
+                "AlphaEvolve is reported to reduce kernel-optimization time materially.",
+                _ref("kernel", "section3_3_2_optimization_months_to_days"),
+            ),
+            _mapped(
+                "kernel optimization time",
+                "Kernel-optimization time is the workflow-duration metric.",
+                _ref("kernel", "section3_3_2_optimization_months_to_days"),
+            ),
+            _mapped(
+                "several months",
+                "The prior kernel-optimization workflow took several months.",
+                _ref("kernel", "section3_3_2_optimization_months_to_days"),
+            ),
+            _mapped(
+                "dedicated engineering effort",
+                "The prior workflow required dedicated engineering effort.",
+                _ref("kernel", "section3_3_2_dedicated_effort_to_automated_experimentation"),
+            ),
+            _mapped(
+                "days of automated experimentation",
+                "The AlphaEvolve workflow is reported to take days of automated experimentation.",
+                _ref("kernel", "section3_3_2_dedicated_effort_to_automated_experimentation"),
+            ),
+        ),
+        "tex_prose_sentence_0192": (
+            _mapped(
+                "speeds up the deployment",
+                "The optimization acceleration is reported to speed deployment.",
+                _ref("kernel", "section3_3_2_faster_optimized_kernel_deployment"),
+            ),
+            _mapped(
+                "optimized kernels",
+                "The faster deployment applies to optimized kernels.",
+                _ref("kernel", "section3_3_2_faster_optimized_kernel_deployment"),
+            ),
+            _mapped(
+                "kernel engineers",
+                "The reported workflow changes how kernel engineers spend their expertise.",
+                _ref("kernel", "section3_3_2_engineers_focus_higher_level_work"),
+            ),
+            _mapped(
+                "more strategic",
+                "Kernel engineers can focus on more strategic work.",
+                _ref("kernel", "section3_3_2_engineers_focus_higher_level_work"),
+            ),
+            _mapped(
+                "higher-level optimization problems",
+                "The redirected work consists of higher-level optimization problems.",
+                _ref("kernel", "section3_3_2_engineers_focus_higher_level_work"),
+            ),
+        ),
+        "tex_prose_sentence_0193": (
+            _mapped(
+                "AlphaEvolve offers a path",
+                "AlphaEvolve is presented as a path toward tuning automation.",
+                _ref("kernel", "section3_3_2_path_to_automated_manual_tuning"),
+            ),
+            _mapped(
+                "automating the manual tuning process",
+                "The proposed path automates manual tuning.",
+                _ref("kernel", "section3_3_2_path_to_automated_manual_tuning"),
+            ),
+            _mapped(
+                "improving the ergonomics",
+                "The proposed path is claimed to improve ergonomics.",
+                _ref("kernel", "section3_3_2_improved_gemini_kernel_ergonomics"),
+            ),
+            _mapped(
+                "Gemini kernel usage",
+                "The ergonomics claim applies to Gemini kernel usage.",
+                _ref("kernel", "section3_3_2_improved_gemini_kernel_ergonomics"),
+            ),
+        ),
+        "tex_prose_sentence_0194": (
+            _mapped(
+                "tiling heuristic discovered by AlphaEvolve",
+                "AlphaEvolve is reported to have discovered the tiling heuristic.",
+                _ref("kernel", "section3_3_2_tiling_heuristic_deployed_production"),
+            ),
+            _mapped(
+                "deployed in production",
+                "The discovered tiling heuristic is reported as production-deployed.",
+                _ref("kernel", "section3_3_2_tiling_heuristic_deployed_production"),
+            ),
+            _mapped(
+                "enhancing Gemini's training efficiency",
+                "Production deployment is reported to enhance Gemini training efficiency.",
+                _ref("kernel", "section3_3_2_deployment_enhanced_training_efficiency"),
+            ),
+            _mapped(
+                "Gemini team",
+                "The reported deployment affects the Gemini team.",
+                _ref("kernel", "section3_3_2_team_research_engineering_velocity"),
+            ),
+            _mapped(
+                "research and engineering velocity",
+                "Production deployment is reported to improve research and engineering velocity.",
+                _ref("kernel", "section3_3_2_team_research_engineering_velocity"),
+            ),
+        ),
+        "tex_prose_sentence_0195": (
+            _reviewed_context(
+                "marks a novel instance",
+                "The authors characterize the deployment as a novel instance.",
+                "Novelty is an author interpretation, not a separate implementation requirement.",
+                disposition="author_interpretation",
+            ),
+            _mapped(
+                "through the capabilities of AlphaEvolve",
+                "AlphaEvolve provides the mechanism for Gemini's reported self-optimization.",
+                _ref("kernel", "section3_3_2_gemini_optimizes_own_training"),
+            ),
+            _mapped(
+                "optimizes its own training process",
+                "Gemini is reported to optimize its own training process.",
+                _ref("kernel", "section3_3_2_gemini_optimizes_own_training"),
             ),
         ),
     }
@@ -3552,7 +4098,7 @@ class AlphaEvolveTexPropositionInventoryBoundaryValidation:
 def alphaevolve_tex_proposition_inventory_boundary_record(
     root: str | Path = ".",
 ) -> dict[str, Any]:
-    """Review atomic propositions through retained Section 3.3.1 scheduling."""
+    """Review atomic propositions through retained Section 3.3.2 kernels."""
 
     root_path = Path(root)
     prose = alphaevolve_tex_prose_inventory_boundary_record(root_path)
@@ -3759,11 +4305,12 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
                 "all 16 retained Section 3.1 matrix-result sentences in results.tex",
                 "all 39 retained Section 3.2 sentences in results.tex",
                 "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
+                "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
                 "manual atomic-proposition statements and exact rendered-source quote offsets",
                 "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions",
             ],
             "excluded": [
-                "the remaining 230 retained prose sentences",
+                "the remaining 207 retained prose sentences",
                 "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
                 "independent second-reviewer semantic agreement",
                 "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
@@ -3772,9 +4319,9 @@ def alphaevolve_tex_proposition_inventory_boundary_record(
         },
         "claim_boundary": (
             "This boundary records a single-reviewer atomic-proposition decomposition "
-            "for every retained sentence from the Abstract through Section 3.3.1 "
-            "data-center scheduling. Complete disposition inside this 172-sentence "
-            "scope does not cover the remaining 230 prose "
+            "for every retained sentence from the Abstract through Section 3.3.2 "
+            "Gemini kernel engineering. Complete disposition inside this 195-sentence "
+            "scope does not cover the remaining 207 prose "
             "sentences and does not prove independent semantic exhaustiveness, "
             "mathematical correctness, result reproduction, or AlphaEvolve parity."
         ),

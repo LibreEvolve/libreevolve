@@ -8,7 +8,7 @@ from libreevolve.problems.benchmarks.alphaevolve_tex_proposition_inventory_bound
 )
 
 
-def test_tex_proposition_inventory_accepts_section3_3_1_scheduling_scope():
+def test_tex_proposition_inventory_accepts_section3_3_2_kernel_scope():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
     validation = validate_alphaevolve_tex_proposition_inventory_boundary(boundary)
@@ -23,12 +23,12 @@ def test_tex_proposition_inventory_accepts_section3_3_1_scheduling_scope():
     assert boundary["review_scope_complete"] is True
     assert boundary["whole_paper_semantic_exhaustiveness_claim_ready"] is False
     assert boundary["independent_semantic_review_ready"] is False
-    assert validation.reviewed_sentence_count == 172
-    assert validation.proposition_count == 523
-    assert validation.remaining_sentence_count == 230
+    assert validation.reviewed_sentence_count == 195
+    assert validation.proposition_count == 621
+    assert validation.remaining_sentence_count == 207
     assert validation.unmapped_proposition_count == 0
     assert validation.unresolved_reference_count == 0
-    assert boundary["reviewed_sentence_fraction"] == 172 / 402
+    assert boundary["reviewed_sentence_fraction"] == 195 / 402
     assert boundary["reviewed_source_files"] == [
         "introduction.tex",
         "main.tex",
@@ -36,21 +36,21 @@ def test_tex_proposition_inventory_accepts_section3_3_1_scheduling_scope():
         "results.tex",
     ]
     assert boundary["disposition_counts"] == {
-        "author_interpretation": 8,
+        "author_interpretation": 9,
         "author_outlook": 2,
-        "existing_bounded_claim_mapping": 474,
-        "source_context_only": 39,
+        "existing_bounded_claim_mapping": 570,
+        "source_context_only": 40,
     }
-    assert boundary["claim_reference_count"] == 496
-    assert boundary["unique_claim_reference_count"] == 204
-    assert boundary["implementation_relevant_proposition_count"] == 464
+    assert boundary["claim_reference_count"] == 592
+    assert boundary["unique_claim_reference_count"] == 253
+    assert boundary["implementation_relevant_proposition_count"] == 560
 
 
 def test_tex_proposition_inventory_resolves_every_reviewed_record():
     boundary = alphaevolve_tex_proposition_inventory_boundary_record()
 
-    assert len(boundary["reviewed_sentence_records"]) == 172
-    assert len(boundary["proposition_records"]) == 523
+    assert len(boundary["reviewed_sentence_records"]) == 195
+    assert len(boundary["proposition_records"]) == 621
     assert all(
         record["review_status"]
         == "manual_static_semantic_decomposition_complete"
@@ -102,6 +102,9 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
         "section3_3_1_mission_critical_operational_qualities",
         "section3_3_1_post_deployment_confirms_simulator",
         "section3_3_1_predictability_advantage",
+        "section3_3_2_average_twenty_three_percent_kernel_speedup",
+        "section3_3_2_one_percent_gemini_training_reduction",
+        "section3_3_2_team_research_engineering_velocity",
         "task_problem_specific_abstraction_choice",
     }
     assert set(boundary["new_bounded_claim_ids"]) <= mapped_ids
@@ -156,6 +159,59 @@ def test_tex_proposition_inventory_records_new_and_repaired_claims():
         "section3_3_1_unseen_recent_workload_capacity_generalization",
         "section3_3_mission_critical_infrastructure_real_world_impact",
     } <= mapped_ids
+    assert {
+        "section3_3_2_gemini_training_compute_demand",
+        "section3_3_2_gemini_built_on_jax",
+        "section3_3_2_pallas_extends_jax",
+        "section3_3_2_custom_specialized_kernel_programs",
+        "section3_3_2_optimal_accelerator_execution",
+        "section3_3_2_pallas_kernel_training_importance",
+        "section3_3_2_matmul_tiling_is_critical_optimization",
+        "section3_3_2_tiling_divides_large_matmul",
+        "section3_3_2_balance_compute_and_data_movement",
+        "section3_3_2_tiling_accelerates_overall_computation",
+        "section3_3_2_search_based_autotuning_baseline",
+        "section3_3_2_manual_heuristic_baseline",
+        "section3_3_2_near_optimal_configs_varied_shapes",
+        "section3_3_2_autotuning_interrupts_workflow",
+        "section3_3_2_retune_every_shape_change",
+        "section3_3_2_manual_heuristic_bottleneck",
+        "section3_3_2_deep_kernel_functionality_expertise",
+        "section3_3_2_deep_hardware_expertise",
+        "section3_3_2_high_performance_arbitrary_shapes",
+        "section3_3_2_expedite_emerging_hardware_kernels",
+        "section3_3_2_simplify_model_developer_utilization",
+        "section3_3_2_facilitate_heuristic_generation",
+        "section3_3_2_optimize_tiling_heuristics",
+        "section3_3_2_gemini_training_matmul_kernel",
+        "section3_3_2_minimize_actual_kernel_runtime",
+        "section3_3_2_iterative_tiling_refinement",
+        "section3_3_2_candidate_code_proposals",
+        "section3_3_2_runtime_across_various_shapes",
+        "section3_3_2_real_tpu_accelerator_measurement",
+        "section3_3_2_correctness_by_construction",
+        "section3_3_2_tiling_strategy_only_candidate_scope",
+        "section3_3_2_underlying_math_unchanged",
+        "section3_3_2_automatic_realistic_shape_collection",
+        "section3_3_2_shape_corpus_from_kernel_users",
+        "section3_3_2_half_training_shape_split",
+        "section3_3_2_training_shapes_are_optimization_targets",
+        "section3_3_2_half_evaluation_shape_split",
+        "section3_3_2_evaluation_tests_general_applicability",
+        "section3_3_2_average_twenty_three_percent_kernel_speedup",
+        "section3_3_2_expert_designed_heuristic_comparator",
+        "section3_3_2_one_percent_gemini_training_reduction",
+        "section3_3_2_optimization_months_to_days",
+        "section3_3_2_dedicated_effort_to_automated_experimentation",
+        "section3_3_2_faster_optimized_kernel_deployment",
+        "section3_3_2_engineers_focus_higher_level_work",
+        "section3_3_2_path_to_automated_manual_tuning",
+        "section3_3_2_improved_gemini_kernel_ergonomics",
+        "section3_3_2_tiling_heuristic_deployed_production",
+        "section3_3_2_deployment_enhanced_training_efficiency",
+        "section3_3_2_team_research_engineering_velocity",
+        "section3_3_2_gemini_optimizes_own_training",
+    } <= mapped_ids
 
 
 def test_tex_proposition_inventory_rejects_record_and_overclaim_drift():
@@ -204,7 +260,7 @@ def test_render_tex_proposition_inventory_summary_reports_shape():
 
     assert "AlphaEvolve TeX proposition inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| reviewed_sentence_count | 172 |" in summary
-    assert "| proposition_count | 523 |" in summary
-    assert "| remaining_sentence_count | 230 |" in summary
+    assert "| reviewed_sentence_count | 195 |" in summary
+    assert "| proposition_count | 621 |" in summary
+    assert "| remaining_sentence_count | 207 |" in summary
     assert "| validation_status | ok |" in summary

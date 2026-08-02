@@ -110,6 +110,9 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_3_1_mission_critical_operational_qualities",
         "section3_3_1_post_deployment_confirms_simulator",
         "section3_3_1_predictability_advantage",
+        "section3_3_2_average_twenty_three_percent_kernel_speedup",
+        "section3_3_2_one_percent_gemini_training_reduction",
+        "section3_3_2_team_research_engineering_velocity",
     } <= mapped_ids
     assert {
         ref["claim_id"] for ref in records[("main.tex", 34, 0)]["claim_refs"]
@@ -225,6 +228,20 @@ def test_tex_prose_inventory_maps_new_claims_and_disambiguates_repeated_anchors(
         "section3_3_1_interpretability_advantage",
         "section3_3_1_mission_critical_operational_qualities",
         "section3_3_1_predictability_advantage",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 161, 0)]["claim_refs"]
+    } == {
+        "section3_3_2_average_twenty_three_percent_kernel_speedup",
+        "section3_3_2_expert_designed_heuristic_comparator",
+        "section3_3_2_one_percent_gemini_training_reduction",
+    }
+    assert {
+        ref["claim_id"] for ref in records[("results.tex", 161, 4)]["claim_refs"]
+    } == {
+        "section3_3_2_deployment_enhanced_training_efficiency",
+        "section3_3_2_team_research_engineering_velocity",
+        "section3_3_2_tiling_heuristic_deployed_production",
     }
     assert [
         ref["claim_id"] for ref in records[("ablations.tex", 8, 3)]["claim_refs"]

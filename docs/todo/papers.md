@@ -101,14 +101,13 @@ directory and using the AlphaEvolve paper as the primary specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the other
     200 constructs directly to existing bounded claim ids with no unmapped or
     unresolved references and no new claim or parity credit. The supplemental
-    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 172
-    sentences from the Abstract through Section 3.3.1 data-center scheduling as
-    523 atomic propositions: 474 map through 496 references to 204 bounded
-    claims, and 49 are context, outlook, or interpretation. The scheduling slice
-    adds no new bounded claim or parity credit, but repairs six sentence mappings
-    for post-deployment simulator confirmation, continuous average 0.7-percent
-    recovery, debuggability, predictability, deployment ease, and mission-
-    critical operational qualities. The paper
+    `papers/alphaevolve_tex_proposition_inventory_boundary.json` reviews all 195
+    sentences from the Abstract through Section 3.3.2 Gemini kernel engineering
+    as 621 atomic propositions: 570 map through 592 references to 253 bounded
+    claims, and 51 are context, outlook, or interpretation. The kernel slice adds
+    no new bounded claim or parity credit, but repairs sentence mappings for the
+    reported 23-percent average kernel speedup, 1-percent Gemini training-time
+    reduction, and Gemini team research and engineering velocity. The paper
     manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
@@ -120,9 +119,9 @@ directory and using the AlphaEvolve paper as the primary specification.
     inventory
     dispositions all 8 environments and 305 source lines; the math inventory
     covers 309 TeX constructs; prose maps 402 sentences, and review
-    covers 523 propositions across all 172 sentences through Section 3.3.1
-    scheduling. Citation role and implementation relevance remain unclassified.
-    Remaining 230
+    covers 621 propositions across all 195 sentences through Section 3.3.2
+    kernel engineering. Citation role and implementation relevance remain
+    unclassified. Remaining 207
     sentence propositions, math/image-pixel/citation semantics, evidence sufficiency,
     result reproduction, and independent reviewer proof that any bounded inventory
     is semantically exhaustive also remain open.

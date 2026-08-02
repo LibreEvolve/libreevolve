@@ -1,7 +1,7 @@
 {
-  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v6",
+  "schema": "libreevolve.alphaevolve_tex_proposition_inventory_boundary.v7",
   "source_paper_id": "2506.13131",
-  "boundary_status": "abstract_through_section3_3_1_scheduling_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
+  "boundary_status": "abstract_through_section3_3_2_kernel_proposition_review_complete_without_remaining_paper_or_independent_semantic_exhaustiveness",
   "source_prose_schema": "libreevolve.alphaevolve_tex_prose_inventory_boundary.v1",
   "source_prose_boundary_status": "retained_tex_paragraph_and_sentence_inventory_complete_without_semantic_clause_exhaustiveness",
   "source_prose_ready": true,
@@ -15,9 +15,9 @@
   "source_errors": [],
   "parse_errors": [],
   "source_sentence_count": 402,
-  "reviewed_sentence_count": 172,
-  "remaining_sentence_count": 230,
-  "reviewed_sentence_fraction": 0.42786069651741293,
+  "reviewed_sentence_count": 195,
+  "remaining_sentence_count": 207,
+  "reviewed_sentence_fraction": 0.48507462686567165,
   "reviewed_source_files": [
     "introduction.tex",
     "main.tex",
@@ -31,16 +31,16 @@
     "discussion.tex",
     "related_work.tex"
   ],
-  "proposition_count": 523,
+  "proposition_count": 621,
   "disposition_counts": {
-    "author_interpretation": 8,
+    "author_interpretation": 9,
     "author_outlook": 2,
-    "existing_bounded_claim_mapping": 474,
-    "source_context_only": 39
+    "existing_bounded_claim_mapping": 570,
+    "source_context_only": 40
   },
-  "claim_reference_count": 496,
-  "unique_claim_reference_count": 204,
-  "implementation_relevant_proposition_count": 464,
+  "claim_reference_count": 592,
+  "unique_claim_reference_count": 253,
+  "implementation_relevant_proposition_count": 560,
   "unmapped_proposition_count": 0,
   "unresolved_reference_count": 0,
   "new_bounded_claim_ids": [
@@ -69,6 +69,9 @@
     "section3_3_1_mission_critical_operational_qualities",
     "section3_3_1_post_deployment_confirms_simulator",
     "section3_3_1_predictability_advantage",
+    "section3_3_2_average_twenty_three_percent_kernel_speedup",
+    "section3_3_2_one_percent_gemini_training_reduction",
+    "section3_3_2_team_research_engineering_velocity",
     "task_problem_specific_abstraction_choice"
   ],
   "reviewed_sentence_records": [
@@ -2484,6 +2487,357 @@
         "tex_proposition_0521",
         "tex_proposition_0522",
         "tex_proposition_0523"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0173",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "2bc920471ea344d586ae718818a8b7d164413ee4a08914b694bf2413634cb908",
+      "rendered_text_sha256": "2bc920471ea344d586ae718818a8b7d164413ee4a08914b694bf2413634cb908",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0524",
+        "tex_proposition_0525"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0174",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "9b76637d39fb42c3d837bc251b3b1cd062b20951f9c23591c6d50fcd86fd8b5f",
+      "rendered_text_sha256": "a13ce0020588b7b242aa11df3cfeb94e46af7f462aa2316cc7c3f149ba1472d2",
+      "proposition_count": 8,
+      "proposition_ids": [
+        "tex_proposition_0526",
+        "tex_proposition_0527",
+        "tex_proposition_0528",
+        "tex_proposition_0529",
+        "tex_proposition_0530",
+        "tex_proposition_0531",
+        "tex_proposition_0532",
+        "tex_proposition_0533"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0175",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "3354e45c7eb47da890e4726e5587033171056cba028c78e975483b21cb202478",
+      "rendered_text_sha256": "3354e45c7eb47da890e4726e5587033171056cba028c78e975483b21cb202478",
+      "proposition_count": 2,
+      "proposition_ids": [
+        "tex_proposition_0534",
+        "tex_proposition_0535"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0176",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "95bcd8b2f0e1b5b7fc644d65dfb3c881c1c79c59b79ba0f44d516ba70e72a021",
+      "rendered_text_sha256": "c0b52a5a2642fd6bbcd366771d49722d6178994a395fcad35a9c9e27f3a99e1a",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0536",
+        "tex_proposition_0537",
+        "tex_proposition_0538",
+        "tex_proposition_0539"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0177",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "0e6ee0063dc15cb88122c9330cb02c633d92f1dfdea53985425f6dd719dc2271",
+      "rendered_text_sha256": "0e6ee0063dc15cb88122c9330cb02c633d92f1dfdea53985425f6dd719dc2271",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0540",
+        "tex_proposition_0541",
+        "tex_proposition_0542",
+        "tex_proposition_0543",
+        "tex_proposition_0544"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0178",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "bdc4626e1696569d6928516f91cf5807276b2a55147bb2cde3ec7c9f34be805a",
+      "rendered_text_sha256": "bdc4626e1696569d6928516f91cf5807276b2a55147bb2cde3ec7c9f34be805a",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0545",
+        "tex_proposition_0546",
+        "tex_proposition_0547",
+        "tex_proposition_0548",
+        "tex_proposition_0549"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0179",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "8648a31f4196d91a151b47b166ba089ba1cae41878dc93bb4c9ca160e84efd71",
+      "rendered_text_sha256": "8648a31f4196d91a151b47b166ba089ba1cae41878dc93bb4c9ca160e84efd71",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0550",
+        "tex_proposition_0551",
+        "tex_proposition_0552"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0180",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "6f409650df60db9922bc472f5067b57975bf612a5d40e9484ab7d9208795411d",
+      "rendered_text_sha256": "6f409650df60db9922bc472f5067b57975bf612a5d40e9484ab7d9208795411d",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0553",
+        "tex_proposition_0554",
+        "tex_proposition_0555",
+        "tex_proposition_0556",
+        "tex_proposition_0557"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0181",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "67b367c6070abb55747214ce7347af360350c4bfd926dad20c62ce630fe83ebd",
+      "rendered_text_sha256": "67b367c6070abb55747214ce7347af360350c4bfd926dad20c62ce630fe83ebd",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0558",
+        "tex_proposition_0559",
+        "tex_proposition_0560"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0182",
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_text_sha256": "e774cff4333736ec8577143e937689c9b78104be283489c855b38d627cea4425",
+      "rendered_text_sha256": "e774cff4333736ec8577143e937689c9b78104be283489c855b38d627cea4425",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0561",
+        "tex_proposition_0562",
+        "tex_proposition_0563",
+        "tex_proposition_0564",
+        "tex_proposition_0565"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0183",
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_text_sha256": "3e6c52e6e3f6b4f6c16becf486ec4f5a83d27b6f73e20afee5108047284f3562",
+      "rendered_text_sha256": "3384e951d5ee1938ec355d05e5d207b3459ab51ba1190484d8ab90c0702dc9cd",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0566",
+        "tex_proposition_0567",
+        "tex_proposition_0568",
+        "tex_proposition_0569"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0184",
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_text_sha256": "a4fc58f12454a404d7bdba3030ab546443e3859af727a611a7b949eae75344d9",
+      "rendered_text_sha256": "a4fc58f12454a404d7bdba3030ab546443e3859af727a611a7b949eae75344d9",
+      "proposition_count": 1,
+      "proposition_ids": [
+        "tex_proposition_0570"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0185",
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_text_sha256": "c8b2b8920aa122708528dda23672f05506fe2ca03dd2bb261a6f22071a9a87ae",
+      "rendered_text_sha256": "6ada3131d0b97dd1347524e3dcc91bbdc9e96ca2381e901d0e1156416ed0b8ee",
+      "proposition_count": 6,
+      "proposition_ids": [
+        "tex_proposition_0571",
+        "tex_proposition_0572",
+        "tex_proposition_0573",
+        "tex_proposition_0574",
+        "tex_proposition_0575",
+        "tex_proposition_0576"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0186",
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_text_sha256": "fc817b1969170e483257aec8c830f703e371f29bdf9d9b388836fb840a360613",
+      "rendered_text_sha256": "aa27f862c9e01f606b093bb28988b66a86f74cc7654575f42e2281f6a01433da",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0577",
+        "tex_proposition_0578",
+        "tex_proposition_0579"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0187",
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_text_sha256": "caf4d9d1210e528a8b5a4488431ad735beda426b8d688281b2d9166c23892d47",
+      "rendered_text_sha256": "ce531986ce3af5c030d497582ecb0ed5aa14c8cf132a758006fea2bd3f0e0c94",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0580",
+        "tex_proposition_0581",
+        "tex_proposition_0582",
+        "tex_proposition_0583",
+        "tex_proposition_0584"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0188",
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_text_sha256": "3a4d767a74885f269c2c8803f03a73e95575c8e6520c6a7f89ac0949eea73857",
+      "rendered_text_sha256": "3a4d767a74885f269c2c8803f03a73e95575c8e6520c6a7f89ac0949eea73857",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0585",
+        "tex_proposition_0586",
+        "tex_proposition_0587",
+        "tex_proposition_0588"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0189",
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_text_sha256": "d16bdce77b3f37f8f407d764fd3086097d6fdd67b392f99f444cd7c70b213621",
+      "rendered_text_sha256": "d16bdce77b3f37f8f407d764fd3086097d6fdd67b392f99f444cd7c70b213621",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0589",
+        "tex_proposition_0590",
+        "tex_proposition_0591",
+        "tex_proposition_0592"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0190",
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_text_sha256": "e48d54b97b56e91c2f13304ca770be074cb9dfa78346108c88f7c80965061529",
+      "rendered_text_sha256": "4cb70a2f8a32d0462ddb7a18f863610d17be8f7b1cbb2bfec84d0f65ee283e3f",
+      "proposition_count": 7,
+      "proposition_ids": [
+        "tex_proposition_0593",
+        "tex_proposition_0594",
+        "tex_proposition_0595",
+        "tex_proposition_0596",
+        "tex_proposition_0597",
+        "tex_proposition_0598",
+        "tex_proposition_0599"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0191",
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_text_sha256": "23c05910ecb180f5070b2de845ebdb27333efead17884284ffb808c9bca02e93",
+      "rendered_text_sha256": "dbdb2dd60f1d01fcf3e9ae0437c49beaa50f527c6b1e30ffabf0e2855816d5d4",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0600",
+        "tex_proposition_0601",
+        "tex_proposition_0602",
+        "tex_proposition_0603",
+        "tex_proposition_0604"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0192",
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_text_sha256": "4bea9b10547edc9b8a3ead920513d0fcf46bd59afde0dcf0338a9b1874a50601",
+      "rendered_text_sha256": "4bea9b10547edc9b8a3ead920513d0fcf46bd59afde0dcf0338a9b1874a50601",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0605",
+        "tex_proposition_0606",
+        "tex_proposition_0607",
+        "tex_proposition_0608",
+        "tex_proposition_0609"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0193",
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_text_sha256": "b6e42ea7388c621058b61bdc0ca8fa49d4eac27afdb223347f4aa30d22e23600",
+      "rendered_text_sha256": "304300899697cdfe0f50448e66f5fb2f69968dc5933d96d8ce25a967ddaacf9e",
+      "proposition_count": 4,
+      "proposition_ids": [
+        "tex_proposition_0610",
+        "tex_proposition_0611",
+        "tex_proposition_0612",
+        "tex_proposition_0613"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0194",
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_text_sha256": "c8f315e2a015f35c5ced4aa8896e75388525fbb58ba1d5e9d2fe06ec2f920692",
+      "rendered_text_sha256": "b20fa84a21a8f7fe68bc7de49ed722acd4a55bd1abd2162ee666540e3c29f123",
+      "proposition_count": 5,
+      "proposition_ids": [
+        "tex_proposition_0614",
+        "tex_proposition_0615",
+        "tex_proposition_0616",
+        "tex_proposition_0617",
+        "tex_proposition_0618"
+      ],
+      "review_status": "manual_static_semantic_decomposition_complete"
+    },
+    {
+      "sentence_id": "tex_prose_sentence_0195",
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_text_sha256": "a27d24f0674e0c185054b9d0457667645bccb06ad63df31412acc9aebaa9df7f",
+      "rendered_text_sha256": "3b0d2cd49beac90fcf8ba22e929c0b04a069c3dee4222e279d32cbd31ce9d0df",
+      "proposition_count": 3,
+      "proposition_ids": [
+        "tex_proposition_0619",
+        "tex_proposition_0620",
+        "tex_proposition_0621"
       ],
       "review_status": "manual_static_semantic_decomposition_complete"
     }
@@ -14829,6 +15183,2344 @@
       ],
       "implementation_relevant": true,
       "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0524",
+      "sentence_id": "tex_prose_sentence_0173",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "Training large models like Gemini",
+      "source_quote_start": 0,
+      "source_quote_end": 33,
+      "source_quote_sha256": "85a419a0babd39dba3df9c8e508979afa13555dd086e9d150f0e3252a5879921",
+      "statement": "Gemini is included in the large-model training workload under discussion.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_gemini_training_compute_demand",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0525",
+      "sentence_id": "tex_prose_sentence_0173",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "requires substantial computational resources",
+      "source_quote_start": 34,
+      "source_quote_end": 78,
+      "source_quote_sha256": "86dd026f7bb09cbc222231026ffd82e0775378f7524ebb3295776a17e2ab8c0c",
+      "statement": "The Gemini training workload is reported to require substantial compute.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_gemini_training_compute_demand",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0526",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "Gemini is built on JAX",
+      "source_quote_start": 0,
+      "source_quote_end": 22,
+      "source_quote_sha256": "250eb7f7923f3f9dde45645df02c2fe6c09a4c445de5d47fbb841ec440c3f54a",
+      "statement": "The reported Gemini implementation is based on JAX.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_gemini_built_on_jax",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0527",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "Pallas is an extension to JAX",
+      "source_quote_start": 40,
+      "source_quote_end": 69,
+      "source_quote_sha256": "1cebfde8142f13ebb4dd37201711ec9e8cb0a9d5d46f53cc08917d5b16b08220",
+      "statement": "Pallas is described as a JAX extension.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_pallas_extends_jax",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0528",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "enables writing",
+      "source_quote_start": 75,
+      "source_quote_end": 90,
+      "source_quote_sha256": "663ef1cfdc575c223a14ede3b0868a5a25545b4c8f0c598245c3e1f02edce202",
+      "statement": "Pallas enables authors to write specialized programs.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_custom_specialized_kernel_programs",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0529",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "custom",
+      "source_quote_start": 91,
+      "source_quote_end": 97,
+      "source_quote_sha256": "6cdfd271da635d491e37a2b4a1044b306e6e9e039aeadee95bb355efadf8cb33",
+      "statement": "The Pallas programs can be customized.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_custom_specialized_kernel_programs",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0530",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "highly specialized programs",
+      "source_quote_start": 99,
+      "source_quote_end": 126,
+      "source_quote_sha256": "a927eb8215406f4c4428cc9160a1251e9396afca7d6f5f6efab15098df015c18",
+      "statement": "The Pallas programs can be highly specialized.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_custom_specialized_kernel_programs",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0531",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "(kernels)",
+      "source_quote_start": 127,
+      "source_quote_end": 136,
+      "source_quote_sha256": "16c32f0d67495fd51e897044760c9f676559ef145b4bae81de66a39a011ac2d1",
+      "statement": "The specialized programs are kernels.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_custom_specialized_kernel_programs",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0532",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "tailored for optimal execution",
+      "source_quote_start": 137,
+      "source_quote_end": 167,
+      "source_quote_sha256": "65c4a5e277316723357cf487fb90e0d58339381d3f65c6ace225dbf1fc855122",
+      "statement": "The kernels are tailored for optimal execution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimal_accelerator_execution",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0533",
+      "sentence_id": "tex_prose_sentence_0174",
+      "sentence_proposition_ordinal": 8,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "on hardware accelerators",
+      "source_quote_start": 168,
+      "source_quote_end": 192,
+      "source_quote_sha256": "51f84f73447ed0b33c30a8758c671cb1914fc2077d9169de1e9835896dc5b3c1",
+      "statement": "The execution target is hardware accelerators.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimal_accelerator_execution",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0534",
+      "sentence_id": "tex_prose_sentence_0175",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "efficient Pallas kernels",
+      "source_quote_start": 11,
+      "source_quote_end": 35,
+      "source_quote_sha256": "22ad7922981c7dc2517496f9c65306b2bc520cbd50f3b38d0ed599723f07c0d9",
+      "statement": "The reported optimization depends on efficient Pallas kernels.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_pallas_kernel_training_importance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0535",
+      "sentence_id": "tex_prose_sentence_0175",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "training performance",
+      "source_quote_start": 72,
+      "source_quote_end": 92,
+      "source_quote_sha256": "c01827d0ba3aa3b809e9289b66cbe6aad2f4e713b8a41f9aaff46cf4726fcd17",
+      "statement": "The affected target is Gemini training performance.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_pallas_kernel_training_importance",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0536",
+      "sentence_id": "tex_prose_sentence_0176",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "critical aspect of kernel optimization",
+      "source_quote_start": 2,
+      "source_quote_end": 40,
+      "source_quote_sha256": "d222de8dfc6bc6baac865ddd8d35bdbb717c5405efa57aeb1af5d3979215c23f",
+      "statement": "Tiling is characterized as a critical kernel-optimization concern.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_matmul_tiling_is_critical_optimization",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0537",
+      "sentence_id": "tex_prose_sentence_0176",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "tuning the tiling strategy",
+      "source_quote_start": 44,
+      "source_quote_end": 70,
+      "source_quote_sha256": "e9d9edb587c2eacfcdbf9e19cde968f516c2c09629d28dbe63b36854d45c5ec2",
+      "statement": "The optimization surface is the tiling strategy.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_matmul_tiling_is_critical_optimization",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0538",
+      "sentence_id": "tex_prose_sentence_0176",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "for matrix multiplication operations",
+      "source_quote_start": 71,
+      "source_quote_end": 107,
+      "source_quote_sha256": "2fd5505082804d150715c56226e9b968cb28925c289cd40c4a3d07176fb9cd56",
+      "statement": "The tiling strategy applies to matrix multiplication.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_matmul_tiling_is_critical_optimization",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0539",
+      "sentence_id": "tex_prose_sentence_0176",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "see [citation]",
+      "source_quote_start": 109,
+      "source_quote_end": 123,
+      "source_quote_sha256": "819573c0d7ddcdf6b7a3431b65cc7da3a26a2c3c56a4478a95515dd6d3a88217",
+      "statement": "The prose points to Figure 7 for the matrix-multiplication tiling problem.",
+      "disposition": "source_context_only",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "This is a figure locator; Figure 7 and its visual semantics are dispositioned separately."
+    },
+    {
+      "proposition_id": "tex_proposition_0540",
+      "sentence_id": "tex_prose_sentence_0177",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "dividing a large matrix multiplication computation",
+      "source_quote_start": 24,
+      "source_quote_end": 74,
+      "source_quote_sha256": "27f0c202bd9c369628231aa79b191f247dc32cdfb18546c069c455f4912b7aee",
+      "statement": "Tiling divides a large matrix-multiplication computation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_tiling_divides_large_matmul",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0541",
+      "sentence_id": "tex_prose_sentence_0177",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "into smaller subproblems",
+      "source_quote_start": 75,
+      "source_quote_end": 99,
+      "source_quote_sha256": "1027cb07638aee40f1d46a7e5bb2a58b56ffdec06055ab9f6c2888569014f69c",
+      "statement": "The division produces smaller subproblems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_tiling_divides_large_matmul",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0542",
+      "sentence_id": "tex_prose_sentence_0177",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "balance computation",
+      "source_quote_start": 110,
+      "source_quote_end": 129,
+      "source_quote_sha256": "fcdb84f85aae0c68de2b545d30b7ccb982e0584ed2c8b69315ef144597f3dc50",
+      "statement": "Tiling is intended to balance computation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_balance_compute_and_data_movement",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0543",
+      "sentence_id": "tex_prose_sentence_0177",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "with data movement",
+      "source_quote_start": 130,
+      "source_quote_end": 148,
+      "source_quote_sha256": "01061b1dd659aed5665c4028354693e5486ba3ed2b85688e55e96504c32603bf",
+      "statement": "The balancing counterpart is data movement.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_balance_compute_and_data_movement",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0544",
+      "sentence_id": "tex_prose_sentence_0177",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "key to accelerating the overall computation",
+      "source_quote_start": 159,
+      "source_quote_end": 202,
+      "source_quote_sha256": "d5e5f0aad474a9fe2d08399f730add023072bac35b7242832f18baf78b24c1da",
+      "statement": "The compute/data-movement balance is reported to accelerate the overall computation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_tiling_accelerates_overall_computation",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0545",
+      "sentence_id": "tex_prose_sentence_0178",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "kernel engineers rely on",
+      "source_quote_start": 15,
+      "source_quote_end": 39,
+      "source_quote_sha256": "4de98cee04926cbae8b231af16379f23c41636755fc53f6ee4d49a4ff7e7aa09",
+      "statement": "Kernel engineers are described as relying on baseline tuning workflows.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_search_based_autotuning_baseline",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0546",
+      "sentence_id": "tex_prose_sentence_0178",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "search-based autotuning",
+      "source_quote_start": 47,
+      "source_quote_end": 70,
+      "source_quote_sha256": "315a9714b54434bb2cddaa6a45cdee05437be0d4dcd1fc232d7ed59e16152397",
+      "statement": "One baseline workflow is search-based autotuning.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_search_based_autotuning_baseline",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0547",
+      "sentence_id": "tex_prose_sentence_0178",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "manually crafted heuristics",
+      "source_quote_start": 74,
+      "source_quote_end": 101,
+      "source_quote_sha256": "8261e3b467abeebe5b9a7ad9fe152b3b243d288af52024af20b9ecb70e71d94a",
+      "statement": "Another baseline workflow uses manually crafted heuristics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_manual_heuristic_baseline",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0548",
+      "sentence_id": "tex_prose_sentence_0178",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "near-optimal tiling configurations",
+      "source_quote_start": 115,
+      "source_quote_end": 149,
+      "source_quote_sha256": "9b1ba9ce6f4f6392cb340f7ce8679ee1eb9ecc4ead41cd8df240312fb0657898",
+      "statement": "The baseline workflows seek near-optimal tiling configurations.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_near_optimal_configs_varied_shapes",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0549",
+      "sentence_id": "tex_prose_sentence_0178",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "various input shapes",
+      "source_quote_start": 154,
+      "source_quote_end": 174,
+      "source_quote_sha256": "842ddffef37e1b989a52df4cab6acf8d0f6ce03e9c04a7945d331b4f5235e796",
+      "statement": "The tiling configurations must cover varied input shapes.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_near_optimal_configs_varied_shapes",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0550",
+      "sentence_id": "tex_prose_sentence_0179",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "Search-based tuning interrupts the research workflow",
+      "source_quote_start": 0,
+      "source_quote_end": 52,
+      "source_quote_sha256": "c17fa08b54540177efcad3ecc9333b49ae751ef3357f661cdf16a5f2af192fa9",
+      "statement": "Search-based tuning is reported to interrupt the research workflow.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_autotuning_interrupts_workflow",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0551",
+      "sentence_id": "tex_prose_sentence_0179",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "necessitating retuning",
+      "source_quote_start": 54,
+      "source_quote_end": 76,
+      "source_quote_sha256": "9802a13be3b331614ddf7976fc0466bdcb5c2d06816a1a4f59640e8cc6a5885b",
+      "statement": "The workflow requires repeated retuning.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_retune_every_shape_change",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0552",
+      "sentence_id": "tex_prose_sentence_0179",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "every input shape change",
+      "source_quote_start": 81,
+      "source_quote_end": 105,
+      "source_quote_sha256": "b98bdf75a61d064df18c7fb55d0829542dfb77786dea868563553512d421b6b8",
+      "statement": "Retuning is reported for every input-shape change.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_retune_every_shape_change",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0553",
+      "sentence_id": "tex_prose_sentence_0180",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "manually crafting effective tiling heuristics",
+      "source_quote_start": 12,
+      "source_quote_end": 57,
+      "source_quote_sha256": "4d84c9ef1e676c99c1a5daf7d37b18d5ef94ce6f74b5638e63210a766edd4cff",
+      "statement": "The manual workflow crafts effective tiling heuristics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_manual_heuristic_bottleneck",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0554",
+      "sentence_id": "tex_prose_sentence_0180",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "major engineering bottleneck",
+      "source_quote_start": 63,
+      "source_quote_end": 91,
+      "source_quote_sha256": "4741ee9456daf82bcac3a702ae8b3efa17cd0db38c2cb9522597487f6374ff80",
+      "statement": "Manual heuristic authoring is reported as a major engineering bottleneck.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_manual_heuristic_bottleneck",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0555",
+      "sentence_id": "tex_prose_sentence_0180",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "due to its complexity",
+      "source_quote_start": 92,
+      "source_quote_end": 113,
+      "source_quote_sha256": "a881fc1c6894d962e8e6bc1578c762f17b7296b16a1627b8a5be8ddb90f884e6",
+      "statement": "The bottleneck is attributed to the workflow's complexity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_manual_heuristic_bottleneck",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0556",
+      "sentence_id": "tex_prose_sentence_0180",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "deep understanding of both kernel functionality",
+      "source_quote_start": 127,
+      "source_quote_end": 174,
+      "source_quote_sha256": "15574c0f2b5d818dc805a3f005e25a181762c831d284d07df12ab89f1d651dc2",
+      "statement": "Manual heuristic design requires deep kernel-functionality expertise.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_deep_kernel_functionality_expertise",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0557",
+      "sentence_id": "tex_prose_sentence_0180",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "hardware intricacies",
+      "source_quote_start": 179,
+      "source_quote_end": 199,
+      "source_quote_sha256": "7eae1dce9b5d20af2842c2b41cffd5768fb7dd80aed2edf49b27e582d74d53cf",
+      "statement": "Manual heuristic design requires deep hardware expertise.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_deep_hardware_expertise",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0558",
+      "sentence_id": "tex_prose_sentence_0181",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "key advantage of a performant heuristic",
+      "source_quote_start": 4,
+      "source_quote_end": 43,
+      "source_quote_sha256": "b8897926960264dcc15ca9bc0deb2c08f6c4f723df474b2f36c81ffb5d2843fd",
+      "statement": "Shape-general performance is characterized as a key heuristic advantage.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_high_performance_arbitrary_shapes",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0559",
+      "sentence_id": "tex_prose_sentence_0181",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "deliver high performance",
+      "source_quote_start": 62,
+      "source_quote_end": 86,
+      "source_quote_sha256": "a29b0c32182d4401ca1b51303b7bdea70528df4a9e3895acf31f08de43a1274e",
+      "statement": "A performant heuristic should deliver high performance.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_high_performance_arbitrary_shapes",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0560",
+      "sentence_id": "tex_prose_sentence_0181",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "across arbitrary input shapes",
+      "source_quote_start": 87,
+      "source_quote_end": 116,
+      "source_quote_sha256": "f178b06a9eb1934a23131c0096006cf998f6fecdab260203a69a9b570ea5f74f",
+      "statement": "The high-performance requirement spans arbitrary input shapes.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_high_performance_arbitrary_shapes",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0561",
+      "sentence_id": "tex_prose_sentence_0182",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "expedite the design of performant kernels",
+      "source_quote_start": 17,
+      "source_quote_end": 58,
+      "source_quote_sha256": "677724c82c54914b3d5e8f43ca85c6b35b811486074e8f4e7b8b12c32e0c6474",
+      "statement": "The proposed workflow aims to accelerate performant-kernel design.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_expedite_emerging_hardware_kernels",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0562",
+      "sentence_id": "tex_prose_sentence_0182",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "for emerging hardware",
+      "source_quote_start": 59,
+      "source_quote_end": 80,
+      "source_quote_sha256": "5e4fa03a3472d58ef53a09c9684c0705a030ce4bfabff2458d07a6b07e3bfefd",
+      "statement": "The accelerated kernel-design target includes emerging hardware.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_expedite_emerging_hardware_kernels",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0563",
+      "sentence_id": "tex_prose_sentence_0182",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "simplify their utilization",
+      "source_quote_start": 88,
+      "source_quote_end": 114,
+      "source_quote_sha256": "24d08f43bc82f5e4c02ab24c0545206f27040c739053074644300cab05e6522f",
+      "statement": "The proposed workflow aims to simplify kernel utilization.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_simplify_model_developer_utilization",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0564",
+      "sentence_id": "tex_prose_sentence_0182",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "by model developers",
+      "source_quote_start": 115,
+      "source_quote_end": 134,
+      "source_quote_sha256": "dc98c4688926dbe06f9622d8195988712b458bcbd7a2b7e438c04f1cc456940c",
+      "statement": "The intended kernel users include model developers.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_simplify_model_developer_utilization",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0565",
+      "sentence_id": "tex_prose_sentence_0182",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 150,
+      "source_end_line": 150,
+      "source_quote": "facilitate the heuristic generation process",
+      "source_quote_start": 146,
+      "source_quote_end": 189,
+      "source_quote_sha256": "823a0c342e10db7ddc51a72899909023c59c9d96d7744802f70384bb24a26ae6",
+      "statement": "The stated goal is to facilitate heuristic generation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_facilitate_heuristic_generation",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0566",
+      "sentence_id": "tex_prose_sentence_0183",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "employing AlphaEvolve",
+      "source_quote_start": 29,
+      "source_quote_end": 50,
+      "source_quote_sha256": "21cadead9efb2fedceec1d0b2e2093cf34ebc03a614066f708b2c61c61a63e3e",
+      "statement": "AlphaEvolve is the proposed optimization system.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimize_tiling_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0567",
+      "sentence_id": "tex_prose_sentence_0183",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "optimize tiling heuristics",
+      "source_quote_start": 54,
+      "source_quote_end": 80,
+      "source_quote_sha256": "f4f007acb1c70e4b0700846103e0aac115b7a1e820b0ef0bc3891b02dd3ba0db",
+      "statement": "AlphaEvolve optimizes tiling heuristics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimize_tiling_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0568",
+      "sentence_id": "tex_prose_sentence_0183",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "important matrix multiplication kernel",
+      "source_quote_start": 88,
+      "source_quote_end": 126,
+      "source_quote_sha256": "9fe217cb3e2245a690d7f2d2461298c8b3428c870f8de0bf2b2480be96f86b53",
+      "statement": "The optimization target is a material matrix-multiplication kernel.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_gemini_training_matmul_kernel",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0569",
+      "sentence_id": "tex_prose_sentence_0183",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "used to train Gemini",
+      "source_quote_start": 127,
+      "source_quote_end": 147,
+      "source_quote_sha256": "67f16d412453051f040903977225c203e979c3f5a7e2427b1f509a62ca4f1b0a",
+      "statement": "The target kernel is used in Gemini training.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_gemini_training_matmul_kernel",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0570",
+      "sentence_id": "tex_prose_sentence_0184",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "minimize the kernel's actual runtime",
+      "source_quote_start": 20,
+      "source_quote_end": 56,
+      "source_quote_sha256": "a8586dc1af661e0da4016151dcd2a86e994a4298a1eabe3adcc0022352f31d82",
+      "statement": "The optimization objective minimizes measured kernel runtime.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_minimize_actual_kernel_runtime",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0571",
+      "sentence_id": "tex_prose_sentence_0185",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "AlphaEvolve iteratively explores",
+      "source_quote_start": 0,
+      "source_quote_end": 32,
+      "source_quote_sha256": "7ea3c4ffd0a1e6773642df258fb42d8faed235088257380cc140904b6b4d90df",
+      "statement": "AlphaEvolve iteratively explores the heuristic search space.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_iterative_tiling_refinement",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0572",
+      "sentence_id": "tex_prose_sentence_0185",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "refines tiling heuristics",
+      "source_quote_start": 37,
+      "source_quote_end": 62,
+      "source_quote_sha256": "d79ff9ee821a89b32f4dd1acd922111666c7086c3a1f813c8943ef96db476995",
+      "statement": "The iteration refines tiling heuristics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_iterative_tiling_refinement",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0573",
+      "sentence_id": "tex_prose_sentence_0185",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "proposing candidate code",
+      "source_quote_start": 82,
+      "source_quote_end": 106,
+      "source_quote_sha256": "9e77914eb1ffd184e6e7aa1badb87a3c7028c59d3b342b2d372a758f57f33386",
+      "statement": "The proposal surface is candidate code.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_candidate_code_proposals",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0574",
+      "sentence_id": "tex_prose_sentence_0185",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "minimize this runtime",
+      "source_quote_start": 118,
+      "source_quote_end": 139,
+      "source_quote_sha256": "28caaf91198c056789a9a56b179a953d35f5759c60da6e9036666208852b35d0",
+      "statement": "Candidate proposals seek to minimize runtime.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_runtime_across_various_shapes",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0575",
+      "sentence_id": "tex_prose_sentence_0185",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "various input shapes",
+      "source_quote_start": 143,
+      "source_quote_end": 163,
+      "source_quote_sha256": "842ddffef37e1b989a52df4cab6acf8d0f6ce03e9c04a7945d331b4f5235e796",
+      "statement": "Runtime is evaluated over varied input shapes.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_runtime_across_various_shapes",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0576",
+      "sentence_id": "tex_prose_sentence_0185",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "real TPU accelerators",
+      "source_quote_start": 167,
+      "source_quote_end": 188,
+      "source_quote_sha256": "730be9f65bdbea6a2f53c0dfc00c0ce3e9984cc63193e7e00acac61f857467e5",
+      "statement": "Runtime is measured on real TPU accelerators.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_real_tpu_accelerator_measurement",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0577",
+      "sentence_id": "tex_prose_sentence_0186",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "correctness is maintained by construction",
+      "source_quote_start": 13,
+      "source_quote_end": 54,
+      "source_quote_sha256": "030a6341ab4dc74181d4200eea25849e419de77b517b7a5292e878ad2c5db281",
+      "statement": "Kernel correctness is claimed to be maintained by construction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_correctness_by_construction",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0578",
+      "sentence_id": "tex_prose_sentence_0186",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "optimizing the tiling strategy",
+      "source_quote_start": 78,
+      "source_quote_end": 108,
+      "source_quote_sha256": "738b8b9b3054b86fd5f06b284c8f49c413c928d955144a378914712e254ad4ea",
+      "statement": "Candidate optimization is restricted to the tiling strategy.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_tiling_strategy_only_candidate_scope",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0579",
+      "sentence_id": "tex_prose_sentence_0186",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "rather than altering its underlying mathematical operation",
+      "source_quote_start": 125,
+      "source_quote_end": 183,
+      "source_quote_sha256": "976adf0bef60aee51a3606278e6657bf64697a9dd96c848af83749aad0022f88",
+      "statement": "The underlying mathematical operation is not altered.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_underlying_math_unchanged",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0580",
+      "sentence_id": "tex_prose_sentence_0187",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "training",
+      "source_quote_start": 13,
+      "source_quote_end": 21,
+      "source_quote_sha256": "c2fb788c7deedbeaa296e424d4c2921b871a4f6cb4cf393c1c1105653ab399b4",
+      "statement": "The collected shape corpus includes a training split.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_automatic_realistic_shape_collection",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0581",
+      "sentence_id": "tex_prose_sentence_0187",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "evaluation datasets",
+      "source_quote_start": 26,
+      "source_quote_end": 45,
+      "source_quote_sha256": "89bacc060a466aa87179d555af2d36fab20f54468508ed8b79ba690103ffb67d",
+      "statement": "The collected shape corpus includes an evaluation split.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_automatic_realistic_shape_collection",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0582",
+      "sentence_id": "tex_prose_sentence_0187",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "automatically collect",
+      "source_quote_start": 66,
+      "source_quote_end": 87,
+      "source_quote_sha256": "2fe9aca5b51cc3049e72c214c976cffe8fe5ba0ad909dd005c840d2d9b690355",
+      "statement": "The shape corpus is collected automatically.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_automatic_realistic_shape_collection",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0583",
+      "sentence_id": "tex_prose_sentence_0187",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "realistic kernel input shapes",
+      "source_quote_start": 88,
+      "source_quote_end": 117,
+      "source_quote_sha256": "fea402d20e45520babf10e4d71cd1716a962151e93cc94df82386e0760ef9378",
+      "statement": "The collected inputs are realistic kernel shapes.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_automatic_realistic_shape_collection",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0584",
+      "sentence_id": "tex_prose_sentence_0187",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "from kernel users",
+      "source_quote_start": 118,
+      "source_quote_end": 135,
+      "source_quote_sha256": "738dc4bfdb529f3803a37ba83dbdd4b1ad588fc446b555730f4e69c58bd5980e",
+      "statement": "The shape corpus is sourced from kernel users.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_shape_corpus_from_kernel_users",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0585",
+      "sentence_id": "tex_prose_sentence_0188",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "Half of these input shapes",
+      "source_quote_start": 0,
+      "source_quote_end": 26,
+      "source_quote_sha256": "61915efe26325f48851f5a233947bd869852e2ec4a1f25cdf4662b483a41472d",
+      "statement": "Half of the collected input shapes are allocated to training.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_half_training_shape_split",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0586",
+      "sentence_id": "tex_prose_sentence_0188",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "form the training set",
+      "source_quote_start": 27,
+      "source_quote_end": 48,
+      "source_quote_sha256": "a96f2241465f64c01faac3516ac1a06520beede4115b9de9ec65b3b6375b0df1",
+      "statement": "The first half forms the training set.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_half_training_shape_split",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0587",
+      "sentence_id": "tex_prose_sentence_0188",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "optimization targets",
+      "source_quote_start": 64,
+      "source_quote_end": 84,
+      "source_quote_sha256": "a51e24e6e628e60efd79c2fbce80920b71052d333d128d2a8410e9b65057f476",
+      "statement": "Training shapes provide optimization targets.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_training_shapes_are_optimization_targets",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0588",
+      "sentence_id": "tex_prose_sentence_0188",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "during the evolutionary process",
+      "source_quote_start": 85,
+      "source_quote_end": 116,
+      "source_quote_sha256": "3b8704761d943a5e7be7d385f77c8c0827c6fbf9a2ff1389cc27583337b1ddf0",
+      "statement": "The optimization targets are used during evolution.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_training_shapes_are_optimization_targets",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0589",
+      "sentence_id": "tex_prose_sentence_0189",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "remaining input shapes",
+      "source_quote_start": 4,
+      "source_quote_end": 26,
+      "source_quote_sha256": "d417e79b3e2d333e40ea3a6b16d5609a9b175e7b1ad95a2541f7dd4a448be879",
+      "statement": "The remaining half of the shape corpus is reserved for evaluation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_half_evaluation_shape_split",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0590",
+      "sentence_id": "tex_prose_sentence_0189",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "form the evaluation set",
+      "source_quote_start": 27,
+      "source_quote_end": 50,
+      "source_quote_sha256": "ffac54d8292759b35b31bd6685f9d35143dd49436ce4662fc6533767a5fabc7f",
+      "statement": "The reserved shapes form the evaluation set.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_half_evaluation_shape_split",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0591",
+      "sentence_id": "tex_prose_sentence_0189",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "test the general applicability",
+      "source_quote_start": 60,
+      "source_quote_end": 90,
+      "source_quote_sha256": "36027f77c0abb8be951a3469a9dfeea9a15ca01b13f3751501f52e7284017b0d",
+      "statement": "The evaluation split tests general applicability.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_evaluation_tests_general_applicability",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0592",
+      "sentence_id": "tex_prose_sentence_0189",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 159,
+      "source_end_line": 159,
+      "source_quote": "resulting heuristic",
+      "source_quote_start": 98,
+      "source_quote_end": 117,
+      "source_quote_sha256": "c13b1e3fe0d21426fe0c3aecc09e05e2dae932aecf9eef810d7af19db496ebcb",
+      "statement": "General applicability is tested for the evolved heuristic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_evaluation_tests_general_applicability",
+          "resolved": true,
+          "implementation_status": "partially_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0593",
+      "sentence_id": "tex_prose_sentence_0190",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "automated approach enables AlphaEvolve",
+      "source_quote_start": 5,
+      "source_quote_end": 43,
+      "source_quote_sha256": "06e0e2d53484841e56c64b58d42b590f3800fa6add07a390609744ef900509e5",
+      "statement": "The heuristic-discovery workflow is automated through AlphaEvolve.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimize_tiling_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0594",
+      "sentence_id": "tex_prose_sentence_0190",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "discover a heuristic",
+      "source_quote_start": 47,
+      "source_quote_end": 67,
+      "source_quote_sha256": "178aa31dbec54e6e7bb09c165e85ae0557bd5402f149e71962b7beb728bae5f9",
+      "statement": "AlphaEvolve discovers a tiling heuristic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimize_tiling_heuristics",
+          "resolved": true,
+          "implementation_status": "not_implemented"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0595",
+      "sentence_id": "tex_prose_sentence_0190",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "average 23 percent kernel speedup",
+      "source_quote_start": 83,
+      "source_quote_end": 116,
+      "source_quote_sha256": "f63bf9bffc70c5d24d7b139a45a1663799ec6bdb6a46d9d4ded32a19684e432f",
+      "statement": "The discovered heuristic is reported to yield a 23-percent average kernel speedup.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_average_twenty_three_percent_kernel_speedup",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0596",
+      "sentence_id": "tex_prose_sentence_0190",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "across all kernels",
+      "source_quote_start": 117,
+      "source_quote_end": 135,
+      "source_quote_sha256": "599d87345014f57e6bf8c4409faf5f57117cfd39aac7b99f564da2139f3f1f0b",
+      "statement": "The reported average speedup spans all evaluated kernels.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_average_twenty_three_percent_kernel_speedup",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0597",
+      "sentence_id": "tex_prose_sentence_0190",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "existing expert-designed heuristic",
+      "source_quote_start": 145,
+      "source_quote_end": 179,
+      "source_quote_sha256": "9c0ed456ce6d7e9d9c07cee37a418717a51d8cffd3919822349a9457e9402dba",
+      "statement": "The kernel-speed comparator is the existing expert-designed heuristic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_expert_designed_heuristic_comparator",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0598",
+      "sentence_id": "tex_prose_sentence_0190",
+      "sentence_proposition_ordinal": 6,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "corresponding 1 percent reduction",
+      "source_quote_start": 187,
+      "source_quote_end": 220,
+      "source_quote_sha256": "0cf1d32950f43cb2c9b699eefb174347a474b58e43b8302ade4002e963b62aea",
+      "statement": "The kernel speedup is reported to correspond to a 1-percent training-time reduction.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_one_percent_gemini_training_reduction",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0599",
+      "sentence_id": "tex_prose_sentence_0190",
+      "sentence_proposition_ordinal": 7,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "overall training time",
+      "source_quote_start": 233,
+      "source_quote_end": 254,
+      "source_quote_sha256": "481ce02d0015f49113478a3f0410d244627f4968aeeb898209fe2a3457aa0144",
+      "statement": "The 1-percent reduction applies to Gemini's overall training time.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_one_percent_gemini_training_reduction",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0600",
+      "sentence_id": "tex_prose_sentence_0191",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "use of AlphaEvolve significantly reduced",
+      "source_quote_start": 17,
+      "source_quote_end": 57,
+      "source_quote_sha256": "e23bfb1c05e92292a134e96beeaa430f0fb4be2f3693abd57642ff40e906488f",
+      "statement": "AlphaEvolve is reported to reduce kernel-optimization time materially.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimization_months_to_days",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0601",
+      "sentence_id": "tex_prose_sentence_0191",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "kernel optimization time",
+      "source_quote_start": 62,
+      "source_quote_end": 86,
+      "source_quote_sha256": "028aaa7b9c63fc46f4830df1dcfd53b3ae1738aa634c95b604e1d19772a2d5d2",
+      "statement": "Kernel-optimization time is the workflow-duration metric.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimization_months_to_days",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0602",
+      "sentence_id": "tex_prose_sentence_0191",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "several months",
+      "source_quote_start": 93,
+      "source_quote_end": 107,
+      "source_quote_sha256": "7fcdea33cd17ef310ac6ac50ffae0e17dfd54c38cf6116e9cdfd28aebe3eebf4",
+      "statement": "The prior kernel-optimization workflow took several months.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_optimization_months_to_days",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0603",
+      "sentence_id": "tex_prose_sentence_0191",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "dedicated engineering effort",
+      "source_quote_start": 111,
+      "source_quote_end": 139,
+      "source_quote_sha256": "343f54eef847c78e80c5bd4efe01cc269df7afd6c3b2a3ecd7e0faea55b7ada2",
+      "statement": "The prior workflow required dedicated engineering effort.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_dedicated_effort_to_automated_experimentation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0604",
+      "sentence_id": "tex_prose_sentence_0191",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "days of automated experimentation",
+      "source_quote_start": 148,
+      "source_quote_end": 181,
+      "source_quote_sha256": "1bc79eac06f512b37be6272ebbe6e1cba5c3e546dabec0619d603040f06b2163",
+      "statement": "The AlphaEvolve workflow is reported to take days of automated experimentation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_dedicated_effort_to_automated_experimentation",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0605",
+      "sentence_id": "tex_prose_sentence_0192",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "speeds up the deployment",
+      "source_quote_start": 18,
+      "source_quote_end": 42,
+      "source_quote_sha256": "9faf03db6c002c8b6da26a172a36e866286631ab0df8a65c0ab1448dfd16df5a",
+      "statement": "The optimization acceleration is reported to speed deployment.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_faster_optimized_kernel_deployment",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0606",
+      "sentence_id": "tex_prose_sentence_0192",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "optimized kernels",
+      "source_quote_start": 46,
+      "source_quote_end": 63,
+      "source_quote_sha256": "68761e168cf3a3758cfb5b2af247fcae84297627b1f533da77517f4f791930af",
+      "statement": "The faster deployment applies to optimized kernels.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_faster_optimized_kernel_deployment",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0607",
+      "sentence_id": "tex_prose_sentence_0192",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "kernel engineers",
+      "source_quote_start": 74,
+      "source_quote_end": 90,
+      "source_quote_sha256": "f3cd96cf09cfd80d9219fdf1552ea19efd96cb4bb7ab7942f6e3db8c4980a526",
+      "statement": "The reported workflow changes how kernel engineers spend their expertise.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_engineers_focus_higher_level_work",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0608",
+      "sentence_id": "tex_prose_sentence_0192",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "more strategic",
+      "source_quote_start": 122,
+      "source_quote_end": 136,
+      "source_quote_sha256": "adaeecab3583be80f55b5d8e0471741de29e13abb46355535ae373ff8e7ec3c0",
+      "statement": "Kernel engineers can focus on more strategic work.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_engineers_focus_higher_level_work",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0609",
+      "sentence_id": "tex_prose_sentence_0192",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "higher-level optimization problems",
+      "source_quote_start": 138,
+      "source_quote_end": 172,
+      "source_quote_sha256": "4b0aa801bdd1461b23e9763e41c1866428d76d0859d90cdeb120e070196683ad",
+      "statement": "The redirected work consists of higher-level optimization problems.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_engineers_focus_higher_level_work",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0610",
+      "sentence_id": "tex_prose_sentence_0193",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "AlphaEvolve offers a path",
+      "source_quote_start": 13,
+      "source_quote_end": 38,
+      "source_quote_sha256": "43895c796376f9096ff7c722f505198bc989f180da86848de723c6b36f20c1b5",
+      "statement": "AlphaEvolve is presented as a path toward tuning automation.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_path_to_automated_manual_tuning",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0611",
+      "sentence_id": "tex_prose_sentence_0193",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "automating the manual tuning process",
+      "source_quote_start": 47,
+      "source_quote_end": 83,
+      "source_quote_sha256": "ebff2212f2d28b04c708c5234f8ed9d8539444b34d706c943a9b6affc87f9589",
+      "statement": "The proposed path automates manual tuning.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_path_to_automated_manual_tuning",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0612",
+      "sentence_id": "tex_prose_sentence_0193",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "improving the ergonomics",
+      "source_quote_start": 88,
+      "source_quote_end": 112,
+      "source_quote_sha256": "d11ece79f1efd438d030762550a2e0eeb907d6372b35e3af1ae71a1f0be86314",
+      "statement": "The proposed path is claimed to improve ergonomics.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_improved_gemini_kernel_ergonomics",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0613",
+      "sentence_id": "tex_prose_sentence_0193",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "Gemini kernel usage",
+      "source_quote_start": 116,
+      "source_quote_end": 135,
+      "source_quote_sha256": "8f48c5a845311b4661d359cfb3432dbc4127566b066410ee06d407d37558680e",
+      "statement": "The ergonomics claim applies to Gemini kernel usage.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_improved_gemini_kernel_ergonomics",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0614",
+      "sentence_id": "tex_prose_sentence_0194",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "tiling heuristic discovered by AlphaEvolve",
+      "source_quote_start": 4,
+      "source_quote_end": 46,
+      "source_quote_sha256": "a97f3e61efeab508f10232045e1212638d74ecf7e8aba289e5d73879d2b7fb49",
+      "statement": "AlphaEvolve is reported to have discovered the tiling heuristic.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_tiling_heuristic_deployed_production",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0615",
+      "sentence_id": "tex_prose_sentence_0194",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "deployed in production",
+      "source_quote_start": 56,
+      "source_quote_end": 78,
+      "source_quote_sha256": "96651923a9692416e55b38afc714c34c56d58bd42016bde4d8713ed1e42322d7",
+      "statement": "The discovered tiling heuristic is reported as production-deployed.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_tiling_heuristic_deployed_production",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0616",
+      "sentence_id": "tex_prose_sentence_0194",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "enhancing Gemini's training efficiency",
+      "source_quote_start": 89,
+      "source_quote_end": 127,
+      "source_quote_sha256": "62e79fa211e220cee76f5149528967dab2164983d27bc7412664ac6c91dec045",
+      "statement": "Production deployment is reported to enhance Gemini training efficiency.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_deployment_enhanced_training_efficiency",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0617",
+      "sentence_id": "tex_prose_sentence_0194",
+      "sentence_proposition_ordinal": 4,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "Gemini team",
+      "source_quote_start": 136,
+      "source_quote_end": 147,
+      "source_quote_sha256": "faa2e1fc159cacaa935fafd67e5910ce95ef9a49b19cb8a16f768c2cbd857d7a",
+      "statement": "The reported deployment affects the Gemini team.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_team_research_engineering_velocity",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0618",
+      "sentence_id": "tex_prose_sentence_0194",
+      "sentence_proposition_ordinal": 5,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "research and engineering velocity",
+      "source_quote_start": 150,
+      "source_quote_end": 183,
+      "source_quote_sha256": "a9dbacbca837ba4f371abc046117e1399b629937ce0a931666d2589fc1e06b95",
+      "statement": "Production deployment is reported to improve research and engineering velocity.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_team_research_engineering_velocity",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0619",
+      "sentence_id": "tex_prose_sentence_0195",
+      "sentence_proposition_ordinal": 1,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "marks a novel instance",
+      "source_quote_start": 21,
+      "source_quote_end": 43,
+      "source_quote_sha256": "37ae62658a7e188c14d589f0cc3256332426c411bd74c9742d429a811dd594f4",
+      "statement": "The authors characterize the deployment as a novel instance.",
+      "disposition": "author_interpretation",
+      "claim_refs": [],
+      "implementation_relevant": false,
+      "review_rationale": "Novelty is an author interpretation, not a separate implementation requirement."
+    },
+    {
+      "proposition_id": "tex_proposition_0620",
+      "sentence_id": "tex_prose_sentence_0195",
+      "sentence_proposition_ordinal": 2,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "through the capabilities of AlphaEvolve",
+      "source_quote_start": 58,
+      "source_quote_end": 97,
+      "source_quote_sha256": "9be4cc7e2cb999757d203b92f1eb43c3a6a9b03ba711709896744b3d7f5d8d7f",
+      "statement": "AlphaEvolve provides the mechanism for Gemini's reported self-optimization.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_gemini_optimizes_own_training",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
+    },
+    {
+      "proposition_id": "tex_proposition_0621",
+      "sentence_id": "tex_prose_sentence_0195",
+      "sentence_proposition_ordinal": 3,
+      "source_file": "results.tex",
+      "source_line": 161,
+      "source_end_line": 161,
+      "source_quote": "optimizes its own training process",
+      "source_quote_start": 99,
+      "source_quote_end": 133,
+      "source_quote_sha256": "a26c2774ebfbff2e24c70493cf9424767d25302b53827e213f2abc41cc9b64cd",
+      "statement": "Gemini is reported to optimize its own training process.",
+      "disposition": "existing_bounded_claim_mapping",
+      "claim_refs": [
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_gemini_optimizes_own_training",
+          "resolved": true,
+          "implementation_status": "not_demonstrated"
+        }
+      ],
+      "implementation_relevant": true,
+      "review_rationale": null
     }
   ],
   "inventory_scope": {
@@ -14839,16 +17531,17 @@
       "all 16 retained Section 3.1 matrix-result sentences in results.tex",
       "all 39 retained Section 3.2 sentences in results.tex",
       "all 19 retained Section 3.3 opening and Section 3.3.1 scheduling sentences in results.tex",
+      "all 23 retained Section 3.3.2 Gemini kernel-engineering sentences in results.tex",
       "manual atomic-proposition statements and exact rendered-source quote offsets",
       "resolved bounded-claim mappings or explicit context, outlook, and interpretation dispositions"
     ],
     "excluded": [
-      "the remaining 230 retained prose sentences",
+      "the remaining 207 retained prose sentences",
       "separately audited captions, tables, equations, listings, footnotes, and explicit math constructs",
       "independent second-reviewer semantic agreement",
       "mathematical correctness, citation sufficiency, image-pixel semantics, or result reproduction",
       "AlphaEvolve system parity"
     ]
   },
-  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.1 data-center scheduling. Complete disposition inside this 172-sentence scope does not cover the remaining 230 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
+  "claim_boundary": "This boundary records a single-reviewer atomic-proposition decomposition for every retained sentence from the Abstract through Section 3.3.2 Gemini kernel engineering. Complete disposition inside this 195-sentence scope does not cover the remaining 207 prose sentences and does not prove independent semantic exhaustiveness, mathematical correctness, result reproduction, or AlphaEvolve parity."
 }

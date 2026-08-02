@@ -386,6 +386,18 @@ _DIRECT_CLAIM_MAP: dict[
     ("results.tex", 150, 2): _claim_refs(
         "kernel", "section3_3_2_pallas_kernel_training_importance"
     ),
+    ("results.tex", 161, 0): _claim_refs(
+        "kernel",
+        "section3_3_2_average_twenty_three_percent_kernel_speedup",
+        "section3_3_2_expert_designed_heuristic_comparator",
+        "section3_3_2_one_percent_gemini_training_reduction",
+    ),
+    ("results.tex", 161, 4): _claim_refs(
+        "kernel",
+        "section3_3_2_tiling_heuristic_deployed_production",
+        "section3_3_2_deployment_enhanced_training_efficiency",
+        "section3_3_2_team_research_engineering_velocity",
+    ),
     ("results.tex", 168, 0): _claim_refs(
         "hardware",
         "already_highly_optimized_verilog_target",

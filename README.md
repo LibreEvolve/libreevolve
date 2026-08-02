@@ -198,17 +198,16 @@ Important limits:
   the prose walk, but complete sentence disposition is not sentence-internal
   clause/proposition exhaustiveness or independent semantic review.
 - `papers/alphaevolve_tex_proposition_inventory_boundary.json` decomposes all
-  172 retained sentences from the Abstract through Section 3.3.1 data-center
-  scheduling into 523 atomic propositions. Four hundred seventy-four map
-  through 496 references to 204 bounded claims; 39 are source context, 2 are
-  author outlook, and 8 are qualified author interpretations.
+  195 retained sentences from the Abstract through Section 3.3.2 Gemini kernel
+  engineering into 621 atomic propositions. Five hundred seventy map through
+  592 references to 253 bounded claims; 40 are source context, 2 are author
+  outlook, and 9 are qualified author interpretations.
   The cumulative review
   adds the previously unbounded direct-versus-instrumental-search and expensive-
-  evaluation sample-efficiency claims. The scheduling slice adds no new claim
-  or parity credit, but repairs six sentence mappings for post-deployment
-  simulator confirmation, continuous average 0.7-percent recovery,
-  debuggability, predictability, deployment ease, and mission-critical
-  operational qualities. The remaining 230
+  evaluation sample-efficiency claims. The kernel slice adds no new claim or
+  parity credit, but repairs sentence mappings for the reported 23-percent
+  average kernel speedup, 1-percent Gemini training-time reduction, and Gemini
+  team research and engineering velocity. The remaining 207
   prose sentences and independent semantic review remain open.
 - Together the twelve bounded inventories cover 846 claims: 30 locally
   implemented, 278 partial, 110 not implemented, 369 not demonstrated, and 59
@@ -223,10 +222,10 @@ Important limits:
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
   dispositions; and all 128 retained prose paragraphs and 402 grammatical
-  sentences have dispositions; all 172 sentences from the Abstract through
-  Section 3.3.1 data-center scheduling also have 523 atomic-proposition
+  sentences have dispositions; all 195 sentences from the Abstract through
+  Section 3.3.2 Gemini kernel engineering also have 621 atomic-proposition
   dispositions. Coverage still excludes proposition review for the remaining
-  230 sentences,
+  207 sentences,
   mathematical correctness,
   image-pixel and citation-semantic review, independent result reproduction,
   independent proof of semantic completeness, and AlphaEvolve-scale execution.

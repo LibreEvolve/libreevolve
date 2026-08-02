@@ -145,13 +145,13 @@ sidecars, tests, and active TODOs.
     correctness, proof validity, and result reproduction remain owned by this
     TODO. The supplemental
     `papers/alphaevolve_tex_proposition_inventory_boundary.json` now reviews all
-    172 sentences from the Abstract through Section 3.3.1 data-center scheduling
-    as 523 atomic propositions. It maps 474 propositions through 496 references
-    to 204 bounded claims and classifies 49 as context, outlook, or
-    interpretation. The scheduling slice adds no new bounded claim or parity
-    credit, but repairs six sentence mappings for post-deployment simulator
-    confirmation, continuous average 0.7-percent recovery, debuggability,
-    predictability, deployment ease, and mission-critical operational qualities.
+    195 sentences from the Abstract through Section 3.3.2 Gemini kernel
+    engineering as 621 atomic propositions. It maps 570 propositions through 592
+    references to 253 bounded claims and classifies 51 as context, outlook, or
+    interpretation. The kernel slice adds no new bounded claim or parity credit,
+    but repairs sentence mappings for the reported 23-percent average kernel
+    speedup, 1-percent Gemini training-time reduction, and Gemini team research
+    and engineering velocity.
     Remaining proposition coverage and independent semantic
     review stay open.
     Meanwhile,
@@ -181,11 +181,11 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 TeX math constructs and 402 prose sentences have dispositions; 523
-    propositions across all 172 sentences through Section 3.3.1 scheduling are
-    reviewed.
+    all 309 TeX math constructs and 402 prose sentences have dispositions; 621
+    propositions across all 195 sentences through Section 3.3.2 kernel
+    engineering are reviewed.
     Citation roles/sufficiency and implementation relevance remain unclassified,
-    and 230 prose sentences lack proposition review;
+    and 207 prose sentences lack proposition review;
     mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report

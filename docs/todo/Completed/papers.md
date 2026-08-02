@@ -14811,3 +14811,18 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
   - Remaining paper gap: 230 sentence propositions, independent semantic
     agreement, mathematical/image/citation correctness, result reproduction,
     and AlphaEvolve parity remain unproven.
+
+- [x] Review AlphaEvolve Section 3.3.2 kernel propositions.
+  - Paper evidence: 23 retained sentences cover Gemini/JAX/Pallas context,
+    matrix-multiplication tiling, autotuning and manual baselines, shape-corpus
+    splits, real-TPU runtime evaluation, reported speed/workflow results,
+    production deployment, and Gemini self-training.
+  - Status: the slice adds 98 propositions, bringing cumulative coverage to 195
+    sentences and 621 propositions; 570 map through 592 references to 253
+    bounded claims and 51 are context, outlook, or interpretation.
+  - Mapping correction: three existing kernel claims omitted by broad prose
+    matching are now linked. No new claim, active TODO, or parity credit is
+    added.
+  - Remaining paper gap: 207 sentence propositions, independent semantic
+    agreement, mathematical/image/citation correctness, result reproduction,
+    and AlphaEvolve parity remain unproven.

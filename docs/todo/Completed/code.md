@@ -19859,3 +19859,19 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused prose, proposition, aggregate, TODO, and manifest
     checks validate source quotes, references, counts, ownership, drift
     rejection, and non-parity boundaries.
+
+- [x] Extend retained-TeX proposition evidence through Section 3.3.2 kernels.
+  - Status: the boundary reviews 23 Gemini kernel-engineering sentences as 98
+    propositions, bringing cumulative scope to 195 sentences and 621
+    propositions. Of those, 570 map through 592 references to 253 bounded
+    claims and 51 are context, outlook, or interpretation.
+  - Mapping correction: sentence-level evidence now includes the reported 23-
+    percent average kernel speedup, 1-percent Gemini training-time reduction,
+    and Gemini team research and engineering velocity. Existing kernel claims
+    and active TODOs own all three gaps.
+  - Remaining code gap: proposition review for 207 prose sentences, independent
+    semantic review, mathematical/image/citation correctness, result
+    reproduction, and AlphaEvolve-scale execution remain open.
+  - Verification: focused prose, proposition, aggregate, TODO, and manifest
+    checks validate source quotes, references, counts, ownership, drift
+    rejection, and non-parity boundaries.

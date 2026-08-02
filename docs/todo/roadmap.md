@@ -249,14 +249,13 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     inherits 34 source-detail and 75 table-cell dispositions and maps the
     remaining 200 constructs directly to existing bounded claim ids, with no
     unmapped or unresolved references and no new claims or parity credit. The
-    proposition inventory now reviews all 172 sentences from the Abstract
-    through Section 3.3.1 data-center scheduling as 523 atomic propositions,
-    maps 474 through 496 references to 204 bounded claims, and classifies 49 as
-    context, outlook, or interpretation. The scheduling slice adds no new
-    bounded claim or parity credit, but repairs six sentence mappings for post-
-    deployment simulator confirmation, continuous average 0.7-percent recovery,
-    debuggability, predictability, deployment ease, and mission-critical
-    operational qualities.
+    proposition inventory now reviews all 195 sentences from the Abstract
+    through Section 3.3.2 Gemini kernel engineering as 621 atomic propositions,
+    maps 570 through 592 references to 253 bounded claims, and classifies 51 as
+    context, outlook, or interpretation. The kernel slice adds no new bounded
+    claim or parity credit, but repairs sentence mappings for the reported 23-
+    percent average kernel speedup, 1-percent Gemini training-time reduction,
+    and Gemini team research and engineering velocity.
     `papers/roadmap_source_span_disposition_boundary.json` now maps all 55
     named spans to ROADMAP section ids, phase buckets, local status, sidecars,
     and audit TODO links, and records that only the AlphaEvolve
@@ -286,9 +285,9 @@ the stated goal of bringing LibreEvolve toward AlphaEvolve's specification.
     footnote constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions, all 8 code listings and 305 source lines have
     line-level dispositions; all 309 math constructs and 402 prose sentences
-    have dispositions; 523 propositions across all 172 sentences through Section
-    3.3.1 scheduling are reviewed. The matrix remains incomplete across the rest
-    of the paper: 230 sentences
+    have dispositions; 621 propositions across all 195 sentences through Section
+    3.3.2 kernel engineering are reviewed. The matrix remains incomplete across
+    the rest of the paper: 207 sentences
     still lack proposition review; it cannot prove
     local math/image/citation correctness and result reproduction;
     show TODO ownership for every gap and add an application matrix;

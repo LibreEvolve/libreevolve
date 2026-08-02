@@ -8763,9 +8763,21 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_average_twenty_three_percent_kernel_speedup",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
           "claim_id": "section3_3_2_expert_designed_heuristic_comparator",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_one_percent_gemini_training_reduction",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null
@@ -8893,15 +8905,21 @@
       "claim_refs": [
         {
           "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
-          "claim_id": "section3_3_2_deployment_enhanced_training_efficiency",
+          "claim_id": "section3_3_2_tiling_heuristic_deployed_production",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
         },
         {
           "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
-          "claim_id": "section3_3_2_tiling_heuristic_deployed_production",
+          "claim_id": "section3_3_2_deployment_enhanced_training_efficiency",
           "resolved": true,
-          "match_kind": "normalized_anchor_mapping"
+          "match_kind": "manual_source_line_mapping"
+        },
+        {
+          "inventory_path": "papers/alphaevolve_kernel_claim_inventory_boundary.json",
+          "claim_id": "section3_3_2_team_research_engineering_velocity",
+          "resolved": true,
+          "match_kind": "manual_source_line_mapping"
         }
       ],
       "nonclaim_disposition": null

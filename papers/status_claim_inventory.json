@@ -148,7 +148,7 @@
   "todo_evidence_status": "all_referenced_todo_paths_present",
   "local_artifacts_missing_from_todo_evidence": [],
   "todo_content_artifact_mention_record_count": 291,
-  "todo_content_row_specific_block_record_count": 959,
+  "todo_content_row_specific_block_record_count": 960,
   "todo_content_matched_source_tokens": [
     "1504.04909",
     "1504.04909__MAP_Elites",
@@ -2701,7 +2701,7 @@
             "papers/2506.13131__AlphaEvolve.pdf"
           ],
           "row_source_token_match_count": 4,
-          "row_specific_block_count": 393,
+          "row_specific_block_count": 394,
           "row_specific_block_records": [
             {
               "block_kind": "completed",
@@ -8980,6 +8980,20 @@
                 "2506.13131",
                 "2506.13131__AlphaEvolve",
                 "2506.13131__AlphaEvolve.pdf"
+              ],
+              "mentioned_local_artifact_records": [],
+              "mentioned_local_artifact_paths": []
+            },
+            {
+              "block_kind": "completed",
+              "block_ordinal": 1086,
+              "file_text_char_start": 901982,
+              "file_text_char_end": 902818,
+              "line_start": 14622,
+              "line_end": 14634,
+              "block_sha256": "3e270bf8a0e9b0d24ffcf7edb40fe4dbe9f9cee04de8800c858a3745ab8ce72b",
+              "matched_source_tokens": [
+                "2506.13131"
               ],
               "mentioned_local_artifact_records": [],
               "mentioned_local_artifact_paths": []

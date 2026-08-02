@@ -16097,3 +16097,14 @@ Moved from `docs/todo/readme.md`. Completed README backlog items live here so th
   - Remaining boundary: formula correctness, proof validity, result
     reproduction, whole-paper proposition semantics, and AlphaEvolve-scale
     execution remain explicitly unproven.
+
+- [x] Document the retained-TeX prose audit and refreshed parity denominator.
+  - Status: README now reports all 128 retained body paragraphs, 402 grammatical
+    sentences, 372 existing-claim mappings, 30 reviewed nonclaims, and zero
+    unmapped or unresolved sentences.
+  - Accounting: README reports 844 bounded claims, 785 implementation-relevant
+    claims, 755 implementation gaps, 3.8% strict parity, and 21.5% half-credit
+    parity after the seven prose-walk additions.
+  - Boundary: README distinguishes paragraph/sentence disposition from
+    sentence-internal clause/proposition semantic exhaustiveness, independent
+    review, result reproduction, and AlphaEvolve-scale execution.

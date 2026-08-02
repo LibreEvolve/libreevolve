@@ -19705,6 +19705,22 @@ Moved from `docs/todo/code.md`. Keep this file as the archive for completed back
   - Verification: focused inventory, implementation-map, ROADMAP coverage, and
     paper-manifest tests validate anchors, counts, references, TODO ownership,
     source wording, drift rejection, and result/parity disclaimers.
+
+- [x] Add the retained-TeX prose paragraph and sentence disposition inventory.
+  - Status: the public boundary parses all 128 retained body paragraphs and 402
+    grammatical sentences after masking table, figure, equation, listing, and
+    footnote surfaces owned by separate inventories.
+  - Accounting: 372 sentences map to existing bounded claims, 30 are reviewed
+    nonclaims, and none is unmapped or unresolved. The prose walk identifies
+    seven additional bounded claims, bringing the aggregate to 844 claims: 30
+    implemented, 278 partial, 110 not implemented, 367 not demonstrated, and
+    59 source-context-only.
+  - Remaining code gap: sentence-internal clause/proposition semantics,
+    independent semantic review, mathematical correctness, image-pixel and
+    citation semantics, result reproduction, and AlphaEvolve parity remain
+    active.
+  - Verification: focused prose, aggregate-boundary, and paper-manifest tests
+    reject source, count, disposition, reference, sidecar, and overclaim drift.
 - [x] Inventory every explicit AlphaEvolve TeX math construct and repair claim omissions.
   - Status: `alphaevolve_tex_math_inventory_boundary.py` parses all 309
     explicit constructs in the retained 14-file TeX closure: 291 inline and 18

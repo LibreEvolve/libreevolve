@@ -14,19 +14,19 @@ directory and using the AlphaEvolve paper as the primary specification.
     provenance claims that the full audit must disposition.
   - Current evidence: the committed
     `papers/alphaevolve_system_requirement_inventory_boundary.json` verifies
-    50 page-local source anchors against the pinned PDF and maps every bounded
+    55 page-local source anchors against the pinned PDF and maps every bounded
     requirement to implementation/audit evidence, ROADMAP section and phase,
-    local status, and active domain TODO ownership. Its status split is 13
-    locally implemented, 30 partially implemented, 2 not implemented, and 5
-    not demonstrated; all 37 incomplete rows have live TODO-title checks. The
+    local status, and active domain TODO ownership. Its status split is 14
+    locally implemented, 31 partially implemented, 4 not implemented, and 6
+    not demonstrated; all 41 incomplete rows have live TODO-title checks. The
     `papers/alphaevolve_context_claim_inventory_boundary.json` adds 44
     exact-page claims from the Abstract, Introduction, Discussion, and one
     Acknowledgements sentence: 6 locally implemented, 11 partial, 4 not
     implemented, and 23 not demonstrated, with live ownership for all 38 gaps.
-    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 42
+    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 44
     exact-page Section 3.1, Table 2, Figure 4, and footnote 3 claims: none
-    locally implemented, 6 partial, 3 not implemented, and 33 not demonstrated,
-    with live ownership for all 42 gaps. These inventories now include the
+    locally implemented, 8 partial, 3 not implemented, and 33 not demonstrated,
+    with live ownership for all 44 gaps. These inventories now include the
     Introduction's 4x4 complex rank-48, roughly 75-percent best-known-match,
     and dimension-11 Kissing Numbers statements plus Section 3.1's unknown
     minimum rank for 3x3 multiplication. The
@@ -68,7 +68,7 @@ directory and using the AlphaEvolve paper as the primary specification.
     exact-page and visible-panel claims from all 13 Appendix B subsections and
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with live code and paper TODO ownership for every gap. Combined coverage is
-    837 claims: 29 implemented, 275 partial, 108 not implemented, 366 not
+    844 claims: 30 implemented, 278 partial, 110 not implemented, 367 not
     demonstrated, and 59 source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` now inventories
     the retained 14-file `main.tex` closure, all 195 logical citation uses, all
@@ -104,17 +104,17 @@ directory and using the AlphaEvolve paper as the primary specification.
     manifest rejects any inventory sidecar's absence, source/reference
     drift, status drift, stale TODO ownership, result-reproduction overclaims,
     and parity overclaims.
-  - Current gap: the combined 837-claim inventory covers every named source
+  - Current gap: the combined 844-claim inventory covers every named source
     span, the supplemental citation inventory covers citation syntax plus
     bibliography-key linkage, and the source-detail inventory dispositions all
     caption/equation-environment/footnote constructs, while the table-cell
     inventory dispositions all retained rows and cells and the code-listing
     inventory
-    dispositions all 8 environments and 305 source lines, and the math
-    inventory dispositions all 309 explicit TeX math constructs. Every
+    dispositions all 8 environments and 305 source lines; the math inventory
+    covers 309 TeX constructs and prose inventory maps all 402 sentences. Each
     citation's supported proposition, source-sufficiency role, and implementation
-    relevance remain unclassified. Whole-paper sentence/paragraph/mathematical-
-    correctness/image-pixel/citation semantics, semantic evidence sufficiency, result
+    relevance remain unclassified. Sentence-internal clause/proposition,
+    math/image-pixel/citation semantics, semantic evidence sufficiency, result
     reproduction, and independent reviewer proof that any bounded inventory is
     semantically exhaustive also remain open.
   - Required result: extract every remaining implementation-bearing claim,

@@ -1669,10 +1669,10 @@ explicit TeX math constructs: 291 inline and 18 display constructs. It inherits
 constructs directly to existing bounded claims, with zero unmapped or unresolved
 references and no new claim or parity credit. It does not establish formula
 correctness, proof validity, or result reproduction. Together the twelve bounded
-claim inventories still disposition 837 claims: 29 locally implemented, 275
-partial, 108 not implemented, 366 not demonstrated, and 59 source-context-only.
-Across 778 implementation-relevant claims this is 3.7% strict implemented
-parity, or 21.4% when partial claims receive half credit.
+claim inventories still disposition 844 claims: 30 locally implemented, 278
+partial, 110 not implemented, 367 not demonstrated, and 59 source-context-only.
+Across 785 implementation-relevant claims this is 3.8% strict implemented
+parity, or 21.5% when partial claims receive half credit.
 The weighted value rises because Appendix B registry metadata receives partial
 credit, not because any Appendix B result was reproduced.
 The corrected
@@ -1686,9 +1686,9 @@ footnotes have construct-level dispositions; all 83 table rows and 240 cells
 have row/cell
 dispositions; and all 8 retained code listings and 305 physical source lines
 have line-level dispositions; all 309 explicit TeX math constructs have
-delimiter-level dispositions. This is not a whole-paper sentence-, paragraph-,
-mathematical-correctness-, image-pixel-, citation-semantic, or
-proposition-level exhaustive inventory, per-phrase evidence-link sufficiency proof,
+delimiter-level dispositions; prose sentences also have dispositions. This is
+not clause/proposition semantic exhaustiveness, mathematical correctness,
+image-pixel or citation-semantic review, or per-phrase sufficiency proof,
 coverage detector,
 generated code-audit report, or CI exhaustiveness gate. The checked
 `papers/status_claim_inventory.json` sidecar records row-level paper-index
@@ -4197,3 +4197,13 @@ Planned or background-only:
   elapsed-month loop cadence, moderate-gain calibration, robust-evaluator
   environment setup/maintenance costs, expected-versus-realized discovery
   value, and environment-expansion decisions are not recorded locally.
+
+The retained-source prose audit in
+`papers/alphaevolve_tex_prose_inventory_boundary.json` inventories 128 body
+paragraphs and 402 grammatical sentences after masking separately audited
+table, figure, equation, listing, and footnote surfaces. It maps 372 sentences
+to existing bounded claims and reviews 30 as nonclaims, with zero unmapped or
+unresolved sentences. The walk contributes seven bounded claims but does not
+establish sentence-internal clause/proposition semantic exhaustiveness,
+independent semantic review, mathematical correctness, result reproduction, or
+AlphaEvolve parity.

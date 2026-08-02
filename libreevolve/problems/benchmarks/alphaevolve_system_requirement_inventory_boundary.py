@@ -24,7 +24,7 @@ ALPHAEVOLVE_SYSTEM_REQUIREMENT_INVENTORY_BOUNDARY_SCHEMA = (
 EXPECTED_BOUNDARY_STATUS = (
     "section_2_system_requirements_inventory_complete_without_whole_paper_claim_exhaustiveness"
 )
-EXPECTED_REQUIREMENT_COUNT = 50
+EXPECTED_REQUIREMENT_COUNT = 55
 IMPLEMENTED_STATUS = "implemented_local"
 INCOMPLETE_STATUSES = frozenset(
     {"partially_implemented", "not_implemented", "not_demonstrated"}
@@ -424,6 +424,21 @@ SYSTEM_REQUIREMENT_SPECS = (
         ),
     ),
     _requirement(
+        "task_metric_maximization_convention",
+        "section_2_1",
+        3,
+        "By convention, these metrics are maximized.",
+        "Use maximization as the default metric direction while supporting explicit minimization.",
+        "task_specification",
+        IMPLEMENTED_STATUS,
+        "evaluation_cascade",
+        "near_term",
+        (
+            "libreevolve/problems/loader.py",
+            "tests/core/test_loader.py",
+        ),
+    ),
+    _requirement(
         "task_fixed_evaluate_signature",
         "section_2_1",
         4,
@@ -588,6 +603,46 @@ SYSTEM_REQUIREMENT_SPECS = (
         (
             "papers/candidate_abstraction_boundary.json",
             "tests/test_candidate_abstraction_boundary.py",
+        ),
+        ("abstraction",),
+    ),
+    _requirement(
+        "task_problem_specific_abstraction_choice",
+        "section_2_1",
+        5,
+        "different levels of abstraction work better for different problems",
+        "Select and justify the candidate abstraction for each problem.",
+        "task_specification",
+        "not_implemented",
+        "candidate_workspace_fidelity",
+        "mid_term",
+        (
+            "papers/candidate_abstraction_boundary.json",
+            "papers/candidate_abstraction_bias_matrix.json",
+            "tests/test_candidate_abstraction_boundary.py",
+        ),
+        ("abstraction",),
+    ),
+    _requirement(
+        "task_symmetry_guided_abstraction_bias",
+        "section_2_1",
+        5,
+        (
+            "for problems with highly symmetric solutions it is advantageous "
+            "to evolve constructor functions"
+        ),
+        (
+            "Use solution symmetry evidence to prefer constructor functions and "
+            "non-symmetry evidence to prefer bespoke search algorithms."
+        ),
+        "task_specification",
+        "not_implemented",
+        "candidate_workspace_fidelity",
+        "mid_term",
+        (
+            "papers/candidate_abstraction_boundary.json",
+            "papers/candidate_abstraction_bias_matrix.json",
+            "tests/test_candidate_abstraction_bias.py",
         ),
         ("abstraction",),
     ),
@@ -856,6 +911,23 @@ SYSTEM_REQUIREMENT_SPECS = (
         ("qualitative_feedback",),
     ),
     _requirement(
+        "evaluation_order_hundred_compute_hours_per_candidate",
+        "section_2_4",
+        8,
+        "on the order of 100 compute-hours to evaluate any new solution",
+        "Account for and bound roughly 100 compute-hours of work per candidate.",
+        "evaluation",
+        "partially_implemented",
+        "async_resumable_runtime",
+        "mid_term",
+        (
+            "papers/expensive_evaluation_budget_boundary.json",
+            "papers/parallel_evaluation_readiness_boundary.json",
+            "tests/test_expensive_evaluation_budget_boundary.py",
+        ),
+        ("expensive_budget", "accelerator_budget"),
+    ),
+    _requirement(
         "evaluation_async_cluster_parallelism",
         "section_2_4",
         8,
@@ -888,6 +960,23 @@ SYSTEM_REQUIREMENT_SPECS = (
             "tests/test_objective_archive_boundary.py",
         ),
         ("multi_objective",),
+    ),
+    _requirement(
+        "evaluation_multi_metric_single_target_uplift",
+        "section_2_4",
+        8,
+        "optimizing for multiple metrics often improves results for the single target metric",
+        "Demonstrate that multi-metric optimization improves a designated target metric.",
+        "evaluation",
+        "not_demonstrated",
+        "multi_objective_search",
+        "longer_term",
+        (
+            "papers/objective_archive_boundary.json",
+            "papers/metric_diverse_prompt_boundary.json",
+            "tests/test_objective_archive_boundary.py",
+        ),
+        ("multi_objective", "metric_diversity"),
     ),
     _requirement(
         "evaluation_metric_diverse_prompting",

@@ -47,20 +47,20 @@ sidecars, tests, and active TODOs.
     Section 2.4 evaluation, Section 2.5 evolution, Section 2.6 distributed
     execution, and published benchmarks with 81 existence-checked source-span,
     module, test, sidecar, and active-TODO references. The committed
-    `papers/alphaevolve_system_requirement_inventory_boundary.json` adds 50
+    `papers/alphaevolve_system_requirement_inventory_boundary.json` adds 55
     PDF-anchored implementation requirements covering all eight Table 1 rows,
-    Sections 2.1-2.6, and Figures 1-3. It classifies 13 requirements as locally
-    implemented, 30 as partial, 2 as not implemented, and 5 as not demonstrated;
-    all 37 incomplete requirements resolve to live domain TODO titles. The
+    Sections 2.1-2.6, and Figures 1-3. It classifies 14 requirements as locally
+    implemented, 31 as partial, 4 as not implemented, and 6 as not demonstrated;
+    all 41 incomplete requirements resolve to live domain TODO titles. The
     committed `papers/alphaevolve_context_claim_inventory_boundary.json` adds
     44 anchored Abstract, Introduction, Discussion, and collaborator-context
     claims. It classifies 6 as locally implemented, 11 partial, 4 not
     implemented, and 23 not demonstrated, and resolves all 38 gaps to live
     domain TODO titles. The committed
-    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 42
-    Section 3.1, Table 2, Figure 4, and footnote 3 claims. It classifies 6 as
+    `papers/alphaevolve_matrix_result_claim_inventory_boundary.json` adds 44
+    Section 3.1, Table 2, Figure 4, and footnote 3 claims. It classifies 8 as
     partial, 3 as not implemented, and 33 as not demonstrated, and resolves all
-    42 gaps to live domain TODO titles. These inventories now include the
+    44 gaps to live domain TODO titles. These inventories now include the
     Introduction's 4x4 complex rank-48, roughly 75-percent best-known-match,
     and dimension-11 Kissing Numbers statements plus Section 3.1's unknown
     minimum rank for 3x3 multiplication. The committed
@@ -105,8 +105,8 @@ sidecars, tests, and active TODOs.
     exact-page and visible-panel claims across all 13 Appendix B subsections and
     Figures 10-14: 95 partial, 24 not implemented, and 69 not demonstrated,
     with both code and paper TODO ownership for every gap. The twelve bounded
-    inventories therefore cover 837 claims: 29 locally implemented, 275
-    partial, 108 not implemented, 366 not demonstrated, and 59
+    inventories therefore cover 844 claims: 30 locally implemented, 278
+    partial, 110 not implemented, 367 not demonstrated, and 59
     source-context-only. The supplemental
     `papers/alphaevolve_citation_use_inventory_boundary.json` now scans the
     retained 14-file TeX closure and records all 195 logical citation uses, 240
@@ -160,7 +160,7 @@ sidecars, tests, and active TODOs.
     per-phrase evidence-link sufficiency, status-cell semantic verification,
     implemented-benchmark bullet semantic verification, and
     absence-sentence freshness checks as missing evidence.
-  - Current gap: the named source structure and 837 bounded system, context,
+  - Current gap: the named source structure and 844 bounded system, context,
     matrix-result, constructive-math, scheduling, kernel-engineering, and
     hardware-circuit-design, compiler-generated-code, Section 4/Figure 8
     ablation, Section 5 Related Work, Appendix A, Table 3, Figure 9, Appendix B,
@@ -170,11 +170,11 @@ sidecars, tests, and active TODOs.
     constructs have dispositions, all 83 table rows and 240 cells have
     row/cell dispositions,
     all 8 code listings and 305 source lines have line-level dispositions, and
-    all 309 explicit TeX math constructs have delimiter-level dispositions.
+    all 309 TeX math constructs; 402 prose sentences are dispositioned.
     However, citation proposition/role/sufficiency and
     implementation relevance remain unclassified, and there is no AlphaEvolve
-    requirement inventory exhaustive at sentence, paragraph, mathematical-
-    correctness, image-pixel, citation-semantic, or proposition level
+    requirement inventory exhaustive at sentence-internal clauses/propositions,
+    mathematical-correctness, image-pixel or citation-semantic level
     across remaining source details and the other paper
     spans and all code modules, tests, runtime report
     schemas, sidecar JSON records, TODO entries, and completion evidence; no

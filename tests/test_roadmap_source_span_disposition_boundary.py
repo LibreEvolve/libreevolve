@@ -14,7 +14,7 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
     assert validation.ok is True
     assert (
         validation.boundary_status
-        == "named_span_dispositions_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_exhaustiveness"
+        == "named_span_dispositions_plus_844_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_and_402_tex_prose_sentences_without_sentence_internal_semantic_exhaustiveness"
     )
     assert boundary["schema"] == ROADMAP_SOURCE_SPAN_DISPOSITION_BOUNDARY_SCHEMA
     assert boundary["source_paper_id"] == "2506.13131"
@@ -62,6 +62,9 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
     assert boundary["tex_math_inventory_input"] == (
         "papers/alphaevolve_tex_math_inventory_boundary.json"
     )
+    assert boundary["tex_prose_inventory_input"] == (
+        "papers/alphaevolve_tex_prose_inventory_boundary.json"
+    )
     assert boundary["completed_evidence"]["citation_uses"] == (
         "195_tex_source_anchored_uses_with_240_key_links_and_120_compiled_references_without_semantic_classification"
     )
@@ -76,6 +79,9 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
     )
     assert boundary["completed_evidence"]["tex_math_constructs"] == (
         "309_explicit_math_constructs_291_inline_18_display_and_zero_unmapped_constructs"
+    )
+    assert boundary["completed_evidence"]["tex_prose_sentences"] == (
+        "128_paragraphs_402_sentences_372_existing_claim_mappings_30_reviewed_nonclaims_and_zero_unmapped_or_unresolved_sentences"
     )
     assert (
         boundary["paper_status_row_disposition_status"]
@@ -110,16 +116,17 @@ def test_roadmap_source_span_disposition_accepts_core_anchor_boundary():
         "disposition_status": "named_structure_disposition_only",
     }
     assert boundary["missing_evidence"] == {
-        "claim_level_requirement_inventory": "837_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_and_309_explicit_math_constructs_have_delimiter_dispositions_without_whole_paper_sentence_paragraph_image_pixel_citation_semantic_mathematical_correctness_or_reproduction_exhaustiveness",
+        "claim_level_requirement_inventory": "844_bounded_claims_cover_all_named_spans_195_citation_uses_have_lexical_linkage_30_tex_source_details_have_construct_dispositions_240_table_cells_have_row_cell_dispositions_305_listing_lines_have_line_dispositions_309_explicit_math_constructs_have_delimiter_dispositions_and_128_paragraphs_402_sentences_have_prose_dispositions_without_sentence_internal_clause_or_proposition_image_pixel_citation_semantic_implementation_semantic_mathematical_correctness_independent_review_or_reproduction_exhaustiveness",
         "application_result_claim_matrix": "not_recorded_locally",
         "status_row_to_roadmap_disposition_map": "not_recorded_locally",
         "missing_partial_todo_proof": "not_recorded_locally",
         "ci_source_span_exhaustiveness_gate": "not_recorded_locally",
     }
     assert "all 55 PDF-verified named AlphaEvolve structural spans" in boundary["claim_boundary"]
-    assert "requirement-level proposition exhaustiveness" in boundary["claim_boundary"]
+    assert "sentence-internal clause- or proposition-level" in boundary["claim_boundary"]
     assert "all 83 rows and 240 cells" in boundary["claim_boundary"]
     assert "all 8 retained TeX code listing environments" in boundary["claim_boundary"]
+    assert "all 128 retained TeX prose paragraphs" in boundary["claim_boundary"]
 
 
 def test_roadmap_source_span_disposition_rejects_exhaustive_overclaim():
@@ -151,7 +158,7 @@ def test_render_roadmap_source_span_disposition_summary_reports_shape():
     assert "ROADMAP source-span disposition boundary" in summary
     assert "| schema_status | ok |" in summary
     assert (
-        "| boundary_status | named_span_dispositions_plus_837_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_and_309_tex_math_constructs_without_whole_paper_exhaustiveness |"
+        "| boundary_status | named_span_dispositions_plus_844_bounded_claims_195_citation_uses_30_tex_source_details_240_table_cells_305_listing_lines_309_tex_math_constructs_and_402_tex_prose_sentences_without_sentence_internal_semantic_exhaustiveness |"
         in summary
     )
     assert "| disposition_record_count | 55 |" in summary

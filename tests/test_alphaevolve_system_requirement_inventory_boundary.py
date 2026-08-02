@@ -21,27 +21,27 @@ def test_system_requirement_inventory_accepts_pdf_anchored_section_2_scope():
     assert boundary["source_artifact"]["identity_ok"] is True
     assert boundary["section_2_requirement_inventory_ready"] is True
     assert boundary["alphaevolve_parity_claim_ready"] is False
-    assert validation.requirement_count == 50
-    assert validation.implemented_local_count == 13
-    assert validation.implementation_gap_count == 37
+    assert validation.requirement_count == 55
+    assert validation.implemented_local_count == 14
+    assert validation.implementation_gap_count == 41
     assert validation.missing_anchor_count == 0
     assert validation.missing_reference_count == 0
-    assert boundary["todo_owned_gap_count"] == 37
+    assert boundary["todo_owned_gap_count"] == 41
     assert boundary["implementation_status_counts"] == {
-        "implemented_local": 13,
-        "not_demonstrated": 5,
-        "not_implemented": 2,
-        "partially_implemented": 30,
+        "implemented_local": 14,
+        "not_demonstrated": 6,
+        "not_implemented": 4,
+        "partially_implemented": 31,
     }
     assert boundary["category_counts"] == {
         "creative_generation": 7,
         "distributed_pipeline": 3,
-        "evaluation": 6,
+        "evaluation": 8,
         "evolution": 4,
         "platform_overview": 5,
         "prompt_sampling": 6,
         "table_1_capability": 8,
-        "task_specification": 11,
+        "task_specification": 14,
     }
     assert boundary["requirement_records"][0]["requirement_id"] == (
         "table1_entire_code_file"
@@ -65,7 +65,7 @@ def test_system_requirement_inventory_gives_every_incomplete_claim_todo_ownershi
         if record["implementation_status"] != "implemented_local"
     ]
 
-    assert len(incomplete) == 37
+    assert len(incomplete) == 41
     assert all(record["active_todo_refs"] for record in incomplete)
     assert all(
         ref["exists"] and ref["required_phrase_present"]
@@ -114,7 +114,7 @@ def test_render_system_requirement_inventory_summary_reports_shape():
 
     assert "AlphaEvolve system requirement inventory boundary" in summary
     assert "| schema_status | ok |" in summary
-    assert "| requirement_count | 50 |" in summary
-    assert "| implemented_local_count | 13 |" in summary
-    assert "| implementation_gap_count | 37 |" in summary
+    assert "| requirement_count | 55 |" in summary
+    assert "| implemented_local_count | 14 |" in summary
+    assert "| implementation_gap_count | 41 |" in summary
     assert "| missing_anchor_count | 0 |" in summary

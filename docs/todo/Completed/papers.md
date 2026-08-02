@@ -14618,6 +14618,19 @@ Moved from `docs/todo/papers.md`. Keep this file as the archive for completed ba
     and independent semantic exhaustiveness review remain open.
   - Verification: the paper manifest requires the sidecar and rejects source,
     count, status, reference, ownership, result-reproduction, and parity drift.
+
+- [x] Inventory retained AlphaEvolve body paragraphs and grammatical sentences.
+  - Paper evidence: after excluding the preamble and separately audited table,
+    figure, equation, listing, and footnote surfaces, the pinned
+    `2506.13131v1` TeX closure contains 128 body paragraphs and 402 grammatical
+    sentences.
+  - Status: `papers/alphaevolve_tex_prose_inventory_boundary.json` maps 372
+    sentences to existing bounded claims and reviews 30 as nonclaims, with no
+    unmapped sentence or unresolved claim reference. Seven newly identified
+    claims update the twelve-inventory aggregate to 844.
+  - Remaining gap: sentence-level mechanical disposition does not prove
+    sentence-internal clause/proposition completeness, mathematical correctness,
+    independent semantic review, result reproduction, or AlphaEvolve parity.
 - [x] Add retained-TeX explicit math dispositions and four omitted source claims.
   - Paper evidence: the recursive `main.tex` closure contains 309 explicit math
     constructs, including 18 display constructs beyond the five previously

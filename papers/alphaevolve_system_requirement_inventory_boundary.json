@@ -30,27 +30,27 @@
       "AlphaEvolve production scale, benchmark results, or system parity"
     ]
   },
-  "requirement_count": 50,
-  "expected_requirement_count": 50,
+  "requirement_count": 55,
+  "expected_requirement_count": 55,
   "category_counts": {
     "creative_generation": 7,
     "distributed_pipeline": 3,
-    "evaluation": 6,
+    "evaluation": 8,
     "evolution": 4,
     "platform_overview": 5,
     "prompt_sampling": 6,
     "table_1_capability": 8,
-    "task_specification": 11
+    "task_specification": 14
   },
   "implementation_status_counts": {
-    "implemented_local": 13,
-    "not_demonstrated": 5,
-    "not_implemented": 2,
-    "partially_implemented": 30
+    "implemented_local": 14,
+    "not_demonstrated": 6,
+    "not_implemented": 4,
+    "partially_implemented": 31
   },
-  "implemented_local_count": 13,
-  "implementation_gap_count": 37,
-  "todo_owned_gap_count": 37,
+  "implemented_local_count": 14,
+  "implementation_gap_count": 41,
+  "todo_owned_gap_count": 41,
   "missing_anchor_count": 0,
   "missing_reference_count": 0,
   "requirement_records": [
@@ -625,6 +625,29 @@
       "active_todo_refs": []
     },
     {
+      "requirement_id": "task_metric_maximization_convention",
+      "source_span_id": "section_2_1",
+      "source_page": 3,
+      "source_anchor": "By convention, these metrics are maximized.",
+      "source_anchor_present": true,
+      "requirement": "Use maximization as the default metric direction while supporting explicit minimization.",
+      "category": "task_specification",
+      "implementation_status": "implemented_local",
+      "roadmap_section_id": "evaluation_cascade",
+      "roadmap_phase": "near_term",
+      "evidence_refs": [
+        {
+          "path": "libreevolve/problems/loader.py",
+          "exists": true
+        },
+        {
+          "path": "tests/core/test_loader.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": []
+    },
+    {
       "requirement_id": "task_fixed_evaluate_signature",
       "source_span_id": "section_2_1",
       "source_page": 4,
@@ -1021,6 +1044,86 @@
         },
         {
           "path": "tests/test_candidate_abstraction_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "abstraction",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add abstraction-choice metadata and benchmark evidence for candidate",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_problem_specific_abstraction_choice",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "different levels of abstraction work better for different problems",
+      "source_anchor_present": true,
+      "requirement": "Select and justify the candidate abstraction for each problem.",
+      "category": "task_specification",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+          "boundary_status": "not_configured_as_problem_defined_abstractions",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/candidate_abstraction_bias_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_bias_matrix.v1",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_candidate_abstraction_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "abstraction",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add abstraction-choice metadata and benchmark evidence for candidate",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "task_symmetry_guided_abstraction_bias",
+      "source_span_id": "section_2_1",
+      "source_page": 5,
+      "source_anchor": "for problems with highly symmetric solutions it is advantageous to evolve constructor functions",
+      "source_anchor_present": true,
+      "requirement": "Use solution symmetry evidence to prefer constructor functions and non-symmetry evidence to prefer bespoke search algorithms.",
+      "category": "task_specification",
+      "implementation_status": "not_implemented",
+      "roadmap_section_id": "candidate_workspace_fidelity",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/candidate_abstraction_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_boundary.v1",
+          "boundary_status": "not_configured_as_problem_defined_abstractions",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/candidate_abstraction_bias_matrix.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_candidate_abstraction_bias_matrix.v1",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_candidate_abstraction_bias.py",
           "exists": true
         }
       ],
@@ -1619,6 +1722,54 @@
       ]
     },
     {
+      "requirement_id": "evaluation_order_hundred_compute_hours_per_candidate",
+      "source_span_id": "section_2_4",
+      "source_page": 8,
+      "source_anchor": "on the order of 100 compute-hours to evaluate any new solution",
+      "source_anchor_present": true,
+      "requirement": "Account for and bound roughly 100 compute-hours of work per candidate.",
+      "category": "evaluation",
+      "implementation_status": "partially_implemented",
+      "roadmap_section_id": "async_resumable_runtime",
+      "roadmap_phase": "mid_term",
+      "evidence_refs": [
+        {
+          "path": "papers/expensive_evaluation_budget_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.expensive_evaluation_budget_boundary.v1",
+          "boundary_status": "local_cooperative_budgets_without_compute_hour_runtime",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/parallel_evaluation_readiness_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.alphaevolve_parallel_evaluation_readiness_boundary.v1",
+          "boundary_status": "local_cross_generation_async_pipeline_partial",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_expensive_evaluation_budget_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "expensive_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add unified expensive-evaluation compute budgets and resumable state.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "accelerator_budget",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Add accelerator and worker budget stops plus budget resume state.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
       "requirement_id": "evaluation_async_cluster_parallelism",
       "source_span_id": "section_2_4",
       "source_page": 8,
@@ -1703,6 +1854,54 @@
           "todo_id": "multi_objective",
           "path": "docs/todo/code.md",
           "required_phrase": "Promote multi-objective overlays to primary archive optimization.",
+          "exists": true,
+          "required_phrase_present": true
+        }
+      ]
+    },
+    {
+      "requirement_id": "evaluation_multi_metric_single_target_uplift",
+      "source_span_id": "section_2_4",
+      "source_page": 8,
+      "source_anchor": "optimizing for multiple metrics often improves results for the single target metric",
+      "source_anchor_present": true,
+      "requirement": "Demonstrate that multi-metric optimization improves a designated target metric.",
+      "category": "evaluation",
+      "implementation_status": "not_demonstrated",
+      "roadmap_section_id": "multi_objective_search",
+      "roadmap_phase": "longer_term",
+      "evidence_refs": [
+        {
+          "path": "papers/objective_archive_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.objective_archive_boundary.v1",
+          "boundary_status": "bounded_retained_overlays_not_primary_pareto_archive",
+          "claim_ready": false
+        },
+        {
+          "path": "papers/metric_diverse_prompt_boundary.json",
+          "exists": true,
+          "schema": "libreevolve.metric_diverse_prompt_boundary.v1",
+          "boundary_status": "prompt_visible_evidence_not_benchmark_policy",
+          "claim_ready": false
+        },
+        {
+          "path": "tests/test_objective_archive_boundary.py",
+          "exists": true
+        }
+      ],
+      "active_todo_refs": [
+        {
+          "todo_id": "multi_objective",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Promote multi-objective overlays to primary archive optimization.",
+          "exists": true,
+          "required_phrase_present": true
+        },
+        {
+          "todo_id": "metric_diversity",
+          "path": "docs/todo/code.md",
+          "required_phrase": "Extend metric-diverse inspiration selection provenance into benchmark",
           "exists": true,
           "required_phrase_present": true
         }

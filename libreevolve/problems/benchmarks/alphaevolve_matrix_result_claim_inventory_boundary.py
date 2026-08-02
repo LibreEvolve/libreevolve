@@ -25,7 +25,7 @@ EXPECTED_BOUNDARY_STATUS = (
     "section_3_1_table_2_figure_4_claim_inventory_complete_without_"
     "appendix_a_or_result_reproduction"
 )
-EXPECTED_CLAIM_COUNT = 42
+EXPECTED_CLAIM_COUNT = 44
 IMPLEMENTED_STATUS = "implemented_local"
 INCOMPLETE_STATUSES = frozenset(
     {"partially_implemented", "not_implemented", "not_demonstrated"}
@@ -215,6 +215,34 @@ MATRIX_RESULT_CLAIM_SPECS = (
         "not_demonstrated",
         ("papers/matrix_suite_publication_artifacts.json",),
         ("suite", "table_export"),
+    ),
+    _claim(
+        "section3_1_tensor_decomposition_algorithm_representation",
+        "section_3_1",
+        9,
+        (
+            "a rich space of algorithms for multiplying two matrices can be "
+            "represented as decompositions of a given 3D tensor into rank-one tensors"
+        ),
+        "Represent matrix-multiplication algorithms as rank-one decompositions of a 3D tensor.",
+        "matrix_method",
+        "partially_implemented",
+        ("papers/matrix_tensor_rank_runtime_boundary.json",),
+        ("tensor_rank",),
+    ),
+    _claim(
+        "section3_1_low_rank_decomposition_search_objective",
+        "section_3_1",
+        9,
+        (
+            "to develop faster matrix multiplication algorithms one needs to "
+            "find low-rank decompositions of particular tensors"
+        ),
+        "Search for low-rank tensor decompositions to reduce matrix-multiplication cost.",
+        "matrix_method",
+        "partially_implemented",
+        ("papers/matrix_tensor_rank_runtime_boundary.json",),
+        ("tensor_rank",),
     ),
     _claim(
         "section3_1_tensor_rank_equals_scalar_multiplications",

@@ -190,11 +190,18 @@ Important limits:
   claims. Nothing is unmapped or unresolved, and the inventory adds no claims
   or parity credit. Formula correctness, proof validity, and result
   reproduction remain open.
-- Together the twelve bounded inventories cover 837 claims: 29 locally
-  implemented, 275 partial, 108 not implemented, 366 not demonstrated, and 59
-  source-context-only, leaving 749 implementation gaps. Across the 778
-  implementation-relevant claims, strict implemented parity is 3.7%; counting
-  partial claims at half credit gives 21.4%. The weighted value rises because
+- `papers/alphaevolve_tex_prose_inventory_boundary.json` inventories all 128
+  retained body paragraphs and 402 grammatical sentences after masking the
+  table, figure, equation, listing, and footnote surfaces audited separately.
+  It maps 372 sentences to existing bounded claims and reviews 30 as nonclaims,
+  with zero unmapped or unresolved sentences. This adds seven claims found by
+  the prose walk, but complete sentence disposition is not sentence-internal
+  clause/proposition exhaustiveness or independent semantic review.
+- Together the twelve bounded inventories cover 844 claims: 30 locally
+  implemented, 278 partial, 110 not implemented, 367 not demonstrated, and 59
+  source-context-only, leaving 755 implementation gaps. Across the 785
+  implementation-relevant claims, strict implemented parity is 3.8%; counting
+  partial claims at half credit gives 21.5%. The weighted value rises because
   Appendix B registry metadata is partial, not because its results were
   reproduced. Citation linkage is lexically complete and every retained-source
   caption, equation-environment construct, and semantic footnote has a
@@ -202,10 +209,11 @@ Important limits:
   dispositions; and
   all 8 retained code listings and 305 physical source lines have line-level
   dispositions; all 309 explicit TeX math constructs have delimiter-level
-  dispositions. Coverage still excludes whole-paper sentence/paragraph,
-  mathematical-correctness, image-pixel, citation-semantic, and
-  proposition-level exhaustiveness, independent result reproduction, and
-  AlphaEvolve-scale execution.
+  dispositions; and all 128 retained prose paragraphs and 402 grammatical
+  sentences have dispositions. Coverage still excludes sentence-internal
+  clause/proposition semantic exhaustiveness, mathematical correctness,
+  image-pixel and citation-semantic review, independent result reproduction,
+  independent proof of semantic completeness, and AlphaEvolve-scale execution.
 - The local paper cache is source inventory. A cached paper or `papers/README.md`
   row does not mean the paper's method or results are implemented.
 - `papers/related_work_taxonomy_boundary.json` records a bounded AlphaEvolve

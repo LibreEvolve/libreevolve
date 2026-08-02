@@ -16321,3 +16321,16 @@ Moved from `docs/todo/roadmap.md`. Keep this file as the archive for completed b
   - Remaining boundary: mathematical correctness, result reproduction,
     sentence/paragraph exhaustiveness, joined application evidence, CI gates,
     and owner signoff remain open.
+
+- [x] Add retained-TeX prose dispositions to the AlphaEvolve ROADMAP audit.
+  - Status: ROADMAP and its implementation-evidence, disposition, coverage, and
+    exhaustiveness boundaries now include all 128 retained body paragraphs and
+    402 grammatical sentences, with 372 existing-claim mappings, 30 reviewed
+    nonclaims, and zero unmapped or unresolved sentences.
+  - Accounting: seven additional claims update the aggregate to 844 total and
+    785 implementation-relevant claims. The measured parity is 3.8% strict or
+    21.5% when partial claims receive half credit.
+  - Remaining boundary: sentence-internal clause/proposition semantics,
+    independent review, mathematical correctness, image-pixel and citation
+    semantics, result reproduction, status/application joins, and owner/CI
+    signoff remain open.
